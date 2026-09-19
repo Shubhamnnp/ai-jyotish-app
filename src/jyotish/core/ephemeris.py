@@ -239,23 +239,31 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
     def __init__(self, ephe_path: Optional[str] = None):
         self._swe = None
         self._has_swisseph = False
+        self._fallback = PyEphemProvider()
         try:
             import swisseph as swe
             self._swe = swe
-            self._has_swisseph = True
-            if ephe_path:
+            if ephe_path and hasattr(swe, 'set_ephe_path'):
                 swe.set_ephe_path(ephe_path)
-        except ImportError:
+            # Perform sanity check
+            if hasattr(swe, 'julday') and hasattr(swe, 'calc_ut') and hasattr(swe, 'set_sid_mode') and hasattr(swe, 'get_ayanamsa_ut'):
+                t_jd = float(swe.julday(2000, 1, 1, 12.0))
+                swe.set_sid_mode(1)
+                _ = float(swe.get_ayanamsa_ut(t_jd))
+                self._has_swisseph = True
+        except BaseException:
             try:
                 import pyswisseph as swe
                 self._swe = swe
-                self._has_swisseph = True
-                if ephe_path:
+                if ephe_path and hasattr(swe, 'set_ephe_path'):
                     swe.set_ephe_path(ephe_path)
-            except ImportError:
+                if hasattr(swe, 'julday') and hasattr(swe, 'calc_ut') and hasattr(swe, 'set_sid_mode') and hasattr(swe, 'get_ayanamsa_ut'):
+                    t_jd = float(swe.julday(2000, 1, 1, 12.0))
+                    swe.set_sid_mode(1)
+                    _ = float(swe.get_ayanamsa_ut(t_jd))
+                    self._has_swisseph = True
+            except BaseException:
                 self._has_swisseph = False
-
-        self._fallback = PyEphemProvider()
 
     @property
     def engine_type(self) -> str:
@@ -265,29 +273,28 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
         if self._has_swisseph and self._swe:
             try:
                 return float(self._swe.julday(dt.year, dt.month, dt.day, dt.hour + dt.minute / 60.0 + dt.second / 3600.0))
-            except Exception:
+            except BaseException:
                 return self._fallback.datetime_to_jd(dt)
         return self._fallback.datetime_to_jd(dt)
 
     def calculate_ayanamsa(self, jd: float, ayanamsa_name: str = "Lahiri") -> float:
         if self._has_swisseph and self._swe:
-            swe = self._swe
-            # Official Swiss Ephemeris sidereal mode integer constants
-            sid_modes = {
-                "lahiri": 1,
-                "raman": 3,
-                "kp": 5,
-                "krishnamurti": 5,
-                "true_chitra": 27,
-                "true_citra": 27,
-                "yukteshwar": 7,
-                "bhasin": 8,
-            }
-            mode = sid_modes.get(ayanamsa_name.lower().strip(), 1)
             try:
+                swe = self._swe
+                sid_modes = {
+                    "lahiri": 1,
+                    "raman": 3,
+                    "kp": 5,
+                    "krishnamurti": 5,
+                    "true_chitra": 27,
+                    "true_citra": 27,
+                    "yukteshwar": 7,
+                    "bhasin": 8,
+                }
+                mode = sid_modes.get(str(ayanamsa_name).lower().strip(), 1)
                 swe.set_sid_mode(mode)
                 return float(swe.get_ayanamsa_ut(jd))
-            except Exception:
+            except BaseException:
                 return self._fallback.calculate_ayanamsa(jd, ayanamsa_name)
         return self._fallback.calculate_ayanamsa(jd, ayanamsa_name)
 
@@ -350,7 +357,7 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
             }
 
             return results, ayanamsa_val
-        except Exception:
+        except BaseException:
             return self._fallback.get_planet_positions(dt_utc, ayanamsa_name)
 
     def calculate_ascendant(
@@ -369,7 +376,7 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
             flg_sidereal = getattr(swe, "FLG_SIDEREAL", 65536)
             cusps, ascmc = swe.houses_ex(jd, latitude, longitude, b'W', flg_sidereal)
             return float(ascmc[0]) % 360.0
-        except Exception:
+        except BaseException:
             return self._fallback.calculate_ascendant(dt_utc, latitude, longitude, ayanamsa_val)
 
 
