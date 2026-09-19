@@ -605,22 +605,40 @@ unified_css = """
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 10px !important;
-        padding: 8px 12px !important;
+        padding: 10px 14px !important;
         margin-bottom: 4px !important;
         margin-top: 2px !important;
         width: 100% !important;
+        min-height: 48px !important;
+        box-sizing: border-box !important;
         display: flex !important;
         align-items: center !important;
+        gap: 10px !important;
         cursor: pointer !important;
         box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    /* Align and position radio circle nicely inside the card */
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label > div:first-child,
+    section[data-testid="stSidebar"] .stRadio label > div:first-child {
+        margin-left: 0 !important;
+        margin-right: 4px !important;
+        flex-shrink: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label > div:last-child,
+    section[data-testid="stSidebar"] .stRadio label > div:last-child {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover,
     section[data-testid="stSidebar"] .stRadio label:hover,
     div[data-testid="stRadio"] label:hover {
         background: #F8FAFC !important;
         border-color: #3B82F6 !important;
-        transform: translateX(4px) !important;
+        transform: translateX(3px) !important;
         box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15) !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked),
@@ -638,6 +656,8 @@ unified_css = """
         font-weight: 700 !important;
         color: #0F172A !important;
         font-size: 13.5px !important;
+        margin: 0 !important;
+        line-height: 1.35 !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) p,
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) span,
