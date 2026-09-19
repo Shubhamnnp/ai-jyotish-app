@@ -382,11 +382,11 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
 
 def get_ephemeris_provider(preference: str = "auto") -> BaseEphemerisProvider:
     """Factory returning the optimal astronomical ephemeris provider."""
-    if preference.lower() in ("swiss", "swisseph", "auto"):
+    if preference.lower() in ("swiss", "swisseph"):
         return SwissEphemerisProvider()
     return PyEphemProvider()
 
 
 # Singleton provider instance
-default_ephemeris_provider = get_ephemeris_provider("auto")
+default_ephemeris_provider = get_ephemeris_provider("pyephem")
 
