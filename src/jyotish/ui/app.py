@@ -593,6 +593,48 @@ unified_css = """
         font-weight: 600 !important;
     }
 
+    /* Beautiful Modern Sidebar Module Label Cards */
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] {
+        gap: 6px !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label {
+        background: #FFFFFF !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 10px !important;
+        padding: 9px 14px !important;
+        margin-bottom: 5px !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label:hover {
+        background: #F8FAFC !important;
+        border-color: #3B82F6 !important;
+        transform: translateX(4px) !important;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12) !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked),
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label[data-checked="true"] {
+        background: #EFF6FF !important;
+        border: 2px solid #2563EB !important;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.18) !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label span,
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label div {
+        font-weight: 700 !important;
+        color: #0F172A !important;
+        font-size: 13.5px !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked) span,
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked) div {
+        color: #1D4ED8 !important;
+        font-weight: 800 !important;
+    }
+
     @media (max-width: 768px) {
         .main-header { font-size: 1.6rem !important; }
         .digital-hud { padding: 8px 10px !important; }
