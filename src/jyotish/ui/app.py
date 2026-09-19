@@ -594,43 +594,54 @@ unified_css = """
     }
 
     /* Beautiful Modern Sidebar Module Label Cards */
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] {
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] {
         gap: 6px !important;
         display: flex !important;
         flex-direction: column !important;
     }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label {
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
+    section[data-testid="stSidebar"] .stRadio label,
+    div[data-testid="stRadio"] label {
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 10px !important;
-        padding: 9px 14px !important;
-        margin-bottom: 5px !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        cursor: pointer !important;
+        padding: 8px 12px !important;
+        margin-bottom: 4px !important;
+        margin-top: 2px !important;
+        width: 100% !important;
         display: flex !important;
         align-items: center !important;
+        cursor: pointer !important;
         box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label:hover {
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover,
+    section[data-testid="stSidebar"] .stRadio label:hover,
+    div[data-testid="stRadio"] label:hover {
         background: #F8FAFC !important;
         border-color: #3B82F6 !important;
         transform: translateX(4px) !important;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12) !important;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15) !important;
     }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked),
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label[data-checked="true"] {
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked),
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="true"],
+    section[data-testid="stSidebar"] .stRadio label:has(input:checked),
+    div[data-testid="stRadio"] label:has(input:checked) {
         background: #EFF6FF !important;
         border: 2px solid #2563EB !important;
         box-shadow: 0 4px 14px rgba(37, 99, 235, 0.18) !important;
     }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label span,
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label div {
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label p,
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label span,
+    section[data-testid="stSidebar"] .stRadio label p,
+    div[data-testid="stRadio"] label p {
         font-weight: 700 !important;
         color: #0F172A !important;
         font-size: 13.5px !important;
     }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked) span,
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div[role="radiogroup"] > label:has(input:checked) div {
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) p,
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) span,
+    div[data-testid="stRadio"] label:has(input:checked) p {
         color: #1D4ED8 !important;
         font-weight: 800 !important;
     }
