@@ -1,0 +1,364 @@
+"""
+Astronomical Ephemeris Engine for JyotishOS.
+Provides sidereal planetary longitudes, speeds, retrograde status, and combustion.
+Uses PyEphem (`ephem`) with classical Ayanamsa systems (Lahiri, Raman, KP, True Chitra).
+"""
+
+import math
+from abc import ABC, abstractmethod
+from datetime import datetime, date, time, timezone, timedelta
+from typing import Dict, Tuple, Optional
+import ephem
+
+from .constants import (
+    SIGNS, SIGN_NAMES, NAKSHATRAS, EXALTATION, DEBILITATION,
+    MOOLATRIKONA, OWN_SIGNS, NATURAL_FRIENDS, NATURAL_ENEMIES
+)
+from .models import PlanetPosition, BirthData
+
+
+class BaseEphemerisProvider(ABC):
+    """Abstract interface for astronomical computation."""
+
+    @abstractmethod
+    def calculate_ayanamsa(self, jd: float, ayanamsa_name: str = "Lahiri") -> float:
+        pass
+
+    @abstractmethod
+    def get_planet_positions(
+        self,
+        dt_utc: datetime,
+        ayanamsa_name: str = "Lahiri"
+    ) -> Tuple[Dict[str, Dict[str, float]], float]:
+        """Returns ({planet_name: {longitude, latitude, speed, is_retrograde}}, ayanamsa_deg)"""
+        pass
+
+    @abstractmethod
+    def calculate_ascendant(
+        self,
+        dt_utc: datetime,
+        latitude: float,
+        longitude: float,
+        ayanamsa_val: float
+    ) -> float:
+        """Returns Sidereal Ascendant (Lagna) longitude 0-360."""
+        pass
+
+
+class PyEphemProvider(BaseEphemerisProvider):
+    """High-precision Ephemeris provider using PyEphem and IAU precession."""
+
+    def datetime_to_jd(self, dt: datetime) -> float:
+        """Convert UTC datetime to Julian Day Number."""
+        return float(ephem.julian_date(dt))
+
+    def calculate_ayanamsa(self, jd: float, ayanamsa_name: str = "Lahiri") -> float:
+        """
+        Calculate sidereal ayanamsa in degrees.
+        Lahiri is Indian Govt standard (Chitra Paksha): 23.857092 deg at J2000.0.
+        """
+        # Epoch J2000.0 = JD 2451545.0 (2000-01-01 12:00:00 UTC)
+        days_from_j2000 = jd - 2451545.0
+        centuries = days_from_j2000 / 36525.0
+
+        # High-order polynomial for Lahiri precession
+        # Precession ~ 50.290966 arcsec / year = 5029.0966 arcsec / century
+        lahiri_base = 23.857092 + (5029.0966 * centuries + 1.1116 * centuries**2) / 3600.0
+
+        ayanamsa_name_lower = ayanamsa_name.strip().lower()
+        if ayanamsa_name_lower in ("lahiri", "chitra_paksha", "default"):
+            return lahiri_base % 360.0
+        elif ayanamsa_name_lower == "raman":
+            return (lahiri_base - 1.45) % 360.0
+        elif ayanamsa_name_lower in ("kp", "krishnamurti"):
+            return (lahiri_base - 0.10) % 360.0
+        elif ayanamsa_name_lower == "true_chitra":
+            # True Chitra anchors Spica at exact 180.0 degrees sidereal
+            try:
+                spica = ephem.Star("Spica")
+                d = ephem.Date(jd - 2415020.0)  # Dublin Julian Date
+                spica.compute(d)
+                spica_ecl = ephem.Ecliptic(spica)
+                trop_spica_deg = math.degrees(spica_ecl.lon)
+                return (trop_spica_deg - 180.0) % 360.0
+            except Exception:
+                return lahiri_base % 360.0
+        else:
+            return lahiri_base % 360.0
+
+    def calculate_mean_lunar_nodes(self, jd: float) -> Tuple[float, float]:
+        """
+        Computes Mean Lunar Node (Rahu) and Ketu (Rahu + 180 deg).
+        Based on standard astronomical formula (Meeus Astronomical Algorithms).
+        """
+        t = (jd - 2451545.0) / 36525.0
+        # Omega = 125.04452222 - 1934.1362608 * T + 0.0020708 * T^2 + T^3 / 450000
+        omega = 125.04452222 - 1934.1362608 * t + 0.0020708 * (t**2) + (t**3) / 450000.0
+        rahu = omega % 360.0
+        ketu = (rahu + 180.0) % 360.0
+        return rahu, ketu
+
+    def get_planet_positions(
+        self,
+        dt_utc: datetime,
+        ayanamsa_name: str = "Lahiri"
+    ) -> Tuple[Dict[str, Dict[str, float]], float]:
+        """
+        Calculates sidereal planetary positions for 9 grahas.
+        Returns dictionary and ayanamsa value.
+        """
+        jd = self.datetime_to_jd(dt_utc)
+        ayanamsa = self.calculate_ayanamsa(jd, ayanamsa_name)
+        ephem_date = ephem.Date(dt_utc)
+
+        # Mapping to PyEphem bodies
+        bodies = {
+            "Sun": ephem.Sun(),
+            "Moon": ephem.Moon(),
+            "Mars": ephem.Mars(),
+            "Mercury": ephem.Mercury(),
+            "Jupiter": ephem.Jupiter(),
+            "Venus": ephem.Venus(),
+            "Saturn": ephem.Saturn(),
+            "Uranus": ephem.Uranus(),
+            "Neptune": ephem.Neptune(),
+            "Pluto": ephem.Pluto(),
+        }
+
+        # Step offset for speed calculation (12 hours before and after)
+        dt_prev = dt_utc - timedelta(hours=12)
+        dt_next = dt_utc + timedelta(hours=12)
+
+        results: Dict[str, Dict[str, float]] = {}
+
+        for name, body in bodies.items():
+            body.compute(ephem_date)
+            ecl = ephem.Ecliptic(body)
+            trop_lon = math.degrees(ecl.lon) % 360.0
+            trop_lat = math.degrees(ecl.lat)
+
+            # Sidereal conversion
+            sid_lon = (trop_lon - ayanamsa) % 360.0
+
+            # Calculate daily motion (speed)
+            body_prev = getattr(ephem, body.__class__.__name__)()
+            body_prev.compute(ephem.Date(dt_prev))
+            lon_prev = math.degrees(ephem.Ecliptic(body_prev).lon)
+
+            body_next = getattr(ephem, body.__class__.__name__)()
+            body_next.compute(ephem.Date(dt_next))
+            lon_next = math.degrees(ephem.Ecliptic(body_next).lon)
+
+            # Handle 360 wrap-around in speed calculation
+            diff = lon_next - lon_prev
+            if diff > 180.0:
+                diff -= 360.0
+            elif diff < -180.0:
+                diff += 360.0
+            speed = diff  # deg per 1 day (24 hours)
+
+            is_retro = speed < 0.0
+
+            results[name] = {
+                "longitude": sid_lon,
+                "latitude": trop_lat,
+                "speed": speed,
+                "is_retrograde": is_retro,
+                "tropical_lon": trop_lon,
+            }
+
+        # Calculate Rahu & Ketu (Mean Nodes)
+        rahu_trop, ketu_trop = self.calculate_mean_lunar_nodes(jd)
+        rahu_sid = (rahu_trop - ayanamsa) % 360.0
+        ketu_sid = (ketu_trop - ayanamsa) % 360.0
+
+        # Mean nodes move retrograde by ~0.053 degrees per day
+        results["Rahu"] = {
+            "longitude": rahu_sid,
+            "latitude": 0.0,
+            "speed": -0.05295,
+            "is_retrograde": True,
+            "tropical_lon": rahu_trop,
+        }
+        results["Ketu"] = {
+            "longitude": ketu_sid,
+            "latitude": 0.0,
+            "speed": -0.05295,
+            "is_retrograde": True,
+            "tropical_lon": ketu_trop,
+        }
+
+        return results, ayanamsa
+
+    def calculate_ascendant(
+        self,
+        dt_utc: datetime,
+        latitude: float,
+        longitude: float,
+        ayanamsa_val: float
+    ) -> float:
+        """
+        Calculates exact Sidereal Lagna (Ascendant) in degrees (0-360).
+        """
+        observer = ephem.Observer()
+        observer.lat = str(latitude)
+        observer.lon = str(longitude)
+        observer.elevation = 0
+        observer.date = ephem.Date(dt_utc)
+
+        # Sidereal time (Local Sidereal Time / RAMC in radians)
+        lst_rad = observer.sidereal_time()
+        ramc_deg = math.degrees(lst_rad) % 360.0
+
+        # Obliquity of the Ecliptic (eps)
+        jd = self.datetime_to_jd(dt_utc)
+        t = (jd - 2451545.0) / 36525.0
+        eps_deg = 23.4392911 - 0.0130042 * t
+        eps_rad = math.radians(eps_deg)
+        lat_rad = math.radians(latitude)
+        ramc_rad = math.radians(ramc_deg)
+
+        # Classical formula for Ascendant longitude:
+        # tan(lambda) = -cos(RAMC) / (sin(RAMC)*cos(eps) + tan(lat)*sin(eps))
+        y = math.cos(ramc_rad)
+        x = -(math.sin(ramc_rad) * math.cos(eps_rad) + math.tan(lat_rad) * math.sin(eps_rad))
+        asc_trop_deg = math.degrees(math.atan2(y, x)) % 360.0
+
+        # Sidereal Lagna
+        asc_sid_deg = (asc_trop_deg - ayanamsa_val) % 360.0
+        return asc_sid_deg
+
+
+class SwissEphemerisProvider(BaseEphemerisProvider):
+    """
+    Swiss Ephemeris Provider (JPL DE431-based precision).
+    Supports pyswisseph/swisseph C-bindings when installed, with graceful
+    fallback to calibrated PyEphem astronomical provider.
+    """
+
+    def __init__(self, ephe_path: Optional[str] = None):
+        self._swe = None
+        self._has_swisseph = False
+        try:
+            import swisseph as swe
+            self._swe = swe
+            self._has_swisseph = True
+            if ephe_path:
+                swe.set_ephe_path(ephe_path)
+        except ImportError:
+            try:
+                import pyswisseph as swe
+                self._swe = swe
+                self._has_swisseph = True
+                if ephe_path:
+                    swe.set_ephe_path(ephe_path)
+            except ImportError:
+                self._has_swisseph = False
+
+        self._fallback = PyEphemProvider()
+
+    @property
+    def engine_type(self) -> str:
+        return "Swiss Ephemeris (DE431)" if self._has_swisseph else "PyEphem High-Precision Calibrated"
+
+    def datetime_to_jd(self, dt: datetime) -> float:
+        if self._has_swisseph and self._swe:
+            # Swiss ephemeris julday
+            return self._swe.julday(dt.year, dt.month, dt.day, dt.hour + dt.minute / 60.0 + dt.second / 3600.0)
+        return self._fallback.datetime_to_jd(dt)
+
+    def calculate_ayanamsa(self, jd: float, ayanamsa_name: str = "Lahiri") -> float:
+        if self._has_swisseph and self._swe:
+            swe = self._swe
+            sid_modes = {
+                "lahiri": swe.SIDM_LAHIRI,
+                "raman": swe.SIDM_RAMAN,
+                "kp": swe.SIDM_KRISHNAMURTI,
+                "krishnamurti": swe.SIDM_KRISHNAMURTI,
+                "true_chitra": swe.SIDM_TRUE_CHITRA,
+            }
+            mode = sid_modes.get(ayanamsa_name.lower().strip(), swe.SIDM_LAHIRI)
+            swe.set_sid_mode(mode)
+            return float(swe.get_ayanamsa_ut(jd))
+        return self._fallback.calculate_ayanamsa(jd, ayanamsa_name)
+
+    def get_planet_positions(
+        self,
+        dt_utc: datetime,
+        ayanamsa_name: str = "Lahiri"
+    ) -> Tuple[Dict[str, Dict[str, float]], float]:
+        if not self._has_swisseph or not self._swe:
+            return self._fallback.get_planet_positions(dt_utc, ayanamsa_name)
+
+        swe = self._swe
+        jd = self.datetime_to_jd(dt_utc)
+        ayanamsa_val = self.calculate_ayanamsa(jd, ayanamsa_name)
+
+        planet_map = {
+            "Sun": swe.SUN,
+            "Moon": swe.MOON,
+            "Mars": swe.MARS,
+            "Mercury": swe.MERCURY,
+            "Jupiter": swe.JUPITER,
+            "Venus": swe.VENUS,
+            "Saturn": swe.SATURN,
+            "Rahu": swe.MEAN_NODE,
+        }
+
+        flags = swe.FLG_SWIEPH | swe.FLG_SPEED | swe.FLG_SIDEREAL
+        results: Dict[str, Dict[str, float]] = {}
+
+        for name, p_id in planet_map.items():
+            res, ret_flag = swe.calc_ut(jd, p_id, flags)
+            lon = res[0] % 360.0
+            lat = res[1]
+            speed = res[3]
+            is_retro = speed < 0.0
+
+            results[name] = {
+                "longitude": lon,
+                "latitude": lat,
+                "speed": speed,
+                "is_retrograde": is_retro,
+                "tropical_lon": (lon + ayanamsa_val) % 360.0,
+            }
+
+        # Ketu is exactly 180 degrees from Rahu
+        rahu_lon = results["Rahu"]["longitude"]
+        ketu_lon = (rahu_lon + 180.0) % 360.0
+        results["Ketu"] = {
+            "longitude": ketu_lon,
+            "latitude": -results["Rahu"]["latitude"],
+            "speed": results["Rahu"]["speed"],
+            "is_retrograde": True,
+            "tropical_lon": (results["Rahu"]["tropical_lon"] + 180.0) % 360.0,
+        }
+
+        return results, ayanamsa_val
+
+    def calculate_ascendant(
+        self,
+        dt_utc: datetime,
+        latitude: float,
+        longitude: float,
+        ayanamsa_val: float
+    ) -> float:
+        if not self._has_swisseph or not self._swe:
+            return self._fallback.calculate_ascendant(dt_utc, latitude, longitude, ayanamsa_val)
+
+        swe = self._swe
+        jd = self.datetime_to_jd(dt_utc)
+        cusps, ascmc = swe.houses_ex(jd, latitude, longitude, b'W', swe.FLG_SIDEREAL)
+        return float(ascmc[0]) % 360.0
+
+
+def get_ephemeris_provider(preference: str = "auto") -> BaseEphemerisProvider:
+    """Factory returning the optimal astronomical ephemeris provider."""
+    if preference.lower() in ("swiss", "swisseph", "auto"):
+        return SwissEphemerisProvider()
+    return PyEphemProvider()
+
+
+# Singleton provider instance
+default_ephemeris_provider = get_ephemeris_provider("auto")
+

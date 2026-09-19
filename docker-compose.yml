@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  ai-jyotish-ui:
+    build: .
+    container_name: ai_jyotish_app
+    restart: always
+    ports:
+      - "8501:8501"
+    environment:
+      - PORT=8501
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - ./data:/app/data
+      - ./saved_charts_db.json:/app/saved_charts_db.json
+

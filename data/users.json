@@ -1,0 +1,26 @@
+{
+  "shubham8jyotish@gmail.com": {
+    "email": "shubham8jyotish@gmail.com",
+    "name": "Shubham Tiwari",
+    "role": "🔮 मुख्य ज्योतिषी (Chief Astrologer)",
+    "salt": "0669a986e8ba90f540f2a1b191590394",
+    "password_hash": "df28f2ee0e76ad0c44785a1ee318771635dae3b92a225ee478b0ba415fe3570a",
+    "created_at": "2026-01-01T00:00:00"
+  },
+  "admin@jyotishos.com": {
+    "email": "admin@jyotishos.com",
+    "name": "JyotishOS Admin",
+    "role": "🔮 मुख्य ज्योतिषी (Chief Astrologer)",
+    "salt": "26f1d11ca4abf07affc9d344298a1dbe",
+    "password_hash": "b133d2e51960dcb6ec614c7a1b17f179a2b9e98cef675bb39a7390aa04bedb24",
+    "created_at": "2026-01-01T00:00:00"
+  },
+  "researcher@jyotishos.com": {
+    "email": "researcher@jyotishos.com",
+    "name": "Vedic Researcher",
+    "role": "🔬 वैदिक शोधकर्ता (Researcher)",
+    "salt": "b9ef8953bcb453b6cbcb49561fc74cd5",
+    "password_hash": "65bc4d088f74a54fdacec29e23dc9bf24f4241a8d233a3df5a0f0a124b39b647",
+    "created_at": "2026-01-01T00:00:00"
+  }
+}

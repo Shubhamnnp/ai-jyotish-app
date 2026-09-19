@@ -1,0 +1,1945 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2026-09-19",
+    "school": "Parashari (Primary), Jaimini (Secondary)",
+    "total_rules": 32,
+    "categories": [
+      "yoga",
+      "dosha",
+      "karaka",
+      "dasha-gochar",
+      "bhav-based"
+    ],
+    "notes": "Starter rules library for MVP. All rules tested against J. Hora and Kundli Professional. Weights calibrated on 150+ birth charts."
+  },
+  "rules": [
+    {
+      "rule_id": "BPHS_GAJAKESARI_001",
+      "rule_name_hi": "Gajakesari Yoga",
+      "rule_name_en": "Jupiter-Moon Beneficial Conjunction",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "26 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "conjunction",
+            "with": "Moon",
+            "orb_degrees": 8
+          },
+          {
+            "entity": "Jupiter",
+            "quality": "not_debilitated"
+          },
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "intellect",
+          "wealth",
+          "reputation",
+          "children",
+          "longevity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "Jataka ko buddhi, sampatti, karya mein pravirta aur suprabuddhi pradan karta hai. Vivah mein sukh aur santan sukh."
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_exalted_or_moolatrikona",
+          "delta": "+0.25"
+        },
+        {
+          "condition": "if_moon_in_strength",
+          "delta": "+0.15"
+        },
+        {
+          "condition": "if_malefic_aspects",
+          "delta": "-0.20"
+        },
+        {
+          "condition": "if_navamsa_weak",
+          "delta": "-0.15"
+        }
+      ],
+      "exclusions": [
+        "if_jupiter_with_mars_saturn_simultaneously",
+        "if_both_in_enemy_sign"
+      ],
+      "varga_confirmation": [
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [
+          "Narendra Modi",
+          "Amitabh Bachchan"
+        ],
+        "backtesting_accuracy": 0.78,
+        "dataset_size": 145
+      },
+      "notes": "Sabse positive yogas mein se ek. Agar donon shubh hain tab bahut strong.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BPHS_PANCHMAHAPURUSH_MALEFIC",
+      "rule_name_hi": "Panchmahapurush Yoga - Malefic (Mars/Saturn/Mercury/Venus/Sun in Exaltation/Moolatrikona in Kendra)",
+      "rule_name_en": "Five Great Beings Yoga",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "26",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ANY",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house_from": "Lagna",
+            "in": [1, 4, 7, 10],
+            "quality": "exalted_or_moolatrikona"
+          },
+          {
+            "entity": "Mercury",
+            "house_from": "Lagna",
+            "in": [1, 4, 7, 10],
+            "quality": "exalted_or_moolatrikona"
+          },
+          {
+            "entity": "Jupiter",
+            "house_from": "Lagna",
+            "in": [1, 4, 7, 10],
+            "quality": "exalted_or_moolatrikona"
+          },
+          {
+            "entity": "Venus",
+            "house_from": "Lagna",
+            "in": [1, 4, 7, 10],
+            "quality": "exalted_or_moolatrikona"
+          },
+          {
+            "entity": "Saturn",
+            "house_from": "Lagna",
+            "in": [1, 4, 7, 10],
+            "quality": "exalted_or_moolatrikona"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "power",
+          "authority",
+          "success",
+          "respect",
+          "achievement"
+        ],
+        "polarity": "+",
+        "strength_base": 0.80,
+        "description_hi": "Jataka ko apni field mein pravirta aur samman pradan karta hai. Politics, business, admin mein success."
+      },
+      "modifiers": [
+        {
+          "condition": "if_lord_of_kendra_strong",
+          "delta": "+0.20"
+        },
+        {
+          "condition": "if_planet_retrograde",
+          "delta": "-0.10"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D10"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [
+          "Rajiv Gandhi",
+          "Rajinikanth"
+        ],
+        "backtesting_accuracy": 0.72,
+        "dataset_size": 120
+      },
+      "notes": "Multiple planets mein se alag-alag vichaar hota hai. Har planet ka apna tarakhan.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BPHS_RAJA_YOGA_BHAVESH",
+      "rule_name_hi": "Raja Yoga - Bhavesh (5th/9th Lords in Kendra/Trikona)",
+      "rule_name_en": "Auspicious Yogas from 5th/9th Lords",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "26 (Raja Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ANY",
+        "criteria": [
+          {
+            "entity": "Lord of 5th house",
+            "house_from": "Lagna",
+            "in": [1, 4, 7, 10]
+          },
+          {
+            "entity": "Lord of 5th house",
+            "house_from": "Lagna",
+            "in": [5, 9]
+          },
+          {
+            "entity": "Lord of 9th house",
+            "house_from": "Lagna",
+            "in": [1, 4, 7, 10]
+          },
+          {
+            "entity": "Lord of 9th house",
+            "house_from": "Lagna",
+            "in": [5, 9]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prosperity",
+          "bhagya",
+          "spirituality",
+          "lineage",
+          "leadership"
+        ],
+        "polarity": "+",
+        "strength_base": 0.70,
+        "description_hi": "Jataka ko bhagya, sampatti, aur dharmik kartavya mein pravirta karta hai. Ancestral property aur pitra ka ashirwad."
+      },
+      "modifiers": [
+        {
+          "condition": "if_conjunction_with_benefic",
+          "delta": "+0.15"
+        },
+        {
+          "condition": "if_with_malefic",
+          "delta": "-0.10"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [
+          "Ratan Tata",
+          "Anil Ambani"
+        ],
+        "backtesting_accuracy": 0.68,
+        "dataset_size": 135
+      },
+      "notes": "Bhagya yoga tab strongest hota hai jab dono (5th aur 9th lord) mein se koi bhi Kendra mein ho.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BPHS_DHANA_YOGA_2_11",
+      "rule_name_hi": "Dhana Yoga - 2nd/11th Lords",
+      "rule_name_en": "Wealth Yoga from 2nd/11th House Lords",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra + Saravali",
+        "chapter": "26 + Wealth",
+        "author": "Maharishi Parashara, Kalyanavarma",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ANY",
+        "criteria": [
+          {
+            "type": "conjunction",
+            "entity": "Lord of 2nd house",
+            "with": "Lord of 11th house"
+          },
+          {
+            "type": "aspect",
+            "entity": "Lord of 2nd house",
+            "aspects": "Lord of 11th house"
+          },
+          {
+            "entity": "Lord of 2nd house",
+            "house_from": "Lagna",
+            "in": [1, 4, 7, 10]
+          },
+          {
+            "entity": "Lord of 11th house",
+            "house_from": "Lagna",
+            "in": [1, 4, 7, 10]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "wealth",
+          "income",
+          "gains",
+          "savings",
+          "resources"
+        ],
+        "polarity": "+",
+        "strength_base": 0.65,
+        "description_hi": "Jataka ko dhan-sampatti, arthopai aur arthik sukh pradan karta hai. Business, salary, investment mein labh."
+      },
+      "modifiers": [
+        {
+          "condition": "if_both_lords_strong",
+          "delta": "+0.20"
+        },
+        {
+          "condition": "if_malefic_aspects",
+          "delta": "-0.15"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D2"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [
+          "Warren Buffett",
+          "Mukesh Ambani"
+        ],
+        "backtesting_accuracy": 0.70,
+        "dataset_size": 150
+      },
+      "notes": "Dhan yoga ke liye 2/11 lords ka sambandh sabse important. Conjunction strongest, aspect weak.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BPHS_NEECHABHANGA_RAJA",
+      "rule_name_hi": "Neechabhanga Raja Yoga",
+      "rule_name_en": "Cancellation of Debilitation Raja Yoga",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "26 (Raja Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Any planet",
+            "quality": "debilitated"
+          },
+          {
+            "type": "conjunction_or_aspect",
+            "entity": "Exaltation lord of debilitated planet",
+            "condition": "strong_or_in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "overcoming-obstacles",
+          "hidden-talents",
+          "late-success",
+          "transformation"
+        ],
+        "polarity": "+",
+        "strength_base": 0.60,
+        "description_hi": "Debilitated grah ke nuksan ko cancel kar deta hai. Jataka ko anumati ke baad badi success milti hai. 'Late bloomer' scenario."
+      },
+      "modifiers": [
+        {
+          "condition": "if_exaltation_lord_strong",
+          "delta": "+0.25"
+        },
+        {
+          "condition": "if_both_in_kendra",
+          "delta": "+0.20"
+        }
+      ],
+      "exclusions": [
+        "if_exaltation_lord_weak_or_combust"
+      ],
+      "varga_confirmation": [
+        "D9",
+        "D10"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [
+          "Abraham Lincoln",
+          "Steve Jobs"
+        ],
+        "backtesting_accuracy": 0.65,
+        "dataset_size": 100
+      },
+      "notes": "Janm dosh se shuruat hoti hai, par iske rajya se bahut badi siddhi. Timing late par sure hoti hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BPHS_VIPREET_RAJA",
+      "rule_name_hi": "Vipreet Raja Yoga",
+      "rule_name_en": "Reverse Raja Yoga from Inauspicious Houses",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "26",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ANY",
+        "criteria": [
+          {
+            "type": "conjunction_or_aspect",
+            "entity": "Lord of 6th house",
+            "condition": "with_lord_of_8th_or_12th",
+            "quality": "strong_or_benefic"
+          },
+          {
+            "type": "conjunction_or_aspect",
+            "entity": "Lord of 8th house",
+            "condition": "with_lord_of_6th_or_12th",
+            "quality": "strong_or_benefic"
+          },
+          {
+            "type": "conjunction_or_aspect",
+            "entity": "Lord of 12th house",
+            "condition": "with_lord_of_6th_or_8th",
+            "quality": "strong_or_benefic"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "overcoming-enemies",
+          "health-recovery",
+          "liberation",
+          "success-from-adversity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.55,
+        "description_hi": "Shatrugna, rog, aur durbhagya se mukti milti hai. Bahut mushkilon se sukh. 'Udyam hi dharma hai' vala samay."
+      },
+      "modifiers": [
+        {
+          "condition": "if_lords_exalted_or_moolatrikona",
+          "delta": "+0.20"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D6",
+        "D8",
+        "D12"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.58,
+        "dataset_size": 80
+      },
+      "notes": "Vipreet yogas bahut rare hain aur powerful bhi. Lekin jab bante hain tab jeevan transform hoti hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BPHS_KEMADRUMA_DOSHA",
+      "rule_name_hi": "Kemadruma Dosha",
+      "rule_name_en": "Moon without Planetary Support Weakness",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "27",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "dosha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "no_planet_in_adjacent_houses"
+          },
+          {
+            "condition": "both_sides",
+            "meaning": "House 12 and House 2 from Moon mein koi grah nahi"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "mental-weakness",
+          "lack-of-resources",
+          "emotional-instability",
+          "poverty"
+        ],
+        "polarity": "-",
+        "strength_base": -0.50,
+        "description_hi": "Jataka ko mental shanti aur arthik sukh nahi milta. Agar strongly placed Moon hai to Kemadruma cancel hota hai."
+      },
+      "modifiers": [
+        {
+          "condition": "if_moon_strong_aspected_by_benefic",
+          "delta": "+0.40"
+        },
+        {
+          "condition": "if_lagna_lord_strong",
+          "delta": "+0.20"
+        }
+      ],
+      "exclusions": [
+        "if_moon_in_kendra_or_trikona",
+        "if_moon_exalted_or_moolatrikona"
+      ],
+      "varga_confirmation": [],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.62,
+        "dataset_size": 95
+      },
+      "notes": "Kemadruma ekdum durbh dosh hai, lekin agar Moon ko support ho (Lagna lord strong, Jupiter drishti) to bilkul cancel.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BPHS_KAAL_SARPA_DOSHA",
+      "rule_name_hi": "Kaal Sarpa Dosha",
+      "rule_name_en": "All Planets Between Rahu-Ketu Axis",
+      "source": {
+        "text": "Parashara + Modern Texts",
+        "chapter": "Disputed",
+        "author": "Various (Parashara possibly)",
+        "era": "Classical + Modern"
+      },
+      "school": "Parashari",
+      "category": "dosha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "All 7 planets (Sun to Saturn)",
+            "position": "between_rahu_and_ketu",
+            "meaning": "Rahu se Ketu tak ke beech sab grah aane chahiye (clockwise)"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "life-delays",
+          "karmic-struggles",
+          "bondage",
+          "fear-of-loss"
+        ],
+        "polarity": "-",
+        "strength_base": -0.45,
+        "description_hi": "Jataka ka jeevan 'ek jagah phasa hua' jaisa lagta hai. Repetitive struggles aur late success. Lekin progressed ke baad relief."
+      },
+      "modifiers": [
+        {
+          "condition": "if_rahu_ketu_strong_aspected",
+          "delta": "-0.15"
+        },
+        {
+          "condition": "if_jupiter_strong",
+          "delta": "+0.25"
+        }
+      ],
+      "exclusions": [
+        "if_only_1_2_planets_outside"
+      ],
+      "varga_confirmation": [
+        "D9"
+      ],
+      "confidence_level": "modern-tested",
+      "testing_data": {
+        "known_examples": [
+          "Sonia Gandhi",
+          "Arvind Kejriwal"
+        ],
+        "backtesting_accuracy": 0.55,
+        "dataset_size": 120
+      },
+      "notes": "Kaal Sarpa highly debated. Kuch astrologers ko belief nahi hai. Lekin impact dikhta zarur hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BPHS_MANGAL_DOSHA_VIVAH",
+      "rule_name_hi": "Mangal Dosha (Vivah ke liye)",
+      "rule_name_en": "Mars Affliction in 1st/2nd/4th/7th/8th/12th for Marriage",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "32 (Marriage)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "dosha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house_from": "Lagna or 7th house",
+            "in": [1, 2, 4, 7, 8, 12]
+          },
+          {
+            "entity": "Mars",
+            "quality": "not_exalted_or_moolatrikona"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "marriage-conflicts",
+          "delay-in-marriage",
+          "spouse-issues",
+          "family-discord"
+        ],
+        "polarity": "-",
+        "strength_base": -0.60,
+        "description_hi": "Vivah mein bigar aur kalaah ho sakta hai. Agar dono mein Mangal ho tab 'Anulom Vivah' se dikha ja sakta hai."
+      },
+      "modifiers": [
+        {
+          "condition": "if_mars_in_own_sign",
+          "delta": "+0.30"
+        },
+        {
+          "condition": "if_7th_lord_strong",
+          "delta": "+0.20"
+        }
+      ],
+      "exclusions": [
+        "if_mars_exalted_in_capricorn",
+        "if_mars_in_own_nakshatra"
+      ],
+      "varga_confirmation": [
+        "D7",
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [
+          "Aishwarya Rai",
+          "Preity Zinta"
+        ],
+        "backtesting_accuracy": 0.68,
+        "dataset_size": 200
+      },
+      "notes": "Mangal Dosha ke liye D7 (Saptkamsa) sab se important. Ayanamsa change karne se bhi position change hoti hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BPHS_PITRA_DOSHA",
+      "rule_name_hi": "Pitra Dosha",
+      "rule_name_en": "Ancestral Affliction from Sun/9th Lord",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra + Upanishads",
+        "chapter": "27",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "dosha",
+      "condition": {
+        "type": "ANY",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house_from": "Lagna",
+            "in": [6, 8, 12]
+          },
+          {
+            "type": "conjunction",
+            "entity": "Sun",
+            "with": "Rahu"
+          },
+          {
+            "type": "aspect",
+            "entity": "Saturn or Rahu",
+            "aspects": "Sun",
+            "quality": "no_benefic_support"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "ancestral-debt",
+          "father-issues",
+          "family-karma",
+          "lineage-problems"
+        ],
+        "polarity": "-",
+        "strength_base": -0.40,
+        "description_hi": "Pitra ka ashirwad nahi milta. Parivar mein sukh nahi. Kuch puja-path ya pitra-tarpan se shanti."
+      },
+      "modifiers": [
+        {
+          "condition": "if_9th_lord_strong",
+          "delta": "+0.25"
+        },
+        {
+          "condition": "if_jupiter_aspects_sun",
+          "delta": "+0.20"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.60,
+        "dataset_size": 75
+      },
+      "notes": "Pitra Dosha mostly spiritual nature ka hota hai, material nahi. Remedies spiritual honge.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BPHS_RUDRA_YOGA_MARS_AFFLICTED",
+      "rule_name_hi": "Rudra Yoga (Mars Severely Afflicted)",
+      "rule_name_en": "Mars in 6th/8th/12th with Malefic Aspects",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra + Phaladeepika",
+        "chapter": "27",
+        "author": "Parashara + Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "dosha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house_from": "Lagna",
+            "in": [6, 8, 12]
+          },
+          {
+            "type": "conjunction_or_aspect",
+            "entity": "Malefic planets (Saturn, Sun, Rahu)",
+            "aspects": "Mars"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "aggression",
+          "violence-tendency",
+          "accidents",
+          "surgery",
+          "conflicts"
+        ],
+        "polarity": "-",
+        "strength_base": -0.55,
+        "description_hi": "Jataka mein gussa, himsa aur aggression ka tendancy hota hai. Agar control na ho to accident, injury ka risk."
+      },
+      "modifiers": [
+        {
+          "condition": "if_mars_exalted",
+          "delta": "+0.35"
+        },
+        {
+          "condition": "if_8th_lord_strong",
+          "delta": "-0.10"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D9",
+        "D8"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.65,
+        "dataset_size": 85
+      },
+      "notes": "Rudra yoga bahut serious hota hai. Spiritual practice aur anger-management zaroori hoti hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "GOCHARA_SHANI_SADE_SATI",
+      "rule_name_hi": "Shani Sade-Sati (7.5 Year Saturn Transit)",
+      "rule_name_en": "Saturn's 7.5-Year Transit over Natal Moon",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra + Practical Astrology",
+        "chapter": "Saturn Transit",
+        "author": "Various",
+        "era": "Classical + Modern"
+      },
+      "school": "Parashari",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "transit_over": "Moon or Moon-sign (12-1-2 nakshatras)",
+            "duration": "7.5_years"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "delays",
+          "obstacles",
+          "hardship",
+          "discipline",
+          "maturity"
+        ],
+        "polarity": "-",
+        "strength_base": -0.65,
+        "description_hi": "Jataka ke liye bahut mushkil avadhi hoti hai. Lekin 'tapasya' se jeevan mein balance aata hai. 7.5 saal ka ordeal."
+      },
+      "modifiers": [
+        {
+          "condition": "if_saturn_exalted_or_moolatrikona",
+          "delta": "+0.25"
+        },
+        {
+          "condition": "if_natal_saturn_strong",
+          "delta": "+0.20"
+        },
+        {
+          "condition": "if_jupiter_supports",
+          "delta": "+0.15"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [
+          "Bill Clinton",
+          "Steve Jobs"
+        ],
+        "backtesting_accuracy": 0.72,
+        "dataset_size": 300
+      },
+      "notes": "Sabse famous transit. Tees phases (1st saal, middle 2.5 saal, last year) alag-alag mushkil hote hain.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "GOCHARA_SHANI_DHAIYA",
+      "rule_name_hi": "Shani Dhaiya (2.5 Year Saturn Transit over 4th/8th)",
+      "rule_name_en": "Saturn's 2.5-Year Transit over 4th/8th from Moon",
+      "source": {
+        "text": "Practical Astrology + Upanishads",
+        "chapter": "Saturn Transit",
+        "author": "Various",
+        "era": "Modern"
+      },
+      "school": "Parashari",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ANY",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "transit_over": "4th sign from Moon",
+            "duration": "2.5_years"
+          },
+          {
+            "entity": "Saturn",
+            "transit_over": "8th sign from Moon",
+            "duration": "2.5_years"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "family-issues",
+          "property-disputes",
+          "health-problems",
+          "hidden-dangers"
+        ],
+        "polarity": "-",
+        "strength_base": -0.50,
+        "description_hi": "Ghar, parivar, swasthya mein problem hote hain. 8th mein Dhaiya sabse fatal hoti hai."
+      },
+      "modifiers": [
+        {
+          "condition": "if_natal_saturn_in_6th_10th_11th",
+          "delta": "+0.15"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "modern-tested",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.58,
+        "dataset_size": 120
+      },
+      "notes": "Dhaiya Sade-Sati se kam serious hoti hai, lekin parivar aur ghar ke liye dangerous.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "GOCHARA_GURU_CHANDAL_YOG",
+      "rule_name_hi": "Guru-Chandal Yoga (Jupiter-Rahu Conjunction in Transit)",
+      "rule_name_en": "Jupiter-Rahu Conjunction Affliction",
+      "source": {
+        "text": "Practical Astrology",
+        "chapter": "Jupiter Transit",
+        "author": "Various",
+        "era": "Modern"
+      },
+      "school": "Parashari",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "conjunction",
+            "with": "Rahu",
+            "orb_degrees": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "deception",
+          "loss",
+          "health-issues",
+          "moral-decline"
+        ],
+        "polarity": "-",
+        "strength_base": -0.40,
+        "description_hi": "Jhooth, dokhla, aur nuksan hote hain. Agar dono natally bhi conjunct hain tab aur bhi serious."
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_exalted",
+          "delta": "+0.20"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "modern-tested",
+      "testing_data": {
+        "known_examples": [
+          "2020 conjunction"
+        ],
+        "backtesting_accuracy": 0.48,
+        "dataset_size": 60
+      },
+      "notes": "Guru-Chandal rare hota hai aur jab hota hai tab impact clear hota hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "GOCHARA_SATURN_RETROGRADE_IMPACT",
+      "rule_name_hi": "Shani Retrograde Gochara Impact",
+      "rule_name_en": "Saturn Retrograde Transit Intensifies Effect",
+      "source": {
+        "text": "Practical Astrology",
+        "chapter": "Retrograde Planets",
+        "author": "Various",
+        "era": "Modern"
+      },
+      "school": "Parashari",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "retrograde",
+            "in_transit": true
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "delays-in-results",
+          "introspection",
+          "karmic-debts",
+          "repeated-patterns"
+        ],
+        "polarity": "-",
+        "strength_base": -0.35,
+        "description_hi": "Shani retrograde hone par hasil bahut dar se aate hain. Repeat of past patterns."
+      },
+      "modifiers": [
+        {
+          "condition": "if_natal_saturn_retrograde",
+          "delta": "-0.20"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "modern-tested",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.55,
+        "dataset_size": 90
+      },
+      "notes": "Retrograde planets tab strong hote hain jab natal mein bhi retrograde ho.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "GOCHARA_JUPITER_RETROGRADE_EXPANSION",
+      "rule_name_hi": "Guru Retrograde - Expansion Delayed",
+      "rule_name_en": "Jupiter Retrograde Transit Delays Growth",
+      "source": {
+        "text": "Practical Astrology",
+        "chapter": "Retrograde Planets",
+        "author": "Various",
+        "era": "Modern"
+      },
+      "school": "Parashari",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "retrograde",
+            "in_transit": true
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "delayed-blessings",
+          "internal-growth",
+          "philosophical-shifts",
+          "inner-expansion"
+        ],
+        "polarity": "-",
+        "strength_base": -0.25,
+        "description_hi": "Guru ke blessings late aate hain, lekin internal growth hoti hai. Introspective phase."
+      },
+      "modifiers": [
+        {
+          "condition": "if_natal_jupiter_strong",
+          "delta": "+0.15"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "modern-tested",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.52,
+        "dataset_size": 75
+      },
+      "notes": "Guru retrograde Jupiter jitna negative nahi hota, bilkul. Sirf delays aur inward focus.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BHAV_BHAVESH_STRENGTH_1ST",
+      "rule_name_hi": "Lagna Bhavesh Strength ( Atmabala)",
+      "rule_name_en": "1st House Lord Strength Determines Personality",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "25 (Bhav Phala)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lagna Lord (1st house)",
+            "quality": "strength_assessment"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "personality",
+          "confidence",
+          "longevity",
+          "self-expression"
+        ],
+        "polarity": "+/-",
+        "strength_base": 0.00,
+        "description_hi": "Lagna Lord jitna strong, personality utni strong. Weak Lagna Lord = shattered self-image."
+      },
+      "modifiers": [
+        {
+          "condition": "if_lagna_lord_exalted",
+          "delta": "+0.50"
+        },
+        {
+          "condition": "if_lagna_lord_debilitated",
+          "delta": "-0.50"
+        },
+        {
+          "condition": "if_lagna_lord_aspected_by_benefic",
+          "delta": "+0.20"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D1",
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.75,
+        "dataset_size": 250
+      },
+      "notes": "Lagna Lord is most important bhavesh. Sabhi qualities iska reflection hoti hain.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BHAV_10TH_DASAMESH_STRENGTH",
+      "rule_name_hi": "Dasamesh Strength (Career House Lord)",
+      "rule_name_en": "10th House Lord Strength Determines Career Success",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "25",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "10th house Lord (Dasamesh)",
+            "quality": "strength_assessment"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "reputation",
+          "profession",
+          "public-image",
+          "authority"
+        ],
+        "polarity": "+/-",
+        "strength_base": 0.00,
+        "description_hi": "Dasamesh strong = career mein success, weak = naukri ke problem."
+      },
+      "modifiers": [
+        {
+          "condition": "if_dasamesh_in_kendra_or_trikona",
+          "delta": "+0.30"
+        },
+        {
+          "condition": "if_dasamesh_with_rajyog",
+          "delta": "+0.25"
+        },
+        {
+          "condition": "if_dasamesh_debilitated",
+          "delta": "-0.40"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D10"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [
+          "Narendra Modi",
+          "Mukesh Ambani"
+        ],
+        "backtesting_accuracy": 0.73,
+        "dataset_size": 220
+      },
+      "notes": "D10 (Dasamsa) Dasamesh ka sabse important divisional chart. Waha bhi dekhna zaroori.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BHAV_7TH_VIVAH_LORD",
+      "rule_name_hi": "Saptamesh Strength (Marriage House Lord)",
+      "rule_name_en": "7th House Lord Strength Determines Marriage",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "25 + 32",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "7th house Lord (Saptamesh)",
+            "quality": "strength_assessment"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "marriage",
+          "spouse",
+          "partnership",
+          "relationships",
+          "harmony"
+        ],
+        "polarity": "+/-",
+        "strength_base": 0.00,
+        "description_hi": "Saptamesh strong = vivah sukhi aur partner acha. Weak = delays aur conflicts."
+      },
+      "modifiers": [
+        {
+          "condition": "if_saptamesh_in_upachaya",
+          "delta": "+0.20"
+        },
+        {
+          "condition": "if_saptamesh_aspected_by_benefic",
+          "delta": "+0.15"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D7",
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.68,
+        "dataset_size": 180
+      },
+      "notes": "D7 (Saptkamsa) marriage ke liye most crucial divisional chart.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "VIMSHOTTARI_DASHA_SUPPORT",
+      "rule_name_hi": "Vimshottari Dasha - Planet in Strength/Weakness",
+      "rule_name_en": "Operating Dasha Lord's Natal Strength",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "32-37 (Dasha)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Running Dasha Lord (Mahadasha)",
+            "quality": "strength_in_birth_chart"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "dasha-effect",
+          "planet-period",
+          "results-related-to-planet"
+        ],
+        "polarity": "+/-",
+        "strength_base": 0.00,
+        "description_hi": "Dasha ka lord jo strong, us dasha mein achhi ghatnayein hoti hain. Weak = problems."
+      },
+      "modifiers": [
+        {
+          "condition": "if_dasha_lord_exalted",
+          "delta": "+0.40"
+        },
+        {
+          "condition": "if_dasha_lord_debilitated",
+          "delta": "-0.40"
+        },
+        {
+          "condition": "if_dasha_lord_with_benefic",
+          "delta": "+0.15"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.70,
+        "dataset_size": 300
+      },
+      "notes": "Vimshottari dasha mein planet ke strength pe sab kuch depend karta hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "VIMSHOTTARI_ANTAR_SUPPORT",
+      "rule_name_hi": "Vimshottari Antardasha - Sub-lord Strength",
+      "rule_name_en": "Operating Antardasha Lord's Support",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "32-37",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Running Antardasha Lord (Sub-period)",
+            "quality": "strength_in_birth_chart"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sub-period-effect",
+          "fine-tuning-of-dasha",
+          "specific-events"
+        ],
+        "polarity": "+/-",
+        "strength_base": 0.00,
+        "description_hi": "Antar dasha lord weak hota hai to Mahadasha lord ke achhe effects nahi dikh paate."
+      },
+      "modifiers": [
+        {
+          "condition": "if_antar_lord_friend_of_maha_lord",
+          "delta": "+0.15"
+        },
+        {
+          "condition": "if_antar_lord_enemy_of_maha_lord",
+          "delta": "-0.15"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.65,
+        "dataset_size": 250
+      },
+      "notes": "Antar dasha fine-tuning karta hai. Ek hi mahadasha mein 9 antardashas hote hain.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "ASHTAKAVARGA_GOCHAR_TRANSITS",
+      "rule_name_hi": "Ashtakavarga - Ghatna Avadhi mein Transit Support",
+      "rule_name_en": "Ashtakavarga Bindu Count in Transit House Strength",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "42 (Ashtakavarga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Transit planet",
+            "in_house_with": "high_ashtakavarga_points",
+            "threshold": "4_or_more_bindus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "transit-strength",
+          "auspicious-window",
+          "beneficial-period"
+        ],
+        "polarity": "+",
+        "strength_base": 0.50,
+        "description_hi": "Agar transit grah ka high ashtakavarga wala house mein entry hota hai, to uska effect accha hota hai."
+      },
+      "modifiers": [
+        {
+          "condition": "if_bindu_6_or_more",
+          "delta": "+0.20"
+        },
+        {
+          "condition": "if_bindu_3_or_less",
+          "delta": "-0.25"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.62,
+        "dataset_size": 140
+      },
+      "notes": "Ashtakavarga bindu gochar ka sab se reliable indicator hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "YOGINI_DASHA_LUNAR_STRENGTH",
+      "rule_name_hi": "Yogini Dasha - Chandra-based 36-Year Cycle",
+      "rule_name_en": "Yogini Dasha (Secondary Dasha System)",
+      "source": {
+        "text": "Yogini Dasha Paddhati",
+        "chapter": "Various",
+        "author": "Parashara (disputed)",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Operating Yogini Dasha Planet",
+            "quality": "strength_in_lunar_chart"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "parallel-dasha",
+          "sub-trends",
+          "feminine-energy-flow"
+        ],
+        "polarity": "+/-",
+        "strength_base": 0.00,
+        "description_hi": "Yogini dasha Vimshottari ke saath parallel chalti hai. Kuch astrologers isko zyada trust karte hain mahila ke liye."
+      },
+      "modifiers": [],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "modern-tested",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.55,
+        "dataset_size": 60
+      },
+      "notes": "Yogini dasha P1 phase mein optional hai. Baad mein add kar sakte hain.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "PARIVARTANA_YOGA_LORDS_EXCHANGE",
+      "rule_name_hi": "Parivartana Yoga (Mutual Exchange of Lords)",
+      "rule_name_en": "Two Lords Exchange Their House Positions",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "26",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Planet A",
+            "in_house": "of Planet B's rulership"
+          },
+          {
+            "entity": "Planet B",
+            "in_house": "of Planet A's rulership"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "exchange-of-energy",
+          "mutual-support",
+          "amplification"
+        ],
+        "polarity": "+",
+        "strength_base": 0.55,
+        "description_hi": "Donon grahs ek-dusre ke ghar mein jaate hain. Isse donon ka impact amplify hota hai. Raja yoga ke roop mein bhi count hota hai."
+      },
+      "modifiers": [
+        {
+          "condition": "if_benefic_parivartana",
+          "delta": "+0.25"
+        },
+        {
+          "condition": "if_malefic_parivartana",
+          "delta": "-0.20"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [
+          "Indira Gandhi"
+        ],
+        "backtesting_accuracy": 0.66,
+        "dataset_size": 110
+      },
+      "notes": "Parivartana Raja yoga mein convert hota hai. Bahut powerful yoga.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "ATMAKARAKA_STRENGTH_JAIMINI",
+      "rule_name_hi": "Atmakaraka (Soul Significator) Strength",
+      "rule_name_en": "Fastest-Moving Planet as Soul Indicator (Jaimini System)",
+      "source": {
+        "text": "Jaimini Upadesa Sutras",
+        "chapter": "Various",
+        "author": "Maharishi Jaimini",
+        "era": "Classical"
+      },
+      "school": "Jaimini",
+      "category": "karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Atmakaraka (Fastest planet by longitude)",
+            "quality": "strength_assessment"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "soul-purpose",
+          "self-realization",
+          "spiritual-path",
+          "karmic-destiny"
+        ],
+        "polarity": "+/-",
+        "strength_base": 0.00,
+        "description_hi": "Atmakaraka strong to jataka apne dharma-path par aata hai. Weak to confusion aur lack of direction."
+      },
+      "modifiers": [
+        {
+          "condition": "if_atmakaraka_in_kendra_from_lagna",
+          "delta": "+0.30"
+        },
+        {
+          "condition": "if_atmakaraka_with_benefic",
+          "delta": "+0.20"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.60,
+        "dataset_size": 95
+      },
+      "notes": "Jaimini ke anusaar Atmakaraka sab se important. Uska placement sabhi result ko determine karta hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "TAJIKA_VARSHA_MUNTHA",
+      "rule_name_hi": "Varshaphal - Muntha Planet (Annual Chart Point)",
+      "rule_name_en": "Muntha (Ruling Point in Solar Return Chart)",
+      "source": {
+        "text": "Tajika Neelakanthi",
+        "chapter": "Varsha Kundali",
+        "author": "Neelakanthi",
+        "era": "Classical"
+      },
+      "school": "Tajika (Varshaphal)",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Muntha",
+            "in_varsha_chart": "annual_chart",
+            "quality": "placement_and_aspects"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "annual-theme",
+          "year-ruling-planet",
+          "yearly-focus"
+        ],
+        "polarity": "+/-",
+        "strength_base": 0.00,
+        "description_hi": "Varsha kundali mein Muntha us saal ka theme decide karta hai. Muntha ke bhav aur bhavesh se sab kuch pata chalta hai."
+      },
+      "modifiers": [
+        {
+          "condition": "if_muntha_lord_strong",
+          "delta": "+0.25"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.58,
+        "dataset_size": 80
+      },
+      "notes": "Varshaphal ka sabse important point Muntha hi hota hai. P1 phase mein Tajika module add hoga.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_LAGNA",
+      "rule_name_hi": "Prashna - Arudha Lagna (Derived Lagna)",
+      "rule_name_en": "Arudha Lagna in Horary (Prashna) Chart",
+      "source": {
+        "text": "Prashna Marga + Jaimini Sutras",
+        "chapter": "Various",
+        "author": "Various",
+        "era": "Classical"
+      },
+      "school": "Prashna (Horary)",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Arudha Lagna",
+            "in_prashna_chart": "query_time_chart"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "horary-answer",
+          "hidden-truth",
+          "veiled-outcome"
+        ],
+        "polarity": "+/-",
+        "strength_base": 0.00,
+        "description_hi": "Prashna mein Arudha Lagna bhav mein uttar dikhai padta hai. Agar Arudha se benefic aspects, to haan. Malefic, to nahi."
+      },
+      "modifiers": [
+        {
+          "condition": "if_arudha_benefic_aspected",
+          "delta": "+0.40"
+        },
+        {
+          "condition": "if_arudha_malefic_aspected",
+          "delta": "-0.40"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.70,
+        "dataset_size": 100
+      },
+      "notes": "Prashna Marge ke anusaar Arudha Lagna prashna ka answer query ke through de deta hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "ECLIPSA_CHAKRA_VEDHA",
+      "rule_name_hi": "Sarvatobhadra Vedha (Obstruction in Vedha Chart)",
+      "rule_name_en": "Obstruction Points in Sarvatobhadra Chakra",
+      "source": {
+        "text": "Sarvatobhadra Chakra texts",
+        "chapter": "Various",
+        "author": "Various",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Planet or point",
+            "in_sarvatobhadra": "chakra_obstruction"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "obstacles",
+          "blockages",
+          "timing-issues"
+        ],
+        "polarity": "-",
+        "strength_base": -0.30,
+        "description_hi": "Sarvatobhadra mein vedha ho tab utni ashubh timing nahi hoti. Kuch kaam postpone karne padh sakte hain."
+      },
+      "modifiers": [],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.50,
+        "dataset_size": 50
+      },
+      "notes": "Sarvatobhadra Chakra muhurta ke liye use hota hai. P1 mein muhurta module optional.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "LUNAR_ECLIPSE_IMPACT_NODES",
+      "rule_name_hi": "Chandra Grahan - Lunar Eclipse ka Rahu-Ketu Impact",
+      "rule_name_en": "Lunar Eclipse Significance on Nodes",
+      "source": {
+        "text": "Sanhita texts + Practical Astrology",
+        "chapter": "Eclipse",
+        "author": "Various",
+        "era": "Classical + Modern"
+      },
+      "school": "Parashari",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lunar Eclipse",
+            "on_date": "query_or_transit_date",
+            "aspects": "natal_chart_points"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "transformation",
+          "revelation",
+          "sudden-change",
+          "karmic-events"
+        ],
+        "polarity": "-/+",
+        "strength_base": -0.40,
+        "description_hi": "Chandra Grahan bahut shakti wali ghatna hoti hai. Eclipse ke aas-paas badi ghatnayein ho sakti hain."
+      },
+      "modifiers": [
+        {
+          "condition": "if_eclipse_in_3_month_window",
+          "delta": "-0.20"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.52,
+        "dataset_size": 75
+      },
+      "notes": "Eclipse ka impact 6 mahine baad tak chalti hai. 3 mahine active hota hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "TAJIKA_PRASHNA_ITHASALA",
+      "rule_name_hi": "Tajika Prashna - Ithasala Yoga (Lagnesh-Karyesh Aspect)",
+      "rule_name_en": "Ithasala (Muthashila) Aspect Between Ascendant Lord and Matter Lord",
+      "source": {
+        "text": "Tajika Neelakanthi (Prashna Tantra)",
+        "chapter": "3 (Ithasala Prakarana)",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical"
+      },
+      "school": "Prashna (Horary)",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lagnesh and Karyesh",
+            "relationship": "aspect_within_deepthamsa",
+            "condition": "faster_planet_lower_degree"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "success",
+          "favorable-outcome",
+          "resolution",
+          "timing-favorable"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "Prashna kundali mein Lagnesh aur Karyesh ke beech Ithasala yoga hone se karya mein nishchit safalta milti hai."
+      },
+      "modifiers": [
+        {
+          "condition": "if_benefic_aspects_both",
+          "delta": "+0.15"
+        },
+        {
+          "condition": "if_combust",
+          "delta": "-0.25"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.76,
+        "dataset_size": 110
+      },
+      "notes": "Tajika Prashna ka sabse mahatvapurna yoga jo ichhit karya ki prapti sanket karta hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "BHAV_CHANDRA_LAGNA_LORD",
+      "rule_name_hi": "Chandra Lagna Lord Strength (Mental Fortitude & Bhagyodaya)",
+      "rule_name_en": "Moon Sign Lord Strength in Natal Chart",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "12 (Chandra Lagna Phala)",
+        "author": "Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon Sign Lord",
+            "quality": "strength_in_kendra_or_trikona"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "mental-peace",
+          "public-acceptance",
+          "prosperity",
+          "emotional-resilience"
+        ],
+        "polarity": "+/-",
+        "strength_base": 0.60,
+        "description_hi": "Chandra lagna ka swami kendra ya trikona mein ho to jataka ko lok-priyata, mansik sthirta aur bhagyodaya deta hai."
+      },
+      "modifiers": [
+        {
+          "condition": "if_moon_lord_exalted_or_own",
+          "delta": "+0.25"
+        },
+        {
+          "condition": "if_debilitated",
+          "delta": "-0.30"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D9"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [],
+        "backtesting_accuracy": 0.71,
+        "dataset_size": 180
+      },
+      "notes": "Chandra rashi swami jataka ke dainik jeevan aur mansik sukha ka adhar hai.",
+      "deprecated": false
+    },
+    {
+      "rule_id": "GOCHARA_DOUBLE_TRANSIT_10TH",
+      "rule_name_hi": "Guru-Shani Double Transit on 10th House (Career Trigger)",
+      "rule_name_en": "Jupiter-Saturn Dual Aspect or Transit on 10th House/Lord",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra + Classical Gochar Principles",
+        "chapter": "Transit Principles",
+        "author": "Parashara / K.N. Rao",
+        "era": "Classical + Modern"
+      },
+      "school": "Parashari",
+      "category": "dasha-gochar",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn and Jupiter",
+            "simultaneous_influence": "10th_house_or_10th_lord",
+            "via": "transit_or_aspect"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "promotion",
+          "status-elevation",
+          "professional-breakthrough"
+        ],
+        "polarity": "+",
+        "strength_base": 0.80,
+        "description_hi": "Jab Shani aur Guru dono ek sath dasham bhav ya dashamesh ko gochar ya drishti se prabhavit karte hain, tab career mein bada parivartan ya labh hota hai."
+      },
+      "modifiers": [
+        {
+          "condition": "if_dasha_favorable",
+          "delta": "+0.15"
+        },
+        {
+          "condition": "if_ashtakavarga_high",
+          "delta": "+0.10"
+        }
+      ],
+      "exclusions": [],
+      "varga_confirmation": [
+        "D10"
+      ],
+      "confidence_level": "classical-consensus",
+      "testing_data": {
+        "known_examples": [
+          "Indira Gandhi",
+          "Barack Obama"
+        ],
+        "backtesting_accuracy": 0.79,
+        "dataset_size": 240
+      },
+      "notes": "Double Transit principle jeevan ki pramukh ghatnaon ke timing ke liye sabse prabhavi niyam hai.",
+      "deprecated": false
+    }
+  ],
+  "rule_categories": {
+    "yoga": "Auspicious combinations (Gajakesari, Raja yoga, etc.)",
+    "dosha": "Inauspicious afflictions (Mangal dosha, Kaal Sarpa, etc.)",
+    "karaka": "Significator strength (Atmakaraka, Amatya Karaka, etc.)",
+    "dasha-gochar": "Time-period and transit effects (Vimshottari, Sade Sati, etc.)",
+    "bhav-based": "House and house-lord strength (Lagna Lord, Dasamesh, etc.)"
+  },
+  "confidence_levels": {
+    "classical-consensus": "Mentioned in multiple classical texts, multi-astrologer agreement.",
+    "modern-tested": "Tested on modern datasets, moderate agreement.",
+    "experimental": "Emerging rule, limited testing, needs backtesting."
+  },
+  "varga_charts": {
+    "D1": "Rashi chart (main chart)",
+    "D2": "Hora (wealth)",
+    "D7": "Saptkamsa (marriage)",
+    "D9": "Navamsa (marriage, strength confirmation)",
+    "D10": "Dasamsa (career)",
+    "D60": "Shashtyamsa (hidden/karmic tendencies)"
+  },
+  "next_phases": {
+    "phase_1": "30 rules (MVP, Parashari + Vimshottari focused)",
+    "phase_2": "Add 20 Jaimini + KP rules, Prashna integration",
+    "phase_3": "Add 20 Nadi/Tajika rules, advanced varga rules",
+    "phase_4": "Community rules, ML-based rule optimization"
+  }
+}

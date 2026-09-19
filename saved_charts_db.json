@@ -1,0 +1,284 @@
+{
+  "folders": [
+    {
+      "id": 100,
+      "name": "🌟 10 प्रामाणिक डेमो कुण्डलियाँ",
+      "children": [],
+      "charts": [
+        {
+          "id": 1001,
+          "name": "Swami Vivekananda",
+          "dateModified": "2026-09-19",
+          "birth_data": {
+            "name": "Swami Vivekananda",
+            "birth_date": "1863-01-12",
+            "birth_time": "06:33:00",
+            "latitude": 22.5726,
+            "longitude": 88.3639,
+            "timezone_offset": 5.89,
+            "city": "Kolkata, West Bengal",
+            "confidence": "Exact"
+          }
+        },
+        {
+          "id": 1002,
+          "name": "Mahatma Gandhi",
+          "dateModified": "2026-09-19",
+          "birth_data": {
+            "name": "Mahatma Gandhi",
+            "birth_date": "1869-10-02",
+            "birth_time": "07:12:00",
+            "latitude": 21.6417,
+            "longitude": 69.6293,
+            "timezone_offset": 5.5,
+            "city": "Porbandar, Gujarat",
+            "confidence": "Exact"
+          }
+        },
+        {
+          "id": 1003,
+          "name": "Albert Einstein",
+          "dateModified": "2026-09-19",
+          "birth_data": {
+            "name": "Albert Einstein",
+            "birth_date": "1879-03-14",
+            "birth_time": "11:30:00",
+            "latitude": 48.4011,
+            "longitude": 9.9876,
+            "timezone_offset": 1.0,
+            "city": "Ulm, Germany",
+            "confidence": "Exact"
+          }
+        },
+        {
+          "id": 1004,
+          "name": "Dr. APJ Abdul Kalam",
+          "dateModified": "2026-09-19",
+          "birth_data": {
+            "name": "Dr. APJ Abdul Kalam",
+            "birth_date": "1931-10-15",
+            "birth_time": "01:15:00",
+            "latitude": 9.2876,
+            "longitude": 79.3129,
+            "timezone_offset": 5.5,
+            "city": "Rameswaram, Tamil Nadu",
+            "confidence": "Exact"
+          }
+        },
+        {
+          "id": 1005,
+          "name": "Steve Jobs",
+          "dateModified": "2026-09-19",
+          "birth_data": {
+            "name": "Steve Jobs",
+            "birth_date": "1955-02-24",
+            "birth_time": "19:15:00",
+            "latitude": 37.7749,
+            "longitude": -122.4194,
+            "timezone_offset": -8.0,
+            "city": "San Francisco, USA",
+            "confidence": "Exact"
+          }
+        },
+        {
+          "id": 1006,
+          "name": "Rabindranath Tagore",
+          "dateModified": "2026-09-19",
+          "birth_data": {
+            "name": "Rabindranath Tagore",
+            "birth_date": "1861-05-07",
+            "birth_time": "04:05:00",
+            "latitude": 22.5726,
+            "longitude": 88.3639,
+            "timezone_offset": 5.89,
+            "city": "Kolkata, West Bengal",
+            "confidence": "Exact"
+          }
+        },
+        {
+          "id": 1007,
+          "name": "Narendra Modi",
+          "dateModified": "2026-09-19",
+          "birth_data": {
+            "name": "Narendra Modi",
+            "birth_date": "1950-09-17",
+            "birth_time": "11:00:00",
+            "latitude": 23.7844,
+            "longitude": 72.6394,
+            "timezone_offset": 5.5,
+            "city": "Vadnagar, Gujarat",
+            "confidence": "Exact"
+          }
+        },
+        {
+          "id": 1008,
+          "name": "Indira Gandhi",
+          "dateModified": "2026-09-19",
+          "birth_data": {
+            "name": "Indira Gandhi",
+            "birth_date": "1917-11-19",
+            "birth_time": "23:11:00",
+            "latitude": 25.4358,
+            "longitude": 81.8463,
+            "timezone_offset": 5.5,
+            "city": "Allahabad, Uttar Pradesh",
+            "confidence": "Exact"
+          }
+        },
+        {
+          "id": 1009,
+          "name": "Amitabh Bachchan",
+          "dateModified": "2026-09-19",
+          "birth_data": {
+            "name": "Amitabh Bachchan",
+            "birth_date": "1942-10-11",
+            "birth_time": "16:00:00",
+            "latitude": 25.4358,
+            "longitude": 81.8463,
+            "timezone_offset": 5.5,
+            "city": "Prayagraj, Uttar Pradesh",
+            "confidence": "Exact"
+          }
+        },
+        {
+          "id": 1010,
+          "name": "Sachin Tendulkar",
+          "dateModified": "2026-09-19",
+          "birth_data": {
+            "name": "Sachin Tendulkar",
+            "birth_date": "1973-04-24",
+            "birth_time": "16:28:00",
+            "latitude": 18.922,
+            "longitude": 72.8347,
+            "timezone_offset": 5.5,
+            "city": "Mumbai, Maharashtra",
+            "confidence": "Exact"
+          }
+        }
+      ]
+    },
+    {
+      "id": 0,
+      "name": "General Charts",
+      "children": [],
+      "charts": [
+        {
+          "id": 1789832414,
+          "name": "Shubham Tiwari",
+          "dateModified": "2026-09-19 21:10:14",
+          "birth_data": {
+            "name": "Shubham Tiwari",
+            "birth_date": "1994-05-16",
+            "birth_time": "17:00:00",
+            "latitude": 28.0327348,
+            "longitude": 81.3787211,
+            "timezone_offset": 5.5,
+            "city": "Nanpara, Uttar Pradesh",
+            "confidence": "Exact"
+          }
+        },
+        {
+          "id": 1789832486,
+          "name": "Shubham Tiwari",
+          "dateModified": "2026-09-19 21:11:26",
+          "birth_data": {
+            "name": "Shubham Tiwari",
+            "birth_date": "1994-05-16",
+            "birth_time": "17:00:00",
+            "latitude": 28.0327348,
+            "longitude": 81.3787211,
+            "timezone_offset": 5.5,
+            "city": "Nanpara, Uttar Pradesh",
+            "confidence": "Exact"
+          }
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Family & Relatives",
+      "children": [],
+      "charts": []
+    },
+    {
+      "id": 2,
+      "name": "VIP Consultations",
+      "children": [],
+      "charts": []
+    },
+    {
+      "id": 9999,
+      "name": "Grahalakshanam Cloud",
+      "children": [],
+      "charts": [
+        {
+          "id": 916,
+          "name": "Shubham Tiwari",
+          "dateModified": "2026-09-04",
+          "source": "Grahalakshanam",
+          "birth_data": {}
+        },
+        {
+          "id": 917,
+          "name": "Seema Tiwari",
+          "dateModified": "2026-09-04",
+          "source": "Grahalakshanam",
+          "birth_data": {}
+        },
+        {
+          "id": 918,
+          "name": "Renu Tiwari",
+          "dateModified": "2026-09-04",
+          "source": "Grahalakshanam",
+          "birth_data": {}
+        },
+        {
+          "id": 919,
+          "name": "Aradhya Tiwari",
+          "dateModified": "2026-09-06",
+          "source": "Grahalakshanam",
+          "birth_data": {}
+        },
+        {
+          "id": 920,
+          "name": "aryadhya tiwari",
+          "dateModified": "2026-09-06",
+          "source": "Grahalakshanam",
+          "birth_data": {}
+        }
+      ]
+    }
+  ],
+  "recent_charts": [
+    {
+      "id": 1789832486,
+      "name": "Shubham Tiwari",
+      "dateModified": "2026-09-19 21:11:26",
+      "birth_data": {
+        "name": "Shubham Tiwari",
+        "birth_date": "1994-05-16",
+        "birth_time": "17:00:00",
+        "latitude": 28.0327348,
+        "longitude": 81.3787211,
+        "timezone_offset": 5.5,
+        "city": "Nanpara, Uttar Pradesh",
+        "confidence": "Exact"
+      }
+    },
+    {
+      "id": 1789832414,
+      "name": "Shubham Tiwari",
+      "dateModified": "2026-09-19 21:10:14",
+      "birth_data": {
+        "name": "Shubham Tiwari",
+        "birth_date": "1994-05-16",
+        "birth_time": "17:00:00",
+        "latitude": 28.0327348,
+        "longitude": 81.3787211,
+        "timezone_offset": 5.5,
+        "city": "Nanpara, Uttar Pradesh",
+        "confidence": "Exact"
+      }
+    }
+  ]
+}
