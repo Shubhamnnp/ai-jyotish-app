@@ -593,35 +593,33 @@ unified_css = """
         font-weight: 600 !important;
     }
 
-    /* Uniform Equal-Sized Modern Sidebar Module Label Cards */
+    /* Beautiful Modern Sidebar Module Label Cards - 100% Uniform Size & Alignment */
     section[data-testid="stSidebar"] div[data-testid="stRadio"],
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] > div,
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] {
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"],
+    section[data-testid="stSidebar"] .stRadio,
+    section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] {
         width: 100% !important;
         display: flex !important;
         flex-direction: column !important;
+        align-items: stretch !important;
         gap: 6px !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
     section[data-testid="stSidebar"] .stRadio label,
     div[data-testid="stRadio"] label {
-        width: 100% !important;
-        min-width: 100% !important;
-        max-width: 100% !important;
-        height: 52px !important;
-        min-height: 52px !important;
-        max-height: 52px !important;
-        box-sizing: border-box !important;
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 10px !important;
-        padding: 6px 12px !important;
-        margin-bottom: 2px !important;
-        margin-top: 0 !important;
+        padding: 10px 14px !important;
+        margin: 0 0 4px 0 !important;
+        width: 100% !important;
+        min-height: 52px !important;
+        box-sizing: border-box !important;
         display: flex !important;
+        flex-direction: row !important;
         align-items: center !important;
         justify-content: flex-start !important;
-        gap: 8px !important;
+        gap: 10px !important;
         cursor: pointer !important;
         box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -629,8 +627,8 @@ unified_css = """
     /* Align and position radio circle nicely inside the card */
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label > div:first-child,
     section[data-testid="stSidebar"] .stRadio label > div:first-child {
-        margin-left: 0 !important;
-        margin-right: 6px !important;
+        margin: 0 !important;
+        padding: 0 !important;
         flex-shrink: 0 !important;
         display: flex !important;
         align-items: center !important;
@@ -639,7 +637,6 @@ unified_css = """
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label > div:last-child,
     section[data-testid="stSidebar"] .stRadio label > div:last-child {
         flex: 1 1 auto !important;
-        overflow: hidden !important;
         display: flex !important;
         align-items: center !important;
     }
@@ -665,15 +662,9 @@ unified_css = """
     div[data-testid="stRadio"] label p {
         font-weight: 700 !important;
         color: #0F172A !important;
-        font-size: 13px !important;
+        font-size: 13.5px !important;
         margin: 0 !important;
-        line-height: 1.25 !important;
-        white-space: normal !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        display: -webkit-box !important;
-        -webkit-line-clamp: 2 !important;
-        -webkit-box-orient: vertical !important;
+        line-height: 1.35 !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) p,
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) span,
@@ -1123,9 +1114,8 @@ MODULE_OPTIONS = [
     "🔍 वैदिक ऋषि सत्यापन (Validation)"
 ]
 
-st.sidebar.markdown("### 📋 मुख्य मॉड्यूल (Select Module)")
 selected_module = st.sidebar.radio(
-    "मॉड्यूल चयन",
+    "module_selection",
     MODULE_OPTIONS,
     index=0,
     label_visibility="collapsed"
