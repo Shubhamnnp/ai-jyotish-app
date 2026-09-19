@@ -263,24 +263,27 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
 
     def datetime_to_jd(self, dt: datetime) -> float:
         if self._has_swisseph and self._swe:
-            # Swiss ephemeris julday
-            return self._swe.julday(dt.year, dt.month, dt.day, dt.hour + dt.minute / 60.0 + dt.second / 3600.0)
+            try:
+                return float(self._swe.julday(dt.year, dt.month, dt.day, dt.hour + dt.minute / 60.0 + dt.second / 3600.0))
+            except Exception:
+                return self._fallback.datetime_to_jd(dt)
         return self._fallback.datetime_to_jd(dt)
 
     def calculate_ayanamsa(self, jd: float, ayanamsa_name: str = "Lahiri") -> float:
         if self._has_swisseph and self._swe:
             swe = self._swe
+            # Official Swiss Ephemeris sidereal mode integer constants
             sid_modes = {
-                "lahiri": getattr(swe, "SIDM_LAHIRI", 1),
-                "raman": getattr(swe, "SIDM_RAMAN", 3),
-                "kp": getattr(swe, "SIDM_KRISHNAMURTI", 5),
-                "krishnamurti": getattr(swe, "SIDM_KRISHNAMURTI", 5),
-                "true_chitra": getattr(swe, "SIDM_TRUE_CITRA", getattr(swe, "SIDM_TRUE_CHITRA", 27)),
-                "true_citra": getattr(swe, "SIDM_TRUE_CITRA", getattr(swe, "SIDM_TRUE_CHITRA", 27)),
-                "yukteshwar": getattr(swe, "SIDM_YUKTESHWAR", 7),
-                "bhasin": getattr(swe, "SIDM_JN_BHASIN", 8),
+                "lahiri": 1,
+                "raman": 3,
+                "kp": 5,
+                "krishnamurti": 5,
+                "true_chitra": 27,
+                "true_citra": 27,
+                "yukteshwar": 7,
+                "bhasin": 8,
             }
-            mode = sid_modes.get(ayanamsa_name.lower().strip(), getattr(swe, "SIDM_LAHIRI", 1))
+            mode = sid_modes.get(ayanamsa_name.lower().strip(), 1)
             try:
                 swe.set_sid_mode(mode)
                 return float(swe.get_ayanamsa_ut(jd))
@@ -296,51 +299,59 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
         if not self._has_swisseph or not self._swe:
             return self._fallback.get_planet_positions(dt_utc, ayanamsa_name)
 
-        swe = self._swe
-        jd = self.datetime_to_jd(dt_utc)
-        ayanamsa_val = self.calculate_ayanamsa(jd, ayanamsa_name)
+        try:
+            swe = self._swe
+            jd = self.datetime_to_jd(dt_utc)
+            ayanamsa_val = self.calculate_ayanamsa(jd, ayanamsa_name)
 
-        planet_map = {
-            "Sun": swe.SUN,
-            "Moon": swe.MOON,
-            "Mars": swe.MARS,
-            "Mercury": swe.MERCURY,
-            "Jupiter": swe.JUPITER,
-            "Venus": swe.VENUS,
-            "Saturn": swe.SATURN,
-            "Rahu": swe.MEAN_NODE,
-        }
-
-        flags = swe.FLG_SWIEPH | swe.FLG_SPEED | swe.FLG_SIDEREAL
-        results: Dict[str, Dict[str, float]] = {}
-
-        for name, p_id in planet_map.items():
-            res, ret_flag = swe.calc_ut(jd, p_id, flags)
-            lon = res[0] % 360.0
-            lat = res[1]
-            speed = res[3]
-            is_retro = speed < 0.0
-
-            results[name] = {
-                "longitude": lon,
-                "latitude": lat,
-                "speed": speed,
-                "is_retrograde": is_retro,
-                "tropical_lon": (lon + ayanamsa_val) % 360.0,
+            # Swiss Ephemeris body IDs (Sun=0, Moon=1, Mercury=2, Venus=3, Mars=4, Jupiter=5, Saturn=6, Mean Node=10)
+            planet_map = {
+                "Sun": getattr(swe, "SUN", 0),
+                "Moon": getattr(swe, "MOON", 1),
+                "Mars": getattr(swe, "MARS", 4),
+                "Mercury": getattr(swe, "MERCURY", 2),
+                "Jupiter": getattr(swe, "JUPITER", 5),
+                "Venus": getattr(swe, "VENUS", 3),
+                "Saturn": getattr(swe, "SATURN", 6),
+                "Rahu": getattr(swe, "MEAN_NODE", 10),
             }
 
-        # Ketu is exactly 180 degrees from Rahu
-        rahu_lon = results["Rahu"]["longitude"]
-        ketu_lon = (rahu_lon + 180.0) % 360.0
-        results["Ketu"] = {
-            "longitude": ketu_lon,
-            "latitude": -results["Rahu"]["latitude"],
-            "speed": results["Rahu"]["speed"],
-            "is_retrograde": True,
-            "tropical_lon": (results["Rahu"]["tropical_lon"] + 180.0) % 360.0,
-        }
+            flg_swieph = getattr(swe, "FLG_SWIEPH", 2)
+            flg_speed = getattr(swe, "FLG_SPEED", 256)
+            flg_sidereal = getattr(swe, "FLG_SIDEREAL", 65536)
+            flags = flg_swieph | flg_speed | flg_sidereal
 
-        return results, ayanamsa_val
+            results: Dict[str, Dict[str, float]] = {}
+
+            for name, p_id in planet_map.items():
+                res, ret_flag = swe.calc_ut(jd, p_id, flags)
+                lon = float(res[0]) % 360.0
+                lat = float(res[1])
+                speed = float(res[3])
+                is_retro = speed < 0.0
+
+                results[name] = {
+                    "longitude": lon,
+                    "latitude": lat,
+                    "speed": speed,
+                    "is_retrograde": is_retro,
+                    "tropical_lon": (lon + ayanamsa_val) % 360.0,
+                }
+
+            # Ketu is exactly 180 degrees from Rahu
+            rahu_lon = results["Rahu"]["longitude"]
+            ketu_lon = (rahu_lon + 180.0) % 360.0
+            results["Ketu"] = {
+                "longitude": ketu_lon,
+                "latitude": -results["Rahu"]["latitude"],
+                "speed": results["Rahu"]["speed"],
+                "is_retrograde": True,
+                "tropical_lon": (results["Rahu"]["tropical_lon"] + 180.0) % 360.0,
+            }
+
+            return results, ayanamsa_val
+        except Exception:
+            return self._fallback.get_planet_positions(dt_utc, ayanamsa_name)
 
     def calculate_ascendant(
         self,
@@ -352,10 +363,14 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
         if not self._has_swisseph or not self._swe:
             return self._fallback.calculate_ascendant(dt_utc, latitude, longitude, ayanamsa_val)
 
-        swe = self._swe
-        jd = self.datetime_to_jd(dt_utc)
-        cusps, ascmc = swe.houses_ex(jd, latitude, longitude, b'W', swe.FLG_SIDEREAL)
-        return float(ascmc[0]) % 360.0
+        try:
+            swe = self._swe
+            jd = self.datetime_to_jd(dt_utc)
+            flg_sidereal = getattr(swe, "FLG_SIDEREAL", 65536)
+            cusps, ascmc = swe.houses_ex(jd, latitude, longitude, b'W', flg_sidereal)
+            return float(ascmc[0]) % 360.0
+        except Exception:
+            return self._fallback.calculate_ascendant(dt_utc, latitude, longitude, ayanamsa_val)
 
 
 def get_ephemeris_provider(preference: str = "auto") -> BaseEphemerisProvider:
