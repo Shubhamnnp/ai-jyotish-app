@@ -271,15 +271,21 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
         if self._has_swisseph and self._swe:
             swe = self._swe
             sid_modes = {
-                "lahiri": swe.SIDM_LAHIRI,
-                "raman": swe.SIDM_RAMAN,
-                "kp": swe.SIDM_KRISHNAMURTI,
-                "krishnamurti": swe.SIDM_KRISHNAMURTI,
-                "true_chitra": swe.SIDM_TRUE_CHITRA,
+                "lahiri": getattr(swe, "SIDM_LAHIRI", 1),
+                "raman": getattr(swe, "SIDM_RAMAN", 3),
+                "kp": getattr(swe, "SIDM_KRISHNAMURTI", 5),
+                "krishnamurti": getattr(swe, "SIDM_KRISHNAMURTI", 5),
+                "true_chitra": getattr(swe, "SIDM_TRUE_CITRA", getattr(swe, "SIDM_TRUE_CHITRA", 27)),
+                "true_citra": getattr(swe, "SIDM_TRUE_CITRA", getattr(swe, "SIDM_TRUE_CHITRA", 27)),
+                "yukteshwar": getattr(swe, "SIDM_YUKTESHWAR", 7),
+                "bhasin": getattr(swe, "SIDM_JN_BHASIN", 8),
             }
-            mode = sid_modes.get(ayanamsa_name.lower().strip(), swe.SIDM_LAHIRI)
-            swe.set_sid_mode(mode)
-            return float(swe.get_ayanamsa_ut(jd))
+            mode = sid_modes.get(ayanamsa_name.lower().strip(), getattr(swe, "SIDM_LAHIRI", 1))
+            try:
+                swe.set_sid_mode(mode)
+                return float(swe.get_ayanamsa_ut(jd))
+            except Exception:
+                return self._fallback.calculate_ayanamsa(jd, ayanamsa_name)
         return self._fallback.calculate_ayanamsa(jd, ayanamsa_name)
 
     def get_planet_positions(
