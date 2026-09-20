@@ -148,28 +148,13 @@ if is_night_mode:
     div[data-baseweb="select"] * {
         color: #FFFFFF !important;
     }
-    header.top-nav-bar, .top-nav-bar-container {
+    header.top-nav-bar {
         background: #0F172A !important;
         border-color: #1E293B !important;
         border-bottom: 3.5px solid #3B82F6 !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
     }
-    div[data-testid="stVerticalBlock"]:has(.top-nav-bar-container) {
-        background: #0A0E1A !important;
-    }
     .top-nav-bar * {
-        color: #F8FAFC !important;
-    }
-    .top-nav-bar-container {
-        background: #0F172A !important;
-        border: 1.5px solid #1E293B !important;
-        border-bottom: 3.5px solid #3B82F6 !important;
-        border-radius: 12px !important;
-        padding: 8px 16px !important;
-        margin-bottom: 12px !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
-    }
-    .top-nav-bar-container * {
         color: #F8FAFC !important;
     }
     .app-brand-title {
@@ -395,36 +380,16 @@ unified_css = f"""
         overflow-x: hidden !important;
         overflow-y: auto !important;
     }}
-    header[data-testid="stHeader"] {{
-        display: none !important;
-        height: 0px !important;
-        visibility: hidden !important;
-    }}
     .block-container {{
         padding-top: 0px !important;
         padding-bottom: 2rem !important;
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
         overflow: visible !important;
-    }}
-    header.top-nav-bar {{
-        position: -webkit-sticky !important;
-        position: sticky !important;
-        top: 0px !important;
-        z-index: 999999 !important;
-        width: calc(100% + 3rem) !important;
-        margin-left: -1.5rem !important;
-        margin-right: -1.5rem !important;
-        margin-top: 0px !important;
-        margin-bottom: 12px !important;
-        padding: 10px 24px !important;
-        backdrop-filter: blur(10px) !important;
     }}
     div:has(> header.top-nav-bar),
     div[data-testid="stMarkdownContainer"]:has(header.top-nav-bar),
-    div[data-testid="element-container"]:has(header.top-nav-bar),
-    div[data-testid="stElementContainer"]:has(header.top-nav-bar) {{
-        position: -webkit-sticky !important;
+    div[data-testid="element-container"]:has(header.top-nav-bar) {{
         position: sticky !important;
         top: 0px !important;
         z-index: 999999 !important;
@@ -526,71 +491,7 @@ unified_css = f"""
         border-color: #94A3B8 !important;
     }}
 
-            /* Unified Frozen Top Header Bar (Full width edge-to-edge with royal blue boundary) */
-    .st-key-frozen_top_header,
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.st-key-frozen_top_header),
-    div[data-testid="stVerticalBlock"]:has(.st-key-frozen_top_header),
-    div[data-testid="element-container"]:has(.st-key-frozen_top_header),
-    div[data-testid="stElementContainer"]:has(.st-key-frozen_top_header) {{
-        position: -webkit-sticky !important;
-        position: sticky !important;
-        top: 0px !important;
-        z-index: 999999 !important;
-        background: #FFFFFF !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-bottom: 3.5px solid #2563EB !important;
-        border-radius: 12px !important;
-        padding: 8px 14px !important;
-        margin-top: 0px !important;
-        margin-bottom: 12px !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
-        backdrop-filter: blur(8px) !important;
-    }}
-
-    body.night-mode .st-key-frozen_top_header,
-    body.night-mode div[data-testid="stVerticalBlockBorderWrapper"]:has(.st-key-frozen_top_header),
-    body.night-mode div[data-testid="stVerticalBlock"]:has(.st-key-frozen_top_header),
-    body.night-mode div[data-testid="element-container"]:has(.st-key-frozen_top_header),
-    body.night-mode div[data-testid="stElementContainer"]:has(.st-key-frozen_top_header) {{
-        background: #0F172A !important;
-        border-color: #334155 !important;
-        border-bottom: 3.5px solid #3B82F6 !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
-    }}
-
-    .st-key-frozen_top_header button,
-    .st-key-frozen_top_header div[data-testid="stPopover"] button {{
-        min-height: 40px !important;
-        height: 40px !important;
-        font-weight: 800 !important;
-        font-size: 13px !important;
-        border-radius: 8px !important;
-        white-space: nowrap !important;
-        margin: 0px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }}
-
-    .top-nav-bar-container {{
-        position: -webkit-sticky !important;
-        position: sticky !important;
-        top: 0px !important;
-        z-index: 999999 !important;
-        background: #FFFFFF !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-bottom: 3.5px solid #2563EB !important;
-        border-radius: 12px !important;
-        padding: 8px 16px !important;
-        margin-bottom: 12px !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-    }}
-    div[data-testid="stVerticalBlock"]:has(.top-nav-bar-container) {{
-        position: -webkit-sticky !important;
-        position: sticky !important;
-        top: 0px !important;
-        z-index: 999999 !important;
-    }}
+    /* Unified Frozen Top Header Bar (Full width edge-to-edge with royal blue boundary) */
     .top-nav-bar {{
         position: sticky !important;
         top: 0px !important;
@@ -671,16 +572,16 @@ unified_css = f"""
     .header-sub-pills-row {{
         display: flex !important;
         align-items: center !important;
-        gap: 8px !important;
+        gap: 6px !important;
         flex-wrap: wrap !important;
-        justify-content: space-between !important;
+        justify-content: flex-end !important;
     }}
     .header-sub-pill {{
         background: #F8FAFC !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 14px !important;
-        padding: 4px 12px !important;
-        font-size: 12px !important;
+        padding: 3px 10px !important;
+        font-size: 11.5px !important;
         color: #0F172A !important;
         font-weight: 700 !important;
         display: inline-flex !important;
@@ -1856,183 +1757,6 @@ LANG_OPTIONS = [
     "বাংলা (Bengali)"
 ]
 
-# -------------------------------------------------------------
-# 21 Vedic Astrology Modules Definitions (Available globally)
-# -------------------------------------------------------------
-if "English" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 Birth Chart (Natal & Vargas)",
-        "🎯 Event Analysis (Ghatna Query)",
-        "🛡️ Afflictions & Remedies",
-        "📊 Dasvarga Table",
-        "🏛️ Vastu-Jyotish",
-        "❓ Prashna Kundali (Horary)",
-        "☁️ Server Sync",
-        "⚖️ Shadbala & Bhavabala",
-        "🔱 Jaimini & Upagrahas",
-        "⏱️ Dasha Systems",
-        "🪐 Transit & Ashtakvarga",
-        "📐 KP Astrology System",
-        "⏳ Auspicious Muhurta",
-        "☸️ Sudarshan Chakra",
-        "📅 Annual Varshaphal",
-        "⏳ Birth Time Rectification (BTR)",
-        "💍 Kundali Matching (Milan)",
-        "💬 Jyotish AI Assistant",
-        "📄 Comprehensive Report",
-        "📚 100 Classical Rules",
-        "🔍 Vedic Sage Validation"
-    ]
-elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 ஜாதகக் கட்டம் (Natal & Vargas)",
-        "🎯 நிகழ்வு பகுப்பாய்வு (Ghatna Query)",
-        "🛡️ தோஷ பரிகாரம் & சுயம் (Remedies)",
-        "📊 தசவர்க்க அட்டவணை (Dasvarga Table)",
-        "🏛️ வாஸ்து ஜோதிடம் (Vastu-Jyotish)",
-        "❓ பிரசன்ன ஜோதிடம் (Horary / Prashna)",
-        "☁️ சர்வர் ஒத்திசைவு (Server Sync)",
-        "⚖️ ஷட்பலம் & பாவபலம் (Shadbala)",
-        "🔱 ஜெயமினி ஜோதிடம் (Jaimini)",
-        "⏱️ தசா அமைப்புகள் (Dasha)",
-        "🪐 கோசாரம் & அஷ்டவர்க்கம் (Transit)",
-        "📐 கே.பி. ஜோதிடம் (KP Astrology)",
-        "⏳ சுப முகூர்த்தம் (Muhurta)",
-        "☸️ சுதர்சன சக்கரம் (Sudarshan Chakra)",
-        "📅 வருட பலன்கள் (Varshaphal)",
-        "⏳ பிறப்பு நேர திருத்தம் (BTR)",
-        "💍 திருமணப் பொருத்தம் (Milan)",
-        "💬 ஜோதிட AI உதவியாளர் (Sahayak)",
-        "📄 முழுமையான அறிக்கை (Report)",
-        "📚 100 சாஸ்திர விதிகள் (Rules)",
-        "🔍 வேத ரிஷி சரிபார்ப்பு (Validation)"
-    ]
-elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 జన్మ జాతక చక్రం (Natal & Vargas)",
-        "🎯 సంఘటన విశ్లేషణ (Ghatna Query)",
-        "🛡️ దోష నివారణ & పరిహారాలు (Remedies)",
-        "📊 దశవర్గ పట్టిక (Dasvarga Table)",
-        "🏛️ వాస్తు జ్యోతిష్యం (Vastu-Jyotish)",
-        "❓ ప్రశ్న జాతకం (Horary / Prashna)",
-        "☁️ సర్వర్ సమకాలీకరణ (Server Sync)",
-        "⚖️ షడ్బలం & భావబలం (Shadbala)",
-        "🔱 జైమిని జ్యోతిష్యం (Jaimini)",
-        "⏱️ దశా పద్ధతులు (Dasha)",
-        "🪐 గోచార & అష్టకవర్గ (Transit)",
-        "📐 కె.పి. పద్ధతి (KP Astrology)",
-        "⏳ శుభ ముహూర్తం (Muhurta)",
-        "☸️ సుదర్శన చక్రం (Sudarshan Chakra)",
-        "📅 వార్షిక ఫలితాలు (Varshaphal)",
-        "⏳ జన్మ సమయ శోధన (BTR)",
-        "💍 గుణ మేళాపకం (Milan)",
-        "💬 జ్యోతిష్య AI సహాయకుడు (Sahayak)",
-        "📄 సంపూర్ణ నివేదిక (Report)",
-        "📚 100 శాస్త్రీయ నియమాలు (Rules)",
-        "🔍 వైదిక ఋషి ధృవీకరణ (Validation)"
-    ]
-elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 જન્મ કુંડળી (Natal & Vargas)",
-        "🎯 ઘટના વિશ્લેષણ (Ghatna Query)",
-        "🛡️ દોષ અને ફ્રી-વિલ (Affliction & Remedies)",
-        "📊 દશવર્ગ કોષ્ટક (Dasvarga Table)",
-        "🏛️ વાસ્તુ-જ્યોતિષ (Vastu-Jyotish)",
-        "❓ પ્રશ્ન કુંડળી (Horary / Prashna)",
-        "☁️ સર્વર સિંક (Server Sync)",
-        "⚖️ ષડ્બળ અને ભાવબળ (Shadbala)",
-        "🔱 જૈમિની અને ઉપગ્રહો (Jaimini)",
-        "⏱️ દશા પ્રણાલી (Dasha)",
-        "🪐 ગોચર અને અષ્ટકવર્ગ (Gochar & Shodhana)",
-        "📐 કે.પી. પદ્ધતિ (KP Astrology)",
-        "⏳ શુભ મુહૂર્ત (Muhurta)",
-        "☸️ સુદર્શન ચક્ર (Sudarshan Chakra)",
-        "📅 વર્ષફળ (Varshaphal)",
-        "⏳ સમય સંશોધન (BTR)",
-        "💍 કુંડળી મેળવણું (Milan)",
-        "💬 જ્યોતિષ AI સહાયક (Sahayak)",
-        "📄 સંપૂર્ણ અહેવાલ (Report)",
-        "📚 ૧૦૦ શાસ્ત્રીય નિયમો (Rules)",
-        "🔍 વૈદિક ઋષિ પ્રમાણીકરણ (Validation)"
-    ]
-elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 जन्म पत्रिका (Natal & Vargas)",
-        "🎯 घटना विश्लेषण (Ghatna Query)",
-        "🛡️ दोष व फ्री-विल (Affliction & Remedies)",
-        "📊 दशवर्ग तक्ता (Dasvarga Table)",
-        "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
-        "❓ प्रश्न पत्रिका (Horary / Prashna)",
-        "☁️ सर्व्हर सिंक (Server Sync)",
-        "⚖️ षड्बल व भावबल (Shadbala)",
-        "🔱 जैमिनी व उपग्रह (Jaimini)",
-        "⏱️ दशा प्रणाली (Dasha)",
-        "🪐 गोचर व अष्टकवर्ग (Gochar & Shodhana)",
-        "📐 के.पी. पद्धती (KP Astrology)",
-        "⏳ शुभ मुहूर्त (Muhurta)",
-        "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
-        "📅 वर्षफळ (Varshaphal)",
-        "⏳ वेळ शोधन (BTR)",
-        "💍 पत्रिका मिलन (Milan)",
-        "💬 ज्योतिष AI सहाय्यक (Sahayak)",
-        "📄 संपूर्ण अहवाल (Report)",
-        "📚 १०० शास्त्रीय नियम (Rules)",
-        "🔍 वैदिक ऋषी पडताळणी (Validation)"
-    ]
-elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 জন্ম কুণ্ডলী (Natal & Vargas)",
-        "🎯 ঘটনা বিশ্লেষণ (Ghatna Query)",
-        "🛡️ দোষ ও প্রতিকার (Affliction & Remedies)",
-        "📊 দশবর্গ তালিকা (Dasvarga Table)",
-        "🏛️ বাস্তু-জ্যোতিষ (Vastu-Jyotish)",
-        "❓ প্রশ্ন কুণ্ডলী (Horary / Prashna)",
-        "☁️ সার্ভার সিঙ্ক (Server Sync)",
-        "⚖️ ষড়্বল ও ভাববল (Shadbala)",
-        "🔱 জৈমিনী ও উপগ্রহ (Jaimini)",
-        "⏱️ দশা পদ্ধতি (Dasha)",
-        "🪐 গোচর ও অষ্টকবর্গ (Gochar & Shodhana)",
-        "📐 কে.পি. পদ্ধতি (KP Astrology)",
-        "⏳ শুভ মুহূর্ত (Muhurta)",
-        "☸️ সুদর্শন চক্র (Sudarshan Chakra)",
-        "📅 বর্ষফল (Varshaphal)",
-        "⏳ সময় সংশোধন (BTR)",
-        "💍 কুণ্ডলী মিলন (Milan)",
-        "💬 জ্যোতিষ AI সহকারী (Sahayak)",
-        "📄 সম্পূর্ণ রিপোর্ট (Report)",
-        "📚 ১০০ শাস্ত্রীয় নিয়ম (Rules)",
-        "🔍 বৈদিক ঋষি প্রমাণ (Validation)"
-    ]
-else:
-    MODULE_OPTIONS = [
-        "📜 जन्म कुण्डली (Natal & Vargas)",
-        "🎯 घटना विश्लेषण (Ghatna Query)",
-        "🛡️ दोष एवं फ्री-विल (Affliction & Remedies)",
-        "📊 दशवर्ग तालिका (Dasvarga Table)",
-        "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
-        "❓ प्रश्न कुण्डली (Horary / Prashna)",
-        "☁️ सर्वर सिंक (Server Sync)",
-        "⚖️ षड्बल एवं भावबल (Shadbala)",
-        "🔱 जैमिनी एवं उपग्रह (Jaimini)",
-        "⏱️ दशा प्रणालियाँ (Dasha)",
-        "🪐 गोचर एवं अष्टकवर्ग (Gochar & Shodhana)",
-        "📐 के.पी. प्रणाली (KP Astrology)",
-        "⏳ शुभ मुहूर्त एवं चौघड़िया (Muhurta)",
-        "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
-        "📅 वर्षफल (Varshaphal)",
-        "⏳ समय शोधन (BTR)",
-        "💍 कुण्डली मिलान (Milan)",
-        "💬 ज्योतिष AI सहायक (Sahayak)",
-        "📄 सम्पूर्ण रिपोर्ट (Report)",
-        "📚 100 शास्त्रीय नियम (Rules)",
-        "🔍 वैदिक ऋषि सत्यापन (Validation)"
-    ]
-
-if "active_module_idx" not in st.session_state:
-    st.session_state.active_module_idx = 0
-if st.session_state.active_module_idx >= len(MODULE_OPTIONS):
-    st.session_state.active_module_idx = 0
-
 # Ensure baseline variables
 name = st.session_state.get("birth_name", "डेमो जातक")
 init_b_date = st.session_state.get("birth_date", _init_now.date())
@@ -2102,92 +1826,70 @@ now_dt = datetime.now()
 current_time_str = now_dt.strftime("%d %b %Y, %I:%M %p")
 
 # -------------------------------------------------------------
+# 1. Top Navigation Bar (Header)
 # -------------------------------------------------------------
-# 1. Unified Frozen Sticky Top Navigation Bar (All Header Elements)
-# -------------------------------------------------------------
-with st.container(border=True, key="frozen_top_header"):
-    # Header Row 1: Brand & Logo (Left) | Action Buttons (Center) | Active Profile (Right)
-    col_h_brand, col_h_btn1, col_h_btn2, col_h_profile = st.columns([3.2, 1.8, 2.0, 3.5])
-    
-    with col_h_brand:
-        st.markdown(f"""
-        <div style="display:flex; align-items:center; gap:10px; height:100%;">
-            <div class="logo-circle" style="width:40px; height:40px; font-size:20px; min-width:40px; border-radius:10px;">🔮</div>
-            <div>
-                <div class="app-brand-title" style="font-size:1.3rem; font-weight:900; margin:0; line-height:1.15;">JyotishOS</div>
-                <div class="app-brand-sub" style="font-size:0.75rem; color:#475569; font-weight:700; line-height:1.1;">प्रामाणिक वैदिक ज्योतिष गणना महामंच</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col_h_btn1:
-        profile_btn_label = "👤 जन्म विवरण " + ("▲" if st.session_state.get("show_birth_details") else "▼")
-        if st.button(profile_btn_label, use_container_width=True, type="primary" if st.session_state.get("show_birth_details") else "secondary", help="जातक जन्म विवरण एवं कुण्डली विन्यास संपादित करें", key="hdr_birth_profile_btn"):
-            st.session_state.show_birth_details = not st.session_state.get("show_birth_details", False)
-            st.rerun()
-
-    with col_h_btn2:
-        with st.popover("🧭 21 मॉड्यूल्स सूची ☰", use_container_width=True, help="सभी 21 वैदिक ज्योतिष मॉड्यूल्स की संपूर्ण सूची खोलें"):
-            st.markdown("<b style='color:#1E40AF; font-size:13.5px;'>🧭 सभी 21 वैदिक ज्योतिष मॉड्यूल्स (क्लिक कर खोलें):</b>", unsafe_allow_html=True)
-            m_cols = st.columns(2)
-            for m_i, m_name in enumerate(MODULE_OPTIONS):
-                target_col = m_cols[m_i % 2]
-                is_active = (st.session_state.active_module_idx == m_i)
-                btn_type = "primary" if is_active else "secondary"
-                if target_col.button(f"{m_i+1}. {m_name}", key=f"pop_top_mod_{m_i}", use_container_width=True, type=btn_type):
-                    st.session_state.active_module_idx = m_i
-                    st.rerun()
-
-    with col_h_profile:
-        st.markdown(f"""
-        <div style="display:flex; justify-content:flex-end; align-items:center; height:100%;">
-            <div class="active-profile-pill" style="font-size:12px; padding:5px 12px; width:100%; text-align:right;">
-                👤 <b>{name}</b> &nbsp;|&nbsp; 📅 {birth_d.strftime('%d %b %Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name} &nbsp;|&nbsp; <span class="pulse-dot"></span> <b>सक्रिय</b>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    # Header Row 2: Status & Utilities Sub-Row (Spans full width evenly)
-    st.markdown(f"""
-    <div class="header-sub-pills-row" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:8px; padding-top:6px; border-top:1px solid #E2E8F0;">
-        <div class="header-sub-pill" style="padding:4px 12px; font-size:12px; font-weight:700;" title="भूमिका: ज्योतिषी व्यवस्थापक">
-            👑 <b>ज्योतिषी</b> (Admin)
-        </div>
-        <div class="header-sub-pill" style="padding:4px 12px; font-size:12px; font-weight:700;" title="दिनांक एवं लाइव समय">
-            🕒 <b>समय:</b> {current_time_str}
-        </div>
-        <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important; padding:4px 12px; font-size:12px; font-weight:700;" title="वर्तमान GPS स्थान">
-            📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
-        </div>
-        <div class="header-sub-pill notranslate lang-select-box" style="padding:2px 10px; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें">
-            <span class="notranslate" style="font-size:13px;">🌐</span>
-            <b class="notranslate" style="color:#166534 !important; font-size:12px;">भाषा:</b>
-            <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:12px; cursor:pointer; outline:none;">
-                <option value="general">General (जनरल)</option>
-                <option value="hi">हिन्दी (Hindi)</option>
-                <option value="en">English (अंग्रेजी)</option>
-                <option value="ta">தமிழ் (Tamil)</option>
-                <option value="te">తెలుగు (Telugu)</option>
-                <option value="gu">ગુજરાતી (Gujarati)</option>
-                <option value="mr">मराठी (Marathi)</option>
-                <option value="bn">বাংলা (Bengali)</option>
-            </select>
-        </div>
-        <div class="header-sub-pill notranslate theme-select-box" style="padding:2px 10px; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
-            <span id="theme-mode-icon" style="font-size:13px;">☀️</span>
-            <b class="notranslate" style="color:#0F172A !important; font-size:12px;">थीम:</b>
-            <select id="software-theme-select" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : null" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:12px; cursor:pointer; outline:none;">
-                <option value="day">☀️ डे मोड (Day Mode)</option>
-                <option value="night">🌙 नाइट मोड (Night Mode)</option>
-            </select>
+st.markdown(f"""
+<header class="top-nav-bar">
+    <div class="nav-left">
+        <button id="sidebar-toggle-action-btn" class="sidebar-toggle-btn" title="साइडबार खोलें / बंद करें (Toggle Sidebar)">
+            ❯❯
+        </button>
+        <div class="logo-circle">🔮</div>
+        <div>
+            <div class="app-brand-title">JyotishOS: Classical Vedic Astrology Platform</div>
+            <div class="app-brand-sub">सर्वं खल्विदं ब्रह्म • प्रामाणिक वैदिक ज्योतिष गणना महामंच</div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    <div class="nav-profile-block">
+        <div class="active-profile-pill">
+            👤 <b>{name}</b> &nbsp;|&nbsp; 📅 {birth_d.strftime('%d %b %Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name} &nbsp;|&nbsp; <span class="pulse-dot"></span> <b>सक्रिय (Online)</b>
+        </div>
+        <div class="header-sub-pills-row">
+            <div class="header-sub-pill" title="भूमिका: ज्योतिषी व्यवस्थापक">
+                👑 <b>ज्योतिषी</b> (Admin)
+            </div>
+            <div class="header-sub-pill" title="वर्तमान समय">
+                🕒 <b>समय:</b> {current_time_str}
+            </div>
+            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
+                📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
+            </div>
+            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
+                <span class="notranslate" translate="no" style="font-size:12px;">🌐</span>
+                <b class="notranslate" translate="no" style="color:#166534 !important; font-size:11.5px;">भाषा:</b>
+                <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
+                    <option value="general" class="notranslate" translate="no">General (जनरल)</option>
+                    <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
+                    <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
+                    <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
+                    <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
+                    <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
+                    <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
+                    <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
+                </select>
+            </div>
+            <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
+                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
+                <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11.5px;">थीम:</b>
+                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
+                    <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
+                    <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</header>
+""", unsafe_allow_html=True)
 
 # -------------------------------------------------------------
-# 2. 6 Category Quick-Tabs Cards (Even 6-Column Row)
+# 2. Single Line: Birth Profile Card + 6 Category Quick-Tabs Cards (All in 1 Line!)
 # -------------------------------------------------------------
-col_cat1, col_cat2, col_cat3, col_cat4, col_cat5, col_cat6 = st.columns(6)
+col_cat0, col_cat1, col_cat2, col_cat3, col_cat4, col_cat5, col_cat6 = st.columns([1.3, 1.2, 1.1, 1.1, 1.1, 1.1, 1.2])
+
+profile_btn_label = "👤 जन्म विवरण " + ("▲" if st.session_state.get("show_birth_details") else "▼")
+if col_cat0.button(profile_btn_label, use_container_width=True, type="primary" if st.session_state.get("show_birth_details") else "secondary", help="जातक जन्म विवरण एवं कुण्डली विन्यास संपादित करें"):
+    st.session_state.show_birth_details = not st.session_state.get("show_birth_details", False)
+    st.rerun()
 
 if col_cat1.button("📜 लग्न व वर्ग (D1-D60)", use_container_width=True, help="D1-D60 षोडशवर्ग व चक्र"):
     st.session_state.active_module_idx = 0
@@ -2435,6 +2137,183 @@ if st.session_state.get("show_birth_details", False):
             if st.button("✖️ बंद करें", key="close_birth_drawer_btn", use_container_width=True, help="जन्म विवरण पैनल को बंद करें"):
                 st.session_state.show_birth_details = False
                 st.rerun()
+
+# -------------------------------------------------------------
+# 4. 21 Vedic Astrology Modules Definitions
+# -------------------------------------------------------------
+if "English" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 Birth Chart (Natal & Vargas)",
+        "🎯 Event Analysis (Ghatna Query)",
+        "🛡️ Afflictions & Remedies",
+        "📊 Dasvarga Table",
+        "🏛️ Vastu-Jyotish",
+        "❓ Prashna Kundali (Horary)",
+        "☁️ Server Sync",
+        "⚖️ Shadbala & Bhavabala",
+        "🔱 Jaimini & Upagrahas",
+        "⏱️ Dasha Systems",
+        "🪐 Transit & Ashtakvarga",
+        "📐 KP Astrology System",
+        "⏳ Auspicious Muhurta",
+        "☸️ Sudarshan Chakra",
+        "📅 Annual Varshaphal",
+        "⏳ Birth Time Rectification (BTR)",
+        "💍 Kundali Matching (Milan)",
+        "💬 Jyotish AI Assistant",
+        "📄 Comprehensive Report",
+        "📚 100 Classical Rules",
+        "🔍 Vedic Sage Validation"
+    ]
+elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 ஜாதகக் கட்டம் (Natal & Vargas)",
+        "🎯 நிகழ்வு பகுப்பாய்வு (Ghatna Query)",
+        "🛡️ தோஷ பரிகாரம் & சுயம் (Remedies)",
+        "📊 தசவர்க்க அட்டவணை (Dasvarga Table)",
+        "🏛️ வாஸ்து ஜோதிடம் (Vastu-Jyotish)",
+        "❓ பிரசன்ன ஜோதிடம் (Horary / Prashna)",
+        "☁️ சர்வர் ஒத்திசைவு (Server Sync)",
+        "⚖️ ஷட்பலம் & பாவபலம் (Shadbala)",
+        "🔱 ஜெயமினி ஜோதிடம் (Jaimini)",
+        "⏱️ தசா அமைப்புகள் (Dasha)",
+        "🪐 கோசாரம் & அஷ்டவர்க்கம் (Transit)",
+        "📐 கே.பி. ஜோதிடம் (KP Astrology)",
+        "⏳ சுப முகூர்த்தம் (Muhurta)",
+        "☸️ சுதர்சன சக்கரம் (Sudarshan Chakra)",
+        "📅 வருட பலன்கள் (Varshaphal)",
+        "⏳ பிறப்பு நேர திருத்தம் (BTR)",
+        "💍 திருமணப் பொருத்தம் (Milan)",
+        "💬 ஜோதிட AI உதவியாளர் (Sahayak)",
+        "📄 முழுமையான அறிக்கை (Report)",
+        "📚 100 சாஸ்திர விதிகள் (Rules)",
+        "🔍 வேத ரிஷி சரிபார்ப்பு (Validation)"
+    ]
+elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 జన్మ జాతక చక్రం (Natal & Vargas)",
+        "🎯 సంఘటన విశ్లేషణ (Ghatna Query)",
+        "🛡️ దోష నివారణ & పరిహారాలు (Remedies)",
+        "📊 దశవర్గ పట్టిక (Dasvarga Table)",
+        "🏛️ వాస్తు జ్యోతిష్యం (Vastu-Jyotish)",
+        "❓ ప్రశ్న జాతకం (Horary / Prashna)",
+        "☁️ సర్వర్ సమకాలీకరణ (Server Sync)",
+        "⚖️ షడ్బలం & భావబలం (Shadbala)",
+        "🔱 జైమిని జ్యోతిష్యం (Jaimini)",
+        "⏱️ దశా పద్ధతులు (Dasha)",
+        "🪐 గోచార & అష్టకవర్గ (Transit)",
+        "📐 కె.పి. పద్ధతి (KP Astrology)",
+        "⏳ శుభ ముహూర్తం (Muhurta)",
+        "☸️ సుదర్శన చక్రం (Sudarshan Chakra)",
+        "📅 వార్షిక ఫలితాలు (Varshaphal)",
+        "⏳ జన్మ సమయ శోధన (BTR)",
+        "💍 గుణ మేళాపకం (Milan)",
+        "💬 జ్యోతిష్య AI సహాయకుడు (Sahayak)",
+        "📄 సంపూర్ణ నివేదిక (Report)",
+        "📚 100 శాస్త్రీయ నియమాలు (Rules)",
+        "🔍 వైదిక ఋషి ధృవీకరణ (Validation)"
+    ]
+elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 જન્મ કુંડળી (Natal & Vargas)",
+        "🎯 ઘટના વિશ્લેષણ (Ghatna Query)",
+        "🛡️ દોષ અને ફ્રી-વિલ (Affliction & Remedies)",
+        "📊 દશવર્ગ કોષ્ટક (Dasvarga Table)",
+        "🏛️ વાસ્તુ-જ્યોતિષ (Vastu-Jyotish)",
+        "❓ પ્રશ્ન કુંડળી (Horary / Prashna)",
+        "☁️ સર્વર સિંક (Server Sync)",
+        "⚖️ ષડ્બળ અને ભાવબળ (Shadbala)",
+        "🔱 જૈમિની અને ઉપગ્રહો (Jaimini)",
+        "⏱️ દશા પ્રણાલી (Dasha)",
+        "🪐 ગોચર અને અષ્ટકવર્ગ (Gochar & Shodhana)",
+        "📐 કે.પી. પદ્ધતિ (KP Astrology)",
+        "⏳ શુભ મુહૂર્ત (Muhurta)",
+        "☸️ સુદર્શન ચક્ર (Sudarshan Chakra)",
+        "📅 વર્ષફળ (Varshaphal)",
+        "⏳ સમય સંશોધન (BTR)",
+        "💍 કુંડળી મેળવણું (Milan)",
+        "💬 જ્યોતિષ AI સહાયક (Sahayak)",
+        "📄 સંપૂર્ણ અહેવાલ (Report)",
+        "📚 ૧૦૦ શાસ્ત્રીય નિયમો (Rules)",
+        "🔍 વૈદિક ઋષિ પ્રમાણીકરણ (Validation)"
+    ]
+elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 जन्म पत्रिका (Natal & Vargas)",
+        "🎯 घटना विश्लेषण (Ghatna Query)",
+        "🛡️ दोष व फ्री-विल (Affliction & Remedies)",
+        "📊 दशवर्ग तक्ता (Dasvarga Table)",
+        "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
+        "❓ प्रश्न पत्रिका (Horary / Prashna)",
+        "☁️ सर्व्हर सिंक (Server Sync)",
+        "⚖️ षड्बल व भावबल (Shadbala)",
+        "🔱 जैमिनी व उपग्रह (Jaimini)",
+        "⏱️ दशा प्रणाली (Dasha)",
+        "🪐 गोचर व अष्टकवर्ग (Gochar & Shodhana)",
+        "📐 के.पी. पद्धती (KP Astrology)",
+        "⏳ शुभ मुहूर्त (Muhurta)",
+        "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
+        "📅 वर्षफळ (Varshaphal)",
+        "⏳ वेळ शोधन (BTR)",
+        "💍 पत्रिका मिलन (Milan)",
+        "💬 ज्योतिष AI सहाय्यक (Sahayak)",
+        "📄 संपूर्ण अहवाल (Report)",
+        "📚 १०० शास्त्रीय नियम (Rules)",
+        "🔍 वैदिक ऋषी पडताळणी (Validation)"
+    ]
+elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 জন্ম কুণ্ডলী (Natal & Vargas)",
+        "🎯 ঘটনা বিশ্লেষণ (Ghatna Query)",
+        "🛡️ দোষ ও প্রতিকার (Affliction & Remedies)",
+        "📊 দশবর্গ তালিকা (Dasvarga Table)",
+        "🏛️ বাস্তু-জ্যোতিষ (Vastu-Jyotish)",
+        "❓ প্রশ্ন কুণ্ডলী (Horary / Prashna)",
+        "☁️ সার্ভার সিঙ্ক (Server Sync)",
+        "⚖️ ষড়্বল ও ভাববল (Shadbala)",
+        "🔱 জৈমিনী ও উপগ্রহ (Jaimini)",
+        "⏱️ দশা পদ্ধতি (Dasha)",
+        "🪐 গোচর ও অষ্টকবর্গ (Gochar & Shodhana)",
+        "📐 কে.পি. পদ্ধতি (KP Astrology)",
+        "⏳ শুভ মুহূর্ত (Muhurta)",
+        "☸️ সুদর্শন চক্র (Sudarshan Chakra)",
+        "📅 বর্ষফল (Varshaphal)",
+        "⏳ সময় সংশোধন (BTR)",
+        "💍 কুণ্ডলী মিলন (Milan)",
+        "💬 জ্যোতিষ AI সহকারী (Sahayak)",
+        "📄 সম্পূর্ণ রিপোর্ট (Report)",
+        "📚 ১০০ শাস্ত্রীয় নিয়ম (Rules)",
+        "🔍 বৈদিক ঋষি প্রমাণ (Validation)"
+    ]
+else:
+    MODULE_OPTIONS = [
+        "📜 जन्म कुण्डली (Natal & Vargas)",
+        "🎯 घटना विश्लेषण (Ghatna Query)",
+        "🛡️ दोष एवं फ्री-विल (Affliction & Remedies)",
+        "📊 दशवर्ग तालिका (Dasvarga Table)",
+        "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
+        "❓ प्रश्न कुण्डली (Horary / Prashna)",
+        "☁️ सर्वर सिंक (Server Sync)",
+        "⚖️ षड्बल एवं भावबल (Shadbala)",
+        "🔱 जैमिनी एवं उपग्रह (Jaimini)",
+        "⏱️ दशा प्रणालियाँ (Dasha)",
+        "🪐 गोचर एवं अष्टकवर्ग (Gochar & Shodhana)",
+        "📐 के.पी. प्रणाली (KP Astrology)",
+        "⏳ शुभ मुहूर्त एवं चौघड़िया (Muhurta)",
+        "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
+        "📅 वर्षफल (Varshaphal)",
+        "⏳ समय शोधन (BTR)",
+        "💍 कुण्डली मिलान (Milan)",
+        "💬 ज्योतिष AI सहायक (Sahayak)",
+        "📄 सम्पूर्ण रिपोर्ट (Report)",
+        "📚 100 शास्त्रीय नियम (Rules)",
+        "🔍 वैदिक ऋषि सत्यापन (Validation)"
+    ]
+
+if "active_module_idx" not in st.session_state:
+    st.session_state.active_module_idx = 0
+if st.session_state.active_module_idx >= len(MODULE_OPTIONS):
+    st.session_state.active_module_idx = 0
 
 col_mod_sel, col_btn_prev, col_btn_next = st.columns([3.8, 1.1, 1.1])
 with col_mod_sel:
