@@ -526,7 +526,52 @@ unified_css = f"""
         border-color: #94A3B8 !important;
     }}
 
-    /* Unified Frozen Top Header Bar (Full width edge-to-edge with royal blue boundary) */
+            /* Unified Frozen Top Header Bar (Full width edge-to-edge with royal blue boundary) */
+    .st-key-frozen_top_header,
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.st-key-frozen_top_header),
+    div[data-testid="stVerticalBlock"]:has(.st-key-frozen_top_header),
+    div[data-testid="element-container"]:has(.st-key-frozen_top_header),
+    div[data-testid="stElementContainer"]:has(.st-key-frozen_top_header) {{
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0px !important;
+        z-index: 999999 !important;
+        background: #FFFFFF !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-bottom: 3.5px solid #2563EB !important;
+        border-radius: 12px !important;
+        padding: 8px 14px !important;
+        margin-top: 0px !important;
+        margin-bottom: 12px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+        backdrop-filter: blur(8px) !important;
+    }}
+
+    body.night-mode .st-key-frozen_top_header,
+    body.night-mode div[data-testid="stVerticalBlockBorderWrapper"]:has(.st-key-frozen_top_header),
+    body.night-mode div[data-testid="stVerticalBlock"]:has(.st-key-frozen_top_header),
+    body.night-mode div[data-testid="element-container"]:has(.st-key-frozen_top_header),
+    body.night-mode div[data-testid="stElementContainer"]:has(.st-key-frozen_top_header) {{
+        background: #0F172A !important;
+        border-color: #334155 !important;
+        border-bottom: 3.5px solid #3B82F6 !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+    }}
+
+    .st-key-frozen_top_header button,
+    .st-key-frozen_top_header div[data-testid="stPopover"] button {{
+        min-height: 40px !important;
+        height: 40px !important;
+        font-weight: 800 !important;
+        font-size: 13px !important;
+        border-radius: 8px !important;
+        white-space: nowrap !important;
+        margin: 0px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }}
+
     .top-nav-bar-container {{
         position: -webkit-sticky !important;
         position: sticky !important;
@@ -626,16 +671,16 @@ unified_css = f"""
     .header-sub-pills-row {{
         display: flex !important;
         align-items: center !important;
-        gap: 6px !important;
+        gap: 8px !important;
         flex-wrap: wrap !important;
-        justify-content: flex-end !important;
+        justify-content: space-between !important;
     }}
     .header-sub-pill {{
         background: #F8FAFC !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 14px !important;
-        padding: 3px 10px !important;
-        font-size: 11.5px !important;
+        padding: 4px 12px !important;
+        font-size: 12px !important;
         color: #0F172A !important;
         font-weight: 700 !important;
         display: inline-flex !important;
@@ -2057,34 +2102,33 @@ now_dt = datetime.now()
 current_time_str = now_dt.strftime("%d %b %Y, %I:%M %p")
 
 # -------------------------------------------------------------
-# 1. Frozen Top Navigation Bar (Header with Integrated Buttons)
 # -------------------------------------------------------------
-with st.container():
-    st.markdown('<div class="top-nav-bar-container">', unsafe_allow_html=True)
-    col_hdr_brand, col_hdr_btn1, col_hdr_btn2, col_hdr_meta = st.columns([2.3, 1.25, 1.35, 3.3])
+# 1. Unified Frozen Sticky Top Navigation Bar (All Header Elements)
+# -------------------------------------------------------------
+with st.container(border=True, key="frozen_top_header"):
+    # Header Row 1: Brand & Logo (Left) | Action Buttons (Center) | Active Profile (Right)
+    col_h_brand, col_h_btn1, col_h_btn2, col_h_profile = st.columns([3.2, 1.8, 2.0, 3.5])
     
-    with col_hdr_brand:
+    with col_h_brand:
         st.markdown(f"""
-        <div style="display:flex; align-items:center; gap:10px; margin-top:2px;">
+        <div style="display:flex; align-items:center; gap:10px; height:100%;">
             <div class="logo-circle" style="width:40px; height:40px; font-size:20px; min-width:40px; border-radius:10px;">🔮</div>
             <div>
-                <div class="app-brand-title" style="font-size:1.25rem; font-weight:900; margin:0; line-height:1.2;">JyotishOS</div>
-                <div class="app-brand-sub" style="font-size:0.75rem; color:#475569; font-weight:700;">प्रामाणिक वैदिक ज्योतिष गणना महामंच</div>
+                <div class="app-brand-title" style="font-size:1.3rem; font-weight:900; margin:0; line-height:1.15;">JyotishOS</div>
+                <div class="app-brand-sub" style="font-size:0.75rem; color:#475569; font-weight:700; line-height:1.1;">प्रामाणिक वैदिक ज्योतिष गणना महामंच</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-    with col_hdr_btn1:
-        st.markdown("<div style='height:4px;'></div>", unsafe_allow_html=True)
+    with col_h_btn1:
         profile_btn_label = "👤 जन्म विवरण " + ("▲" if st.session_state.get("show_birth_details") else "▼")
         if st.button(profile_btn_label, use_container_width=True, type="primary" if st.session_state.get("show_birth_details") else "secondary", help="जातक जन्म विवरण एवं कुण्डली विन्यास संपादित करें", key="hdr_birth_profile_btn"):
             st.session_state.show_birth_details = not st.session_state.get("show_birth_details", False)
             st.rerun()
 
-    with col_hdr_btn2:
-        st.markdown("<div style='height:4px;'></div>", unsafe_allow_html=True)
+    with col_h_btn2:
         with st.popover("🧭 21 मॉड्यूल्स सूची ☰", use_container_width=True, help="सभी 21 वैदिक ज्योतिष मॉड्यूल्स की संपूर्ण सूची खोलें"):
-            st.markdown("<b style='color:#1E40AF; font-size:13px;'>🧭 सभी 21 वैदिक ज्योतिष मॉड्यूल्स (Click to Open):</b>", unsafe_allow_html=True)
+            st.markdown("<b style='color:#1E40AF; font-size:13.5px;'>🧭 सभी 21 वैदिक ज्योतिष मॉड्यूल्स (क्लिक कर खोलें):</b>", unsafe_allow_html=True)
             m_cols = st.columns(2)
             for m_i, m_name in enumerate(MODULE_OPTIONS):
                 target_col = m_cols[m_i % 2]
@@ -2094,40 +2138,51 @@ with st.container():
                     st.session_state.active_module_idx = m_i
                     st.rerun()
 
-    with col_hdr_meta:
+    with col_h_profile:
         st.markdown(f"""
-        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:3px;">
-            <div class="active-profile-pill" style="font-size:11.5px; padding:2px 10px; margin-bottom:2px;">
+        <div style="display:flex; justify-content:flex-end; align-items:center; height:100%;">
+            <div class="active-profile-pill" style="font-size:12px; padding:5px 12px; width:100%; text-align:right;">
                 👤 <b>{name}</b> &nbsp;|&nbsp; 📅 {birth_d.strftime('%d %b %Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name} &nbsp;|&nbsp; <span class="pulse-dot"></span> <b>सक्रिय</b>
-            </div>
-            <div class="header-sub-pills-row" style="font-size:11px;">
-                <div class="header-sub-pill" style="padding:2px 6px;">👑 <b>ज्योतिषी</b></div>
-                <div class="header-sub-pill" style="padding:2px 6px;">🕒 {current_time_str}</div>
-                <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important; padding:2px 6px;">📍 <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span></div>
-                <div class="header-sub-pill notranslate lang-select-box" style="padding:1px 6px; display:inline-flex; align-items:center; gap:2px;">
-                    <span>🌐</span>
-                    <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11px; cursor:pointer; outline:none;">
-                        <option value="general">General (जनरल)</option>
-                        <option value="hi">हिन्दी (Hindi)</option>
-                        <option value="en">English (अंग्रेजी)</option>
-                        <option value="ta">தமிழ் (Tamil)</option>
-                        <option value="te">తెలుగు (Telugu)</option>
-                        <option value="gu">ગુજરાતી (Gujarati)</option>
-                        <option value="mr">मराठी (Marathi)</option>
-                        <option value="bn">বাংলা (Bengali)</option>
-                    </select>
-                </div>
-                <div class="header-sub-pill notranslate theme-select-box" style="padding:1px 6px; display:inline-flex; align-items:center; gap:2px;">
-                    <span id="theme-mode-icon">☀️</span>
-                    <select id="software-theme-select" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : null" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11px; cursor:pointer; outline:none;">
-                        <option value="day">☀️ डे (Day)</option>
-                        <option value="night">🌙 नाइट (Night)</option>
-                    </select>
-                </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+
+    # Header Row 2: Status & Utilities Sub-Row (Spans full width evenly)
+    st.markdown(f"""
+    <div class="header-sub-pills-row" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:8px; padding-top:6px; border-top:1px solid #E2E8F0;">
+        <div class="header-sub-pill" style="padding:4px 12px; font-size:12px; font-weight:700;" title="भूमिका: ज्योतिषी व्यवस्थापक">
+            👑 <b>ज्योतिषी</b> (Admin)
+        </div>
+        <div class="header-sub-pill" style="padding:4px 12px; font-size:12px; font-weight:700;" title="दिनांक एवं लाइव समय">
+            🕒 <b>समय:</b> {current_time_str}
+        </div>
+        <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important; padding:4px 12px; font-size:12px; font-weight:700;" title="वर्तमान GPS स्थान">
+            📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
+        </div>
+        <div class="header-sub-pill notranslate lang-select-box" style="padding:2px 10px; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें">
+            <span class="notranslate" style="font-size:13px;">🌐</span>
+            <b class="notranslate" style="color:#166534 !important; font-size:12px;">भाषा:</b>
+            <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:12px; cursor:pointer; outline:none;">
+                <option value="general">General (जनरल)</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="en">English (अंग्रेजी)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+                <option value="te">తెలుగు (Telugu)</option>
+                <option value="gu">ગુજરાતી (Gujarati)</option>
+                <option value="mr">मराठी (Marathi)</option>
+                <option value="bn">বাংলা (Bengali)</option>
+            </select>
+        </div>
+        <div class="header-sub-pill notranslate theme-select-box" style="padding:2px 10px; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
+            <span id="theme-mode-icon" style="font-size:13px;">☀️</span>
+            <b class="notranslate" style="color:#0F172A !important; font-size:12px;">थीम:</b>
+            <select id="software-theme-select" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : null" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:12px; cursor:pointer; outline:none;">
+                <option value="day">☀️ डे मोड (Day Mode)</option>
+                <option value="night">🌙 नाइट मोड (Night Mode)</option>
+            </select>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # -------------------------------------------------------------
 # 2. 6 Category Quick-Tabs Cards (Even 6-Column Row)
