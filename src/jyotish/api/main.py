@@ -319,8 +319,8 @@ def run_prashna_full(payload: PrashnaFullRequest):
 
 
 class GlaLoginRequest(BaseModel):
-    username: str = "shubham8jyotish@gmail.com"
-    password: str = "Bahraich@123"
+    username: str = ""
+    password: str = ""
 
 
 @app.post("/api/grahalakshanam/login")

@@ -7,7 +7,7 @@ Unites:
    - Dasvarga Table (D1-D60 color-coded dignity grid)
    - Vastu-Jyotish (8 Directions Mandala, chart diagnosis, Hindi/English remedies)
    - Prashna (23 Categories, Tajika Ithasala, House roles with emojis)
-   - Grahalakshanam Cloud Sync & Benchmark (Direct login for shubham8jyotish@gmail.com)
+   - Server Cloud Sync & Benchmark (Secure multi-tenant authentication)
 3. Classical 32 Rules Execution & Multi-System Consensus
 4. Geocoding API & Location Resolver
 5. Vedic Rishi API Cross-Validation
@@ -1491,18 +1491,22 @@ with st.sidebar.expander("📁 सहेजी गई कुण्डलिय�
                 st.rerun()
 
     st.markdown("---")
-    st.caption("☁️ **Server Cloud Sync:** `admin@jyotishos.com`")
+    st.caption("☁️ **Server Cloud Sync**")
     if st.button("🔄 Sync Cloud Charts", key="sync_gla_btn"):
-        with st.spinner("Connecting to Cloud API..."):
-            client = GrahalakshanamClient()
-            if client.authenticate():
-                st.session_state.gla_authenticated = True
-                ff = client.get_folders_with_files()
-                st.session_state.gla_charts = ff.get("files", [])
-                imported = default_folder_manager.sync_from_grahalakshanam(ff)
-                st.success(f"Synced {len(st.session_state.gla_charts)} charts from cloud!")
-            else:
-                st.error("Authentication failed. Please verify credentials.")
+        if not st.session_state.get("gla_authenticated"):
+            st.sidebar.warning("⚠️ कृपया पहले मॉड्यूल 7 (सर्वर सिंक) में जाकर अपना Username व Password कनेक्ट करें।")
+        else:
+            with st.spinner("Connecting to Cloud API..."):
+                active_u = st.session_state.get("gla_user", "")
+                active_p = st.session_state.get("gla_pass", "")
+                client = GrahalakshanamClient(GrahalakshanamConfig(username=active_u, password=active_p))
+                if client.authenticate():
+                    ff = client.get_folders_with_files()
+                    st.session_state.gla_charts = ff.get("files", [])
+                    imported = default_folder_manager.sync_from_grahalakshanam(ff)
+                    st.sidebar.success(f"Synced {len(st.session_state.gla_charts)} charts from cloud!")
+                else:
+                    st.sidebar.error("Authentication failed. Please verify credentials in Module 7.")
 
 st.sidebar.markdown("---")
 # -------------------------------------------------------------
@@ -2948,17 +2952,34 @@ elif selected_idx == 6:
     st.write("अधिकृत खाते से लाइव सम्बंध स्थापित कर कुण्डलियों को सिंक करें और पंचांग से सटीकता का मिलान करें।")
 
     c_auth1, c_auth2, c_auth3 = st.columns([2, 2, 1])
-    g_user = c_auth1.text_input("Username / Email", value="shubham8jyotish@gmail.com")
-    g_pass = c_auth2.text_input("Password", value="Bahraich@123", type="password")
+    g_user = c_auth1.text_input("Username / Email", value=st.session_state.get("gla_user", ""), placeholder="उपयोगकर्ता नाम या ईमेल दर्ज करें", key="sync_user_input")
+    g_pass = c_auth2.text_input("Password", value=st.session_state.get("gla_pass", ""), type="password", placeholder="पासवर्ड दर्ज करें", key="sync_pass_input")
     c_auth3.write("")
     c_auth3.write("")
-    test_conn_btn = c_auth3.button("🔗 कनेक्ट करें", type="primary")
+    test_conn_btn = c_auth3.button("🔗 कनेक्ट करें", type="primary", use_container_width=True)
 
-    if test_conn_btn or st.session_state.gla_authenticated:
-        client = GrahalakshanamClient(GrahalakshanamConfig(username=g_user, password=g_pass))
+    if test_conn_btn:
+        if not g_user.strip() or not g_pass.strip():
+            st.session_state.gla_authenticated = False
+            st.warning("⚠️ कृपया सर्वर सिंक हेतु Username / Email और Password दोनों दर्ज करें।")
+        else:
+            with st.spinner("सर्वर से कनेक्ट किया जा रहा है..."):
+                client = GrahalakshanamClient(GrahalakshanamConfig(username=g_user.strip(), password=g_pass.strip()))
+                if client.authenticate():
+                    st.session_state.gla_authenticated = True
+                    st.session_state.gla_user = g_user.strip()
+                    st.session_state.gla_pass = g_pass.strip()
+                    st.success("✅ सर्वर खाते से सफलतापूर्वक कनेक्टेड!")
+                else:
+                    st.session_state.gla_authenticated = False
+                    st.error("❌ लॉगिन असफल। कृपया उपयोगकर्ता नाम एवं पासवर्ड जांचें।")
+
+    if st.session_state.get("gla_authenticated", False):
+        active_u = st.session_state.get("gla_user", g_user)
+        active_p = st.session_state.get("gla_pass", g_pass)
+        client = GrahalakshanamClient(GrahalakshanamConfig(username=active_u, password=active_p))
         if client.authenticate():
-            st.session_state.gla_authenticated = True
-            st.success("✅ क्लाउड खाते से सफलतापूर्वक कनेक्टेड!")
+            st.info(f"🌐 सक्रिय सर्वर खाता: **{active_u}**")
 
             col_sync1, col_sync2 = st.columns(2)
             with col_sync1:

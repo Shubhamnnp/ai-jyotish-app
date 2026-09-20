@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 @dataclass
 class GrahalakshanamConfig:
     base_url: str = "https://api.grahalakshanam.in/api/"
-    username: str = "shubham8jyotish@gmail.com"
-    password: str = "Bahraich@123"
+    username: str = ""
+    password: str = ""
     timeout_seconds: int = 15
 
 
