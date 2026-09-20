@@ -1315,118 +1315,155 @@ components.html("""
 
                 if (isNight) {
                     parentDoc.body.classList.add("night-mode");
+                    if (parentDoc.documentElement) parentDoc.documentElement.classList.add("night-mode");
+                    
+                    const nightCss = `
+                        html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
+                            background-color: #0A0E1A !important;
+                            color: #F8FAFC !important;
+                        }
+                        [data-testid="stSidebar"], section[data-testid="stSidebar"] {
+                            background-color: #0F172A !important;
+                            border-right: 2px solid #1E293B !important;
+                        }
+                        [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
+                            color: #F1F5F9 !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label {
+                            background: #1E293B !important;
+                            border-color: #334155 !important;
+                            color: #F1F5F9 !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p {
+                            color: #F1F5F9 !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {
+                            background: #2E3E5B !important;
+                            border-color: #F59E0B !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"],
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) {
+                            background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%) !important;
+                            border-color: #3B82F6 !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"] p,
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) p {
+                            color: #FFFFFF !important;
+                        }
+                        h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
+                            color: #F1F5F9 !important;
+                        }
+                        input, textarea, select,
+                        div[data-baseweb="input"] input,
+                        div[data-baseweb="base-input"] input,
+                        div[data-baseweb="input"] {
+                            background-color: #1E293B !important;
+                            color: #FFFFFF !important;
+                            -webkit-text-fill-color: #FFFFFF !important;
+                            border: 1.5px solid #3B82F6 !important;
+                        }
+                        div[data-baseweb="select"] > div {
+                            background-color: #1E293B !important;
+                            color: #FFFFFF !important;
+                            border: 1.5px solid #475569 !important;
+                        }
+                        div[data-baseweb="select"] * {
+                            color: #FFFFFF !important;
+                        }
+                        header.top-nav-bar {
+                            background: #0F172A !important;
+                            border-color: #1E293B !important;
+                            border-bottom: 3.5px solid #3B82F6 !important;
+                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
+                        }
+                        .top-nav-bar * {
+                            color: #F8FAFC !important;
+                        }
+                        .app-brand-title {
+                            background: linear-gradient(90deg, #F59E0B 0%, #FBBF24 50%, #60A5FA 100%) !important;
+                            -webkit-background-clip: text !important;
+                            -webkit-text-fill-color: transparent !important;
+                        }
+                        .app-brand-sub {
+                            color: #94A3B8 !important;
+                        }
+                        .active-profile-pill {
+                            background: #1E293B !important;
+                            border: 1.5px solid #F59E0B !important;
+                            color: #FEF3C7 !important;
+                        }
+                        .active-profile-pill * {
+                            color: #FEF3C7 !important;
+                        }
+                        .header-sub-pill {
+                            background: #1E293B !important;
+                            border: 1.5px solid #334155 !important;
+                            color: #E2E8F0 !important;
+                        }
+                        .header-sub-pill * {
+                            color: #E2E8F0 !important;
+                        }
+                        .header-sub-pill b {
+                            color: #F8FAFC !important;
+                        }
+                        .theme-select-box {
+                            background: #1E293B !important;
+                            border-color: #F59E0B !important;
+                        }
+                        .theme-select-box select, .theme-select-box b, .theme-select-box span {
+                            color: #F59E0B !important;
+                        }
+                        .theme-select-box option {
+                            background: #0F172A !important;
+                            color: #FFFFFF !important;
+                        }
+                        .digital-hud {
+                            background: #0F172A !important;
+                            border-color: #1E293B !important;
+                        }
+                        .digital-hud * {
+                            color: #F8FAFC !important;
+                        }
+                        .hud-pill {
+                            background: #1E293B !important;
+                            border: 1.5px solid #334155 !important;
+                            color: #F8FAFC !important;
+                        }
+                        .hud-pill b {
+                            color: #F59E0B !important;
+                        }
+                        div[data-testid="stExpander"] {
+                            background: #1E293B !important;
+                            border-color: #334155 !important;
+                        }
+                        div[data-testid="stMetricValue"], div[data-testid="stMetricValue"] * {
+                            color: #F8FAFC !important;
+                        }
+                        div[data-testid="stMetricLabel"], div[data-testid="stMetricLabel"] * {
+                            color: #94A3B8 !important;
+                        }
+                        [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+                            background-color: #1E293B !important;
+                            color: #FFFFFF !important;
+                        }
+                        div[style*="background:#FFFFFF"], div[style*="background: #FFFFFF"],
+                        div[style*="background:#F8FAFC"], div[style*="background: #F8FAFC"],
+                        div[style*="background:#EFF6FF"], div[style*="background: #EFF6FF"] {
+                            background: #1E293B !important;
+                            border-color: #334155 !important;
+                            color: #F8FAFC !important;
+                        }
+                    `;
+                    
                     if (!styleEl) {
                         styleEl = parentDoc.createElement("style");
                         styleEl.id = NIGHT_STYLE_ID;
-                        styleEl.innerHTML = `
-                            html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
-                                background-color: #090D16 !important;
-                                color: #F8FAFC !important;
-                            }
-                            [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-                                background-color: #0D1322 !important;
-                                border-right: 2px solid #1E293B !important;
-                            }
-                            [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
-                                color: #F1F5F9 !important;
-                            }
-                            h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p {
-                                color: #F1F5F9 !important;
-                            }
-                            input, textarea, select,
-                            div[data-baseweb="input"] input,
-                            div[data-baseweb="base-input"] input,
-                            div[data-baseweb="input"] {
-                                background-color: #161F30 !important;
-                                color: #FFFFFF !important;
-                                -webkit-text-fill-color: #FFFFFF !important;
-                                border-color: #3B82F6 !important;
-                            }
-                            div[data-baseweb="select"] > div {
-                                background-color: #161F30 !important;
-                                color: #FFFFFF !important;
-                                border-color: #475569 !important;
-                            }
-                            div[data-baseweb="select"] * {
-                                color: #FFFFFF !important;
-                            }
-                            header.top-nav-bar {
-                                background: #0D1322 !important;
-                                border-color: #2E3E5B !important;
-                                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
-                            }
-                            .top-nav-bar * {
-                                color: #F8FAFC !important;
-                            }
-                            .app-brand-title {
-                                color: #F59E0B !important;
-                            }
-                            .app-brand-sub {
-                                color: #94A3B8 !important;
-                            }
-                            .active-profile-pill {
-                                background: #161F30 !important;
-                                border-color: #D97706 !important;
-                                color: #FEF3C7 !important;
-                            }
-                            .header-sub-pill {
-                                background: #161F30 !important;
-                                border-color: #475569 !important;
-                                color: #E2E8F0 !important;
-                            }
-                            .theme-select-box {
-                                background: #1E293B !important;
-                                border-color: #F59E0B !important;
-                                color: #F59E0B !important;
-                            }
-                            .theme-select-box select, .theme-select-box b, .theme-select-box span {
-                                color: #F59E0B !important;
-                            }
-                            .theme-select-box option {
-                                background: #0D1322 !important;
-                                color: #FFFFFF !important;
-                            }
-                            .digital-hud {
-                                background: #0D1322 !important;
-                                border-color: #2E3E5B !important;
-                            }
-                            .hud-pill {
-                                background: #161F30 !important;
-                                border-color: #475569 !important;
-                                color: #F8FAFC !important;
-                            }
-                            .hud-pill b {
-                                color: #F59E0B !important;
-                            }
-                            div[data-testid="stExpander"] {
-                                background: #161F30 !important;
-                                border-color: #334155 !important;
-                            }
-                            div[data-testid="stMetricValue"], div[data-testid="stMetricValue"] * {
-                                color: #F8FAFC !important;
-                            }
-                            div[data-testid="stMetricLabel"], div[data-testid="stMetricLabel"] * {
-                                color: #94A3B8 !important;
-                            }
-                            [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] * {
-                                background-color: #161F30 !important;
-                                color: #FFFFFF !important;
-                            }
-                            div[style*="background:#FFFFFF"], div[style*="background: #FFFFFF"],
-                            div[style*="background:#F8FAFC"], div[style*="background: #F8FAFC"] {
-                                background: #161F30 !important;
-                                border-color: #2E3E5B !important;
-                                color: #F8FAFC !important;
-                            }
-                            div[style*="background:#EFF6FF"], div[style*="background: #EFF6FF"] {
-                                background: #1E293B !important;
-                                border-color: #3B82F6 !important;
-                            }
-                        `;
                         parentDoc.head.appendChild(styleEl);
                     }
+                    styleEl.innerHTML = nightCss;
                 } else {
                     parentDoc.body.classList.remove("night-mode");
+                    if (parentDoc.documentElement) parentDoc.documentElement.classList.remove("night-mode");
                     if (styleEl) {
                         styleEl.remove();
                     }
@@ -1453,9 +1490,15 @@ components.html("""
 
             parentWin.changeSoftwareTheme = handleThemeSwitch;
             window.changeSoftwareTheme = handleThemeSwitch;
+            if (parentDoc.defaultView) {
+                parentDoc.defaultView.changeSoftwareTheme = handleThemeSwitch;
+            }
 
             const themeSelects = parentDoc.querySelectorAll("#software-theme-select");
             themeSelects.forEach(function(sel) {
+                sel.onchange = function(e) {
+                    handleThemeSwitch(sel.value);
+                };
                 if (!sel.dataset.themeBound) {
                     sel.dataset.themeBound = "true";
                     sel.addEventListener("change", function(e) {
@@ -2117,20 +2160,20 @@ st.markdown(f"""
     </div>
     <div class="nav-profile-block">
         <div class="active-profile-pill">
-            👤 <b>{name}</b> | 📅 {birth_d.strftime('%d %b %Y')}, {birth_t.strftime('%I:%M %p')} | 📍 {default_city_name}
+            👤 <b>{name}</b> &nbsp;|&nbsp; 📅 {birth_d.strftime('%d %b %Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name} &nbsp;|&nbsp; <span class="pulse-dot"></span> <b>सक्रिय (Online)</b>
         </div>
         <div class="header-sub-pills-row">
-            <div class="header-sub-pill">
-                <span class="pulse-dot"></span> <b>प्रणाली:</b> सक्रिय (Online)
+            <div class="header-sub-pill" title="भूमिका: ज्योतिषी व्यवस्थापक">
+                👑 <b>ज्योतिषी</b> (Admin)
             </div>
-            <div class="header-sub-pill">
-                👑 <b>भूमिका:</b> ज्योतिषी (Admin)
+            <div class="header-sub-pill" title="वर्तमान समय">
+                🕒 <b>समय:</b> {current_time_str}
             </div>
-            <div class="header-sub-pill">
-                🕒 <b>वर्तमान समय:</b> {current_time_str}
+            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
+                📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
             </div>
-            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 10px !important; display:inline-flex; align-items:center; gap:6px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Software Language)">
-                <span class="notranslate" translate="no" style="font-size:13px;">🌐</span>
+            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
+                <span class="notranslate" translate="no" style="font-size:12px;">🌐</span>
                 <b class="notranslate" translate="no" style="color:#166534 !important; font-size:11.5px;">भाषा:</b>
                 <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
                     <option value="general" class="notranslate" translate="no">General (जनरल)</option>
@@ -2143,11 +2186,8 @@ st.markdown(f"""
                     <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
                 </select>
             </div>
-            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
-                📍 <b>वर्तमान स्थान (GPS):</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
-            </div>
-            <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 10px !important; display:inline-flex; align-items:center; gap:6px;" title="थीम चुनें (Select Day / Night Mode)">
-                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:13px;">☀️</span>
+            <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
+                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
                 <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11.5px;">थीम:</b>
                 <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : null" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
                     <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
