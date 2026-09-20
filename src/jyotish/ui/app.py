@@ -2023,81 +2023,82 @@ now_dt = datetime.now()
 current_time_str = now_dt.strftime("%d %b %Y, %I:%M %p")
 
 # -------------------------------------------------------------
-# 1. Top Navigation Bar (Header)
+# 1. Frozen Top Navigation Bar (Header with Integrated Buttons)
 # -------------------------------------------------------------
-st.markdown(f"""
-<header class="top-nav-bar">
-    <div class="nav-left">
-        <button id="sidebar-toggle-action-btn" class="sidebar-toggle-btn" title="साइडबार खोलें / बंद करें (Toggle Sidebar)">
-            ❯❯
-        </button>
-        <div class="logo-circle">🔮</div>
-        <div>
-            <div class="app-brand-title">JyotishOS: Classical Vedic Astrology Platform</div>
-            <div class="app-brand-sub">सर्वं खल्विदं ब्रह्म • प्रामाणिक वैदिक ज्योतिष गणना महामंच</div>
-        </div>
-    </div>
-    <div class="nav-profile-block">
-        <div class="active-profile-pill">
-            👤 <b>{name}</b> &nbsp;|&nbsp; 📅 {birth_d.strftime('%d %b %Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name} &nbsp;|&nbsp; <span class="pulse-dot"></span> <b>सक्रिय (Online)</b>
-        </div>
-        <div class="header-sub-pills-row">
-            <div class="header-sub-pill" title="भूमिका: ज्योतिषी व्यवस्थापक">
-                👑 <b>ज्योतिषी</b> (Admin)
-            </div>
-            <div class="header-sub-pill" title="वर्तमान समय">
-                🕒 <b>समय:</b> {current_time_str}
-            </div>
-            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
-                📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
-            </div>
-            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
-                <span class="notranslate" translate="no" style="font-size:12px;">🌐</span>
-                <b class="notranslate" translate="no" style="color:#166534 !important; font-size:11.5px;">भाषा:</b>
-                <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
-                    <option value="general" class="notranslate" translate="no">General (जनरल)</option>
-                    <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
-                    <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
-                    <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
-                    <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
-                    <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
-                    <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
-                    <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
-                </select>
-            </div>
-            <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
-                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
-                <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11.5px;">थीम:</b>
-                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
-                    <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
-                    <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
-                </select>
+with st.container():
+    st.markdown('<div class="top-nav-bar-container">', unsafe_allow_html=True)
+    col_hdr_brand, col_hdr_btn1, col_hdr_btn2, col_hdr_meta = st.columns([2.3, 1.25, 1.35, 3.3])
+    
+    with col_hdr_brand:
+        st.markdown(f"""
+        <div style="display:flex; align-items:center; gap:10px; margin-top:2px;">
+            <div class="logo-circle" style="width:40px; height:40px; font-size:20px; min-width:40px; border-radius:10px;">🔮</div>
+            <div>
+                <div class="app-brand-title" style="font-size:1.25rem; font-weight:900; margin:0; line-height:1.2;">JyotishOS</div>
+                <div class="app-brand-sub" style="font-size:0.75rem; color:#475569; font-weight:700;">प्रामाणिक वैदिक ज्योतिष गणना महामंच</div>
             </div>
         </div>
-    </div>
-</header>
-""", unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
-# -------------------------------------------------------------
-# 2. Single Line: Birth Profile Card + 21 Modules List Button + 6 Category Quick-Tabs Cards (All in 1 Line!)
-# -------------------------------------------------------------
-col_cat0, col_mod_btn, col_cat1, col_cat2, col_cat3, col_cat4, col_cat5, col_cat6 = st.columns([1.25, 1.35, 1.15, 1.1, 1.1, 1.1, 1.1, 1.2])
-
-profile_btn_label = "👤 जन्म विवरण " + ("▲" if st.session_state.get("show_birth_details") else "▼")
-if col_cat0.button(profile_btn_label, use_container_width=True, type="primary" if st.session_state.get("show_birth_details") else "secondary", help="जातक जन्म विवरण एवं कुण्डली विन्यास संपादित करें"):
-    st.session_state.show_birth_details = not st.session_state.get("show_birth_details", False)
-    st.rerun()
-
-with col_mod_btn.popover("🧭 21 मॉड्यूल्स सूची ☰", use_container_width=True, help="सभी 21 वैदिक ज्योतिष मॉड्यूल्स की संपूर्ण सूची खोलें"):
-    st.markdown("<b style='color:#1E40AF; font-size:13px;'>🧭 सभी 21 वैदिक ज्योतिष मॉड्यूल्स (Click to Open):</b>", unsafe_allow_html=True)
-    m_cols = st.columns(2)
-    for m_i, m_name in enumerate(MODULE_OPTIONS):
-        target_col = m_cols[m_i % 2]
-        is_active = (st.session_state.active_module_idx == m_i)
-        btn_type = "primary" if is_active else "secondary"
-        if target_col.button(f"{m_i+1}. {m_name}", key=f"pop_top_mod_{m_i}", use_container_width=True, type=btn_type):
-            st.session_state.active_module_idx = m_i
+    with col_hdr_btn1:
+        st.markdown("<div style='height:4px;'></div>", unsafe_allow_html=True)
+        profile_btn_label = "👤 जन्म विवरण " + ("▲" if st.session_state.get("show_birth_details") else "▼")
+        if st.button(profile_btn_label, use_container_width=True, type="primary" if st.session_state.get("show_birth_details") else "secondary", help="जातक जन्म विवरण एवं कुण्डली विन्यास संपादित करें", key="hdr_birth_profile_btn"):
+            st.session_state.show_birth_details = not st.session_state.get("show_birth_details", False)
             st.rerun()
+
+    with col_hdr_btn2:
+        st.markdown("<div style='height:4px;'></div>", unsafe_allow_html=True)
+        with st.popover("🧭 21 मॉड्यूल्स सूची ☰", use_container_width=True, help="सभी 21 वैदिक ज्योतिष मॉड्यूल्स की संपूर्ण सूची खोलें"):
+            st.markdown("<b style='color:#1E40AF; font-size:13px;'>🧭 सभी 21 वैदिक ज्योतिष मॉड्यूल्स (Click to Open):</b>", unsafe_allow_html=True)
+            m_cols = st.columns(2)
+            for m_i, m_name in enumerate(MODULE_OPTIONS):
+                target_col = m_cols[m_i % 2]
+                is_active = (st.session_state.active_module_idx == m_i)
+                btn_type = "primary" if is_active else "secondary"
+                if target_col.button(f"{m_i+1}. {m_name}", key=f"pop_top_mod_{m_i}", use_container_width=True, type=btn_type):
+                    st.session_state.active_module_idx = m_i
+                    st.rerun()
+
+    with col_hdr_meta:
+        st.markdown(f"""
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:3px;">
+            <div class="active-profile-pill" style="font-size:11.5px; padding:2px 10px; margin-bottom:2px;">
+                👤 <b>{name}</b> &nbsp;|&nbsp; 📅 {birth_d.strftime('%d %b %Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name} &nbsp;|&nbsp; <span class="pulse-dot"></span> <b>सक्रिय</b>
+            </div>
+            <div class="header-sub-pills-row" style="font-size:11px;">
+                <div class="header-sub-pill" style="padding:2px 6px;">👑 <b>ज्योतिषी</b></div>
+                <div class="header-sub-pill" style="padding:2px 6px;">🕒 {current_time_str}</div>
+                <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important; padding:2px 6px;">📍 <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span></div>
+                <div class="header-sub-pill notranslate lang-select-box" style="padding:1px 6px; display:inline-flex; align-items:center; gap:2px;">
+                    <span>🌐</span>
+                    <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11px; cursor:pointer; outline:none;">
+                        <option value="general">General (जनरल)</option>
+                        <option value="hi">हिन्दी (Hindi)</option>
+                        <option value="en">English (अंग्रेजी)</option>
+                        <option value="ta">தமிழ் (Tamil)</option>
+                        <option value="te">తెలుగు (Telugu)</option>
+                        <option value="gu">ગુજરાતી (Gujarati)</option>
+                        <option value="mr">मराठी (Marathi)</option>
+                        <option value="bn">বাংলা (Bengali)</option>
+                    </select>
+                </div>
+                <div class="header-sub-pill notranslate theme-select-box" style="padding:1px 6px; display:inline-flex; align-items:center; gap:2px;">
+                    <span id="theme-mode-icon">☀️</span>
+                    <select id="software-theme-select" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : null" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11px; cursor:pointer; outline:none;">
+                        <option value="day">☀️ डे (Day)</option>
+                        <option value="night">🌙 नाइट (Night)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# -------------------------------------------------------------
+# 2. 6 Category Quick-Tabs Cards (Even 6-Column Row)
+# -------------------------------------------------------------
+col_cat1, col_cat2, col_cat3, col_cat4, col_cat5, col_cat6 = st.columns(6)
 
 if col_cat1.button("📜 लग्न व वर्ग (D1-D60)", use_container_width=True, help="D1-D60 षोडशवर्ग व चक्र"):
     st.session_state.active_module_idx = 0
