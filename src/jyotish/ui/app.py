@@ -1234,49 +1234,122 @@ st.markdown(f"""
 if selected_module.startswith("📜 जन्म कुण्डली"):
     st.subheader("📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (D1 to D60)")
 
+    VARGA_SIGNIFICANCE = {
+        "D1": "समस्त जीवन, शारीरिक गठन एवं आत्म-व्यक्तित्व (General Life & Body)",
+        "D2": "धन, संपत्ति, वित्तीय स्थिति एवं कुटुम्ब (Wealth & Family Prosperity)",
+        "D3": "पराक्रम, भ्रातृ सुख, साहस एवं ऊर्जा (Courage, Siblings & Valor)",
+        "D4": "अचल संपत्ति, भवन, वाहन एवं भाग्य (Fixed Assets, Property & Fortune)",
+        "D7": "संतान सुख, वंश वृद्धि एवं रचनात्मकता (Children & Progeny)",
+        "D9": "धर्म, वैवाहिक जीवन, जीवनसाथी एवं आत्मबल (Dharma, Marriage & Destiny)",
+        "D10": "कर्म, आजीविका, प्रतिष्ठा, पद एवं अधिकार (Career, Profession & Power)",
+        "D12": "माता-पिता, पितृ ऋण एवं पैतृक विरासत (Parents & Ancestral Lineage)",
+        "D16": "वाहन, भौतिक सुख-साधन एवं अंतःकरण (Vehicles, Luxuries & Mind)",
+        "D20": "आध्यात्मिक साधना, उपासना एवं ईश्वरीय कृपा (Spiritual Quest & Bhakti)",
+        "D24": "उच्च विद्या, ज्ञान, मेधा शक्ति एवं कौशल (Higher Learning & Intellect)",
+        "D27": "शारीरिक बल, सामर्थ्य, गुण एवं दुर्बलताएं (Strengths & Weaknesses)",
+        "D30": "अरिष्ट, रोग, पाप प्रभाव एवं संकट (Misfortunes, Evils & Challenges)",
+        "D60": "पूर्वजन्म के संचित कर्म एवं अंतिम प्रारब्ध (Past Life Karma & Core Destiny)",
+    }
+
+    def get_varga_dignity_info(planet: str, sign_name: str, aff_eng: AfflictionEngine) -> Tuple[str, int, str]:
+        text, css = aff_eng.get_dignity(planet, sign_name)
+        if css == "exalt":
+            return "🌟 उच्च (Exalted)", 20, "परमोच्च बल एवं अत्यंत शुभ फल"
+        elif css == "mool":
+            return "💎 मूलत्रिकोण (Moolatrikona)", 18, "प्रबल शुभ एवं फलदायक"
+        elif css == "own":
+            return "👑 स्वराशि (Own Sign)", 15, "सशक्त एवं अनुकूल"
+        elif css == "friend":
+            return "🤝 मित्र राशि (Friend Sign)", 11, "मित्रवत एवं सहयोगी"
+        elif css == "neutral":
+            return "⚖️ सम राशि (Neutral)", 7, "तटस्थ / सामान्य फल"
+        elif css == "enemy":
+            return "⚔️ शत्रु राशि (Enemy Sign)", 4, "प्रतिरोधी एवं संघर्ष"
+        elif css == "deb":
+            return "⚠️ नीच (Debilitated)", 0, "कमजोर / उपाय आवश्यक"
+        return "⚖️ सामान्य", 7, "सामान्य"
+
     col_chart1, col_chart2 = st.columns([1, 1])
     with col_chart1:
         varga_options = list(chart.vargas.keys()) if chart.vargas else ["D1"]
         varga_choice = st.selectbox(
-            "वर्ग चक्र चयन (Varga Chart)",
+            "वर्ग चक्र चयन (Select Varga Chart)",
             varga_options,
             format_func=lambda x: f"{x} - {chart.vargas[x].varga_name}" if x in chart.vargas else x
         )
-        title = f"{varga_choice} {chart.vargas[varga_choice].varga_name if varga_choice in chart.vargas else ''} Kundali"
+        target_varga = chart.vargas.get(varga_choice, chart.vargas.get("D1"))
+        v_name = target_varga.varga_name if target_varga else "Rashi"
+        v_lagna_sign = target_varga.lagna_sign_name if target_varga else chart.lagna_sign_name
+        v_lagna_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
+
+        title = f"{varga_choice} {v_name} Kundali"
         svg_code = render_chart_svg(chart, title, varga_code=varga_choice)
         st.markdown(svg_code, unsafe_allow_html=True)
 
+        v_desc = VARGA_SIGNIFICANCE.get(varga_choice, "शास्त्रीय सूक्ष्म विश्लेषण")
+        st.info(f"🎯 **{varga_choice} ({v_name}) शास्त्रीय प्रयोजन:** {v_desc}")
+
     with col_chart2:
-        st.markdown("#### 🌟 पंचांग एवं आत्मकारक")
+        st.markdown(f"#### 🌟 {varga_choice} ({v_name}) सारांश एवं पंचांग")
         p_col1, p_col2 = st.columns(2)
-        p_col1.markdown(f"- **तिथि:** {p.tithi_name}")
-        p_col1.markdown(f"- **वार:** {p.vara_name}")
-        p_col1.markdown(f"- **नक्षत्र:** {p.nakshatra_name}")
-        p_col2.markdown(f"- **योग:** {p.yoga_name}")
-        p_col2.markdown(f"- **करण:** {p.karana_name}")
-        p_col2.markdown(f"- **आत्मकारक (AK):** {chart.atmakaraka}")
+        p_col1.markdown(f"- **वर्ग लग्न:** `{v_lagna_sign} ({v_lagna_id})`")
+        p_col1.markdown(f"- **जन्म लग्न (D1):** `{chart.lagna_sign_name} ({chart.lagna_sign_id})`")
+        p_col1.markdown(f"- **आत्मकारक (AK):** `{chart.atmakaraka}`")
+        p_col2.markdown(f"- **तिथि:** {p.tithi_name}")
+        p_col2.markdown(f"- **नक्षत्र:** {p.nakshatra_name}")
+        p_col2.markdown(f"- **वार:** {p.vara_name}")
 
-        st.markdown("#### 🏆 विंशोपक बल (Vimsopaka Bala - 20 Point Scale)")
-        vimsopaka = VargaCalculator.calculate_vimsopaka_bala(chart)
-        st.bar_chart(pd.DataFrame(list(vimsopaka.items()), columns=["Planet", "Vimsopaka Score"]).set_index("Planet"))
+        # Dynamic Planetary Dignity & Strength Bar Chart for the selected Varga
+        st.markdown(f"#### 📊 {varga_choice} ({v_name}) ग्रह गरिमा एवं बल सूचकांक")
+        varga_scores = {}
+        target_planets_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
+        for p_name in target_planets_order:
+            vp_obj = target_varga.planets.get(p_name) if target_varga else None
+            if vp_obj:
+                _, d_pts, _ = get_varga_dignity_info(p_name, vp_obj.sign_name, affliction_engine)
+                varga_scores[p_name] = d_pts
+            else:
+                varga_scores[p_name] = 7
 
-    st.markdown("### 🪐 नवग्रह स्पष्ट स्थिति एवं अवस्थाएं")
+        st.bar_chart(pd.DataFrame(list(varga_scores.items()), columns=["Planet", f"{varga_choice} Dignity Score"]).set_index("Planet"))
+
+        with st.expander("🏆 समग्र विंशोपक बल (20 Point Shadvarga Bala)", expanded=False):
+            vimsopaka = VargaCalculator.calculate_vimsopaka_bala(chart)
+            st.bar_chart(pd.DataFrame(list(vimsopaka.items()), columns=["Planet", "Vimsopaka Score"]).set_index("Planet"))
+
+    st.markdown(f"### 🪐 {varga_choice} ({v_name}) चक्र — नवग्रह स्पष्ट स्थिति, भाव एवं गरिमा तालिका")
     p_data = []
-    for name_p, p_obj in chart.planets.items():
-        sh_obj = chart.shadbala.planets.get(name_p) if chart.shadbala else None
+    target_planets_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
+    for name_p in target_planets_order:
+        vp_obj = target_varga.planets.get(name_p) if target_varga else None
+        if not vp_obj:
+            continue
+        d1_p = chart.planets.get(name_p)
+        
+        d_label, d_pts, d_impact = get_varga_dignity_info(name_p, vp_obj.sign_name, affliction_engine)
+        h_lord = SIGN_LORDS.get(vp_obj.sign_name, "-")
+
+        h_num = vp_obj.house_number
+        h_suffix = "st" if h_num == 1 else "nd" if h_num == 2 else "rd" if h_num == 3 else "th"
+        h_name_hi = {
+            1: "तनु (1st)", 2: "धन (2nd)", 3: "सहज (3rd)", 4: "सुख (4th)",
+            5: "सुत (5th)", 6: "रिपु (6th)", 7: "जाया (7th)", 8: "आयु (8th)",
+            9: "धर्म (9th)", 10: "कर्म (10th)", 11: "लाभ (11th)", 12: "व्यय (12th)"
+        }.get(h_num, f"{h_num}{h_suffix}")
+
         p_data.append({
-            "Graha": name_p,
-            "Rashi": p_obj.sign_name,
-            "Degree": f"{p_obj.sign_degree:.2f}°",
-            "House": p_obj.house_from_lagna,
-            "Nakshatra": f"{p_obj.nakshatra_name} ({p_obj.nakshatra_pada})",
-            "Dignity": p_obj.dignity.capitalize(),
-            "Retrograde": "Vakri (R)" if p_obj.is_retrograde else "Direct",
-            "Combust": "Combust (*)" if p_obj.is_combust else "Direct",
-            "Baladi Avastha": sh_obj.baladi_avastha if sh_obj else "-",
-            "Deeptadi Avastha": sh_obj.deeptadi_avastha if sh_obj else "-",
+            "ग्रह (Graha)": name_p,
+            "वर्ग राशि (Sign)": vp_obj.sign_name,
+            "राशि स्वामी (Lord)": h_lord,
+            "वर्ग अंश (Degree)": f"{vp_obj.degree_in_varga:.2f}°",
+            "वर्ग भाव (Varga House)": f"{h_num}{h_suffix} भाव ({h_name_hi})",
+            "वर्ग गरिमा (Dignity)": d_label,
+            "D1 राशि (Ref)": d1_p.sign_name if d1_p else "-",
+            "D1 भाव (Ref)": f"{d1_p.house_from_lagna}th House" if d1_p else "-",
+            "गति (Motion)": "वक्री (R)" if (d1_p and d1_p.is_retrograde) else "मार्गी",
+            "अवस्था / शास्त्रीय प्रभाव": d_impact,
         })
-    st.dataframe(pd.DataFrame(p_data), use_container_width=True)
+    st.dataframe(pd.DataFrame(p_data), use_container_width=True, hide_index=True)
 
 
 # =============================================================
