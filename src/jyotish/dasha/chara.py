@@ -71,6 +71,80 @@ class CharaDashaEngine:
         return timeline
 
     @classmethod
+    def generate_antardashas(
+        cls,
+        major_sign_id: int,
+        start_dt: datetime,
+        end_dt: datetime
+    ) -> List[Dict[str, Any]]:
+        """
+        Generates 12 Chara Antardashas within a Major Chara Dasha sign.
+        Duration of each antardasha = total_duration / 12.
+        """
+        is_direct = major_sign_id in cls.DIRECT_SIGNS
+        if is_direct:
+            sub_sequence = [((major_sign_id - 1 + i) % 12) + 1 for i in range(12)]
+        else:
+            sub_sequence = [((major_sign_id - 1 - i) % 12) + 1 for i in range(12)]
+
+        total_sec = (end_dt - start_dt).total_seconds()
+        sub_dur_sec = total_sec / 12.0
+
+        antardashas = []
+        curr_dt = start_dt
+        for s_id in sub_sequence:
+            next_dt = curr_dt + timedelta(seconds=sub_dur_sec)
+            s_name = SIGN_NAMES[s_id - 1]
+            antardashas.append({
+                "sign_id": s_id,
+                "sign_name": s_name,
+                "lord": SIGN_LORDS[s_name],
+                "start_date": curr_dt,
+                "end_date": next_dt,
+                "duration_months": round(sub_dur_sec / (86400.0 * 30.4375), 1),
+                "duration_days": round(sub_dur_sec / 86400.0, 1),
+            })
+            curr_dt = next_dt
+
+        return antardashas
+
+    @classmethod
+    def generate_pratyantardashas(
+        cls,
+        antar_sign_id: int,
+        start_dt: datetime,
+        end_dt: datetime
+    ) -> List[Dict[str, Any]]:
+        """
+        Generates 12 Chara Pratyantardashas within an Antardasha sign.
+        """
+        is_direct = antar_sign_id in cls.DIRECT_SIGNS
+        if is_direct:
+            sub_sequence = [((antar_sign_id - 1 + i) % 12) + 1 for i in range(12)]
+        else:
+            sub_sequence = [((antar_sign_id - 1 - i) % 12) + 1 for i in range(12)]
+
+        total_sec = (end_dt - start_dt).total_seconds()
+        sub_dur_sec = total_sec / 12.0
+
+        pratyantars = []
+        curr_dt = start_dt
+        for s_id in sub_sequence:
+            next_dt = curr_dt + timedelta(seconds=sub_dur_sec)
+            s_name = SIGN_NAMES[s_id - 1]
+            pratyantars.append({
+                "sign_id": s_id,
+                "sign_name": s_name,
+                "lord": SIGN_LORDS[s_name],
+                "start_date": curr_dt,
+                "end_date": next_dt,
+                "duration_days": round(sub_dur_sec / 86400.0, 1),
+            })
+            curr_dt = next_dt
+
+        return pratyantars
+
+    @classmethod
     def get_active_chara_dasha_at(cls, chart: KundaliChart, target_date: date) -> Dict[str, Any]:
         """Returns the active Chara Dasha rashi at target_date."""
         timeline = cls.generate_timeline(chart)

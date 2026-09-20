@@ -101,6 +101,79 @@ class YoginiDashaEngine:
         return timeline
 
     @classmethod
+    def generate_antardashas(
+        cls,
+        major_yogini: str,
+        start_dt: datetime,
+        end_dt: datetime
+    ) -> List[Dict[str, Any]]:
+        """
+        Generates 8 Antardashas within a Yogini Dasha.
+        Sub-periods start from the major Yogini.
+        Duration = (Major_duration * Sub_years) / 36.
+        """
+        names = [y["name"] for y in YOGINI_SEQUENCE]
+        start_idx = names.index(major_yogini) if major_yogini in names else 0
+        total_duration_sec = (end_dt - start_dt).total_seconds()
+
+        antardashas = []
+        curr_dt = start_dt
+        for i in range(8):
+            idx = (start_idx + i) % 8
+            sub_y = YOGINI_SEQUENCE[idx]
+            sub_frac = sub_y["years"] / TOTAL_YOGINI_CYCLE_YEARS
+            sub_sec = total_duration_sec * sub_frac
+            next_dt = curr_dt + timedelta(seconds=sub_sec)
+            antardashas.append({
+                "yogini": sub_y["name"],
+                "yogini_name": sub_y["name"],
+                "lord": sub_y["lord"],
+                "start_date": curr_dt,
+                "end_date": next_dt,
+                "duration_days": round(sub_sec / 86400.0, 2),
+                "duration_months": round(sub_sec / (86400.0 * 30.4375), 1),
+            })
+            curr_dt = next_dt
+
+        return antardashas
+
+    @classmethod
+    def generate_pratyantardashas(
+        cls,
+        major_yogini: str,
+        antar_yogini: str,
+        start_dt: datetime,
+        end_dt: datetime
+    ) -> List[Dict[str, Any]]:
+        """
+        Generates 8 Pratyantardashas within a Yogini Antardasha.
+        Duration = (Antar_duration * Sub_years) / 36.
+        """
+        names = [y["name"] for y in YOGINI_SEQUENCE]
+        start_idx = names.index(antar_yogini) if antar_yogini in names else 0
+        total_duration_sec = (end_dt - start_dt).total_seconds()
+
+        pratyantars = []
+        curr_dt = start_dt
+        for i in range(8):
+            idx = (start_idx + i) % 8
+            sub_y = YOGINI_SEQUENCE[idx]
+            sub_frac = sub_y["years"] / TOTAL_YOGINI_CYCLE_YEARS
+            sub_sec = total_duration_sec * sub_frac
+            next_dt = curr_dt + timedelta(seconds=sub_sec)
+            pratyantars.append({
+                "yogini": sub_y["name"],
+                "yogini_name": sub_y["name"],
+                "lord": sub_y["lord"],
+                "start_date": curr_dt,
+                "end_date": next_dt,
+                "duration_days": round(sub_sec / 86400.0, 2),
+            })
+            curr_dt = next_dt
+
+        return pratyantars
+
+    @classmethod
     def get_active_yogini_at(
         cls,
         birth_datetime: datetime,

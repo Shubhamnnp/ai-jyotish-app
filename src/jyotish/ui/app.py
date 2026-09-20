@@ -2569,57 +2569,433 @@ elif selected_module.startswith("🔱 जैमिनी"):
 # TAB 10: DASHA SYSTEMS
 
 elif selected_module.startswith("⏱️ दशा"):
-    st.subheader("⏱️ दशा प्रणालियाँ (Dasha Systems)")
+    st.subheader("⏱️ दशा प्रणालियाँ (Multi-Level Dasha Systems)")
+    st.write("विंशोत्तरी दशा (महादशा, अंतर्दशा, प्रत्यंतर्दशा, सूक्ष्मदशा एवं प्राणदशा), योगिनी, जैमिनी चर, कालचक्र एवं शूल दशाओं का सम्पूर्ण बहु-स्तरीय विश्लेषण।")
+
+    # Target Date Picker for Point-in-Time Dasha Calculation
+    c_dt1, c_dt2 = st.columns([2, 4])
+    with c_dt1:
+        dasha_target_date = st.date_input("🎯 लक्षित दिनांक पर दशा देखें (Target Date)", value=date.today(), key="dasha_target_date_picker")
+    with c_dt2:
+        st.caption(f"🗓️ वर्तमान में **{dasha_target_date.strftime('%d-%b-%Y')}** के लिए तात्कालिक सक्रिय सूक्ष्म दशाओं का मूल्यांकन प्रदर्शित किया जा रहा है।")
+
     d_mode = st.radio(
-        "दशा प्रणाली चुनें",
+        "दशा प्रणाली चयन (Select Dasha System)",
         [
-            "विंशोत्तरी दशा (120 Yrs)",
-            "योगिनी दशा (36 Yrs)",
-            "जैमिनी चर दशा",
-            "कालचक्र दशा (Kaalachakra Dasha)",
-            "शूल दशा (Shoola Dasha - Ayurdaya)"
+            "🌟 विंशोत्तरी दशा (Vimshottari 120 Yrs - 5 Levels)",
+            "🌸 योगिनी दशा (Yogini 36 Yrs - 3 Levels)",
+            "🔱 जैमिनी चर दशा (Jaimini Chara Dasha)",
+            "🔄 कालचक्र दशा (Kaalachakra Dasha - BPHS)",
+            "⚔️ शूल दशा (Shoola Dasha - Ayurdaya & Maraka)"
         ],
-        horizontal=True
+        horizontal=True,
+        key="dasha_system_mode_radio"
     )
 
+    birth_dt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
+    moon_lon = chart.planets["Moon"].longitude
+    target_dt = datetime.combine(dasha_target_date, datetime.now().time())
+
+    # =========================================================================
+    # 1. VIMSHOTTARI DASHA (5 LEVELS: MAHA -> ANTAR -> PRAT -> SOOKSHMA -> PRANA)
+    # =========================================================================
     if "विंशोत्तरी" in d_mode:
-        birth_dt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
-        moon_lon = chart.planets["Moon"].longitude
-        v_periods = default_dasha_engine.generate_mahadasha_sequence(birth_dt, moon_lon)
+        h5 = default_dasha_engine.get_5level_hierarchy(birth_dt, moon_lon, target_dt)
 
-        st.dataframe(pd.DataFrame([{
-            "Lord": d["lord"] if isinstance(d, dict) else d.lord,
-            "Start Date": (d["start_date"] if isinstance(d, dict) else d.start_date).strftime("%d-%b-%Y"),
-            "End Date": (d["end_date"] if isinstance(d, dict) else d.end_date).strftime("%d-%b-%Y"),
-            "Duration (Yrs)": round(d["duration_years"] if isinstance(d, dict) else d.duration_years, 2),
-            "Status": "Birth Balance" if (d.get("is_partial") if isinstance(d, dict) else getattr(d, "is_balance", False)) else "Full Period"
-        } for d in v_periods]), use_container_width=True)
+        act_m = h5["mahadasha"]
+        act_a = h5["antardasha"]
+        act_pr = h5["pratyantardasha"]
+        act_s = h5["sookshmadasha"]
+        act_p = h5["pranadasha"]
 
+        # 1. Active 5-Level HUD
+        st.markdown(f"#### 🔴 सक्रिय 5-स्तरीय विंशोत्तरी दशा ({dasha_target_date.strftime('%d-%b-%Y')})")
+
+        # Breadcrumb Banner
+        p_icons = {
+            "Sun": "☀️ सूर्य (Sun)", "Moon": "🌙 चन्द्र (Moon)", "Mars": "⚔️ मंगल (Mars)",
+            "Mercury": "☿️ बुध (Mercury)", "Jupiter": "🪐 गुरु (Jupiter)", "Venus": "💎 शुक्र (Venus)",
+            "Saturn": "⚖️ शनि (Saturn)", "Rahu": "🐉 राहु (Rahu)", "Ketu": "☄️ केतु (Ketu)"
+        }
+        b_str = (
+            f"<div style='background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FFFFFF; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.15);'>"
+            f"<div style='font-size: 12px; color: #A5B4FC; font-weight: 700; margin-bottom: 4px;'>🧭 सक्रिय दशा पथ (Active Dasha Hierarchy):</div>"
+            f"<div style='font-size: 16px; font-weight: 900; letter-spacing: 0.3px; color: #FDE047;'>"
+            f"👑 {p_icons.get(act_m['lord'], act_m['lord'])} &nbsp;➔&nbsp; "
+            f"🪐 {p_icons.get(act_a['lord'], act_a['lord'])} &nbsp;➔&nbsp; "
+            f"⚡ {p_icons.get(act_pr['lord'], act_pr['lord'])} &nbsp;➔&nbsp; "
+            f"🔍 {p_icons.get(act_s['lord'], act_s['lord'])} &nbsp;➔&nbsp; "
+            f"🧬 {p_icons.get(act_p['lord'], act_p['lord'])}"
+            f"</div>"
+            f"</div>"
+        )
+        st.markdown(b_str, unsafe_allow_html=True)
+
+        # 5 Metric Cards
+        c1, c2, c3, c4, c5 = st.columns(5)
+        with c1:
+            st.markdown(f"""
+            <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#4338CA; font-weight:800;">👑 महादशा (L1)</div>
+                <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_m['lord']}</div>
+                <div style="font-size:10.5px; color:#475569;">{act_m['start_date'].strftime('%d-%b-%y')} ~ {act_m['end_date'].strftime('%d-%b-%y')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c2:
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#15803D; font-weight:800;">🪐 अंतर्दशा (L2)</div>
+                <div style="font-size:18px; font-weight:900; color:#064E3B;">{act_a['lord']}</div>
+                <div style="font-size:10.5px; color:#475569;">{act_a['start_date'].strftime('%d-%b-%y')} ~ {act_a['end_date'].strftime('%d-%b-%y')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c3:
+            st.markdown(f"""
+            <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ प्रत्यंतर्दशा (L3)</div>
+                <div style="font-size:18px; font-weight:900; color:#78350F;">{act_pr['lord']}</div>
+                <div style="font-size:10.5px; color:#475569;">{act_pr['start_date'].strftime('%d-%b-%y')} ~ {act_pr['end_date'].strftime('%d-%b-%y')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c4:
+            st.markdown(f"""
+            <div style="background:#FDF2F8; border: 2px solid #EC4899; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#BE185D; font-weight:800;">🔍 सूक्ष्मदशा (L4)</div>
+                <div style="font-size:18px; font-weight:900; color:#831843;">{act_s['lord']}</div>
+                <div style="font-size:10.5px; color:#475569;">{act_s['start_date'].strftime('%d-%b')} ~ {act_s['end_date'].strftime('%d-%b')} ({act_s.get('duration_days', 0)}d)</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c5:
+            st.markdown(f"""
+            <div style="background:#F3F4F6; border: 2px solid #64748B; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#334155; font-weight:800;">🧬 प्राणदशा (L5)</div>
+                <div style="font-size:18px; font-weight:900; color:#0F172A;">{act_p['lord']}</div>
+                <div style="font-size:10.5px; color:#475569;">{act_p['start_date'].strftime('%d-%b %H:%M')} ~ {act_p['end_date'].strftime('%d-%b %H:%M')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # Progress calculation for active Antardasha
+        a_total_sec = (act_a["end_date"] - act_a["start_date"]).total_seconds()
+        a_elapsed_sec = max(0.0, min(a_total_sec, (target_dt - act_a["start_date"]).total_seconds()))
+        a_pct = (a_elapsed_sec / max(1.0, a_total_sec))
+        st.write("")
+        st.markdown(f"**🪐 सक्रिय अंतर्दशा ({act_m['lord']}-{act_a['lord']}) प्रगति: {int(a_pct * 100)}% संपन्न**")
+        st.progress(a_pct)
+
+        st.markdown("---")
+
+        # 2. Interactive Multi-Level Dasha Explorer
+        st.markdown("#### 🌳 विंशोत्तरी दशा बहु-स्तरीय विस्तृत अन्वेषक (5-Level Interactive Explorer)")
+
+        tab_v1, tab_v2, tab_v3, tab_v4, tab_v5, tab_v_all = st.tabs([
+            "👑 स्तर 1: महादशा (Mahadasha)",
+            "🪐 स्तर 2: अंतर्दशा (Antardasha)",
+            "⚡ स्तर 3: प्रत्यंतर्दशा (Pratyantardasha)",
+            "🔍 स्तर 4: सूक्ष्मदशा (Sookshmadasha)",
+            "🧬 स्तर 5: प्राणदशा (Pranadasha)",
+            "📜 सम्पूर्ण 120-वर्षीय कालक्रम (All Mahadashas)"
+        ])
+
+        v_mahadashas = default_dasha_engine.generate_mahadasha_sequence(birth_dt, moon_lon, num_cycles=2)
+        maha_options = [f"{m['lord']} ({m['start_date'].strftime('%d-%b-%Y')} से {m['end_date'].strftime('%d-%b-%Y')})" for m in v_mahadashas]
+        default_maha_idx = next((i for i, m in enumerate(v_mahadashas) if m['lord'] == act_m['lord'] and m['start_date'] <= target_dt <= m['end_date']), 0)
+
+        with tab_v1:
+            st.markdown("##### 👑 समस्त 9 महादशाएँ (120 Years Vimshottari Cycle)")
+            m_rows = []
+            for m in v_mahadashas:
+                is_active = (m["start_date"] <= target_dt <= m["end_date"])
+                m_rows.append({
+                    "महादशा स्वामी (Lord)": f"👑 {m['lord']}" + (" (⭐ वर्तमान सक्रिय)" if is_active else ""),
+                    "आरंभ दिनांक (Start)": m["start_date"].strftime("%d-%b-%Y"),
+                    "समाप्ति दिनांक (End)": m["end_date"].strftime("%d-%b-%Y"),
+                    "अवधि (Years)": f"{m['duration_years']:.2f} वर्ष",
+                    "प्रकार": "जन्म शेष (Birth Balance)" if m.get("is_partial") else "पूर्ण महादशा",
+                    "सक्रियता": "✅ सक्रिय" if is_active else "—"
+                })
+            st.dataframe(pd.DataFrame(m_rows), use_container_width=True, hide_index=True)
+
+        with tab_v2:
+            st.markdown("##### 🪐 महादशा अंतर्गत समस्त 9 अंतर्दशाएं (Antardashas / Bhuktis)")
+            sel_maha_idx = st.selectbox("महादशा चुनें (Select Mahadasha)", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_maha_for_antar")
+            sel_m_obj = v_mahadashas[sel_maha_idx]
+            
+            antars = default_dasha_engine.generate_antardashas(
+                sel_m_obj["lord"], sel_m_obj["start_date"], sel_m_obj["end_date"], is_partial=sel_m_obj.get("is_partial", False)
+            )
+            a_rows = []
+            for a in antars:
+                is_a_active = (a["start_date"] <= target_dt <= a["end_date"])
+                a_rows.append({
+                    "महादशा / अंतर्दशा": f"{sel_m_obj['lord']} — {a['lord']}" + (" (⭐ सक्रिय)" if is_a_active else ""),
+                    "अंतर्दशा स्वामी (Lord)": a["lord"],
+                    "आरंभ दिनांक (Start)": a["start_date"].strftime("%d-%b-%Y"),
+                    "समाप्ति दिनांक (End)": a["end_date"].strftime("%d-%b-%Y"),
+                    "अवधि (Years)": f"{a['duration_years']:.2f} वर्ष",
+                    "अवधि (माह / दिन)": f"{int(a['duration_years']*12)} माह {int((a['duration_years']*12 % 1)*30)} दिन",
+                    "सक्रियता": "✅ सक्रिय" if is_a_active else "—"
+                })
+            st.dataframe(pd.DataFrame(a_rows), use_container_width=True, hide_index=True)
+
+        with tab_v3:
+            st.markdown("##### ⚡ अंतर्दशा अंतर्गत समस्त 9 प्रत्यंतर्दशाएं (Pratyantardashas)")
+            col_sel1, col_sel2 = st.columns(2)
+            with col_sel1:
+                sel_m_prat_idx = st.selectbox("महादशा चुनें", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_prat")
+            sel_m_for_p = v_mahadashas[sel_m_prat_idx]
+            antars_for_p = default_dasha_engine.generate_antardashas(sel_m_for_p["lord"], sel_m_for_p["start_date"], sel_m_for_p["end_date"], is_partial=sel_m_for_p.get("is_partial", False))
+            antar_p_options = [f"{a['lord']} ({a['start_date'].strftime('%d-%b-%Y')} से {a['end_date'].strftime('%d-%b-%Y')})" for a in antars_for_p]
+            default_a_idx = next((i for i, a in enumerate(antars_for_p) if a['lord'] == act_a['lord'] and a['start_date'] <= target_dt <= a['end_date']), 0)
+            with col_sel2:
+                sel_a_prat_idx = st.selectbox("अंतर्दशा चुनें", range(len(antar_p_options)), format_func=lambda i: antar_p_options[i], index=default_a_idx, key="sel_a_for_prat")
+            
+            sel_a_for_p = antars_for_p[sel_a_prat_idx]
+            pratyantars = default_dasha_engine.generate_pratyantardashas(
+                sel_m_for_p["lord"], sel_a_for_p["lord"], sel_a_for_p["start_date"], sel_a_for_p["end_date"]
+            )
+            pr_rows = []
+            for pr in pratyantars:
+                is_pr_act = (pr["start_date"] <= target_dt <= pr["end_date"])
+                dur_days = (pr["end_date"] - pr["start_date"]).total_seconds() / 86400.0
+                pr_rows.append({
+                    "दशा क्रम": f"{sel_m_for_p['lord']} / {sel_a_for_p['lord']} / {pr['lord']}" + (" (⭐ सक्रिय)" if is_pr_act else ""),
+                    "प्रत्यंतर्दशा स्वामी": pr["lord"],
+                    "आरंभ दिनांक": pr["start_date"].strftime("%d-%b-%Y"),
+                    "समाप्ति दिनांक": pr["end_date"].strftime("%d-%b-%Y"),
+                    "अवधि (दिन)": f"{dur_days:.1f} दिन",
+                    "सक्रियता": "✅ सक्रिय" if is_pr_act else "—"
+                })
+            st.dataframe(pd.DataFrame(pr_rows), use_container_width=True, hide_index=True)
+
+        with tab_v4:
+            st.markdown("##### 🔍 प्रत्यंतर्दशा अंतर्गत समस्त 9 सूक्ष्मदशाएं (Sookshmadashas - Level 4)")
+            col_s1, col_s2, col_s3 = st.columns(3)
+            with col_s1:
+                sel_m_s_idx = st.selectbox("महादशा", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_sookshma")
+            sel_m_s = v_mahadashas[sel_m_s_idx]
+            antars_s = default_dasha_engine.generate_antardashas(sel_m_s["lord"], sel_m_s["start_date"], sel_m_s["end_date"], is_partial=sel_m_s.get("is_partial", False))
+            with col_s2:
+                sel_a_s_idx = st.selectbox("अंतर्दशा", range(len(antars_s)), format_func=lambda i: f"{antars_s[i]['lord']} ({antars_s[i]['start_date'].strftime('%d-%b-%y')})", index=min(default_a_idx, len(antars_s)-1), key="sel_a_for_sookshma")
+            sel_a_s = antars_s[sel_a_s_idx]
+            prats_s = default_dasha_engine.generate_pratyantardashas(sel_m_s["lord"], sel_a_s["lord"], sel_a_s["start_date"], sel_a_s["end_date"])
+            default_pr_idx = next((i for i, p in enumerate(prats_s) if p['lord'] == act_pr['lord'] and p['start_date'] <= target_dt <= p['end_date']), 0)
+            with col_s3:
+                sel_pr_s_idx = st.selectbox("प्रत्यंतर्दशा", range(len(prats_s)), format_func=lambda i: f"{prats_s[i]['lord']} ({prats_s[i]['start_date'].strftime('%d-%b-%y')})", index=min(default_pr_idx, len(prats_s)-1), key="sel_pr_for_sookshma")
+            
+            sel_pr_s = prats_s[sel_pr_s_idx]
+            sookshmas = default_dasha_engine.generate_sookshmadashas(sel_m_s["lord"], sel_a_s["lord"], sel_pr_s["lord"], sel_pr_s["start_date"], sel_pr_s["end_date"])
+            s_rows = []
+            for s in sookshmas:
+                is_s_act = (s["start_date"] <= target_dt <= s["end_date"])
+                s_rows.append({
+                    "4-स्तरीय दशा": f"{sel_m_s['lord']}/{sel_a_s['lord']}/{sel_pr_s['lord']}/{s['lord']}" + (" (⭐ सक्रिय)" if is_s_act else ""),
+                    "सूक्ष्मदशा स्वामी": s["lord"],
+                    "आरंभ समय": s["start_date"].strftime("%d-%b-%Y %I:%M %p"),
+                    "समाप्ति समय": s["end_date"].strftime("%d-%b-%Y %I:%M %p"),
+                    "अवधि": f"{s['duration_days']} दिन",
+                    "सक्रियता": "✅ सक्रिय" if is_s_act else "—"
+                })
+            st.dataframe(pd.DataFrame(s_rows), use_container_width=True, hide_index=True)
+
+        with tab_v5:
+            st.markdown("##### 🧬 सूक्ष्मदशा अंतर्गत समस्त 9 प्राणदशाएं (Pranadashas - Level 5 / Hourly Precision)")
+            c_p1, c_p2, c_p3, c_p4 = st.columns(4)
+            with c_p1:
+                sel_m_p_idx = st.selectbox("महादशा (Maha)", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_prana")
+            sel_m_p = v_mahadashas[sel_m_p_idx]
+            antars_p = default_dasha_engine.generate_antardashas(sel_m_p["lord"], sel_m_p["start_date"], sel_m_p["end_date"], is_partial=sel_m_p.get("is_partial", False))
+            with c_p2:
+                sel_a_p_idx = st.selectbox("अंतर्दशा (Antar)", range(len(antars_p)), format_func=lambda i: f"{antars_p[i]['lord']}", index=min(default_a_idx, len(antars_p)-1), key="sel_a_for_prana")
+            sel_a_p = antars_p[sel_a_p_idx]
+            prats_p = default_dasha_engine.generate_pratyantardashas(sel_m_p["lord"], sel_a_p["lord"], sel_a_p["start_date"], sel_a_p["end_date"])
+            with c_p3:
+                sel_pr_p_idx = st.selectbox("प्रत्यंतर्दशा (Prat)", range(len(prats_p)), format_func=lambda i: f"{prats_p[i]['lord']}", index=min(default_pr_idx, len(prats_p)-1), key="sel_pr_for_prana")
+            sel_pr_p = prats_p[sel_pr_p_idx]
+            sookshmas_p = default_dasha_engine.generate_sookshmadashas(sel_m_p["lord"], sel_a_p["lord"], sel_pr_p["lord"], sel_pr_p["start_date"], sel_pr_p["end_date"])
+            default_s_idx = next((i for i, s in enumerate(sookshmas_p) if s['lord'] == act_s['lord'] and s['start_date'] <= target_dt <= s['end_date']), 0)
+            with c_p4:
+                sel_s_p_idx = st.selectbox("सूक्ष्मदशा (Sookshma)", range(len(sookshmas_p)), format_func=lambda i: f"{sookshmas_p[i]['lord']}", index=min(default_s_idx, len(sookshmas_p)-1), key="sel_s_for_prana")
+            sel_s_p = sookshmas_p[sel_s_p_idx]
+
+            pranas = default_dasha_engine.generate_pranadashas(sel_m_p["lord"], sel_a_p["lord"], sel_pr_p["lord"], sel_s_p["lord"], sel_s_p["start_date"], sel_s_p["end_date"])
+            p_rows = []
+            for prn in pranas:
+                is_p_act = (prn["start_date"] <= target_dt <= prn["end_date"])
+                p_rows.append({
+                    "5-स्तरीय प्राणदशा": f"{sel_m_p['lord']}/{sel_a_p['lord']}/{sel_pr_p['lord']}/{sel_s_p['lord']}/{prn['lord']}" + (" (⭐ सक्रिय)" if is_p_act else ""),
+                    "प्राणदशा स्वामी": prn["lord"],
+                    "आरंभ समय": prn["start_date"].strftime("%d-%b-%Y %I:%M %p"),
+                    "समाप्ति समय": prn["end_date"].strftime("%d-%b-%Y %I:%M %p"),
+                    "अवधि (घंटे)": f"{prn['duration_hours']} घंटे",
+                    "सक्रियता": "✅ सक्रिय" if is_p_act else "—"
+                })
+            st.dataframe(pd.DataFrame(p_rows), use_container_width=True, hide_index=True)
+
+        with tab_v_all:
+            st.markdown("##### 📜 संपूर्ण 120-वर्षीय जीवन कालक्रम तालिका")
+            full_rows = []
+            for m in v_mahadashas:
+                m_antars = default_dasha_engine.generate_antardashas(m["lord"], m["start_date"], m["end_date"], is_partial=m.get("is_partial", False))
+                for a in m_antars:
+                    is_active = (a["start_date"] <= target_dt <= a["end_date"])
+                    full_rows.append({
+                        "महादशा (L1)": m["lord"],
+                        "अंतर्दशा (L2)": a["lord"],
+                        "आरंभ दिनांक": a["start_date"].strftime("%d-%b-%Y"),
+                        "समाप्ति दिनांक": a["end_date"].strftime("%d-%b-%Y"),
+                        "अवधि (वर्ष)": f"{a['duration_years']:.2f}",
+                        "सक्रियता": "⭐ वर्तमान सक्रिय" if is_active else ""
+                    })
+            st.dataframe(pd.DataFrame(full_rows), use_container_width=True, hide_index=True)
+
+    # =========================================================================
+    # 2. YOGINI DASHA (3 LEVELS: MAJOR -> ANTAR -> PRATYANTAR)
+    # =========================================================================
     elif "योगिनी" in d_mode:
-        birth_dt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
-        moon_lon = chart.planets["Moon"].longitude
+        st.markdown(f"#### 🌸 योगिनी दशा (36-Year Classical Cycle — Major, Antar & Pratyantar)")
         try:
             yog_dashas = default_yogini_engine.generate_timeline(birth_dt, moon_lon)
         except TypeError:
             yog_dashas = default_yogini_engine.generate_timeline(chart)
-        st.dataframe(pd.DataFrame([{
-            "Yogini": y.get("yogini_name") or y.get("yogini", "Yogini"),
-            "Lord": y.get("lord", ""),
-            "Start Date": y["start_date"].strftime("%d-%b-%Y"),
-            "End Date": y["end_date"].strftime("%d-%b-%Y"),
-            "Duration (Yrs)": y["duration_years"],
-            "Status": "Birth Balance" if y.get("is_partial") else "Full"
-        } for y in yog_dashas]), use_container_width=True)
 
+        act_yog = next((y for y in yog_dashas if y["start_date"] <= target_dt <= y["end_date"]), yog_dashas[0])
+        
+        # Active Yogini HUD
+        y_col1, y_col2, y_col3 = st.columns(3)
+        y_col1.metric("🌸 सक्रिय मुख्य योगिनी (Major)", f"{act_yog.get('yogini_name', act_yog.get('yogini'))}", f"स्वामी: {act_yog.get('lord')}")
+        y_col2.metric("🗓️ अवधि सीमा", f"{act_yog['start_date'].strftime('%d-%b-%Y')} से {act_yog['end_date'].strftime('%d-%b-%Y')}")
+        y_col3.metric("⏳ कुल वर्ष", f"{act_yog['duration_years']} वर्ष")
+
+        tab_y1, tab_y2, tab_y3 = st.tabs([
+            "🌸 मुख्य योगिनी दशा (Major Periods)",
+            "💫 योगिनी अंतर्दशा (Antardashas)",
+            "⚡ योगिनी प्रत्यंतर्दशा (Pratyantardashas)"
+        ])
+
+        with tab_y1:
+            st.markdown("##### 🌸 मुख्य योगिनी दशा चक्र (36 वर्ष)")
+            st.dataframe(pd.DataFrame([{
+                "योगिनी (Yogini)": y.get("yogini_name") or y.get("yogini", "Yogini"),
+                "स्वामी ग्रह (Lord)": y.get("lord", ""),
+                "आरंभ दिनांक (Start)": y["start_date"].strftime("%d-%b-%Y"),
+                "समाप्ति दिनांक (End)": y["end_date"].strftime("%d-%b-%Y"),
+                "अवधि (वर्ष)": f"{y['duration_years']} वर्ष",
+                "स्थिति": "जन्म शेष (Birth Balance)" if y.get("is_partial") else "पूर्ण दशा",
+                "सक्रियता": "⭐ वर्तमान सक्रिय" if (y["start_date"] <= target_dt <= y["end_date"]) else ""
+            } for y in yog_dashas]), use_container_width=True, hide_index=True)
+
+        with tab_y2:
+            st.markdown("##### 💫 योगिनी अंतर्दशा (8 Sub-periods per Yogini)")
+            y_options = [f"{y.get('yogini_name', y.get('yogini'))} ({y['start_date'].strftime('%d-%b-%Y')} ~ {y['end_date'].strftime('%d-%b-%Y')})" for y in yog_dashas]
+            default_y_idx = next((i for i, y in enumerate(yog_dashas) if y["start_date"] <= target_dt <= y["end_date"]), 0)
+            sel_y_idx = st.selectbox("मुख्य योगिनी चुनें", range(len(y_options)), format_func=lambda i: y_options[i], index=default_y_idx, key="sel_yogini_for_antar")
+            sel_y_obj = yog_dashas[sel_y_idx]
+
+            y_antars = default_yogini_engine.generate_antardashas(
+                sel_y_obj.get("yogini_name", sel_y_obj.get("yogini")), sel_y_obj["start_date"], sel_y_obj["end_date"]
+            )
+            st.dataframe(pd.DataFrame([{
+                "योगिनी / अंतर्दशा": f"{sel_y_obj.get('yogini_name', sel_y_obj.get('yogini'))} — {ya['yogini']}",
+                "अंतर्दशा स्वामी": ya["lord"],
+                "आरंभ दिनांक": ya["start_date"].strftime("%d-%b-%Y"),
+                "समाप्ति दिनांक": ya["end_date"].strftime("%d-%b-%Y"),
+                "अवधि (माह / दिन)": f"{ya['duration_months']} माह ({ya['duration_days']} दिन)",
+                "सक्रियता": "⭐ सक्रिय" if (ya["start_date"] <= target_dt <= ya["end_date"]) else ""
+            } for ya in y_antars]), use_container_width=True, hide_index=True)
+
+        with tab_y3:
+            st.markdown("##### ⚡ योगिनी प्रत्यंतर्दशा (Pratyantardashas)")
+            col_y_p1, col_y_p2 = st.columns(2)
+            with col_y_p1:
+                sel_y_m_idx = st.selectbox("मुख्य योगिनी", range(len(y_options)), format_func=lambda i: y_options[i], index=default_y_idx, key="sel_y_m_for_prat")
+            sel_y_m_p = yog_dashas[sel_y_m_idx]
+            y_antars_p = default_yogini_engine.generate_antardashas(sel_y_m_p.get("yogini_name", sel_y_m_p.get("yogini")), sel_y_m_p["start_date"], sel_y_m_p["end_date"])
+            with col_y_p2:
+                sel_y_a_idx = st.selectbox("अंतर्दशा योगिनी", range(len(y_antars_p)), format_func=lambda i: f"{y_antars_p[i]['yogini']} ({y_antars_p[i]['start_date'].strftime('%d-%b-%y')})", key="sel_y_a_for_prat")
+            sel_y_a_p = y_antars_p[sel_y_a_idx]
+            
+            y_prats = default_yogini_engine.generate_pratyantardashas(
+                sel_y_m_p.get("yogini_name", sel_y_m_p.get("yogini")), sel_y_a_p["yogini"], sel_y_a_p["start_date"], sel_y_a_p["end_date"]
+            )
+            st.dataframe(pd.DataFrame([{
+                "3-स्तरीय योगिनी": f"{sel_y_m_p.get('yogini_name', sel_y_m_p.get('yogini'))} / {sel_y_a_p['yogini']} / {yp['yogini']}",
+                "प्रत्यंतर स्वामी": yp["lord"],
+                "आरंभ समय": yp["start_date"].strftime("%d-%b-%Y %I:%M %p"),
+                "समाप्ति समय": yp["end_date"].strftime("%d-%b-%Y %I:%M %p"),
+                "अवधि (दिन)": f"{yp['duration_days']} दिन",
+                "सक्रियता": "⭐ सक्रिय" if (yp["start_date"] <= target_dt <= yp["end_date"]) else ""
+            } for yp in y_prats]), use_container_width=True, hide_index=True)
+
+    # =========================================================================
+    # 3. JAIMINI CHARA DASHA (3 LEVELS: MAJOR SIGN -> ANTARDASHA -> PRATYANTAR)
+    # =========================================================================
     elif "जैमिनी" in d_mode:
+        st.markdown("#### 🔱 जैमिनी चर दशा (Jaimini Rashi Chara Dasha — Major & Antar)")
         chara_dashas = default_chara_engine.generate_timeline(chart)
-        st.dataframe(pd.DataFrame([{
-            "Sign": c["sign_name"],
-            "Start Date": c["start_date"].strftime("%d-%b-%Y"),
-            "End Date": c["end_date"].strftime("%d-%b-%Y"),
-            "Duration (Yrs)": c["duration_years"],
-        } for c in chara_dashas]), use_container_width=True)
+        act_chara = next((c for c in chara_dashas if c["start_date"] <= target_dt <= c["end_date"]), chara_dashas[0])
 
+        c_col1, c_col2, c_col3 = st.columns(3)
+        c_col1.metric("🔱 सक्रिय चर दशा राशि", f"{act_chara['sign_name']}", f"Sign #{act_chara['sign_id']}")
+        c_col2.metric("🗓️ अवधि सीमा", f"{act_chara['start_date'].strftime('%d-%b-%Y')} से {act_chara['end_date'].strftime('%d-%b-%Y')}")
+        c_col3.metric("⏳ कुल वर्ष", f"{act_chara['duration_years']} वर्ष")
+
+        tab_c1, tab_c2, tab_c3 = st.tabs([
+            "🔱 चर महादशा (12 Signs)",
+            "💫 चर अंतर्दशा (12 Sub-Signs per Sign)",
+            "⚡ चर प्रत्यंतर्दशा (Pratyantardasha)"
+        ])
+
+        with tab_c1:
+            st.markdown("##### 🔱 12 राशियों का चर महादशा कालक्रम")
+            st.dataframe(pd.DataFrame([{
+                "राशि (Sign)": f"{c['sign_name']} (#{c['sign_id']})",
+                "आरंभ दिनांक (Start)": c["start_date"].strftime("%d-%b-%Y"),
+                "समाप्ति दिनांक (End)": c["end_date"].strftime("%d-%b-%Y"),
+                "अवधि (वर्ष)": f"{c['duration_years']} वर्ष",
+                "सक्रियता": "⭐ वर्तमान सक्रिय" if (c["start_date"] <= target_dt <= c["end_date"]) else ""
+            } for c in chara_dashas]), use_container_width=True, hide_index=True)
+
+        with tab_c2:
+            st.markdown("##### 💫 चर अंतर्दशा (12 Sub-signs under Selected Rashi)")
+            c_options = [f"{c['sign_name']} ({c['start_date'].strftime('%d-%b-%Y')} ~ {c['end_date'].strftime('%d-%b-%Y')})" for c in chara_dashas]
+            default_c_idx = next((i for i, c in enumerate(chara_dashas) if c["start_date"] <= target_dt <= c["end_date"]), 0)
+            sel_c_idx = st.selectbox("चर दशा राशि चुनें", range(len(c_options)), format_func=lambda i: c_options[i], index=default_c_idx, key="sel_chara_for_antar")
+            sel_c_obj = chara_dashas[sel_c_idx]
+
+            c_antars = default_chara_engine.generate_antardashas(sel_c_obj["sign_id"], sel_c_obj["start_date"], sel_c_obj["end_date"])
+            st.dataframe(pd.DataFrame([{
+                "चर महादशा / अंतर्दशा": f"{sel_c_obj['sign_name']} — {ca['sign_name']}",
+                "राशि स्वामी (Lord)": ca["lord"],
+                "आरंभ दिनांक": ca["start_date"].strftime("%d-%b-%Y"),
+                "समाप्ति दिनांक": ca["end_date"].strftime("%d-%b-%Y"),
+                "अवधि": f"{ca['duration_months']} माह ({ca['duration_days']} दिन)",
+                "सक्रियता": "⭐ सक्रिय" if (ca["start_date"] <= target_dt <= ca["end_date"]) else ""
+            } for ca in c_antars]), use_container_width=True, hide_index=True)
+
+        with tab_c3:
+            st.markdown("##### ⚡ चर प्रत्यंतर्दशा (12 Sub-divisions per Antardasha)")
+            col_c_p1, col_c_p2 = st.columns(2)
+            with col_c_p1:
+                sel_c_m_idx = st.selectbox("महादशा राशि", range(len(c_options)), format_func=lambda i: c_options[i], index=default_c_idx, key="sel_c_m_for_prat")
+            sel_c_m_p = chara_dashas[sel_c_m_idx]
+            c_antars_p = default_chara_engine.generate_antardashas(sel_c_m_p["sign_id"], sel_c_m_p["start_date"], sel_c_m_p["end_date"])
+            with col_c_p2:
+                sel_c_a_idx = st.selectbox("अंतर्दशा राशि", range(len(c_antars_p)), format_func=lambda i: f"{c_antars_p[i]['sign_name']} ({c_antars_p[i]['start_date'].strftime('%d-%b-%y')})", key="sel_c_a_for_prat")
+            sel_c_a_p = c_antars_p[sel_c_a_idx]
+
+            c_prats = default_chara_engine.generate_pratyantardashas(sel_c_a_p["sign_id"], sel_c_a_p["start_date"], sel_c_a_p["end_date"])
+            st.dataframe(pd.DataFrame([{
+                "3-स्तरीय चर दशा": f"{sel_c_m_p['sign_name']} / {sel_c_a_p['sign_name']} / {cp['sign_name']}",
+                "राशि स्वामी": cp["lord"],
+                "आरंभ दिनांक": cp["start_date"].strftime("%d-%b-%Y"),
+                "समाप्ति दिनांक": cp["end_date"].strftime("%d-%b-%Y"),
+                "अवधि (दिन)": f"{cp['duration_days']} दिन",
+                "सक्रियता": "⭐ सक्रिय" if (cp["start_date"] <= target_dt <= cp["end_date"]) else ""
+            } for cp in c_prats]), use_container_width=True, hide_index=True)
+
+    # =========================================================================
+    # 4. KAALACHAKRA DASHA (BPHS)
+    # =========================================================================
     elif "कालचक्र" in d_mode:
         st.markdown("#### 🔄 कालचक्र महादशा (Kaalachakra Dasha - BPHS)")
         kcd_res = default_kcd_engine.calculate(chart)
@@ -2634,6 +3010,9 @@ elif selected_module.startswith("⏱️ दशा"):
 
         st.info("💡 **कालचक्र गति फल:** 'मण्डूक गति' (Frog Jump) अथवा 'सिंहावलोकन' (Lion's Gaze) की दशा में जीवन में अचानक बड़े परिवर्तन, स्थान परिवर्तन अथवा अप्रत्याशित उत्थान/पतन घटित होता है। देह राशि शारीरिक सुख-स्वास्थ्य और जीव राशि मानसिक व आत्मिक शांति का नियंत्रण करती है।")
 
+    # =========================================================================
+    # 5. SHOOLA DASHA (AYURDAYA & MARAKA)
+    # =========================================================================
     elif "शूल" in d_mode:
         st.markdown("#### 🔱 शूल महादशा (Shoola Dasha - Ayurdaya & Maraka Timing)")
         shoola_res = default_shoola_engine.calculate(chart)
