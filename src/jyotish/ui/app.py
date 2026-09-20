@@ -180,30 +180,31 @@ unified_css = """
         z-index: 999999 !important;
     }
 
-    /* Global Canvas & Base Font Color */
-    .stApp {
+    /* Global Canvas & Base Font Color (Day Mode) */
+    body:not(.night-mode) .stApp {
         background-color: #F8FAFC !important;
         color: #000000 !important;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
     }
 
-    /* All Text, Headings, Spans, Labels, Paragraphs in Pure Black */
-    h1, h2, h3, h4, h5, h6, p, span, li, a, div, label, caption, strong, b {
+    /* Day Mode Text in Pure Black */
+    body:not(.night-mode) h1, body:not(.night-mode) h2, body:not(.night-mode) h3, body:not(.night-mode) h4, body:not(.night-mode) h5, body:not(.night-mode) h6,
+    body:not(.night-mode) p, body:not(.night-mode) span, body:not(.night-mode) li, body:not(.night-mode) a, body:not(.night-mode) label, body:not(.night-mode) caption, body:not(.night-mode) strong, body:not(.night-mode) b {
         color: #000000 !important;
     }
 
-    /* Form Labels (Inputs, Selectboxes, Dates, Times) */
-    label, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] span {
+    /* Day Mode Form Labels */
+    body:not(.night-mode) label, body:not(.night-mode) [data-testid="stWidgetLabel"] p, body:not(.night-mode) [data-testid="stWidgetLabel"] span {
         color: #000000 !important;
         font-weight: 700 !important;
         font-size: 0.92rem !important;
     }
 
-    /* Input Fields: Crisp White Background with Solid Black Text & High Contrast Border */
-    input, textarea, select, 
-    div[data-baseweb="input"] input, 
-    div[data-baseweb="base-input"] input,
-    div[data-baseweb="input"] {
+    /* Day Mode Input Fields */
+    body:not(.night-mode) input, body:not(.night-mode) textarea, body:not(.night-mode) select, 
+    body:not(.night-mode) div[data-baseweb="input"] input, 
+    body:not(.night-mode) div[data-baseweb="base-input"] input,
+    body:not(.night-mode) div[data-baseweb="input"] {
         background-color: #FFFFFF !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
@@ -211,44 +212,44 @@ unified_css = """
         border-radius: 8px !important;
         font-weight: 600 !important;
     }
-    input:focus, textarea:focus, div[data-baseweb="input"]:focus-within {
+    body:not(.night-mode) input:focus, body:not(.night-mode) textarea:focus, body:not(.night-mode) div[data-baseweb="input"]:focus-within {
         border-color: #D97706 !important;
         box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.25) !important;
     }
 
-    /* Selectbox Containers */
-    div[data-baseweb="select"] > div {
+    /* Day Mode Selectbox Containers */
+    body:not(.night-mode) div[data-baseweb="select"] > div {
         background-color: #FFFFFF !important;
         color: #000000 !important;
         border: 1.5px solid #94A3B8 !important;
         border-radius: 8px !important;
         font-weight: 600 !important;
     }
-    div[data-baseweb="select"] * {
+    body:not(.night-mode) div[data-baseweb="select"] * {
         color: #000000 !important;
     }
 
-    /* Numbers & Metrics: Solid Black & Extra Bold */
-    [data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
+    /* Day Mode Numbers & Metrics */
+    body:not(.night-mode) [data-testid="stMetricValue"], body:not(.night-mode) [data-testid="stMetricValue"] * {
         color: #000000 !important;
         font-weight: 900 !important;
         font-size: 1.65rem !important;
     }
-    [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] * {
+    body:not(.night-mode) [data-testid="stMetricLabel"], body:not(.night-mode) [data-testid="stMetricLabel"] * {
         color: #1E293B !important;
         font-weight: 700 !important;
         font-size: 0.88rem !important;
     }
 
-    /* Sidebar Styling: Clean Light Slate, CRISP BLACK LABELS & TEXT */
-    [data-testid="stSidebar"] {
+    /* Day Mode Sidebar Styling */
+    body:not(.night-mode) [data-testid="stSidebar"] {
         background-color: #F1F5F9 !important;
         border-right: 2px solid #CBD5E1 !important;
     }
-    [data-testid="stSidebar"] * {
+    body:not(.night-mode) [data-testid="stSidebar"] * {
         color: #000000 !important;
     }
-    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
+    body:not(.night-mode) [data-testid="stSidebar"] h1, body:not(.night-mode) [data-testid="stSidebar"] h2, body:not(.night-mode) [data-testid="stSidebar"] h3 {
         color: #000000 !important;
         font-weight: 800 !important;
     }
