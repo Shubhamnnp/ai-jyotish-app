@@ -1281,7 +1281,6 @@ st.markdown(f"""
         </div>
     </div>
 </header>
-<img src="data:image/svg+xml;utf8,<svg></svg>" style="display:none;" onload="(function(){try{var c=localStorage.getItem('jyotish_user_gps_loc')||sessionStorage.getItem('jyotish_user_gps_loc');if(c){var el=document.getElementById('user-gps-val');if(el)el.innerText=c;}}catch(e){}})()" onerror="this.onload()" />
 """, unsafe_allow_html=True)
 
 p = chart.panchang
