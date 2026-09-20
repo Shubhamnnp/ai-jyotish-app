@@ -4432,16 +4432,20 @@ elif selected_module.startswith("💬 ज्योतिष AI"):
         # Generate Assistant Response
         with st.chat_message("assistant", avatar="🔮"):
             with st.spinner("🔮 कुण्डली के समस्त ग्रहों, भावों एवं दशाओं का विश्लेषण कर सटीक उत्तर तैयार किया जा रहा है..."):
+                import importlib
+                import src.jyotish.ai.narrative as narrative_mod
+                importlib.reload(narrative_mod)
+                chat_svc = narrative_mod.default_narrative_service
+
                 master_bundle = default_master_calculator.calculate_all(chart)
                 active_key = st.session_state.get("gemini_api_key", os.getenv("GEMINI_API_KEY"))
                 
-                ai_response = default_narrative_service.chat_consultation(
+                ai_response = chat_svc.chat_consultation(
                     user_query=prompt_to_process,
                     chart=chart,
                     master_data=master_bundle,
                     api_key=active_key,
                     model="gemini-3.8-flash",
-                    language="Hindi",
                     chat_history=st.session_state.ai_chat_history
                 )
                 st.markdown(ai_response)
