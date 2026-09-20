@@ -1735,8 +1735,17 @@ if not st.session_state.get("is_logged_in", False):
 
 
 # -------------------------------------------------------------
-# 🌐 Multi-Language Selector (Native Python Engine)
+# App State & Multi-Language Configuration
 # -------------------------------------------------------------
+if "app_theme_mode" not in st.session_state:
+    st.session_state.app_theme_mode = "day"
+
+if "app_lang" not in st.session_state:
+    st.session_state.app_lang = "General (जनरल)"
+
+if "show_birth_details" not in st.session_state:
+    st.session_state.show_birth_details = False
+
 LANG_OPTIONS = [
     "General (जनरल)",
     "हिन्दी (Hindi)",
@@ -1747,48 +1756,54 @@ LANG_OPTIONS = [
     "मराठी (Marathi)",
     "বাংলা (Bengali)"
 ]
-if "app_lang" not in st.session_state:
-    st.session_state.app_lang = "General (जनरल)"
+
+init_b_date = st.session_state.birth_date
+if isinstance(init_b_date, datetime):
+    init_b_date = init_b_date.date()
+if init_b_date < date(1950, 1, 1):
+    init_b_date = date(1950, 1, 1)
+elif init_b_date > date(2050, 12, 31):
+    init_b_date = date(2050, 12, 31)
+
+default_lat = st.session_state.birth_lat
+default_lon = st.session_state.birth_lon
+default_tz = 5.5
+default_city_name = st.session_state.birth_city
 
 # -------------------------------------------------------------
-# Top Control Panel: Birth Profile & Kundali Calculation Controls
+# Collapsible Top Control Panel: Birth Profile & Kundali Calculations
 # -------------------------------------------------------------
-with st.expander("👤 जातक जन्म विवरण एवं कुण्डली गणना (Birth Profile & Calculation Controls)", expanded=True):
-    col_r1_1, col_r1_2, col_r1_3, col_r1_4 = st.columns([1.2, 1.4, 1.4, 1.4])
+with st.expander("👤 जातक जन्म विवरण एवं कुण्डली गणना (Birth Profile Controls & Presets)", expanded=st.session_state.get("show_birth_details", False)):
+    col_r1_1, col_r1_2, col_r1_3, col_r1_4 = st.columns([1.2, 1.4, 1.5, 1.5])
     
-    name = col_r1_1.text_input("नाम (Name)", value=st.session_state.birth_name)
+    with col_r1_1:
+        name = st.text_input("नाम (Name)", value=st.session_state.birth_name, key="app_birth_name_input")
+        st.session_state.birth_name = name
     
-    city_query = col_r1_2.text_input("स्थान खोज (Search City)", value=st.session_state.birth_city)
-    geo_results = default_geocoding_service.search(city_query, limit=3)
-    default_lat = st.session_state.birth_lat
-    default_lon = st.session_state.birth_lon
-    default_tz = 5.5
-    default_city_name = st.session_state.birth_city
-    if geo_results:
-        selected_loc = col_r1_2.selectbox(
-            "उपलब्ध स्थान (Select Location)",
-            geo_results,
-            format_func=lambda x: f"{x.formatted_name} ({x.source})"
-        )
-        default_lat = selected_loc.latitude
-        default_lon = selected_loc.longitude
-        default_tz = selected_loc.timezone_offset
-        default_city_name = selected_loc.city
-
-    init_b_date = st.session_state.birth_date
-    if isinstance(init_b_date, datetime):
-        init_b_date = init_b_date.date()
-    if init_b_date < date(1950, 1, 1):
-        init_b_date = date(1950, 1, 1)
-    elif init_b_date > date(2050, 12, 31):
-        init_b_date = date(2050, 12, 31)
+    with col_r1_2:
+        city_query = st.text_input("स्थान खोज (Search City)", value=st.session_state.birth_city, key="app_city_query_input")
+        geo_results = default_geocoding_service.search(city_query, limit=3)
+        if geo_results:
+            selected_loc = st.selectbox(
+                "उपलब्ध स्थान (Select Location)",
+                geo_results,
+                format_func=lambda x: f"{x.formatted_name} ({x.source})",
+                key="app_geo_select"
+            )
+            default_lat = selected_loc.latitude
+            default_lon = selected_loc.longitude
+            default_tz = selected_loc.timezone_offset
+            default_city_name = selected_loc.city
+            st.session_state.birth_lat = default_lat
+            st.session_state.birth_lon = default_lon
+            st.session_state.birth_city = default_city_name
 
     with col_r1_3:
         dob_mode = st.radio(
-            "जन्म तिथि (DOB)",
+            "जन्म तिथि प्रारूप (DOB Mode)",
             ["🔢 वर्ष (1950-2050)", "📅 कैलेंडर"],
             horizontal=True,
-            key="app_dob_picker_type"
+            key="app_dob_mode_radio"
         )
         if "1950" in dob_mode or "वर्ष" in dob_mode:
             col_d_day, col_d_mon, col_d_yr = st.columns([1, 1.2, 1.2])
@@ -1802,8 +1817,8 @@ with st.expander("👤 जातक जन्म विवरण एवं क�
             ]
             cur_mon = init_b_date.month
             mon_idx = cur_mon - 1
-            sel_yr = col_d_yr.selectbox("वर्ष", years_list, index=yr_idx, key="app_dob_year_sel")
-            sel_mon_str = col_d_mon.selectbox("माह", months_labels, index=mon_idx, key="app_dob_month_sel")
+            sel_yr = col_d_yr.selectbox("वर्ष", years_list, index=yr_idx, key="app_dob_yr_select")
+            sel_mon_str = col_d_mon.selectbox("माह", months_labels, index=mon_idx, key="app_dob_mon_select")
             sel_mon = months_labels.index(sel_mon_str) + 1
             if sel_mon in [1, 3, 5, 7, 8, 10, 12]:
                 max_d = 31
@@ -1815,7 +1830,7 @@ with st.expander("👤 जातक जन्म विवरण एवं क�
             days_list = list(range(1, max_d + 1))
             cur_d = min(init_b_date.day, max_d)
             d_idx = cur_d - 1
-            sel_d = col_d_day.selectbox("दिन", days_list, index=d_idx, key="app_dob_day_sel")
+            sel_d = col_d_day.selectbox("दिन", days_list, index=d_idx, key="app_dob_day_select")
             birth_d = date(sel_yr, sel_mon, sel_d)
             st.session_state.birth_date = birth_d
         else:
@@ -1834,7 +1849,7 @@ with st.expander("👤 जातक जन्म विवरण एवं क�
             "जन्म समय (Birth Time)",
             ["12 घंटे (AM/PM)", "24 घंटे"],
             horizontal=True,
-            key="app_time_format_pref"
+            key="app_time_mode_radio"
         )
         if "last_loaded_time" not in st.session_state:
             st.session_state.last_loaded_time = st.session_state.birth_time
@@ -1875,33 +1890,35 @@ with st.expander("👤 जातक जन्म विवरण एवं क�
             )
             st.session_state.birth_time = birth_t
 
-    # Row 2: Settings & Coordinates
+    # Row 2: Coordinates & Settings
     col_r2_1, col_r2_2, col_r2_3, col_r2_4 = st.columns([1.2, 1.2, 1.4, 1.4])
     with col_r2_1:
         col_g1, col_g2 = st.columns(2)
-        latitude = col_g1.number_input("Latitude", value=default_lat, format="%.4f")
-        longitude = col_g2.number_input("Longitude", value=default_lon, format="%.4f")
+        latitude = col_g1.number_input("Latitude", value=default_lat, format="%.4f", key="app_lat_input")
+        longitude = col_g2.number_input("Longitude", value=default_lon, format="%.4f", key="app_lon_input")
     with col_r2_2:
         col_tz1, col_tz2 = st.columns(2)
-        tz_offset = col_tz1.number_input("TZ Offset", value=default_tz, step=0.5)
-        confidence = col_tz2.selectbox("Confidence", ["Exact", "Approx (±15 min)", "Unknown"])
+        tz_offset = col_tz1.number_input("TZ Offset", value=default_tz, step=0.5, key="app_tz_input")
+        confidence = col_tz2.selectbox("Confidence", ["Exact", "Approx (±15 min)", "Unknown"], key="app_conf_select")
     with col_r2_3:
         col_ay, col_hs = st.columns(2)
-        ayanamsa = col_ay.selectbox("अयनांश (Ayanamsa)", ["Lahiri", "Raman", "KP", "True Chitra"])
-        house_system = col_hs.selectbox("भाव पद्धति", ["Whole Sign", "Equal"])
+        ayanamsa = col_ay.selectbox("अयनांश (Ayanamsa)", ["Lahiri", "Raman", "KP", "True Chitra"], key="app_ayanamsa_select")
+        house_system = col_hs.selectbox("भाव पद्धति", ["Whole Sign", "Equal"], key="app_hs_select")
     with col_r2_4:
         col_cs, col_pm = st.columns([1.4, 1])
-        chart_style = col_cs.selectbox("कुण्डली चक्र शैली", ["North Indian (Diamond)", "South Indian (Box)", "East Indian (Surya)"])
-        pro_mode = col_pm.toggle("⚡ Pro Mode", value=True)
+        chart_style = col_cs.selectbox("कुण्डली चक्र शैली", ["North Indian (Diamond)", "South Indian (Box)", "East Indian (Surya)"], key="app_chart_style_select")
+        pro_mode = col_pm.toggle("⚡ Pro Mode", value=True, key="app_pro_mode_toggle")
 
-    # Row 3: Actions & Presets
+    # Row 3: Action Buttons
     col_a1, col_a2, col_a3, col_a4 = st.columns([1.6, 1.3, 1.6, 1.1])
-    calc_clicked = col_a1.button("🚀 कुण्डली गणना करें (Calculate)", type="primary", use_container_width=True)
+    calc_clicked = col_a1.button("🚀 कुण्डली गणना करें (Calculate)", type="primary", use_container_width=True, key="app_calc_kundali_btn")
     if calc_clicked:
         st.session_state.calculated_at = datetime.now()
+        st.session_state.show_birth_details = False
         st.toast("✅ कुण्डली गणना एवं षोडशवर्ग सफलतापूर्वक अद्यतन किए गए!", icon="🔮")
+        st.rerun()
 
-    save_clicked = col_a2.button("💾 कुण्डली सहेजें", use_container_width=True)
+    save_clicked = col_a2.button("💾 कुण्डली सहेजें", use_container_width=True, key="app_save_kundali_btn")
     if save_clicked:
         save_payload = {
             "name": name,
@@ -1927,7 +1944,7 @@ with st.expander("👤 जातक जन्म विवरण एवं क�
                 })
         if flat_saved_charts:
             with st.popover("📁 सहेजी गई / 10 डेमो प्रोफाइल", use_container_width=True):
-                sel_demo_label = st.selectbox("प्रोफाइल चुनें", [sc["label"] for sc in flat_saved_charts])
+                sel_demo_label = st.selectbox("प्रोफाइल चुनें", [sc["label"] for sc in flat_saved_charts], key="app_pop_demo_sel")
                 if st.button("📥 लोड करें (Load)", key="load_saved_profile_top_btn", use_container_width=True):
                     chosen = next((sc for sc in flat_saved_charts if sc["label"] == sel_demo_label), None)
                     if chosen and chosen["data"]:
@@ -1941,6 +1958,7 @@ with st.expander("👤 जातक जन्म विवरण एवं क�
                             st.session_state.birth_time = datetime.strptime(bd["birth_time"], "%H:%M:%S").time()
                         except Exception:
                             pass
+                        st.session_state.show_birth_details = False
                         st.toast(f"✅ {st.session_state.birth_name} का विवरण लोड किया गया!", icon="🔮")
                         st.rerun()
 
@@ -1960,6 +1978,34 @@ with st.expander("👤 जातक जन्म विवरण एवं क�
                         st.success(f"Synced {len(st.session_state.gla_charts)} charts!")
                     else:
                         st.error("Authentication failed. Please verify credentials in Module 7.")
+
+# Ensure all calculation variables are resolved
+if "name" not in locals():
+    name = st.session_state.birth_name
+if "birth_d" not in locals():
+    birth_d = st.session_state.birth_date
+if "birth_t" not in locals():
+    birth_t = st.session_state.birth_time
+if "latitude" not in locals():
+    latitude = default_lat
+if "longitude" not in locals():
+    longitude = default_lon
+if "tz_offset" not in locals():
+    tz_offset = default_tz
+if "confidence" not in locals():
+    confidence = "Exact"
+if "ayanamsa" not in locals():
+    ayanamsa = "Lahiri"
+if "house_system" not in locals():
+    house_system = "Whole Sign"
+if "chart_style" not in locals():
+    chart_style = "North Indian (Diamond)"
+if "pro_mode" not in locals():
+    pro_mode = True
+
+# -------------------------------------------------------------
+# 21 Vedic Astrology Modules Definitions
+# -------------------------------------------------------------
 if "English" in st.session_state.app_lang:
     MODULE_OPTIONS = [
         "📜 Birth Chart (Natal & Vargas)",
@@ -2187,6 +2233,9 @@ current_time_str = now_dt.strftime("%d %b %Y, %I:%M %p")
 st.markdown(f"""
 <header class="top-nav-bar">
     <div class="nav-left">
+        <button id="sidebar-toggle-action-btn" class="sidebar-toggle-btn" title="साइडबार खोलें / बंद करें (Toggle Sidebar)">
+            ❯❯
+        </button>
         <div class="logo-circle">🔮</div>
         <div>
             <div class="app-brand-title">JyotishOS: Classical Vedic Astrology Platform</div>
