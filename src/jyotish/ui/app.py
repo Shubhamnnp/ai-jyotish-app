@@ -51,15 +51,11 @@ from src.jyotish.dasha.yogini import default_yogini_engine
 from src.jyotish.dasha.chara import default_chara_engine
 from src.jyotish.dasha.kcd import default_kcd_engine
 from src.jyotish.dasha.shoola import default_shoola_engine
-import importlib
-import src.jyotish.services.prashna as prashna_service_mod
-importlib.reload(prashna_service_mod)
+from src.jyotish.services.event_query import default_event_query_service
 from src.jyotish.services.prashna import default_prashna_service, PRASHNA_CATEGORIES
 from src.jyotish.services.varshaphal import default_varshaphal_service
 from src.jyotish.services.btr import default_btr_service, LifeEvent
 from src.jyotish.services.milan import default_milan_service
-import src.jyotish.services.geocoding as geocoding_service_mod
-importlib.reload(geocoding_service_mod)
 from src.jyotish.services.geocoding import default_geocoding_service
 from src.jyotish.services.vedic_rishi import default_vedic_rishi_client
 from src.jyotish.services.report_generator import default_report_generator

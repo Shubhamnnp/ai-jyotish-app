@@ -15,8 +15,8 @@ calculates net consensus, and provides full evidence for the final verdict.
 
 from typing import Dict, List, Any, Tuple, Optional
 from datetime import datetime
-from ..core.models import KundaliChart
-from ..core.constants import KENDRA_HOUSES, TRIKONA_HOUSES, DUSTHANA_HOUSES, SIGN_LORDS
+from src.jyotish.core.models import KundaliChart
+from src.jyotish.core.constants import KENDRA_HOUSES, TRIKONA_HOUSES, DUSTHANA_HOUSES, SIGN_LORDS
 
 
 # Deeptamsha orbs
@@ -789,3 +789,4 @@ class PrashnaRuleEvaluator:
 
 
 default_prashna_rule_evaluator = PrashnaRuleEvaluator()
+

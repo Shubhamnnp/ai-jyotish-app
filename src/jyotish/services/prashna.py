@@ -7,10 +7,10 @@ Provides 23 query categories, sub-questions, 12-house role maps with icons, and 
 
 from datetime import datetime, date, time
 from typing import Dict, Any, List, Optional
-from ..core.models import BirthData, KundaliChart
-from ..core.calculator import default_chart_calculator
-from ..core.constants import KENDRA_HOUSES, TRIKONA_HOUSES, SIGN_LORDS
-from ..rules.prashna_rules import default_prashna_rule_evaluator
+from src.jyotish.core.models import BirthData, KundaliChart
+from src.jyotish.core.calculator import default_chart_calculator
+from src.jyotish.core.constants import KENDRA_HOUSES, TRIKONA_HOUSES, SIGN_LORDS
+from src.jyotish.rules.prashna_rules import default_prashna_rule_evaluator
 
 
 PRASHNA_CATEGORIES = [
