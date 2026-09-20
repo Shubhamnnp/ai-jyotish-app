@@ -1149,6 +1149,26 @@ def render_chart_svg(c_obj: KundaliChart, chart_title: str, varga_code: str = "D
     return ChartRenderer.render_north_indian_svg(c_obj, title=chart_title, varga_code=varga_code)
 
 
+def get_varga_dignity_info(planet: str, sign_name: str, aff_eng: Optional[AfflictionEngine] = None) -> Tuple[str, int, str]:
+    target_aff = aff_eng or affliction_engine
+    text, css = target_aff.get_dignity(planet, sign_name)
+    if css == "exalt":
+        return "🌟 उच्च (Exalted)", 20, "परमोच्च बल एवं अत्यंत शुभ फल"
+    elif css == "mool":
+        return "💎 मूलत्रिकोण (Moolatrikona)", 18, "प्रबल शुभ एवं फलदायक"
+    elif css == "own":
+        return "👑 स्वराशि (Own Sign)", 15, "सशक्त एवं अनुकूल"
+    elif css == "friend":
+        return "🤝 मित्र राशि (Friend Sign)", 11, "मित्रवत एवं सहयोगी"
+    elif css == "neutral":
+        return "⚖️ सम राशि (Neutral)", 7, "तटस्थ / सामान्य फल"
+    elif css == "enemy":
+        return "⚔️ शत्रु राशि (Enemy Sign)", 4, "प्रतिरोधी एवं संघर्ष"
+    elif css == "deb":
+        return "⚠️ नीच (Debilitated)", 0, "कमजोर / उपाय आवश्यक"
+    return "⚖️ सामान्य", 7, "सामान्य"
+
+
 now_dt = datetime.now()
 current_time_str = now_dt.strftime("%d %b %Y, %I:%M %p")
 
@@ -1251,24 +1271,6 @@ if selected_module.startswith("📜 जन्म कुण्डली"):
         "D30": "अरिष्ट, रोग, पाप प्रभाव एवं संकट (Misfortunes, Evils & Challenges)",
         "D60": "पूर्वजन्म के संचित कर्म एवं अंतिम प्रारब्ध (Past Life Karma & Core Destiny)",
     }
-
-    def get_varga_dignity_info(planet: str, sign_name: str, aff_eng: AfflictionEngine) -> Tuple[str, int, str]:
-        text, css = aff_eng.get_dignity(planet, sign_name)
-        if css == "exalt":
-            return "🌟 उच्च (Exalted)", 20, "परमोच्च बल एवं अत्यंत शुभ फल"
-        elif css == "mool":
-            return "💎 मूलत्रिकोण (Moolatrikona)", 18, "प्रबल शुभ एवं फलदायक"
-        elif css == "own":
-            return "👑 स्वराशि (Own Sign)", 15, "सशक्त एवं अनुकूल"
-        elif css == "friend":
-            return "🤝 मित्र राशि (Friend Sign)", 11, "मित्रवत एवं सहयोगी"
-        elif css == "neutral":
-            return "⚖️ सम राशि (Neutral)", 7, "तटस्थ / सामान्य फल"
-        elif css == "enemy":
-            return "⚔️ शत्रु राशि (Enemy Sign)", 4, "प्रतिरोधी एवं संघर्ष"
-        elif css == "deb":
-            return "⚠️ नीच (Debilitated)", 0, "कमजोर / उपाय आवश्यक"
-        return "⚖️ सामान्य", 7, "सामान्य"
 
     col_chart1, col_chart2 = st.columns([1, 1])
     with col_chart1:
@@ -1850,46 +1852,219 @@ elif selected_module.startswith("🏛️ वास्तु-ज्योति�
 
 
 # =============================================================
-# TAB 6: PRASHNA KUNDALI (HORARY)
+# TAB 6: PRASHNA KUNDALI (HORARY ASTROLOGY)
 
 elif selected_module.startswith("❓ प्रश्न कुण्डली"):
-    st.subheader("❓ प्रश्न कुण्डली (Horary Astrology)")
-    st.write("23 प्रश्न श्रेणियों, कार्येश एवं लग्नेश के इत्थशाल योग, द्वादश भाव भूमिका एवं सटीक समय निर्धारण।")
+    st.subheader("❓ प्रश्न कुण्डली एवं ताजिक फलकथन (Horary Astrology)")
+    st.write("23 शास्त्रीय प्रश्न श्रेणियाँ, तात्कालिक प्रश्न कुण्डली चक्र, कार्येश-लग्नेश इत्थशाल योग, द्वादश भाव भूमिका एवं सटीक समय निर्धारण।")
 
-    col_p1, col_p2 = st.columns([2, 1])
+    # Native / Questioner Selection Mode
+    st.markdown("##### 👤 प्रश्नकर्ता चयन (Select Questioner / Query Source)")
+    q_mode = st.radio(
+        "questioner_mode",
+        [
+            f"👤 सक्रिय जातक ({name}) — जन्म स्थान / डिफ़ॉल्ट",
+            "🌐 वर्तमान तात्कालिक समय एवं स्थान (Current Live Moment)",
+            "✏️ अन्य प्रश्नकर्ता / नवीन विवरण (Custom Querent)"
+        ],
+        index=0,
+        horizontal=True,
+        label_visibility="collapsed"
+    )
+
+    q_name = name
+    q_lat = latitude
+    q_lon = longitude
+    q_tz = tz_offset
+    q_city_name = default_city_name
+    q_dt = datetime.now()
+
+    if q_mode.startswith("🌐"):
+        q_name = f"{name} (लाइव प्रश्न)"
+        q_dt = datetime.now()
+    elif q_mode.startswith("✏️"):
+        with st.expander("📝 नवीन प्रश्नकर्ता का विवरण दर्ज करें", expanded=True):
+            col_q1, col_q2, col_q3 = st.columns([2, 1, 1])
+            q_name = col_q1.text_input("प्रश्नकर्ता का नाम (Questioner Name)", value="नया प्रश्नकर्ता")
+            q_date_val = col_q2.date_input("प्रश्न तिथि (Query Date)", value=date.today())
+            q_time_val = col_q3.time_input("प्रश्न समय (Query Time)", value=datetime.now().time())
+            q_dt = datetime.combine(q_date_val, q_time_val)
+
+            col_loc1, col_loc2, col_loc3 = st.columns([2, 1, 1])
+            custom_city = col_loc1.text_input("स्थान / नगर (Place/City)", value=default_city_name)
+            if custom_city != default_city_name:
+                geo_res = default_geocoding_service.resolve(custom_city)
+                if geo_res:
+                    q_lat = geo_res["latitude"]
+                    q_lon = geo_res["longitude"]
+                    q_tz = geo_res["timezone_offset"]
+                    q_city_name = geo_res["name"]
+            
+            q_lat = col_loc2.number_input("अक्षांश (Lat)", value=float(q_lat), format="%.4f")
+            q_lon = col_loc3.number_input("देशांतर (Lon)", value=float(q_lon), format="%.4f")
+
+    # Category and Query Input
+    st.markdown("---")
+    cat_options = [f"{c['icon']} {c['Name_Hi']} ({c['Name']})" for c in PRASHNA_CATEGORIES]
+    
+    col_p1, col_p2 = st.columns([1, 2])
     with col_p1:
-        prashna_text = st.text_input("अपना प्रश्न दर्ज करें (Enter Query)", value="क्या मुझे नई नौकरी या पदोन्नति मिलेगी?")
-    with col_p2:
-        cat_choices = [c["Name"] for c in PRASHNA_CATEGORIES]
-        prashna_cat = st.selectbox("प्रश्न श्रेणी (Category)", cat_choices, index=6)
+        cat_idx_choice = st.selectbox(
+            "प्रश्न श्रेणी (Question Category)",
+            range(len(cat_options)),
+            format_func=lambda i: cat_options[i],
+            index=6
+        )
+        selected_cat_meta = PRASHNA_CATEGORIES[cat_idx_choice]
+        prashna_cat = selected_cat_meta["Name"]
 
-    if st.button("🔮 प्रश्न निर्णय प्राप्त करें (Calculate Prashna)", type="primary"):
-        p_res = default_prashna_service.generate_prashna_chart(
+    # Sample default questions per category
+    sample_queries = {
+        "Health": "क्या मरीज को वर्तमान बीमारी से शीघ्र स्वास्थ्य लाभ मिलेगा?",
+        "Marriage": "क्या इस वर्ष मेरा विवाह तय हो जाएगा?",
+        "Relationship": "क्या हमारे प्रेम सम्बंध में सामंजस्य और स्थायित्व रहेगा?",
+        "Child": "क्या संतान प्राप्ति के शुभ योग बन रहे हैं?",
+        "Wealth": "क्या मुझे रुका हुआ धन वापस मिलेगा और आर्थिक स्थिति सुधरेगी?",
+        "Career": "क्या मुझे कार्यक्षेत्र में उच्च पद और प्रतिष्ठा प्राप्त होगी?",
+        "Job": "क्या मुझे नई नौकरी या पदोन्नति मिलेगी?",
+        "Business": "क्या नया व्यापार प्रारंभ करना लाभदायक रहेगा?",
+        "Property": "क्या यह भूमि या मकान खरीदना मेरे लिए शुभ रहेगा?",
+        "Investment": "क्या इस निवेश या शेयर बाज़ार में मुझे अच्छा लाभ होगा?",
+        "Litigation / Court": "क्या न्यायालय में चल रहे मुक़दमे में मेरी विजय होगी?",
+        "Foreign Travel": "क्या मेरा विदेश यात्रा का वीज़ा स्वीकृत हो जाएगा?",
+        "Education / Exam": "क्या मुझे इस प्रतियोगी परीक्षा में सफलता मिलेगी?",
+        "Lost Item": "क्या खोई हुई वस्तु पुनः प्राप्त हो जाएगी?",
+        "Purchase Vehicle": "क्या नया वाहन खरीदना इस समय अनुकूल रहेगा?",
+        "Partnership": "क्या यह व्यापारिक साझेदारी दीर्घकालिक सफल होगी?",
+        "Debt / Loan": "क्या मुझे क़र्ज़ से शीघ्र मुक्ति मिलेगी?",
+        "Relocation / Transfer": "क्या मेरा वांछित स्थान पर तबादला हो जाएगा?",
+        "Surgery / Diagnosis": "क्या शल्य चिकित्सा (सर्जरी) सकुशल संपन्न होगी?",
+        "Spiritual Initiation": "क्या मुझे सद्गुरु की कृपा और मंत्र दीक्षा प्राप्त होगी?",
+        "Construction / Vastu": "क्या नवीन गृह निर्माण निर्विघ्न संपन्न होगा?",
+        "Friends / Enemies": "क्या शत्रु पक्ष शांत रहेगा और मित्रों का सहयोग मिलेगा?",
+        "General Prashna": "क्या मेरा अभीष्ट कार्य सफलतापूर्वक सिद्ध होगा?"
+    }
+    default_q_text = sample_queries.get(prashna_cat, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
+
+    with col_p2:
+        prashna_text = st.text_input("अपना विशिष्ट प्रश्न दर्ज करें (Enter Query)", value=default_q_text)
+
+    calc_btn = st.button("🔮 प्रश्न कुण्डली एवं शास्त्रीय निर्णय प्राप्त करें (Calculate Prashna Chart)", type="primary")
+
+    # Store calculation in session state so it remains interactive
+    if calc_btn or "prashna_res" not in st.session_state:
+        st.session_state.prashna_res = default_prashna_service.generate_prashna_chart(
             query_text=prashna_text,
             category_name=prashna_cat,
-            latitude=latitude,
-            longitude=longitude,
+            latitude=q_lat,
+            longitude=q_lon,
+            timezone_offset=q_tz,
+            query_dt=q_dt,
+            questioner_name=q_name
         )
-        st.markdown("---")
-        m1, m2, m3, m4 = st.columns(4)
-        m1.metric("निर्णय", p_res['verdict'].split(" (")[0])
-        m2.metric("ताजिक योग", p_res['tajika_yoga'].split(" (")[0])
-        m3.metric("संभावित समय", p_res['timing'].split(" (")[0])
-        m4.metric("सहमति स्कोर", f"{p_res['verdict_score']:.2f}")
 
-        st.info(f"**शास्त्रीय निष्कर्ष:** {p_res['explanation_hi']}")
+    p_res = st.session_state.prashna_res
+    p_chart: KundaliChart = p_res["chart"]
 
-        st.markdown("#### 🎭 प्रश्न कुण्डली द्वादश भाव भूमिका (House Roles & Sign Indicators)")
+    st.markdown("---")
+
+    # 1. Top KPI Metrics Row
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("🎯 शास्त्रीय निर्णय", p_res['verdict'].split(" (")[0], p_res['verdict_badge'])
+    m2.metric("⏳ संभावित समय", p_res['timing'].split(" (")[0])
+    m3.metric("🪐 ताजिक योग", p_res['tajika_yoga'].split(" (")[0])
+    m4.metric("📊 निश्चितता स्कोर", f"{int(p_res['verdict_score'] * 100)}%")
+
+    # 2. Main 2-Column Visual Layout (Left: SVG Chart, Right: Summary HUD)
+    col_chart, col_summary = st.columns([1, 1])
+
+    with col_chart:
+        st.markdown(f"#### 🔮 प्रश्न कुण्डली चक्र ({p_res['category_icon']} {p_res['category_hi']})")
+        prashna_chart_title = f"Prashna Kundali — {p_res['category']}"
+        svg_code = render_chart_svg(p_chart, prashna_chart_title, varga_code="D1")
+        st.markdown(svg_code, unsafe_allow_html=True)
+        st.caption(f"📍 स्थान: {q_city_name} (Lat: {q_lat:.2f}°, Lon: {q_lon:.2f}°) | समय: {p_res['query_time']}")
+
+    with col_summary:
+        st.markdown("#### 🌟 प्रश्न सारांश एवं मुख्य शास्त्रीय कारकत्व")
+        
+        sum_col1, sum_col2 = st.columns(2)
+        with sum_col1:
+            st.markdown(f"- **प्रश्नकर्ता:** {p_res['questioner_name']}")
+            st.markdown(f"- **प्रश्न लग्न:** {p_res['prashna_lagna']}")
+            st.markdown(f"- **लग्नेश (1st Lord):** {p_res['lagnesh']}")
+            st.markdown(f"- **कार्य भाव:** {p_res['karya_bhava']}")
+        with sum_col2:
+            st.markdown(f"- **प्रश्न समय:** {p_res['query_time']}")
+            st.markdown(f"- **कार्येश (Karyesha):** {p_res['karyesh']}")
+            st.markdown(f"- **चन्द्रमा स्थिति:** {p_res['moon_placement']}")
+            st.markdown(f"- **ताजिक योग:** {p_res['tajika_yoga']}")
+
+        st.info(f"📜 **शास्त्रीय निष्कर्ष:** {p_res['explanation_hi']}")
+
+        # Visual Score Bar
+        st.markdown(f"**फलसिद्धि संभावना सूचकांक (Success Probability): {int(p_res['verdict_score'] * 100)}%**")
+        st.progress(float(p_res['verdict_score']))
+
+    # 3. Detailed Analytical Tabs
+    st.markdown("---")
+    p_tab1, p_tab2, p_tab3 = st.tabs([
+        "🪐 प्रश्नकालीन नवग्रह स्थिति तालिका",
+        "🎭 द्वादश भाव भूमिका एवं प्रभाव",
+        "📜 ताजिक योग एवं प्रश्न मार्ग नियम"
+    ])
+
+    with p_tab1:
+        st.markdown("##### 🪐 प्रश्न समय पर ग्रहों की स्पष्ट खगोलीय स्थिति (Graha Spashta)")
+        p_graha_df = []
+        for g_row in p_res.get("graha_table", []):
+            p_obj = p_chart.planets.get(g_row["graha"])
+            dignity_label, _, _ = get_varga_dignity_info(g_row["graha"], g_row["sign"], affliction_engine)
+            p_graha_df.append({
+                "ग्रह (Graha)": g_row["graha"],
+                "राशि (Sign)": g_row["sign"],
+                "राशि स्वामी (Lord)": g_row["lord"],
+                "भाव (House)": g_row["house"],
+                "अंश (Degree)": g_row["degree"],
+                "नक्षत्र (Nakshatra)": g_row["nakshatra"],
+                "गति (Motion)": g_row["motion"],
+                "गरिमा (Dignity)": dignity_label
+            })
+        st.dataframe(pd.DataFrame(p_graha_df), use_container_width=True, hide_index=True)
+
+    with p_tab2:
+        st.markdown("##### 🎭 प्रश्न सम्बंधी द्वादश भाव भूमिका (12 Houses Role & Significators)")
         role_cards = []
         for hr in p_res["house_roles"]:
             role_cards.append({
-                "House": f"{hr['house']} ({hr['sign']})",
-                "Lord": hr["lord"],
-                "Role / Significator": f"{hr['icon']} {hr['text']}",
-                "Important": "⭐ हाँ" if hr["is_important"] else "सामान्य",
-                "Planets in House": ", ".join(hr["occupants"]) if hr["occupants"] else "-"
+                "भाव (House)": f"{hr['house']} ({hr['sign']})",
+                "भावेश (Lord)": hr["lord"],
+                "भूमिका / कारकत्व (Role)": f"{hr['icon']} {hr['text']}",
+                "महत्व (Significance)": "⭐ मुख्य भाव" if hr["is_important"] else "सामान्य",
+                "भावस्थ ग्रह (Occupants)": ", ".join(hr["occupants"]) if hr["occupants"] else "—"
             })
-        st.dataframe(pd.DataFrame(role_cards), use_container_width=True)
+        st.dataframe(pd.DataFrame(role_cards), use_container_width=True, hide_index=True)
+
+    with p_tab3:
+        st.markdown("##### 📜 ताजिक नीलकण्ठी एवं प्रश्न मार्ग के प्रमुख सिद्धांत")
+        t_col1, t_col2 = st.columns(2)
+        with t_col1:
+            st.markdown("""
+            **1. इत्थशाल योग (Ithasala Yoga):**
+            - जब तीव्र गति का ग्रह मंद गति के ग्रह से कम अंश पर रहकर दीप्तांश के भीतर अग्रसर होता है, तो कार्य की त्वरित व निश्चित सिद्धि होती है।
+            - **दीप्तांश विस्तार:** सूर्य (15°), चन्द्र (12°), मंगल (8°), बुध (7°), गुरु (9°), शुक्र (7°), शनि (9°)।
+
+            **2. ईशराफ / मुसरिफ़ योग (Esharpha Yoga):**
+            - जब तीव्र गति का ग्रह मंद ग्रह के अंशों को पार कर 1° या अधिक आगे निकल जाता है, तो अवसर बीत जाने अथवा विफलता का संकेत होता है।
+            """)
+        with t_col2:
+            st.markdown("""
+            **3. चन्द्रमा की स्थिति का महत्व (Moon's Role):**
+            - प्रश्न कुण्डली में चन्द्रमा को प्रश्नकर्ता का मन माना जाता है। चन्द्रमा का 6, 8, 12 भाव में होना अथवा पाप पीड़ित होना मानसिक चिंता व विलंब दर्शाता है।
+            
+            **4. कार्येश-लग्नेश सम्बंध:**
+            - लग्नेश (प्रश्नकर्ता) और कार्येश (प्रश्न का अभीष्ट) का केंद्र/त्रिकोण में होना कार्य की सहज सिद्धि कराता है।
+            """)
 
 
 # =============================================================
