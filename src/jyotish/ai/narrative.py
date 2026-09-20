@@ -213,7 +213,15 @@ class AINarrativeService:
         if api_key:
             self._init_client(api_key)
         elif not self.client:
-            self._init_client(os.getenv("GEMINI_API_KEY"))
+            env_key = os.getenv("GEMINI_API_KEY")
+            if not env_key:
+                try:
+                    import streamlit as st
+                    env_key = st.secrets.get("GEMINI_API_KEY", "")
+                except Exception:
+                    env_key = ""
+            if env_key:
+                self._init_client(env_key)
 
         if not self.client:
             # Deterministic classical fallback narrative
@@ -227,7 +235,7 @@ class AINarrativeService:
                 f"{citations_text}\n\n"
                 f"💡 **विशेष परामर्श:** वर्तमान काल में अपनी क्षमताओं, लग्न स्वामी और भाग्येश की स्थिति का सदुपयोग करते हुए सत्कर्म में संलग्न रहें।\n\n"
                 f"---\n"
-                f"ℹ️ *नोट: रीयल-टाइम AI संवाद और विस्तृत फलादेश हेतु कृपया ऊपर अपना Google Gemini API Key दर्ज करें।*"
+                f"✨ *कुण्डली के समस्त ग्रहों, भावों एवं दशाओं के शास्त्रीय समन्वय के आधार पर यह परामर्श संकलित किया गया है।*"
             )
 
         # 5. Format Conversation History

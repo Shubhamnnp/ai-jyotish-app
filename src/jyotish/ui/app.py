@@ -4357,28 +4357,11 @@ elif selected_module.startswith("💍 कुण्डली मिलान"):
 
 
 # =============================================================
-# TAB 15: AI SAHAYAK (CHAT CONSULTATION - GEMINI API INTEGRATED)
+# TAB 15: AI SAHAYAK (CHAT CONSULTATION)
 
 elif selected_module.startswith("💬 ज्योतिष AI"):
-    st.subheader("💬 ज्योतिष AI सहायक — Google Gemini API पावर्ड (Interactive Kundali Assistant)")
+    st.subheader("💬 ज्योतिष AI सहायक (Interactive Shastriya Sahayak)")
     st.write("आपकी खुली हुई कुण्डली (ग्रह, भाव, दशा, गोचर, षड्बल एवं अष्टकवर्ग) के आधार पर व्यक्तिगत एवं सटीक शास्त्रीय परामर्श।")
-
-    # API Key Config Box
-    with st.expander("🔑 Google Gemini API विन्यास एवं सेटिंग्स (API Settings)", expanded=False):
-        c_k1, c_k2 = st.columns([3, 1])
-        default_key = os.getenv("GEMINI_API_KEY", st.session_state.get("gemini_api_key", ""))
-        user_gemini_key = c_k1.text_input(
-            "Google Gemini API Key",
-            value=default_key,
-            type="password",
-            placeholder="AIzaSy...",
-            help="Google AI Studio से प्राप्त निःशुल्क API Key यहाँ दर्ज करें।"
-        )
-        if user_gemini_key:
-            st.session_state.gemini_api_key = user_gemini_key
-            c_k2.markdown("<div style='margin-top:28px;'><span style='background:#DCFCE7; color:#166534; font-weight:bold; padding:6px 12px; border-radius:6px;'>🟢 API लिंक सक्रिय</span></div>", unsafe_allow_html=True)
-        else:
-            c_k2.markdown("<div style='margin-top:28px;'><span style='background:#FEF3C7; color:#92400E; font-weight:bold; padding:6px 12px; border-radius:6px;'>⚠️ डिफ़ॉल्ट मोड</span></div>", unsafe_allow_html=True)
 
     # Active Kundali Profile Banner
     st.markdown(f"""
