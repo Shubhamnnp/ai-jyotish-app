@@ -814,36 +814,63 @@ components.html("""
             "अयनांश": "Ayanamsa", "भाव प्रणाली": "House System", "कुण्डली शैली": "Chart Style",
             "सहेजें": "Save", "लॉगिन": "Login", "पासवर्ड": "Password", "ईमेल": "Email"
         },
-        "sa": {
-            "जन्म कुण्डली": "जन्मकुण्डली एवं षोडशवर्गाः",
-            "घटना विश्लेषण": "घटनाविमर्शः",
-            "दोष एवं फ्री-विल": "दोषशान्तिः उपायाश्च",
-            "दशवर्ग तालिका": "दशवर्गतालिका",
-            "वास्तु-ज्योतिष": "वास्तुशास्त्रम्",
-            "प्रश्न कुण्डली": "प्रश्नकुण्डली",
-            "सर्वर सिंक": "शास्त्रीयसर्वरः",
-            "षड्बल एवं भावबल": "षड्बलं भावबलञ्च",
-            "जैमिनी एवं उपग्रह": "जैमिन्युपग्रहाः",
-            "दशा प्रणालियाँ": "दशाप्रणाली",
-            "गोचर एवं अष्टकवर्ग": "गोचराष्टकवर्गौ",
-            "के.पी. प्रणाली": "कृष्णमूर्तिपद्धतिः",
-            "शुभ मुहूर्त एवं चौघड़िया": "शुभमुहूर्तः",
-            "सुदर्शन चक्र": "सुदर्शनचक्रम्",
-            "वर्षफल": "वर्षफलम्",
-            "समय शोधन": "कालशोधनम्",
-            "कुण्डली मिलान": "मेलापकम्",
-            "ज्योतिष AI सहायक": "ज्योतिष एआई सहायकः",
-            "सम्पूर्ण रिपोर्ट": "सम्पूर्णविवरणम्",
-            "100 शास्त्रीय नियम": "१०० शास्त्रीयनियमाः",
-            "वैदिक ऋषि सत्यापन": "वैदिकऋषिसत्यापनम्",
-            "वर्तमान समय": "वर्तमानकालः",
-            "वर्तमान स्थान": "वर्तमानस्थानम्",
-            "प्रणाली: सक्रिय": "प्रणाली: सक्रिया",
-            "भूमिका: ज्योतिषी": "भूमिका: ज्योतिषी",
-            "कुण्डली गणना करें": "कुण्डलीगणनं कुरु",
-            "तिथि": "तिथिः", "वार": "वारः", "नक्षत्र": "नक्षत्रम्", "योग": "योगः", "करण": "करणम्",
-            "सूर्योदय": "सूर्योदयः", "सूर्यास्त": "सूर्यास्तः", "जन्म घटी": "जन्मघटी", "होरा स्वामी": "होरास्वामी",
-            "भाषा": "भाषा", "नाम": "नाम", "स्थान": "स्थानम्"
+        "ta": {
+            "जन्म कुण्डली": "ஜாதகக் கட்டம் (Natal & Vargas)",
+            "घटना विश्लेषण": "நிகழ்வு பகுப்பாய்வு (Ghatna)",
+            "दोष एवं फ्री-विल": "தோஷ பரிகாரம் & சுயம் (Remedies)",
+            "दशवर्ग तालिका": "தசவர்க்க அட்டவணை (Dasvarga)",
+            "वास्तु-ज्योतिष": "வாஸ்து ஜோதிடம் (Vastu)",
+            "प्रश्न कुण्डली": "பிரசன்ன ஜோதிடம் (Prashna)",
+            "सर्वर सिंक": "சர்வர் ஒத்திசைவு (Server Sync)",
+            "षड्बल एवं भावबल": "ஷட்பலம் & பாவபலம் (Shadbala)",
+            "जैमिनी एवं उपग्रह": "ஜெயமினி ஜோதிடம் (Jaimini)",
+            "दशा प्रणालियाँ": "தசா அமைப்புகள் (Dasha)",
+            "गोचर एवं अष्टकवर्ग": "கோசாரம் & அஷ்டவர்க்கம் (Transit)",
+            "के.पी. प्रणाली": "கே.பி. ஜோதிடம் (KP System)",
+            "शुभ मुहूर्त एवं चौघड़िया": "சுப முகூர்த்தம் (Muhurta)",
+            "सुदर्शन चक्र": "சுதர்சன சக்கரம் (Sudarshan Chakra)",
+            "वर्षफल": "வருட பலன்கள் (Varshaphal)",
+            "समय शोधन": "பிறப்பு நேர திருத்தம் (BTR)",
+            "कुण्डली मिलान": "திருமணப் பொருத்தம் (Milan)",
+            "ज्योतिष AI सहायक": "ஜோதிட AI உதவியாளர் (Sahayak)",
+            "सम्पूर्ण रिपोर्ट": "முழுமையான ஜாதக அறிக்கை (Report)",
+            "100 शास्त्रीय नियम": "100 சாஸ்திர விதிகள் (Rules)",
+            "वैदिक ऋषि सत्यापन": "வேத ரிஷி சரிபார்ப்பு (Validation)",
+            "वर्तमान समय": "தற்போதைய நேரம்", "वर्तमान स्थान": "தற்போதைய இடம்",
+            "प्रणाली: सक्रिय": "கணினி: ஆன்லைன்", "भूमिका: ज्योतिषी": "பங்கு: ஜோதிடர்",
+            "कुण्डली गणना करें": "ஜாதகம் கணக்கிடுக",
+            "तिथि": "திதி", "वार": "வாரம்", "नक्षत्र": "நட்சத்திரம்", "योग": "யோகம்", "करण": "கரணம்",
+            "सूर्योदय": "சூரியோதயம்", "सूर्यास्त": "சூரிய அஸ்தமனம்", "जन्म घटी": "ஜென்ம கடிகை", "होरा स्वामी": "ஹோரா அதிபதி",
+            "भाषा": "மொழி", "नाम": "பெயர்", "स्थान": "இடம்"
+        },
+        "te": {
+            "जन्म कुण्डली": "జన్మ జాతక చక్రం (Natal & Vargas)",
+            "घटना विश्लेषण": "సంఘటన విశ్లేషణ (Ghatna)",
+            "दोष एवं फ्री-विल": "దోష నివారణ & పరిహారాలు (Remedies)",
+            "दशवर्ग तालिका": "దశవర్గ పట్టిక (Dasvarga)",
+            "वास्तु-ज्योतिष": "వాస్తు జ్యోతిష్యం (Vastu)",
+            "प्रश्न कुण्डली": "ప్రశ్న జాతకం (Prashna)",
+            "सर्वर सिंक": "సర్వర్ సమకాలీకరణ (Server Sync)",
+            "षड्बल एवं भावबल": "షడ్బలం & భావబలం (Shadbala)",
+            "जैमिनी एवं उपग्रह": "జైమిని జ్యోతిష్యం (Jaimini)",
+            "दशा प्रणालियाँ": "దశా పద్ధతులు (Dasha)",
+            "गोचर एवं अष्टकवर्ग": "గోచార & అష్టకవర్గ (Transit)",
+            "के.पी. प्रणाली": "కె.పి. పద్ధతి (KP Astrology)",
+            "शुभ मुहूर्त एवं चौघड़िया": "శుభ ముహూర్తం (Muhurta)",
+            "सुदर्शन चक्र": "సుదర్శన చక్రం (Sudarshan Chakra)",
+            "वर्षफल": "వార్షిక ఫలితాలు (Varshaphal)",
+            "समय शोधन": "జన్మ సమయ శోధన (BTR)",
+            "कुण्डली मिलान": "గుణ మేళాపకం (Milan)",
+            "ज्योतिष AI सहायक": "జ్యోతిష్య AI సహాయకుడు (Sahayak)",
+            "सम्पूर्ण रिपोर्ट": "సంపూర్ణ జాతక నివేదిక (Report)",
+            "100 शास्त्रीय नियम": "100 శాస్త్రీయ నియమాలు (Rules)",
+            "वैदिक ऋषि सत्यापन": "వైదిక ఋషి ధృవీకరణ (Validation)",
+            "वर्तमान समय": "ప్రస్తుత సమయం", "वर्तमान स्थान": "ప్రస్తుత స్థానం",
+            "प्रणाली: सक्रिय": "వ్యవస్థ: ఆన్‌లైన్", "भूमिका: ज्योतिषी": "పాత్ర: జ్యోతిష్యుడు",
+            "कुण्डली गणना करें": "జాతకం గణించండి",
+            "तिथि": "తిథి", "वार": "వారం", "नक्षत्र": "నక్షత్రం", "योग": "యోగం", "करण": "కరణం",
+            "सूर्योदय": "సూర్యోదయం", "सूर्यास्त": "సూర్యాస్తమయం", "जन्म घटी": "జన్మ ఘడియలు", "होरा स्वामी": "హోరా అధిపతి",
+            "भाषा": "భాష", "नाम": "పేరు", "स्थान": "స్థలం"
         },
         "gu": {
             "जन्म कुण्डली": "જન્મ કુંડળી અને ષોડશવર્ગ",
@@ -969,7 +996,7 @@ components.html("""
             let node;
             while ((node = walker.nextNode())) {
                 const parentEl = node.parentElement;
-                if (!parentEl || parentEl.tagName === 'SCRIPT' || parentEl.tagName === 'STYLE' || parentEl.id === 'software-lang-select') {
+                if (!parentEl || parentEl.tagName === 'SCRIPT' || parentEl.tagName === 'STYLE' || parentEl.id === 'software-lang-select' || (parentEl.closest && parentEl.closest('.notranslate, #software-lang-select, select, option, .lang-select-box'))) {
                     continue;
                 }
 
@@ -1168,16 +1195,17 @@ components.html("""
 def render_login_page():
     st.markdown("""
     <div style="display:flex; justify-content:flex-end; margin-bottom: 4px;">
-        <div class="header-sub-pill" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:4px 12px !important;">
-            🌐 <b>भाषा (Language):</b>
-            <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : (window.parent && window.parent.changeSoftwareLanguage ? window.parent.changeSoftwareLanguage(this.value) : null)">
-                <option value="general">General (जनरल)</option>
-                <option value="hi">हिन्दी (Hindi)</option>
-                <option value="en">English (अंग्रेजी)</option>
-                <option value="sa">संस्कृतम् (Sanskrit)</option>
-                <option value="gu">ગુજરાતી (Gujarati)</option>
-                <option value="mr">मराठी (Marathi)</option>
-                <option value="bn">বাংলা (Bengali)</option>
+        <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:4px 12px !important;">
+            🌐 <b class="notranslate" translate="no">भाषा (Language):</b>
+            <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : (window.parent && window.parent.changeSoftwareLanguage ? window.parent.changeSoftwareLanguage(this.value) : null)">
+                <option value="general" class="notranslate" translate="no">General (जनरल)</option>
+                <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
+                <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
+                <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
+                <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
+                <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
+                <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
+                <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
             </select>
         </div>
     </div>
@@ -1626,16 +1654,17 @@ st.markdown(f"""
             <div class="header-sub-pill">
                 🕒 <b>वर्तमान समय:</b> {current_time_str}
             </div>
-            <div class="header-sub-pill" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important;" title="सॉफ़्टवेयर की भाषा चुनें (Select Language)">
-                🌐 <b>भाषा:</b>
-                <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : (window.parent && window.parent.changeSoftwareLanguage ? window.parent.changeSoftwareLanguage(this.value) : null)">
-                    <option value="general">General (जनरल)</option>
-                    <option value="hi">हिन्दी (Hindi)</option>
-                    <option value="en">English (अंग्रेजी)</option>
-                    <option value="sa">संस्कृतम् (Sanskrit)</option>
-                    <option value="gu">ગુજરાતી (Gujarati)</option>
-                    <option value="mr">मराठी (Marathi)</option>
-                    <option value="bn">বাংলা (Bengali)</option>
+            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important;" title="सॉफ़्टवेयर की भाषा चुनें (Select Language)">
+                🌐 <b class="notranslate" translate="no">भाषा:</b>
+                <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : (window.parent && window.parent.changeSoftwareLanguage ? window.parent.changeSoftwareLanguage(this.value) : null)">
+                    <option value="general" class="notranslate" translate="no">General (जनरल)</option>
+                    <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
+                    <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
+                    <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
+                    <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
+                    <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
+                    <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
+                    <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
                 </select>
             </div>
             <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
