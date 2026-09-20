@@ -2154,14 +2154,14 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
 
                 filtered_rules = []
                 for ar in all_r_list:
-                    # Status filter
-                    st_val = ar.get("status", "")
+                    # Status filter using robust boolean triggered check
+                    is_trig = ar.get("triggered", False) or ar.get("status") in ["सक्रिय", "✅ लागू (Triggered)"]
                     tp_val = ar.get("type", "")
-                    if status_filter.startswith("केवल सक्रिय शुभ") and not (st_val == "सक्रिय" and tp_val == "POSITIVE"):
+                    if status_filter.startswith("केवल सक्रिय शुभ") and not (is_trig and tp_val == "POSITIVE"):
                         continue
-                    if status_filter.startswith("केवल सक्रिय अशुभ") and not (st_val == "सक्रिय" and tp_val == "NEGATIVE"):
+                    if status_filter.startswith("केवल सक्रिय अशुभ") and not (is_trig and tp_val == "NEGATIVE"):
                         continue
-                    if status_filter.startswith("केवल निष्क्रिय") and st_val == "सक्रिय":
+                    if status_filter.startswith("केवल निष्क्रिय") and is_trig:
                         continue
 
                     # Domain filter
@@ -2187,8 +2187,8 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
                         "शास्त्रीय नियम नाम": ar.get("name_hi"),
                         "मूल ग्रंथ (Source)": ar.get("source"),
                         "प्रकार": "🟢 शुभ (+)" if ar.get("type") == "POSITIVE" else "🔴 अशुभ (-)",
-                        "प्रभाव अंक": f"+{ar.get('weight')}" if ar.get("type") == "POSITIVE" else f"-{ar.get('weight')}",
-                        "सक्रियता स्थिति": "✅ सक्रिय" if ar.get("status") == "सक्रिय" else "⚪ निष्क्रिय",
+                        "प्रभाव अंक": f"+{abs(ar.get('weight', 0))}" if ar.get("type") == "POSITIVE" else f"-{abs(ar.get('weight', 0))}",
+                        "सक्रियता स्थिति": "🌟 सक्रिय (Active)" if is_trig else "⚪ निष्क्रिय (Inactive)",
                         "शास्त्रीय विवरण व प्रमाण": ar.get("description_hi")
                     })
 

@@ -117,8 +117,8 @@ class PrashnaRuleEvaluator:
                 "source": source,
                 "type": r_type,  # "POSITIVE" or "NEGATIVE"
                 "weight": weight if r_type == "POSITIVE" else -weight,
-                "triggered": triggered,
-                "status": "✅ लागू (Triggered)" if triggered else "⚪ अनुपस्थित (Inactive)",
+                "triggered": bool(triggered),
+                "status": "सक्रिय" if triggered else "निष्क्रिय",
                 "description_hi": desc_hi
             })
 
