@@ -2155,8 +2155,12 @@ else:
 
 if "active_module_idx" not in st.session_state:
     st.session_state.active_module_idx = 0
-if st.session_state.active_module_idx >= len(MODULE_OPTIONS):
-    st.session_state.active_module_idx = 0
+st.session_state.active_module_idx = max(0, min(int(st.session_state.active_module_idx), len(MODULE_OPTIONS) - 1))
+
+# Keep top_bar_module_selector in sync with active_module_idx and current language
+if ("top_bar_module_selector" not in st.session_state or 
+    st.session_state.top_bar_module_selector not in MODULE_OPTIONS):
+    st.session_state.top_bar_module_selector = MODULE_OPTIONS[st.session_state.active_module_idx]
 
 # -------------------------------------------------------------
 # 🌟 FROZEN STICKY TOP HEADER SECTION (Pinned at Top)
@@ -2423,28 +2427,39 @@ with st.container(key="top_frozen_header_container", border=True):
                         else:
                             st.error("Authentication failed. Please verify credentials in Module 7.")
 
+    def _nav_prev_module():
+        new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
+        st.session_state.active_module_idx = new_idx
+        st.session_state.top_bar_module_selector = MODULE_OPTIONS[new_idx]
+
+    def _nav_next_module():
+        new_idx = (st.session_state.active_module_idx + 1) % len(MODULE_OPTIONS)
+        st.session_state.active_module_idx = new_idx
+        st.session_state.top_bar_module_selector = MODULE_OPTIONS[new_idx]
+
+    def _on_module_selector_change():
+        chosen = st.session_state.top_bar_module_selector
+        if chosen in MODULE_OPTIONS:
+            st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen)
+
     # 3. 21 Modules Selector (Inside the Frozen Top Container)
     col_btn_prev, col_mod_sel, col_btn_next = st.columns([1.1, 3.8, 1.1])
     with col_btn_prev:
-        if st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn"):
-            st.session_state.active_module_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
-            st.rerun()
+        st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn", on_click=_nav_prev_module)
 
     with col_mod_sel:
         selected_module = st.selectbox(
             "मॉड्यूल चयन",
             MODULE_OPTIONS,
-            index=st.session_state.active_module_idx,
             key="top_bar_module_selector",
-            label_visibility="collapsed"
+            label_visibility="collapsed",
+            on_change=_on_module_selector_change
         )
-        selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else 0
+        selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else st.session_state.active_module_idx
         st.session_state.active_module_idx = selected_idx
 
     with col_btn_next:
-        if st.button("अगला (Next) ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="top_next_mod_btn"):
-            st.session_state.active_module_idx = (st.session_state.active_module_idx + 1) % len(MODULE_OPTIONS)
-            st.rerun()
+        st.button("अगला (Next) ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="top_next_mod_btn", on_click=_nav_next_module)
 
 
 p = chart.panchang
