@@ -719,6 +719,96 @@ unified_css = """
         color: #0F172A !important;
         font-weight: 700 !important;
     }
+
+    /* =============================================================
+       🌙 NIGHT MODE / DARK COSMIC THEME OVERRIDES
+       ============================================================= */
+    body.night-mode,
+    body.night-mode .stApp,
+    .night-mode [data-testid="stAppViewContainer"],
+    .night-mode [data-testid="stMain"],
+    .night-mode section.main {
+        background-color: #0B0F19 !important;
+        color: #F8FAFC !important;
+    }
+
+    body.night-mode [data-testid="stSidebar"] {
+        background-color: #0F172A !important;
+        border-right: 2px solid #1E293B !important;
+    }
+
+    body.night-mode [data-testid="stSidebar"] * {
+        color: #F1F5F9 !important;
+    }
+
+    body.night-mode h1, body.night-mode h2, body.night-mode h3, body.night-mode h4, body.night-mode h5, body.night-mode h6,
+    body.night-mode p, body.night-mode span, body.night-mode li, body.night-mode label, body.night-mode div, body.night-mode strong, body.night-mode b {
+        color: #F1F5F9 !important;
+    }
+
+    body.night-mode input, body.night-mode textarea, body.night-mode select,
+    body.night-mode div[data-baseweb="input"] input,
+    body.night-mode div[data-baseweb="base-input"] input,
+    body.night-mode div[data-baseweb="input"] {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        border-color: #475569 !important;
+    }
+
+    body.night-mode div[data-baseweb="select"] > div {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+        border-color: #475569 !important;
+    }
+    body.night-mode div[data-baseweb="select"] * {
+        color: #FFFFFF !important;
+    }
+
+    body.night-mode header.top-nav-bar {
+        background: #0F172A !important;
+        border-color: #334155 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+    }
+    body.night-mode .top-nav-bar * {
+        color: #F8FAFC !important;
+    }
+    body.night-mode .active-profile-pill {
+        background: #1E293B !important;
+        border-color: #D97706 !important;
+        color: #FEF3C7 !important;
+    }
+    body.night-mode .header-sub-pill {
+        background: #1E293B !important;
+        border-color: #475569 !important;
+        color: #E2E8F0 !important;
+    }
+    body.night-mode .digital-hud {
+        background: #0F172A !important;
+        border-color: #334155 !important;
+    }
+    body.night-mode .hud-pill {
+        background: #1E293B !important;
+        border-color: #475569 !important;
+        color: #F8FAFC !important;
+    }
+    body.night-mode .hud-pill b {
+        color: #F59E0B !important;
+    }
+    body.night-mode div[data-testid="stExpander"] {
+        background: #1E293B !important;
+        border-color: #334155 !important;
+    }
+    body.night-mode div[data-testid="stMetricValue"], body.night-mode div[data-testid="stMetricValue"] * {
+        color: #F8FAFC !important;
+    }
+    body.night-mode div[data-testid="stMetricLabel"], body.night-mode div[data-testid="stMetricLabel"] * {
+        color: #94A3B8 !important;
+    }
+    body.night-mode [data-testid="stTable"], body.night-mode [data-testid="stDataFrame"] {
+        background: #1E293B !important;
+        color: #FFFFFF !important;
+    }
 </style>
 """
 
@@ -1206,14 +1296,89 @@ components.html("""
         } catch (e) {
             console.error('GPS resolver error:', e);
         }
+    // Live Day Mode / Night Mode Theme Switcher
+    function setupThemeMode() {
+        try {
+            const parentDoc = window.parent.document;
+            const parentWin = window.parent;
+            if (!parentDoc || !parentWin) return;
+
+            function applyTheme(isNight) {
+                const body = parentDoc.body;
+                const app = parentDoc.querySelector('.stApp') || body;
+                
+                if (isNight) {
+                    body.classList.add('night-mode');
+                    if (app) app.classList.add('night-mode');
+                    localStorage.setItem('jyotish_theme_mode', 'night');
+                    sessionStorage.setItem('jyotish_theme_mode', 'night');
+                } else {
+                    body.classList.remove('night-mode');
+                    if (app) app.classList.remove('night-mode');
+                    localStorage.setItem('jyotish_theme_mode', 'day');
+                    sessionStorage.setItem('jyotish_theme_mode', 'day');
+                }
+
+                const pills = parentDoc.querySelectorAll('#theme-toggle-btn, .theme-mode-pill');
+                pills.forEach(function(pill) {
+                    const icon = pill.querySelector('#theme-mode-icon') || pill.querySelector('.theme-mode-icon');
+                    const text = pill.querySelector('#theme-mode-text') || pill.querySelector('.theme-mode-text');
+                    if (isNight) {
+                        if (icon) icon.innerText = '🌙';
+                        if (text) {
+                            text.innerText = 'नाइट मोड (Night)';
+                            text.style.color = '#F59E0B';
+                        }
+                        pill.style.background = '#1E293B';
+                        pill.style.borderColor = '#F59E0B';
+                    } else {
+                        if (icon) icon.innerText = '☀️';
+                        if (text) {
+                            text.innerText = 'डे मोड (Day)';
+                            text.style.color = '#0F172A';
+                        }
+                        pill.style.background = '#F1F5F9';
+                        pill.style.borderColor = '#94A3B8';
+                    }
+                });
+            }
+
+            const handleToggle = function() {
+                const current = localStorage.getItem('jyotish_theme_mode') || 'day';
+                const nextIsNight = (current !== 'night');
+                applyTheme(nextIsNight);
+            };
+
+            parentWin.toggleDayNightMode = handleToggle;
+            window.toggleDayNightMode = handleToggle;
+
+            const btns = parentDoc.querySelectorAll('#theme-toggle-btn, .theme-mode-pill');
+            btns.forEach(function(btn) {
+                if (!btn.dataset.themeBound) {
+                    btn.dataset.themeBound = 'true';
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleToggle();
+                    });
+                }
+            });
+
+            const saved = localStorage.getItem('jyotish_theme_mode') || 'day';
+            applyTheme(saved === 'night');
+        } catch (e) {
+            console.error('Theme mode bridge error:', e);
+        }
     }
 
     setupSidebarToggle();
     setupLanguageBridge();
+    setupThemeMode();
     resolveClientGPS();
     setInterval(function() {
         setupSidebarToggle();
         setupLanguageBridge();
+        setupThemeMode();
         const cached = localStorage.getItem("jyotish_user_gps_loc") || sessionStorage.getItem("jyotish_user_gps_loc");
         if (cached) {
             updateLocationUI(cached);
@@ -1229,7 +1394,11 @@ components.html("""
 # -------------------------------------------------------------
 def render_login_page():
     st.markdown("""
-    <div style="display:flex; justify-content:flex-end; margin-bottom: 4px;">
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom: 4px;">
+        <div id="theme-toggle-btn" class="header-sub-pill theme-mode-pill notranslate" translate="no" onclick="window.toggleDayNightMode ? window.toggleDayNightMode() : (window.parent && window.parent.toggleDayNightMode ? window.parent.toggleDayNightMode() : null)" style="background:#F1F5F9 !important; border-color:#94A3B8 !important; color:#0F172A !important; cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:6px; font-weight:800; padding:4px 12px !important;" title="डे मोड / नाइट मोड बदलें (Toggle Day/Night Mode)">
+            <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:14px;">☀️</span>
+            <b id="theme-mode-text" class="notranslate" translate="no" style="font-size:11.5px; color:#0F172A;">डे मोड (Day)</b>
+        </div>
         <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:4px 12px !important;">
             🌐 <b class="notranslate" translate="no">भाषा (Language):</b>
             <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : (window.parent && window.parent.changeSoftwareLanguage ? window.parent.changeSoftwareLanguage(this.value) : null)">
@@ -1872,6 +2041,10 @@ st.markdown(f"""
             </div>
             <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
                 📍 <b>वर्तमान स्थान (GPS):</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
+            </div>
+            <div id="theme-toggle-btn" class="header-sub-pill theme-mode-pill notranslate" translate="no" onclick="window.toggleDayNightMode ? window.toggleDayNightMode() : null" style="background:#F1F5F9 !important; border-color:#94A3B8 !important; color:#0F172A !important; cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:6px; font-weight:800; padding:2px 10px !important;" title="डे मोड / नाइट मोड बदलें (Toggle Day/Night Mode)">
+                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:13px;">☀️</span>
+                <b id="theme-mode-text" class="notranslate" translate="no" style="font-size:11.5px; color:#0F172A;">डे मोड (Day)</b>
             </div>
         </div>
     </div>
