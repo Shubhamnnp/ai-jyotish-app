@@ -233,6 +233,14 @@ if is_night_mode:
         border-color: #334155 !important;
         color: #F8FAFC !important;
     }
+    div[data-testid="stVerticalBlock"]:has(> div > div > .frozen-header-marker),
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.frozen-header-marker),
+    div[data-testid="element-container"]:has(.frozen-header-marker),
+    div:has(> .frozen-header-marker) {
+        background: #0A0E1A !important;
+        border-bottom: 2.5px solid #1E293B !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+    }
     """
 else:
     theme_mode_css = """
@@ -376,24 +384,34 @@ unified_css = f"""
     }}
 
     /* Clean top spacing & allow frozen sticky header */
-    [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {{
+    [data-testid="stAppViewContainer"] {
         overflow-x: hidden !important;
         overflow-y: auto !important;
-    }}
-    .block-container {{
+    }
+    [data-testid="stMain"], section.main {
+        overflow: visible !important;
+    }
+    .block-container {
         padding-top: 0px !important;
         padding-bottom: 2rem !important;
         padding-left: 2rem !important;
         padding-right: 2rem !important;
         overflow: visible !important;
-    }}
-    div:has(> header.top-nav-bar),
-    div[data-testid="stMarkdownContainer"]:has(header.top-nav-bar),
-    div[data-testid="element-container"]:has(header.top-nav-bar) {{
+    }
+    div[data-testid="stVerticalBlock"]:has(> div > div > .frozen-header-marker),
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.frozen-header-marker),
+    div[data-testid="element-container"]:has(.frozen-header-marker),
+    div:has(> .frozen-header-marker) {
         position: sticky !important;
         top: 0px !important;
         z-index: 999999 !important;
-    }}
+        background: #F8FAFC !important;
+        padding-top: 4px !important;
+        padding-bottom: 8px !important;
+        margin-bottom: 8px !important;
+        border-bottom: 2.5px solid #CBD5E1 !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+    }
 
     /* Sidebar Radio Navigation List (18 Modules as Clean, 100% Equal Size Cards) */
     [data-testid="stSidebar"] .stRadio,
@@ -1486,19 +1504,65 @@ components.html("""
         }
     }
 
+    function setupStickyTopHeader() {
+        try {
+            const parentDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            if (!parentDoc) return;
+            
+            const appView = parentDoc.querySelector('[data-testid="stAppViewContainer"]');
+            if (appView) {
+                appView.style.setProperty('overflow-y', 'auto', 'important');
+            }
+            const mainSec = parentDoc.querySelector('[data-testid="stMain"], section.main');
+            if (mainSec) {
+                mainSec.style.setProperty('overflow', 'visible', 'important');
+            }
+            const blockContainer = parentDoc.querySelector('.block-container');
+            if (blockContainer) {
+                blockContainer.style.setProperty('overflow', 'visible', 'important');
+                blockContainer.style.setProperty('padding-top', '0px', 'important');
+            }
+
+            const marker = parentDoc.querySelector('.frozen-header-marker');
+            if (marker) {
+                let container = marker.closest('[data-testid="stVerticalBlockBorderWrapper"]') ||
+                                marker.closest('[data-testid="stVerticalBlock"]') ||
+                                marker.parentElement;
+                if (container) {
+                    container.style.setProperty('position', 'sticky', 'important');
+                    container.style.setProperty('top', '0px', 'important');
+                    container.style.setProperty('z-index', '999999', 'important');
+                    
+                    const isNight = parentDoc.body.classList.contains('night-mode') || 
+                                    parentDoc.querySelector('#software-theme-select')?.value === 'night' ||
+                                    (window.parent && window.parent.currentSoftwareTheme === 'night');
+                    container.style.setProperty('background', isNight ? '#0A0E1A' : '#F8FAFC', 'important');
+                    container.style.setProperty('border-bottom', isNight ? '2.5px solid #1E293B' : '2.5px solid #CBD5E1', 'important');
+                    container.style.setProperty('box-shadow', '0 6px 20px rgba(0, 0, 0, 0.12)', 'important');
+                    container.style.setProperty('padding-bottom', '8px', 'important');
+                    container.style.setProperty('margin-bottom', '8px', 'important');
+                }
+            }
+        } catch(e) {
+            console.error("Error freezing top header:", e);
+        }
+    }
+
     setupSidebarToggle();
     setupLanguageBridge();
     setupThemeMode();
+    setupStickyTopHeader();
     resolveClientGPS();
     setInterval(function() {
         setupSidebarToggle();
         setupLanguageBridge();
         setupThemeMode();
+        setupStickyTopHeader();
         const cached = localStorage.getItem("jyotish_user_gps_loc") || sessionStorage.getItem("jyotish_user_gps_loc");
         if (cached) {
             updateLocationUI(cached);
         }
-    }, 400);
+    }, 250);
 })();
 </script>
 """, height=0, width=0)
