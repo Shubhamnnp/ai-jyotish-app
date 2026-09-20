@@ -2269,22 +2269,21 @@ if st.session_state.active_module_idx >= len(MODULE_OPTIONS):
 col_mod_sel, col_btn_prev, col_btn_next = st.columns([3.8, 1.1, 1.1])
 with col_mod_sel:
     selected_module = st.selectbox(
-        "🧭 सक्रिय वैदिक ज्योतिष मॉड्यूल चयन (Top Navigation - Select 21 Modules)",
+        "मॉड्यूल चयन",
         MODULE_OPTIONS,
         index=st.session_state.active_module_idx,
-        key="top_bar_module_selector"
+        key="top_bar_module_selector",
+        label_visibility="collapsed"
     )
     selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else 0
     st.session_state.active_module_idx = selected_idx
 
 with col_btn_prev:
-    st.markdown("<div style='height:28px;'></div>", unsafe_allow_html=True)
     if st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn"):
         st.session_state.active_module_idx = (selected_idx - 1) % len(MODULE_OPTIONS)
         st.rerun()
 
 with col_btn_next:
-    st.markdown("<div style='height:28px;'></div>", unsafe_allow_html=True)
     if st.button("अगला (Next) ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="top_next_mod_btn"):
         st.session_state.active_module_idx = (selected_idx + 1) % len(MODULE_OPTIONS)
         st.rerun()
