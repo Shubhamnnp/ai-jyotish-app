@@ -375,35 +375,23 @@ unified_css = f"""
         transform: scale(0.95) !important;
     }}
 
-        /* 100% Guaranteed Sticky Frozen Top Header */
-    html, body, [data-testid="stAppViewContainer"], [data-testid="stMain"] {{
-        overflow: hidden !important;
-        height: 100vh !important;
-    }}
-    section.main {{
-        overflow-y: auto !important;
+        /* Natural Scrolling & Clean Top Spacing */
+    html, body {{
         overflow-x: hidden !important;
-        height: 100vh !important;
-        position: relative !important;
-        scroll-behavior: smooth !important;
+        overflow-y: auto !important;
+    }}
+    [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {{
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
     }}
     .block-container {{
         padding-top: 0px !important;
         padding-bottom: 2rem !important;
         padding-left: 1.5rem !important;
         padding-right: 1.5rem !important;
-        overflow: visible !important;
     }}
 
-    /* Fixed/Sticky Frozen Header Container */
-    div:has(> .top-header-frozen-bar),
-    div[data-testid="stVerticalBlock"]:has(> div > .top-header-frozen-bar),
-    div[data-testid="element-container"]:has(.top-header-frozen-bar),
-    div[data-testid="stMarkdownContainer"]:has(.top-header-frozen-bar),
-    div:has(> header.top-nav-bar),
-    div[data-testid="stMarkdownContainer"]:has(header.top-nav-bar),
-    div[data-testid="element-container"]:has(header.top-nav-bar),
-    div[data-testid="stVerticalBlock"]:has(> div > header.top-nav-bar),
+    /* Sticky Frozen Top Header */
     header.top-nav-bar,
     .top-nav-bar,
     .top-header-frozen-bar {{
