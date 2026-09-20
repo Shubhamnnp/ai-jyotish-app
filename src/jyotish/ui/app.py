@@ -724,26 +724,67 @@ unified_css = """
     /* =============================================================
        🌙 NIGHT MODE / DARK COSMIC THEME OVERRIDES
        ============================================================= */
+    html.night-mode,
     body.night-mode,
     body.night-mode .stApp,
     .night-mode [data-testid="stAppViewContainer"],
     .night-mode [data-testid="stMain"],
     .night-mode section.main {
-        background-color: #0B0F19 !important;
+        background-color: #0A0E1A !important;
         color: #F8FAFC !important;
     }
 
-    body.night-mode [data-testid="stSidebar"] {
+    body.night-mode [data-testid="stSidebar"],
+    body.night-mode section[data-testid="stSidebar"] {
         background-color: #0F172A !important;
         border-right: 2px solid #1E293B !important;
     }
 
-    body.night-mode [data-testid="stSidebar"] * {
+    body.night-mode [data-testid="stSidebar"] *,
+    body.night-mode [data-testid="stSidebar"] p,
+    body.night-mode [data-testid="stSidebar"] span,
+    body.night-mode [data-testid="stSidebar"] label,
+    body.night-mode [data-testid="stSidebar"] div,
+    body.night-mode [data-testid="stSidebar"] b {
         color: #F1F5F9 !important;
     }
 
+    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
+    body.night-mode section[data-testid="stSidebar"] .stRadio label,
+    body.night-mode [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label,
+    body.night-mode div[data-testid="stRadio"] label {
+        background: #1E293B !important;
+        border: 1.5px solid #334155 !important;
+        color: #F1F5F9 !important;
+    }
+    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label p,
+    body.night-mode section[data-testid="stSidebar"] .stRadio label p,
+    body.night-mode [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p,
+    body.night-mode div[data-testid="stRadio"] label p {
+        color: #F1F5F9 !important;
+    }
+    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover,
+    body.night-mode section[data-testid="stSidebar"] .stRadio label:hover,
+    body.night-mode div[data-testid="stRadio"] label:hover {
+        background: #2E3E5B !important;
+        border-color: #F59E0B !important;
+    }
+    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked),
+    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="true"],
+    body.night-mode section[data-testid="stSidebar"] .stRadio label:has(input:checked),
+    body.night-mode div[data-testid="stRadio"] label:has(input:checked) {
+        background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%) !important;
+        border: 2px solid #3B82F6 !important;
+    }
+    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) p,
+    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) span,
+    body.night-mode div[data-testid="stRadio"] label:has(input:checked) p {
+        color: #FFFFFF !important;
+    }
+
     body.night-mode h1, body.night-mode h2, body.night-mode h3, body.night-mode h4, body.night-mode h5, body.night-mode h6,
-    body.night-mode p, body.night-mode span, body.night-mode li, body.night-mode label, body.night-mode div, body.night-mode strong, body.night-mode b {
+    body.night-mode p, body.night-mode span, body.night-mode li, body.night-mode a, body.night-mode label, body.night-mode caption, body.night-mode strong, body.night-mode b,
+    body.night-mode [data-testid="stMarkdownContainer"] p, body.night-mode [data-testid="stMarkdownContainer"] span {
         color: #F1F5F9 !important;
     }
 
@@ -754,13 +795,13 @@ unified_css = """
         background-color: #1E293B !important;
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
-        border-color: #475569 !important;
+        border: 1.5px solid #3B82F6 !important;
     }
 
     body.night-mode div[data-baseweb="select"] > div {
         background-color: #1E293B !important;
         color: #FFFFFF !important;
-        border-color: #475569 !important;
+        border: 1.5px solid #475569 !important;
     }
     body.night-mode div[data-baseweb="select"] * {
         color: #FFFFFF !important;
@@ -768,37 +809,84 @@ unified_css = """
 
     body.night-mode header.top-nav-bar {
         background: #0F172A !important;
-        border-color: #334155 !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+        border-color: #1E293B !important;
+        border-bottom: 3.5px solid #3B82F6 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
     }
     body.night-mode .top-nav-bar * {
         color: #F8FAFC !important;
     }
+    body.night-mode .app-brand-title {
+        background: linear-gradient(90deg, #F59E0B 0%, #FBBF24 50%, #60A5FA 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+    body.night-mode .app-brand-sub {
+        color: #94A3B8 !important;
+    }
     body.night-mode .active-profile-pill {
         background: #1E293B !important;
-        border-color: #D97706 !important;
+        border: 1.5px solid #F59E0B !important;
+        color: #FEF3C7 !important;
+    }
+    body.night-mode .active-profile-pill * {
         color: #FEF3C7 !important;
     }
     body.night-mode .header-sub-pill {
         background: #1E293B !important;
-        border-color: #475569 !important;
+        border: 1.5px solid #334155 !important;
         color: #E2E8F0 !important;
+    }
+    body.night-mode .header-sub-pill * {
+        color: #E2E8F0 !important;
+    }
+    body.night-mode .header-sub-pill b {
+        color: #F8FAFC !important;
+    }
+    body.night-mode .theme-select-box {
+        background: #1E293B !important;
+        border-color: #F59E0B !important;
+    }
+    body.night-mode .theme-select-box select, body.night-mode .theme-select-box b, body.night-mode .theme-select-box span {
+        color: #F59E0B !important;
+    }
+    body.night-mode .theme-select-box option {
+        background: #0F172A !important;
+        color: #FFFFFF !important;
     }
     body.night-mode .digital-hud {
         background: #0F172A !important;
-        border-color: #334155 !important;
+        border-color: #1E293B !important;
+    }
+    body.night-mode .digital-hud * {
+        color: #F8FAFC !important;
     }
     body.night-mode .hud-pill {
         background: #1E293B !important;
-        border-color: #475569 !important;
+        border: 1.5px solid #334155 !important;
         color: #F8FAFC !important;
     }
-    body.night-mode .hud-pill b {
+    body.night-mode .hud-pill b, body.night-mode .hud-pill strong {
         color: #F59E0B !important;
+    }
+    body.night-mode .rule-card {
+        background: #1E293B !important;
+        border: 1.5px solid #334155 !important;
+        color: #F8FAFC !important;
+    }
+    body.night-mode .rule-card * {
+        color: #F8FAFC !important;
+    }
+    body.night-mode .vastu-card {
+        background: #1E293B !important;
+        border: 1.5px solid #334155 !important;
+    }
+    body.night-mode .vastu-card * {
+        color: #F8FAFC !important;
     }
     body.night-mode div[data-testid="stExpander"] {
         background: #1E293B !important;
-        border-color: #334155 !important;
+        border: 1.5px solid #334155 !important;
     }
     body.night-mode div[data-testid="stMetricValue"], body.night-mode div[data-testid="stMetricValue"] * {
         color: #F8FAFC !important;
@@ -806,9 +894,25 @@ unified_css = """
     body.night-mode div[data-testid="stMetricLabel"], body.night-mode div[data-testid="stMetricLabel"] * {
         color: #94A3B8 !important;
     }
-    body.night-mode [data-testid="stTable"], body.night-mode [data-testid="stDataFrame"] {
-        background: #1E293B !important;
+    body.night-mode [data-testid="stTable"], body.night-mode [data-testid="stDataFrame"], body.night-mode [data-testid="stTable"] *, body.night-mode [data-testid="stDataFrame"] * {
+        background-color: #1E293B !important;
         color: #FFFFFF !important;
+    }
+    body.night-mode button[kind="secondary"] {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #475569 !important;
+    }
+    body.night-mode button[kind="secondary"]:hover {
+        background-color: #334155 !important;
+        border-color: #64748B !important;
+    }
+    body.night-mode div[style*="background:#FFFFFF"], body.night-mode div[style*="background: #FFFFFF"],
+    body.night-mode div[style*="background:#F8FAFC"], body.night-mode div[style*="background: #F8FAFC"],
+    body.night-mode div[style*="background:#EFF6FF"], body.night-mode div[style*="background: #EFF6FF"] {
+        background: #1E293B !important;
+        border-color: #334155 !important;
+        color: #F8FAFC !important;
     }
 </style>
 """
@@ -1297,176 +1401,32 @@ components.html("""
         } catch (e) {
             console.error('GPS resolver error:', e);
         }
+    }
+
     // Comprehensive Day Mode / Night Mode Theme Engine
     function setupThemeMode() {
         try {
-            const parentDoc = window.parent.document;
-            const parentWin = window.parent;
-            if (!parentDoc || !parentWin) return;
-
-            const NIGHT_STYLE_ID = "jyotish-night-mode-override-style";
+            const parentDoc = window.parent ? window.parent.document : document;
+            const parentWin = window.parent || window;
+            if (!parentDoc) return;
 
             function applyTheme(mode) {
                 const isNight = (mode === "night");
-                localStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
-                sessionStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
-
-                let styleEl = parentDoc.getElementById(NIGHT_STYLE_ID);
+                try {
+                    localStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
+                    sessionStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
+                } catch(e) {}
 
                 if (isNight) {
                     parentDoc.body.classList.add("night-mode");
                     if (parentDoc.documentElement) parentDoc.documentElement.classList.add("night-mode");
-                    
-                    const nightCss = `
-                        html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
-                            background-color: #0A0E1A !important;
-                            color: #F8FAFC !important;
-                        }
-                        [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-                            background-color: #0F172A !important;
-                            border-right: 2px solid #1E293B !important;
-                        }
-                        [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
-                            color: #F1F5F9 !important;
-                        }
-                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label {
-                            background: #1E293B !important;
-                            border-color: #334155 !important;
-                            color: #F1F5F9 !important;
-                        }
-                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p {
-                            color: #F1F5F9 !important;
-                        }
-                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {
-                            background: #2E3E5B !important;
-                            border-color: #F59E0B !important;
-                        }
-                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"],
-                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) {
-                            background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%) !important;
-                            border-color: #3B82F6 !important;
-                        }
-                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"] p,
-                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) p {
-                            color: #FFFFFF !important;
-                        }
-                        h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
-                            color: #F1F5F9 !important;
-                        }
-                        input, textarea, select,
-                        div[data-baseweb="input"] input,
-                        div[data-baseweb="base-input"] input,
-                        div[data-baseweb="input"] {
-                            background-color: #1E293B !important;
-                            color: #FFFFFF !important;
-                            -webkit-text-fill-color: #FFFFFF !important;
-                            border: 1.5px solid #3B82F6 !important;
-                        }
-                        div[data-baseweb="select"] > div {
-                            background-color: #1E293B !important;
-                            color: #FFFFFF !important;
-                            border: 1.5px solid #475569 !important;
-                        }
-                        div[data-baseweb="select"] * {
-                            color: #FFFFFF !important;
-                        }
-                        header.top-nav-bar {
-                            background: #0F172A !important;
-                            border-color: #1E293B !important;
-                            border-bottom: 3.5px solid #3B82F6 !important;
-                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
-                        }
-                        .top-nav-bar * {
-                            color: #F8FAFC !important;
-                        }
-                        .app-brand-title {
-                            background: linear-gradient(90deg, #F59E0B 0%, #FBBF24 50%, #60A5FA 100%) !important;
-                            -webkit-background-clip: text !important;
-                            -webkit-text-fill-color: transparent !important;
-                        }
-                        .app-brand-sub {
-                            color: #94A3B8 !important;
-                        }
-                        .active-profile-pill {
-                            background: #1E293B !important;
-                            border: 1.5px solid #F59E0B !important;
-                            color: #FEF3C7 !important;
-                        }
-                        .active-profile-pill * {
-                            color: #FEF3C7 !important;
-                        }
-                        .header-sub-pill {
-                            background: #1E293B !important;
-                            border: 1.5px solid #334155 !important;
-                            color: #E2E8F0 !important;
-                        }
-                        .header-sub-pill * {
-                            color: #E2E8F0 !important;
-                        }
-                        .header-sub-pill b {
-                            color: #F8FAFC !important;
-                        }
-                        .theme-select-box {
-                            background: #1E293B !important;
-                            border-color: #F59E0B !important;
-                        }
-                        .theme-select-box select, .theme-select-box b, .theme-select-box span {
-                            color: #F59E0B !important;
-                        }
-                        .theme-select-box option {
-                            background: #0F172A !important;
-                            color: #FFFFFF !important;
-                        }
-                        .digital-hud {
-                            background: #0F172A !important;
-                            border-color: #1E293B !important;
-                        }
-                        .digital-hud * {
-                            color: #F8FAFC !important;
-                        }
-                        .hud-pill {
-                            background: #1E293B !important;
-                            border: 1.5px solid #334155 !important;
-                            color: #F8FAFC !important;
-                        }
-                        .hud-pill b {
-                            color: #F59E0B !important;
-                        }
-                        div[data-testid="stExpander"] {
-                            background: #1E293B !important;
-                            border-color: #334155 !important;
-                        }
-                        div[data-testid="stMetricValue"], div[data-testid="stMetricValue"] * {
-                            color: #F8FAFC !important;
-                        }
-                        div[data-testid="stMetricLabel"], div[data-testid="stMetricLabel"] * {
-                            color: #94A3B8 !important;
-                        }
-                        [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
-                            background-color: #1E293B !important;
-                            color: #FFFFFF !important;
-                        }
-                        div[style*="background:#FFFFFF"], div[style*="background: #FFFFFF"],
-                        div[style*="background:#F8FAFC"], div[style*="background: #F8FAFC"],
-                        div[style*="background:#EFF6FF"], div[style*="background: #EFF6FF"] {
-                            background: #1E293B !important;
-                            border-color: #334155 !important;
-                            color: #F8FAFC !important;
-                        }
-                    `;
-                    
-                    if (!styleEl) {
-                        styleEl = parentDoc.createElement("style");
-                        styleEl.id = NIGHT_STYLE_ID;
-                        parentDoc.head.appendChild(styleEl);
-                    }
-                    styleEl.innerHTML = nightCss;
+                    if (document.body) document.body.classList.add("night-mode");
+                    if (document.documentElement) document.documentElement.classList.add("night-mode");
                 } else {
                     parentDoc.body.classList.remove("night-mode");
                     if (parentDoc.documentElement) parentDoc.documentElement.classList.remove("night-mode");
-                    if (styleEl) {
-                        styleEl.remove();
-                    }
+                    if (document.body) document.body.classList.remove("night-mode");
+                    if (document.documentElement) document.documentElement.classList.remove("night-mode");
                 }
 
                 // Sync all select elements
@@ -1496,9 +1456,6 @@ components.html("""
 
             const themeSelects = parentDoc.querySelectorAll("#software-theme-select");
             themeSelects.forEach(function(sel) {
-                sel.onchange = function(e) {
-                    handleThemeSwitch(sel.value);
-                };
                 if (!sel.dataset.themeBound) {
                     sel.dataset.themeBound = "true";
                     sel.addEventListener("change", function(e) {
@@ -1507,7 +1464,7 @@ components.html("""
                 }
             });
 
-            const currentSaved = localStorage.getItem("jyotish_theme_mode") || "day";
+            const currentSaved = localStorage.getItem("jyotish_theme_mode") || sessionStorage.getItem("jyotish_theme_mode") || "day";
             applyTheme(currentSaved);
         } catch (e) {
             console.error("Theme mode error:", e);
@@ -1541,7 +1498,7 @@ def render_login_page():
         <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:4px 12px !important; display:inline-flex; align-items:center; gap:6px;" title="थीम चुनें (Select Day / Night Mode)">
             <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:14px;">☀️</span>
             <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:12px;">थीम:</b>
-            <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:12px; cursor:pointer; outline:none; padding:0 2px;">
+            <select id="software-theme-select" class="notranslate" translate="no" onchange="(function(sel){var v=sel.value; try{var pd=(window.parent&&window.parent.document)?window.parent.document:document; if(v==='night'){document.documentElement.classList.add('night-mode'); document.body.classList.add('night-mode'); pd.documentElement.classList.add('night-mode'); pd.body.classList.add('night-mode'); localStorage.setItem('jyotish_theme_mode','night'); sessionStorage.setItem('jyotish_theme_mode','night');} else {document.documentElement.classList.remove('night-mode'); document.body.classList.remove('night-mode'); pd.documentElement.classList.remove('night-mode'); pd.body.classList.remove('night-mode'); localStorage.setItem('jyotish_theme_mode','day'); sessionStorage.setItem('jyotish_theme_mode','day');} var ics=(pd||document).querySelectorAll('#theme-mode-icon, .theme-mode-icon'); ics.forEach(function(i){i.innerText=(v==='night'?'🌙':'☀️');}); if(window.changeSoftwareTheme) window.changeSoftwareTheme(v); if(window.parent&&window.parent.changeSoftwareTheme) window.parent.changeSoftwareTheme(v);}catch(e){}})(this)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:12px; cursor:pointer; outline:none; padding:0 2px;">
                 <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
                 <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
             </select>
@@ -2189,7 +2146,7 @@ st.markdown(f"""
             <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
                 <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
                 <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11.5px;">थीम:</b>
-                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : null" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
+                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
                     <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
                     <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
                 </select>
