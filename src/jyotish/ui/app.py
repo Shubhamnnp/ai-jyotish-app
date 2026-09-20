@@ -75,27 +75,242 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+if "app_theme_mode" not in st.session_state:
+    st.session_state.app_theme_mode = "day"
+
+is_night_mode = (st.session_state.app_theme_mode == "night")
+
 # -------------------------------------------------------------
 # Unified High-Contrast Cosmic Vedic Theme (Solid Black Font & Zero Washout)
 # -------------------------------------------------------------
-unified_css = """
+if is_night_mode:
+    theme_mode_css = """
+    html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
+        background-color: #0A0E1A !important;
+        color: #F8FAFC !important;
+    }
+    [data-testid="stSidebar"], section[data-testid="stSidebar"] {
+        background-color: #0F172A !important;
+        border-right: 2px solid #1E293B !important;
+    }
+    [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
+        color: #F1F5F9 !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
+    section[data-testid="stSidebar"] .stRadio label,
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label,
+    div[data-testid="stRadio"] label {
+        background: #1E293B !important;
+        border: 1.5px solid #334155 !important;
+        color: #F1F5F9 !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label p,
+    section[data-testid="stSidebar"] .stRadio label p,
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p,
+    div[data-testid="stRadio"] label p {
+        color: #F1F5F9 !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover,
+    section[data-testid="stSidebar"] .stRadio label:hover,
+    div[data-testid="stRadio"] label:hover {
+        background: #2E3E5B !important;
+        border-color: #F59E0B !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked),
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="true"],
+    section[data-testid="stSidebar"] .stRadio label:has(input:checked),
+    div[data-testid="stRadio"] label:has(input:checked) {
+        background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%) !important;
+        border: 2px solid #3B82F6 !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) p,
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) span,
+    div[data-testid="stRadio"] label:has(input:checked) p {
+        color: #FFFFFF !important;
+    }
+    h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
+        color: #F1F5F9 !important;
+    }
+    input, textarea, select,
+    div[data-baseweb="input"] input,
+    div[data-baseweb="base-input"] input,
+    div[data-baseweb="input"] {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        border: 1.5px solid #3B82F6 !important;
+    }
+    div[data-baseweb="select"] > div {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #475569 !important;
+    }
+    div[data-baseweb="select"] * {
+        color: #FFFFFF !important;
+    }
+    header.top-nav-bar {
+        background: #0F172A !important;
+        border-color: #1E293B !important;
+        border-bottom: 3.5px solid #3B82F6 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
+    }
+    .top-nav-bar * {
+        color: #F8FAFC !important;
+    }
+    .app-brand-title {
+        background: linear-gradient(90deg, #F59E0B 0%, #FBBF24 50%, #60A5FA 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+    .app-brand-sub {
+        color: #94A3B8 !important;
+    }
+    .active-profile-pill {
+        background: #1E293B !important;
+        border: 1.5px solid #F59E0B !important;
+        color: #FEF3C7 !important;
+    }
+    .active-profile-pill * {
+        color: #FEF3C7 !important;
+    }
+    .header-sub-pill {
+        background: #1E293B !important;
+        border: 1.5px solid #334155 !important;
+        color: #E2E8F0 !important;
+    }
+    .header-sub-pill * {
+        color: #E2E8F0 !important;
+    }
+    .header-sub-pill b {
+        color: #F8FAFC !important;
+    }
+    .digital-hud {
+        background: #0F172A !important;
+        border-color: #1E293B !important;
+    }
+    .digital-hud * {
+        color: #F8FAFC !important;
+    }
+    .hud-pill {
+        background: #1E293B !important;
+        border: 1.5px solid #334155 !important;
+        color: #F8FAFC !important;
+    }
+    .hud-pill b, .hud-pill strong {
+        color: #F59E0B !important;
+    }
+    .rule-card, .vastu-card {
+        background: #1E293B !important;
+        border: 1.5px solid #334155 !important;
+        color: #F8FAFC !important;
+    }
+    .rule-card *, .vastu-card * {
+        color: #F8FAFC !important;
+    }
+    div[data-testid="stExpander"] {
+        background: #1E293B !important;
+        border: 1.5px solid #334155 !important;
+    }
+    div[data-testid="stMetricValue"], div[data-testid="stMetricValue"] * {
+        color: #F8FAFC !important;
+    }
+    div[data-testid="stMetricLabel"], div[data-testid="stMetricLabel"] * {
+        color: #94A3B8 !important;
+    }
+    [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+    }
+    button[kind="secondary"] {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #475569 !important;
+    }
+    div[style*="background:#FFFFFF"], div[style*="background: #FFFFFF"],
+    div[style*="background:#F8FAFC"], div[style*="background: #F8FAFC"],
+    div[style*="background:#EFF6FF"], div[style*="background: #EFF6FF"] {
+        background: #1E293B !important;
+        border-color: #334155 !important;
+        color: #F8FAFC !important;
+    }
+    """
+else:
+    theme_mode_css = """
+    body .stApp {
+        background-color: #F8FAFC !important;
+        color: #000000 !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    }
+    h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b {
+        color: #000000 !important;
+    }
+    label, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] span {
+        color: #000000 !important;
+        font-weight: 700 !important;
+        font-size: 0.92rem !important;
+    }
+    input, textarea, select, 
+    div[data-baseweb="input"] input, 
+    div[data-baseweb="base-input"] input,
+    div[data-baseweb="input"] {
+        background-color: #FFFFFF !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        border: 1.5px solid #94A3B8 !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+    }
+    div[data-baseweb="select"] > div {
+        background-color: #FFFFFF !important;
+        color: #000000 !important;
+        border: 1.5px solid #94A3B8 !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+    }
+    div[data-baseweb="select"] * {
+        color: #000000 !important;
+    }
+    [data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
+        color: #000000 !important;
+        font-weight: 900 !important;
+        font-size: 1.65rem !important;
+    }
+    [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] * {
+        color: #1E293B !important;
+        font-weight: 700 !important;
+        font-size: 0.88rem !important;
+    }
+    [data-testid="stSidebar"] {
+        background-color: #F1F5F9 !important;
+        border-right: 2px solid #CBD5E1 !important;
+    }
+    [data-testid="stSidebar"] * {
+        color: #000000 !important;
+    }
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
+        color: #000000 !important;
+        font-weight: 800 !important;
+    }
+    """
+
+unified_css = f"""
 <style>
     /* Hide Streamlit Deploy button, 3-dots menu, and footer */
-    .stDeployButton, #MainMenu, footer, [data-testid="stDecoration"], div[data-testid="stToolbar"] {
+    .stDeployButton, #MainMenu, footer, [data-testid="stDecoration"], div[data-testid="stToolbar"] {{
         display: none !important;
         visibility: hidden !important;
-    }
-    header[data-testid="stHeader"] {
+    }}
+    header[data-testid="stHeader"] {{
         background: transparent !important;
         height: 50px !important;
         z-index: 1000002 !important;
-    }
+    }}
 
     /* Keep Sidebar Open/Close Expand Button (>>) Always Visible, High-Contrast & Clickable */
     [data-testid="collapsedControl"],
     [data-testid="stSidebarCollapsedControl"],
     button[data-testid="stSidebarCollapsedControl"],
-    header[data-testid="stHeader"] button {
+    header[data-testid="stHeader"] button {{
         pointer-events: auto !important;
         display: inline-flex !important;
         visibility: visible !important;
@@ -115,27 +330,27 @@ unified_css = """
         min-height: 38px !important;
         align-items: center !important;
         justify-content: center !important;
-    }
+    }}
     [data-testid="collapsedControl"]:hover,
     [data-testid="stSidebarCollapsedControl"]:hover,
     button[data-testid="stSidebarCollapsedControl"]:hover,
-    header[data-testid="stHeader"] button:hover {
+    header[data-testid="stHeader"] button:hover {{
         background: #1D4ED8 !important;
         border-color: #1E3A8A !important;
         transform: scale(1.05) !important;
-    }
+    }}
     [data-testid="collapsedControl"] svg,
     [data-testid="stSidebarCollapsedControl"] svg,
     button[data-testid="stSidebarCollapsedControl"] svg,
-    header[data-testid="stHeader"] button svg {
+    header[data-testid="stHeader"] button svg {{
         fill: #FFFFFF !important;
         color: #FFFFFF !important;
         stroke: #FFFFFF !important;
         width: 22px !important;
         height: 22px !important;
-    }
+    }}
 
-    .sidebar-toggle-btn {
+    .sidebar-toggle-btn {{
         background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
         color: #FFFFFF !important;
         border: 1.5px solid #1E40AF !important;
@@ -150,121 +365,47 @@ unified_css = """
         box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35) !important;
         transition: all 0.15s ease !important;
         user-select: none !important;
-    }
-    .sidebar-toggle-btn:hover {
+    }}
+    .sidebar-toggle-btn:hover {{
         background: #1D4ED8 !important;
         transform: scale(1.06) !important;
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5) !important;
-    }
-    .sidebar-toggle-btn:active {
+    }}
+    .sidebar-toggle-btn:active {{
         transform: scale(0.95) !important;
-    }
+    }}
 
     /* Clean top spacing & allow frozen sticky header */
-    [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
+    [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {{
         overflow-x: hidden !important;
         overflow-y: auto !important;
-    }
-    .block-container {
+    }}
+    .block-container {{
         padding-top: 0px !important;
         padding-bottom: 2rem !important;
         padding-left: 2rem !important;
         padding-right: 2rem !important;
         overflow: visible !important;
-    }
+    }}
     div:has(> header.top-nav-bar),
     div[data-testid="stMarkdownContainer"]:has(header.top-nav-bar),
-    div[data-testid="element-container"]:has(header.top-nav-bar) {
+    div[data-testid="element-container"]:has(header.top-nav-bar) {{
         position: sticky !important;
         top: 0px !important;
         z-index: 999999 !important;
-    }
-
-    /* Global Canvas & Base Font Color (Day Mode) */
-    body:not(.night-mode) .stApp {
-        background-color: #F8FAFC !important;
-        color: #000000 !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-    }
-
-    /* Day Mode Text in Pure Black */
-    body:not(.night-mode) h1, body:not(.night-mode) h2, body:not(.night-mode) h3, body:not(.night-mode) h4, body:not(.night-mode) h5, body:not(.night-mode) h6,
-    body:not(.night-mode) p, body:not(.night-mode) span, body:not(.night-mode) li, body:not(.night-mode) a, body:not(.night-mode) label, body:not(.night-mode) caption, body:not(.night-mode) strong, body:not(.night-mode) b {
-        color: #000000 !important;
-    }
-
-    /* Day Mode Form Labels */
-    body:not(.night-mode) label, body:not(.night-mode) [data-testid="stWidgetLabel"] p, body:not(.night-mode) [data-testid="stWidgetLabel"] span {
-        color: #000000 !important;
-        font-weight: 700 !important;
-        font-size: 0.92rem !important;
-    }
-
-    /* Day Mode Input Fields */
-    body:not(.night-mode) input, body:not(.night-mode) textarea, body:not(.night-mode) select, 
-    body:not(.night-mode) div[data-baseweb="input"] input, 
-    body:not(.night-mode) div[data-baseweb="base-input"] input,
-    body:not(.night-mode) div[data-baseweb="input"] {
-        background-color: #FFFFFF !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        border: 1.5px solid #94A3B8 !important;
-        border-radius: 8px !important;
-        font-weight: 600 !important;
-    }
-    body:not(.night-mode) input:focus, body:not(.night-mode) textarea:focus, body:not(.night-mode) div[data-baseweb="input"]:focus-within {
-        border-color: #D97706 !important;
-        box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.25) !important;
-    }
-
-    /* Day Mode Selectbox Containers */
-    body:not(.night-mode) div[data-baseweb="select"] > div {
-        background-color: #FFFFFF !important;
-        color: #000000 !important;
-        border: 1.5px solid #94A3B8 !important;
-        border-radius: 8px !important;
-        font-weight: 600 !important;
-    }
-    body:not(.night-mode) div[data-baseweb="select"] * {
-        color: #000000 !important;
-    }
-
-    /* Day Mode Numbers & Metrics */
-    body:not(.night-mode) [data-testid="stMetricValue"], body:not(.night-mode) [data-testid="stMetricValue"] * {
-        color: #000000 !important;
-        font-weight: 900 !important;
-        font-size: 1.65rem !important;
-    }
-    body:not(.night-mode) [data-testid="stMetricLabel"], body:not(.night-mode) [data-testid="stMetricLabel"] * {
-        color: #1E293B !important;
-        font-weight: 700 !important;
-        font-size: 0.88rem !important;
-    }
-
-    /* Day Mode Sidebar Styling */
-    body:not(.night-mode) [data-testid="stSidebar"] {
-        background-color: #F1F5F9 !important;
-        border-right: 2px solid #CBD5E1 !important;
-    }
-    body:not(.night-mode) [data-testid="stSidebar"] * {
-        color: #000000 !important;
-    }
-    body:not(.night-mode) [data-testid="stSidebar"] h1, body:not(.night-mode) [data-testid="stSidebar"] h2, body:not(.night-mode) [data-testid="stSidebar"] h3 {
-        color: #000000 !important;
-        font-weight: 800 !important;
-    }
+    }}
 
     /* Sidebar Radio Navigation List (18 Modules as Clean, 100% Equal Size Cards) */
     [data-testid="stSidebar"] .stRadio,
     [data-testid="stSidebar"] .stRadio > div,
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] {
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] {{
         display: flex !important;
         flex-direction: column !important;
         gap: 6px !important;
         width: 100% !important;
         box-sizing: border-box !important;
-    }
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label {
+    }}
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label {{
         width: 100% !important;
         min-height: 48px !important;
         box-sizing: border-box !important;
@@ -280,43 +421,43 @@ unified_css = """
         box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
         display: flex !important;
         align-items: center !important;
-    }
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label > div {
+    }}
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label > div {{
         display: flex !important;
         align-items: center !important;
-    }
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label div[data-testid="stMarkdownContainer"] {
+    }}
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label div[data-testid="stMarkdownContainer"] {{
         width: 100% !important;
         flex: 1 !important;
-    }
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p {
+    }}
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p {{
         margin: 0px !important;
         font-size: 13px !important;
         font-weight: 700 !important;
         color: #000000 !important;
         line-height: 1.3 !important;
         width: 100% !important;
-    }
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {
+    }}
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {{
         background: #FEF3C7 !important;
         border-color: #D97706 !important;
         transform: translateY(-1px);
-    }
+    }}
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"],
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) {
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) {{
         background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%) !important;
         border-color: #2563EB !important;
         border-width: 2px !important;
         box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2) !important;
-    }
+    }}
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"] p,
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) p {
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) p {{
         color: #1E3A8A !important;
         font-weight: 800 !important;
-    }
+    }}
 
     /* Primary Calculate Button (Side me Janm Vivran ke niche) */
-    button[kind="primary"] {
+    button[kind="primary"] {{
         background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
         color: #FFFFFF !important;
         font-weight: 900 !important;
@@ -327,31 +468,31 @@ unified_css = """
         box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4) !important;
         cursor: pointer !important;
         transition: all 0.15s ease !important;
-    }
-    button[kind="primary"] * {
+    }}
+    button[kind="primary"] * {{
         color: #FFFFFF !important;
         font-weight: 900 !important;
-    }
-    button[kind="primary"]:hover {
+    }}
+    button[kind="primary"]:hover {{
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(217, 119, 6, 0.5) !important;
-    }
+    }}
 
     /* Secondary Buttons */
-    button[kind="secondary"] {
+    button[kind="secondary"] {{
         background-color: #FFFFFF !important;
         color: #000000 !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 8px !important;
         font-weight: 700 !important;
-    }
-    button[kind="secondary"]:hover {
+    }}
+    button[kind="secondary"]:hover {{
         background-color: #F8FAFC !important;
         border-color: #94A3B8 !important;
-    }
+    }}
 
     /* Unified Frozen Top Header Bar (Full width edge-to-edge with royal blue boundary) */
-    .top-nav-bar {
+    .top-nav-bar {{
         position: sticky !important;
         top: 0px !important;
         z-index: 999999 !important;
@@ -373,13 +514,13 @@ unified_css = """
         flex-wrap: wrap !important;
         gap: 14px !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-    }
-    .nav-left {
+    }}
+    .nav-left {{
         display: flex !important;
         align-items: center !important;
         gap: 12px !important;
-    }
-    .logo-circle {
+    }}
+    .logo-circle {{
         width: 44px !important;
         height: 44px !important;
         border-radius: 12px !important;
@@ -390,8 +531,8 @@ unified_css = """
         justify-content: center !important;
         font-size: 24px !important;
         box-shadow: 0 2px 8px rgba(217, 119, 6, 0.2) !important;
-    }
-    .app-brand-title {
+    }}
+    .app-brand-title {{
         font-size: 1.45rem !important;
         font-weight: 900 !important;
         background: linear-gradient(90deg, #B45309 0%, #D97706 45%, #2563EB 100%) !important;
@@ -399,25 +540,25 @@ unified_css = """
         -webkit-text-fill-color: transparent !important;
         line-height: 1.2 !important;
         letter-spacing: -0.5px !important;
-    }
-    .app-brand-sub {
+    }}
+    .app-brand-sub {{
         font-size: 0.8rem !important;
         color: #475569 !important;
         font-weight: 700 !important;
         letter-spacing: 0.2px !important;
-    }
-    .nav-profile-block {
+    }}
+    .nav-profile-block {{
         display: flex !important;
         flex-direction: column !important;
         align-items: flex-end !important;
         gap: 5px !important;
-    }
-    @media (max-width: 900px) {
-        .nav-profile-block {
+    }}
+    @media (max-width: 900px) {{
+        .nav-profile-block {{
             align-items: flex-start !important;
-        }
-    }
-    .active-profile-pill {
+        }}
+    }}
+    .active-profile-pill {{
         background: #EFF6FF !important;
         border: 1.5px solid #93C5FD !important;
         border-radius: 20px !important;
@@ -427,15 +568,15 @@ unified_css = """
         font-weight: 700 !important;
         box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1) !important;
         white-space: nowrap !important;
-    }
-    .header-sub-pills-row {
+    }}
+    .header-sub-pills-row {{
         display: flex !important;
         align-items: center !important;
         gap: 6px !important;
         flex-wrap: wrap !important;
         justify-content: flex-end !important;
-    }
-    .header-sub-pill {
+    }}
+    .header-sub-pill {{
         background: #F8FAFC !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 14px !important;
@@ -448,21 +589,21 @@ unified_css = """
         gap: 5px !important;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
         white-space: nowrap !important;
-    }
-    .header-sub-pill b {
+    }}
+    .header-sub-pill b {{
         font-weight: 800 !important;
         color: #0F172A !important;
-    }
-    .pulse-dot {
+    }}
+    .pulse-dot {{
         width: 8px !important;
         height: 8px !important;
         border-radius: 50% !important;
         background: #10B981 !important;
         box-shadow: 0 0 8px #10B981 !important;
         display: inline-block !important;
-    }
+    }}
 
-    .main-header {
+    .main-header {{
         font-size: 2.2rem;
         font-weight: 900;
         background: linear-gradient(90deg, #B45309 0%, #D97706 40%, #2563EB 100%);
@@ -470,30 +611,30 @@ unified_css = """
         -webkit-text-fill-color: transparent;
         margin-bottom: 12px;
         letter-spacing: -0.5px;
-    }
-    .digital-hud {
+    }}
+    .digital-hud {{
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 10px !important;
         padding: 8px 14px !important;
         margin-bottom: 12px !important;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-    }
-    .digital-hud * {
+    }}
+    .digital-hud * {{
         color: #000000 !important;
-    }
-    .hud-grid {
+    }}
+    .hud-grid {{
         display: grid !important;
         grid-template-columns: repeat(4, 1fr) !important;
         gap: 6px !important;
         width: 100% !important;
-    }
-    @media (max-width: 992px) {
-        .hud-grid {
+    }}
+    @media (max-width: 992px) {{
+        .hud-grid {{
             grid-template-columns: repeat(2, 1fr) !important;
-        }
-    }
-    .hud-pill {
+        }}
+    }}
+    .hud-pill {{
         background: #F8FAFC !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 6px !important;
@@ -510,54 +651,54 @@ unified_css = """
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
-    }
-    .hud-pill b, .hud-pill strong {
+    }}
+    .hud-pill b, .hud-pill strong {{
         color: #000000 !important;
         font-weight: 900 !important;
-    }
-    .hud-pill-highlight {
+    }}
+    .hud-pill-highlight {{
         border-color: #D97706 !important;
         background: #FEF3C7 !important;
         color: #92400E !important;
         display: inline-flex !important;
         padding: 3px 10px !important;
         font-size: 12px !important;
-    }
-    .hud-pill-highlight b {
+    }}
+    .hud-pill-highlight b {{
         color: #78350F !important;
-    }
-    .rule-card {
+    }}
+    .rule-card {{
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 10px !important;
         padding: 14px !important;
         margin-bottom: 12px !important;
         box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
-    }
-    .rule-card * {
+    }}
+    .rule-card * {{
         color: #000000 !important;
-    }
+    }}
 
     /* Vastu-Jyotish Grid & Uniform High-Contrast Cards */
-    .vastu-grid {
+    .vastu-grid {{
         display: grid !important;
         grid-template-columns: repeat(3, 1fr) !important;
         gap: 16px !important;
         margin-top: 14px !important;
         margin-bottom: 24px !important;
         width: 100% !important;
-    }
-    @media (max-width: 992px) {
-        .vastu-grid {
+    }}
+    @media (max-width: 992px) {{
+        .vastu-grid {{
             grid-template-columns: repeat(2, 1fr) !important;
-        }
-    }
-    @media (max-width: 640px) {
-        .vastu-grid {
+        }}
+    }}
+    @media (max-width: 640px) {{
+        .vastu-grid {{
             grid-template-columns: 1fr !important;
-        }
-    }
-    .vastu-card {
+        }}
+    }}
+    .vastu-card {{
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 12px !important;
@@ -570,143 +711,54 @@ unified_css = """
         box-sizing: border-box !important;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
         transition: transform 0.15s ease, box-shadow 0.15s ease !important;
-    }
-    .vastu-card:hover {
+    }}
+    .vastu-card:hover {{
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
         border-color: #94A3B8 !important;
-    }
-    .vastu-card * {
+    }}
+    .vastu-card * {{
         color: #0F172A !important;
-    }
+    }}
 
     /* High-contrast Badges */
-    .own-badge { color: #065F46 !important; font-weight: 800; background: #D1FAE5 !important; border: 1.5px solid #10B981 !important; padding: 3px 8px; border-radius: 6px; }
-    .mool-badge { color: #115E59 !important; font-weight: 800; background: #CCFBF1 !important; border: 1.5px solid #14B8A6 !important; padding: 3px 8px; border-radius: 6px; }
-    .exalt-badge { color: #1E40AF !important; font-weight: 800; background: #DBEAFE !important; border: 1.5px solid #3B82F6 !important; padding: 3px 8px; border-radius: 6px; }
-    .deb-badge { color: #991B1B !important; font-weight: 800; background: #FEE2E2 !important; border: 1.5px solid #EF4444 !important; padding: 3px 8px; border-radius: 6px; }
+    .own-badge {{ color: #065F46 !important; font-weight: 800; background: #D1FAE5 !important; border: 1.5px solid #10B981 !important; padding: 3px 8px; border-radius: 6px; }}
+    .mool-badge {{ color: #115E59 !important; font-weight: 800; background: #CCFBF1 !important; border: 1.5px solid #14B8A6 !important; padding: 3px 8px; border-radius: 6px; }}
+    .exalt-badge {{ color: #1E40AF !important; font-weight: 800; background: #DBEAFE !important; border: 1.5px solid #3B82F6 !important; padding: 3px 8px; border-radius: 6px; }}
+    .deb-badge {{ color: #991B1B !important; font-weight: 800; background: #FEE2E2 !important; border: 1.5px solid #EF4444 !important; padding: 3px 8px; border-radius: 6px; }}
 
-    [data-testid="stDataFrame"] {
+    [data-testid="stDataFrame"] {{
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 8px !important;
-    }
-    [data-testid="stDataFrame"] * {
+    }}
+    [data-testid="stDataFrame"] * {{
         color: #000000 !important;
         font-weight: 600 !important;
-    }
-
-    /* Beautiful Modern Sidebar Module Label Cards - 100% Uniform Size & Alignment */
-    section[data-testid="stSidebar"] div[data-testid="stRadio"],
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"],
-    section[data-testid="stSidebar"] .stRadio,
-    section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] {
-        width: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 6px !important;
-    }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
-    section[data-testid="stSidebar"] .stRadio label,
-    div[data-testid="stRadio"] label {
-        background: #FFFFFF !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-radius: 10px !important;
-        padding: 10px 14px !important;
-        margin: 0 0 4px 0 !important;
-        width: 100% !important;
-        min-height: 52px !important;
-        box-sizing: border-box !important;
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        gap: 10px !important;
-        cursor: pointer !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-    /* Align and position radio circle nicely inside the card */
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label > div:first-child,
-    section[data-testid="stSidebar"] .stRadio label > div:first-child {
-        margin: 0 !important;
-        padding: 0 !important;
-        flex-shrink: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label > div:last-child,
-    section[data-testid="stSidebar"] .stRadio label > div:last-child {
-        flex: 1 1 auto !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover,
-    section[data-testid="stSidebar"] .stRadio label:hover,
-    div[data-testid="stRadio"] label:hover {
-        background: #F8FAFC !important;
-        border-color: #3B82F6 !important;
-        transform: translateX(3px) !important;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15) !important;
-    }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked),
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="true"],
-    section[data-testid="stSidebar"] .stRadio label:has(input:checked),
-    div[data-testid="stRadio"] label:has(input:checked) {
-        background: #EFF6FF !important;
-        border: 2px solid #2563EB !important;
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.18) !important;
-    }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label p,
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label span,
-    section[data-testid="stSidebar"] .stRadio label p,
-    div[data-testid="stRadio"] label p {
-        font-weight: 700 !important;
-        color: #0F172A !important;
-        font-size: 13.5px !important;
-        margin: 0 !important;
-        line-height: 1.35 !important;
-    }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) p,
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) span,
-    div[data-testid="stRadio"] label:has(input:checked) p {
-        color: #1D4ED8 !important;
-        font-weight: 800 !important;
-    }
-
-    @media (max-width: 768px) {
-        .main-header { font-size: 1.6rem !important; }
-        .digital-hud { padding: 8px 10px !important; }
-        .hud-pill { font-size: 11px !important; padding: 4px 8px !important; }
-        button[kind="primary"], button[kind="secondary"] {
-            min-height: 44px !important;
-        }
-    }
+    }}
 
     /* Google Translate Clean Styling - Zero Distortion */
-    .goog-te-banner-frame.skiptranslate, .goog-te-gadget, #goog-gt-tt, .goog-te-spinner-pos, iframe.goog-te-banner-frame {
+    .goog-te-banner-frame.skiptranslate, .goog-te-gadget, #goog-gt-tt, .goog-te-spinner-pos, iframe.goog-te-banner-frame {{
         display: none !important;
         visibility: hidden !important;
-    }
-    body {
+    }}
+    body {{
         top: 0px !important;
-    }
-    #google_translate_element {
+    }}
+    #google_translate_element {{
         display: none !important;
-    }
-    .skiptranslate iframe {
+    }}
+    .skiptranslate iframe {{
         display: none !important;
-    }
-    .goog-tooltip, .goog-tooltip:hover {
+    }}
+    .goog-tooltip, .goog-tooltip:hover {{
         display: none !important;
-    }
-    .goog-text-highlight {
+    }}
+    .goog-text-highlight {{
         background-color: transparent !important;
         border: none !important;
         box-shadow: none !important;
-    }
-    #software-lang-select {
+    }}
+    #software-lang-select {{
         border: none !important;
         background: transparent !important;
         font-weight: 800 !important;
@@ -714,222 +766,14 @@ unified_css = """
         color: #166534 !important;
         cursor: pointer !important;
         outline: none !important;
-    }
-    #software-lang-select option {
+    }}
+    #software-lang-select option {{
         background: #FFFFFF !important;
         color: #0F172A !important;
         font-weight: 700 !important;
-    }
+    }}
 
-    /* =============================================================
-       🌙 NIGHT MODE / DARK COSMIC THEME OVERRIDES
-       ============================================================= */
-    html.night-mode,
-    body.night-mode,
-    body.night-mode .stApp,
-    .night-mode [data-testid="stAppViewContainer"],
-    .night-mode [data-testid="stMain"],
-    .night-mode section.main {
-        background-color: #0B0F19 !important;
-        background-color: #0A0E1A !important;
-        color: #F8FAFC !important;
-    }
-
-    body.night-mode [data-testid="stSidebar"] {
-    body.night-mode [data-testid="stSidebar"],
-    body.night-mode section[data-testid="stSidebar"] {
-        background-color: #0F172A !important;
-        border-right: 2px solid #1E293B !important;
-    }
-
-    body.night-mode [data-testid="stSidebar"] * {
-    body.night-mode [data-testid="stSidebar"] *,
-    body.night-mode [data-testid="stSidebar"] p,
-    body.night-mode [data-testid="stSidebar"] span,
-    body.night-mode [data-testid="stSidebar"] label,
-    body.night-mode [data-testid="stSidebar"] div,
-    body.night-mode [data-testid="stSidebar"] b {
-        color: #F1F5F9 !important;
-    }
-
-    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
-    body.night-mode section[data-testid="stSidebar"] .stRadio label,
-    body.night-mode [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label,
-    body.night-mode div[data-testid="stRadio"] label {
-        background: #1E293B !important;
-        border: 1.5px solid #334155 !important;
-        color: #F1F5F9 !important;
-    }
-    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label p,
-    body.night-mode section[data-testid="stSidebar"] .stRadio label p,
-    body.night-mode [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p,
-    body.night-mode div[data-testid="stRadio"] label p {
-        color: #F1F5F9 !important;
-    }
-    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover,
-    body.night-mode section[data-testid="stSidebar"] .stRadio label:hover,
-    body.night-mode div[data-testid="stRadio"] label:hover {
-        background: #2E3E5B !important;
-        border-color: #F59E0B !important;
-    }
-    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked),
-    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="true"],
-    body.night-mode section[data-testid="stSidebar"] .stRadio label:has(input:checked),
-    body.night-mode div[data-testid="stRadio"] label:has(input:checked) {
-        background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%) !important;
-        border: 2px solid #3B82F6 !important;
-    }
-    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) p,
-    body.night-mode section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) span,
-    body.night-mode div[data-testid="stRadio"] label:has(input:checked) p {
-        color: #FFFFFF !important;
-    }
-
-    body.night-mode h1, body.night-mode h2, body.night-mode h3, body.night-mode h4, body.night-mode h5, body.night-mode h6,
-    body.night-mode p, body.night-mode span, body.night-mode li, body.night-mode label, body.night-mode div, body.night-mode strong, body.night-mode b {
-    body.night-mode p, body.night-mode span, body.night-mode li, body.night-mode a, body.night-mode label, body.night-mode caption, body.night-mode strong, body.night-mode b,
-    body.night-mode [data-testid="stMarkdownContainer"] p, body.night-mode [data-testid="stMarkdownContainer"] span {
-        color: #F1F5F9 !important;
-    }
-
-    body.night-mode input, body.night-mode textarea, body.night-mode select,
-    body.night-mode div[data-baseweb="input"] input,
-    body.night-mode div[data-baseweb="base-input"] input,
-    body.night-mode div[data-baseweb="input"] {
-        background-color: #1E293B !important;
-        color: #FFFFFF !important;
-        -webkit-text-fill-color: #FFFFFF !important;
-        border-color: #475569 !important;
-        border: 1.5px solid #3B82F6 !important;
-    }
-
-    body.night-mode div[data-baseweb="select"] > div {
-        background-color: #1E293B !important;
-        color: #FFFFFF !important;
-        border-color: #475569 !important;
-        border: 1.5px solid #475569 !important;
-    }
-    body.night-mode div[data-baseweb="select"] * {
-        color: #FFFFFF !important;
-    }
-
-    body.night-mode header.top-nav-bar {
-        background: #0F172A !important;
-        border-color: #334155 !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
-        border-color: #1E293B !important;
-        border-bottom: 3.5px solid #3B82F6 !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
-    }
-    body.night-mode .top-nav-bar * {
-        color: #F8FAFC !important;
-    }
-    body.night-mode .app-brand-title {
-        background: linear-gradient(90deg, #F59E0B 0%, #FBBF24 50%, #60A5FA 100%) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-    }
-    body.night-mode .app-brand-sub {
-        color: #94A3B8 !important;
-    }
-    body.night-mode .active-profile-pill {
-        background: #1E293B !important;
-        border-color: #D97706 !important;
-        border: 1.5px solid #F59E0B !important;
-        color: #FEF3C7 !important;
-    }
-    body.night-mode .active-profile-pill * {
-        color: #FEF3C7 !important;
-    }
-    body.night-mode .header-sub-pill {
-        background: #1E293B !important;
-        border-color: #475569 !important;
-        border: 1.5px solid #334155 !important;
-        color: #E2E8F0 !important;
-    }
-    body.night-mode .header-sub-pill * {
-        color: #E2E8F0 !important;
-    }
-    body.night-mode .header-sub-pill b {
-        color: #F8FAFC !important;
-    }
-    body.night-mode .theme-select-box {
-        background: #1E293B !important;
-        border-color: #F59E0B !important;
-    }
-    body.night-mode .theme-select-box select, body.night-mode .theme-select-box b, body.night-mode .theme-select-box span {
-        color: #F59E0B !important;
-    }
-    body.night-mode .theme-select-box option {
-        background: #0F172A !important;
-        color: #FFFFFF !important;
-    }
-    body.night-mode .digital-hud {
-        background: #0F172A !important;
-        border-color: #334155 !important;
-        border-color: #1E293B !important;
-    }
-    body.night-mode .digital-hud * {
-        color: #F8FAFC !important;
-    }
-    body.night-mode .hud-pill {
-        background: #1E293B !important;
-        border-color: #475569 !important;
-        border: 1.5px solid #334155 !important;
-        color: #F8FAFC !important;
-    }
-    body.night-mode .hud-pill b {
-    body.night-mode .hud-pill b, body.night-mode .hud-pill strong {
-        color: #F59E0B !important;
-    }
-    body.night-mode .rule-card {
-        background: #1E293B !important;
-        border: 1.5px solid #334155 !important;
-        color: #F8FAFC !important;
-    }
-    body.night-mode .rule-card * {
-        color: #F8FAFC !important;
-    }
-    body.night-mode .vastu-card {
-        background: #1E293B !important;
-        border: 1.5px solid #334155 !important;
-    }
-    body.night-mode .vastu-card * {
-        color: #F8FAFC !important;
-    }
-    body.night-mode div[data-testid="stExpander"] {
-        background: #1E293B !important;
-        border-color: #334155 !important;
-        border: 1.5px solid #334155 !important;
-    }
-    body.night-mode div[data-testid="stMetricValue"], body.night-mode div[data-testid="stMetricValue"] * {
-        color: #F8FAFC !important;
-    }
-    body.night-mode div[data-testid="stMetricLabel"], body.night-mode div[data-testid="stMetricLabel"] * {
-        color: #94A3B8 !important;
-    }
-    body.night-mode [data-testid="stTable"], body.night-mode [data-testid="stDataFrame"] {
-        background: #1E293B !important;
-    body.night-mode [data-testid="stTable"], body.night-mode [data-testid="stDataFrame"], body.night-mode [data-testid="stTable"] *, body.night-mode [data-testid="stDataFrame"] * {
-        background-color: #1E293B !important;
-        color: #FFFFFF !important;
-    }
-    body.night-mode button[kind="secondary"] {
-        background-color: #1E293B !important;
-        color: #FFFFFF !important;
-        border: 1.5px solid #475569 !important;
-    }
-    body.night-mode button[kind="secondary"]:hover {
-        background-color: #334155 !important;
-        border-color: #64748B !important;
-    }
-    body.night-mode div[style*="background:#FFFFFF"], body.night-mode div[style*="background: #FFFFFF"],
-    body.night-mode div[style*="background:#F8FAFC"], body.night-mode div[style*="background: #F8FAFC"],
-    body.night-mode div[style*="background:#EFF6FF"], body.night-mode div[style*="background: #EFF6FF"] {
-        background: #1E293B !important;
-        border-color: #334155 !important;
-        color: #F8FAFC !important;
-    }
+    {theme_mode_css}
 </style>
 """
 
@@ -1422,10 +1266,7 @@ components.html("""
     // Comprehensive Day Mode / Night Mode Theme Engine
     function setupThemeMode() {
         try {
-            const parentDoc = window.parent.document;
-            const parentWin = window.parent;
-            if (!parentDoc || !parentWin) return;
-            const parentDoc = window.parent ? window.parent.document : document;
+            const parentDoc = (window.parent && window.parent.document) ? window.parent.document : document;
             const parentWin = window.parent || window;
             if (!parentDoc) return;
 
@@ -1433,8 +1274,6 @@ components.html("""
 
             function applyTheme(mode) {
                 const isNight = (mode === "night");
-                localStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
-                sessionStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
                 try {
                     localStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
                     sessionStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
@@ -1640,7 +1479,6 @@ components.html("""
                 }
             });
 
-            const currentSaved = localStorage.getItem("jyotish_theme_mode") || "day";
             const currentSaved = localStorage.getItem("jyotish_theme_mode") || sessionStorage.getItem("jyotish_theme_mode") || "day";
             applyTheme(currentSaved);
         } catch (e) {
@@ -1675,7 +1513,6 @@ def render_login_page():
         <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:4px 12px !important; display:inline-flex; align-items:center; gap:6px;" title="थीम चुनें (Select Day / Night Mode)">
             <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:14px;">☀️</span>
             <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:12px;">थीम:</b>
-            <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:12px; cursor:pointer; outline:none; padding:0 2px;">
             <select id="software-theme-select" class="notranslate" translate="no" onchange="(function(sel){var v=sel.value; try{var pd=(window.parent&&window.parent.document)?window.parent.document:document; if(v==='night'){document.documentElement.classList.add('night-mode'); document.body.classList.add('night-mode'); pd.documentElement.classList.add('night-mode'); pd.body.classList.add('night-mode'); localStorage.setItem('jyotish_theme_mode','night'); sessionStorage.setItem('jyotish_theme_mode','night');} else {document.documentElement.classList.remove('night-mode'); document.body.classList.remove('night-mode'); pd.documentElement.classList.remove('night-mode'); pd.body.classList.remove('night-mode'); localStorage.setItem('jyotish_theme_mode','day'); sessionStorage.setItem('jyotish_theme_mode','day');} var ics=(pd||document).querySelectorAll('#theme-mode-icon, .theme-mode-icon'); ics.forEach(function(i){i.innerText=(v==='night'?'🌙':'☀️');}); if(window.changeSoftwareTheme) window.changeSoftwareTheme(v); if(window.parent&&window.parent.changeSoftwareTheme) window.parent.changeSoftwareTheme(v);}catch(e){}})(this)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:12px; cursor:pointer; outline:none; padding:0 2px;">
                 <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
                 <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
@@ -1900,9 +1737,15 @@ if not st.session_state.get("is_logged_in", False):
 # -------------------------------------------------------------
 # SIDEBAR: 1. Birth Profile -> 2. Calculate Button -> 3. 18 Modules
 # -------------------------------------------------------------
-col_u1, col_u2 = st.sidebar.columns([3, 1])
-col_u1.markdown("<span style='color:#059669; font-size:15px; font-weight:bold;'>●</span> <b style='color:#000000; font-size:13px;'>ज्योतिषी (Admin)</b>", unsafe_allow_html=True)
-if col_u2.button("🚪", help="लॉगआउट करें (Go to Login Page)"):
+col_u1, col_u2, col_u3, col_u4 = st.sidebar.columns([1.6, 0.9, 0.9, 0.6])
+col_u1.markdown("<span style='color:#059669; font-size:14px; font-weight:bold;'>●</span> <b style='color:#000000; font-size:12px;'>ज्योतिषी</b>", unsafe_allow_html=True)
+if col_u2.button("☀️ डे", help="डे मोड (Day Mode)", use_container_width=True):
+    st.session_state.app_theme_mode = "day"
+    st.rerun()
+if col_u3.button("🌙 नाइट", help="नाइट मोड (Night Mode)", use_container_width=True):
+    st.session_state.app_theme_mode = "night"
+    st.rerun()
+if col_u4.button("🚪", help="लॉगआउट करें (Logout)", use_container_width=True):
     st.session_state.is_logged_in = False
     st.rerun()
 
@@ -2010,21 +1853,65 @@ if init_b_date < date(1950, 1, 1):
 elif init_b_date > date(2050, 12, 31):
     init_b_date = date(2050, 12, 31)
 
+# DOB Section with 1950 to 2050 Range Support
+dob_mode = st.sidebar.radio(
+    "जन्म तिथि प्रारूप (DOB Mode)",
+    ["🔢 वर्ष-माह-दिन (1950-2050)", "📅 कैलेंडर (DD/MM/YYYY)"],
+    horizontal=True,
+    key="sb_dob_picker_type"
+)
+
+if "1950" in dob_mode or "वर्ष" in dob_mode:
+    col_d_day, col_d_mon, col_d_yr = st.sidebar.columns([1, 1.2, 1.2])
+    years_list = list(range(1950, 2051))
+    cur_yr = init_b_date.year if init_b_date.year in years_list else 1995
+    yr_idx = years_list.index(cur_yr)
+
+    months_labels = [
+        "01-जनवरी", "02-फरवरी", "03-मार्च", "04-अप्रैल",
+        "05-मई", "06-जून", "07-जुलाई", "08-अगस्त",
+        "09-सितंबर", "10-अक्टूबर", "11-नवंबर", "12-दिसंबर"
+    ]
+    cur_mon = init_b_date.month
+    mon_idx = cur_mon - 1
+
+    sel_yr = col_d_yr.selectbox("वर्ष", years_list, index=yr_idx, key="sb_dob_year_sel")
+    sel_mon_str = col_d_mon.selectbox("माह", months_labels, index=mon_idx, key="sb_dob_month_sel")
+    sel_mon = months_labels.index(sel_mon_str) + 1
+
+    if sel_mon in [1, 3, 5, 7, 8, 10, 12]:
+        max_d = 31
+    elif sel_mon in [4, 6, 9, 11]:
+        max_d = 30
+    else:
+        is_leap = (sel_yr % 4 == 0 and sel_yr % 100 != 0) or (sel_yr % 400 == 0)
+        max_d = 29 if is_leap else 28
+
+    days_list = list(range(1, max_d + 1))
+    cur_d = min(init_b_date.day, max_d)
+    d_idx = cur_d - 1
+    sel_d = col_d_day.selectbox("दिन", days_list, index=d_idx, key="sb_dob_day_sel")
+
+    birth_d = date(sel_yr, sel_mon, sel_d)
+    st.session_state.birth_date = birth_d
+    st.sidebar.caption(f"🗓️ जन्म तिथि: **{birth_d.strftime('%d/%m/%Y')}** ({birth_d.strftime('%d %B %Y')})")
+else:
+    birth_d = st.sidebar.date_input(
+        "जन्म तिथि (DOB - DD/MM/YYYY)",
+        value=init_b_date,
+        min_value=date(1950, 1, 1),
+        max_value=date(2050, 12, 31),
+        format="DD/MM/YYYY",
+        key="sb_dob_cal_input",
+        help="जन्म तिथि चुनें (1950 से 2050, प्रारूप: DD/MM/YYYY)"
+    )
+    st.session_state.birth_date = birth_d
+
 time_format_mode = st.sidebar.radio(
     "समय प्रारूप (Time Format)",
     ["12 घंटे (AM/PM)", "24 घंटे (24-Hour)"],
     horizontal=True,
     key="sb_time_format_pref"
-)
-
-col_b1, col_b2 = st.sidebar.columns(2)
-birth_d = col_b1.date_input(
-    "जन्म तिथि (DOB)",
-    value=init_b_date,
-    min_value=date(1950, 1, 1),
-    max_value=date(2050, 12, 31),
-    format="DD/MM/YYYY",
-    help="जन्म तिथि चुनें (1950 से 2050, प्रारूप: DD/MM/YYYY)"
 )
 
 # Synchronize last loaded time across preset drawer switches
@@ -2053,20 +1940,23 @@ if time_format_mode.startswith("12"):
     if curr_h12 == 0:
         curr_h12 = 12
 
-    col_th, col_tm, col_tp = col_b2.columns([1, 1, 1.2])
-    h_val = col_th.selectbox("घंटा", list(range(1, 13)), index=curr_h12 - 1, key="sb_time_h")
-    m_val = col_tm.selectbox("मिनट", [f"{m:02d}" for m in range(60)], index=curr_m, key="sb_time_m")
-    p_val = col_tp.selectbox("AM/PM", ["AM", "PM"], index=0 if curr_ampm == "AM" else 1, key="sb_time_p")
+    col_th, col_tm, col_tp = st.sidebar.columns([1, 1, 1.1])
+    h_val = col_th.selectbox("घंटा (1-12)", list(range(1, 13)), index=curr_h12 - 1, key="sb_time_h")
+    m_val = col_tm.selectbox("मिनट (00-59)", [f"{m:02d}" for m in range(60)], index=curr_m, key="sb_time_m")
+    p_val = col_tp.selectbox("AM / PM", ["AM", "PM"], index=0 if curr_ampm == "AM" else 1, key="sb_time_p")
     
     h_24 = (int(h_val) % 12) + (12 if p_val == "PM" else 0)
     birth_t = time(h_24, int(m_val), 0)
+    st.session_state.birth_time = birth_t
+    st.sidebar.caption(f"⏰ जन्म समय: **{birth_t.strftime('%I:%M %p')}** (24H: {birth_t.strftime('%H:%M')})")
 else:
-    birth_t = col_b2.time_input(
+    birth_t = st.sidebar.time_input(
         "जन्म समय (24-Hour)",
         value=st.session_state.birth_time,
         step=60,
         key="sb_time_24_val"
     )
+    st.session_state.birth_time = birth_t
 
 col_geo1, col_geo2 = st.sidebar.columns(2)
 latitude = col_geo1.number_input("Latitude", value=default_lat, format="%.4f")
@@ -2386,7 +2276,6 @@ st.markdown(f"""
             <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
                 <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
                 <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11.5px;">थीम:</b>
-                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : null" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
                 <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
                     <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
                     <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
