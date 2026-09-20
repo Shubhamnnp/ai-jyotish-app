@@ -229,6 +229,36 @@ unified_css = """
         color: #000000 !important;
     }
 
+    /* Day Mode Datepicker & Calendar Popover */
+    body:not(.night-mode) div[data-baseweb="popover"],
+    body:not(.night-mode) div[data-baseweb="calendar"] {
+        background-color: #FFFFFF !important;
+        color: #000000 !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+    body:not(.night-mode) div[data-baseweb="calendar"] * {
+        color: #000000 !important;
+        font-weight: 600 !important;
+    }
+    body:not(.night-mode) div[data-baseweb="calendar"] select {
+        background-color: #FFFFFF !important;
+        color: #000000 !important;
+        border: 1px solid #94A3B8 !important;
+    }
+    body:not(.night-mode) div[data-baseweb="calendar"] [aria-selected="true"] {
+        background-color: #2563EB !important;
+        color: #FFFFFF !important;
+        font-weight: 800 !important;
+        border-radius: 6px !important;
+    }
+    body:not(.night-mode) div[data-baseweb="calendar"] [role="gridcell"]:hover {
+        background-color: #EFF6FF !important;
+        color: #1D4ED8 !important;
+        border-radius: 6px !important;
+    }
+
     /* Day Mode Numbers & Metrics */
     body:not(.night-mode) [data-testid="stMetricValue"], body:not(.night-mode) [data-testid="stMetricValue"] * {
         color: #000000 !important;
@@ -730,16 +760,19 @@ unified_css = """
     .night-mode [data-testid="stAppViewContainer"],
     .night-mode [data-testid="stMain"],
     .night-mode section.main {
+        background-color: #0B0F19 !important;
         background-color: #0A0E1A !important;
         color: #F8FAFC !important;
     }
 
+    body.night-mode [data-testid="stSidebar"] {
     body.night-mode [data-testid="stSidebar"],
     body.night-mode section[data-testid="stSidebar"] {
         background-color: #0F172A !important;
         border-right: 2px solid #1E293B !important;
     }
 
+    body.night-mode [data-testid="stSidebar"] * {
     body.night-mode [data-testid="stSidebar"] *,
     body.night-mode [data-testid="stSidebar"] p,
     body.night-mode [data-testid="stSidebar"] span,
@@ -807,6 +840,36 @@ unified_css = """
         color: #FFFFFF !important;
     }
 
+    /* Night Mode Datepicker & Calendar Popover */
+    body.night-mode div[data-baseweb="popover"],
+    body.night-mode div[data-baseweb="calendar"] {
+        background-color: #161F30 !important;
+        color: #F8FAFC !important;
+        border: 1.5px solid #334155 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+    }
+    body.night-mode div[data-baseweb="calendar"] * {
+        color: #F8FAFC !important;
+        font-weight: 600 !important;
+    }
+    body.night-mode div[data-baseweb="calendar"] select {
+        background-color: #1E293B !important;
+        color: #FFFFFF !important;
+        border: 1px solid #475569 !important;
+    }
+    body.night-mode div[data-baseweb="calendar"] [aria-selected="true"] {
+        background-color: #3B82F6 !important;
+        color: #FFFFFF !important;
+        font-weight: 800 !important;
+        border-radius: 6px !important;
+    }
+    body.night-mode div[data-baseweb="calendar"] [role="gridcell"]:hover {
+        background-color: #1E293B !important;
+        color: #F59E0B !important;
+        border-radius: 6px !important;
+    }
+
     body.night-mode header.top-nav-bar {
         background: #0F172A !important;
         border-color: #1E293B !important;
@@ -826,6 +889,7 @@ unified_css = """
     }
     body.night-mode .active-profile-pill {
         background: #1E293B !important;
+        border-color: #D97706 !important;
         border: 1.5px solid #F59E0B !important;
         color: #FEF3C7 !important;
     }
@@ -834,6 +898,7 @@ unified_css = """
     }
     body.night-mode .header-sub-pill {
         background: #1E293B !important;
+        border-color: #475569 !important;
         border: 1.5px solid #334155 !important;
         color: #E2E8F0 !important;
     }
@@ -856,6 +921,7 @@ unified_css = """
     }
     body.night-mode .digital-hud {
         background: #0F172A !important;
+        border-color: #334155 !important;
         border-color: #1E293B !important;
     }
     body.night-mode .digital-hud * {
@@ -863,9 +929,11 @@ unified_css = """
     }
     body.night-mode .hud-pill {
         background: #1E293B !important;
+        border-color: #475569 !important;
         border: 1.5px solid #334155 !important;
         color: #F8FAFC !important;
     }
+    body.night-mode .hud-pill b {
     body.night-mode .hud-pill b, body.night-mode .hud-pill strong {
         color: #F59E0B !important;
     }
@@ -886,6 +954,7 @@ unified_css = """
     }
     body.night-mode div[data-testid="stExpander"] {
         background: #1E293B !important;
+        border-color: #334155 !important;
         border: 1.5px solid #334155 !important;
     }
     body.night-mode div[data-testid="stMetricValue"], body.night-mode div[data-testid="stMetricValue"] * {
@@ -894,6 +963,8 @@ unified_css = """
     body.night-mode div[data-testid="stMetricLabel"], body.night-mode div[data-testid="stMetricLabel"] * {
         color: #94A3B8 !important;
     }
+    body.night-mode [data-testid="stTable"], body.night-mode [data-testid="stDataFrame"] {
+        background: #1E293B !important;
     body.night-mode [data-testid="stTable"], body.night-mode [data-testid="stDataFrame"], body.night-mode [data-testid="stTable"] *, body.night-mode [data-testid="stDataFrame"] * {
         background-color: #1E293B !important;
         color: #FFFFFF !important;
@@ -1406,25 +1477,182 @@ components.html("""
     // Comprehensive Day Mode / Night Mode Theme Engine
     function setupThemeMode() {
         try {
+            const parentDoc = window.parent.document;
+            const parentWin = window.parent;
+            if (!parentDoc || !parentWin) return;
             const parentDoc = window.parent ? window.parent.document : document;
             const parentWin = window.parent || window;
             if (!parentDoc) return;
 
+            const NIGHT_STYLE_ID = "jyotish-night-mode-override-style";
+
             function applyTheme(mode) {
                 const isNight = (mode === "night");
+                localStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
+                sessionStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
                 try {
                     localStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
                     sessionStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
                 } catch(e) {}
 
+                let styleEl = parentDoc.getElementById(NIGHT_STYLE_ID);
+
                 if (isNight) {
                     parentDoc.body.classList.add("night-mode");
                     if (parentDoc.documentElement) parentDoc.documentElement.classList.add("night-mode");
+                    
+                    const nightCss = `
+                        html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
+                            background-color: #0A0E1A !important;
+                            color: #F8FAFC !important;
+                        }
+                        [data-testid="stSidebar"], section[data-testid="stSidebar"] {
+                            background-color: #0F172A !important;
+                            border-right: 2px solid #1E293B !important;
+                        }
+                        [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
+                            color: #F1F5F9 !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label {
+                            background: #1E293B !important;
+                            border-color: #334155 !important;
+                            color: #F1F5F9 !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p {
+                            color: #F1F5F9 !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {
+                            background: #2E3E5B !important;
+                            border-color: #F59E0B !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"],
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) {
+                            background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%) !important;
+                            border-color: #3B82F6 !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"] p,
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) p {
+                            color: #FFFFFF !important;
+                        }
+                        h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
+                            color: #F1F5F9 !important;
+                        }
+                        input, textarea, select,
+                        div[data-baseweb="input"] input,
+                        div[data-baseweb="base-input"] input,
+                        div[data-baseweb="input"] {
+                            background-color: #1E293B !important;
+                            color: #FFFFFF !important;
+                            -webkit-text-fill-color: #FFFFFF !important;
+                            border: 1.5px solid #3B82F6 !important;
+                        }
+                        div[data-baseweb="select"] > div {
+                            background-color: #1E293B !important;
+                            color: #FFFFFF !important;
+                            border: 1.5px solid #475569 !important;
+                        }
+                        div[data-baseweb="select"] * {
+                            color: #FFFFFF !important;
+                        }
+                        header.top-nav-bar {
+                            background: #0F172A !important;
+                            border-color: #1E293B !important;
+                            border-bottom: 3.5px solid #3B82F6 !important;
+                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
+                        }
+                        .top-nav-bar * {
+                            color: #F8FAFC !important;
+                        }
+                        .app-brand-title {
+                            background: linear-gradient(90deg, #F59E0B 0%, #FBBF24 50%, #60A5FA 100%) !important;
+                            -webkit-background-clip: text !important;
+                            -webkit-text-fill-color: transparent !important;
+                        }
+                        .app-brand-sub {
+                            color: #94A3B8 !important;
+                        }
+                        .active-profile-pill {
+                            background: #1E293B !important;
+                            border: 1.5px solid #F59E0B !important;
+                            color: #FEF3C7 !important;
+                        }
+                        .active-profile-pill * {
+                            color: #FEF3C7 !important;
+                        }
+                        .header-sub-pill {
+                            background: #1E293B !important;
+                            border: 1.5px solid #334155 !important;
+                            color: #E2E8F0 !important;
+                        }
+                        .header-sub-pill * {
+                            color: #E2E8F0 !important;
+                        }
+                        .header-sub-pill b {
+                            color: #F8FAFC !important;
+                        }
+                        .theme-select-box {
+                            background: #1E293B !important;
+                            border-color: #F59E0B !important;
+                        }
+                        .theme-select-box select, .theme-select-box b, .theme-select-box span {
+                            color: #F59E0B !important;
+                        }
+                        .theme-select-box option {
+                            background: #0F172A !important;
+                            color: #FFFFFF !important;
+                        }
+                        .digital-hud {
+                            background: #0F172A !important;
+                            border-color: #1E293B !important;
+                        }
+                        .digital-hud * {
+                            color: #F8FAFC !important;
+                        }
+                        .hud-pill {
+                            background: #1E293B !important;
+                            border: 1.5px solid #334155 !important;
+                            color: #F8FAFC !important;
+                        }
+                        .hud-pill b {
+                            color: #F59E0B !important;
+                        }
+                        div[data-testid="stExpander"] {
+                            background: #1E293B !important;
+                            border-color: #334155 !important;
+                        }
+                        div[data-testid="stMetricValue"], div[data-testid="stMetricValue"] * {
+                            color: #F8FAFC !important;
+                        }
+                        div[data-testid="stMetricLabel"], div[data-testid="stMetricLabel"] * {
+                            color: #94A3B8 !important;
+                        }
+                        [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+                            background-color: #1E293B !important;
+                            color: #FFFFFF !important;
+                        }
+                        div[style*="background:#FFFFFF"], div[style*="background: #FFFFFF"],
+                        div[style*="background:#F8FAFC"], div[style*="background: #F8FAFC"],
+                        div[style*="background:#EFF6FF"], div[style*="background: #EFF6FF"] {
+                            background: #1E293B !important;
+                            border-color: #334155 !important;
+                            color: #F8FAFC !important;
+                        }
+                    `;
+                    
+                    if (!styleEl) {
+                        styleEl = parentDoc.createElement("style");
+                        styleEl.id = NIGHT_STYLE_ID;
+                        parentDoc.head.appendChild(styleEl);
+                    }
+                    styleEl.innerHTML = nightCss;
                     if (document.body) document.body.classList.add("night-mode");
                     if (document.documentElement) document.documentElement.classList.add("night-mode");
                 } else {
                     parentDoc.body.classList.remove("night-mode");
                     if (parentDoc.documentElement) parentDoc.documentElement.classList.remove("night-mode");
+                    if (styleEl) {
+                        styleEl.remove();
+                    }
                     if (document.body) document.body.classList.remove("night-mode");
                     if (document.documentElement) document.documentElement.classList.remove("night-mode");
                 }
@@ -1456,6 +1684,9 @@ components.html("""
 
             const themeSelects = parentDoc.querySelectorAll("#software-theme-select");
             themeSelects.forEach(function(sel) {
+                sel.onchange = function(e) {
+                    handleThemeSwitch(sel.value);
+                };
                 if (!sel.dataset.themeBound) {
                     sel.dataset.themeBound = "true";
                     sel.addEventListener("change", function(e) {
@@ -1464,6 +1695,7 @@ components.html("""
                 }
             });
 
+            const currentSaved = localStorage.getItem("jyotish_theme_mode") || "day";
             const currentSaved = localStorage.getItem("jyotish_theme_mode") || sessionStorage.getItem("jyotish_theme_mode") || "day";
             applyTheme(currentSaved);
         } catch (e) {
@@ -1498,6 +1730,7 @@ def render_login_page():
         <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:4px 12px !important; display:inline-flex; align-items:center; gap:6px;" title="थीम चुनें (Select Day / Night Mode)">
             <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:14px;">☀️</span>
             <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:12px;">थीम:</b>
+            <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:12px; cursor:pointer; outline:none; padding:0 2px;">
             <select id="software-theme-select" class="notranslate" translate="no" onchange="(function(sel){var v=sel.value; try{var pd=(window.parent&&window.parent.document)?window.parent.document:document; if(v==='night'){document.documentElement.classList.add('night-mode'); document.body.classList.add('night-mode'); pd.documentElement.classList.add('night-mode'); pd.body.classList.add('night-mode'); localStorage.setItem('jyotish_theme_mode','night'); sessionStorage.setItem('jyotish_theme_mode','night');} else {document.documentElement.classList.remove('night-mode'); document.body.classList.remove('night-mode'); pd.documentElement.classList.remove('night-mode'); pd.body.classList.remove('night-mode'); localStorage.setItem('jyotish_theme_mode','day'); sessionStorage.setItem('jyotish_theme_mode','day');} var ics=(pd||document).querySelectorAll('#theme-mode-icon, .theme-mode-icon'); ics.forEach(function(i){i.innerText=(v==='night'?'🌙':'☀️');}); if(window.changeSoftwareTheme) window.changeSoftwareTheme(v); if(window.parent&&window.parent.changeSoftwareTheme) window.parent.changeSoftwareTheme(v);}catch(e){}})(this)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:12px; cursor:pointer; outline:none; padding:0 2px;">
                 <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
                 <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
@@ -1825,8 +2058,17 @@ if geo_results:
     default_city_name = selected_loc.city
 
 col_b1, col_b2 = st.sidebar.columns(2)
-birth_d = col_b1.date_input("जन्म तिथि (Birth Date)", value=st.session_state.birth_date)
-birth_t = col_b2.time_input("जन्म समय (Birth Time)", value=st.session_state.birth_time)
+birth_d = col_b1.date_input(
+    "जन्म तिथि (Birth Date)",
+    value=st.session_state.birth_date,
+    min_value=date(1800, 1, 1),
+    max_value=date(2100, 12, 31),
+    format="DD/MM/YYYY",
+    help="जन्म तिथि चुनें (DD/MM/YYYY - 1800 से 2100 तक उपलब्ध)"
+)
+st.session_state.birth_date = birth_d
+birth_t = col_b2.time_input("जन्म समय (Birth Time)", value=st.session_state.birth_time, help="जन्म का सही समय चुनें")
+st.session_state.birth_time = birth_t
 
 col_geo1, col_geo2 = st.sidebar.columns(2)
 latitude = col_geo1.number_input("Latitude", value=default_lat, format="%.4f")
@@ -2146,6 +2388,7 @@ st.markdown(f"""
             <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
                 <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
                 <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11.5px;">थीम:</b>
+                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : null" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
                 <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
                     <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
                     <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
@@ -2316,7 +2559,13 @@ elif selected_idx == 1:
     st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का बहु-पद्धति शास्त्रीय विश्लेषण प्राप्त करें।")
 
     col_q1, col_q2, col_q3 = st.columns([2, 2, 2])
-    target_event_date = col_q1.date_input("लक्षित तिथि (Target Date)", value=date(2027, 4, 12))
+    target_event_date = col_q1.date_input(
+        "लक्षित तिथि (Target Date)",
+        value=date(2027, 4, 12),
+        min_value=date(1800, 1, 1),
+        max_value=date(2100, 12, 31),
+        format="DD/MM/YYYY"
+    )
     theme = col_q2.selectbox(
         "विश्लेषण विषय (Theme)",
         ["career", "marriage", "wealth", "health", "travel", "spirituality", "all"],
@@ -2839,7 +3088,13 @@ elif selected_idx == 5:
         with st.expander("📝 नवीन प्रश्नकर्ता का विवरण दर्ज करें", expanded=True):
             col_q1, col_q2, col_q3 = st.columns([2, 1, 1])
             q_name = col_q1.text_input("प्रश्नकर्ता का नाम (Questioner Name)", value="नया प्रश्नकर्ता")
-            q_date_val = col_q2.date_input("प्रश्न तिथि (Query Date)", value=date.today())
+            q_date_val = col_q2.date_input(
+                "प्रश्न तिथि (Query Date)",
+                value=date.today(),
+                min_value=date(1800, 1, 1),
+                max_value=date(2100, 12, 31),
+                format="DD/MM/YYYY"
+            )
             q_time_val = col_q3.time_input("प्रश्न समय (Query Time)", value=datetime.now().time())
             q_dt = datetime.combine(q_date_val, q_time_val)
 
@@ -3545,7 +3800,14 @@ elif selected_idx == 9:
     # Target Date Picker for Point-in-Time Dasha Calculation
     c_dt1, c_dt2 = st.columns([2, 4])
     with c_dt1:
-        dasha_target_date = st.date_input("🎯 लक्षित दिनांक पर दशा देखें (Target Date)", value=date.today(), key="dasha_target_date_picker")
+        dasha_target_date = st.date_input(
+            "🎯 लक्षित दिनांक पर दशा देखें (Target Date)",
+            value=date.today(),
+            min_value=date(1800, 1, 1),
+            max_value=date(2100, 12, 31),
+            format="DD/MM/YYYY",
+            key="dasha_target_date_picker"
+        )
     with c_dt2:
         st.caption(f"🗓️ वर्तमान में **{dasha_target_date.strftime('%d-%b-%Y')}** के लिए तात्कालिक सक्रिय सूक्ष्म दशाओं का मूल्यांकन प्रदर्शित किया जा रहा है।")
 
@@ -4260,7 +4522,13 @@ elif selected_idx == 10:
     # Date-time picker for live transit
     col_gt1, col_gt2, col_gt3 = st.columns([1.5, 1.5, 2])
     with col_gt1:
-        t_date = st.date_input("📅 गोचर दिनांक (Transit Date)", value=target_calc_date if 'target_calc_date' in locals() else datetime.now().date())
+        t_date = st.date_input(
+            "📅 गोचर दिनांक (Transit Date)",
+            value=target_calc_date if 'target_calc_date' in locals() else datetime.now().date(),
+            min_value=date(1800, 1, 1),
+            max_value=date(2100, 12, 31),
+            format="DD/MM/YYYY"
+        )
     with col_gt2:
         t_time = st.time_input("🕒 गोचर समय (Transit Time)", value=datetime.now().time())
     with col_gt3:
@@ -5066,7 +5334,13 @@ elif selected_idx == 12:
 
     col_m1, col_m2 = st.columns([1.5, 2.5])
     with col_m1:
-        muhurta_date = st.date_input("📅 मुहूर्त दिनांक चयन करें", value=datetime.now().date())
+        muhurta_date = st.date_input(
+            "📅 मुहूर्त दिनांक चयन करें",
+            value=datetime.now().date(),
+            min_value=date(1800, 1, 1),
+            max_value=date(2100, 12, 31),
+            format="DD/MM/YYYY"
+        )
     with col_m2:
         st.write("")
         st.caption(f"📍 स्थान: **{default_city_name}** | वार: **{muhurta_date.strftime('%A')}**")
@@ -5268,7 +5542,13 @@ elif selected_idx == 15:
     st.subheader("⏳ जन्म समय शोधन (Birth Time Rectification - BTR)")
     st.write("अपने जीवन की प्रमाणित ऐतिहासिक घटनाओं (नौकरी, विवाह, संतान आदि) के आधार पर सटीक जन्म समय की गणना करें।")
 
-    btr_ev_date = st.date_input("घटना तिथि (Event Date)", value=date(2020, 7, 1))
+    btr_ev_date = st.date_input(
+        "घटना तिथि (Event Date)",
+        value=date(2020, 7, 1),
+        min_value=date(1800, 1, 1),
+        max_value=date(2100, 12, 31),
+        format="DD/MM/YYYY"
+    )
     btr_ev_cat = st.selectbox("घटना श्रेणी (Event Type)", ["career", "marriage", "child", "travel", "property", "health_accident"])
     btr_ev_desc = st.text_input("घटना विवरण (Description)", value="कंपनी में पदोन्नति / नई नौकरी")
 
@@ -5297,12 +5577,26 @@ elif selected_idx == 16:
     with col_m1:
         st.markdown("#### 👦 वर विवरण (Groom Details)")
         g_name = st.text_input("वर का नाम", value="वर")
-        g_date = st.date_input("वर जन्म तिथि", value=date(1995, 8, 20), key="g_d")
+        g_date = st.date_input(
+            "वर जन्म तिथि",
+            value=date(1995, 8, 20),
+            min_value=date(1800, 1, 1),
+            max_value=date(2100, 12, 31),
+            format="DD/MM/YYYY",
+            key="g_d"
+        )
         g_time = st.time_input("वर जन्म समय", value=time(14, 30), key="g_t")
     with col_m2:
         st.markdown("#### 👧 वधू विवरण (Bride Details)")
         b_name = st.text_input("वधू का नाम", value="वधू")
-        b_date = st.date_input("वधू जन्म तिथि", value=date(1997, 3, 15), key="b_d")
+        b_date = st.date_input(
+            "वधू जन्म तिथि",
+            value=date(1997, 3, 15),
+            min_value=date(1800, 1, 1),
+            max_value=date(2100, 12, 31),
+            format="DD/MM/YYYY",
+            key="b_d"
+        )
         b_time = st.time_input("वधू जन्म समय", value=time(9, 15), key="b_t")
 
     if st.button("💑 कुण्डली मिलान करें", type="primary"):
