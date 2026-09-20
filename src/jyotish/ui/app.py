@@ -461,40 +461,40 @@ unified_css = f"""
         z-index: 999990 !important;
         background: #F8FAFC !important;
         border: none !important;
-        border-bottom: 2.5px solid #CBD5E1 !important;
+        border-bottom: 2px solid #CBD5E1 !important;
         border-radius: 0px !important;
-        padding-top: 4px !important;
-        padding-bottom: 8px !important;
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-        margin-bottom: 10px !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+        padding-top: 2px !important;
+        padding-bottom: 4px !important;
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+        margin-bottom: 6px !important;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06) !important;
     }}
 
-    /* Top Module Navigation Bar (Symmetric, Uniform Height & Aligned) */
+    /* Top Module Navigation Bar (Slim 34px Height) */
     .st-key-top_frozen_header_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
     div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
-        min-height: 40px !important;
-        height: 40px !important;
-        border-radius: 8px !important;
+        min-height: 34px !important;
+        height: 34px !important;
+        border-radius: 6px !important;
         border: 1.5px solid #2563EB !important;
         background: #FFFFFF !important;
         font-weight: 800 !important;
-        font-size: 13.5px !important;
+        font-size: 13px !important;
         display: flex !important;
         align-items: center !important;
     }}
     .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"],
     div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"] {{
-        min-height: 40px !important;
-        height: 40px !important;
-        border-radius: 8px !important;
+        min-height: 34px !important;
+        height: 34px !important;
+        border-radius: 6px !important;
         border: 1.5px solid #94A3B8 !important;
         background: #FFFFFF !important;
         font-weight: 800 !important;
-        font-size: 13px !important;
+        font-size: 12.5px !important;
         color: #1E293B !important;
-        padding: 0px 12px !important;
+        padding: 0px 10px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -510,16 +510,17 @@ unified_css = f"""
     div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] {{
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
-        border-radius: 10px !important;
-        margin-bottom: 6px !important;
+        border-radius: 8px !important;
+        margin-bottom: 4px !important;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
     }}
     .st-key-top_frozen_header_container [data-testid="stExpander"] summary,
     div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] summary {{
         font-weight: 800 !important;
         color: #1E293B !important;
-        padding: 6px 12px !important;
-        font-size: 13.5px !important;
+        padding: 4px 10px !important;
+        font-size: 12.5px !important;
+        min-height: 30px !important;
     }}
 
     /* Sidebar Radio Navigation List (18 Modules as Clean, 100% Equal Size Cards) */
@@ -622,9 +623,9 @@ unified_css = f"""
     .top-nav-bar {{
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
-        border-radius: 10px !important;
-        padding: 8px 16px !important;
-        margin-bottom: 6px !important;
+        border-radius: 8px !important;
+        padding: 4px 12px !important;
+        margin-bottom: 4px !important;
         margin-top: 0px !important;
         margin-left: 0px !important;
         margin-right: 0px !important;
@@ -632,64 +633,42 @@ unified_css = f"""
         justify-content: space-between !important;
         align-items: center !important;
         flex-wrap: wrap !important;
-        gap: 10px !important;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+        gap: 8px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
         width: 100% !important;
         box-sizing: border-box !important;
     }}
     .nav-left {{
         display: flex !important;
         align-items: center !important;
-        gap: 12px !important;
+        gap: 8px !important;
     }}
     .logo-circle {{
-        width: 44px !important;
-        height: 44px !important;
-        border-radius: 12px !important;
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 8px !important;
         background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%) !important;
         border: 1.5px solid #D97706 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        font-size: 24px !important;
-        box-shadow: 0 2px 8px rgba(217, 119, 6, 0.2) !important;
+        font-size: 18px !important;
+        box-shadow: 0 2px 6px rgba(217, 119, 6, 0.2) !important;
     }}
     .app-brand-title {{
-        font-size: 1.45rem !important;
-        font-weight: 900 !important;
+        font-size: 1.15rem !important;
+        font-weight: 800 !important;
         background: linear-gradient(90deg, #B45309 0%, #D97706 45%, #2563EB 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
-        line-height: 1.2 !important;
-        letter-spacing: -0.5px !important;
+        line-height: 1.15 !important;
+        letter-spacing: -0.3px !important;
     }}
     .app-brand-sub {{
-        font-size: 0.8rem !important;
+        font-size: 0.72rem !important;
         color: #475569 !important;
         font-weight: 700 !important;
-        letter-spacing: 0.2px !important;
-    }}
-    .nav-profile-block {{
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: flex-end !important;
-        gap: 5px !important;
-    }}
-    @media (max-width: 900px) {{
-        .nav-profile-block {{
-            align-items: flex-start !important;
-        }}
-    }}
-    .active-profile-pill {{
-        background: #EFF6FF !important;
-        border: 1.5px solid #93C5FD !important;
-        border-radius: 20px !important;
-        padding: 4px 14px !important;
-        font-size: 12.5px !important;
-        color: #1E3A8A !important;
-        font-weight: 700 !important;
-        box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1) !important;
-        white-space: nowrap !important;
+        letter-spacing: 0.1px !important;
     }}
     .header-sub-pills-row {{
         display: flex !important;
@@ -701,14 +680,14 @@ unified_css = f"""
     .header-sub-pill {{
         background: #F8FAFC !important;
         border: 1.5px solid #CBD5E1 !important;
-        border-radius: 14px !important;
-        padding: 3px 10px !important;
-        font-size: 11.5px !important;
+        border-radius: 12px !important;
+        padding: 2px 8px !important;
+        font-size: 11px !important;
         color: #0F172A !important;
         font-weight: 700 !important;
         display: inline-flex !important;
         align-items: center !important;
-        gap: 5px !important;
+        gap: 4px !important;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
         white-space: nowrap !important;
     }}
@@ -2185,7 +2164,7 @@ if st.session_state.active_module_idx >= len(MODULE_OPTIONS):
 with st.container(key="top_frozen_header_container", border=True):
     st.markdown('<div class="fixed-header-anchor"></div>', unsafe_allow_html=True)
     
-    # 1. Top Navigation Bar (Header)
+    # 1. Top Navigation Bar (Slim Single-Line Header)
     st.markdown(f"""
     <header class="top-nav-bar">
         <div class="nav-left">
@@ -2194,53 +2173,49 @@ with st.container(key="top_frozen_header_container", border=True):
             </button>
             <div class="logo-circle">🔮</div>
             <div>
-                <div class="app-brand-title">JyotishOS: Classical Vedic Astrology Platform</div>
+                <div class="app-brand-title">JyotishOS Platform</div>
                 <div class="app-brand-sub">सर्वं खल्विदं ब्रह्म • प्रामाणिक वैदिक ज्योतिष गणना महामंच</div>
             </div>
         </div>
-        <div class="nav-profile-block">
-            <div class="active-profile-pill">
-                👤 <b>{name}</b> &nbsp;|&nbsp; 📅 {birth_d.strftime('%d %b %Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name} &nbsp;|&nbsp; <span class="pulse-dot"></span> <b>सक्रिय (Online)</b>
+        <div class="header-sub-pills-row">
+            <div class="header-sub-pill" title="भूमिका: ज्योतिषी व्यवस्थापक">
+                👑 <b>ज्योतिषी</b> (Admin)
             </div>
-            <div class="header-sub-pills-row">
-                <div class="header-sub-pill" title="भूमिका: ज्योतिषी व्यवस्थापक">
-                    👑 <b>ज्योतिषी</b> (Admin)
-                </div>
-                <div class="header-sub-pill" title="वर्तमान समय">
-                    🕒 <b>समय:</b> {current_time_str}
-                </div>
-                <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
-                    📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
-                </div>
-                <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
-                    <span class="notranslate" translate="no" style="font-size:12px;">🌐</span>
-                    <b class="notranslate" translate="no" style="color:#166534 !important; font-size:11.5px;">भाषा:</b>
-                    <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
-                        <option value="general" class="notranslate" translate="no">General (जनरल)</option>
-                        <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
-                        <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
-                        <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
-                        <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
-                        <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
-                        <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
-                        <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
-                    </select>
-                </div>
-                <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
-                    <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
-                    <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11.5px;">थीम:</b>
-                    <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
-                        <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
-                        <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
-                    </select>
-                </div>
+            <div class="header-sub-pill" title="वर्तमान समय">
+                🕒 <b>समय:</b> {current_time_str}
+            </div>
+            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
+                📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
+            </div>
+            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
+                <span class="notranslate" translate="no" style="font-size:12px;">🌐</span>
+                <b class="notranslate" translate="no" style="color:#166534 !important; font-size:11px;">भाषा:</b>
+                <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0 2px;">
+                    <option value="general" class="notranslate" translate="no">General (जनरल)</option>
+                    <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
+                    <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
+                    <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
+                    <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
+                    <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
+                    <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
+                    <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
+                </select>
+            </div>
+            <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
+                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
+                <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11px;">थीम:</b>
+                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0 2px;">
+                    <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
+                    <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
+                </select>
             </div>
         </div>
     </header>
     """, unsafe_allow_html=True)
 
-    # 2. Collapsible Birth Profile & Presets Control Expander
-    with st.expander("👤 जातक जन्म विवरण एवं कुण्डली गणना (Birth Profile Controls & Presets)", expanded=False):
+    # 2. Collapsible Birth Profile & Presets Control Expander (Integrating Profile Card as Requested)
+    expander_title = f"👤 जातक: {name} | 📅 {birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')} | 📍 {default_city_name} | 🟢 सक्रिय (Online) • ⚙️ जन्म विवरण एवं गणना"
+    with st.expander(expander_title, expanded=False):
         col_r1_1, col_r1_2, col_r1_3, col_r1_4 = st.columns([1.2, 1.4, 1.5, 1.5])
         with col_r1_1:
             in_name = st.text_input("नाम (Name)", value=st.session_state.birth_name, key="app_birth_name_input")
