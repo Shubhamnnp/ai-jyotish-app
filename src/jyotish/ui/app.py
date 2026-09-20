@@ -4384,28 +4384,25 @@ elif selected_module.startswith("📄 सम्पूर्ण"):
 
     with st.expander("👑 ज्योतिषी कस्टम ब्रांडिंग एवं रिपोर्ट विन्यास (White-Label Branding Settings)", expanded=True):
         c_br1, c_br2, c_br3 = st.columns(3)
-        astro_name = c_br1.text_input("ज्योतिषी का नाम (Astrologer Name)", value="ज्योतिषाचार्य पं. शुभम शर्मा")
-        astro_org = c_br2.text_input("संस्थान / केंद्र (Center Name)", value="वैदिक ज्योतिष अनुसंधान केंद्र")
-        astro_phone = c_br3.text_input("संपर्क सूत्र / WhatsApp (Contact)", value="+91 98765 43210")
+        astro_name = c_br1.text_input("ज्योतिषी का नाम (Astrologer Name)", value="ज्योतिषाचार्य पं. शुभम तिवारी")
+        astro_org = c_br2.text_input("संस्थान / केंद्र (Center Name)", value="ज्योतिर्विश्व (JyotishOS) वैदिक ज्योतिष अनुसंधान केंद्र")
+        astro_phone = c_br3.text_input("संपर्क सूत्र / WhatsApp (Contact)", value="+91-9452155742")
 
     with st.spinner("🔮 समस्त २१ मॉड्यूल्स की गणनाओं को संकलित कर सम्पूर्ण पत्रिका तैयार की जा रही है..."):
         master_bundle = default_master_calculator.calculate_all(chart)
-        html_rep = default_report_generator.generate_html_report(chart, master_data=master_bundle)
-
-    # Inject custom branding into HTML header
-    custom_header_html = f"""
-    <div style="text-align:center; padding:18px; border-bottom:3px solid #D97706; background:linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); margin-bottom:24px; border-radius:10px; font-family:sans-serif;">
-        <div style="font-size:22px; font-weight:900; color:#78350F;">🔮 {astro_org}</div>
-        <div style="font-size:14.5px; font-weight:700; color:#92400E; margin-top:4px;">परामर्शक: {astro_name} &nbsp;|&nbsp; 📞 {astro_phone}</div>
-    </div>
-    """
-    html_rep_branded = html_rep.replace("<body>", f"<body>{custom_header_html}")
+        html_rep = default_report_generator.generate_html_report(
+            chart,
+            master_data=master_bundle,
+            astro_name=astro_name,
+            astro_phone=astro_phone,
+            astro_org=astro_org
+        )
 
     col_rep_btn1, col_rep_btn2 = st.columns([2, 2])
     with col_rep_btn1:
         st.download_button(
             label="📥 रंगीन PDF / HTML पत्रिका डाउनलोड करें (Download Full Kundali)",
-            data=html_rep_branded,
+            data=html_rep,
             file_name=f"{birth_profile.name}_Sampurna_Kundali_Report.html",
             mime="text/html",
             type="primary",
@@ -4415,7 +4412,7 @@ elif selected_module.startswith("📄 सम्पूर्ण"):
         st.button("🖨️ सीधे प्रिंट करें (Direct Print via Browser)", on_click=lambda: st.toast("प्रिंट करने हेतु डाउनलोड फाइल को ब्राउज़र में खोलकर Ctrl+P दबाएं।"), use_container_width=True)
 
     with st.expander("👁️ पत्रिका सम्पूर्ण लाइव पूर्वावलोकन (Live 20+ Chapter Preview)", expanded=True):
-        st.components.v1.html(html_rep_branded, height=850, scrolling=True)
+        st.components.v1.html(html_rep, height=850, scrolling=True)
 
 
 

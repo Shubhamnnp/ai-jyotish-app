@@ -1,26 +1,30 @@
 """
 Comprehensive Master Natal Report Generator for JyotishOS.
-Generates an exhaustive, multi-chapter Shastriya Kundali Dossier (20+ Chapters)
+Generates an exhaustive, multi-chapter Shastriya Kundali Dossier (22+ Chapters)
 synthesizing the complete outputs of ALL 21 JyotishOS calculation modules:
-1. Birth Profile & Panchang Pillars
-2. Lagna (D1) & Navamsha (D9) Visual SVG Charts
-3. Planetary Longitudes, Dignities, Avasthas, Motion, Combust Table
-4. 12 Bhavas In-Depth Classical Analysis
-5. Shadbala & Bhava Bala Matrix
-6. Jaimini 7 Chara Karakas, Arudhas (AL, UL, HL) & Upagrahas (Mandi/Gulika)
-7. Full 120-Year Vimshottari Mahadasha & Antardasha Timeline
-8. Secondary Dashas: Yogini (36-Yr), Chara, Kaalachakra (KCD) & Shoola Dasha
-9. Ayurdaya (Classical Longevity Assessment)
-10. Sarva Ashtakavarga (SAV 337) & Shodhita Pinda
-11. Gochar / Live Transits, Saturn Sade Sati / Dhaiya & Double Transit
-12. Sarvatobhadra Chakra (9x9 Vedhas) & Kota Chakra 4-Zone Fortress Defense
-13. KP Astrology (Krishnamurti Paddhati) Cuspal Sub-Lords & Ruling Planets (RP)
-14. Sudarshan Chakra Concentric Evaluation
-15. Vastu-Jyotish 8-Direction Mandala Analysis
-16. Afflictions & Dosha Analysis (Manglik, Kaal Sarp, Pitra) & Free-Will Diagnostics
-17. Tajika Varshaphal (Annual Solar Return, Muntha, Varshesha & Mudda Dasha)
-18. Satvik Ethical Shastriya Remedies & Guidance
-19. Vedic Rishi Calibration & Classical Ephemeris Certification Seal
+1. Astrologer White-Label Header: Pt. Shubham Tiwari (Mo. 9452155742)
+2. Birth Profile, Avakahada Chakra & Panchang Pillars
+3. Lagna (D1), Navamsha (D9), Dashamsha (D10), Saptamsha (D7), Chaturthamsha (D4), Shashtiamsha (D60) SVG Charts
+4. Planetary Longitudes, Dignities, Avasthas, Motion, Combust Table
+5. 12 Bhavas In-Depth Classical Analysis
+6. Shadbala & Bhava Bala Matrix
+7. Shodashavarga (D1-D60) & Vimsopaka Bala
+8. Ashtakavarga (BAV 8x12, SAV 337, Shodhana & Shodhya Pinda)
+9. Jaimini 7 Chara Karakas, Arudhas (AL, UL, HL, GL) & Karakamsha
+10. Upagrahas (Mandi, Gulika, Dhuma, Vyatipata, Parivesha, Indrachapa, Upaketu)
+11. Full 120-Year Vimshottari Mahadasha & Active 5-Level Hierarchy
+12. Secondary Dashas: Yogini (36-Yr), Chara, Kaalachakra (KCD) & Shoola Dasha
+13. Ayurdaya (Classical Longevity Assessment)
+14. Gochar / Live Transits, Saturn Sade Sati / Dhaiya & Double Transit
+15. Sarvatobhadra Chakra (9x9 Vedhas) & Kota Chakra 4-Zone Fortress Defense
+16. KP Astrology (Krishnamurti Paddhati) Cuspal Sub-Lords, 4-Fold Significators & RP
+17. Sudarshan Chakra Concentric Evaluation
+18. Vastu-Jyotish 8-Direction Mandala Analysis
+19. Afflictions & Dosha Analysis (Manglik, Kaal Sarp, Pitra) & Free-Will Diagnostics
+20. Tajika Varshaphal (Annual Solar Return, Muntha, Varshesha & Mudda Dasha)
+21. Vedic Muhurta, Choghadiya & Kaal-Vela
+22. Comprehensive Vedic Remedies (Gemstones, Rudraksha, Mantras, Yantras, Charity, Fasting)
+23. Astrologer Certification & Ephemeris Verification Seal
 """
 
 from datetime import datetime, date
@@ -36,29 +40,38 @@ class NatalReportGenerator:
     def generate_html_report(
         self,
         chart: KundaliChart,
-        master_data: Optional[Dict[str, Any]] = None
+        master_data: Optional[Dict[str, Any]] = None,
+        astro_name: str = "ज्योतिषाचार्य पं. शुभम तिवारी",
+        astro_phone: str = "+91-9452155742",
+        astro_org: str = "ज्योतिर्विश्व (JyotishOS) वैदिक ज्योतिष अनुसंधान केंद्र"
     ) -> str:
         """
-        Generates a comprehensive styled HTML master dossier incorporating all modules.
-        If master_data is not provided, it executes default_master_calculator.calculate_all(chart).
+        Generates a comprehensive styled HTML master dossier incorporating all 21 modules.
         """
         if master_data is None:
             master_data = default_master_calculator.calculate_all(chart)
 
         p = chart.birth_data
         pan = chart.panchang
-        d1_svg = ChartRenderer.render_north_indian_svg(chart, title="Lagna Kundali (D1)")
-        d9_svg = ChartRenderer.render_north_indian_svg(chart, title="Navamsha (D9)") if "D9" in chart.vargas else ""
+
+        # SVG Charts
+        d1_svg = ChartRenderer.render_north_indian_svg(chart, title="Lagna Kundali (D1)", varga_code="D1")
+        d9_svg = ChartRenderer.render_north_indian_svg(chart, title="Navamsha (D9)", varga_code="D9") if "D9" in chart.vargas else d1_svg
+        d10_svg = ChartRenderer.render_north_indian_svg(chart, title="Dashamsha (D10)", varga_code="D10") if "D10" in chart.vargas else ""
+        d7_svg = ChartRenderer.render_north_indian_svg(chart, title="Saptamsha (D7)", varga_code="D7") if "D7" in chart.vargas else ""
+        d4_svg = ChartRenderer.render_north_indian_svg(chart, title="Chaturthamsha (D4)", varga_code="D4") if "D4" in chart.vargas else ""
+        d60_svg = ChartRenderer.render_north_indian_svg(chart, title="Shashtiamsha (D60)", varga_code="D60") if "D60" in chart.vargas else ""
 
         # 1. Planetary Table Rows
         planet_rows = ""
         for p_name, pos in chart.planets.items():
             badge_class = pos.dignity if pos.dignity in ("exalted", "own", "moolatrikona", "friend", "debilitated") else "neutral"
+            deg_fmt = f"{int(pos.sign_degree)}° {int((pos.sign_degree % 1) * 60):02d}' {int(((pos.sign_degree * 60) % 1) * 60):02d}\""
             planet_rows += f"""
             <tr>
                 <td><b>{p_name}</b></td>
                 <td>{pos.sign_name}</td>
-                <td>{pos.sign_degree:.2f}°</td>
+                <td>{deg_fmt}</td>
                 <td>{pos.house_from_lagna}</td>
                 <td>{pos.nakshatra_name} (पद {pos.nakshatra_pada})</td>
                 <td><span class="badge {badge_class}">{pos.dignity.capitalize()}</span></td>
@@ -116,7 +129,6 @@ class NatalReportGenerator:
         shadbala_rows = ""
         sb = master_data.get("shadbala", {})
         if sb and "planets" in sb:
-            # Sort planets by strength_ratio descending to compute definitive ranks 1 to 7
             planets_items = list(sb["planets"].items())
             def get_ratio(item):
                 p_val = item[1]
@@ -232,6 +244,24 @@ class NatalReportGenerator:
         for sh in vp.get("sahams", [])[:8]:
             vp_sahams_html += f"<li><b>{sh.get('saham_hi', '')}:</b> {sh.get('sign', '')} ({sh.get('house', '')}) - <small>{sh.get('significance', '')}</small></li>"
 
+        # 11. Astrological Remedies Recommendation
+        moon_rashi = chart.planets["Moon"].sign_name
+        lagna_rashi = chart.lagna_sign_name
+        ak_planet = chart.atmakaraka
+
+        gemstones_map = {
+            "Sun": ("माणिक्य (Ruby)", "ताम्र / स्वर्ण", "अनामिका (Ring Finger)", "ॐ ह्रां ह्रीं ह्रौं सः सूर्याय नमः"),
+            "Moon": ("मोती (Pearl)", "चांदी (Silver)", "कनिष्ठिका (Little Finger)", "ॐ श्रां श्रीं श्रौं सः चन्द्रमसे नमः"),
+            "Mars": ("मूंगा (Red Coral)", "ताम्र / स्वर्ण", "अनामिका (Ring Finger)", "ॐ क्रां क्रीं क्रौं सः भौमाय नमः"),
+            "Mercury": ("पन्ना (Emerald)", "कांस्य / स्वर्ण", "कनिष्ठिका (Little Finger)", "ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः"),
+            "Jupiter": ("पुखराज (Yellow Sapphire)", "स्वर्ण / पीतल", "तर्जनी (Index Finger)", "ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः"),
+            "Venus": ("हीरा / ओपल (Diamond/Opal)", "चांदी / प्लैटिनम", "मध्यमा/अनामिका", "ॐ द्रां द्रीं द्रौं सः शुक्राय नमः"),
+            "Saturn": ("नीलम / नीली (Blue Sapphire)", "पंचधातु / अष्टधातु", "मध्यमा (Middle Finger)", "ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः"),
+            "Rahu": ("गोमेद (Hessonite)", "अष्टधातु / चांदी", "मध्यमा (Middle Finger)", "ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः"),
+            "Ketu": ("लहसुनिया (Cat's Eye)", "अष्टधातु / चांदी", "कनिष्ठिका (Little Finger)", "ॐ स्त्रां स्त्रीं स्त्रौं सः केतवे नमः"),
+        }
+        lucky_gem = gemstones_map.get(ak_planet, ("पुखराज (Yellow Sapphire)", "स्वर्ण", "तर्जनी", "ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः"))
+
         html = f"""<!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -250,7 +280,7 @@ class NatalReportGenerator:
             text-align: center;
             border-bottom: 3.5px solid #2563EB;
             padding-bottom: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             background: #FFFFFF;
             border-radius: 12px;
             padding: 24px;
@@ -259,7 +289,7 @@ class NatalReportGenerator:
         .report-header h1 {{
             color: #1E40AF;
             margin: 0;
-            font-size: 2.3rem;
+            font-size: 2.2rem;
             font-weight: 900;
         }}
         .report-header p {{
@@ -267,6 +297,18 @@ class NatalReportGenerator:
             margin: 6px 0 0 0;
             font-size: 1.05rem;
             font-weight: 600;
+        }}
+        .astro-badge {{
+            display: inline-block;
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border: 2px solid #F59E0B;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-top: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #78350F;
+            box-shadow: 0 2px 8px rgba(245,158,11,0.15);
         }}
         .section-title {{
             color: #1E3A8A;
@@ -346,12 +388,15 @@ class NatalReportGenerator:
             border: 1px solid #FDE68A;
         }}
         .disclaimer {{
-            font-size: 0.82rem;
-            color: #64748B;
+            font-size: 0.85rem;
+            color: #475569;
             text-align: center;
             margin-top: 50px;
             border-top: 2px solid #CBD5E1;
             padding-top: 20px;
+            background: #FFFFFF;
+            border-radius: 10px;
+            padding: 20px;
         }}
         @media print {{
             body {{ padding: 10px; background: white; }}
@@ -369,15 +414,19 @@ class NatalReportGenerator:
     </div>
 
     <div class="report-header">
-        <h1>🔮 ज्योतिर्विश्व (JyotishOS) - सम्पूर्ण जीवन जन्म पत्रिका</h1>
+        <h1>🔮 ज्योतिर्विश्व (JyotishOS) — सम्पूर्ण जीवन जन्म पत्रिका</h1>
         <p>२१ मॉड्यूल्स शास्त्रीय गणना • वृहत्पाराशर, जैमिनी, ताजिक, कृष्णमूर्ति एवं फलदीपिका महा-विमर्श</p>
-        <div style="margin-top: 10px; font-size: 0.88rem; color: #64748B;">
-            <b>गणना दिनांक:</b> {master_data.get('calculated_at', '')} | <b>मानक:</b> स्विस एफिमेरिस (चित्रापक्ष/लाहिड़ी अयनांश)
+        <div class="astro-badge">
+            🕉️ <b>परामर्शदाता ज्योतिषी:</b> {astro_name} &nbsp;|&nbsp; 📞 <b>संपर्क सूत्र:</b> {astro_phone}<br/>
+            🏛️ <b>संस्थान:</b> {astro_org}
+        </div>
+        <div style="margin-top: 12px; font-size: 0.88rem; color: #64748B;">
+            <b>गणना दिनांक:</b> {master_data.get('calculated_at', datetime.now().strftime('%d-%b-%Y %H:%M'))} | <b>खगोलीय मानक:</b> स्विस एफिमेरिस (चित्रापक्ष/लाहिड़ी अयनांश)
         </div>
     </div>
 
     <!-- CHAPTER 1: PROFILE & PANCHANG -->
-    <h2 class="section-title">१. जातक जन्म परिचय एवं पंचांग स्तम्भ</h2>
+    <h2 class="section-title">१. जातक जन्म परिचय, अवकहड़ा चक्र एवं पंचांग स्तम्भ</h2>
     <div class="grid-2">
         <div class="card">
             <h3 style="color:#1E40AF; margin-top:0;">👤 जातक जन्म विवरण</h3>
@@ -388,23 +437,29 @@ class NatalReportGenerator:
             <p><b>अयनांश प्रणाली:</b> {chart.ayanamsa_name} ({chart.ayanamsa_value:.4f}°)</p>
         </div>
         <div class="card">
-            <h3 style="color:#1E40AF; margin-top:0;">🌟 पंचांग एवं मुख्य नियंत्रक</h3>
+            <h3 style="color:#1E40AF; margin-top:0;">🌟 पंचांग एवं अवकहड़ा चक्र</h3>
             <p><b>लग्न राशि:</b> {chart.lagna_sign_name} ({chart.lagna_degree:.2f}°)</p>
             <p><b>चन्द्र राशि:</b> {chart.planets['Moon'].sign_name} &nbsp;|&nbsp; <b>सूर्य राशि:</b> {chart.planets['Sun'].sign_name}</p>
             <p><b>तिथि:</b> {pan.tithi_name} &nbsp;|&nbsp; <b>वार:</b> {pan.vara_name}</p>
             <p><b>नक्षत्र:</b> {pan.nakshatra_name} &nbsp;|&nbsp; <b>योग:</b> {pan.yoga_name} &nbsp;|&nbsp; <b>करण:</b> {pan.karana_name}</p>
-            <p><b>आत्मकारक (AK):</b> <b>{chart.atmakaraka}</b> &nbsp;|&nbsp; <b>आयुर्दाय वर्ग:</b> {master_data.get('ayurdaya', {}).get('consensus_category', 'मध्यायु')}</p>
+            <p><b>आत्मकारक (AK):</b> <b>{chart.atmakaraka}</b> &nbsp;|&nbsp; <b>आयुर्दाय वर्ग:</b> {master_data.get('ayurdaya', {}).get('consensus_category', 'मध्यायु (36-72 वर्ष)')}</p>
         </div>
     </div>
 
-    <!-- CHAPTER 2: D1 & D9 CHARTS -->
-    <h2 class="section-title">२. लग्न कुण्डली (D1) एवं नवांश कुण्डली (D9) चक्र</h2>
-    <div class="grid-2">
+    <!-- CHAPTER 2: D1, D9 & D10 CHARTS -->
+    <h2 class="section-title">२. प्रमुख कुण्डली चक्र (Lagna D1, Navamsha D9 व Dashamsha D10)</h2>
+    <div class="grid-3">
         <div class="card" style="text-align:center;">
+            <h4 style="color:#1E40AF; margin-top:0;">लग्न कुण्डली (D1)</h4>
             {d1_svg}
         </div>
         <div class="card" style="text-align:center;">
-            {d9_svg if d9_svg else "<p>Navamsha (D9) Visual Chart</p>"}
+            <h4 style="color:#1E40AF; margin-top:0;">नवांश कुण्डली (D9)</h4>
+            {d9_svg if d9_svg else "<p>Navamsha (D9) Chart</p>"}
+        </div>
+        <div class="card" style="text-align:center;">
+            <h4 style="color:#1E40AF; margin-top:0;">दशमांश कुण्डली (D10)</h4>
+            {d10_svg if d10_svg else "<p>Dashamsha (D10) Chart</p>"}
         </div>
     </div>
 
@@ -565,23 +620,41 @@ class NatalReportGenerator:
         </div>
     </div>
 
-    <!-- CHAPTER 13: REMEDIES -->
-    <h2 class="section-title">१३. सात्विक शास्त्रीय उपाय एवं साधना (Ethical Satvik Remedies)</h2>
+    <!-- CHAPTER 13: COMPREHENSIVE VEDIC REMEDIES -->
+    <h2 class="section-title">१३. सर्वांगीण शास्त्रीय उपाय, रत्न, रुद्राक्ष, मन्त्र व दान विधान (Satvik Remedies)</h2>
     <div class="remedy-box">
-        <h4 style="color:#78350F; margin-top:0;">🕊️ सर्वांगीण कल्याणकारी साधना व उपाय</h4>
+        <h4 style="color:#78350F; margin-top:0;">💎 १. रत्न विचार (Gemstone Recommendation)</h4>
+        <p>
+            • <b>भाग्य/जीवन रत्न:</b> <b>{lucky_gem[0]}</b> ({lucky_gem[1]} धातु में, {lucky_gem[2]} उंगली में धारण करें)<br/>
+            • <b>प्राण-प्रतिष्ठा मन्त्र:</b> <code>{lucky_gem[3]}</code> (108 बार जप कर शुक्ल पक्ष के शुभ वार में धारण करें)।
+        </p>
+
+        <h4 style="color:#78350F; margin-top:14px;">📿 २. रुद्राक्ष एवं मन्त्र साधना</h4>
         <ul>
-            <li><b>मंत्र जप:</b> प्रतिदिन गायत्री मंत्र अथवा महामृत्युंजय मंत्र का शांत वातावरण में 108 बार जप करें।</li>
-            <li><b>सत्कर्म एवं दान:</b> शनिवार को निर्धनों को भोजन अथवा पक्षियों को दाना-पानी देना शनि, राहु एवं केतु की नकारात्मक ऊर्जा को शमित करता है।</li>
-            <li><b>इष्ट देव आराधना:</b> अपने आत्मकारक ग्रह ({chart.atmakaraka}) के अधिष्ठाता देव की नित्य अर्चना करें।</li>
-            <li><b>गृह वास्तु सुधार:</b> घर के उत्तर-पूर्व (ईशान) कोण को सदा स्वच्छ रखें और शाम को संध्या दीप प्रज्वलित करें।</li>
+            <li><b>रुद्राक्ष:</b> आत्मकारक ग्रह ({ak_planet}) के संतुलन हेतु ५-मुखी अथवा ७-मुखी रुद्राक्ष गंगाजल से अभिमंत्रित कर धारण करें।</li>
+            <li><b>महा-मन्त्र:</b> प्रतिदिन प्रातःकाल <b>गायत्री मंत्र</b> अथवा <b>महामृत्युंजय मंत्र</b> का १०८ बार जप आत्मिक बल व दीर्घायु प्रदान करता है।</li>
+            <li><b>इष्ट देव आराधना:</b> आत्मकारक ग्रह के अधिष्ठाता देव की नित्य अर्चना व धूप-दीप अर्पित करें।</li>
+        </ul>
+
+        <h4 style="color:#78350F; margin-top:14px;">🌿 ३. दान, व्रत एवं वास्तु पर्यावरण सुधार</h4>
+        <ul>
+            <li><b>सत्कर्म एवं दान:</b> शनिवार को निर्धनों को अन्नदान, काले तिल अथवा पक्षियों को दाना-पानी देना समस्त अनिष्ट ग्रहों की शांति करता है।</li>
+            <li><b>गृह वास्तु सुधार:</b> घर के उत्तर-पूर्व (ईशान कोण) को सर्वदा स्वच्छ व प्रकाशमान रखें, शाम को संध्या दीप प्रज्वलित करें।</li>
         </ul>
         <small><i>नोट: उपाय केवल आत्म-शांति, सकारात्मक ऊर्जा एवं ग्रह-कृपा संवर्धन हेतु हैं; ये किसी अंधविश्वास या चमत्कार का दावा नहीं करते।</i></small>
     </div>
 
-    <!-- DISCLAIMER & CERTIFICATION -->
+    <!-- DISCLAIMER & ASTROLOGER CERTIFICATION -->
     <div class="disclaimer">
-        <b>🔒 विधिक, शास्त्रीय एवं खगोलीय प्रमाणीकरण (Verification & Certification Seal):</b><br/>
-        यह सम्पूर्ण जन्म पत्रिका JyotishOS स्विस एफिमेरिस एवं वैदिक ऋषि एस्ट्रो मानक के आधार पर 0.05° की सूक्ष्म सहिष्णुता सीमा के भीतर शुद्ध गणितीय रूप से संकलित की गई है। ज्योतिष आत्म-बोध और कर्म-मार्गदर्शन का साधन है।
+        <div style="font-size:16px; font-weight:900; color:#1E40AF; margin-bottom:6px;">
+            📜 विधिक, शास्त्रीय एवं खगोलीय प्रमाणीकरण मुद्रा (Astrological Certification Seal)
+        </div>
+        <div style="font-size:14px; color:#1E293B; margin-bottom:8px;">
+            यह सम्पूर्ण जन्म पत्रिका <b>{astro_name}</b> के मार्गदर्शन में <b>JyotishOS स्विस एफिमेरिस एवं वैदिक ऋषि एस्ट्रो</b> के आधार पर 0.05° की सूक्ष्म सहिष्णुता सीमा के भीतर शुद्ध गणितीय रूप से संकलित की गई है।
+        </div>
+        <div style="font-size:13px; color:#475569;">
+            <b>परामर्शक:</b> {astro_name} &nbsp;|&nbsp; <b>मो. नं.:</b> {astro_phone} &nbsp;|&nbsp; <b>संस्थान:</b> {astro_org}
+        </div>
     </div>
 
 </body>
