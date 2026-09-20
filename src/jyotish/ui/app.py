@@ -1169,8 +1169,35 @@ def get_varga_dignity_info(planet: str, sign_name: str, aff_eng: Optional[Afflic
     return "⚖️ सामान्य", 7, "सामान्य"
 
 
+def get_current_client_location() -> str:
+    if "current_client_location" in st.session_state and st.session_state.current_client_location:
+        return st.session_state.current_client_location
+    
+    loc_str = "Nanpara, Bahraich (UP)"
+    try:
+        import urllib.request
+        import json
+        req = urllib.request.Request("http://ip-api.com/json/", headers={"User-Agent": "Mozilla/5.0 JyotishOS/2.0"})
+        with urllib.request.urlopen(req, timeout=1.5) as resp:
+            data = json.loads(resp.read().decode())
+            if data.get("status") == "success":
+                city = data.get("city", "")
+                region = data.get("regionName", "")
+                country = data.get("country", "")
+                if city and region:
+                    loc_str = f"{city}, {region} ({country})"
+                elif city:
+                    loc_str = f"{city} ({country})"
+    except Exception:
+        pass
+    
+    st.session_state.current_client_location = loc_str
+    return loc_str
+
+
 now_dt = datetime.now()
 current_time_str = now_dt.strftime("%d %b %Y, %I:%M %p")
+current_location_str = get_current_client_location()
 
 st.markdown(f"""
 <header class="top-nav-bar">
@@ -1197,6 +1224,9 @@ st.markdown(f"""
             </div>
             <div class="header-sub-pill">
                 🕒 <b>वर्तमान समय:</b> {current_time_str}
+            </div>
+            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="सॉफ़्टवेयर का वर्तमान स्थान (Current Client Location)">
+                📍 <b>वर्तमान स्थान:</b> {current_location_str}
             </div>
         </div>
     </div>
