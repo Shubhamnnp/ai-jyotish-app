@@ -1111,7 +1111,7 @@ MODULE_OPTIONS = [
     "💍 कुण्डली मिलान (Milan)",
     "💬 ज्योतिष AI सहायक (Sahayak)",
     "📄 सम्पूर्ण रिपोर्ट (Report)",
-    "📚 32 शास्त्रीय नियम (Rules)",
+    "📚 100 शास्त्रीय नियम (Rules)",
     "🔍 वैदिक ऋषि सत्यापन (Validation)"
 ]
 
@@ -4432,20 +4432,16 @@ elif selected_module.startswith("💬 ज्योतिष AI"):
         # Generate Assistant Response
         with st.chat_message("assistant", avatar="🔮"):
             with st.spinner("🔮 कुण्डली के समस्त ग्रहों, भावों एवं दशाओं का विश्लेषण कर सटीक उत्तर तैयार किया जा रहा है..."):
-                import importlib
-                import src.jyotish.ai.narrative as narrative_mod
-                importlib.reload(narrative_mod)
-                chat_svc = narrative_mod.default_narrative_service
-
                 master_bundle = default_master_calculator.calculate_all(chart)
                 active_key = st.session_state.get("gemini_api_key", os.getenv("GEMINI_API_KEY"))
                 
-                ai_response = chat_svc.chat_consultation(
+                ai_response = default_narrative_service.chat_consultation(
                     user_query=prompt_to_process,
                     chart=chart,
                     master_data=master_bundle,
                     api_key=active_key,
                     model="gemini-3.8-flash",
+                    language="Hindi",
                     chat_history=st.session_state.ai_chat_history
                 )
                 st.markdown(ai_response)
@@ -4510,18 +4506,48 @@ elif selected_module.startswith("📄 सम्पूर्ण"):
 
 
 # =============================================================
-# TAB 17: 32 SHASTRIYA RULES LIBRARY
+# TAB 17: 100 SHASTRIYA RULES LIBRARY
 
-elif selected_module.startswith("📚 32 शास्त्रीय"):
-    st.subheader("📚 शास्त्रीय 32 नियम पुस्तकालय (Production Rules Catalog)")
+elif selected_module.startswith("📚 100 शास्त्रीय"):
+    st.subheader("📚 शास्त्रीय १०० नियम पुस्तकालय (Exhaustive 100 Classical Rules Catalog)")
     rules_to_show = default_rules_engine.rules
-    st.write(f"कुल शास्त्रीय नियम: **{len(rules_to_show)}** (100% Shastriya Parashari, Jaimini, Tajika & Prashna)")
+    st.write(f"कुल शास्त्रीय नियम: **{len(rules_to_show)}** (100% Shastriya Parashari, Brihat Jataka, Prashna Marga, Phaladeepika, Saravali, Jaimini, Tajika & Uttara Kalamrita)")
+
+    c_f1, c_f2, c_f3 = st.columns([2, 2, 2])
+    search_kw = c_f1.text_input("🔍 नियम खोजें (Search Rule)", placeholder="e.g. गजलक्ष्मी, राजयोग, केमद्रुम, इत्थशाल...")
+    
+    all_granthas = sorted(list({r['source']['text'] for r in rules_to_show}))
+    sel_grantha = c_f2.selectbox("📖 ग्रन्थ अनुसार फ़िल्टर (By Grantha)", ["सभी ग्रन्थ (All Granthas)"] + all_granthas)
+    
+    all_cats = sorted(list({r['category'] for r in rules_to_show}))
+    sel_cat = c_f3.selectbox("🏷️ श्रेणी अनुसार फ़िल्टर (By Category)", ["सभी श्रेणियां (All Categories)"] + all_cats)
+
+    # Filter rules
+    filtered_rules = []
     for r in rules_to_show:
-        with st.expander(f"{r['rule_name_hi']} ({r['rule_id']})"):
+        if sel_grantha != "सभी ग्रन्थ (All Granthas)" and r['source']['text'] != sel_grantha:
+            continue
+        if sel_cat != "सभी श्रेणियां (All Categories)" and r['category'] != sel_cat:
+            continue
+        if search_kw:
+            kw_l = search_kw.lower()
+            match_txt = f"{r['rule_name_hi']} {r['rule_name_en']} {r['rule_id']} {r['effect'].get('description_hi', '')}".lower()
+            if kw_l not in match_txt:
+                continue
+        filtered_rules.append(r)
+
+    st.caption(f"प्रदर्शित नियम: **{len(filtered_rules)}** / {len(rules_to_show)}")
+
+    for r in filtered_rules:
+        pol_badge = "🟢 शुभ योग (+)" if r['effect']['polarity'] == '+' else "🔴 अनिष्ट/दोष (-)"
+        with st.expander(f"{r['rule_name_hi']} — {r['rule_name_en']} ({r['rule_id']})"):
             c1, c2 = st.columns(2)
-            c1.markdown(f"**ग्रन्थ:** {r['source']['text']} ({r['source']['chapter']}) | **ऋषि:** {r['source']['author']}")
-            c2.markdown(f"**पद्धति:** {r['school']} | **श्रेणी:** {r['category']} | **आधार शक्ति:** {r['effect']['strength_base']}")
-            st.markdown(f"**वर्णन:** {r['effect'].get('description_hi', '')}")
+            c1.markdown(f"**📖 ग्रन्थ:** {r['source']['text']} *(अध्याय: {r['source']['chapter']})* | **ऋषि/आचार्य:** {r['source']['author']}")
+            c2.markdown(f"**पद्धति:** {r['school']} | **श्रेणी:** {r['category']} | **प्रभाव:** {pol_badge} | **शक्ति:** {r['effect']['strength_base']}")
+            st.markdown(f"**शास्त्रीय फलित एवं व्याख्या:** {r['effect'].get('description_hi', '')}")
+            if r.get('modifiers'):
+                mods_txt = " • ".join([f"{m.get('condition', '')} ({m.get('delta', '')})" for m in r['modifiers']])
+                st.markdown(f"<small style='color:#475569;'><b>मॉडिफायर्स (Modifiers):</b> {mods_txt}</small>", unsafe_allow_html=True)
 
 
 # =============================================================

@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "last_updated": "2026-09-19",
+    "last_updated": "2026-09-20",
     "school": "Parashari (Primary), Jaimini (Secondary)",
-    "total_rules": 32,
+    "total_rules": 100,
     "categories": [
       "yoga",
       "dosha",
@@ -11,7 +11,7 @@
       "dasha-gochar",
       "bhav-based"
     ],
-    "notes": "Starter rules library for MVP. All rules tested against J. Hora and Kundli Professional. Weights calibrated on 150+ birth charts."
+    "notes": "Exhaustive 100 Classical Shastriya Rules Library (Brihat Parashara Hora Shastra, Brihat Jataka, Prashna Marga, Phaladeepika, Saravali, Jaimini Sutras, Uttara Kalamrita, Tajika Neelakanthi)."
   },
   "rules": [
     {
@@ -112,31 +112,56 @@
           {
             "entity": "Mars",
             "house_from": "Lagna",
-            "in": [1, 4, 7, 10],
+            "in": [
+              1,
+              4,
+              7,
+              10
+            ],
             "quality": "exalted_or_moolatrikona"
           },
           {
             "entity": "Mercury",
             "house_from": "Lagna",
-            "in": [1, 4, 7, 10],
+            "in": [
+              1,
+              4,
+              7,
+              10
+            ],
             "quality": "exalted_or_moolatrikona"
           },
           {
             "entity": "Jupiter",
             "house_from": "Lagna",
-            "in": [1, 4, 7, 10],
+            "in": [
+              1,
+              4,
+              7,
+              10
+            ],
             "quality": "exalted_or_moolatrikona"
           },
           {
             "entity": "Venus",
             "house_from": "Lagna",
-            "in": [1, 4, 7, 10],
+            "in": [
+              1,
+              4,
+              7,
+              10
+            ],
             "quality": "exalted_or_moolatrikona"
           },
           {
             "entity": "Saturn",
             "house_from": "Lagna",
-            "in": [1, 4, 7, 10],
+            "in": [
+              1,
+              4,
+              7,
+              10
+            ],
             "quality": "exalted_or_moolatrikona"
           }
         ]
@@ -150,7 +175,7 @@
           "achievement"
         ],
         "polarity": "+",
-        "strength_base": 0.80,
+        "strength_base": 0.8,
         "description_hi": "Jataka ko apni field mein pravirta aur samman pradan karta hai. Politics, business, admin mein success."
       },
       "modifiers": [
@@ -197,22 +222,38 @@
           {
             "entity": "Lord of 5th house",
             "house_from": "Lagna",
-            "in": [1, 4, 7, 10]
+            "in": [
+              1,
+              4,
+              7,
+              10
+            ]
           },
           {
             "entity": "Lord of 5th house",
             "house_from": "Lagna",
-            "in": [5, 9]
+            "in": [
+              5,
+              9
+            ]
           },
           {
             "entity": "Lord of 9th house",
             "house_from": "Lagna",
-            "in": [1, 4, 7, 10]
+            "in": [
+              1,
+              4,
+              7,
+              10
+            ]
           },
           {
             "entity": "Lord of 9th house",
             "house_from": "Lagna",
-            "in": [5, 9]
+            "in": [
+              5,
+              9
+            ]
           }
         ]
       },
@@ -225,7 +266,7 @@
           "leadership"
         ],
         "polarity": "+",
-        "strength_base": 0.70,
+        "strength_base": 0.7,
         "description_hi": "Jataka ko bhagya, sampatti, aur dharmik kartavya mein pravirta karta hai. Ancestral property aur pitra ka ashirwad."
       },
       "modifiers": [
@@ -282,12 +323,22 @@
           {
             "entity": "Lord of 2nd house",
             "house_from": "Lagna",
-            "in": [1, 4, 7, 10]
+            "in": [
+              1,
+              4,
+              7,
+              10
+            ]
           },
           {
             "entity": "Lord of 11th house",
             "house_from": "Lagna",
-            "in": [1, 4, 7, 10]
+            "in": [
+              1,
+              4,
+              7,
+              10
+            ]
           }
         ]
       },
@@ -323,7 +374,7 @@
           "Warren Buffett",
           "Mukesh Ambani"
         ],
-        "backtesting_accuracy": 0.70,
+        "backtesting_accuracy": 0.7,
         "dataset_size": 150
       },
       "notes": "Dhan yoga ke liye 2/11 lords ka sambandh sabse important. Conjunction strongest, aspect weak.",
@@ -363,7 +414,7 @@
           "transformation"
         ],
         "polarity": "+",
-        "strength_base": 0.60,
+        "strength_base": 0.6,
         "description_hi": "Debilitated grah ke nuksan ko cancel kar deta hai. Jataka ko anumati ke baad badi success milti hai. 'Late bloomer' scenario."
       },
       "modifiers": [
@@ -495,7 +546,7 @@
           "poverty"
         ],
         "polarity": "-",
-        "strength_base": -0.50,
+        "strength_base": -0.5,
         "description_hi": "Jataka ko mental shanti aur arthik sukh nahi milta. Agar strongly placed Moon hai to Kemadruma cancel hota hai."
       },
       "modifiers": [
@@ -601,7 +652,14 @@
           {
             "entity": "Mars",
             "house_from": "Lagna or 7th house",
-            "in": [1, 2, 4, 7, 8, 12]
+            "in": [
+              1,
+              2,
+              4,
+              7,
+              8,
+              12
+            ]
           },
           {
             "entity": "Mars",
@@ -617,7 +675,7 @@
           "family-discord"
         ],
         "polarity": "-",
-        "strength_base": -0.60,
+        "strength_base": -0.6,
         "description_hi": "Vivah mein bigar aur kalaah ho sakta hai. Agar dono mein Mangal ho tab 'Anulom Vivah' se dikha ja sakta hai."
       },
       "modifiers": [
@@ -668,7 +726,11 @@
           {
             "entity": "Sun",
             "house_from": "Lagna",
-            "in": [6, 8, 12]
+            "in": [
+              6,
+              8,
+              12
+            ]
           },
           {
             "type": "conjunction",
@@ -691,7 +753,7 @@
           "lineage-problems"
         ],
         "polarity": "-",
-        "strength_base": -0.40,
+        "strength_base": -0.4,
         "description_hi": "Pitra ka ashirwad nahi milta. Parivar mein sukh nahi. Kuch puja-path ya pitra-tarpan se shanti."
       },
       "modifiers": [
@@ -711,7 +773,7 @@
       "confidence_level": "classical-consensus",
       "testing_data": {
         "known_examples": [],
-        "backtesting_accuracy": 0.60,
+        "backtesting_accuracy": 0.6,
         "dataset_size": 75
       },
       "notes": "Pitra Dosha mostly spiritual nature ka hota hai, material nahi. Remedies spiritual honge.",
@@ -735,7 +797,11 @@
           {
             "entity": "Mars",
             "house_from": "Lagna",
-            "in": [6, 8, 12]
+            "in": [
+              6,
+              8,
+              12
+            ]
           },
           {
             "type": "conjunction_or_aspect",
@@ -879,7 +945,7 @@
           "hidden-dangers"
         ],
         "polarity": "-",
-        "strength_base": -0.50,
+        "strength_base": -0.5,
         "description_hi": "Ghar, parivar, swasthya mein problem hote hain. 8th mein Dhaiya sabse fatal hoti hai."
       },
       "modifiers": [
@@ -930,7 +996,7 @@
           "moral-decline"
         ],
         "polarity": "-",
-        "strength_base": -0.40,
+        "strength_base": -0.4,
         "description_hi": "Jhooth, dokhla, aur nuksan hote hain. Agar dono natally bhi conjunct hain tab aur bhi serious."
       },
       "modifiers": [
@@ -1081,7 +1147,7 @@
           "self-expression"
         ],
         "polarity": "+/-",
-        "strength_base": 0.00,
+        "strength_base": 0.0,
         "description_hi": "Lagna Lord jitna strong, personality utni strong. Weak Lagna Lord = shattered self-image."
       },
       "modifiers": [
@@ -1142,7 +1208,7 @@
           "authority"
         ],
         "polarity": "+/-",
-        "strength_base": 0.00,
+        "strength_base": 0.0,
         "description_hi": "Dasamesh strong = career mein success, weak = naukri ke problem."
       },
       "modifiers": [
@@ -1205,7 +1271,7 @@
           "harmony"
         ],
         "polarity": "+/-",
-        "strength_base": 0.00,
+        "strength_base": 0.0,
         "description_hi": "Saptamesh strong = vivah sukhi aur partner acha. Weak = delays aur conflicts."
       },
       "modifiers": [
@@ -1260,7 +1326,7 @@
           "results-related-to-planet"
         ],
         "polarity": "+/-",
-        "strength_base": 0.00,
+        "strength_base": 0.0,
         "description_hi": "Dasha ka lord jo strong, us dasha mein achhi ghatnayein hoti hain. Weak = problems."
       },
       "modifiers": [
@@ -1284,7 +1350,7 @@
       "confidence_level": "classical-consensus",
       "testing_data": {
         "known_examples": [],
-        "backtesting_accuracy": 0.70,
+        "backtesting_accuracy": 0.7,
         "dataset_size": 300
       },
       "notes": "Vimshottari dasha mein planet ke strength pe sab kuch depend karta hai.",
@@ -1318,7 +1384,7 @@
           "specific-events"
         ],
         "polarity": "+/-",
-        "strength_base": 0.00,
+        "strength_base": 0.0,
         "description_hi": "Antar dasha lord weak hota hai to Mahadasha lord ke achhe effects nahi dikh paate."
       },
       "modifiers": [
@@ -1371,7 +1437,7 @@
           "beneficial-period"
         ],
         "polarity": "+",
-        "strength_base": 0.50,
+        "strength_base": 0.5,
         "description_hi": "Agar transit grah ka high ashtakavarga wala house mein entry hota hai, to uska effect accha hota hai."
       },
       "modifiers": [
@@ -1423,7 +1489,7 @@
           "feminine-energy-flow"
         ],
         "polarity": "+/-",
-        "strength_base": 0.00,
+        "strength_base": 0.0,
         "description_hi": "Yogini dasha Vimshottari ke saath parallel chalti hai. Kuch astrologers isko zyada trust karte hain mahila ke liye."
       },
       "modifiers": [],
@@ -1527,7 +1593,7 @@
           "karmic-destiny"
         ],
         "polarity": "+/-",
-        "strength_base": 0.00,
+        "strength_base": 0.0,
         "description_hi": "Atmakaraka strong to jataka apne dharma-path par aata hai. Weak to confusion aur lack of direction."
       },
       "modifiers": [
@@ -1547,7 +1613,7 @@
       "confidence_level": "classical-consensus",
       "testing_data": {
         "known_examples": [],
-        "backtesting_accuracy": 0.60,
+        "backtesting_accuracy": 0.6,
         "dataset_size": 95
       },
       "notes": "Jaimini ke anusaar Atmakaraka sab se important. Uska placement sabhi result ko determine karta hai.",
@@ -1582,7 +1648,7 @@
           "yearly-focus"
         ],
         "polarity": "+/-",
-        "strength_base": 0.00,
+        "strength_base": 0.0,
         "description_hi": "Varsha kundali mein Muntha us saal ka theme decide karta hai. Muntha ke bhav aur bhavesh se sab kuch pata chalta hai."
       },
       "modifiers": [
@@ -1630,7 +1696,7 @@
           "veiled-outcome"
         ],
         "polarity": "+/-",
-        "strength_base": 0.00,
+        "strength_base": 0.0,
         "description_hi": "Prashna mein Arudha Lagna bhav mein uttar dikhai padta hai. Agar Arudha se benefic aspects, to haan. Malefic, to nahi."
       },
       "modifiers": [
@@ -1648,7 +1714,7 @@
       "confidence_level": "classical-consensus",
       "testing_data": {
         "known_examples": [],
-        "backtesting_accuracy": 0.70,
+        "backtesting_accuracy": 0.7,
         "dataset_size": 100
       },
       "notes": "Prashna Marge ke anusaar Arudha Lagna prashna ka answer query ke through de deta hai.",
@@ -1682,7 +1748,7 @@
           "timing-issues"
         ],
         "polarity": "-",
-        "strength_base": -0.30,
+        "strength_base": -0.3,
         "description_hi": "Sarvatobhadra mein vedha ho tab utni ashubh timing nahi hoti. Kuch kaam postpone karne padh sakte hain."
       },
       "modifiers": [],
@@ -1691,7 +1757,7 @@
       "confidence_level": "classical-consensus",
       "testing_data": {
         "known_examples": [],
-        "backtesting_accuracy": 0.50,
+        "backtesting_accuracy": 0.5,
         "dataset_size": 50
       },
       "notes": "Sarvatobhadra Chakra muhurta ke liye use hota hai. P1 mein muhurta module optional.",
@@ -1727,7 +1793,7 @@
           "karmic-events"
         ],
         "polarity": "-/+",
-        "strength_base": -0.40,
+        "strength_base": -0.4,
         "description_hi": "Chandra Grahan bahut shakti wali ghatna hoti hai. Eclipse ke aas-paas badi ghatnayein ho sakti hain."
       },
       "modifiers": [
@@ -1830,7 +1896,7 @@
           "emotional-resilience"
         ],
         "polarity": "+/-",
-        "strength_base": 0.60,
+        "strength_base": 0.6,
         "description_hi": "Chandra lagna ka swami kendra ya trikona mein ho to jataka ko lok-priyata, mansik sthirta aur bhagyodaya deta hai."
       },
       "modifiers": [
@@ -1886,7 +1952,7 @@
           "professional-breakthrough"
         ],
         "polarity": "+",
-        "strength_base": 0.80,
+        "strength_base": 0.8,
         "description_hi": "Jab Shani aur Guru dono ek sath dasham bhav ya dashamesh ko gochar ya drishti se prabhavit karte hain, tab career mein bada parivartan ya labh hota hai."
       },
       "modifiers": [
@@ -1914,6 +1980,3005 @@
       },
       "notes": "Double Transit principle jeevan ki pramukh ghatnaon ke timing ke liye sabse prabhavi niyam hai.",
       "deprecated": false
+    },
+    {
+      "rule_id": "BJ_SUNAPHAA_033",
+      "rule_name_hi": "सुनफा योग (Sunaphaa Yoga)",
+      "rule_name_en": "Planet in 2nd from Moon (Except Sun)",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "13 (Chandra Yoga)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "relationship": "planet_in_2nd",
+            "excluding": "Sun"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "wealth",
+          "intellect",
+          "self_earned_income",
+          "reputation"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "चंद्रमा से द्वितीय भाव में सूर्य के अतिरिक्त शुभ ग्रह होने से जातक स्व-अर्जित धन, बुद्धि और समाज में मान-सम्मान प्राप्त करता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_benefic_planet",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_ANAPHAA_034",
+      "rule_name_hi": "अनफा योग (Anaphaa Yoga)",
+      "rule_name_en": "Planet in 12th from Moon (Except Sun)",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "13 (Chandra Yoga)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "relationship": "planet_in_12th",
+            "excluding": "Sun"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "generosity",
+          "good_conduct",
+          "peace"
+        ],
+        "polarity": "+",
+        "strength_base": 0.68,
+        "description_hi": "चंद्रमा से द्वादश भाव में शुभ ग्रह होने से जातक स्वस्थ, दानी, शीलवान और मानसिक शांति से युक्त होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_benefic_planet",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_DHURDHURA_035",
+      "rule_name_hi": "दुरुधरा योग (Dhurdhura Yoga)",
+      "rule_name_en": "Planets on Both Sides of Moon (2nd and 12th)",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "13 (Chandra Yoga)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "relationship": "planets_in_2nd_and_12th",
+            "excluding": "Sun"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "wealth",
+          "vehicles",
+          "fame",
+          "luxury"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "चंद्रमा के दोनों ओर (२ और १२ भाव) ग्रह होने से दुरुधरा योग बनता है, जिससे जातक प्रचुर धन, वाहन और सुख-साधन प्राप्त करता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_both_benefics",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_KEMADRUMA_036",
+      "rule_name_hi": "केमद्रुम दोष (Kemadruma Dosha)",
+      "rule_name_en": "No Planets in 2nd and 12th from Moon",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "13 (Chandra Yoga)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "dosha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "relationship": "no_planets_in_2nd_12th"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "mental_restlessness",
+          "financial_struggle",
+          "loneliness"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "चंद्रमा से द्वितीय व द्वादश में कोई ग्रह न होने पर केमद्रुम दोष बनता है, जो मानसिक अस्थिरता व संघर्ष देता है (यदि केंद्र में ग्रह हों तो भंग)।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_kendra_occupied",
+          "delta": -0.4
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_VESI_037",
+      "rule_name_hi": "वेसी योग (Vesi Yoga)",
+      "rule_name_en": "Planet in 2nd from Sun (Except Moon)",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "14 (Surya Yoga)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "planet_in_2nd",
+            "excluding": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "eloquence",
+          "truthfulness",
+          "wealth",
+          "steady_gains"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "सूर्य से द्वितीय भाव में ग्रह होने से जातक मधुर वक्ता, सत्यवादी, दृढ़ निश्चयी और संपन्न होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_or_venus",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_VOSI_038",
+      "rule_name_hi": "वोसी योग (Vosi Yoga)",
+      "rule_name_en": "Planet in 12th from Sun (Except Moon)",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "14 (Surya Yoga)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "planet_in_12th",
+            "excluding": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "intellect",
+          "spiritual_inclination",
+          "fame"
+        ],
+        "polarity": "+",
+        "strength_base": 0.68,
+        "description_hi": "सूर्य से द्वादश भाव में शुभ ग्रह होने से जातक मेधावी, कीर्तिमान और उदार स्वभाव का होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_benefic_in_12th",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_UBHAYACHARI_039",
+      "rule_name_hi": "उभयचारी योग (Ubhayachari Yoga)",
+      "rule_name_en": "Planets on Both Sides of Sun (2nd and 12th)",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "14 (Surya Yoga)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "planets_in_2nd_and_12th",
+            "excluding": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kingly_status",
+          "leadership",
+          "immense_wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "सूर्य के दोनों ओर शुभ ग्रह होने से उभयचारी योग बनता है, जो जातक को राजतुल्य सम्मान और नेतृत्व क्षमता प्रदान करता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_both_benefics",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_RUCHAKA_040",
+      "rule_name_hi": "रुचक महापुरुष योग (Ruchaka Mahapurusha Yoga)",
+      "rule_name_en": "Mars in Kendra in Own or Exalted Sign",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "26 (Pancha Mahapurusha)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "in_houses": [
+              1,
+              4,
+              7,
+              10
+            ],
+            "dignity_in": [
+              "exalted",
+              "own"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "courage",
+          "military_police_authority",
+          "land_property",
+          "victory"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "मंगल केंद्र में स्वराशि (मेष/वृश्चिक) या उच्च (मकर) में हो तो रुचक योग बनता है, जिससे जातक अद्वितीय पराक्रमी, भूमि-स्वामी व सेनापति होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_mars_in_10th",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_BHADRA_041",
+      "rule_name_hi": "भद्र महापुरुष योग (Bhadra Mahapurusha Yoga)",
+      "rule_name_en": "Mercury in Kendra in Own or Exalted Sign",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "26 (Pancha Mahapurusha)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "in_houses": [
+              1,
+              4,
+              7,
+              10
+            ],
+            "dignity_in": [
+              "exalted",
+              "own"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "high_intellect",
+          "commerce",
+          "mathematics",
+          "speech",
+          "longevity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "बुध केंद्र में मिथुन या कन्या में हो तो भद्र योग बनता है। जातक कुशाग्र बुद्धि, वाणिज्य निपुण, विद्वान व दीर्घायु होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_mercury_exalted_in_virgo",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_HAMSA_042",
+      "rule_name_hi": "हंस महापुरुष योग (Hamsa Mahapurusha Yoga)",
+      "rule_name_en": "Jupiter in Kendra in Own or Exalted Sign",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "26 (Pancha Mahapurusha)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "in_houses": [
+              1,
+              4,
+              7,
+              10
+            ],
+            "dignity_in": [
+              "exalted",
+              "own"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual_wisdom",
+          "judge_advisor",
+          "universal_respect",
+          "purity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "गुरु केंद्र में धनु, मीन या कर्क में हो तो हंस योग बनता है। जातक धर्मात्मा, नीतिज्ञ, पूजनीय और राजगुरु तुल्य होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_exalted_in_cancer",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_MALAVYA_043",
+      "rule_name_hi": "मालव्य महापुरुष योग (Malavya Mahapurusha Yoga)",
+      "rule_name_en": "Venus in Kendra in Own or Exalted Sign",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "26 (Pancha Mahapurusha)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "in_houses": [
+              1,
+              4,
+              7,
+              10
+            ],
+            "dignity_in": [
+              "exalted",
+              "own"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "supreme_luxury",
+          "artistic_genius",
+          "marital_bliss",
+          "beauty"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "शुक्र केंद्र में वृषभ, तुला या मीन में हो तो मालव्य योग बनता है। जातक सौन्दर्य, कला, वाहन, ऐश्वर्य व उत्तम जीवनसाथी पाता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_venus_exalted_in_pisces",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BJ_SASA_044",
+      "rule_name_hi": "शश महापुरुष योग (Sasa Mahapurusha Yoga)",
+      "rule_name_en": "Saturn in Kendra in Own or Exalted Sign",
+      "source": {
+        "text": "Brihat Jataka",
+        "chapter": "26 (Pancha Mahapurusha)",
+        "author": "Acharya Varahamihira",
+        "era": "Classical"
+      },
+      "school": "Varahamihira",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "in_houses": [
+              1,
+              4,
+              7,
+              10
+            ],
+            "dignity_in": [
+              "exalted",
+              "own"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "mass_leadership",
+          "political_power",
+          "endurance",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "शनि केंद्र में मकर, कुम्भ या तुला में हो तो शश योग बनता है। जातक जननायक, शासन में प्रमुख, धैर्यवान और दीर्घकालीन सत्ता पाता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_saturn_exalted_in_libra",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_AMALA_045",
+      "rule_name_hi": "अमल योग (Amala Yoga)",
+      "rule_name_en": "Benefic in 10th from Lagna or Moon",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "benefic_planets",
+            "in_houses_from_lagna_or_moon": [
+              10
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spotless_reputation",
+          "noble_deeds",
+          "lasting_fame",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "लग्न या चंद्रमा से दशम भाव में केवल शुभ ग्रह होने से अमल योग बनता है, जो निष्कलंक यश, परोपकार और स्थायी कीर्ति देता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_in_10th",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_PARVATA_046",
+      "rule_name_hi": "पर्वत योग (Parvata Yoga)",
+      "rule_name_en": "Benefics in Kendra and 6/8 Free of Malefics",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "kendra_houses",
+            "occupied_by": "benefics"
+          },
+          {
+            "entity": "dusthana_6_8",
+            "free_of": "malefics"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "immense_wealth",
+          "steadfast_fortune",
+          "high_status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "केंद्रों में शुभ ग्रह हों और ६ व ८ भाव रिक्त या शुभ युक्त हों तो पर्वत योग बनता है। जातक पर्वत के समान स्थिर धन व प्रतिष्ठा पाता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_lagnesha_in_kendra",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_KAHALA_047",
+      "rule_name_hi": "काहल योग (Kahala Yoga)",
+      "rule_name_en": "Lords of 4th and 9th in Mutual Kendras",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_4",
+            "in_kendra_to": "lord_of_9"
+          },
+          {
+            "entity": "lord_of_1",
+            "dignity": "strong"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "courageous_leadership",
+          "organizational_power",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "चतुर्थेश और नवमेश परस्पर केंद्र में हों और लग्नेश बलवान हो तो काहल योग बनता है। जातक साहसी, संगठन प्रमुख और सम्मानित होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_lagna_lord_exalted",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_SHANKHA_048",
+      "rule_name_hi": "शंख योग (Shankha Yoga)",
+      "rule_name_en": "Lords of 5th and 6th in Mutual Kendras with Strong Lagnesha",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_5",
+            "in_kendra_to": "lord_of_6"
+          },
+          {
+            "entity": "lord_of_1",
+            "dignity": "strong"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "philosophical_learning",
+          "charity",
+          "humane_nature",
+          "prosperity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.78,
+        "description_hi": "पंचमेश व षष्ठेश परस्पर केंद्र में हों तथा लग्नेश बलवान हो तो शंख योग बनता है। जातक दयालु, विद्वान और परोपकारी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_benefic_aspect",
+          "delta": 0.12
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_BHERI_049",
+      "rule_name_hi": "भेरी योग (Bheri Yoga)",
+      "rule_name_en": "9th Lord Strong, All Planets in Lagna, 2, 7, 12",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_9",
+            "dignity": "strong"
+          },
+          {
+            "entity": "venus_jupiter_lagnesha",
+            "in_kendra": true
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "fame",
+          "wealth",
+          "long_life",
+          "spiritual_bliss"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "नवमेश बलवान हो और शुक्र, गुरु व लग्नेश परस्पर शुभ स्थानों में हों तो भेरी योग बनता है। जातक राजतुल्य सुखी व दीर्घायु होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_in_lagna",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_MRIDANGA_050",
+      "rule_name_hi": "मृदंग योग (Mridanga Yoga)",
+      "rule_name_en": "Navamsha Lord in Kendra/Trikona Exalted or Own Sign",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "navamsha_lord",
+            "in_houses": [
+              1,
+              4,
+              5,
+              7,
+              9,
+              10
+            ],
+            "dignity_in": [
+              "exalted",
+              "own"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "high_authority",
+          "fame",
+          "happiness",
+          "royal_honor"
+        ],
+        "polarity": "+",
+        "strength_base": 0.84,
+        "description_hi": "नवांशपति केंद्र या त्रिकोण में स्व/उच्च राशि में होकर लग्नेश से दृष्ट हो तो मृदंग योग बनता है। जातक को चौतरफा सम्मान मिलता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_lagnesha_aspects",
+          "delta": 0.16
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_SHRINATHA_051",
+      "rule_name_hi": "श्रीनाथ योग (Shrinatha Yoga)",
+      "rule_name_en": "7th Lord Exalted in 10th with 9th Lord (for Sagittarius Lagna)",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_7",
+            "dignity": "exalted"
+          },
+          {
+            "entity": "lord_of_9",
+            "in_houses": [
+              10
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "vishnu_blessing",
+          "opulence",
+          "magnetic_personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "सप्तमेश दशम में उच्च का होकर नवमेश से युक्त हो तो श्रीनाथ योग बनता है। जातक भगवान नारायण के समान ऐश्वर्यशाली होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_sagittarius_lagna",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_SARASWATI_052",
+      "rule_name_hi": "सरस्वती योग (Saraswati Yoga)",
+      "rule_name_en": "Jupiter, Venus, and Mercury in Kendra/Trikona/2nd with Strong Jupiter",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "jupiter_venus_mercury",
+            "in_houses": [
+              1,
+              2,
+              4,
+              5,
+              7,
+              9,
+              10
+            ]
+          },
+          {
+            "entity": "Jupiter",
+            "dignity_in": [
+              "exalted",
+              "own",
+              "moolatrikona"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "poetic_genius",
+          "scholarly_acclaim",
+          "highest_wisdom",
+          "fame"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "गुरु, शुक्र व बुध केंद्र, त्रिकोण या द्वितीय में हों और गुरु बलवान हो तो सरस्वती योग बनता है। जातक महाविद्वान, प्रख्यात लेखक व कवि होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_in_1st_or_5th",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_LAKSHMI_053",
+      "rule_name_hi": "लक्ष्मी योग (Lakshmi Yoga)",
+      "rule_name_en": "9th Lord and Venus in Kendra/Trikona in Own or Exalted Sign",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_9",
+            "in_houses": [
+              1,
+              4,
+              5,
+              7,
+              9,
+              10
+            ],
+            "dignity_in": [
+              "exalted",
+              "own"
+            ]
+          },
+          {
+            "entity": "Venus",
+            "dignity_in": [
+              "exalted",
+              "own"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "immense_wealth",
+          "nobility",
+          "goddess_lakshmi_grace"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "नवमेश व शुक्र केंद्र या त्रिकोण में स्व/उच्च राशि में हों तो लक्ष्मी योग बनता है। जातक कुबेर तुल्य धनवान, रूपवान व सुखी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_in_9th_house",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_GAURI_054",
+      "rule_name_hi": "गौरी योग (Gauri Yoga)",
+      "rule_name_en": "Moon in Exaltation/Own Sign Aspected by Jupiter in Kendra/Trikona",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "dignity_in": [
+              "exalted",
+              "own"
+            ]
+          },
+          {
+            "entity": "Jupiter",
+            "in_houses": [
+              1,
+              4,
+              5,
+              7,
+              9,
+              10
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "noble_family",
+          "virtuous_character",
+          "wealth",
+          "reputation"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "चंद्रमा स्व या उच्च का होकर गुरु से दृष्ट या केंद्र-त्रिकोण में हो तो गौरी योग बनता है। जातक सुंदर, सुशीला, यशस्वी व धनवान होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_moon_jupiter_conjunction",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_HARSHA_055",
+      "rule_name_hi": "हर्ष विपरीत राजयोग (Harsha Viparita Raja Yoga)",
+      "rule_name_en": "6th Lord in 6th, 8th or 12th House Only",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "38 (Viparita Raja Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_6",
+            "in_houses": [
+              6,
+              8,
+              12
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "victory_over_enemies",
+          "robust_health",
+          "sudden_wealth",
+          "invincible"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "षष्ठेश ६, ८ या १२ भाव में ही स्थित हो तो हर्ष योग बनता है। जातक शत्रुओं पर सर्वदा विजय पाता है, निरोगी और संपन्न रहता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_not_associated_with_benefics",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_SARALA_056",
+      "rule_name_hi": "सरल विपरीत राजयोग (Sarala Viparita Raja Yoga)",
+      "rule_name_en": "8th Lord in 6th, 8th or 12th House Only",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "38 (Viparita Raja Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_8",
+            "in_houses": [
+              6,
+              8,
+              12
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "fearlessness",
+          "longevity",
+          "sudden_inheritance",
+          "intellect"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "अष्टमेश ६, ८ या १२ भाव में ही स्थित हो तो सरल योग बनता है। जातक निडर, विद्वान, दीर्घायु और आकस्मिक धन प्राप्त करता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_lagnesha_strong",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_VIMALA_057",
+      "rule_name_hi": "विमल विपरीत राजयोग (Vimala Viparita Raja Yoga)",
+      "rule_name_en": "12th Lord in 6th, 8th or 12th House Only",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "38 (Viparita Raja Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_12",
+            "in_houses": [
+              6,
+              8,
+              12
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "independent_nature",
+          "frugal_wealth",
+          "spiritual_peace",
+          "happiness"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "द्वादशेश ६, ८ या १२ भाव में ही स्थित हो तो विमल योग बनता है। जातक स्वतंत्र, मितव्ययी, परोपकारी और सुखी रहता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_lagnesha_strong",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_NEECHABHANGA_058",
+      "rule_name_hi": "नीचभंग राजयोग (Neechabhanga Raja Yoga)",
+      "rule_name_en": "Debilitated Planet Lord in Kendra from Lagna or Moon",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "39 (Neechabhanga Raja Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "debilitated_planet_dispositor",
+            "in_kendra_from": [
+              "lagna",
+              "moon"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "rise_from_adversity",
+          "supreme_eminence",
+          "ruler_status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "नीच ग्रह की राशि का स्वामी लग्न या चंद्र से केंद्र में हो तो नीचभंग राजयोग बनता है। जातक विपत्तियों से उबरकर राजा तुल्य प्रतिष्ठा पाता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_exaltation_lord_in_kendra",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_DHANA_2_11_059",
+      "rule_name_hi": "धन-लाभ महायोग (Dhana-Labha Mahayoga)",
+      "rule_name_en": "Mutual Exchange or Conjunction of 2nd and 11th Lords",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "41 (Dhana Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_2",
+            "relationship": "conjunction_or_exchange",
+            "with": "lord_of_11"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "multimillionaire",
+          "business_success",
+          "vast_liquid_wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "द्वितीयेश और एकादशेश की युति या राशि परिवर्तन होने से जातक अत्यंत धनाढ्य, सफल व्यापारी और विशाल संपत्ति का स्वामी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_in_kendra_or_trikona",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_DHANA_1_9_060",
+      "rule_name_hi": "लक्ष्मी-नारायण धन योग (Lakshmi-Narayana Dhana Yoga)",
+      "rule_name_en": "Conjunction of 1st and 9th Lords in Kendra or Trikona",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "41 (Dhana Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_1",
+            "relationship": "conjunction",
+            "with": "lord_of_9"
+          },
+          {
+            "entity": "conjunction_house",
+            "in_houses": [
+              1,
+              4,
+              5,
+              7,
+              9,
+              10
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "divine_grace",
+          "hereditary_wealth",
+          "virtue",
+          "prosperity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "लग्नेश और नवमेश की केंद्र-त्रिकोण में युति लक्ष्मी-नारायण योग बनाती है, जिससे जातक जन्मजात भाग्यशाली, पूज्य और समृद्ध होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_in_lagna_or_9th",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_RAJAYOGA_4_9_061",
+      "rule_name_hi": "सुख-भाग्य राजयोग (Sukha-Bhagya Raja Yoga)",
+      "rule_name_en": "Conjunction or Aspect of 4th Lord (Kendra) and 9th Lord (Trikona)",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "40 (Raja Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_4",
+            "relationship": "conjunction_or_aspect",
+            "with": "lord_of_9"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "royal_mansions",
+          "vehicles",
+          "high_honor",
+          "blessed_family"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "चतुर्थेश (केंद्र) और नवमेश (त्रिकोण) का सम्बंध जातक को राजप्रसाद, अनेक वाहन, उत्तम भूमि व सार्वजनिक सम्मान दिलाता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_in_4th_or_9th",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_RAJAYOGA_5_10_062",
+      "rule_name_hi": "कर्म-बुद्धि राजयोग (Karma-Buddhi Raja Yoga)",
+      "rule_name_en": "Conjunction of 5th Lord (Trikona) and 10th Lord (Kendra)",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "40 (Raja Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_5",
+            "relationship": "conjunction",
+            "with": "lord_of_10"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "state_minister",
+          "strategic_advisor",
+          "intellectual_dominance"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "पंचमेश और दशमेश की युति जातक को उच्च प्रशासनिक पद, मंत्री पद, कूटनीतिक सफलता व अटूट यश प्रदान करती है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_in_10th_house",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_DHARMA_KARMADHIPATI_063",
+      "rule_name_hi": "धर्म-कर्माधिपति महा राजयोग (Dharmakarmadhipati Raja Yoga)",
+      "rule_name_en": "Mutual Sambandha between 9th and 10th Lords",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "40 (Raja Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_9",
+            "relationship": "conjunction_exchange_aspect",
+            "with": "lord_of_10"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "supreme_ruler",
+          "global_fame",
+          "charitable_institutions",
+          "power"
+        ],
+        "polarity": "+",
+        "strength_base": 0.98,
+        "description_hi": "नवमेश (धर्म) और दशमेश (कर्म) का सम्बंध पराशरी ज्योतिष का सर्वश्रेष्ठ राजयोग है, जो जातक को शीर्ष सत्ता व विश्वव्यापी ख्याति देता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_unafflicted",
+          "delta": 0.25
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_CHANDRADHI_064",
+      "rule_name_hi": "चंद्राधि योग (Chandradhi Yoga)",
+      "rule_name_en": "Benefics in 6th, 7th, 8th from Moon",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "36 (Adhi Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "benefics_jupiter_venus_mercury",
+            "in_houses_from_moon": [
+              6,
+              7,
+              8
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "commander",
+          "minister",
+          "long_life",
+          "victory_over_enemies"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "चंद्रमा से ६, ७ व ८ भाव में शुभ ग्रह (बुध, गुरु, शुक्र) हों तो चंद्राधि योग बनता है। जातक सेनापति या मंत्री तुल्य पद पाता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_all_three_benefics_present",
+          "delta": 0.25
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_LAGNADHI_065",
+      "rule_name_hi": "लग्नाधि योग (Lagnadhi Yoga)",
+      "rule_name_en": "Benefics in 6th, 7th, 8th from Lagna",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "36 (Adhi Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "benefics_jupiter_venus_mercury",
+            "in_houses_from_lagna": [
+              6,
+              7,
+              8
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "erudition",
+          "immense_wealth",
+          "spiritual_mastery",
+          "fame"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "लग्न से ६, ७ व ८ भाव में शुभ ग्रह हों तो लग्नाधि योग बनता है। जातक विद्वान, राजाओं द्वारा सम्मानित और सुखी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_all_three_benefics_present",
+          "delta": 0.25
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_VASUMATI_066",
+      "rule_name_hi": "वसुमति योग (Vasumati Yoga)",
+      "rule_name_en": "Benefics in Upachaya Houses (3, 6, 10, 11) from Lagna or Moon",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "37 (Vasumati Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "benefic_planets",
+            "in_upachaya_houses": [
+              3,
+              6,
+              10,
+              11
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "immense_wealth",
+          "never_dependent_on_others",
+          "luxuries"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "लग्न या चंद्र से उपचय भावों (३, ६, १०, ११) में शुभ ग्रह हों तो वसुमति योग बनता है। जातक कभी पराधीन नहीं रहता और अपार धनवान होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_all_upachayas_occupied",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_PUSHKAAL_067",
+      "rule_name_hi": "पुष्कल योग (Pushkala Yoga)",
+      "rule_name_en": "Moon Lord and Lagnesha in Kendra with Lagna Aspected by Benefic",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "35 (Yoga Adhyay)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "moon_dispositor",
+            "in_kendra_with": "lagnesha"
+          },
+          {
+            "entity": "lagna",
+            "aspected_by": "benefic"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "oratory_mastery",
+          "fame",
+          "royal_patronage",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.84,
+        "description_hi": "चंद्र राशि स्वामी और लग्नेश केंद्र में हों तथा लग्न शुभ दृष्ट हो तो पुष्कल योग बनता है। जातक प्रख्यात वक्ता और लोकप्रिय होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_aspects_lagna",
+          "delta": 0.16
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_MAHABHAGYA_068",
+      "rule_name_hi": "महाभाग्य योग (Mahabhagya Yoga)",
+      "rule_name_en": "Male: Day birth, Lagna/Sun/Moon in Odd Signs | Female: Night birth in Even Signs",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "37 (Mahabhagya Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ANY",
+        "criteria": [
+          {
+            "gender": "male",
+            "day_birth": true,
+            "lagna_sun_moon": "odd_signs"
+          },
+          {
+            "gender": "female",
+            "night_birth": true,
+            "lagna_sun_moon": "even_signs"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "supreme_good_fortune",
+          "universal_fame",
+          "saintly_wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "पुरुष का दिन जन्म व लग्न-सूर्य-चंद्र विषम राशि में हों (या स्त्री का रात्रि जन्म सम राशि में) तो महाभाग्य योग बनता है, जो अतुलनीय भाग्य देता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_all_three_in_benefic_nakshatras",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_KESHARI_069",
+      "rule_name_hi": "केसरी योग (Keshari Yoga)",
+      "rule_name_en": "Moon in Kendra to Jupiter with Jupiter Exalted/Own",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "36 (Keshari Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "in_kendra_to": "Jupiter"
+          },
+          {
+            "entity": "Jupiter",
+            "dignity_in": [
+              "exalted",
+              "own"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "fearless_courage",
+          "lion_like_aura",
+          "destroyer_of_adversaries"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "चंद्रमा से केंद्र में बलवान गुरु होने से केसरी योग बनता है। जातक सिंह के समान निडर, शत्रुमर्दन करने वाला और यशस्वी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_in_cancer",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_SHUBHAKARTARI_070",
+      "rule_name_hi": "शुभकर्तरी योग (Shubhakartari Yoga)",
+      "rule_name_en": "Lagna or Bhava Hemmed between Benefic Planets (2nd and 12th)",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "12 (Bhava Viveka)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lagna_or_bhava",
+            "hemmed_by": "benefic_planets"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "protection",
+          "prosperity",
+          "health",
+          "unhindered_growth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "लग्न या किसी भाव के दोनों ओर (२ और १२ भाव में) शुभ ग्रह हों तो शुभकर्तरी योग उस भाव की वृद्धि व पूर्ण सुरक्षा करता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_and_venus",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_PAPAKARTARI_071",
+      "rule_name_hi": "पापकर्तरी दोष (Papakartari Dosha)",
+      "rule_name_en": "Lagna or Bhava Hemmed between Malefic Planets (2nd and 12th)",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "12 (Bhava Viveka)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "dosha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lagna_or_bhava",
+            "hemmed_by": "malefic_planets"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "blockage",
+          "mental_stress",
+          "delays_in_bhava_fruits"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लग्न या किसी भाव के दोनों ओर पाप ग्रह (शनि, राहु, मंगल) हों तो पापकर्तरी दोष उत्पन्न होता है, जो उस भाव के फलों में बाधा देता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_rahu_and_saturn",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_VIPARITA_6_8_072",
+      "rule_name_hi": "षष्ठाष्टम विपरीत योग (6-8 Mutual Viparita Yoga)",
+      "rule_name_en": "Exchange between 6th and 8th Lords",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "38 (Viparita Raja Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_6",
+            "in_houses": [
+              8
+            ]
+          },
+          {
+            "entity": "lord_of_8",
+            "in_houses": [
+              6
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "destruction_of_debts_enemies",
+          "unforeseen_wealth_rise"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "६ठे और ८वें भाव के स्वामियों का परस्पर परिवर्तन शत्रुओं व रोगों का नाश कर आकस्मिक उन्नति का मार्ग प्रशस्त करता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_lagnesha_unafflicted",
+          "delta": 0.16
+        }
+      ]
+    },
+    {
+      "rule_id": "PM_PRASHNA_ITHASALA_073",
+      "rule_name_hi": "इत्थशाल योग (Tajika Ithasala / Muthasila Yoga)",
+      "rule_name_en": "Faster Planet with Lower Degree Applying to Slower Planet",
+      "source": {
+        "text": "Tajika Neelakanthi & Prashna Marga",
+        "chapter": "4 (Tajika Yogas)",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical"
+      },
+      "school": "Tajika/Prashna",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "faster_planet",
+            "aspecting_slower": true,
+            "degree_relation": "applying"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "guaranteed_success",
+          "smooth_fulfillment",
+          "harmony"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक पद्धति में शीघ्रगामी ग्रह मंदगामी ग्रह की ओर दीप्तांश सीमा में अग्रसर हो तो इत्थशाल योग कार्य की निश्चित सफलता सिद्ध करता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_mutual_friends",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "PM_PRASHNA_ISHRAFA_074",
+      "rule_name_hi": "ईशराफ योग (Tajika Ishrafa / Musaripha Yoga)",
+      "rule_name_en": "Faster Planet Separating from Slower Planet by 1 Degree",
+      "source": {
+        "text": "Tajika Neelakanthi & Prashna Marga",
+        "chapter": "4 (Tajika Yogas)",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical"
+      },
+      "school": "Tajika/Prashna",
+      "category": "dosha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "faster_planet",
+            "aspecting_slower": true,
+            "degree_relation": "separating"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "missed_opportunity",
+          "separation",
+          "incomplete_work"
+        ],
+        "polarity": "-",
+        "strength_base": 0.72,
+        "description_hi": "शीघ्रगामी ग्रह मंदगामी ग्रह के अंशों को पार कर अलग हो रहा हो तो ईशराफ योग बनता है, जिससे बना-बनाया कार्य अंतिम समय में रुक सकता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_malefic_aspect",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "PM_PRASHNA_NAKTA_075",
+      "rule_name_hi": "नक्त योग (Tajika Nakta Yoga)",
+      "rule_name_en": "Fastest Planet Transmits Light between Lagnesha and Karyesha",
+      "source": {
+        "text": "Tajika Neelakanthi",
+        "chapter": "4 (Tajika Yogas)",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical"
+      },
+      "school": "Tajika/Prashna",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "mediator_planet",
+            "transmits_light_between": [
+              "lagnesha",
+              "karyesha"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "third_party_mediation",
+          "success_through_intercession"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "लग्नेश व कार्येश में दृष्टि न होने पर कोई तीसरा शीघ्रगामी ग्रह (जैसे चंद्र) प्रकाश का संचार करे तो नक्त योग से मध्यस्थ द्वारा कार्य सिद्ध होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_moon_is_mediator",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "PM_PRASHNA_YAMAYA_076",
+      "rule_name_hi": "यमया योग (Tajika Yamaya Yoga)",
+      "rule_name_en": "Slower Planet Collects Light from Lagnesha and Karyesha",
+      "source": {
+        "text": "Tajika Neelakanthi",
+        "chapter": "4 (Tajika Yogas)",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical"
+      },
+      "school": "Tajika/Prashna",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "slower_mediator_planet",
+            "collects_light_from": [
+              "lagnesha",
+              "karyesha"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "elder_statesman_help",
+          "delayed_success_through_authority"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "लग्नेश और कार्येश दोनों किसी उच्चाधिकारी या मंदगामी ग्रह को प्रकाश दें तो यमया योग द्वारा वरिष्ठ व्यक्ति की कृपा से कार्य पूरा होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_is_collector",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "PM_PRASHNA_KAMBOOLA_077",
+      "rule_name_hi": "कम्बूल योग (Tajika Kamboola Yoga)",
+      "rule_name_en": "Ithasala between Lagnesha and Karyesha with Moon Participating",
+      "source": {
+        "text": "Tajika Neelakanthi",
+        "chapter": "4 (Tajika Yogas)",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical"
+      },
+      "school": "Tajika/Prashna",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lagnesha_karyesha_ithasala",
+            "moon_in_ithasala": true
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "unfailing_grand_success",
+          "immense_satisfaction"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "इत्थशाल योग में चंद्रमा भी सम्मिलित हो जाए तो कम्बूल योग बनता है, जो प्रश्न या वर्षफल में अति-शीघ्र एवं सर्वोत्कृष्ट कार्य सिद्धि कराता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_moon_exalted",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "PM_PRASHNA_KARYASIDDHI_078",
+      "rule_name_hi": "प्रश्न कार्य सिद्धि योग (Prashna Karya Siddhi Yoga)",
+      "rule_name_en": "Prashna Lagnesha in Kendra/Trikona and Aspected by Jupiter",
+      "source": {
+        "text": "Prashna Marga",
+        "chapter": "15 (Karyasiddhi Vichar)",
+        "author": "Narayana Bhatta",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "prashna_lagnesha",
+            "in_houses": [
+              1,
+              4,
+              5,
+              7,
+              9,
+              10
+            ]
+          },
+          {
+            "entity": "Jupiter",
+            "aspects": "prashna_lagnesha"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "definite_query_success",
+          "auspicious_resolution"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न लग्न का स्वामी केंद्र या त्रिकोण में होकर देवगुरु बृहस्पति से दृष्ट हो तो अभीष्ट प्रश्न का शत-प्रतिशत सकारात्मक फल प्राप्त होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_in_shubha_shadvarga",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "PM_PRASHNA_ROG_MUKTI_079",
+      "rule_name_hi": "प्रश्न रोग-मुक्ति योग (Prashna Rog Mukti Yoga)",
+      "rule_name_en": "Lagnesha Strong, 8th House Free from Malefics, Benefic in Lagna",
+      "source": {
+        "text": "Prashna Marga",
+        "chapter": "18 (Roga Prashna)",
+        "author": "Narayana Bhatta",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_1",
+            "dignity": "strong"
+          },
+          {
+            "entity": "house_8",
+            "free_from": "malefics"
+          },
+          {
+            "entity": "house_1",
+            "occupied_by": "benefics"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "fast_recovery",
+          "medical_cure",
+          "vitality_restoration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "रोग प्रश्न में लग्नेश बलवान हो, अष्टम भाव पापमुक्त हो और लग्न में शुभ ग्रह स्थित हो तो रोगी अति-शीघ्र स्वस्थ व निरोगी हो जाता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_moon_waxing",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "PM_PRASHNA_SHATRU_VIJAY_080",
+      "rule_name_hi": "प्रश्न शत्रु-विजय योग (Prashna Shatru Vijaya Yoga)",
+      "rule_name_en": "Lagnesha Stronger than 7th Lord in Prashna Chart",
+      "source": {
+        "text": "Prashna Marga",
+        "chapter": "21 (Yuddha & Vivada)",
+        "author": "Narayana Bhatta",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_1_shadbala",
+            "greater_than": "lord_of_7_shadbala"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "triumph_in_litigation",
+          "victory_in_dispute",
+          "compromise_on_own_terms"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "मुकदमे या विवाद के प्रश्न में लग्नेश का बल सप्तमेश (प्रतिवादी) से अधिक हो तो जातक की न्यायालय व विवाद में पूर्ण विजय होती है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_mars_favorable",
+          "delta": 0.16
+        }
+      ]
+    },
+    {
+      "rule_id": "SARAVALI_VIDYUT_081",
+      "rule_name_hi": "विद्युत योग (Vidyut Yoga)",
+      "rule_name_en": "11th Lord Exalted in Kendra with Venus, Lagnesha Strong",
+      "source": {
+        "text": "Saravali",
+        "chapter": "35 (Raja Yoga)",
+        "author": "Kalyanavarma",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_11",
+            "dignity": "exalted",
+            "in_houses": [
+              1,
+              4,
+              7,
+              10
+            ]
+          },
+          {
+            "entity": "Venus",
+            "conjunction_with": "lord_of_11"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "splendid_charity",
+          "treasurer_status",
+          "luxury",
+          "fame"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "एकादशेश केंद्र में उच्च का होकर शुक्र से युक्त हो और लग्नेश बलवान हो तो विद्युत योग बनता है। जातक दानी, कोषाध्यक्ष व विलासी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_in_10th_house",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "SARAVALI_GANDHARVA_082",
+      "rule_name_hi": "गन्धर्व योग (Gandharva Yoga)",
+      "rule_name_en": "10th Lord in 3rd/7th/11th with Sun Exalted and Jupiter in Lagna",
+      "source": {
+        "text": "Saravali",
+        "chapter": "35 (Raja Yoga)",
+        "author": "Kalyanavarma",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_10",
+            "in_houses": [
+              3,
+              7,
+              11
+            ]
+          },
+          {
+            "entity": "Sun",
+            "dignity": "exalted"
+          },
+          {
+            "entity": "Jupiter",
+            "in_houses": [
+              1
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "musical_genius",
+          "world_renowned_artist",
+          "pleasure"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "दशमेश काम भाव में, सूर्य उच्च का और गुरु लग्न में हो तो गंधर्व योग बनता है। जातक संगीत, ललित कला और गायन में विश्वविख्यात होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_venus_strong",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "SARAVALI_SHIVA_083",
+      "rule_name_hi": "शिव योग (Shiva Yoga)",
+      "rule_name_en": "5th Lord in 9th, 9th Lord in 10th, 10th Lord in 5th",
+      "source": {
+        "text": "Saravali",
+        "chapter": "35 (Raja Yoga)",
+        "author": "Kalyanavarma",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_5",
+            "in_houses": [
+              9
+            ]
+          },
+          {
+            "entity": "lord_of_9",
+            "in_houses": [
+              10
+            ]
+          },
+          {
+            "entity": "lord_of_10",
+            "in_houses": [
+              5
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "supreme_devotion",
+          "military_general",
+          "righteous_wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "पंचमेश नवम में, नवमेश दशम में और दशमेश पंचम में हो तो शिव योग बनता है। जातक धर्मात्मा, सेनानायक और अत्यंत बुद्धिमान होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_unafflicted",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "SARAVALI_VISHNU_084",
+      "rule_name_hi": "विष्णु योग (Vishnu Yoga)",
+      "rule_name_en": "9th and 10th Lords in 2nd House with Exalted Navamsha Lord",
+      "source": {
+        "text": "Saravali",
+        "chapter": "35 (Raja Yoga)",
+        "author": "Kalyanavarma",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_9_and_10",
+            "in_houses": [
+              2
+            ]
+          },
+          {
+            "entity": "navamsha_lord",
+            "dignity": "exalted"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "immense_wealth",
+          "kingly_advisor",
+          "universal_praise"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "नवमेश व दशमेश द्वितीय भाव में स्थित हों और नवांशेश उच्च का हो तो विष्णु योग बनता है। जातक अपार धनवान, सम्मानित और सुखी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_aspects",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "SARAVALI_BRAHMA_085",
+      "rule_name_hi": "ब्रह्म योग (Brahma Yoga)",
+      "rule_name_en": "Jupiter, Venus, and Mercury in Kendras from Lagnesha and 9th Lord",
+      "source": {
+        "text": "Saravali",
+        "chapter": "35 (Raja Yoga)",
+        "author": "Kalyanavarma",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "jupiter_venus_mercury",
+            "in_kendras_from": [
+              "lagnesha",
+              "lord_of_9"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "supreme_vedic_knowledge",
+          "brahminical_radiance",
+          "long_life"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "गुरु, शुक्र व बुध केंद्र में स्थित होकर शुभ युत हों तो ब्रह्म योग बनता है। जातक वेदों व शास्त्रों का ज्ञाता, दीर्घायु व पूज्य होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_sun_in_trikona",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "SARAVALI_BHASKARA_086",
+      "rule_name_hi": "भास्कर योग (Bhaskara Yoga)",
+      "rule_name_en": "Moon in 2nd from Sun, Mercury in 3rd from Moon, Jupiter in 5th/9th from Mercury",
+      "source": {
+        "text": "Saravali",
+        "chapter": "35 (Raja Yoga)",
+        "author": "Kalyanavarma",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "in_2nd_from": "Sun"
+          },
+          {
+            "entity": "Mercury",
+            "in_3rd_from": "Moon"
+          },
+          {
+            "entity": "Jupiter",
+            "in_trikona_to": "Mercury"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "splendor_like_sun",
+          "scriptural_scholar",
+          "musical_skill",
+          "brave"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "सूर्य से २ चंद्रमा, चंद्रमा से ३ बुध और बुध से त्रिकोण में गुरु हो तो भास्कर योग बनता है। जातक सूर्य सदृश तेजस्वी व प्रतापी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_sun_in_own_sign",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "SARAVALI_MARUT_087",
+      "rule_name_hi": "मारुत योग (Marut Yoga)",
+      "rule_name_en": "Jupiter in 5th/9th from Venus, Moon in 5th from Jupiter, Sun in Kendra from Moon",
+      "source": {
+        "text": "Saravali",
+        "chapter": "35 (Raja Yoga)",
+        "author": "Kalyanavarma",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "in_trikona_to": "Venus"
+          },
+          {
+            "entity": "Moon",
+            "in_5th_from": "Jupiter"
+          },
+          {
+            "entity": "Sun",
+            "in_kendra_to": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "eloquent_speaker",
+          "vast_learning",
+          "wealthy_merchant"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "शुक्र से त्रिकोण गुरु, गुरु से ५ चंद्र और चंद्र से केंद्र सूर्य हो तो मारुत योग बनता है। जातक कुशल वक्ता, दानी व महा-व्यापारी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_mercury_strong",
+          "delta": 0.15
+        }
+      ]
+    },
+    {
+      "rule_id": "SARAVALI_KALANIDHI_088",
+      "rule_name_hi": "कलानिधि योग (Kalanidhi Yoga)",
+      "rule_name_en": "Jupiter in 2nd/5th Conjoined or Aspected by Mercury and Venus",
+      "source": {
+        "text": "Saravali",
+        "chapter": "35 (Raja Yoga)",
+        "author": "Kalyanavarma",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "in_houses": [
+              2,
+              5
+            ]
+          },
+          {
+            "entity": "Jupiter",
+            "aspected_or_conjoined_by": [
+              "Mercury",
+              "Venus"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "master_of_all_arts",
+          "virtuous",
+          "aristocratic_lifestyle"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "गुरु द्वितीय या पंचम में होकर बुध व शुक्र से युत/दृष्ट हो तो कलानिधि योग बनता है। जातक ६४ कलाओं का ज्ञाता, निरोगी व धनवान होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_in_sagittarius_or_pisces",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "PD_MATSYA_089",
+      "rule_name_hi": "मत्स्य योग (Matsya Yoga)",
+      "rule_name_en": "Benefics in 1st/9th, Malefics in 4th/8th, Planet in 5th",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "6 (Yoga Adhyay)",
+        "author": "Acharya Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "benefics",
+            "in_houses": [
+              1,
+              9
+            ]
+          },
+          {
+            "entity": "malefics",
+            "in_houses": [
+              4,
+              8
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "deep_compassion",
+          "oceanic_wisdom",
+          "universal_benefactor",
+          "religious"
+        ],
+        "polarity": "+",
+        "strength_base": 0.84,
+        "description_hi": "लग्न व नवम में शुभ, ४ व ८ में पाप और ५वें में ग्रह हों तो मत्स्य योग बनता है। जातक समुद्र तुल्य गंभीर, ज्ञानी और परोपकारी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_jupiter_in_lagna",
+          "delta": 0.16
+        }
+      ]
+    },
+    {
+      "rule_id": "PD_KURMA_090",
+      "rule_name_hi": "कूर्म योग (Kurma Yoga)",
+      "rule_name_en": "Benefics in 5th, 6th, 7th in Own/Exalted Signs with Malefics in 1st, 3rd, 11th",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "6 (Yoga Adhyay)",
+        "author": "Acharya Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "benefics",
+            "in_houses": [
+              5,
+              6,
+              7
+            ]
+          },
+          {
+            "entity": "malefics",
+            "in_houses": [
+              1,
+              3,
+              11
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "unshakeable_leader",
+          "world_ruler",
+          "righteous_governance"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "शुभ ग्रह ५, ६, ७ में स्व/उच्च के हों और क्रूर ग्रह १, ३, ११ में हों तो कूर्म योग बनता है। जातक कछुए के समान अडिग और सर्वमान्य राजा होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_sun_in_11th",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "PD_KUSUMA_091",
+      "rule_name_hi": "कुसुम योग (Kusuma Yoga)",
+      "rule_name_en": "Venus in Kendra, Moon in Trikona, Saturn in 10th",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "6 (Yoga Adhyay)",
+        "author": "Acharya Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "in_houses": [
+              1,
+              4,
+              7,
+              10
+            ]
+          },
+          {
+            "entity": "Moon",
+            "in_houses": [
+              5,
+              9
+            ]
+          },
+          {
+            "entity": "Saturn",
+            "in_houses": [
+              10
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "delicate_luxury",
+          "kingly_celebration",
+          "joyous_fame"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "शुक्र केंद्र में, चंद्र त्रिकोण में और शनि दशम भाव में हो तो कुसुम योग बनता है। जातक पुष्प के समान सुवासित यश, आनंद व धन पाता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_saturn_own_or_exalted",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "PD_CHAMARA_092",
+      "rule_name_hi": "चामर योग (Chamara Yoga)",
+      "rule_name_en": "Exalted Lagnesha in Kendra Aspected by Jupiter",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "6 (Yoga Adhyay)",
+        "author": "Acharya Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_1",
+            "dignity": "exalted",
+            "in_houses": [
+              1,
+              4,
+              7,
+              10
+            ]
+          },
+          {
+            "entity": "Jupiter",
+            "aspects": "lord_of_1"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "royal_umbrella_regal_status",
+          "orator",
+          "immense_longevity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "लग्नेश केंद्र में उच्च का होकर गुरु से दृष्ट हो तो चामर योग बनता है। जातक पर राजछत्र चंवर डुलते हैं और वह दीर्घायु व विजयी होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_in_lagna",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "PD_DHRITI_093",
+      "rule_name_hi": "धृति योग (Dhriti Yoga)",
+      "rule_name_en": "All Benefics in Kendras and Trikonas with Strong Lagna",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "6 (Yoga Adhyay)",
+        "author": "Acharya Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "all_benefics",
+            "in_houses": [
+              1,
+              4,
+              5,
+              7,
+              9,
+              10
+            ]
+          },
+          {
+            "entity": "lagna",
+            "strength": "strong"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "patient_perseverance",
+          "unflinching_wealth",
+          "contentment"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "समस्त शुभ ग्रह केंद्र व त्रिकोण में हों तो धृति योग बनता है। जातक परम धैर्यवान, संतुष्ट, निरोगी और आजीवन धन-धान्य से संपन्न रहता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_dusthanas_empty",
+          "delta": 0.16
+        }
+      ]
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_KETU_094",
+      "rule_name_hi": "कारकांश केतु मोक्ष योग (Karakamsha Ketu Moksha Yoga)",
+      "rule_name_en": "Ketu in 12th from Karakamsha Lagna in Navamsha",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "1 (Pada 2)",
+        "author": "Maharishi Jaimini",
+        "era": "Classical"
+      },
+      "school": "Jaimini",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "in_12th_from": "Karakamsha"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual_liberation_moksha",
+          "divine_knowledge",
+          "detachment"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "नवांश में आत्मकारक की राशि (कारकांश) से द्वादश भाव में केतु होने से महर्षि जैमिनी अनुसार जातक को निश्चित मोक्ष व आत्म-साक्षात्कार होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_aspected_by_benefics",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_GURU_095",
+      "rule_name_hi": "कारकांश गुरु विद्वता योग (Karakamsha Guru Vidwat Yoga)",
+      "rule_name_en": "Jupiter in Karakamsha Lagna or 5th from it in D9",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "1 (Pada 2)",
+        "author": "Maharishi Jaimini",
+        "era": "Classical"
+      },
+      "school": "Jaimini",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "in_houses_from_karakamsha": [
+              1,
+              5
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "all_knowing_scholar",
+          "vedic_philosophy",
+          "spiritual_guide"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "कारकांश लग्न या उससे पंचम में गुरु हो तो जातक सर्वशास्त्रवेत्ता, वैदिक दर्शन का प्रकांड पंडित और महान शिक्षक होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_in_own_navamsha",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "JAIMINI_ARGALA_DHAN_096",
+      "rule_name_hi": "जैमिनी शुभ अर्गला योग (Jaimini Shubha Argala Yoga)",
+      "rule_name_en": "Unobstructed Benefic Argala on 2nd, 4th, 11th from Lagna/AL",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "1 (Pada 1)",
+        "author": "Maharishi Jaimini",
+        "era": "Classical"
+      },
+      "school": "Jaimini",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "benefics",
+            "forming_argala_on": [
+              "lagna",
+              "arudha_lagna"
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "unhindered_prosperity",
+          "societal_support",
+          "blessings"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "लग्न या आरूढ़ लग्न पर २, ४, ११ भावों से शुभ ग्रहों की निर्बाध अर्गला जातक के कार्यों को सहज गति व निर्विघ्न सफलता देती है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_no_virodhargala",
+          "delta": 0.18
+        }
+      ]
+    },
+    {
+      "rule_id": "JAIMINI_PADA_RAJAYOGA_097",
+      "rule_name_hi": "जैमिनी आरूढ़ राजयोग (Jaimini Arudha Pada Raja Yoga)",
+      "rule_name_en": "Conjunction or Mutual Kendra of Arudha Lagna (AL) and Darapada (A7)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "1 (Pada 3)",
+        "author": "Maharishi Jaimini",
+        "era": "Classical"
+      },
+      "school": "Jaimini",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "arudha_lagna_AL",
+            "in_kendra_or_conjunction_with": "darapada_A7"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "immense_popularity",
+          "political_alliance",
+          "public_wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "आरूढ़ लग्न (AL) और दारापद (A7) का केंद्र सम्बंध जातक को जनता में असीम लोकप्रियता, शक्तिशाली मित्र व पद दिलाता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_aspected_by_jupiter",
+          "delta": 0.16
+        }
+      ]
+    },
+    {
+      "rule_id": "UK_UTTARA_KALAMRITA_RAJA_098",
+      "rule_name_hi": "उत्तर कालामृत विशेष राजयोग (Uttara Kalamrita Special Raja Yoga)",
+      "rule_name_en": "Conjunction of Lords of 9th and 10th in 9th or 10th with Strong Benefic",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "4 (Bhava Phala)",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_9",
+            "conjoined_with": "lord_of_10",
+            "in_houses": [
+              9,
+              10
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "unrivalled_authority",
+          "wealth_of_nations",
+          "fame"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "महाकवि कालिदास अनुसार नवमेश व दशमेश ९ या १० भाव में ही युत हों तो जातक राष्ट्र प्रमुख, अपार संपदा व सर्वोच्च सत्ता का अधिपति बनता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_uncombust",
+          "delta": 0.2
+        }
+      ]
+    },
+    {
+      "rule_id": "UK_VIPARITA_12_8_099",
+      "rule_name_hi": "कालिदास कृत द्वादशाष्टम विपरीत योग (Kalidasa 12-8 Viparita Yoga)",
+      "rule_name_en": "12th Lord in 8th and 8th Lord in 12th with Weak Dusthana Malefics",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "4 (Viparita Phala)",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical"
+      },
+      "school": "Classical",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "lord_of_12",
+            "in_houses": [
+              8
+            ]
+          },
+          {
+            "entity": "lord_of_8",
+            "in_houses": [
+              12
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sudden_rise_after_others_fall",
+          "foreign_wealth",
+          "secret_power"
+        ],
+        "polarity": "+",
+        "strength_base": 0.84,
+        "description_hi": "द्वादशेश ८वें में और अष्टमेश १२वें में हो तो जातक दूसरों की पराजय से अप्रत्याशित रूप से विशाल सत्ता व विदेश से धन लाभ पाता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_lagnesha_strong",
+          "delta": 0.16
+        }
+      ]
+    },
+    {
+      "rule_id": "BPHS_SANYASA_4_PLANETS_100",
+      "rule_name_hi": "चतुर्ग्रह प्रव्रज्या / संन्यास योग (Chaturgraha Pravrajya / Sanyasa Yoga)",
+      "rule_name_en": "4 or More Strong Planets Conjoined in a Single Kendra/Trikona House",
+      "source": {
+        "text": "Brihat Parashara Hora Shastra",
+        "chapter": "44 (Pravrajya Yoga)",
+        "author": "Maharishi Parashara",
+        "era": "Classical"
+      },
+      "school": "Parashari",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "single_house",
+            "occupied_by_count": 4,
+            "in_houses": [
+              1,
+              4,
+              5,
+              7,
+              9,
+              10
+            ]
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual_illumination",
+          "great_saint_ascetic",
+          "renunciation",
+          "wisdom"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "एक ही भाव में ४ या अधिक बलिष्ठ ग्रह स्थित हों तो प्रव्रज्या योग बनता है। जातक महान संन्यासी, दार्शनिक या समाज सुधारक गुरु होता है।"
+      },
+      "modifiers": [
+        {
+          "condition": "if_strongest_planet_is_jupiter",
+          "delta": 0.22
+        }
+      ]
     }
   ],
   "rule_categories": {
