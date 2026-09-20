@@ -2175,13 +2175,16 @@ else:
         "🔍 वैदिक ऋषि सत्यापन (Validation)"
     ]
 
-selected_module = st.sidebar.radio(
-    "module_selection",
-    MODULE_OPTIONS,
-    index=0,
-    label_visibility="collapsed"
-)
-selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else 0
+if "active_module_idx" not in st.session_state:
+    st.session_state.active_module_idx = 0
+if st.session_state.active_module_idx >= len(MODULE_OPTIONS):
+    st.session_state.active_module_idx = 0
+
+with st.sidebar.expander("🧭 21 मॉड्यूल त्वरित सूची (Module Quick Links)", expanded=False):
+    for m_i, m_name in enumerate(MODULE_OPTIONS):
+        if st.button(m_name, key=f"sb_mod_link_{m_i}", use_container_width=True):
+            st.session_state.active_module_idx = m_i
+            st.rerun()
 
 
 # Construct BirthData object
@@ -2285,6 +2288,52 @@ st.markdown(f"""
     </div>
 </header>
 """, unsafe_allow_html=True)
+
+# -------------------------------------------------------------
+# Top Bar: 21 Vedic Astrology Modules Navigation Bar
+# -------------------------------------------------------------
+col_cat1, col_cat2, col_cat3, col_cat4, col_cat5, col_cat6 = st.columns(6)
+if col_cat1.button("📜 लग्न व वर्ग (D1-D60)", use_container_width=True, help="D1-D60 षोडशवर्ग व चक्र"):
+    st.session_state.active_module_idx = 0
+    st.rerun()
+if col_cat2.button("⏱️ दशा व गोचर", use_container_width=True, help="दशा प्रणालियाँ, गोचर व वर्षफल"):
+    st.session_state.active_module_idx = 9
+    st.rerun()
+if col_cat3.button("⚖️ षड्बल व KP", use_container_width=True, help="षड्बल, जैमिनी व KP पद्धति"):
+    st.session_state.active_module_idx = 7
+    st.rerun()
+if col_cat4.button("🔮 प्रश्न व मुहूर्त", use_container_width=True, help="प्रश्न, मुहूर्त, वास्तु व दोष"):
+    st.session_state.active_module_idx = 5
+    st.rerun()
+if col_cat5.button("💍 मिलान व AI", use_container_width=True, help="कुण्डली मिलान, AI व सम्पूर्ण रिपोर्ट"):
+    st.session_state.active_module_idx = 16
+    st.rerun()
+if col_cat6.button("📚 100 शास्त्रीय नियम", use_container_width=True, help="100 नियम व ऋषि सत्यापन"):
+    st.session_state.active_module_idx = 19
+    st.rerun()
+
+col_mod_sel, col_btn_prev, col_btn_next = st.columns([3.8, 1.1, 1.1])
+with col_mod_sel:
+    selected_module = st.selectbox(
+        "🧭 सक्रिय वैदिक ज्योतिष मॉड्यूल चयन (Top Navigation - Select 21 Modules)",
+        MODULE_OPTIONS,
+        index=st.session_state.active_module_idx,
+        key="top_bar_module_selector"
+    )
+    selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else 0
+    st.session_state.active_module_idx = selected_idx
+
+with col_btn_prev:
+    st.markdown("<div style='height:28px;'></div>", unsafe_allow_html=True)
+    if st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn"):
+        st.session_state.active_module_idx = (selected_idx - 1) % len(MODULE_OPTIONS)
+        st.rerun()
+
+with col_btn_next:
+    st.markdown("<div style='height:28px;'></div>", unsafe_allow_html=True)
+    if st.button("अगला (Next) ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="top_next_mod_btn"):
+        st.session_state.active_module_idx = (selected_idx + 1) % len(MODULE_OPTIONS)
+        st.rerun()
 
 p = chart.panchang
 sr_time = "05:18:32 AM"
