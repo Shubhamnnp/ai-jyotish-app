@@ -1385,7 +1385,7 @@ def render_login_page():
 पंजीकृत ईमेल पर 6-अंकीय OTP सत्यापन कोड प्राप्त करें और नया पासवर्ड एन्क्रिप्ट करें।
 </div>""", unsafe_allow_html=True)
 
-            f_email = st.text_input("पंजीकृत ईमेल दर्ज करें (Registered Email)", value="shubham8jyotish@gmail.com", key="auth_forgot_email")
+            f_email = st.text_input("पंजीकृत ईमेल दर्ज करें (Registered Email)", value="admin@jyotishos.com", key="auth_forgot_email")
 
             if st.button("📩 OTP सत्यापन कोड प्राप्त करें (Request OTP)", use_container_width=True):
                 ok, msg, otp = default_auth_service.request_reset_code(f_email)
@@ -1420,28 +1420,24 @@ if "saved_charts" not in st.session_state:
 if "gla_authenticated" not in st.session_state:
     st.session_state.gla_authenticated = False
 
+_init_now = datetime.now()
+
 # Pre-populate with live charts
 if "gla_charts" not in st.session_state or not st.session_state.gla_charts:
-    st.session_state.gla_charts = [
-        {"id": 916, "name": "Shubham Tiwari", "address": "Nanpara, Uttar Pradesh, IN", "date": "May 16, 1994", "time": "05:00:01 PM", "lat": 27.8646, "lon": 81.5004},
-        {"id": 917, "name": "Seema Tiwari", "address": "Bahraigh, Uttar Pradesh, IN", "date": "August 10, 1998", "time": "03:30:00 AM", "lat": 27.5743, "lon": 81.5947},
-        {"id": 918, "name": "Renu Tiwari", "address": "Nanpara, Uttar Pradesh, IN", "date": "January 15, 1972", "time": "06:15:00 AM", "lat": 27.8646, "lon": 81.5004},
-        {"id": 919, "name": "Aradhya Tiwari", "address": "Bahraich, Uttar Pradesh, IN", "date": "March 22, 2018", "time": "11:45:00 AM", "lat": 27.5743, "lon": 81.5947},
-        {"id": 920, "name": "aryadhya tiwari", "address": "Bahraich, Uttar Pradesh, IN", "date": "March 22, 2018", "time": "11:45:00 AM", "lat": 27.5743, "lon": 81.5947},
-    ]
+    st.session_state.gla_charts = []
 
 if "birth_name" not in st.session_state:
-    st.session_state.birth_name = "Shubham Tiwari"
+    st.session_state.birth_name = "डेमो जातक (Demo Profile)"
 if "birth_date" not in st.session_state:
-    st.session_state.birth_date = date(1994, 5, 16)
+    st.session_state.birth_date = _init_now.date()
 if "birth_time" not in st.session_state:
-    st.session_state.birth_time = time(17, 0, 1)
+    st.session_state.birth_time = _init_now.time().replace(microsecond=0)
 if "birth_lat" not in st.session_state:
-    st.session_state.birth_lat = 27.8646
+    st.session_state.birth_lat = 28.6139
 if "birth_lon" not in st.session_state:
-    st.session_state.birth_lon = 81.5004
+    st.session_state.birth_lon = 77.2090
 if "birth_city" not in st.session_state:
-    st.session_state.birth_city = "Nanpara, Uttar Pradesh"
+    st.session_state.birth_city = "New Delhi, Delhi, India"
 
 
 # Gateway Check: If not logged in, render login screen
@@ -1454,7 +1450,7 @@ if not st.session_state.get("is_logged_in", False):
 # SIDEBAR: 1. Birth Profile -> 2. Calculate Button -> 3. 18 Modules
 # -------------------------------------------------------------
 col_u1, col_u2 = st.sidebar.columns([3, 1])
-col_u1.markdown("<span style='color:#059669; font-size:15px; font-weight:bold;'>●</span> <b style='color:#000000; font-size:13px;'>shubham8jyotish</b>", unsafe_allow_html=True)
+col_u1.markdown("<span style='color:#059669; font-size:15px; font-weight:bold;'>●</span> <b style='color:#000000; font-size:13px;'>ज्योतिषी (Admin)</b>", unsafe_allow_html=True)
 if col_u2.button("🚪", help="लॉगआउट करें (Go to Login Page)"):
     st.session_state.is_logged_in = False
     st.rerun()
@@ -1495,7 +1491,7 @@ with st.sidebar.expander("📁 सहेजी गई कुण्डलिय�
                 st.rerun()
 
     st.markdown("---")
-    st.caption("☁️ **Server Cloud Sync:** `shubham8jyotish@gmail.com`")
+    st.caption("☁️ **Server Cloud Sync:** `admin@jyotishos.com`")
     if st.button("🔄 Sync Cloud Charts", key="sync_gla_btn"):
         with st.spinner("Connecting to Cloud API..."):
             client = GrahalakshanamClient()
