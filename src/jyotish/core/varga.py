@@ -392,6 +392,52 @@ class VargaCalculator:
         return VargaChart(varga_code="D60", varga_name="Shashtiamsha", division=60,
                           lagna_sign_id=lagna_d60, lagna_sign_name=SIGN_NAMES[lagna_d60 - 1], planets=planets)
 
+    @staticmethod
+    def calculate_d40(chart: KundaliChart) -> VargaChart:
+        """D40 (Khavedamsha / Chatvarimshamsha - Auspicious / Inauspicious Results). 40 parts of 0.75 deg."""
+        def get_d40_sign(sign_id: int, deg: float) -> int:
+            part = int(deg // 0.75)  # 0 to 39
+            is_odd = (sign_id % 2 != 0)
+            start_sign = 1 if is_odd else 7  # Aries for odd, Libra for even
+            return ((start_sign - 1 + part) % 12) + 1
+
+        lagna_d40 = get_d40_sign(chart.lagna_sign_id, chart.lagna_degree)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        for name, p in chart.planets.items():
+            s_id = get_d40_sign(p.sign_id, p.sign_degree)
+            house = ((s_id - lagna_d40) % 12) + 1
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.sign_degree % 0.75) / 0.75) * 30.0,
+                house_number=house
+            )
+        return VargaChart(varga_code="D40", varga_name="Khavedamsha", division=40,
+                          lagna_sign_id=lagna_d40, lagna_sign_name=SIGN_NAMES[lagna_d40 - 1], planets=planets)
+
+    @staticmethod
+    def calculate_d45(chart: KundaliChart) -> VargaChart:
+        """D45 (Akshavedamsha - Character, Morals, General Fortunes). 45 parts of 2/3 deg = 0.666667 deg."""
+        def get_d45_sign(sign_id: int, deg: float) -> int:
+            span = 30.0 / 45.0  # 0.6666667 deg
+            part = int(deg // span)  # 0 to 44
+            m_type = (sign_id - 1) % 3  # 0: Movable, 1: Fixed, 2: Dual
+            start_sign = 1 if m_type == 0 else (5 if m_type == 1 else 9)
+            return ((start_sign - 1 + part) % 12) + 1
+
+        lagna_d45 = get_d45_sign(chart.lagna_sign_id, chart.lagna_degree)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        for name, p in chart.planets.items():
+            s_id = get_d45_sign(p.sign_id, p.sign_degree)
+            house = ((s_id - lagna_d45) % 12) + 1
+            span = 30.0 / 45.0
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.sign_degree % span) / span) * 30.0,
+                house_number=house
+            )
+        return VargaChart(varga_code="D45", varga_name="Akshavedamsha", division=45,
+                          lagna_sign_id=lagna_d45, lagna_sign_name=SIGN_NAMES[lagna_d45 - 1], planets=planets)
+
     @classmethod
     def calculate_vimsopaka_bala(cls, chart: KundaliChart) -> Dict[str, float]:
         """
@@ -408,14 +454,13 @@ class VargaCalculator:
                 if v_code in all_v:
                     v_planet = all_v[v_code].planets.get(p_name)
                     if v_planet:
-                        # Full dignity in varga: 1.0, friendly: 0.75, neutral: 0.5, enemy: 0.25
                         total_score += wt * 0.75
             scores[p_name] = round(total_score, 2)
         return scores
 
     @classmethod
     def calculate_all_vargas(cls, chart: KundaliChart) -> Dict[str, VargaChart]:
-        """Compute all Parashari divisional charts (Shodashavarga)."""
+        """Compute all 16 Parashari divisional charts (Shodashavarga)."""
         return {
             "D1": cls.calculate_d1(chart),
             "D2": cls.calculate_d2(chart),
@@ -430,6 +475,8 @@ class VargaCalculator:
             "D24": cls.calculate_d24(chart),
             "D27": cls.calculate_d27(chart),
             "D30": cls.calculate_d30(chart),
+            "D40": cls.calculate_d40(chart),
+            "D45": cls.calculate_d45(chart),
             "D60": cls.calculate_d60(chart),
         }
 
