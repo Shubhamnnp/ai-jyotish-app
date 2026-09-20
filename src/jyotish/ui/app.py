@@ -427,9 +427,15 @@ unified_css = f"""
     [data-testid="stAppViewContainer"] {{
         overflow-x: hidden !important;
         overflow-y: auto !important;
+        contain: none !important;
+        transform: none !important;
     }}
-    [data-testid="stMain"], section.main {{
+    [data-testid="stMain"], section.main, .main {{
         overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        contain: none !important;
+        transform: none !important;
     }}
     .block-container {{
         padding-top: 0px !important;
@@ -437,12 +443,23 @@ unified_css = f"""
         padding-left: 2rem !important;
         padding-right: 2rem !important;
         overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        contain: none !important;
+        transform: none !important;
     }}
-    div[data-testid="stVerticalBlock"]:has(> div > div > .frozen-header-marker),
+    div[data-testid="stVerticalBlock"],
+    div[data-testid="stElementContainer"] {{
+        overflow: visible !important;
+        contain: none !important;
+        transform: none !important;
+    }}
     div[data-testid="stVerticalBlockBorderWrapper"]:has(.frozen-header-marker),
-    div[data-testid="element-container"]:has(.frozen-header-marker),
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(> div > div > .frozen-header-marker),
+    div[data-testid="stVerticalBlock"]:has(> div > div > .frozen-header-marker),
     div:has(> .frozen-header-marker) {{
         position: sticky !important;
+        position: -webkit-sticky !important;
         top: 0px !important;
         z-index: 999999 !important;
         background: #F8FAFC !important;
@@ -455,6 +472,8 @@ unified_css = f"""
         padding-right: 10px !important;
         margin-bottom: 10px !important;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+        contain: none !important;
+        transform: none !important;
     }}
 
     /* Top Module Navigation Bar (Symmetric, Uniform Height & Aligned) */
@@ -1594,41 +1613,56 @@ components.html("""
             const parentDoc = (window.parent && window.parent.document) ? window.parent.document : document;
             if (!parentDoc) return;
             
+            const stHeader = parentDoc.querySelector('header[data-testid="stHeader"]');
+            if (stHeader) {
+                stHeader.style.setProperty('display', 'none', 'important');
+                stHeader.style.setProperty('height', '0px', 'important');
+            }
+
             const appView = parentDoc.querySelector('[data-testid="stAppViewContainer"]');
             if (appView) {
                 appView.style.setProperty('overflow-y', 'auto', 'important');
+                appView.style.setProperty('overflow-x', 'hidden', 'important');
+                appView.style.setProperty('contain', 'none', 'important');
+                appView.style.setProperty('transform', 'none', 'important');
             }
-            const mainSec = parentDoc.querySelector('[data-testid="stMain"], section.main');
-            if (mainSec) {
-                mainSec.style.setProperty('overflow', 'visible', 'important');
-            }
-            const blockContainer = parentDoc.querySelector('.block-container');
-            if (blockContainer) {
-                blockContainer.style.setProperty('overflow', 'visible', 'important');
-                blockContainer.style.setProperty('padding-top', '0px', 'important');
-            }
-            const rootVertBlocks = parentDoc.querySelectorAll('[data-testid="stVerticalBlock"]');
-            rootVertBlocks.forEach(function(vb) {
-                vb.style.setProperty('overflow', 'visible', 'important');
-            });
 
             const marker = parentDoc.querySelector('.frozen-header-marker');
             if (marker) {
                 const wrapper = marker.closest('[data-testid="stVerticalBlockBorderWrapper"]') || marker.parentElement;
                 if (wrapper) {
-                    wrapper.style.setProperty('position', 'sticky', 'important');
-                    wrapper.style.setProperty('top', '0px', 'important');
-                    wrapper.style.setProperty('z-index', '999999', 'important');
-                    
                     const isNight = parentDoc.body.classList.contains('night-mode') || 
                                     parentDoc.querySelector('#software-theme-select')?.value === 'night' ||
                                     (window.parent && window.parent.currentSoftwareTheme === 'night');
+
+                    wrapper.style.setProperty('position', 'sticky', 'important');
+                    wrapper.style.setProperty('position', '-webkit-sticky', 'important');
+                    wrapper.style.setProperty('top', '0px', 'important');
+                    wrapper.style.setProperty('z-index', '999999', 'important');
                     wrapper.style.setProperty('background', isNight ? '#0A0E1A' : '#F8FAFC', 'important');
                     wrapper.style.setProperty('border', 'none', 'important');
                     wrapper.style.setProperty('border-bottom', isNight ? '2px solid #1E293B' : '2px solid #CBD5E1', 'important');
                     wrapper.style.setProperty('box-shadow', '0 6px 20px rgba(0, 0, 0, 0.12)', 'important');
                     wrapper.style.setProperty('padding', '6px 14px 8px 14px', 'important');
                     wrapper.style.setProperty('margin-bottom', '10px', 'important');
+                    wrapper.style.setProperty('contain', 'none', 'important');
+                    wrapper.style.setProperty('transform', 'none', 'important');
+
+                    // Unlock all ancestor containers so sticky sticks to the viewport
+                    let current = wrapper.parentElement;
+                    while (current && current !== parentDoc.body && current !== parentDoc.documentElement) {
+                        if (current.getAttribute('data-testid') === 'stAppViewContainer') {
+                            current.style.setProperty('overflow-y', 'auto', 'important');
+                            current.style.setProperty('overflow-x', 'hidden', 'important');
+                        } else {
+                            current.style.setProperty('overflow', 'visible', 'important');
+                            current.style.setProperty('overflow-y', 'visible', 'important');
+                            current.style.setProperty('overflow-x', 'visible', 'important');
+                        }
+                        current.style.setProperty('contain', 'none', 'important');
+                        current.style.setProperty('transform', 'none', 'important');
+                        current = current.parentElement;
+                    }
                 }
             }
         } catch(e) {
