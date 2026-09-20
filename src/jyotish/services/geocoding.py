@@ -39,6 +39,13 @@ OFFLINE_GAZETTEER: List[Dict[str, Any]] = [
     {"city": "Pune", "state": "Maharashtra", "country": "India", "lat": 18.5204, "lon": 73.8567, "tz": 5.5},
     {"city": "Jaipur", "state": "Rajasthan", "country": "India", "lat": 26.9124, "lon": 75.7873, "tz": 5.5},
     {"city": "Lucknow", "state": "Uttar Pradesh", "country": "India", "lat": 26.8467, "lon": 80.9462, "tz": 5.5},
+    {"city": "Bahraich", "state": "Uttar Pradesh", "country": "India", "lat": 27.5752, "lon": 81.5947, "tz": 5.5},
+    {"city": "Nanpara", "state": "Uttar Pradesh", "country": "India", "lat": 27.8652, "lon": 81.4984, "tz": 5.5},
+    {"city": "Gonda", "state": "Uttar Pradesh", "country": "India", "lat": 27.1300, "lon": 81.9600, "tz": 5.5},
+    {"city": "Shravasti", "state": "Uttar Pradesh", "country": "India", "lat": 27.5000, "lon": 82.0000, "tz": 5.5},
+    {"city": "Balrampur", "state": "Uttar Pradesh", "country": "India", "lat": 27.4300, "lon": 82.1800, "tz": 5.5},
+    {"city": "Barabanki", "state": "Uttar Pradesh", "country": "India", "lat": 26.9300, "lon": 81.2000, "tz": 5.5},
+    {"city": "Faizabad", "state": "Uttar Pradesh", "country": "India", "lat": 26.7800, "lon": 82.1400, "tz": 5.5},
     {"city": "Chandigarh", "state": "Chandigarh", "country": "India", "lat": 30.7333, "lon": 76.7794, "tz": 5.5},
     {"city": "Patna", "state": "Bihar", "country": "India", "lat": 25.5941, "lon": 85.1376, "tz": 5.5},
     {"city": "Bhopal", "state": "Madhya Pradesh", "country": "India", "lat": 23.2599, "lon": 77.4126, "tz": 5.5},
@@ -225,6 +232,25 @@ class GeocodingService:
             return results
         except Exception:
             return []
+
+    def resolve(self, query: str) -> Optional[Dict[str, Any]]:
+        """Resolves a city/place string into latitude, longitude, and timezone offset."""
+        if not query or not query.strip():
+            return None
+        res_list = self.search(query.strip(), limit=1)
+        if res_list:
+            top = res_list[0]
+            return {
+                "name": top.formatted_name,
+                "city": top.city,
+                "state": top.state,
+                "country": top.country,
+                "latitude": float(top.latitude),
+                "longitude": float(top.longitude),
+                "timezone_offset": float(top.timezone_offset),
+                "tz_offset": float(top.timezone_offset)
+            }
+        return None
 
 
 # Singleton geocoding service

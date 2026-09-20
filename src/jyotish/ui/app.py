@@ -58,6 +58,8 @@ from src.jyotish.services.prashna import default_prashna_service, PRASHNA_CATEGO
 from src.jyotish.services.varshaphal import default_varshaphal_service
 from src.jyotish.services.btr import default_btr_service, LifeEvent
 from src.jyotish.services.milan import default_milan_service
+import src.jyotish.services.geocoding as geocoding_service_mod
+importlib.reload(geocoding_service_mod)
 from src.jyotish.services.geocoding import default_geocoding_service
 from src.jyotish.services.vedic_rishi import default_vedic_rishi_client
 from src.jyotish.services.report_generator import default_report_generator
@@ -1894,13 +1896,16 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
 
             col_loc1, col_loc2, col_loc3 = st.columns([2, 1, 1])
             custom_city = col_loc1.text_input("स्थान / नगर (Place/City)", value=default_city_name)
-            if custom_city != default_city_name:
-                geo_res = default_geocoding_service.resolve(custom_city)
+            if custom_city and custom_city.strip() != default_city_name:
+                try:
+                    geo_res = default_geocoding_service.resolve(custom_city.strip())
+                except Exception:
+                    geo_res = None
                 if geo_res:
-                    q_lat = geo_res["latitude"]
-                    q_lon = geo_res["longitude"]
-                    q_tz = geo_res["timezone_offset"]
-                    q_city_name = geo_res["name"]
+                    q_lat = geo_res.get("latitude", q_lat)
+                    q_lon = geo_res.get("longitude", q_lon)
+                    q_tz = geo_res.get("timezone_offset", q_tz)
+                    q_city_name = geo_res.get("city", custom_city)
             
             q_lat = col_loc2.number_input("अक्षांश (Lat)", value=float(q_lat), format="%.4f")
             q_lon = col_loc3.number_input("देशांतर (Lon)", value=float(q_lon), format="%.4f")
@@ -1957,7 +1962,9 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
     calc_btn = st.button("🔮 प्रश्न कुण्डली एवं शास्त्रीय निर्णय प्राप्त करें (Calculate Prashna Chart)", type="primary")
 
     # Store calculation in session state so it remains interactive
-    if calc_btn or "prashna_res" not in st.session_state or st.session_state.prashna_res.get("category") != prashna_cat:
+    if calc_btn:
+        if not q_mode.startswith("✏️"):
+            q_dt = datetime.now()
         try:
             st.session_state.prashna_res = default_prashna_service.generate_prashna_chart(
                 query_text=prashna_text,
@@ -1968,6 +1975,7 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
                 query_dt=q_dt,
                 questioner_name=q_name
             )
+            st.toast("✅ प्रश्न कुण्डली एवं शास्त्रीय निर्णय सफलतापूर्वक परिकलित!")
         except Exception:
             import src.jyotish.services.prashna as p_mod_live
             importlib.reload(p_mod_live)
@@ -1980,6 +1988,17 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
                 query_dt=q_dt,
                 questioner_name=q_name
             )
+            st.toast("✅ प्रश्न कुण्डली एवं शास्त्रीय निर्णय सफलतापूर्वक परिकलित!")
+    elif "prashna_res" not in st.session_state or st.session_state.prashna_res.get("category") != prashna_cat:
+        st.session_state.prashna_res = default_prashna_service.generate_prashna_chart(
+            query_text=prashna_text,
+            category_name=prashna_cat,
+            latitude=q_lat,
+            longitude=q_lon,
+            timezone_offset=q_tz,
+            query_dt=q_dt,
+            questioner_name=q_name
+        )
 
     p_res = st.session_state.prashna_res
     p_chart: KundaliChart = p_res.get("chart", chart)
