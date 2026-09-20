@@ -778,42 +778,268 @@ components.html("""
         }
     }
     
-    // Multi-Language Translation Engine
+    // Comprehensive Multi-Language Translation Engine & Live DOM Replacer
+    const LANG_DICTIONARY = {
+        "en": {
+            "जन्म कुण्डली": "Birth Chart & Vargas",
+            "घटना विश्लेषण": "Event Analysis (Ghatna)",
+            "दोष एवं फ्री-विल": "Afflictions & Remedies",
+            "दशवर्ग तालिका": "Dasvarga Table",
+            "वास्तु-ज्योतिष": "Vastu-Jyotish",
+            "प्रश्न कुण्डली": "Horary / Prashna",
+            "सर्वर सिंक": "Server Sync",
+            "षड्बल एवं भावबल": "Shadbala & Bhavabala",
+            "जैमिनी एवं उपग्रह": "Jaimini & Upagraha",
+            "दशा प्रणालियाँ": "Dasha Systems",
+            "गोचर एवं अष्टकवर्ग": "Transit & Ashtakvarga",
+            "के.पी. प्रणाली": "KP Astrology",
+            "शुभ मुहूर्त एवं चौघड़िया": "Muhurta & Choghadiya",
+            "सुदर्शन चक्र": "Sudarshan Chakra",
+            "वर्षफल": "Varshaphal (Annual)",
+            "समय शोधन": "Birth Time Rectification",
+            "कुण्डली मिलान": "Kundali Matching",
+            "ज्योतिष AI सहायक": "Jyotish AI Assistant",
+            "सम्पूर्ण रिपोर्ट": "Comprehensive Report",
+            "100 शास्त्रीय नियम": "100 Classical Rules",
+            "वैदिक ऋषि सत्यापन": "Vedic Sage Validation",
+            "वर्तमान समय": "Current Time",
+            "वर्तमान स्थान": "Current Location",
+            "प्रणाली: सक्रिय": "System: Online",
+            "भूमिका: ज्योतिषी": "Role: Astrologer",
+            "कुण्डली गणना करें": "Calculate Kundali",
+            "तिथि": "Tithi", "वार": "Vara", "नक्षत्र": "Nakshatra", "योग": "Yoga", "करण": "Karana",
+            "सूर्योदय": "Sunrise", "सूर्यास्त": "Sunset", "जन्म घटी": "Janma Ghati", "होरा स्वामी": "Hora Lord",
+            "भाषा": "Language", "नाम": "Name", "जन्म दिनांक": "Birth Date", "जन्म समय": "Birth Time",
+            "स्थान": "Location", "शहर": "City", "अक्षांश": "Latitude", "रेखांश": "Longitude",
+            "अयनांश": "Ayanamsa", "भाव प्रणाली": "House System", "कुण्डली शैली": "Chart Style",
+            "सहेजें": "Save", "लॉगिन": "Login", "पासवर्ड": "Password", "ईमेल": "Email"
+        },
+        "sa": {
+            "जन्म कुण्डली": "जन्मकुण्डली एवं षोडशवर्गाः",
+            "घटना विश्लेषण": "घटनाविमर्शः",
+            "दोष एवं फ्री-विल": "दोषशान्तिः उपायाश्च",
+            "दशवर्ग तालिका": "दशवर्गतालिका",
+            "वास्तु-ज्योतिष": "वास्तुशास्त्रम्",
+            "प्रश्न कुण्डली": "प्रश्नकुण्डली",
+            "सर्वर सिंक": "शास्त्रीयसर्वरः",
+            "षड्बल एवं भावबल": "षड्बलं भावबलञ्च",
+            "जैमिनी एवं उपग्रह": "जैमिन्युपग्रहाः",
+            "दशा प्रणालियाँ": "दशाप्रणाली",
+            "गोचर एवं अष्टकवर्ग": "गोचराष्टकवर्गौ",
+            "के.पी. प्रणाली": "कृष्णमूर्तिपद्धतिः",
+            "शुभ मुहूर्त एवं चौघड़िया": "शुभमुहूर्तः",
+            "सुदर्शन चक्र": "सुदर्शनचक्रम्",
+            "वर्षफल": "वर्षफलम्",
+            "समय शोधन": "कालशोधनम्",
+            "कुण्डली मिलान": "मेलापकम्",
+            "ज्योतिष AI सहायक": "ज्योतिष एआई सहायकः",
+            "सम्पूर्ण रिपोर्ट": "सम्पूर्णविवरणम्",
+            "100 शास्त्रीय नियम": "१०० शास्त्रीयनियमाः",
+            "वैदिक ऋषि सत्यापन": "वैदिकऋषिसत्यापनम्",
+            "वर्तमान समय": "वर्तमानकालः",
+            "वर्तमान स्थान": "वर्तमानस्थानम्",
+            "प्रणाली: सक्रिय": "प्रणाली: सक्रिया",
+            "भूमिका: ज्योतिषी": "भूमिका: ज्योतिषी",
+            "कुण्डली गणना करें": "कुण्डलीगणनं कुरु",
+            "तिथि": "तिथिः", "वार": "वारः", "नक्षत्र": "नक्षत्रम्", "योग": "योगः", "करण": "करणम्",
+            "सूर्योदय": "सूर्योदयः", "सूर्यास्त": "सूर्यास्तः", "जन्म घटी": "जन्मघटी", "होरा स्वामी": "होरास्वामी",
+            "भाषा": "भाषा", "नाम": "नाम", "स्थान": "स्थानम्"
+        },
+        "gu": {
+            "जन्म कुण्डली": "જન્મ કુંડળી અને ષોડશવર્ગ",
+            "घटना विश्लेषण": "ઘટના વિશ્લેષણ",
+            "दोष एवं फ्री-विल": "દોષ અને ફ્રી-વિલ ઉપાયો",
+            "दशवर्ग तालिका": "દશવર્ગ કોષ્ટક",
+            "वास्तु-ज्योतिष": "વાસ્તુ જ્યોતિષ",
+            "प्रश्न कुण्डली": "પ્રશ્ન કુંડળી",
+            "सर्वर सिंक": "સર્વર સિંક",
+            "षड्बल एवं भावबल": "ષડ્બળ અને ભાવબળ",
+            "जैमिनी एवं उपग्रह": "જૈમિની અને ઉપગ્રહો",
+            "दशा प्रणालियाँ": "દશા પ્રણાલી",
+            "गोचर एवं अष्टकवर्ग": "ગોચર અને અષ્ટકવર્ગ",
+            "के.पी. प्रणाली": "કે.પી. પદ્ધતિ",
+            "शुभ मुहूर्त एवं चौघड़िया": "શુભ મુહૂર્ત",
+            "सुदर्शन चक्र": "સુદર્શન ચક્ર",
+            "वर्षफल": "વર્ષફળ",
+            "समय शोधन": "સમય સંશોધન",
+            "कुण्डली मिलान": "કુંડળી મેળવણું",
+            "ज्योतिष AI सहायक": "જ્યોતિષ AI સહાયક",
+            "सम्पूर्ण रिपोर्ट": "સંપૂર્ણ અહેવાલ",
+            "100 शास्त्रीय नियम": "૧૦૦ શાસ્ત્રીય નિયમો",
+            "वैदिक ऋषि सत्यापन": "વૈદિક ઋષિ પ્રમાણીકરણ",
+            "वर्तमान समय": "વર્તમાન સમય",
+            "वर्तमान स्थान": "વર્તમાન સ્થળ",
+            "प्रणाली: सक्रिय": "પ્રણાલી: સક્રિય",
+            "भूमिका: ज्योतिषी": "ભૂમિકા: જ્યોતિષી",
+            "कुण्डली गणना करें": "કુંડળી ગણતરી કરો",
+            "तिथि": "તિથિ", "वार": "વાર", "નक्षत्र": "નક્ષત્ર", "योग": "યોગ", "करण": "કરણ",
+            "सूर्योदय": "સૂર્યોદય", "सूर्यास्त": "સૂર્યાસ્ત", "जन्म घटी": "જન્મ ઘટી", "होरा स्वामी": "હોરા સ્વામી",
+            "भाषा": "ભાષા", "नाम": "નામ"
+        },
+        "mr": {
+            "जन्म कुण्डली": "जन्म पत्रिका व षोडशवर्ग",
+            "घटना विश्लेषण": "घटना विश्लेषण",
+            "दोष एवं फ्री-विल": "दोष व फ्री-विल उपाय",
+            "दशवर्ग तालिका": "दशवर्ग तक्ता",
+            "वास्तु-ज्योतिष": "वास्तु ज्योतिष",
+            "प्रश्न कुण्डली": "प्रश्न पत्रिका",
+            "सर्वर सिंक": "सर्व्हर सिंक",
+            "षड्बल एवं भावबल": "षड्बल व भावबल",
+            "जैमिनी एवं उपग्रह": "जैमिनी व उपग्रह",
+            "दशा प्रणालियाँ": "दशा प्रणाली",
+            "गोचर एवं अष्टकवर्ग": "गोचर व अष्टकवर्ग",
+            "के.पी. प्रणाली": "के.पी. पद्धती",
+            "शुभ मुहूर्त एवं चौघड़िया": "शुभ मुहूर्त",
+            "सुदर्शन चक्र": "सुदर्शन चक्र",
+            "वर्षफल": "वर्षफळ",
+            "समय शोधन": "वेळ शोधन",
+            "कुण्डली मिलान": "पत्रिका मिलन",
+            "ज्योतिष AI सहायक": "ज्योतिष AI सहाय्यक",
+            "सम्पूर्ण रिपोर्ट": "संपूर्ण अहवाल",
+            "100 शास्त्रीय नियम": "१०० शास्त्रीय नियम",
+            "वैदिक ऋषि सत्यापन": "वैदिक ऋषी पडताळणी",
+            "वर्तमान समय": "चालू वेळ",
+            "वर्तमान स्थान": "सध्याचे स्थान",
+            "प्रणाली: सक्रिय": "प्रणाली: सक्रिय",
+            "भूमिका: ज्योतिषी": "भूमिका: ज्योतिषी",
+            "कुण्डली गणना करें": "पत्रिका गणना करा",
+            "तिथि": "तिथी", "वार": "वार", "नक्षत्र": "नक्षत्र", "योग": "योग", "करण": "करण",
+            "सूर्योदय": "सूर्योदय", "सूर्यास्त": "सूर्यास्त", "जन्म घटी": "जन्म घटी", "होरा स्वामी": "होरा स्वामी",
+            "भाषा": "भाषा", "नाम": "नाव"
+        },
+        "bn": {
+            "जन्म कुण्डली": "জন্ম কুণ্ডলী ও ষোড়শবর্গ",
+            "घटना विश्लेषण": "ঘটনা বিশ্লেষণ",
+            "दोष एवं फ्री-विल": "দোষ ও প্রতিকার",
+            "दशवर्ग तालिका": "দশবর্গ তালিকা",
+            "वास्तु-ज्योतिष": "বাস্তু জ্যোতিষ",
+            "प्रश्न कुण्डली": "প্রশ্ন কুণ্ডলী",
+            "सर्वर सिंक": "সার্ভার সিঙ্ক",
+            "षड्बल एवं भावबल": "ষড়্বল ও ভাববল",
+            "जैमिनी एवं उपग्रह": "জৈমিনী ও উপগ্রহ",
+            "दशा प्रणालियाँ": "দশা পদ্ধতি",
+            "गोचर एवं अष्टकवर्ग": "গোচর ও অষ্টকবর্গ",
+            "के.पी. प्रणाली": "কে.পি. পদ্ধতি",
+            "शुभ मुहूर्त एवं चौघड़िया": "শুভ মুহূর্ত",
+            "सुदर्शन चक्र": "সুদর্শন চক্র",
+            "वर्षफल": "বর্ষফল",
+            "समय शोधन": "সময় সংশোধন",
+            "कुण्डली मिलान": "কুণ্ডলী মিলন",
+            "ज्योतिष AI सहायक": "জ্যোতিষ AI সহকারী",
+            "सम्पूर्ण रिपोर्ट": "সম্পূর্ণ রিপোর্ট",
+            "100 शास्त्रीय नियम": "১০০ শাস্ত্রীয় নিয়ম",
+            "वैदिक ऋषि सत्यापन": "বৈদিক ঋষি প্রমাণ",
+            "वर्तमान समय": "বর্তমান সময়",
+            "वर्तमान स्थान": "বর্তমান অবস্থান",
+            "प्रणाली: सक्रिय": "সিস্টেম: সক্রিয়",
+            "भूमिका: ज्योतिषी": "ভূমিকা: জ্যোতিষী",
+            "कुण्डली गणना करें": "কুণ্ডলী গণনা করুন",
+            "तिथि": "তিথি", "वार": "বার", "নक्षत्र": "নক্ষত্র", "योग": "যোগ", "করণ": "করণ",
+            "सूर्योदय": "সূর্যোদয়", "सूर्याস্ত": "সূর্যাস্ত", "जन्म घटी": "জন্ম ঘটি", "होरा स्वामी": "হোরা স্বামী",
+            "भाषा": "ভাষা", "नाम": "নাম"
+        }
+    };
+
+    function applyDOMTranslations(targetLang) {
+        try {
+            const parentDoc = window.parent.document;
+            if (!parentDoc) return;
+            
+            if (targetLang === "general" || !targetLang || targetLang === "hi") {
+                // Restore original if general
+                const elements = parentDoc.querySelectorAll('[data-orig-text]');
+                elements.forEach(function(el) {
+                    el.innerText = el.getAttribute('data-orig-text');
+                    el.removeAttribute('data-orig-text');
+                });
+                return;
+            }
+
+            const dict = LANG_DICTIONARY[targetLang];
+            if (!dict) return;
+
+            // Walk text nodes in parentDoc
+            const walker = parentDoc.createTreeWalker(
+                parentDoc.body,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            let node;
+            while ((node = walker.nextNode())) {
+                const parentEl = node.parentElement;
+                if (!parentEl || parentEl.tagName === 'SCRIPT' || parentEl.tagName === 'STYLE' || parentEl.id === 'software-lang-select') {
+                    continue;
+                }
+
+                let text = node.nodeValue;
+                if (!text || !text.trim()) continue;
+
+                for (let k in dict) {
+                    if (text.includes(k)) {
+                        if (!parentEl.getAttribute('data-orig-text')) {
+                            parentEl.setAttribute('data-orig-text', parentEl.innerText);
+                        }
+                        node.nodeValue = text.split(k).join(dict[k]);
+                        text = node.nodeValue;
+                    }
+                }
+            }
+        } catch (err) {
+            console.error('DOM Translation error:', err);
+        }
+    }
+
     function setupLanguageBridge() {
         try {
             const parentDoc = window.parent.document;
             const parentWin = window.parent;
             if (!parentDoc || !parentWin) return;
 
-            // Setup language change function on parent window
-            if (!parentWin.changeSoftwareLanguage) {
-                parentWin.changeSoftwareLanguage = function(langCode) {
-                    localStorage.setItem("jyotish_app_lang", langCode);
-                    sessionStorage.setItem("jyotish_app_lang", langCode);
-                    
-                    if (langCode === "general" || !langCode) {
-                        // Reset Google Translate cookie
-                        parentDoc.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                        parentDoc.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + parentWin.location.hostname;
-                        parentWin.location.reload();
-                        return;
-                    }
-                    
-                    // Set cookie for auto translation
-                    parentDoc.cookie = "googtrans=/auto/" + langCode + "; path=/;";
-                    parentDoc.cookie = "googtrans=/auto/" + langCode + "; path=/; domain=" + parentWin.location.hostname;
-                    
+            const handleLanguageSwitch = function(langCode) {
+                localStorage.setItem("jyotish_app_lang", langCode);
+                sessionStorage.setItem("jyotish_app_lang", langCode);
+                
+                // 1. Instant DOM Translation
+                applyDOMTranslations(langCode);
+
+                // 2. Google Translate Integration
+                if (langCode === "general" || !langCode) {
+                    parentDoc.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    parentDoc.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + parentWin.location.hostname;
                     const combo = parentDoc.querySelector('.goog-te-combo');
                     if (combo) {
-                        combo.value = langCode;
+                        combo.value = "hi";
                         combo.dispatchEvent(new Event('change'));
-                    } else {
-                        parentWin.location.reload();
                     }
-                };
-            }
+                    return;
+                }
+                
+                parentDoc.cookie = "googtrans=/auto/" + langCode + "; path=/;";
+                parentDoc.cookie = "googtrans=/auto/" + langCode + "; path=/; domain=" + parentWin.location.hostname;
+                
+                const combo = parentDoc.querySelector('.goog-te-combo');
+                if (combo) {
+                    combo.value = langCode;
+                    combo.dispatchEvent(new Event('change'));
+                }
+            };
 
-            // Inject Google Translate script in parent doc if not present
+            parentWin.changeSoftwareLanguage = handleLanguageSwitch;
+
+            // Bind change events to all select boxes
+            const selects = parentDoc.querySelectorAll('#software-lang-select');
+            selects.forEach(function(sel) {
+                if (!sel.dataset.bound) {
+                    sel.dataset.bound = "true";
+                    sel.addEventListener('change', function(e) {
+                        handleLanguageSwitch(e.target.value);
+                    });
+                }
+            });
+
+            // Inject Google Translate script if not present
             if (!parentDoc.getElementById('google-translate-script')) {
                 const gdiv = parentDoc.createElement('div');
                 gdiv.id = 'google_translate_element';
@@ -835,14 +1061,16 @@ components.html("""
                 parentDoc.head.appendChild(s);
             }
 
-            // Sync select boxes with current saved language
+            // Apply saved language
             const activeLang = localStorage.getItem("jyotish_app_lang") || "general";
-            const selects = parentDoc.querySelectorAll('#software-lang-select');
             selects.forEach(function(sel) {
                 if (sel.value !== activeLang) {
                     sel.value = activeLang;
                 }
             });
+            if (activeLang !== "general") {
+                applyDOMTranslations(activeLang);
+            }
         } catch (e) {
             console.error('Language bridge error:', e);
         }
@@ -942,7 +1170,7 @@ def render_login_page():
     <div style="display:flex; justify-content:flex-end; margin-bottom: 4px;">
         <div class="header-sub-pill" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:4px 12px !important;">
             🌐 <b>भाषा (Language):</b>
-            <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null">
+            <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : (window.parent && window.parent.changeSoftwareLanguage ? window.parent.changeSoftwareLanguage(this.value) : null)">
                 <option value="general">General (जनरल)</option>
                 <option value="hi">हिन्दी (Hindi)</option>
                 <option value="en">English (अंग्रेजी)</option>
@@ -1400,7 +1628,7 @@ st.markdown(f"""
             </div>
             <div class="header-sub-pill" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important;" title="सॉफ़्टवेयर की भाषा चुनें (Select Language)">
                 🌐 <b>भाषा:</b>
-                <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null">
+                <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : (window.parent && window.parent.changeSoftwareLanguage ? window.parent.changeSoftwareLanguage(this.value) : null)">
                     <option value="general">General (जनरल)</option>
                     <option value="hi">हिन्दी (Hindi)</option>
                     <option value="en">English (अंग्रेजी)</option>
