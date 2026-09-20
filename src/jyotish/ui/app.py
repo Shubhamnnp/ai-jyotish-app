@@ -2880,11 +2880,60 @@ elif selected_module.startswith("⏱️ दशा"):
 
         act_yog = next((y for y in yog_dashas if y["start_date"] <= target_dt <= y["end_date"]), yog_dashas[0])
         
-        # Active Yogini HUD
+        # Calculate Active Antardasha & Pratyantardasha for current target_dt
+        y_antars_for_act = y_engine.generate_antardashas(
+            act_yog.get("yogini_name", act_yog.get("yogini")), act_yog["start_date"], act_yog["end_date"]
+        )
+        act_ya = next((a for a in y_antars_for_act if a["start_date"] <= target_dt <= a["end_date"]), y_antars_for_act[0])
+        
+        y_prats_for_act = y_engine.generate_pratyantardashas(
+            act_yog.get("yogini_name", act_yog.get("yogini")), act_ya["yogini"], act_ya["start_date"], act_ya["end_date"]
+        )
+        act_ypr = next((p for p in y_prats_for_act if p["start_date"] <= target_dt <= p["end_date"]), y_prats_for_act[0])
+
+        # Active Yogini Hierarchy Top Banner
+        b_str_yog = (
+            f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
+            f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय 3-स्तरीय योगिनी दशा पदानुक्रम (Active Yogini Dasha Hierarchy):</div>"
+            f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
+            f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🌸 मुख्य योगिनी: {act_yog.get('yogini_name', act_yog.get('yogini'))} ({act_yog.get('lord')})</span> "
+            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+            f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>💫 योगिनी अंतर्दशा: {act_ya['yogini']} ({act_ya['lord']})</span> "
+            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+            f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ योगिनी प्रत्यंतर: {act_ypr['yogini']} ({act_ypr['lord']})</span>"
+            f"</div>"
+            f"</div>"
+        )
+        st.markdown(b_str_yog, unsafe_allow_html=True)
+
+        # 3 Styled Metric Cards
         y_col1, y_col2, y_col3 = st.columns(3)
-        y_col1.metric("🌸 सक्रिय मुख्य योगिनी (Major)", f"{act_yog.get('yogini_name', act_yog.get('yogini'))}", f"स्वामी: {act_yog.get('lord')}")
-        y_col2.metric("🗓️ अवधि सीमा", f"{act_yog['start_date'].strftime('%d-%b-%Y')} से {act_yog['end_date'].strftime('%d-%b-%Y')}")
-        y_col3.metric("⏳ कुल वर्ष", f"{act_yog['duration_years']} वर्ष")
+        with y_col1:
+            st.markdown(f"""
+            <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🌸 मुख्य योगिनी (Major)</div>
+                <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_yog.get('yogini_name', act_yog.get('yogini'))} ({act_yog.get('lord')})</div>
+                <div style="font-size:10.5px; color:#475569;">{act_yog['start_date'].strftime('%d-%b-%y')} ~ {act_yog['end_date'].strftime('%d-%b-%y')} ({act_yog['duration_years']} वर्ष)</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with y_col2:
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#15803D; font-weight:800;">💫 अंतर्दशा (Sub-Period)</div>
+                <div style="font-size:18px; font-weight:900; color:#064E3B;">{act_ya['yogini']} ({act_ya['lord']})</div>
+                <div style="font-size:10.5px; color:#475569;">{act_ya['start_date'].strftime('%d-%b-%y')} ~ {act_ya['end_date'].strftime('%d-%b-%y')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with y_col3:
+            st.markdown(f"""
+            <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ प्रत्यंतर्दशा (Pratyantar)</div>
+                <div style="font-size:18px; font-weight:900; color:#78350F;">{act_ypr['yogini']} ({act_ypr['lord']})</div>
+                <div style="font-size:10.5px; color:#475569;">{act_ypr['start_date'].strftime('%d-%b-%y')} ~ {act_ypr['end_date'].strftime('%d-%b-%y')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.write("")
 
         tab_y1, tab_y2, tab_y3 = st.tabs([
             "🌸 मुख्य योगिनी दशा (Major Periods)",
@@ -2954,10 +3003,56 @@ elif selected_module.startswith("⏱️ दशा"):
         chara_dashas = c_engine.generate_timeline(chart)
         act_chara = next((c for c in chara_dashas if c["start_date"] <= target_dt <= c["end_date"]), chara_dashas[0])
 
+        # Active Antardasha & Pratyantar
+        c_antars_for_act = c_engine.generate_antardashas(act_chara["sign_id"], act_chara["start_date"], act_chara["end_date"])
+        act_ca = next((a for a in c_antars_for_act if a["start_date"] <= target_dt <= a["end_date"]), c_antars_for_act[0])
+
+        c_prats_for_act = c_engine.generate_pratyantardashas(act_ca["sign_id"], act_ca["start_date"], act_ca["end_date"])
+        act_cpr = next((p for p in c_prats_for_act if p["start_date"] <= target_dt <= p["end_date"]), c_prats_for_act[0])
+
+        # Top Banner
+        b_str_chara = (
+            f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
+            f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय 3-स्तरीय जैमिनी चर दशा पदानुक्रम (Active Jaimini Chara Dasha Hierarchy):</div>"
+            f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
+            f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🔱 चर महादशा: {act_chara['sign_name']} (#{act_chara['sign_id']})</span> "
+            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+            f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>💫 चर अंतर्दशा: {act_ca['sign_name']} (स्वामी: {act_ca['lord']})</span> "
+            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+            f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ चर प्रत्यंतर: {act_cpr['sign_name']} (स्वामी: {act_cpr['lord']})</span>"
+            f"</div>"
+            f"</div>"
+        )
+        st.markdown(b_str_chara, unsafe_allow_html=True)
+
+        # 3 Styled Metric Cards
         c_col1, c_col2, c_col3 = st.columns(3)
-        c_col1.metric("🔱 सक्रिय चर दशा राशि", f"{act_chara['sign_name']}", f"Sign #{act_chara['sign_id']}")
-        c_col2.metric("🗓️ अवधि सीमा", f"{act_chara['start_date'].strftime('%d-%b-%Y')} से {act_chara['end_date'].strftime('%d-%b-%Y')}")
-        c_col3.metric("⏳ कुल वर्ष", f"{act_chara['duration_years']} वर्ष")
+        with c_col1:
+            st.markdown(f"""
+            <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🔱 सक्रिय चर महादशा</div>
+                <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_chara['sign_name']} (#{act_chara['sign_id']})</div>
+                <div style="font-size:10.5px; color:#475569;">{act_chara['start_date'].strftime('%d-%b-%y')} ~ {act_chara['end_date'].strftime('%d-%b-%y')} ({act_chara['duration_years']} वर्ष)</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c_col2:
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#15803D; font-weight:800;">💫 चर अंतर्दशा</div>
+                <div style="font-size:18px; font-weight:900; color:#064E3B;">{act_ca['sign_name']} (स्वामी: {act_ca['lord']})</div>
+                <div style="font-size:10.5px; color:#475569;">{act_ca['start_date'].strftime('%d-%b-%y')} ~ {act_ca['end_date'].strftime('%d-%b-%y')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c_col3:
+            st.markdown(f"""
+            <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ चर प्रत्यंतर्दशा</div>
+                <div style="font-size:18px; font-weight:900; color:#78350F;">{act_cpr['sign_name']} (स्वामी: {act_cpr['lord']})</div>
+                <div style="font-size:10.5px; color:#475569;">{act_cpr['start_date'].strftime('%d-%b-%y')} ~ {act_cpr['end_date'].strftime('%d-%b-%y')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.write("")
 
         tab_c1, tab_c2, tab_c3 = st.tabs([
             "🔱 चर महादशा (12 Signs)",
@@ -3020,12 +3115,73 @@ elif selected_module.startswith("⏱️ दशा"):
         st.markdown("#### 🔄 कालचक्र महादशा (Kaalachakra Dasha - BPHS)")
         kcd_res = default_kcd_engine.calculate(chart)
 
-        col_kc1, col_kc2, col_kc3, col_kc4 = st.columns(4)
-        col_kc1.metric("वर्ग चक्र (Group)", kcd_res["group_type"])
-        col_kc2.metric("👤 देह राशि (Deha Rashi)", kcd_res["deha_rashi"])
-        col_kc3.metric("❤️ जीव राशि (Jeeva Rashi)", kcd_res["jeeva_rashi"])
-        col_kc4.metric("✨ चन्द्र नक्षत्र पद", f"{kcd_res['nakshatra']} (पद {kcd_res['pada']})")
+        # Determine active KCD period
+        act_kcd = None
+        for item in kcd_res["timeline"]:
+            try:
+                s_dt = datetime.strptime(item["start_date"], "%d-%b-%Y")
+                e_dt = datetime.strptime(item["end_date"], "%d-%b-%Y")
+                if s_dt <= target_dt <= e_dt:
+                    act_kcd = item
+                    break
+            except Exception:
+                pass
+        if not act_kcd and kcd_res["timeline"]:
+            act_kcd = kcd_res["timeline"][0]
 
+        # Top Banner
+        b_str_kcd = (
+            f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
+            f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय कालचक्र दशा स्थिति (Active Kaalachakra Dasha Overview):</div>"
+            f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
+            f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🔄 सक्रिय राशि: {act_kcd['rashi']} ({act_kcd.get('role', '') or 'दशा'})</span> "
+            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+            f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>👤 देह राशि: {kcd_res['deha_rashi']}</span> "
+            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+            f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>❤️ जीव राशि: {kcd_res['jeeva_rashi']}</span> "
+            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+            f"<span style='background:#FDF2F8; border:1.5px solid #EC4899; color:#831843; padding:5px 12px; border-radius:8px;'>🌀 गति: {act_kcd['gati'].split('/')[0]}</span>"
+            f"</div>"
+            f"</div>"
+        )
+        st.markdown(b_str_kcd, unsafe_allow_html=True)
+
+        # 4 Styled Metric Cards
+        col_kc1, col_kc2, col_kc3, col_kc4 = st.columns(4)
+        with col_kc1:
+            st.markdown(f"""
+            <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🔄 सक्रिय कालचक्र राशि</div>
+                <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_kcd['rashi']}</div>
+                <div style="font-size:10.5px; color:#475569;">{act_kcd['start_date']} ~ {act_kcd['end_date']}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_kc2:
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#15803D; font-weight:800;">👤 देह राशि (Deha Rashi)</div>
+                <div style="font-size:18px; font-weight:900; color:#064E3B;">{kcd_res['deha_rashi']}</div>
+                <div style="font-size:10.5px; color:#475569;">शारीरिक सुख व स्वास्थ्य</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_kc3:
+            st.markdown(f"""
+            <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#B45309; font-weight:800;">❤️ जीव राशि (Jeeva Rashi)</div>
+                <div style="font-size:18px; font-weight:900; color:#78350F;">{kcd_res['jeeva_rashi']}</div>
+                <div style="font-size:10.5px; color:#475569;">मानसिक एवं आत्मिक शांति</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_kc4:
+            st.markdown(f"""
+            <div style="background:#FDF2F8; border: 2px solid #EC4899; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#BE185D; font-weight:800;">✨ चक्र वर्ग एवं नक्षत्र</div>
+                <div style="font-size:18px; font-weight:900; color:#831843;">{kcd_res['nakshatra']} (पद {kcd_res['pada']})</div>
+                <div style="font-size:10.5px; color:#475569;">{kcd_res['group_type']}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.write("")
         st.dataframe(pd.DataFrame(kcd_res["timeline"]), use_container_width=True)
 
         st.info("💡 **कालचक्र गति फल:** 'मण्डूक गति' (Frog Jump) अथवा 'सिंहावलोकन' (Lion's Gaze) की दशा में जीवन में अचानक बड़े परिवर्तन, स्थान परिवर्तन अथवा अप्रत्याशित उत्थान/पतन घटित होता है। देह राशि शारीरिक सुख-स्वास्थ्य और जीव राशि मानसिक व आत्मिक शांति का नियंत्रण करती है।")
@@ -3037,11 +3193,73 @@ elif selected_module.startswith("⏱️ दशा"):
         st.markdown("#### 🔱 शूल महादशा (Shoola Dasha - Ayurdaya & Maraka Timing)")
         shoola_res = default_shoola_engine.calculate(chart)
 
-        col_sh1, col_sh2, col_sh3 = st.columns(3)
-        col_sh1.metric("आरंभिक राशि (Start Seed)", shoola_res["start_sign"])
-        col_sh2.metric("दशा क्रम (Progression)", shoola_res["direction"])
-        col_sh3.metric("🔱 त्रिशूल राशियाँ (Trishoola)", ", ".join(shoola_res["trishoola_signs"]))
+        # Determine active Shoola period
+        act_shoola = None
+        for item in shoola_res["timeline"]:
+            try:
+                s_dt = datetime.strptime(item["start_date"], "%d-%b-%Y")
+                e_dt = datetime.strptime(item["end_date"], "%d-%b-%Y")
+                if s_dt <= target_dt <= e_dt:
+                    act_shoola = item
+                    break
+            except Exception:
+                pass
+        if not act_shoola and shoola_res["timeline"]:
+            act_shoola = shoola_res["timeline"][0]
 
+        # Top Banner
+        b_str_shoola = (
+            f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
+            f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय शूल दशा एवं आयुर्दाय स्थिति (Active Shoola Dasha & Ayurdaya Status):</div>"
+            f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
+            f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🔱 सक्रिय शूल राशि: {act_shoola['sign']} ({act_shoola['duration_years']} वर्ष)</span> "
+            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+            f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>🎯 आरंभिक बीज राशि: {shoola_res['start_sign']}</span> "
+            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+            f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ त्रिशूल राशियाँ: {', '.join(shoola_res['trishoola_signs'])}</span> "
+            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+            f"<span style='background:#FDF2F8; border:1.5px solid #EC4899; color:#831843; padding:5px 12px; border-radius:8px;'>🛡️ जोखिम स्तर: {act_shoola['risk_level'].split('/')[0]}</span>"
+            f"</div>"
+            f"</div>"
+        )
+        st.markdown(b_str_shoola, unsafe_allow_html=True)
+
+        # 4 Styled Metric Cards
+        col_sh1, col_sh2, col_sh3, col_sh4 = st.columns(4)
+        with col_sh1:
+            st.markdown(f"""
+            <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🔱 सक्रिय शूल दशा राशि</div>
+                <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_shoola['sign']}</div>
+                <div style="font-size:10.5px; color:#475569;">{act_shoola['start_date']} ~ {act_shoola['end_date']}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_sh2:
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#15803D; font-weight:800;">🎯 आरंभिक बीज राशि</div>
+                <div style="font-size:18px; font-weight:900; color:#064E3B;">{shoola_res['start_sign']}</div>
+                <div style="font-size:10.5px; color:#475569;">{shoola_res['direction']}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_sh3:
+            st.markdown(f"""
+            <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ त्रिशूल राशियाँ (Trishoola)</div>
+                <div style="font-size:16px; font-weight:900; color:#78350F;">{', '.join(shoola_res['trishoola_signs'])}</div>
+                <div style="font-size:10.5px; color:#475569;">रुद्रांश त्रिकोण राशियाँ</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_sh4:
+            st.markdown(f"""
+            <div style="background:#FDF2F8; border: 2px solid #EC4899; border-radius:10px; padding:10px; text-align:center;">
+                <div style="font-size:11.5px; color:#BE185D; font-weight:800;">🛡️ वर्तमान जोखिम स्थिति</div>
+                <div style="font-size:16px; font-weight:900; color:#831843;">{act_shoola['risk_level'].split('/')[0]}</div>
+                <div style="font-size:10.5px; color:#475569;">ग्रह स्थिति: {act_shoola['occupants']}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.write("")
         st.dataframe(pd.DataFrame(shoola_res["timeline"]), use_container_width=True)
 
         st.warning("⚠️ **शूल दशा शास्त्रीय उपयोग:** शूल दशा जातक के जीवन में स्वास्थ्य संकट, शल्यक्रिया (Surgery), दुर्घटना एवं मारक काल के सूक्ष्म परीक्षण हेतु उपयोग की जाती है। जब दशा त्रिशूल राशि में हो और उस पर क्रूर ग्रहों का प्रभाव हो, तो वह काल विशेष रूप से संवेदनशील होता है।")
