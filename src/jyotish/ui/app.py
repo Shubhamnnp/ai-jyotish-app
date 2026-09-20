@@ -384,24 +384,24 @@ unified_css = f"""
     }}
 
     /* Clean top spacing & allow frozen sticky header */
-    [data-testid="stAppViewContainer"] {
+    [data-testid="stAppViewContainer"] {{
         overflow-x: hidden !important;
         overflow-y: auto !important;
-    }
-    [data-testid="stMain"], section.main {
+    }}
+    [data-testid="stMain"], section.main {{
         overflow: visible !important;
-    }
-    .block-container {
+    }}
+    .block-container {{
         padding-top: 0px !important;
         padding-bottom: 2rem !important;
         padding-left: 2rem !important;
         padding-right: 2rem !important;
         overflow: visible !important;
-    }
+    }}
     div[data-testid="stVerticalBlock"]:has(> div > div > .frozen-header-marker),
     div[data-testid="stVerticalBlockBorderWrapper"]:has(.frozen-header-marker),
     div[data-testid="element-container"]:has(.frozen-header-marker),
-    div:has(> .frozen-header-marker) {
+    div:has(> .frozen-header-marker) {{
         position: sticky !important;
         top: 0px !important;
         z-index: 999999 !important;
@@ -411,7 +411,7 @@ unified_css = f"""
         margin-bottom: 8px !important;
         border-bottom: 2.5px solid #CBD5E1 !important;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
-    }
+    }}
 
     /* Sidebar Radio Navigation List (18 Modules as Clean, 100% Equal Size Cards) */
     [data-testid="stSidebar"] .stRadio,
