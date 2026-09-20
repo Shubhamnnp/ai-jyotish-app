@@ -4388,9 +4388,14 @@ elif selected_module.startswith("📄 सम्पूर्ण"):
         astro_org = c_br2.text_input("संस्थान / केंद्र (Center Name)", value="ज्योतिर्विश्व (JyotishOS) वैदिक ज्योतिष अनुसंधान केंद्र")
         astro_phone = c_br3.text_input("संपर्क सूत्र / WhatsApp (Contact)", value="+91-9452155742")
 
+    import importlib
+    import src.jyotish.services.report_generator as rep_mod
+    importlib.reload(rep_mod)
+    r_gen = rep_mod.default_report_generator
+
     with st.spinner("🔮 समस्त २१ मॉड्यूल्स की गणनाओं को संकलित कर सम्पूर्ण पत्रिका तैयार की जा रही है..."):
         master_bundle = default_master_calculator.calculate_all(chart)
-        html_rep = default_report_generator.generate_html_report(
+        html_rep = r_gen.generate_html_report(
             chart,
             master_data=master_bundle,
             astro_name=astro_name,

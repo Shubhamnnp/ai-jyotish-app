@@ -41,13 +41,15 @@ class NatalReportGenerator:
         self,
         chart: KundaliChart,
         master_data: Optional[Dict[str, Any]] = None,
-        astro_name: str = "ज्योतिषाचार्य पं. शुभम तिवारी",
-        astro_phone: str = "+91-9452155742",
-        astro_org: str = "ज्योतिर्विश्व (JyotishOS) वैदिक ज्योतिष अनुसंधान केंद्र"
+        *args,
+        **kwargs
     ) -> str:
         """
         Generates a comprehensive styled HTML master dossier incorporating all 21 modules.
         """
+        astro_name = kwargs.get("astro_name", "ज्योतिषाचार्य पं. शुभम तिवारी")
+        astro_phone = kwargs.get("astro_phone", "+91-9452155742")
+        astro_org = kwargs.get("astro_org", "ज्योतिर्विश्व (JyotishOS) वैदिक ज्योतिष अनुसंधान केंद्र")
         if master_data is None:
             master_data = default_master_calculator.calculate_all(chart)
 
