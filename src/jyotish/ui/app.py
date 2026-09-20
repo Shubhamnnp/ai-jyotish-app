@@ -1293,9 +1293,9 @@ if selected_module.startswith("📜 जन्म कुण्डली"):
     with col_chart2:
         st.markdown(f"#### 🌟 {varga_choice} ({v_name}) सारांश एवं पंचांग")
         p_col1, p_col2 = st.columns(2)
-        p_col1.markdown(f"- **वर्ग लग्न:** `{v_lagna_sign} ({v_lagna_id})`")
-        p_col1.markdown(f"- **जन्म लग्न (D1):** `{chart.lagna_sign_name} ({chart.lagna_sign_id})`")
-        p_col1.markdown(f"- **आत्मकारक (AK):** `{chart.atmakaraka}`")
+        p_col1.markdown(f"- **वर्ग लग्न:** {v_lagna_sign} ({v_lagna_id})")
+        p_col1.markdown(f"- **जन्म लग्न (D1):** {chart.lagna_sign_name} ({chart.lagna_sign_id})")
+        p_col1.markdown(f"- **आत्मकारक (AK):** {chart.atmakaraka}")
         p_col2.markdown(f"- **तिथि:** {p.tithi_name}")
         p_col2.markdown(f"- **नक्षत्र:** {p.nakshatra_name}")
         p_col2.markdown(f"- **वार:** {p.vara_name}")
