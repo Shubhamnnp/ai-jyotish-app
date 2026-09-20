@@ -229,36 +229,6 @@ unified_css = """
         color: #000000 !important;
     }
 
-    /* Day Mode Datepicker & Calendar Popover */
-    body:not(.night-mode) div[data-baseweb="popover"],
-    body:not(.night-mode) div[data-baseweb="calendar"] {
-        background-color: #FFFFFF !important;
-        color: #000000 !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-radius: 10px !important;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
-    }
-    body:not(.night-mode) div[data-baseweb="calendar"] * {
-        color: #000000 !important;
-        font-weight: 600 !important;
-    }
-    body:not(.night-mode) div[data-baseweb="calendar"] select {
-        background-color: #FFFFFF !important;
-        color: #000000 !important;
-        border: 1px solid #94A3B8 !important;
-    }
-    body:not(.night-mode) div[data-baseweb="calendar"] [aria-selected="true"] {
-        background-color: #2563EB !important;
-        color: #FFFFFF !important;
-        font-weight: 800 !important;
-        border-radius: 6px !important;
-    }
-    body:not(.night-mode) div[data-baseweb="calendar"] [role="gridcell"]:hover {
-        background-color: #EFF6FF !important;
-        color: #1D4ED8 !important;
-        border-radius: 6px !important;
-    }
-
     /* Day Mode Numbers & Metrics */
     body:not(.night-mode) [data-testid="stMetricValue"], body:not(.night-mode) [data-testid="stMetricValue"] * {
         color: #000000 !important;
@@ -816,6 +786,7 @@ unified_css = """
     }
 
     body.night-mode h1, body.night-mode h2, body.night-mode h3, body.night-mode h4, body.night-mode h5, body.night-mode h6,
+    body.night-mode p, body.night-mode span, body.night-mode li, body.night-mode label, body.night-mode div, body.night-mode strong, body.night-mode b {
     body.night-mode p, body.night-mode span, body.night-mode li, body.night-mode a, body.night-mode label, body.night-mode caption, body.night-mode strong, body.night-mode b,
     body.night-mode [data-testid="stMarkdownContainer"] p, body.night-mode [data-testid="stMarkdownContainer"] span {
         color: #F1F5F9 !important;
@@ -828,50 +799,24 @@ unified_css = """
         background-color: #1E293B !important;
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
+        border-color: #475569 !important;
         border: 1.5px solid #3B82F6 !important;
     }
 
     body.night-mode div[data-baseweb="select"] > div {
         background-color: #1E293B !important;
         color: #FFFFFF !important;
+        border-color: #475569 !important;
         border: 1.5px solid #475569 !important;
     }
     body.night-mode div[data-baseweb="select"] * {
         color: #FFFFFF !important;
     }
 
-    /* Night Mode Datepicker & Calendar Popover */
-    body.night-mode div[data-baseweb="popover"],
-    body.night-mode div[data-baseweb="calendar"] {
-        background-color: #161F30 !important;
-        color: #F8FAFC !important;
-        border: 1.5px solid #334155 !important;
-        border-radius: 10px !important;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
-    }
-    body.night-mode div[data-baseweb="calendar"] * {
-        color: #F8FAFC !important;
-        font-weight: 600 !important;
-    }
-    body.night-mode div[data-baseweb="calendar"] select {
-        background-color: #1E293B !important;
-        color: #FFFFFF !important;
-        border: 1px solid #475569 !important;
-    }
-    body.night-mode div[data-baseweb="calendar"] [aria-selected="true"] {
-        background-color: #3B82F6 !important;
-        color: #FFFFFF !important;
-        font-weight: 800 !important;
-        border-radius: 6px !important;
-    }
-    body.night-mode div[data-baseweb="calendar"] [role="gridcell"]:hover {
-        background-color: #1E293B !important;
-        color: #F59E0B !important;
-        border-radius: 6px !important;
-    }
-
     body.night-mode header.top-nav-bar {
         background: #0F172A !important;
+        border-color: #334155 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
         border-color: #1E293B !important;
         border-bottom: 3.5px solid #3B82F6 !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
@@ -2058,17 +2003,49 @@ if geo_results:
     default_city_name = selected_loc.city
 
 col_b1, col_b2 = st.sidebar.columns(2)
+min_d = min(date(1950, 1, 1), st.session_state.birth_date) if isinstance(st.session_state.birth_date, date) else date(1950, 1, 1)
 birth_d = col_b1.date_input(
-    "जन्म तिथि (Birth Date)",
+    "जन्म तिथि (DOB)",
     value=st.session_state.birth_date,
-    min_value=date(1800, 1, 1),
+    min_value=min_d,
     max_value=date(2100, 12, 31),
     format="DD/MM/YYYY",
-    help="जन्म तिथि चुनें (DD/MM/YYYY - 1800 से 2100 तक उपलब्ध)"
+    help="जन्म की तिथि चुनें (प्रारंभ: 1950, प्रारूप: DD/MM/YYYY)"
 )
 st.session_state.birth_date = birth_d
-birth_t = col_b2.time_input("जन्म समय (Birth Time)", value=st.session_state.birth_time, help="जन्म का सही समय चुनें")
-st.session_state.birth_time = birth_t
+
+time_format_mode = col_b2.selectbox(
+    "समय प्रारूप",
+    ["12-घंटे (AM/PM)", "24-घंटे (24-Hrs)"],
+    index=0,
+    key="sb_time_mode_sel",
+    help="समय प्रविष्टि का प्रारूप चुनें"
+)
+
+if time_format_mode == "12-घंटे (AM/PM)":
+    cur_t = st.session_state.birth_time if isinstance(st.session_state.birth_time, time) else time(12, 0, 0)
+    cur_h12 = (cur_t.hour % 12) or 12
+    cur_m = cur_t.minute
+    cur_ampm = "PM" if cur_t.hour >= 12 else "AM"
+    
+    col_t1, col_t2, col_t3 = st.sidebar.columns([1.2, 1.2, 1.4])
+    t_h = col_t1.selectbox("घंटा (Hr)", list(range(1, 13)), index=cur_h12 - 1, key="sb_t_hr_12")
+    t_m = col_t2.selectbox("मिनट (Min)", [f"{m:02d}" for m in range(60)], index=cur_m, key="sb_t_min_12")
+    t_ampm = col_t3.selectbox("प्रहर", ["AM (प्रातः)", "PM (सायं)"], index=0 if cur_ampm == "AM" else 1, key="sb_t_ampm_12")
+    
+    h24 = (int(t_h) % 12) + (12 if "PM" in t_ampm else 0)
+    birth_t = time(h24, int(t_m), 0)
+    st.session_state.birth_time = birth_t
+    st.sidebar.markdown(f"<div style='background:#F8FAFC; border:1px solid #CBD5E1; border-radius:6px; padding:3px 8px; font-size:11.5px; margin-bottom:6px; color:#0F172A; text-align:center;'>🕒 <b>समय:</b> {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; ⏱️ <b>24H:</b> {birth_t.strftime('%H:%M:%S')}</div>", unsafe_allow_html=True)
+else:
+    birth_t = st.sidebar.time_input(
+        "जन्म समय (Birth Time - 24H)",
+        value=st.session_state.birth_time,
+        step=60,
+        help="24-घंटे के प्रारूप में समय चुनें"
+    )
+    st.session_state.birth_time = birth_t
+    st.sidebar.markdown(f"<div style='background:#F8FAFC; border:1px solid #CBD5E1; border-radius:6px; padding:3px 8px; font-size:11.5px; margin-bottom:6px; color:#0F172A; text-align:center;'>🕒 <b>समय:</b> {birth_t.strftime('%H:%M:%S')} (24H) &nbsp;|&nbsp; ⏱️ {birth_t.strftime('%I:%M %p')}</div>", unsafe_allow_html=True)
 
 col_geo1, col_geo2 = st.sidebar.columns(2)
 latitude = col_geo1.number_input("Latitude", value=default_lat, format="%.4f")
@@ -2559,13 +2536,7 @@ elif selected_idx == 1:
     st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का बहु-पद्धति शास्त्रीय विश्लेषण प्राप्त करें।")
 
     col_q1, col_q2, col_q3 = st.columns([2, 2, 2])
-    target_event_date = col_q1.date_input(
-        "लक्षित तिथि (Target Date)",
-        value=date(2027, 4, 12),
-        min_value=date(1800, 1, 1),
-        max_value=date(2100, 12, 31),
-        format="DD/MM/YYYY"
-    )
+    target_event_date = col_q1.date_input("लक्षित तिथि (Target Date)", value=date(2027, 4, 12), format="DD/MM/YYYY")
     theme = col_q2.selectbox(
         "विश्लेषण विषय (Theme)",
         ["career", "marriage", "wealth", "health", "travel", "spirituality", "all"],
@@ -3088,13 +3059,7 @@ elif selected_idx == 5:
         with st.expander("📝 नवीन प्रश्नकर्ता का विवरण दर्ज करें", expanded=True):
             col_q1, col_q2, col_q3 = st.columns([2, 1, 1])
             q_name = col_q1.text_input("प्रश्नकर्ता का नाम (Questioner Name)", value="नया प्रश्नकर्ता")
-            q_date_val = col_q2.date_input(
-                "प्रश्न तिथि (Query Date)",
-                value=date.today(),
-                min_value=date(1800, 1, 1),
-                max_value=date(2100, 12, 31),
-                format="DD/MM/YYYY"
-            )
+            q_date_val = col_q2.date_input("प्रश्न तिथि (Query Date)", value=date.today(), format="DD/MM/YYYY")
             q_time_val = col_q3.time_input("प्रश्न समय (Query Time)", value=datetime.now().time())
             q_dt = datetime.combine(q_date_val, q_time_val)
 
@@ -3800,14 +3765,7 @@ elif selected_idx == 9:
     # Target Date Picker for Point-in-Time Dasha Calculation
     c_dt1, c_dt2 = st.columns([2, 4])
     with c_dt1:
-        dasha_target_date = st.date_input(
-            "🎯 लक्षित दिनांक पर दशा देखें (Target Date)",
-            value=date.today(),
-            min_value=date(1800, 1, 1),
-            max_value=date(2100, 12, 31),
-            format="DD/MM/YYYY",
-            key="dasha_target_date_picker"
-        )
+        dasha_target_date = st.date_input("🎯 लक्षित दिनांक पर दशा देखें (Target Date)", value=date.today(), key="dasha_target_date_picker", format="DD/MM/YYYY")
     with c_dt2:
         st.caption(f"🗓️ वर्तमान में **{dasha_target_date.strftime('%d-%b-%Y')}** के लिए तात्कालिक सक्रिय सूक्ष्म दशाओं का मूल्यांकन प्रदर्शित किया जा रहा है।")
 
@@ -4522,13 +4480,7 @@ elif selected_idx == 10:
     # Date-time picker for live transit
     col_gt1, col_gt2, col_gt3 = st.columns([1.5, 1.5, 2])
     with col_gt1:
-        t_date = st.date_input(
-            "📅 गोचर दिनांक (Transit Date)",
-            value=target_calc_date if 'target_calc_date' in locals() else datetime.now().date(),
-            min_value=date(1800, 1, 1),
-            max_value=date(2100, 12, 31),
-            format="DD/MM/YYYY"
-        )
+        t_date = st.date_input("📅 गोचर दिनांक (Transit Date)", value=target_calc_date if 'target_calc_date' in locals() else datetime.now().date(), format="DD/MM/YYYY")
     with col_gt2:
         t_time = st.time_input("🕒 गोचर समय (Transit Time)", value=datetime.now().time())
     with col_gt3:
@@ -5334,13 +5286,7 @@ elif selected_idx == 12:
 
     col_m1, col_m2 = st.columns([1.5, 2.5])
     with col_m1:
-        muhurta_date = st.date_input(
-            "📅 मुहूर्त दिनांक चयन करें",
-            value=datetime.now().date(),
-            min_value=date(1800, 1, 1),
-            max_value=date(2100, 12, 31),
-            format="DD/MM/YYYY"
-        )
+        muhurta_date = st.date_input("📅 मुहूर्त दिनांक चयन करें", value=datetime.now().date())
     with col_m2:
         st.write("")
         st.caption(f"📍 स्थान: **{default_city_name}** | वार: **{muhurta_date.strftime('%A')}**")
@@ -5542,13 +5488,7 @@ elif selected_idx == 15:
     st.subheader("⏳ जन्म समय शोधन (Birth Time Rectification - BTR)")
     st.write("अपने जीवन की प्रमाणित ऐतिहासिक घटनाओं (नौकरी, विवाह, संतान आदि) के आधार पर सटीक जन्म समय की गणना करें।")
 
-    btr_ev_date = st.date_input(
-        "घटना तिथि (Event Date)",
-        value=date(2020, 7, 1),
-        min_value=date(1800, 1, 1),
-        max_value=date(2100, 12, 31),
-        format="DD/MM/YYYY"
-    )
+    btr_ev_date = st.date_input("घटना तिथि (Event Date)", value=date(2020, 7, 1), format="DD/MM/YYYY")
     btr_ev_cat = st.selectbox("घटना श्रेणी (Event Type)", ["career", "marriage", "child", "travel", "property", "health_accident"])
     btr_ev_desc = st.text_input("घटना विवरण (Description)", value="कंपनी में पदोन्नति / नई नौकरी")
 
@@ -5577,26 +5517,12 @@ elif selected_idx == 16:
     with col_m1:
         st.markdown("#### 👦 वर विवरण (Groom Details)")
         g_name = st.text_input("वर का नाम", value="वर")
-        g_date = st.date_input(
-            "वर जन्म तिथि",
-            value=date(1995, 8, 20),
-            min_value=date(1800, 1, 1),
-            max_value=date(2100, 12, 31),
-            format="DD/MM/YYYY",
-            key="g_d"
-        )
+        g_date = st.date_input("वर जन्म तिथि", value=date(1995, 8, 20), min_value=date(1950, 1, 1), max_value=date(2100, 12, 31), format="DD/MM/YYYY", key="g_d")
         g_time = st.time_input("वर जन्म समय", value=time(14, 30), key="g_t")
     with col_m2:
         st.markdown("#### 👧 वधू विवरण (Bride Details)")
         b_name = st.text_input("वधू का नाम", value="वधू")
-        b_date = st.date_input(
-            "वधू जन्म तिथि",
-            value=date(1997, 3, 15),
-            min_value=date(1800, 1, 1),
-            max_value=date(2100, 12, 31),
-            format="DD/MM/YYYY",
-            key="b_d"
-        )
+        b_date = st.date_input("वधू जन्म तिथि", value=date(1997, 3, 15), min_value=date(1950, 1, 1), max_value=date(2100, 12, 31), format="DD/MM/YYYY", key="b_d")
         b_time = st.time_input("वधू जन्म समय", value=time(9, 15), key="b_t")
 
     if st.button("💑 कुण्डली मिलान करें", type="primary"):
