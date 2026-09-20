@@ -10,7 +10,7 @@ from typing import Dict, Any, List, Optional
 from ..core.models import BirthData, KundaliChart
 from ..core.calculator import default_chart_calculator
 from ..core.constants import KENDRA_HOUSES, TRIKONA_HOUSES, SIGN_LORDS
-from ..rules.prashna_rules import default_prashna_rule_engine, PRASHNA_RULES_LIBRARY
+from ..rules.prashna_rules import default_prashna_rule_evaluator
 
 
 PRASHNA_CATEGORIES = [
@@ -285,28 +285,30 @@ class PrashnaService:
             (house_karyesh in [1, 2, 4, 5, 7, 9, 10, 11] and house_lagnesh in [1, 2, 4, 5, 7, 9, 10, 11])
         )
 
-        verdict_score = 0.50
-        if is_promising:
-            verdict_score += 0.25
-        if is_ithasala:
-            verdict_score += 0.15
-        if moon_favorable:
-            verdict_score += 0.10
-        if is_esharpha:
-            verdict_score -= 0.15
+        # Evaluate 100 Classical Prashna Rules
+        rules_analysis = default_prashna_rule_evaluator.evaluate_100_rules(
+            chart=chart,
+            category=cat_meta["Name"],
+            karya_house_num=karya_house_num,
+            karyesh_name=karyesh_name,
+            is_ithasala=is_ithasala,
+            is_esharpha=is_esharpha,
+            tajika_yoga_name=tajika_yoga_name
+        )
 
-        verdict_score = max(0.10, min(0.98, verdict_score))
+        verdict_score = rules_analysis["consensus_score"]
+        net_balance = rules_analysis["net_balance_score"]
 
-        if verdict_score >= 0.70:
+        if net_balance >= 35 or verdict_score >= 0.70:
             verdict = "सकारात्मक / शीघ्र कार्य सिद्धि (Favorable / Swift Success)"
             timing = "1 से 3 सप्ताह के भीतर (Within 1-3 weeks)"
-            verdict_badge = "✅ शुभ एवं फलदायक"
-        elif verdict_score <= 0.45:
+            verdict_badge = "🌟 प्रबल शुभ एवं फलदायक"
+        elif net_balance <= -20 or verdict_score <= 0.40:
             verdict = "विलंब / बाधाएं एवं चुनौतियां (Delays & Obstacles Indicated)"
             timing = "विलंब संभव / शास्त्रीय उपाय आवश्यक (Delayed, Remedies Advised)"
-            verdict_badge = "⚠️ विलंबकारी"
+            verdict_badge = "⚠️ विलंबकारी / उपाय आवश्यक"
         else:
-            verdict = "मध्यम / प्रयास एवं धैर्य से सिद्धि (Mixed / Success through Effort)"
+            verdict = "मध्यम / सतत प्रयास एवं धैर्य से सिद्धि (Mixed / Success through Effort)"
             timing = "1 से 3 माह के भीतर (Within 1-3 months)"
             verdict_badge = "⚖️ मध्यम फल"
 
@@ -350,7 +352,7 @@ class PrashnaService:
                 "is_retrograde": p_obj.is_retrograde
             })
 
-        base_res = {
+        return {
             "chart": chart,
             "questioner_name": questioner_name,
             "query_text": query_text,
@@ -373,49 +375,29 @@ class PrashnaService:
             "is_ithasala": is_ithasala,
             "is_esharpha": is_esharpha,
             "moon_placement": f"चन्द्र देव: {moon.sign_name} ({moon.sign_degree:.2f}°) — {moon.house_from_lagna}वां भाव",
-            "house_roles": house_roles,
-            "graha_table": graha_table_data
-        }
-
-        # Run full 32 Shastriya Rules Evaluation
-        rule_eval = default_prashna_rule_engine.evaluate(base_res)
-        conf_score = rule_eval["confidence_score"]
-        norm_score = conf_score / 100.0
-
-        if conf_score >= 70.0:
-            verdict = "सकारात्मक / निश्चित कार्य सिद्धि (Favorable / Swift Success)"
-            timing = "1 से 3 सप्ताह के भीतर (Within 1-3 weeks)"
-            verdict_badge = "🌟 99% निश्चित शुभ फल"
-        elif conf_score <= 45.0:
-            verdict = "विलंब / बाधाएं एवं चुनौतियां (Delays & Obstacles Indicated)"
-            timing = "विलंब संभव / शास्त्रीय उपाय आवश्यक (Delayed, Remedies Advised)"
-            verdict_badge = "⚠️ विलंबकारी"
-        else:
-            verdict = "मध्यम / सतत प्रयास से सिद्धि (Mixed / Success through Effort)"
-            timing = "1 से 3 माह के भीतर (Within 1-3 months)"
-            verdict_badge = "⚖️ मध्यम फल"
-
-        base_res.update({
             "verdict": verdict,
             "verdict_badge": verdict_badge,
             "timing": timing,
-            "verdict_score": round(norm_score, 2),
-            "confidence_score": conf_score,
-            "triggered_rules": rule_eval["triggered_rules"],
-            "positive_factors": rule_eval["positive_factors"],
-            "negative_factors": rule_eval["negative_factors"],
-            "shastriya_remedy": rule_eval["shastriya_remedy"],
+            "verdict_score": round(verdict_score, 2),
+            "rules_analysis": rules_analysis,
+            "active_positive_count": rules_analysis["active_positive_count"],
+            "active_negative_count": rules_analysis["active_negative_count"],
+            "total_positive_points": rules_analysis["total_positive_points"],
+            "total_negative_points": rules_analysis["total_negative_points"],
+            "net_balance_score": rules_analysis["net_balance_score"],
+            "positive_rules": rules_analysis["positive_rules"],
+            "negative_rules": rules_analysis["negative_rules"],
+            "all_rules": rules_analysis["all_rules"],
+            "house_roles": house_roles,
+            "graha_table": graha_table_data,
             "explanation_hi": (
                 f"प्रश्न समय पर लग्न '{chart.lagna_sign_name}' उदित है जिसके स्वामी '{lagnesh_name}' {house_lagnesh}वें भाव में स्थित हैं। "
                 f"प्रश्न से सम्बंधित कार्य भाव {karya_house_num} के स्वामी '{karyesh_name}' की स्थिति {house_karyesh}वें भाव में है। "
                 f"लग्नेश एवं कार्येश के मध्य {tajika_yoga_name} बना हुआ है। "
-                f"चंद्र देव {moon.house_from_lagna}वें भाव में {moon.sign_name} राशि में विराजमान हैं। "
-                f"32 शास्त्रीय नियमों के आधार पर निश्चितता स्कोर: {conf_score}%। "
-                f"शास्त्रीय निर्णय: {verdict}। कार्य सिद्धि का संभावित काल: {timing}।"
+                f"100 शास्त्रीय प्रश्न नियमों के अंतर्गत कुल {rules_analysis['active_positive_count']} शुभ (+) व {rules_analysis['active_negative_count']} अशुभ (-) योग सक्रिय हैं। "
+                f"शास्त्रीय फल: {verdict}। कार्य सिद्धि का संभावित काल: {timing}।"
             )
-        })
-
-        return base_res
+        }
 
 
 default_prashna_service = PrashnaService()

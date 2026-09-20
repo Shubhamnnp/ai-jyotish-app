@@ -55,7 +55,6 @@ import importlib
 import src.jyotish.services.prashna as prashna_service_mod
 importlib.reload(prashna_service_mod)
 from src.jyotish.services.prashna import default_prashna_service, PRASHNA_CATEGORIES
-from src.jyotish.rules.prashna_rules import PRASHNA_RULES_LIBRARY, default_prashna_rule_engine
 from src.jyotish.services.varshaphal import default_varshaphal_service
 from src.jyotish.services.btr import default_btr_service, LifeEvent
 from src.jyotish.services.milan import default_milan_service
@@ -2011,13 +2010,14 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
     v_text = str(p_res.get('verdict', 'उत्कृष्ट')).split(" (")[0]
     v_badge = str(p_res.get('verdict_badge', '✅ शुभ'))
     t_text = str(p_res.get('timing', '1 से 3 सप्ताह')).split(" (")[0]
-    y_text = str(p_res.get('tajika_yoga', 'इत्थशाल योग')).split(" (")[0]
     v_score = float(p_res.get('verdict_score', 0.75))
+    pos_c = p_res.get('active_positive_count', 0)
+    neg_c = p_res.get('active_negative_count', 0)
 
     m1.metric("🎯 शास्त्रीय निर्णय", v_text, v_badge)
     m2.metric("⏳ संभावित समय", t_text)
-    m3.metric("🪐 ताजिक योग", y_text)
-    m4.metric("📊 निश्चितता स्कोर", f"{int(v_score * 100)}%")
+    m3.metric("📊 सहमति स्कोर", f"{int(v_score * 100)}%")
+    m4.metric("📜 100 शास्त्रीय नियम", f"✅ {pos_c} शुभ | ⚠️ {neg_c} अशुभ")
 
     # 2. Main 2-Column Visual Layout (Left: SVG Chart, Right: Summary HUD)
     col_chart, col_summary = st.columns([1, 1])
@@ -2052,14 +2052,96 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
         st.markdown(f"**फलसिद्धि संभावना सूचकांक (Success Probability): {int(v_score * 100)}%**")
         st.progress(v_score)
 
-    # 3. Detailed Analytical Tabs (99% Accuracy Shastriya Rule Matrix)
+    # 3. Detailed Analytical Tabs
     st.markdown("---")
-    p_tab1, p_tab2, p_tab3, p_tab4 = st.tabs([
-        "🪐 प्रश्नकालीन नवग्रह स्पष्ट तालिका",
-        "🎭 द्वादश भाव भूमिका एवं कारकत्व",
-        "📚 32 शास्त्रीय प्रश्न नियम पुस्तिका एवं साक्ष्य",
-        "🪔 शास्त्रीय उपाय, मंत्र एवं शांति विधान"
+    p_tab_rules, p_tab1, p_tab2, p_tab3 = st.tabs([
+        "📜 100 शास्त्रीय प्रश्न नियम एवं प्रमाण",
+        "🪐 प्रश्नकालीन नवग्रह स्थिति तालिका",
+        "🎭 द्वादश भाव भूमिका एवं प्रभाव",
+        "📖 ताजिक एवं प्रश्न मार्ग सिद्धांत"
     ])
+
+    with p_tab_rules:
+        st.markdown("##### 📜 100 शास्त्रीय प्रश्न नियम — शुभ (+) व अशुभ (-) प्रमाण विश्लेषण")
+        st.write("प्रश्न मार्ग, ताजिक नीलकण्ठी, षट्पंचाशिका, दैवज्ञ वल्लभ एवं केपी होरारी के 100 शास्त्रीय नियमों का स्वचालित मूल्यांकन।")
+
+        r_col1, r_col2, r_col3 = st.columns(3)
+        pos_pts = p_res.get('total_positive_points', 0)
+        neg_pts = p_res.get('total_negative_points', 0)
+        net_bal = p_res.get('net_balance_score', 0)
+
+        r_col1.markdown(f"""
+        <div style="background: #F0FDF4; border: 2px solid #86EFAC; border-radius: 10px; padding: 12px; text-align: center;">
+            <div style="font-size: 13px; color: #166534; font-weight: 700;">🟢 सक्रिय शुभ नियम (Positive Rules)</div>
+            <div style="font-size: 24px; font-weight: 900; color: #15803D;">{pos_c} नियम (+{pos_pts} अंक)</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        r_col2.markdown(f"""
+        <div style="background: #FEF2F2; border: 2px solid #FECACA; border-radius: 10px; padding: 12px; text-align: center;">
+            <div style="font-size: 13px; color: #991B1B; font-weight: 700;">🔴 सक्रिय अशुभ नियम (Negative Obstacles)</div>
+            <div style="font-size: 24px; font-weight: 900; color: #DC2626;">{neg_c} नियम (-{neg_pts} अंक)</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        r_col3.markdown(f"""
+        <div style="background: #F8FAFC; border: 2px solid #CBD5E1; border-radius: 10px; padding: 12px; text-align: center;">
+            <div style="font-size: 13px; color: #334155; font-weight: 700;">⚖️ शुद्ध संतुलन (Net Shastriya Balance)</div>
+            <div style="font-size: 24px; font-weight: 900; color: {'#15803D' if net_bal >= 0 else '#DC2626'};">{net_bal:+} अंक</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.write("")
+        with st.expander(f"🟢 सक्रिय शुभ नियम प्रमाण विवरण ({pos_c} Positive Evidence)", expanded=True):
+            pos_rules_list = p_res.get('positive_rules', [])
+            if pos_rules_list:
+                pos_df = []
+                for pr in pos_rules_list:
+                    pos_df.append({
+                        "नियम ID": pr.get("rule_id"),
+                        "श्रेणी (Domain)": pr.get("domain"),
+                        "शास्त्रीय नियम (Rule Title)": pr.get("name_hi"),
+                        "मूल ग्रंथ (Source)": pr.get("source"),
+                        "शुभ अंक": f"+{pr.get('weight', 0)}",
+                        "शास्त्रीय प्रमाण व फल": pr.get("description_hi")
+                    })
+                st.dataframe(pd.DataFrame(pos_df), use_container_width=True, hide_index=True)
+            else:
+                st.info("वर्तमान प्रश्न कुण्डली में कोई विशेष सकारात्मक नियम सक्रिय नहीं है।")
+
+        with st.expander(f"🔴 सक्रिय अशुभ / बाधक नियम विवरण ({neg_c} Negative Evidence)", expanded=True):
+            neg_rules_list = p_res.get('negative_rules', [])
+            if neg_rules_list:
+                neg_df = []
+                for nr in neg_rules_list:
+                    neg_df.append({
+                        "नियम ID": nr.get("rule_id"),
+                        "श्रेणी (Domain)": nr.get("domain"),
+                        "बाधक नियम (Obstacle Title)": nr.get("name_hi"),
+                        "मूल ग्रंथ (Source)": nr.get("source"),
+                        "बाधा अंक": f"{nr.get('weight', 0)}",
+                        "बाधा विवरण एवं उपाय": nr.get("description_hi")
+                    })
+                st.dataframe(pd.DataFrame(neg_df), use_container_width=True, hide_index=True)
+            else:
+                st.success("🎉 उत्कृष्ट! वर्तमान प्रश्न कुण्डली में कोई भी गंभीर अशुभ अथवा बाधक नियम सक्रिय नहीं है।")
+
+        with st.expander("📚 संपूर्ण 100 शास्त्रीय प्रश्न नियम संदर्भ तालिका (Complete 100 Rules Library)", expanded=False):
+            all_r_list = p_res.get('all_rules', [])
+            if all_r_list:
+                all_df = []
+                for ar in all_r_list:
+                    all_df.append({
+                        "ID": ar.get("rule_id"),
+                        "क्षेत्र": ar.get("domain"),
+                        "नियम नाम": ar.get("name_hi"),
+                        "ग्रंथ संदर्भ": ar.get("source"),
+                        "प्रकार": "🟢 शुभ (+)" if ar.get("type") == "POSITIVE" else "🔴 अशुभ (-)",
+                        "प्रभाव अंक": ar.get("weight"),
+                        "स्थिति": ar.get("status"),
+                        "शास्त्रीय विवरण": ar.get("description_hi")
+                    })
+                st.dataframe(pd.DataFrame(all_df), use_container_width=True, hide_index=True)
 
     with p_tab1:
         st.markdown("##### 🪐 प्रश्न समय पर ग्रहों की स्पष्ट खगोलीय स्थिति (Graha Spashta)")
@@ -2100,61 +2182,24 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
         st.dataframe(pd.DataFrame(role_cards), use_container_width=True, hide_index=True)
 
     with p_tab3:
-        st.markdown(f"##### 📚 32 शास्त्रीय प्रश्न नियम पुस्तिका एवं लाइव मूल्यांकन (Consensus Score: {p_res.get('confidence_score', 85)}%)")
-        
-        # Summary of triggered positive & negative rules
-        trig_pos = p_res.get("positive_factors", [])
-        trig_neg = p_res.get("negative_factors", [])
-
-        c_pos, c_neg = st.columns(2)
-        with c_pos:
-            st.markdown("###### ✅ अनुकूल शास्त्रीय योग एवं प्रबलता कारक")
-            if trig_pos:
-                for f_item in trig_pos:
-                    st.success(f"• {f_item}")
-            else:
-                st.info("सामान्य अनुकूलता")
-        
-        with c_neg:
-            st.markdown("###### ⚠️ प्रतिकूल प्रभाव एवं सावधानी कारक")
-            if trig_neg:
-                for n_item in trig_neg:
-                    st.warning(f"• {n_item}")
-            else:
-                st.success("• कोई गम्भीर पाप प्रभाव अथवा अरिष्ट योग नहीं पाया गया।")
-
-        st.markdown("---")
-        st.markdown("###### 📖 सम्पूर्ण 32 शास्त्रीय प्रश्न नियम संदर्भ ग्रन्थ संग्रह (32 Shastriya Rule Library)")
-        rules_table = []
-        for r_item in PRASHNA_RULES_LIBRARY:
-            is_active = any(t.get("id") == r_item["id"] for t in p_res.get("triggered_rules", []))
-            rules_table.append({
-                "नियम कोड": r_item["id"],
-                "शास्त्रीय नियम नाम": r_item["name"],
-                "मूल ग्रन्थ संदर्भ": r_item["source"],
-                "ज्योतिष पद्धति": r_item["school"],
-                "प्रभाव / परिणाम": r_item["verdict_impact"],
-                "तात्कालिक स्थिति": "🌟 सक्रिय (Active)" if is_active else "निष्क्रिय"
-            })
-        st.dataframe(pd.DataFrame(rules_table), use_container_width=True, hide_index=True)
-
-    with p_tab4:
-        st.markdown("##### 🪔 प्रश्न शांति विधान, अचूक शास्त्रीय उपाय एवं मंत्र")
-        st.info(f"**🎯 तात्कालिक प्रश्न उपाय:** {p_res.get('shastriya_remedy', 'श्री गणेश जी का स्मरण करें।')}")
-        
-        remedy_c1, remedy_c2 = st.columns(2)
-        with remedy_c1:
+        st.markdown("##### 📜 ताजिक नीलकण्ठी एवं प्रश्न मार्ग के प्रमुख सिद्धांत")
+        t_col1, t_col2 = st.columns(2)
+        with t_col1:
             st.markdown("""
-            **🕉️ सर्वकार्य सिद्धि वैदिक महामंत्र:**
-            > *ॐ गं गणपतये नमः*  
-            > *ॐ नमो भगवते वासुदेवाय*  
-            > *(प्रतिदिन प्रातः 108 बार जप करें)*
+            **1. इत्थशाल योग (Ithasala Yoga):**
+            - जब तीव्र गति का ग्रह मंद गति के ग्रह से कम अंश पर रहकर दीप्तांश के भीतर अग्रसर होता है, तो कार्य की त्वरित व निश्चित सिद्धि होती है।
+            - **दीप्तांश विस्तार:** सूर्य (15°), चन्द्र (12°), मंगल (8°), बुध (7°), गुरु (9°), शुक्र (7°), शनि (9°)।
+
+            **2. ईशराफ / मुसरिफ़ योग (Esharpha Yoga):**
+            - जब तीव्र गति का ग्रह मंद ग्रह के अंशों को पार कर 1° या अधिक आगे निकल जाता है, तो अवसर बीत जाने अथवा विफलता का संकेत होता है।
             """)
-        with remedy_c2:
+        with t_col2:
             st.markdown("""
-            **🌿 शास्त्रीय दान एवं सदाचार विधान:**
-            - गौ सेवा: बुधवार व शुक्रवार को गाय को हरा चारा अथवा गुड़-रोटी खिलाएं।
-            - जल अर्पण: नित्य प्रातः सूर्य देव को तांबे के पात्र से कुमकुम युक्त अर्घ्य दें।
+            **3. चन्द्रमा की स्थिति का महत्व (Moon's Role):**
+            - प्रश्न कुण्डली में चन्द्रमा को प्रश्नकर्ता का मन माना जाता है। चन्द्रमा का 6, 8, 12 भाव में होना अथवा पाप पीड़ित होना मानसिक चिंता व विलंब दर्शाता है।
+            
+            **4. कार्येश-लग्नेश सम्बंध:**
+            - लग्नेश (प्रश्नकर्ता) और कार्येश (प्रश्न का अभीष्ट) का केंद्र/त्रिकोण में होना कार्य की सहज सिद्धि कराता है।
             """)
 
 
