@@ -1024,36 +1024,68 @@ components.html("""
             const parentWin = window.parent;
             if (!parentDoc || !parentWin) return;
 
+            function setGoogleTransCookie(lang) {
+                const domain = parentWin.location.hostname;
+                if (lang === 'general' || lang === 'hi' || !lang) {
+                    const cookies = ['googtrans'];
+                    const domains = ['', domain, '.' + domain];
+                    cookies.forEach(function(c) {
+                        domains.forEach(function(d) {
+                            parentDoc.cookie = c + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;' + (d ? ' domain=' + d + ';' : '');
+                        });
+                    });
+                } else {
+                    const transVal = '/hi/' + lang;
+                    parentDoc.cookie = 'googtrans=' + transVal + '; path=/;';
+                    if (domain) {
+                        parentDoc.cookie = 'googtrans=' + transVal + '; path=/; domain=' + domain + ';';
+                        parentDoc.cookie = 'googtrans=' + transVal + '; path=/; domain=.' + domain + ';';
+                    }
+                }
+            }
+
             const handleLanguageSwitch = function(langCode) {
                 localStorage.setItem("jyotish_app_lang", langCode);
                 sessionStorage.setItem("jyotish_app_lang", langCode);
+                setGoogleTransCookie(langCode);
                 
-                // 1. Instant DOM Translation
+                // Sync all language dropdowns on page
+                const selects = parentDoc.querySelectorAll('#software-lang-select');
+                selects.forEach(function(sel) {
+                    if (sel.value !== langCode) {
+                        sel.value = langCode;
+                    }
+                });
+
+                // 1. Instant DOM Translation (Zero Lag)
                 applyDOMTranslations(langCode);
 
                 // 2. Google Translate Integration
-                if (langCode === "general" || !langCode) {
-                    parentDoc.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    parentDoc.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + parentWin.location.hostname;
+                if (langCode === "general" || langCode === "hi" || !langCode) {
                     const combo = parentDoc.querySelector('.goog-te-combo');
                     if (combo) {
                         combo.value = "hi";
                         combo.dispatchEvent(new Event('change'));
                     }
+                    setTimeout(function() {
+                        parentWin.location.reload();
+                    }, 100);
                     return;
                 }
-                
-                parentDoc.cookie = "googtrans=/auto/" + langCode + "; path=/;";
-                parentDoc.cookie = "googtrans=/auto/" + langCode + "; path=/; domain=" + parentWin.location.hostname;
                 
                 const combo = parentDoc.querySelector('.goog-te-combo');
                 if (combo) {
                     combo.value = langCode;
                     combo.dispatchEvent(new Event('change'));
+                } else {
+                    setTimeout(function() {
+                        parentWin.location.reload();
+                    }, 150);
                 }
             };
 
             parentWin.changeSoftwareLanguage = handleLanguageSwitch;
+            window.changeSoftwareLanguage = handleLanguageSwitch;
 
             // Bind change events to all select boxes
             const selects = parentDoc.querySelectorAll('#software-lang-select');
@@ -1068,15 +1100,18 @@ components.html("""
 
             // Inject Google Translate script if not present
             if (!parentDoc.getElementById('google-translate-script')) {
-                const gdiv = parentDoc.createElement('div');
-                gdiv.id = 'google_translate_element';
-                gdiv.style.display = 'none';
-                parentDoc.body.appendChild(gdiv);
+                let gdiv = parentDoc.getElementById('google_translate_element');
+                if (!gdiv) {
+                    gdiv = parentDoc.createElement('div');
+                    gdiv.id = 'google_translate_element';
+                    gdiv.style.display = 'none';
+                    parentDoc.body.appendChild(gdiv);
+                }
 
                 parentWin.googleTranslateElementInit = function() {
                     new parentWin.google.translate.TranslateElement({
                         pageLanguage: 'hi',
-                        includedLanguages: 'hi,en,sa,gu,mr,bn,te,ta',
+                        includedLanguages: 'hi,en,gu,mr,bn,te,ta',
                         autoDisplay: false
                     }, 'google_translate_element');
                 };
@@ -1095,7 +1130,7 @@ components.html("""
                     sel.value = activeLang;
                 }
             });
-            if (activeLang !== "general") {
+            if (activeLang && activeLang !== "general" && activeLang !== "hi") {
                 applyDOMTranslations(activeLang);
             }
         } catch (e) {
@@ -1473,6 +1508,27 @@ with st.sidebar.expander("📁 सहेजी गई कुण्डलिय�
             else:
                 st.error("Authentication failed. Please verify credentials.")
 
+st.sidebar.markdown("---")
+# -------------------------------------------------------------
+# 🌐 Multi-Language Selector (Native Python Engine)
+# -------------------------------------------------------------
+LANG_OPTIONS = [
+    "General (जनरल)",
+    "हिन्दी (Hindi)",
+    "English (अंग्रेजी)",
+    "தமிழ் (Tamil)",
+    "తెలుగు (Telugu)",
+    "ગુજરાતી (Gujarati)",
+    "मराठी (Marathi)",
+    "বাংলা (Bengali)"
+]
+if "app_lang" not in st.session_state:
+    st.session_state.app_lang = "General (जनरल)"
+
+cur_lang_idx = LANG_OPTIONS.index(st.session_state.app_lang) if st.session_state.app_lang in LANG_OPTIONS else 0
+chosen_lang = st.sidebar.selectbox("🌐 भाषा चयन (Language)", LANG_OPTIONS, index=cur_lang_idx, key="native_app_language_selector")
+st.session_state.app_lang = chosen_lang
+
 name = st.sidebar.text_input("नाम (Name)", value=st.session_state.birth_name)
 
 # Location Search
@@ -1545,31 +1601,176 @@ if calc_clicked:
     st.session_state.calculated_at = datetime.now()
     st.toast("✅ कुण्डली गणना एवं षोडशवर्ग सफलतापूर्वक अद्यतन किए गए!", icon="🔮")
 
-# 3. Third: The 18 Modules List under the button
+# 3. Third: The 21 Modules List under the button
 st.sidebar.markdown("---")
-MODULE_OPTIONS = [
-    "📜 जन्म कुण्डली (Natal & Vargas)",
-    "🎯 घटना विश्लेषण (Ghatna Query)",
-    "🛡️ दोष एवं फ्री-विल (Affliction & Remedies)",
-    "📊 दशवर्ग तालिका (Dasvarga Table)",
-    "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
-    "❓ प्रश्न कुण्डली (Horary / Prashna)",
-    "☁️ सर्वर सिंक (Server Sync)",
-    "⚖️ षड्बल एवं भावबल (Shadbala)",
-    "🔱 जैमिनी एवं उपग्रह (Jaimini)",
-    "⏱️ दशा प्रणालियाँ (Dasha)",
-    "🪐 गोचर एवं अष्टकवर्ग (Gochar & Shodhana)",
-    "📐 के.पी. प्रणाली (KP Astrology)",
-    "⏳ शुभ मुहूर्त एवं चौघड़िया (Muhurta)",
-    "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
-    "📅 वर्षफल (Varshaphal)",
-    "⏳ समय शोधन (BTR)",
-    "💍 कुण्डली मिलान (Milan)",
-    "💬 ज्योतिष AI सहायक (Sahayak)",
-    "📄 सम्पूर्ण रिपोर्ट (Report)",
-    "📚 100 शास्त्रीय नियम (Rules)",
-    "🔍 वैदिक ऋषि सत्यापन (Validation)"
-]
+if "English" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 Birth Chart (Natal & Vargas)",
+        "🎯 Event Analysis (Ghatna Query)",
+        "🛡️ Afflictions & Remedies",
+        "📊 Dasvarga Table",
+        "🏛️ Vastu-Jyotish",
+        "❓ Prashna Kundali (Horary)",
+        "☁️ Server Sync",
+        "⚖️ Shadbala & Bhavabala",
+        "🔱 Jaimini & Upagrahas",
+        "⏱️ Dasha Systems",
+        "🪐 Transit & Ashtakvarga",
+        "📐 KP Astrology System",
+        "⏳ Auspicious Muhurta",
+        "☸️ Sudarshan Chakra",
+        "📅 Annual Varshaphal",
+        "⏳ Birth Time Rectification (BTR)",
+        "💍 Kundali Matching (Milan)",
+        "💬 Jyotish AI Assistant",
+        "📄 Comprehensive Report",
+        "📚 100 Classical Rules",
+        "🔍 Vedic Sage Validation"
+    ]
+elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 ஜாதகக் கட்டம் (Natal & Vargas)",
+        "🎯 நிகழ்வு பகுப்பாய்வு (Ghatna Query)",
+        "🛡️ தோஷ பரிகாரம் & சுயம் (Remedies)",
+        "📊 தசவர்க்க அட்டவணை (Dasvarga Table)",
+        "🏛️ வாஸ்து ஜோதிடம் (Vastu-Jyotish)",
+        "❓ பிரசன்ன ஜோதிடம் (Horary / Prashna)",
+        "☁️ சர்வர் ஒத்திசைவு (Server Sync)",
+        "⚖️ ஷட்பலம் & பாவபலம் (Shadbala)",
+        "🔱 ஜெயமினி ஜோதிடம் (Jaimini)",
+        "⏱️ தசா அமைப்புகள் (Dasha)",
+        "🪐 கோசாரம் & அஷ்டவர்க்கம் (Transit)",
+        "📐 கே.பி. ஜோதிடம் (KP Astrology)",
+        "⏳ சுப முகூர்த்தம் (Muhurta)",
+        "☸️ சுதர்சன சக்கரம் (Sudarshan Chakra)",
+        "📅 வருட பலன்கள் (Varshaphal)",
+        "⏳ பிறப்பு நேர திருத்தம் (BTR)",
+        "💍 திருமணப் பொருத்தம் (Milan)",
+        "💬 ஜோதிட AI உதவியாளர் (Sahayak)",
+        "📄 முழுமையான அறிக்கை (Report)",
+        "📚 100 சாஸ்திர விதிகள் (Rules)",
+        "🔍 வேத ரிஷி சரிபார்ப்பு (Validation)"
+    ]
+elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 జన్మ జాతక చక్రం (Natal & Vargas)",
+        "🎯 సంఘటన విశ్లేషణ (Ghatna Query)",
+        "🛡️ దోష నివారణ & పరిహారాలు (Remedies)",
+        "📊 దశవర్గ పట్టిక (Dasvarga Table)",
+        "🏛️ వాస్తు జ్యోతిష్యం (Vastu-Jyotish)",
+        "❓ ప్రశ్న జాతకం (Horary / Prashna)",
+        "☁️ సర్వర్ సమకాలీకరణ (Server Sync)",
+        "⚖️ షడ్బలం & భావబలం (Shadbala)",
+        "🔱 జైమిని జ్యోతిష్యం (Jaimini)",
+        "⏱️ దశా పద్ధతులు (Dasha)",
+        "🪐 గోచార & అష్టకవర్గ (Transit)",
+        "📐 కె.పి. పద్ధతి (KP Astrology)",
+        "⏳ శుభ ముహూర్తం (Muhurta)",
+        "☸️ సుదర్శన చక్రం (Sudarshan Chakra)",
+        "📅 వార్షిక ఫలితాలు (Varshaphal)",
+        "⏳ జన్మ సమయ శోధన (BTR)",
+        "💍 గుణ మేళాపకం (Milan)",
+        "💬 జ్యోతిష్య AI సహాయకుడు (Sahayak)",
+        "📄 సంపూర్ణ నివేదిక (Report)",
+        "📚 100 శాస్త్రీయ నియమాలు (Rules)",
+        "🔍 వైదిక ఋషి ధృవీకరణ (Validation)"
+    ]
+elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 જન્મ કુંડળી (Natal & Vargas)",
+        "🎯 ઘટના વિશ્લેષણ (Ghatna Query)",
+        "🛡️ દોષ અને ફ્રી-વિલ (Affliction & Remedies)",
+        "📊 દશવર્ગ કોષ્ટક (Dasvarga Table)",
+        "🏛️ વાસ્તુ-જ્યોતિષ (Vastu-Jyotish)",
+        "❓ પ્રશ્ન કુંડળી (Horary / Prashna)",
+        "☁️ સર્વર સિંક (Server Sync)",
+        "⚖️ ષડ્બળ અને ભાવબળ (Shadbala)",
+        "🔱 જૈમિની અને ઉપગ્રહો (Jaimini)",
+        "⏱️ દશા પ્રણાલી (Dasha)",
+        "🪐 ગોચર અને અષ્ટકવર્ગ (Gochar & Shodhana)",
+        "📐 કે.પી. પદ્ધતિ (KP Astrology)",
+        "⏳ શુભ મુહૂર્ત (Muhurta)",
+        "☸️ સુદર્શન ચક્ર (Sudarshan Chakra)",
+        "📅 વર્ષફળ (Varshaphal)",
+        "⏳ સમય સંશોધન (BTR)",
+        "💍 કુંડળી મેળવણું (Milan)",
+        "💬 જ્યોતિષ AI સહાયક (Sahayak)",
+        "📄 સંપૂર્ણ અહેવાલ (Report)",
+        "📚 ૧૦૦ શાસ્ત્રીય નિયમો (Rules)",
+        "🔍 વૈદિક ઋષિ પ્રમાણીકરણ (Validation)"
+    ]
+elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 जन्म पत्रिका (Natal & Vargas)",
+        "🎯 घटना विश्लेषण (Ghatna Query)",
+        "🛡️ दोष व फ्री-विल (Affliction & Remedies)",
+        "📊 दशवर्ग तक्ता (Dasvarga Table)",
+        "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
+        "❓ प्रश्न पत्रिका (Horary / Prashna)",
+        "☁️ सर्व्हर सिंक (Server Sync)",
+        "⚖️ षड्बल व भावबल (Shadbala)",
+        "🔱 जैमिनी व उपग्रह (Jaimini)",
+        "⏱️ दशा प्रणाली (Dasha)",
+        "🪐 गोचर व अष्टकवर्ग (Gochar & Shodhana)",
+        "📐 के.पी. पद्धती (KP Astrology)",
+        "⏳ शुभ मुहूर्त (Muhurta)",
+        "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
+        "📅 वर्षफळ (Varshaphal)",
+        "⏳ वेळ शोधन (BTR)",
+        "💍 पत्रिका मिलन (Milan)",
+        "💬 ज्योतिष AI सहाय्यक (Sahayak)",
+        "📄 संपूर्ण अहवाल (Report)",
+        "📚 १०० शास्त्रीय नियम (Rules)",
+        "🔍 वैदिक ऋषी पडताळणी (Validation)"
+    ]
+elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 জন্ম কুণ্ডলী (Natal & Vargas)",
+        "🎯 ঘটনা বিশ্লেষণ (Ghatna Query)",
+        "🛡️ দোষ ও প্রতিকার (Affliction & Remedies)",
+        "📊 দশবর্গ তালিকা (Dasvarga Table)",
+        "🏛️ বাস্তু-জ্যোতিষ (Vastu-Jyotish)",
+        "❓ প্রশ্ন কুণ্ডলী (Horary / Prashna)",
+        "☁️ সার্ভার সিঙ্ক (Server Sync)",
+        "⚖️ ষড়্বল ও ভাববল (Shadbala)",
+        "🔱 জৈমিনী ও উপগ্রহ (Jaimini)",
+        "⏱️ দশা পদ্ধতি (Dasha)",
+        "🪐 গোচর ও অষ্টকবর্গ (Gochar & Shodhana)",
+        "📐 কে.পি. পদ্ধতি (KP Astrology)",
+        "⏳ শুভ মুহূর্ত (Muhurta)",
+        "☸️ সুদর্শন চক্র (Sudarshan Chakra)",
+        "📅 বর্ষফল (Varshaphal)",
+        "⏳ সময় সংশোধন (BTR)",
+        "💍 কুণ্ডলী মিলন (Milan)",
+        "💬 জ্যোতিষ AI সহকারী (Sahayak)",
+        "📄 সম্পূর্ণ রিপোর্ট (Report)",
+        "📚 ১০০ শাস্ত্রীয় নিয়ম (Rules)",
+        "🔍 বৈদিক ঋষি প্রমাণ (Validation)"
+    ]
+else:
+    MODULE_OPTIONS = [
+        "📜 जन्म कुण्डली (Natal & Vargas)",
+        "🎯 घटना विश्लेषण (Ghatna Query)",
+        "🛡️ दोष एवं फ्री-विल (Affliction & Remedies)",
+        "📊 दशवर्ग तालिका (Dasvarga Table)",
+        "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
+        "❓ प्रश्न कुण्डली (Horary / Prashna)",
+        "☁️ सर्वर सिंक (Server Sync)",
+        "⚖️ षड्बल एवं भावबल (Shadbala)",
+        "🔱 जैमिनी एवं उपग्रह (Jaimini)",
+        "⏱️ दशा प्रणालियाँ (Dasha)",
+        "🪐 गोचर एवं अष्टकवर्ग (Gochar & Shodhana)",
+        "📐 के.पी. प्रणाली (KP Astrology)",
+        "⏳ शुभ मुहूर्त एवं चौघड़िया (Muhurta)",
+        "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
+        "📅 वर्षफल (Varshaphal)",
+        "⏳ समय शोधन (BTR)",
+        "💍 कुण्डली मिलान (Milan)",
+        "💬 ज्योतिष AI सहायक (Sahayak)",
+        "📄 सम्पूर्ण रिपोर्ट (Report)",
+        "📚 100 शास्त्रीय नियम (Rules)",
+        "🔍 वैदिक ऋषि सत्यापन (Validation)"
+    ]
 
 selected_module = st.sidebar.radio(
     "module_selection",
@@ -1577,6 +1778,7 @@ selected_module = st.sidebar.radio(
     index=0,
     label_visibility="collapsed"
 )
+selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else 0
 
 
 # Construct BirthData object
@@ -1654,9 +1856,10 @@ st.markdown(f"""
             <div class="header-sub-pill">
                 🕒 <b>वर्तमान समय:</b> {current_time_str}
             </div>
-            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important;" title="सॉफ़्टवेयर की भाषा चुनें (Select Language)">
-                🌐 <b class="notranslate" translate="no">भाषा:</b>
-                <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : (window.parent && window.parent.changeSoftwareLanguage ? window.parent.changeSoftwareLanguage(this.value) : null)">
+            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 10px !important; display:inline-flex; align-items:center; gap:6px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Software Language)">
+                <span class="notranslate" translate="no" style="font-size:13px;">🌐</span>
+                <b class="notranslate" translate="no" style="color:#166534 !important; font-size:11.5px;">भाषा:</b>
+                <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11.5px; cursor:pointer; outline:none; padding:0 2px;">
                     <option value="general" class="notranslate" translate="no">General (जनरल)</option>
                     <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
                     <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
@@ -1724,7 +1927,7 @@ st.markdown(f"""
 # -------------------------------------------------------------
 # Module Routing
 # -------------------------------------------------------------
-if selected_module.startswith("📜 जन्म कुण्डली"):
+if selected_idx == 0:
     st.subheader("📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (D1 to D60)")
 
     VARGA_SIGNIFICANCE = {
@@ -1830,7 +2033,7 @@ if selected_module.startswith("📜 जन्म कुण्डली"):
 # =============================================================
 # TAB 3: AFFLICTION & FREE WILL ANALYSIS (GRAHALAKSHANAM CORE)
 
-elif selected_module.startswith("🎯 घटना विश्लेषण"):
+elif selected_idx == 1:
     st.subheader("🎯 घटना विश्लेषण (Event Window Analysis)")
     st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का बहु-पद्धति शास्त्रीय विश्लेषण प्राप्त करें।")
 
@@ -1899,7 +2102,7 @@ elif selected_module.startswith("🎯 घटना विश्लेषण"):
 # =============================================================
 # TAB 2: JANM KUNDALI & SHODASHAVARGA
 
-elif selected_module.startswith("🛡️ दोष एवं फ्री-विल"):
+elif selected_idx == 2:
     st.subheader("🛡️ दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)")
     st.write("सर्वर की हस्ताक्षर प्रणाली: द्वादश भाव एवं नवग्रहों का सौम्य/क्रूर प्रभाव, त्रिकोण/त्रिक सम्बंध, दिग्बल एवं फ्री-विल प्रतिशत।")
 
@@ -2115,7 +2318,7 @@ elif selected_module.startswith("🛡️ दोष एवं फ्री-वि
 # =============================================================
 # TAB 4: DASVARGA TABLE (GRAHALAKSHANAM MATRIX)
 
-elif selected_module.startswith("📊 दशवर्ग तालिका"):
+elif selected_idx == 3:
     st.subheader("📊 दशवर्ग तालिका (Dasvarga Dignity Table)")
     st.write("D1 से D60 तक समस्त 10 प्रमुख वर्गों में ग्रहों की शास्त्रीय गरिमा (उच्च, मूलत्रिकोण, स्वराशि, मित्र, सम, शत्रु, नीच)।")
 
@@ -2253,7 +2456,7 @@ elif selected_module.startswith("📊 दशवर्ग तालिका"):
 # =============================================================
 # TAB 5: VASTU-JYOTISH (MANDALA & REMEDIES)
 
-elif selected_module.startswith("🏛️ वास्तु-ज्योतिष"):
+elif selected_idx == 4:
     st.subheader("🏛️ वास्तु-ज्योतिष दिशा मण्डल (Vastu-Jyotish Architectural Alignment)")
     st.write("जन्म कुण्डली के ग्रहों एवं भावों का अष्ट दिशाओं और ब्रह्मस्थान से शास्त्रीय समन्वय एवं वास्तु-दोष निवारण।")
 
@@ -2326,7 +2529,7 @@ elif selected_module.startswith("🏛️ वास्तु-ज्योति�
 # =============================================================
 # TAB 6: PRASHNA KUNDALI (HORARY ASTROLOGY)
 
-elif selected_module.startswith("❓ प्रश्न कुण्डली"):
+elif selected_idx == 5:
     st.subheader("❓ प्रश्न कुण्डली एवं ताजिक फलकथन (Horary Astrology)")
     st.write("23 शास्त्रीय प्रश्न श्रेणियाँ, तात्कालिक प्रश्न कुण्डली चक्र, कार्येश-लग्नेश इत्थशाल योग, द्वादश भाव भूमिका एवं सटीक समय निर्धारण।")
 
@@ -2744,7 +2947,7 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
 # =============================================================
 # TAB 7: GRAHALAKSHANAM CLOUD SYNC & BENCHMARK
 
-elif selected_module.startswith("☁️ सर्वर"):
+elif selected_idx == 6:
     st.subheader("☁️ लाइव सर्वर सिंक एवं डेटा सत्यापन (Server Cloud Sync & Validation)")
     st.write("अधिकृत खाते से लाइव सम्बंध स्थापित कर कुण्डलियों को सिंक करें और पंचांग से सटीकता का मिलान करें।")
 
@@ -2814,7 +3017,7 @@ elif selected_module.startswith("☁️ सर्वर"):
             st.error("❌ लॉगिन असफल। कृपया क्रेडेंशियल्स जांचें।")
 
 
-elif selected_module.startswith("⚖️ षड्बल"):
+elif selected_idx == 7:
     st.subheader("⚖️ षड्बल, भावबल एवं इष्ट/कष्ट फल (Shadbala & Strengths)")
     if chart.shadbala:
         sb_data = []
@@ -2851,7 +3054,7 @@ elif selected_module.startswith("⚖️ षड्बल"):
 # =============================================================
 # TAB 9: JAIMINI & UPAGRAHAS & SPECIAL LAGNAS & AVASTHAS
 
-elif selected_module.startswith("🔱 जैमिनी"):
+elif selected_idx == 8:
     st.subheader("🔱 जैमिनी ज्योतिष, विशेष लग्न, आरूढ़ पद एवं ग्रह अवस्थाएँ")
     st.write("महर्षि जैमिनी उपदेश सूत्र एवं बृहत्पाराशर होराशास्त्र (BPHS) आधारित विशेष लग्न, 12 आरूढ़ पद, ग्रह अवस्थाएँ, आयुर्दाय एवं अप्रकाशित उपग्रह।")
 
@@ -3040,7 +3243,7 @@ elif selected_module.startswith("🔱 जैमिनी"):
 # =============================================================
 # TAB 10: DASHA SYSTEMS
 
-elif selected_module.startswith("⏱️ दशा"):
+elif selected_idx == 9:
     st.subheader("⏱️ दशा प्रणालियाँ (Multi-Level Dasha Systems)")
     st.write("विंशोत्तरी दशा (महादशा, अंतर्दशा, प्रत्यंतर्दशा, सूक्ष्मदशा एवं प्राणदशा), योगिनी, जैमिनी चर, कालचक्र एवं शूल दशाओं का सम्पूर्ण बहु-स्तरीय विश्लेषण।")
 
@@ -3740,7 +3943,7 @@ elif selected_module.startswith("⏱️ दशा"):
 # =============================================================
 # TAB 11: GOCHAR & ASHTAKAVARGA & CHAKRAS
 
-elif selected_module.startswith("🪐 गोचर"):
+elif selected_idx == 10:
     st.subheader("🪐 गोचर, अष्टकवर्ग, सर्वतोभद्र चक्र एवं कोटा चक्र")
     st.write("तात्कालिक ग्रह गोचर स्थिति, साढ़ेसाती व ढैया ट्रैकर, 8x12 भिन्नाष्टकवर्ग, 9x9 सर्वतोभद्र वेध चक्र एवं 4-क्षेत्रीय कोटा दुर्ग चक्र।")
 
@@ -4153,7 +4356,7 @@ elif selected_module.startswith("🪐 गोचर"):
 # =============================================================
 # TAB 12: KP ASTROLOGY (KRISHNAMURTI PADDHATI)
 
-elif selected_module.startswith("📐 के.पी. प्रणाली"):
+elif selected_idx == 11:
     st.subheader("📐 के.पी. ज्योतिष प्रणाली (Krishnamurti Paddhati - KP System & Future Prediction)")
     st.write("कृष्णमूर्ति पद्धति आधारित 4-स्तरीय कार्यकत्व (4-Fold Significators), कस्पल सब-लॉर्ड (Sub-Lords), उप-उप स्वामी (Sub-Sub Lords), रूलिंग प्लैनेट्स (RP), 1-249 होरारी व भविष्य फलित निर्णय।")
 
@@ -4562,7 +4765,7 @@ elif selected_module.startswith("📐 के.पी. प्रणाली"):
 # =============================================================
 # TAB 13: MUHURTA & CHOGHADIYA & KAAL-VELA
 
-elif selected_module.startswith("⏳ शुभ मुहूर्त"):
+elif selected_idx == 12:
     st.subheader("⏳ शुभ मुहूर्त, दैनिक चौघड़िया एवं काल-वेला (Vedic Muhurta)")
     st.write("सूर्य सिद्धांत एवं मुहूर्त चिंतामणि आधारित दिन व रात्रि के ८-८ चौघड़िया, राहुकाल, अभिजित मुहूर्त एवं विशिष्ट कार्य सिद्धि मुहूर्त।")
 
@@ -4634,7 +4837,7 @@ elif selected_module.startswith("⏳ शुभ मुहूर्त"):
 # =============================================================
 # TAB 14: SUDARSHAN CHAKRA
 
-elif selected_module.startswith("☸️ सुदर्शन चक्र"):
+elif selected_idx == 13:
     st.subheader("☸️ सुदर्शन चक्र (Sudarshan Chakra - 3-Ring Concentric Mandala)")
     st.write("बृहत्पाराशर होराशास्त्र (BPHS) के अनुसार लग्न (शरीर), चन्द्र (मन) एवं सूर्य (आत्मा) तीनों दृष्टिकोणों का एक साथ संकेंद्री चक्र में त्रि-स्तरीय फलित।")
 
@@ -4655,7 +4858,7 @@ elif selected_module.startswith("☸️ सुदर्शन चक्र"):
 # =============================================================
 # TAB 15: VARSHAPHAL (TAJIKA ANNUAL SOLAR RETURN)
 
-elif selected_module.startswith("📅 वर्षफल"):
+elif selected_idx == 14:
     st.subheader("📅 वर्षफल / ताजिक वार्षिक चक्र (Tajika Annual Solar Return)")
     st.write("ताजिक नीलकण्ठी अनुसार वार्षिक सौर वापसी कुण्डली, मुन्था विचार, पंचाधिकारी वर्षेश निर्णय, १६ ताजिक सहम एवं १-वर्षीय मुद्धा दशा चक्र।")
 
@@ -4766,7 +4969,7 @@ elif selected_module.startswith("📅 वर्षफल"):
 # =============================================================
 # TAB 13: BIRTH TIME RECTIFICATION (BTR)
 
-elif selected_module.startswith("⏳ समय"):
+elif selected_idx == 15:
     st.subheader("⏳ जन्म समय शोधन (Birth Time Rectification - BTR)")
     st.write("अपने जीवन की प्रमाणित ऐतिहासिक घटनाओं (नौकरी, विवाह, संतान आदि) के आधार पर सटीक जन्म समय की गणना करें।")
 
@@ -4793,7 +4996,7 @@ elif selected_module.startswith("⏳ समय"):
 # =============================================================
 # TAB 14: KUNDALI MILAN
 
-elif selected_module.startswith("💍 कुण्डली मिलान"):
+elif selected_idx == 16:
     st.subheader("💍 कुण्डली मिलान (36-Guna Ashtakoota & Manglik Matching)")
     col_m1, col_m2 = st.columns(2)
     with col_m1:
@@ -4831,7 +5034,7 @@ elif selected_module.startswith("💍 कुण्डली मिलान"):
 # =============================================================
 # TAB 15: AI SAHAYAK (CHAT CONSULTATION)
 
-elif selected_module.startswith("💬 ज्योतिष AI"):
+elif selected_idx == 17:
     st.subheader("💬 ज्योतिष AI सहायक (Interactive Shastriya Sahayak)")
     st.write("आपकी खुली हुई कुण्डली (ग्रह, भाव, दशा, गोचर, षड्बल एवं अष्टकवर्ग) के आधार पर व्यक्तिगत एवं सटीक शास्त्रीय परामर्श।")
 
@@ -4917,7 +5120,7 @@ elif selected_module.startswith("💬 ज्योतिष AI"):
 # =============================================================
 # TAB 19: COMPREHENSIVE REPORT & PRINTABLE KUNDALI BOOK
 
-elif selected_module.startswith("📄 सम्पूर्ण"):
+elif selected_idx == 18:
     st.subheader("📄 सम्पूर्ण जीवन कुण्डली पत्रिका (Full Printable 20+ Page Master Dossier)")
     st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, कोटा चक्र, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु-दोष, वर्षफल एवं सात्विक उपायों सहित शास्त्रीय गणनाओं की पूर्ण रंगीन प्रिंटेबल पत्रिका।")
 
@@ -4963,7 +5166,7 @@ elif selected_module.startswith("📄 सम्पूर्ण"):
 # =============================================================
 # TAB 17: 100 SHASTRIYA RULES LIBRARY
 
-elif selected_module.startswith("📚 100 शास्त्रीय"):
+elif selected_idx == 19:
     st.subheader("📚 शास्त्रीय १०० नियम पुस्तकालय (Exhaustive 100 Classical Rules Catalog)")
     import importlib
     import src.jyotish.rules.engine as rules_mod
@@ -5012,7 +5215,7 @@ elif selected_module.startswith("📚 100 शास्त्रीय"):
 # =============================================================
 # TAB 18: VEDIC RISHI VALIDATION
 
-elif selected_module.startswith("🔍 वैदिक ऋषि"):
+elif selected_idx == 20:
     st.subheader("🔍 वैदिक ऋषि API सत्यापन एवं बेंचमार्क (Vedic Rishi Cross-Validation)")
     st.write("JyotishOS स्विस एफिमेरिस गणनाओं का वैदिक ऋषि एस्ट्रो मानक से ग्रह-दर-ग्रह मिलान और सटीकता सत्यापन।")
 
