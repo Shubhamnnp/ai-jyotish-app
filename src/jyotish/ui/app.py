@@ -682,12 +682,49 @@ unified_css = """
             min-height: 44px !important;
         }
     }
+
+    /* Google Translate Clean Styling - Zero Distortion */
+    .goog-te-banner-frame.skiptranslate, .goog-te-gadget, #goog-gt-tt, .goog-te-spinner-pos, iframe.goog-te-banner-frame {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    body {
+        top: 0px !important;
+    }
+    #google_translate_element {
+        display: none !important;
+    }
+    .skiptranslate iframe {
+        display: none !important;
+    }
+    .goog-tooltip, .goog-tooltip:hover {
+        display: none !important;
+    }
+    .goog-text-highlight {
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    #software-lang-select {
+        border: none !important;
+        background: transparent !important;
+        font-weight: 800 !important;
+        font-size: 11.5px !important;
+        color: #166534 !important;
+        cursor: pointer !important;
+        outline: none !important;
+    }
+    #software-lang-select option {
+        background: #FFFFFF !important;
+        color: #0F172A !important;
+        font-weight: 700 !important;
+    }
 </style>
 """
 
 st.markdown(unified_css, unsafe_allow_html=True)
 
-# Client-Side Sidebar Toggle Bridge & Live GPS Location Resolver
+# Client-Side Sidebar Toggle Bridge, Multi-Language Engine & Live GPS Resolver
 components.html("""
 <script>
 (function() {
@@ -741,6 +778,76 @@ components.html("""
         }
     }
     
+    // Multi-Language Translation Engine
+    function setupLanguageBridge() {
+        try {
+            const parentDoc = window.parent.document;
+            const parentWin = window.parent;
+            if (!parentDoc || !parentWin) return;
+
+            // Setup language change function on parent window
+            if (!parentWin.changeSoftwareLanguage) {
+                parentWin.changeSoftwareLanguage = function(langCode) {
+                    localStorage.setItem("jyotish_app_lang", langCode);
+                    sessionStorage.setItem("jyotish_app_lang", langCode);
+                    
+                    if (langCode === "general" || !langCode) {
+                        // Reset Google Translate cookie
+                        parentDoc.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                        parentDoc.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + parentWin.location.hostname;
+                        parentWin.location.reload();
+                        return;
+                    }
+                    
+                    // Set cookie for auto translation
+                    parentDoc.cookie = "googtrans=/auto/" + langCode + "; path=/;";
+                    parentDoc.cookie = "googtrans=/auto/" + langCode + "; path=/; domain=" + parentWin.location.hostname;
+                    
+                    const combo = parentDoc.querySelector('.goog-te-combo');
+                    if (combo) {
+                        combo.value = langCode;
+                        combo.dispatchEvent(new Event('change'));
+                    } else {
+                        parentWin.location.reload();
+                    }
+                };
+            }
+
+            // Inject Google Translate script in parent doc if not present
+            if (!parentDoc.getElementById('google-translate-script')) {
+                const gdiv = parentDoc.createElement('div');
+                gdiv.id = 'google_translate_element';
+                gdiv.style.display = 'none';
+                parentDoc.body.appendChild(gdiv);
+
+                parentWin.googleTranslateElementInit = function() {
+                    new parentWin.google.translate.TranslateElement({
+                        pageLanguage: 'hi',
+                        includedLanguages: 'hi,en,sa,gu,mr,bn,te,ta',
+                        autoDisplay: false
+                    }, 'google_translate_element');
+                };
+
+                const s = parentDoc.createElement('script');
+                s.id = 'google-translate-script';
+                s.type = 'text/javascript';
+                s.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+                parentDoc.head.appendChild(s);
+            }
+
+            // Sync select boxes with current saved language
+            const activeLang = localStorage.getItem("jyotish_app_lang") || "general";
+            const selects = parentDoc.querySelectorAll('#software-lang-select');
+            selects.forEach(function(sel) {
+                if (sel.value !== activeLang) {
+                    sel.value = activeLang;
+                }
+            });
+        } catch (e) {
+            console.error('Language bridge error:', e);
+        }
+    }
+
     // Live Client GPS Geolocation Resolver
     function updateLocationUI(locStr) {
         try {
@@ -812,9 +919,11 @@ components.html("""
     }
 
     setupSidebarToggle();
+    setupLanguageBridge();
     resolveClientGPS();
     setInterval(function() {
         setupSidebarToggle();
+        setupLanguageBridge();
         const cached = localStorage.getItem("jyotish_user_gps_loc") || sessionStorage.getItem("jyotish_user_gps_loc");
         if (cached) {
             updateLocationUI(cached);
@@ -830,7 +939,21 @@ components.html("""
 # -------------------------------------------------------------
 def render_login_page():
     st.markdown("""
-    <div style="text-align: center; padding: 25px 15px 15px 15px;">
+    <div style="display:flex; justify-content:flex-end; margin-bottom: 4px;">
+        <div class="header-sub-pill" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:4px 12px !important;">
+            🌐 <b>भाषा (Language):</b>
+            <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null">
+                <option value="general">General (जनरल)</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="en">English (अंग्रेजी)</option>
+                <option value="sa">संस्कृतम् (Sanskrit)</option>
+                <option value="gu">ગુજરાતી (Gujarati)</option>
+                <option value="mr">मराठी (Marathi)</option>
+                <option value="bn">বাংলা (Bengali)</option>
+            </select>
+        </div>
+    </div>
+    <div style="text-align: center; padding: 15px 15px 15px 15px;">
         <div style="font-size: 2.8rem; font-weight: 900; color: #B45309; letter-spacing: -0.5px; margin-bottom: 4px;">
             🔮 JyotishOS Cloud Platform
         </div>
@@ -1274,6 +1397,18 @@ st.markdown(f"""
             </div>
             <div class="header-sub-pill">
                 🕒 <b>वर्तमान समय:</b> {current_time_str}
+            </div>
+            <div class="header-sub-pill" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important;" title="सॉफ़्टवेयर की भाषा चुनें (Select Language)">
+                🌐 <b>भाषा:</b>
+                <select id="software-lang-select" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null">
+                    <option value="general">General (जनरल)</option>
+                    <option value="hi">हिन्दी (Hindi)</option>
+                    <option value="en">English (अंग्रेजी)</option>
+                    <option value="sa">संस्कृतम् (Sanskrit)</option>
+                    <option value="gu">ગુજરાતી (Gujarati)</option>
+                    <option value="mr">मराठी (Marathi)</option>
+                    <option value="bn">বাংলা (Bengali)</option>
+                </select>
             </div>
             <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
                 📍 <b>वर्तमान स्थान (GPS):</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
