@@ -375,26 +375,41 @@ unified_css = f"""
         transform: scale(0.95) !important;
     }}
 
-        /* Natural Scrolling & Clean Top Spacing */
-    html, body {{
-        overflow-x: hidden !important;
-        overflow-y: auto !important;
-    }}
+    /* Clean top spacing & allow frozen sticky header */
     [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {{
         overflow-x: hidden !important;
         overflow-y: auto !important;
+    }}
+    header[data-testid="stHeader"] {{
+        display: none !important;
+        height: 0px !important;
+        visibility: hidden !important;
     }}
     .block-container {{
         padding-top: 0px !important;
         padding-bottom: 2rem !important;
         padding-left: 1.5rem !important;
         padding-right: 1.5rem !important;
+        overflow: visible !important;
     }}
-
-    /* Sticky Frozen Top Header */
-    header.top-nav-bar,
-    .top-nav-bar,
-    .top-header-frozen-bar {{
+    header.top-nav-bar {{
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0px !important;
+        z-index: 999999 !important;
+        width: calc(100% + 3rem) !important;
+        margin-left: -1.5rem !important;
+        margin-right: -1.5rem !important;
+        margin-top: 0px !important;
+        margin-bottom: 12px !important;
+        padding: 10px 24px !important;
+        backdrop-filter: blur(10px) !important;
+    }}
+    div:has(> header.top-nav-bar),
+    div[data-testid="stMarkdownContainer"]:has(header.top-nav-bar),
+    div[data-testid="element-container"]:has(header.top-nav-bar),
+    div[data-testid="stElementContainer"]:has(header.top-nav-bar) {{
+        position: -webkit-sticky !important;
         position: sticky !important;
         top: 0px !important;
         z-index: 999999 !important;
@@ -2011,7 +2026,7 @@ current_time_str = now_dt.strftime("%d %b %Y, %I:%M %p")
 # 1. Top Navigation Bar (Header)
 # -------------------------------------------------------------
 st.markdown(f"""
-<header class="top-nav-bar top-header-frozen-bar">
+<header class="top-nav-bar">
     <div class="nav-left">
         <button id="sidebar-toggle-action-btn" class="sidebar-toggle-btn" title="साइडबार खोलें / बंद करें (Toggle Sidebar)">
             ❯❯
