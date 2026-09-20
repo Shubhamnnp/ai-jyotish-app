@@ -3682,63 +3682,401 @@ elif selected_module.startswith("🪐 गोचर"):
 # TAB 12: KP ASTROLOGY (KRISHNAMURTI PADDHATI)
 
 elif selected_module.startswith("📐 के.पी. प्रणाली"):
-    st.subheader("📐 के.पी. ज्योतिष प्रणाली (Krishnamurti Paddhati - KP System)")
-    st.write("कृष्णमूर्ति पद्धति आधारित ग्रह व कस्पल उप-स्वामी (Sub-Lords), उप-उप स्वामी (Sub-Sub Lords), रूलिंग प्लैनेट्स (RP) एवं 1-249 होरारी तालिका।")
+    st.subheader("📐 के.पी. ज्योतिष प्रणाली (Krishnamurti Paddhati - KP System & Future Prediction)")
+    st.write("कृष्णमूर्ति पद्धति आधारित 4-स्तरीय कार्यकत्व (4-Fold Significators), कस्पल सब-लॉर्ड (Sub-Lords), उप-उप स्वामी (Sub-Sub Lords), रूलिंग प्लैनेट्स (RP), 1-249 होरारी व भविष्य फलित निर्णय।")
 
-    kp_chart_data = default_kp_engine.calculate_chart_kp(chart)
+    import importlib
+    import src.jyotish.core.kp as kp_mod
+    if not hasattr(kp_mod.default_kp_engine, "predict_kp_query"):
+        importlib.reload(kp_mod)
+    k_engine = kp_mod.default_kp_engine
 
-    tab_kp1, tab_kp2, tab_kp3, tab_kp4 = st.tabs([
-        "🪐 ग्रह के.पी. उप-स्वामी (Planet Sub-Lords)",
-        "🏰 द्वादश भाव कस्पल तालिका (12 Cuspal Sub-Lords)",
-        "👑 रूलिंग प्लैनेट्स (Ruling Planets - RP)",
-        "🔢 1-249 कृष्णमूर्ति होरारी तालिका (1-249 KP Horary)"
-    ])
+    # 1. Calculation Mode Selector
+    kp_mode = st.radio(
+        "🎯 के.पी. गणना एवं फलित मोड चुनें:",
+        ["👤 सक्रिय जातक के.पी. जन्मपत्री एवं फलित (Active Native KP Natal & Prediction)",
+         "🔮 तत्कालिक 1-249 कृष्णमूर्ति होरारी प्रश्न (KP Instant Horary Question & Prediction)"],
+        horizontal=True
+    )
 
-    with tab_kp1:
-        st.markdown("#### 🪐 नवग्रह के.पी. स्थिति, नक्षत्र स्वामी व उप-स्वामी")
-        st.write("प्रत्येक ग्रह की राशि, राशि स्वामी (Sign Lord), नक्षत्र स्वामी (Star Lord), उप-स्वामी (Sub Lord) एवं उप-उप स्वामी (Sub-Sub Lord)।")
-        st.dataframe(pd.DataFrame(kp_chart_data["planets_kp"]), use_container_width=True)
+    active_kp_chart = chart
+    chosen_horary_num = None
 
-    with tab_kp2:
-        st.markdown("#### 🏰 द्वादश भाव संधि व कस्पल उप-स्वामी (Cuspal Sub-Lords)")
-        st.write("के.पी. पद्धति में किसी भी घटना के फलित का अंतिम निर्णय उस भाव के **कस्पल सब-लॉर्ड (Cuspal Sub-Lord)** के नक्षत्र स्वामी द्वारा होता है।")
-        st.dataframe(pd.DataFrame(kp_chart_data["cusps_kp"]), use_container_width=True)
+    if "तत्कालिक 1-249" in kp_mode:
+        st.markdown("##### 🔮 तत्कालिक के.पी. होरारी प्रश्न विवरण दर्ज करें (Date, Time, Location & Horary No.)")
+        c_hq1, c_hq2, c_hq3, c_hq4 = st.columns([1.2, 1.2, 1.2, 1.4])
+        with c_hq1:
+            chosen_horary_num = st.number_input("🔢 होरारी संख्या (1 - 249)", min_value=1, max_value=249, value=108, step=1, key="kp_horary_input_num")
+        with c_hq2:
+            q_date = st.date_input("📅 प्रश्न दिनांक (Date)", value=datetime.now().date(), key="kp_q_date")
+        with c_hq3:
+            q_time = st.time_input("⏰ प्रश्न समय (Time)", value=datetime.now().time(), key="kp_q_time")
+        with c_hq4:
+            q_city = st.text_input("📍 प्रश्न स्थान (City)", value=default_city_name, key="kp_q_city")
 
-    with tab_kp3:
-        st.markdown("#### 👑 तात्कालिक रूलिंग प्लैनेट्स (Ruling Planets - RP)")
-        st.write("जन्म/प्रश्न क्षण के समय ब्रह्मांड के ५ नियंत्रक ग्रह (वार, चन्द्र राशि/नक्षत्र, लग्न राशि/नक्षत्र स्वामी)।")
-        
-        rp = kp_chart_data["ruling_planets"]
-        c_rp1, c_rp2, c_rp3 = st.columns(3)
-        c_rp1.metric(rp["day_lord"]["title"], rp["day_lord"]["planet"])
-        c_rp2.metric(rp["moon_sign_lord"]["title"], rp["moon_sign_lord"]["planet"])
-        c_rp3.metric(rp["moon_star_lord"]["title"], rp["moon_star_lord"]["planet"])
+        # Resolve Horary Location & Calculate Horary Chart
+        loc_res = default_geocoding_service.resolve_location(q_city)
+        h_bdata = BirthData(
+            name=f"KP Horary #{chosen_horary_num}",
+            gender="Unknown",
+            birth_date=q_date,
+            birth_time=q_time,
+            latitude=loc_res.latitude,
+            longitude=loc_res.longitude,
+            timezone_offset=loc_res.timezone_offset,
+            city_name=loc_res.city_name
+        )
+        try:
+            active_kp_chart = default_chart_calculator.calculate_chart(h_bdata)
+            # In KP Horary, Ascendant is fixed to the selected 1-249 sub-division starting longitude
+            h_entry = k_engine.get_horary_number_detail(int(chosen_horary_num))
+            active_kp_chart.lagna_longitude = h_entry["start_lon"]
+            active_kp_chart.lagna_sign_id = h_entry["sign_id"]
+            active_kp_chart.lagna_degree = h_entry["start_deg"]
+        except Exception as e:
+            st.warning(f"होरारी गणना में त्रुटि, सक्रिय जातक का चार्ट उपयोग किया जा रहा है: {e}")
+            active_kp_chart = chart
 
-        c_rp4, c_rp5 = st.columns(2)
-        c_rp4.metric(rp["lagna_sign_lord"]["title"], rp["lagna_sign_lord"]["planet"])
-        c_rp5.metric(rp["lagna_star_lord"]["title"], rp["lagna_star_lord"]["planet"])
+    kp_chart_data = k_engine.calculate_chart_kp(active_kp_chart)
+    rp_info = kp_chart_data["ruling_planets"]
+    cusps_data = kp_chart_data["cusps_kp"]
+    planets_kp_data = kp_chart_data["planets_kp"]
+    p_sigs = kp_chart_data["planet_significations"]
+    h_sigs = kp_chart_data["house_significators"]
 
-        st.info("💡 **रूलिंग प्लैनेट्स का उपयोग:** जन्म समय शोधन (BTR), प्रश्न निर्णय, एवं घटना के सटीक समय निर्धारण (Timing of Events) में रूलिंग प्लैनेट्स सर्वोच्च मार्गदर्शक होते हैं।")
+    # Active KP Top Banner (Light Golden HUD)
+    lagna_csl = cusps_data[0]
+    moon_kp_obj = next((p for p in planets_kp_data if p["planet"] == "Moon"), planets_kp_data[1])
 
-    with tab_kp4:
-        st.markdown("#### 🔢 1-249 कृष्णमूर्ति होरारी अंक विश्लेषक (KP Horary Resolver)")
-        st.write("1 से 249 तक किसी भी होरारी संख्या का चयन करें और उसकी सटीक राशि, नक्षत्र व उप-स्वामी विभाजन देखें।")
-        
-        horary_num = st.number_input("होरारी संख्या दर्ज करें (1 - 249)", min_value=1, max_value=249, value=108, step=1)
-        h_detail = default_kp_engine.get_horary_number_detail(int(horary_num))
+    b_str_kp = (
+        f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
+        f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय के.पी. लग्न व चन्द्र सब-लॉर्ड पथ (Active KP Hierarchy & Ruling Planets):</div>"
+        f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
+        f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>👑 लग्न CSL: {lagna_csl['sub_lord']} ({lagna_csl['sign']})</span> "
+        f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+        f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>🌙 चन्द्र CSL: {moon_kp_obj['sub_lord']} (नक्षत्र: {moon_kp_obj['star_lord']})</span> "
+        f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+        f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ वार स्वामी: {rp_info['day_lord']['planet']}</span> "
+        f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+        f"<span style='background:#FDF2F8; border:1.5px solid #EC4899; color:#831843; padding:5px 12px; border-radius:8px;'>👑 मुख्य RPs: {', '.join(rp_info['all_rp_list'][:4])}</span>"
+        f"</div>"
+        f"</div>"
+    )
+    st.markdown(b_str_kp, unsafe_allow_html=True)
 
-        col_h1, col_h2, col_h3 = st.columns(3)
-        col_h1.metric("राशि (Sign)", f"{h_detail['sign_name']} (स्वामी: {h_detail['sign_lord']})")
-        col_h2.metric("नक्षत्र (Star Lord)", f"{h_detail['nakshatra']} ({h_detail['star_lord']})")
-        col_h3.metric("उप-स्वामी (Sub Lord)", h_detail['sub_lord'])
-
+    # 4 Matching Styled Metric Cards
+    c_k1, c_k2, c_k3, c_k4 = st.columns(4)
+    with c_k1:
         st.markdown(f"""
-        <div style="background:#FFFFFF; border:1.5px solid #2563EB; border-radius:10px; padding:14px; margin-top:8px;">
-            <b style="color:#1E40AF; font-size:14px;">🎯 होरारी संख्या #{horary_num} का खगोलीय विस्तार:</b><br/>
-            • <b>प्रारंभिक अंश:</b> {h_detail['start_deg']:.2f}° &nbsp;|&nbsp; <b>समाप्ति अंश:</b> {h_detail['end_deg']:.2f}° (राशि: {h_detail['sign_name']})<br/>
-            • <b>पूर्ण देशांतर (Longitude):</b> {h_detail['start_lon']:.2f}° से {h_detail['end_lon']:.2f}°
+        <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+            <div style="font-size:11.5px; color:#4338CA; font-weight:800;">👑 लग्न कस्पल सब-लॉर्ड (L1 CSL)</div>
+            <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{lagna_csl['sub_lord']}</div>
+            <div style="font-size:10.5px; color:#475569;">Star: {lagna_csl['star_lord']} | SSL: {lagna_csl['sub_sub_lord']}</div>
         </div>
         """, unsafe_allow_html=True)
+    with c_k2:
+        st.markdown(f"""
+        <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+            <div style="font-size:11.5px; color:#15803D; font-weight:800;">🌙 चन्द्र नक्षत्र व सब-लॉर्ड</div>
+            <div style="font-size:18px; font-weight:900; color:#064E3B;">{moon_kp_obj['sub_lord']}</div>
+            <div style="font-size:10.5px; color:#475569;">Star: {moon_kp_obj['star_lord']} ({moon_kp_obj['sign']})</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with c_k3:
+        st.markdown(f"""
+        <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+            <div style="font-size:11.5px; color:#B45309; font-weight:800;">👑 वार स्वामी (Day Lord)</div>
+            <div style="font-size:18px; font-weight:900; color:#78350F;">{rp_info['day_lord']['planet']}</div>
+            <div style="font-size:10.5px; color:#475569;">{active_kp_chart.panchang.vara_name}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with c_k4:
+        st.markdown(f"""
+        <div style="background:#FDF2F8; border: 2px solid #EC4899; border-radius:10px; padding:10px; text-align:center;">
+            <div style="font-size:11.5px; color:#BE185D; font-weight:800;">🔢 होरारी / लग्न स्थिति</div>
+            <div style="font-size:18px; font-weight:900; color:#831843;">{"होरारी #" + str(chosen_horary_num) if chosen_horary_num else "जन्म लग्न"}</div>
+            <div style="font-size:10.5px; color:#475569;">{lagna_csl['sign']} ({lagna_csl['degree_formatted']})</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.write("")
+
+    # 5 Sub-Tabs
+    tab_kp_pred, tab_kp1, tab_kp2, tab_kp3, tab_kp4 = st.tabs([
+        "🔮 के.पी. भविष्य फलित एवं कार्य सिद्धि निर्णय (KP Prediction)",
+        "🪐 ग्रह के.पी. उप-स्वामी व ४-स्तरीय कार्यकत्व (Planets & Significations)",
+        "🏰 द्वादश भाव कस्पल तालिका (12 Cuspal Sub-Lords)",
+        "👑 रूलिंग प्लैनेट्स (Ruling Planets - RP)",
+        "🔢 1-249 कृष्णमूर्ति होरारी तालिका (1-249 KP Master Table)"
+    ])
+
+    # -------------------------------------------------------------
+    # TAB 1: KP FUTURE PREDICTION ENGINE
+    # -------------------------------------------------------------
+    with tab_kp_pred:
+        st.markdown("#### 🔮 कृष्णमूर्ति पद्धति भविष्य फलित एवं कार्य सिद्धि विश्लेषक (KP Future Prediction Engine)")
+        st.write("के.पी. पद्धति के सार्वभौमिक स्वर्णिम नियमों (Golden Rules of KP) पर आधारित — मुख्य कस्पल सब-लॉर्ड, नक्षत्र स्वामी, ४-स्तरीय भाव कार्यकत्व एवं रूलिंग प्लैनेट्स के आधार पर अचूक भविष्यवाणी।")
+
+        col_q1, col_q2 = st.columns([1.5, 2.5])
+        with col_q1:
+            q_cat_options = list(kp_mod.KP_QUERY_RULES.keys())
+            selected_q_key = st.selectbox(
+                "📋 प्रश्न / अभीष्ट कार्य क्षेत्र चुनें (Select Domain):",
+                q_cat_options,
+                format_func=lambda k: kp_mod.KP_QUERY_RULES[k]["name"],
+                key="kp_query_domain_select"
+            )
+        with col_q2:
+            user_q_text = st.text_input(
+                "✍️ विशिष्ट प्रश्न लिखें (वैकल्पिक):",
+                placeholder="उदा. क्या मुझे इस वर्ष पदोन्नति/नई नौकरी मिलेगी? क्या विवाह संपन्न होगा?",
+                key="kp_user_q_text"
+            )
+
+        btn_pred = st.button("🔮 के.पी. शास्त्रीय फलित एवं कार्य सिद्धि निर्णय प्राप्त करें", type="primary", use_container_width=True)
+
+        # Execute Prediction
+        pred_res = k_engine.predict_kp_query(
+            active_kp_chart,
+            query_key=selected_q_key,
+            horary_num=chosen_horary_num,
+            query_text=user_q_text
+        )
+
+        st.markdown("---")
+        
+        # Grand Verdict Banner
+        c_theme = pred_res["color_theme"]
+        score = pred_res["confidence_score"]
+
+        st.markdown(f"""
+        <div style="background: #FFFFFF; border: 2.5px solid {c_theme}; border-radius: 14px; padding: 18px 22px; box-shadow: 0 4px 14px rgba(0,0,0,0.06); margin-bottom: 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:10px;">
+                <span style="font-size:20px; font-weight:900; color:{c_theme};">{pred_res['verdict_badge']}</span>
+                <span style="font-size:16px; font-weight:800; background:{c_theme}15; color:{c_theme}; padding:4px 14px; border-radius:20px; border:1px solid {c_theme};">🎯 अनुकूलता स्कोर: {score}%</span>
+            </div>
+            <div style="font-size:14.5px; color:#1E293B; line-height:1.6; margin-bottom:10px;">
+                {pred_res['verdict_desc']}
+            </div>
+            <div style="background:#F8FAFC; border-left:4px solid {c_theme}; padding:10px 14px; border-radius:6px; font-size:13px; color:#334155;">
+                📖 <b>शास्त्रीय संदर्भ:</b> {pred_res['query_desc']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.progress(score / 100.0)
+
+        # 3 Detailed Analytical Columns
+        col_pa1, col_pa2, col_pa3 = st.columns(3)
+
+        with col_pa1:
+            csl = pred_res["primary_csl"]
+            st.markdown(f"""
+            <div style="background:#EEF2FF; border:1.5px solid #6366F1; border-radius:10px; padding:12px; height:100%;">
+                <div style="font-weight:800; color:#4338CA; font-size:13px; margin-bottom:6px;">🎯 प्राथमिक कस्प एवं सब-लॉर्ड (CSL)</div>
+                <div style="font-size:16px; font-weight:900; color:#1E1B4B;">भाव #{pred_res['primary_cusp']} कस्पल सब-लॉर्ड</div>
+                <div style="font-size:13px; color:#312E81; margin-top:4px;">
+                    • <b>सब-लॉर्ड (CSL):</b> {csl['planet']}<br/>
+                    • <b>नक्षत्र स्वामी (Star Lord):</b> {csl['star_lord']}<br/>
+                    • <b>उप-उप स्वामी (SSL):</b> {csl['sub_sub_lord']}<br/>
+                    • <b>कस्प राशि व अंश:</b> {csl['sign']} ({csl['degree']})
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_pa2:
+            fav_html = "".join([f"<span style='background:#DCFCE7; color:#15803D; font-weight:800; padding:2px 8px; border-radius:6px; border:1px solid #86EFAC; margin-right:4px;'>भाव {h}</span>" for h in pred_res['favorable_houses']])
+            act_fav_html = "".join([f"<span style='background:#15803D; color:#FFFFFF; font-weight:900; padding:2px 8px; border-radius:6px; margin-right:4px;'>भाव {h} ✓</span>" for h in pred_res['signified_favorable']]) or "<span style='color:#94A3B8;'>कोई प्रत्यक्ष भाव नहीं</span>"
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border:1.5px solid #22C55E; border-radius:10px; padding:12px; height:100%;">
+                <div style="font-weight:800; color:#15803D; font-size:13px; margin-bottom:6px;">📈 अभीष्ट कार्य के अनुकूल भाव</div>
+                <div style="font-size:12px; color:#166534; margin-bottom:6px;"><b>आवश्यक अनुकूल भाव:</b><br/>{fav_html}</div>
+                <div style="font-size:12.5px; color:#14532D; margin-top:6px;">
+                    <b>CSL द्वारा सक्रिय अनुकूल भाव:</b><br/>{act_fav_html}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_pa3:
+            unfav_html = "".join([f"<span style='background:#FEE2E2; color:#B91C1C; font-weight:800; padding:2px 8px; border-radius:6px; border:1px solid #FCA5A5; margin-right:4px;'>भाव {h}</span>" for h in pred_res['unfavorable_houses']])
+            act_unfav_html = "".join([f"<span style='background:#B91C1C; color:#FFFFFF; font-weight:900; padding:2px 8px; border-radius:6px; margin-right:4px;'>भाव {h} ✗</span>" for h in pred_res['signified_unfavorable']]) or "<span style='color:#15803D; font-weight:700;'>🛡️ कोई बाधक भाव सक्रिय नहीं</span>"
+            st.markdown(f"""
+            <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:10px; padding:12px; height:100%;">
+                <div style="font-weight:800; color:#B91C1C; font-size:13px; margin-bottom:6px;">📉 बाधक एवं नकारात्मक भाव</div>
+                <div style="font-size:12px; color:#991B1B; margin-bottom:6px;"><b>कार्य-विरोधी भाव:</b><br/>{unfav_html}</div>
+                <div style="font-size:12.5px; color:#7F1D1D; margin-top:6px;">
+                    <b>CSL द्वारा सक्रिय बाधक भाव:</b><br/>{act_unfav_html}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.write("")
+
+        # Ruling Planets Synergy & Timing of Events
+        col_rp_chk, col_timing = st.columns(2)
+        with col_rp_chk:
+            rp_status = "✅ पूर्ण समर्थन (Verified by RP)" if pred_res["rp_agreement"] else "⚠️ मध्यम संगति (Moderate RP Connection)"
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px;">
+                <b style="color:#92400E; font-size:14px;">👑 रूलिंग प्लैनेट्स (RP) समर्थन:</b> &nbsp; <span style="color:#B45309; font-weight:800;">{rp_status}</span><br/>
+                <div style="font-size:13px; color:#451A03; margin-top:6px;">
+                    • <b>सक्रिय रूलिंग प्लैनेट्स:</b> {', '.join(pred_res['ruling_planets_active'])}<br/>
+                    • <b>के.पी. सिद्धांत:</b> यदि मुख्य कस्पल सब-लॉर्ड अथवा उसका नक्षत्र स्वामी रूलिंग प्लैनेट्स का सदस्य हो, तो कार्य समय पर फलित होता है।
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_timing:
+            st.markdown(f"""
+            <div style="background:#F8FAFC; border:1.5px solid #64748B; border-radius:10px; padding:14px;">
+                <b style="color:#1E293B; font-size:14px;">⏳ फलित काल एवं सटीक समय निर्धारण (Timing of Event):</b><br/>
+                <div style="font-size:13px; color:#334155; margin-top:6px;">
+                    {pred_res['timing_estimate']}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # -------------------------------------------------------------
+    # TAB 2: PLANETARY SUB-LORDS & 4-FOLD SIGNIFICATORS
+    # -------------------------------------------------------------
+    with tab_kp1:
+        st.markdown("#### 🪐 नवग्रह के.पी. स्थिति, उप-स्वामी एवं ४-स्तरीय कार्यकत्व (4-Fold Significators)")
+        st.write("के.पी. प्रणाली के अनुसार प्रत्येक ग्रह अपने **नक्षत्र स्वामी (Star Lord)** के भावों का फल देता है तथा **सब-लॉर्ड (Sub Lord)** फल की प्रकृति व कार्य सिद्धि (YES/NO) निर्धारित करता है।")
+
+        p_rows = []
+        for p in planets_kp_data:
+            p_name = p["planet"]
+            p_sig = p_sigs.get(p_name, {})
+            p_rows.append({
+                "ग्रह (Planet)": p_name,
+                "राशि (Sign)": p["sign"],
+                "सटीक अंश (Degree)": p["degree_formatted"],
+                "राशि स्वामी (Sign Lord)": p["sign_lord"],
+                "नक्षत्र स्वामी (Star Lord)": p["star_lord"],
+                "उप-स्वामी (Sub Lord)": p["sub_lord"],
+                "उप-उप स्वामी (SSL)": p["sub_sub_lord"],
+                "गति": p["motion"],
+                "कार्यकत्व भाव (Signified Houses)": ", ".join([f"#{h}" for h in p_sig.get("combined_houses", [])])
+            })
+        st.dataframe(pd.DataFrame(p_rows), use_container_width=True, hide_index=True)
+
+        st.markdown("##### 📜 ४-स्तरीय ग्रह कार्यकत्व विवरण (Levels A, B, C, D Breakdown)")
+        sig_rows = []
+        for p_name, s in p_sigs.items():
+            sig_rows.append({
+                "ग्रह": p_name,
+                "Level A (नक्षत्र में स्थित ग्रह के भाव)": ", ".join([f"भाव {h}" for h in s["level_a_houses"]]) or "—",
+                "Level B (स्वयं स्थित भाव)": ", ".join([f"भाव {h}" for h in s["level_b_houses"]]) or "—",
+                "Level C (नक्षत्र स्वामी के स्वामित्व वाले भाव)": ", ".join([f"भाव {h}" for h in s["level_c_houses"]]) or "—",
+                "Level D (स्वयं के स्वामित्व वाले भाव)": ", ".join([f"भाव {h}" for h in s["level_d_houses"]]) or "—",
+                "कुल कार्यकत्व (Total Signified)": ", ".join([f"#{h}" for h in s["combined_houses"]])
+            })
+        st.dataframe(pd.DataFrame(sig_rows), use_container_width=True, hide_index=True)
+
+    # -------------------------------------------------------------
+    # TAB 3: 12 CUSPAL SUB-LORDS & HOUSE SIGNIFICATORS
+    # -------------------------------------------------------------
+    with tab_kp2:
+        st.markdown("#### 🏰 द्वादश भाव संधि, कस्पल उप-स्वामी (Cuspal Sub-Lords) व भाव कार्यक")
+        st.write("के.पी. पद्धति में किसी भी भाव का फलित निर्णय उस भाव के **कस्पल सब-लॉर्ड (Cuspal Sub-Lord - CSL)** के नक्षत्र स्वामी द्वारा ही निर्धारित होता है।")
+
+        c_rows = []
+        for c in cusps_data:
+            h_num = c["cusp_num"]
+            h_sig = h_sigs.get(h_num, {})
+            c_rows.append({
+                "भाव (Cusp)": c["cusp"],
+                "राशि (Sign)": c["sign"],
+                "कस्प अंश (Degree)": c["degree_formatted"],
+                "राशि स्वामी (Sign Lord)": c["sign_lord"],
+                "नक्षत्र स्वामी (Star Lord)": c["star_lord"],
+                "कस्पल सब-लॉर्ड (CSL)": c["sub_lord"],
+                "उप-उप स्वामी (SSL)": c["sub_sub_lord"],
+                "भाव के कार्यक ग्रह (Significators)": ", ".join(h_sig.get("all_significators", []))
+            })
+        st.dataframe(pd.DataFrame(c_rows), use_container_width=True, hide_index=True)
+
+        st.markdown("##### 🏛️ द्वादश भावों के ४-स्तरीय नियंत्रक ग्रह (House Level A-D Significators)")
+        h_table_rows = []
+        for h_num, h_info in h_sigs.items():
+            h_table_rows.append({
+                "भाव": f"भाव #{h_num}",
+                "भाव स्वामी (Lord)": h_info["lord"],
+                "Level A (भाव में स्थित ग्रह के नक्षत्र में ग्रह)": ", ".join(h_info["level_a"]) or "—",
+                "Level B (भाव में स्थित ग्रह)": ", ".join(h_info["level_b"]) or "—",
+                "Level C (भाव स्वामी के नक्षत्र में ग्रह)": ", ".join(h_info["level_c"]) or "—",
+                "Level D (भाव स्वामी स्वयं)": ", ".join(h_info["level_d"]) or "—",
+                "समस्त कार्यक ग्रह": ", ".join(h_info["all_significators"])
+            })
+        st.dataframe(pd.DataFrame(h_table_rows), use_container_width=True, hide_index=True)
+
+    # -------------------------------------------------------------
+    # TAB 4: RULING PLANETS (RP)
+    # -------------------------------------------------------------
+    with tab_kp3:
+        st.markdown("#### 👑 तात्कालिक रूलिंग प्लैनेट्स (Ruling Planets - RP Analysis)")
+        st.write("जन्म/प्रश्न क्षण के समय ब्रह्मांड के नियंत्रक ग्रह (वार स्वामी, चन्द्र राशि/नक्षत्र स्वामी, लग्न राशि/नक्षत्र स्वामी)।")
+
+        c_rp1, c_rp2, c_rp3 = st.columns(3)
+        c_rp1.metric(rp_info["day_lord"]["title"], rp_info["day_lord"]["planet"])
+        c_rp2.metric(rp_info["moon_sign_lord"]["title"], rp_info["moon_sign_lord"]["planet"])
+        c_rp3.metric(rp_info["moon_star_lord"]["title"], rp_info["moon_star_lord"]["planet"])
+
+        c_rp4, c_rp5, c_rp6 = st.columns(3)
+        c_rp4.metric(rp_info["lagna_sign_lord"]["title"], rp_info["lagna_sign_lord"]["planet"])
+        c_rp5.metric(rp_info["lagna_star_lord"]["title"], rp_info["lagna_star_lord"]["planet"])
+        c_rp6.metric("लग्न उप-स्वामी (Lagna Sub Lord)", rp_info["lagna_sub_lord"]["planet"])
+
+        if rp_info.get("node_agents"):
+            st.markdown(f"""
+            <div style="background:#F1F5F9; border:1.5px solid #64748B; border-radius:10px; padding:12px; margin-top:12px;">
+                <b style="color:#0F172A; font-size:13.5px;">🐉 राहु / केतु नोड प्रतिनिधित्व (Node Agents of RPs):</b><br/>
+                <span style="font-size:13px; color:#334155;">{', '.join(rp_info['node_agents'])} — के.पी. नियमानुसार यदि राहु/केतु किसी RP की राशि/नक्षत्र में हों तो वे उस RP से भी अधिक शक्तिशाली फल देते हैं।</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.info("💡 **रूलिंग प्लैनेट्स का उपयोग:** जन्म समय शोधन (BTR), प्रश्न फलित निर्णय एवं कार्य सिद्धि के सटीक समय निर्धारण (Timing of Events) में रूलिंग प्लैनेट्स सर्वोच्च मार्गदर्शक होते हैं।")
+
+    # -------------------------------------------------------------
+    # TAB 5: 1-249 KP HORARY MASTER TABLE
+    # -------------------------------------------------------------
+    with tab_kp4:
+        st.markdown("#### 🔢 1-249 कृष्णमूर्ति होरारी तालिका (KP Horary Master Table)")
+        st.write("1 से 249 तक किसी भी होरारी संख्या का चयन करें अथवा सम्पूर्ण २49 उप-विभाजनों की सूची खोजें।")
+
+        all_249 = k_engine.get_all_249_table()
+
+        col_h_s1, col_h_s2 = st.columns([1.5, 2.5])
+        with col_h_s1:
+            inspect_h_num = st.number_input("होरारी संख्या चुनें (1 - 249)", min_value=1, max_value=249, value=int(chosen_horary_num) if chosen_horary_num else 108, step=1, key="inspect_h_num_single")
+        
+        h_detail = k_engine.get_horary_number_detail(int(inspect_h_num))
+        with col_h_s2:
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:12px;">
+                <b style="color:#92400E; font-size:14px;">🎯 होरारी संख्या #{inspect_h_num} का विवरण:</b><br/>
+                • <b>राशि:</b> {h_detail['sign_name']} (स्वामी: <b>{h_detail['sign_lord']}</b>) &nbsp;|&nbsp; <b>नक्षत्र:</b> {h_detail['nakshatra']} (स्वामी: <b>{h_detail['star_lord']}</b>)<br/>
+                • <b>उप-स्वामी (Sub Lord):</b> <span style="background:#EEF2FF; color:#312E81; padding:2px 8px; border-radius:4px; font-weight:800;">{h_detail['sub_lord']}</span><br/>
+                • <b>राशि अंश विस्तार:</b> {h_detail['start_deg']:.2f}° से {h_detail['end_deg']:.2f}° (पूर्ण देशांतर: {h_detail['start_lon']:.2f}° ~ {h_detail['end_lon']:.2f}°)
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.write("")
+        st.markdown("##### 📋 संपूर्ण 1-249 कृष्णमूर्ति उप-विभाजन तालिका (Full 249 Sub-Divisions)")
+        df_249 = pd.DataFrame([{
+            "होरारी #": row["number"],
+            "राशि (Sign)": row["sign_name"],
+            "राशि स्वामी": row["sign_lord"],
+            "नक्षत्र": row["nakshatra"],
+            "नक्षत्र स्वामी (Star Lord)": row["star_lord"],
+            "उप-स्वामी (Sub Lord)": row["sub_lord"],
+            "प्रारंभिक अंश": f"{row['start_deg']:.2f}°",
+            "समाप्ति अंश": f"{row['end_deg']:.2f}°",
+            "पूर्ण देशांतर (Longitude)": f"{row['start_lon']:.2f}° ~ {row['end_lon']:.2f}°"
+        } for row in all_249])
+
+        st.dataframe(df_249, use_container_width=True, hide_index=True)
+
 
 
 # =============================================================
