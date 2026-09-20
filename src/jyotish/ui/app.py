@@ -157,7 +157,13 @@ if is_night_mode:
     .top-nav-bar * {
         color: #F8FAFC !important;
     }
-    .top-nav-bar-container {
+    .top-nav-bar-container,
+    div[data-testid="stHorizontalBlock"]:has(button[key="hdr_birth_profile_btn"]),
+    div[data-testid="stVerticalBlock"]:has(> div[data-testid="stHorizontalBlock"] button[key="hdr_birth_profile_btn"]) {
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0px !important;
+        z-index: 999999 !important;
         background: #0F172A !important;
         border: 1.5px solid #1E293B !important;
         border-bottom: 3.5px solid #3B82F6 !important;
@@ -165,6 +171,7 @@ if is_night_mode:
         padding: 8px 16px !important;
         margin-bottom: 12px !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
+        backdrop-filter: blur(10px) !important;
     }
     .top-nav-bar-container * {
         color: #F8FAFC !important;
@@ -523,15 +530,22 @@ unified_css = f"""
         border-color: #94A3B8 !important;
     }}
 
-    /* Unified Frozen Top Header Bar (Full width edge-to-edge with royal blue boundary) */
-    .top-nav-bar-container {{
+    /* Unified Frozen Top Header Bar */
+    .top-nav-bar-container,
+    div[data-testid="stHorizontalBlock"]:has(button[key="hdr_birth_profile_btn"]),
+    div[data-testid="stVerticalBlock"]:has(> div[data-testid="stHorizontalBlock"] button[key="hdr_birth_profile_btn"]) {{
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0px !important;
+        z-index: 999999 !important;
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
         border-bottom: 3.5px solid #2563EB !important;
         border-radius: 12px !important;
         padding: 8px 16px !important;
         margin-bottom: 12px !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+        backdrop-filter: blur(10px) !important;
     }}
     .top-nav-bar {{
         position: sticky !important;
