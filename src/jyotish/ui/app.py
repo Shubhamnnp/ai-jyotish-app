@@ -389,7 +389,10 @@ unified_css = f"""
     }}
     div:has(> header.top-nav-bar),
     div[data-testid="stMarkdownContainer"]:has(header.top-nav-bar),
-    div[data-testid="element-container"]:has(header.top-nav-bar) {{
+    div[data-testid="element-container"]:has(header.top-nav-bar),
+    div[data-testid="stVerticalBlock"]:has(> div > header.top-nav-bar),
+    header.top-nav-bar,
+    .top-nav-bar {{
         position: sticky !important;
         top: 0px !important;
         z-index: 999999 !important;
