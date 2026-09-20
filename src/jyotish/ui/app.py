@@ -2002,50 +2002,71 @@ if geo_results:
     default_tz = selected_loc.timezone_offset
     default_city_name = selected_loc.city
 
+init_b_date = st.session_state.birth_date
+if isinstance(init_b_date, datetime):
+    init_b_date = init_b_date.date()
+if init_b_date < date(1950, 1, 1):
+    init_b_date = date(1950, 1, 1)
+elif init_b_date > date(2050, 12, 31):
+    init_b_date = date(2050, 12, 31)
+
+time_format_mode = st.sidebar.radio(
+    "समय प्रारूप (Time Format)",
+    ["12 घंटे (AM/PM)", "24 घंटे (24-Hour)"],
+    horizontal=True,
+    key="sb_time_format_pref"
+)
+
 col_b1, col_b2 = st.sidebar.columns(2)
-min_d = min(date(1950, 1, 1), st.session_state.birth_date) if isinstance(st.session_state.birth_date, date) else date(1950, 1, 1)
 birth_d = col_b1.date_input(
     "जन्म तिथि (DOB)",
-    value=st.session_state.birth_date,
-    min_value=min_d,
-    max_value=date(2100, 12, 31),
+    value=init_b_date,
+    min_value=date(1950, 1, 1),
+    max_value=date(2050, 12, 31),
     format="DD/MM/YYYY",
-    help="जन्म की तिथि चुनें (प्रारंभ: 1950, प्रारूप: DD/MM/YYYY)"
-)
-st.session_state.birth_date = birth_d
-
-time_format_mode = col_b2.selectbox(
-    "समय प्रारूप",
-    ["12-घंटे (AM/PM)", "24-घंटे (24-Hrs)"],
-    index=0,
-    key="sb_time_mode_sel",
-    help="समय प्रविष्टि का प्रारूप चुनें"
+    help="जन्म तिथि चुनें (1950 से 2050, प्रारूप: DD/MM/YYYY)"
 )
 
-if time_format_mode == "12-घंटे (AM/PM)":
-    cur_t = st.session_state.birth_time if isinstance(st.session_state.birth_time, time) else time(12, 0, 0)
-    cur_h12 = (cur_t.hour % 12) or 12
-    cur_m = cur_t.minute
-    cur_ampm = "PM" if cur_t.hour >= 12 else "AM"
+# Synchronize last loaded time across preset drawer switches
+if "last_loaded_time" not in st.session_state:
+    st.session_state.last_loaded_time = st.session_state.birth_time
+
+if st.session_state.last_loaded_time != st.session_state.birth_time:
+    st.session_state.last_loaded_time = st.session_state.birth_time
+    curr_h24 = st.session_state.birth_time.hour
+    curr_m = st.session_state.birth_time.minute
+    curr_ampm = "PM" if curr_h24 >= 12 else "AM"
+    curr_h12 = curr_h24 % 12
+    if curr_h12 == 0:
+        curr_h12 = 12
+    st.session_state["sb_time_h"] = curr_h12
+    st.session_state["sb_time_m"] = f"{curr_m:02d}"
+    st.session_state["sb_time_p"] = curr_ampm
+    st.session_state["sb_time_24_val"] = st.session_state.birth_time
+
+if time_format_mode.startswith("12"):
+    curr_t = st.session_state.birth_time
+    curr_h24 = curr_t.hour
+    curr_m = curr_t.minute
+    curr_ampm = "PM" if curr_h24 >= 12 else "AM"
+    curr_h12 = curr_h24 % 12
+    if curr_h12 == 0:
+        curr_h12 = 12
+
+    col_th, col_tm, col_tp = col_b2.columns([1, 1, 1.2])
+    h_val = col_th.selectbox("घंटा", list(range(1, 13)), index=curr_h12 - 1, key="sb_time_h")
+    m_val = col_tm.selectbox("मिनट", [f"{m:02d}" for m in range(60)], index=curr_m, key="sb_time_m")
+    p_val = col_tp.selectbox("AM/PM", ["AM", "PM"], index=0 if curr_ampm == "AM" else 1, key="sb_time_p")
     
-    col_t1, col_t2, col_t3 = st.sidebar.columns([1.2, 1.2, 1.4])
-    t_h = col_t1.selectbox("घंटा (Hr)", list(range(1, 13)), index=cur_h12 - 1, key="sb_t_hr_12")
-    t_m = col_t2.selectbox("मिनट (Min)", [f"{m:02d}" for m in range(60)], index=cur_m, key="sb_t_min_12")
-    t_ampm = col_t3.selectbox("प्रहर", ["AM (प्रातः)", "PM (सायं)"], index=0 if cur_ampm == "AM" else 1, key="sb_t_ampm_12")
-    
-    h24 = (int(t_h) % 12) + (12 if "PM" in t_ampm else 0)
-    birth_t = time(h24, int(t_m), 0)
-    st.session_state.birth_time = birth_t
-    st.sidebar.markdown(f"<div style='background:#F8FAFC; border:1px solid #CBD5E1; border-radius:6px; padding:3px 8px; font-size:11.5px; margin-bottom:6px; color:#0F172A; text-align:center;'>🕒 <b>समय:</b> {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; ⏱️ <b>24H:</b> {birth_t.strftime('%H:%M:%S')}</div>", unsafe_allow_html=True)
+    h_24 = (int(h_val) % 12) + (12 if p_val == "PM" else 0)
+    birth_t = time(h_24, int(m_val), 0)
 else:
-    birth_t = st.sidebar.time_input(
-        "जन्म समय (Birth Time - 24H)",
+    birth_t = col_b2.time_input(
+        "जन्म समय (24-Hour)",
         value=st.session_state.birth_time,
         step=60,
-        help="24-घंटे के प्रारूप में समय चुनें"
+        key="sb_time_24_val"
     )
-    st.session_state.birth_time = birth_t
-    st.sidebar.markdown(f"<div style='background:#F8FAFC; border:1px solid #CBD5E1; border-radius:6px; padding:3px 8px; font-size:11.5px; margin-bottom:6px; color:#0F172A; text-align:center;'>🕒 <b>समय:</b> {birth_t.strftime('%H:%M:%S')} (24H) &nbsp;|&nbsp; ⏱️ {birth_t.strftime('%I:%M %p')}</div>", unsafe_allow_html=True)
 
 col_geo1, col_geo2 = st.sidebar.columns(2)
 latitude = col_geo1.number_input("Latitude", value=default_lat, format="%.4f")
@@ -3765,7 +3786,7 @@ elif selected_idx == 9:
     # Target Date Picker for Point-in-Time Dasha Calculation
     c_dt1, c_dt2 = st.columns([2, 4])
     with c_dt1:
-        dasha_target_date = st.date_input("🎯 लक्षित दिनांक पर दशा देखें (Target Date)", value=date.today(), key="dasha_target_date_picker", format="DD/MM/YYYY")
+        dasha_target_date = st.date_input("🎯 लक्षित दिनांक पर दशा देखें (Target Date)", value=date.today(), format="DD/MM/YYYY", key="dasha_target_date_picker")
     with c_dt2:
         st.caption(f"🗓️ वर्तमान में **{dasha_target_date.strftime('%d-%b-%Y')}** के लिए तात्कालिक सक्रिय सूक्ष्म दशाओं का मूल्यांकन प्रदर्शित किया जा रहा है।")
 
@@ -4898,7 +4919,7 @@ elif selected_idx == 11:
         with c_hq1:
             chosen_horary_num = st.number_input("🔢 होरारी संख्या (1 - 249)", min_value=1, max_value=249, value=108, step=1, key="kp_horary_input_num")
         with c_hq2:
-            q_date = st.date_input("📅 प्रश्न दिनांक (Date)", value=datetime.now().date(), key="kp_q_date")
+            q_date = st.date_input("📅 प्रश्न दिनांक (Date)", value=datetime.now().date(), format="DD/MM/YYYY", key="kp_q_date")
         with c_hq3:
             q_time = st.time_input("⏰ प्रश्न समय (Time)", value=datetime.now().time(), key="kp_q_time")
         with c_hq4:
@@ -5286,7 +5307,7 @@ elif selected_idx == 12:
 
     col_m1, col_m2 = st.columns([1.5, 2.5])
     with col_m1:
-        muhurta_date = st.date_input("📅 मुहूर्त दिनांक चयन करें", value=datetime.now().date())
+        muhurta_date = st.date_input("📅 मुहूर्त दिनांक चयन करें", value=datetime.now().date(), format="DD/MM/YYYY")
     with col_m2:
         st.write("")
         st.caption(f"📍 स्थान: **{default_city_name}** | वार: **{muhurta_date.strftime('%A')}**")
@@ -5517,12 +5538,12 @@ elif selected_idx == 16:
     with col_m1:
         st.markdown("#### 👦 वर विवरण (Groom Details)")
         g_name = st.text_input("वर का नाम", value="वर")
-        g_date = st.date_input("वर जन्म तिथि", value=date(1995, 8, 20), min_value=date(1950, 1, 1), max_value=date(2100, 12, 31), format="DD/MM/YYYY", key="g_d")
+        g_date = st.date_input("वर जन्म तिथि", value=date(1995, 8, 20), min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="g_d")
         g_time = st.time_input("वर जन्म समय", value=time(14, 30), key="g_t")
     with col_m2:
         st.markdown("#### 👧 वधू विवरण (Bride Details)")
         b_name = st.text_input("वधू का नाम", value="वधू")
-        b_date = st.date_input("वधू जन्म तिथि", value=date(1997, 3, 15), min_value=date(1950, 1, 1), max_value=date(2100, 12, 31), format="DD/MM/YYYY", key="b_d")
+        b_date = st.date_input("वधू जन्म तिथि", value=date(1997, 3, 15), min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="b_d")
         b_time = st.time_input("वधू जन्म समय", value=time(9, 15), key="b_t")
 
     if st.button("💑 कुण्डली मिलान करें", type="primary"):
