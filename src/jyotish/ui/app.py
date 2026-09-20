@@ -4510,7 +4510,11 @@ elif selected_module.startswith("📄 सम्पूर्ण"):
 
 elif selected_module.startswith("📚 100 शास्त्रीय"):
     st.subheader("📚 शास्त्रीय १०० नियम पुस्तकालय (Exhaustive 100 Classical Rules Catalog)")
-    rules_to_show = default_rules_engine.rules
+    import importlib
+    import src.jyotish.rules.engine as rules_mod
+    importlib.reload(rules_mod)
+    rules_engine = rules_mod.RulesEngine()
+    rules_to_show = rules_engine.rules
     st.write(f"कुल शास्त्रीय नियम: **{len(rules_to_show)}** (100% Shastriya Parashari, Brihat Jataka, Prashna Marga, Phaladeepika, Saravali, Jaimini, Tajika & Uttara Kalamrita)")
 
     c_f1, c_f2, c_f3 = st.columns([2, 2, 2])
