@@ -4380,12 +4380,12 @@ elif selected_module.startswith("💬 ज्योतिष AI"):
 
 elif selected_module.startswith("📄 सम्पूर्ण"):
     st.subheader("📄 सम्पूर्ण जीवन कुण्डली पत्रिका (Full Printable 20+ Page Master Dossier)")
-    st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, कोटा चक्र, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु-दोष, वर्षफल एवं सात्विक उपायों सहित २१ मॉड्यूल्स की पूर्ण रंगीन प्रिंटेबल पत्रिका।")
+    st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, कोटा चक्र, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु-दोष, वर्षफल एवं सात्विक उपायों सहित शास्त्रीय गणनाओं की पूर्ण रंगीन प्रिंटेबल पत्रिका।")
 
     with st.expander("👑 ज्योतिषी कस्टम ब्रांडिंग एवं रिपोर्ट विन्यास (White-Label Branding Settings)", expanded=True):
         c_br1, c_br2, c_br3 = st.columns(3)
         astro_name = c_br1.text_input("ज्योतिषी का नाम (Astrologer Name)", value="ज्योतिषाचार्य पं. शुभम तिवारी")
-        astro_org = c_br2.text_input("संस्थान / केंद्र (Center Name)", value="ज्योतिर्विश्व (JyotishOS) वैदिक ज्योतिष अनुसंधान केंद्र")
+        astro_org = c_br2.text_input("संस्थान / केंद्र (Center Name)", value="वैदिक ज्योतिष अनुसंधान केंद्र")
         astro_phone = c_br3.text_input("संपर्क सूत्र / WhatsApp (Contact)", value="+91-9452155742")
 
     import importlib
@@ -4393,7 +4393,7 @@ elif selected_module.startswith("📄 सम्पूर्ण"):
     importlib.reload(rep_mod)
     r_gen = rep_mod.default_report_generator
 
-    with st.spinner("🔮 समस्त २१ मॉड्यूल्स की गणनाओं को संकलित कर सम्पूर्ण पत्रिका तैयार की जा रही है..."):
+    with st.spinner("🔮 समस्त शास्त्रीय गणनाओं को संकलित कर सम्पूर्ण पत्रिका तैयार की जा रही है..."):
         master_bundle = default_master_calculator.calculate_all(chart)
         html_rep = r_gen.generate_html_report(
             chart,

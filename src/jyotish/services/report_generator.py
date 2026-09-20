@@ -45,11 +45,11 @@ class NatalReportGenerator:
         **kwargs
     ) -> str:
         """
-        Generates a comprehensive styled HTML master dossier incorporating all 21 modules.
+        Generates a comprehensive styled HTML master dossier.
         """
         astro_name = kwargs.get("astro_name", "ज्योतिषाचार्य पं. शुभम तिवारी")
         astro_phone = kwargs.get("astro_phone", "+91-9452155742")
-        astro_org = kwargs.get("astro_org", "ज्योतिर्विश्व (JyotishOS) वैदिक ज्योतिष अनुसंधान केंद्र")
+        astro_org = kwargs.get("astro_org", "वैदिक ज्योतिष अनुसंधान केंद्र")
         if master_data is None:
             master_data = default_master_calculator.calculate_all(chart)
 
@@ -268,7 +268,7 @@ class NatalReportGenerator:
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>JyotishOS Shastriya Master Kundali Dossier - {p.name}</title>
+    <title>सम्पूर्ण वैदिक जन्म पत्रिका - {p.name}</title>
     <style>
         body {{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -416,14 +416,14 @@ class NatalReportGenerator:
     </div>
 
     <div class="report-header">
-        <h1>🔮 ज्योतिर्विश्व (JyotishOS) — सम्पूर्ण जीवन जन्म पत्रिका</h1>
-        <p>२१ मॉड्यूल्स शास्त्रीय गणना • वृहत्पाराशर, जैमिनी, ताजिक, कृष्णमूर्ति एवं फलदीपिका महा-विमर्श</p>
+        <h1>🕉️ श्री गणेशाय नमः — सम्पूर्ण जीवन जन्म पत्रिका</h1>
+        <p>प्राचीन वैदिक ऋषि परम्परा एवं शुद्ध खगोलीय सिद्धान्तों पर आधारित विस्तृत फलादेश</p>
         <div class="astro-badge">
             🕉️ <b>परामर्शदाता ज्योतिषी:</b> {astro_name} &nbsp;|&nbsp; 📞 <b>संपर्क सूत्र:</b> {astro_phone}<br/>
             🏛️ <b>संस्थान:</b> {astro_org}
         </div>
         <div style="margin-top: 12px; font-size: 0.88rem; color: #64748B;">
-            <b>गणना दिनांक:</b> {master_data.get('calculated_at', datetime.now().strftime('%d-%b-%Y %H:%M'))} | <b>खगोलीय मानक:</b> स्विस एफिमेरिस (चित्रापक्ष/लाहिड़ी अयनांश)
+            <b>गणना दिनांक:</b> {master_data.get('calculated_at', datetime.now().strftime('%d-%b-%Y %H:%M'))} | <b>मानक:</b> शुद्ध चित्रापक्ष (लाहिड़ी) अयनांश
         </div>
     </div>
 
@@ -649,10 +649,10 @@ class NatalReportGenerator:
     <!-- DISCLAIMER & ASTROLOGER CERTIFICATION -->
     <div class="disclaimer">
         <div style="font-size:16px; font-weight:900; color:#1E40AF; margin-bottom:6px;">
-            📜 विधिक, शास्त्रीय एवं खगोलीय प्रमाणीकरण मुद्रा (Astrological Certification Seal)
+            📜 शास्त्रीय एवं खगोलीय प्रमाणीकरण मुद्रा (Astrological Certification Seal)
         </div>
         <div style="font-size:14px; color:#1E293B; margin-bottom:8px;">
-            यह सम्पूर्ण जन्म पत्रिका <b>{astro_name}</b> के मार्गदर्शन में <b>JyotishOS स्विस एफिमेरिस एवं वैदिक ऋषि एस्ट्रो</b> के आधार पर 0.05° की सूक्ष्म सहिष्णुता सीमा के भीतर शुद्ध गणितीय रूप से संकलित की गई है।
+            यह सम्पूर्ण जन्म पत्रिका <b>{astro_name}</b> के मार्गदर्शन में शुद्ध वैदिक ज्योतिषीय एवं खगोलीय सिद्धान्तों के आधार पर सूक्ष्म गणितीय परिशुद्धता के साथ संकलित की गई है।
         </div>
         <div style="font-size:13px; color:#475569;">
             <b>परामर्शक:</b> {astro_name} &nbsp;|&nbsp; <b>मो. नं.:</b> {astro_phone} &nbsp;|&nbsp; <b>संस्थान:</b> {astro_org}
