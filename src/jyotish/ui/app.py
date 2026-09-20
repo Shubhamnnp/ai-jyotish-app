@@ -1004,7 +1004,7 @@ with st.sidebar.expander("📁 सहेजी गई कुण्डलिय�
                 st.rerun()
 
     st.markdown("---")
-    st.caption("☁️ **Grahalakshanam Cloud Sync:** `shubham8jyotish@gmail.com`")
+    st.caption("☁️ **Server Cloud Sync:** `shubham8jyotish@gmail.com`")
     if st.button("🔄 Sync Cloud Charts", key="sync_gla_btn"):
         with st.spinner("Connecting to Cloud API..."):
             client = GrahalakshanamClient()
@@ -1098,7 +1098,7 @@ MODULE_OPTIONS = [
     "📊 दशवर्ग तालिका (Dasvarga Table)",
     "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
     "❓ प्रश्न कुण्डली (Horary / Prashna)",
-    "☁️ ग्रहलक्षणम् सिंक (Grahalakshanam Sync)",
+    "☁️ सर्वर सिंक (Server Sync)",
     "⚖️ षड्बल एवं भावबल (Shadbala)",
     "🔱 जैमिनी एवं उपग्रह (Jaimini)",
     "⏱️ दशा प्रणालियाँ (Dasha)",
@@ -1429,7 +1429,7 @@ elif selected_module.startswith("🎯 घटना विश्लेषण"):
 
 elif selected_module.startswith("🛡️ दोष एवं फ्री-विल"):
     st.subheader("🛡️ दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)")
-    st.write("Grahalakshanam की हस्ताक्षर प्रणाली: द्वादश भाव एवं नवग्रहों का सौम्य/क्रूर प्रभाव, त्रिकोण/त्रिक सम्बंध, दिग्बल एवं फ्री-विल प्रतिशत।")
+    st.write("सर्वर की हस्ताक्षर प्रणाली: द्वादश भाव एवं नवग्रहों का सौम्य/क्रूर प्रभाव, त्रिकोण/त्रिक सम्बंध, दिग्बल एवं फ्री-विल प्रतिशत।")
 
     detailed_toggle = st.toggle("🔄 ग्रह प्रतीक दृश्य (Detailed Symbols: Ju, Ma, Ra)", value=False)
 
@@ -1492,8 +1492,8 @@ elif selected_module.startswith("🛡️ दोष एवं फ्री-वि
     # GRAHALAKSHANAM SIGNATURE REMEDY SECTION
     # -------------------------------------------------------------
     st.markdown("---")
-    st.subheader("🌿 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Grahalakshanam Remedy Suite)")
-    st.write("Grahalakshanam की हस्ताक्षर उपचार प्रणाली: भाव (House), कारक (Karaka) एवं भावेश (Lord) का शास्त्रीय निवारण — रुद्राक्ष, यज्ञ, बीज मंत्र, विशिष्ट दान एवं वृक्षारोपण।")
+    st.subheader("🌿 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Server Remedy Suite)")
+    st.write("सर्वर की हस्ताक्षर उपचार प्रणाली: भाव (House), कारक (Karaka) एवं भावेश (Lord) का शास्त्रीय निवारण — रुद्राक्ष, यज्ञ, बीज मंत्र, विशिष्ट दान एवं वृक्षारोपण।")
 
     c_rem_top1, c_rem_top2 = st.columns([3, 1])
     with c_rem_top1:
@@ -1624,7 +1624,7 @@ elif selected_module.startswith("🛡️ दोष एवं फ्री-वि
     st.markdown(rem_html, unsafe_allow_html=True)
 
     # Remedy Shastriya Rules & Guidance Box
-    with st.expander("📖 ग्रहलक्षणम् शास्त्रीय उपाय नियम पुस्तिका (Remedy Rules & Scientific Guide)", expanded=True):
+    with st.expander("📖 सर्वर शास्त्रीय उपाय नियम पुस्तिका (Remedy Rules & Scientific Guide)", expanded=True):
         st.markdown("""
         1. **रत्न धारण नियम (Gemstone Rule):**
            - रत्न केवल उन्हीं ग्रहों का धारण किया जाता है जो कुण्डली में **शुभ (Benefic)** हों तथा जिनका **फ्री-विल 50% से अधिक** हो (तालिका में हरे रंग से चिन्हित)।
@@ -2272,8 +2272,8 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
 # =============================================================
 # TAB 7: GRAHALAKSHANAM CLOUD SYNC & BENCHMARK
 
-elif selected_module.startswith("☁️ ग्रहलक्षणम्"):
-    st.subheader("☁️ लाइव क्लाउड सिंक एवं होम डेटा सत्यापन")
+elif selected_module.startswith("☁️ सर्वर"):
+    st.subheader("☁️ लाइव सर्वर सिंक एवं डेटा सत्यापन (Server Cloud Sync & Validation)")
     st.write("अधिकृत खाते से लाइव सम्बंध स्थापित कर कुण्डलियों को सिंक करें और पंचांग से सटीकता का मिलान करें।")
 
     c_auth1, c_auth2, c_auth3 = st.columns([2, 2, 1])

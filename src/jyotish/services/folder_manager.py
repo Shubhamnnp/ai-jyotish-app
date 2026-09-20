@@ -264,15 +264,17 @@ class ChartFolderManager:
         imported_count = 0
         gla_files = gla_folders_files.get("files", [])
 
-        target_folder = next((f for f in self.data.get("folders", []) if f["name"] == "Grahalakshanam Cloud"), None)
+        target_folder = next((f for f in self.data.get("folders", []) if f["name"] in ["Server Cloud", "Grahalakshanam Cloud"]), None)
         if not target_folder:
             target_folder = {
                 "id": 9999,
-                "name": "Grahalakshanam Cloud",
+                "name": "Server Cloud",
                 "children": [],
                 "charts": []
             }
             self.data.setdefault("folders", []).append(target_folder)
+        else:
+            target_folder["name"] = "Server Cloud"
 
         for gf in gla_files:
             cid = gf.get("id")
@@ -285,7 +287,7 @@ class ChartFolderManager:
                     "id": cid,
                     "name": name,
                     "dateModified": date_mod,
-                    "source": "Grahalakshanam",
+                    "source": "Server",
                     "birth_data": {}
                 }
                 target_folder.setdefault("charts", []).append(chart_item)
