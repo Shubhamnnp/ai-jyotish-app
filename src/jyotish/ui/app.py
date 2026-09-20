@@ -4357,22 +4357,106 @@ elif selected_module.startswith("💍 कुण्डली मिलान"):
 
 
 # =============================================================
-# TAB 15: AI SAHAYAK (CHAT CONSULTATION)
+# TAB 15: AI SAHAYAK (CHAT CONSULTATION - GEMINI API INTEGRATED)
 
 elif selected_module.startswith("💬 ज्योतिष AI"):
-    st.subheader("💬 ज्योतिष AI सहायक (Interactive Shastriya Sahayak)")
-    st.write("अपनी कुण्डली और शास्त्रों के आधार पर प्रश्न पूछें। जेमिनी AI साक्ष्य-बद्ध शास्त्रीय परामर्श प्रदान करेगा।")
+    st.subheader("💬 ज्योतिष AI सहायक — Google Gemini API पावर्ड (Interactive Kundali Assistant)")
+    st.write("आपकी खुली हुई कुण्डली (ग्रह, भाव, दशा, गोचर, षड्बल एवं अष्टकवर्ग) के आधार पर व्यक्तिगत एवं सटीक शास्त्रीय परामर्श।")
 
-    user_q = st.text_input("अपना प्रश्न लिखें (Ask Jyotish Sahayak)", value="मेरी कुण्डली में करियर और भाग्य के मुख्य योग क्या हैं?")
-    if st.button("✨ उत्तर प्राप्त करें", type="primary"):
-        with st.spinner("शास्त्रों एवं कुण्डली का विमर्श किया जा रहा है..."):
-            ai_ans = default_narrative_service.chat_consultation(
-                user_query=user_q,
-                chart=chart,
-                active_dasha_summary="Vimshottari Dasha Active",
-                language="Hindi"
-            )
-            st.markdown(ai_ans)
+    # API Key Config Box
+    with st.expander("🔑 Google Gemini API विन्यास एवं सेटिंग्स (API Settings)", expanded=False):
+        c_k1, c_k2 = st.columns([3, 1])
+        default_key = os.getenv("GEMINI_API_KEY", st.session_state.get("gemini_api_key", ""))
+        user_gemini_key = c_k1.text_input(
+            "Google Gemini API Key",
+            value=default_key,
+            type="password",
+            placeholder="AIzaSy...",
+            help="Google AI Studio से प्राप्त निःशुल्क API Key यहाँ दर्ज करें।"
+        )
+        if user_gemini_key:
+            st.session_state.gemini_api_key = user_gemini_key
+            c_k2.markdown("<div style='margin-top:28px;'><span style='background:#DCFCE7; color:#166534; font-weight:bold; padding:6px 12px; border-radius:6px;'>🟢 API लिंक सक्रिय</span></div>", unsafe_allow_html=True)
+        else:
+            c_k2.markdown("<div style='margin-top:28px;'><span style='background:#FEF3C7; color:#92400E; font-weight:bold; padding:6px 12px; border-radius:6px;'>⚠️ डिफ़ॉल्ट मोड</span></div>", unsafe_allow_html=True)
+
+    # Active Kundali Profile Banner
+    st.markdown(f"""
+    <div style="background:linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border:1.5px solid #93C5FD; border-radius:10px; padding:12px 18px; margin-bottom:15px;">
+        <b style="color:#1E40AF; font-size:15px;">👤 सक्रिय कुण्डली:</b> <span style="font-weight:700; color:#0F172A;">{chart.birth_data.name}</span> &nbsp;|&nbsp; 
+        <b>लग्न:</b> <span style="color:#2563EB;">{chart.lagna_sign_name}</span> &nbsp;|&nbsp; 
+        <b>चंद्र राशि:</b> <span style="color:#2563EB;">{chart.planets['Moon'].sign_name} ({chart.panchang.nakshatra_name})</span> &nbsp;|&nbsp; 
+        <b>आत्मकारक:</b> <span style="color:#D97706;">{chart.atmakaraka}</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Initialize chat history
+    if "ai_chat_history" not in st.session_state:
+        st.session_state.ai_chat_history = [
+            {
+                "role": "assistant",
+                "content": f"🙏 **प्रणाम! मैं आपका 'दैवज्ञ AI' सहायक हूँ।**\n\nमैंने **{chart.birth_data.name} जी** की कुण्डली ({chart.lagna_sign_name} लग्न, {chart.planets['Moon'].sign_name} राशि) का सम्पूर्ण विश्लेषण लोड कर लिया है। आप करियर, विवाह, धन, स्वास्थ्य, वर्तमान दशा या उपायों से संबंधित कोई भी प्रश्न पूछ सकते हैं।"
+            }
+        ]
+
+    # Quick Question Chips
+    st.markdown("<b style='font-size:13px; color:#475569;'>⚡ त्वरित प्रश्न (Quick Questions):</b>", unsafe_allow_html=True)
+    c_q1, c_q2, c_q3, c_q4, c_q5 = st.columns(5)
+    quick_q = None
+    if c_q1.button("💼 करियर व पदोन्नति", use_container_width=True):
+        quick_q = "मेरी कुण्डली में करियर, आजीविका एवं पदोन्नति के क्या योग हैं और कब अनुकूल समय आएगा?"
+    if c_q2.button("💍 विवाह एवं सम्बंध", use_container_width=True):
+        quick_q = "मेरी कुण्डली में विवाह एवं वैवाहिक जीवन का योग कैसा है?"
+    if c_q3.button("💰 धन एवं आर्थिक स्थिति", use_container_width=True):
+        quick_q = "मेरी आर्थिक स्थिति, धन लाभ और बचत के लिए कुण्डली क्या संकेत देती है?"
+    if c_q4.button("⏳ वर्तमान दशा फल", use_container_width=True):
+        quick_q = "वर्तमान में चल रही दशा और गोचर का मेरे जीवन पर क्या प्रभाव पड़ रहा है?"
+    if c_q5.button("💎 शुभ रत्न व उपाय", use_container_width=True):
+        quick_q = "मेरी कुण्डली के अनुसार सबसे प्रभावशाली शुभ रत्न, रुद्राक्ष और निवारण उपाय क्या हैं?"
+
+    # Display Conversation History
+    for msg in st.session_state.ai_chat_history:
+        with st.chat_message(msg["role"], avatar="🔮" if msg["role"] == "assistant" else "👤"):
+            st.markdown(msg["content"])
+
+    # Chat Input Box
+    user_prompt = st.chat_input("अपनी कुण्डली से संबंधित प्रश्न यहाँ लिखें (e.g. व्यापार कब शुरू करूँ?)...")
+    prompt_to_process = quick_q or user_prompt
+
+    if prompt_to_process:
+        # Add user message to history
+        st.session_state.ai_chat_history.append({"role": "user", "content": prompt_to_process})
+        with st.chat_message("user", avatar="👤"):
+            st.markdown(prompt_to_process)
+
+        # Generate Assistant Response
+        with st.chat_message("assistant", avatar="🔮"):
+            with st.spinner("🔮 कुण्डली के समस्त ग्रहों, भावों एवं दशाओं का विश्लेषण कर सटीक उत्तर तैयार किया जा रहा है..."):
+                master_bundle = default_master_calculator.calculate_all(chart)
+                active_key = st.session_state.get("gemini_api_key", os.getenv("GEMINI_API_KEY"))
+                
+                ai_response = default_narrative_service.chat_consultation(
+                    user_query=prompt_to_process,
+                    chart=chart,
+                    master_data=master_bundle,
+                    api_key=active_key,
+                    model="gemini-3.8-flash",
+                    language="Hindi",
+                    chat_history=st.session_state.ai_chat_history
+                )
+                st.markdown(ai_response)
+                st.session_state.ai_chat_history.append({"role": "assistant", "content": ai_response})
+
+    # Clear Chat Button
+    if len(st.session_state.ai_chat_history) > 1:
+        if st.button("🗑️ संवाद इतिहास साफ करें (Clear Chat)"):
+            st.session_state.ai_chat_history = [
+                {
+                    "role": "assistant",
+                    "content": f"🙏 **संवाद पुनः प्रारंभ किया गया।** {chart.birth_data.name} जी की कुण्डली के संदर्भ में आप अपना प्रश्न पूछ सकते हैं।"
+                }
+            ]
+            st.rerun()
 
 
 # =============================================================
