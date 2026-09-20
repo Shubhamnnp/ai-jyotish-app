@@ -233,12 +233,12 @@ if is_night_mode:
         border-color: #334155 !important;
         color: #F8FAFC !important;
     }
-    div[data-testid="stVerticalBlock"]:has(> div > div > .frozen-header-marker),
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.frozen-header-marker),
-    div[data-testid="element-container"]:has(.frozen-header-marker),
-    div:has(> .frozen-header-marker) {
+    .st-key-top_frozen_header_container,
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor),
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.fixed-header-anchor),
+    div.st-key-top_frozen_header_container > div[data-testid="stVerticalBlock"] {
         background: #0A0E1A !important;
-        border-bottom: 2px solid #1E293B !important;
+        border-bottom: 2.5px solid #1E293B !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
     }
     .top-nav-bar {
@@ -262,22 +262,26 @@ if is_night_mode:
         border: 1.5px solid #3B82F6 !important;
         color: #93C5FD !important;
     }
-    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+    .st-key-top_frozen_header_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
         background: #1E293B !important;
         border-color: #3B82F6 !important;
         color: #F8FAFC !important;
     }
-    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) button[data-testid="baseButton-secondary"] {
+    .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"],
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"] {
         background: #1E293B !important;
         border-color: #475569 !important;
         color: #F8FAFC !important;
     }
-    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) button[data-testid="baseButton-secondary"]:hover {
+    .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"]:hover,
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"]:hover {
         background: #334155 !important;
         border-color: #60A5FA !important;
         color: #FFFFFF !important;
     }
-    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) [data-testid="stExpander"] {
+    .st-key-top_frozen_header_container [data-testid="stExpander"],
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] {
         background: #111827 !important;
         border-color: #1E293B !important;
     }
@@ -426,16 +430,13 @@ unified_css = f"""
     /* Clean top spacing & allow frozen sticky header */
     [data-testid="stAppViewContainer"] {{
         overflow-x: hidden !important;
-        overflow-y: auto !important;
-        contain: none !important;
-        transform: none !important;
+        overflow-y: hidden !important;
     }}
-    [data-testid="stMain"], section.main, .main {{
-        overflow: visible !important;
-        overflow-x: visible !important;
-        overflow-y: visible !important;
-        contain: none !important;
-        transform: none !important;
+    [data-testid="stMain"], section.main {{
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        position: relative !important;
+        height: 100vh !important;
     }}
     .block-container {{
         padding-top: 0px !important;
@@ -443,41 +444,36 @@ unified_css = f"""
         padding-left: 2rem !important;
         padding-right: 2rem !important;
         overflow: visible !important;
-        overflow-x: visible !important;
-        overflow-y: visible !important;
-        contain: none !important;
-        transform: none !important;
     }}
-    div[data-testid="stVerticalBlock"],
-    div[data-testid="stElementContainer"] {{
+    div[data-testid="stVerticalBlock"] {{
         overflow: visible !important;
-        contain: none !important;
-        transform: none !important;
     }}
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.frozen-header-marker),
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(> div > div > .frozen-header-marker),
-    div[data-testid="stVerticalBlock"]:has(> div > div > .frozen-header-marker),
-    div:has(> .frozen-header-marker) {{
-        position: sticky !important;
+
+    /* Frozen Sticky Header Container (Pins to the Top of the App) */
+    .st-key-top_frozen_header_container,
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor),
+    div[data-testid="stVerticalBlock"] > div:has([data-testid="stMarkdownContainer"] .fixed-header-anchor),
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(.fixed-header-anchor),
+    div.st-key-top_frozen_header_container > div[data-testid="stVerticalBlock"] {{
         position: -webkit-sticky !important;
+        position: sticky !important;
         top: 0px !important;
-        z-index: 999999 !important;
+        z-index: 999990 !important;
         background: #F8FAFC !important;
         border: none !important;
-        border-bottom: 2px solid #CBD5E1 !important;
+        border-bottom: 2.5px solid #CBD5E1 !important;
         border-radius: 0px !important;
-        padding-top: 6px !important;
+        padding-top: 4px !important;
         padding-bottom: 8px !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
         margin-bottom: 10px !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
-        contain: none !important;
-        transform: none !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
     }}
 
     /* Top Module Navigation Bar (Symmetric, Uniform Height & Aligned) */
-    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
+    .st-key-top_frozen_header_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
         min-height: 40px !important;
         height: 40px !important;
         border-radius: 8px !important;
@@ -488,7 +484,8 @@ unified_css = f"""
         display: flex !important;
         align-items: center !important;
     }}
-    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) button[data-testid="baseButton-secondary"] {{
+    .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"],
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"] {{
         min-height: 40px !important;
         height: 40px !important;
         border-radius: 8px !important;
@@ -503,19 +500,22 @@ unified_css = f"""
         justify-content: center !important;
         transition: all 0.15s ease !important;
     }}
-    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) button[data-testid="baseButton-secondary"]:hover {{
+    .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"]:hover,
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"]:hover {{
         background: #EFF6FF !important;
         border-color: #2563EB !important;
         color: #1D4ED8 !important;
     }}
-    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) [data-testid="stExpander"] {{
+    .st-key-top_frozen_header_container [data-testid="stExpander"],
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] {{
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 10px !important;
         margin-bottom: 6px !important;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
     }}
-    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) [data-testid="stExpander"] summary {{
+    .st-key-top_frozen_header_container [data-testid="stExpander"] summary,
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] summary {{
         font-weight: 800 !important;
         color: #1E293B !important;
         padding: 6px 12px !important;
@@ -1612,56 +1612,50 @@ components.html("""
         try {
             const parentDoc = (window.parent && window.parent.document) ? window.parent.document : document;
             if (!parentDoc) return;
-            
+
             const stHeader = parentDoc.querySelector('header[data-testid="stHeader"]');
             if (stHeader) {
                 stHeader.style.setProperty('display', 'none', 'important');
                 stHeader.style.setProperty('height', '0px', 'important');
             }
 
-            const appView = parentDoc.querySelector('[data-testid="stAppViewContainer"]');
-            if (appView) {
-                appView.style.setProperty('overflow-y', 'auto', 'important');
-                appView.style.setProperty('overflow-x', 'hidden', 'important');
-                appView.style.setProperty('contain', 'none', 'important');
-                appView.style.setProperty('transform', 'none', 'important');
+            const mainSec = parentDoc.querySelector('[data-testid="stMain"], section.main');
+            if (mainSec) {
+                mainSec.style.setProperty('overflow-y', 'auto', 'important');
+                mainSec.style.setProperty('overflow-x', 'hidden', 'important');
+                mainSec.style.setProperty('position', 'relative', 'important');
             }
 
-            const marker = parentDoc.querySelector('.frozen-header-marker');
-            if (marker) {
-                const wrapper = marker.closest('[data-testid="stVerticalBlockBorderWrapper"]') || marker.parentElement;
-                if (wrapper) {
+            const blockContainer = parentDoc.querySelector('.block-container');
+            if (blockContainer) {
+                blockContainer.style.setProperty('padding-top', '0px', 'important');
+                blockContainer.style.setProperty('overflow', 'visible', 'important');
+            }
+
+            const anchor = parentDoc.querySelector('.fixed-header-anchor, .frozen-header-marker');
+            if (anchor) {
+                let headerContainer = anchor.closest('.st-key-top_frozen_header_container') ||
+                                      anchor.closest('[data-testid="stVerticalBlockBorderWrapper"]') ||
+                                      anchor.closest('[data-testid="stVerticalBlock"] > div');
+                if (headerContainer) {
                     const isNight = parentDoc.body.classList.contains('night-mode') || 
                                     parentDoc.querySelector('#software-theme-select')?.value === 'night' ||
                                     (window.parent && window.parent.currentSoftwareTheme === 'night');
 
-                    wrapper.style.setProperty('position', 'sticky', 'important');
-                    wrapper.style.setProperty('position', '-webkit-sticky', 'important');
-                    wrapper.style.setProperty('top', '0px', 'important');
-                    wrapper.style.setProperty('z-index', '999999', 'important');
-                    wrapper.style.setProperty('background', isNight ? '#0A0E1A' : '#F8FAFC', 'important');
-                    wrapper.style.setProperty('border', 'none', 'important');
-                    wrapper.style.setProperty('border-bottom', isNight ? '2px solid #1E293B' : '2px solid #CBD5E1', 'important');
-                    wrapper.style.setProperty('box-shadow', '0 6px 20px rgba(0, 0, 0, 0.12)', 'important');
-                    wrapper.style.setProperty('padding', '6px 14px 8px 14px', 'important');
-                    wrapper.style.setProperty('margin-bottom', '10px', 'important');
-                    wrapper.style.setProperty('contain', 'none', 'important');
-                    wrapper.style.setProperty('transform', 'none', 'important');
+                    headerContainer.style.setProperty('position', '-webkit-sticky', 'important');
+                    headerContainer.style.setProperty('position', 'sticky', 'important');
+                    headerContainer.style.setProperty('top', '0px', 'important');
+                    headerContainer.style.setProperty('z-index', '999990', 'important');
+                    headerContainer.style.setProperty('background', isNight ? '#0A0E1A' : '#F8FAFC', 'important');
+                    headerContainer.style.setProperty('border', 'none', 'important');
+                    headerContainer.style.setProperty('border-bottom', isNight ? '2.5px solid #1E293B' : '2.5px solid #CBD5E1', 'important');
+                    headerContainer.style.setProperty('box-shadow', '0 6px 20px rgba(0, 0, 0, 0.12)', 'important');
+                    headerContainer.style.setProperty('padding-top', '4px', 'important');
+                    headerContainer.style.setProperty('padding-bottom', '8px', 'important');
+                    headerContainer.style.setProperty('margin-bottom', '8px', 'important');
 
-                    // Unlock all ancestor containers so sticky sticks to the viewport
-                    let current = wrapper.parentElement;
-                    while (current && current !== parentDoc.body && current !== parentDoc.documentElement) {
-                        if (current.getAttribute('data-testid') === 'stAppViewContainer') {
-                            current.style.setProperty('overflow-y', 'auto', 'important');
-                            current.style.setProperty('overflow-x', 'hidden', 'important');
-                        } else {
-                            current.style.setProperty('overflow', 'visible', 'important');
-                            current.style.setProperty('overflow-y', 'visible', 'important');
-                            current.style.setProperty('overflow-x', 'visible', 'important');
-                        }
-                        current.style.setProperty('contain', 'none', 'important');
-                        current.style.setProperty('transform', 'none', 'important');
-                        current = current.parentElement;
+                    if (headerContainer.parentElement) {
+                        headerContainer.parentElement.style.setProperty('overflow', 'visible', 'important');
                     }
                 }
             }
@@ -2188,8 +2182,8 @@ if st.session_state.active_module_idx >= len(MODULE_OPTIONS):
 # -------------------------------------------------------------
 # 🌟 FROZEN STICKY TOP HEADER SECTION (Pinned at Top)
 # -------------------------------------------------------------
-with st.container(border=True):
-    st.markdown('<div class="frozen-header-marker"></div>', unsafe_allow_html=True)
+with st.container(key="top_frozen_header_container", border=True):
+    st.markdown('<div class="fixed-header-anchor"></div>', unsafe_allow_html=True)
     
     # 1. Top Navigation Bar (Header)
     st.markdown(f"""
