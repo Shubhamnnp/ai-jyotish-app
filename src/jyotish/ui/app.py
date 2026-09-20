@@ -3715,16 +3715,24 @@ elif selected_module.startswith("📐 के.पी. प्रणाली"):
             q_city = st.text_input("📍 प्रश्न स्थान (City)", value=default_city_name, key="kp_q_city")
 
         # Resolve Horary Location & Calculate Horary Chart
-        loc_res = default_geocoding_service.resolve_location(q_city)
+        loc_res = default_geocoding_service.resolve(q_city)
+        if loc_res:
+            h_lat = float(loc_res.get("latitude", 28.6139))
+            h_lon = float(loc_res.get("longitude", 77.2090))
+            h_tz = float(loc_res.get("timezone_offset", 5.5))
+            h_city = loc_res.get("city", q_city)
+        else:
+            h_lat, h_lon, h_tz, h_city = 28.6139, 77.2090, 5.5, q_city
+
         h_bdata = BirthData(
             name=f"KP Horary #{chosen_horary_num}",
             gender="Unknown",
             birth_date=q_date,
             birth_time=q_time,
-            latitude=loc_res.latitude,
-            longitude=loc_res.longitude,
-            timezone_offset=loc_res.timezone_offset,
-            city_name=loc_res.city_name
+            latitude=h_lat,
+            longitude=h_lon,
+            timezone_offset=h_tz,
+            city_name=h_city
         )
         try:
             active_kp_chart = default_chart_calculator.calculate_chart(h_bdata)

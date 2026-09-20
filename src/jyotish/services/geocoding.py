@@ -252,6 +252,10 @@ class GeocodingService:
             }
         return None
 
+    def resolve_location(self, query: str) -> Optional[Dict[str, Any]]:
+        """Alias for resolve."""
+        return self.resolve(query)
+
 
 # Singleton geocoding service
 default_geocoding_service = GeocodingService()
