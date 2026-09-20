@@ -687,7 +687,7 @@ unified_css = """
 
 st.markdown(unified_css, unsafe_allow_html=True)
 
-# Client-Side Sidebar Toggle Bridge
+# Client-Side Sidebar Toggle Bridge & Live GPS Location Resolver
 components.html("""
 <script>
 (function() {
@@ -741,8 +741,85 @@ components.html("""
         }
     }
     
+    // Live Client GPS Geolocation Resolver
+    function updateLocationUI(locStr) {
+        try {
+            const parentDoc = window.parent.document;
+            if (!parentDoc) return;
+            const els = parentDoc.querySelectorAll('#user-gps-val, .user-gps-val');
+            els.forEach(function(el) {
+                el.innerText = locStr;
+            });
+        } catch (e) {}
+    }
+
+    function resolveClientGPS() {
+        try {
+            const cached = localStorage.getItem("jyotish_user_gps_loc") || sessionStorage.getItem("jyotish_user_gps_loc");
+            if (cached) {
+                updateLocationUI(cached);
+            }
+
+            if (navigator.geolocation && !window.__gps_queried) {
+                window.__gps_queried = true;
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    const lat = pos.coords.latitude;
+                    const lon = pos.coords.longitude;
+                    fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + lat + "&longitude=" + lon + "&localityLanguage=en")
+                        .then(function(r) { return r.json(); })
+                        .then(function(data) {
+                            const city = data.locality || data.city || data.principalSubdivision || "स्थानीय";
+                            const state = data.principalSubdivision || "";
+                            const country = data.countryName || "India";
+                            const loc = city + (state && state !== city ? (", " + state) : "") + " (" + country + ")";
+                            localStorage.setItem("jyotish_user_gps_loc", loc);
+                            sessionStorage.setItem("jyotish_user_gps_loc", loc);
+                            updateLocationUI(loc);
+                        })
+                        .catch(function() {
+                            fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon)
+                                .then(function(r) { return r.json(); })
+                                .then(function(d) {
+                                    const a = d.address || {};
+                                    const city = a.city || a.town || a.village || a.county || "स्थानीय";
+                                    const state = a.state || "";
+                                    const country = a.country || "India";
+                                    const loc = city + (state ? (", " + state) : "") + " (" + country + ")";
+                                    localStorage.setItem("jyotish_user_gps_loc", loc);
+                                    sessionStorage.setItem("jyotish_user_gps_loc", loc);
+                                    updateLocationUI(loc);
+                                }).catch(function() {});
+                        });
+                }, function(err) {
+                    // Fallback to client-side IP lookup in user browser (not server)
+                    if (!cached) {
+                        fetch("https://ipapi.co/json/")
+                            .then(function(r) { return r.json(); })
+                            .then(function(d) {
+                                const loc = (d.city || "Bahraich") + ", " + (d.region || "Uttar Pradesh") + " (" + (d.country_name || "India") + ")";
+                                localStorage.setItem("jyotish_user_gps_loc", loc);
+                                updateLocationUI(loc);
+                            })
+                            .catch(function() {
+                                updateLocationUI("Nanpara, Bahraich (India)");
+                            });
+                    }
+                }, { timeout: 10000, enableHighAccuracy: true, maximumAge: 30000 });
+            }
+        } catch (e) {
+            console.error('GPS resolver error:', e);
+        }
+    }
+
     setupSidebarToggle();
-    setInterval(setupSidebarToggle, 250);
+    resolveClientGPS();
+    setInterval(function() {
+        setupSidebarToggle();
+        const cached = localStorage.getItem("jyotish_user_gps_loc") || sessionStorage.getItem("jyotish_user_gps_loc");
+        if (cached) {
+            updateLocationUI(cached);
+        }
+    }, 400);
 })();
 </script>
 """, height=0, width=0)
@@ -1169,35 +1246,8 @@ def get_varga_dignity_info(planet: str, sign_name: str, aff_eng: Optional[Afflic
     return "⚖️ सामान्य", 7, "सामान्य"
 
 
-def get_current_client_location() -> str:
-    if "current_client_location" in st.session_state and st.session_state.current_client_location:
-        return st.session_state.current_client_location
-    
-    loc_str = "Nanpara, Bahraich (UP)"
-    try:
-        import urllib.request
-        import json
-        req = urllib.request.Request("http://ip-api.com/json/", headers={"User-Agent": "Mozilla/5.0 JyotishOS/2.0"})
-        with urllib.request.urlopen(req, timeout=1.5) as resp:
-            data = json.loads(resp.read().decode())
-            if data.get("status") == "success":
-                city = data.get("city", "")
-                region = data.get("regionName", "")
-                country = data.get("country", "")
-                if city and region:
-                    loc_str = f"{city}, {region} ({country})"
-                elif city:
-                    loc_str = f"{city} ({country})"
-    except Exception:
-        pass
-    
-    st.session_state.current_client_location = loc_str
-    return loc_str
-
-
 now_dt = datetime.now()
 current_time_str = now_dt.strftime("%d %b %Y, %I:%M %p")
-current_location_str = get_current_client_location()
 
 st.markdown(f"""
 <header class="top-nav-bar">
@@ -1225,12 +1275,13 @@ st.markdown(f"""
             <div class="header-sub-pill">
                 🕒 <b>वर्तमान समय:</b> {current_time_str}
             </div>
-            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="सॉफ़्टवेयर का वर्तमान स्थान (Current Client Location)">
-                📍 <b>वर्तमान स्थान:</b> {current_location_str}
+            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
+                📍 <b>वर्तमान स्थान (GPS):</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
             </div>
         </div>
     </div>
 </header>
+<img src="data:image/svg+xml;utf8,<svg></svg>" style="display:none;" onload="(function(){try{var c=localStorage.getItem('jyotish_user_gps_loc')||sessionStorage.getItem('jyotish_user_gps_loc');if(c){var el=document.getElementById('user-gps-val');if(el)el.innerText=c;}}catch(e){}})()" onerror="this.onload()" />
 """, unsafe_allow_html=True)
 
 p = chart.panchang
