@@ -238,8 +238,48 @@ if is_night_mode:
     div[data-testid="element-container"]:has(.frozen-header-marker),
     div:has(> .frozen-header-marker) {
         background: #0A0E1A !important;
-        border-bottom: 2.5px solid #1E293B !important;
+        border-bottom: 2px solid #1E293B !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+    }
+    .top-nav-bar {
+        background: #111827 !important;
+        border: 1.5px solid #1E293B !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+    }
+    .top-nav-bar * {
+        color: #F8FAFC !important;
+    }
+    .header-sub-pill {
+        background: #1E293B !important;
+        border: 1.5px solid #334155 !important;
+        color: #F8FAFC !important;
+    }
+    .header-sub-pill b {
+        color: #F8FAFC !important;
+    }
+    .active-profile-pill {
+        background: #1E293B !important;
+        border: 1.5px solid #3B82F6 !important;
+        color: #93C5FD !important;
+    }
+    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+        background: #1E293B !important;
+        border-color: #3B82F6 !important;
+        color: #F8FAFC !important;
+    }
+    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) button[data-testid="baseButton-secondary"] {
+        background: #1E293B !important;
+        border-color: #475569 !important;
+        color: #F8FAFC !important;
+    }
+    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) button[data-testid="baseButton-secondary"]:hover {
+        background: #334155 !important;
+        border-color: #60A5FA !important;
+        color: #FFFFFF !important;
+    }
+    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) [data-testid="stExpander"] {
+        background: #111827 !important;
+        border-color: #1E293B !important;
     }
     """
 else:
@@ -406,11 +446,57 @@ unified_css = f"""
         top: 0px !important;
         z-index: 999999 !important;
         background: #F8FAFC !important;
-        padding-top: 4px !important;
+        padding-top: 6px !important;
         padding-bottom: 8px !important;
-        margin-bottom: 8px !important;
-        border-bottom: 2.5px solid #CBD5E1 !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+        margin-bottom: 10px !important;
+        border-bottom: 2px solid #CBD5E1 !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+    }}
+
+    /* Top Module Navigation Bar (Symmetric, Uniform Height & Aligned) */
+    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
+        min-height: 40px !important;
+        height: 40px !important;
+        border-radius: 8px !important;
+        border: 1.5px solid #2563EB !important;
+        background: #FFFFFF !important;
+        font-weight: 800 !important;
+        font-size: 13.5px !important;
+        display: flex !important;
+        align-items: center !important;
+    }}
+    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) button[data-testid="baseButton-secondary"] {{
+        min-height: 40px !important;
+        height: 40px !important;
+        border-radius: 8px !important;
+        border: 1.5px solid #94A3B8 !important;
+        background: #FFFFFF !important;
+        font-weight: 800 !important;
+        font-size: 13px !important;
+        color: #1E293B !important;
+        padding: 0px 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.15s ease !important;
+    }}
+    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) button[data-testid="baseButton-secondary"]:hover {{
+        background: #EFF6FF !important;
+        border-color: #2563EB !important;
+        color: #1D4ED8 !important;
+    }}
+    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) [data-testid="stExpander"] {{
+        background: #FFFFFF !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 10px !important;
+        margin-bottom: 6px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+    }}
+    div[data-testid="stVerticalBlock"]:has(.frozen-header-marker) [data-testid="stExpander"] summary {{
+        font-weight: 800 !important;
+        color: #1E293B !important;
+        padding: 6px 12px !important;
+        font-size: 13.5px !important;
     }}
 
     /* Sidebar Radio Navigation List (18 Modules as Clean, 100% Equal Size Cards) */
@@ -509,29 +595,24 @@ unified_css = f"""
         border-color: #94A3B8 !important;
     }}
 
-    /* Unified Frozen Top Header Bar (Full width edge-to-edge with royal blue boundary) */
+    /* Unified Frozen Top Header Bar */
     .top-nav-bar {{
-        position: sticky !important;
-        top: 0px !important;
-        z-index: 999999 !important;
         background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
-        border-top: none !important;
-        border-left: none !important;
-        border-right: none !important;
-        border-bottom: 3.5px solid #2563EB !important;
-        border-radius: 0px !important;
-        padding: 12px 24px !important;
-        margin-bottom: 18px !important;
+        border-radius: 10px !important;
+        padding: 8px 16px !important;
+        margin-bottom: 6px !important;
         margin-top: 0px !important;
-        margin-left: -2rem !important;
-        margin-right: -2rem !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
         flex-wrap: wrap !important;
-        gap: 14px !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        gap: 10px !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }}
     .nav-left {{
         display: flex !important;
@@ -2333,7 +2414,12 @@ with st.container():
                             st.error("Authentication failed. Please verify credentials in Module 7.")
 
     # 3. 21 Modules Selector (Inside the Frozen Top Container)
-    col_mod_sel, col_btn_prev, col_btn_next = st.columns([3.8, 1.1, 1.1])
+    col_btn_prev, col_mod_sel, col_btn_next = st.columns([1.1, 3.8, 1.1])
+    with col_btn_prev:
+        if st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn"):
+            st.session_state.active_module_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
+            st.rerun()
+
     with col_mod_sel:
         selected_module = st.selectbox(
             "मॉड्यूल चयन",
@@ -2345,14 +2431,9 @@ with st.container():
         selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else 0
         st.session_state.active_module_idx = selected_idx
 
-    with col_btn_prev:
-        if st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn"):
-            st.session_state.active_module_idx = (selected_idx - 1) % len(MODULE_OPTIONS)
-            st.rerun()
-
     with col_btn_next:
         if st.button("अगला (Next) ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="top_next_mod_btn"):
-            st.session_state.active_module_idx = (selected_idx + 1) % len(MODULE_OPTIONS)
+            st.session_state.active_module_idx = (st.session_state.active_module_idx + 1) % len(MODULE_OPTIONS)
             st.rerun()
 
 
