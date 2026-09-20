@@ -1882,14 +1882,25 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # -------------------------------------------------------------
-# 2. Single Line: Birth Profile Card + 6 Category Quick-Tabs Cards (All in 1 Line!)
+# 2. Single Line: Birth Profile Card + 21 Modules List Button + 6 Category Quick-Tabs Cards (All in 1 Line!)
 # -------------------------------------------------------------
-col_cat0, col_cat1, col_cat2, col_cat3, col_cat4, col_cat5, col_cat6 = st.columns([1.3, 1.2, 1.1, 1.1, 1.1, 1.1, 1.2])
+col_cat0, col_mod_btn, col_cat1, col_cat2, col_cat3, col_cat4, col_cat5, col_cat6 = st.columns([1.25, 1.35, 1.15, 1.1, 1.1, 1.1, 1.1, 1.2])
 
 profile_btn_label = "👤 जन्म विवरण " + ("▲" if st.session_state.get("show_birth_details") else "▼")
 if col_cat0.button(profile_btn_label, use_container_width=True, type="primary" if st.session_state.get("show_birth_details") else "secondary", help="जातक जन्म विवरण एवं कुण्डली विन्यास संपादित करें"):
     st.session_state.show_birth_details = not st.session_state.get("show_birth_details", False)
     st.rerun()
+
+with col_mod_btn.popover("🧭 21 मॉड्यूल्स सूची ☰", use_container_width=True, help="सभी 21 वैदिक ज्योतिष मॉड्यूल्स की संपूर्ण सूची खोलें"):
+    st.markdown("<b style='color:#1E40AF; font-size:13px;'>🧭 सभी 21 वैदिक ज्योतिष मॉड्यूल्स (Click to Open):</b>", unsafe_allow_html=True)
+    m_cols = st.columns(2)
+    for m_i, m_name in enumerate(MODULE_OPTIONS):
+        target_col = m_cols[m_i % 2]
+        is_active = (st.session_state.active_module_idx == m_i)
+        btn_type = "primary" if is_active else "secondary"
+        if target_col.button(f"{m_i+1}. {m_name}", key=f"pop_top_mod_{m_i}", use_container_width=True, type=btn_type):
+            st.session_state.active_module_idx = m_i
+            st.rerun()
 
 if col_cat1.button("📜 लग्न व वर्ग (D1-D60)", use_container_width=True, help="D1-D60 षोडशवर्ग व चक्र"):
     st.session_state.active_module_idx = 0
