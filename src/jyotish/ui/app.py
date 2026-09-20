@@ -1957,9 +1957,18 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
 
     calc_btn = st.button("🔮 प्रश्न कुण्डली एवं शास्त्रीय निर्णय प्राप्त करें (Calculate Prashna Chart)", type="primary")
 
-    # Store calculation in session state so it remains interactive
-    if calc_btn:
-        if not q_mode.startswith("✏️"):
+    # Store calculation in session state with automatic cache-invalidation
+    need_recalc = (
+        calc_btn
+        or "prashna_res" not in st.session_state
+        or not isinstance(st.session_state.prashna_res, dict)
+        or "rules_analysis" not in st.session_state.prashna_res
+        or not st.session_state.prashna_res.get("all_rules")
+        or st.session_state.prashna_res.get("category") != prashna_cat
+    )
+
+    if need_recalc:
+        if calc_btn and not q_mode.startswith("✏️"):
             q_dt = datetime.now()
         try:
             st.session_state.prashna_res = default_prashna_service.generate_prashna_chart(
@@ -1971,7 +1980,8 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
                 query_dt=q_dt,
                 questioner_name=q_name
             )
-            st.toast("✅ प्रश्न कुण्डली एवं शास्त्रीय निर्णय सफलतापूर्वक परिकलित!")
+            if calc_btn:
+                st.toast("✅ प्रश्न कुण्डली एवं शास्त्रीय निर्णय सफलतापूर्वक परिकलित!")
         except Exception:
             import src.jyotish.services.prashna as p_mod_live
             importlib.reload(p_mod_live)
@@ -1984,9 +1994,12 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
                 query_dt=q_dt,
                 questioner_name=q_name
             )
-            st.toast("✅ प्रश्न कुण्डली एवं शास्त्रीय निर्णय सफलतापूर्वक परिकलित!")
-    elif "prashna_res" not in st.session_state or st.session_state.prashna_res.get("category") != prashna_cat:
-        st.session_state.prashna_res = default_prashna_service.generate_prashna_chart(
+            if calc_btn:
+                st.toast("✅ प्रश्न कुण्डली एवं शास्त्रीय निर्णय सफलतापूर्वक परिकलित!")
+
+    p_res = st.session_state.prashna_res
+    if not p_res.get("all_rules") or "rules_analysis" not in p_res:
+        p_res = default_prashna_service.generate_prashna_chart(
             query_text=prashna_text,
             category_name=prashna_cat,
             latitude=q_lat,
@@ -1995,8 +2008,8 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
             query_dt=q_dt,
             questioner_name=q_name
         )
+        st.session_state.prashna_res = p_res
 
-    p_res = st.session_state.prashna_res
     p_chart: KundaliChart = p_res.get("chart", chart)
 
     st.markdown("---")
@@ -2115,29 +2128,74 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
                         "श्रेणी (Domain)": nr.get("domain"),
                         "बाधक नियम (Obstacle Title)": nr.get("name_hi"),
                         "मूल ग्रंथ (Source)": nr.get("source"),
-                        "बाधा अंक": f"{nr.get('weight', 0)}",
+                        "बाधा अंक": f"-{nr.get('weight', 0)}",
                         "बाधा विवरण एवं उपाय": nr.get("description_hi")
                     })
                 st.dataframe(pd.DataFrame(neg_df), use_container_width=True, hide_index=True)
             else:
                 st.success("🎉 उत्कृष्ट! वर्तमान प्रश्न कुण्डली में कोई भी गंभीर अशुभ अथवा बाधक नियम सक्रिय नहीं है।")
 
-        with st.expander("📚 संपूर्ण 100 शास्त्रीय प्रश्न नियम संदर्भ तालिका (Complete 100 Rules Library)", expanded=False):
+        with st.expander("📚 संपूर्ण 100 शास्त्रीय प्रश्न नियम संदर्भ तालिका (Complete 100 Rules Library)", expanded=True):
             all_r_list = p_res.get('all_rules', [])
             if all_r_list:
-                all_df = []
+                # Interactive filtering controls for 100 rules library
+                f_col1, f_col2, f_col3 = st.columns([1.5, 1.5, 2])
+                with f_col1:
+                    status_filter = st.selectbox(
+                        "स्थिति फ़िल्टर (Status Filter)",
+                        ["सभी 100 नियम (All 100)", "केवल सक्रिय शुभ (+) (Active Positive)", "केवल सक्रिय अशुभ (-) (Active Negative)", "केवल निष्क्रिय (Inactive)"],
+                        key="prashna_rules_filter_status"
+                    )
+                with f_col2:
+                    domains = ["समस्त ग्रंथ / क्षेत्र (All Domains)"] + sorted(list(set(r.get("domain", "") for r in all_r_list if r.get("domain"))))
+                    domain_filter = st.selectbox("ग्रंथ / पद्धति फ़िल्टर (Domain Filter)", domains, key="prashna_rules_filter_domain")
+                with f_col3:
+                    rule_search = st.text_input("🔍 नियम खोजें (Search Rule)", placeholder="नाम, ग्रंथ, ID या फल...", key="prashna_rules_search")
+
+                filtered_rules = []
                 for ar in all_r_list:
-                    all_df.append({
+                    # Status filter
+                    st_val = ar.get("status", "")
+                    tp_val = ar.get("type", "")
+                    if status_filter.startswith("केवल सक्रिय शुभ") and not (st_val == "सक्रिय" and tp_val == "POSITIVE"):
+                        continue
+                    if status_filter.startswith("केवल सक्रिय अशुभ") and not (st_val == "सक्रिय" and tp_val == "NEGATIVE"):
+                        continue
+                    if status_filter.startswith("केवल निष्क्रिय") and st_val == "सक्रिय":
+                        continue
+
+                    # Domain filter
+                    if domain_filter != "समस्त ग्रंथ / क्षेत्र (All Domains)" and ar.get("domain") != domain_filter:
+                        continue
+
+                    # Search text
+                    if rule_search and rule_search.strip():
+                        s_term = rule_search.strip().lower()
+                        match = (
+                            s_term in str(ar.get("rule_id", "")).lower()
+                            or s_term in str(ar.get("name_hi", "")).lower()
+                            or s_term in str(ar.get("source", "")).lower()
+                            or s_term in str(ar.get("domain", "")).lower()
+                            or s_term in str(ar.get("description_hi", "")).lower()
+                        )
+                        if not match:
+                            continue
+
+                    filtered_rules.append({
                         "ID": ar.get("rule_id"),
                         "क्षेत्र": ar.get("domain"),
-                        "नियम नाम": ar.get("name_hi"),
-                        "ग्रंथ संदर्भ": ar.get("source"),
+                        "शास्त्रीय नियम नाम": ar.get("name_hi"),
+                        "मूल ग्रंथ (Source)": ar.get("source"),
                         "प्रकार": "🟢 शुभ (+)" if ar.get("type") == "POSITIVE" else "🔴 अशुभ (-)",
-                        "प्रभाव अंक": ar.get("weight"),
-                        "स्थिति": ar.get("status"),
-                        "शास्त्रीय विवरण": ar.get("description_hi")
+                        "प्रभाव अंक": f"+{ar.get('weight')}" if ar.get("type") == "POSITIVE" else f"-{ar.get('weight')}",
+                        "सक्रियता स्थिति": "✅ सक्रिय" if ar.get("status") == "सक्रिय" else "⚪ निष्क्रिय",
+                        "शास्त्रीय विवरण व प्रमाण": ar.get("description_hi")
                     })
-                st.dataframe(pd.DataFrame(all_df), use_container_width=True, hide_index=True)
+
+                st.caption(f"प्रदर्शित नियम: **{len(filtered_rules)} / 100**")
+                st.dataframe(pd.DataFrame(filtered_rules), use_container_width=True, hide_index=True)
+            else:
+                st.warning("⚠️ नियम तालिका लोड नहीं हो सकी। कृपया ऊपर 'प्रश्न कुण्डली एवं शास्त्रीय निर्णय प्राप्त करें' बटन पर क्लिक करें।")
 
     with p_tab1:
         st.markdown("##### 🪐 प्रश्न समय पर ग्रहों की स्पष्ट खगोलीय स्थिति (Graha Spashta)")
