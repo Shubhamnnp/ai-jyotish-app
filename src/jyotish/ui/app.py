@@ -2596,11 +2596,27 @@ elif selected_module.startswith("⏱️ दशा"):
     moon_lon = chart.planets["Moon"].longitude
     target_dt = datetime.combine(dasha_target_date, datetime.now().time())
 
+    import importlib
+    import src.jyotish.dasha.vimshottari as vim_mod
+    import src.jyotish.dasha.yogini as yog_mod
+    import src.jyotish.dasha.chara as chara_mod
+    
+    if not hasattr(default_dasha_engine, "get_5level_hierarchy"):
+        importlib.reload(vim_mod)
+    if not hasattr(default_yogini_engine, "generate_antardashas"):
+        importlib.reload(yog_mod)
+    if not hasattr(default_chara_engine, "generate_antardashas"):
+        importlib.reload(chara_mod)
+
+    d_engine = vim_mod.default_dasha_engine
+    y_engine = yog_mod.default_yogini_engine
+    c_engine = chara_mod.default_chara_engine
+
     # =========================================================================
     # 1. VIMSHOTTARI DASHA (5 LEVELS: MAHA -> ANTAR -> PRAT -> SOOKSHMA -> PRANA)
     # =========================================================================
     if "विंशोत्तरी" in d_mode:
-        h5 = default_dasha_engine.get_5level_hierarchy(birth_dt, moon_lon, target_dt)
+        h5 = d_engine.get_5level_hierarchy(birth_dt, moon_lon, target_dt)
 
         act_m = h5["mahadasha"]
         act_a = h5["antardasha"]
@@ -2696,7 +2712,7 @@ elif selected_module.startswith("⏱️ दशा"):
             "📜 सम्पूर्ण 120-वर्षीय कालक्रम (All Mahadashas)"
         ])
 
-        v_mahadashas = default_dasha_engine.generate_mahadasha_sequence(birth_dt, moon_lon, num_cycles=2)
+        v_mahadashas = d_engine.generate_mahadasha_sequence(birth_dt, moon_lon, num_cycles=2)
         maha_options = [f"{m['lord']} ({m['start_date'].strftime('%d-%b-%Y')} से {m['end_date'].strftime('%d-%b-%Y')})" for m in v_mahadashas]
         default_maha_idx = next((i for i, m in enumerate(v_mahadashas) if m['lord'] == act_m['lord'] and m['start_date'] <= target_dt <= m['end_date']), 0)
 
@@ -2720,7 +2736,7 @@ elif selected_module.startswith("⏱️ दशा"):
             sel_maha_idx = st.selectbox("महादशा चुनें (Select Mahadasha)", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_maha_for_antar")
             sel_m_obj = v_mahadashas[sel_maha_idx]
             
-            antars = default_dasha_engine.generate_antardashas(
+            antars = d_engine.generate_antardashas(
                 sel_m_obj["lord"], sel_m_obj["start_date"], sel_m_obj["end_date"], is_partial=sel_m_obj.get("is_partial", False)
             )
             a_rows = []
@@ -2743,14 +2759,14 @@ elif selected_module.startswith("⏱️ दशा"):
             with col_sel1:
                 sel_m_prat_idx = st.selectbox("महादशा चुनें", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_prat")
             sel_m_for_p = v_mahadashas[sel_m_prat_idx]
-            antars_for_p = default_dasha_engine.generate_antardashas(sel_m_for_p["lord"], sel_m_for_p["start_date"], sel_m_for_p["end_date"], is_partial=sel_m_for_p.get("is_partial", False))
+            antars_for_p = d_engine.generate_antardashas(sel_m_for_p["lord"], sel_m_for_p["start_date"], sel_m_for_p["end_date"], is_partial=sel_m_for_p.get("is_partial", False))
             antar_p_options = [f"{a['lord']} ({a['start_date'].strftime('%d-%b-%Y')} से {a['end_date'].strftime('%d-%b-%Y')})" for a in antars_for_p]
             default_a_idx = next((i for i, a in enumerate(antars_for_p) if a['lord'] == act_a['lord'] and a['start_date'] <= target_dt <= a['end_date']), 0)
             with col_sel2:
                 sel_a_prat_idx = st.selectbox("अंतर्दशा चुनें", range(len(antar_p_options)), format_func=lambda i: antar_p_options[i], index=default_a_idx, key="sel_a_for_prat")
             
             sel_a_for_p = antars_for_p[sel_a_prat_idx]
-            pratyantars = default_dasha_engine.generate_pratyantardashas(
+            pratyantars = d_engine.generate_pratyantardashas(
                 sel_m_for_p["lord"], sel_a_for_p["lord"], sel_a_for_p["start_date"], sel_a_for_p["end_date"]
             )
             pr_rows = []
@@ -2773,17 +2789,17 @@ elif selected_module.startswith("⏱️ दशा"):
             with col_s1:
                 sel_m_s_idx = st.selectbox("महादशा", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_sookshma")
             sel_m_s = v_mahadashas[sel_m_s_idx]
-            antars_s = default_dasha_engine.generate_antardashas(sel_m_s["lord"], sel_m_s["start_date"], sel_m_s["end_date"], is_partial=sel_m_s.get("is_partial", False))
+            antars_s = d_engine.generate_antardashas(sel_m_s["lord"], sel_m_s["start_date"], sel_m_s["end_date"], is_partial=sel_m_s.get("is_partial", False))
             with col_s2:
                 sel_a_s_idx = st.selectbox("अंतर्दशा", range(len(antars_s)), format_func=lambda i: f"{antars_s[i]['lord']} ({antars_s[i]['start_date'].strftime('%d-%b-%y')})", index=min(default_a_idx, len(antars_s)-1), key="sel_a_for_sookshma")
             sel_a_s = antars_s[sel_a_s_idx]
-            prats_s = default_dasha_engine.generate_pratyantardashas(sel_m_s["lord"], sel_a_s["lord"], sel_a_s["start_date"], sel_a_s["end_date"])
+            prats_s = d_engine.generate_pratyantardashas(sel_m_s["lord"], sel_a_s["lord"], sel_a_s["start_date"], sel_a_s["end_date"])
             default_pr_idx = next((i for i, p in enumerate(prats_s) if p['lord'] == act_pr['lord'] and p['start_date'] <= target_dt <= p['end_date']), 0)
             with col_s3:
                 sel_pr_s_idx = st.selectbox("प्रत्यंतर्दशा", range(len(prats_s)), format_func=lambda i: f"{prats_s[i]['lord']} ({prats_s[i]['start_date'].strftime('%d-%b-%y')})", index=min(default_pr_idx, len(prats_s)-1), key="sel_pr_for_sookshma")
             
             sel_pr_s = prats_s[sel_pr_s_idx]
-            sookshmas = default_dasha_engine.generate_sookshmadashas(sel_m_s["lord"], sel_a_s["lord"], sel_pr_s["lord"], sel_pr_s["start_date"], sel_pr_s["end_date"])
+            sookshmas = d_engine.generate_sookshmadashas(sel_m_s["lord"], sel_a_s["lord"], sel_pr_s["lord"], sel_pr_s["start_date"], sel_pr_s["end_date"])
             s_rows = []
             for s in sookshmas:
                 is_s_act = (s["start_date"] <= target_dt <= s["end_date"])
@@ -2803,21 +2819,21 @@ elif selected_module.startswith("⏱️ दशा"):
             with c_p1:
                 sel_m_p_idx = st.selectbox("महादशा (Maha)", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_prana")
             sel_m_p = v_mahadashas[sel_m_p_idx]
-            antars_p = default_dasha_engine.generate_antardashas(sel_m_p["lord"], sel_m_p["start_date"], sel_m_p["end_date"], is_partial=sel_m_p.get("is_partial", False))
+            antars_p = d_engine.generate_antardashas(sel_m_p["lord"], sel_m_p["start_date"], sel_m_p["end_date"], is_partial=sel_m_p.get("is_partial", False))
             with c_p2:
                 sel_a_p_idx = st.selectbox("अंतर्दशा (Antar)", range(len(antars_p)), format_func=lambda i: f"{antars_p[i]['lord']}", index=min(default_a_idx, len(antars_p)-1), key="sel_a_for_prana")
             sel_a_p = antars_p[sel_a_p_idx]
-            prats_p = default_dasha_engine.generate_pratyantardashas(sel_m_p["lord"], sel_a_p["lord"], sel_a_p["start_date"], sel_a_p["end_date"])
+            prats_p = d_engine.generate_pratyantardashas(sel_m_p["lord"], sel_a_p["lord"], sel_a_p["start_date"], sel_a_p["end_date"])
             with c_p3:
                 sel_pr_p_idx = st.selectbox("प्रत्यंतर्दशा (Prat)", range(len(prats_p)), format_func=lambda i: f"{prats_p[i]['lord']}", index=min(default_pr_idx, len(prats_p)-1), key="sel_pr_for_prana")
             sel_pr_p = prats_p[sel_pr_p_idx]
-            sookshmas_p = default_dasha_engine.generate_sookshmadashas(sel_m_p["lord"], sel_a_p["lord"], sel_pr_p["lord"], sel_pr_p["start_date"], sel_pr_p["end_date"])
+            sookshmas_p = d_engine.generate_sookshmadashas(sel_m_p["lord"], sel_a_p["lord"], sel_pr_p["lord"], sel_pr_p["start_date"], sel_pr_p["end_date"])
             default_s_idx = next((i for i, s in enumerate(sookshmas_p) if s['lord'] == act_s['lord'] and s['start_date'] <= target_dt <= s['end_date']), 0)
             with c_p4:
                 sel_s_p_idx = st.selectbox("सूक्ष्मदशा (Sookshma)", range(len(sookshmas_p)), format_func=lambda i: f"{sookshmas_p[i]['lord']}", index=min(default_s_idx, len(sookshmas_p)-1), key="sel_s_for_prana")
             sel_s_p = sookshmas_p[sel_s_p_idx]
 
-            pranas = default_dasha_engine.generate_pranadashas(sel_m_p["lord"], sel_a_p["lord"], sel_pr_p["lord"], sel_s_p["lord"], sel_s_p["start_date"], sel_s_p["end_date"])
+            pranas = d_engine.generate_pranadashas(sel_m_p["lord"], sel_a_p["lord"], sel_pr_p["lord"], sel_s_p["lord"], sel_s_p["start_date"], sel_s_p["end_date"])
             p_rows = []
             for prn in pranas:
                 is_p_act = (prn["start_date"] <= target_dt <= prn["end_date"])
@@ -2835,7 +2851,7 @@ elif selected_module.startswith("⏱️ दशा"):
             st.markdown("##### 📜 संपूर्ण 120-वर्षीय जीवन कालक्रम तालिका")
             full_rows = []
             for m in v_mahadashas:
-                m_antars = default_dasha_engine.generate_antardashas(m["lord"], m["start_date"], m["end_date"], is_partial=m.get("is_partial", False))
+                m_antars = d_engine.generate_antardashas(m["lord"], m["start_date"], m["end_date"], is_partial=m.get("is_partial", False))
                 for a in m_antars:
                     is_active = (a["start_date"] <= target_dt <= a["end_date"])
                     full_rows.append({
@@ -2854,9 +2870,9 @@ elif selected_module.startswith("⏱️ दशा"):
     elif "योगिनी" in d_mode:
         st.markdown(f"#### 🌸 योगिनी दशा (36-Year Classical Cycle — Major, Antar & Pratyantar)")
         try:
-            yog_dashas = default_yogini_engine.generate_timeline(birth_dt, moon_lon)
+            yog_dashas = y_engine.generate_timeline(birth_dt, moon_lon)
         except TypeError:
-            yog_dashas = default_yogini_engine.generate_timeline(chart)
+            yog_dashas = y_engine.generate_timeline(chart)
 
         act_yog = next((y for y in yog_dashas if y["start_date"] <= target_dt <= y["end_date"]), yog_dashas[0])
         
@@ -2891,7 +2907,7 @@ elif selected_module.startswith("⏱️ दशा"):
             sel_y_idx = st.selectbox("मुख्य योगिनी चुनें", range(len(y_options)), format_func=lambda i: y_options[i], index=default_y_idx, key="sel_yogini_for_antar")
             sel_y_obj = yog_dashas[sel_y_idx]
 
-            y_antars = default_yogini_engine.generate_antardashas(
+            y_antars = y_engine.generate_antardashas(
                 sel_y_obj.get("yogini_name", sel_y_obj.get("yogini")), sel_y_obj["start_date"], sel_y_obj["end_date"]
             )
             st.dataframe(pd.DataFrame([{
@@ -2909,12 +2925,12 @@ elif selected_module.startswith("⏱️ दशा"):
             with col_y_p1:
                 sel_y_m_idx = st.selectbox("मुख्य योगिनी", range(len(y_options)), format_func=lambda i: y_options[i], index=default_y_idx, key="sel_y_m_for_prat")
             sel_y_m_p = yog_dashas[sel_y_m_idx]
-            y_antars_p = default_yogini_engine.generate_antardashas(sel_y_m_p.get("yogini_name", sel_y_m_p.get("yogini")), sel_y_m_p["start_date"], sel_y_m_p["end_date"])
+            y_antars_p = y_engine.generate_antardashas(sel_y_m_p.get("yogini_name", sel_y_m_p.get("yogini")), sel_y_m_p["start_date"], sel_y_m_p["end_date"])
             with col_y_p2:
                 sel_y_a_idx = st.selectbox("अंतर्दशा योगिनी", range(len(y_antars_p)), format_func=lambda i: f"{y_antars_p[i]['yogini']} ({y_antars_p[i]['start_date'].strftime('%d-%b-%y')})", key="sel_y_a_for_prat")
             sel_y_a_p = y_antars_p[sel_y_a_idx]
             
-            y_prats = default_yogini_engine.generate_pratyantardashas(
+            y_prats = y_engine.generate_pratyantardashas(
                 sel_y_m_p.get("yogini_name", sel_y_m_p.get("yogini")), sel_y_a_p["yogini"], sel_y_a_p["start_date"], sel_y_a_p["end_date"]
             )
             st.dataframe(pd.DataFrame([{
@@ -2931,7 +2947,7 @@ elif selected_module.startswith("⏱️ दशा"):
     # =========================================================================
     elif "जैमिनी" in d_mode:
         st.markdown("#### 🔱 जैमिनी चर दशा (Jaimini Rashi Chara Dasha — Major & Antar)")
-        chara_dashas = default_chara_engine.generate_timeline(chart)
+        chara_dashas = c_engine.generate_timeline(chart)
         act_chara = next((c for c in chara_dashas if c["start_date"] <= target_dt <= c["end_date"]), chara_dashas[0])
 
         c_col1, c_col2, c_col3 = st.columns(3)
@@ -2962,7 +2978,7 @@ elif selected_module.startswith("⏱️ दशा"):
             sel_c_idx = st.selectbox("चर दशा राशि चुनें", range(len(c_options)), format_func=lambda i: c_options[i], index=default_c_idx, key="sel_chara_for_antar")
             sel_c_obj = chara_dashas[sel_c_idx]
 
-            c_antars = default_chara_engine.generate_antardashas(sel_c_obj["sign_id"], sel_c_obj["start_date"], sel_c_obj["end_date"])
+            c_antars = c_engine.generate_antardashas(sel_c_obj["sign_id"], sel_c_obj["start_date"], sel_c_obj["end_date"])
             st.dataframe(pd.DataFrame([{
                 "चर महादशा / अंतर्दशा": f"{sel_c_obj['sign_name']} — {ca['sign_name']}",
                 "राशि स्वामी (Lord)": ca["lord"],
@@ -2978,12 +2994,12 @@ elif selected_module.startswith("⏱️ दशा"):
             with col_c_p1:
                 sel_c_m_idx = st.selectbox("महादशा राशि", range(len(c_options)), format_func=lambda i: c_options[i], index=default_c_idx, key="sel_c_m_for_prat")
             sel_c_m_p = chara_dashas[sel_c_m_idx]
-            c_antars_p = default_chara_engine.generate_antardashas(sel_c_m_p["sign_id"], sel_c_m_p["start_date"], sel_c_m_p["end_date"])
+            c_antars_p = c_engine.generate_antardashas(sel_c_m_p["sign_id"], sel_c_m_p["start_date"], sel_c_m_p["end_date"])
             with col_c_p2:
                 sel_c_a_idx = st.selectbox("अंतर्दशा राशि", range(len(c_antars_p)), format_func=lambda i: f"{c_antars_p[i]['sign_name']} ({c_antars_p[i]['start_date'].strftime('%d-%b-%y')})", key="sel_c_a_for_prat")
             sel_c_a_p = c_antars_p[sel_c_a_idx]
 
-            c_prats = default_chara_engine.generate_pratyantardashas(sel_c_a_p["sign_id"], sel_c_a_p["start_date"], sel_c_a_p["end_date"])
+            c_prats = c_engine.generate_pratyantardashas(sel_c_a_p["sign_id"], sel_c_a_p["start_date"], sel_c_a_p["end_date"])
             st.dataframe(pd.DataFrame([{
                 "3-स्तरीय चर दशा": f"{sel_c_m_p['sign_name']} / {sel_c_a_p['sign_name']} / {cp['sign_name']}",
                 "राशि स्वामी": cp["lord"],
