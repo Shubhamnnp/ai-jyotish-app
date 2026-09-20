@@ -51,7 +51,9 @@ from src.jyotish.dasha.yogini import default_yogini_engine
 from src.jyotish.dasha.chara import default_chara_engine
 from src.jyotish.dasha.kcd import default_kcd_engine
 from src.jyotish.dasha.shoola import default_shoola_engine
-from src.jyotish.services.event_query import default_event_query_service
+import importlib
+import src.jyotish.services.prashna as prashna_service_mod
+importlib.reload(prashna_service_mod)
 from src.jyotish.services.prashna import default_prashna_service, PRASHNA_CATEGORIES
 from src.jyotish.services.varshaphal import default_varshaphal_service
 from src.jyotish.services.btr import default_btr_service, LifeEvent
@@ -1956,15 +1958,28 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
 
     # Store calculation in session state so it remains interactive
     if calc_btn or "prashna_res" not in st.session_state or st.session_state.prashna_res.get("category") != prashna_cat:
-        st.session_state.prashna_res = default_prashna_service.generate_prashna_chart(
-            query_text=prashna_text,
-            category_name=prashna_cat,
-            latitude=q_lat,
-            longitude=q_lon,
-            timezone_offset=q_tz,
-            query_dt=q_dt,
-            questioner_name=q_name
-        )
+        try:
+            st.session_state.prashna_res = default_prashna_service.generate_prashna_chart(
+                query_text=prashna_text,
+                category_name=prashna_cat,
+                latitude=q_lat,
+                longitude=q_lon,
+                timezone_offset=q_tz,
+                query_dt=q_dt,
+                questioner_name=q_name
+            )
+        except Exception:
+            import src.jyotish.services.prashna as p_mod_live
+            importlib.reload(p_mod_live)
+            st.session_state.prashna_res = p_mod_live.default_prashna_service.generate_prashna_chart(
+                query_text=prashna_text,
+                category_name=prashna_cat,
+                latitude=q_lat,
+                longitude=q_lon,
+                timezone_offset=q_tz,
+                query_dt=q_dt,
+                questioner_name=q_name
+            )
 
     p_res = st.session_state.prashna_res
     p_chart: KundaliChart = p_res.get("chart", chart)

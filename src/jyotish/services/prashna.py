@@ -183,7 +183,8 @@ class PrashnaService:
         query_dt: Optional[datetime] = None,
         query_category: Optional[str] = None,
         questioner_name: str = "Prashna Querent",
-        horary_number: int = 0
+        horary_number: int = 0,
+        **kwargs
     ) -> Dict[str, Any]:
         """
         Calculates Prashna Chart at the query moment.
