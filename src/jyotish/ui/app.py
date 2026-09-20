@@ -446,10 +446,14 @@ unified_css = f"""
         top: 0px !important;
         z-index: 999999 !important;
         background: #F8FAFC !important;
+        border: none !important;
+        border-bottom: 2px solid #CBD5E1 !important;
+        border-radius: 0px !important;
         padding-top: 6px !important;
         padding-bottom: 8px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
         margin-bottom: 10px !important;
-        border-bottom: 2px solid #CBD5E1 !important;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
     }}
 
@@ -1603,25 +1607,28 @@ components.html("""
                 blockContainer.style.setProperty('overflow', 'visible', 'important');
                 blockContainer.style.setProperty('padding-top', '0px', 'important');
             }
+            const rootVertBlocks = parentDoc.querySelectorAll('[data-testid="stVerticalBlock"]');
+            rootVertBlocks.forEach(function(vb) {
+                vb.style.setProperty('overflow', 'visible', 'important');
+            });
 
             const marker = parentDoc.querySelector('.frozen-header-marker');
             if (marker) {
-                let container = marker.closest('[data-testid="stVerticalBlockBorderWrapper"]') ||
-                                marker.closest('[data-testid="stVerticalBlock"]') ||
-                                marker.parentElement;
-                if (container) {
-                    container.style.setProperty('position', 'sticky', 'important');
-                    container.style.setProperty('top', '0px', 'important');
-                    container.style.setProperty('z-index', '999999', 'important');
+                const wrapper = marker.closest('[data-testid="stVerticalBlockBorderWrapper"]') || marker.parentElement;
+                if (wrapper) {
+                    wrapper.style.setProperty('position', 'sticky', 'important');
+                    wrapper.style.setProperty('top', '0px', 'important');
+                    wrapper.style.setProperty('z-index', '999999', 'important');
                     
                     const isNight = parentDoc.body.classList.contains('night-mode') || 
                                     parentDoc.querySelector('#software-theme-select')?.value === 'night' ||
                                     (window.parent && window.parent.currentSoftwareTheme === 'night');
-                    container.style.setProperty('background', isNight ? '#0A0E1A' : '#F8FAFC', 'important');
-                    container.style.setProperty('border-bottom', isNight ? '2.5px solid #1E293B' : '2.5px solid #CBD5E1', 'important');
-                    container.style.setProperty('box-shadow', '0 6px 20px rgba(0, 0, 0, 0.12)', 'important');
-                    container.style.setProperty('padding-bottom', '8px', 'important');
-                    container.style.setProperty('margin-bottom', '8px', 'important');
+                    wrapper.style.setProperty('background', isNight ? '#0A0E1A' : '#F8FAFC', 'important');
+                    wrapper.style.setProperty('border', 'none', 'important');
+                    wrapper.style.setProperty('border-bottom', isNight ? '2px solid #1E293B' : '2px solid #CBD5E1', 'important');
+                    wrapper.style.setProperty('box-shadow', '0 6px 20px rgba(0, 0, 0, 0.12)', 'important');
+                    wrapper.style.setProperty('padding', '6px 14px 8px 14px', 'important');
+                    wrapper.style.setProperty('margin-bottom', '10px', 'important');
                 }
             }
         } catch(e) {
@@ -2147,7 +2154,7 @@ if st.session_state.active_module_idx >= len(MODULE_OPTIONS):
 # -------------------------------------------------------------
 # 🌟 FROZEN STICKY TOP HEADER SECTION (Pinned at Top)
 # -------------------------------------------------------------
-with st.container():
+with st.container(border=True):
     st.markdown('<div class="frozen-header-marker"></div>', unsafe_allow_html=True)
     
     # 1. Top Navigation Bar (Header)
