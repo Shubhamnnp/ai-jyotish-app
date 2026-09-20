@@ -1757,6 +1757,183 @@ LANG_OPTIONS = [
     "বাংলা (Bengali)"
 ]
 
+# -------------------------------------------------------------
+# 21 Vedic Astrology Modules Definitions (Available globally)
+# -------------------------------------------------------------
+if "English" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 Birth Chart (Natal & Vargas)",
+        "🎯 Event Analysis (Ghatna Query)",
+        "🛡️ Afflictions & Remedies",
+        "📊 Dasvarga Table",
+        "🏛️ Vastu-Jyotish",
+        "❓ Prashna Kundali (Horary)",
+        "☁️ Server Sync",
+        "⚖️ Shadbala & Bhavabala",
+        "🔱 Jaimini & Upagrahas",
+        "⏱️ Dasha Systems",
+        "🪐 Transit & Ashtakvarga",
+        "📐 KP Astrology System",
+        "⏳ Auspicious Muhurta",
+        "☸️ Sudarshan Chakra",
+        "📅 Annual Varshaphal",
+        "⏳ Birth Time Rectification (BTR)",
+        "💍 Kundali Matching (Milan)",
+        "💬 Jyotish AI Assistant",
+        "📄 Comprehensive Report",
+        "📚 100 Classical Rules",
+        "🔍 Vedic Sage Validation"
+    ]
+elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 ஜாதகக் கட்டம் (Natal & Vargas)",
+        "🎯 நிகழ்வு பகுப்பாய்வு (Ghatna Query)",
+        "🛡️ தோஷ பரிகாரம் & சுயம் (Remedies)",
+        "📊 தசவர்க்க அட்டவணை (Dasvarga Table)",
+        "🏛️ வாஸ்து ஜோதிடம் (Vastu-Jyotish)",
+        "❓ பிரசன்ன ஜோதிடம் (Horary / Prashna)",
+        "☁️ சர்வர் ஒத்திசைவு (Server Sync)",
+        "⚖️ ஷட்பலம் & பாவபலம் (Shadbala)",
+        "🔱 ஜெயமினி ஜோதிடம் (Jaimini)",
+        "⏱️ தசா அமைப்புகள் (Dasha)",
+        "🪐 கோசாரம் & அஷ்டவர்க்கம் (Transit)",
+        "📐 கே.பி. ஜோதிடம் (KP Astrology)",
+        "⏳ சுப முகூர்த்தம் (Muhurta)",
+        "☸️ சுதர்சன சக்கரம் (Sudarshan Chakra)",
+        "📅 வருட பலன்கள் (Varshaphal)",
+        "⏳ பிறப்பு நேர திருத்தம் (BTR)",
+        "💍 திருமணப் பொருத்தம் (Milan)",
+        "💬 ஜோதிட AI உதவியாளர் (Sahayak)",
+        "📄 முழுமையான அறிக்கை (Report)",
+        "📚 100 சாஸ்திர விதிகள் (Rules)",
+        "🔍 வேத ரிஷி சரிபார்ப்பு (Validation)"
+    ]
+elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 జన్మ జాతక చక్రం (Natal & Vargas)",
+        "🎯 సంఘటన విశ్లేషణ (Ghatna Query)",
+        "🛡️ దోష నివారణ & పరిహారాలు (Remedies)",
+        "📊 దశవర్గ పట్టిక (Dasvarga Table)",
+        "🏛️ వాస్తు జ్యోతిష్యం (Vastu-Jyotish)",
+        "❓ ప్రశ్న జాతకం (Horary / Prashna)",
+        "☁️ సర్వర్ సమకాలీకరణ (Server Sync)",
+        "⚖️ షడ్బలం & భావబలం (Shadbala)",
+        "🔱 జైమిని జ్యోతిష్యం (Jaimini)",
+        "⏱️ దశా పద్ధతులు (Dasha)",
+        "🪐 గోచార & అష్టకవర్గ (Transit)",
+        "📐 కె.పి. పద్ధతి (KP Astrology)",
+        "⏳ శుభ ముహూర్తం (Muhurta)",
+        "☸️ సుదర్శన చక్రం (Sudarshan Chakra)",
+        "📅 వార్షిక ఫలితాలు (Varshaphal)",
+        "⏳ జన్మ సమయ శోధన (BTR)",
+        "💍 గుణ మేళాపకం (Milan)",
+        "💬 జ్యోతిష్య AI సహాయకుడు (Sahayak)",
+        "📄 సంపూర్ణ నివేదిక (Report)",
+        "📚 100 శాస్త్రీయ నియమాలు (Rules)",
+        "🔍 వైదిక ఋషి ధృవీకరణ (Validation)"
+    ]
+elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 જન્મ કુંડળી (Natal & Vargas)",
+        "🎯 ઘટના વિશ્લેષણ (Ghatna Query)",
+        "🛡️ દોષ અને ફ્રી-વિલ (Affliction & Remedies)",
+        "📊 દશવર્ગ કોષ્ટક (Dasvarga Table)",
+        "🏛️ વાસ્તુ-જ્યોતિષ (Vastu-Jyotish)",
+        "❓ પ્રશ્ન કુંડળી (Horary / Prashna)",
+        "☁️ સર્વર સિંક (Server Sync)",
+        "⚖️ ષડ્બળ અને ભાવબળ (Shadbala)",
+        "🔱 જૈમિની અને ઉપગ્રહો (Jaimini)",
+        "⏱️ દશા પ્રણાલી (Dasha)",
+        "🪐 ગોચર અને અષ્ટકવર્ગ (Gochar & Shodhana)",
+        "📐 કે.પી. પદ્ધતિ (KP Astrology)",
+        "⏳ શુભ મુહૂર્ત (Muhurta)",
+        "☸️ સુદર્શન ચક્ર (Sudarshan Chakra)",
+        "📅 વર્ષફળ (Varshaphal)",
+        "⏳ સમય સંશોધન (BTR)",
+        "💍 કુંડળી મેળવણું (Milan)",
+        "💬 જ્યોતિષ AI સહાયક (Sahayak)",
+        "📄 સંપૂર્ણ અહેવાલ (Report)",
+        "📚 ૧૦૦ શાસ્ત્રીય નિયમો (Rules)",
+        "🔍 વૈદિક ઋષિ પ્રમાણીકરણ (Validation)"
+    ]
+elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 जन्म पत्रिका (Natal & Vargas)",
+        "🎯 घटना विश्लेषण (Ghatna Query)",
+        "🛡️ दोष व फ्री-विल (Affliction & Remedies)",
+        "📊 दशवर्ग तक्ता (Dasvarga Table)",
+        "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
+        "❓ प्रश्न पत्रिका (Horary / Prashna)",
+        "☁️ सर्व्हर सिंक (Server Sync)",
+        "⚖️ षड्बल व भावबल (Shadbala)",
+        "🔱 जैमिनी व उपग्रह (Jaimini)",
+        "⏱️ दशा प्रणाली (Dasha)",
+        "🪐 गोचर व अष्टकवर्ग (Gochar & Shodhana)",
+        "📐 के.पी. पद्धती (KP Astrology)",
+        "⏳ शुभ मुहूर्त (Muhurta)",
+        "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
+        "📅 वर्षफळ (Varshaphal)",
+        "⏳ वेळ शोधन (BTR)",
+        "💍 पत्रिका मिलन (Milan)",
+        "💬 ज्योतिष AI सहाय्यक (Sahayak)",
+        "📄 संपूर्ण अहवाल (Report)",
+        "📚 १०० शास्त्रीय नियम (Rules)",
+        "🔍 वैदिक ऋषी पडताळणी (Validation)"
+    ]
+elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
+    MODULE_OPTIONS = [
+        "📜 জন্ম কুণ্ডলী (Natal & Vargas)",
+        "🎯 ঘটনা বিশ্লেষণ (Ghatna Query)",
+        "🛡️ দোষ ও প্রতিকার (Affliction & Remedies)",
+        "📊 দশবর্গ তালিকা (Dasvarga Table)",
+        "🏛️ বাস্তু-জ্যোতিষ (Vastu-Jyotish)",
+        "❓ প্রশ্ন কুণ্ডলী (Horary / Prashna)",
+        "☁️ সার্ভার সিঙ্ক (Server Sync)",
+        "⚖️ ষড়্বল ও ভাববল (Shadbala)",
+        "🔱 জৈমিনী ও উপগ্রহ (Jaimini)",
+        "⏱️ দশা পদ্ধতি (Dasha)",
+        "🪐 গোচর ও অষ্টকবর্গ (Gochar & Shodhana)",
+        "📐 কে.পি. পদ্ধতি (KP Astrology)",
+        "⏳ শুভ মুহূর্ত (Muhurta)",
+        "☸️ সুদর্শন চক্র (Sudarshan Chakra)",
+        "📅 বর্ষফল (Varshaphal)",
+        "⏳ সময় সংশোধন (BTR)",
+        "💍 কুণ্ডলী মিলন (Milan)",
+        "💬 জ্যোতিষ AI সহকারী (Sahayak)",
+        "📄 সম্পূর্ণ রিপোর্ট (Report)",
+        "📚 ১০০ শাস্ত্রীয় নিয়ম (Rules)",
+        "🔍 বৈদিক ঋষি প্রমাণ (Validation)"
+    ]
+else:
+    MODULE_OPTIONS = [
+        "📜 जन्म कुण्डली (Natal & Vargas)",
+        "🎯 घटना विश्लेषण (Ghatna Query)",
+        "🛡️ दोष एवं फ्री-विल (Affliction & Remedies)",
+        "📊 दशवर्ग तालिका (Dasvarga Table)",
+        "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
+        "❓ प्रश्न कुण्डली (Horary / Prashna)",
+        "☁️ सर्वर सिंक (Server Sync)",
+        "⚖️ षड्बल एवं भावबल (Shadbala)",
+        "🔱 जैमिनी एवं उपग्रह (Jaimini)",
+        "⏱️ दशा प्रणालियाँ (Dasha)",
+        "🪐 गोचर एवं अष्टकवर्ग (Gochar & Shodhana)",
+        "📐 के.पी. प्रणाली (KP Astrology)",
+        "⏳ शुभ मुहूर्त एवं चौघड़िया (Muhurta)",
+        "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
+        "📅 वर्षफल (Varshaphal)",
+        "⏳ समय शोधन (BTR)",
+        "💍 कुण्डली मिलान (Milan)",
+        "💬 ज्योतिष AI सहायक (Sahayak)",
+        "📄 सम्पूर्ण रिपोर्ट (Report)",
+        "📚 100 शास्त्रीय नियम (Rules)",
+        "🔍 वैदिक ऋषि सत्यापन (Validation)"
+    ]
+
+if "active_module_idx" not in st.session_state:
+    st.session_state.active_module_idx = 0
+if st.session_state.active_module_idx >= len(MODULE_OPTIONS):
+    st.session_state.active_module_idx = 0
+
 # Ensure baseline variables
 name = st.session_state.get("birth_name", "डेमो जातक")
 init_b_date = st.session_state.get("birth_date", _init_now.date())
@@ -2148,183 +2325,6 @@ if st.session_state.get("show_birth_details", False):
             if st.button("✖️ बंद करें", key="close_birth_drawer_btn", use_container_width=True, help="जन्म विवरण पैनल को बंद करें"):
                 st.session_state.show_birth_details = False
                 st.rerun()
-
-# -------------------------------------------------------------
-# 4. 21 Vedic Astrology Modules Definitions
-# -------------------------------------------------------------
-if "English" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 Birth Chart (Natal & Vargas)",
-        "🎯 Event Analysis (Ghatna Query)",
-        "🛡️ Afflictions & Remedies",
-        "📊 Dasvarga Table",
-        "🏛️ Vastu-Jyotish",
-        "❓ Prashna Kundali (Horary)",
-        "☁️ Server Sync",
-        "⚖️ Shadbala & Bhavabala",
-        "🔱 Jaimini & Upagrahas",
-        "⏱️ Dasha Systems",
-        "🪐 Transit & Ashtakvarga",
-        "📐 KP Astrology System",
-        "⏳ Auspicious Muhurta",
-        "☸️ Sudarshan Chakra",
-        "📅 Annual Varshaphal",
-        "⏳ Birth Time Rectification (BTR)",
-        "💍 Kundali Matching (Milan)",
-        "💬 Jyotish AI Assistant",
-        "📄 Comprehensive Report",
-        "📚 100 Classical Rules",
-        "🔍 Vedic Sage Validation"
-    ]
-elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 ஜாதகக் கட்டம் (Natal & Vargas)",
-        "🎯 நிகழ்வு பகுப்பாய்வு (Ghatna Query)",
-        "🛡️ தோஷ பரிகாரம் & சுயம் (Remedies)",
-        "📊 தசவர்க்க அட்டவணை (Dasvarga Table)",
-        "🏛️ வாஸ்து ஜோதிடம் (Vastu-Jyotish)",
-        "❓ பிரசன்ன ஜோதிடம் (Horary / Prashna)",
-        "☁️ சர்வர் ஒத்திசைவு (Server Sync)",
-        "⚖️ ஷட்பலம் & பாவபலம் (Shadbala)",
-        "🔱 ஜெயமினி ஜோதிடம் (Jaimini)",
-        "⏱️ தசா அமைப்புகள் (Dasha)",
-        "🪐 கோசாரம் & அஷ்டவர்க்கம் (Transit)",
-        "📐 கே.பி. ஜோதிடம் (KP Astrology)",
-        "⏳ சுப முகூர்த்தம் (Muhurta)",
-        "☸️ சுதர்சன சக்கரம் (Sudarshan Chakra)",
-        "📅 வருட பலன்கள் (Varshaphal)",
-        "⏳ பிறப்பு நேர திருத்தம் (BTR)",
-        "💍 திருமணப் பொருத்தம் (Milan)",
-        "💬 ஜோதிட AI உதவியாளர் (Sahayak)",
-        "📄 முழுமையான அறிக்கை (Report)",
-        "📚 100 சாஸ்திர விதிகள் (Rules)",
-        "🔍 வேத ரிஷி சரிபார்ப்பு (Validation)"
-    ]
-elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 జన్మ జాతక చక్రం (Natal & Vargas)",
-        "🎯 సంఘటన విశ్లేషణ (Ghatna Query)",
-        "🛡️ దోష నివారణ & పరిహారాలు (Remedies)",
-        "📊 దశవర్గ పట్టిక (Dasvarga Table)",
-        "🏛️ వాస్తు జ్యోతిష్యం (Vastu-Jyotish)",
-        "❓ ప్రశ్న జాతకం (Horary / Prashna)",
-        "☁️ సర్వర్ సమకాలీకరణ (Server Sync)",
-        "⚖️ షడ్బలం & భావబలం (Shadbala)",
-        "🔱 జైమిని జ్యోతిష్యం (Jaimini)",
-        "⏱️ దశా పద్ధతులు (Dasha)",
-        "🪐 గోచార & అష్టకవర్గ (Transit)",
-        "📐 కె.పి. పద్ధతి (KP Astrology)",
-        "⏳ శుభ ముహూర్తం (Muhurta)",
-        "☸️ సుదర్శన చక్రం (Sudarshan Chakra)",
-        "📅 వార్షిక ఫలితాలు (Varshaphal)",
-        "⏳ జన్మ సమయ శోధన (BTR)",
-        "💍 గుణ మేళాపకం (Milan)",
-        "💬 జ్యోతిష్య AI సహాయకుడు (Sahayak)",
-        "📄 సంపూర్ణ నివేదిక (Report)",
-        "📚 100 శాస్త్రీయ నియమాలు (Rules)",
-        "🔍 వైదిక ఋషి ధృవీకరణ (Validation)"
-    ]
-elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 જન્મ કુંડળી (Natal & Vargas)",
-        "🎯 ઘટના વિશ્લેષણ (Ghatna Query)",
-        "🛡️ દોષ અને ફ્રી-વિલ (Affliction & Remedies)",
-        "📊 દશવર્ગ કોષ્ટક (Dasvarga Table)",
-        "🏛️ વાસ્તુ-જ્યોતિષ (Vastu-Jyotish)",
-        "❓ પ્રશ્ન કુંડળી (Horary / Prashna)",
-        "☁️ સર્વર સિંક (Server Sync)",
-        "⚖️ ષડ્બળ અને ભાવબળ (Shadbala)",
-        "🔱 જૈમિની અને ઉપગ્રહો (Jaimini)",
-        "⏱️ દશા પ્રણાલી (Dasha)",
-        "🪐 ગોચર અને અષ્ટકવર્ગ (Gochar & Shodhana)",
-        "📐 કે.પી. પદ્ધતિ (KP Astrology)",
-        "⏳ શુભ મુહૂર્ત (Muhurta)",
-        "☸️ સુદર્શન ચક્ર (Sudarshan Chakra)",
-        "📅 વર્ષફળ (Varshaphal)",
-        "⏳ સમય સંશોધન (BTR)",
-        "💍 કુંડળી મેળવણું (Milan)",
-        "💬 જ્યોતિષ AI સહાયક (Sahayak)",
-        "📄 સંપૂર્ણ અહેવાલ (Report)",
-        "📚 ૧૦૦ શાસ્ત્રીય નિયમો (Rules)",
-        "🔍 વૈદિક ઋષિ પ્રમાણીકરણ (Validation)"
-    ]
-elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 जन्म पत्रिका (Natal & Vargas)",
-        "🎯 घटना विश्लेषण (Ghatna Query)",
-        "🛡️ दोष व फ्री-विल (Affliction & Remedies)",
-        "📊 दशवर्ग तक्ता (Dasvarga Table)",
-        "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
-        "❓ प्रश्न पत्रिका (Horary / Prashna)",
-        "☁️ सर्व्हर सिंक (Server Sync)",
-        "⚖️ षड्बल व भावबल (Shadbala)",
-        "🔱 जैमिनी व उपग्रह (Jaimini)",
-        "⏱️ दशा प्रणाली (Dasha)",
-        "🪐 गोचर व अष्टकवर्ग (Gochar & Shodhana)",
-        "📐 के.पी. पद्धती (KP Astrology)",
-        "⏳ शुभ मुहूर्त (Muhurta)",
-        "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
-        "📅 वर्षफळ (Varshaphal)",
-        "⏳ वेळ शोधन (BTR)",
-        "💍 पत्रिका मिलन (Milan)",
-        "💬 ज्योतिष AI सहाय्यक (Sahayak)",
-        "📄 संपूर्ण अहवाल (Report)",
-        "📚 १०० शास्त्रीय नियम (Rules)",
-        "🔍 वैदिक ऋषी पडताळणी (Validation)"
-    ]
-elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
-    MODULE_OPTIONS = [
-        "📜 জন্ম কুণ্ডলী (Natal & Vargas)",
-        "🎯 ঘটনা বিশ্লেষণ (Ghatna Query)",
-        "🛡️ দোষ ও প্রতিকার (Affliction & Remedies)",
-        "📊 দশবর্গ তালিকা (Dasvarga Table)",
-        "🏛️ বাস্তু-জ্যোতিষ (Vastu-Jyotish)",
-        "❓ প্রশ্ন কুণ্ডলী (Horary / Prashna)",
-        "☁️ সার্ভার সিঙ্ক (Server Sync)",
-        "⚖️ ষড়্বল ও ভাববল (Shadbala)",
-        "🔱 জৈমিনী ও উপগ্রহ (Jaimini)",
-        "⏱️ দশা পদ্ধতি (Dasha)",
-        "🪐 গোচর ও অষ্টকবর্গ (Gochar & Shodhana)",
-        "📐 কে.পি. পদ্ধতি (KP Astrology)",
-        "⏳ শুভ মুহূর্ত (Muhurta)",
-        "☸️ সুদর্শন চক্র (Sudarshan Chakra)",
-        "📅 বর্ষফল (Varshaphal)",
-        "⏳ সময় সংশোধন (BTR)",
-        "💍 কুণ্ডলী মিলন (Milan)",
-        "💬 জ্যোতিষ AI সহকারী (Sahayak)",
-        "📄 সম্পূর্ণ রিপোর্ট (Report)",
-        "📚 ১০০ শাস্ত্রীয় নিয়ম (Rules)",
-        "🔍 বৈদিক ঋষি প্রমাণ (Validation)"
-    ]
-else:
-    MODULE_OPTIONS = [
-        "📜 जन्म कुण्डली (Natal & Vargas)",
-        "🎯 घटना विश्लेषण (Ghatna Query)",
-        "🛡️ दोष एवं फ्री-विल (Affliction & Remedies)",
-        "📊 दशवर्ग तालिका (Dasvarga Table)",
-        "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
-        "❓ प्रश्न कुण्डली (Horary / Prashna)",
-        "☁️ सर्वर सिंक (Server Sync)",
-        "⚖️ षड्बल एवं भावबल (Shadbala)",
-        "🔱 जैमिनी एवं उपग्रह (Jaimini)",
-        "⏱️ दशा प्रणालियाँ (Dasha)",
-        "🪐 गोचर एवं अष्टकवर्ग (Gochar & Shodhana)",
-        "📐 के.पी. प्रणाली (KP Astrology)",
-        "⏳ शुभ मुहूर्त एवं चौघड़िया (Muhurta)",
-        "☸️ सुदर्शन चक्र (Sudarshan Chakra)",
-        "📅 वर्षफल (Varshaphal)",
-        "⏳ समय शोधन (BTR)",
-        "💍 कुण्डली मिलान (Milan)",
-        "💬 ज्योतिष AI सहायक (Sahayak)",
-        "📄 सम्पूर्ण रिपोर्ट (Report)",
-        "📚 100 शास्त्रीय नियम (Rules)",
-        "🔍 वैदिक ऋषि सत्यापन (Validation)"
-    ]
-
-if "active_module_idx" not in st.session_state:
-    st.session_state.active_module_idx = 0
-if st.session_state.active_module_idx >= len(MODULE_OPTIONS):
-    st.session_state.active_module_idx = 0
 
 col_mod_sel, col_btn_prev, col_btn_next = st.columns([3.8, 1.1, 1.1])
 with col_mod_sel:
