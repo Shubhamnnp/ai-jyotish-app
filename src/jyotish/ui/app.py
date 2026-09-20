@@ -1964,6 +1964,7 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
         or not isinstance(st.session_state.prashna_res, dict)
         or "rules_analysis" not in st.session_state.prashna_res
         or not st.session_state.prashna_res.get("all_rules")
+        or st.session_state.prashna_res.get("active_positive_count", 0) == 0
         or st.session_state.prashna_res.get("category") != prashna_cat
     )
 
@@ -1998,7 +1999,7 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
                 st.toast("✅ प्रश्न कुण्डली एवं शास्त्रीय निर्णय सफलतापूर्वक परिकलित!")
 
     p_res = st.session_state.prashna_res
-    if not p_res.get("all_rules") or "rules_analysis" not in p_res:
+    if not p_res or not p_res.get("all_rules") or p_res.get("active_positive_count", 0) == 0 or "rules_analysis" not in p_res:
         p_res = default_prashna_service.generate_prashna_chart(
             query_text=prashna_text,
             category_name=prashna_cat,
@@ -2101,43 +2102,54 @@ elif selected_module.startswith("❓ प्रश्न कुण्डली"):
         """, unsafe_allow_html=True)
 
         st.write("")
-        with st.expander(f"🟢 सक्रिय शुभ नियम प्रमाण विवरण ({pos_c} Positive Evidence)", expanded=True):
+        
+        # Sub-tabs for instant direct viewing
+        subtab_pos, subtab_neg, subtab_all = st.tabs([
+            f"🟢 सक्रिय शुभ नियम ({pos_c})",
+            f"🔴 सक्रिय अशुभ नियम ({neg_c})",
+            "📚 संपूर्ण 100 नियमों की संदर्भ तालिका (Complete Library)"
+        ])
+
+        with subtab_pos:
             pos_rules_list = p_res.get('positive_rules', [])
             if pos_rules_list:
+                st.markdown(f"#### 🟢 सक्रिय शुभ शास्त्रीय नियम साक्ष्य (कुल: {len(pos_rules_list)} नियम | +{pos_pts} अंक)")
                 pos_df = []
                 for pr in pos_rules_list:
                     pos_df.append({
                         "नियम ID": pr.get("rule_id"),
-                        "श्रेणी (Domain)": pr.get("domain"),
-                        "शास्त्रीय नियम (Rule Title)": pr.get("name_hi"),
+                        "क्षेत्र": pr.get("domain"),
+                        "शास्त्रीय नियम नाम": pr.get("name_hi"),
                         "मूल ग्रंथ (Source)": pr.get("source"),
-                        "शुभ अंक": f"+{pr.get('weight', 0)}",
+                        "शुभ अंक": f"+{abs(pr.get('weight', 0))}",
                         "शास्त्रीय प्रमाण व फल": pr.get("description_hi")
                     })
                 st.dataframe(pd.DataFrame(pos_df), use_container_width=True, hide_index=True)
             else:
                 st.info("वर्तमान प्रश्न कुण्डली में कोई विशेष सकारात्मक नियम सक्रिय नहीं है।")
 
-        with st.expander(f"🔴 सक्रिय अशुभ / बाधक नियम विवरण ({neg_c} Negative Evidence)", expanded=True):
+        with subtab_neg:
             neg_rules_list = p_res.get('negative_rules', [])
             if neg_rules_list:
+                st.markdown(f"#### 🔴 सक्रिय अशुभ / बाधक नियम साक्ष्य (कुल: {len(neg_rules_list)} नियम | -{neg_pts} अंक)")
                 neg_df = []
                 for nr in neg_rules_list:
                     neg_df.append({
                         "नियम ID": nr.get("rule_id"),
-                        "श्रेणी (Domain)": nr.get("domain"),
-                        "बाधक नियम (Obstacle Title)": nr.get("name_hi"),
+                        "क्षेत्र": nr.get("domain"),
+                        "बाधक नियम नाम": nr.get("name_hi"),
                         "मूल ग्रंथ (Source)": nr.get("source"),
-                        "बाधा अंक": f"-{nr.get('weight', 0)}",
+                        "बाधा अंक": f"-{abs(nr.get('weight', 0))}",
                         "बाधा विवरण एवं उपाय": nr.get("description_hi")
                     })
                 st.dataframe(pd.DataFrame(neg_df), use_container_width=True, hide_index=True)
             else:
                 st.success("🎉 उत्कृष्ट! वर्तमान प्रश्न कुण्डली में कोई भी गंभीर अशुभ अथवा बाधक नियम सक्रिय नहीं है।")
 
-        with st.expander("📚 संपूर्ण 100 शास्त्रीय प्रश्न नियम संदर्भ तालिका (Complete 100 Rules Library)", expanded=True):
+        with subtab_all:
             all_r_list = p_res.get('all_rules', [])
             if all_r_list:
+                st.markdown("#### 📚 संपूर्ण 100 शास्त्रीय प्रश्न नियम संदर्भ तालिका (Complete 100 Rules Library)")
                 # Interactive filtering controls for 100 rules library
                 f_col1, f_col2, f_col3 = st.columns([1.5, 1.5, 2])
                 with f_col1:
