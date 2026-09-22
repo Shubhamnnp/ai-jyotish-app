@@ -5252,24 +5252,32 @@ elif selected_idx == 10:
                 if _prastara:
                     _psel = st.selectbox("ग्रह चुनें (Select Planet)", list(_prastara.keys()), key="prastara_sel_m10")
                     if _psel and _psel in _prastara:
-                        _grid = _prastara[_psel].get("grid", {})
-                        _contribs = _prastara[_psel].get("contributors", [])
-                        _signs12 = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"]
-                        if _grid and _contribs:
+                        _p_data = _prastara[_psel]
+                        _grid_rows = _p_data.get("grid", [])
+                        _sign_names = _p_data.get("sign_names", ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुंभ", "मीन"])
+                        _bav_total = _p_data.get("bav_total", [])
+                        if _grid_rows:
                             _pr_rows = []
-                            for _c in _contribs:
-                                _row = {"योगदानकर्ता": _c}
-                                for _s in _signs12:
-                                    _row[_s[:3]] = _grid.get(_c, {}).get(_s, 0)
-                                _row["योग"] = sum(_grid.get(_c, {}).get(_s, 0) for _s in _signs12)
+                            for _r in _grid_rows:
+                                _c_name = _r.get("contributor", "")
+                                _bindus = _r.get("bindus", [0]*12)
+                                _row = {"योगदानकर्ता (Contributor)": _c_name}
+                                for _idx, _sname in enumerate(_sign_names):
+                                    _col_title = f"{_sname[:3]} ({_idx+1})"
+                                    _row[_col_title] = "● 1" if (_idx < len(_bindus) and _bindus[_idx] == 1) else "—"
+                                _row["योग (Total)"] = sum(_bindus)
                                 _pr_rows.append(_row)
-                            _tot = {"योगदानकर्ता": "TOTAL"}
-                            for _s in _signs12:
-                                _tot[_s[:3]] = sum(_grid.get(_c, {}).get(_s, 0) for _c in _contribs)
-                            _tot["योग"] = sum(_tot[_s[:3]] for _s in _signs12)
+
+                            # Total Row (BAV)
+                            _tot = {"योगदानकर्ता (Contributor)": "कुल बिन्दु (BAV Total)"}
+                            for _idx, _sname in enumerate(_sign_names):
+                                _col_title = f"{_sname[:3]} ({_idx+1})"
+                                _tot[_col_title] = _bav_total[_idx] if _idx < len(_bav_total) else sum(r.get("bindus", [0]*12)[_idx] for r in _grid_rows)
+                            _tot["योग (Total)"] = sum(_bav_total) if _bav_total else sum(sum(r.get("bindus", [0]*12)) for r in _grid_rows)
                             _pr_rows.append(_tot)
+
                             st.dataframe(pd.DataFrame(_pr_rows), use_container_width=True, hide_index=True)
-                            st.caption(f"📌 {_psel} का कुल SAV बिन्दु: **{_tot['योग']}**")
+                            st.caption(f"📌 **{_psel}** का कुल भिन्नाष्टकवर्ग (BAV) योग: **{_tot['योग (Total)']}** बिन्दु")
                         else:
                             st.info(f"{_psel} के लिए ग्रिड डेटा उपलब्ध नहीं।")
                 else:
