@@ -2377,13 +2377,13 @@ with st.container(key="top_frozen_header_container", border=True):
         with col_r2_4:
             col_cs, col_pm = st.columns([1.4, 1])
             chart_styles_list = ["North Indian (Diamond)", "South Indian (Box)", "East Indian (Surya)"]
-            curr_cs = st.session_state.get("app_chart_style", "North Indian (Diamond)")
-            if curr_cs not in chart_styles_list:
-                curr_cs = "North Indian (Diamond)"
-            cs_idx = chart_styles_list.index(curr_cs)
-            in_cs = col_cs.selectbox("कुण्डली चक्र शैली", chart_styles_list, index=cs_idx, key="app_chart_style_select")
+            if "app_chart_style" not in st.session_state or st.session_state.app_chart_style not in chart_styles_list:
+                st.session_state.app_chart_style = "North Indian (Diamond)"
+            cs_idx = chart_styles_list.index(st.session_state.app_chart_style)
+            def _on_top_cs_change():
+                st.session_state.app_chart_style = st.session_state.app_chart_style_select
+            in_cs = col_cs.selectbox("कुण्डली चक्र शैली", chart_styles_list, index=cs_idx, key="app_chart_style_select", on_change=_on_top_cs_change)
             in_pm = col_pm.toggle("⚡ Pro Mode", value=st.session_state.get("app_pro_mode", True), key="app_pro_mode_toggle")
-            st.session_state.app_chart_style = in_cs
             st.session_state.app_pro_mode = in_pm
 
         # Row 3: Action Buttons
@@ -2564,15 +2564,12 @@ if selected_idx == 0:
     curr_style = st.session_state.get("app_chart_style", "North Indian (Diamond)")
     if c_st1.button("💎 उत्तर भारतीय (Diamond)", use_container_width=True, type="primary" if "North" in curr_style else "secondary", key="btn_style_north"):
         st.session_state.app_chart_style = "North Indian (Diamond)"
-        st.session_state.app_chart_style_select = "North Indian (Diamond)"
         st.rerun()
     if c_st2.button("🔲 दक्षिण भारतीय (Square Box)", use_container_width=True, type="primary" if "South" in curr_style else "secondary", key="btn_style_south"):
         st.session_state.app_chart_style = "South Indian (Box)"
-        st.session_state.app_chart_style_select = "South Indian (Box)"
         st.rerun()
     if c_st3.button("🔺 पूर्व भारतीय (Bengal/Odisha)", use_container_width=True, type="primary" if "East" in curr_style else "secondary", key="btn_style_east"):
         st.session_state.app_chart_style = "East Indian (Surya)"
-        st.session_state.app_chart_style_select = "East Indian (Surya)"
         st.rerun()
 
     col_chart1, col_chart2 = st.columns([1, 1])
