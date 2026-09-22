@@ -413,4 +413,5 @@ class VimshottariDashaEngine:
 
 # Singleton dasha engine
 default_dasha_engine = VimshottariDashaEngine(year_type="solar")
+default_vimshottari_engine = default_dasha_engine
 

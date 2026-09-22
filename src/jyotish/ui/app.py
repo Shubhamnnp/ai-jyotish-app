@@ -48,7 +48,8 @@ from src.jyotish.core.kp import default_kp_engine
 from src.jyotish.services.muhurta import default_muhurta_engine
 from src.jyotish.ui.sudarshan import default_sudarshan_engine
 from src.jyotish.core.affliction import AfflictionEngine, LIFE_AREAS
-from src.jyotish.dasha.vimshottari import default_vimshottari_engine
+from src.jyotish.dasha.vimshottari import default_dasha_engine
+default_vimshottari_engine = default_dasha_engine
 from src.jyotish.dasha.transit import default_gochar_engine
 from src.jyotish.dasha.panchanga import default_panchanga_engine
 from src.jyotish.dasha.ashtakavarga_dasha import default_ashtakavarga_dasha_engine
