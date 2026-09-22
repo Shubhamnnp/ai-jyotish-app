@@ -73,7 +73,11 @@ from src.jyotish.ui.grahalakshanam_icons import (
     ICON_FOLDER_B64,
     ICON_SAVE_B64,
     ICON_SETTINGS_B64,
-    ICON_LANGUAGES_B64
+    ICON_LANGUAGES_B64,
+    ICON_CLOCK_B64,
+    ICON_LOCATION_B64,
+    ICON_THEME_B64,
+    ICON_LOGOUT_B64
 )
 
 st.set_page_config(
@@ -2217,11 +2221,39 @@ with st.container(key="top_frozen_header_container", border=True):
             <div class="header-sub-pill" title="भूमिका: ज्योतिषी व्यवस्थापक">
                 👑 <b>ज्योतिषी</b> (Admin)
             </div>
+            <div class="header-sub-pill" title="वर्तमान समय">
+                🕒 <b>समय:</b> {current_time_str}
+            </div>
+            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
+                📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
+            </div>
+            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
+                <span class="notranslate" translate="no" style="font-size:12px;">🌐</span>
+                <b class="notranslate" translate="no" style="color:#166534 !important; font-size:11px;">भाषा:</b>
+                <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0 2px;">
+                    <option value="general" class="notranslate" translate="no">General (जनरल)</option>
+                    <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
+                    <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
+                    <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
+                    <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
+                    <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
+                    <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
+                    <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
+                </select>
+            </div>
+            <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
+                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
+                <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11px;">थीम:</b>
+                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0 2px;">
+                    <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
+                    <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
+                </select>
+            </div>
         </div>
     </header>
     """, unsafe_allow_html=True)
 
-    # 2. Authentic Grahalakshanam Component Toolbar & Modals (Exact UI Parity)
+    # 2. Authentic Grahalakshanam Component Toolbar & Modals (Exact UI Parity - 10 Icons Suite)
     if "gla_active_tool" not in st.session_state:
         st.session_state.gla_active_tool = None
 
@@ -2233,7 +2265,7 @@ with st.container(key="top_frozen_header_container", border=True):
         align-items: center;
         justify-content: flex-start;
         gap: 12px;
-        padding: 8px 12px;
+        padding: 10px 14px;
         background: #f8f9fa;
         border-radius: 14px;
         border: 1px solid #e2e8f0;
@@ -2246,13 +2278,13 @@ with st.container(key="top_frozen_header_container", border=True):
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 72px;
-        height: 72px;
+        width: 78px;
+        height: 78px;
         background-color: #f2f2f2;
-        border: 2.5px solid #00b0f0;
-        border-radius: 14px;
+        border: 3px solid #00b0f0;
+        border-radius: 15px;
         cursor: pointer;
-        padding: 4px;
+        padding: 5px;
         box-shadow: 0 2px 6px rgba(0, 176, 240, 0.2);
         transition: all 0.2s ease-in-out;
         text-align: center;
@@ -2264,8 +2296,8 @@ with st.container(key="top_frozen_header_container", border=True):
         background-color: #e0f4fc;
     }
     .gla-btn-tile img {
-        width: 38px;
-        height: 38px;
+        width: 42px;
+        height: 42px;
         object-fit: contain;
     }
     .gla-btn-tile span {
@@ -2274,35 +2306,6 @@ with st.container(key="top_frozen_header_container", border=True):
         color: #1e293b;
         margin-top: 2px;
         white-space: nowrap;
-    }
-    .gla-toolbar-pill-box {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        min-height: 72px;
-        padding: 4px 6px;
-        box-sizing: border-box;
-    }
-    .gla-toolbar-pill-card {
-        background: #FFFFFF;
-        border: 1.5px solid #CBD5E1;
-        border-radius: 10px;
-        padding: 6px 10px;
-        font-size: 11.5px;
-        color: #0F172A;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        white-space: normal;
-        word-break: break-word;
-        line-height: 1.35;
-        min-height: 48px;
-    }
-    .gla-toolbar-pill-card b {
-        font-weight: 800;
-        color: #0F172A;
     }
     .gla-info-strip {
         display: flex;
@@ -2325,29 +2328,6 @@ with st.container(key="top_frozen_header_container", border=True):
         border-radius: 4px;
         font-size: 11px;
     }
-    /* Compact the action buttons under the icon tiles */
-    .st-key-gla_btn_new button,
-    .st-key-gla_btn_birth button,
-    .st-key-gla_btn_open button,
-    .st-key-gla_btn_save button,
-    .st-key-gla_btn_settings button,
-    .st-key-gla_btn_lang button {
-        padding: 3px 6px !important;
-        font-size: 11px !important;
-        min-height: 28px !important;
-        margin-top: 4px !important;
-        border-radius: 6px !important;
-        font-weight: 700 !important;
-    }
-    .st-key-gla_btn_logout button {
-        min-height: 46px !important;
-        font-weight: 800 !important;
-        border-color: #EF4444 !important;
-        color: #B91C1C !important;
-    }
-    .st-key-gla_btn_logout button:hover {
-        background: #FEE2E2 !important;
-    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -2363,10 +2343,11 @@ with st.container(key="top_frozen_header_container", border=True):
     </div>
     """, unsafe_allow_html=True)
 
-    # 6-Tile Toolbelt Columns + 4 Status/Control Pills (Time, GPS, Language, Theme) + Logout
-    tb_col1, tb_col2, tb_col3, tb_col4, tb_col5, tb_col6, tb_col_time, tb_col_gps, tb_col_lang, tb_col_theme, tb_col_logout = st.columns([0.85, 0.95, 0.85, 0.85, 0.9, 0.9, 1.4, 1.8, 1.3, 1.3, 0.9])
+    # 10-Tile Complete Grahalakshanam Toolbelt Columns (Exact UI Parity)
+    tb_cols = st.columns(10)
 
-    with tb_col1:
+    # 1. New Chart
+    with tb_cols[0]:
         st.markdown(f"""
         <div style="display:flex; justify-content:center;">
             <div class="gla-btn-tile" title="नया चार्ट / रीसेट (New Chart / Reset)">
@@ -2375,10 +2356,11 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("New", key="gla_btn_new", use_container_width=True):
+        if st.button("📄 New", key="gla_btn_new", use_container_width=True):
             st.session_state.gla_active_tool = "new" if st.session_state.gla_active_tool != "new" else None
 
-    with tb_col2:
+    # 2. Birth Data
+    with tb_cols[1]:
         st.markdown(f"""
         <div style="display:flex; justify-content:center;">
             <div class="gla-btn-tile" title="जन्म विवरण दर्ज करें (Birth Data Entry)">
@@ -2387,10 +2369,11 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Birth Data", key="gla_btn_birth", use_container_width=True):
+        if st.button("👶 Birth Data", key="gla_btn_birth", use_container_width=True):
             st.session_state.gla_active_tool = "birth" if st.session_state.gla_active_tool != "birth" else None
 
-    with tb_col3:
+    # 3. Open Folder
+    with tb_cols[2]:
         st.markdown(f"""
         <div style="display:flex; justify-content:center;">
             <div class="gla-btn-tile" title="सहेजी गई कुण्डली खोलें (Open Saved Charts)">
@@ -2399,10 +2382,11 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Open", key="gla_btn_open", use_container_width=True):
+        if st.button("📁 Open", key="gla_btn_open", use_container_width=True):
             st.session_state.gla_active_tool = "open" if st.session_state.gla_active_tool != "open" else None
 
-    with tb_col4:
+    # 4. Save Chart
+    with tb_cols[3]:
         st.markdown(f"""
         <div style="display:flex; justify-content:center;">
             <div class="gla-btn-tile" title="कुण्डली सहेजें (Save Chart)">
@@ -2411,10 +2395,11 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Save", key="gla_btn_save", use_container_width=True):
+        if st.button("💾 Save", key="gla_btn_save", use_container_width=True):
             st.session_state.gla_active_tool = "save" if st.session_state.gla_active_tool != "save" else None
 
-    with tb_col5:
+    # 5. Settings
+    with tb_cols[4]:
         st.markdown(f"""
         <div style="display:flex; justify-content:center;">
             <div class="gla-btn-tile" title="गणना सेटिंग्स (Settings: Ayanamsa, House System)">
@@ -2423,10 +2408,11 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Settings", key="gla_btn_settings", use_container_width=True):
+        if st.button("⚙️ Settings", key="gla_btn_settings", use_container_width=True):
             st.session_state.gla_active_tool = "settings" if st.session_state.gla_active_tool != "settings" else None
 
-    with tb_col6:
+    # 6. Languages
+    with tb_cols[5]:
         st.markdown(f"""
         <div style="display:flex; justify-content:center;">
             <div class="gla-btn-tile" title="भाषा चयन (Software Language Switcher)">
@@ -2435,81 +2421,61 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Languages", key="gla_btn_lang", use_container_width=True):
+        if st.button("🌐 Languages", key="gla_btn_lang", use_container_width=True):
             st.session_state.gla_active_tool = "lang" if st.session_state.gla_active_tool != "lang" else None
 
-    with tb_col_time:
+    # 7. Current Time (वर्तमान समय)
+    with tb_cols[6]:
         st.markdown(f"""
-        <div class="gla-toolbar-pill-box">
-            <div class="gla-toolbar-pill-card" title="वर्तमान समय">
-                <span style="font-size:16px;">🕒</span>
-                <div>
-                    <div style="font-size:10px; color:#64748B; font-weight:700;">समय (Time)</div>
-                    <div style="font-size:11.5px; font-weight:800; color:#0F172A;">{current_time_str}</div>
-                </div>
+        <div style="display:flex; justify-content:center;">
+            <div class="gla-btn-tile" title="वर्तमान समय (Current Time / Live Clock)">
+                <img src="{ICON_CLOCK_B64}" alt="Current Time" />
+                <span>Time</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
+        if st.button("🕒 Time", key="gla_btn_clock", use_container_width=True):
+            st.session_state.gla_active_tool = "clock" if st.session_state.gla_active_tool != "clock" else None
 
-    with tb_col_gps:
-        st.markdown("""
-        <div class="gla-toolbar-pill-box">
-            <div class="gla-toolbar-pill-card" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
-                <span style="font-size:16px;">📍</span>
-                <div>
-                    <div style="font-size:10px; color:#B45309; font-weight:700;">स्थान (GPS)</div>
-                    <div id="user-gps-val" class="user-gps-val" style="font-size:11px; font-weight:800; color:#92400E;">GPS जाँचा जा रहा है...</div>
-                </div>
+    # 8. Current Location (वर्तमान स्थान)
+    with tb_cols[7]:
+        st.markdown(f"""
+        <div style="display:flex; justify-content:center;">
+            <div class="gla-btn-tile" title="वर्तमान स्थान (Current Location / GPS)">
+                <img src="{ICON_LOCATION_B64}" alt="Location" />
+                <span>Location</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
+        if st.button("📍 Location", key="gla_btn_location", use_container_width=True):
+            st.session_state.gla_active_tool = "location" if st.session_state.gla_active_tool != "location" else None
 
-    with tb_col_lang:
-        st.markdown("""
-        <div class="gla-toolbar-pill-box">
-            <div class="gla-toolbar-pill-card notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:4px 8px !important;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
-                <span class="notranslate" translate="no" style="font-size:16px;">🌐</span>
-                <div style="width:100%;">
-                    <div class="notranslate" translate="no" style="font-size:10px; color:#15803D; font-weight:700;">भाषा (Language)</div>
-                    <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0; width:100%;">
-                        <option value="general" class="notranslate" translate="no">General (जनरल)</option>
-                        <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
-                        <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
-                        <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
-                        <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
-                        <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
-                        <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
-                        <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
-                    </select>
-                </div>
+    # 9. Theme Mode (थीम मोड: डे / नाइट)
+    with tb_cols[8]:
+        st.markdown(f"""
+        <div style="display:flex; justify-content:center;">
+            <div class="gla-btn-tile" title="थीम मोड बदलें (Theme: Day / Night Mode)">
+                <img src="{ICON_THEME_B64}" alt="Theme Mode" />
+                <span>Theme</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
+        if st.button("☀️ Theme", key="gla_btn_theme", use_container_width=True):
+            st.session_state.gla_active_tool = "theme" if st.session_state.gla_active_tool != "theme" else None
 
-    with tb_col_theme:
-        st.markdown("""
-        <div class="gla-toolbar-pill-box">
-            <div class="gla-toolbar-pill-card notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:4px 8px !important;" title="थीम चुनें (Day / Night Mode)">
-                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:16px;">☀️</span>
-                <div style="width:100%;">
-                    <div class="notranslate" translate="no" style="font-size:10px; color:#475569; font-weight:700;">थीम (Theme)</div>
-                    <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0; width:100%;">
-                        <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day)</option>
-                        <option value="night" class="notranslate" translate="no">🌙 नाइट (Night)</option>
-                    </select>
-                </div>
+    # 10. Logout (लॉगआउट)
+    with tb_cols[9]:
+        st.markdown(f"""
+        <div style="display:flex; justify-content:center;">
+            <div class="gla-btn-tile" title="सत्र से लॉगआउट करें (Logout)">
+                <img src="{ICON_LOGOUT_B64}" alt="Logout" />
+                <span>Logout</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
+        if st.button("🚪 Logout", key="gla_btn_logout", use_container_width=True):
+            st.session_state.gla_active_tool = "logout" if st.session_state.gla_active_tool != "logout" else None
 
-    with tb_col_logout:
-        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
-        if st.button("🚪 Logout", key="gla_btn_logout", use_container_width=True, help="Grahalakshanam सत्र से लॉगआउट करें"):
-            st.session_state.is_logged_in = False
-            st.session_state.gla_authenticated = False
-            st.session_state.pop("auth_user", None)
-            st.toast("✅ Grahalakshanam सत्र सफलतापूर्वक समाप्त हो गया।", icon="🚪")
-            st.rerun()
 
     # Active tool dialog/form container
     if st.session_state.gla_active_tool:
@@ -2832,6 +2798,107 @@ with st.container(key="top_frozen_header_container", border=True):
                         st.session_state.gla_active_tool = None
                         st.toast(f"✅ भाषा परिवर्तित: {sel_new_lang}", icon="🌐")
                         st.rerun()
+
+        # 7. TOOL: CURRENT TIME (वर्तमान समय)
+        elif st.session_state.gla_active_tool == "clock":
+            with st.container(border=True):
+                st.markdown("### 🕒 वर्तमान समय एवं काल संदर्भ (Current Time)")
+                now_val = datetime.now()
+                col_c1, col_c2, col_c3 = st.columns([2, 2, 1])
+                with col_c1:
+                    st.markdown(f"""
+                    <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px;">
+                        <b style="color:#1E40AF; font-size:15px;">🕒 सिस्टम का वर्तमान समय:</b><br/>
+                        <span style="font-size:20px; font-weight:900; color:#0F172A;">{now_val.strftime('%d-%b-%Y, %I:%M:%S %p')}</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+                with col_c2:
+                    if st.button("⏱️ इस समय को जन्म समय बनाएं (Set as Birth Time)", type="primary", use_container_width=True, key="gla_set_current_time_btn"):
+                        st.session_state.birth_date = now_val.date()
+                        st.session_state.birth_time = now_val.time().replace(microsecond=0)
+                        st.session_state.gla_active_tool = None
+                        st.toast("✅ वर्तमान समय कुण्डली में सेट किया गया!", icon="🕒")
+                        st.rerun()
+                with col_c3:
+                    if st.button("❌ बंद करें", use_container_width=True, key="gla_close_clock_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+        # 8. TOOL: CURRENT LOCATION (वर्तमान स्थान)
+        elif st.session_state.gla_active_tool == "location":
+            with st.container(border=True):
+                st.markdown("### 📍 वर्तमान स्थान एवं GPS निर्देशांक (Current Location)")
+                col_loc1, col_loc2, col_loc3 = st.columns([2, 1.5, 1])
+                with col_loc1:
+                    loc_search = st.text_input("स्थान खोजें (Search City)", value=st.session_state.birth_city, key="gla_loc_modal_input")
+                    loc_results = default_geocoding_service.search(loc_search, limit=3)
+                    if loc_results:
+                        picked_loc = st.selectbox("स्थान का चयन करें", loc_results, format_func=lambda x: f"{x.formatted_name}", key="gla_loc_modal_sel")
+                        if st.button("📍 इसे वर्तमान जन्म स्थान बनाएं", type="primary", use_container_width=True, key="gla_apply_location_btn"):
+                            st.session_state.birth_lat = picked_loc.latitude
+                            st.session_state.birth_lon = picked_loc.longitude
+                            st.session_state.birth_tz = picked_loc.timezone_offset
+                            st.session_state.birth_city = picked_loc.city
+                            st.session_state.gla_active_tool = None
+                            st.toast(f"✅ स्थान '{picked_loc.city}' सेट किया गया!", icon="📍")
+                            st.rerun()
+                with col_loc2:
+                    st.markdown(f"""
+                    <div style="background:#FEF3C7; border:1.5px solid #F59E0B; border-radius:10px; padding:12px;">
+                        <b style="color:#92400E;">वर्तमान सक्रिय निर्देशांक:</b><br/>
+                        <b>शहर:</b> {st.session_state.birth_city}<br/>
+                        <b>अक्षांश:</b> {st.session_state.birth_lat:.4f}° N<br/>
+                        <b>रेखांश:</b> {st.session_state.birth_lon:.4f}° E<br/>
+                        <b>टाइमज़ोन:</b> UTC+{st.session_state.get('birth_tz', 5.5)}
+                    </div>
+                    """, unsafe_allow_html=True)
+                with col_loc3:
+                    if st.button("❌ बंद करें", use_container_width=True, key="gla_close_loc_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+        # 9. TOOL: THEME MODE (थीम मोड)
+        elif st.session_state.gla_active_tool == "theme":
+            with st.container(border=True):
+                st.markdown("### ☀️🌙 थीम मोड स्विच करें (Day / Night Mode)")
+                cur_th = st.session_state.get("app_theme_mode", "day")
+                col_th1, col_th2, col_th3 = st.columns([1.5, 1.5, 1])
+                with col_th1:
+                    if st.button("☀️ डे मोड (Day Mode)", type="primary" if cur_th == "day" else "secondary", use_container_width=True, key="gla_set_day_theme_btn"):
+                        st.session_state.app_theme_mode = "day"
+                        st.session_state.gla_active_tool = None
+                        st.toast("☀️ डे मोड सक्रिय किया गया!", icon="☀️")
+                        st.rerun()
+                with col_th2:
+                    if st.button("🌙 नाइट मोड (Night Mode)", type="primary" if cur_th == "night" else "secondary", use_container_width=True, key="gla_set_night_theme_btn"):
+                        st.session_state.app_theme_mode = "night"
+                        st.session_state.gla_active_tool = None
+                        st.toast("🌙 नाइट मोड सक्रिय किया गया!", icon="🌙")
+                        st.rerun()
+                with col_th3:
+                    if st.button("❌ बंद करें", use_container_width=True, key="gla_close_theme_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+        # 10. TOOL: LOGOUT (लॉगआउट)
+        elif st.session_state.gla_active_tool == "logout":
+            with st.container(border=True):
+                st.markdown("### 🚪 सत्र से लॉगआउट करें (Logout Confirmation)")
+                st.write("क्या आप वर्तमान Grahalakshanam / JyotishOS सत्र से लॉगआउट करना चाहते हैं?")
+                col_lg1, col_lg2, col_lg3 = st.columns([1.5, 1.5, 2])
+                with col_lg1:
+                    if st.button("🚪 हाँ, लॉगआउट करें", type="primary", use_container_width=True, key="gla_confirm_logout_btn"):
+                        st.session_state.is_logged_in = False
+                        st.session_state.gla_authenticated = False
+                        st.session_state.pop("auth_user", None)
+                        st.session_state.gla_active_tool = None
+                        st.toast("✅ आप सुरक्षित रूप से लॉगआउट हो गए हैं।", icon="🚪")
+                        st.rerun()
+                with col_lg2:
+                    if st.button("❌ नहीं, रद्द करें", use_container_width=True, key="gla_cancel_logout_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
 
 
     def _nav_prev_module():
