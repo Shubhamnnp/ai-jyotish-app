@@ -3967,8 +3967,10 @@ elif selected_idx == 8:
         st.markdown("### 📡 जैमिनी राशि दृष्टि (Rashi Drishti)")
         st.info("चर→स्थिर | स्थिर→चर (पड़ोसी छोड़कर) | द्विस्वभाव→द्विस्वभाव")
         try:
-            from src.jyotish.core.jaimini import JaiminiCalculator
-            _rd = JaiminiCalculator.calculate_rashi_drishti(chart)
+            import importlib
+            import src.jyotish.core.jaimini as jm_mod
+            importlib.reload(jm_mod)
+            _rd = jm_mod.JaiminiCalculator.calculate_rashi_drishti(chart)
             if _rd:
                 _rd_rows = [{"राशि": k, "दृष्ट राशियाँ": ", ".join(v) if v else "—", "संख्या": len(v)} for k, v in _rd.items()]
                 st.dataframe(pd.DataFrame(_rd_rows), use_container_width=True, hide_index=True)
@@ -3979,8 +3981,10 @@ elif selected_idx == 8:
         st.markdown("### 🔗 अर्गला (Argala — Intervention)")
         st.info("द्वितीय/चतुर्थ/एकादश से अर्गला | तृतीय/दशम/द्वादश से विरोधार्गला")
         try:
-            from src.jyotish.core.jaimini import JaiminiCalculator
-            _arg = JaiminiCalculator.calculate_argala(chart)
+            import importlib
+            import src.jyotish.core.jaimini as jm_mod
+            importlib.reload(jm_mod)
+            _arg = jm_mod.JaiminiCalculator.calculate_argala(chart)
             if _arg:
                 _arg_rows = [{"भाव": k, "अर्गला": ", ".join(v.get("argala", [])) or "—", "विरोधार्गला": ", ".join(v.get("virodhargala", [])) or "—", "शुद्ध": v.get("net_argala", "—")} for k, v in _arg.items()]
                 st.dataframe(pd.DataFrame(_arg_rows), use_container_width=True, hide_index=True)
@@ -3991,8 +3995,10 @@ elif selected_idx == 8:
         st.markdown("### 🌍 ग्रह आरूढ पद (Graha Arudha Padas)")
         st.info("प्रत्येक ग्रह के स्वामी की राशि से उतनी ही राशि आगे — ग्रह का बाह्य प्रकटन।")
         try:
-            from src.jyotish.core.jaimini import JaiminiCalculator
-            _ga = JaiminiCalculator.calculate_graha_arudhas(chart)
+            import importlib
+            import src.jyotish.core.jaimini as jm_mod
+            importlib.reload(jm_mod)
+            _ga = jm_mod.JaiminiCalculator.calculate_graha_arudhas(chart)
             if _ga:
                 _ga_rows = [{"ग्रह": k, "आरूढ राशि": v.get("sign_name", "—"), "लग्न से भाव": v.get("house_from_lagna", "—"), "स्वामी": v.get("sign_lord", "—")} for k, v in _ga.items()]
                 st.dataframe(pd.DataFrame(_ga_rows), use_container_width=True, hide_index=True)
@@ -5213,8 +5219,10 @@ elif selected_idx == 10:
         st.markdown("### 🔵 भृगु बिन्दु (Bhrigu Bindu)")
         st.info("राहु और चन्द्रमा के मध्य बिन्दु। इस पर ग्रह गोचर = महत्त्वपूर्ण जीवन घटना।")
         try:
-            from src.jyotish.core.ashtakavarga import AshtakavargaCalculator
-            _bb = AshtakavargaCalculator.calculate_bhrigu_bindu(chart)
+            import importlib
+            import src.jyotish.core.ashtakavarga as ak_mod
+            importlib.reload(ak_mod)
+            _bb = ak_mod.AshtakavargaCalculator.calculate_bhrigu_bindu(chart)
             if _bb:
                 _bbc1, _bbc2, _bbc3 = st.columns(3)
                 _bbc1.metric("🔵 देशांतर", f"{_bb.get('longitude', 0):.2f}°")
@@ -5236,9 +5244,11 @@ elif selected_idx == 10:
         st.markdown("### 📊 प्रस्तार अष्टकवर्ग (Prastara Ashtakvarga — 8×12 Grid)")
         st.info("8 योगदानकर्ता (Sun/Moon/Mars/Mercury/Jupiter/Venus/Saturn/Lagna) × 12 राशियाँ = प्रत्येक ग्रह का बिन्दु ग्रिड।")
         try:
-            from src.jyotish.core.ashtakavarga import AshtakavargaCalculator
+            import importlib
+            import src.jyotish.core.ashtakavarga as ak_mod
+            importlib.reload(ak_mod)
             if chart.ashtakavarga:
-                _prastara = AshtakavargaCalculator.calculate_prastara(chart, chart.ashtakavarga)
+                _prastara = ak_mod.AshtakavargaCalculator.calculate_prastara(chart, chart.ashtakavarga)
                 if _prastara:
                     _psel = st.selectbox("ग्रह चुनें (Select Planet)", list(_prastara.keys()), key="prastara_sel_m10")
                     if _psel and _psel in _prastara:
