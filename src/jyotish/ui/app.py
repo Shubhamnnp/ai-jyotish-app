@@ -6007,9 +6007,13 @@ elif selected_idx == 16:
         b_time = st.time_input("वधू जन्म समय", value=time(9, 15), key="b_t")
 
     if st.button("💑 कुण्डली मिलान करें", type="primary"):
+        import importlib
+        import src.jyotish.services.milan as milan_mod
+        importlib.reload(milan_mod)
+
         groom_data = BirthData(name=g_name, birth_date=g_date, birth_time=g_time, latitude=28.61, longitude=77.20)
         bride_data = BirthData(name=b_name, birth_date=b_date, birth_time=b_time, latitude=28.61, longitude=77.20)
-        m_score = default_milan_service.match_charts(groom_data, bride_data)
+        m_score = milan_mod.default_milan_service.match_charts(groom_data, bride_data)
 
         st.metric("अष्टकूट गुण मिलान", f"{m_score.total_score} / 36.0", m_score.verdict)
         st.info(f"**शास्त्रीय परामर्श:** {m_score.recommendation_hi}")
@@ -6026,21 +6030,32 @@ elif selected_idx == 16:
         ])
         st.dataframe(koota_df, use_container_width=True)
 
-        # Advanced Shastriya Cancellations & Balancing Analysis
+        # Advanced Shastriya Cancellations & Balancing Analysis (with defensive fallback)
         st.markdown("#### 🛡️ शास्त्रीय दोष परिहार एवं साम्य विश्लेषण (Shastriya Cancellations)")
         c_mc1, c_mc2 = st.columns(2)
+        
+        m_canc_reason = getattr(m_score, 'manglik_cancellation_reason', '') or (
+            "समान मांगलिक सामंजस्य: दोनों मांगलिक हैं।" if getattr(m_score, 'groom_manglik', False) and getattr(m_score, 'bride_manglik', False)
+            else ("दोष रहित: दोनों मांगलिक नहीं हैं।" if not getattr(m_score, 'groom_manglik', False) and not getattr(m_score, 'bride_manglik', False)
+            else "असंतुलित मांगलिक: एक पक्ष मांगलिक है।")
+        )
+        n_canc_reason = getattr(m_score, 'nadi_cancellation_reason', '') or (
+            "नाड़ी दोष परिहार लागू।" if getattr(m_score, 'nadi_dosha_cancelled', False)
+            else ("नाड़ी दोष सक्रिय है।" if getattr(m_score, 'nadi_dosha', False) else "नाड़ी दोष नहीं है।")
+        )
+
         with c_mc1:
-            if m_score.manglik_match:
-                st.success(f"**🔥 मांगलिक सामंजस्य:** {m_score.manglik_cancellation_reason}")
+            if getattr(m_score, 'manglik_match', False):
+                st.success(f"**🔥 मांगलिक सामंजस्य:** {m_canc_reason}")
             else:
-                st.error(f"**⚠️ मांगलिक असंतुलन:** {m_score.manglik_cancellation_reason}")
+                st.error(f"**⚠️ मांगलिक असंतुलन:** {m_canc_reason}")
         with c_mc2:
-            if m_score.nadi_dosha_cancelled:
-                st.success(f"**🧬 {m_score.nadi_cancellation_reason}**")
-            elif m_score.nadi_dosha:
-                st.error(f"**⚠️ {m_score.nadi_cancellation_reason}**")
+            if getattr(m_score, 'nadi_dosha_cancelled', False):
+                st.success(f"**🧬 {n_canc_reason}**")
+            elif getattr(m_score, 'nadi_dosha', False):
+                st.error(f"**⚠️ {n_canc_reason}**")
             else:
-                st.info(f"**🧬 नाड़ी मिलान:** {m_score.nadi_cancellation_reason}")
+                st.info(f"**🧬 नाड़ी मिलान:** {n_canc_reason}")
 
 
 # =============================================================
