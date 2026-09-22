@@ -229,5 +229,189 @@ class ChartRenderer:
 
     @classmethod
     def render_east_indian_svg(cls, chart: KundaliChart, title: str = "East Indian (Surya) Kundali", varga_code: str = "D1") -> str:
-        """Renders East Indian (Bengali/Odia style) Kundali."""
-        return cls.render_south_indian_svg(chart, title=f"East Indian (Prachya) - {title}", varga_code=varga_code)
+        """
+        Renders a classical East Indian (Bengali / Odia / Prachya Surya Chakra) kundali in SVG format.
+        Layout is a 3x3 square structure where the 4 corner squares are split diagonally into two triangles each,
+        yielding exactly 12 sign-fixed compartments (Mesha/Aries fixed at Top-Center, followed anticlockwise).
+        """
+        target_varga = chart.vargas.get(varga_code) if (chart.vargas and varga_code in chart.vargas) else None
+        lagna_s_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
+
+        sign_planets: Dict[int, List[Tuple[str, str]]] = {s: [] for s in range(1, 13)}
+        if target_varga:
+            for p_name, vp in target_varga.planets.items():
+                short_name = p_name[:2]
+                if p_name in chart.planets and chart.planets[p_name].is_retrograde:
+                    short_name += "(R)"
+                color = cls.get_planet_color(short_name)
+                sign_planets[vp.sign_id].append((short_name, color))
+        else:
+            for p_name, p in chart.planets.items():
+                short_name = p_name[:2]
+                if p.is_retrograde: short_name += "(R)"
+                if p.is_combust: short_name += "*"
+                color = cls.get_planet_color(short_name)
+                sign_planets[p.sign_id].append((short_name, color))
+
+        W, H = 420, 420
+        # 3x3 outer box boundaries
+        x0, y0 = 30, 45
+        size = 360
+        s3 = 120  # 360 / 3
+
+        # Coordinates of 3x3 grid points
+        x1, x2, x3 = x0 + s3, x0 + 2 * s3, x0 + size
+        y1, y2, y3 = y0 + s3, y0 + 2 * s3, y0 + size
+
+        # Standard East Indian 12 compartment polygons (Aries=1 Top-Center, anticlockwise)
+        # 1. Mesha (Top-Center rectangle): (x1,y0) to (x2,y1)
+        # 2. Vrishabha (Top-Left upper triangle): (x0,y0) -> (x1,y0) -> (x1,y1)
+        # 3. Mithuna (Top-Left lower triangle): (x0,y0) -> (x0,y1) -> (x1,y1)
+        # 4. Karka (Middle-Left rectangle): (x0,y1) to (x1,y2)
+        # 5. Simha (Bottom-Left upper triangle): (x0,y1) -> (x1,y2) -> (x0,y2) ...
+        # Standard diagonal partitioning:
+        # TL corner (x0,y0 to x1,y1): diagonal from (x0,y0) to (x1,y1)
+        # BL corner (x0,y2 to x1,y3): diagonal from (x0,y3) to (x1,y2)
+        # BR corner (x2,y2 to x3,y3): diagonal from (x2,y2) to (x3,y3)
+        # TR corner (x2,y0 to x3,y1): diagonal from (x2,y1) to (x3,y0)
+
+        compartments = {
+            1: {  # Mesha (Aries) - Top Center
+                "poly": f"{x1},{y0} {x2},{y0} {x2},{y1} {x1},{y1}",
+                "name": "Mesha (1)",
+                "cx": (x1 + x2) // 2,
+                "cy": y0 + 55,
+                "lx": (x1 + x2) // 2,
+                "ly": y0 + 22
+            },
+            2: {  # Vrishabha (Taurus) - Top-Left inner/upper triangle
+                "poly": f"{x0},{y0} {x1},{y0} {x1},{y1}",
+                "name": "Vrishabha (2)",
+                "cx": x0 + 80,
+                "cy": y0 + 60,
+                "lx": x0 + 75,
+                "ly": y0 + 25
+            },
+            3: {  # Mithuna (Gemini) - Top-Left outer/lower triangle
+                "poly": f"{x0},{y0} {x1},{y1} {x0},{y1}",
+                "name": "Mithuna (3)",
+                "cx": x0 + 40,
+                "cy": y0 + 80,
+                "lx": x0 + 38,
+                "ly": y0 + 45
+            },
+            4: {  # Karka (Cancer) - Mid Left
+                "poly": f"{x0},{y1} {x1},{y1} {x1},{y2} {x0},{y2}",
+                "name": "Karka (4)",
+                "cx": (x0 + x1) // 2,
+                "cy": y1 + 55,
+                "lx": (x0 + x1) // 2,
+                "ly": y1 + 22
+            },
+            5: {  # Simha (Leo) - Bottom-Left upper triangle
+                "poly": f"{x0},{y1} {x1},{y2} {x0},{y3}",
+                "name": "Simha (5)",
+                "cx": x0 + 40,
+                "cy": y2 + 40,
+                "lx": x0 + 38,
+                "ly": y2 + 15
+            },
+            6: {  # Kanya (Virgo) - Bottom-Left lower triangle
+                "poly": f"{x0},{y3} {x1},{y2} {x1},{y3}",
+                "name": "Kanya (6)",
+                "cx": x0 + 80,
+                "cy": y2 + 65,
+                "lx": x0 + 75,
+                "ly": y3 - 10
+            },
+            7: {  # Tula (Libra) - Bottom Center
+                "poly": f"{x1},{y2} {x2},{y2} {x2},{y3} {x1},{y3}",
+                "name": "Tula (7)",
+                "cx": (x1 + x2) // 2,
+                "cy": y2 + 55,
+                "lx": (x1 + x2) // 2,
+                "ly": y2 + 22
+            },
+            8: {  # Vrishchika (Scorpio) - Bottom-Right lower triangle
+                "poly": f"{x2},{y3} {x2},{y2} {x3},{y3}",
+                "name": "Vrishchika (8)",
+                "cx": x2 + 40,
+                "cy": y2 + 65,
+                "lx": x2 + 45,
+                "ly": y3 - 10
+            },
+            9: {  # Dhanu (Sagittarius) - Bottom-Right upper triangle
+                "poly": f"{x2},{y2} {x3},{y2} {x3},{y3}",
+                "name": "Dhanu (9)",
+                "cx": x2 + 80,
+                "cy": y2 + 40,
+                "lx": x2 + 82,
+                "ly": y2 + 15
+            },
+            10: {  # Makara (Capricorn) - Mid Right
+                "poly": f"{x2},{y1} {x3},{y1} {x3},{y2} {x2},{y2}",
+                "name": "Makara (10)",
+                "cx": (x2 + x3) // 2,
+                "cy": y1 + 55,
+                "lx": (x2 + x3) // 2,
+                "ly": y1 + 22
+            },
+            11: {  # Kumbha (Aquarius) - Top-Right lower triangle
+                "poly": f"{x2},{y1} {x3},{y1} {x3},{y0}",
+                "name": "Kumbha (11)",
+                "cx": x2 + 80,
+                "cy": y0 + 80,
+                "lx": x2 + 82,
+                "ly": y0 + 45
+            },
+            12: {  # Meena (Pisces) - Top-Right upper triangle
+                "poly": f"{x2},{y0} {x3},{y0} {x2},{y1}",
+                "name": "Meena (12)",
+                "cx": x2 + 40,
+                "cy": y0 + 60,
+                "lx": x2 + 45,
+                "ly": y0 + 25
+            }
+        }
+
+        svg_parts = [
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="380" style="background:#FFFFFF; border:2px solid #CBD5E1; border-radius:14px; box-shadow:0 4px 15px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
+            f'<text x="{W//2}" y="25" text-anchor="middle" fill="#78350F" font-size="14" font-weight="900">{title}</text>',
+            # Center Square: Brand / Watermark
+            f'<rect x="{x1}" y="{y1}" width="{s3}" height="{s3}" fill="#FFFBEB" stroke="#D97706" stroke-width="2"/>',
+            f'<text x="{(x1+x2)//2}" y="{(y1+y2)//2 - 10}" text-anchor="middle" fill="#B45309" font-size="14" font-weight="900">सूर्य चक्र</text>',
+            f'<text x="{(x1+x2)//2}" y="{(y1+y2)//2 + 8}" text-anchor="middle" fill="#1E293B" font-size="11.5" font-weight="800">पूर्व भारतीय (प्राच्य)</text>',
+            f'<text x="{(x1+x2)//2}" y="{(y1+y2)//2 + 24}" text-anchor="middle" fill="#64748B" font-size="10" font-weight="700">Bengal / Odisha Style</text>'
+        ]
+
+        # Draw 12 Compartments
+        for s_id in range(1, 13):
+            comp = compartments[s_id]
+            is_lagna = (s_id == lagna_s_id)
+            bg_color = "#FEF3C7" if is_lagna else "#FFFFFF"
+            poly_pts = comp["poly"]
+
+            # Polygon cell
+            svg_parts.append(f'<polygon points="{poly_pts}" fill="{bg_color}" stroke="#D97706" stroke-width="1.6"/>')
+
+            # Sign Label (with Lagna Ascendant indicator)
+            lbl_color = "#DC2626" if is_lagna else "#475569"
+            lbl_text = comp["name"]
+            if is_lagna:
+                lbl_text += " [Lagna]"
+
+            svg_parts.append(f'<text x="{comp["lx"]}" y="{comp["ly"]}" text-anchor="middle" fill="{lbl_color}" font-size="10" font-weight="800">{lbl_text}</text>')
+
+            # Planets inside this sign
+            p_list = sign_planets[s_id]
+            if p_list:
+                count = len(p_list)
+                start_y = comp["cy"] - (count - 1) * 7
+                for idx, (p_str, p_col) in enumerate(p_list):
+                    py = start_y + idx * 14
+                    svg_parts.append(
+                        f'<text x="{comp["cx"]}" y="{py}" text-anchor="middle" fill="{p_col}" font-size="11.5" font-weight="900">{p_str}</text>'
+                    )
+
+        svg_parts.append('</svg>')
+        return "".join(svg_parts)
