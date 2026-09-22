@@ -2394,9 +2394,15 @@ with st.container(key="top_frozen_header_container", border=True):
         cursor: pointer !important;
         margin: 0 !important;
         padding: 0 !important;
-        border-radius: 15px !important;
         border: none !important;
         background: transparent !important;
+    }
+    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-testid="stTooltipHoverTarget"],
+    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-baseweb="tooltip"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -2417,13 +2423,13 @@ with st.container(key="top_frozen_header_container", border=True):
     tb_cols = st.columns(10)
 
     # Helper function for rendering clickable tile
-    def render_tool_tile(col, icon_b64, label_text, tooltip, tool_key):
+    def render_tool_tile(col, icon_b64, label_text, tool_key):
         with col:
             is_active = (st.session_state.gla_active_tool == tool_key)
             active_style = "border-color:#ff9800; background-color:#fff8e7; box-shadow:0 0 10px rgba(255,152,0,0.5);" if is_active else ""
             st.markdown(f"""
             <div class="gla-tile-box">
-                <a href="?gla_tool={tool_key}" target="_self" style="text-decoration:none; color:inherit; display:block;" title="{tooltip}">
+                <a href="?gla_tool={tool_key}" target="_self" style="text-decoration:none; color:inherit; display:block;">
                     <div class="gla-btn-tile" style="{active_style}">
                         <img src="{icon_b64}" alt="{label_text}" />
                         <span>{label_text}</span>
@@ -2431,39 +2437,39 @@ with st.container(key="top_frozen_header_container", border=True):
                 </a>
             </div>
             """, unsafe_allow_html=True)
-            if st.button(" ", key=f"gla_tile_btn_{tool_key}", use_container_width=True, help=tooltip):
+            if st.button(" ", key=f"gla_tile_btn_{tool_key}", use_container_width=True):
                 st.session_state.gla_active_tool = tool_key if st.session_state.gla_active_tool != tool_key else None
                 st.rerun()
 
     # 1. New Chart
-    render_tool_tile(tb_cols[0], ICON_NOTEPAD_B64, "New", "नया चार्ट / रीसेट (New Chart / Reset)", "new")
+    render_tool_tile(tb_cols[0], ICON_NOTEPAD_B64, "New", "new")
 
     # 2. Birth Data
-    render_tool_tile(tb_cols[1], ICON_BIRTH_B64, "Birth Data", "जन्म विवरण दर्ज करें (Birth Data Entry)", "birth")
+    render_tool_tile(tb_cols[1], ICON_BIRTH_B64, "Birth Data", "birth")
 
     # 3. Open Folder
-    render_tool_tile(tb_cols[2], ICON_FOLDER_B64, "Open", "सहेजी गई कुण्डली खोलें (Open Saved Charts)", "open")
+    render_tool_tile(tb_cols[2], ICON_FOLDER_B64, "Open", "open")
 
     # 4. Save Chart
-    render_tool_tile(tb_cols[3], ICON_SAVE_B64, "Save", "कुण्डली सहेजें (Save Chart)", "save")
+    render_tool_tile(tb_cols[3], ICON_SAVE_B64, "Save", "save")
 
     # 5. Settings
-    render_tool_tile(tb_cols[4], ICON_SETTINGS_B64, "Settings", "गणना सेटिंग्स (Settings: Ayanamsa, House System)", "settings")
+    render_tool_tile(tb_cols[4], ICON_SETTINGS_B64, "Settings", "settings")
 
     # 6. Languages
-    render_tool_tile(tb_cols[5], ICON_LANGUAGES_B64, "Languages", "भाषा चयन (Software Language Switcher)", "lang")
+    render_tool_tile(tb_cols[5], ICON_LANGUAGES_B64, "Languages", "lang")
 
     # 7. Current Time
-    render_tool_tile(tb_cols[6], ICON_CLOCK_B64, "Time", "वर्तमान समय (Current Time / Live Clock)", "clock")
+    render_tool_tile(tb_cols[6], ICON_CLOCK_B64, "Time", "clock")
 
     # 8. Current Location
-    render_tool_tile(tb_cols[7], ICON_LOCATION_B64, "Location", "वर्तमान स्थान (Current Location / GPS)", "location")
+    render_tool_tile(tb_cols[7], ICON_LOCATION_B64, "Location", "location")
 
     # 9. Theme Mode
-    render_tool_tile(tb_cols[8], ICON_THEME_B64, "Theme", "थीम मोड बदलें (Theme: Day / Night Mode)", "theme")
+    render_tool_tile(tb_cols[8], ICON_THEME_B64, "Theme", "theme")
 
     # 10. Logout
-    render_tool_tile(tb_cols[9], ICON_LOGOUT_B64, "Logout", "सत्र से लॉगआउट करें (Logout)", "logout")
+    render_tool_tile(tb_cols[9], ICON_LOGOUT_B64, "Logout", "logout")
 
 
 
