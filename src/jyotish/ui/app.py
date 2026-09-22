@@ -50,9 +50,6 @@ from src.jyotish.ui.sudarshan import default_sudarshan_engine
 from src.jyotish.core.affliction import AfflictionEngine, LIFE_AREAS
 from src.jyotish.dasha.vimshottari import default_dasha_engine
 default_vimshottari_engine = default_dasha_engine
-from src.jyotish.dasha.transit import default_gochar_engine
-from src.jyotish.dasha.panchanga import default_panchanga_engine
-from src.jyotish.dasha.ashtakavarga_dasha import default_ashtakavarga_dasha_engine
 from src.jyotish.dasha.yogini import default_yogini_engine
 from src.jyotish.dasha.chara import default_chara_engine
 from src.jyotish.dasha.kcd import default_kcd_engine
