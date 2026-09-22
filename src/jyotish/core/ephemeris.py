@@ -421,5 +421,5 @@ def get_ephemeris_provider(preference: str = "auto") -> BaseEphemerisProvider:
 
 
 # Singleton provider instance
-default_ephemeris_provider = get_ephemeris_provider("pyephem")
+default_ephemeris_provider = get_ephemeris_provider("auto")
 

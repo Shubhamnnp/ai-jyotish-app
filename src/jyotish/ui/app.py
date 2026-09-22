@@ -2620,6 +2620,99 @@ if selected_idx == 0:
         })
     st.dataframe(pd.DataFrame(p_data), use_container_width=True, hide_index=True)
 
+    # ---- Extra Kundali Views ----
+    st.markdown("---")
+    _m0t1, _m0t2, _m0t3, _m0t4 = st.tabs([
+        "🌙 चन्द्र कुण्डली",
+        "☀️ सूर्य कुण्डली",
+        "🏠 भाव चलित चक्र",
+        "⚔️ ग्रह युद्ध"
+    ])
+
+    with _m0t1:
+        st.markdown("### 🌙 चन्द्र कुण्डली (Moon as Lagna)")
+        _moon = chart.planets.get("Moon")
+        if _moon:
+            _moon_sid = _moon.sign_id
+            st.info(f"चन्द्र राशि: **{_moon.sign_name}** — यह चन्द्र कुण्डली का प्रथम भाव है।")
+            _cc1, _cc2 = st.columns([1, 1])
+            with _cc1:
+                try:
+                    st.markdown(render_chart_svg(chart, f"Chandra Kundali ({_moon.sign_name} Lagna)"), unsafe_allow_html=True)
+                except Exception as _ec:
+                    st.info(f"Chart: {_ec}")
+            with _cc2:
+                _moon_tbl = []
+                for _pn, _pp in chart.planets.items():
+                    _moon_tbl.append({"ग्रह": _pn, "राशि": _pp.sign_name, "चन्द्र-लग्न से भाव": ((_pp.sign_id - _moon_sid) % 12) + 1, "देशांतर": f"{_pp.longitude:.2f}°"})
+                st.dataframe(pd.DataFrame(_moon_tbl), use_container_width=True, hide_index=True)
+                st.success("चन्द्र कुण्डली — मन, माता, सुख एवं जनजीवन का दर्पण।")
+        else:
+            st.warning("चन्द्रमा की स्थिति उपलब्ध नहीं।")
+
+    with _m0t2:
+        st.markdown("### ☀️ सूर्य कुण्डली (Sun as Lagna)")
+        _sun = chart.planets.get("Sun")
+        if _sun:
+            _sun_sid = _sun.sign_id
+            st.info(f"सूर्य राशि: **{_sun.sign_name}** — यह सूर्य कुण्डली का प्रथम भाव है।")
+            _sc1, _sc2 = st.columns([1, 1])
+            with _sc1:
+                try:
+                    st.markdown(render_chart_svg(chart, f"Surya Kundali ({_sun.sign_name} Lagna)"), unsafe_allow_html=True)
+                except Exception as _es:
+                    st.info(f"Chart: {_es}")
+            with _sc2:
+                _sun_tbl = []
+                for _pn, _pp in chart.planets.items():
+                    _sun_tbl.append({"ग्रह": _pn, "राशि": _pp.sign_name, "सूर्य-लग्न से भाव": ((_pp.sign_id - _sun_sid) % 12) + 1, "देशांतर": f"{_pp.longitude:.2f}°"})
+                st.dataframe(pd.DataFrame(_sun_tbl), use_container_width=True, hide_index=True)
+                st.success("सूर्य कुण्डली — आत्मा, पिता, यश एवं जीवन उद्देश्य का संकेत।")
+        else:
+            st.warning("सूर्य की स्थिति उपलब्ध नहीं।")
+
+    with _m0t3:
+        st.markdown("### 🏠 भाव चलित चक्र (Bhava Chalit Chart)")
+        st.info("समभाव पद्धति में mid-cusp boundaries से ग्रहों का वास्तविक भाव।")
+        try:
+            from src.jyotish.core.calculator import ChartCalculator
+            _bc_res = ChartCalculator().calculate_bhava_chalit(chart)
+            if _bc_res:
+                _bc1, _bc2 = st.columns(2)
+                with _bc1:
+                    _bc_rows = []
+                    for _it in _bc_res:
+                        _rh = _it.get("rashi_house", "—")
+                        _ch = _it.get("chalit_house", "—")
+                        _bc_rows.append({"ग्रह": _it.get("planet", ""), "राशि भाव": _rh, "चलित भाव": _ch, "परिवर्तन?": "✅ बदला" if _rh != _ch else "— समान", "राशि": _it.get("sign_name", "")})
+                    st.dataframe(pd.DataFrame(_bc_rows), use_container_width=True, hide_index=True)
+                with _bc2:
+                    _cusps = _bc_res[0].get("bhava_cusps", []) if _bc_res else []
+                    if _cusps:
+                        st.dataframe(pd.DataFrame([{"भाव": i+1, "Cusp": f"{c:.2f}°"} for i, c in enumerate(_cusps)]), use_container_width=True, hide_index=True)
+                    _chd = [r for r in _bc_rows if "बदला" in r["परिवर्तन?"]]
+                    if _chd:
+                        st.warning("⚠️ " + str(len(_chd)) + " ग्रह राशि-भाव और चलित-भाव में भिन्न: " + ", ".join(f"{r['ग्रह']} ({r['राशि भाव']}→{r['चलित भाव']})" for r in _chd))
+                    else:
+                        st.success("✅ सभी ग्रह राशि-भाव और चलित-भाव में समान हैं।")
+        except Exception as _ebc:
+            st.error(f"भाव चलित त्रुटि: {str(_ebc)[:200]}")
+
+    with _m0t4:
+        st.markdown("### ⚔️ ग्रह युद्ध (Graha Yuddha — Planetary War)")
+        st.info("जब दो ग्रह 1° के भीतर हों तो ग्रह युद्ध। उत्तर अक्षांश वाला ग्रह विजेता।")
+        try:
+            from src.jyotish.core.calculator import ChartCalculator
+            _yw_list = ChartCalculator().detect_graha_yuddha(chart)
+            if _yw_list:
+                st.error(f"⚔️ {len(_yw_list)} ग्रह युद्ध इस कुण्डली में पाए गए:")
+                for _yw in _yw_list:
+                    st.markdown(f"**⚔️ {_yw.get('planet1')} vs {_yw.get('planet2')}** — अंतर: {_yw.get('separation_deg', 0):.3f}° | 🏆 विजेता: **{_yw.get('winner')}** | पराजित: **{_yw.get('loser')}**")
+            else:
+                st.success("✅ इस कुण्डली में कोई ग्रह युद्ध नहीं है।")
+        except Exception as _egy:
+            st.error(f"ग्रह युद्ध त्रुटि: {str(_egy)[:200]}")
+
 
 # =============================================================
 # TAB 3: AFFLICTION & FREE WILL ANALYSIS (GRAHALAKSHANAM CORE)
@@ -3847,6 +3940,50 @@ elif selected_idx == 8:
             ]
             st.dataframe(pd.DataFrame(u_data), use_container_width=True)
 
+    # ---- Rashi Drishti + Argala + Graha Arudhas ----
+    st.markdown("---")
+    _jt_rd, _jt_arg, _jt_ga = st.tabs([
+        "📡 राशि दृष्टि (Rashi Drishti)",
+        "🔗 अर्गला (Argala)",
+        "🌍 ग्रह आरूढ (Graha Arudhas)"
+    ])
+
+    with _jt_rd:
+        st.markdown("### 📡 जैमिनी राशि दृष्टि (Rashi Drishti)")
+        st.info("चर→स्थिर | स्थिर→चर (पड़ोसी छोड़कर) | द्विस्वभाव→द्विस्वभाव")
+        try:
+            from src.jyotish.core.jaimini import JaiminiCalculator
+            _rd = JaiminiCalculator.calculate_rashi_drishti(chart)
+            if _rd:
+                _rd_rows = [{"राशि": k, "दृष्ट राशियाँ": ", ".join(v) if v else "—", "संख्या": len(v)} for k, v in _rd.items()]
+                st.dataframe(pd.DataFrame(_rd_rows), use_container_width=True, hide_index=True)
+        except Exception as _erd:
+            st.error(f"राशि दृष्टि त्रुटि: {str(_erd)[:150]}")
+
+    with _jt_arg:
+        st.markdown("### 🔗 अर्गला (Argala — Intervention)")
+        st.info("द्वितीय/चतुर्थ/एकादश से अर्गला | तृतीय/दशम/द्वादश से विरोधार्गला")
+        try:
+            from src.jyotish.core.jaimini import JaiminiCalculator
+            _arg = JaiminiCalculator.calculate_argala(chart)
+            if _arg:
+                _arg_rows = [{"भाव": k, "अर्गला": ", ".join(v.get("argala", [])) or "—", "विरोधार्गला": ", ".join(v.get("virodhargala", [])) or "—", "शुद्ध": v.get("net_argala", "—")} for k, v in _arg.items()]
+                st.dataframe(pd.DataFrame(_arg_rows), use_container_width=True, hide_index=True)
+        except Exception as _earg:
+            st.error(f"अर्गला त्रुटि: {str(_earg)[:150]}")
+
+    with _jt_ga:
+        st.markdown("### 🌍 ग्रह आरूढ पद (Graha Arudha Padas)")
+        st.info("प्रत्येक ग्रह के स्वामी की राशि से उतनी ही राशि आगे — ग्रह का बाह्य प्रकटन।")
+        try:
+            from src.jyotish.core.jaimini import JaiminiCalculator
+            _ga = JaiminiCalculator.calculate_graha_arudhas(chart)
+            if _ga:
+                _ga_rows = [{"ग्रह": k, "आरूढ राशि": v.get("sign_name", "—"), "लग्न से भाव": v.get("house_from_lagna", "—"), "स्वामी": v.get("sign_lord", "—")} for k, v in _ga.items()]
+                st.dataframe(pd.DataFrame(_ga_rows), use_container_width=True, hide_index=True)
+        except Exception as _ega:
+            st.error(f"ग्रह आरूढ त्रुटि: {str(_ega)[:150]}")
+
 
 # =============================================================
 # TAB 10: DASHA SYSTEMS
@@ -5049,6 +5186,73 @@ elif selected_idx == 10:
             zone_data = [{"क्षेत्र (Zone)": z_name, "समाहित नक्षत्र (Nakshatras)": ", ".join(nak_list)} for z_name, nak_list in kota_res["zones_map"].items()]
             st.dataframe(pd.DataFrame(zone_data), use_container_width=True)
             st.caption("💡 **कोटा चक्र नियम:** स्तम्भ (केन्द्र) में पापी ग्रहों का प्रवेश रोग/संकट कारक होता है, जबकि शुभ ग्रहों का प्रवेश दुर्ग को अभेद्य बनाता है।")
+
+    # ---- Bhrigu Bindu + Prastara ----
+    st.markdown("---")
+    _m10t1, _m10t2 = st.tabs([
+        "🔵 भृगु बिन्दु (Bhrigu Bindu)",
+        "📊 प्रस्तार अष्टकवर्ग (Prastara Grid)"
+    ])
+
+    with _m10t1:
+        st.markdown("### 🔵 भृगु बिन्दु (Bhrigu Bindu)")
+        st.info("राहु और चन्द्रमा के मध्य बिन्दु। इस पर ग्रह गोचर = महत्त्वपूर्ण जीवन घटना।")
+        try:
+            from src.jyotish.core.ashtakavarga import AshtakavargaCalculator
+            _bb = AshtakavargaCalculator.calculate_bhrigu_bindu(chart)
+            if _bb:
+                _bbc1, _bbc2, _bbc3 = st.columns(3)
+                _bbc1.metric("🔵 देशांतर", f"{_bb.get('longitude', 0):.2f}°")
+                _bbc2.metric("🌌 राशि", _bb.get('sign_name', '—'))
+                _bbc3.metric("⭐ नक्षत्र", _bb.get('nakshatra', '—'))
+                st.info(f"गणना: (राहु {chart.planets['Rahu'].longitude:.2f}° + चन्द्र {chart.planets['Moon'].longitude:.2f}°) ÷ 2 = **{_bb.get('longitude', 0):.4f}°** | भाव {_bb.get('house_from_lagna', '—')}")
+                # Check planets near Bhrigu Bindu
+                _bb_lon = _bb.get('longitude', 0)
+                _near = [{"ग्रह": pn, "देशांतर": f"{pp.longitude:.2f}°", "अंतर": f"{abs((pp.longitude - _bb_lon + 180) % 360 - 180):.2f}°"} for pn, pp in chart.planets.items() if abs((pp.longitude - _bb_lon + 180) % 360 - 180) < 5]
+                if _near:
+                    st.warning("⚠️ निम्न ग्रह भृगु बिन्दु के 5° के भीतर हैं:")
+                    st.dataframe(pd.DataFrame(_near), use_container_width=True, hide_index=True)
+                else:
+                    st.success("✅ कोई ग्रह भृगु बिन्दु के 5° के भीतर नहीं।")
+        except Exception as _ebb:
+            st.error(f"भृगु बिन्दु त्रुटि: {str(_ebb)[:200]}")
+
+    with _m10t2:
+        st.markdown("### 📊 प्रस्तार अष्टकवर्ग (Prastara Ashtakvarga — 8×12 Grid)")
+        st.info("8 योगदानकर्ता (Sun/Moon/Mars/Mercury/Jupiter/Venus/Saturn/Lagna) × 12 राशियाँ = प्रत्येक ग्रह का बिन्दु ग्रिड।")
+        try:
+            from src.jyotish.core.ashtakavarga import AshtakavargaCalculator
+            if chart.ashtakavarga:
+                _prastara = AshtakavargaCalculator.calculate_prastara(chart, chart.ashtakavarga)
+                if _prastara:
+                    _psel = st.selectbox("ग्रह चुनें (Select Planet)", list(_prastara.keys()), key="prastara_sel_m10")
+                    if _psel and _psel in _prastara:
+                        _grid = _prastara[_psel].get("grid", {})
+                        _contribs = _prastara[_psel].get("contributors", [])
+                        _signs12 = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"]
+                        if _grid and _contribs:
+                            _pr_rows = []
+                            for _c in _contribs:
+                                _row = {"योगदानकर्ता": _c}
+                                for _s in _signs12:
+                                    _row[_s[:3]] = _grid.get(_c, {}).get(_s, 0)
+                                _row["योग"] = sum(_grid.get(_c, {}).get(_s, 0) for _s in _signs12)
+                                _pr_rows.append(_row)
+                            _tot = {"योगदानकर्ता": "TOTAL"}
+                            for _s in _signs12:
+                                _tot[_s[:3]] = sum(_grid.get(_c, {}).get(_s, 0) for _c in _contribs)
+                            _tot["योग"] = sum(_tot[_s[:3]] for _s in _signs12)
+                            _pr_rows.append(_tot)
+                            st.dataframe(pd.DataFrame(_pr_rows), use_container_width=True, hide_index=True)
+                            st.caption(f"📌 {_psel} का कुल SAV बिन्दु: **{_tot['योग']}**")
+                        else:
+                            st.info(f"{_psel} के लिए ग्रिड डेटा उपलब्ध नहीं।")
+                else:
+                    st.info("प्रस्तार डेटा उपलब्ध नहीं।")
+            else:
+                st.info("अष्टकवर्ग गणना उपलब्ध नहीं।")
+        except Exception as _epr:
+            st.error(f"प्रस्तार त्रुटि: {str(_epr)[:200]}")
 
 
 # =============================================================
