@@ -2288,6 +2288,16 @@ with st.container(key="top_frozen_header_container", border=True):
     if "gla_active_tool" not in st.session_state:
         st.session_state.gla_active_tool = None
 
+    # Sync with query parameter if user clicked an anchor tile
+    if "gla_tool" in st.query_params:
+        param_tool = st.query_params.get("gla_tool")
+        if param_tool:
+            st.session_state.gla_active_tool = param_tool if st.session_state.gla_active_tool != param_tool else None
+        try:
+            del st.query_params["gla_tool"]
+        except Exception:
+            pass
+
 
     st.markdown("""
     <style>
@@ -2339,26 +2349,6 @@ with st.container(key="top_frozen_header_container", border=True):
         margin-top: 2px;
         white-space: nowrap;
     }
-    /* Clickable tile button overlay styling */
-    .gla-col-box {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-    .gla-col-box .stButton {
-        width: 100% !important;
-        margin-top: -82px !important;
-        height: 82px !important;
-        opacity: 0 !important;
-        z-index: 10 !important;
-    }
-    .gla-col-box .stButton > button {
-        width: 100% !important;
-        height: 82px !important;
-        cursor: pointer !important;
-    }
     .gla-info-strip {
         display: flex;
         align-items: center;
@@ -2374,11 +2364,39 @@ with st.container(key="top_frozen_header_container", border=True):
     .gla-info-strip b {
         color: #ffffff;
     }
-    .gla-active-tag {
-        background: #0077b6;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 11px;
+    /* Transparent button overlaid exactly on top of the tile in gla-tile-box */
+    .gla-tile-box {
+        position: relative;
+        width: 78px;
+        height: 78px;
+        margin: 0 auto;
+    }
+    div[data-testid="stColumn"]:has(.gla-tile-box) {
+        position: relative !important;
+    }
+    div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {
+        position: relative !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    div[data-testid="stColumn"]:has(.gla-tile-box) button {
+        position: absolute !important;
+        top: -78px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 78px !important;
+        height: 78px !important;
+        min-height: 78px !important;
+        max-height: 78px !important;
+        opacity: 0 !important;
+        z-index: 20 !important;
+        cursor: pointer !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 15px !important;
+        border: none !important;
+        background: transparent !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -2398,155 +2416,54 @@ with st.container(key="top_frozen_header_container", border=True):
     # 10-Tile Complete Grahalakshanam Toolbelt Columns (Exact UI Parity - Clickable Tiles)
     tb_cols = st.columns(10)
 
-    # 1. New Chart
-    with tb_cols[0]:
-        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "new" else ""
-        st.markdown(f"""
-        <div class="gla-col-box">
-            <div class="gla-btn-tile" style="{tile_active_style}" title="नया चार्ट / रीसेट (New Chart / Reset)">
-                <img src="{ICON_NOTEPAD_B64}" alt="New Chart" />
-                <span>New</span>
+    # Helper function for rendering clickable tile
+    def render_tool_tile(col, icon_b64, label_text, tooltip, tool_key):
+        with col:
+            is_active = (st.session_state.gla_active_tool == tool_key)
+            active_style = "border-color:#ff9800; background-color:#fff8e7; box-shadow:0 0 10px rgba(255,152,0,0.5);" if is_active else ""
+            st.markdown(f"""
+            <div class="gla-tile-box">
+                <a href="?gla_tool={tool_key}" target="_self" style="text-decoration:none; color:inherit; display:block;" title="{tooltip}">
+                    <div class="gla-btn-tile" style="{active_style}">
+                        <img src="{icon_b64}" alt="{label_text}" />
+                        <span>{label_text}</span>
+                    </div>
+                </a>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("New", key="gla_btn_new", use_container_width=True):
-            st.session_state.gla_active_tool = "new" if st.session_state.gla_active_tool != "new" else None
-            st.rerun()
+            """, unsafe_allow_html=True)
+            if st.button(" ", key=f"gla_tile_btn_{tool_key}", use_container_width=True, help=tooltip):
+                st.session_state.gla_active_tool = tool_key if st.session_state.gla_active_tool != tool_key else None
+                st.rerun()
+
+    # 1. New Chart
+    render_tool_tile(tb_cols[0], ICON_NOTEPAD_B64, "New", "नया चार्ट / रीसेट (New Chart / Reset)", "new")
 
     # 2. Birth Data
-    with tb_cols[1]:
-        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "birth" else ""
-        st.markdown(f"""
-        <div class="gla-col-box">
-            <div class="gla-btn-tile" style="{tile_active_style}" title="जन्म विवरण दर्ज करें (Birth Data Entry)">
-                <img src="{ICON_BIRTH_B64}" alt="Birth Data" />
-                <span>Birth Data</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Birth Data", key="gla_btn_birth", use_container_width=True):
-            st.session_state.gla_active_tool = "birth" if st.session_state.gla_active_tool != "birth" else None
-            st.rerun()
+    render_tool_tile(tb_cols[1], ICON_BIRTH_B64, "Birth Data", "जन्म विवरण दर्ज करें (Birth Data Entry)", "birth")
 
     # 3. Open Folder
-    with tb_cols[2]:
-        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "open" else ""
-        st.markdown(f"""
-        <div class="gla-col-box">
-            <div class="gla-btn-tile" style="{tile_active_style}" title="सहेजी गई कुण्डली खोलें (Open Saved Charts)">
-                <img src="{ICON_FOLDER_B64}" alt="Open Charts" />
-                <span>Open</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Open", key="gla_btn_open", use_container_width=True):
-            st.session_state.gla_active_tool = "open" if st.session_state.gla_active_tool != "open" else None
-            st.rerun()
+    render_tool_tile(tb_cols[2], ICON_FOLDER_B64, "Open", "सहेजी गई कुण्डली खोलें (Open Saved Charts)", "open")
 
     # 4. Save Chart
-    with tb_cols[3]:
-        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "save" else ""
-        st.markdown(f"""
-        <div class="gla-col-box">
-            <div class="gla-btn-tile" style="{tile_active_style}" title="कुण्डली सहेजें (Save Chart)">
-                <img src="{ICON_SAVE_B64}" alt="Save Chart" />
-                <span>Save</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Save", key="gla_btn_save", use_container_width=True):
-            st.session_state.gla_active_tool = "save" if st.session_state.gla_active_tool != "save" else None
-            st.rerun()
+    render_tool_tile(tb_cols[3], ICON_SAVE_B64, "Save", "कुण्डली सहेजें (Save Chart)", "save")
 
     # 5. Settings
-    with tb_cols[4]:
-        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "settings" else ""
-        st.markdown(f"""
-        <div class="gla-col-box">
-            <div class="gla-btn-tile" style="{tile_active_style}" title="गणना सेटिंग्स (Settings: Ayanamsa, House System)">
-                <img src="{ICON_SETTINGS_B64}" alt="Settings" />
-                <span>Settings</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Settings", key="gla_btn_settings", use_container_width=True):
-            st.session_state.gla_active_tool = "settings" if st.session_state.gla_active_tool != "settings" else None
-            st.rerun()
+    render_tool_tile(tb_cols[4], ICON_SETTINGS_B64, "Settings", "गणना सेटिंग्स (Settings: Ayanamsa, House System)", "settings")
 
     # 6. Languages
-    with tb_cols[5]:
-        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "lang" else ""
-        st.markdown(f"""
-        <div class="gla-col-box">
-            <div class="gla-btn-tile" style="{tile_active_style}" title="भाषा चयन (Software Language Switcher)">
-                <img src="{ICON_LANGUAGES_B64}" alt="Languages" />
-                <span>Languages</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Languages", key="gla_btn_lang", use_container_width=True):
-            st.session_state.gla_active_tool = "lang" if st.session_state.gla_active_tool != "lang" else None
-            st.rerun()
+    render_tool_tile(tb_cols[5], ICON_LANGUAGES_B64, "Languages", "भाषा चयन (Software Language Switcher)", "lang")
 
-    # 7. Current Time (वर्तमान समय)
-    with tb_cols[6]:
-        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "clock" else ""
-        st.markdown(f"""
-        <div class="gla-col-box">
-            <div class="gla-btn-tile" style="{tile_active_style}" title="वर्तमान समय (Current Time / Live Clock)">
-                <img src="{ICON_CLOCK_B64}" alt="Current Time" />
-                <span>Time</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Time", key="gla_btn_clock", use_container_width=True):
-            st.session_state.gla_active_tool = "clock" if st.session_state.gla_active_tool != "clock" else None
-            st.rerun()
+    # 7. Current Time
+    render_tool_tile(tb_cols[6], ICON_CLOCK_B64, "Time", "वर्तमान समय (Current Time / Live Clock)", "clock")
 
-    # 8. Current Location (वर्तमान स्थान)
-    with tb_cols[7]:
-        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "location" else ""
-        st.markdown(f"""
-        <div class="gla-col-box">
-            <div class="gla-btn-tile" style="{tile_active_style}" title="वर्तमान स्थान (Current Location / GPS)">
-                <img src="{ICON_LOCATION_B64}" alt="Location" />
-                <span>Location</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Location", key="gla_btn_location", use_container_width=True):
-            st.session_state.gla_active_tool = "location" if st.session_state.gla_active_tool != "location" else None
-            st.rerun()
+    # 8. Current Location
+    render_tool_tile(tb_cols[7], ICON_LOCATION_B64, "Location", "वर्तमान स्थान (Current Location / GPS)", "location")
 
-    # 9. Theme Mode (थीम मोड: डे / नाइट)
-    with tb_cols[8]:
-        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "theme" else ""
-        st.markdown(f"""
-        <div class="gla-col-box">
-            <div class="gla-btn-tile" style="{tile_active_style}" title="थीम मोड बदलें (Theme: Day / Night Mode)">
-                <img src="{ICON_THEME_B64}" alt="Theme Mode" />
-                <span>Theme</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Theme", key="gla_btn_theme", use_container_width=True):
-            st.session_state.gla_active_tool = "theme" if st.session_state.gla_active_tool != "theme" else None
-            st.rerun()
+    # 9. Theme Mode
+    render_tool_tile(tb_cols[8], ICON_THEME_B64, "Theme", "थीम मोड बदलें (Theme: Day / Night Mode)", "theme")
 
-    # 10. Logout (लॉगआउट)
-    with tb_cols[9]:
-        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "logout" else ""
-        st.markdown(f"""
-        <div class="gla-col-box">
-            <div class="gla-btn-tile" style="{tile_active_style}" title="सत्र से लॉगआउट करें (Logout)">
-                <img src="{ICON_LOGOUT_B64}" alt="Logout" />
-                <span>Logout</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button("Logout", key="gla_btn_logout", use_container_width=True):
-            st.session_state.gla_active_tool = "logout" if st.session_state.gla_active_tool != "logout" else None
-            st.rerun()
+    # 10. Logout
+    render_tool_tile(tb_cols[9], ICON_LOGOUT_B64, "Logout", "सत्र से लॉगआउट करें (Logout)", "logout")
 
 
 
