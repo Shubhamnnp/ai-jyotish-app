@@ -3978,29 +3978,56 @@ elif selected_idx == 8:
             st.error(f"राशि दृष्टि त्रुटि: {str(_erd)[:150]}")
 
     with _jt_arg:
-        st.markdown("### 🔗 अर्गला (Argala — Intervention)")
-        st.info("द्वितीय/चतुर्थ/एकादश से अर्गला | तृतीय/दशम/द्वादश से विरोधार्गला")
+        st.markdown("### 🔗 अर्गला एवं विरोधार्गला (Argala Intervention)")
+        st.info("द्वितीय भाव (धन अर्गला) ⟷ द्वादश (विरोध) | चतुर्थ भाव (सुख अर्गला) ⟷ दशम (विरोध) | एकादश भाव (लाभ अर्गला) ⟷ तृतीय (विरोध)")
         try:
             import importlib
             import src.jyotish.core.jaimini as jm_mod
             importlib.reload(jm_mod)
             _arg = jm_mod.JaiminiCalculator.calculate_argala(chart)
             if _arg:
-                _arg_rows = [{"भाव": k, "अर्गला": ", ".join(v.get("argala", [])) or "—", "विरोधार्गला": ", ".join(v.get("virodhargala", [])) or "—", "शुद्ध": v.get("net_argala", "—")} for k, v in _arg.items()]
+                _arg_rows = []
+                for k, v in _arg.items():
+                    dhana = v.get("dhana_argala", {})
+                    sukha = v.get("sukha_argala", {})
+                    labha = v.get("labha_argala", {})
+                    
+                    dh_str = f"ग्रह: {', '.join(dhana.get('planets', [])) or '—'} | विरोध: {', '.join(dhana.get('virodha', [])) or '—'} ({'✅ प्रभावी' if dhana.get('effective') else 'निष्प्रभावी'})"
+                    su_str = f"ग्रह: {', '.join(sukha.get('planets', [])) or '—'} | विरोध: {', '.join(sukha.get('virodha', [])) or '—'} ({'✅ प्रभावी' if sukha.get('effective') else 'निष्प्रभावी'})"
+                    la_str = f"ग्रह: {', '.join(labha.get('planets', [])) or '—'} | विरोध: {', '.join(labha.get('virodha', [])) or '—'} ({'✅ प्रभावी' if labha.get('effective') else 'निष्प्रभावी'})"
+
+                    _arg_rows.append({
+                        "भाव": f"भाव {v.get('bhava', k)} ({v.get('sign', '')})",
+                        "द्वितीय अर्गला (Dhana)": dh_str,
+                        "चतुर्थ अर्गला (Sukha)": su_str,
+                        "एकादश अर्गला (Labha)": la_str,
+                        "सक्रिय अर्गलाएँ": f"{v.get('total_argalas', 0)} / 3",
+                    })
                 st.dataframe(pd.DataFrame(_arg_rows), use_container_width=True, hide_index=True)
         except Exception as _earg:
             st.error(f"अर्गला त्रुटि: {str(_earg)[:150]}")
 
     with _jt_ga:
         st.markdown("### 🌍 ग्रह आरूढ पद (Graha Arudha Padas)")
-        st.info("प्रत्येक ग्रह के स्वामी की राशि से उतनी ही राशि आगे — ग्रह का बाह्य प्रकटन।")
+        st.info("प्रत्येक ग्रह की राशि के स्वामी से उतनी ही दूरी आगे गिनने पर ग्रह आरूढ ज्ञात होता है।")
         try:
             import importlib
             import src.jyotish.core.jaimini as jm_mod
             importlib.reload(jm_mod)
             _ga = jm_mod.JaiminiCalculator.calculate_graha_arudhas(chart)
             if _ga:
-                _ga_rows = [{"ग्रह": k, "आरूढ राशि": v.get("sign_name", "—"), "लग्न से भाव": v.get("house_from_lagna", "—"), "स्वामी": v.get("sign_lord", "—")} for k, v in _ga.items()]
+                _ga_rows = []
+                for k, v in _ga.items():
+                    _arudha_sid = v.get("arudha_sign_id", 1)
+                    _house_from_l = ((_arudha_sid - chart.lagna_sign_id) % 12) + 1
+                    _ga_rows.append({
+                        "ग्रह": k,
+                        "ग्रह राशि": v.get("planet_sign", "—"),
+                        "राशि स्वामी": f"{v.get('planet_lord', '—')} ({v.get('lord_sign', '—')})",
+                        "आरूढ राशि (Pada)": v.get("arudha_sign", "—"),
+                        "लग्न से भाव": f"भाव {_house_from_l}",
+                        "शास्त्रीय प्रभाव": v.get("meaning_hi", "—")
+                    })
                 st.dataframe(pd.DataFrame(_ga_rows), use_container_width=True, hide_index=True)
         except Exception as _ega:
             st.error(f"ग्रह आरूढ त्रुटि: {str(_ega)[:150]}")
