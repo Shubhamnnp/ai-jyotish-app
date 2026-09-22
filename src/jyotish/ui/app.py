@@ -2675,21 +2675,33 @@ if selected_idx == 0:
         st.markdown("### 🏠 भाव चलित चक्र (Bhava Chalit Chart)")
         st.info("समभाव पद्धति में mid-cusp boundaries से ग्रहों का वास्तविक भाव।")
         try:
-            from src.jyotish.core.calculator import ChartCalculator
-            _bc_res = ChartCalculator().calculate_bhava_chalit(chart)
+            import importlib
+            import src.jyotish.core.calculator as calc_mod
+            importlib.reload(calc_mod)
+            _calc_instance = calc_mod.default_chart_calculator
+            _bc_res = _calc_instance.calculate_bhava_chalit(chart)
             if _bc_res:
+                _bc_items = _bc_res.get("planet_positions", []) if isinstance(_bc_res, dict) else _bc_res
+                _cusps_list = _bc_res.get("bhava_cusps", []) if isinstance(_bc_res, dict) else []
                 _bc1, _bc2 = st.columns(2)
                 with _bc1:
                     _bc_rows = []
-                    for _it in _bc_res:
+                    for _it in _bc_items:
                         _rh = _it.get("rashi_house", "—")
                         _ch = _it.get("chalit_house", "—")
-                        _bc_rows.append({"ग्रह": _it.get("planet", ""), "राशि भाव": _rh, "चलित भाव": _ch, "परिवर्तन?": "✅ बदला" if _rh != _ch else "— समान", "राशि": _it.get("sign_name", "")})
+                        _bc_rows.append({"ग्रह": _it.get("planet", ""), "राशि भाव": _rh, "चलित भाव": _ch, "परिवर्तन?": "✅ बदला" if _rh != _ch else "— समान", "राशि": _it.get("sign", _it.get("sign_name", ""))})
                     st.dataframe(pd.DataFrame(_bc_rows), use_container_width=True, hide_index=True)
                 with _bc2:
-                    _cusps = _bc_res[0].get("bhava_cusps", []) if _bc_res else []
-                    if _cusps:
-                        st.dataframe(pd.DataFrame([{"भाव": i+1, "Cusp": f"{c:.2f}°"} for i, c in enumerate(_cusps)]), use_container_width=True, hide_index=True)
+                    if _cusps_list:
+                        _cusp_table = []
+                        for _c in _cusps_list:
+                            _cusp_table.append({
+                                "भाव": _c.get("bhava", ""),
+                                "राशि": _c.get("sign_name", ""),
+                                "Cusp अंश": f"{_c.get('cusp_degree', 0.0):.2f}°",
+                                "स्पष्ट": f"{_c.get('cusp_longitude', 0.0):.2f}°"
+                            })
+                        st.dataframe(pd.DataFrame(_cusp_table), use_container_width=True, hide_index=True)
                     _chd = [r for r in _bc_rows if "बदला" in r["परिवर्तन?"]]
                     if _chd:
                         st.warning("⚠️ " + str(len(_chd)) + " ग्रह राशि-भाव और चलित-भाव में भिन्न: " + ", ".join(f"{r['ग्रह']} ({r['राशि भाव']}→{r['चलित भाव']})" for r in _chd))
@@ -2702,8 +2714,11 @@ if selected_idx == 0:
         st.markdown("### ⚔️ ग्रह युद्ध (Graha Yuddha — Planetary War)")
         st.info("जब दो ग्रह 1° के भीतर हों तो ग्रह युद्ध। उत्तर अक्षांश वाला ग्रह विजेता।")
         try:
-            from src.jyotish.core.calculator import ChartCalculator
-            _yw_list = ChartCalculator().detect_graha_yuddha(chart)
+            import importlib
+            import src.jyotish.core.calculator as calc_mod
+            importlib.reload(calc_mod)
+            _calc_instance = calc_mod.default_chart_calculator
+            _yw_list = _calc_instance.detect_graha_yuddha(chart)
             if _yw_list:
                 st.error(f"⚔️ {len(_yw_list)} ग्रह युद्ध इस कुण्डली में पाए गए:")
                 for _yw in _yw_list:
