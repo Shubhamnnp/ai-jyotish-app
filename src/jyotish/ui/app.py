@@ -2007,7 +2007,9 @@ if "English" in st.session_state.app_lang:
         "📄 Comprehensive Report",
         "📚 100 Classical Rules",
         "🔍 Vedic Sage Validation",
-        "⚡ Dosh & Yog Analysis (Complete)"
+        "⚡ Dosh & Yog Analysis (Complete)",
+        "🔢 Numerology & Lo-Shu Grid",
+        "📕 Lal Kitab 1952 & Remedies"
     ]
 elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2032,7 +2034,9 @@ elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_sta
         "📄 முழுமையான அறிக்கை (Report)",
         "📚 100 சாஸ்திர விதிகள் (Rules)",
         "🔍 வேத ரிஷி சரிபார்ப்பு (Validation)",
-        "⚡ தோஷம்-யோகம் முழு பகுப்பாய்வு (Dosh & Yog)"
+        "⚡ தோஷம்-யோகம் முழு பகுப்பாய்வு (Dosh & Yog)",
+        "🔢 எண்கணிதம் & லோ-ஷு கிரிட் (Numerology)",
+        "📕 லால் கிதாப் 1952 பரிகாரங்கள் (Lal Kitab)"
     ]
 elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2057,7 +2061,9 @@ elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session
         "📄 సంపూర్ణ నివేదిక (Report)",
         "📚 100 శాస్త్రీయ నియమాలు (Rules)",
         "🔍 వైదిక ఋషి ధృవీకరణ (Validation)",
-        "⚡ దోష-యోగ సంపూర్ణ విశ్లేషణ (Dosh & Yog)"
+        "⚡ దోష-యోగ సంపూర్ణ విశ్లేషణ (Dosh & Yog)",
+        "🔢 సంఖ్యాశాస్త్రం & లో-షు గ్రిడ్ (Numerology)",
+        "📕 లాల్ కితాబ్ 1952 నివారణలు (Lal Kitab)"
     ]
 elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2082,7 +2088,9 @@ elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.se
         "📄 સંપૂર્ણ અહેવાલ (Report)",
         "📚 ૧૦૦ શાસ્ત્રીય નિયમો (Rules)",
         "🔍 વૈદિક ઋષિ પ્રમાણીકરણ (Validation)",
-        "⚡ દોષ-યોગ સંપૂર્ણ વિશ્લેષણ (Dosh & Yog)"
+        "⚡ દોષ-યોગ સંપૂર્ણ વિશ્લેષણ (Dosh & Yog)",
+        "🔢 અંકશાસ્ત્ર અને લો-શૂ ગ્રિડ (Numerology)",
+        "📕 લાલ કિતાબ ૧૯૫૨ ઉપાયો (Lal Kitab)"
     ]
 elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2107,7 +2115,9 @@ elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_s
         "📄 संपूर्ण अहवाल (Report)",
         "📚 १०० शास्त्रीय नियम (Rules)",
         "🔍 वैदिक ऋषी पडताळणी (Validation)",
-        "⚡ दोष-योग संपूर्ण विश्लेषण (Dosh & Yog)"
+        "⚡ दोष-योग संपूर्ण विश्लेषण (Dosh & Yog)",
+        "🔢 अंकशास्त्र व लो-शू ग्रिड (Numerology)",
+        "📕 लाल किताब १९५२ उपाय (Lal Kitab)"
     ]
 elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2132,7 +2142,9 @@ elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_s
         "📄 সম্পূর্ণ রিপোর্ট (Report)",
         "📚 ১০০ শাস্ত্রীয় নিয়ম (Rules)",
         "🔍 বৈদিক ঋষি প্রমাণ (Validation)",
-        "⚡ দোষ-যোগ সম্পূর্ণ বিশ্লেষণ (Dosh & Yog)"
+        "⚡ দোষ-যোগ সম্পূর্ণ বিশ্লেষণ (Dosh & Yog)",
+        "🔢 সংখ্যাতত্ত্ব ও লো-শু গ্রিড (Numerology)",
+        "📕 লাল কিতাব ১৯৫২ প্রতিকার (Lal Kitab)"
     ]
 else:
     MODULE_OPTIONS = [
@@ -2157,8 +2169,11 @@ else:
         "📄 सम्पूर्ण रिपोर्ट (Report)",
         "📚 100 शास्त्रीय नियम (Rules)",
         "🔍 वैदिक ऋषि सत्यापन (Validation)",
-        "⚡ सम्पूर्ण दोष एवं योग (Dosh & Yog)"
+        "⚡ सम्पूर्ण दोष एवं योग (Dosh & Yog)",
+        "🔢 अंकशास्त्र एवं लो-शू ग्रिड (Numerology)",
+        "📕 लाल किताब 1952 एवं उपाय (Lal Kitab)"
     ]
+
 
 if "active_module_idx" not in st.session_state:
     st.session_state.active_module_idx = 0
@@ -2537,6 +2552,20 @@ if selected_idx == 0:
         "D30": "अरिष्ट, रोग, पाप प्रभाव एवं संकट (Misfortunes, Evils & Challenges)",
         "D60": "पूर्वजन्म के संचित कर्म एवं अंतिम प्रारब्ध (Past Life Karma & Core Destiny)",
     }
+
+    # 1-Click Quick Chart Style Switcher
+    st.markdown("##### 🎨 कुण्डली चक्र शैली टॉगल (Switch Chart Style)")
+    c_st1, c_st2, c_st3 = st.columns(3)
+    curr_style = st.session_state.get("app_chart_style", "North Indian (Diamond)")
+    if c_st1.button("💎 उत्तर भारतीय (Diamond)", use_container_width=True, type="primary" if "North" in curr_style else "secondary"):
+        st.session_state.app_chart_style = "North Indian (Diamond)"
+        st.rerun()
+    if c_st2.button("🔲 दक्षिण भारतीय (Square Box)", use_container_width=True, type="primary" if "South" in curr_style else "secondary"):
+        st.session_state.app_chart_style = "South Indian (Box)"
+        st.rerun()
+    if c_st3.button("🔺 पूर्व भारतीय (Bengal/Odisha)", use_container_width=True, type="primary" if "East" in curr_style else "secondary"):
+        st.session_state.app_chart_style = "East Indian (Surya)"
+        st.rerun()
 
     col_chart1, col_chart2 = st.columns([1, 1])
     with col_chart1:
@@ -5997,6 +6026,22 @@ elif selected_idx == 16:
         ])
         st.dataframe(koota_df, use_container_width=True)
 
+        # Advanced Shastriya Cancellations & Balancing Analysis
+        st.markdown("#### 🛡️ शास्त्रीय दोष परिहार एवं साम्य विश्लेषण (Shastriya Cancellations)")
+        c_mc1, c_mc2 = st.columns(2)
+        with c_mc1:
+            if m_score.manglik_match:
+                st.success(f"**🔥 मांगलिक सामंजस्य:** {m_score.manglik_cancellation_reason}")
+            else:
+                st.error(f"**⚠️ मांगलिक असंतुलन:** {m_score.manglik_cancellation_reason}")
+        with c_mc2:
+            if m_score.nadi_dosha_cancelled:
+                st.success(f"**🧬 {m_score.nadi_cancellation_reason}**")
+            elif m_score.nadi_dosha:
+                st.error(f"**⚠️ {m_score.nadi_cancellation_reason}**")
+            else:
+                st.info(f"**🧬 नाड़ी मिलान:** {m_score.nadi_cancellation_reason}")
+
 
 # =============================================================
 # TAB 15: AI SAHAYAK (CHAT CONSULTATION)
@@ -6492,4 +6537,250 @@ elif selected_idx == 21:
             </div>""",
             unsafe_allow_html=True
         )
+
+
+# =============================================================
+# MODULE 22: अंकशास्त्र एवं लो-शू ग्रिड (NUMEROLOGY & LO-SHU GRID)
+# =============================================================
+
+elif selected_idx == 22:
+    st.subheader("🔢 अंकशास्त्र एवं लो-शू ग्रिड (Vedic & Lo-Shu Numerology)")
+    st.write("कील्डियन नामांक, मूलांक, भाग्यांक, कुआ नंबर, ३×३ लो-शू ग्रिड (८ तल), मिसिंग नंबर एवं क्रिस्टल/धातु आधारित शास्त्रीय उपाय।")
+
+    import importlib
+    import src.jyotish.core.numerology as num_mod
+    importlib.reload(num_mod)
+
+    b_date = birth_profile.birth_date
+    num_res = num_mod.default_numerology_engine.calculate(
+        birth_date=b_date,
+        full_name=birth_profile.name,
+        gender=st.session_state.get("birth_gender", "male")
+    )
+
+    # 4-Pillar Numerology HUD
+    c_n1, c_n2, c_n3, c_n4 = st.columns(4)
+    c_n1.metric("मूलांक (Driver / Root)", f"🔢 {num_res.mulank}", num_res.driver_info["planet"].split()[0])
+    c_n2.metric("भाग्यांक (Destiny / Conductor)", f"🌟 {num_res.bhagyank}", num_res.conductor_info["planet"].split()[0])
+    c_n3.metric("कुआ नंबर (Kua / Feng Shui)", f"🧭 {num_res.kua_number}", "दिशात्मक ऊर्जा")
+    c_n4.metric("कील्डियन नामांक (Name No.)", f"✍️ {num_res.chaldean_namank}", f"पाइथागोरस: {num_res.pythagorean_namank}")
+
+    tab_num1, tab_num2, tab_num3, tab_num4 = st.tabs([
+        "📊 ३×३ लो-शू ग्रिड एवं ८ तल (Lo-Shu Grid)",
+        "🪐 मूलांक व भाग्यांक विस्तृत विश्लेषण",
+        "🧩 मिसिंग नंबर एवं शास्त्रीय उपाय",
+        "💎 लकी फैक्टर्स एवं नेम करेक्शन"
+    ])
+
+    with tab_num1:
+        st.markdown("### 📊 ३×३ लो-शू ग्रिड (Magic Square of 15)")
+        st.caption("जन्म दिनांक के अंकों एवं मूलांक-भाग्यांक से निर्मित दिव्य लो-शू चक्र:")
+
+        g = num_res.lo_shu_grid
+        col_g1, col_g2 = st.columns([1.2, 1.8])
+
+        with col_g1:
+            # 3x3 Lo-Shu Box HTML
+            def fmt_cell(n):
+                cnt = g.get(n, 0)
+                if cnt == 0:
+                    return f"<span style='color:#CBD5E1;font-size:22px;'>—</span><br/><small style='color:#94A3B8;'>{n}</small>"
+                return f"<span style='color:#1E40AF;font-size:24px;font-weight:900;'>{str(n)*cnt}</span>"
+
+            grid_html = f"""
+            <table style="width:100%; border-collapse:collapse; text-align:center; font-family:sans-serif; background:#F8FAFC; border:2px solid #3B82F6; border-radius:12px; overflow:hidden;">
+                <tr style="height:90px; border-bottom:2px solid #93C5FD;">
+                    <td style="width:33.3%; border-right:2px solid #93C5FD; background:#EFF6FF;">{fmt_cell(4)}</td>
+                    <td style="width:33.3%; border-right:2px solid #93C5FD; background:#EFF6FF;">{fmt_cell(9)}</td>
+                    <td style="width:33.3%; background:#EFF6FF;">{fmt_cell(2)}</td>
+                </tr>
+                <tr style="height:90px; border-bottom:2px solid #93C5FD;">
+                    <td style="border-right:2px solid #93C5FD; background:#EFF6FF;">{fmt_cell(3)}</td>
+                    <td style="border-right:2px solid #93C5FD; background:#FEF3C7; border:2px solid #F59E0B;">{fmt_cell(5)}</td>
+                    <td style="background:#EFF6FF;">{fmt_cell(7)}</td>
+                </tr>
+                <tr style="height:90px;">
+                    <td style="border-right:2px solid #93C5FD; background:#EFF6FF;">{fmt_cell(8)}</td>
+                    <td style="border-right:2px solid #93C5FD; background:#EFF6FF;">{fmt_cell(1)}</td>
+                    <td style="background:#EFF6FF;">{fmt_cell(6)}</td>
+                </tr>
+            </table>
+            """
+            st.markdown(grid_html, unsafe_allow_html=True)
+            st.caption("📌 ग्रिड में उपस्थित अंक जातक की आंतरिक शक्तियों को दर्शाते हैं।")
+
+        with col_g2:
+            st.markdown("#### 🌟 सक्रिय योग / तल (Active Planes)")
+            if num_res.completed_planes:
+                for p in num_res.completed_planes:
+                    st.markdown(f"""
+                    <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:8px; padding:10px; margin-bottom:8px;">
+                        <b style="color:#065F46; font-size:15px;">✅ {p['name']} (100% पूर्ण)</b><br/>
+                        <small style="color:#1F2937;">{p['significance_hi']}</small>
+                    </div>
+                    """, unsafe_allow_html=True)
+            else:
+                st.info("वर्तमान ग्रिड में कोई 100% पूर्ण तल नहीं है। आंशिक तलों की स्थिति नीचे देखें:")
+
+            with st.expander("⚪ अन्य आंशिक / अपूर्ण तल (Incomplete Planes)"):
+                for p in num_res.incomplete_planes:
+                    st.markdown(f"• **{p['name']}** — शक्ति: **{p['strength_pct']}%** ({p['significance_hi'][:60]}...)")
+
+    with tab_num2:
+        st.markdown("### 🪐 मूलांक एवं भाग्यांक व्यक्तित्व विश्लेषण")
+        col_dr1, col_dr2 = st.columns(2)
+        with col_dr1:
+            d = num_res.driver_info
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px;">
+                <h4 style="color:#B45309; margin-top:0;">👑 मूलांक: {num_res.mulank} (स्वामी: {d['planet']})</h4>
+                <p><b>तत्व:</b> {d['element']} | <b>दिशा:</b> {d['direction']}</p>
+                <p><b>स्वभाव एवं गुण:</b> {d['nature_hi']}</p>
+                <p><b>मुख्य रत्न:</b> {d['gemstone']}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_dr2:
+            c = num_res.conductor_info
+            st.markdown(f"""
+            <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:14px;">
+                <h4 style="color:#1E40AF; margin-top:0;">🌟 भाग्यांक: {num_res.bhagyank} (स्वामी: {c['planet']})</h4>
+                <p><b>तत्व:</b> {c['element']} | <b>दिशा:</b> {c['direction']}</p>
+                <p><b>जीवन लक्ष्य व कर्म:</b> {c['nature_hi']}</p>
+                <p><b>मुख्य रत्न:</b> {c['gemstone']}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.info(f"⏳ **पर्सनल ईयर (Personal Year {date.today().year}):** इस वर्ष का व्यक्तिगत अंक **{num_res.personal_year}** है। यह वर्ष नए संकल्पों एवं योजनाओं के क्रियान्वयन हेतु अत्यंत महत्वपूर्ण रहेगा।")
+
+    with tab_num3:
+        st.markdown("### 🧩 मिसिंग नंबर (Missing Numbers) एवं अचूक उपाय")
+        st.caption("लो-शू ग्रिड में जो अंक अनुपस्थित हैं, उनके जीवन पर पड़ने वाले प्रभाव व सटीक निवारण:")
+
+        if num_res.remedies_for_missing:
+            for rem in num_res.remedies_for_missing:
+                st.markdown(f"""
+                <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px; margin-bottom:10px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+                    <b style="color:#DC2626; font-size:15px;">⚠️ अनुपस्थित अंक {rem['number']} ({rem['planet']})</b>
+                    <p style="margin:4px 0; color:#475569;"><b>प्रभाव:</b> {rem['lacking_hi']}</p>
+                    <p style="margin:4px 0; color:#047857;"><b>🌿 अचूक उपाय:</b> {rem['remedy_hi']}</p>
+                    <small style="color:#2563EB;"><b>धारण योग्य वस्तु:</b> {rem['item']}</small>
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.success("🎉 अद्भुत! आपके लो-शू ग्रिड में लगभग सभी महत्वपूर्ण अंक संतुलित हैं।")
+
+    with tab_num4:
+        st.markdown("### 💎 लकी फैक्टर्स एवं नाम संतुलन (Name Correction)")
+        ls = num_res.lucky_summary
+        col_lf1, col_lf2 = st.columns(2)
+        with col_lf1:
+            st.markdown(f"• **शुभ दिन:** {', '.join(ls['lucky_days'])}")
+            st.markdown(f"• **अनुकूल रंग:** {', '.join(ls['lucky_colors'])}")
+            st.markdown(f"• **शुभ अंक:** {', '.join(str(n) for n in ls['lucky_numbers'])}")
+        with col_lf2:
+            st.markdown(f"• **शत्रु / प्रतिकूल अंक:** {', '.join(str(n) for n in ls['unfavorable_numbers']) or 'कोई नहीं'}")
+            st.markdown(f"• **शुभ रत्न:** {', '.join(ls['lucky_gemstones'])}")
+            st.markdown(f"• **नाम स्पेलिंग कंपैटिबिलिटी:** कील्डियन योग **{num_res.chaldean_namank}** (मूलांक {num_res.mulank} के साथ {'अनुकूल ✅' if num_res.chaldean_namank in ls['lucky_numbers'] else 'सामान्य ⚖️'})")
+
+
+# =============================================================
+# MODULE 23: लाल किताब 1952 तेवा एवं उपाय (LAL KITAB 1952)
+# =============================================================
+
+elif selected_idx == 23:
+    st.subheader("📕 लाल किताब 1952 तेवा एवं शास्त्रीय उपाय (Lal Kitab Engine)")
+    st.write("कालपुरुष पक्के घर (खाना नं. १ से १२), ७ प्रकार के ऋण (ऋण पितृ, मातृ, स्व आदि), सोया हुआ घर/ग्रह, धर्मी तेवा एवं लाल किताब के अनुभूत टोटके।")
+
+    import importlib
+    import src.jyotish.core.lalkitab as lk_mod
+    importlib.reload(lk_mod)
+
+    lk_res = lk_mod.default_lalkitab_engine.calculate(chart)
+
+    # Top Status Banner
+    c_lk1, c_lk2, c_lk3, c_lk4 = st.columns(4)
+    c_lk1.metric("कुण्डली प्रकार", "धर्मी तेवा (Blessed) 🛡️" if lk_res.dharmi_teva else "सामान्य तेवा", "ईश्वरीय सुरक्षा")
+    c_lk2.metric("अंधा तेवा (Blind Chart)", "⚠️ हाँ (सतर्क रहें)" if lk_res.andha_teva else "✅ नहीं (नेत्रवान)", "खाना १० स्थिति")
+    c_lk3.metric("सक्रिय ऋण (Karmic Debts)", f"{len(lk_res.active_debts)} ऋण", "पूर्वजन्म संस्कार")
+    c_lk4.metric("सोए हुए घर (Sleeping Houses)", f"{len(lk_res.sleeping_houses)} / 12", "जाग्रत करने योग्य")
+
+    tab_lk1, tab_lk2, tab_lk3, tab_lk4 = st.tabs([
+        "🏠 १२ पक्के खाने एवं ग्रह स्थिति (12 Khanas)",
+        "⚠️ ७ प्रकार के ऋण एवं पितृ दोष विश्लेषण",
+        "💤 सोए हुए घर एवं ग्रह (Sleeping Houses)",
+        "🌿 लाल किताब के अनुभूत अचूक टोटके"
+    ])
+
+    with tab_lk1:
+        st.markdown("### 🏠 लाल किताब अनुसार १२ खानों में ग्रह स्थिति")
+        st.caption("लाल किताब में राशि नहीं, बल्कि खाना (House 1 to 12) सर्वोपरि होता है:")
+
+        khana_table = []
+        for kh in range(1, 13):
+            kh_info = lk_mod.LAL_KITAB_KHANA_DATA[kh]
+            pls = lk_res.khana_planets.get(kh, [])
+            khana_table.append({
+                "खाना नं.": f"खाना {kh}",
+                "पक्का स्वामी": kh_info["pakka_ruler"],
+                "कारक": kh_info["karaka"],
+                "स्थित ग्रह": ", ".join(pls) if pls else "⚪ रिक्त (सोया घर)",
+                "महत्व / क्षेत्र": kh_info["nature_hi"]
+            })
+        st.dataframe(pd.DataFrame(khana_table), use_container_width=True, hide_index=True)
+
+    with tab_lk2:
+        st.markdown("### ⚠️ लाल किताब के ७ कर्मिक ऋण (Karmic Debts)")
+        st.caption("पूर्वजन्म अथवा पूर्वजों द्वारा किए गए कृत्यों के कारण उत्पन्न ऋण:")
+
+        if lk_res.active_debts:
+            for d in lk_res.active_debts:
+                st.markdown(f"""
+                <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:10px; padding:14px; margin-bottom:12px;">
+                    <b style="color:#991B1B; font-size:16px;">⚠️ {d['name_hi']}</b>
+                    <p style="margin:5px 0;"><b>कारण:</b> {d['cause_hi']}</p>
+                    <p style="margin:5px 0;"><b>जीवन पर प्रभाव:</b> {d['effect_hi']}</p>
+                    <div style="background:#FFFFFF; border-radius:6px; padding:8px; border:1px solid #FCA5A5; margin-top:6px;">
+                        <b style="color:#047857;">🌿 लाल किताब निवारण उपाय:</b> {d['remedy_hi']}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.success("🎉 आपकी कुण्डली लाल किताब के सातों मुख्य कर्मिक ऋणों (पितृ, मातृ, स्व आदि) से मुक्त है!")
+
+    with tab_lk3:
+        st.markdown("### 💤 सोए हुए घर एवं ग्रह विचार")
+        col_sl1, col_sl2 = st.columns(2)
+        with col_sl1:
+            st.markdown("#### 🏠 सोए हुए घर (Sleeping Houses)")
+            st.write("जिन घरों में कोई ग्रह नहीं होता, वे सोए हुए माने जाते हैं। उनके पक्के स्वामियों की सेवा से वे जाग्रत होते हैं:")
+            st.info(", ".join(f"खाना {h}" for h in lk_res.sleeping_houses) if lk_res.sleeping_houses else "कोई घर सोया हुआ नहीं है।")
+
+        with col_sl2:
+            st.markdown("#### 🪐 सोए हुए ग्रह (Sleeping Planets)")
+            st.write("जो ग्रह अपने कारक घर से संपर्क नहीं बना पाते:")
+            st.warning(", ".join(lk_res.sleeping_planets) if lk_res.sleeping_planets else "सभी ग्रह सक्रिय हैं।")
+
+    with tab_lk4:
+        st.markdown("### 🌿 लाल किताब के अनुभूत अचूक टोटके एवं सावधानियां")
+        st.caption("आपकी ग्रह स्थिति के आधार पर विशेष टोटके:")
+
+        if lk_res.specific_remedies:
+            for r in lk_res.specific_remedies:
+                st.markdown(f"""
+                <div style="background:#FFFBEB; border:1px solid #F59E0B; border-radius:8px; padding:12px; margin-bottom:8px;">
+                    <b style="color:#B45309;">📍 {r['placement']}</b><br/>
+                    <span style="color:#1E293B;">{r['totka_hi']}</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+        st.markdown("""
+        #### 📜 लाल किताब के १० शाश्वत नियम:
+        1. किसी भी उपाय को सूर्योदय के पश्चात और सूर्यास्त से पहले करें।
+        2. एक समय में एक ही उपाय करें, कम से कम ४० से ४३ दिन तक नियम न टूटे।
+        3. मुफ्त में कोई वस्तु या ताबीज न लें, न ही बिना दक्षिणा के ज्योतिषीय उपाय करें।
+        4. घर के मंदिर में भारी घंटियां या ऊंची मूर्तियां न रखें।
+        5. मांस, मदिरा एवं पराई स्त्री के संग से सदा दूर रहें।
+        """)
+
 
