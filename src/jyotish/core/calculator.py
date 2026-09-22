@@ -333,6 +333,108 @@ class ChartCalculator:
         chart.upagrahas = default_upagraha_calculator.calculate(chart)
         return chart
 
+    def calculate_bhava_chalit(self, chart: KundaliChart) -> List[Dict]:
+        """
+        Calculates Bhava Chalit (Chalit chart / Cuspal chart).
+        In Bhava Chalit, each bhava spans 30 degrees centered on its cusp.
+        The cusp of Bhava 1 = exact Lagna degree. Each subsequent cusp = +30 degrees.
+        Planets may fall in a different bhava than their Rashi house.
+
+        Returns a list of dicts: [{planet, rashi_house, chalit_house, is_different}]
+        """
+        lagna_lon = chart.lagna_longitude
+        chalit_results = []
+
+        # Bhava cusps: House 1 starts at lagna_lon, each +30 degrees
+        # Mid-bhava points (where each bhava is centered):
+        bhava_cusps = [(lagna_lon + (h * 30.0)) % 360.0 for h in range(12)]
+
+        def find_chalit_house(planet_lon: float) -> int:
+            """Find which bhava the planet falls in based on equal cusps from Lagna."""
+            # Distance from Lagna
+            dist = (planet_lon - lagna_lon) % 360.0
+            # Chalit house = floor(dist / 30) + 1
+            chalit_h = int(dist // 30.0) + 1
+            return chalit_h if 1 <= chalit_h <= 12 else 12
+
+        for p_name, p_pos in chart.planets.items():
+            rashi_house = p_pos.house_from_lagna  # Whole sign house
+            chalit_house = find_chalit_house(p_pos.longitude)
+            chalit_results.append({
+                "planet": p_name,
+                "rashi_house": rashi_house,
+                "chalit_house": chalit_house,
+                "is_different": (rashi_house != chalit_house),
+                "longitude": round(p_pos.longitude, 4),
+                "sign": p_pos.sign_name,
+                "sign_degree": round(p_pos.sign_degree, 4),
+            })
+
+        # Also calculate bhava cusp signs
+        bhava_details = []
+        for h, cusp_lon in enumerate(bhava_cusps):
+            sign_id = int(cusp_lon // 30.0) + 1
+            if sign_id > 12:
+                sign_id = 12
+            sign_name = SIGN_NAMES[sign_id - 1]
+            bhava_details.append({
+                "bhava": h + 1,
+                "cusp_longitude": round(cusp_lon, 4),
+                "sign_id": sign_id,
+                "sign_name": sign_name,
+                "cusp_degree": round(cusp_lon % 30.0, 4),
+            })
+
+        return {"planet_positions": chalit_results, "bhava_cusps": bhava_details}
+
+    def detect_graha_yuddha(self, chart: KundaliChart) -> List[Dict]:
+        """
+        Detects Graha Yuddha (Planetary War) — when two planets are within 1 degree of each other.
+        Rules:
+        - Only applies to: Mars, Mercury, Jupiter, Venus, Saturn (not Sun, Moon, Rahu, Ketu)
+        - Winner: Planet with greater north latitude wins
+        - Loser planet's energy is significantly weakened
+        Returns list of active wars.
+        """
+        war_planets = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
+        wars = []
+
+        for i, p1_name in enumerate(war_planets):
+            for p2_name in war_planets[i+1:]:
+                if p1_name not in chart.planets or p2_name not in chart.planets:
+                    continue
+                p1 = chart.planets[p1_name]
+                p2 = chart.planets[p2_name]
+
+                # Longitudinal difference
+                diff = abs(p1.longitude - p2.longitude) % 360.0
+                if diff > 180.0:
+                    diff = 360.0 - diff
+
+                if diff <= 1.0:  # Within 1 degree = Graha Yuddha
+                    # Winner: planet with greater north latitude (positive latitude)
+                    lat1 = p1.latitude if hasattr(p1, 'latitude') else 0.0
+                    lat2 = p2.latitude if hasattr(p2, 'latitude') else 0.0
+                    winner = p1_name if lat1 >= lat2 else p2_name
+                    loser = p2_name if winner == p1_name else p1_name
+
+                    wars.append({
+                        "planet1": p1_name,
+                        "planet2": p2_name,
+                        "separation_deg": round(diff, 4),
+                        "winner": winner,
+                        "loser": loser,
+                        "winner_lat": round(max(lat1, lat2), 4),
+                        "loser_lat": round(min(lat1, lat2), 4),
+                        "intensity": "Intense" if diff <= 0.25 else ("Strong" if diff <= 0.5 else "Moderate"),
+                        "description_hi": (
+                            f"{p1_name} और {p2_name} में ग्रह युद्ध (अंतर: {round(diff, 2)}°) — "
+                            f"विजेता: {winner}, पराजित: {loser}"
+                        ),
+                    })
+
+        return wars
+
 
 # Singleton calculator instance
 default_chart_calculator = ChartCalculator()

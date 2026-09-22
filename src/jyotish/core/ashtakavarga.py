@@ -194,3 +194,99 @@ class AshtakavargaCalculator:
         sign_idx = (sign_id - 1) % 12
         return ashtakavarga.sav[sign_idx]
 
+    @classmethod
+    def calculate_bhrigu_bindu(cls, chart: "KundaliChart") -> Dict:
+        """
+        Calculates Bhrigu Bindu — the midpoint between Rahu and Moon.
+        This sensitive point triggers important events when planets transit over it.
+        Transit of Jupiter, Saturn, or Rahu/Ketu over Bhrigu Bindu = major life event.
+        """
+        from .constants import SIGN_NAMES
+        rahu_lon = chart.planets["Rahu"].longitude
+        moon_lon = chart.planets["Moon"].longitude
+
+        # Midpoint calculation (handle 0/360 wraparound)
+        diff = (moon_lon - rahu_lon) % 360.0
+        if diff > 180.0:
+            bhrigu_bindu_lon = (rahu_lon + diff / 2.0) % 360.0
+        else:
+            bhrigu_bindu_lon = (rahu_lon + diff / 2.0) % 360.0
+
+        sign_id = int(bhrigu_bindu_lon // 30.0) + 1
+        if sign_id > 12:
+            sign_id = 12
+        sign_name = SIGN_NAMES[sign_id - 1]
+        degree_in_sign = bhrigu_bindu_lon % 30.0
+
+        # Nakshatra determination
+        nak_span = 360.0 / 27.0
+        nak_idx = int(bhrigu_bindu_lon / nak_span) % 27
+        NAKSHATRA_NAMES = [
+            "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra",
+            "Punarvasu", "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni",
+            "Hasta", "Chitra", "Swati", "Vishakha", "Anuradha", "Jyeshtha",
+            "Mula", "Purva Ashadha", "Uttara Ashadha", "Shravana", "Dhanishtha",
+            "Shatabhisha", "Purva Bhadrapada", "Uttara Bhadrapada", "Revati"
+        ]
+
+        return {
+            "longitude": round(bhrigu_bindu_lon, 4),
+            "sign_id": sign_id,
+            "sign_name": sign_name,
+            "degree_in_sign": round(degree_in_sign, 4),
+            "nakshatra": NAKSHATRA_NAMES[nak_idx],
+            "rahu_longitude": round(rahu_lon, 4),
+            "moon_longitude": round(moon_lon, 4),
+            "description_hi": (
+                f"भृगु बिन्दु: {sign_name} {round(degree_in_sign, 2)}° ({NAKSHATRA_NAMES[nak_idx]} नक्षत्र) — "
+                f"जब कोई ग्रह इस स्थान पर गोचर करे, तो जीवन में महत्वपूर्ण घटनाएँ होती हैं। "
+                f"विशेषतः गुरु, शनि, राहु/केतु का गोचर अत्यन्त प्रभावशाली होता है।"
+            ),
+        }
+
+    @classmethod
+    def calculate_prastara(cls, chart: "KundaliChart", ashtakavarga: AshtakavargaResult) -> Dict:
+        """
+        Calculates Prastara Ashtakvarga — the full 8×12 contributor grid for each planet.
+        Shows exactly WHICH contributor (Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Lagna)
+        gives a bindu in each sign for each planet.
+        This is the detailed foundation of Ashtakvarga from which BAV is derived.
+        """
+        from .constants import ASHTAKAVARGA_RULES, SIGN_NAMES
+
+        contributors = {
+            "Sun": chart.planets["Sun"].sign_id,
+            "Moon": chart.planets["Moon"].sign_id,
+            "Mars": chart.planets["Mars"].sign_id,
+            "Mercury": chart.planets["Mercury"].sign_id,
+            "Jupiter": chart.planets["Jupiter"].sign_id,
+            "Venus": chart.planets["Venus"].sign_id,
+            "Saturn": chart.planets["Saturn"].sign_id,
+            "Lagna": chart.lagna_sign_id,
+        }
+
+        prastara = {}
+        for p_name, contributor_rules in ASHTAKAVARGA_RULES.items():
+            planet_prastara = {}
+            for contrib_name, houses in contributor_rules.items():
+                ref_sign = contributors[contrib_name]
+                contrib_bindus = [0] * 12
+                for h in houses:
+                    target_sign_idx = (ref_sign - 1 + (h - 1)) % 12
+                    contrib_bindus[target_sign_idx] = 1
+                planet_prastara[contrib_name] = contrib_bindus
+
+            # Build a grid: rows=contributors, cols=signs
+            grid_rows = []
+            for contrib_name in ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Lagna"]:
+                row = {"contributor": contrib_name, "bindus": planet_prastara.get(contrib_name, [0]*12)}
+                grid_rows.append(row)
+
+            prastara[p_name] = {
+                "grid": grid_rows,
+                "bav_total": ashtakavarga.bav.get(p_name, [0]*12),
+                "sign_names": SIGN_NAMES,
+            }
+
+        return prastara
+

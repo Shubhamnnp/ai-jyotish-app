@@ -2006,7 +2006,8 @@ if "English" in st.session_state.app_lang:
         "💬 Jyotish AI Assistant",
         "📄 Comprehensive Report",
         "📚 100 Classical Rules",
-        "🔍 Vedic Sage Validation"
+        "🔍 Vedic Sage Validation",
+        "⚡ Dosh & Yog Analysis (Complete)"
     ]
 elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2030,7 +2031,8 @@ elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_sta
         "💬 ஜோதிட AI உதவியாளர் (Sahayak)",
         "📄 முழுமையான அறிக்கை (Report)",
         "📚 100 சாஸ்திர விதிகள் (Rules)",
-        "🔍 வேத ரிஷி சரிபார்ப்பு (Validation)"
+        "🔍 வேத ரிஷி சரிபார்ப்பு (Validation)",
+        "⚡ தோஷம்-யோகம் முழு பகுப்பாய்வு (Dosh & Yog)"
     ]
 elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2054,7 +2056,8 @@ elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session
         "💬 జ్యోతిష్య AI సహాయకుడు (Sahayak)",
         "📄 సంపూర్ణ నివేదిక (Report)",
         "📚 100 శాస్త్రీయ నియమాలు (Rules)",
-        "🔍 వైదిక ఋషి ధృవీకరణ (Validation)"
+        "🔍 వైదిక ఋషి ధృవీకరణ (Validation)",
+        "⚡ దోష-యోగ సంపూర్ణ విశ్లేషణ (Dosh & Yog)"
     ]
 elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2078,7 +2081,8 @@ elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.se
         "💬 જ્યોતિષ AI સહાયક (Sahayak)",
         "📄 સંપૂર્ણ અહેવાલ (Report)",
         "📚 ૧૦૦ શાસ્ત્રીય નિયમો (Rules)",
-        "🔍 વૈદિક ઋષિ પ્રમાણીકરણ (Validation)"
+        "🔍 વૈદિક ઋષિ પ્રમાણીકરણ (Validation)",
+        "⚡ દોષ-યોગ સંપૂર્ણ વિશ્લેષણ (Dosh & Yog)"
     ]
 elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2102,7 +2106,8 @@ elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_s
         "💬 ज्योतिष AI सहाय्यक (Sahayak)",
         "📄 संपूर्ण अहवाल (Report)",
         "📚 १०० शास्त्रीय नियम (Rules)",
-        "🔍 वैदिक ऋषी पडताळणी (Validation)"
+        "🔍 वैदिक ऋषी पडताळणी (Validation)",
+        "⚡ दोष-योग संपूर्ण विश्लेषण (Dosh & Yog)"
     ]
 elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2126,7 +2131,8 @@ elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_s
         "💬 জ্যোতিষ AI সহকারী (Sahayak)",
         "📄 সম্পূর্ণ রিপোর্ট (Report)",
         "📚 ১০০ শাস্ত্রীয় নিয়ম (Rules)",
-        "🔍 বৈদিক ঋষি প্রমাণ (Validation)"
+        "🔍 বৈদিক ঋষি প্রমাণ (Validation)",
+        "⚡ দোষ-যোগ সম্পূর্ণ বিশ্লেষণ (Dosh & Yog)"
     ]
 else:
     MODULE_OPTIONS = [
@@ -2150,7 +2156,8 @@ else:
         "💬 ज्योतिष AI सहायक (Sahayak)",
         "📄 सम्पूर्ण रिपोर्ट (Report)",
         "📚 100 शास्त्रीय नियम (Rules)",
-        "🔍 वैदिक ऋषि सत्यापन (Validation)"
+        "🔍 वैदिक ऋषि सत्यापन (Validation)",
+        "⚡ सम्पूर्ण दोष एवं योग (Dosh & Yog)"
     ]
 
 if "active_module_idx" not in st.session_state:
@@ -3862,7 +3869,11 @@ elif selected_idx == 9:
             "🌸 योगिनी दशा (Yogini 36 Yrs - 3 Levels)",
             "🔱 जैमिनी चर दशा (Jaimini Chara Dasha)",
             "🔄 कालचक्र दशा (Kaalachakra Dasha - BPHS)",
-            "⚔️ शूल दशा (Shoola Dasha - Ayurdaya & Maraka)"
+            "⚔️ शूल दशा (Shoola Dasha - Ayurdaya & Maraka)",
+            "🕉️ अष्टोत्तरी दशा (Ashtottari 108 Yrs - 8 Planets)",
+            "🪐 नारायण दशा (Narayana Rashi Dasha - Jaimini)",
+            "⏳ द्विसप्ततिसम दशा (Dwisaptati Sama 72 Yrs)",
+            "🔷 स्थिर दशा (Sthira Dasha - Jaimini Fixed)"
         ],
         horizontal=True,
         key="dasha_system_mode_radio"
@@ -3876,6 +3887,10 @@ elif selected_idx == 9:
     import src.jyotish.dasha.vimshottari as vim_mod
     import src.jyotish.dasha.yogini as yog_mod
     import src.jyotish.dasha.chara as chara_mod
+    import src.jyotish.dasha.ashtottari as ashto_mod
+    import src.jyotish.dasha.narayana as narayana_mod
+    import src.jyotish.dasha.sama_dashas as sama_mod
+    import src.jyotish.dasha.sthira_drig as sthira_mod
     
     if not hasattr(default_dasha_engine, "get_5level_hierarchy"):
         importlib.reload(vim_mod)
@@ -3887,6 +3902,10 @@ elif selected_idx == 9:
     d_engine = vim_mod.default_dasha_engine
     y_engine = yog_mod.default_yogini_engine
     c_engine = chara_mod.default_chara_engine
+    ashto_engine = ashto_mod.default_ashtottari_engine
+    narayana_engine = narayana_mod.default_narayana_engine
+    dwisaptati_engine = sama_mod.default_dwisaptati_engine
+    sthira_engine = sthira_mod.default_sthira_engine
 
     # =========================================================================
     # 1. VIMSHOTTARI DASHA (5 LEVELS: MAHA -> ANTAR -> PRAT -> SOOKSHMA -> PRANA)
@@ -4539,6 +4558,84 @@ elif selected_idx == 9:
         st.dataframe(pd.DataFrame(shoola_res["timeline"]), use_container_width=True)
 
         st.warning("⚠️ **शूल दशा शास्त्रीय उपयोग:** शूल दशा जातक के जीवन में स्वास्थ्य संकट, शल्यक्रिया (Surgery), दुर्घटना एवं मारक काल के सूक्ष्म परीक्षण हेतु उपयोग की जाती है। जब दशा त्रिशूल राशि में हो और उस पर क्रूर ग्रहों का प्रभाव हो, तो वह काल विशेष रूप से संवेदनशील होता है।")
+
+    # =========================================================================
+    # 6. ASHTOTTARI DASHA
+    elif "अष्टोत्तरी" in d_mode:
+        try:
+            st.markdown("### 🕉️ अष्टोत्तरी दशा (Ashtottari Dasha — 108 वर्ष)")
+            st.info("108 वर्ष का चक्र, 8 ग्रह — राहु सहित, केतु को छोड़कर। नक्षत्र-आधारित।")
+            active_a = ashto_engine.get_active_dasha_at(chart, dasha_target_date)
+            ca1, ca2, ca3 = st.columns(3)
+            ca1.metric("महादशा", active_a["mahadasha"]["lord"], active_a["mahadasha"]["start_date"].strftime('%d-%b-%Y'))
+            ca2.metric("अंतर्दशा", active_a["antardasha"]["lord"], active_a["antardasha"]["start_date"].strftime('%d-%b-%Y'))
+            ca3.metric("प्रत्यंतर्दशा", active_a["pratyantardasha"]["lord"], active_a["pratyantardasha"]["start_date"].strftime('%d-%b-%Y'))
+            st.success(f"सक्रिय: {active_a['summary']}")
+            with st.expander("सम्पूर्ण अष्टोत्तरी कालक्रम", expanded=False):
+                tl_a = ashto_engine.generate_timeline(chart)
+                tl_a_rows = [{"महादशा": md["lord"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": f"{md['duration_years']:.2f}", "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_a[:16]]
+                st.dataframe(pd.DataFrame(tl_a_rows), use_container_width=True, hide_index=True)
+            with st.expander("सक्रिय महादशा के अंतर्दशाएँ", expanded=True):
+                ads = ashto_engine.generate_antardashas(active_a["mahadasha"]["lord"], active_a["mahadasha"]["start_date"], active_a["mahadasha"]["end_date"], active_a["mahadasha"].get("is_partial", False))
+                ad_rows = [{"अंतर्दशा": ad["lord"], "प्रारम्भ": ad["start_date"].strftime("%d-%b-%Y"), "समाप्ति": ad["end_date"].strftime("%d-%b-%Y"), "वर्ष": f"{ad['duration_years']:.3f}", "स्थिति": "🔴" if ad["start_date"] <= target_dt <= ad["end_date"] else "—"} for ad in ads]
+                st.dataframe(pd.DataFrame(ad_rows), use_container_width=True, hide_index=True)
+        except Exception as e_a:
+            st.error(f"अष्टोत्तरी दशा त्रुटि: {str(e_a)[:300]}")
+
+    # =========================================================================
+    # 7. NARAYANA DASHA
+    elif "नारायण" in d_mode:
+        try:
+            st.markdown("### 🪐 नारायण दशा (Narayana Rashi Dasha — जैमिनी)")
+            st.info("जैमिनी राशि-आधारित दशा। विषम लग्न से आगे, सम लग्न से पीछे।")
+            active_n = narayana_engine.get_active_dasha_at(chart, dasha_target_date)
+            cn1, cn2 = st.columns(2)
+            cn1.metric("महादशा (राशि)", active_n["mahadasha"]["sign_name"], f"{active_n['mahadasha']['duration_years']} वर्ष")
+            cn2.metric("अंतर्दशा (राशि)", active_n["antardasha"]["sign_name"], active_n["antardasha"]["start_date"].strftime('%d-%b-%Y'))
+            st.success(f"सक्रिय: {active_n['summary']}")
+            with st.expander("नारायण दशा कालक्रम (12 राशि)", expanded=True):
+                tl_n = narayana_engine.generate_timeline(chart)
+                tl_n_rows = [{"राशि": md["sign_name"], "स्वामी": md["lord"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": md["duration_years"], "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_n]
+                st.dataframe(pd.DataFrame(tl_n_rows), use_container_width=True, hide_index=True)
+        except Exception as e_n:
+            st.error(f"नारायण दशा त्रुटि: {str(e_n)[:300]}")
+
+    # =========================================================================
+    # 8. DWISAPTATI SAMA DASHA
+    elif "द्विसप्ततिसम" in d_mode:
+        try:
+            st.markdown("### ⏳ द्विसप्ततिसम दशा (Dwisaptati Sama — 72 वर्ष)")
+            st.info("72 वर्ष, 8 ग्रह, प्रत्येक को 9 वर्ष।")
+            active_dw = dwisaptati_engine.get_active_dasha_at(chart, dasha_target_date)
+            cdw1, cdw2 = st.columns(2)
+            cdw1.metric("महादशा", active_dw["mahadasha"]["lord"], active_dw["mahadasha"]["start_date"].strftime('%d-%b-%Y'))
+            cdw2.metric("अंतर्दशा", active_dw["antardasha"]["lord"], active_dw["antardasha"]["start_date"].strftime('%d-%b-%Y'))
+            st.success(f"सक्रिय: {active_dw['summary']}")
+            with st.expander("द्विसप्ततिसम कालक्रम", expanded=True):
+                tl_dw = dwisaptati_engine.generate_timeline(chart)
+                tl_dw_rows = [{"महादशा": md["lord"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": f"{md['duration_years']:.2f}", "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_dw[:16]]
+                st.dataframe(pd.DataFrame(tl_dw_rows), use_container_width=True, hide_index=True)
+        except Exception as e_dw:
+            st.error(f"द्विसप्ततिसम दशा त्रुटि: {str(e_dw)[:300]}")
+
+    # =========================================================================
+    # 9. STHIRA DASHA
+    elif "स्थिर" in d_mode:
+        try:
+            st.markdown("### 🔷 स्थिर दशा (Sthira Dasha — जैमिनी)")
+            st.info("चर=7, स्थिर=8, द्विस्वभाव=9 वर्ष। लग्न से आगे क्रम।")
+            active_st = sthira_engine.get_active_dasha_at(chart, dasha_target_date)
+            cst1, cst2 = st.columns(2)
+            cst1.metric("महादशा (राशि)", active_st["mahadasha"]["sign_name"], f"{active_st['mahadasha']['type']} — {active_st['mahadasha']['duration_years']}yr")
+            cst2.metric("अंतर्दशा (राशि)", active_st["antardasha"]["sign_name"], active_st["antardasha"]["start_date"].strftime('%d-%b-%Y'))
+            st.success(f"सक्रिय: {active_st['summary']}")
+            with st.expander("स्थिर दशा कालक्रम (12 राशि)", expanded=True):
+                tl_st = sthira_engine.generate_timeline(chart)
+                tl_st_rows = [{"राशि": md["sign_name"], "प्रकार": md["type"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": md["duration_years"], "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_st]
+                st.dataframe(pd.DataFrame(tl_st_rows), use_container_width=True, hide_index=True)
+        except Exception as e_st:
+            st.error(f"स्थिर दशा त्रुटि: {str(e_st)[:300]}")
+
 
 
 # =============================================================
@@ -5858,3 +5955,152 @@ elif selected_idx == 20:
             tc2.markdown(f"- **गणना पद्धति (Methodology):** BPHS (बृहत्पाराशर होराशास्त्र) + वैदिक ऋषि एस्ट्रो मानक")
             tc2.markdown(f"- **अयनांश प्रकार (Ayanamsha):** चित्रापक्ष / लाहिरी (Chitra Paksha Lahiri)")
 
+
+# =============================================================
+# MODULE 21: सम्पूर्ण दोष एवं योग विश्लेषण
+# =============================================================
+
+elif selected_idx == 21:
+    st.subheader("⚡ सम्पूर्ण दोष एवं योग विश्लेषण")
+    st.write("इस मॉड्यूल में सभी शास्त्रीय दोषों, शुभ-अशुभ योगों, उपाय एवं सावधानियों का विस्तृत विवेचन है।")
+
+    try:
+        from src.jyotish.rules.engine import default_rules_engine
+        rules_result = default_rules_engine.evaluate_all(chart)
+        all_rules_21 = rules_result.get("rules", [])
+    except Exception as _e21:
+        all_rules_21 = []
+        st.warning(f"Rules engine: {_e21}")
+
+    _DOSHA_KW = ["dosha", "sade_sati", "kaal_sarpa", "mangal", "pitra", "guru_chandal", "rudra", "kemadruma", "dhaiya"]
+    _YOGA_KW = ["yoga", "gajakesari", "panch_mahapurusha", "raja", "dhana", "vipreet", "neechabhanga", "parivartana"]
+    _doshas21 = [r for r in all_rules_21 if any(k in r.get("rule_id", "").lower() for k in _DOSHA_KW)]
+    _yogas21 = [r for r in all_rules_21 if any(k in r.get("rule_id", "").lower() for k in _YOGA_KW)]
+
+    _mc1, _mc2, _mc3, _mc4 = st.columns(4)
+    _mc1.metric("⚠️ सक्रिय दोष", sum(1 for r in _doshas21 if r.get("is_active")), delta=f"कुल {len(_doshas21)}", delta_color="inverse")
+    _mc2.metric("✨ सक्रिय योग", sum(1 for r in _yogas21 if r.get("is_active")), delta=f"कुल {len(_yogas21)}")
+    _mc3.metric("📋 कुल नियम", len(all_rules_21))
+    _mc4.metric("💡 उपाय", sum(1 for r in all_rules_21 if r.get("remedies")))
+
+    _dy_t1, _dy_t2, _dy_t3, _dy_t4 = st.tabs([
+        f"🔴 दोष ({len(_doshas21)})",
+        f"🟢 योग ({len(_yogas21)})",
+        f"📋 सभी नियम ({len(all_rules_21)})",
+        "💊 उपाय"
+    ])
+
+    with _dy_t1:
+        st.markdown("### 🔴 दोष विश्लेषण (Dosha Analysis)")
+        if _doshas21:
+            for _d in _doshas21:
+                _act = _d.get("is_active", False)
+                _col = "#FEF2F2" if _act else "#F9FAFB"
+                _brd = "#EF4444" if _act else "#D1D5DB"
+                _nm = _d.get("name", _d.get("rule_id", ""))
+                _desc = _d.get("description", _d.get("interpretation", ""))
+                _status = "🔴 सक्रिय" if _act else "⚪ निष्क्रिय"
+                st.markdown(
+                    f'<div style="background:{_col};border:1.5px solid {_brd};border-radius:8px;'
+                    f'padding:12px;margin:6px 0;"><b>{_nm}</b> — <span style="color:{_brd};">'
+                    f'{_status}</span><br/><small>{_desc}</small></div>',
+                    unsafe_allow_html=True
+                )
+        else:
+            st.info("ℹ️ Rules Engine से कोई दोष detect नहीं हुआ। नीचे manual शास्त्रीय जाँच:")
+            _mars = chart.planets.get("Mars")
+            if _mars and hasattr(_mars, "house_from_lagna"):
+                if _mars.house_from_lagna in [1, 2, 4, 7, 8, 12]:
+                    st.error(f"⚠️ **मंगल दोष:** मंगल भाव {_mars.house_from_lagna} में — दोष विद्यमान!")
+                else:
+                    st.success(f"✅ **मंगल दोष नहीं** (भाव {_mars.house_from_lagna})")
+            _rahu = chart.planets.get("Rahu")
+            _ketu = chart.planets.get("Ketu")
+            if _rahu and _ketu:
+                _non_rk = [p for p in chart.planets if p not in ["Rahu", "Ketu"]]
+                _ks = True
+                for _p in _non_rk:
+                    _ang = (chart.planets[_p].longitude - _rahu.longitude) % 360
+                    if _ang > 180:
+                        _ks = False
+                        break
+                if _ks:
+                    st.error(f"🐍 **काल सर्प दोष:** सभी ग्रह राहु-केतु अक्ष एक ओर। राहु भाव {_rahu.house_from_lagna}।")
+                else:
+                    st.success("✅ **काल सर्प दोष नहीं है**")
+
+    with _dy_t2:
+        st.markdown("### 🟢 योग विश्लेषण (Yoga Analysis)")
+        if _yogas21:
+            for _y in _yogas21:
+                _act = _y.get("is_active", False)
+                _col = "#ECFDF5" if _act else "#F9FAFB"
+                _brd = "#10B981" if _act else "#D1D5DB"
+                _nm = _y.get("name", _y.get("rule_id", ""))
+                _desc = _y.get("description", _y.get("interpretation", ""))
+                _status = "🟢 सक्रिय" if _act else "⚪ निष्क्रिय"
+                st.markdown(
+                    f'<div style="background:{_col};border:1.5px solid {_brd};border-radius:8px;'
+                    f'padding:12px;margin:6px 0;"><b>{_nm}</b> — <span style="color:{_brd};">'
+                    f'{_status}</span><br/><small>{_desc}</small></div>',
+                    unsafe_allow_html=True
+                )
+        else:
+            st.info("इस कुण्डली में कोई मान्य योग detect नहीं हुआ।")
+
+    with _dy_t3:
+        st.markdown("### 📋 सम्पूर्ण शास्त्रीय नियम तालिका")
+        _rows21 = []
+        for _r21 in all_rules_21:
+            _sv = _r21.get("strength", 0) or 0
+            try:
+                _stars = "⭐" * min(int(float(_sv)), 5)
+            except Exception:
+                _stars = "—"
+            _rows21.append({
+                "नियम नाम": _r21.get("name", _r21.get("rule_id", "—")),
+                "सक्रिय?": "🟢" if _r21.get("is_active") else "⚪",
+                "तीव्रता": _stars or "—",
+                "ग्रह": ", ".join(_r21.get("planets", [])) or "—",
+                "भाव": ", ".join(str(_h) for _h in _r21.get("houses", [])) or "—",
+            })
+        if _rows21:
+            st.dataframe(pd.DataFrame(_rows21), use_container_width=True, hide_index=True)
+            _act_c = sum(1 for r in all_rules_21 if r.get("is_active"))
+            if len(all_rules_21) > 0:
+                st.metric("✅ सक्रिय", f"{_act_c}/{len(all_rules_21)}", f"{round(_act_c/len(all_rules_21)*100)}%")
+        else:
+            st.warning("कोई परिणाम नहीं।")
+
+    with _dy_t4:
+        st.markdown("### 💊 उपाय एवं सावधानियाँ")
+        _rwr = [r for r in all_rules_21 if r.get("remedies") or r.get("upay")]
+        for _r in _rwr:
+            _rt = _r.get("remedies", _r.get("upay", ""))
+            if isinstance(_rt, list):
+                _rt = "\n".join(f"• {x}" for x in _rt)
+            st.info(f"**{_r.get('name', '')}:** {_rt}")
+
+        st.markdown("""
+#### 🙏 सामान्य शास्त्रीय उपाय
+
+| दोष/समस्या | मुख्य उपाय | दिन | देवता |
+|:---|:---|:---|:---|
+| **मंगल दोष** | हनुमान चालीसा, लाल मसूर दान, मंगलवार व्रत | मंगलवार | श्री हनुमान |
+| **काल सर्प दोष** | नागपंचमी पूजा, सर्प सूक्त पाठ, सोमवार व्रत | सोमवार | भगवान शिव |
+| **पितृ दोष** | पितृ तर्पण, श्राद्ध, गया यात्रा | शनिवार | पितृगण |
+| **शनि साढ़ेसाती** | शनि स्तोत्र, काले तिल दान, शनि मंत्र जाप | शनिवार | शनि देव |
+| **गुरु-चांडाल दोष** | गुरु मंत्र, हल्दी दान, बृहस्पतिवार व्रत | बृहस्पतिवार | श्री विष्णु |
+| **राहु-केतु** | दुर्गा पाठ, भैरव पूजा, रोटी-नमक दान | शनि/मंगल | माँ दुर्गा |
+| **सामान्य दोष** | गायत्री मंत्र, महामृत्युंजय मंत्र | नित्य प्रातः | सूर्य भगवान |
+        """)
+
+        st.info("📌 उपाय करने से पहले योग्य ज्योतिषाचार्य से परामर्श अवश्य लें।")
+        st.markdown(
+            '<div style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:2px solid #F59E0B;'
+            'border-radius:10px;padding:14px;text-align:center;margin-top:10px;">'
+            '<b style="font-size:15px;color:#92400E;">🔱 ज्योतिषाचार्य पं. शुभम तिवारी</b><br/>'
+            '<small style="color:#78350F;">वैदिक ज्योतिष अनुसंधान केंद्र</small><br/>'
+            '<b style="color:#B45309;">📞 +91-9452155742</b></div>',
+            unsafe_allow_html=True
+        )

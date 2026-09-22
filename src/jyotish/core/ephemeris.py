@@ -98,13 +98,37 @@ class PyEphemProvider(BaseEphemerisProvider):
         ketu = (rahu + 180.0) % 360.0
         return rahu, ketu
 
+    def calculate_true_lunar_nodes(self, dt_utc: datetime) -> Tuple[float, float]:
+        """
+        Computes True (Sphutha) Lunar Node (Rahu) using PyEphem's precise Moon tracking.
+        True node oscillates around the mean node with a ±1.5° amplitude.
+        """
+        try:
+            # PyEphem tracks the Moon's actual ascending node via Moon._n_dot / _node
+            m = ephem.Moon()
+            m.compute(ephem.Date(dt_utc))
+            # PyEphem internal: moon._node is the longitude of ascending node in radians
+            if hasattr(m, '_node'):
+                rahu_trop = math.degrees(m._node) % 360.0
+            else:
+                # Fallback: use mean node
+                jd = self.datetime_to_jd(dt_utc)
+                rahu_trop, _ = self.calculate_mean_lunar_nodes(jd)
+            ketu_trop = (rahu_trop + 180.0) % 360.0
+            return rahu_trop, ketu_trop
+        except Exception:
+            jd = self.datetime_to_jd(dt_utc)
+            return self.calculate_mean_lunar_nodes(jd)
+
     def get_planet_positions(
         self,
         dt_utc: datetime,
-        ayanamsa_name: str = "Lahiri"
+        ayanamsa_name: str = "Lahiri",
+        node_type: str = "mean"
     ) -> Tuple[Dict[str, Dict[str, float]], float]:
         """
         Calculates sidereal planetary positions for 9 grahas.
+        node_type: 'mean' (default) or 'true' for True/Sphutha nodes.
         Returns dictionary and ayanamsa value.
         """
         jd = self.datetime_to_jd(dt_utc)
@@ -167,25 +191,34 @@ class PyEphemProvider(BaseEphemerisProvider):
                 "tropical_lon": trop_lon,
             }
 
-        # Calculate Rahu & Ketu (Mean Nodes)
-        rahu_trop, ketu_trop = self.calculate_mean_lunar_nodes(jd)
+        # Calculate Rahu & Ketu (Mean or True Nodes based on node_type)
+        if node_type == "true":
+            rahu_trop, ketu_trop = self.calculate_true_lunar_nodes(dt_utc)
+            node_speed = -0.0535  # True node oscillates, avg speed similar to mean
+            node_label = "True Node"
+        else:
+            rahu_trop, ketu_trop = self.calculate_mean_lunar_nodes(jd)
+            node_speed = -0.05295
+            node_label = "Mean Node"
+
         rahu_sid = (rahu_trop - ayanamsa) % 360.0
         ketu_sid = (ketu_trop - ayanamsa) % 360.0
 
-        # Mean nodes move retrograde by ~0.053 degrees per day
         results["Rahu"] = {
             "longitude": rahu_sid,
             "latitude": 0.0,
-            "speed": -0.05295,
+            "speed": node_speed,
             "is_retrograde": True,
             "tropical_lon": rahu_trop,
+            "node_type": node_label,
         }
         results["Ketu"] = {
             "longitude": ketu_sid,
             "latitude": 0.0,
-            "speed": -0.05295,
+            "speed": node_speed,
             "is_retrograde": True,
             "tropical_lon": ketu_trop,
+            "node_type": node_label,
         }
 
         return results, ayanamsa

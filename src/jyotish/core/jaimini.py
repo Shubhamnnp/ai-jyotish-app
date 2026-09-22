@@ -389,6 +389,232 @@ class JaiminiCalculator:
 
         return SIGN_NAMES[vl_id - 1]
 
+    @classmethod
+    def calculate_rashi_drishti(cls, chart: "KundaliChart") -> Dict[str, List[str]]:
+        """
+        Calculates Jaimini Rashi Drishti (Sign-based aspects).
+        Rules:
+        - Chara (Moveable) signs: aspect all Sthira (Fixed) signs EXCEPT the adjacent one
+        - Sthira (Fixed) signs: aspect all Chara (Moveable) signs EXCEPT the adjacent one
+        - Dwiswabhava (Dual) signs: aspect all other Dual signs (3 signs total)
+        Returns {sign_name: [list of sign names it aspects]}
+        """
+        CHARA = {1, 4, 7, 10}     # Aries, Cancer, Libra, Capricorn
+        STHIRA = {2, 5, 8, 11}    # Taurus, Leo, Scorpio, Aquarius
+        DWISWA = {3, 6, 9, 12}    # Gemini, Virgo, Sagittarius, Pisces
+
+        result: Dict[str, List[str]] = {}
+
+        for sign_id in range(1, 13):
+            sign_name = SIGN_NAMES[sign_id - 1]
+            aspected = []
+
+            if sign_id in CHARA:
+                # Next adjacent fixed sign (skip it)
+                next_sign = (sign_id % 12) + 1
+                adj_fixed = next_sign if next_sign in STHIRA else ((sign_id - 2) % 12) + 1
+                for s in STHIRA:
+                    if s != adj_fixed:
+                        aspected.append(SIGN_NAMES[s - 1])
+
+            elif sign_id in STHIRA:
+                # Next adjacent moveable sign (skip it)
+                next_sign = (sign_id % 12) + 1
+                adj_chara = next_sign if next_sign in CHARA else ((sign_id - 2) % 12) + 1
+                for s in CHARA:
+                    if s != adj_chara:
+                        aspected.append(SIGN_NAMES[s - 1])
+
+            else:  # DWISWA
+                for s in DWISWA:
+                    if s != sign_id:
+                        aspected.append(SIGN_NAMES[s - 1])
+
+            result[sign_name] = aspected
+
+        return result
+
+    @classmethod
+    def calculate_argala(cls, chart: "KundaliChart") -> Dict[str, Dict]:
+        """
+        Calculates Argala (Intervention) for all 12 houses from Lagna.
+        Argala exists when planets occupy:
+        - 2nd house: Dhana argala (wealth/resources)
+        - 4th house: Sukha argala (happiness/emotions)
+        - 11th house: Labha argala (gains/fulfillment)
+        Virodha-argala (obstruction) exists when planets occupy:
+        - 12th house (obstructs 2nd argala)
+        - 10th house (obstructs 4th argala)
+        - 3rd house (obstructs 11th argala)
+        Argala is said to be stronger if argala planets > virodha-argala planets.
+        """
+        lagna_sign = chart.lagna_sign_id
+        # Get planet sign distribution
+        sign_planets: Dict[int, List[str]] = {i: [] for i in range(1, 13)}
+        for p_name, p_pos in chart.planets.items():
+            sign_planets[p_pos.sign_id].append(p_name)
+
+        argala_result = {}
+        for h in range(1, 13):
+            # Bhava h counted from Lagna
+            base_sign = ((lagna_sign - 1 + h - 1) % 12) + 1
+
+            # Argala positions (from this bhava's sign)
+            a2_sign = ((base_sign - 1 + 1) % 12) + 1   # 2nd from bhava
+            a4_sign = ((base_sign - 1 + 3) % 12) + 1   # 4th from bhava
+            a11_sign = ((base_sign - 1 + 10) % 12) + 1  # 11th from bhava
+            a5_sign = ((base_sign - 1 + 4) % 12) + 1   # 5th argala (additional)
+
+            # Virodha positions
+            v12_sign = ((base_sign - 1 + 11) % 12) + 1  # 12th (obstructs 2nd)
+            v10_sign = ((base_sign - 1 + 9) % 12) + 1   # 10th (obstructs 4th)
+            v3_sign = ((base_sign - 1 + 2) % 12) + 1    # 3rd (obstructs 11th)
+
+            # Get planets
+            a2_pl = sign_planets.get(a2_sign, [])
+            a4_pl = sign_planets.get(a4_sign, [])
+            a11_pl = sign_planets.get(a11_sign, [])
+            v12_pl = sign_planets.get(v12_sign, [])
+            v10_pl = sign_planets.get(v10_sign, [])
+            v3_pl = sign_planets.get(v3_sign, [])
+
+            # Net argala (positive = argala effective)
+            net_dhana = len(a2_pl) - len(v12_pl)
+            net_sukha = len(a4_pl) - len(v10_pl)
+            net_labha = len(a11_pl) - len(v3_pl)
+
+            argala_result[f"Bhava {h}"] = {
+                "bhava": h,
+                "sign": SIGN_NAMES[base_sign - 1],
+                "dhana_argala": {"planets": a2_pl, "virodha": v12_pl, "net": net_dhana,
+                                  "effective": net_dhana > 0},
+                "sukha_argala": {"planets": a4_pl, "virodha": v10_pl, "net": net_sukha,
+                                  "effective": net_sukha > 0},
+                "labha_argala": {"planets": a11_pl, "virodha": v3_pl, "net": net_labha,
+                                  "effective": net_labha > 0},
+                "total_argalas": sum(1 for n in [net_dhana, net_sukha, net_labha] if n > 0),
+            }
+
+        return argala_result
+
+    @classmethod
+    def calculate_graha_arudhas(cls, chart: "KundaliChart") -> Dict[str, Dict]:
+        """
+        Calculates Graha Arudhas (Planet-based Padas).
+        For each planet, its Arudha = 2× (planet's lord's house count from planet) from planet.
+        These reveal what a planet "appears to give" vs what it actually signifies.
+        """
+        from .constants import SIGN_LORDS
+
+        graha_arudhas = {}
+        for p_name, p_pos in chart.planets.items():
+            if p_name in ["Rahu", "Ketu"]:
+                continue
+            # Planet's sign → its lord
+            sign_lord = SIGN_LORDS.get(p_pos.sign_name, "")
+            if not sign_lord or sign_lord not in chart.planets:
+                continue
+
+            lord_pos = chart.planets[sign_lord]
+            lord_sign_id = lord_pos.sign_id
+            planet_sign_id = p_pos.sign_id
+
+            # Count from planet to lord
+            count_fwd = ((lord_sign_id - planet_sign_id) % 12) + 1
+
+            # Arudha = same count forward from lord
+            arudha_sign_id = ((lord_sign_id - 1 + count_fwd - 1) % 12) + 1
+
+            # Classical exception: if Arudha = planet's sign or 7th from it → shift 10 or 4
+            if arudha_sign_id == planet_sign_id:
+                arudha_sign_id = ((planet_sign_id - 1 + 9) % 12) + 1  # 10th
+            elif arudha_sign_id == ((planet_sign_id - 1 + 6) % 12) + 1:  # 7th
+                arudha_sign_id = ((planet_sign_id - 1 + 3) % 12) + 1  # 4th
+
+            graha_arudhas[p_name] = {
+                "planet": p_name,
+                "planet_sign": p_pos.sign_name,
+                "planet_lord": sign_lord,
+                "lord_sign": lord_pos.sign_name,
+                "arudha_sign_id": arudha_sign_id,
+                "arudha_sign": SIGN_NAMES[arudha_sign_id - 1],
+                "meaning_hi": f"{p_name} का ग्रह अरूढ़ — {p_name} की 'दृश्य' अभिव्यक्ति का भाव।",
+            }
+
+        return graha_arudhas
+
+    @classmethod
+    def calculate_special_indicators(cls, chart: "KundaliChart") -> Dict[str, Any]:
+        """
+        Calculates 64th Navamsha, 22nd Drekkana, Pushkar Navamsha/Bhaga indicators.
+        These are sensitive points related to danger, maraka (death inflicting) and auspiciousness.
+        """
+        moon_lon = chart.planets["Moon"].longitude
+        lagna_lon = chart.lagna_longitude
+
+        # 64th Navamsha from Moon: each Navamsha = 3.333 deg, 64th = Moon's own + 63 more
+        nav_size = 30.0 / 9.0  # 3.3333 deg
+        moon_nav_idx = int((moon_lon % 360.0) / nav_size) % 108
+        nav_64_idx = (moon_nav_idx + 63) % 108
+        nav_64_sign_id = (nav_64_idx // 9) + 1
+        nav_64_sign = SIGN_NAMES[nav_64_sign_id - 1] if nav_64_sign_id <= 12 else SIGN_NAMES[0]
+
+        # 22nd Drekkana from Lagna: each Drekkana = 10 deg, 22nd = Lagna's own + 21 more
+        drek_size = 10.0
+        lagna_drek_idx = int((lagna_lon % 360.0) / drek_size) % 36
+        drek_22_idx = (lagna_drek_idx + 21) % 36
+        drek_22_sign_id = (drek_22_idx // 3) + 1
+        drek_22_sign = SIGN_NAMES[drek_22_sign_id - 1] if drek_22_sign_id <= 12 else SIGN_NAMES[0]
+
+        # Pushkar Navamsha (auspicious navamshas where planets give extra strength)
+        # Classical Pushkar Navamshas: specific navamshas in benefic signs
+        PUSHKAR_NAVASHAS = {
+            # sign_id: [list of navamsha_pada (1-9) that are Pushkar]
+            1: [1], 2: [5], 3: [3, 9], 4: [4], 5: [6], 6: [5],
+            7: [4], 8: [2, 8], 9: [3], 10: [7], 11: [1, 7], 12: [9]
+        }
+
+        # Pushkar Bhaga (specific auspicious degrees within signs)
+        PUSHKAR_BHAGAS = {
+            1: [21], 2: [14], 3: [7, 21], 4: [14], 5: [7], 6: [14],
+            7: [21], 8: [7, 21], 9: [14], 10: [7], 11: [14, 28], 12: [21]
+        }
+
+        planets_in_pushkar = []
+        for p_name, p_pos in chart.planets.items():
+            sign_id = p_pos.sign_id
+            nav_pada = int(p_pos.sign_degree // nav_size) + 1  # Navamsha pada within sign (1-9)
+            deg = int(p_pos.sign_degree)
+
+            is_pushkar_nav = nav_pada in PUSHKAR_NAVASHAS.get(sign_id, [])
+            is_pushkar_bhaga = deg in PUSHKAR_BHAGAS.get(sign_id, [])
+
+            if is_pushkar_nav or is_pushkar_bhaga:
+                planets_in_pushkar.append({
+                    "planet": p_name,
+                    "sign": p_pos.sign_name,
+                    "degree": round(p_pos.sign_degree, 2),
+                    "navamsha_pada": nav_pada,
+                    "is_pushkar_navamsha": is_pushkar_nav,
+                    "is_pushkar_bhaga": is_pushkar_bhaga,
+                    "strength_boost": "उच्च" if (is_pushkar_nav and is_pushkar_bhaga) else "मध्यम",
+                })
+
+        return {
+            "navamsha_64": {
+                "sign": nav_64_sign,
+                "sign_id": nav_64_sign_id,
+                "description_hi": f"चन्द्र का 64वाँ नवांश: {nav_64_sign} — यह राशि मारक संकेत देती है। इस राशि में गोचर करने वाले ग्रह स्वास्थ्य/आयु पर प्रभाव डाल सकते हैं।",
+            },
+            "drekkana_22": {
+                "sign": drek_22_sign,
+                "sign_id": drek_22_sign_id,
+                "description_hi": f"लग्न का 22वाँ द्रेक्काण: {drek_22_sign} — यह राशि खतरे का संकेत देती है। इस राशि के स्वामी का गोचर सतर्कता की माँग करता है।",
+            },
+            "pushkar_planets": planets_in_pushkar,
+            "pushkar_count": len(planets_in_pushkar),
+        }
+
 
 # Singleton Jaimini Calculator
 default_jaimini_calculator = JaiminiCalculator()
