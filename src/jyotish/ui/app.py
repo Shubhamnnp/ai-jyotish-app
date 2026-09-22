@@ -2235,58 +2235,10 @@ if ("top_bar_module_selector" not in st.session_state or
 with st.container(key="top_frozen_header_container", border=True):
     st.markdown('<div class="fixed-header-anchor"></div>', unsafe_allow_html=True)
     
-    # 1. Top Navigation Bar (Slim Single-Line Header)
-    st.markdown(f"""
-    <header class="top-nav-bar">
-        <div class="nav-left">
-            <button id="sidebar-toggle-action-btn" class="sidebar-toggle-btn" title="साइडबार खोलें / बंद करें (Toggle Sidebar)">
-                ❯❯
-            </button>
-            <div class="logo-circle">🔮</div>
-            <div>
-                <div class="app-brand-title">JyotishOS Platform</div>
-                <div class="app-brand-sub">सर्वं खल्विदं ब्रह्म • प्रामाणिक वैदिक ज्योतिष गणना महामंच</div>
-            </div>
-        </div>
-        <div class="header-sub-pills-row">
-            <div class="header-sub-pill" title="भूमिका: ज्योतिषी व्यवस्थापक">
-                👑 <b>ज्योतिषी</b> (Admin)
-            </div>
-            <div class="header-sub-pill" title="वर्तमान समय">
-                🕒 <b>समय:</b> {current_time_str}
-            </div>
-            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
-                📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
-            </div>
-            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
-                <span class="notranslate" translate="no" style="font-size:12px;">🌐</span>
-                <b class="notranslate" translate="no" style="color:#166534 !important; font-size:11px;">भाषा:</b>
-                <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0 2px;">
-                    <option value="general" class="notranslate" translate="no">General (जनरल)</option>
-                    <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
-                    <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
-                    <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
-                    <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
-                    <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
-                    <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
-                    <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
-                </select>
-            </div>
-            <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
-                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
-                <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11px;">थीम:</b>
-                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0 2px;">
-                    <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
-                    <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
-                </select>
-            </div>
-        </div>
-    </header>
-    """, unsafe_allow_html=True)
-
     # 2. Authentic Grahalakshanam Component Toolbar & Modals (Exact UI Parity - 10 Icons Suite)
     if "gla_active_tool" not in st.session_state:
         st.session_state.gla_active_tool = None
+
 
     st.markdown("""
     <style>
