@@ -2235,6 +2235,55 @@ if ("top_bar_module_selector" not in st.session_state or
 with st.container(key="top_frozen_header_container", border=True):
     st.markdown('<div class="fixed-header-anchor"></div>', unsafe_allow_html=True)
     
+    # 1. Top Navigation Bar (Slim Single-Line Header)
+    st.markdown(f"""
+    <header class="top-nav-bar">
+        <div class="nav-left">
+            <button id="sidebar-toggle-action-btn" class="sidebar-toggle-btn" title="साइडबार खोलें / बंद करें (Toggle Sidebar)">
+                ❯❯
+            </button>
+            <div class="logo-circle">🔮</div>
+            <div>
+                <div class="app-brand-title">JyotishOS Platform</div>
+                <div class="app-brand-sub">सर्वं खल्विदं ब्रह्म • प्रामाणिक वैदिक ज्योतिष गणना महामंच</div>
+            </div>
+        </div>
+        <div class="header-sub-pills-row">
+            <div class="header-sub-pill" title="भूमिका: ज्योतिषी व्यवस्थापक">
+                👑 <b>ज्योतिषी</b> (Admin)
+            </div>
+            <div class="header-sub-pill" title="वर्तमान समय">
+                🕒 <b>समय:</b> {current_time_str}
+            </div>
+            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
+                📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
+            </div>
+            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
+                <span class="notranslate" translate="no" style="font-size:12px;">🌐</span>
+                <b class="notranslate" translate="no" style="color:#166534 !important; font-size:11px;">भाषा:</b>
+                <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0 2px;">
+                    <option value="general" class="notranslate" translate="no">General (जनरल)</option>
+                    <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
+                    <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
+                    <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
+                    <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
+                    <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
+                    <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
+                    <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
+                </select>
+            </div>
+            <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
+                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
+                <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11px;">थीम:</b>
+                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0 2px;">
+                    <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
+                    <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
+                </select>
+            </div>
+        </div>
+    </header>
+    """, unsafe_allow_html=True)
+
     # 2. Authentic Grahalakshanam Component Toolbar & Modals (Exact UI Parity - 10 Icons Suite)
     if "gla_active_tool" not in st.session_state:
         st.session_state.gla_active_tool = None
@@ -2290,6 +2339,26 @@ with st.container(key="top_frozen_header_container", border=True):
         margin-top: 2px;
         white-space: nowrap;
     }
+    /* Clickable tile button overlay styling */
+    .gla-col-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .gla-col-box .stButton {
+        width: 100% !important;
+        margin-top: -82px !important;
+        height: 82px !important;
+        opacity: 0 !important;
+        z-index: 10 !important;
+    }
+    .gla-col-box .stButton > button {
+        width: 100% !important;
+        height: 82px !important;
+        cursor: pointer !important;
+    }
     .gla-info-strip {
         display: flex;
         align-items: center;
@@ -2326,138 +2395,159 @@ with st.container(key="top_frozen_header_container", border=True):
     </div>
     """, unsafe_allow_html=True)
 
-    # 10-Tile Complete Grahalakshanam Toolbelt Columns (Exact UI Parity)
+    # 10-Tile Complete Grahalakshanam Toolbelt Columns (Exact UI Parity - Clickable Tiles)
     tb_cols = st.columns(10)
 
     # 1. New Chart
     with tb_cols[0]:
+        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "new" else ""
         st.markdown(f"""
-        <div style="display:flex; justify-content:center;">
-            <div class="gla-btn-tile" title="नया चार्ट / रीसेट (New Chart / Reset)">
+        <div class="gla-col-box">
+            <div class="gla-btn-tile" style="{tile_active_style}" title="नया चार्ट / रीसेट (New Chart / Reset)">
                 <img src="{ICON_NOTEPAD_B64}" alt="New Chart" />
                 <span>New</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("📄 New", key="gla_btn_new", use_container_width=True):
+        if st.button("New", key="gla_btn_new", use_container_width=True):
             st.session_state.gla_active_tool = "new" if st.session_state.gla_active_tool != "new" else None
+            st.rerun()
 
     # 2. Birth Data
     with tb_cols[1]:
+        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "birth" else ""
         st.markdown(f"""
-        <div style="display:flex; justify-content:center;">
-            <div class="gla-btn-tile" title="जन्म विवरण दर्ज करें (Birth Data Entry)">
+        <div class="gla-col-box">
+            <div class="gla-btn-tile" style="{tile_active_style}" title="जन्म विवरण दर्ज करें (Birth Data Entry)">
                 <img src="{ICON_BIRTH_B64}" alt="Birth Data" />
                 <span>Birth Data</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("👶 Birth Data", key="gla_btn_birth", use_container_width=True):
+        if st.button("Birth Data", key="gla_btn_birth", use_container_width=True):
             st.session_state.gla_active_tool = "birth" if st.session_state.gla_active_tool != "birth" else None
+            st.rerun()
 
     # 3. Open Folder
     with tb_cols[2]:
+        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "open" else ""
         st.markdown(f"""
-        <div style="display:flex; justify-content:center;">
-            <div class="gla-btn-tile" title="सहेजी गई कुण्डली खोलें (Open Saved Charts)">
+        <div class="gla-col-box">
+            <div class="gla-btn-tile" style="{tile_active_style}" title="सहेजी गई कुण्डली खोलें (Open Saved Charts)">
                 <img src="{ICON_FOLDER_B64}" alt="Open Charts" />
                 <span>Open</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("📁 Open", key="gla_btn_open", use_container_width=True):
+        if st.button("Open", key="gla_btn_open", use_container_width=True):
             st.session_state.gla_active_tool = "open" if st.session_state.gla_active_tool != "open" else None
+            st.rerun()
 
     # 4. Save Chart
     with tb_cols[3]:
+        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "save" else ""
         st.markdown(f"""
-        <div style="display:flex; justify-content:center;">
-            <div class="gla-btn-tile" title="कुण्डली सहेजें (Save Chart)">
+        <div class="gla-col-box">
+            <div class="gla-btn-tile" style="{tile_active_style}" title="कुण्डली सहेजें (Save Chart)">
                 <img src="{ICON_SAVE_B64}" alt="Save Chart" />
                 <span>Save</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("💾 Save", key="gla_btn_save", use_container_width=True):
+        if st.button("Save", key="gla_btn_save", use_container_width=True):
             st.session_state.gla_active_tool = "save" if st.session_state.gla_active_tool != "save" else None
+            st.rerun()
 
     # 5. Settings
     with tb_cols[4]:
+        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "settings" else ""
         st.markdown(f"""
-        <div style="display:flex; justify-content:center;">
-            <div class="gla-btn-tile" title="गणना सेटिंग्स (Settings: Ayanamsa, House System)">
+        <div class="gla-col-box">
+            <div class="gla-btn-tile" style="{tile_active_style}" title="गणना सेटिंग्स (Settings: Ayanamsa, House System)">
                 <img src="{ICON_SETTINGS_B64}" alt="Settings" />
                 <span>Settings</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("⚙️ Settings", key="gla_btn_settings", use_container_width=True):
+        if st.button("Settings", key="gla_btn_settings", use_container_width=True):
             st.session_state.gla_active_tool = "settings" if st.session_state.gla_active_tool != "settings" else None
+            st.rerun()
 
     # 6. Languages
     with tb_cols[5]:
+        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "lang" else ""
         st.markdown(f"""
-        <div style="display:flex; justify-content:center;">
-            <div class="gla-btn-tile" title="भाषा चयन (Software Language Switcher)">
+        <div class="gla-col-box">
+            <div class="gla-btn-tile" style="{tile_active_style}" title="भाषा चयन (Software Language Switcher)">
                 <img src="{ICON_LANGUAGES_B64}" alt="Languages" />
                 <span>Languages</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("🌐 Languages", key="gla_btn_lang", use_container_width=True):
+        if st.button("Languages", key="gla_btn_lang", use_container_width=True):
             st.session_state.gla_active_tool = "lang" if st.session_state.gla_active_tool != "lang" else None
+            st.rerun()
 
     # 7. Current Time (वर्तमान समय)
     with tb_cols[6]:
+        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "clock" else ""
         st.markdown(f"""
-        <div style="display:flex; justify-content:center;">
-            <div class="gla-btn-tile" title="वर्तमान समय (Current Time / Live Clock)">
+        <div class="gla-col-box">
+            <div class="gla-btn-tile" style="{tile_active_style}" title="वर्तमान समय (Current Time / Live Clock)">
                 <img src="{ICON_CLOCK_B64}" alt="Current Time" />
                 <span>Time</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("🕒 Time", key="gla_btn_clock", use_container_width=True):
+        if st.button("Time", key="gla_btn_clock", use_container_width=True):
             st.session_state.gla_active_tool = "clock" if st.session_state.gla_active_tool != "clock" else None
+            st.rerun()
 
     # 8. Current Location (वर्तमान स्थान)
     with tb_cols[7]:
+        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "location" else ""
         st.markdown(f"""
-        <div style="display:flex; justify-content:center;">
-            <div class="gla-btn-tile" title="वर्तमान स्थान (Current Location / GPS)">
+        <div class="gla-col-box">
+            <div class="gla-btn-tile" style="{tile_active_style}" title="वर्तमान स्थान (Current Location / GPS)">
                 <img src="{ICON_LOCATION_B64}" alt="Location" />
                 <span>Location</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("📍 Location", key="gla_btn_location", use_container_width=True):
+        if st.button("Location", key="gla_btn_location", use_container_width=True):
             st.session_state.gla_active_tool = "location" if st.session_state.gla_active_tool != "location" else None
+            st.rerun()
 
     # 9. Theme Mode (थीम मोड: डे / नाइट)
     with tb_cols[8]:
+        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "theme" else ""
         st.markdown(f"""
-        <div style="display:flex; justify-content:center;">
-            <div class="gla-btn-tile" title="थीम मोड बदलें (Theme: Day / Night Mode)">
+        <div class="gla-col-box">
+            <div class="gla-btn-tile" style="{tile_active_style}" title="थीम मोड बदलें (Theme: Day / Night Mode)">
                 <img src="{ICON_THEME_B64}" alt="Theme Mode" />
                 <span>Theme</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("☀️ Theme", key="gla_btn_theme", use_container_width=True):
+        if st.button("Theme", key="gla_btn_theme", use_container_width=True):
             st.session_state.gla_active_tool = "theme" if st.session_state.gla_active_tool != "theme" else None
+            st.rerun()
 
     # 10. Logout (लॉगआउट)
     with tb_cols[9]:
+        tile_active_style = "border-color: #f59e0b; background-color: #fef3c7;" if st.session_state.gla_active_tool == "logout" else ""
         st.markdown(f"""
-        <div style="display:flex; justify-content:center;">
-            <div class="gla-btn-tile" title="सत्र से लॉगआउट करें (Logout)">
+        <div class="gla-col-box">
+            <div class="gla-btn-tile" style="{tile_active_style}" title="सत्र से लॉगआउट करें (Logout)">
                 <img src="{ICON_LOGOUT_B64}" alt="Logout" />
                 <span>Logout</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("🚪 Logout", key="gla_btn_logout", use_container_width=True):
+        if st.button("Logout", key="gla_btn_logout", use_container_width=True):
             st.session_state.gla_active_tool = "logout" if st.session_state.gla_active_tool != "logout" else None
+            st.rerun()
+
 
 
     # Active tool dialog/form container
