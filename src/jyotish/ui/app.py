@@ -2235,9 +2235,7 @@ if ("top_bar_module_selector" not in st.session_state or
 with st.container(key="top_frozen_header_container", border=True):
     st.markdown('<div class="fixed-header-anchor"></div>', unsafe_allow_html=True)
     
-    # Top Header - Grahalakshanam Exact UI Header
-
-    # 2. Authentic Grahalakshanam Component Toolbar & Modals (Exact UI Parity - 10 Icons Suite)
+    # 1. Authentic Grahalakshanam Component Toolbar & Modals (Exact UI Parity - 10 Icons Suite)
     if "gla_active_tool" not in st.session_state:
         st.session_state.gla_active_tool = None
 
@@ -2259,13 +2257,13 @@ with st.container(key="top_frozen_header_container", border=True):
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
-        gap: 6px;
-        padding: 4px 8px;
+        gap: 12px;
+        padding: 10px 14px;
         background: #f8f9fa;
-        border-radius: 8px;
+        border-radius: 14px;
         border: 1px solid #e2e8f0;
-        margin-top: 2px;
-        margin-bottom: 2px;
+        margin-top: 6px;
+        margin-bottom: 8px;
         overflow-x: auto;
     }
     .gla-btn-tile {
@@ -2273,34 +2271,33 @@ with st.container(key="top_frozen_header_container", border=True):
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 54px;
-        height: 52px;
+        width: 78px;
+        height: 78px;
         background-color: #f2f2f2;
-        border: 2px solid #00b0f0;
-        border-radius: 9px;
+        border: 3px solid #00b0f0;
+        border-radius: 15px;
         cursor: pointer;
-        padding: 2px 1px;
-        box-shadow: 0 1px 4px rgba(0, 176, 240, 0.15);
-        transition: all 0.15s ease-in-out;
+        padding: 5px;
+        box-shadow: 0 2px 6px rgba(0, 176, 240, 0.2);
+        transition: all 0.2s ease-in-out;
         text-align: center;
         margin: 0 auto;
     }
     .gla-btn-tile:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 3px 8px rgba(0, 176, 240, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 12px rgba(0, 176, 240, 0.35);
         background-color: #e0f4fc;
     }
     .gla-btn-tile img {
-        width: 26px;
-        height: 26px;
+        width: 42px;
+        height: 42px;
         object-fit: contain;
     }
     .gla-btn-tile span {
-        font-size: 8.5px;
+        font-size: 10px;
         font-weight: 700;
         color: #1e293b;
-        margin-top: 1px;
-        line-height: 1;
+        margin-top: 2px;
         white-space: nowrap;
     }
     .gla-info-strip {
@@ -2309,12 +2306,11 @@ with st.container(key="top_frozen_header_container", border=True):
         justify-content: space-between;
         background: #00b0f0;
         color: #ffffff;
-        padding: 3px 10px;
-        border-radius: 6px;
-        font-size: 11.5px;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 13px;
         font-weight: 700;
-        margin-bottom: 4px;
-        line-height: 1.2;
+        margin-bottom: 8px;
     }
     .gla-info-strip b {
         color: #ffffff;
@@ -2322,13 +2318,12 @@ with st.container(key="top_frozen_header_container", border=True):
     /* Transparent button overlaid exactly on top of the tile in gla-tile-box */
     .gla-tile-box {
         position: relative;
-        width: 54px;
-        height: 52px;
+        width: 78px;
+        height: 78px;
         margin: 0 auto;
     }
     div[data-testid="stColumn"]:has(.gla-tile-box) {
         position: relative !important;
-        padding: 0 2px !important;
     }
     div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {
         position: relative !important;
@@ -2338,13 +2333,13 @@ with st.container(key="top_frozen_header_container", border=True):
     }
     div[data-testid="stColumn"]:has(.gla-tile-box) button {
         position: absolute !important;
-        top: -52px !important;
+        top: -78px !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
-        width: 54px !important;
-        height: 52px !important;
-        min-height: 52px !important;
-        max-height: 52px !important;
+        width: 78px !important;
+        height: 78px !important;
+        min-height: 78px !important;
+        max-height: 78px !important;
         opacity: 0 !important;
         z-index: 20 !important;
         cursor: pointer !important;
@@ -2359,13 +2354,6 @@ with st.container(key="top_frozen_header_container", border=True):
         visibility: hidden !important;
         opacity: 0 !important;
         pointer-events: none !important;
-    }
-    /* Compact top frozen header container */
-    .st-key-top_frozen_header_container,
-    div.st-key-top_frozen_header_container > div[data-testid="stVerticalBlock"] {
-        gap: 0.25rem !important;
-        padding-top: 2px !important;
-        padding-bottom: 2px !important;
     }
     </style>
     """, unsafe_allow_html=True)
