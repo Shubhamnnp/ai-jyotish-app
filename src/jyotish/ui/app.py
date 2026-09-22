@@ -26,11 +26,13 @@ import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 
-# Ensure project root is in sys.path
+# Ensure project root, src, and current directory are in sys.path
 curr_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(curr_dir, "..", "..", ".."))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
+src_dir = os.path.abspath(os.path.join(curr_dir, "..", ".."))
+for p in [curr_dir, src_dir, project_root]:
+    if p not in sys.path:
+        sys.path.insert(0, p)
 
 from src.jyotish.core.models import BirthData, GhatnaQueryInput, KundaliChart
 from src.jyotish.core.constants import SIGN_LORDS, SIGNS, SIGN_NAMES, NAKSHATRAS, GRAHAS
@@ -46,7 +48,10 @@ from src.jyotish.core.kp import default_kp_engine
 from src.jyotish.services.muhurta import default_muhurta_engine
 from src.jyotish.ui.sudarshan import default_sudarshan_engine
 from src.jyotish.core.affliction import AfflictionEngine, LIFE_AREAS
-from src.jyotish.dasha.vimshottari import default_dasha_engine
+from src.jyotish.dasha.vimshottari import default_vimshottari_engine
+from src.jyotish.dasha.transit import default_gochar_engine
+from src.jyotish.dasha.panchanga import default_panchanga_engine
+from src.jyotish.dasha.ashtakavarga_dasha import default_ashtakavarga_dasha_engine
 from src.jyotish.dasha.yogini import default_yogini_engine
 from src.jyotish.dasha.chara import default_chara_engine
 from src.jyotish.dasha.kcd import default_kcd_engine
@@ -67,18 +72,46 @@ from src.jyotish.services.auth import default_auth_service
 from src.jyotish.rules.engine import default_rules_engine
 from src.jyotish.ui.chart_renderer import ChartRenderer
 from src.jyotish.ai.narrative import default_narrative_service
-from src.jyotish.ui.grahalakshanam_icons import (
-    ICON_NOTEPAD_B64,
-    ICON_BIRTH_B64,
-    ICON_FOLDER_B64,
-    ICON_SAVE_B64,
-    ICON_SETTINGS_B64,
-    ICON_LANGUAGES_B64,
-    ICON_CLOCK_B64,
-    ICON_LOCATION_B64,
-    ICON_THEME_B64,
-    ICON_LOGOUT_B64
-)
+try:
+    from src.jyotish.ui.grahalakshanam_icons import (
+        ICON_NOTEPAD_B64,
+        ICON_BIRTH_B64,
+        ICON_FOLDER_B64,
+        ICON_SAVE_B64,
+        ICON_SETTINGS_B64,
+        ICON_LANGUAGES_B64,
+        ICON_CLOCK_B64,
+        ICON_LOCATION_B64,
+        ICON_THEME_B64,
+        ICON_LOGOUT_B64
+    )
+except (ImportError, ModuleNotFoundError):
+    try:
+        from jyotish.ui.grahalakshanam_icons import (
+            ICON_NOTEPAD_B64,
+            ICON_BIRTH_B64,
+            ICON_FOLDER_B64,
+            ICON_SAVE_B64,
+            ICON_SETTINGS_B64,
+            ICON_LANGUAGES_B64,
+            ICON_CLOCK_B64,
+            ICON_LOCATION_B64,
+            ICON_THEME_B64,
+            ICON_LOGOUT_B64
+        )
+    except (ImportError, ModuleNotFoundError):
+        from grahalakshanam_icons import (
+            ICON_NOTEPAD_B64,
+            ICON_BIRTH_B64,
+            ICON_FOLDER_B64,
+            ICON_SAVE_B64,
+            ICON_SETTINGS_B64,
+            ICON_LANGUAGES_B64,
+            ICON_CLOCK_B64,
+            ICON_LOCATION_B64,
+            ICON_THEME_B64,
+            ICON_LOGOUT_B64
+        )
 
 st.set_page_config(
     page_title="JyotishOS - Enterprise Vedic Astrology Platform",
