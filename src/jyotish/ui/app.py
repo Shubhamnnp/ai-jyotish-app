@@ -67,6 +67,14 @@ from src.jyotish.services.auth import default_auth_service
 from src.jyotish.rules.engine import default_rules_engine
 from src.jyotish.ui.chart_renderer import ChartRenderer
 from src.jyotish.ai.narrative import default_narrative_service
+from src.jyotish.ui.grahalakshanam_icons import (
+    ICON_NOTEPAD_B64,
+    ICON_BIRTH_B64,
+    ICON_FOLDER_B64,
+    ICON_SAVE_B64,
+    ICON_SETTINGS_B64,
+    ICON_LANGUAGES_B64
+)
 
 st.set_page_config(
     page_title="JyotishOS - Enterprise Vedic Astrology Platform",
@@ -1885,6 +1893,8 @@ if "birth_lon" not in st.session_state:
     st.session_state.birth_lon = 77.2090
 if "birth_city" not in st.session_state:
     st.session_state.birth_city = "New Delhi, Delhi, India"
+if "birth_gender" not in st.session_state:
+    st.session_state.birth_gender = "Male"
 
 
 # Gateway Check: If not logged in, render login screen
@@ -2239,220 +2249,501 @@ with st.container(key="top_frozen_header_container", border=True):
     </header>
     """, unsafe_allow_html=True)
 
-    # 2. Collapsible Birth Profile & Presets Control Expander (Integrating Profile Card as Requested)
-    expander_title = f"👤 जातक: {name} | 📅 {birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')} | 📍 {default_city_name} | 🟢 सक्रिय (Online) • ⚙️ जन्म विवरण एवं गणना"
-    with st.expander(expander_title, expanded=False):
-        col_r1_1, col_r1_2, col_r1_3, col_r1_4 = st.columns([1.2, 1.4, 1.5, 1.5])
-        with col_r1_1:
-            in_name = st.text_input("नाम (Name)", value=st.session_state.birth_name, key="app_birth_name_input")
-            st.session_state.birth_name = in_name
+    # 2. Authentic Grahalakshanam Component Toolbar & Modals (Exact UI Parity)
+    if "gla_active_tool" not in st.session_state:
+        st.session_state.gla_active_tool = None
 
-        with col_r1_2:
-            in_city_query = st.text_input("स्थान खोज (Search City)", value=st.session_state.birth_city, key="app_city_query_input")
-            geo_results = default_geocoding_service.search(in_city_query, limit=3)
-            if geo_results:
-                selected_loc = st.selectbox(
-                    "उपलब्ध स्थान (Select Location)",
-                    geo_results,
-                    format_func=lambda x: f"{x.formatted_name} ({x.source})",
-                    key="app_geo_select"
-                )
-                st.session_state.birth_lat = selected_loc.latitude
-                st.session_state.birth_lon = selected_loc.longitude
-                st.session_state.birth_tz = selected_loc.timezone_offset
-                st.session_state.birth_city = selected_loc.city
+    st.markdown("""
+    <style>
+    .gla-toolbar-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 16px;
+        padding: 10px 14px;
+        background: #f8f9fa;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        margin-top: 6px;
+        margin-bottom: 8px;
+        overflow-x: auto;
+    }
+    .gla-btn-tile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 78px;
+        height: 78px;
+        background-color: #f2f2f2;
+        border: 3px solid #00b0f0;
+        border-radius: 15px;
+        cursor: pointer;
+        padding: 6px;
+        box-shadow: 0 2px 6px rgba(0, 176, 240, 0.2);
+        transition: all 0.2s ease-in-out;
+        text-align: center;
+    }
+    .gla-btn-tile:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 12px rgba(0, 176, 240, 0.35);
+        background-color: #e0f4fc;
+    }
+    .gla-btn-tile img {
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+    }
+    .gla-btn-tile span {
+        font-size: 10.5px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-top: 3px;
+        white-space: nowrap;
+    }
+    .gla-info-strip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #00b0f0;
+        color: #ffffff;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .gla-info-strip b {
+        color: #ffffff;
+    }
+    .gla-active-tag {
+        background: #0077b6;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-        with col_r1_3:
-            dob_mode = st.radio(
-                "जन्म तिथि प्रारूप (DOB Mode)",
-                ["🔢 वर्ष (1950-2050)", "📅 कैलेंडर"],
-                horizontal=True,
-                key="app_dob_mode_radio"
-            )
-            if "1950" in dob_mode or "वर्ष" in dob_mode:
-                col_d_day, col_d_mon, col_d_yr = st.columns([1, 1.2, 1.2])
-                years_list = list(range(1950, 2051))
-                cur_yr = init_b_date.year if init_b_date.year in years_list else 1995
-                yr_idx = years_list.index(cur_yr)
-                months_labels = [
-                    "01-जनवरी", "02-फरवरी", "03-मार्च", "04-अप्रैल",
-                    "05-मई", "06-जून", "07-जुलाई", "08-अगस्त",
-                    "09-सितंबर", "10-अक्टूबर", "11-नवंबर", "12-दिसंबर"
-                ]
-                cur_mon = init_b_date.month
-                mon_idx = cur_mon - 1
-                sel_yr = col_d_yr.selectbox("वर्ष", years_list, index=yr_idx, key="app_dob_yr_select")
-                sel_mon_str = col_d_mon.selectbox("माह", months_labels, index=mon_idx, key="app_dob_mon_select")
-                sel_mon = months_labels.index(sel_mon_str) + 1
-                if sel_mon in [1, 3, 5, 7, 8, 10, 12]:
-                    max_d = 31
-                elif sel_mon in [4, 6, 9, 11]:
-                    max_d = 30
-                else:
-                    is_leap = (sel_yr % 4 == 0 and sel_yr % 100 != 0) or (sel_yr % 400 == 0)
-                    max_d = 29 if is_leap else 28
-                days_list = list(range(1, max_d + 1))
-                cur_d = min(init_b_date.day, max_d)
-                d_idx = cur_d - 1
-                sel_d = col_d_day.selectbox("दिन", days_list, index=d_idx, key="app_dob_day_select")
-                in_birth_d = date(sel_yr, sel_mon, sel_d)
-                st.session_state.birth_date = in_birth_d
-            else:
-                in_birth_d = st.date_input(
-                    "जन्म तिथि (DD/MM/YYYY)",
-                    value=init_b_date,
-                    min_value=date(1950, 1, 1),
-                    max_value=date(2050, 12, 31),
-                    format="DD/MM/YYYY",
-                    key="app_dob_cal_input"
-                )
-                st.session_state.birth_date = in_birth_d
+    # Active profile banner with live info
+    st.markdown(f"""
+    <div class="gla-info-strip">
+        <div>
+            👤 <b>जातक:</b> {name} &nbsp;|&nbsp; 📅 {birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name}
+        </div>
+        <div>
+            <span class="gla-active-tag">🟢 Grahalakshanam Active</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-        with col_r1_4:
-            time_format_mode = st.radio(
-                "जन्म समय (Birth Time)",
-                ["12 घंटे (AM/PM)", "24 घंटे"],
-                horizontal=True,
-                key="app_time_mode_radio"
-            )
-            if "last_loaded_time" not in st.session_state:
-                st.session_state.last_loaded_time = st.session_state.birth_time
-            if st.session_state.last_loaded_time != st.session_state.birth_time:
-                st.session_state.last_loaded_time = st.session_state.birth_time
-                curr_h24 = st.session_state.birth_time.hour
-                curr_m = st.session_state.birth_time.minute
-                curr_ampm = "PM" if curr_h24 >= 12 else "AM"
-                curr_h12 = curr_h24 % 12
-                if curr_h12 == 0:
-                    curr_h12 = 12
-                st.session_state["app_time_h"] = curr_h12
-                st.session_state["app_time_m"] = f"{curr_m:02d}"
-                st.session_state["app_time_p"] = curr_ampm
-                st.session_state["app_time_24_val"] = st.session_state.birth_time
+    # 6-Tile Toolbelt Columns + Logout
+    tb_col1, tb_col2, tb_col3, tb_col4, tb_col5, tb_col6, tb_col_space, tb_col_logout = st.columns([1, 1, 1, 1, 1, 1, 3.5, 1.2])
 
-            if time_format_mode.startswith("12"):
-                curr_t = st.session_state.birth_time
-                curr_h24 = curr_t.hour
-                curr_m = curr_t.minute
-                curr_ampm = "PM" if curr_h24 >= 12 else "AM"
-                curr_h12 = curr_h24 % 12
-                if curr_h12 == 0:
-                    curr_h12 = 12
-                col_th, col_tm, col_tp = st.columns([1, 1, 1.1])
-                h_val = col_th.selectbox("घंटा", list(range(1, 13)), index=curr_h12 - 1, key="app_time_h")
-                m_val = col_tm.selectbox("मिनट", [f"{m:02d}" for m in range(60)], index=curr_m, key="app_time_m")
-                p_val = col_tp.selectbox("AM/PM", ["AM", "PM"], index=0 if curr_ampm == "AM" else 1, key="app_time_p")
-                h_24 = (int(h_val) % 12) + (12 if p_val == "PM" else 0)
-                in_birth_t = time(h_24, int(m_val), 0)
-                st.session_state.birth_time = in_birth_t
-            else:
-                in_birth_t = st.time_input(
-                    "जन्म समय",
-                    value=st.session_state.birth_time,
-                    step=60,
-                    key="app_time_24_val"
-                )
-                st.session_state.birth_time = in_birth_t
+    with tb_col1:
+        st.markdown(f"""
+        <div style="display:flex; justify-content:center;">
+            <div class="gla-btn-tile" title="नया चार्ट / रीसेट (New Chart / Reset)">
+                <img src="{ICON_NOTEPAD_B64}" alt="New Chart" />
+                <span>New</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("📄 New", key="gla_btn_new", use_container_width=True):
+            st.session_state.gla_active_tool = "new" if st.session_state.gla_active_tool != "new" else None
 
-        # Row 2: Coordinates & Settings
-        col_r2_1, col_r2_2, col_r2_3, col_r2_4 = st.columns([1.2, 1.2, 1.4, 1.4])
-        with col_r2_1:
-            col_g1, col_g2 = st.columns(2)
-            in_lat = col_g1.number_input("Latitude", value=float(st.session_state.birth_lat), format="%.4f", key="app_lat_input")
-            in_lon = col_g2.number_input("Longitude", value=float(st.session_state.birth_lon), format="%.4f", key="app_lon_input")
-            st.session_state.birth_lat = in_lat
-            st.session_state.birth_lon = in_lon
-        with col_r2_2:
-            col_tz1, col_tz2 = st.columns(2)
-            in_tz = col_tz1.number_input("TZ Offset", value=float(st.session_state.get("birth_tz", 5.5)), step=0.5, key="app_tz_input")
-            in_conf = col_tz2.selectbox("Confidence", ["Exact", "Approx (±15 min)", "Unknown"], key="app_conf_select")
-            st.session_state.birth_tz = in_tz
-            st.session_state.birth_conf = in_conf
-        with col_r2_3:
-            col_ay, col_hs = st.columns(2)
-            in_ay = col_ay.selectbox("अयनांश (Ayanamsa)", ["Lahiri", "Raman", "KP", "True Chitra"], key="app_ayanamsa_select")
-            in_hs = col_hs.selectbox("भाव पद्धति", ["Whole Sign", "Equal"], key="app_hs_select")
-            st.session_state.app_ayanamsa = in_ay
-            st.session_state.app_house_system = in_hs
-        with col_r2_4:
-            col_cs, col_pm = st.columns([1.4, 1])
-            chart_styles_list = ["North Indian (Diamond)", "South Indian (Box)", "East Indian (Surya)"]
-            if "app_chart_style" not in st.session_state or st.session_state.app_chart_style not in chart_styles_list:
-                st.session_state.app_chart_style = "North Indian (Diamond)"
-            cs_idx = chart_styles_list.index(st.session_state.app_chart_style)
-            def _on_top_cs_change():
-                st.session_state.app_chart_style = st.session_state.app_chart_style_select
-            in_cs = col_cs.selectbox("कुण्डली चक्र शैली", chart_styles_list, index=cs_idx, key="app_chart_style_select", on_change=_on_top_cs_change)
-            in_pm = col_pm.toggle("⚡ Pro Mode", value=st.session_state.get("app_pro_mode", True), key="app_pro_mode_toggle")
-            st.session_state.app_pro_mode = in_pm
+    with tb_col2:
+        st.markdown(f"""
+        <div style="display:flex; justify-content:center;">
+            <div class="gla-btn-tile" title="जन्म विवरण दर्ज करें (Birth Data Entry)">
+                <img src="{ICON_BIRTH_B64}" alt="Birth Data" />
+                <span>Birth Data</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("👶 Birth Data", key="gla_btn_birth", use_container_width=True):
+            st.session_state.gla_active_tool = "birth" if st.session_state.gla_active_tool != "birth" else None
 
-        # Row 3: Action Buttons
-        col_a1, col_a2, col_a3, col_a4 = st.columns([1.5, 1.2, 1.5, 1.0])
-        calc_clicked = col_a1.button("🚀 गणना करें (Calculate)", type="primary", use_container_width=True, key="app_calc_kundali_btn")
-        if calc_clicked:
-            st.session_state.calculated_at = datetime.now()
-            st.toast("✅ कुण्डली गणना एवं षोडशवर्ग सफलतापूर्वक अद्यतन किए गए!", icon="🔮")
+    with tb_col3:
+        st.markdown(f"""
+        <div style="display:flex; justify-content:center;">
+            <div class="gla-btn-tile" title="सहेजी गई कुण्डली खोलें (Open Saved Charts)">
+                <img src="{ICON_FOLDER_B64}" alt="Open Charts" />
+                <span>Open</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("📁 Open", key="gla_btn_open", use_container_width=True):
+            st.session_state.gla_active_tool = "open" if st.session_state.gla_active_tool != "open" else None
+
+    with tb_col4:
+        st.markdown(f"""
+        <div style="display:flex; justify-content:center;">
+            <div class="gla-btn-tile" title="कुण्डली सहेजें (Save Chart)">
+                <img src="{ICON_SAVE_B64}" alt="Save Chart" />
+                <span>Save</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("💾 Save", key="gla_btn_save", use_container_width=True):
+            st.session_state.gla_active_tool = "save" if st.session_state.gla_active_tool != "save" else None
+
+    with tb_col5:
+        st.markdown(f"""
+        <div style="display:flex; justify-content:center;">
+            <div class="gla-btn-tile" title="गणना सेटिंग्स (Settings: Ayanamsa, House System)">
+                <img src="{ICON_SETTINGS_B64}" alt="Settings" />
+                <span>Settings</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("⚙️ Settings", key="gla_btn_settings", use_container_width=True):
+            st.session_state.gla_active_tool = "settings" if st.session_state.gla_active_tool != "settings" else None
+
+    with tb_col6:
+        st.markdown(f"""
+        <div style="display:flex; justify-content:center;">
+            <div class="gla-btn-tile" title="भाषा चयन (Software Language Switcher)">
+                <img src="{ICON_LANGUAGES_B64}" alt="Languages" />
+                <span>Languages</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("🌐 Languages", key="gla_btn_lang", use_container_width=True):
+            st.session_state.gla_active_tool = "lang" if st.session_state.gla_active_tool != "lang" else None
+
+    with tb_col_logout:
+        st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+        if st.button("🚪 Logout", key="gla_btn_logout", use_container_width=True, help="Grahalakshanam सत्र से लॉगआउट करें"):
+            st.session_state.is_logged_in = False
+            st.session_state.gla_authenticated = False
+            st.session_state.pop("auth_user", None)
+            st.toast("✅ Grahalakshanam सत्र सफलतापूर्वक समाप्त हो गया।", icon="🚪")
             st.rerun()
 
-        save_clicked = col_a2.button("💾 सहेजें (Save)", use_container_width=True, key="app_save_kundali_btn")
-        if save_clicked:
-            save_payload = {
-                "name": st.session_state.birth_name,
-                "birth_date": st.session_state.birth_date.strftime("%Y-%m-%d"),
-                "birth_time": st.session_state.birth_time.strftime("%H:%M:%S"),
-                "latitude": st.session_state.birth_lat,
-                "longitude": st.session_state.birth_lon,
-                "timezone_offset": st.session_state.get("birth_tz", 5.5),
-                "city": st.session_state.birth_city,
-                "confidence": st.session_state.get("birth_conf", "Exact")
-            }
-            default_folder_manager.save_chart(folder_id=0, chart_name=st.session_state.birth_name, birth_data=save_payload)
-            st.toast(f"✅ कुण्डली '{st.session_state.birth_name}' सफलतापूर्वक सहेज ली गई!", icon="💾")
+    # Active tool dialog/form container
+    if st.session_state.gla_active_tool:
+        st.markdown("<div style='height: 6px;'></div>", unsafe_allow_html=True)
 
-        with col_a3:
-            all_local_folders = default_folder_manager.list_folders()
-            flat_saved_charts = []
-            for f in all_local_folders:
-                for c in f.get("charts", []):
-                    flat_saved_charts.append({
-                        "label": f"[{f['name'].split()[0]}] {c['name']}",
-                        "data": c.get("birth_data", {})
-                    })
-            if flat_saved_charts:
-                with st.popover("📁 सहेजी गई / 10 डेमो प्रोफाइल", use_container_width=True):
-                    sel_demo_label = st.selectbox("प्रोफाइल चुनें", [sc["label"] for sc in flat_saved_charts], key="app_pop_demo_sel")
-                    if st.button("📥 लोड करें (Load)", key="load_saved_profile_top_btn", use_container_width=True):
-                        chosen = next((sc for sc in flat_saved_charts if sc["label"] == sel_demo_label), None)
-                        if chosen and chosen["data"]:
-                            bd = chosen["data"]
-                            st.session_state.birth_name = bd.get("name", "Client")
-                            st.session_state.birth_lat = float(bd.get("latitude", 27.8646))
-                            st.session_state.birth_lon = float(bd.get("longitude", 81.5004))
-                            st.session_state.birth_city = bd.get("city", "Delhi")
-                            try:
-                                st.session_state.birth_date = datetime.strptime(bd["birth_date"], "%Y-%m-%d").date()
-                                st.session_state.birth_time = datetime.strptime(bd["birth_time"], "%H:%M:%S").time()
-                            except Exception:
-                                pass
-                            st.toast(f"✅ {st.session_state.birth_name} का विवरण लोड किया गया!", icon="🔮")
-                            st.rerun()
+        # 1. TOOL: NEW / RESET
+        if st.session_state.gla_active_tool == "new":
+            with st.container(border=True):
+                st.markdown("### 📄 नया चार्ट तैयार करें (New Chart / Reset)")
+                st.write("क्या आप वर्तमान विवरण रीसेट करके नया ब्लैंक या डिफ़ॉल्ट प्रोफाइल शुरू करना चाहते हैं?")
+                col_n1, col_n2, col_n3 = st.columns([1.5, 1.5, 3])
+                if col_n1.button("✨ नया ब्लैंक प्रोफाइल (New Blank)", type="primary", use_container_width=True):
+                    st.session_state.birth_name = "New Client"
+                    st.session_state.birth_gender = "Male"
+                    st.session_state.birth_date = date.today()
+                    st.session_state.birth_time = time(12, 0, 0)
+                    st.session_state.birth_city = "New Delhi, Delhi, India"
+                    st.session_state.birth_lat = 28.6139
+                    st.session_state.birth_lon = 77.2090
+                    st.session_state.birth_tz = 5.5
+                    st.session_state.gla_active_tool = "birth"
+                    st.toast("✅ नया प्रोफाइल तैयार! कृपया जन्म विवरण भरें।", icon="👶")
+                    st.rerun()
+                if col_n2.button("🔄 डिफ़ॉल्ट रीसेट (Default Profile)", use_container_width=True):
+                    st.session_state.birth_name = "डेमो जातक (Demo Profile)"
+                    st.session_state.birth_gender = "Male"
+                    st.session_state.birth_date = date(1995, 1, 1)
+                    st.session_state.birth_time = time(12, 0, 0)
+                    st.session_state.birth_city = "New Delhi, Delhi, India"
+                    st.session_state.birth_lat = 28.6139
+                    st.session_state.birth_lon = 77.2090
+                    st.session_state.birth_tz = 5.5
+                    st.session_state.gla_active_tool = None
+                    st.toast("✅ डिफ़ॉल्ट डेमो प्रोफाइल लोड की गई!", icon="🔄")
+                    st.rerun()
+                if col_n3.button("❌ बंद करें (Close)", use_container_width=True):
+                    st.session_state.gla_active_tool = None
+                    st.rerun()
 
-        with col_a4:
-            if st.button("☁️ सिंक", key="sync_gla_top_btn", use_container_width=True):
-                if not st.session_state.get("gla_authenticated"):
-                    st.warning("⚠️ कृपया पहले मॉड्यूल 7 (सर्वर सिंक) में जाकर Username व Password कनेक्ट करें।")
-                else:
-                    with st.spinner("Connecting to Cloud API..."):
-                        active_u = st.session_state.get("gla_user", "")
-                        active_p = st.session_state.get("gla_pass", "")
-                        client = GrahalakshanamClient(GrahalakshanamConfig(username=active_u, password=active_p))
-                        if client.authenticate():
-                            ff = client.get_folders_with_files()
-                            st.session_state.gla_charts = ff.get("files", [])
-                            imported = default_folder_manager.sync_from_grahalakshanam(ff)
-                            st.success(f"Synced {len(st.session_state.gla_charts)} charts!")
+        # 2. TOOL: BIRTH DATA (Authentic Grahalakshanam Birth Form)
+        elif st.session_state.gla_active_tool == "birth":
+            with st.container(border=True):
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #00b0f0; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#0077b6;">
+                        👶 Grahalakshanam जन्म विवरण प्रपत्र (Birth Data Entry)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                col_bf1, col_bf2, col_bf3 = st.columns([1.8, 1.2, 1.5])
+                with col_bf1:
+                    in_name = st.text_input("जातक का नाम (Name)", value=st.session_state.birth_name, key="gla_birth_name_input")
+                    st.session_state.birth_name = in_name
+
+                with col_bf2:
+                    current_gender = st.session_state.get("birth_gender", "Male")
+                    in_gender = st.radio("लिंग (Gender)", ["Male (पुरुष)", "Female (स्त्री)"], index=0 if current_gender == "Male" else 1, horizontal=True, key="gla_birth_gender_radio")
+                    st.session_state.birth_gender = "Male" if "Male" in in_gender else "Female"
+
+                with col_bf3:
+                    dob_mode = st.radio("तिथि मोड (Date Mode)", ["🔢 वर्ष (1950-2050)", "📅 कैलेंडर"], horizontal=True, key="gla_dob_mode_radio")
+
+                # Row 2: Date & Time pickers
+                col_dt1, col_dt2 = st.columns([1.5, 1.5])
+                with col_dt1:
+                    if "1950" in dob_mode or "वर्ष" in dob_mode:
+                        col_d_day, col_d_mon, col_d_yr = st.columns([1, 1.2, 1.2])
+                        years_list = list(range(1950, 2051))
+                        cur_yr = init_b_date.year if init_b_date.year in years_list else 1995
+                        yr_idx = years_list.index(cur_yr)
+                        months_labels = [
+                            "01-जनवरी", "02-फरवरी", "03-मार्च", "04-अप्रैल",
+                            "05-मई", "06-जून", "07-जुलाई", "08-अगस्त",
+                            "09-सितंबर", "10-अक्टूबर", "11-नवंबर", "12-दिसंबर"
+                        ]
+                        cur_mon = init_b_date.month
+                        mon_idx = cur_mon - 1
+                        sel_yr = col_d_yr.selectbox("वर्ष (Year)", years_list, index=yr_idx, key="gla_dob_yr_select")
+                        sel_mon_str = col_d_mon.selectbox("माह (Month)", months_labels, index=mon_idx, key="gla_dob_mon_select")
+                        sel_mon = months_labels.index(sel_mon_str) + 1
+                        if sel_mon in [1, 3, 5, 7, 8, 10, 12]:
+                            max_d = 31
+                        elif sel_mon in [4, 6, 9, 11]:
+                            max_d = 30
                         else:
-                            st.error("Authentication failed. Please verify credentials in Module 7.")
+                            is_leap = (sel_yr % 4 == 0 and sel_yr % 100 != 0) or (sel_yr % 400 == 0)
+                            max_d = 29 if is_leap else 28
+                        days_list = list(range(1, max_d + 1))
+                        cur_d = min(init_b_date.day, max_d)
+                        d_idx = cur_d - 1
+                        sel_d = col_d_day.selectbox("दिन (Day)", days_list, index=d_idx, key="gla_dob_day_select")
+                        st.session_state.birth_date = date(sel_yr, sel_mon, sel_d)
+                    else:
+                        in_birth_d = st.date_input("जन्म तिथि (DD/MM/YYYY)", value=init_b_date, min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="gla_dob_cal_input")
+                        st.session_state.birth_date = in_birth_d
+
+                with col_dt2:
+                    time_format_mode = st.radio("समय प्रारूप (Time Format)", ["12 घंटे (AM/PM)", "24 घंटे"], horizontal=True, key="gla_time_mode_radio")
+                    if time_format_mode.startswith("12"):
+                        curr_t = st.session_state.birth_time
+                        curr_h24 = curr_t.hour
+                        curr_m = curr_t.minute
+                        curr_s = curr_t.second
+                        curr_ampm = "PM" if curr_h24 >= 12 else "AM"
+                        curr_h12 = curr_h24 % 12
+                        if curr_h12 == 0:
+                            curr_h12 = 12
+                        col_th, col_tm, col_ts, col_tp = st.columns([1, 1, 1, 1.1])
+                        h_val = col_th.selectbox("घंटा (HH)", list(range(1, 13)), index=curr_h12 - 1, key="gla_time_h")
+                        m_val = col_tm.selectbox("मिनट (MM)", [f"{m:02d}" for m in range(60)], index=curr_m, key="gla_time_m")
+                        s_val = col_ts.selectbox("सेकंड (SS)", [f"{s:02d}" for s in range(60)], index=curr_s, key="gla_time_s")
+                        p_val = col_tp.selectbox("AM/PM", ["AM", "PM"], index=0 if curr_ampm == "AM" else 1, key="gla_time_p")
+                        h_24 = (int(h_val) % 12) + (12 if p_val == "PM" else 0)
+                        st.session_state.birth_time = time(h_24, int(m_val), int(s_val))
+                    else:
+                        in_birth_t = st.time_input("जन्म समय", value=st.session_state.birth_time, step=60, key="gla_time_24_val")
+                        st.session_state.birth_time = in_birth_t
+
+                # Row 3: City Geocoding & Coordinates
+                col_geo1, col_geo2, col_geo3 = st.columns([1.6, 1.4, 1.2])
+                with col_geo1:
+                    in_city_query = st.text_input("स्थान खोज (Search City)", value=st.session_state.birth_city, key="gla_city_query_input")
+                    geo_results = default_geocoding_service.search(in_city_query, limit=3)
+                    if geo_results:
+                        selected_loc = st.selectbox(
+                            "उपलब्ध स्थान (Select Location)",
+                            geo_results,
+                            format_func=lambda x: f"{x.formatted_name} ({x.source})",
+                            key="gla_geo_select"
+                        )
+                        st.session_state.birth_lat = selected_loc.latitude
+                        st.session_state.birth_lon = selected_loc.longitude
+                        st.session_state.birth_tz = selected_loc.timezone_offset
+                        st.session_state.birth_city = selected_loc.city
+
+                with col_geo2:
+                    col_la, col_lo = st.columns(2)
+                    in_lat = col_la.number_input("Latitude", value=float(st.session_state.birth_lat), format="%.4f", key="gla_lat_input")
+                    in_lon = col_lo.number_input("Longitude", value=float(st.session_state.birth_lon), format="%.4f", key="gla_lon_input")
+                    st.session_state.birth_lat = in_lat
+                    st.session_state.birth_lon = in_lon
+
+                with col_geo3:
+                    col_tz_a, col_conf_a = st.columns(2)
+                    in_tz = col_tz_a.number_input("TZ Offset", value=float(st.session_state.get("birth_tz", 5.5)), step=0.5, key="gla_tz_input")
+                    in_conf = col_conf_a.selectbox("Confidence", ["Exact", "Approx (±15 min)", "Unknown"], key="gla_conf_select")
+                    st.session_state.birth_tz = in_tz
+                    st.session_state.birth_conf = in_conf
+
+                # Form Buttons: Calculate & Close
+                st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+                col_fbtn1, col_fbtn2, col_fbtn3 = st.columns([2, 1.2, 1])
+                with col_fbtn1:
+                    if st.button("🚀 गणना करें एवं कुण्डली बनाएं (Submit / Calculate)", type="primary", use_container_width=True, key="gla_calc_submit_btn"):
+                        st.session_state.calculated_at = datetime.now()
+                        st.session_state.gla_active_tool = None
+                        st.toast(f"✅ {st.session_state.birth_name} की कुण्डली एवं षोडशवर्ग सफलतापूर्वक तैयार किए गए!", icon="🔮")
+                        st.rerun()
+                with col_fbtn2:
+                    if st.button("💾 सहेजें (Save)", use_container_width=True, key="gla_save_submit_btn"):
+                        save_payload = {
+                            "name": st.session_state.birth_name,
+                            "gender": st.session_state.get("birth_gender", "Male"),
+                            "birth_date": st.session_state.birth_date.strftime("%Y-%m-%d"),
+                            "birth_time": st.session_state.birth_time.strftime("%H:%M:%S"),
+                            "latitude": st.session_state.birth_lat,
+                            "longitude": st.session_state.birth_lon,
+                            "timezone_offset": st.session_state.get("birth_tz", 5.5),
+                            "city": st.session_state.birth_city,
+                            "confidence": st.session_state.get("birth_conf", "Exact")
+                        }
+                        default_folder_manager.save_chart(folder_id=0, chart_name=st.session_state.birth_name, birth_data=save_payload)
+                        st.toast(f"✅ कुण्डली '{st.session_state.birth_name}' सफलतापूर्वक सहेज ली गई!", icon="💾")
+                with col_fbtn3:
+                    if st.button("❌ बंद करें", use_container_width=True, key="gla_close_birth_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+        # 3. TOOL: OPEN / SAVED CHARTS & CLOUD FOLDERS
+        elif st.session_state.gla_active_tool == "open":
+            with st.container(border=True):
+                st.markdown("### 📁 सहेजी गई कुण्डलियां एवं क्लाउड सिंक (Open Charts & Cloud Folders)")
+                all_local_folders = default_folder_manager.list_folders()
+                flat_saved_charts = []
+                for f in all_local_folders:
+                    for c in f.get("charts", []):
+                        flat_saved_charts.append({
+                            "label": f"[{f['name'].split()[0]}] {c['name']}",
+                            "data": c.get("birth_data", {})
+                        })
+
+                col_op1, col_op2 = st.columns([2.5, 1.5])
+                with col_op1:
+                    if flat_saved_charts:
+                        sel_saved_label = st.selectbox("स्थानीय व डेमो कुण्डली चुनें (Select Profile)", [sc["label"] for sc in flat_saved_charts], key="gla_sel_saved_profile")
+                        if st.button("📥 लोड करें (Load Chart)", type="primary", use_container_width=True, key="gla_load_saved_btn"):
+                            chosen = next((sc for sc in flat_saved_charts if sc["label"] == sel_saved_label), None)
+                            if chosen and chosen["data"]:
+                                bd = chosen["data"]
+                                st.session_state.birth_name = bd.get("name", "Client")
+                                st.session_state.birth_lat = float(bd.get("latitude", 28.6139))
+                                st.session_state.birth_lon = float(bd.get("longitude", 77.2090))
+                                st.session_state.birth_city = bd.get("city", "Delhi")
+                                try:
+                                    st.session_state.birth_date = datetime.strptime(bd["birth_date"], "%Y-%m-%d").date()
+                                    st.session_state.birth_time = datetime.strptime(bd["birth_time"], "%H:%M:%S").time()
+                                except Exception:
+                                    pass
+                                st.session_state.gla_active_tool = None
+                                st.toast(f"✅ {st.session_state.birth_name} का विवरण लोड किया गया!", icon="🔮")
+                                st.rerun()
+                    else:
+                        st.info("कोई स्थानीय कुण्डली उपलब्ध नहीं है।")
+
+                with col_op2:
+                    st.markdown("#### ☁️ Grahalakshanam Cloud Sync")
+                    if st.button("☁️ सर्वर से सिंक करें (Sync API)", use_container_width=True, key="gla_sync_in_open_btn"):
+                        with st.spinner("Connecting to Grahalakshanam Cloud..."):
+                            active_u = st.session_state.get("gla_user", "shubham8jyotish@gmail.com")
+                            active_p = st.session_state.get("gla_pass", "Bahraich@123")
+                            client = GrahalakshanamClient(GrahalakshanamConfig(username=active_u, password=active_p))
+                            if client.authenticate():
+                                ff = client.get_folders_with_files()
+                                st.session_state.gla_charts = ff.get("files", [])
+                                default_folder_manager.sync_from_grahalakshanam(ff)
+                                st.session_state.gla_authenticated = True
+                                st.success(f"✅ Synced {len(st.session_state.gla_charts)} cloud charts!")
+                            else:
+                                st.error("❌ Authentication failed. Please verify credentials.")
+
+                    if st.button("❌ बंद करें (Close)", use_container_width=True, key="gla_close_open_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+        # 4. TOOL: SAVE CHART
+        elif st.session_state.gla_active_tool == "save":
+            with st.container(border=True):
+                st.markdown("### 💾 कुण्डली सहेजें (Save / Save As)")
+                col_sv1, col_sv2, col_sv3 = st.columns([2, 1.5, 1])
+                with col_sv1:
+                    save_name_input = st.text_input("कुण्डली का नाम (Chart Name)", value=st.session_state.birth_name, key="gla_save_chart_name")
+                with col_sv2:
+                    all_local_folders = default_folder_manager.list_folders()
+                    f_options = {f["id"]: f["name"] for f in all_local_folders}
+                    sel_fid = st.selectbox("फ़ोल्डर चुनें (Select Folder)", list(f_options.keys()), format_func=lambda x: f_options[x], key="gla_save_folder_sel")
+                with col_sv3:
+                    st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+                    if st.button("💾 सुरक्षित करें (Confirm Save)", type="primary", use_container_width=True, key="gla_confirm_save_btn"):
+                        save_payload = {
+                            "name": save_name_input,
+                            "gender": st.session_state.get("birth_gender", "Male"),
+                            "birth_date": st.session_state.birth_date.strftime("%Y-%m-%d"),
+                            "birth_time": st.session_state.birth_time.strftime("%H:%M:%S"),
+                            "latitude": st.session_state.birth_lat,
+                            "longitude": st.session_state.birth_lon,
+                            "timezone_offset": st.session_state.get("birth_tz", 5.5),
+                            "city": st.session_state.birth_city,
+                            "confidence": st.session_state.get("birth_conf", "Exact")
+                        }
+                        default_folder_manager.save_chart(folder_id=sel_fid, chart_name=save_name_input, birth_data=save_payload)
+                        st.session_state.birth_name = save_name_input
+                        st.session_state.gla_active_tool = None
+                        st.toast(f"✅ कुण्डली '{save_name_input}' सफलतापूर्वक सहेज ली गई!", icon="💾")
+                        st.rerun()
+
+                if st.button("❌ बंद करें (Close)", key="gla_close_save_btn"):
+                    st.session_state.gla_active_tool = None
+                    st.rerun()
+
+        # 5. TOOL: SETTINGS (Ayanamsa, House System, Chart Style, Pro Mode)
+        elif st.session_state.gla_active_tool == "settings":
+            with st.container(border=True):
+                st.markdown("### ⚙️ गणना एवं सॉफ़्टवेयर प्राथमिकताएं (Settings & Calculation Engine)")
+                col_st1, col_st2, col_st3, col_st4 = st.columns(4)
+                with col_st1:
+                    ay_opts = ["Lahiri", "Raman", "KP", "True Chitra", "Yukteshwar", "Fagan-Bradley"]
+                    cur_ay = st.session_state.get("app_ayanamsa", "Lahiri")
+                    ay_idx = ay_opts.index(cur_ay) if cur_ay in ay_opts else 0
+                    in_ay = st.selectbox("अयनांश (Ayanamsa)", ay_opts, index=ay_idx, key="gla_settings_ayanamsa")
+                    st.session_state.app_ayanamsa = in_ay
+
+                with col_st2:
+                    hs_opts = ["Whole Sign", "Equal", "Placidus", "Shripati", "Koch"]
+                    cur_hs = st.session_state.get("app_house_system", "Whole Sign")
+                    hs_idx = hs_opts.index(cur_hs) if cur_hs in hs_opts else 0
+                    in_hs = st.selectbox("भाव पद्धति (House System)", hs_opts, index=hs_idx, key="gla_settings_hs")
+                    st.session_state.app_house_system = in_hs
+
+                with col_st3:
+                    chart_styles_list = ["North Indian (Diamond)", "South Indian (Box)", "East Indian (Surya)"]
+                    if "app_chart_style" not in st.session_state or st.session_state.app_chart_style not in chart_styles_list:
+                        st.session_state.app_chart_style = "North Indian (Diamond)"
+                    cs_idx = chart_styles_list.index(st.session_state.app_chart_style)
+                    def _on_gla_cs_change():
+                        st.session_state.app_chart_style = st.session_state.gla_settings_cs_select
+                    in_cs = st.selectbox("कुण्डली चक्र शैली (Chart Style)", chart_styles_list, index=cs_idx, key="gla_settings_cs_select", on_change=_on_gla_cs_change)
+
+                with col_st4:
+                    in_pm = st.toggle("⚡ Pro Mode (उच्च परिशुद्धता)", value=st.session_state.get("app_pro_mode", True), key="gla_settings_pm_toggle")
+                    st.session_state.app_pro_mode = in_pm
+                    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+                    if st.button("✅ लागू करें एवं बंद करें", type="primary", use_container_width=True, key="gla_apply_settings_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+        # 6. TOOL: LANGUAGES SWITCHER
+        elif st.session_state.gla_active_tool == "lang":
+            with st.container(border=True):
+                st.markdown("### 🌐 सॉफ़्टवेयर भाषा चुनें (Software Language Switcher)")
+                col_l1, col_l2 = st.columns([3, 1])
+                with col_l1:
+                    cur_l = st.session_state.get("app_lang", "General (जनरल)")
+                    l_idx = LANG_OPTIONS.index(cur_l) if cur_l in LANG_OPTIONS else 0
+                    sel_new_lang = st.selectbox("उपलब्ध भाषाएं (Supported Languages)", LANG_OPTIONS, index=l_idx, key="gla_lang_select_box")
+                    st.session_state.app_lang = sel_new_lang
+                with col_l2:
+                    st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+                    if st.button("✅ भाषा बदलें (Apply)", type="primary", use_container_width=True, key="gla_apply_lang_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.toast(f"✅ भाषा परिवर्तित: {sel_new_lang}", icon="🌐")
+                        st.rerun()
+
 
     def _nav_prev_module():
         new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
