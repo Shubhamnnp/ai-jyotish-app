@@ -2217,34 +2217,6 @@ with st.container(key="top_frozen_header_container", border=True):
             <div class="header-sub-pill" title="भूमिका: ज्योतिषी व्यवस्थापक">
                 👑 <b>ज्योतिषी</b> (Admin)
             </div>
-            <div class="header-sub-pill" title="वर्तमान समय">
-                🕒 <b>समय:</b> {current_time_str}
-            </div>
-            <div class="header-sub-pill" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
-                📍 <b>स्थान:</b> <span id="user-gps-val" class="user-gps-val">GPS जाँचा जा रहा है...</span>
-            </div>
-            <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
-                <span class="notranslate" translate="no" style="font-size:12px;">🌐</span>
-                <b class="notranslate" translate="no" style="color:#166534 !important; font-size:11px;">भाषा:</b>
-                <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0 2px;">
-                    <option value="general" class="notranslate" translate="no">General (जनरल)</option>
-                    <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
-                    <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
-                    <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
-                    <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
-                    <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
-                    <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
-                    <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
-                </select>
-            </div>
-            <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:2px 8px !important; display:inline-flex; align-items:center; gap:4px;" title="थीम चुनें (Day / Night Mode)">
-                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:12px;">☀️</span>
-                <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11px;">थीम:</b>
-                <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0 2px;">
-                    <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
-                    <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
-                </select>
-            </div>
         </div>
     </header>
     """, unsafe_allow_html=True)
@@ -2260,8 +2232,8 @@ with st.container(key="top_frozen_header_container", border=True):
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
-        gap: 16px;
-        padding: 10px 14px;
+        gap: 12px;
+        padding: 8px 12px;
         background: #f8f9fa;
         border-radius: 14px;
         border: 1px solid #e2e8f0;
@@ -2274,16 +2246,17 @@ with st.container(key="top_frozen_header_container", border=True):
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 78px;
-        height: 78px;
+        width: 72px;
+        height: 72px;
         background-color: #f2f2f2;
-        border: 3px solid #00b0f0;
-        border-radius: 15px;
+        border: 2.5px solid #00b0f0;
+        border-radius: 14px;
         cursor: pointer;
-        padding: 6px;
+        padding: 4px;
         box-shadow: 0 2px 6px rgba(0, 176, 240, 0.2);
         transition: all 0.2s ease-in-out;
         text-align: center;
+        margin: 0 auto;
     }
     .gla-btn-tile:hover {
         transform: translateY(-2px);
@@ -2291,16 +2264,45 @@ with st.container(key="top_frozen_header_container", border=True):
         background-color: #e0f4fc;
     }
     .gla-btn-tile img {
-        width: 44px;
-        height: 44px;
+        width: 38px;
+        height: 38px;
         object-fit: contain;
     }
     .gla-btn-tile span {
-        font-size: 10.5px;
+        font-size: 10px;
         font-weight: 700;
         color: #1e293b;
-        margin-top: 3px;
+        margin-top: 2px;
         white-space: nowrap;
+    }
+    .gla-toolbar-pill-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 72px;
+        padding: 4px 6px;
+        box-sizing: border-box;
+    }
+    .gla-toolbar-pill-card {
+        background: #FFFFFF;
+        border: 1.5px solid #CBD5E1;
+        border-radius: 10px;
+        padding: 6px 10px;
+        font-size: 11.5px;
+        color: #0F172A;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.35;
+        min-height: 48px;
+    }
+    .gla-toolbar-pill-card b {
+        font-weight: 800;
+        color: #0F172A;
     }
     .gla-info-strip {
         display: flex;
@@ -2323,6 +2325,29 @@ with st.container(key="top_frozen_header_container", border=True):
         border-radius: 4px;
         font-size: 11px;
     }
+    /* Compact the action buttons under the icon tiles */
+    .st-key-gla_btn_new button,
+    .st-key-gla_btn_birth button,
+    .st-key-gla_btn_open button,
+    .st-key-gla_btn_save button,
+    .st-key-gla_btn_settings button,
+    .st-key-gla_btn_lang button {
+        padding: 3px 6px !important;
+        font-size: 11px !important;
+        min-height: 28px !important;
+        margin-top: 4px !important;
+        border-radius: 6px !important;
+        font-weight: 700 !important;
+    }
+    .st-key-gla_btn_logout button {
+        min-height: 46px !important;
+        font-weight: 800 !important;
+        border-color: #EF4444 !important;
+        color: #B91C1C !important;
+    }
+    .st-key-gla_btn_logout button:hover {
+        background: #FEE2E2 !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -2338,8 +2363,8 @@ with st.container(key="top_frozen_header_container", border=True):
     </div>
     """, unsafe_allow_html=True)
 
-    # 6-Tile Toolbelt Columns + Logout
-    tb_col1, tb_col2, tb_col3, tb_col4, tb_col5, tb_col6, tb_col_space, tb_col_logout = st.columns([1, 1, 1, 1, 1, 1, 3.5, 1.2])
+    # 6-Tile Toolbelt Columns + 4 Status/Control Pills (Time, GPS, Language, Theme) + Logout
+    tb_col1, tb_col2, tb_col3, tb_col4, tb_col5, tb_col6, tb_col_time, tb_col_gps, tb_col_lang, tb_col_theme, tb_col_logout = st.columns([0.85, 0.95, 0.85, 0.85, 0.9, 0.9, 1.4, 1.8, 1.3, 1.3, 0.9])
 
     with tb_col1:
         st.markdown(f"""
@@ -2350,7 +2375,7 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("📄 New", key="gla_btn_new", use_container_width=True):
+        if st.button("New", key="gla_btn_new", use_container_width=True):
             st.session_state.gla_active_tool = "new" if st.session_state.gla_active_tool != "new" else None
 
     with tb_col2:
@@ -2362,7 +2387,7 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("👶 Birth Data", key="gla_btn_birth", use_container_width=True):
+        if st.button("Birth Data", key="gla_btn_birth", use_container_width=True):
             st.session_state.gla_active_tool = "birth" if st.session_state.gla_active_tool != "birth" else None
 
     with tb_col3:
@@ -2374,7 +2399,7 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("📁 Open", key="gla_btn_open", use_container_width=True):
+        if st.button("Open", key="gla_btn_open", use_container_width=True):
             st.session_state.gla_active_tool = "open" if st.session_state.gla_active_tool != "open" else None
 
     with tb_col4:
@@ -2386,7 +2411,7 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("💾 Save", key="gla_btn_save", use_container_width=True):
+        if st.button("Save", key="gla_btn_save", use_container_width=True):
             st.session_state.gla_active_tool = "save" if st.session_state.gla_active_tool != "save" else None
 
     with tb_col5:
@@ -2398,7 +2423,7 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("⚙️ Settings", key="gla_btn_settings", use_container_width=True):
+        if st.button("Settings", key="gla_btn_settings", use_container_width=True):
             st.session_state.gla_active_tool = "settings" if st.session_state.gla_active_tool != "settings" else None
 
     with tb_col6:
@@ -2410,11 +2435,75 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("🌐 Languages", key="gla_btn_lang", use_container_width=True):
+        if st.button("Languages", key="gla_btn_lang", use_container_width=True):
             st.session_state.gla_active_tool = "lang" if st.session_state.gla_active_tool != "lang" else None
 
+    with tb_col_time:
+        st.markdown(f"""
+        <div class="gla-toolbar-pill-box">
+            <div class="gla-toolbar-pill-card" title="वर्तमान समय">
+                <span style="font-size:16px;">🕒</span>
+                <div>
+                    <div style="font-size:10px; color:#64748B; font-weight:700;">समय (Time)</div>
+                    <div style="font-size:11.5px; font-weight:800; color:#0F172A;">{current_time_str}</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with tb_col_gps:
+        st.markdown("""
+        <div class="gla-toolbar-pill-box">
+            <div class="gla-toolbar-pill-card" style="background:#FEF3C7 !important; border-color:#F59E0B !important; color:#92400E !important;" title="डिवाइस का लाइव GPS स्थान">
+                <span style="font-size:16px;">📍</span>
+                <div>
+                    <div style="font-size:10px; color:#B45309; font-weight:700;">स्थान (GPS)</div>
+                    <div id="user-gps-val" class="user-gps-val" style="font-size:11px; font-weight:800; color:#92400E;">GPS जाँचा जा रहा है...</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with tb_col_lang:
+        st.markdown("""
+        <div class="gla-toolbar-pill-box">
+            <div class="gla-toolbar-pill-card notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:4px 8px !important;" title="सॉफ़्टवेयर की भाषा चुनें (Change Language)">
+                <span class="notranslate" translate="no" style="font-size:16px;">🌐</span>
+                <div style="width:100%;">
+                    <div class="notranslate" translate="no" style="font-size:10px; color:#15803D; font-weight:700;">भाषा (Language)</div>
+                    <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : null" style="background:transparent; border:none; color:#15803D; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0; width:100%;">
+                        <option value="general" class="notranslate" translate="no">General (जनरल)</option>
+                        <option value="hi" class="notranslate" translate="no">हिन्दी (Hindi)</option>
+                        <option value="en" class="notranslate" translate="no">English (अंग्रेजी)</option>
+                        <option value="ta" class="notranslate" translate="no">தமிழ் (Tamil)</option>
+                        <option value="te" class="notranslate" translate="no">తెలుగు (Telugu)</option>
+                        <option value="gu" class="notranslate" translate="no">ગુજરાતી (Gujarati)</option>
+                        <option value="mr" class="notranslate" translate="no">मराठी (Marathi)</option>
+                        <option value="bn" class="notranslate" translate="no">বাংলা (Bengali)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with tb_col_theme:
+        st.markdown("""
+        <div class="gla-toolbar-pill-box">
+            <div class="gla-toolbar-pill-card notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:4px 8px !important;" title="थीम चुनें (Day / Night Mode)">
+                <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:16px;">☀️</span>
+                <div style="width:100%;">
+                    <div class="notranslate" translate="no" style="font-size:10px; color:#475569; font-weight:700;">थीम (Theme)</div>
+                    <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:11px; cursor:pointer; outline:none; padding:0; width:100%;">
+                        <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day)</option>
+                        <option value="night" class="notranslate" translate="no">🌙 नाइट (Night)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     with tb_col_logout:
-        st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
         if st.button("🚪 Logout", key="gla_btn_logout", use_container_width=True, help="Grahalakshanam सत्र से लॉगआउट करें"):
             st.session_state.is_logged_in = False
             st.session_state.gla_authenticated = False
