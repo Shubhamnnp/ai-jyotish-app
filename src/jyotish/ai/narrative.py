@@ -167,13 +167,23 @@ class AINarrativeService:
     def get_or_evaluate_chart_rules(self, chart: KundaliChart) -> List[RuleEvidence]:
         """
         Evaluates or retrieves cached results for all 12,500+ classical rules against the given chart.
-        Fast sub-second evaluation cached directly on the chart object.
+        Fast sub-second evaluation cached safely without Pydantic attribute errors.
         """
-        if hasattr(chart, "_cached_rules_evidence") and chart._cached_rules_evidence:
-            return chart._cached_rules_evidence
+        try:
+            cached = getattr(chart, "_cached_rules_evidence", None)
+            if cached:
+                return cached
+        except Exception:
+            pass
 
         evidences = [default_rules_engine.evaluate_rule(r, chart) for r in default_rules_engine.rules]
-        chart._cached_rules_evidence = evidences
+        try:
+            object.__setattr__(chart, "_cached_rules_evidence", evidences)
+        except Exception:
+            try:
+                chart._cached_rules_evidence = evidences
+            except Exception:
+                pass
         return evidences
 
     def scan_shastriya_rules(

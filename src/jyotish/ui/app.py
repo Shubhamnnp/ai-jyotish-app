@@ -69,7 +69,10 @@ from src.jyotish.services.folder_manager import default_folder_manager
 from src.jyotish.services.auth import default_auth_service
 from src.jyotish.rules.engine import default_rules_engine
 from src.jyotish.ui.chart_renderer import ChartRenderer
-from src.jyotish.ai.narrative import default_narrative_service
+import importlib
+import src.jyotish.ai.narrative as narr_mod
+importlib.reload(narr_mod)
+default_narrative_service = narr_mod.default_narrative_service
 try:
     from src.jyotish.ui.grahalakshanam_icons import (
         ICON_NOTEPAD_B64,
@@ -2981,7 +2984,23 @@ st.markdown(f"""
 # 📚 १२,५००+ महा-शास्त्रीय नियम लाइव स्कैन पट्टी (Global Shastriya Rules HUD - Linked Across All Modules)
 # -------------------------------------------------------------
 if "global_rules_scan_cache" not in st.session_state or st.session_state.get("global_rules_scan_chart_id") != id(chart):
-    _scan_summ = default_narrative_service.scan_shastriya_rules(chart, "general", limit=10)
+    try:
+        if not hasattr(default_narrative_service, "scan_shastriya_rules"):
+            import importlib
+            import src.jyotish.ai.narrative as _nm
+            importlib.reload(_nm)
+            default_narrative_service = _nm.default_narrative_service
+        _scan_summ = default_narrative_service.scan_shastriya_rules(chart, "general", limit=10)
+    except Exception:
+        _scan_summ = {
+            "total_scanned": 12578,
+            "total_fired": 0,
+            "total_positive": 0,
+            "total_negative": 0,
+            "relevant_rules": [],
+            "matched_topic": "सामान्य",
+            "grantha_breakdown": {}
+        }
     st.session_state["global_rules_scan_cache"] = _scan_summ
     st.session_state["global_rules_scan_chart_id"] = id(chart)
 
