@@ -6627,23 +6627,23 @@ elif selected_idx == 16:
 
         with c_mc1:
             if getattr(m_score, 'manglik_match', False):
-                st.success(f"**🔥 मांगलिक सामंजस्य:**\n\n<small>{m_canc_reason}</small>", unsafe_allow_html=True)
+                st.success(f"**🔥 मांगलिक सामंजस्य:**\n\n{m_canc_reason}")
             else:
-                st.error(f"**⚠️ मांगलिक असंतुलन:**\n\n<small>{m_canc_reason}</small>", unsafe_allow_html=True)
+                st.error(f"**⚠️ मांगलिक असंतुलन:**\n\n{m_canc_reason}")
         with c_mc2:
             if getattr(m_score, 'nadi_dosha_cancelled', False):
-                st.success(f"**🧬 नाड़ी परिहार:**\n\n<small>{n_canc_reason}</small>", unsafe_allow_html=True)
+                st.success(f"**🧬 नाड़ी परिहार:**\n\n{n_canc_reason}")
             elif getattr(m_score, 'nadi_dosha', False):
-                st.error(f"**🚫 नाड़ी महादोष:**\n\n<small>{n_canc_reason}</small>", unsafe_allow_html=True)
+                st.error(f"**🚫 नाड़ी महादोष:**\n\n{n_canc_reason}")
             else:
-                st.info(f"**🧬 नाड़ी मिलान:**\n\n<small>{n_canc_reason}</small>", unsafe_allow_html=True)
+                st.info(f"**🧬 नाड़ी मिलान:**\n\n{n_canc_reason}")
         with c_mc3:
             if getattr(m_score, 'bhakoot_dosha_cancelled', False):
-                st.success("**🌙 भकूट परिहार:**\n\n<small>राशि स्वामी एक या परस्पर मित्र होने से भकूट दोष निष्प्रभावी।</small>", unsafe_allow_html=True)
+                st.success("**🌙 भकूट परिहार:**\n\nराशि स्वामी एक या परस्पर मित्र होने से भकूट दोष निष्प्रभावी।")
             elif getattr(m_score, 'bhakoot_dosha', False):
-                st.error("**⚠️ भकूट दोष सक्रिय:**\n\n<small>षडाष्टक/द्विर्द्वादश/नवपंचम संबंध सक्रिय है (बिना परिहार)।</small>", unsafe_allow_html=True)
+                st.error("**⚠️ भकूट दोष सक्रिय:**\n\nषडाष्टक/द्विर्द्वादश/नवपंचम संबंध सक्रिय है (बिना परिहार)।")
             else:
-                st.info("**🌙 भकूट मिलान:**\n\n<small>भकूट दोष से पूर्णतः मुक्त अनुकूल संबंध।</small>", unsafe_allow_html=True)
+                st.info("**🌙 भकूट मिलान:**\n\nभकूट दोष से पूर्णतः मुक्त अनुकूल संबंध।")
 
         # ============================================================
         # DEEP SHASTRIYA SYNASTRY & LIFE COMPATIBILITY (शास्त्रीय गहन फलादेश)
