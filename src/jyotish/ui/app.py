@@ -6590,7 +6590,14 @@ elif selected_idx == 16:
         m_score = milan_mod.default_milan_service.match_charts(groom_data, bride_data)
 
         st.metric("अष्टकूट गुण मिलान", f"{m_score.total_score} / 36.0", m_score.verdict)
-        st.info(f"**शास्त्रीय परामर्श:** {m_score.recommendation_hi}")
+        if "वर्जित" in m_score.verdict or "अनुचित" in m_score.verdict or "महादोष" in m_score.verdict:
+            st.error(f"**🚫 शास्त्रीय निर्णय एवं निषेध:** {m_score.recommendation_hi}")
+        elif "दोष" in m_score.verdict or "असंतुलित" in m_score.verdict:
+            st.warning(f"**⚠️ शास्त्रीय परामर्श एवं सावधानी:** {m_score.recommendation_hi}")
+        elif "उत्कृष्ट" in m_score.verdict:
+            st.success(f"**✨ शास्त्रीय परामर्श:** {m_score.recommendation_hi}")
+        else:
+            st.info(f"**शास्त्रीय परामर्श:** {m_score.recommendation_hi}")
 
         koota_df = pd.DataFrame([
             {"Koota": "वर्ण (Varna)", "Score": m_score.varna, "Max": 1.0},
@@ -6606,7 +6613,7 @@ elif selected_idx == 16:
 
         # Advanced Shastriya Cancellations & Balancing Analysis (with defensive fallback)
         st.markdown("#### 🛡️ शास्त्रीय दोष परिहार एवं साम्य विश्लेषण (Shastriya Cancellations)")
-        c_mc1, c_mc2 = st.columns(2)
+        c_mc1, c_mc2, c_mc3 = st.columns(3)
         
         m_canc_reason = getattr(m_score, 'manglik_cancellation_reason', '') or (
             "समान मांगलिक सामंजस्य: दोनों मांगलिक हैं।" if getattr(m_score, 'groom_manglik', False) and getattr(m_score, 'bride_manglik', False)
@@ -6615,21 +6622,28 @@ elif selected_idx == 16:
         )
         n_canc_reason = getattr(m_score, 'nadi_cancellation_reason', '') or (
             "नाड़ी दोष परिहार लागू।" if getattr(m_score, 'nadi_dosha_cancelled', False)
-            else ("नाड़ी दोष सक्रिय है।" if getattr(m_score, 'nadi_dosha', False) else "नाड़ी दोष नहीं है।")
+            else ("नाड़ी महादोष सक्रिय है।" if getattr(m_score, 'nadi_dosha', False) else "नाड़ी दोष नहीं है।")
         )
 
         with c_mc1:
             if getattr(m_score, 'manglik_match', False):
-                st.success(f"**🔥 मांगलिक सामंजस्य:** {m_canc_reason}")
+                st.success(f"**🔥 मांगलिक सामंजस्य:**\n\n<small>{m_canc_reason}</small>", unsafe_allow_html=True)
             else:
-                st.error(f"**⚠️ मांगलिक असंतुलन:** {m_canc_reason}")
+                st.error(f"**⚠️ मांगलिक असंतुलन:**\n\n<small>{m_canc_reason}</small>", unsafe_allow_html=True)
         with c_mc2:
             if getattr(m_score, 'nadi_dosha_cancelled', False):
-                st.success(f"**🧬 {n_canc_reason}**")
+                st.success(f"**🧬 नाड़ी परिहार:**\n\n<small>{n_canc_reason}</small>", unsafe_allow_html=True)
             elif getattr(m_score, 'nadi_dosha', False):
-                st.error(f"**⚠️ {n_canc_reason}**")
+                st.error(f"**🚫 नाड़ी महादोष:**\n\n<small>{n_canc_reason}</small>", unsafe_allow_html=True)
             else:
-                st.info(f"**🧬 नाड़ी मिलान:** {n_canc_reason}")
+                st.info(f"**🧬 नाड़ी मिलान:**\n\n<small>{n_canc_reason}</small>", unsafe_allow_html=True)
+        with c_mc3:
+            if getattr(m_score, 'bhakoot_dosha_cancelled', False):
+                st.success("**🌙 भकूट परिहार:**\n\n<small>राशि स्वामी एक या परस्पर मित्र होने से भकूट दोष निष्प्रभावी।</small>", unsafe_allow_html=True)
+            elif getattr(m_score, 'bhakoot_dosha', False):
+                st.error("**⚠️ भकूट दोष सक्रिय:**\n\n<small>षडाष्टक/द्विर्द्वादश/नवपंचम संबंध सक्रिय है (बिना परिहार)।</small>", unsafe_allow_html=True)
+            else:
+                st.info("**🌙 भकूट मिलान:**\n\n<small>भकूट दोष से पूर्णतः मुक्त अनुकूल संबंध।</small>", unsafe_allow_html=True)
 
         # ============================================================
         # DEEP SHASTRIYA SYNASTRY & LIFE COMPATIBILITY (शास्त्रीय गहन फलादेश)

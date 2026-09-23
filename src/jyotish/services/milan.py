@@ -119,18 +119,51 @@ class MilanService:
         b_manglik = self._is_manglik(bride_chart)
         manglik_match, manglik_canc_reason = self._evaluate_manglik_cancellation(groom_chart, bride_chart, g_manglik, b_manglik)
 
-        if total >= 28:
+        # Determine strict, honest Shastriya Verdict based on Gunas AND Doshas
+        has_uncancelled_nadi = (nadi_dosha and not nadi_canc)
+        has_uncancelled_bhakoot = (bhakoot_dosha and not bhakoot_canc)
+        has_manglik_conflict = (not manglik_match)
+
+        if has_uncancelled_nadi:
+            verdict = "नाड़ी महादोष (विवाह वर्जित / High Risk)"
+            rec_hi = (
+                f"कुल 36 में से {total} गुण मिलने के उपरांत भी 'नाड़ी महादोष' (बिना परिहार) उपस्थित है। "
+                "मुहूर्त चिंतामणि व बृहत्पाराशर अनुसार नाड़ी दोष संतान कष्ट, स्वास्थ्य हानि व वियोग का प्रबल कारक माना गया है। "
+                "शास्त्रानुसार यह विवाह उचित नहीं है। यदि विवाह करना ही हो तो महामृत्युंजय अनुष्ठान व सुवर्ण/गौ दान अनिवार्य है।"
+            )
+            rec_en = f"Critical Nadi Dosha without cancellation ({total}/36 gunas). Marriage not recommended as per classical texts."
+        elif has_uncancelled_bhakoot:
+            verdict = "भकूट दोष (गंभीर कलह व आर्थिक संकट)"
+            rec_hi = (
+                f"कुल 36 में से {total} गुण हैं, किंतु 'भकूट दोष' (बिना परिहार) विद्यमान है। "
+                "षडाष्टक/द्विर्द्वादश राशि संबंध के कारण दांपत्य में आर्थिक तंगी, भारी वैचारिक कलह अथवा वियोग की आशंका रहती है। "
+                "विशेष सावधानी, गुरु-शुक्र बल का विचार व शांति पूजा आवश्यक है।"
+            )
+            rec_en = f"Bhakoot Dosha present without cancellation ({total}/36 gunas). Caution advised for harmony and finances."
+        elif has_manglik_conflict:
+            verdict = "असंतुलित मांगलिक दोष (विवाह पूर्व शांति अनिवार्य)"
+            rec_hi = (
+                f"कुल 36 में से {total} गुण मिलते हैं, परंतु {manglik_canc_reason} "
+                "भौम (मंगल) के असंतुलन से दांपत्य में क्रोध, दुर्घटना, स्वास्थ्य संकट या कलह का योग बनता है। "
+                "विवाह पूर्व कुंभ विवाह अथवा मंगल शांति आवश्यक है।"
+            )
+            rec_en = f"Manglik imbalance detected ({total}/36 gunas). Pre-marital remedies required."
+        elif total < 18:
+            verdict = "अधम / विवाह अनुचित (Strictly Incompatible)"
+            rec_hi = (
+                f"कुल 36 में से केवल {total} गुण मिलते हैं (न्यूनतम १८ गुणों से कम)। "
+                "शास्त्रों के अनुसार १८ से कम गुण होने पर मानसिक तालमेल, स्वास्थ्य व दांपत्य सुख में घोर कमी रहती है। "
+                "यह मिलान विवाह हेतु शास्त्रसम्मत नहीं है।"
+            )
+            rec_en = f"Strictly incompatible ({total}/36 gunas). Below minimum 18 points threshold."
+        elif total >= 28:
             verdict = "उत्कृष्ट (Excellent)"
-            rec_hi = f"कुल 36 में से {total} गुण मिलते हैं। विवाह अत्यन्त शुभ और अनुकूल है।"
-            rec_en = f"Outstanding compatibility with {total}/36 gunas. Highly recommended."
-        elif total >= 18:
-            verdict = "मध्यम (Favorable)"
-            rec_hi = f"कुल 36 में से {total} गुण मिलते हैं। विवाह उत्तम रहेगा।"
-            rec_en = f"Favorable match with {total}/36 gunas. Suitable for marriage."
+            rec_hi = f"कुल 36 में से {total} गुण मिलते हैं। नाड़ी व भकूट दोष से मुक्त अत्यंत शुभ, दीर्घायु एवं सुखद दांपत्य योग है।"
+            rec_en = f"Outstanding compatibility with {total}/36 gunas without dosha. Highly recommended."
         else:
-            verdict = "अल्प अनुकूल (Challenging)"
-            rec_hi = f"कुल 36 में से {total} गुण मिलते हैं। गुणों की संख्या 18 से कम है।"
-            rec_en = f"Low compatibility ({total}/36 gunas). Astrological remedies recommended."
+            verdict = "मध्यम एवं अनुकूल (Favorable)"
+            rec_hi = f"कुल 36 में से {total} गुण मिलते हैं और प्रमुख दोषों का परिहार है। सामान्य समझदारी से दांपत्य उत्तम रहेगा।"
+            rec_en = f"Favorable match with {total}/36 gunas. Suitable for marriage."
 
         # Deep Shastriya Synastry Analysis
         deep_analysis = self.analyze_deep_synastry(groom_chart, bride_chart)
@@ -242,21 +275,27 @@ class MilanService:
         if g_nadi != b_nadi:
             return 8.0, False, False, "नाड़ी दोष नहीं है (भिन्न नाड़ी)।"
 
-        # Same Nadi -> Check classical cancellations
-        # Cancellation 1: Same nakshatra but different charan/pada
-        if g_nak == b_nak and g_pada != b_pada:
-            return 8.0, True, True, "नाड़ी दोष परिहार: एक ही नक्षत्र है परन्तु चरण/पाद भिन्न हैं, अतः दोष निष्प्रभावी।"
+        # Same Nadi -> Check authentic classical cancellations (मुहूर्त चिंतामणि व बृहत्पाराशर)
+        # Cancellation 1: एक राशि भिन्न नक्षत्र (Same rashi, different nakshatras)
+        if g_sign == b_sign and g_nak != b_nak:
+            return 8.0, True, True, "नाड़ी दोष परिहार: एक ही राशि में भिन्न नक्षत्र होने से नाड़ी दोष का शास्त्रीय परिहार हो जाता है।"
 
-        # Cancellation 2: Different rashi same nakshatra (cross-boundary)
-        if g_sign != b_sign:
-            return 8.0, True, True, "नाड़ी दोष परिहार: राशि भिन्न होने के कारण नाड़ी दोष स्वतः समाप्त माना जाता है।"
+        # Cancellation 2: एक नक्षत्र भिन्न राशि (Same nakshatra divided across two different rashis)
+        if g_nak == b_nak and g_sign != b_sign:
+            return 8.0, True, True, "नाड़ी दोष परिहार: एक ही नक्षत्र दो भिन्न राशियों में विभाजित होने से नाड़ी दोष निष्प्रभावी हो जाता है।"
 
-        # Cancellation 3: Rohini, Ardra, Pushya, Vishakha, Anuradha, Shravana exempt
-        exempt_naks = [2, 5, 7, 15, 16, 21, 25] # Krittika, Mrigashira, Pushya, etc.
-        if g_nak in exempt_naks or b_nak in exempt_naks:
-            return 8.0, True, True, "नाड़ी दोष परिहार: शास्त्रीय मान्यतानुसार यह नक्षत्र नाड़ी दोष से मुक्त माना गया है।"
+        # Cancellation 3: एक नक्षत्र भिन्न चरण (Same nakshatra different padas, excluding critical nakshatras)
+        # In Shastras, Ashwini(0), Bharani(1), Ardra(5), Ashlesha(8), Magha(9), Jyeshtha(17), Mula(18) have no pada cancellation
+        critical_naks = [0, 1, 5, 8, 9, 17, 18]
+        if g_nak == b_nak and g_pada != b_pada and g_nak not in critical_naks:
+            return 8.0, True, True, "नाड़ी दोष परिहार: एक ही नक्षत्र में भिन्न चरण होने से शास्त्रीय परिहार मान्य है।"
 
-        return 0.0, True, False, "गंभीर नाड़ी दोष सक्रिय है। स्वास्थ्य एवं संतान पक्ष में ध्यान देने की आवश्यकता है।"
+        # Cancellation 4: शास्त्रीय नाड़ी दोष मुक्त नक्षत्र युग्म (विशेष मान्यता)
+        exempt_naks = [2, 6, 7, 15, 16, 21]  # Krittika(2), Punarvasu(6), Pushya(7), Vishakha(15), Anuradha(16), Shravana(21)
+        if (g_nak in exempt_naks and b_nak in exempt_naks) and g_nak != b_nak:
+            return 8.0, True, True, "नाड़ी दोष परिहार: दोनों नक्षत्र विशिष्ट नाड़ी दोष मुक्त वर्ग में आते हैं।"
+
+        return 0.0, True, False, "गंभीर नाड़ी महादोष सक्रिय है (बिना परिहार)। स्वास्थ्य, जीवनशक्ति एवं संतान सुख में बाधा का प्रबल योग है।"
 
     def _is_manglik(self, chart: KundaliChart) -> bool:
         """Checks Manglik Dosha from Lagna and Moon (houses 1, 2, 4, 7, 8, 12)."""
@@ -347,11 +386,39 @@ class MilanService:
         5. Spouse Support & Post-Marital Prosperity (Bhagyodaya)
         6. Summary Compatibility & Vedic Remedies
         """
-        # 1. Pati-Patni Vyavahar & Svabhav
+        # 1. Pati-Patni Vyavahar & Svabhav (बृहत्पाराशर होराशास्त्र अनुसार लग्नेश व तत्त्व साम्य)
         g_lagna_lord = SIGN_LORDS.get(g_chart.lagna_sign_name, "Mars")
         b_lagna_lord = SIGN_LORDS.get(b_chart.lagna_sign_name, "Venus")
+        lagna_dist = ((b_chart.lagna_sign_id - g_chart.lagna_sign_id) % 12) + 1
 
-        if g_lagna_lord == b_lagna_lord:
+        is_enemy_lords = (b_lagna_lord in NATURAL_ENEMIES.get(g_lagna_lord, []) or g_lagna_lord in NATURAL_ENEMIES.get(b_lagna_lord, []))
+        is_friend_lords = (b_lagna_lord in NATURAL_FRIENDS.get(g_lagna_lord, []) and g_lagna_lord in NATURAL_FRIENDS.get(b_lagna_lord, []))
+
+        if lagna_dist in (6, 8) and is_enemy_lords:
+            vyavahar_title = "लग्न षडाष्टक महादोष (तीव्र कलह, अहंकार का टकराव व अशांति)"
+            vyavahar_score = 36
+            vyavahar_desc = (
+                f"वर का लग्न ({g_chart.lagna_sign_name}) एवं कन्या का लग्न ({b_chart.lagna_sign_name}) परस्पर षडाष्टक (६/८) संबंध में हैं, "
+                f"तथा लग्नेश ({g_lagna_lord} व {b_lagna_lord}) में नैसर्गिक शत्रुता है। "
+                "बृहत्पाराशर अनुसार यह योग विचारों में कभी सहमति न बनने, बार-बार क्रोध व कटु विवाद, वर्चस्व की होड़ तथा "
+                "वैवाहिक जीवन में भारी मानसिक अशांति का संकेत देता है। दोनों में अहंकार का त्याग व धैर्य अत्यंत आवश्यक होगा।"
+            )
+        elif is_enemy_lords:
+            vyavahar_title = "लग्नेश शत्रुता (वैचारिक द्वंद्व, हठ व मतभेद)"
+            vyavahar_score = 48
+            vyavahar_desc = (
+                f"वर के लग्नेश ({g_lagna_lord}) और कन्या के लग्नेश ({b_lagna_lord}) में नैसर्गिक शत्रुता है। "
+                "दोनों की कार्यशैली, प्राथमिकताओं और सोचने के तरीके में बड़ा अंतर रहेगा। "
+                "एक-दूसरे पर अपनी राय थोपने से दैनिक जीवन में बार-बार तनाव व मनमुटाव की स्थिति बनेगी।"
+            )
+        elif lagna_dist in (2, 12):
+            vyavahar_title = "लग्न द्विर्द्वादश स्थिति (प्राथमिकताओं व सोच में अंतर)"
+            vyavahar_score = 56
+            vyavahar_desc = (
+                f"वर व कन्या के लग्न परस्पर २/१२ संबंध में हैं। जीवन मूल्यों, खर्च करने की आदत तथा प्राथमिकताओं में भिन्नता रहेगी। "
+                "धीरज व एक-दूसरे की व्यक्तिगत स्वतंत्रता का आदर करने पर ही दांपत्य संतुलित रहेगा।"
+            )
+        elif g_lagna_lord == b_lagna_lord:
             vyavahar_title = "समान लग्नेश (अत्युत्तम वैचारिक सामंजस्य)"
             vyavahar_score = 95
             vyavahar_desc = (
@@ -359,24 +426,16 @@ class MilanService:
                 "दोनों के जीवन मूल्य, रुचियां एवं सोचने का दृष्टिकोण एक जैसा रहेगा। "
                 "पारस्परिक समझदारी, आदर एवं भावनात्मक निकटता उच्च कोटि की रहेगी।"
             )
-        elif b_lagna_lord in NATURAL_FRIENDS.get(g_lagna_lord, []) and g_lagna_lord in NATURAL_FRIENDS.get(b_lagna_lord, []):
+        elif is_friend_lords:
             vyavahar_title = "परस्पर स्वाभाविक मित्र लग्नेश (सद्भाव एवं सहयोग)"
             vyavahar_score = 88
             vyavahar_desc = (
                 f"वर के लग्नेश ({g_lagna_lord}) एवं कन्या के लग्नेश ({b_lagna_lord}) आपस में स्वाभाविक मित्र हैं। "
                 "विपरीत परिस्थितियों में भी दोनों एक-दूसरे का संबल बनेंगे। आपसी संवाद मधुर एवं उत्साहवर्धक रहेगा।"
             )
-        elif b_lagna_lord in NATURAL_ENEMIES.get(g_lagna_lord, []) or g_lagna_lord in NATURAL_ENEMIES.get(b_lagna_lord, []):
-            vyavahar_title = "भिन्न दृष्टिकोण (परस्पर धैर्य एवं समझदारी आवश्यक)"
-            vyavahar_score = 65
-            vyavahar_desc = (
-                f"वर के लग्नेश ({g_lagna_lord}) और कन्या के लग्नेश ({b_lagna_lord}) में नैसर्गिक शत्रुता है। "
-                "स्वभाव, निर्णय लेने की गति अथवा प्राथमिकताओं में अंतर हो सकता है। "
-                "अहंकार के टकराव से बचकर परस्पर विचारों का सम्मान करना दांपत्य को सुखद बनाएगा।"
-            )
         else:
             vyavahar_title = "तटस्थ/सम भाव लग्नेश (व्यावहारिक संतुलन)"
-            vyavahar_score = 78
+            vyavahar_score = 75
             vyavahar_desc = (
                 f"वर के लग्नेश ({g_lagna_lord}) व कन्या के लग्नेश ({b_lagna_lord}) सम भाव में हैं। "
                 "दांपत्य जीवन में व्यावहारिक संतुलन रहेगा। सामान्य समझदारी से सभी पारिवारिक दायित्व सुचारू रहेंगे।"
@@ -398,7 +457,7 @@ class MilanService:
         else:
             element_desc = f"वर ({g_elem}) व कन्या ({b_elem}) का स्वभाव भिन्न शैलियों का है; व्यावहारिक तालमेल से मधुरता रहेगी।"
 
-        # 2. Relationship Reliability & Marital Longevity
+        # 2. Relationship Reliability & Marital Longevity (महर्षि जैमिनी उपपद लग्न UL सूत्र)
         g_ul_name = "Libra"
         b_ul_name = "Gemini"
         g_ul_id = 7
@@ -411,7 +470,22 @@ class MilanService:
             b_ul_name = b_chart.jaimini.arudha_pada_names.get("UL", "Gemini")
 
         ul_dist = ((b_ul_id - g_ul_id) % 12) + 1
-        if ul_dist in (1, 5, 9, 7):
+        if ul_dist in (6, 8):
+            rel_title = "उपपद षडाष्टक दोष (अविश्वास, दरार व विच्छेद का जोखिम)"
+            rel_score = 38
+            rel_desc = (
+                f"महर्षि जैमिनी उपपद सूत्र अनुसार वर का उपपद ({g_ul_name}) व कन्या का उपपद ({b_ul_name}) "
+                "परस्पर ६/८ (षडाष्टक) स्थिति में हैं। यह योग दांपत्य में अविश्वास, भावनात्मक अलगाव, बाहरी हस्तक्षेप "
+                "अथवा विधिक विवाद/दांपत्य विच्छेद (Separation/Divorce) का प्रबल जोखिम दर्शाता है। अत्यंत धैर्य व सतर्कता आवश्यक है।"
+            )
+        elif ul_dist in (2, 12):
+            rel_title = "उपपद द्विर्द्वादश स्थिति (पारिवारिक दूरी व व्यय)"
+            rel_score = 52
+            rel_desc = (
+                f"उपपद लग्न परस्पर २/१२ स्थिति में हैं। दोनों के मध्य भावनात्मक दूरी, किसी एक का बाहर रहना "
+                "अथवा ससुराल पक्ष से तनाव की आशंका रहती है। खुलापन व पारदर्शिता जरूरी है।"
+            )
+        elif ul_dist in (1, 5, 9, 7):
             rel_title = "अटूट दांपत्य निष्ठा एवं दीर्घायु संबंध"
             rel_score = 92
             rel_desc = (
@@ -419,23 +493,15 @@ class MilanService:
                 "परस्पर त्रिकोण अथवा समसप्तक में हैं। यह जीवनभर एक-दूसरे के प्रति समर्पण, विश्वास, सामाजिक मर्यादा "
                 "तथा संकटों में भी कभी साथ न छोड़ने का पक्का योग बनाता है।"
             )
-        elif ul_dist in (3, 4, 10, 11):
-            rel_title = "स्थिर एवं अनुकूल दांपत्य निष्ठा"
-            rel_score = 82
+        else:
+            rel_title = "स्थिर एवं सामान्य दांपत्य निष्ठा"
+            rel_score = 76
             rel_desc = (
                 f"दोनों के उपपद लग्न ({g_ul_name} व {b_ul_name}) केंद्र व उपचय संबंध में हैं। "
-                "विवाह के उपरांत दोनों में आपसी भरोसा दिनों-दिन गहरा होगा और पारिवारिक संबंध सुदृढ़ रहेंगे।"
-            )
-        else:
-            rel_title = "पारदर्शिता एवं सतर्कता आवश्यक"
-            rel_score = 68
-            rel_desc = (
-                f"दोनों के उपपद लग्न ({g_ul_name} व {b_ul_name}) परस्पर २/१२ या ६/८ स्थिति में हैं। "
-                "दांपत्य में किसी तीसरे व्यक्ति या बाहरी रिश्तेदारों की बातों में आकर संदेह न करें; "
-                "आपसी खुलापन व पारदर्शिता संबंध को अटूट बनाए रखेगी।"
+                "विवाह के उपरांत दोनों में आपसी भरोसा सामान्य रूप से बना रहेगा।"
             )
 
-        # 3. Progeny / Children Analysis & Beeja/Kshetra Sphuta
+        # 3. Progeny / Children Analysis & Beeja/Kshetra Sphuta (फलदीपिका व जातक पारिजात)
         bs_long = (g_chart.planets["Sun"].longitude + g_chart.planets["Venus"].longitude + g_chart.planets["Jupiter"].longitude) % 360.0
         bs_sign_id, bs_sign_name, bs_nav_id, bs_nav_name, bs_s_odd, bs_n_odd = self._get_sphuta_details(bs_long)
 
@@ -446,11 +512,11 @@ class MilanService:
         elif bs_s_odd or bs_n_odd:
             bs_status = "मध्यम बीज बल"
             bs_desc = f"बीज स्फुट ({bs_sign_name} राशि, {bs_nav_name} नवांश) में एक विषम व एक सम है। वर का बीज बल संतुलित है, समय पर संतान प्राप्ति होगी।"
-            bs_score = 75
+            bs_score = 72
         else:
-            bs_status = "अल्प/संवेदनशील बीज बल"
-            bs_desc = f"बीज स्फुट ({bs_sign_name} राशि, {bs_nav_name} नवांश) दोनों सम राशियों में हैं। सूर्य अर्घ्य व देवगुरु बृहस्पति की उपासना हितकर रहेगी।"
-            bs_score = 55
+            bs_status = "अल्प/कमजोर बीज बल (दोष युक्त)"
+            bs_desc = f"बीज स्फुट ({bs_sign_name} राशि, {bs_nav_name} नवांश) दोनों सम राशियों में हैं। शास्त्रानुसार यह शुक्र/वीर्य दुर्बलता व संतान प्राप्ति में बाधा दर्शाता है।"
+            bs_score = 42
 
         ks_long = (b_chart.planets["Moon"].longitude + b_chart.planets["Mars"].longitude + b_chart.planets["Jupiter"].longitude) % 360.0
         ks_sign_id, ks_sign_name, ks_nav_id, ks_nav_name, ks_s_odd, ks_n_odd = self._get_sphuta_details(ks_long)
@@ -462,48 +528,67 @@ class MilanService:
         elif (not ks_s_odd) or (not ks_n_odd):
             ks_status = "मध्यम क्षेत्र बल"
             ks_desc = f"क्षेत्र स्फुट ({ks_sign_name} राशि, {ks_nav_name} नवांश) में एक सम व एक विषम है। मातृत्व क्षमता सामान्य व संतुलित है।"
-            ks_score = 75
+            ks_score = 72
         else:
-            ks_status = "अल्प/संवेदनशील क्षेत्र बल"
-            ks_desc = f"क्षेत्र स्फुट ({ks_sign_name} राशि, {ks_nav_name} नवांश) दोनों विषम राशियों में हैं। गर्भाधान पूर्व संतान गोपाल मंत्र का जप कल्याणकारी रहेगा।"
-            ks_score = 55
+            ks_status = "अल्प/कमजोर क्षेत्र बल (दोष युक्त)"
+            ks_desc = f"क्षेत्र स्फुट ({ks_sign_name} राशि, {ks_nav_name} नवांश) दोनों विषम राशियों में हैं। शास्त्रानुसार यह गर्भाधान में संवेदनशीलता व बाधा का संकेत है।"
+            ks_score = 42
 
         santana_avg = round((bs_score + ks_score) / 2)
-        if santana_avg >= 85:
+        if (bs_score <= 45) and (ks_score <= 45):
+            children_count = "संतान हीनता / घोर विलंब व बाधा (Severe Progeny Affliction)"
+            santana_avg = 35
+            lineage_text = (
+                "फलदीपिका व जातक पारिजात अनुसार वर का बीज स्फुट और कन्या का क्षेत्र स्फुट दोनों ही पूर्णतः कमजोर व प्रतिकूल स्थिति में हैं। "
+                "यह योग प्राकृतिक गर्भाधान में भारी अवरोध, शुक्राणु/अंडाणु दुर्बलता, गर्भस्राव अथवा संतानहीनता का संकेत देता है। "
+                "बिना गहन चिकित्सकीय उपचार एवं संतान गोपाल/हरिवंश पुराण अनुष्ठान के संतान सुख में घोर संशय रहेगा।"
+            )
+            first_child_desc = "प्राकृतिक रूप से प्रथम संतान में अत्यधिक विलंब अथवा गहन चिकित्सकीय प्रक्रिया का संकेत।"
+        elif (bs_score <= 45) or (ks_score <= 45):
+            children_count = "संतान में विलंब व संवेदनशीलता (Medical & Astrological Care Needed)"
+            santana_avg = 52
+            lineage_text = (
+                "एक पक्ष का स्फुट पूर्णतः कमजोर है, जिससे प्राकृतिक गर्भधारण में संवेदनशीलता व २ से ४ वर्ष का विलंब संभव है। "
+                "चिकित्सकीय परामर्श तथा धार्मिक अनुष्ठान के उपरांत ही संतान सुख की प्राप्ति होगी।"
+            )
+            first_child_desc = "प्रथम संतान प्राप्ति में समय लग सकता है; धैर्य व चिकित्सकीय देखरेख आवश्यक है।"
+        elif santana_avg >= 85:
             children_count = "२ से ३ संतान का प्रबल एवं उत्तम योग"
             lineage_text = (
                 "बीज व क्षेत्र स्फुट के अत्यंत अनुकूल होने से वंश वृद्धि निर्बाध रूप से होगी। "
-                "संतान सद्गुणी, आज्ञाकारी, कुलदीपक एवं परिवार का यश बढ़ाने वाली होगी। "
-                "माता-पिता को संतान का पूर्ण सुख एवं वृद्धावस्था में उत्तम सेवा प्राप्त होगी।"
+                "संतान सद्गुणी, आज्ञाकारी, कुलदीपक एवं परिवार का यश बढ़ाने वाली होगी।"
             )
             first_child_desc = "प्रथम संतान ओजस्वी, नेतृत्व क्षमता से युक्त एवं परिवार के लिए भाग्यशाली सिद्ध होगी।"
-        elif santana_avg >= 70:
+        else:
             children_count = "१ से २ संतान का सुखद योग"
             lineage_text = (
                 "संतान सुख सामान्य समय पर प्राप्त होगा। परिवार में खुशहाली रहेगी तथा संतान विद्या व संस्कार में आगे रहेगी।"
             )
             first_child_desc = "प्रथम संतान बुद्धिमान, शांत स्वभाव एवं माता-पिता के प्रति समर्पित रहेगी।"
-        else:
-            children_count = "१ संतान का योग (धार्मिक अनुष्ठान अनुशंसित)"
-            lineage_text = (
-                "संतान प्राप्ति में किंचित विलंब या संवेदनशीलता संभव है। विवाह उपरांत भगवान कृष्ण के "
-                "संतान गोपाल स्वरूप का नियमित पूजन व चिकित्सकीय मार्गदर्शन से पूर्ण संतति सुख मिलेगा।"
-            )
-            first_child_desc = "संतान धर्मपरायण एवं कुल परंपरा का निर्वहन करने वाली होगी।"
 
-        # 4. Sasural Paksha se Sahayog & Relatives (ससुराल पक्ष, सास, ससुर, देवर, ननद आदि)
-        # 4.1 Groom's Sasural (वर का ससुराल पक्ष):
+        # 4. Sasural Paksha se Sahayog & Relatives (ससुराल पक्ष, सास, ससुर, देवर, ननद आदि - भावत् भावम् व BPHS)
+        # 4.1 Groom's Sasural (वर का ससुराल पक्ष - अष्टम भाव):
         g_h8_planets = [p for p, obj in g_chart.planets.items() if obj.house_from_lagna == 8]
-        if not g_h8_planets:
+        has_g_8th_malefic = any(p in ["Mars", "Saturn", "Rahu", "Ketu"] for p in g_h8_planets)
+        if has_g_8th_malefic:
+            groom_sasural_desc = "वर के ८वें भाव में क्रूर/पाप ग्रह होने से ससुराल पक्ष से अनावश्यक दखलंदाजी, आर्थिक विवाद, अपमान अथवा धोखे का योग है। वर को ससुराल से आर्थिक लेन-देन या साझेदारी पूर्णतः टालनी चाहिए।"
+            groom_sasural_score = 42
+        elif not g_h8_planets:
             groom_sasural_desc = "वर को ससुराल पक्ष से भरपूर मान-सम्मान, आतिथ्य एवं स्नेह मिलेगा। ससुराल वाले वर की प्रतिष्ठा व निर्णयों का पूर्ण आदर करेंगे।"
+            groom_sasural_score = 88
         else:
-            groom_sasural_desc = "वर को ससुराल पक्ष से औपचारिक व आदरयुक्त संबंध बनाए रखना चाहिए। आर्थिक लेन-देन में पारदर्शिता रखें।"
+            groom_sasural_desc = "वर को ससुराल पक्ष से औपचारिक व आदरयुक्त संबंध बनाए रखना चाहिए। आर्थिक लेन-देन में पूर्ण पारदर्शिता रखें।"
+            groom_sasural_score = 74
 
-        # 4.2 Bride's general Sasural (कन्या का ससुराल में स्थान):
-        bride_sasural_desc = (
-            "कन्या को ससुराल में कुलवधू के रूप में उचित सम्मान व बेटी जैसा स्नेह मिलने का सुंदर योग है। "
-            "कन्या अपनी समझदारी व सेवाभाव से ससुराल के सभी सदस्यों का दिल जीत लेगी।"
-        )
+        # 4.2 Bride's general Sasural (कन्या का ससुराल में स्थान - अष्टम भाव):
+        b_h8_planets = [p for p, obj in b_chart.planets.items() if obj.house_from_lagna == 8]
+        has_b_8th_malefic = any(p in ["Mars", "Saturn", "Rahu", "Ketu"] for p in b_h8_planets)
+        if has_b_8th_malefic:
+            bride_sasural_desc = "कन्या के ८वें (मांगल्य व ससुराल सुख) भाव में पाप प्रभाव होने से ससुराल में उपेक्षा, कठोर नियम, मानसिक तनाव अथवा प्रताड़ना की आशंका का योग है। कन्या को ससुराल में बहुत सतर्क, धैर्यवान व आत्मविश्वासी रहना होगा।"
+            bride_sasural_score = 40
+        else:
+            bride_sasural_desc = "कन्या को ससुराल में कुलवधू के रूप में उचित सम्मान व बेटी जैसा स्नेह मिलने का सुंदर योग है। कन्या अपनी समझदारी से ससुराल के सभी सदस्यों का दिल जीत लेगी।"
+            bride_sasural_score = 88
 
         # 4.3 ससुर (Father-in-law / श्वसुर संबंध):
         # Shastriya rule: 9th from 7th = 3rd house of Bride
@@ -515,31 +600,33 @@ class MilanService:
 
         has_benefic_3rd = any(p in ["Jupiter", "Venus", "Mercury", "Moon"] for p in b_3rd_planets)
         has_malefic_3rd = any(p in ["Saturn", "Rahu", "Ketu", "Mars"] for p in b_3rd_planets)
+        is_3rd_lord_trika = (b_3rd_lord_h in (6, 8, 12))
 
-        if has_benefic_3rd or b_3rd_lord_h in (1, 3, 5, 9, 10, 11):
+        if has_malefic_3rd or is_3rd_lord_trika:
+            sasur_title = "ससुर से वैचारिक दूरी, कठोरता व आलोचना योग (Critical & Strained)"
+            sasur_status = "कटु / तनावपूर्ण संबंध (High Tension)"
+            sasur_score = 38
+            sasur_desc = (
+                "कन्या के ३रे भाव (सप्तम से नवम - ससुर स्थान) पर क्रूर/पाप प्रभाव है। "
+                "ससुर का दृष्टिकोण कन्या के प्रति अत्यधिक आलोचनात्मक, शंकालु, कठोर या उपेक्षापूर्ण हो सकता है। "
+                "छोटी बातों पर असंतोष प्रकट हो सकता है। कन्या को ससुर के समक्ष अत्यधिक मौन, संयम व विनम्रता बरतनी होगी।"
+            )
+        elif has_benefic_3rd or b_3rd_lord_h in (1, 3, 5, 9, 10, 11):
             sasur_title = "पुत्रीवत वात्सल्य एवं संरक्षक ससुर योग (Paternal Guidance & Blessings)"
             sasur_status = "अत्यंत अनुकूल एवं स्नेहमयी"
+            sasur_score = 92
             sasur_desc = (
                 "ससुर का दृष्टिकोण अत्यंत उदार, संरक्षक एवं मार्गदर्शक रहेगा। कन्या को ससुर से पिता तुल्य मान-सम्मान व आशीर्वाद प्राप्त होगा। "
                 "परिवार के महत्वपूर्ण निर्णयों में कन्या के विचारों को सम्मान दिया जाएगा तथा वर के पिता हर परिस्थिति में उसके संबल बनेंगे।"
             )
-            sasur_score = 92
-        elif has_malefic_3rd:
-            sasur_title = "पारंपरिक अनुशासन एवं मर्यादा युक्त संबंध (Disciplined & Traditional)"
-            sasur_status = "मर्यादापूर्ण एवं अनुशासित"
-            sasur_desc = (
-                "ससुर थोड़े गंभीर, पारंपरिक नियमों का कड़ाई से पालन करने वाले अथवा अनुशासित स्वभाव के हो सकते हैं। "
-                "कन्या द्वारा समयबद्धता, शिष्टाचार, कुल परंपराओं का आदर व विनम्र संवाद रखने से संबंध सदैव गरिमामयी और सुदृढ़ बने रहेंगे।"
-            )
-            sasur_score = 75
         else:
-            sasur_title = "संतुलित सौहार्द एवं पारस्परिक आदर (Balanced & Cordial)"
-            sasur_status = "संतुलित एवं सौहार्दपूर्ण"
+            sasur_title = "संतुलित सौहार्द एवं पारस्परिक आदर (Balanced & Formal)"
+            sasur_status = "संतुलित एवं शिष्टाचारपूर्ण"
+            sasur_score = 75
             sasur_desc = (
                 "ससुर के साथ व्यावहारिक, शांत व सौहार्दपूर्ण संबंध रहेंगे। दैनिक पारिवारिक कार्यों में कोई अनावश्यक हस्तक्षेप नहीं होगा "
                 "और परस्पर मान-सम्मान सदैव बना रहेगा।"
             )
-            sasur_score = 84
 
         # 4.4 सासू माँ (Mother-in-law / सासू माँ संबंध):
         # Shastriya rule: 4th from 7th = 10th house of Bride
@@ -551,86 +638,96 @@ class MilanService:
 
         has_benefic_10th = any(p in ["Jupiter", "Venus", "Mercury", "Moon"] for p in b_10th_planets)
         has_malefic_10th = any(p in ["Mars", "Saturn", "Rahu", "Ketu", "Sun"] for p in b_10th_planets)
+        is_10th_lord_trika = (b_10th_lord_h in (6, 8, 12))
 
-        if has_benefic_10th or (b_10th_lord_h in (1, 2, 4, 5, 7, 9, 10, 11) and not has_malefic_10th):
+        if has_malefic_10th or is_10th_lord_trika:
+            saas_title = "सास-बहू अधिकार संघर्ष एवं शीतयुद्ध योग (High Friction & Dominance)"
+            saas_status = "गंभीर कलह व प्रभुत्व संघर्ष (Severe Friction)"
+            saas_score = 35
+            saas_desc = (
+                "कन्या के १०वें भाव (सप्तम से चतुर्थ - सासू माँ स्थान) पर क्रूर ग्रहों का प्रभाव है। "
+                "सासू माँ का स्वभाव अत्यधिक अधिकारवादी, टोका-टोकी करने वाला अथवा असंतुष्ट रहने वाला हो सकता है। "
+                "गृह-प्रबंधन, रीति-रिवाजों और रसोई पर नियंत्रण को लेकर सास-बहू में लगातार तनातनी, शीतयुद्ध या तीखी बहस की प्रबल आशंका है। "
+                "परिवार में शांति हेतु अलग आवास (nuclear setup) या असीम धैर्य की आवश्यकता पड़ेगी।"
+            )
+        elif has_benefic_10th or (b_10th_lord_h in (1, 2, 4, 5, 7, 9, 10, 11) and not has_malefic_10th):
             saas_title = "मातृवत वात्सल्य एवं उत्तम गृह-प्रबंधन योग (Motherly Affection & Household Synergy)"
             saas_status = "मातृवत स्नेह एवं कुशल तालमेल"
+            saas_score = 91
             saas_desc = (
                 "सासू माँ ममतामयी, कुशल गृहस्वामिनी एवं कन्या को सगी पुत्री जैसा स्नेह देने वाली होंगी। "
                 "रसोई, रीति-रिवाजों व गृहस्थी के संचालन में दोनों के बीच सुंदर तालमेल रहेगा। "
                 "सासू माँ कन्या को घर की बागडोर सौंपकर प्रसन्न रहेंगी तथा सास-बहू में मां-बेटी जैसा प्यार रहेगा।"
             )
-            saas_score = 90
-        elif has_malefic_10th:
-            saas_title = "स्वाभिमान एवं कार्यशैली में संतुलन अपेक्षित (Patience & Tact Needed)"
-            saas_status = "सतर्कता एवं धैर्य अपेक्षित"
-            saas_desc = (
-                "सासू माँ का स्वभाव थोड़ा प्रभुत्वशाली (authoritative) या कार्यप्रणाली में पूर्णता (perfection) चाहने वाला हो सकता है। "
-                "शुरुआती दौर में विचारों का अंतर आ सकता है। कन्या को सासू माँ की आदतों व अनुभवों का सम्मान करते हुए धैर्य, "
-                "मीठी वाणी व सेवाभाव से काम लेना चाहिए, जिससे शीघ्र ही अगाध विश्वास स्थापित होगा।"
-            )
-            saas_score = 72
         else:
             saas_title = "सहज तालमेल एवं परस्पर सम्मान (Cooperative & Respectful)"
             saas_status = "सहयोगात्मक एवं शांत"
+            saas_score = 75
             saas_desc = (
                 "सासू माँ और बहू के मध्य व्यावहारिक, सहयोगात्मक और सम्मानजनक संबंध रहेंगे। "
                 "दोनों एक-दूसरे के कार्यक्षेत्र व स्वतंत्रता का आदर करेंगे और घर का वातावरण शांत रहेगा।"
             )
-            saas_score = 82
 
         # 4.5 देवर / जेठ (Husband's Brothers):
         # Shastriya rule: 3rd from 7th = 9th house (Younger / Devar), 11th from 7th = 5th house (Elder / Jeth)
         b_9th_planets = [p for p, obj in b_chart.planets.items() if obj.house_from_lagna == 9]
         b_5th_planets = [p for p, obj in b_chart.planets.items() if obj.house_from_lagna == 5]
-        has_affliction_brothers = any(p in ["Saturn", "Rahu", "Mars"] for p in b_9th_planets + b_5th_planets)
+        has_affliction_brothers = any(p in ["Saturn", "Rahu", "Mars", "Ketu"] for p in b_9th_planets + b_5th_planets)
 
-        if not has_affliction_brothers:
+        if has_affliction_brothers:
+            devar_title = "देवर/जेठ से तनातनी व संपत्ति/अहंकार विवाद योग (Conflict & Distance)"
+            devar_status = "तनाव व विवाद की आशंका (High Risk)"
+            devar_score = 40
+            devar_desc = (
+                "देवर या जेठ के साथ वैचारिक मतभेद, पारिवारिक राजनीति, संपत्ति या व्यवहार को लेकर कड़वाहट पैदा हो सकती है। "
+                "आदर में कमी या घरेलू मामलों में अवांछित हस्तक्षेप का जोखिम है। पारिवारिक मामलों में स्पष्ट दूरी व सतर्कता जरूरी है।"
+            )
+        else:
             devar_title = "स्नेहपूर्ण देवर-भाभी व जेठ आदर योग (Harmonious Brother-in-Law Bond)"
             devar_status = "मित्रवत, आदरयुक्त एवं सहयोगात्मक"
+            devar_score = 90
             devar_desc = (
                 "देवर भाभी को बड़ी बहन अथवा माँ तुल्य आदर देगा और हर घरेलू व सामाजिक कार्य में बढ़-चढ़कर साथ देगा। "
                 "जेठ के साथ अत्यंत मर्यादित, सौम्य व सम्माननीय संबंध रहेंगे। परिवार में भ्रातृ-सौहार्द बना रहेगा।"
             )
-            devar_score = 88
-        else:
-            devar_title = "मर्यादित एवं व्यावहारिक संबंध योग (Formal & Respectful)"
-            devar_status = "मर्यादित एवं व्यावहारिक"
-            devar_desc = (
-                "देवर व जेठ के साथ संबंध व्यावहारिक और मर्यादित रहेंगे। पारिवारिक दायित्वों व वित्तीय मामलों में "
-                "स्पष्टता रखने तथा अनावश्यक तर्क-वितर्क से दूर रहने पर सौहार्द बना रहेगा।"
-            )
-            devar_score = 75
 
         # 4.6 ननद (Husband's Sister) एवं साला/साली (Wife's Siblings):
         # Mercury & Venus karakas, plus 3rd from lagna / 9th from lagna
         merc_obj = b_chart.planets.get("Mercury")
         merc_h = merc_obj.house_from_lagna if merc_obj else 1
-        if merc_h not in (6, 8, 12):
+        if merc_h in (6, 8, 12):
+            nanad_title = "ननद से वैमनस्य एवं साले-साली से कलह योग (Gossip & Jealousy Risk)"
+            nanad_status = "ईर्ष्या व व्यंग्य का जोखिम (Tension Prone)"
+            nanad_score = 42
+            nanad_desc = (
+                "ननद के साथ ईर्ष्या, व्यंग्यात्मक बातें, चुगली या मायके-ससुराल की तुलना के कारण दांपत्य में दरार पड़ने का जोखिम है। "
+                "वर को भी साले-साली से कटाक्ष या असहयोग मिल सकता है। आंतरिक बातों को इनके सामने साझा करने से पूर्ण परहेज करें।"
+            )
+        else:
             nanad_title = "सखीवत ननद-भाभी एवं मधुर साला-साली संबंध (Sisterly Warmth & Joyful Bond)"
             nanad_status = "सहेलीवत स्नेह एवं सखी भाव"
+            nanad_score = 90
             nanad_desc = (
                 "कन्या और ननद के बीच सहेलियों (बहनों) जैसा सहज, खुला व आत्मीय संबंध रहेगा। दोनों सुख-दुख साझा करेंगी। "
                 "वहीं वर को भी अपने साले व सालियों से भरपूर आदर, अपनत्व एवं हास्य-विनोद पूर्ण वातावरण प्राप्त होगा।"
             )
-            nanad_score = 89
-        else:
-            nanad_title = "पारस्परिक समझ व आदर योग (Warm with Mindful Speech)"
-            nanad_status = "संवाद में मधुरता अपेक्षित"
-            nanad_desc = (
-                "ननद व साले-साली के साथ संबंध सामान्य व अच्छे रहेंगे। कभी-कभार हंसी-मजाक में ग़लतफ़हमी से बचने हेतु "
-                "स्पष्टता व मधुर वाणी रखें। त्योहारों पर उपहारों के आदान-प्रदान से रिश्ते अधिक घनिष्ठ होंगे।"
-            )
-            nanad_score = 78
 
         sasural_score = round((sasur_score * 0.25) + (saas_score * 0.30) + (devar_score * 0.25) + (nanad_score * 0.20))
 
-        # 5. Patni ka Sahayog & Bhagyodaya
+        # 5. Patni ka Sahayog & Bhagyodaya (सप्तमेश भाव स्थिति - BPHS)
         g_7th_sign_id = ((g_chart.lagna_sign_id - 1 + 6) % 12) + 1
         g_7th_lord = SIGN_LORDS.get(SIGN_NAMES[g_7th_sign_id - 1], "Venus")
         g_7th_lord_h = g_chart.planets.get(g_7th_lord).house_from_lagna if g_chart.planets.get(g_7th_lord) else 7
 
-        if g_7th_lord_h in (1, 2, 4, 7, 9, 10, 11):
+        if g_7th_lord_h in (6, 8, 12):
+            bhagyodaya_title = "विवाह उपरांत वित्तीय बाधाएं व व्यय योग (Post-Marital Financial Hurdles)"
+            prosperity_score = 42
+            bhagyodaya_desc = (
+                f"वर की कुण्डली में सप्तमेश ({g_7th_lord}) {g_7th_lord_h}वें (त्रिक/हानि) भाव में स्थित हैं। "
+                "बृहत्पाराशर होराशास्त्र अनुसार विवाह के पश्चात अचानक अनपेक्षित खर्च, कर्ज, व्यापार/नौकरी में उतार-चढ़ाव या "
+                "स्वास्थ्य पर व्यय का योग बनता है। किसी भी बड़े वित्तीय निर्णय में जल्दबाजी न करें तथा बचत पर विशेष ध्यान दें।"
+            )
+        elif g_7th_lord_h in (1, 2, 4, 7, 9, 10, 11):
             bhagyodaya_title = "विवाह उपरांत तीव्र भाग्योदय योग (Post-Marital Prosperity)"
             prosperity_score = 92
             bhagyodaya_desc = (
@@ -640,7 +737,7 @@ class MilanService:
             )
         else:
             bhagyodaya_title = "स्थिर एवं संतुलित भाग्योदय"
-            prosperity_score = 78
+            prosperity_score = 74
             bhagyodaya_desc = (
                 "विवाह के बाद दोनों के संयुक्त प्रयासों व बचत की नीति से परिवार की वित्तीय स्थिति निरंतर सुदृढ़ होगी।"
             )
@@ -660,13 +757,22 @@ class MilanService:
                 "को नई ऊंचाइयों पर ले जाएगी। उसकी उपस्थिति से घर में शांति व बरकत रहेगी।"
             )
 
-        # 6. Vedic Remedies
-        remedies = [
-            "विवाह के उपरांत वर-वधू को संयुक्त रूप से 'गौरी-शंकर रुद्राक्ष' सिद्ध करवाकर पूजा कक्ष में रखना चाहिए।",
-            "प्रत्येक शुक्रवार अथवा पूर्णिमा को खीर का भोग लगाकर 'श्री सूक्त' एवं 'विष्णु सहस्रनाम' का संयुक्त पाठ करें।",
-            "संतान सुख एवं वंश वृद्धि में पूर्ण अनुकूलता हेतु दंपत्ति 'संतान गोपाल मंत्र' का नित्य ११ बार जप करें।",
-            "कन्या द्वारा करवाचौथ, तीज या नवरात्रि में वृद्ध सुहागिन महिलाओं को सुहाग सामग्री व मीठा फल भेंट करना अत्यंत शुभ रहेगा।"
-        ]
+        # 6. Vedic Remedies (दोषों के आधार पर वास्तविक विशिष्ट शास्त्रीय उपाय)
+        remedies = []
+        if vyavahar_score < 50:
+            remedies.append("लग्न षडाष्टक / शत्रुता निवारण हेतु वर-वधू को भगवान शिव व माता पार्वती का संयुक्त रुद्राभिषेक कराना चाहिए।")
+        if rel_score < 50:
+            remedies.append("उपपद दोष व दांपत्य स्थायित्व हेतु दोनों को संयुक्त रूप से 'गौरी-शंकर रुद्राक्ष' सिद्ध करवाकर पूजा कक्ष में स्थापित करना चाहिए।")
+        if santana_avg < 60:
+            remedies.append("संतान बाधा निवारण एवं वंश वृद्धि हेतु दंपत्ति को नित्य 'संतान गोपाल मंत्र' (ॐ देवकीसुत गोविंद...) का १०८ बार जप करना चाहिए।")
+        if saas_score < 50:
+            remedies.append("सास-बहू कलह शांति हेतु कन्या को चांदी का चौकोर टुकड़ा अपने पास रखना चाहिए एवं पूर्णिमा को सासू माँ के चरण स्पर्श करने चाहिए।")
+        if prosperity_score < 50:
+            remedies.append("सप्तमेश के त्रिक भाव में होने पर ऋण व आर्थिक हानि से बचने हेतु दंपत्ति को शुक्रवार को 'श्री सूक्त' व 'कनकधारा स्तोत्र' का पाठ करना चाहिए।")
+
+        # General standard remedies
+        remedies.append("प्रत्येक शुक्रवार अथवा पूर्णिमा को खीर का भोग लगाकर 'विष्णु सहस्रनाम' का संयुक्त पाठ करें।")
+        remedies.append("कन्या द्वारा करवाचौथ, तीज या नवरात्रि में वृद्ध सुहागिन महिलाओं को सुहाग सामग्री व मीठा फल भेंट करना अत्यंत शुभ रहेगा।")
 
         overall_rating = round((vyavahar_score + rel_score + santana_avg + sasural_score + prosperity_score) / 5)
 
