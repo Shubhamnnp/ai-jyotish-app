@@ -1,0 +1,3848 @@
+{
+  "metadata": {
+    "grantha": "Phaladeepika",
+    "count": 120
+  },
+  "rules": [
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H1",
+      "rule_name_hi": "गुलिक/मांदी लग्न में",
+      "rule_name_en": "UPAGRAHA MANDI H1",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका: गुलिक/मांदी लग्न में। शारीरिक संवेदनशीलता, चंचल नेत्र, स्वतंत्र स्वभाव परंतु स्वास्थ्य साधना जरूरी।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H2",
+      "rule_name_hi": "गुलिक/मांदी द्वितीय भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H2",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका: गुलिक/मांदी द्वितीय भाव में। कटु वाणी की प्रवृत्ति, खान-पान में संयम रखें, संचित धन की रक्षा करें।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H3",
+      "rule_name_hi": "गुलिक/मांदी तृतीय भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H3",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका: गुलिक/मांदी तृतीय भाव में। पराक्रम वृद्धि, शत्रुओं पर विजय, साहसी एवं स्वतंत्र कार्यशैली।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H4",
+      "rule_name_hi": "गुलिक/मांदी चतुर्थ भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H4",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "-",
+        "strength_base": 0.6,
+        "description_hi": "फलदीपिका: गुलिक/मांदी चतुर्थ भाव में। पारिवारिक शांति व माता के स्वास्थ्य का ध्यान रखें; गृह निर्माण में विलंब।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H5",
+      "rule_name_hi": "गुलिक/मांदी पंचम भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H5",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका: गुलिक/मांदी पंचम भाव में। मंत्र सिद्धि में बाधा, संतान चिंता; भगवान शिव की नित्य उपासना हितकर।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H6",
+      "rule_name_hi": "गुलिक/मांदी षष्ठम भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H6",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "फलदीपिका: गुलिक/मांदी षष्ठम भाव में। शत्रु संहारक योग, रोगों से मुक्ति, कोर्ट-कचहरी में विजय प्राप्त।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H7",
+      "rule_name_hi": "गुलिक/मांदी सप्तम भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H7",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका: गुलिक/मांदी सप्तम भाव में। दांपत्य में वैचारिक तालमेल रखें; साझेदारों की सत्यता परखें।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H8",
+      "rule_name_hi": "गुलिक/मांदी अष्टम भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H8",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "-",
+        "strength_base": 0.6,
+        "description_hi": "फलदीपिका: गुलिक/मांदी अष्टम भाव में। आयु वृद्धि हेतु महामृत्युंजय जप आवश्यक; गुप्त विद्याओं में आकर्षण।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H9",
+      "rule_name_hi": "गुलिक/मांदी नवम भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H9",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका: गुलिक/मांदी नवम भाव में। गुरु व पिता के प्रति आदर, धार्मिक अनुष्ठानों में नियमितता रखें।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H10",
+      "rule_name_hi": "गुलिक/मांदी दशम भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H10",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका: गुलिक/मांदी दशम भाव में। प्रशासनिक कार्यों में सफलता, समाज सेवा, तीर्थ निर्माण में योगदान।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H11",
+      "rule_name_hi": "गुलिक/मांदी एकादश भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H11",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "फलदीपिका: गुलिक/मांदी एकादश भाव में। प्रचुर धन लाभ, समस्त ऐश्वर्य की प्राप्ति, समाज में मान-सम्मान।"
+      }
+    },
+    {
+      "rule_id": "PD_UPAGRAHA_MANDI_H12",
+      "rule_name_hi": "गुलिक/मांदी द्वादश भाव में",
+      "rule_name_en": "UPAGRAHA MANDI H12",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 25 (Upagraha Phala Adhyaya)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "spiritual"
+        ],
+        "polarity": "-",
+        "strength_base": 0.6,
+        "description_hi": "फलदीपिका: गुलिक/मांदी द्वादश भाव में। धार्मिक व्यय, विदेश यात्रा, अंतर्मुखी साधना एवं एकांत प्रियता।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H1",
+      "rule_name_hi": "फलदीपिका: Sun 1वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 1",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का लग्न (तनु भाव) में शास्त्रीय फलादेश — स्वास्थ्य, आत्म-सम्मान, कांति व व्यक्तित्व से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H2",
+      "rule_name_hi": "फलदीपिका: Sun 2वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 2",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का द्वितीय (धन भाव) में शास्त्रीय फलादेश — पैतृक धन, वाणी, कुटुंब, खानपान व नेत्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H3",
+      "rule_name_hi": "फलदीपिका: Sun 3वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 3",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का तृतीय (सहज/पराक्रम) में शास्त्रीय फलादेश — बाहुबल, साहस, छोटे भाई-बहन, लेखन व संचार से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H4",
+      "rule_name_hi": "फलदीपिका: Sun 4वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 4",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का चतुर्थ (सुख भाव) में शास्त्रीय फलादेश — मातृ सुख, गृह-प्रासाद, वाहन, भूमि व मानसिक शांति से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H5",
+      "rule_name_hi": "फलदीपिका: Sun 5वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 5",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का पंचम (धी/पुत्र भाव) में शास्त्रीय फलादेश — मेधा, उच्च शिक्षा, संतान सुख, मंत्र-दीक्षा व पूर्व-पुण्य से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H6",
+      "rule_name_hi": "फलदीपिका: Sun 6वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 6",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का षष्ठम (रिपु/रोग भाव) में शास्त्रीय फलादेश — शत्रु विजय, रोग प्रतिरोध, प्रतियोगिता व सेवा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H7",
+      "rule_name_hi": "फलदीपिका: Sun 7वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 7",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का सप्तम (जाया भाव) में शास्त्रीय फलादेश — विवाह, जीवनसाथी, साझेदारी व सार्वजनिक प्रतिष्ठा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H8",
+      "rule_name_hi": "फलदीपिका: Sun 8वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 8",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का अष्टम (आयु/रंध्र भाव) में शास्त्रीय फलादेश — दीर्घायु, गूढ़ विद्याएं, वसीयत व आकस्मिक घटनाएं से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H9",
+      "rule_name_hi": "फलदीपिका: Sun 9वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 9",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का नवम (धर्म/भाग्य भाव) में शास्त्रीय फलादेश — ईश्वरीय कृपा, तीर्थाटन, पिता का सुख व उच्च ज्ञान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H10",
+      "rule_name_hi": "फलदीपिका: Sun 10वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 10",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का दशम (कर्म भाव) में शास्त्रीय फलादेश — राजकीय सत्ता, उच्च पद, आजीविका, व्यापार व यश से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H11",
+      "rule_name_hi": "फलदीपिका: Sun 11वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 11",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का एकादश (लाभ भाव) में शास्त्रीय फलादेश — प्रचुर आय, बड़े भाई-बहन, मनोकामना पूर्ति व मित्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SUN_H12",
+      "rule_name_hi": "फलदीपिका: Sun 12वें भाव में",
+      "rule_name_en": "Phaladeepika: Sun in House 12",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Sun)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Sun का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फलादेश — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H1",
+      "rule_name_hi": "फलदीपिका: Moon 1वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 1",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का लग्न (तनु भाव) में शास्त्रीय फलादेश — स्वास्थ्य, आत्म-सम्मान, कांति व व्यक्तित्व से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H2",
+      "rule_name_hi": "फलदीपिका: Moon 2वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 2",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का द्वितीय (धन भाव) में शास्त्रीय फलादेश — पैतृक धन, वाणी, कुटुंब, खानपान व नेत्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H3",
+      "rule_name_hi": "फलदीपिका: Moon 3वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 3",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का तृतीय (सहज/पराक्रम) में शास्त्रीय फलादेश — बाहुबल, साहस, छोटे भाई-बहन, लेखन व संचार से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H4",
+      "rule_name_hi": "फलदीपिका: Moon 4वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 4",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का चतुर्थ (सुख भाव) में शास्त्रीय फलादेश — मातृ सुख, गृह-प्रासाद, वाहन, भूमि व मानसिक शांति से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H5",
+      "rule_name_hi": "फलदीपिका: Moon 5वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 5",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का पंचम (धी/पुत्र भाव) में शास्त्रीय फलादेश — मेधा, उच्च शिक्षा, संतान सुख, मंत्र-दीक्षा व पूर्व-पुण्य से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H6",
+      "rule_name_hi": "फलदीपिका: Moon 6वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 6",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का षष्ठम (रिपु/रोग भाव) में शास्त्रीय फलादेश — शत्रु विजय, रोग प्रतिरोध, प्रतियोगिता व सेवा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H7",
+      "rule_name_hi": "फलदीपिका: Moon 7वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 7",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का सप्तम (जाया भाव) में शास्त्रीय फलादेश — विवाह, जीवनसाथी, साझेदारी व सार्वजनिक प्रतिष्ठा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H8",
+      "rule_name_hi": "फलदीपिका: Moon 8वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 8",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का अष्टम (आयु/रंध्र भाव) में शास्त्रीय फलादेश — दीर्घायु, गूढ़ विद्याएं, वसीयत व आकस्मिक घटनाएं से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H9",
+      "rule_name_hi": "फलदीपिका: Moon 9वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 9",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का नवम (धर्म/भाग्य भाव) में शास्त्रीय फलादेश — ईश्वरीय कृपा, तीर्थाटन, पिता का सुख व उच्च ज्ञान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H10",
+      "rule_name_hi": "फलदीपिका: Moon 10वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 10",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का दशम (कर्म भाव) में शास्त्रीय फलादेश — राजकीय सत्ता, उच्च पद, आजीविका, व्यापार व यश से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H11",
+      "rule_name_hi": "फलदीपिका: Moon 11वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 11",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का एकादश (लाभ भाव) में शास्त्रीय फलादेश — प्रचुर आय, बड़े भाई-बहन, मनोकामना पूर्ति व मित्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MOON_H12",
+      "rule_name_hi": "फलदीपिका: Moon 12वें भाव में",
+      "rule_name_en": "Phaladeepika: Moon in House 12",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Moon)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Moon का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फलादेश — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H1",
+      "rule_name_hi": "फलदीपिका: Mars 1वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 1",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का लग्न (तनु भाव) में शास्त्रीय फलादेश — स्वास्थ्य, आत्म-सम्मान, कांति व व्यक्तित्व से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H2",
+      "rule_name_hi": "फलदीपिका: Mars 2वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 2",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का द्वितीय (धन भाव) में शास्त्रीय फलादेश — पैतृक धन, वाणी, कुटुंब, खानपान व नेत्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H3",
+      "rule_name_hi": "फलदीपिका: Mars 3वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 3",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का तृतीय (सहज/पराक्रम) में शास्त्रीय फलादेश — बाहुबल, साहस, छोटे भाई-बहन, लेखन व संचार से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H4",
+      "rule_name_hi": "फलदीपिका: Mars 4वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 4",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का चतुर्थ (सुख भाव) में शास्त्रीय फलादेश — मातृ सुख, गृह-प्रासाद, वाहन, भूमि व मानसिक शांति से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H5",
+      "rule_name_hi": "फलदीपिका: Mars 5वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 5",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का पंचम (धी/पुत्र भाव) में शास्त्रीय फलादेश — मेधा, उच्च शिक्षा, संतान सुख, मंत्र-दीक्षा व पूर्व-पुण्य से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H6",
+      "rule_name_hi": "फलदीपिका: Mars 6वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 6",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का षष्ठम (रिपु/रोग भाव) में शास्त्रीय फलादेश — शत्रु विजय, रोग प्रतिरोध, प्रतियोगिता व सेवा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H7",
+      "rule_name_hi": "फलदीपिका: Mars 7वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 7",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का सप्तम (जाया भाव) में शास्त्रीय फलादेश — विवाह, जीवनसाथी, साझेदारी व सार्वजनिक प्रतिष्ठा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H8",
+      "rule_name_hi": "फलदीपिका: Mars 8वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 8",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का अष्टम (आयु/रंध्र भाव) में शास्त्रीय फलादेश — दीर्घायु, गूढ़ विद्याएं, वसीयत व आकस्मिक घटनाएं से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H9",
+      "rule_name_hi": "फलदीपिका: Mars 9वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 9",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का नवम (धर्म/भाग्य भाव) में शास्त्रीय फलादेश — ईश्वरीय कृपा, तीर्थाटन, पिता का सुख व उच्च ज्ञान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H10",
+      "rule_name_hi": "फलदीपिका: Mars 10वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 10",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का दशम (कर्म भाव) में शास्त्रीय फलादेश — राजकीय सत्ता, उच्च पद, आजीविका, व्यापार व यश से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H11",
+      "rule_name_hi": "फलदीपिका: Mars 11वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 11",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का एकादश (लाभ भाव) में शास्त्रीय फलादेश — प्रचुर आय, बड़े भाई-बहन, मनोकामना पूर्ति व मित्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MARS_H12",
+      "rule_name_hi": "फलदीपिका: Mars 12वें भाव में",
+      "rule_name_en": "Phaladeepika: Mars in House 12",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mars)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mars का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फलादेश — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H1",
+      "rule_name_hi": "फलदीपिका: Mercury 1वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 1",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का लग्न (तनु भाव) में शास्त्रीय फलादेश — स्वास्थ्य, आत्म-सम्मान, कांति व व्यक्तित्व से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H2",
+      "rule_name_hi": "फलदीपिका: Mercury 2वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 2",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का द्वितीय (धन भाव) में शास्त्रीय फलादेश — पैतृक धन, वाणी, कुटुंब, खानपान व नेत्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H3",
+      "rule_name_hi": "फलदीपिका: Mercury 3वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 3",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का तृतीय (सहज/पराक्रम) में शास्त्रीय फलादेश — बाहुबल, साहस, छोटे भाई-बहन, लेखन व संचार से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H4",
+      "rule_name_hi": "फलदीपिका: Mercury 4वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 4",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का चतुर्थ (सुख भाव) में शास्त्रीय फलादेश — मातृ सुख, गृह-प्रासाद, वाहन, भूमि व मानसिक शांति से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H5",
+      "rule_name_hi": "फलदीपिका: Mercury 5वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 5",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का पंचम (धी/पुत्र भाव) में शास्त्रीय फलादेश — मेधा, उच्च शिक्षा, संतान सुख, मंत्र-दीक्षा व पूर्व-पुण्य से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H6",
+      "rule_name_hi": "फलदीपिका: Mercury 6वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 6",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का षष्ठम (रिपु/रोग भाव) में शास्त्रीय फलादेश — शत्रु विजय, रोग प्रतिरोध, प्रतियोगिता व सेवा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H7",
+      "rule_name_hi": "फलदीपिका: Mercury 7वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 7",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का सप्तम (जाया भाव) में शास्त्रीय फलादेश — विवाह, जीवनसाथी, साझेदारी व सार्वजनिक प्रतिष्ठा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H8",
+      "rule_name_hi": "फलदीपिका: Mercury 8वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 8",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का अष्टम (आयु/रंध्र भाव) में शास्त्रीय फलादेश — दीर्घायु, गूढ़ विद्याएं, वसीयत व आकस्मिक घटनाएं से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H9",
+      "rule_name_hi": "फलदीपिका: Mercury 9वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 9",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का नवम (धर्म/भाग्य भाव) में शास्त्रीय फलादेश — ईश्वरीय कृपा, तीर्थाटन, पिता का सुख व उच्च ज्ञान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H10",
+      "rule_name_hi": "फलदीपिका: Mercury 10वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 10",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का दशम (कर्म भाव) में शास्त्रीय फलादेश — राजकीय सत्ता, उच्च पद, आजीविका, व्यापार व यश से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H11",
+      "rule_name_hi": "फलदीपिका: Mercury 11वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 11",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का एकादश (लाभ भाव) में शास्त्रीय फलादेश — प्रचुर आय, बड़े भाई-बहन, मनोकामना पूर्ति व मित्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_MERCURY_H12",
+      "rule_name_hi": "फलदीपिका: Mercury 12वें भाव में",
+      "rule_name_en": "Phaladeepika: Mercury in House 12",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Mercury)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Mercury का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फलादेश — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H1",
+      "rule_name_hi": "फलदीपिका: Jupiter 1वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 1",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का लग्न (तनु भाव) में शास्त्रीय फलादेश — स्वास्थ्य, आत्म-सम्मान, कांति व व्यक्तित्व से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H2",
+      "rule_name_hi": "फलदीपिका: Jupiter 2वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 2",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का द्वितीय (धन भाव) में शास्त्रीय फलादेश — पैतृक धन, वाणी, कुटुंब, खानपान व नेत्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H3",
+      "rule_name_hi": "फलदीपिका: Jupiter 3वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 3",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का तृतीय (सहज/पराक्रम) में शास्त्रीय फलादेश — बाहुबल, साहस, छोटे भाई-बहन, लेखन व संचार से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H4",
+      "rule_name_hi": "फलदीपिका: Jupiter 4वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 4",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का चतुर्थ (सुख भाव) में शास्त्रीय फलादेश — मातृ सुख, गृह-प्रासाद, वाहन, भूमि व मानसिक शांति से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H5",
+      "rule_name_hi": "फलदीपिका: Jupiter 5वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 5",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का पंचम (धी/पुत्र भाव) में शास्त्रीय फलादेश — मेधा, उच्च शिक्षा, संतान सुख, मंत्र-दीक्षा व पूर्व-पुण्य से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H6",
+      "rule_name_hi": "फलदीपिका: Jupiter 6वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 6",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का षष्ठम (रिपु/रोग भाव) में शास्त्रीय फलादेश — शत्रु विजय, रोग प्रतिरोध, प्रतियोगिता व सेवा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H7",
+      "rule_name_hi": "फलदीपिका: Jupiter 7वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 7",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का सप्तम (जाया भाव) में शास्त्रीय फलादेश — विवाह, जीवनसाथी, साझेदारी व सार्वजनिक प्रतिष्ठा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H8",
+      "rule_name_hi": "फलदीपिका: Jupiter 8वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 8",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का अष्टम (आयु/रंध्र भाव) में शास्त्रीय फलादेश — दीर्घायु, गूढ़ विद्याएं, वसीयत व आकस्मिक घटनाएं से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H9",
+      "rule_name_hi": "फलदीपिका: Jupiter 9वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 9",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का नवम (धर्म/भाग्य भाव) में शास्त्रीय फलादेश — ईश्वरीय कृपा, तीर्थाटन, पिता का सुख व उच्च ज्ञान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H10",
+      "rule_name_hi": "फलदीपिका: Jupiter 10वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 10",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का दशम (कर्म भाव) में शास्त्रीय फलादेश — राजकीय सत्ता, उच्च पद, आजीविका, व्यापार व यश से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H11",
+      "rule_name_hi": "फलदीपिका: Jupiter 11वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 11",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का एकादश (लाभ भाव) में शास्त्रीय फलादेश — प्रचुर आय, बड़े भाई-बहन, मनोकामना पूर्ति व मित्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_JUPITER_H12",
+      "rule_name_hi": "फलदीपिका: Jupiter 12वें भाव में",
+      "rule_name_en": "Phaladeepika: Jupiter in House 12",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Jupiter)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Jupiter का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फलादेश — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H1",
+      "rule_name_hi": "फलदीपिका: Venus 1वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 1",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का लग्न (तनु भाव) में शास्त्रीय फलादेश — स्वास्थ्य, आत्म-सम्मान, कांति व व्यक्तित्व से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H2",
+      "rule_name_hi": "फलदीपिका: Venus 2वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 2",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का द्वितीय (धन भाव) में शास्त्रीय फलादेश — पैतृक धन, वाणी, कुटुंब, खानपान व नेत्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H3",
+      "rule_name_hi": "फलदीपिका: Venus 3वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 3",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का तृतीय (सहज/पराक्रम) में शास्त्रीय फलादेश — बाहुबल, साहस, छोटे भाई-बहन, लेखन व संचार से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H4",
+      "rule_name_hi": "फलदीपिका: Venus 4वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 4",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का चतुर्थ (सुख भाव) में शास्त्रीय फलादेश — मातृ सुख, गृह-प्रासाद, वाहन, भूमि व मानसिक शांति से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H5",
+      "rule_name_hi": "फलदीपिका: Venus 5वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 5",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का पंचम (धी/पुत्र भाव) में शास्त्रीय फलादेश — मेधा, उच्च शिक्षा, संतान सुख, मंत्र-दीक्षा व पूर्व-पुण्य से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H6",
+      "rule_name_hi": "फलदीपिका: Venus 6वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 6",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का षष्ठम (रिपु/रोग भाव) में शास्त्रीय फलादेश — शत्रु विजय, रोग प्रतिरोध, प्रतियोगिता व सेवा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H7",
+      "rule_name_hi": "फलदीपिका: Venus 7वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 7",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का सप्तम (जाया भाव) में शास्त्रीय फलादेश — विवाह, जीवनसाथी, साझेदारी व सार्वजनिक प्रतिष्ठा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H8",
+      "rule_name_hi": "फलदीपिका: Venus 8वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 8",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का अष्टम (आयु/रंध्र भाव) में शास्त्रीय फलादेश — दीर्घायु, गूढ़ विद्याएं, वसीयत व आकस्मिक घटनाएं से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H9",
+      "rule_name_hi": "फलदीपिका: Venus 9वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 9",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का नवम (धर्म/भाग्य भाव) में शास्त्रीय फलादेश — ईश्वरीय कृपा, तीर्थाटन, पिता का सुख व उच्च ज्ञान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H10",
+      "rule_name_hi": "फलदीपिका: Venus 10वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 10",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का दशम (कर्म भाव) में शास्त्रीय फलादेश — राजकीय सत्ता, उच्च पद, आजीविका, व्यापार व यश से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H11",
+      "rule_name_hi": "फलदीपिका: Venus 11वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 11",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का एकादश (लाभ भाव) में शास्त्रीय फलादेश — प्रचुर आय, बड़े भाई-बहन, मनोकामना पूर्ति व मित्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_VENUS_H12",
+      "rule_name_hi": "फलदीपिका: Venus 12वें भाव में",
+      "rule_name_en": "Phaladeepika: Venus in House 12",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Venus)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Venus का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फलादेश — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H1",
+      "rule_name_hi": "फलदीपिका: Saturn 1वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 1",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का लग्न (तनु भाव) में शास्त्रीय फलादेश — स्वास्थ्य, आत्म-सम्मान, कांति व व्यक्तित्व से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H2",
+      "rule_name_hi": "फलदीपिका: Saturn 2वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 2",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का द्वितीय (धन भाव) में शास्त्रीय फलादेश — पैतृक धन, वाणी, कुटुंब, खानपान व नेत्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H3",
+      "rule_name_hi": "फलदीपिका: Saturn 3वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 3",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का तृतीय (सहज/पराक्रम) में शास्त्रीय फलादेश — बाहुबल, साहस, छोटे भाई-बहन, लेखन व संचार से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H4",
+      "rule_name_hi": "फलदीपिका: Saturn 4वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 4",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का चतुर्थ (सुख भाव) में शास्त्रीय फलादेश — मातृ सुख, गृह-प्रासाद, वाहन, भूमि व मानसिक शांति से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H5",
+      "rule_name_hi": "फलदीपिका: Saturn 5वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 5",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का पंचम (धी/पुत्र भाव) में शास्त्रीय फलादेश — मेधा, उच्च शिक्षा, संतान सुख, मंत्र-दीक्षा व पूर्व-पुण्य से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H6",
+      "rule_name_hi": "फलदीपिका: Saturn 6वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 6",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का षष्ठम (रिपु/रोग भाव) में शास्त्रीय फलादेश — शत्रु विजय, रोग प्रतिरोध, प्रतियोगिता व सेवा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H7",
+      "rule_name_hi": "फलदीपिका: Saturn 7वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 7",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का सप्तम (जाया भाव) में शास्त्रीय फलादेश — विवाह, जीवनसाथी, साझेदारी व सार्वजनिक प्रतिष्ठा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H8",
+      "rule_name_hi": "फलदीपिका: Saturn 8वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 8",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का अष्टम (आयु/रंध्र भाव) में शास्त्रीय फलादेश — दीर्घायु, गूढ़ विद्याएं, वसीयत व आकस्मिक घटनाएं से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H9",
+      "rule_name_hi": "फलदीपिका: Saturn 9वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 9",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का नवम (धर्म/भाग्य भाव) में शास्त्रीय फलादेश — ईश्वरीय कृपा, तीर्थाटन, पिता का सुख व उच्च ज्ञान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H10",
+      "rule_name_hi": "फलदीपिका: Saturn 10वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 10",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का दशम (कर्म भाव) में शास्त्रीय फलादेश — राजकीय सत्ता, उच्च पद, आजीविका, व्यापार व यश से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H11",
+      "rule_name_hi": "फलदीपिका: Saturn 11वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 11",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का एकादश (लाभ भाव) में शास्त्रीय फलादेश — प्रचुर आय, बड़े भाई-बहन, मनोकामना पूर्ति व मित्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_SATURN_H12",
+      "rule_name_hi": "फलदीपिका: Saturn 12वें भाव में",
+      "rule_name_en": "Phaladeepika: Saturn in House 12",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Saturn)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Saturn का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फलादेश — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H1",
+      "rule_name_hi": "फलदीपिका: Rahu 1वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 1",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का लग्न (तनु भाव) में शास्त्रीय फलादेश — स्वास्थ्य, आत्म-सम्मान, कांति व व्यक्तित्व से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H2",
+      "rule_name_hi": "फलदीपिका: Rahu 2वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 2",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का द्वितीय (धन भाव) में शास्त्रीय फलादेश — पैतृक धन, वाणी, कुटुंब, खानपान व नेत्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H3",
+      "rule_name_hi": "फलदीपिका: Rahu 3वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 3",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का तृतीय (सहज/पराक्रम) में शास्त्रीय फलादेश — बाहुबल, साहस, छोटे भाई-बहन, लेखन व संचार से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H4",
+      "rule_name_hi": "फलदीपिका: Rahu 4वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 4",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का चतुर्थ (सुख भाव) में शास्त्रीय फलादेश — मातृ सुख, गृह-प्रासाद, वाहन, भूमि व मानसिक शांति से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H5",
+      "rule_name_hi": "फलदीपिका: Rahu 5वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 5",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का पंचम (धी/पुत्र भाव) में शास्त्रीय फलादेश — मेधा, उच्च शिक्षा, संतान सुख, मंत्र-दीक्षा व पूर्व-पुण्य से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H6",
+      "rule_name_hi": "फलदीपिका: Rahu 6वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 6",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का षष्ठम (रिपु/रोग भाव) में शास्त्रीय फलादेश — शत्रु विजय, रोग प्रतिरोध, प्रतियोगिता व सेवा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H7",
+      "rule_name_hi": "फलदीपिका: Rahu 7वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 7",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का सप्तम (जाया भाव) में शास्त्रीय फलादेश — विवाह, जीवनसाथी, साझेदारी व सार्वजनिक प्रतिष्ठा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H8",
+      "rule_name_hi": "फलदीपिका: Rahu 8वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 8",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का अष्टम (आयु/रंध्र भाव) में शास्त्रीय फलादेश — दीर्घायु, गूढ़ विद्याएं, वसीयत व आकस्मिक घटनाएं से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H9",
+      "rule_name_hi": "फलदीपिका: Rahu 9वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 9",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का नवम (धर्म/भाग्य भाव) में शास्त्रीय फलादेश — ईश्वरीय कृपा, तीर्थाटन, पिता का सुख व उच्च ज्ञान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H10",
+      "rule_name_hi": "फलदीपिका: Rahu 10वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 10",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का दशम (कर्म भाव) में शास्त्रीय फलादेश — राजकीय सत्ता, उच्च पद, आजीविका, व्यापार व यश से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H11",
+      "rule_name_hi": "फलदीपिका: Rahu 11वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 11",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का एकादश (लाभ भाव) में शास्त्रीय फलादेश — प्रचुर आय, बड़े भाई-बहन, मनोकामना पूर्ति व मित्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_RAHU_H12",
+      "rule_name_hi": "फलदीपिका: Rahu 12वें भाव में",
+      "rule_name_en": "Phaladeepika: Rahu in House 12",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Rahu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Rahu का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फलादेश — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H1",
+      "rule_name_hi": "फलदीपिका: Ketu 1वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 1",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का लग्न (तनु भाव) में शास्त्रीय फलादेश — स्वास्थ्य, आत्म-सम्मान, कांति व व्यक्तित्व से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H2",
+      "rule_name_hi": "फलदीपिका: Ketu 2वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 2",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का द्वितीय (धन भाव) में शास्त्रीय फलादेश — पैतृक धन, वाणी, कुटुंब, खानपान व नेत्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H3",
+      "rule_name_hi": "फलदीपिका: Ketu 3वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 3",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का तृतीय (सहज/पराक्रम) में शास्त्रीय फलादेश — बाहुबल, साहस, छोटे भाई-बहन, लेखन व संचार से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H4",
+      "rule_name_hi": "फलदीपिका: Ketu 4वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 4",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का चतुर्थ (सुख भाव) में शास्त्रीय फलादेश — मातृ सुख, गृह-प्रासाद, वाहन, भूमि व मानसिक शांति से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H5",
+      "rule_name_hi": "फलदीपिका: Ketu 5वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 5",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का पंचम (धी/पुत्र भाव) में शास्त्रीय फलादेश — मेधा, उच्च शिक्षा, संतान सुख, मंत्र-दीक्षा व पूर्व-पुण्य से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H6",
+      "rule_name_hi": "फलदीपिका: Ketu 6वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 6",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का षष्ठम (रिपु/रोग भाव) में शास्त्रीय फलादेश — शत्रु विजय, रोग प्रतिरोध, प्रतियोगिता व सेवा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H7",
+      "rule_name_hi": "फलदीपिका: Ketu 7वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 7",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का सप्तम (जाया भाव) में शास्त्रीय फलादेश — विवाह, जीवनसाथी, साझेदारी व सार्वजनिक प्रतिष्ठा से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H8",
+      "rule_name_hi": "फलदीपिका: Ketu 8वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 8",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का अष्टम (आयु/रंध्र भाव) में शास्त्रीय फलादेश — दीर्घायु, गूढ़ विद्याएं, वसीयत व आकस्मिक घटनाएं से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H9",
+      "rule_name_hi": "फलदीपिका: Ketu 9वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 9",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का नवम (धर्म/भाग्य भाव) में शास्त्रीय फलादेश — ईश्वरीय कृपा, तीर्थाटन, पिता का सुख व उच्च ज्ञान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H10",
+      "rule_name_hi": "फलदीपिका: Ketu 10वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 10",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का दशम (कर्म भाव) में शास्त्रीय फलादेश — राजकीय सत्ता, उच्च पद, आजीविका, व्यापार व यश से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H11",
+      "rule_name_hi": "फलदीपिका: Ketu 11वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 11",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का एकादश (लाभ भाव) में शास्त्रीय फलादेश — प्रचुर आय, बड़े भाई-बहन, मनोकामना पूर्ति व मित्र से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_GRAHA_KETU_H12",
+      "rule_name_hi": "फलदीपिका: Ketu 12वें भाव में",
+      "rule_name_en": "Phaladeepika: Ketu in House 12",
+      "source": {
+        "text": "Phaladeepika (फलदीपिका)",
+        "chapter": "Adhyaya 8 (Bhavartha Adhyaya - Ketu)",
+        "author": "Mantreshwara",
+        "era": "Classical"
+      },
+      "school": "Phaladeepika",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "health",
+          "wealth",
+          "career"
+        ],
+        "polarity": "-",
+        "strength_base": 0.65,
+        "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फलादेश — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान से संबंधित विशिष्ट परिणाम।"
+      }
+    }
+  ]
+}

@@ -1,0 +1,2504 @@
+{
+  "metadata": {
+    "grantha": "Prashna Marga",
+    "count": 78
+  },
+  "rules": [
+    {
+      "rule_id": "PRASHNA_VIVAH_SIDDHI",
+      "rule_name_hi": "विवाह प्रश्न सिद्धि योग",
+      "rule_name_en": "विवाह प्रश्न सिद्धि योग",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Karya Siddhi Prakaranam)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "karya",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग श्लोक: विवाह प्रश्न सिद्धि योग। सप्तमेश व लग्नेश का परस्पर इत्थशाल योग या केंद्र संबंध विवाह शीघ्र सुनिश्चित करता है।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ROGA_MUKTI",
+      "rule_name_hi": "रोग मुक्ति प्रश्न योग",
+      "rule_name_en": "रोग मुक्ति प्रश्न योग",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Karya Siddhi Prakaranam)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "karya",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग श्लोक: रोग मुक्ति प्रश्न योग। लग्नेश बलवान होकर लग्न या केंद्र में हो और षष्ठेश दुर्बल हो तो शीघ्र आरोग्य लाभ।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_KARYA_VIJAYA",
+      "rule_name_hi": "मुकदमे में विजय प्रश्न योग",
+      "rule_name_en": "मुकदमे में विजय प्रश्न योग",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Karya Siddhi Prakaranam)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "karya",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग श्लोक: मुकदमे में विजय प्रश्न योग। लग्न व दशम भाव में शुभ ग्रह हों और षष्ठेश अष्टम या द्वादश में हो तो शत्रु पर पूर्ण विजय।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_DHANA_PRAPTI",
+      "rule_name_hi": "धन लाभ प्रश्न योग",
+      "rule_name_en": "धन लाभ प्रश्न योग",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Karya Siddhi Prakaranam)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "karya",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग श्लोक: धन लाभ प्रश्न योग। धनेश व लाभेश लग्नेश के साथ युति करें या परस्पर दृष्टि रखें तो अप्रत्याशित धन लाभ।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_LOST_ARTICLE",
+      "rule_name_hi": "खोई वस्तु प्राप्ति योग",
+      "rule_name_en": "खोई वस्तु प्राप्ति योग",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Karya Siddhi Prakaranam)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "karya",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "प्रश्न मार्ग श्लोक: खोई वस्तु प्राप्ति योग। लग्नेश और चतुर्थेश परस्पर सौम्य दृष्टि रखें और चन्द्रमा केंद्र में हो तो वस्तु सकुशल मिल जाएगी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_YATRA_SHUBHA",
+      "rule_name_hi": "विदेश/दूरस्थ यात्रा प्रश्न योग",
+      "rule_name_en": "विदेश/दूरस्थ यात्रा प्रश्न योग",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Karya Siddhi Prakaranam)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "karya",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग श्लोक: विदेश/दूरस्थ यात्रा प्रश्न योग। नवमेश व द्वादशेश का शुभ संबंध एवं लग्न में चर राशि यात्रा को अत्यंत सुखद व सफल बनाती है।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_SUN",
+      "rule_name_hi": "प्रश्न विचार: तनु प्रश्न (आरोग्य व आयु) — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 1 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: तनु प्रश्न (आरोग्य व आयु)। लग्नेश केंद्र में हो व शुभ दृष्ट हो तो पूर्ण आरोग्य लाभ व सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_MOON",
+      "rule_name_hi": "प्रश्न विचार: तनु प्रश्न (आरोग्य व आयु) — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 1 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: तनु प्रश्न (आरोग्य व आयु)। लग्नेश केंद्र में हो व शुभ दृष्ट हो तो पूर्ण आरोग्य लाभ व सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_MARS",
+      "rule_name_hi": "प्रश्न विचार: तनु प्रश्न (आरोग्य व आयु) — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 1 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: तनु प्रश्न (आरोग्य व आयु)। लग्नेश केंद्र में हो व शुभ दृष्ट हो तो पूर्ण आरोग्य लाभ व सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: तनु प्रश्न (आरोग्य व आयु) — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 1 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: तनु प्रश्न (आरोग्य व आयु)। लग्नेश केंद्र में हो व शुभ दृष्ट हो तो पूर्ण आरोग्य लाभ व सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: तनु प्रश्न (आरोग्य व आयु) — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 1 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: तनु प्रश्न (आरोग्य व आयु)। लग्नेश केंद्र में हो व शुभ दृष्ट हो तो पूर्ण आरोग्य लाभ व सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_VENUS",
+      "rule_name_hi": "प्रश्न विचार: तनु प्रश्न (आरोग्य व आयु) — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 1 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: तनु प्रश्न (आरोग्य व आयु)। लग्नेश केंद्र में हो व शुभ दृष्ट हो तो पूर्ण आरोग्य लाभ व सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_SUN",
+      "rule_name_hi": "प्रश्न विचार: धन प्रश्न (आर्थिक लाभ) — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 2 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: धन प्रश्न (आर्थिक लाभ)। धनेश व लाभेश शुभ युत हों तो धन प्राप्ति सुनिश्चित।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_MOON",
+      "rule_name_hi": "प्रश्न विचार: धन प्रश्न (आर्थिक लाभ) — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 2 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: धन प्रश्न (आर्थिक लाभ)। धनेश व लाभेश शुभ युत हों तो धन प्राप्ति सुनिश्चित।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_MARS",
+      "rule_name_hi": "प्रश्न विचार: धन प्रश्न (आर्थिक लाभ) — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 2 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: धन प्रश्न (आर्थिक लाभ)। धनेश व लाभेश शुभ युत हों तो धन प्राप्ति सुनिश्चित।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: धन प्रश्न (आर्थिक लाभ) — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 2 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: धन प्रश्न (आर्थिक लाभ)। धनेश व लाभेश शुभ युत हों तो धन प्राप्ति सुनिश्चित।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: धन प्रश्न (आर्थिक लाभ) — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 2 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: धन प्रश्न (आर्थिक लाभ)। धनेश व लाभेश शुभ युत हों तो धन प्राप्ति सुनिश्चित।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_VENUS",
+      "rule_name_hi": "प्रश्न विचार: धन प्रश्न (आर्थिक लाभ) — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 2 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: धन प्रश्न (आर्थिक लाभ)। धनेश व लाभेश शुभ युत हों तो धन प्राप्ति सुनिश्चित।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_SUN",
+      "rule_name_hi": "प्रश्न विचार: पराक्रम व भ्रातृ प्रश्न — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 3 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: पराक्रम व भ्रातृ प्रश्न। तृतीयेश बलवान हो तो यात्रा व कार्य में विजय।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_MOON",
+      "rule_name_hi": "प्रश्न विचार: पराक्रम व भ्रातृ प्रश्न — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 3 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: पराक्रम व भ्रातृ प्रश्न। तृतीयेश बलवान हो तो यात्रा व कार्य में विजय।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_MARS",
+      "rule_name_hi": "प्रश्न विचार: पराक्रम व भ्रातृ प्रश्न — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 3 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: पराक्रम व भ्रातृ प्रश्न। तृतीयेश बलवान हो तो यात्रा व कार्य में विजय।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: पराक्रम व भ्रातृ प्रश्न — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 3 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: पराक्रम व भ्रातृ प्रश्न। तृतीयेश बलवान हो तो यात्रा व कार्य में विजय।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: पराक्रम व भ्रातृ प्रश्न — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 3 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: पराक्रम व भ्रातृ प्रश्न। तृतीयेश बलवान हो तो यात्रा व कार्य में विजय।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_VENUS",
+      "rule_name_hi": "प्रश्न विचार: पराक्रम व भ्रातृ प्रश्न — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 3 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: पराक्रम व भ्रातृ प्रश्न। तृतीयेश बलवान हो तो यात्रा व कार्य में विजय।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_SUN",
+      "rule_name_hi": "प्रश्न विचार: गृह-भूमि-वाहन प्रश्न — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 4 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: गृह-भूमि-वाहन प्रश्न। चतुर्थेश लग्न या दशम में हो तो संपत्ति क्रय सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_MOON",
+      "rule_name_hi": "प्रश्न विचार: गृह-भूमि-वाहन प्रश्न — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 4 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: गृह-भूमि-वाहन प्रश्न। चतुर्थेश लग्न या दशम में हो तो संपत्ति क्रय सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_MARS",
+      "rule_name_hi": "प्रश्न विचार: गृह-भूमि-वाहन प्रश्न — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 4 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: गृह-भूमि-वाहन प्रश्न। चतुर्थेश लग्न या दशम में हो तो संपत्ति क्रय सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: गृह-भूमि-वाहन प्रश्न — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 4 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: गृह-भूमि-वाहन प्रश्न। चतुर्थेश लग्न या दशम में हो तो संपत्ति क्रय सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: गृह-भूमि-वाहन प्रश्न — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 4 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: गृह-भूमि-वाहन प्रश्न। चतुर्थेश लग्न या दशम में हो तो संपत्ति क्रय सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_VENUS",
+      "rule_name_hi": "प्रश्न विचार: गृह-भूमि-वाहन प्रश्न — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 4 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: गृह-भूमि-वाहन प्रश्न। चतुर्थेश लग्न या दशम में हो तो संपत्ति क्रय सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_SUN",
+      "rule_name_hi": "प्रश्न विचार: संतान व परीक्षा प्रश्न — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 5 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संतान व परीक्षा प्रश्न। पंचमेश व गुरु सौम्य हों तो परीक्षा व संतान सुख।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_MOON",
+      "rule_name_hi": "प्रश्न विचार: संतान व परीक्षा प्रश्न — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 5 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संतान व परीक्षा प्रश्न। पंचमेश व गुरु सौम्य हों तो परीक्षा व संतान सुख।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_MARS",
+      "rule_name_hi": "प्रश्न विचार: संतान व परीक्षा प्रश्न — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 5 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संतान व परीक्षा प्रश्न। पंचमेश व गुरु सौम्य हों तो परीक्षा व संतान सुख।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: संतान व परीक्षा प्रश्न — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 5 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संतान व परीक्षा प्रश्न। पंचमेश व गुरु सौम्य हों तो परीक्षा व संतान सुख।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: संतान व परीक्षा प्रश्न — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 5 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संतान व परीक्षा प्रश्न। पंचमेश व गुरु सौम्य हों तो परीक्षा व संतान सुख।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_VENUS",
+      "rule_name_hi": "प्रश्न विचार: संतान व परीक्षा प्रश्न — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 5 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संतान व परीक्षा प्रश्न। पंचमेश व गुरु सौम्य हों तो परीक्षा व संतान सुख।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_SUN",
+      "rule_name_hi": "प्रश्न विचार: रोग व शत्रु विजय प्रश्न — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 6 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: रोग व शत्रु विजय प्रश्न। षष्ठेश निर्बल व लग्नेश बली हो तो शत्रु परास्त।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_MOON",
+      "rule_name_hi": "प्रश्न विचार: रोग व शत्रु विजय प्रश्न — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 6 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: रोग व शत्रु विजय प्रश्न। षष्ठेश निर्बल व लग्नेश बली हो तो शत्रु परास्त।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_MARS",
+      "rule_name_hi": "प्रश्न विचार: रोग व शत्रु विजय प्रश्न — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 6 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: रोग व शत्रु विजय प्रश्न। षष्ठेश निर्बल व लग्नेश बली हो तो शत्रु परास्त।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: रोग व शत्रु विजय प्रश्न — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 6 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: रोग व शत्रु विजय प्रश्न। षष्ठेश निर्बल व लग्नेश बली हो तो शत्रु परास्त।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: रोग व शत्रु विजय प्रश्न — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 6 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: रोग व शत्रु विजय प्रश्न। षष्ठेश निर्बल व लग्नेश बली हो तो शत्रु परास्त।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_VENUS",
+      "rule_name_hi": "प्रश्न विचार: रोग व शत्रु विजय प्रश्न — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 6 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: रोग व शत्रु विजय प्रश्न। षष्ठेश निर्बल व लग्नेश बली हो तो शत्रु परास्त।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_SUN",
+      "rule_name_hi": "प्रश्न विचार: विवाह व साझेदारी प्रश्न — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 7 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विवाह व साझेदारी प्रश्न। सप्तमेश व शुक्र केंद्र में हों तो शीघ्र शुभ विवाह।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_MOON",
+      "rule_name_hi": "प्रश्न विचार: विवाह व साझेदारी प्रश्न — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 7 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विवाह व साझेदारी प्रश्न। सप्तमेश व शुक्र केंद्र में हों तो शीघ्र शुभ विवाह।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_MARS",
+      "rule_name_hi": "प्रश्न विचार: विवाह व साझेदारी प्रश्न — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 7 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विवाह व साझेदारी प्रश्न। सप्तमेश व शुक्र केंद्र में हों तो शीघ्र शुभ विवाह।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: विवाह व साझेदारी प्रश्न — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 7 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विवाह व साझेदारी प्रश्न। सप्तमेश व शुक्र केंद्र में हों तो शीघ्र शुभ विवाह।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: विवाह व साझेदारी प्रश्न — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 7 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विवाह व साझेदारी प्रश्न। सप्तमेश व शुक्र केंद्र में हों तो शीघ्र शुभ विवाह।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_VENUS",
+      "rule_name_hi": "प्रश्न विचार: विवाह व साझेदारी प्रश्न — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 7 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विवाह व साझेदारी प्रश्न। सप्तमेश व शुक्र केंद्र में हों तो शीघ्र शुभ विवाह।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_SUN",
+      "rule_name_hi": "प्रश्न विचार: संकट व दुर्घटना प्रश्न — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 8 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संकट व दुर्घटना प्रश्न। अष्टमेश शुभ दृष्ट हो तो संकट टल जाएगा।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_MOON",
+      "rule_name_hi": "प्रश्न विचार: संकट व दुर्घटना प्रश्न — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 8 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संकट व दुर्घटना प्रश्न। अष्टमेश शुभ दृष्ट हो तो संकट टल जाएगा।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_MARS",
+      "rule_name_hi": "प्रश्न विचार: संकट व दुर्घटना प्रश्न — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 8 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संकट व दुर्घटना प्रश्न। अष्टमेश शुभ दृष्ट हो तो संकट टल जाएगा।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: संकट व दुर्घटना प्रश्न — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 8 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संकट व दुर्घटना प्रश्न। अष्टमेश शुभ दृष्ट हो तो संकट टल जाएगा।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: संकट व दुर्घटना प्रश्न — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 8 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संकट व दुर्घटना प्रश्न। अष्टमेश शुभ दृष्ट हो तो संकट टल जाएगा।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_VENUS",
+      "rule_name_hi": "प्रश्न विचार: संकट व दुर्घटना प्रश्न — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 8 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: संकट व दुर्घटना प्रश्न। अष्टमेश शुभ दृष्ट हो तो संकट टल जाएगा।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_SUN",
+      "rule_name_hi": "प्रश्न विचार: भाग्य व तीर्थ प्रश्न — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 9 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: भाग्य व तीर्थ प्रश्न। नवमेश बली हो तो भाग्योदय व कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_MOON",
+      "rule_name_hi": "प्रश्न विचार: भाग्य व तीर्थ प्रश्न — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 9 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: भाग्य व तीर्थ प्रश्न। नवमेश बली हो तो भाग्योदय व कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_MARS",
+      "rule_name_hi": "प्रश्न विचार: भाग्य व तीर्थ प्रश्न — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 9 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: भाग्य व तीर्थ प्रश्न। नवमेश बली हो तो भाग्योदय व कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: भाग्य व तीर्थ प्रश्न — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 9 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: भाग्य व तीर्थ प्रश्न। नवमेश बली हो तो भाग्योदय व कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: भाग्य व तीर्थ प्रश्न — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 9 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: भाग्य व तीर्थ प्रश्न। नवमेश बली हो तो भाग्योदय व कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_VENUS",
+      "rule_name_hi": "प्रश्न विचार: भाग्य व तीर्थ प्रश्न — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 9 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: भाग्य व तीर्थ प्रश्न। नवमेश बली हो तो भाग्योदय व कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_SUN",
+      "rule_name_hi": "प्रश्न विचार: नौकरी व पदोन्नति प्रश्न — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 10 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: नौकरी व पदोन्नति प्रश्न। दशमेश व सूर्य बली हों तो उच्च पद लाभ।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_MOON",
+      "rule_name_hi": "प्रश्न विचार: नौकरी व पदोन्नति प्रश्न — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 10 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: नौकरी व पदोन्नति प्रश्न। दशमेश व सूर्य बली हों तो उच्च पद लाभ।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_MARS",
+      "rule_name_hi": "प्रश्न विचार: नौकरी व पदोन्नति प्रश्न — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 10 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: नौकरी व पदोन्नति प्रश्न। दशमेश व सूर्य बली हों तो उच्च पद लाभ।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: नौकरी व पदोन्नति प्रश्न — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 10 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: नौकरी व पदोन्नति प्रश्न। दशमेश व सूर्य बली हों तो उच्च पद लाभ।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: नौकरी व पदोन्नति प्रश्न — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 10 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: नौकरी व पदोन्नति प्रश्न। दशमेश व सूर्य बली हों तो उच्च पद लाभ।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_VENUS",
+      "rule_name_hi": "प्रश्न विचार: नौकरी व पदोन्नति प्रश्न — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 10 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: नौकरी व पदोन्नति प्रश्न। दशमेश व सूर्य बली हों तो उच्च पद लाभ।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_SUN",
+      "rule_name_hi": "प्रश्न विचार: मनोरथ व लाभ प्रश्न — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 11 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: मनोरथ व लाभ प्रश्न। एकादशेश शुभ भाव में हो तो मनोकामना पूर्ण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_MOON",
+      "rule_name_hi": "प्रश्न विचार: मनोरथ व लाभ प्रश्न — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 11 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: मनोरथ व लाभ प्रश्न। एकादशेश शुभ भाव में हो तो मनोकामना पूर्ण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_MARS",
+      "rule_name_hi": "प्रश्न विचार: मनोरथ व लाभ प्रश्न — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 11 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: मनोरथ व लाभ प्रश्न। एकादशेश शुभ भाव में हो तो मनोकामना पूर्ण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: मनोरथ व लाभ प्रश्न — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 11 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: मनोरथ व लाभ प्रश्न। एकादशेश शुभ भाव में हो तो मनोकामना पूर्ण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: मनोरथ व लाभ प्रश्न — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 11 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: मनोरथ व लाभ प्रश्न। एकादशेश शुभ भाव में हो तो मनोकामना पूर्ण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_VENUS",
+      "rule_name_hi": "प्रश्न विचार: मनोरथ व लाभ प्रश्न — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 11 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: मनोरथ व लाभ प्रश्न। एकादशेश शुभ भाव में हो तो मनोकामना पूर्ण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_SUN",
+      "rule_name_hi": "प्रश्न विचार: विदेश वास व मोक्ष प्रश्न — कार्येश Sun",
+      "rule_name_en": "Prashna Bhava 12 Karya Lord Sun",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विदेश वास व मोक्ष प्रश्न। द्वादशेश चर राशि में हो तो विदेश गमन सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_MOON",
+      "rule_name_hi": "प्रश्न विचार: विदेश वास व मोक्ष प्रश्न — कार्येश Moon",
+      "rule_name_en": "Prashna Bhava 12 Karya Lord Moon",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विदेश वास व मोक्ष प्रश्न। द्वादशेश चर राशि में हो तो विदेश गमन सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_MARS",
+      "rule_name_hi": "प्रश्न विचार: विदेश वास व मोक्ष प्रश्न — कार्येश Mars",
+      "rule_name_en": "Prashna Bhava 12 Karya Lord Mars",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विदेश वास व मोक्ष प्रश्न। द्वादशेश चर राशि में हो तो विदेश गमन सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_MERCURY",
+      "rule_name_hi": "प्रश्न विचार: विदेश वास व मोक्ष प्रश्न — कार्येश Mercury",
+      "rule_name_en": "Prashna Bhava 12 Karya Lord Mercury",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विदेश वास व मोक्ष प्रश्न। द्वादशेश चर राशि में हो तो विदेश गमन सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_JUPITER",
+      "rule_name_hi": "प्रश्न विचार: विदेश वास व मोक्ष प्रश्न — कार्येश Jupiter",
+      "rule_name_en": "Prashna Bhava 12 Karya Lord Jupiter",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विदेश वास व मोक्ष प्रश्न। द्वादशेश चर राशि में हो तो विदेश गमन सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_VENUS",
+      "rule_name_hi": "प्रश्न विचार: विदेश वास व मोक्ष प्रश्न — कार्येश Venus",
+      "rule_name_en": "Prashna Bhava 12 Karya Lord Venus",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Bhava Judgement)",
+        "author": "Classical Horary",
+        "era": "Classical"
+      },
+      "school": "Prashna",
+      "category": "prashna-karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "timing",
+          "karya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग: विदेश वास व मोक्ष प्रश्न। द्वादशेश चर राशि में हो तो विदेश गमन सफल।"
+      }
+    }
+  ]
+}

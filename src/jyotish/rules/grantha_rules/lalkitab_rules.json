@@ -1,0 +1,3572 @@
+{
+  "metadata": {
+    "grantha": "Lal Kitab",
+    "count": 108
+  },
+  "rules": [
+    {
+      "rule_id": "LALKITAB_KHANA_1_SUN",
+      "rule_name_hi": "Sun खाना नंबर 1 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 1",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 1 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १ (सूर्य का पक्का घर)। Sun की स्थिति: शाही तख्त, खुददारी, सेहतमंद जिस्म व सरकारी सम्मान। उपाय: बंदरों को गुड़-चना डालें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_1_MOON",
+      "rule_name_hi": "Moon खाना नंबर 1 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 1",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 1 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १ (सूर्य का पक्का घर)। Moon की स्थिति: शाही तख्त, खुददारी, सेहतमंद जिस्म व सरकारी सम्मान। उपाय: बंदरों को गुड़-चना डालें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_1_MARS",
+      "rule_name_hi": "Mars खाना नंबर 1 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 1",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 1 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १ (सूर्य का पक्का घर)। Mars की स्थिति: शाही तख्त, खुददारी, सेहतमंद जिस्म व सरकारी सम्मान। उपाय: बंदरों को गुड़-चना डालें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_1_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 1 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 1",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 1 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १ (सूर्य का पक्का घर)। Mercury की स्थिति: शाही तख्त, खुददारी, सेहतमंद जिस्म व सरकारी सम्मान। उपाय: बंदरों को गुड़-चना डालें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_1_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 1 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 1",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 1 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १ (सूर्य का पक्का घर)। Jupiter की स्थिति: शाही तख्त, खुददारी, सेहतमंद जिस्म व सरकारी सम्मान। उपाय: बंदरों को गुड़-चना डालें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_1_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 1 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 1",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 1 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १ (सूर्य का पक्का घर)। Venus की स्थिति: शाही तख्त, खुददारी, सेहतमंद जिस्म व सरकारी सम्मान। उपाय: बंदरों को गुड़-चना डालें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_1_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 1 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 1",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 1 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १ (सूर्य का पक्का घर)। Saturn की स्थिति: शाही तख्त, खुददारी, सेहतमंद जिस्म व सरकारी सम्मान। उपाय: बंदरों को गुड़-चना डालें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_1_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 1 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 1",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 1 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १ (सूर्य का पक्का घर)। Rahu की स्थिति: शाही तख्त, खुददारी, सेहतमंद जिस्म व सरकारी सम्मान। उपाय: बंदरों को गुड़-चना डालें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_1_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 1 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 1",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 1 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १ (सूर्य का पक्का घर)। Ketu की स्थिति: शाही तख्त, खुददारी, सेहतमंद जिस्म व सरकारी सम्मान। उपाय: बंदरों को गुड़-चना डालें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_2_SUN",
+      "rule_name_hi": "Sun खाना नंबर 2 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 2",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 2 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर २ (बृहस्पति का पक्का घर)। Sun की स्थिति: कुटुंब, धर्म मंदिर, संचित धन व वाणी। उपाय: माथे पर केसर का तिलक लगाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_2_MOON",
+      "rule_name_hi": "Moon खाना नंबर 2 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 2",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 2 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर २ (बृहस्पति का पक्का घर)। Moon की स्थिति: कुटुंब, धर्म मंदिर, संचित धन व वाणी। उपाय: माथे पर केसर का तिलक लगाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_2_MARS",
+      "rule_name_hi": "Mars खाना नंबर 2 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 2",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 2 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर २ (बृहस्पति का पक्का घर)। Mars की स्थिति: कुटुंब, धर्म मंदिर, संचित धन व वाणी। उपाय: माथे पर केसर का तिलक लगाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_2_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 2 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 2",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 2 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर २ (बृहस्पति का पक्का घर)। Mercury की स्थिति: कुटुंब, धर्म मंदिर, संचित धन व वाणी। उपाय: माथे पर केसर का तिलक लगाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_2_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 2 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 2",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 2 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर २ (बृहस्पति का पक्का घर)। Jupiter की स्थिति: कुटुंब, धर्म मंदिर, संचित धन व वाणी। उपाय: माथे पर केसर का तिलक लगाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_2_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 2 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 2",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 2 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर २ (बृहस्पति का पक्का घर)। Venus की स्थिति: कुटुंब, धर्म मंदिर, संचित धन व वाणी। उपाय: माथे पर केसर का तिलक लगाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_2_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 2 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 2",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 2 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर २ (बृहस्पति का पक्का घर)। Saturn की स्थिति: कुटुंब, धर्म मंदिर, संचित धन व वाणी। उपाय: माथे पर केसर का तिलक लगाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_2_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 2 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 2",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 2 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर २ (बृहस्पति का पक्का घर)। Rahu की स्थिति: कुटुंब, धर्म मंदिर, संचित धन व वाणी। उपाय: माथे पर केसर का तिलक लगाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_2_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 2 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 2",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 2 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर २ (बृहस्पति का पक्का घर)। Ketu की स्थिति: कुटुंब, धर्म मंदिर, संचित धन व वाणी। उपाय: माथे पर केसर का तिलक लगाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_3_SUN",
+      "rule_name_hi": "Sun खाना नंबर 3 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 3",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 3 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ३ (मंगल का पक्का घर)। Sun की स्थिति: बाहुबल, भाई-बंधु, बहादुरी व हिम्मत। उपाय: बहते पानी में रेवड़ियां बहाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_3_MOON",
+      "rule_name_hi": "Moon खाना नंबर 3 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 3",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 3 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ३ (मंगल का पक्का घर)। Moon की स्थिति: बाहुबल, भाई-बंधु, बहादुरी व हिम्मत। उपाय: बहते पानी में रेवड़ियां बहाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_3_MARS",
+      "rule_name_hi": "Mars खाना नंबर 3 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 3",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 3 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ३ (मंगल का पक्का घर)। Mars की स्थिति: बाहुबल, भाई-बंधु, बहादुरी व हिम्मत। उपाय: बहते पानी में रेवड़ियां बहाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_3_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 3 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 3",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 3 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ३ (मंगल का पक्का घर)। Mercury की स्थिति: बाहुबल, भाई-बंधु, बहादुरी व हिम्मत। उपाय: बहते पानी में रेवड़ियां बहाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_3_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 3 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 3",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 3 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ३ (मंगल का पक्का घर)। Jupiter की स्थिति: बाहुबल, भाई-बंधु, बहादुरी व हिम्मत। उपाय: बहते पानी में रेवड़ियां बहाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_3_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 3 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 3",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 3 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ३ (मंगल का पक्का घर)। Venus की स्थिति: बाहुबल, भाई-बंधु, बहादुरी व हिम्मत। उपाय: बहते पानी में रेवड़ियां बहाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_3_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 3 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 3",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 3 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ३ (मंगल का पक्का घर)। Saturn की स्थिति: बाहुबल, भाई-बंधु, बहादुरी व हिम्मत। उपाय: बहते पानी में रेवड़ियां बहाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_3_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 3 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 3",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 3 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ३ (मंगल का पक्का घर)। Rahu की स्थिति: बाहुबल, भाई-बंधु, बहादुरी व हिम्मत। उपाय: बहते पानी में रेवड़ियां बहाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_3_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 3 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 3",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 3 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ३ (मंगल का पक्का घर)। Ketu की स्थिति: बाहुबल, भाई-बंधु, बहादुरी व हिम्मत। उपाय: बहते पानी में रेवड़ियां बहाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_4_SUN",
+      "rule_name_hi": "Sun खाना नंबर 4 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 4",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 4 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ४ (चन्द्रमा का पक्का घर)। Sun की स्थिति: माता, शांति, अमृत जल व शुद्ध भावनाएं। उपाय: चांदी का चौकोर टुकड़ा पास रखें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_4_MOON",
+      "rule_name_hi": "Moon खाना नंबर 4 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 4",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 4 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ४ (चन्द्रमा का पक्का घर)। Moon की स्थिति: माता, शांति, अमृत जल व शुद्ध भावनाएं। उपाय: चांदी का चौकोर टुकड़ा पास रखें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_4_MARS",
+      "rule_name_hi": "Mars खाना नंबर 4 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 4",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 4 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ४ (चन्द्रमा का पक्का घर)। Mars की स्थिति: माता, शांति, अमृत जल व शुद्ध भावनाएं। उपाय: चांदी का चौकोर टुकड़ा पास रखें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_4_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 4 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 4",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 4 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ४ (चन्द्रमा का पक्का घर)। Mercury की स्थिति: माता, शांति, अमृत जल व शुद्ध भावनाएं। उपाय: चांदी का चौकोर टुकड़ा पास रखें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_4_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 4 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 4",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 4 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ४ (चन्द्रमा का पक्का घर)। Jupiter की स्थिति: माता, शांति, अमृत जल व शुद्ध भावनाएं। उपाय: चांदी का चौकोर टुकड़ा पास रखें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_4_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 4 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 4",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 4 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ४ (चन्द्रमा का पक्का घर)। Venus की स्थिति: माता, शांति, अमृत जल व शुद्ध भावनाएं। उपाय: चांदी का चौकोर टुकड़ा पास रखें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_4_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 4 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 4",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 4 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ४ (चन्द्रमा का पक्का घर)। Saturn की स्थिति: माता, शांति, अमृत जल व शुद्ध भावनाएं। उपाय: चांदी का चौकोर टुकड़ा पास रखें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_4_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 4 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 4",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 4 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ४ (चन्द्रमा का पक्का घर)। Rahu की स्थिति: माता, शांति, अमृत जल व शुद्ध भावनाएं। उपाय: चांदी का चौकोर टुकड़ा पास रखें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_4_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 4 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 4",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 4 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ४ (चन्द्रमा का पक्का घर)। Ketu की स्थिति: माता, शांति, अमृत जल व शुद्ध भावनाएं। उपाय: चांदी का चौकोर टुकड़ा पास रखें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_5_SUN",
+      "rule_name_hi": "Sun खाना नंबर 5 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 5",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 5 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ५ (गुरु का पक्का घर)। Sun की स्थिति: औलाद, विद्या, पूर्व-पुण्य व तकदीर। उपाय: पीपल के वृक्ष को जल दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_5_MOON",
+      "rule_name_hi": "Moon खाना नंबर 5 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 5",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 5 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ५ (गुरु का पक्का घर)। Moon की स्थिति: औलाद, विद्या, पूर्व-पुण्य व तकदीर। उपाय: पीपल के वृक्ष को जल दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_5_MARS",
+      "rule_name_hi": "Mars खाना नंबर 5 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 5",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 5 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ५ (गुरु का पक्का घर)। Mars की स्थिति: औलाद, विद्या, पूर्व-पुण्य व तकदीर। उपाय: पीपल के वृक्ष को जल दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_5_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 5 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 5",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 5 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ५ (गुरु का पक्का घर)। Mercury की स्थिति: औलाद, विद्या, पूर्व-पुण्य व तकदीर। उपाय: पीपल के वृक्ष को जल दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_5_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 5 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 5",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 5 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ५ (गुरु का पक्का घर)। Jupiter की स्थिति: औलाद, विद्या, पूर्व-पुण्य व तकदीर। उपाय: पीपल के वृक्ष को जल दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_5_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 5 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 5",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 5 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ५ (गुरु का पक्का घर)। Venus की स्थिति: औलाद, विद्या, पूर्व-पुण्य व तकदीर। उपाय: पीपल के वृक्ष को जल दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_5_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 5 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 5",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 5 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ५ (गुरु का पक्का घर)। Saturn की स्थिति: औलाद, विद्या, पूर्व-पुण्य व तकदीर। उपाय: पीपल के वृक्ष को जल दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_5_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 5 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 5",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 5 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ५ (गुरु का पक्का घर)। Rahu की स्थिति: औलाद, विद्या, पूर्व-पुण्य व तकदीर। उपाय: पीपल के वृक्ष को जल दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_5_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 5 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 5",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 5 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ५ (गुरु का पक्का घर)। Ketu की स्थिति: औलाद, विद्या, पूर्व-पुण्य व तकदीर। उपाय: पीपल के वृक्ष को जल दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_6_SUN",
+      "rule_name_hi": "Sun खाना नंबर 6 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 6",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 6 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ६ (बुध व केतु का घर)। Sun की स्थिति: शत्रु, कर्ज, ननिहाल व बीमारी। उपाय: कन्याओं का आशीर्वाद लें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_6_MOON",
+      "rule_name_hi": "Moon खाना नंबर 6 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 6",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 6 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ६ (बुध व केतु का घर)। Moon की स्थिति: शत्रु, कर्ज, ननिहाल व बीमारी। उपाय: कन्याओं का आशीर्वाद लें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_6_MARS",
+      "rule_name_hi": "Mars खाना नंबर 6 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 6",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 6 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ६ (बुध व केतु का घर)। Mars की स्थिति: शत्रु, कर्ज, ननिहाल व बीमारी। उपाय: कन्याओं का आशीर्वाद लें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_6_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 6 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 6",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 6 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ६ (बुध व केतु का घर)। Mercury की स्थिति: शत्रु, कर्ज, ननिहाल व बीमारी। उपाय: कन्याओं का आशीर्वाद लें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_6_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 6 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 6",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 6 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ६ (बुध व केतु का घर)। Jupiter की स्थिति: शत्रु, कर्ज, ननिहाल व बीमारी। उपाय: कन्याओं का आशीर्वाद लें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_6_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 6 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 6",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 6 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ६ (बुध व केतु का घर)। Venus की स्थिति: शत्रु, कर्ज, ननिहाल व बीमारी। उपाय: कन्याओं का आशीर्वाद लें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_6_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 6 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 6",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 6 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ६ (बुध व केतु का घर)। Saturn की स्थिति: शत्रु, कर्ज, ननिहाल व बीमारी। उपाय: कन्याओं का आशीर्वाद लें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_6_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 6 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 6",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 6 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ६ (बुध व केतु का घर)। Rahu की स्थिति: शत्रु, कर्ज, ननिहाल व बीमारी। उपाय: कन्याओं का आशीर्वाद लें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_6_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 6 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 6",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 6 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ६ (बुध व केतु का घर)। Ketu की स्थिति: शत्रु, कर्ज, ननिहाल व बीमारी। उपाय: कन्याओं का आशीर्वाद लें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_7_SUN",
+      "rule_name_hi": "Sun खाना नंबर 7 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 7",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 7 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ७ (शुक्र व बुध का घर)। Sun की स्थिति: गृहस्थ, दुनियादारी, साझेदार व व्यापार। उपाय: गाय को हरा चारा व रोटी दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_7_MOON",
+      "rule_name_hi": "Moon खाना नंबर 7 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 7",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 7 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ७ (शुक्र व बुध का घर)। Moon की स्थिति: गृहस्थ, दुनियादारी, साझेदार व व्यापार। उपाय: गाय को हरा चारा व रोटी दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_7_MARS",
+      "rule_name_hi": "Mars खाना नंबर 7 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 7",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 7 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ७ (शुक्र व बुध का घर)। Mars की स्थिति: गृहस्थ, दुनियादारी, साझेदार व व्यापार। उपाय: गाय को हरा चारा व रोटी दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_7_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 7 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 7",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 7 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ७ (शुक्र व बुध का घर)। Mercury की स्थिति: गृहस्थ, दुनियादारी, साझेदार व व्यापार। उपाय: गाय को हरा चारा व रोटी दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_7_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 7 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 7",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 7 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ७ (शुक्र व बुध का घर)। Jupiter की स्थिति: गृहस्थ, दुनियादारी, साझेदार व व्यापार। उपाय: गाय को हरा चारा व रोटी दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_7_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 7 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 7",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 7 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ७ (शुक्र व बुध का घर)। Venus की स्थिति: गृहस्थ, दुनियादारी, साझेदार व व्यापार। उपाय: गाय को हरा चारा व रोटी दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_7_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 7 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 7",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 7 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ७ (शुक्र व बुध का घर)। Saturn की स्थिति: गृहस्थ, दुनियादारी, साझेदार व व्यापार। उपाय: गाय को हरा चारा व रोटी दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_7_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 7 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 7",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 7 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ७ (शुक्र व बुध का घर)। Rahu की स्थिति: गृहस्थ, दुनियादारी, साझेदार व व्यापार। उपाय: गाय को हरा चारा व रोटी दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_7_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 7 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 7",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 7 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ७ (शुक्र व बुध का घर)। Ketu की स्थिति: गृहस्थ, दुनियादारी, साझेदार व व्यापार। उपाय: गाय को हरा चारा व रोटी दें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_8_SUN",
+      "rule_name_hi": "Sun खाना नंबर 8 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 8",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 8 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ८ (शनि व मंगल का घर)। Sun की स्थिति: मौत का कुआं, गुप्त भेद, रूहानियत व रुकावटें। उपाय: आठ बादाम मंदिर में चढ़ाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_8_MOON",
+      "rule_name_hi": "Moon खाना नंबर 8 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 8",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 8 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ८ (शनि व मंगल का घर)। Moon की स्थिति: मौत का कुआं, गुप्त भेद, रूहानियत व रुकावटें। उपाय: आठ बादाम मंदिर में चढ़ाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_8_MARS",
+      "rule_name_hi": "Mars खाना नंबर 8 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 8",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 8 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ८ (शनि व मंगल का घर)। Mars की स्थिति: मौत का कुआं, गुप्त भेद, रूहानियत व रुकावटें। उपाय: आठ बादाम मंदिर में चढ़ाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_8_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 8 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 8",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 8 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ८ (शनि व मंगल का घर)। Mercury की स्थिति: मौत का कुआं, गुप्त भेद, रूहानियत व रुकावटें। उपाय: आठ बादाम मंदिर में चढ़ाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_8_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 8 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 8",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 8 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ८ (शनि व मंगल का घर)। Jupiter की स्थिति: मौत का कुआं, गुप्त भेद, रूहानियत व रुकावटें। उपाय: आठ बादाम मंदिर में चढ़ाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_8_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 8 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 8",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 8 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ८ (शनि व मंगल का घर)। Venus की स्थिति: मौत का कुआं, गुप्त भेद, रूहानियत व रुकावटें। उपाय: आठ बादाम मंदिर में चढ़ाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_8_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 8 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 8",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 8 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ८ (शनि व मंगल का घर)। Saturn की स्थिति: मौत का कुआं, गुप्त भेद, रूहानियत व रुकावटें। उपाय: आठ बादाम मंदिर में चढ़ाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_8_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 8 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 8",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 8 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ८ (शनि व मंगल का घर)। Rahu की स्थिति: मौत का कुआं, गुप्त भेद, रूहानियत व रुकावटें। उपाय: आठ बादाम मंदिर में चढ़ाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_8_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 8 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 8",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 8 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ८ (शनि व मंगल का घर)। Ketu की स्थिति: मौत का कुआं, गुप्त भेद, रूहानियत व रुकावटें। उपाय: आठ बादाम मंदिर में चढ़ाएं।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_9_SUN",
+      "rule_name_hi": "Sun खाना नंबर 9 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 9",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 9 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ९ (बृहस्पति का घर)। Sun की स्थिति: किस्मत का खजाना, धर्म, बुजुर्गों की दुआ। उपाय: कुल पुरोहित व बुजुर्गों की सेवा।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_9_MOON",
+      "rule_name_hi": "Moon खाना नंबर 9 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 9",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 9 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ९ (बृहस्पति का घर)। Moon की स्थिति: किस्मत का खजाना, धर्म, बुजुर्गों की दुआ। उपाय: कुल पुरोहित व बुजुर्गों की सेवा।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_9_MARS",
+      "rule_name_hi": "Mars खाना नंबर 9 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 9",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 9 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ९ (बृहस्पति का घर)। Mars की स्थिति: किस्मत का खजाना, धर्म, बुजुर्गों की दुआ। उपाय: कुल पुरोहित व बुजुर्गों की सेवा।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_9_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 9 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 9",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 9 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ९ (बृहस्पति का घर)। Mercury की स्थिति: किस्मत का खजाना, धर्म, बुजुर्गों की दुआ। उपाय: कुल पुरोहित व बुजुर्गों की सेवा।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_9_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 9 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 9",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 9 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ९ (बृहस्पति का घर)। Jupiter की स्थिति: किस्मत का खजाना, धर्म, बुजुर्गों की दुआ। उपाय: कुल पुरोहित व बुजुर्गों की सेवा।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_9_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 9 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 9",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 9 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ९ (बृहस्पति का घर)। Venus की स्थिति: किस्मत का खजाना, धर्म, बुजुर्गों की दुआ। उपाय: कुल पुरोहित व बुजुर्गों की सेवा।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_9_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 9 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 9",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 9 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ९ (बृहस्पति का घर)। Saturn की स्थिति: किस्मत का खजाना, धर्म, बुजुर्गों की दुआ। उपाय: कुल पुरोहित व बुजुर्गों की सेवा।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_9_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 9 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 9",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 9 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ९ (बृहस्पति का घर)। Rahu की स्थिति: किस्मत का खजाना, धर्म, बुजुर्गों की दुआ। उपाय: कुल पुरोहित व बुजुर्गों की सेवा।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_9_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 9 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 9",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 9 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ९ (बृहस्पति का घर)। Ketu की स्थिति: किस्मत का खजाना, धर्म, बुजुर्गों की दुआ। उपाय: कुल पुरोहित व बुजुर्गों की सेवा।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_10_SUN",
+      "rule_name_hi": "Sun खाना नंबर 10 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 10",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 10 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १० (शनि का पक्का घर)। Sun की स्थिति: दशम पाताल, कारोबार, आजीविका व हुकूमत। उपाय: अंध विद्यालय में भोजन दान।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_10_MOON",
+      "rule_name_hi": "Moon खाना नंबर 10 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 10",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 10 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १० (शनि का पक्का घर)। Moon की स्थिति: दशम पाताल, कारोबार, आजीविका व हुकूमत। उपाय: अंध विद्यालय में भोजन दान।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_10_MARS",
+      "rule_name_hi": "Mars खाना नंबर 10 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 10",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 10 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १० (शनि का पक्का घर)। Mars की स्थिति: दशम पाताल, कारोबार, आजीविका व हुकूमत। उपाय: अंध विद्यालय में भोजन दान।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_10_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 10 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 10",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 10 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १० (शनि का पक्का घर)। Mercury की स्थिति: दशम पाताल, कारोबार, आजीविका व हुकूमत। उपाय: अंध विद्यालय में भोजन दान।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_10_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 10 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 10",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 10 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १० (शनि का पक्का घर)। Jupiter की स्थिति: दशम पाताल, कारोबार, आजीविका व हुकूमत। उपाय: अंध विद्यालय में भोजन दान।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_10_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 10 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 10",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 10 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १० (शनि का पक्का घर)। Venus की स्थिति: दशम पाताल, कारोबार, आजीविका व हुकूमत। उपाय: अंध विद्यालय में भोजन दान।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_10_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 10 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 10",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 10 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १० (शनि का पक्का घर)। Saturn की स्थिति: दशम पाताल, कारोबार, आजीविका व हुकूमत। उपाय: अंध विद्यालय में भोजन दान।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_10_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 10 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 10",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 10 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १० (शनि का पक्का घर)। Rahu की स्थिति: दशम पाताल, कारोबार, आजीविका व हुकूमत। उपाय: अंध विद्यालय में भोजन दान।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_10_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 10 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 10",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 10 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १० (शनि का पक्का घर)। Ketu की स्थिति: दशम पाताल, कारोबार, आजीविका व हुकूमत। उपाय: अंध विद्यालय में भोजन दान।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_11_SUN",
+      "rule_name_hi": "Sun खाना नंबर 11 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 11",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 11 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ११ (गुरु व शनि का घर)। Sun की स्थिति: आमदनी, लाभ, बड़े भाई व मनोकामना। उपाय: शनिवार को सरसों का तेल छायादान करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_11_MOON",
+      "rule_name_hi": "Moon खाना नंबर 11 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 11",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 11 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ११ (गुरु व शनि का घर)। Moon की स्थिति: आमदनी, लाभ, बड़े भाई व मनोकामना। उपाय: शनिवार को सरसों का तेल छायादान करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_11_MARS",
+      "rule_name_hi": "Mars खाना नंबर 11 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 11",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 11 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ११ (गुरु व शनि का घर)। Mars की स्थिति: आमदनी, लाभ, बड़े भाई व मनोकामना। उपाय: शनिवार को सरसों का तेल छायादान करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_11_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 11 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 11",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 11 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ११ (गुरु व शनि का घर)। Mercury की स्थिति: आमदनी, लाभ, बड़े भाई व मनोकामना। उपाय: शनिवार को सरसों का तेल छायादान करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_11_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 11 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 11",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 11 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ११ (गुरु व शनि का घर)। Jupiter की स्थिति: आमदनी, लाभ, बड़े भाई व मनोकामना। उपाय: शनिवार को सरसों का तेल छायादान करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_11_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 11 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 11",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 11 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ११ (गुरु व शनि का घर)। Venus की स्थिति: आमदनी, लाभ, बड़े भाई व मनोकामना। उपाय: शनिवार को सरसों का तेल छायादान करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_11_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 11 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 11",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 11 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ११ (गुरु व शनि का घर)। Saturn की स्थिति: आमदनी, लाभ, बड़े भाई व मनोकामना। उपाय: शनिवार को सरसों का तेल छायादान करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_11_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 11 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 11",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 11 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ११ (गुरु व शनि का घर)। Rahu की स्थिति: आमदनी, लाभ, बड़े भाई व मनोकामना। उपाय: शनिवार को सरसों का तेल छायादान करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_11_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 11 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 11",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 11 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर ११ (गुरु व शनि का घर)। Ketu की स्थिति: आमदनी, लाभ, बड़े भाई व मनोकामना। उपाय: शनिवार को सरसों का तेल छायादान करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_12_SUN",
+      "rule_name_hi": "Sun खाना नंबर 12 (लाल किताब फ़रमान)",
+      "rule_name_en": "Sun in Lal Kitab House 12",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 12 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १२ (बृहस्पति व राहु का घर)। Sun की स्थिति: शयन सुख, मोक्ष, खर्च व विदेश। उपाय: गले में शुद्ध चांदी धारण करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_12_MOON",
+      "rule_name_hi": "Moon खाना नंबर 12 (लाल किताब फ़रमान)",
+      "rule_name_en": "Moon in Lal Kitab House 12",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 12 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १२ (बृहस्पति व राहु का घर)। Moon की स्थिति: शयन सुख, मोक्ष, खर्च व विदेश। उपाय: गले में शुद्ध चांदी धारण करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_12_MARS",
+      "rule_name_hi": "Mars खाना नंबर 12 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mars in Lal Kitab House 12",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 12 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १२ (बृहस्पति व राहु का घर)। Mars की स्थिति: शयन सुख, मोक्ष, खर्च व विदेश। उपाय: गले में शुद्ध चांदी धारण करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_12_MERCURY",
+      "rule_name_hi": "Mercury खाना नंबर 12 (लाल किताब फ़रमान)",
+      "rule_name_en": "Mercury in Lal Kitab House 12",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 12 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १२ (बृहस्पति व राहु का घर)। Mercury की स्थिति: शयन सुख, मोक्ष, खर्च व विदेश। उपाय: गले में शुद्ध चांदी धारण करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_12_JUPITER",
+      "rule_name_hi": "Jupiter खाना नंबर 12 (लाल किताब फ़रमान)",
+      "rule_name_en": "Jupiter in Lal Kitab House 12",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 12 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १२ (बृहस्पति व राहु का घर)। Jupiter की स्थिति: शयन सुख, मोक्ष, खर्च व विदेश। उपाय: गले में शुद्ध चांदी धारण करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_12_VENUS",
+      "rule_name_hi": "Venus खाना नंबर 12 (लाल किताब फ़रमान)",
+      "rule_name_en": "Venus in Lal Kitab House 12",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 12 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १२ (बृहस्पति व राहु का घर)। Venus की स्थिति: शयन सुख, मोक्ष, खर्च व विदेश। उपाय: गले में शुद्ध चांदी धारण करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_12_SATURN",
+      "rule_name_hi": "Saturn खाना नंबर 12 (लाल किताब फ़रमान)",
+      "rule_name_en": "Saturn in Lal Kitab House 12",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 12 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १२ (बृहस्पति व राहु का घर)। Saturn की स्थिति: शयन सुख, मोक्ष, खर्च व विदेश। उपाय: गले में शुद्ध चांदी धारण करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_12_RAHU",
+      "rule_name_hi": "Rahu खाना नंबर 12 (लाल किताब फ़रमान)",
+      "rule_name_en": "Rahu in Lal Kitab House 12",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 12 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १२ (बृहस्पति व राहु का घर)। Rahu की स्थिति: शयन सुख, मोक्ष, खर्च व विदेश। उपाय: गले में शुद्ध चांदी धारण करें।"
+      }
+    },
+    {
+      "rule_id": "LALKITAB_KHANA_12_KETU",
+      "rule_name_hi": "Ketu खाना नंबर 12 (लाल किताब फ़रमान)",
+      "rule_name_en": "Ketu in Lal Kitab House 12",
+      "source": {
+        "text": "Lal Kitab (1952 Farmaan)",
+        "chapter": "Khana Number 12 Farmaan",
+        "author": "Pt. Roop Chand Joshi",
+        "era": "Post-Classical"
+      },
+      "school": "Lal Kitab",
+      "category": "farman",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "remedies",
+          "farman",
+          "wealth",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.75,
+        "description_hi": "लाल किताब फ़रमान: खाना नंबर १२ (बृहस्पति व राहु का घर)। Ketu की स्थिति: शयन सुख, मोक्ष, खर्च व विदेश। उपाय: गले में शुद्ध चांदी धारण करें।"
+      }
+    }
+  ]
+}

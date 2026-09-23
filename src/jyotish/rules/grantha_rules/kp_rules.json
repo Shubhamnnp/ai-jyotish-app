@@ -1,0 +1,3572 @@
+{
+  "metadata": {
+    "grantha": "KP Astrology",
+    "count": 108
+  },
+  "rules": [
+    {
+      "rule_id": "KP_CUSP_1_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 1 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 1 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 1 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: स्वास्थ्य व दीर्घायु। १ले कस्प का सब-लॉर्ड ६, ८, १२ के बजाय १, ५, ९, ११ से जुड़े तो उत्तम स्वास्थ्य व दीर्घायु। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_1_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 1 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 1 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 1 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: स्वास्थ्य व दीर्घायु। १ले कस्प का सब-लॉर्ड ६, ८, १२ के बजाय १, ५, ९, ११ से जुड़े तो उत्तम स्वास्थ्य व दीर्घायु। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_1_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 1 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 1 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 1 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: स्वास्थ्य व दीर्घायु। १ले कस्प का सब-लॉर्ड ६, ८, १२ के बजाय १, ५, ९, ११ से जुड़े तो उत्तम स्वास्थ्य व दीर्घायु। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_1_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 1 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 1 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 1 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: स्वास्थ्य व दीर्घायु। १ले कस्प का सब-लॉर्ड ६, ८, १२ के बजाय १, ५, ९, ११ से जुड़े तो उत्तम स्वास्थ्य व दीर्घायु। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_1_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 1 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 1 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 1 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: स्वास्थ्य व दीर्घायु। १ले कस्प का सब-लॉर्ड ६, ८, १२ के बजाय १, ५, ९, ११ से जुड़े तो उत्तम स्वास्थ्य व दीर्घायु। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_1_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 1 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 1 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 1 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: स्वास्थ्य व दीर्घायु। १ले कस्प का सब-लॉर्ड ६, ८, १२ के बजाय १, ५, ९, ११ से जुड़े तो उत्तम स्वास्थ्य व दीर्घायु। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_1_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 1 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 1 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 1 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: स्वास्थ्य व दीर्घायु। १ले कस्प का सब-लॉर्ड ६, ८, १२ के बजाय १, ५, ९, ११ से जुड़े तो उत्तम स्वास्थ्य व दीर्घायु। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_1_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 1 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 1 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 1 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: स्वास्थ्य व दीर्घायु। १ले कस्प का सब-लॉर्ड ६, ८, १२ के बजाय १, ५, ९, ११ से जुड़े तो उत्तम स्वास्थ्य व दीर्घायु। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_1_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 1 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 1 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 1 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: स्वास्थ्य व दीर्घायु। १ले कस्प का सब-लॉर्ड ६, ८, १२ के बजाय १, ५, ९, ११ से जुड़े तो उत्तम स्वास्थ्य व दीर्घायु। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_2_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 2 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 2 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 2 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: धनार्जन व वित्त। २रे कस्प का सब-लॉर्ड २, ६, १०, ११ भावों का कार्येश बने तो प्रचुर धन लाभ। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_2_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 2 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 2 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 2 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: धनार्जन व वित्त। २रे कस्प का सब-लॉर्ड २, ६, १०, ११ भावों का कार्येश बने तो प्रचुर धन लाभ। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_2_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 2 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 2 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 2 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: धनार्जन व वित्त। २रे कस्प का सब-लॉर्ड २, ६, १०, ११ भावों का कार्येश बने तो प्रचुर धन लाभ। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_2_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 2 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 2 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 2 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: धनार्जन व वित्त। २रे कस्प का सब-लॉर्ड २, ६, १०, ११ भावों का कार्येश बने तो प्रचुर धन लाभ। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_2_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 2 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 2 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 2 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: धनार्जन व वित्त। २रे कस्प का सब-लॉर्ड २, ६, १०, ११ भावों का कार्येश बने तो प्रचुर धन लाभ। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_2_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 2 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 2 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 2 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: धनार्जन व वित्त। २रे कस्प का सब-लॉर्ड २, ६, १०, ११ भावों का कार्येश बने तो प्रचुर धन लाभ। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_2_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 2 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 2 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 2 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: धनार्जन व वित्त। २रे कस्प का सब-लॉर्ड २, ६, १०, ११ भावों का कार्येश बने तो प्रचुर धन लाभ। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_2_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 2 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 2 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 2 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: धनार्जन व वित्त। २रे कस्प का सब-लॉर्ड २, ६, १०, ११ भावों का कार्येश बने तो प्रचुर धन लाभ। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_2_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 2 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 2 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 2 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: धनार्जन व वित्त। २रे कस्प का सब-लॉर्ड २, ६, १०, ११ भावों का कार्येश बने तो प्रचुर धन लाभ। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_3_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 3 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 3 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 3 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संचार, मीडिया व पराक्रम। ३रे कस्प का सब-लॉर्ड ३, १०, ११ से जुड़े तो लेखन, पब्लिकेशन व मीडिया में सफलता। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_3_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 3 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 3 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 3 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संचार, मीडिया व पराक्रम। ३रे कस्प का सब-लॉर्ड ३, १०, ११ से जुड़े तो लेखन, पब्लिकेशन व मीडिया में सफलता। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_3_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 3 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 3 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 3 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संचार, मीडिया व पराक्रम। ३रे कस्प का सब-लॉर्ड ३, १०, ११ से जुड़े तो लेखन, पब्लिकेशन व मीडिया में सफलता। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_3_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 3 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 3 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 3 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संचार, मीडिया व पराक्रम। ३रे कस्प का सब-लॉर्ड ३, १०, ११ से जुड़े तो लेखन, पब्लिकेशन व मीडिया में सफलता। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_3_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 3 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 3 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 3 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संचार, मीडिया व पराक्रम। ३रे कस्प का सब-लॉर्ड ३, १०, ११ से जुड़े तो लेखन, पब्लिकेशन व मीडिया में सफलता। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_3_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 3 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 3 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 3 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संचार, मीडिया व पराक्रम। ३रे कस्प का सब-लॉर्ड ३, १०, ११ से जुड़े तो लेखन, पब्लिकेशन व मीडिया में सफलता। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_3_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 3 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 3 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 3 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संचार, मीडिया व पराक्रम। ३रे कस्प का सब-लॉर्ड ३, १०, ११ से जुड़े तो लेखन, पब्लिकेशन व मीडिया में सफलता। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_3_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 3 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 3 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 3 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संचार, मीडिया व पराक्रम। ३रे कस्प का सब-लॉर्ड ३, १०, ११ से जुड़े तो लेखन, पब्लिकेशन व मीडिया में सफलता। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_3_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 3 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 3 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 3 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संचार, मीडिया व पराक्रम। ३रे कस्प का सब-लॉर्ड ३, १०, ११ से जुड़े तो लेखन, पब्लिकेशन व मीडिया में सफलता। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_4_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 4 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 4 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 4 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: भूमि, भवन व शिक्षा। ४थे कस्प का सब-लॉर्ड ४, ११, १२ से जुड़े तो अचल संपत्ति, वाहन व उच्च डिग्री। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_4_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 4 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 4 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 4 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: भूमि, भवन व शिक्षा। ४थे कस्प का सब-लॉर्ड ४, ११, १२ से जुड़े तो अचल संपत्ति, वाहन व उच्च डिग्री। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_4_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 4 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 4 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 4 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: भूमि, भवन व शिक्षा। ४थे कस्प का सब-लॉर्ड ४, ११, १२ से जुड़े तो अचल संपत्ति, वाहन व उच्च डिग्री। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_4_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 4 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 4 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 4 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: भूमि, भवन व शिक्षा। ४थे कस्प का सब-लॉर्ड ४, ११, १२ से जुड़े तो अचल संपत्ति, वाहन व उच्च डिग्री। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_4_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 4 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 4 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 4 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: भूमि, भवन व शिक्षा। ४थे कस्प का सब-लॉर्ड ४, ११, १२ से जुड़े तो अचल संपत्ति, वाहन व उच्च डिग्री। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_4_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 4 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 4 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 4 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: भूमि, भवन व शिक्षा। ४थे कस्प का सब-लॉर्ड ४, ११, १२ से जुड़े तो अचल संपत्ति, वाहन व उच्च डिग्री। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_4_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 4 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 4 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 4 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: भूमि, भवन व शिक्षा। ४थे कस्प का सब-लॉर्ड ४, ११, १२ से जुड़े तो अचल संपत्ति, वाहन व उच्च डिग्री। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_4_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 4 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 4 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 4 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: भूमि, भवन व शिक्षा। ४थे कस्प का सब-लॉर्ड ४, ११, १२ से जुड़े तो अचल संपत्ति, वाहन व उच्च डिग्री। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_4_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 4 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 4 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 4 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: भूमि, भवन व शिक्षा। ४थे कस्प का सब-लॉर्ड ४, ११, १२ से जुड़े तो अचल संपत्ति, वाहन व उच्च डिग्री। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_5_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 5 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 5 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 5 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संतान, प्रेम व रचनात्मकता। ५वें कस्प का सब-लॉर्ड २, ५, ११ से जुड़े तो संतान प्राप्ति व सट्टा-ट्रेडिंग में लाभ। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_5_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 5 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 5 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 5 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संतान, प्रेम व रचनात्मकता। ५वें कस्प का सब-लॉर्ड २, ५, ११ से जुड़े तो संतान प्राप्ति व सट्टा-ट्रेडिंग में लाभ। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_5_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 5 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 5 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 5 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संतान, प्रेम व रचनात्मकता। ५वें कस्प का सब-लॉर्ड २, ५, ११ से जुड़े तो संतान प्राप्ति व सट्टा-ट्रेडिंग में लाभ। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_5_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 5 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 5 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 5 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संतान, प्रेम व रचनात्मकता। ५वें कस्प का सब-लॉर्ड २, ५, ११ से जुड़े तो संतान प्राप्ति व सट्टा-ट्रेडिंग में लाभ। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_5_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 5 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 5 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 5 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संतान, प्रेम व रचनात्मकता। ५वें कस्प का सब-लॉर्ड २, ५, ११ से जुड़े तो संतान प्राप्ति व सट्टा-ट्रेडिंग में लाभ। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_5_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 5 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 5 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 5 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संतान, प्रेम व रचनात्मकता। ५वें कस्प का सब-लॉर्ड २, ५, ११ से जुड़े तो संतान प्राप्ति व सट्टा-ट्रेडिंग में लाभ। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_5_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 5 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 5 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 5 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संतान, प्रेम व रचनात्मकता। ५वें कस्प का सब-लॉर्ड २, ५, ११ से जुड़े तो संतान प्राप्ति व सट्टा-ट्रेडिंग में लाभ। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_5_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 5 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 5 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 5 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संतान, प्रेम व रचनात्मकता। ५वें कस्प का सब-लॉर्ड २, ५, ११ से जुड़े तो संतान प्राप्ति व सट्टा-ट्रेडिंग में लाभ। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_5_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 5 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 5 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 5 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: संतान, प्रेम व रचनात्मकता। ५वें कस्प का सब-लॉर्ड २, ५, ११ से जुड़े तो संतान प्राप्ति व सट्टा-ट्रेडिंग में लाभ। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_6_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 6 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 6 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 6 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: नौकरी व प्रतियोगिता। ६ठे कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रतियोगी परीक्षा में विजय व नौकरी। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_6_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 6 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 6 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 6 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: नौकरी व प्रतियोगिता। ६ठे कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रतियोगी परीक्षा में विजय व नौकरी। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_6_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 6 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 6 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 6 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: नौकरी व प्रतियोगिता। ६ठे कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रतियोगी परीक्षा में विजय व नौकरी। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_6_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 6 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 6 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 6 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: नौकरी व प्रतियोगिता। ६ठे कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रतियोगी परीक्षा में विजय व नौकरी। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_6_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 6 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 6 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 6 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: नौकरी व प्रतियोगिता। ६ठे कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रतियोगी परीक्षा में विजय व नौकरी। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_6_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 6 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 6 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 6 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: नौकरी व प्रतियोगिता। ६ठे कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रतियोगी परीक्षा में विजय व नौकरी। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_6_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 6 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 6 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 6 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: नौकरी व प्रतियोगिता। ६ठे कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रतियोगी परीक्षा में विजय व नौकरी। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_6_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 6 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 6 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 6 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: नौकरी व प्रतियोगिता। ६ठे कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रतियोगी परीक्षा में विजय व नौकरी। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_6_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 6 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 6 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 6 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: नौकरी व प्रतियोगिता। ६ठे कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रतियोगी परीक्षा में विजय व नौकरी। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_7_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 7 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 7 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 7 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विवाह व व्यापार साझेदारी। ७वें कस्प का सब-लॉर्ड २, ७, ११ से जुड़े तो समय पर सुखी विवाह व सफल व्यापार। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_7_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 7 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 7 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 7 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विवाह व व्यापार साझेदारी। ७वें कस्प का सब-लॉर्ड २, ७, ११ से जुड़े तो समय पर सुखी विवाह व सफल व्यापार। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_7_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 7 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 7 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 7 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विवाह व व्यापार साझेदारी। ७वें कस्प का सब-लॉर्ड २, ७, ११ से जुड़े तो समय पर सुखी विवाह व सफल व्यापार। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_7_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 7 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 7 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 7 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विवाह व व्यापार साझेदारी। ७वें कस्प का सब-लॉर्ड २, ७, ११ से जुड़े तो समय पर सुखी विवाह व सफल व्यापार। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_7_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 7 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 7 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 7 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विवाह व व्यापार साझेदारी। ७वें कस्प का सब-लॉर्ड २, ७, ११ से जुड़े तो समय पर सुखी विवाह व सफल व्यापार। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_7_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 7 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 7 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 7 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विवाह व व्यापार साझेदारी। ७वें कस्प का सब-लॉर्ड २, ७, ११ से जुड़े तो समय पर सुखी विवाह व सफल व्यापार। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_7_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 7 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 7 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 7 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विवाह व व्यापार साझेदारी। ७वें कस्प का सब-लॉर्ड २, ७, ११ से जुड़े तो समय पर सुखी विवाह व सफल व्यापार। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_7_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 7 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 7 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 7 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विवाह व व्यापार साझेदारी। ७वें कस्प का सब-लॉर्ड २, ७, ११ से जुड़े तो समय पर सुखी विवाह व सफल व्यापार। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_7_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 7 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 7 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 7 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विवाह व व्यापार साझेदारी। ७वें कस्प का सब-लॉर्ड २, ७, ११ से जुड़े तो समय पर सुखी विवाह व सफल व्यापार। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_8_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 8 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 8 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 8 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: आकस्मिक घटनाएं व वसीयत। ८वें कस्प का सब-लॉर्ड २, ८, ११ से जुड़े तो वसीयत, बीमा व अप्रत्याशित धन प्राप्ति। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_8_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 8 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 8 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 8 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: आकस्मिक घटनाएं व वसीयत। ८वें कस्प का सब-लॉर्ड २, ८, ११ से जुड़े तो वसीयत, बीमा व अप्रत्याशित धन प्राप्ति। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_8_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 8 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 8 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 8 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: आकस्मिक घटनाएं व वसीयत। ८वें कस्प का सब-लॉर्ड २, ८, ११ से जुड़े तो वसीयत, बीमा व अप्रत्याशित धन प्राप्ति। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_8_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 8 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 8 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 8 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: आकस्मिक घटनाएं व वसीयत। ८वें कस्प का सब-लॉर्ड २, ८, ११ से जुड़े तो वसीयत, बीमा व अप्रत्याशित धन प्राप्ति। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_8_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 8 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 8 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 8 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: आकस्मिक घटनाएं व वसीयत। ८वें कस्प का सब-लॉर्ड २, ८, ११ से जुड़े तो वसीयत, बीमा व अप्रत्याशित धन प्राप्ति। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_8_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 8 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 8 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 8 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: आकस्मिक घटनाएं व वसीयत। ८वें कस्प का सब-लॉर्ड २, ८, ११ से जुड़े तो वसीयत, बीमा व अप्रत्याशित धन प्राप्ति। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_8_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 8 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 8 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 8 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: आकस्मिक घटनाएं व वसीयत। ८वें कस्प का सब-लॉर्ड २, ८, ११ से जुड़े तो वसीयत, बीमा व अप्रत्याशित धन प्राप्ति। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_8_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 8 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 8 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 8 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: आकस्मिक घटनाएं व वसीयत। ८वें कस्प का सब-लॉर्ड २, ८, ११ से जुड़े तो वसीयत, बीमा व अप्रत्याशित धन प्राप्ति। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_8_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 8 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 8 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 8 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: आकस्मिक घटनाएं व वसीयत। ८वें कस्प का सब-लॉर्ड २, ८, ११ से जुड़े तो वसीयत, बीमा व अप्रत्याशित धन प्राप्ति। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_9_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 9 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 9 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 9 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: उच्च शिक्षा व विदेश यात्रा। ९वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो विदेश यात्रा व उच्च शोध। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_9_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 9 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 9 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 9 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: उच्च शिक्षा व विदेश यात्रा। ९वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो विदेश यात्रा व उच्च शोध। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_9_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 9 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 9 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 9 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: उच्च शिक्षा व विदेश यात्रा। ९वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो विदेश यात्रा व उच्च शोध। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_9_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 9 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 9 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 9 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: उच्च शिक्षा व विदेश यात्रा। ९वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो विदेश यात्रा व उच्च शोध। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_9_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 9 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 9 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 9 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: उच्च शिक्षा व विदेश यात्रा। ९वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो विदेश यात्रा व उच्च शोध। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_9_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 9 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 9 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 9 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: उच्च शिक्षा व विदेश यात्रा। ९वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो विदेश यात्रा व उच्च शोध। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_9_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 9 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 9 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 9 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: उच्च शिक्षा व विदेश यात्रा। ९वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो विदेश यात्रा व उच्च शोध। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_9_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 9 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 9 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 9 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: उच्च शिक्षा व विदेश यात्रा। ९वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो विदेश यात्रा व उच्च शोध। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_9_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 9 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 9 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 9 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: उच्च शिक्षा व विदेश यात्रा। ९वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो विदेश यात्रा व उच्च शोध। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_10_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 10 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 10 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 10 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: करियर, पद व प्रतिष्ठा। १०वें कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रशासनिक पद व कॉर्पोरेट शीर्ष पद। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_10_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 10 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 10 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 10 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: करियर, पद व प्रतिष्ठा। १०वें कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रशासनिक पद व कॉर्पोरेट शीर्ष पद। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_10_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 10 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 10 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 10 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: करियर, पद व प्रतिष्ठा। १०वें कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रशासनिक पद व कॉर्पोरेट शीर्ष पद। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_10_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 10 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 10 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 10 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: करियर, पद व प्रतिष्ठा। १०वें कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रशासनिक पद व कॉर्पोरेट शीर्ष पद। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_10_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 10 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 10 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 10 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: करियर, पद व प्रतिष्ठा। १०वें कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रशासनिक पद व कॉर्पोरेट शीर्ष पद। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_10_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 10 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 10 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 10 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: करियर, पद व प्रतिष्ठा। १०वें कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रशासनिक पद व कॉर्पोरेट शीर्ष पद। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_10_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 10 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 10 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 10 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: करियर, पद व प्रतिष्ठा। १०वें कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रशासनिक पद व कॉर्पोरेट शीर्ष पद। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_10_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 10 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 10 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 10 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: करियर, पद व प्रतिष्ठा। १०वें कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रशासनिक पद व कॉर्पोरेट शीर्ष पद। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_10_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 10 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 10 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 10 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: करियर, पद व प्रतिष्ठा। १०वें कस्प का सब-लॉर्ड २, ६, १०, ११ से जुड़े तो प्रशासनिक पद व कॉर्पोरेट शीर्ष पद। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_11_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 11 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 11 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 11 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: मनोकामना पूर्ति व लाभ। ११वें कस्प का सब-लॉर्ड २, १०, ११ से जुड़े तो जीवन के समस्त बड़े मनोरथ सिद्ध। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_11_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 11 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 11 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 11 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: मनोकामना पूर्ति व लाभ। ११वें कस्प का सब-लॉर्ड २, १०, ११ से जुड़े तो जीवन के समस्त बड़े मनोरथ सिद्ध। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_11_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 11 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 11 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 11 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: मनोकामना पूर्ति व लाभ। ११वें कस्प का सब-लॉर्ड २, १०, ११ से जुड़े तो जीवन के समस्त बड़े मनोरथ सिद्ध। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_11_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 11 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 11 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 11 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: मनोकामना पूर्ति व लाभ। ११वें कस्प का सब-लॉर्ड २, १०, ११ से जुड़े तो जीवन के समस्त बड़े मनोरथ सिद्ध। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_11_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 11 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 11 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 11 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: मनोकामना पूर्ति व लाभ। ११वें कस्प का सब-लॉर्ड २, १०, ११ से जुड़े तो जीवन के समस्त बड़े मनोरथ सिद्ध। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_11_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 11 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 11 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 11 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: मनोकामना पूर्ति व लाभ। ११वें कस्प का सब-लॉर्ड २, १०, ११ से जुड़े तो जीवन के समस्त बड़े मनोरथ सिद्ध। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_11_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 11 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 11 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 11 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: मनोकामना पूर्ति व लाभ। ११वें कस्प का सब-लॉर्ड २, १०, ११ से जुड़े तो जीवन के समस्त बड़े मनोरथ सिद्ध। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_11_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 11 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 11 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 11 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: मनोकामना पूर्ति व लाभ। ११वें कस्प का सब-लॉर्ड २, १०, ११ से जुड़े तो जीवन के समस्त बड़े मनोरथ सिद्ध। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_11_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 11 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 11 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 11 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: मनोकामना पूर्ति व लाभ। ११वें कस्प का सब-लॉर्ड २, १०, ११ से जुड़े तो जीवन के समस्त बड़े मनोरथ सिद्ध। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_12_SUB_SUN",
+      "rule_name_hi": "के.पी. कस्प 12 सब-लॉर्ड: Sun",
+      "rule_name_en": "KP Cusp 12 Sub-Lord Sun",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 12 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विदेश प्रवास व मोक्ष। १२वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो स्थायी विदेश निवास व आध्यात्मिक मोक्ष। उप-स्वामी (Sub-Lord) Sun का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_12_SUB_MOON",
+      "rule_name_hi": "के.पी. कस्प 12 सब-लॉर्ड: Moon",
+      "rule_name_en": "KP Cusp 12 Sub-Lord Moon",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 12 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विदेश प्रवास व मोक्ष। १२वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो स्थायी विदेश निवास व आध्यात्मिक मोक्ष। उप-स्वामी (Sub-Lord) Moon का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_12_SUB_MARS",
+      "rule_name_hi": "के.पी. कस्प 12 सब-लॉर्ड: Mars",
+      "rule_name_en": "KP Cusp 12 Sub-Lord Mars",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 12 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विदेश प्रवास व मोक्ष। १२वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो स्थायी विदेश निवास व आध्यात्मिक मोक्ष। उप-स्वामी (Sub-Lord) Mars का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_12_SUB_MERCURY",
+      "rule_name_hi": "के.पी. कस्प 12 सब-लॉर्ड: Mercury",
+      "rule_name_en": "KP Cusp 12 Sub-Lord Mercury",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 12 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विदेश प्रवास व मोक्ष। १२वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो स्थायी विदेश निवास व आध्यात्मिक मोक्ष। उप-स्वामी (Sub-Lord) Mercury का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_12_SUB_JUPITER",
+      "rule_name_hi": "के.पी. कस्प 12 सब-लॉर्ड: Jupiter",
+      "rule_name_en": "KP Cusp 12 Sub-Lord Jupiter",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 12 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विदेश प्रवास व मोक्ष। १२वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो स्थायी विदेश निवास व आध्यात्मिक मोक्ष। उप-स्वामी (Sub-Lord) Jupiter का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_12_SUB_VENUS",
+      "rule_name_hi": "के.पी. कस्प 12 सब-लॉर्ड: Venus",
+      "rule_name_en": "KP Cusp 12 Sub-Lord Venus",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 12 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विदेश प्रवास व मोक्ष। १२वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो स्थायी विदेश निवास व आध्यात्मिक मोक्ष। उप-स्वामी (Sub-Lord) Venus का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_12_SUB_SATURN",
+      "rule_name_hi": "के.पी. कस्प 12 सब-लॉर्ड: Saturn",
+      "rule_name_en": "KP Cusp 12 Sub-Lord Saturn",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 12 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विदेश प्रवास व मोक्ष। १२वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो स्थायी विदेश निवास व आध्यात्मिक मोक्ष। उप-स्वामी (Sub-Lord) Saturn का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_12_SUB_RAHU",
+      "rule_name_hi": "के.पी. कस्प 12 सब-लॉर्ड: Rahu",
+      "rule_name_en": "KP Cusp 12 Sub-Lord Rahu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 12 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विदेश प्रवास व मोक्ष। १२वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो स्थायी विदेश निवास व आध्यात्मिक मोक्ष। उप-स्वामी (Sub-Lord) Rahu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    },
+    {
+      "rule_id": "KP_CUSP_12_SUB_KETU",
+      "rule_name_hi": "के.पी. कस्प 12 सब-लॉर्ड: Ketu",
+      "rule_name_en": "KP Cusp 12 Sub-Lord Ketu",
+      "source": {
+        "text": "Krishnamurti Paddhati (KP System)",
+        "chapter": "KP Reader II & III (Cusp 12 Judgement)",
+        "author": "Prof. K.S. Krishnamurti",
+        "era": "Modern Classical"
+      },
+      "school": "KP",
+      "category": "sublord",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "career",
+          "marriage",
+          "wealth",
+          "events"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "के.पी. ज्योतिष नियम: विदेश प्रवास व मोक्ष। १२वें कस्प का सब-लॉर्ड ३, ९, १२ से जुड़े तो स्थायी विदेश निवास व आध्यात्मिक मोक्ष। उप-स्वामी (Sub-Lord) Ketu का कार्यकत्व प्रभावी रहेगा।"
+      }
+    }
+  ]
+}

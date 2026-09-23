@@ -1,0 +1,656 @@
+{
+  "metadata": {
+    "grantha": "Jaimini Upadesha Sutras",
+    "count": 20
+  },
+  "rules": [
+    {
+      "rule_id": "JAIMINI_AK_SUN",
+      "rule_name_hi": "आत्मकारक सूर्य",
+      "rule_name_en": "Atmakaraka Sun Soul Lesson",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2 (Karakamsha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "destiny",
+          "karma",
+          "moksha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "महर्षि जैमिनी सूत्र: आत्मकारक सूर्य। अहंकार त्याग, नम्रता, जनकल्याण एवं सत्यनिष्ठा की साधना।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_MOON",
+      "rule_name_hi": "आत्मकारक चन्द्रमा",
+      "rule_name_en": "Atmakaraka Moon Soul Lesson",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2 (Karakamsha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "destiny",
+          "karma",
+          "moksha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "महर्षि जैमिनी सूत्र: आत्मकारक चन्द्रमा। भावनात्मक समत्व, सार्वभौमिक वात्सल्य एवं चित्त शुद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_MARS",
+      "rule_name_hi": "आत्मकारक मंगल",
+      "rule_name_en": "Atmakaraka Mars Soul Lesson",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2 (Karakamsha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "destiny",
+          "karma",
+          "moksha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "महर्षि जैमिनी सूत्र: आत्मकारक मंगल। क्रोध विजय, अहिंसा, धर्म रक्षा एवं पराक्रम का सृजनात्मक उपयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_MERCURY",
+      "rule_name_hi": "आत्मकारक बुध",
+      "rule_name_en": "Atmakaraka Mercury Soul Lesson",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2 (Karakamsha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "destiny",
+          "karma",
+          "moksha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "महर्षि जैमिनी सूत्र: आत्मकारक बुध। सत्य भाषण, वाक्-संयम, बौद्धिक अहंकार त्याग एवं ईश्वरार्पण।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_JUPITER",
+      "rule_name_hi": "आत्मकारक बृहस्पति",
+      "rule_name_en": "Atmakaraka Jupiter Soul Lesson",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2 (Karakamsha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "destiny",
+          "karma",
+          "moksha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "महर्षि जैमिनी सूत्र: आत्मकारक बृहस्पति। गुरु परंपरा का आदर, ज्ञान का अहंकार न करना, परोपकार।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_VENUS",
+      "rule_name_hi": "आत्मकारक शुक्र",
+      "rule_name_en": "Atmakaraka Venus Soul Lesson",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2 (Karakamsha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "destiny",
+          "karma",
+          "moksha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "महर्षि जैमिनी सूत्र: आत्मकारक शुक्र। इन्द्रिय संयम, काम वासना का दिव्य प्रेम में रूपांतरण।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_SATURN",
+      "rule_name_hi": "आत्मकारक शनि",
+      "rule_name_en": "Atmakaraka Saturn Soul Lesson",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2 (Karakamsha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "destiny",
+          "karma",
+          "moksha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "महर्षि जैमिनी सूत्र: आत्मकारक शनि। प्रारब्ध कष्टों को धैर्य से सहना, दीन-दुखियों की निष्काम सेवा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_RAHU",
+      "rule_name_hi": "आत्मकारक राहु",
+      "rule_name_en": "Atmakaraka Rahu Soul Lesson",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2 (Karakamsha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "not_combust"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "destiny",
+          "karma",
+          "moksha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "महर्षि जैमिनी सूत्र: आत्मकारक राहु। सांसारिक माया, कपट व छल का परित्याग कर सत्य को आत्मसात करना।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_1",
+      "rule_name_hi": "कारकांश लग्न से 1वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 1 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार लग्न (तनु भाव) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_2",
+      "rule_name_hi": "कारकांश लग्न से 2वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 2 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार द्वितीय (धन/कुटुंब) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_3",
+      "rule_name_hi": "कारकांश लग्न से 3वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 3 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार तृतीय (पराक्रम/सहज) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_4",
+      "rule_name_hi": "कारकांश लग्न से 4वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 4 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार चतुर्थ (सुख/मातृ) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_5",
+      "rule_name_hi": "कारकांश लग्न से 5वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 5 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार पंचम (धी/पुत्र/पुण्य) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_6",
+      "rule_name_hi": "कारकांश लग्न से 6वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 6 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार षष्ठम (शत्रु/रोग/ऋण) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_7",
+      "rule_name_hi": "कारकांश लग्न से 7वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 7 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार सप्तम (जाया/व्यापार) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_8",
+      "rule_name_hi": "कारकांश लग्न से 8वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 8 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार अष्टम (आयु/छिद्र/मृत्यु) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_9",
+      "rule_name_hi": "कारकांश लग्न से 9वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 9 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार नवम (धर्म/भाग्य/पिता) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_10",
+      "rule_name_hi": "कारकांश लग्न से 10वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 10 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार दशम (कर्म/प्रतिष्ठा/राज्य) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_11",
+      "rule_name_hi": "कारकांश लग्न से 11वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 11 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार एकादश (लाभ/आय) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KARAKAMSHA_BHAVA_12",
+      "rule_name_hi": "कारकांश लग्न से 12वां भाव विचार",
+      "rule_name_en": "Karakamsha Bhava 12 Fruit",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 1, Pada 2",
+        "author": "Maharishi Jaimini",
+        "era": "Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "bhav-based",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "spiritual",
+          "moksha",
+          "dharma"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "कारकांश कुण्डली के अनुसार द्वादश (व्यय/मोक्ष) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    }
+  ]
+}

@@ -1,0 +1,2864 @@
+{
+  "metadata": {
+    "grantha": "Ank Shastra",
+    "count": 89
+  },
+  "rules": [
+    {
+      "rule_id": "NUM_LOSHU_492_MENTAL",
+      "rule_name_hi": "मानसिक तल (Mental Plane 4-9-2)",
+      "rule_name_en": "मानसिक तल (Mental Plane 4-9-2)",
+      "source": {
+        "text": "Ank Shastra & Lo-Shu Grid System",
+        "chapter": "Vedic & Cheiro Numerology Combinations",
+        "author": "Vedic Sages",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "wealth",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र नियम: मानसिक तल (Mental Plane 4-9-2)। स्मरण शक्ति, उच्च बौद्धिक क्षमता, तार्किक विश्लेषण व कूटनीति में निपुणता।"
+      }
+    },
+    {
+      "rule_id": "NUM_LOSHU_357_EMOTIONAL",
+      "rule_name_hi": "भावनात्मक तल (Emotional Plane 3-5-7)",
+      "rule_name_en": "भावनात्मक तल (Emotional Plane 3-5-7)",
+      "source": {
+        "text": "Ank Shastra & Lo-Shu Grid System",
+        "chapter": "Vedic & Cheiro Numerology Combinations",
+        "author": "Vedic Sages",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "wealth",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र नियम: भावनात्मक तल (Emotional Plane 3-5-7)। दया, करुणा, अंतर्ज्ञान (Intuition), कलात्मक हृदय व आध्यात्मिक संवेदनशीलता।"
+      }
+    },
+    {
+      "rule_id": "NUM_LOSHU_816_PRACTICAL",
+      "rule_name_hi": "व्यावहारिक तल (Practical Plane 8-1-6)",
+      "rule_name_en": "व्यावहारिक तल (Practical Plane 8-1-6)",
+      "source": {
+        "text": "Ank Shastra & Lo-Shu Grid System",
+        "chapter": "Vedic & Cheiro Numerology Combinations",
+        "author": "Vedic Sages",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "wealth",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र नियम: व्यावहारिक तल (Practical Plane 8-1-6)। व्यापारिक सूझबूझ, यथार्थवाद, धन प्रबंधन व भौतिक सफलता।"
+      }
+    },
+    {
+      "rule_id": "NUM_LOSHU_438_THOUGHT",
+      "rule_name_hi": "विचार तल (Thought Plane 4-3-8)",
+      "rule_name_en": "विचार तल (Thought Plane 4-3-8)",
+      "source": {
+        "text": "Ank Shastra & Lo-Shu Grid System",
+        "chapter": "Vedic & Cheiro Numerology Combinations",
+        "author": "Vedic Sages",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "wealth",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "अंकशास्त्र नियम: विचार तल (Thought Plane 4-3-8)। दीर्घकालिक योजना, संगठन क्षमता, अनुशासित विचार व दूरदर्शिता।"
+      }
+    },
+    {
+      "rule_id": "NUM_LOSHU_951_WILL",
+      "rule_name_hi": "संकल्प तल (Will Plane 9-5-1)",
+      "rule_name_en": "संकल्प तल (Will Plane 9-5-1)",
+      "source": {
+        "text": "Ank Shastra & Lo-Shu Grid System",
+        "chapter": "Vedic & Cheiro Numerology Combinations",
+        "author": "Vedic Sages",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "wealth",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "अंकशास्त्र नियम: संकल्प तल (Will Plane 9-5-1)। अदम्य इच्छाशक्ति, हठी संकल्प, कभी हार न मानने की प्रवृत्ति व राजयोग।"
+      }
+    },
+    {
+      "rule_id": "NUM_LOSHU_276_ACTION",
+      "rule_name_hi": "क्रिया तल (Action Plane 2-7-6)",
+      "rule_name_en": "क्रिया तल (Action Plane 2-7-6)",
+      "source": {
+        "text": "Ank Shastra & Lo-Shu Grid System",
+        "chapter": "Vedic & Cheiro Numerology Combinations",
+        "author": "Vedic Sages",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "wealth",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.8,
+        "description_hi": "अंकशास्त्र नियम: क्रिया तल (Action Plane 2-7-6)। त्वरित निर्णय, कर्मठता, खेल, तकनीकी निष्पादन व साहसिक कार्य।"
+      }
+    },
+    {
+      "rule_id": "NUM_LOSHU_456_GOLDEN",
+      "rule_name_hi": "गोल्डन राजयोग (Golden Raj Yoga 4-5-6)",
+      "rule_name_en": "गोल्डन राजयोग (Golden Raj Yoga 4-5-6)",
+      "source": {
+        "text": "Ank Shastra & Lo-Shu Grid System",
+        "chapter": "Vedic & Cheiro Numerology Combinations",
+        "author": "Vedic Sages",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "wealth",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "अंकशास्त्र नियम: गोल्डन राजयोग (Golden Raj Yoga 4-5-6)। अकूत धन, समृद्धि, सामाजिक प्रतिष्ठा व जीवन के समस्त सुख-साधन।"
+      }
+    },
+    {
+      "rule_id": "NUM_LOSHU_258_SILVER",
+      "rule_name_hi": "सिल्वर राजयोग (Silver Raj Yoga 2-5-8)",
+      "rule_name_en": "सिल्वर राजयोग (Silver Raj Yoga 2-5-8)",
+      "source": {
+        "text": "Ank Shastra & Lo-Shu Grid System",
+        "chapter": "Vedic & Cheiro Numerology Combinations",
+        "author": "Vedic Sages",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "wealth",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "अंकशास्त्र नियम: सिल्वर राजयोग (Silver Raj Yoga 2-5-8)। रियल एस्टेट, भूमि-भवन संपदा, अचल संपत्ति एवं स्थायी वित्तीय स्थिरता।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_1_BHAG_1",
+      "rule_name_hi": "मूलांक 1 + भाग्यांक 1 संयोजन",
+      "rule_name_en": "Mulank 1 and Bhagyank 1 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 1 एवं भाग्यांक 1 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_1_BHAG_2",
+      "rule_name_hi": "मूलांक 1 + भाग्यांक 2 संयोजन",
+      "rule_name_en": "Mulank 1 and Bhagyank 2 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 1 एवं भाग्यांक 2 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_1_BHAG_3",
+      "rule_name_hi": "मूलांक 1 + भाग्यांक 3 संयोजन",
+      "rule_name_en": "Mulank 1 and Bhagyank 3 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 1 एवं भाग्यांक 3 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_1_BHAG_4",
+      "rule_name_hi": "मूलांक 1 + भाग्यांक 4 संयोजन",
+      "rule_name_en": "Mulank 1 and Bhagyank 4 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 1 एवं भाग्यांक 4 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_1_BHAG_5",
+      "rule_name_hi": "मूलांक 1 + भाग्यांक 5 संयोजन",
+      "rule_name_en": "Mulank 1 and Bhagyank 5 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 1 एवं भाग्यांक 5 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_1_BHAG_6",
+      "rule_name_hi": "मूलांक 1 + भाग्यांक 6 संयोजन",
+      "rule_name_en": "Mulank 1 and Bhagyank 6 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 1 एवं भाग्यांक 6 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_1_BHAG_7",
+      "rule_name_hi": "मूलांक 1 + भाग्यांक 7 संयोजन",
+      "rule_name_en": "Mulank 1 and Bhagyank 7 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 1 एवं भाग्यांक 7 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_1_BHAG_8",
+      "rule_name_hi": "मूलांक 1 + भाग्यांक 8 संयोजन",
+      "rule_name_en": "Mulank 1 and Bhagyank 8 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 1 एवं भाग्यांक 8 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_1_BHAG_9",
+      "rule_name_hi": "मूलांक 1 + भाग्यांक 9 संयोजन",
+      "rule_name_en": "Mulank 1 and Bhagyank 9 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 1 एवं भाग्यांक 9 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_2_BHAG_1",
+      "rule_name_hi": "मूलांक 2 + भाग्यांक 1 संयोजन",
+      "rule_name_en": "Mulank 2 and Bhagyank 1 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 2 एवं भाग्यांक 1 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_2_BHAG_2",
+      "rule_name_hi": "मूलांक 2 + भाग्यांक 2 संयोजन",
+      "rule_name_en": "Mulank 2 and Bhagyank 2 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 2 एवं भाग्यांक 2 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_2_BHAG_3",
+      "rule_name_hi": "मूलांक 2 + भाग्यांक 3 संयोजन",
+      "rule_name_en": "Mulank 2 and Bhagyank 3 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 2 एवं भाग्यांक 3 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_2_BHAG_4",
+      "rule_name_hi": "मूलांक 2 + भाग्यांक 4 संयोजन",
+      "rule_name_en": "Mulank 2 and Bhagyank 4 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 2 एवं भाग्यांक 4 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_2_BHAG_5",
+      "rule_name_hi": "मूलांक 2 + भाग्यांक 5 संयोजन",
+      "rule_name_en": "Mulank 2 and Bhagyank 5 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 2 एवं भाग्यांक 5 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_2_BHAG_6",
+      "rule_name_hi": "मूलांक 2 + भाग्यांक 6 संयोजन",
+      "rule_name_en": "Mulank 2 and Bhagyank 6 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 2 एवं भाग्यांक 6 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_2_BHAG_7",
+      "rule_name_hi": "मूलांक 2 + भाग्यांक 7 संयोजन",
+      "rule_name_en": "Mulank 2 and Bhagyank 7 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 2 एवं भाग्यांक 7 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_2_BHAG_8",
+      "rule_name_hi": "मूलांक 2 + भाग्यांक 8 संयोजन",
+      "rule_name_en": "Mulank 2 and Bhagyank 8 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 2 एवं भाग्यांक 8 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_2_BHAG_9",
+      "rule_name_hi": "मूलांक 2 + भाग्यांक 9 संयोजन",
+      "rule_name_en": "Mulank 2 and Bhagyank 9 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 2 एवं भाग्यांक 9 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_3_BHAG_1",
+      "rule_name_hi": "मूलांक 3 + भाग्यांक 1 संयोजन",
+      "rule_name_en": "Mulank 3 and Bhagyank 1 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 3 एवं भाग्यांक 1 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_3_BHAG_2",
+      "rule_name_hi": "मूलांक 3 + भाग्यांक 2 संयोजन",
+      "rule_name_en": "Mulank 3 and Bhagyank 2 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 3 एवं भाग्यांक 2 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_3_BHAG_3",
+      "rule_name_hi": "मूलांक 3 + भाग्यांक 3 संयोजन",
+      "rule_name_en": "Mulank 3 and Bhagyank 3 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 3 एवं भाग्यांक 3 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_3_BHAG_4",
+      "rule_name_hi": "मूलांक 3 + भाग्यांक 4 संयोजन",
+      "rule_name_en": "Mulank 3 and Bhagyank 4 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 3 एवं भाग्यांक 4 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_3_BHAG_5",
+      "rule_name_hi": "मूलांक 3 + भाग्यांक 5 संयोजन",
+      "rule_name_en": "Mulank 3 and Bhagyank 5 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 3 एवं भाग्यांक 5 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_3_BHAG_6",
+      "rule_name_hi": "मूलांक 3 + भाग्यांक 6 संयोजन",
+      "rule_name_en": "Mulank 3 and Bhagyank 6 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 3 एवं भाग्यांक 6 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_3_BHAG_7",
+      "rule_name_hi": "मूलांक 3 + भाग्यांक 7 संयोजन",
+      "rule_name_en": "Mulank 3 and Bhagyank 7 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 3 एवं भाग्यांक 7 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_3_BHAG_8",
+      "rule_name_hi": "मूलांक 3 + भाग्यांक 8 संयोजन",
+      "rule_name_en": "Mulank 3 and Bhagyank 8 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 3 एवं भाग्यांक 8 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_3_BHAG_9",
+      "rule_name_hi": "मूलांक 3 + भाग्यांक 9 संयोजन",
+      "rule_name_en": "Mulank 3 and Bhagyank 9 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 3 एवं भाग्यांक 9 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_4_BHAG_1",
+      "rule_name_hi": "मूलांक 4 + भाग्यांक 1 संयोजन",
+      "rule_name_en": "Mulank 4 and Bhagyank 1 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 4 एवं भाग्यांक 1 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_4_BHAG_2",
+      "rule_name_hi": "मूलांक 4 + भाग्यांक 2 संयोजन",
+      "rule_name_en": "Mulank 4 and Bhagyank 2 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 4 एवं भाग्यांक 2 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_4_BHAG_3",
+      "rule_name_hi": "मूलांक 4 + भाग्यांक 3 संयोजन",
+      "rule_name_en": "Mulank 4 and Bhagyank 3 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 4 एवं भाग्यांक 3 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_4_BHAG_4",
+      "rule_name_hi": "मूलांक 4 + भाग्यांक 4 संयोजन",
+      "rule_name_en": "Mulank 4 and Bhagyank 4 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 4 एवं भाग्यांक 4 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_4_BHAG_5",
+      "rule_name_hi": "मूलांक 4 + भाग्यांक 5 संयोजन",
+      "rule_name_en": "Mulank 4 and Bhagyank 5 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 4 एवं भाग्यांक 5 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_4_BHAG_6",
+      "rule_name_hi": "मूलांक 4 + भाग्यांक 6 संयोजन",
+      "rule_name_en": "Mulank 4 and Bhagyank 6 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 4 एवं भाग्यांक 6 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_4_BHAG_7",
+      "rule_name_hi": "मूलांक 4 + भाग्यांक 7 संयोजन",
+      "rule_name_en": "Mulank 4 and Bhagyank 7 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 4 एवं भाग्यांक 7 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_4_BHAG_8",
+      "rule_name_hi": "मूलांक 4 + भाग्यांक 8 संयोजन",
+      "rule_name_en": "Mulank 4 and Bhagyank 8 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 4 एवं भाग्यांक 8 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_4_BHAG_9",
+      "rule_name_hi": "मूलांक 4 + भाग्यांक 9 संयोजन",
+      "rule_name_en": "Mulank 4 and Bhagyank 9 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 4 एवं भाग्यांक 9 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_5_BHAG_1",
+      "rule_name_hi": "मूलांक 5 + भाग्यांक 1 संयोजन",
+      "rule_name_en": "Mulank 5 and Bhagyank 1 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 5 एवं भाग्यांक 1 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_5_BHAG_2",
+      "rule_name_hi": "मूलांक 5 + भाग्यांक 2 संयोजन",
+      "rule_name_en": "Mulank 5 and Bhagyank 2 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 5 एवं भाग्यांक 2 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_5_BHAG_3",
+      "rule_name_hi": "मूलांक 5 + भाग्यांक 3 संयोजन",
+      "rule_name_en": "Mulank 5 and Bhagyank 3 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 5 एवं भाग्यांक 3 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_5_BHAG_4",
+      "rule_name_hi": "मूलांक 5 + भाग्यांक 4 संयोजन",
+      "rule_name_en": "Mulank 5 and Bhagyank 4 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 5 एवं भाग्यांक 4 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_5_BHAG_5",
+      "rule_name_hi": "मूलांक 5 + भाग्यांक 5 संयोजन",
+      "rule_name_en": "Mulank 5 and Bhagyank 5 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 5 एवं भाग्यांक 5 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_5_BHAG_6",
+      "rule_name_hi": "मूलांक 5 + भाग्यांक 6 संयोजन",
+      "rule_name_en": "Mulank 5 and Bhagyank 6 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 5 एवं भाग्यांक 6 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_5_BHAG_7",
+      "rule_name_hi": "मूलांक 5 + भाग्यांक 7 संयोजन",
+      "rule_name_en": "Mulank 5 and Bhagyank 7 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 5 एवं भाग्यांक 7 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_5_BHAG_8",
+      "rule_name_hi": "मूलांक 5 + भाग्यांक 8 संयोजन",
+      "rule_name_en": "Mulank 5 and Bhagyank 8 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 5 एवं भाग्यांक 8 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_5_BHAG_9",
+      "rule_name_hi": "मूलांक 5 + भाग्यांक 9 संयोजन",
+      "rule_name_en": "Mulank 5 and Bhagyank 9 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 5 एवं भाग्यांक 9 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_6_BHAG_1",
+      "rule_name_hi": "मूलांक 6 + भाग्यांक 1 संयोजन",
+      "rule_name_en": "Mulank 6 and Bhagyank 1 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 6 एवं भाग्यांक 1 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_6_BHAG_2",
+      "rule_name_hi": "मूलांक 6 + भाग्यांक 2 संयोजन",
+      "rule_name_en": "Mulank 6 and Bhagyank 2 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 6 एवं भाग्यांक 2 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_6_BHAG_3",
+      "rule_name_hi": "मूलांक 6 + भाग्यांक 3 संयोजन",
+      "rule_name_en": "Mulank 6 and Bhagyank 3 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 6 एवं भाग्यांक 3 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_6_BHAG_4",
+      "rule_name_hi": "मूलांक 6 + भाग्यांक 4 संयोजन",
+      "rule_name_en": "Mulank 6 and Bhagyank 4 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 6 एवं भाग्यांक 4 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_6_BHAG_5",
+      "rule_name_hi": "मूलांक 6 + भाग्यांक 5 संयोजन",
+      "rule_name_en": "Mulank 6 and Bhagyank 5 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 6 एवं भाग्यांक 5 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_6_BHAG_6",
+      "rule_name_hi": "मूलांक 6 + भाग्यांक 6 संयोजन",
+      "rule_name_en": "Mulank 6 and Bhagyank 6 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 6 एवं भाग्यांक 6 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_6_BHAG_7",
+      "rule_name_hi": "मूलांक 6 + भाग्यांक 7 संयोजन",
+      "rule_name_en": "Mulank 6 and Bhagyank 7 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 6 एवं भाग्यांक 7 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_6_BHAG_8",
+      "rule_name_hi": "मूलांक 6 + भाग्यांक 8 संयोजन",
+      "rule_name_en": "Mulank 6 and Bhagyank 8 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 6 एवं भाग्यांक 8 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_6_BHAG_9",
+      "rule_name_hi": "मूलांक 6 + भाग्यांक 9 संयोजन",
+      "rule_name_en": "Mulank 6 and Bhagyank 9 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 6 एवं भाग्यांक 9 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_7_BHAG_1",
+      "rule_name_hi": "मूलांक 7 + भाग्यांक 1 संयोजन",
+      "rule_name_en": "Mulank 7 and Bhagyank 1 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 7 एवं भाग्यांक 1 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_7_BHAG_2",
+      "rule_name_hi": "मूलांक 7 + भाग्यांक 2 संयोजन",
+      "rule_name_en": "Mulank 7 and Bhagyank 2 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 7 एवं भाग्यांक 2 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_7_BHAG_3",
+      "rule_name_hi": "मूलांक 7 + भाग्यांक 3 संयोजन",
+      "rule_name_en": "Mulank 7 and Bhagyank 3 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 7 एवं भाग्यांक 3 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_7_BHAG_4",
+      "rule_name_hi": "मूलांक 7 + भाग्यांक 4 संयोजन",
+      "rule_name_en": "Mulank 7 and Bhagyank 4 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 7 एवं भाग्यांक 4 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_7_BHAG_5",
+      "rule_name_hi": "मूलांक 7 + भाग्यांक 5 संयोजन",
+      "rule_name_en": "Mulank 7 and Bhagyank 5 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 7 एवं भाग्यांक 5 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_7_BHAG_6",
+      "rule_name_hi": "मूलांक 7 + भाग्यांक 6 संयोजन",
+      "rule_name_en": "Mulank 7 and Bhagyank 6 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 7 एवं भाग्यांक 6 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_7_BHAG_7",
+      "rule_name_hi": "मूलांक 7 + भाग्यांक 7 संयोजन",
+      "rule_name_en": "Mulank 7 and Bhagyank 7 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 7 एवं भाग्यांक 7 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_7_BHAG_8",
+      "rule_name_hi": "मूलांक 7 + भाग्यांक 8 संयोजन",
+      "rule_name_en": "Mulank 7 and Bhagyank 8 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 7 एवं भाग्यांक 8 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_7_BHAG_9",
+      "rule_name_hi": "मूलांक 7 + भाग्यांक 9 संयोजन",
+      "rule_name_en": "Mulank 7 and Bhagyank 9 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 7 एवं भाग्यांक 9 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_8_BHAG_1",
+      "rule_name_hi": "मूलांक 8 + भाग्यांक 1 संयोजन",
+      "rule_name_en": "Mulank 8 and Bhagyank 1 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 8 एवं भाग्यांक 1 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_8_BHAG_2",
+      "rule_name_hi": "मूलांक 8 + भाग्यांक 2 संयोजन",
+      "rule_name_en": "Mulank 8 and Bhagyank 2 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 8 एवं भाग्यांक 2 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_8_BHAG_3",
+      "rule_name_hi": "मूलांक 8 + भाग्यांक 3 संयोजन",
+      "rule_name_en": "Mulank 8 and Bhagyank 3 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 8 एवं भाग्यांक 3 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_8_BHAG_4",
+      "rule_name_hi": "मूलांक 8 + भाग्यांक 4 संयोजन",
+      "rule_name_en": "Mulank 8 and Bhagyank 4 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 8 एवं भाग्यांक 4 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_8_BHAG_5",
+      "rule_name_hi": "मूलांक 8 + भाग्यांक 5 संयोजन",
+      "rule_name_en": "Mulank 8 and Bhagyank 5 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 8 एवं भाग्यांक 5 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_8_BHAG_6",
+      "rule_name_hi": "मूलांक 8 + भाग्यांक 6 संयोजन",
+      "rule_name_en": "Mulank 8 and Bhagyank 6 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 8 एवं भाग्यांक 6 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_8_BHAG_7",
+      "rule_name_hi": "मूलांक 8 + भाग्यांक 7 संयोजन",
+      "rule_name_en": "Mulank 8 and Bhagyank 7 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 8 एवं भाग्यांक 7 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_8_BHAG_8",
+      "rule_name_hi": "मूलांक 8 + भाग्यांक 8 संयोजन",
+      "rule_name_en": "Mulank 8 and Bhagyank 8 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 8 एवं भाग्यांक 8 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_8_BHAG_9",
+      "rule_name_hi": "मूलांक 8 + भाग्यांक 9 संयोजन",
+      "rule_name_en": "Mulank 8 and Bhagyank 9 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 8 एवं भाग्यांक 9 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_9_BHAG_1",
+      "rule_name_hi": "मूलांक 9 + भाग्यांक 1 संयोजन",
+      "rule_name_en": "Mulank 9 and Bhagyank 1 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 9 एवं भाग्यांक 1 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_9_BHAG_2",
+      "rule_name_hi": "मूलांक 9 + भाग्यांक 2 संयोजन",
+      "rule_name_en": "Mulank 9 and Bhagyank 2 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 9 एवं भाग्यांक 2 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_9_BHAG_3",
+      "rule_name_hi": "मूलांक 9 + भाग्यांक 3 संयोजन",
+      "rule_name_en": "Mulank 9 and Bhagyank 3 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 9 एवं भाग्यांक 3 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_9_BHAG_4",
+      "rule_name_hi": "मूलांक 9 + भाग्यांक 4 संयोजन",
+      "rule_name_en": "Mulank 9 and Bhagyank 4 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 9 एवं भाग्यांक 4 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_9_BHAG_5",
+      "rule_name_hi": "मूलांक 9 + भाग्यांक 5 संयोजन",
+      "rule_name_en": "Mulank 9 and Bhagyank 5 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 9 एवं भाग्यांक 5 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_9_BHAG_6",
+      "rule_name_hi": "मूलांक 9 + भाग्यांक 6 संयोजन",
+      "rule_name_en": "Mulank 9 and Bhagyank 6 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 9 एवं भाग्यांक 6 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_9_BHAG_7",
+      "rule_name_hi": "मूलांक 9 + भाग्यांक 7 संयोजन",
+      "rule_name_en": "Mulank 9 and Bhagyank 7 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 9 एवं भाग्यांक 7 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_9_BHAG_8",
+      "rule_name_hi": "मूलांक 9 + भाग्यांक 8 संयोजन",
+      "rule_name_en": "Mulank 9 and Bhagyank 8 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.7,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 9 एवं भाग्यांक 8 का जीवन पथ। परिश्रम व संतुलन साध्य संबंध।"
+      }
+    },
+    {
+      "rule_id": "NUM_MUL_9_BHAG_9",
+      "rule_name_hi": "मूलांक 9 + भाग्यांक 9 संयोजन",
+      "rule_name_en": "Mulank 9 and Bhagyank 9 Synergy",
+      "source": {
+        "text": "Ank Shastra (Vedic Numerology)",
+        "chapter": "Mulank-Bhagyank Sambandha Prakarana",
+        "author": "Vedic Numerologists",
+        "era": "Ancient"
+      },
+      "school": "Ank Shastra",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "numerology",
+          "career",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "अंकशास्त्र सामंजस्य: मूलांक 9 एवं भाग्यांक 9 का जीवन पथ। अति शुभ व मित्रवत ऊर्जा।"
+      }
+    }
+  ]
+}

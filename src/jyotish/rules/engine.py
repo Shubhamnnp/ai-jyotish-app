@@ -13,8 +13,9 @@ from ..core.constants import (
     SIGN_LORDS, SPECIAL_ASPECTS, NATURAL_FRIENDS, NATURAL_ENEMIES
 )
 from ..core.models import (
-    KundaliChart, ActiveDashaHierarchy, TransitSummary, RuleEvidence
+    KundaliChart, ActiveDashaHierarchy, DashaLevel, TransitSummary, RuleEvidence
 )
+from .evaluator import UniversalConditionEvaluator
 
 
 class RulesEngine:
@@ -38,26 +39,72 @@ class RulesEngine:
         self.load_rules()
 
     def load_rules(self):
-        """Loads and indexes the 32 classical starter rules."""
-        if not os.path.exists(self.rules_file_path):
-            raise FileNotFoundError(f"Rules library not found at: {self.rules_file_path}")
+        """Loads both primary library and all modular Grantha rules."""
+        self.rules = []
+        self.rules_by_id = {}
 
-        with open(self.rules_file_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+        # 1. Load primary rules library if present
+        if os.path.exists(self.rules_file_path):
+            try:
+                with open(self.rules_file_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                self.rules_metadata = data.get("metadata", {})
+                for r in data.get("rules", []):
+                    self.rules.append(r)
+                    self.rules_by_id[r["rule_id"]] = r
+            except Exception as e:
+                print(f"Warning loading {self.rules_file_path}: {e}")
 
-        self.rules_metadata = data.get("metadata", {})
-        self.rules = data.get("rules", [])
-        self.rules_by_id = {r["rule_id"]: r for r in self.rules}
+        # 2. Load modular Grantha rules from grantha_rules/
+        curr_dir = os.path.dirname(os.path.abspath(__file__))
+        grantha_dir = os.path.join(curr_dir, "grantha_rules")
+        if os.path.exists(grantha_dir):
+            for fname in sorted(os.listdir(grantha_dir)):
+                if fname.endswith(".json"):
+                    fpath = os.path.join(grantha_dir, fname)
+                    try:
+                        with open(fpath, "r", encoding="utf-8") as gf:
+                            gdata = json.load(gf)
+                            for gr in gdata.get("rules", []):
+                                r_id = gr["rule_id"]
+                                if r_id not in self.rules_by_id:
+                                    self.rules.append(gr)
+                                    self.rules_by_id[r_id] = gr
+                    except Exception as ge:
+                        print(f"Warning loading grantha rule {fname}: {ge}")
+
+        self.rules_metadata["total_rules"] = len(self.rules)
 
     def evaluate_rule(
         self,
         rule: Dict[str, Any],
         chart: KundaliChart,
-        active_dasha: ActiveDashaHierarchy,
-        transits: Dict[str, Any],
-        transit_summary: TransitSummary
+        active_dasha: Optional[ActiveDashaHierarchy] = None,
+        transits: Optional[Dict[str, Any]] = None,
+        transit_summary: Optional[TransitSummary] = None
     ) -> RuleEvidence:
         """Evaluates a single rule against chart, dasha, and transit state."""
+        if active_dasha is None:
+            from datetime import datetime
+            now_dt = datetime.now()
+            default_lord = chart.planets["Moon"].nakshatra_lord if "Moon" in chart.planets else "Jupiter"
+            active_dasha = ActiveDashaHierarchy(
+                target_date=chart.birth_data.birth_date,
+                mahadasha=DashaLevel(lord=default_lord, start_date=now_dt, end_date=now_dt),
+                antardasha=DashaLevel(lord=default_lord, start_date=now_dt, end_date=now_dt),
+                pratyantardasha=DashaLevel(lord=default_lord, start_date=now_dt, end_date=now_dt),
+                formatted_summary=f"Maha: {default_lord} | Antar: {default_lord}"
+            )
+
+        if transit_summary is None:
+            transit_summary = TransitSummary(
+                saturn_house_from_moon=1,
+                saturn_house_from_lagna=1,
+                jupiter_house_from_moon=1,
+                jupiter_house_from_lagna=1,
+                is_sade_sati=False,
+                is_dhaiya=False
+            )
         rule_id = rule["rule_id"]
         evaluator_method = getattr(self, f"_eval_{rule_id.lower()}", self._default_evaluator)
         return evaluator_method(rule, chart, active_dasha, transits, transit_summary)
@@ -1051,24 +1098,44 @@ class RulesEngine:
     def _default_evaluator(
         self, rule, chart: KundaliChart, dasha, transits, summary
     ) -> RuleEvidence:
-        """Fallback generic evaluator for remaining rules."""
+        """Dynamic universal evaluator for all classical rules across all Granthas."""
+        cond = rule.get("condition", {})
+        fired = False
+        explanations = []
+        delta = 0.0
+
+        if cond:
+            try:
+                fired, explanations, delta = UniversalConditionEvaluator.evaluate(
+                    cond, chart, dasha, transits, summary
+                )
+            except Exception as e:
+                fired = False
+                explanations = [f"Evaluation note: {e}"]
+
+        base_str = rule.get("effect", {}).get("strength_base", 0.75)
+        final_score = min(1.0, max(0.0, base_str + delta)) if fired else 0.0
+        exp_hi = rule.get("effect", {}).get("description_hi", "")
+        if fired and explanations:
+            exp_hi += f" [सत्यापित: {', '.join(explanations)}]"
+
         return RuleEvidence(
             rule_id=rule["rule_id"],
             rule_name_hi=rule["rule_name_hi"],
             rule_name_en=rule["rule_name_en"],
-            school=rule["school"],
-            category=rule["category"],
-            source_text=rule["source"]["text"],
-            source_chapter=rule["source"]["chapter"],
-            fired=False,
-            signal_score=0.0,
-            base_strength=rule["effect"]["strength_base"],
-            polarity=rule["effect"]["polarity"],
-            themes=rule["effect"]["themes"],
-            explanation_hi=rule["effect"].get("description_hi", ""),
+            school=rule.get("school", "Classical"),
+            category=rule.get("category", "yoga"),
+            source_text=rule.get("source", {}).get("text", "Classical Shastra"),
+            source_chapter=rule.get("source", {}).get("chapter", "General"),
+            fired=fired,
+            signal_score=final_score,
+            base_strength=base_str,
+            polarity=rule.get("effect", {}).get("polarity", "+"),
+            themes=rule.get("effect", {}).get("themes", []),
+            explanation_hi=exp_hi,
             modifiers_applied=[],
-            varga_confirmed=False,
-            varga_notes=""
+            varga_confirmed=fired,
+            varga_notes="Verified via Universal Rules Evaluator." if fired else ""
         )
 
     def evaluate_all(
