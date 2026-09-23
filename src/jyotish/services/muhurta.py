@@ -208,6 +208,12 @@ class MuhurtaRangeScanner:
 
     PROHIBITED_TITHIS = [4, 9, 14, 19, 24, 29, 30]  # Rikta tithis (4, 9, 14 of Shukla and Krishna) + Amavasya
 
+    YOGA_NAMES = [
+        "विष्कम्भ", "प्रीति", "आयुष्मान्", "सौभाग्य", "शोभन", "अतिगण्ड", "सुकर्मा", "धृति", "शूल", "गण्ड",
+        "वृद्धि", "ध्रुव", "व्याघात", "हर्षण", "वज्र", "सिद्धि", "व्यतीपात", "वरीयान्", "परिघ", "शिव",
+        "सिद्ध", "साध्य", "शुभ", "शुक्ल", "ब्रह्म", "ऐन्द्र", "वैधृति"
+    ]
+
     MALIFIC_YOGAS = [1, 6, 9, 10, 17, 27]  # Vishkambha(1), Atiganda(6), Shula(9), Ganda(10), Vyatipata(17), Vaidhriti(27)
 
     def __init__(self, provider: Optional[Any] = None):
@@ -254,6 +260,11 @@ class MuhurtaRangeScanner:
             yoga_idx = int(((m_lon + s_lon) % 360.0) // (360.0 / 27.0)) + 1
             weekday = cur_d.weekday()  # Mon=0..Sun=6
 
+            nak_item = NAKSHATRAS[nak_idx - 1] if 1 <= nak_idx <= len(NAKSHATRAS) else {}
+            nak_name = nak_item.get("name", "—") if isinstance(nak_item, dict) else str(nak_item)
+            nak_lord = nak_item.get("lord", "—") if isinstance(nak_item, dict) else "—"
+            yoga_name = self.YOGA_NAMES[yoga_idx - 1] if 1 <= yoga_idx <= len(self.YOGA_NAMES) else "शुभ"
+
             # Compute Shubh Score (Base 70)
             score = 70
             reasons = []
@@ -278,7 +289,6 @@ class MuhurtaRangeScanner:
             # 3. Nakshatra Check
             if nak_idx in fav_naks:
                 score += 20
-                nak_name = NAKSHATRAS[nak_idx - 1] if nak_idx <= len(NAKSHATRAS) else "शुभ"
                 reasons.append(f"✨ कार्य-अनुकूल नक्षत्र: {nak_name}")
             else:
                 score -= 10
@@ -286,7 +296,7 @@ class MuhurtaRangeScanner:
             # 4. Yoga Check
             if yoga_idx in self.MALIFIC_YOGAS:
                 score -= 15
-                reasons.append("⚠️ अशुभ योग (व्यतीपात/वैधृति/विष्कम्भ)")
+                reasons.append(f"⚠️ अशुभ योग ({yoga_name})")
 
             # 5. Chandra Balam (Native's Moon Strength)
             chandra_bal_status = "सामान्य"
@@ -323,15 +333,21 @@ class MuhurtaRangeScanner:
 
             results.append({
                 "date": cur_d.strftime("%d %b %Y"),
+                "date_str": cur_d.strftime("%d %b %Y"),
+                "raw_date": cur_d,
                 "iso_date": cur_d.strftime("%Y-%m-%d"),
                 "weekday": cur_d.strftime("%A"),
+                "day_name": cur_d.strftime("%A"),
                 "score": score,
                 "verdict": verdict,
                 "badge_color": badge_color,
                 "tithi": f"तिथि {tithi_idx}",
-                "nakshatra": NAKSHATRAS[nak_idx - 1] if nak_idx <= len(NAKSHATRAS) else "—",
-                "moon_sign": SIGN_NAMES[moon_sign - 1],
+                "nakshatra": nak_name,
+                "nakshatra_lord": nak_lord,
+                "yoga": yoga_name,
+                "moon_sign": SIGN_NAMES[moon_sign - 1] if 1 <= moon_sign <= len(SIGN_NAMES) else "—",
                 "chandra_bal": chandra_bal_status,
+                "chandra_balam": chandra_bal_status,
                 "best_window": f"अभिजित: {abhijit_w} | चौघड़िया: {chog_str}",
                 "reasons": reasons
             })

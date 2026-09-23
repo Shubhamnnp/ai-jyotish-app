@@ -7096,25 +7096,34 @@ elif selected_idx == 12:
             top_muhurtas = st.session_state["top_muhurtas_res"]
             st.markdown(f"### 🏆 शीर्ष {len(top_muhurtas)} अनुशंसित मुहूर्त (Top Ranked Auspicious Dates)")
             for rank, m in enumerate(top_muhurtas, 1):
-                badge_bg = "#DCFCE7" if m["score"] >= 80 else ("#FEF3C7" if m["score"] >= 65 else "#FEE2E2")
-                badge_c = "#15803D" if m["score"] >= 80 else ("#B45309" if m["score"] >= 65 else "#B91C1C")
+                badge_bg = "#DCFCE7" if m.get("score", 0) >= 80 else ("#FEF3C7" if m.get("score", 0) >= 65 else "#FEE2E2")
+                badge_c = "#15803D" if m.get("score", 0) >= 80 else ("#B45309" if m.get("score", 0) >= 65 else "#B91C1C")
+                date_val = m.get("date_str") or m.get("date", "")
+                if hasattr(date_val, "strftime"):
+                    date_display = date_val.strftime("%d %b %Y")
+                else:
+                    date_display = str(date_val)
+                day_val = m.get("day_name") or m.get("weekday", "")
+                nak_lord_str = f" ({m['nakshatra_lord']})" if m.get("nakshatra_lord") and m.get("nakshatra_lord") != "—" else ""
+                yoga_str = f" | 🕉️ {m['yoga']} योग" if m.get("yoga") else ""
+                chandra_bal_str = m.get("chandra_balam") or m.get("chandra_bal", "—")
                 st.markdown(f"""
                 <div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-left:6px solid {badge_c}; border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                         <div>
-                            <span style="font-size:18px; font-weight:800; color:#0F172A;">#{rank} 📅 {m['date'].strftime('%d %b %Y')} ({m['day_name']})</span>
-                            <span style="margin-left:12px; font-size:13px; color:#475569;">🌙 {m['tithi']} | ✨ {m['nakshatra']} ({m['nakshatra_lord']}) | 🕉️ {m['yoga']} योग</span>
+                            <span style="font-size:18px; font-weight:800; color:#0F172A;">#{rank} 📅 {date_display} ({day_val})</span>
+                            <span style="margin-left:12px; font-size:13px; color:#475569;">🌙 {m.get('tithi', '—')} | ✨ {m.get('nakshatra', '—')}{nak_lord_str}{yoga_str}</span>
                         </div>
                         <div>
                             <span style="background:{badge_bg}; color:{badge_c}; font-size:14px; font-weight:800; padding:4px 12px; border-radius:16px;">
-                                शुभ स्कोर: {m['score']}% ({m['verdict']})
+                                शुभ स्कोर: {m.get('score', 0)}% ({m.get('verdict', '—')})
                             </span>
                         </div>
                     </div>
                     <div style="margin-top:10px; font-size:13px; color:#1E293B; line-height:1.6; background:#F8FAFC; padding:8px 12px; border-radius:6px; border:1px solid #E2E8F0;">
-                        <b>🎯 सर्वोत्तम समय खिड़की (Best Window):</b> {m['best_window']}<br/>
-                        <b>🌕 चन्द्र स्थिति व बल:</b> {m['chandra_balam']} ({m['moon_sign']} राशि)<br/>
-                        <b>📜 शास्त्रीय अवलोकन:</b> {'; '.join(m['reasons'])}
+                        <b>🎯 सर्वोत्तम समय खिड़की (Best Window):</b> {m.get('best_window', '—')}<br/>
+                        <b>🌕 चन्द्र स्थिति व बल:</b> {chandra_bal_str} ({m.get('moon_sign', '—')} राशि)<br/>
+                        <b>📜 शास्त्रीय अवलोकन:</b> {'; '.join(m.get('reasons', []))}
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
