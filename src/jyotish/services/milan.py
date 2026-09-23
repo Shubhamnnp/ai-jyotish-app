@@ -156,7 +156,6 @@ class MilanService:
             manglik_match=manglik_match,
             manglik_cancellation_reason=manglik_canc_reason,
             recommendation_hi=rec_hi,
-            recommendation_en=rec_en
             recommendation_en=rec_en,
             deep_analysis=deep_analysis
         )
