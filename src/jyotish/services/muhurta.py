@@ -188,3 +188,148 @@ class MuhurtaEngine:
 
 default_muhurta_engine = MuhurtaEngine()
 
+
+class MuhurtaRangeScanner:
+    """Scans date ranges and ranks best muhurtas based on Panchang, Nakshatra, and Chandra Balam."""
+
+    FAVORABLE_NAKSHATRAS = {
+        "vivaha": [4, 5, 10, 12, 13, 15, 17, 19, 21, 26, 27],  # Rohini, Mrig, Magha, U.Phal, Hast, Swati, Anuradha, Moola, U.Ashadha, U.Bhadra, Revati
+        "griha_pravesh": [4, 5, 12, 14, 17, 21, 22, 23, 24, 26, 27],  # Rohini, Mrig, U.Phal, Chitra, Anuradha, U.Ashadha, Shravan, Dhanishta, Shatabhisha, U.Bhadra, Revati
+        "vyapar": [1, 4, 8, 13, 14, 15, 17, 22, 23, 27],  # Ashwini, Rohini, Pushya, Hast, Chitra, Swati, Anuradha, Shravan, Dhanishta, Revati
+        "vahan_kray": [1, 4, 7, 8, 13, 15, 22, 23, 24, 27],  # Ashwini, Rohini, Punarvasu, Pushya, Hast, Swati, Shravan, Dhanishta, Shatabhisha, Revati
+    }
+
+    PROHIBITED_TITHIS = [4, 9, 14, 19, 24, 29, 30]  # Rikta tithis (4, 9, 14 of Shukla and Krishna) + Amavasya
+
+    MALIFIC_YOGAS = [1, 6, 9, 10, 17, 27]  # Vishkambha(1), Atiganda(6), Shula(9), Ganda(10), Vyatipata(17), Vaidhriti(27)
+
+    def __init__(self):
+        from ..core.ephemeris import PyEphemProvider
+        self.provider = PyEphemProvider()
+
+    def scan_range(
+        self,
+        activity_type: str,
+        start_date: date,
+        end_date: date,
+        natal_chart: Optional[Any] = None,
+        top_n: int = 7
+    ) -> List[Dict[str, Any]]:
+        """
+        Scans all dates between start_date and end_date.
+        Ranks top dates by Shubh Score (0-100%).
+        """
+        results = []
+        cur_d = start_date
+        delta = timedelta(days=1)
+
+        fav_naks = self.FAVORABLE_NAKSHATRAS.get(activity_type, self.FAVORABLE_NAKSHATRAS["vyapar"])
+        natal_moon_sign = natal_chart.planets["Moon"].sign_id if (natal_chart and "Moon" in natal_chart.planets) else None
+
+        from ..core.constants import NAKSHATRAS, SIGN_NAMES
+
+        while cur_d <= end_date:
+            dt_noon = datetime.combine(cur_d, time(12, 0))
+            pos, _ = self.provider.get_planet_positions(dt_noon)
+
+            m_lon = pos.get("Moon", {}).get("longitude", 0.0)
+            s_lon = pos.get("Sun", {}).get("longitude", 0.0)
+
+            tithi_idx = int(((m_lon - s_lon) % 360.0) // 12.0) + 1  # 1 to 30
+            nak_idx = int((m_lon % 360.0) // (360.0 / 27.0)) + 1    # 1 to 27
+            moon_sign = int((m_lon % 360.0) // 30.0) + 1           # 1 to 12
+            yoga_idx = int(((m_lon + s_lon) % 360.0) // (360.0 / 27.0)) + 1
+            weekday = cur_d.weekday()  # Mon=0..Sun=6
+
+            # Compute Shubh Score (Base 70)
+            score = 70
+            reasons = []
+
+            # 1. Tithi Check
+            if tithi_idx in self.PROHIBITED_TITHIS:
+                score -= 25
+                reasons.append("⚠️ रिक्ता तिथि / अमावस्या")
+            elif tithi_idx in [2, 3, 5, 7, 10, 11, 13, 15]:
+                score += 10
+                reasons.append("✅ शुभ नंदा/भद्रा/पूर्णा तिथि")
+
+            # 2. Weekday Check
+            if weekday in [1, 5]:  # Tue, Sat
+                if activity_type in ["vivaha", "griha_pravesh"]:
+                    score -= 15
+                    reasons.append("⚠️ भौम/शनि वार (शांतिकर्म में वर्जित)")
+            elif weekday in [0, 2, 3, 4]:  # Mon, Wed, Thu, Fri
+                score += 10
+                reasons.append("✅ सौम्य शुभ वार (सोम/बुध/गुरु/शुक्र)")
+
+            # 3. Nakshatra Check
+            if nak_idx in fav_naks:
+                score += 20
+                nak_name = NAKSHATRAS[nak_idx - 1] if nak_idx <= len(NAKSHATRAS) else "शुभ"
+                reasons.append(f"✨ कार्य-अनुकूल नक्षत्र: {nak_name}")
+            else:
+                score -= 10
+
+            # 4. Yoga Check
+            if yoga_idx in self.MALIFIC_YOGAS:
+                score -= 15
+                reasons.append("⚠️ अशुभ योग (व्यतीपात/वैधृति/विष्कम्भ)")
+
+            # 5. Chandra Balam (Native's Moon Strength)
+            chandra_bal_status = "सामान्य"
+            if natal_moon_sign:
+                h_diff = ((moon_sign - natal_moon_sign) % 12) + 1
+                if h_diff in [6, 8, 12]:
+                    score -= 25
+                    chandra_bal_status = f"⚠️ अष्टम/घात चंद्र ({h_diff} भाव)"
+                    reasons.append(f"⚠️ जातक की जन्म राशि से {h_diff}वां चन्द्रमा (चन्द्र दोष)")
+                elif h_diff in [1, 3, 6, 7, 10, 11]:
+                    score += 15
+                    chandra_bal_status = f"🟢 बलिष्ठ चंद्र ({h_diff} भाव)"
+                    reasons.append(f"✅ जातक की राशि से {h_diff}वां चन्द्रमा (शुभ चन्द्रबल)")
+                else:
+                    chandra_bal_status = f"🟡 मध्यम चंद्र ({h_diff} भाव)"
+
+            score = min(99, max(20, score))
+
+            if score >= 82:
+                verdict = "🟢 सर्वोत्तम मुहूर्त (Highly Auspicious)"
+                badge_color = "#16A34A"
+            elif score >= 65:
+                verdict = "🟡 मध्यम अनुकूल (Acceptable)"
+                badge_color = "#D97706"
+            else:
+                verdict = "🔴 वर्जित / त्याज्य (Inauspicious)"
+                badge_color = "#DC2626"
+
+            # Get daily time windows (Abhijit & Choghadiya)
+            d_info = MuhurtaEngine.calculate_daily_muhurta(cur_d)
+            best_chog = [c for c in d_info["day_choghadiyas"] if c["is_good"]]
+            chog_str = ", ".join([f"{c['name'].split(' ')[0]} ({c['start_time']}-{c['end_time']})" for c in best_chog[:2]])
+            abhijit_w = next((w["time"] for w in d_info["special_windows"] if "अभिजित" in w["title"]), "11:45 AM - 12:35 PM")
+
+            results.append({
+                "date": cur_d.strftime("%d %b %Y"),
+                "iso_date": cur_d.strftime("%Y-%m-%d"),
+                "weekday": cur_d.strftime("%A"),
+                "score": score,
+                "verdict": verdict,
+                "badge_color": badge_color,
+                "tithi": f"तिथि {tithi_idx}",
+                "nakshatra": NAKSHATRAS[nak_idx - 1] if nak_idx <= len(NAKSHATRAS) else "—",
+                "moon_sign": SIGN_NAMES[moon_sign - 1],
+                "chandra_bal": chandra_bal_status,
+                "best_window": f"अभिजित: {abhijit_w} | चौघड़िया: {chog_str}",
+                "reasons": reasons
+            })
+
+            cur_d += delta
+
+        # Sort descending by score
+        results.sort(key=lambda x: x["score"], reverse=True)
+        return results[:top_n]
+
+
+default_muhurta_scanner = MuhurtaRangeScanner()
+
+

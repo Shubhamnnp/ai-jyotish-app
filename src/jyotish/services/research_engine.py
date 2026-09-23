@@ -309,3 +309,4 @@ class AstrologicalResearchEngine:
 
 
 default_research_engine = AstrologicalResearchEngine()
+

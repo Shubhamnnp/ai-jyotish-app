@@ -45,7 +45,9 @@ from src.jyotish.core.upagraha import default_upagraha_calculator
 from src.jyotish.core.chakras import default_sarvatobhadra_engine, default_kota_chakra_engine
 from src.jyotish.core.ayurdaya import default_ayurdaya_engine
 from src.jyotish.core.kp import default_kp_engine
-from src.jyotish.services.muhurta import default_muhurta_engine
+from src.jyotish.services.muhurta import default_muhurta_engine, default_muhurta_scanner
+from src.jyotish.services.prescription import default_prescription_service
+from src.jyotish.services.transit_calendar import default_transit_calendar_service
 from src.jyotish.ui.sudarshan import default_sudarshan_engine
 from src.jyotish.core.affliction import AfflictionEngine, LIFE_AREAS
 from src.jyotish.dasha.vimshottari import default_dasha_engine
@@ -5837,13 +5839,14 @@ elif selected_idx == 10:
     rashi_names_hi = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"]
     rashi_symbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"]
 
-    tab_g0, tab_g1, tab_g2, tab_g3, tab_g4, tab_g5 = st.tabs([
+    tab_g0, tab_g1, tab_g2, tab_g3, tab_g4, tab_g5, tab_g6 = st.tabs([
         "🎯 जन्म-गोचर ओवरले चक्र (Bi-Wheel Dual Chart)",
         "🪐 दैनिक गोचर व अष्टकवर्ग (Live Transits & BAV/SAV)",
         "🛡️ सर्वतोभद्र चक्र (9x9 Sarvatobhadra Vedha)",
         "🏰 कोटा चक्र (Kota Chakra 4-Zone Fortress)",
         "📈 वित्तीय ज्योतिष व शेयर बाज़ार वेध (Financial & Commodity Trader)",
-        "📊 ग्रह गति व वक्रता वक्र (Dynamic Transit Speed & Waves)"
+        "📊 ग्रह गति व वक्रता वक्र (Dynamic Transit Speed & Waves)",
+        "📅 मासिक व्यक्तिगत गोचर पंचांग (Personal Transit Calendar)"
     ])
 
     with tab_g0:
@@ -6492,6 +6495,55 @@ elif selected_idx == 10:
         else:
             st.info("💡 चुने गए कालखंड में किसी चयनित ग्रह के वक्र/मार्गी मोड़ बिंदु (Zero Crossing) नहीं हैं। सभी ग्रह अपनी वर्तमान गति में अग्रसर हैं।")
 
+    with tab_g6:
+        st.markdown("### 📅 मासिक व्यक्तिगत गोचर पंचांग कैलेंडर (Personalized Monthly Transit Calendar)")
+        st.caption("Shri Jyoti Star के समान मासिक कैलेंडर ग्रिड—माह के प्रत्येक दिन जातक की जन्म राशि अनुसार व्यक्तिगत भाग्य रेटिंग (१-५ स्टार), राशि परिवर्तन (Ingress), और मुख्य पर्व।")
+
+        from src.jyotish.services.transit_calendar import default_transit_calendar_service
+
+        col_cal1, col_cal2 = st.columns(2)
+        with col_cal1:
+            cal_month = st.selectbox(
+                "माह चुनें (Select Month)",
+                list(range(1, 13)),
+                index=datetime.now().month - 1,
+                format_func=lambda x: datetime(2026, x, 1).strftime("%B"),
+                key="cal_m_sel"
+            )
+        with col_cal2:
+            cal_year = st.selectbox(
+                "वर्ष चुनें (Select Year)",
+                [2024, 2025, 2026, 2027, 2028, 2029, 2030],
+                index=2,
+                key="cal_y_sel"
+            )
+
+        with st.spinner("मासिक गोचर पंचांग व चंद्र शुद्धि की गणना जारी..."):
+            cal_data = default_transit_calendar_service.generate_monthly_calendar(cal_year, cal_month, chart)
+
+        # Top Summary KPIs
+        days_5star = sum(1 for d in cal_data["days"] if d["stars"] == 5)
+        days_4star = sum(1 for d in cal_data["days"] if d["stars"] == 4)
+        days_caution = sum(1 for d in cal_data["days"] if d["stars"] <= 2)
+
+        c_ck1, c_ck2, c_ck3, c_ck4 = st.columns(4)
+        c_ck1.metric("उत्कृष्ट कार्य सिद्धि दिवस", f"{days_5star} दिन", "५-स्टार ⭐⭐⭐⭐⭐")
+        c_ck2.metric("शुभ व सामान्य अनुकूल", f"{days_4star} दिन", "४-स्टार ⭐⭐⭐⭐")
+        c_ck3.metric("सतर्कता दिवस (घात चंद्र)", f"{days_caution} दिन", "१-२ स्टार ⚠️")
+        c_ck4.metric("ग्रह राशि परिवर्तन (Ingress)", f"{len(cal_data['ingress_events'])} घटनाएं", "संक्रांति")
+
+        # HTML Calendar Grid
+        cal_html = default_transit_calendar_service.render_calendar_html(cal_data)
+        st.markdown(cal_html, unsafe_allow_html=True)
+
+        # Ingress Events Detail Table
+        if cal_data["ingress_events"]:
+            st.markdown("#### ⚡ इस माह में होने वाले मुख्य ग्रह राशि परिवर्तन (Planetary Ingresses):")
+            ing_df = pd.DataFrame(cal_data["ingress_events"]).rename(columns={
+                "date": "दिनांक", "planet": "ग्रह", "sign": "प्रवेश राशि", "house": "जातक का भाव", "event": "घटना विवरण"
+            })
+            st.dataframe(ing_df, use_container_width=True, hide_index=True)
+
 elif selected_idx == 11:
     st.subheader("📐 के.पी. ज्योतिष प्रणाली (Krishnamurti Paddhati - KP System & Future Prediction)")
     st.write("कृष्णमूर्ति पद्धति आधारित 4-स्तरीय कार्यकत्व (4-Fold Significators), कस्पल सब-लॉर्ड (Sub-Lords), उप-उप स्वामी (Sub-Sub Lords), रूलिंग प्लैनेट्स (RP), 1-249 होरारी व भविष्य फलित निर्णय।")
@@ -6914,10 +6966,11 @@ elif selected_idx == 12:
 
     m_data = default_muhurta_engine.calculate_daily_muhurta(muhurta_date)
 
-    tab_m1, tab_m2, tab_m3 = st.tabs([
+    tab_m1, tab_m2, tab_m3, tab_m4 = st.tabs([
         "☀️ दिन व रात्रि चौघड़िया (Day & Night Choghadiya)",
         "⏳ काल वेला व राहुकाल (Inauspicious & Auspicious Times)",
-        "🎯 शुभ कार्य मुहूर्त फाइंडर (Event Muhurta Scanner)"
+        "🎯 दैनिक कार्य मुहूर्त (Daily Event Suitability)",
+        "🔍 स्वचालित तिथि-रेंज मुहूर्त खोजक (Automated Muhurta Range Scanner)"
     ])
 
     with tab_m1:
@@ -6968,6 +7021,69 @@ elif selected_idx == 12:
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+    with tab_m4:
+        st.markdown("#### 🔍 स्वचालित बहु-दिवसीय मुहूर्त खोजक (Automated Muhurta Scanner)")
+        st.caption("३० से ९० दिनों की समय सीमा में विवाह, गृह प्रवेश, व्यापार व वाहन क्रय के सर्वश्रेष्ठ शुभ मुहूर्तों की स्वतः खोज व जन्म चंद्र शुद्धि / चंद्र बल रैंकिंग।")
+
+        col_sc1, col_sc2, col_sc3 = st.columns([1.5, 1, 1])
+        with col_sc1:
+            scan_activity = st.selectbox(
+                "शुभ कार्य का चयन करें",
+                [
+                    ("vivaha", "💍 विवाह संस्कार (Vivaha)"),
+                    ("griha_pravesh", "🏛️ गृह प्रवेश (Griha Pravesh)"),
+                    ("vyapar", "💼 व्यापार / दुकान / अनुबंध (Business)"),
+                    ("vahan_kray", "🚗 वाहन क्रय व पूजन (Vehicle Purchase)")
+                ],
+                format_func=lambda x: x[1],
+                key="muh_scan_act"
+            )
+        with col_sc2:
+            scan_start = st.date_input("आरंभ तिथि (Start Date)", value=muhurta_date, key="muh_scan_start")
+        with col_sc3:
+            scan_days = st.selectbox("खोज अवधि (Search Window)", [30, 45, 60, 90], index=1, key="muh_scan_days")
+
+        if st.button("🚀 सर्वश्रेष्ठ मुहूर्त खोजें (Scan Best Muhurtas)", type="primary", key="btn_scan_muhurta"):
+            import datetime
+            scan_end = scan_start + datetime.timedelta(days=scan_days)
+            with st.spinner(f"{scan_days} दिनों में श्रेष्ठ मुहूर्त खोजे जा रहे हैं..."):
+                top_muhurtas = default_muhurta_scanner.scan_range(
+                    activity_type=scan_activity[0],
+                    start_date=scan_start,
+                    end_date=scan_end,
+                    natal_chart=chart,
+                    top_n=7
+                )
+            st.session_state["top_muhurtas_res"] = top_muhurtas
+
+        if "top_muhurtas_res" in st.session_state and st.session_state["top_muhurtas_res"]:
+            top_muhurtas = st.session_state["top_muhurtas_res"]
+            st.markdown(f"### 🏆 शीर्ष {len(top_muhurtas)} अनुशंसित मुहूर्त (Top Ranked Auspicious Dates)")
+            for rank, m in enumerate(top_muhurtas, 1):
+                badge_bg = "#DCFCE7" if m["score"] >= 80 else ("#FEF3C7" if m["score"] >= 65 else "#FEE2E2")
+                badge_c = "#15803D" if m["score"] >= 80 else ("#B45309" if m["score"] >= 65 else "#B91C1C")
+                st.markdown(f"""
+                <div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-left:6px solid {badge_c}; border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <div>
+                            <span style="font-size:18px; font-weight:800; color:#0F172A;">#{rank} 📅 {m['date'].strftime('%d %b %Y')} ({m['day_name']})</span>
+                            <span style="margin-left:12px; font-size:13px; color:#475569;">🌙 {m['tithi']} | ✨ {m['nakshatra']} ({m['nakshatra_lord']}) | 🕉️ {m['yoga']} योग</span>
+                        </div>
+                        <div>
+                            <span style="background:{badge_bg}; color:{badge_c}; font-size:14px; font-weight:800; padding:4px 12px; border-radius:16px;">
+                                शुभ स्कोर: {m['score']}% ({m['verdict']})
+                            </span>
+                        </div>
+                    </div>
+                    <div style="margin-top:10px; font-size:13px; color:#1E293B; line-height:1.6; background:#F8FAFC; padding:8px 12px; border-radius:6px; border:1px solid #E2E8F0;">
+                        <b>🎯 सर्वोत्तम समय खिड़की (Best Window):</b> {m['best_window']}<br/>
+                        <b>🌕 चन्द्र स्थिति व बल:</b> {m['chandra_balam']} ({m['moon_sign']} राशि)<br/>
+                        <b>📜 शास्त्रीय अवलोकन:</b> {'; '.join(m['reasons'])}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
 
 
 # =============================================================
@@ -7635,45 +7751,90 @@ elif selected_idx == 17:
 # TAB 19: COMPREHENSIVE REPORT & PRINTABLE KUNDALI BOOK
 
 elif selected_idx == 18:
-    st.subheader("📄 सम्पूर्ण जीवन कुण्डली पत्रिका (Full Printable 20+ Page Master Dossier)")
-    st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, कोटा चक्र, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु-दोष, वर्षफल एवं सात्विक उपायों सहित शास्त्रीय गणनाओं की पूर्ण रंगीन प्रिंटेबल पत्रिका।")
+    st.subheader("📄 सम्पूर्ण जीवन कुण्डली पत्रिका एवं १-पेज परामर्श पर्ची (Printable Dossier & Prescription)")
 
-    with st.expander("👑 ज्योतिषी कस्टम ब्रांडिंग एवं रिपोर्ट विन्यास (White-Label Branding Settings)", expanded=True):
+    with st.expander("👑 ज्योतिषी कस्टम ब्रांडिंग एवं रिपोर्ट विन्यास (White-Label Branding Settings)", expanded=False):
         c_br1, c_br2, c_br3 = st.columns(3)
-        astro_name = c_br1.text_input("ज्योतिषी का नाम (Astrologer Name)", value="ज्योतिषाचार्य पं. शुभम तिवारी")
-        astro_org = c_br2.text_input("संस्थान / केंद्र (Center Name)", value="वैदिक ज्योतिष अनुसंधान केंद्र")
-        astro_phone = c_br3.text_input("संपर्क सूत्र / WhatsApp (Contact)", value="+91-9452155742")
+        astro_name = c_br1.text_input("ज्योतिषी का नाम (Astrologer Name)", value="ज्योतिषाचार्य पं. शुभम तिवारी", key="rep_astro_name")
+        astro_org = c_br2.text_input("संस्थान / केंद्र (Center Name)", value="वैदिक ज्योतिष अनुसंधान केंद्र", key="rep_astro_org")
+        astro_phone = c_br3.text_input("संपर्क सूत्र / WhatsApp (Contact)", value="+91-9452155742", key="rep_astro_phone")
 
-    import importlib
-    import src.jyotish.services.report_generator as rep_mod
-    importlib.reload(rep_mod)
-    r_gen = rep_mod.default_report_generator
+    tab_rep_master, tab_rep_slip = st.tabs([
+        "📚 २०+ पृष्ठीय सम्पूर्ण महा-पत्रिका (Full 20+ Page Kundali Dossier)",
+        "📋 १-पेज ज्योतिषी परामर्श पर्ची (1-Page Astrologer Prescription Slip)"
+    ])
 
-    with st.spinner("🔮 समस्त शास्त्रीय गणनाओं को संकलित कर सम्पूर्ण पत्रिका तैयार की जा रही है..."):
-        master_bundle = default_master_calculator.calculate_all(chart)
-        html_rep = r_gen.generate_html_report(
-            chart,
-            master_data=master_bundle,
+    with tab_rep_master:
+        st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, कोटा चक्र, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु-दोष, वर्षफल एवं सात्विक उपायों सहित शास्त्रीय गणनाओं की पूर्ण रंगीन प्रिंटेबल पत्रिका।")
+
+        import importlib
+        import src.jyotish.services.report_generator as rep_mod
+        importlib.reload(rep_mod)
+        r_gen = rep_mod.default_report_generator
+
+        with st.spinner("🔮 समस्त शास्त्रीय गणनाओं को संकलित कर सम्पूर्ण पत्रिका तैयार की जा रही है..."):
+            master_bundle = default_master_calculator.calculate_all(chart)
+            html_rep = r_gen.generate_html_report(
+                chart,
+                master_data=master_bundle,
+                astro_name=astro_name,
+                astro_phone=astro_phone,
+                astro_org=astro_org
+            )
+
+        col_rep_btn1, col_rep_btn2 = st.columns([2, 2])
+        with col_rep_btn1:
+            st.download_button(
+                label="📥 रंगीन PDF / HTML पत्रिका डाउनलोड करें (Download Full Kundali)",
+                data=html_rep,
+                file_name=f"{birth_profile.name}_Sampurna_Kundali_Report.html",
+                mime="text/html",
+                type="primary",
+                use_container_width=True,
+                key="rep_btn_download"
+            )
+        with col_rep_btn2:
+            st.button("🖨️ सीधे प्रिंट करें (Direct Print via Browser)", on_click=lambda: st.toast("प्रिंट करने हेतु डाउनलोड फाइल को ब्राउज़र में खोलकर Ctrl+P दबाएं।"), use_container_width=True, key="rep_btn_print")
+
+        with st.expander("👁️ पत्रिका सम्पूर्ण लाइव पूर्वावलोकन (Live 20+ Chapter Preview)", expanded=True):
+            st.components.v1.html(html_rep, height=850, scrolling=True)
+
+    with tab_rep_slip:
+        st.markdown("#### 📋 १-पेज डॉक्टरी-शैली ज्योतिषी परामर्श पर्ची (Consultation Prescription Slip)")
+        st.caption("क्लाइंट को परामर्श के बाद सीधे देने हेतु त्वरित १-पेज पर्ची — अनुकूल रत्न, पूर्ण वर्जित रत्न, वैदिक मंत्र, अनिष्ट शांति दान, जीवनशैली एवं ९० दिनों की गोचर सावधानी।")
+
+        p_data = default_prescription_service.generate_prescription(chart)
+        p_html = default_prescription_service.render_prescription_html(
+            p_data,
             astro_name=astro_name,
-            astro_phone=astro_phone,
-            astro_org=astro_org
+            astro_center=astro_org,
+            astro_contact=astro_phone
         )
+        p_wa_text = default_prescription_service.generate_whatsapp_text(p_data)
+        import urllib.parse
+        wa_url = f"https://wa.me/?text={urllib.parse.quote(p_wa_text)}"
 
-    col_rep_btn1, col_rep_btn2 = st.columns([2, 2])
-    with col_rep_btn1:
-        st.download_button(
-            label="📥 रंगीन PDF / HTML पत्रिका डाउनलोड करें (Download Full Kundali)",
-            data=html_rep,
-            file_name=f"{birth_profile.name}_Sampurna_Kundali_Report.html",
-            mime="text/html",
-            type="primary",
-            use_container_width=True
-        )
-    with col_rep_btn2:
-        st.button("🖨️ सीधे प्रिंट करें (Direct Print via Browser)", on_click=lambda: st.toast("प्रिंट करने हेतु डाउनलोड फाइल को ब्राउज़र में खोलकर Ctrl+P दबाएं।"), use_container_width=True)
+        col_slip1, col_slip2, col_slip3 = st.columns([1.5, 1.5, 1.5])
+        with col_slip1:
+            st.download_button(
+                "📥 १-पेज पर्ची HTML / PDF डाउनलोड करें",
+                data=p_html,
+                file_name=f"{birth_profile.name}_Consultation_Prescription.html",
+                mime="text/html",
+                type="primary",
+                use_container_width=True,
+                key="btn_dl_slip"
+            )
+        with col_slip2:
+            st.link_button(
+                "💬 WhatsApp पर परामर्श साझा करें (Share to WhatsApp)",
+                url=wa_url,
+                use_container_width=True
+            )
+        with col_slip3:
+            st.button("🖨️ A4 प्रिंटेबल रेडी (Ctrl+P)", on_click=lambda: st.toast("डाउनलोड की गई पर्ची ब्राउज़र में खोलकर Ctrl+P से A4 आकार में तुरंत प्रिंट करें।"), use_container_width=True, key="btn_print_slip")
 
-    with st.expander("👁️ पत्रिका सम्पूर्ण लाइव पूर्वावलोकन (Live 20+ Chapter Preview)", expanded=True):
-        st.components.v1.html(html_rep, height=850, scrolling=True)
+        st.components.v1.html(p_html, height=720, scrolling=True)
 
 
 
