@@ -4663,37 +4663,110 @@ elif selected_idx == 6:
 
 
 elif selected_idx == 7:
-    st.subheader("⚖️ षड्बल, भावबल एवं इष्ट/कष्ट फल (Shadbala & Strengths)")
-    if chart.shadbala:
-        sb_data = []
-        for p_name, s_obj in chart.shadbala.planets.items():
-            sb_data.append({
-                "Planet": p_name,
-                "Sthana Bala": s_obj.sthana_bala,
-                "Dik Bala": s_obj.dik_bala,
-                "Kaala Bala": s_obj.kaala_bala,
-                "Cheshta Bala": s_obj.cheshta_bala,
-                "Naisargika": s_obj.naisargika_bala,
-                "Drik Bala": s_obj.drik_bala,
-                "Total Virupas": s_obj.total_virupas,
-                "Rupas": s_obj.total_rupas,
-                "Required": s_obj.required_virupas,
-                "Strength Ratio": f"{s_obj.strength_ratio:.2f}",
-                "Status": "✅ बलवान्" if s_obj.is_strong else "⚠️ निर्बल",
-                "Ishta Phala": s_obj.ishta_phala,
-                "Kashta Phala": s_obj.kashta_phala,
-            })
-        st.dataframe(pd.DataFrame(sb_data), use_container_width=True)
+    st.subheader("⚖️ षड्बल, भावबल एवं दृष्टि वेध चक्र (Shadbala & Aspectarium)")
+    tab_sb_shadbala, tab_sb_aspectarium = st.tabs([
+        "⚖️ षड्बल एवं भावबल (Shadbala & Bhava Bala)",
+        "📐 दृष्टि वेध एवं कोणीय संबंध (Dynamic Aspectarium & Orbs)"
+    ])
 
-        col_sb1, col_sb2 = st.columns(2)
-        with col_sb1:
-            st.markdown("#### 📊 षड्बल रूप अनुपात (Strength Ratio)")
-            r_df = pd.DataFrame([{"Planet": p_name, "Ratio": s_obj.strength_ratio} for p_name, s_obj in chart.shadbala.planets.items()]).set_index("Planet")
-            st.bar_chart(r_df)
-        with col_sb2:
-            st.markdown("#### 🏰 द्वादश भाव बल (Bhavabala - Virupas)")
-            b_df = pd.DataFrame([{"House": f"H{h}", "Bala": b_val} for h, b_val in chart.shadbala.bhava_bala.items()]).set_index("House")
-            st.bar_chart(b_df)
+    with tab_sb_shadbala:
+        if chart.shadbala:
+            sb_data = []
+            for p_name, s_obj in chart.shadbala.planets.items():
+                sb_data.append({
+                    "Planet": p_name,
+                    "Sthana Bala": s_obj.sthana_bala,
+                    "Dik Bala": s_obj.dik_bala,
+                    "Kaala Bala": s_obj.kaala_bala,
+                    "Cheshta Bala": s_obj.cheshta_bala,
+                    "Naisargika": s_obj.naisargika_bala,
+                    "Drik Bala": s_obj.drik_bala,
+                    "Total Virupas": s_obj.total_virupas,
+                    "Rupas": s_obj.total_rupas,
+                    "Required": s_obj.required_virupas,
+                    "Strength Ratio": f"{s_obj.strength_ratio:.2f}",
+                    "Status": "✅ बलवान्" if s_obj.is_strong else "⚠️ निर्बल",
+                    "Ishta Phala": s_obj.ishta_phala,
+                    "Kashta Phala": s_obj.kashta_phala,
+                })
+            st.dataframe(pd.DataFrame(sb_data), use_container_width=True)
+
+            col_sb1, col_sb2 = st.columns(2)
+            with col_sb1:
+                st.markdown("#### 📊 षड्बल रूप अनुपात (Strength Ratio)")
+                r_df = pd.DataFrame([{"Planet": p_name, "Ratio": s_obj.strength_ratio} for p_name, s_obj in chart.shadbala.planets.items()]).set_index("Planet")
+                st.bar_chart(r_df)
+            with col_sb2:
+                st.markdown("#### 🏰 द्वादश भाव बल (Bhavabala - Virupas)")
+                b_df = pd.DataFrame([{"House": f"H{h}", "Bala": b_val} for h, b_val in chart.shadbala.bhava_bala.items()]).set_index("House")
+                st.bar_chart(b_df)
+
+    with tab_sb_aspectarium:
+        st.markdown("### 📐 डायनेमिक वैदिक एवं पाश्चात्य दृष्टि वेध चक्र (Dynamic Aspectarium & Orbs)")
+        st.caption("Shri Jyoti Star एवं Parashara's Light ग्रेड 9x9 कोणीय अंतर मैट्रिक्स, पराशरीय विशेष दृष्टि (मंगल 4/8, गुरु 5/9, शनि 3/10) एवं पाश्चात्य प्रमुख कोणीय वेध (0°, 60°, 90°, 120°, 150°, 180°) व संमुख/विमुख (Applying vs Separating) गति:")
+
+        try:
+            import importlib
+            import src.jyotish.services.aspectarium as asp_mod
+            importlib.reload(asp_mod)
+            asp_data = asp_mod.default_aspectarium_service.calculate_aspectarium(chart)
+            asp_html = asp_mod.default_aspectarium_service.render_aspectarium_html(chart)
+
+            # Top KPI metrics
+            c_as1, c_as2, c_as3 = st.columns(3)
+            with c_as1:
+                st.metric("सक्रिय प्रमुख दृष्टियां (Western Aspects)", f"{asp_data['total_aspects_count']} संबंध", "युति, त्रिकोण, केंद्र, लाभ")
+            with c_as2:
+                st.metric("वैदिक विशेष दृष्टियां (Vedic Drishtis)", f"{asp_data['total_drishti_count']} वेध", "मंगल, गुरु, शनि एवं सप्तम दृष्टि")
+            with c_as3:
+                # Find tightest aspect
+                t_asp = min(asp_data["aspects"], key=lambda x: x["orb_abs"]) if asp_data["aspects"] else None
+                if t_asp:
+                    st.metric("सर्वाधिक तीव्र वेध (Tightest Orb)", f"{t_asp['p1_hi']} {t_asp['symbol']} {t_asp['p2_hi']}", f"Orb: {t_asp['orb_str']} ({t_asp['motion_hi']})")
+                else:
+                    st.metric("सर्वाधिक तीव्र वेध", "—", "—")
+
+            # Visual 9x9 Aspectarium Table
+            st.markdown(asp_html.strip(), unsafe_allow_html=True)
+
+            # Detailed Aspect Breakdown Tables in 2 columns
+            col_ad1, col_ad2 = st.columns(2)
+            with col_ad1:
+                st.markdown("#### 🌟 पाश्चात्य एवं हार्मोनिक कोणीय संबंध (Major Aspects & Orbs)")
+                if asp_data["aspects"]:
+                    asp_rows = []
+                    for a in asp_data["aspects"]:
+                        asp_rows.append({
+                            "ग्रह १": f"{a['p1_hi']} ({a['planet1']})",
+                            "दृष्टि प्रकार": f"{a['symbol']} {a['aspect_name']}",
+                            "ग्रह २": f"{a['p2_hi']} ({a['planet2']})",
+                            "वास्तविक कोण": f"{a['actual_angle']:.2f}°",
+                            "ऑर्ब (अंश अंतर)": f"{a['orb_str']}",
+                            "गति (Phase)": a["motion_hi"],
+                            "प्रकृति": a["nature"]
+                        })
+                    st.dataframe(pd.DataFrame(asp_rows), use_container_width=True, hide_index=True)
+                else:
+                    st.info("कोई प्रमुख कोणीय दृष्टि इस चार्ट में सक्रिय नहीं है।")
+
+            with col_ad2:
+                st.markdown("#### 🔱 पराशरीय वैदिक विशेष दृष्टियां (Parashari Vedic Drishtis)")
+                if asp_data["vedic_drishtis"]:
+                    vd_rows = []
+                    for vd in asp_data["vedic_drishtis"]:
+                        vd_rows.append({
+                            "दृष्टि कर्ता ग्रह": f"{vd['drishti_kar']}",
+                            "दृष्टि प्रकार": vd["drishti_type"],
+                            "दृष्टि प्राप्त ग्रह": f"{vd['drishti_prapak']}",
+                            "भाव अंतर": f"{vd['house_dist']} भाव दूरी",
+                            "शास्त्रीय प्रभाव": vd["impact"]
+                        })
+                    st.dataframe(pd.DataFrame(vd_rows), use_container_width=True, hide_index=True)
+                else:
+                    st.info("कोई वैदिक विशेष दृष्टि दर्ज नहीं हुई।")
+
+        except Exception as _e_asp:
+            st.error(f"Aspectarium गणना त्रुटि: {_e_asp}")
 
 
 # =============================================================
@@ -4703,13 +4776,90 @@ elif selected_idx == 8:
     st.subheader("🔱 जैमिनी ज्योतिष, विशेष लग्न, आरूढ़ पद एवं ग्रह अवस्थाएँ")
     st.write("महर्षि जैमिनी उपदेश सूत्र एवं बृहत्पाराशर होराशास्त्र (BPHS) आधारित विशेष लग्न, 12 आरूढ़ पद, ग्रह अवस्थाएँ, आयुर्दाय एवं अप्रकाशित उपग्रह।")
 
-    tab_j1, tab_j2, tab_j3, tab_j4, tab_j5 = st.tabs([
+    tab_j_km, tab_j1, tab_j2, tab_j3, tab_j4, tab_j5 = st.tabs([
+        "🔱 कारकांश व स्वांश चक्र (Karakamsha & Swamsha Suite)",
         "🌟 विशेष लग्न (Special Lagnas)",
         "👑 सम्पूर्ण 12 आरूढ़ पद (Arudha Padas)",
         "💫 ग्रह अवस्थाएँ (Planetary Avasthas)",
         "⏳ आयुर्दाय एवं दीर्घायु (Longevity)",
         "👻 अप्रकाशित उपग्रह (Invisible Upagrahas)"
     ])
+
+    with tab_j_km:
+        st.markdown("### 🔱 जैमिनी कारकांश, स्वांश एवं इष्ट देवता वेध (Jaimini Karakamsha Suite)")
+        st.caption("महर्षि जैमिनी उपदेश सूत्र अनुसार नवमांश में आत्मकारक की स्थिति (कारकांश), स्वांश फल, इष्ट देवता एवं मोक्ष योग का प्रामाणिक विश्लेषण:")
+
+        try:
+            import importlib
+            import src.jyotish.services.jaimini_suite as js_mod
+            importlib.reload(js_mod)
+            j_res = js_mod.default_jaimini_suite_service.analyze_jaimini_suite(chart)
+
+            # Top KPI summary
+            c_jk1, c_jk2, c_jk3, c_jk4 = st.columns(4)
+            with c_jk1:
+                st.metric("आत्मकारक (AK)", f"{j_res['atmakaraka']}", "आत्मा का स्वभाव")
+            with c_jk2:
+                st.metric("कारकांश राशि (D9)", f"{j_res['karakamsha_sign']}", f"Sign #{j_res['karakamsha_sign_id']}")
+            with c_jk3:
+                ishta = j_res["ishta_devata"]
+                st.metric("इष्ट देवता (Ishta Devata)", f"{ishta['deity']}", f"मंत्र: {ishta['mantra']}")
+            with c_jk4:
+                dharma = j_res["dharma_devata"]
+                st.metric("धर्म देवता (Dharma)", f"{dharma['deity']}", f"ग्रह: {dharma['planet']}")
+
+            # Karakamsha 12-House Grid
+            st.markdown("#### 🏛️ कारकांश लग्न से १२ भावों में ग्रहीय स्थिति (Houses from Karakamsha in D9)")
+            h_cols = st.columns(6)
+            for h_num in range(1, 7):
+                with h_cols[h_num - 1]:
+                    pls = j_res["houses_from_kl"].get(h_num, [])
+                    pl_str = ", ".join(pls) if pls else "—"
+                    st.markdown(
+                        f'<div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:8px; text-align:center; margin-bottom:8px;">'
+                        f'<b style="color:#1E3A8A; font-size:12px;">भाव {h_num}</b><br/>'
+                        f'<span style="font-weight:700; color:#0F172A; font-size:13px;">{pl_str}</span>'
+                        f'</div>',
+                        unsafe_allow_html=True
+                    )
+
+            h_cols2 = st.columns(6)
+            for h_num in range(7, 13):
+                with h_cols2[h_num - 7]:
+                    pls = j_res["houses_from_kl"].get(h_num, [])
+                    pl_str = ", ".join(pls) if pls else "—"
+                    bg_color = "#DCFCE7" if (h_num == 12 and "Ketu" in pls) else "#F8FAFC"
+                    st.markdown(
+                        f'<div style="background:{bg_color}; border:1px solid #CBD5E1; border-radius:8px; padding:8px; text-align:center; margin-bottom:8px;">'
+                        f'<b style="color:#1E3A8A; font-size:12px;">भाव {h_num}</b><br/>'
+                        f'<span style="font-weight:700; color:#0F172A; font-size:13px;">{pl_str}</span>'
+                        f'</div>',
+                        unsafe_allow_html=True
+                    )
+
+            # Swamsha Shastriya Yogas
+            st.markdown("#### 📜 स्वांश फल एवं जैमिनी योग (Swamsha Classical Yogas)")
+            if j_res["swamsha_yogas"]:
+                for yg in j_res["swamsha_yogas"]:
+                    st.markdown(
+                        f'<div style="background:#FFFBEB; border-left:4px solid #F59E0B; padding:10px 14px; border-radius:0 8px 8px 0; margin-bottom:8px;">'
+                        f'<b style="color:#B45309; font-size:14px;">{yg["title"]}</b> — <small style="color:#78350F;">{yg["sutra"]}</small><br/>'
+                        f'<p style="margin:4px 0 0 0; color:#1E293B; font-size:13px;">{yg["desc"]}</p>'
+                        f'</div>',
+                        unsafe_allow_html=True
+                    )
+            else:
+                st.info("कारकांश में सामान्य ग्रह स्थिति है। आत्मकारक का ध्यान एवं इष्ट साधना कल्याणकारी है।")
+
+            # Arudha Lagna & Upapada Lagna Alignment
+            c_al1, c_al2 = st.columns(2)
+            with c_al1:
+                st.info(f"**🌟 आरूढ़ लग्न (AL) व जन्म लग्न संबंध:** {j_res['al_jl_harmony']}")
+            with c_al2:
+                st.info(f"**💍 उपपद लग्न (UL) दांपत्य वेध:** {j_res['ul_summary']}")
+
+        except Exception as _e_jkm:
+            st.error(f"कारकांश विश्लेषण में त्रुटि: {_e_jkm}")
 
     with tab_j1:
         st.markdown("#### 🌟 विशेष लग्न विश्लेषण (Special Lagnas & Significance)")
@@ -6708,60 +6858,124 @@ elif selected_idx == 10:
 # TAB 12: KP ASTROLOGY (KRISHNAMURTI PADDHATI)
 
     with tab_g5:
-        st.markdown("### 📊 डायनेमिक गोचर गति व वक्रता वक्र (Dynamic Planetary Speed & Retrograde Curves)")
-        st.caption("Shri Jyoti Star एवं Jagannatha Hora के समान ग्रहों की दैनिक कोणीय गति (°/दिन), वक्र-मार्गी मोड़ बिंदु (Stationary Points), अतिचार व मन्द गति का दृश्य वक्र।")
+        sub_spd, sub_wave = st.tabs([
+            "⚡ अल्पकालिक ग्रह गति व मोड़ बिंदु (Speed & Stations)",
+            "📈 ५-वर्षीय बहु-ग्रहीय वेव व राशि संक्रमण (5-Year Ephemeris Waves)"
+        ])
 
-        from src.jyotish.services.transit_graph import default_transit_graph_service, PLANET_NAMES_HI, PLANET_COLORS
+        with sub_spd:
+            st.markdown("### 📊 डायनेमिक गोचर गति व वक्रता वक्र (Dynamic Planetary Speed & Retrograde Curves)")
+            st.caption("Shri Jyoti Star एवं Jagannatha Hora के समान ग्रहों की दैनिक कोणीय गति (°/दिन), वक्र-मार्गी मोड़ बिंदु (Stationary Points), अतिचार व मन्द गति का दृश्य वक्र।")
 
-        col_sp1, col_sp2, col_sp3 = st.columns([1.5, 1.5, 3])
-        with col_sp1:
-            spd_start_date = st.date_input("आरंभिक तिथि (Start Date)", value=t_date, key="spd_start_d")
-        with col_sp2:
-            spd_days = st.selectbox("अवधि (Time Horizon)", [30, 60, 90, 180, 365], index=2, format_func=lambda x: f"{x} दिन", key="spd_days_sel")
-        with col_sp3:
-            all_pl_opts = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Sun", "Moon", "Rahu"]
-            spd_planets = st.multiselect("ग्रह चयन (Select Planets)", all_pl_opts, default=["Mars", "Mercury", "Jupiter", "Venus", "Saturn"], format_func=lambda x: PLANET_NAMES_HI.get(x, x), key="spd_pl_sel")
+            from src.jyotish.services.transit_graph import default_transit_graph_service, PLANET_NAMES_HI, PLANET_COLORS
 
-        if not spd_planets:
-            spd_planets = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
+            col_sp1, col_sp2, col_sp3 = st.columns([1.5, 1.5, 3])
+            with col_sp1:
+                spd_start_date = st.date_input("आरंभिक तिथि (Start Date)", value=t_date, key="spd_start_d")
+            with col_sp2:
+                spd_days = st.selectbox("अवधि (Time Horizon)", [30, 60, 90, 180, 365], index=2, format_func=lambda x: f"{x} दिन", key="spd_days_sel")
+            with col_sp3:
+                all_pl_opts = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Sun", "Moon", "Rahu"]
+                spd_planets = st.multiselect("ग्रह चयन (Select Planets)", all_pl_opts, default=["Mars", "Mercury", "Jupiter", "Venus", "Saturn"], format_func=lambda x: PLANET_NAMES_HI.get(x, x), key="spd_pl_sel")
 
-        with st.spinner("ग्रह गति वक्र की खगोलीय गणना जारी..."):
-            spd_res = default_transit_graph_service.calculate_speed_timeline(spd_start_date, days=spd_days, planet_names=spd_planets)
+            if not spd_planets:
+                spd_planets = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
 
-        # SVG Chart
-        spd_svg = default_transit_graph_service.render_speed_svg(spd_res)
-        st.markdown(spd_svg, unsafe_allow_html=True)
+            with st.spinner("ग्रह गति वक्र की खगोलीय गणना जारी..."):
+                spd_res = default_transit_graph_service.calculate_speed_timeline(spd_start_date, days=spd_days, planet_names=spd_planets)
 
-        st.markdown("---")
-        # Current Moment Speedometer & Motion Status Cards
-        st.markdown("#### ⚡ तात्कालिक ग्रह गति एवं खगोलीय स्थिति (Current Motion Status):")
-        cols_st = st.columns(len(spd_planets))
-        for idx, p in enumerate(spd_planets):
-            info = spd_res["current_status"].get(p)
-            if info:
-                with cols_st[idx]:
-                    st.metric(
-                        info["planet_hi"].split(" ")[0],
-                        f"{info['speed']:+.3f}°/दिन",
-                        f"{info['status'].split(' ')[0]} ({info['sign']})"
-                    )
+            # SVG Chart
+            spd_svg = default_transit_graph_service.render_speed_svg(spd_res)
+            st.markdown(spd_svg, unsafe_allow_html=True)
 
-        # Turning Points / Stationary Events Table
-        st.markdown("#### 🔄 आगामी वक्र/मार्गी मोड़ बिंदु (Upcoming Stationary Turning Points):")
-        if spd_res.get("turning_points"):
-            tp_rows = []
-            for tp in spd_res["turning_points"]:
-                tp_rows.append({
-                    "दिनांक (Date)": tp["date"],
-                    "ग्रह (Planet)": tp["planet_hi"],
-                    "परिवर्तन (Event)": tp["shift_type"],
-                    "गोचर राशि (Sign)": tp["sign"],
-                    "स्पष्ट अंश (Degree)": tp["degree_str"],
-                    "गति (Speed)": f"{tp['speed']:+.4f}°/दिन"
-                })
-            st.dataframe(pd.DataFrame(tp_rows), use_container_width=True, hide_index=True)
-        else:
-            st.info("💡 चुने गए कालखंड में किसी चयनित ग्रह के वक्र/मार्गी मोड़ बिंदु (Zero Crossing) नहीं हैं। सभी ग्रह अपनी वर्तमान गति में अग्रसर हैं।")
+            st.markdown("---")
+            # Current Moment Speedometer & Motion Status Cards
+            st.markdown("#### ⚡ तात्कालिक ग्रह गति एवं खगोलीय स्थिति (Current Motion Status):")
+            cols_st = st.columns(len(spd_planets))
+            for idx, p in enumerate(spd_planets):
+                info = spd_res["current_status"].get(p)
+                if info:
+                    with cols_st[idx]:
+                        st.metric(
+                            info["planet_hi"].split(" ")[0],
+                            f"{info['speed']:+.3f}°/दिन",
+                            f"{info['status'].split(' ')[0]} ({info['sign']})"
+                        )
+
+            # Turning Points / Stationary Events Table
+            st.markdown("#### 🔄 आगामी वक्र/मार्गी मोड़ बिंदु (Upcoming Stationary Turning Points):")
+            if spd_res.get("turning_points"):
+                tp_rows = []
+                for tp in spd_res["turning_points"]:
+                    tp_rows.append({
+                        "दिनांक (Date)": tp["date"],
+                        "ग्रह (Planet)": tp["planet_hi"],
+                        "परिवर्तन (Event)": tp["shift_type"],
+                        "गोचर राशि (Sign)": tp["sign"],
+                        "स्पष्ट अंश (Degree)": tp["degree_str"],
+                        "गति (Speed)": f"{tp['speed']:+.4f}°/दिन"
+                    })
+                st.dataframe(pd.DataFrame(tp_rows), use_container_width=True, hide_index=True)
+            else:
+                st.info("💡 चुने गए कालखंड में किसी चयनित ग्रह के वक्र/मार्गी मोड़ बिंदु (Zero Crossing) नहीं हैं। सभी ग्रह अपनी वर्तमान गति में अग्रसर हैं।")
+
+        with sub_wave:
+            st.markdown("### 📈 ५-वर्षीय बहु-ग्रहीय वेव आरेख व राशि संक्रमण (5-Year Ephemeris Waves)")
+            st.caption("Shri Jyoti Star एवं Jagannatha Hora ग्रेड ५-वर्षीय दीर्घकालिक गोचर वेव आरेख — शनि, गुरु, राहु एवं मंगल के राशि संचरण, वक्र-मार्गी दोलन (Retrograde Loops) एवं राशि संक्रमण (Ingress):")
+
+            try:
+                import importlib
+                import src.jyotish.services.ephemeris_waves as ew_mod
+                importlib.reload(ew_mod)
+                ew_svc = ew_mod.default_ephemeris_waves_service
+
+                c_w1, c_w2 = st.columns([1.5, 3])
+                with c_w1:
+                    w_start_year = st.selectbox("आरंभिक वर्ष (Start Year)", [2024, 2025, 2026, 2027, 2028, 2029, 2030], index=2, key="ew_start_yr")
+                with c_w2:
+                    w_duration = st.slider("अवधि (Duration in Years)", min_value=2, max_value=7, value=5, step=1, key="ew_duration_yr")
+
+                with st.spinner("५-वर्षीय खगोलीय वेव चक्र एवं राशि परिवर्तन की गणना जारी..."):
+                    waves_data = ew_svc.generate_multi_year_waves(start_year=w_start_year, duration_years=w_duration)
+                    waves_svg = ew_svc.render_waves_svg_html(start_year=w_start_year, duration_years=w_duration)
+
+                # Render SVG Wave Chart
+                st.markdown(waves_svg.strip(), unsafe_allow_html=True)
+
+                col_we1, col_we2 = st.columns(2)
+                with col_we1:
+                    st.markdown("#### 🔄 आगामी वक्री-मार्गी चक्र (Upcoming Retrograde Intervals)")
+                    if waves_data.get("retrograde_events"):
+                        r_rows = []
+                        for rev in waves_data["retrograde_events"][:12]:
+                            r_rows.append({
+                                "ग्रह": rev["planet_hi"],
+                                "वक्री आरंभ": rev["retro_start"],
+                                "मार्गी वापसी": rev["direct_date"],
+                                "अवधि": f"{rev['duration_days']} दिन",
+                                "राशि": rev["sign"]
+                            })
+                        st.dataframe(pd.DataFrame(r_rows), use_container_width=True, hide_index=True)
+                    else:
+                        st.info("इस कालखंड में कोई वक्री चक्र नहीं है।")
+
+                with col_we2:
+                    st.markdown("#### 🚪 आगामी प्रमुख राशि संक्रमण (Upcoming Rashi Ingress)")
+                    if waves_data.get("ingress_events"):
+                        ing_rows = []
+                        for ing in waves_data["ingress_events"][:12]:
+                            ing_rows.append({
+                                "दिनांक": ing["date"],
+                                "ग्रह": ing["planet_hi"],
+                                "पूर्व राशि": ing["from_sign"],
+                                "प्रवेश राशि": f"➡️ {ing['to_sign']}",
+                            })
+                        st.dataframe(pd.DataFrame(ing_rows), use_container_width=True, hide_index=True)
+                    else:
+                        st.info("इस कालखंड में कोई राशि संक्रमण नहीं है।")
+
+            except Exception as _e_ew:
+                st.error(f"Ephemeris Waves गणना त्रुटि: {_e_ew}")
 
     with tab_g6:
         st.markdown("### 📅 मासिक व्यक्तिगत गोचर पंचांग कैलेंडर (Personalized Monthly Transit Calendar)")
@@ -8184,10 +8398,11 @@ elif selected_idx == 18:
 # TAB 17: 100 SHASTRIYA RULES LIBRARY
 
 elif selected_idx == 19:
-    st.subheader("📚 १२,५००+ महा-शास्त्रीय नियम बैंक एवं अनुसंधान इंजन (Vedic Rules & Research Engine)")
-    tab_rules_bank, tab_research_engine = st.tabs([
+    st.subheader("📚 १२,५००+ महा-शास्त्रीय नियम बैंक, ग्रन्थ एक्सप्लोरर एवं अनुसंधान इंजन (Vedic Rules & Research Engine)")
+    tab_rules_bank, tab_grantha_explorer, tab_research_engine = st.tabs([
         "📚 १२,५००+ महा-शास्त्रीय नियम बैंक (Grand Rules Library)",
-        "🔍 शास्त्रीय योग एवं कुण्डली अनुसंधान इंजन (Astrological Research & Query Engine)"
+        "🔍 शास्त्रीय ग्रन्थ नियम एक्सप्लोरर (Classical Grantha Rules Explorer)",
+        "🔬 शास्त्रीय योग एवं कुण्डली अनुसंधान इंजन (Astrological Research & Query Engine)"
     ])
     with tab_rules_bank:
 
@@ -8297,8 +8512,82 @@ elif selected_idx == 19:
 
 
         # =============================================================
-        # TAB 18: VEDIC RISHI VALIDATION
+    with tab_grantha_explorer:
+        st.markdown("### 🔍 शास्त्रीय ग्रन्थ नियम एक्सप्लोरर एवं १-क्लिक कुण्डली वेध (Grantha Rules Explorer)")
+        st.caption("बृहत्पाराशर होराशास्त्र, बृहज्जातक, सारावली, फलदीपिका, जैमिनी सूत्र, लाल किताब, के.पी. ज्योतिष, नाड़ी एवं प्रश्न मार्ग के १२,५००+ नियमों का लाइव सर्च व कुण्डली परीक्षण:")
 
+        try:
+            import importlib
+            import src.jyotish.services.rules_explorer as re_mod
+            importlib.reload(re_mod)
+            re_svc = re_mod.default_rules_explorer_service
+
+            stats = re_svc.get_stats()
+            total_rules_indexed = stats["total_rules"]
+
+            # Top KPI metrics
+            c_rk1, c_rk2, c_rk3 = st.columns(3)
+            with c_rk1:
+                st.metric("इंडेक्स किए गए कुल नियम", f"{total_rules_indexed:,}", "१५ शास्त्रीय ग्रन्थ")
+            with c_rk2:
+                st.metric("ग्रन्थ पुस्तकालय (Granthas)", f"{stats['granthas_count']} ग्रन्थ", "पारंपरिक व आधुनिक")
+            with c_rk3:
+                st.metric("खोज क्षमता (Engine)", "अति-तीव्र (Sub-millisecond)", "In-memory AST Index")
+
+            # Search & Filter Bar
+            c_qs1, c_qs2, c_qs3 = st.columns([2.5, 2, 1])
+            with c_qs1:
+                search_q = st.text_input("🔍 नियम या योग खोजें (Search by Keyword)", placeholder="उदा: गजकेसरी, उच्च, नीच, अष्टम, केमद्रुम, विवाह, धन...", key="re_search_q")
+            with c_qs2:
+                g_options = ["सभी ग्रन्थ (All Granthas)"] + list(stats["breakdown"].keys())
+                sel_g = st.selectbox("📖 ग्रन्थ चुनें (Filter Grantha)", g_options, key="re_sel_grantha")
+            with c_qs3:
+                max_re = st.selectbox("अधिकतम परिणाम", [20, 50, 100, 200], index=1, key="re_max_re")
+
+            grantha_arg = None if sel_g == "सभी ग्रन्थ (All Granthas)" else sel_g
+            search_results = re_svc.search_rules(query=search_q, grantha_filter=grantha_arg, max_results=max_re)
+
+            st.caption(f"प्राप्त परिणाम: **{len(search_results)}** नियम")
+
+            # Display Search Results
+            for idx, r in enumerate(search_results):
+                r_id = r.get("rule_id", f"R_{idx}")
+                r_name_hi = r.get("rule_name_hi", r_id)
+                r_name_en = r.get("rule_name_en", "")
+                src_meta = r.get("source", {})
+                grantha_title = r.get("_grantha", src_meta.get("text", "Classical"))
+                eff = r.get("effect", {})
+                desc_hi = eff.get("description_hi", "")
+                pol = eff.get("polarity", "+")
+                themes = eff.get("themes", [])
+
+                # Live Test on Current Chart
+                is_active, active_reason = re_svc.test_rule_on_chart(r, chart)
+
+                status_badge = "✅ इस कुण्डली में सक्रिय" if is_active else "⚪ इस कुण्डली में निष्क्रिय"
+                badge_bg = "#DCFCE7" if is_active else "#F1F5F9"
+                badge_fg = "#166534" if is_active else "#64748B"
+                border_color = "#86EFAC" if is_active else "#CBD5E1"
+                left_border = "#16A34A" if is_active else "#94A3B8"
+
+                with st.expander(f"{'⭐ ' if is_active else ''}{r_name_hi} — {r_name_en} [{status_badge}]", expanded=is_active):
+                    st.markdown(
+                        f'<div style="background:#FFFFFF; border:1px solid {border_color}; border-left:5px solid {left_border}; padding:12px; border-radius:8px; margin-bottom:8px;">'
+                        f'<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">'
+                        f'<div><b>📖 ग्रन्थ:</b> <span style="color:#2563EB; font-weight:700;">{grantha_title}</span> ({src_meta.get("chapter", "अध्याय")}, {src_meta.get("shloka", "")})</div>'
+                        f'<span style="background:{badge_bg}; color:{badge_fg}; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:800;">{status_badge}</span>'
+                        f'</div>'
+                        f'<div style="font-size:13.5px; color:#0F172A; margin:6px 0; line-height:1.5;"><b>📜 शास्त्रीय फल:</b> {desc_hi}</div>'
+                        f'<div style="font-size:12px; color:#475569;">🎯 <b>विषय:</b> {", ".join(themes) if themes else "सामान्य"} | <b>नियम ID:</b> <code>{r_id}</code></div>'
+                        f'<div style="margin-top:8px; padding:6px 10px; background:#F8FAFC; border-radius:6px; font-size:12px; color:#1E293B;">'
+                        f'<b>🔎 कुण्डली वेध परिणाम:</b> {active_reason}'
+                        f'</div>'
+                        f'</div>',
+                        unsafe_allow_html=True
+                    )
+
+        except Exception as _e_re:
+            st.error(f"नियम एक्सप्लोरर में त्रुटि: {_e_re}")
 
     with tab_research_engine:
         st.markdown("### 🔍 शास्त्रीय योग एवं कुण्डली अनुसंधान इंजन (Astrological Research & Query Engine)")

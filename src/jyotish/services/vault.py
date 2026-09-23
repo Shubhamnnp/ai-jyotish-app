@@ -185,3 +185,4 @@ class KundaliVaultService:
 
 # Singleton instance
 default_vault_service = KundaliVaultService()
+
