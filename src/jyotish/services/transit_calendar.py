@@ -207,19 +207,18 @@ class PersonalTransitCalendarService:
             for ev in d["events"][:2]:
                 ev_html += f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:3px; padding:1px 4px; font-size:10px; margin-top:2px; font-weight:700; color:#0F172A; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{ev}</div>'
 
-            html.append(f"""
-            <div style="background:{d['bg_card']}; border:1.5px solid {d['status_color']}; border-radius:8px; padding:6px; min-height:92px; display:flex; flex-direction:column; justify-content:space-between;">
-                <div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b style="font-size:14px; color:#0F172A;">{d['day']}</b>
-                        <span style="font-size:9.5px; color:{d['status_color']}; font-weight:800;">{stars_str}</span>
-                    </div>
-                    <div style="font-size:10px; color:#475569; margin-top:1px;">{d['tithi']}</div>
-                    <div style="font-size:10px; color:#64748B;">चन्द्र: <b>{d['moon_sign']}</b> ({d['moon_house']}वां)</div>
-                    {ev_html}
-                </div>
-            </div>
-            """)
+            html.append(
+                f'<div style="background:{d["bg_card"]}; border:1.5px solid {d["status_color"]}; border-radius:8px; padding:6px; min-height:92px; display:flex; flex-direction:column; justify-content:space-between;">'
+                f'<div>'
+                f'<div style="display:flex; justify-content:space-between; align-items:center;">'
+                f'<b style="font-size:14px; color:#0F172A;">{d["day"]}</b>'
+                f'<span style="font-size:9.5px; color:{d["status_color"]}; font-weight:800;">{stars_str}</span>'
+                f'</div>'
+                f'<div style="font-size:10px; color:#475569; margin-top:1px;">{d["tithi"]}</div>'
+                f'<div style="font-size:10px; color:#64748B;">चन्द्र: <b>{d["moon_sign"]}</b> ({d["moon_house"]}वां)</div>'
+                f'{ev_html}'
+                f'</div></div>'
+            )
 
         html.append('</div></div>')
         return "".join(html)

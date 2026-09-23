@@ -6564,8 +6564,8 @@ elif selected_idx == 10:
         c_ck4.metric("ग्रह राशि परिवर्तन (Ingress)", f"{len(cal_data['ingress_events'])} घटनाएं", "संक्रांति")
 
         # HTML Calendar Grid
-        cal_html = default_transit_calendar_service.render_calendar_html(cal_data)
-        st.markdown(cal_html, unsafe_allow_html=True)
+        cal_html = t_cal.render_calendar_html(cal_data)
+        st.components.v1.html(cal_html, height=760, scrolling=True)
 
         # Ingress Events Detail Table
         if cal_data["ingress_events"]:
