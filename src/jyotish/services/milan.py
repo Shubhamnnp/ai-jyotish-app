@@ -5,9 +5,9 @@ Varna (1), Vashya (2), Tara (3), Yoni (4), Graha Maitri (5), Gana (6), Bhakoot (
 along with classical cancellations (Nadi/Bhakoot dosha) and mutual Manglik Dosha analysis.
 """
 
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Optional
 from pydantic import BaseModel, Field
-from ..core.constants import SIGN_LORDS, NATURAL_FRIENDS, NATURAL_ENEMIES
+from ..core.constants import SIGN_LORDS, NATURAL_FRIENDS, NATURAL_ENEMIES, SIGN_NAMES
 from ..core.models import BirthData, KundaliChart
 from ..core.calculator import default_chart_calculator
 
@@ -63,6 +63,7 @@ class AshtakootaScore(BaseModel):
     nadi_cancellation_reason: str = ""
     recommendation_hi: str
     recommendation_en: str
+    deep_analysis: Optional[Dict[str, Any]] = None
 
 
 class MilanService:
@@ -129,6 +130,9 @@ class MilanService:
             rec_hi = f"कुल 36 में से {total} गुण मिलते हैं। गुणों की संख्या 18 से कम है।"
             rec_en = f"Low compatibility ({total}/36 gunas). Astrological remedies recommended."
 
+        # Deep Shastriya Synastry Analysis
+        deep_analysis = self.analyze_deep_synastry(groom_chart, bride_chart)
+
         return AshtakootaScore(
             varna=varna_score,
             vashya=vashya_score,
@@ -150,7 +154,8 @@ class MilanService:
             manglik_match=manglik_match,
             manglik_cancellation_reason=manglik_canc_reason,
             recommendation_hi=rec_hi,
-            recommendation_en=rec_en
+            recommendation_en=rec_en,
+            deep_analysis=deep_analysis
         )
 
     def _calc_varna(self, g_sign: int, b_sign: int) -> float:
@@ -312,6 +317,289 @@ class MilanService:
             return True, f"गुरु दृष्टि परिहार: {m_person} की कुण्डली में देवगुरु बृहस्पति केन्द्र में स्थित होकर मांगलिक दोष का शमन कर रहे हैं।"
 
         return False, f"असंतुलित मांगलिक: केवल {m_person} मांगलिक हैं और {c_person} की कुण्डली में पर्याप्त परिहार नहीं है। विवाह पूर्व कुंभ/अर्क विवाह उपाय अनुशंसित है।"
+
+    def _get_sphuta_details(self, long_val: float) -> Tuple[int, str, int, str, bool, bool]:
+        norm_long = long_val % 360.0
+        sign_id = int(norm_long / 30.0) + 1
+        sign_name = SIGN_NAMES[sign_id - 1]
+        deg_in_sign = norm_long % 30.0
+        nav_div = int(deg_in_sign / (30.0 / 9.0))
+        sign_idx = sign_id - 1
+        # Element: 0=Fire, 1=Earth, 2=Air, 3=Water
+        elem = sign_idx % 4
+        start_signs = {0: 0, 1: 9, 2: 6, 3: 3}  # Aries, Cap, Libra, Cancer
+        nav_sign_idx = (start_signs[elem] + nav_div) % 12
+        nav_sign_id = nav_sign_idx + 1
+        nav_sign_name = SIGN_NAMES[nav_sign_idx]
+        is_sign_odd = (sign_id % 2 != 0)
+        is_nav_odd = (nav_sign_id % 2 != 0)
+        return sign_id, sign_name, nav_sign_id, nav_sign_name, is_sign_odd, is_nav_odd
+
+    def analyze_deep_synastry(self, g_chart: KundaliChart, b_chart: KundaliChart) -> Dict[str, Any]:
+        """Calculates in-depth Shastriya Synastry for Groom and Bride:
+
+        1. Husband-Wife Temperament & Mutual Behavior
+        2. Relationship Reliability & Marital Longevity (Upapada Lagna)
+        3. Progeny / Children Analysis (Beeja & Kshetra Sphuta)
+        4. In-Laws Support & Relations (Sasural Paksha)
+        5. Spouse Support & Post-Marital Prosperity (Bhagyodaya)
+        6. Summary Compatibility & Vedic Remedies
+        """
+        # 1. Pati-Patni Vyavahar & Svabhav
+        g_lagna_lord = SIGN_LORDS.get(g_chart.lagna_sign_name, "Mars")
+        b_lagna_lord = SIGN_LORDS.get(b_chart.lagna_sign_name, "Venus")
+
+        if g_lagna_lord == b_lagna_lord:
+            vyavahar_title = "समान लग्नेश (अत्युत्तम वैचारिक सामंजस्य)"
+            vyavahar_score = 95
+            vyavahar_desc = (
+                f"वर और कन्या दोनों के लग्नेश एक ही ग्रह ({g_lagna_lord}) हैं। "
+                "दोनों के जीवन मूल्य, रुचियां एवं सोचने का दृष्टिकोण एक जैसा रहेगा। "
+                "पारस्परिक समझदारी, आदर एवं भावनात्मक निकटता उच्च कोटि की रहेगी।"
+            )
+        elif b_lagna_lord in NATURAL_FRIENDS.get(g_lagna_lord, []) and g_lagna_lord in NATURAL_FRIENDS.get(b_lagna_lord, []):
+            vyavahar_title = "परस्पर स्वाभाविक मित्र लग्नेश (सद्भाव एवं सहयोग)"
+            vyavahar_score = 88
+            vyavahar_desc = (
+                f"वर के लग्नेश ({g_lagna_lord}) एवं कन्या के लग्नेश ({b_lagna_lord}) आपस में स्वाभाविक मित्र हैं। "
+                "विपरीत परिस्थितियों में भी दोनों एक-दूसरे का संबल बनेंगे। आपसी संवाद मधुर एवं उत्साहवर्धक रहेगा।"
+            )
+        elif b_lagna_lord in NATURAL_ENEMIES.get(g_lagna_lord, []) or g_lagna_lord in NATURAL_ENEMIES.get(b_lagna_lord, []):
+            vyavahar_title = "भिन्न दृष्टिकोण (परस्पर धैर्य एवं समझदारी आवश्यक)"
+            vyavahar_score = 65
+            vyavahar_desc = (
+                f"वर के लग्नेश ({g_lagna_lord}) और कन्या के लग्नेश ({b_lagna_lord}) में नैसर्गिक शत्रुता है। "
+                "स्वभाव, निर्णय लेने की गति अथवा प्राथमिकताओं में अंतर हो सकता है। "
+                "अहंकार के टकराव से बचकर परस्पर विचारों का सम्मान करना दांपत्य को सुखद बनाएगा।"
+            )
+        else:
+            vyavahar_title = "तटस्थ/सम भाव लग्नेश (व्यावहारिक संतुलन)"
+            vyavahar_score = 78
+            vyavahar_desc = (
+                f"वर के लग्नेश ({g_lagna_lord}) व कन्या के लग्नेश ({b_lagna_lord}) सम भाव में हैं। "
+                "दांपत्य जीवन में व्यावहारिक संतुलन रहेगा। सामान्य समझदारी से सभी पारिवारिक दायित्व सुचारू रहेंगे।"
+            )
+
+        # Moon Elements
+        elem_names = ["अग्नि तत्त्व (Fire)", "पृथ्वी तत्त्व (Earth)", "वायु तत्त्व (Air)", "जल तत्त्व (Water)"]
+        g_elem_idx = (g_chart.planets["Moon"].sign_id - 1) % 4
+        b_elem_idx = (b_chart.planets["Moon"].sign_id - 1) % 4
+        g_elem = elem_names[g_elem_idx]
+        b_elem = elem_names[b_elem_idx]
+
+        if g_elem_idx == b_elem_idx:
+            element_desc = f"दोनों की चंद्र राशि एक ही तत्त्व ({g_elem}) में है, जिससे मन का स्पंदन और भावनाएं एक समान रहेंगी।"
+        elif (g_elem_idx, b_elem_idx) in [(0, 2), (2, 0), (1, 3), (3, 1)]:
+            element_desc = f"वर ({g_elem}) और कन्या ({b_elem}) पूरक तत्त्व हैं। यह योग एक-दूसरे को नई ऊर्जा, प्रेरणा व संबल प्रदान करता है।"
+        elif (g_elem_idx, b_elem_idx) in [(0, 3), (3, 0)]:
+            element_desc = f"वर ({g_elem}) और कन्या ({b_elem}) अग्नि-जल संयोग में हैं। कभी-कभी क्रोध या अति-भावुकता से बचें; शांत मन से संवाद रखें।"
+        else:
+            element_desc = f"वर ({g_elem}) व कन्या ({b_elem}) का स्वभाव भिन्न शैलियों का है; व्यावहारिक तालमेल से मधुरता रहेगी।"
+
+        # 2. Relationship Reliability & Marital Longevity
+        g_ul_name = "Libra"
+        b_ul_name = "Gemini"
+        g_ul_id = 7
+        b_ul_id = 3
+        if g_chart.jaimini and g_chart.jaimini.arudha_padas:
+            g_ul_id = g_chart.jaimini.arudha_padas.get("UL", 7)
+            g_ul_name = g_chart.jaimini.arudha_pada_names.get("UL", "Libra")
+        if b_chart.jaimini and b_chart.jaimini.arudha_padas:
+            b_ul_id = b_chart.jaimini.arudha_padas.get("UL", 3)
+            b_ul_name = b_chart.jaimini.arudha_pada_names.get("UL", "Gemini")
+
+        ul_dist = ((b_ul_id - g_ul_id) % 12) + 1
+        if ul_dist in (1, 5, 9, 7):
+            rel_title = "अटूट दांपत्य निष्ठा एवं दीर्घायु संबंध"
+            rel_score = 92
+            rel_desc = (
+                f"महर्षि जैमिनी के उपपद लग्न (UL) सूत्र अनुसार वर का उपपद ({g_ul_name}) व कन्या का उपपद ({b_ul_name}) "
+                "परस्पर त्रिकोण अथवा समसप्तक में हैं। यह जीवनभर एक-दूसरे के प्रति समर्पण, विश्वास, सामाजिक मर्यादा "
+                "तथा संकटों में भी कभी साथ न छोड़ने का पक्का योग बनाता है।"
+            )
+        elif ul_dist in (3, 4, 10, 11):
+            rel_title = "स्थिर एवं अनुकूल दांपत्य निष्ठा"
+            rel_score = 82
+            rel_desc = (
+                f"दोनों के उपपद लग्न ({g_ul_name} व {b_ul_name}) केंद्र व उपचय संबंध में हैं। "
+                "विवाह के उपरांत दोनों में आपसी भरोसा दिनों-दिन गहरा होगा और पारिवारिक संबंध सुदृढ़ रहेंगे।"
+            )
+        else:
+            rel_title = "पारदर्शिता एवं सतर्कता आवश्यक"
+            rel_score = 68
+            rel_desc = (
+                f"दोनों के उपपद लग्न ({g_ul_name} व {b_ul_name}) परस्पर २/१२ या ६/८ स्थिति में हैं। "
+                "दांपत्य में किसी तीसरे व्यक्ति या बाहरी रिश्तेदारों की बातों में आकर संदेह न करें; "
+                "आपसी खुलापन व पारदर्शिता संबंध को अटूट बनाए रखेगी।"
+            )
+
+        # 3. Progeny / Children Analysis & Beeja/Kshetra Sphuta
+        bs_long = (g_chart.planets["Sun"].longitude + g_chart.planets["Venus"].longitude + g_chart.planets["Jupiter"].longitude) % 360.0
+        bs_sign_id, bs_sign_name, bs_nav_id, bs_nav_name, bs_s_odd, bs_n_odd = self._get_sphuta_details(bs_long)
+
+        if bs_s_odd and bs_n_odd:
+            bs_status = "उत्कृष्ट एवं परम ओजस्वी बीज बल"
+            bs_desc = f"बीज स्फुट ({bs_sign_name} राशि, {bs_nav_name} नवांश) दोनों विषम राशियों में हैं। वर का बीज बल शास्त्रानुसार परम पुष्ट व ओजस्वी है।"
+            bs_score = 95
+        elif bs_s_odd or bs_n_odd:
+            bs_status = "मध्यम बीज बल"
+            bs_desc = f"बीज स्फुट ({bs_sign_name} राशि, {bs_nav_name} नवांश) में एक विषम व एक सम है। वर का बीज बल संतुलित है, समय पर संतान प्राप्ति होगी।"
+            bs_score = 75
+        else:
+            bs_status = "अल्प/संवेदनशील बीज बल"
+            bs_desc = f"बीज स्फुट ({bs_sign_name} राशि, {bs_nav_name} नवांश) दोनों सम राशियों में हैं। सूर्य अर्घ्य व देवगुरु बृहस्पति की उपासना हितकर रहेगी।"
+            bs_score = 55
+
+        ks_long = (b_chart.planets["Moon"].longitude + b_chart.planets["Mars"].longitude + b_chart.planets["Jupiter"].longitude) % 360.0
+        ks_sign_id, ks_sign_name, ks_nav_id, ks_nav_name, ks_s_odd, ks_n_odd = self._get_sphuta_details(ks_long)
+
+        if (not ks_s_odd) and (not ks_n_odd):
+            ks_status = "उत्कृष्ट एवं परम फलदायी क्षेत्र बल"
+            ks_desc = f"क्षेत्र स्फुट ({ks_sign_name} राशि, {ks_nav_name} नवांश) दोनों सम राशियों में हैं। कन्या का क्षेत्र बल परम उर्वर व पुष्ट है। मातृत्व क्षमता उत्तम है।"
+            ks_score = 95
+        elif (not ks_s_odd) or (not ks_n_odd):
+            ks_status = "मध्यम क्षेत्र बल"
+            ks_desc = f"क्षेत्र स्फुट ({ks_sign_name} राशि, {ks_nav_name} नवांश) में एक सम व एक विषम है। मातृत्व क्षमता सामान्य व संतुलित है।"
+            ks_score = 75
+        else:
+            ks_status = "अल्प/संवेदनशील क्षेत्र बल"
+            ks_desc = f"क्षेत्र स्फुट ({ks_sign_name} राशि, {ks_nav_name} नवांश) दोनों विषम राशियों में हैं। गर्भाधान पूर्व संतान गोपाल मंत्र का जप कल्याणकारी रहेगा।"
+            ks_score = 55
+
+        santana_avg = round((bs_score + ks_score) / 2)
+        if santana_avg >= 85:
+            children_count = "२ से ३ संतान का प्रबल एवं उत्तम योग"
+            lineage_text = (
+                "बीज व क्षेत्र स्फुट के अत्यंत अनुकूल होने से वंश वृद्धि निर्बाध रूप से होगी। "
+                "संतान सद्गुणी, आज्ञाकारी, कुलदीपक एवं परिवार का यश बढ़ाने वाली होगी। "
+                "माता-पिता को संतान का पूर्ण सुख एवं वृद्धावस्था में उत्तम सेवा प्राप्त होगी।"
+            )
+            first_child_desc = "प्रथम संतान ओजस्वी, नेतृत्व क्षमता से युक्त एवं परिवार के लिए भाग्यशाली सिद्ध होगी।"
+        elif santana_avg >= 70:
+            children_count = "१ से २ संतान का सुखद योग"
+            lineage_text = (
+                "संतान सुख सामान्य समय पर प्राप्त होगा। परिवार में खुशहाली रहेगी तथा संतान विद्या व संस्कार में आगे रहेगी।"
+            )
+            first_child_desc = "प्रथम संतान बुद्धिमान, शांत स्वभाव एवं माता-पिता के प्रति समर्पित रहेगी।"
+        else:
+            children_count = "१ संतान का योग (धार्मिक अनुष्ठान अनुशंसित)"
+            lineage_text = (
+                "संतान प्राप्ति में किंचित विलंब या संवेदनशीलता संभव है। विवाह उपरांत भगवान कृष्ण के "
+                "संतान गोपाल स्वरूप का नियमित पूजन व चिकित्सकीय मार्गदर्शन से पूर्ण संतति सुख मिलेगा।"
+            )
+            first_child_desc = "संतान धर्मपरायण एवं कुल परंपरा का निर्वहन करने वाली होगी।"
+
+        # 4. Sasural Paksha se Sahayog
+        g_h8_planets = [p for p, obj in g_chart.planets.items() if obj.house_from_lagna == 8]
+        if not g_h8_planets:
+            groom_sasural_desc = "वर को ससुराल पक्ष से भरपूर मान-सम्मान, आतिथ्य एवं स्नेह मिलेगा। ससुर व सासू माँ का वर के प्रति अपनत्व रहेगा।"
+        else:
+            groom_sasural_desc = "वर को ससुराल पक्ष से औपचारिक व आदरयुक्त संबंध बनाए रखना चाहिए। आर्थिक लेन-देन में पारदर्शिता रखें।"
+
+        bride_sasural_desc = (
+            "कन्या को ससुराल में कुलवधू के रूप में उचित सम्मान व बेटी जैसा स्नेह मिलने का सुंदर योग है। "
+            "कन्या अपनी समझदारी व सेवाभाव से ससुराल के सभी सदस्यों का दिल जीत लेगी।"
+        )
+        sasural_score = 85
+
+        # 5. Patni ka Sahayog & Bhagyodaya
+        g_7th_sign_id = ((g_chart.lagna_sign_id - 1 + 6) % 12) + 1
+        g_7th_lord = SIGN_LORDS.get(SIGN_NAMES[g_7th_sign_id - 1], "Venus")
+        g_7th_lord_h = g_chart.planets.get(g_7th_lord).house_from_lagna if g_chart.planets.get(g_7th_lord) else 7
+
+        if g_7th_lord_h in (1, 2, 4, 7, 9, 10, 11):
+            bhagyodaya_title = "विवाह उपरांत तीव्र भाग्योदय योग (Post-Marital Prosperity)"
+            prosperity_score = 92
+            bhagyodaya_desc = (
+                f"वर की कुण्डली में सप्तमेश ({g_7th_lord}) केंद्र/त्रिकोण अथवा धन भाव ({g_7th_lord_h}वें भाव) में स्थित हैं। "
+                "बृहत्पाराशर होराशास्त्र अनुसार विवाह के पश्चात जातक का वास्तविक भाग्योदय होगा। "
+                "करियर में पदोन्नति, व्यापार में विस्तार, नया गृह/वाहन तथा आर्थिक समृद्धि में तेजी से वृद्धि होगी।"
+            )
+        else:
+            bhagyodaya_title = "स्थिर एवं संतुलित भाग्योदय"
+            prosperity_score = 78
+            bhagyodaya_desc = (
+                "विवाह के बाद दोनों के संयुक्त प्रयासों व बचत की नीति से परिवार की वित्तीय स्थिति निरंतर सुदृढ़ होगी।"
+            )
+
+        b_10th_planets = [p for p, obj in b_chart.planets.items() if obj.house_from_lagna == 10]
+        sun_obj = b_chart.planets.get("Sun")
+        if b_10th_planets or (sun_obj and sun_obj.house_from_lagna in (1, 10)):
+            wife_role_title = "कामकाजी एवं संयुक्त आर्थिक संबल (Professional Partner)"
+            wife_role_desc = (
+                "कन्या में स्वतंत्र आजीविका, मेधा एवं व्यावसायिक कार्यकुशलता के गुण हैं। "
+                "वह नौकरी या व्यवसाय द्वारा परिवार की आय में सक्रिय योगदान दे सकती है।"
+            )
+        else:
+            wife_role_title = "कुशल गृहलक्ष्मी एवं पारिवारिक सूत्रधार (Home Administrator)"
+            wife_role_desc = (
+                "कन्या कुशल गृहलक्ष्मी बनकर घर के वित्तीय प्रबंधन, बजट, बचत एवं परिवार की सामाजिक प्रतिष्ठा "
+                "को नई ऊंचाइयों पर ले जाएगी। उसकी उपस्थिति से घर में शांति व बरकत रहेगी।"
+            )
+
+        # 6. Vedic Remedies
+        remedies = [
+            "विवाह के उपरांत वर-वधू को संयुक्त रूप से 'गौरी-शंकर रुद्राक्ष' सिद्ध करवाकर पूजा कक्ष में रखना चाहिए।",
+            "प्रत्येक शुक्रवार अथवा पूर्णिमा को खीर का भोग लगाकर 'श्री सूक्त' एवं 'विष्णु सहस्रनाम' का संयुक्त पाठ करें।",
+            "संतान सुख एवं वंश वृद्धि में पूर्ण अनुकूलता हेतु दंपत्ति 'संतान गोपाल मंत्र' का नित्य ११ बार जप करें।",
+            "कन्या द्वारा करवाचौथ, तीज या नवरात्रि में वृद्ध सुहागिन महिलाओं को सुहाग सामग्री व मीठा फल भेंट करना अत्यंत शुभ रहेगा।"
+        ]
+
+        overall_rating = round((vyavahar_score + rel_score + santana_avg + sasural_score + prosperity_score) / 5)
+
+        return {
+            "vyavahar": {
+                "title": vyavahar_title,
+                "score": vyavahar_score,
+                "desc": vyavahar_desc,
+                "g_lagna_lord": g_lagna_lord,
+                "b_lagna_lord": b_lagna_lord,
+                "g_elem": g_elem,
+                "b_elem": b_elem,
+                "element_desc": element_desc
+            },
+            "reliability": {
+                "title": rel_title,
+                "score": rel_score,
+                "desc": rel_desc,
+                "g_ul": g_ul_name,
+                "b_ul": b_ul_name
+            },
+            "santana": {
+                "score": santana_avg,
+                "children_count": children_count,
+                "lineage_text": lineage_text,
+                "first_child_desc": first_child_desc,
+                "beeja": {
+                    "status": bs_status,
+                    "desc": bs_desc,
+                    "score": bs_score,
+                    "sign": bs_sign_name,
+                    "navamsha": bs_nav_name
+                },
+                "kshetra": {
+                    "status": ks_status,
+                    "desc": ks_desc,
+                    "score": ks_score,
+                    "sign": ks_sign_name,
+                    "navamsha": ks_nav_name
+                }
+            },
+            "sasural": {
+                "score": sasural_score,
+                "groom_inlaws": groom_sasural_desc,
+                "bride_inlaws": bride_sasural_desc
+            },
+            "prosperity": {
+                "score": prosperity_score,
+                "bhagyodaya_title": bhagyodaya_title,
+                "bhagyodaya_desc": bhagyodaya_desc,
+                "wife_role_title": wife_role_title,
+                "wife_role_desc": wife_role_desc
+            },
+            "remedies": remedies,
+            "overall_rating": overall_rating
+        }
 
 
 # Singleton Milan service

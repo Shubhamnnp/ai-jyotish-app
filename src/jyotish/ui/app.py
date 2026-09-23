@@ -6619,6 +6619,129 @@ elif selected_idx == 16:
             else:
                 st.info(f"**🧬 नाड़ी मिलान:** {n_canc_reason}")
 
+        # ============================================================
+        # DEEP SHASTRIYA SYNASTRY & LIFE COMPATIBILITY (शास्त्रीय गहन फलादेश)
+        # ============================================================
+        deep_res = getattr(m_score, 'deep_analysis', None)
+        if deep_res:
+            st.markdown("---")
+            st.markdown("### 🔮 कुण्डली स्कैनिंग आधारित शास्त्रीय गहन दांपत्य फलादेश")
+            st.caption("बृहत्पाराशर होराशास्त्र, फलदीपिका, जातक पारिजात एवं महर्षि जैमिनी उपदेश सूत्र के आधार पर ५ प्रमुख स्तंभों का विश्लेषण:")
+
+            # Top Summary Scorecard Banner
+            ov_rating = deep_res.get('overall_rating', 85)
+            ov_badge = "उत्कृष्ट दांपत्य योग (Highly Auspicious)" if ov_rating >= 85 else ("उत्तम एवं अनुकूल दांपत्य (Favorable)" if ov_rating >= 75 else "मध्यम (धैर्य व उपाय अपेक्षित)")
+            st.markdown(f"""
+            <div style="background:linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%); border:2px solid #A855F7; border-radius:12px; padding:16px; margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                    <div>
+                        <span style="font-size:18px; font-weight:900; color:#6B21A8;">🌟 समग्र दांपत्य सामंजस्य सूचकांक: {ov_rating}%</span><br/>
+                        <small style="color:#7E22CE; font-weight:600;">{ov_badge}</small>
+                    </div>
+                    <div style="background:#FFFFFF; border:1px solid #C084FC; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:700; color:#581C87;">
+                        ५-स्तंभ कुण्डली संश्लेषण
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 1. Pati-Patni Vyavahar & Svabhav
+            vy = deep_res['vyavahar']
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:16px; margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                    <b style="color:#15803D; font-size:16px;">💑 १. पति-पत्नी का आपसी व्यवहार एवं स्वभाव सामंजस्य</b>
+                    <span style="background:#DCFCE7; color:#166534; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">अनुकूलता: {vy['score']}%</span>
+                </div>
+                <div style="font-weight:800; color:#14532D; margin-bottom:4px;">{vy['title']}</div>
+                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{vy['desc']}</p>
+                <div style="background:#FFFFFF; border-left:3px solid #22C55E; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
+                    <small style="color:#15803D;"><b>तत्त्व साम्य (Element Harmony):</b> {vy['element_desc']} (वर लग्नेश: <b>{vy['g_lagna_lord']}</b> | कन्या लग्नेश: <b>{vy['b_lagna_lord']}</b>)</small>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 2. Relationship Reliability & Marital Longevity (Upapada Lagna)
+            rel = deep_res['reliability']
+            st.markdown(f"""
+            <div style="background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:10px; padding:16px; margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                    <b style="color:#1E40AF; font-size:16px;">🛡️ २. दांपत्य विश्वसनीयता, निष्ठा एवं स्थायित्व (Relationship Reliability)</b>
+                    <span style="background:#DBEAFE; color:#1E40AF; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">विश्वसनीयता: {rel['score']}%</span>
+                </div>
+                <div style="font-weight:800; color:#1D4ED8; margin-bottom:4px;">{rel['title']}</div>
+                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{rel['desc']}</p>
+                <div style="background:#FFFFFF; border-left:3px solid #3B82F6; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
+                    <small style="color:#1E40AF;"><b>जैमिनी उपपद लग्न (UL):</b> वर उपपद: <b>{rel['g_ul']}</b> | कन्या उपपद: <b>{rel['b_ul']}</b> (सामाजिक मर्यादा व अखंड निष्ठा का प्रमाण)</small>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 3. Santana Yoga & Beeja / Kshetra Sphuta
+            san = deep_res['santana']
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:10px; padding:16px; margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                    <b style="color:#B45309; font-size:16px;">👶 ३. संतान सुख, बच्चे कितने होंगे एवं वंश वृद्धि निर्णय (Progeny Analysis)</b>
+                    <span style="background:#FEF3C7; color:#92400E; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">संतति बल: {san['score']}%</span>
+                </div>
+                <div style="font-size:15px; font-weight:900; color:#78350F; margin-bottom:6px;">
+                    🌟 अनुमानित संतान संख्या: <u>{san['children_count']}</u>
+                </div>
+                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{san['lineage_text']}</p>
+                <p style="margin:4px 0; color:#0F172A; font-size:13.5px;">• <b>प्रथम संतान स्वभाव:</b> {san['first_child_desc']}</p>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
+                    <div style="background:#FFFFFF; border:1px solid #FDE68A; border-radius:8px; padding:10px;">
+                        <b style="color:#B45309; font-size:13px;">🌾 वर बीज स्फुट (Beeja Sphuta):</b><br/>
+                        <small style="color:#0F172A;"><b>स्थिति:</b> {san['beeja']['status']}</small><br/>
+                        <small style="color:#475569;">{san['beeja']['desc']}</small>
+                    </div>
+                    <div style="background:#FFFFFF; border:1px solid #FDE68A; border-radius:8px; padding:10px;">
+                        <b style="color:#B45309; font-size:13px;">🌸 कन्या क्षेत्र स्फुट (Kshetra Sphuta):</b><br/>
+                        <small style="color:#0F172A;"><b>स्थिति:</b> {san['kshetra']['status']}</small><br/>
+                        <small style="color:#475569;">{san['kshetra']['desc']}</small>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 4. Sasural Paksha se Sahayog
+            sas = deep_res['sasural']
+            st.markdown(f"""
+            <div style="background:#FDF4FF; border:1.5px solid #F0ABFC; border-radius:10px; padding:16px; margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                    <b style="color:#86198F; font-size:16px;">🏛️ ४. ससुराल पक्ष से सहयोग, संबंध एवं सत्कार (In-Laws Compatibility)</b>
+                    <span style="background:#FAE8FF; color:#701A75; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">अनुकूलता: {sas['score']}%</span>
+                </div>
+                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">• <b>वर के लिए ससुराल संबंध:</b> {sas['groom_inlaws']}</p>
+                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">• <b>कन्या के लिए ससुराल संबंध:</b> {sas['bride_inlaws']}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 5. Patni ka Sahayog & Bhagyodaya
+            pro = deep_res['prosperity']
+            st.markdown(f"""
+            <div style="background:#FFF7ED; border:1.5px solid #FDBA74; border-radius:10px; padding:16px; margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                    <b style="color:#C2410C; font-size:16px;">📈 ५. पत्नी का सहयोग एवं विवाह उपरांत भाग्योदय (Post-Marital Prosperity)</b>
+                    <span style="background:#FFEDD5; color:#9A3412; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">भाग्योदय बल: {pro['score']}%</span>
+                </div>
+                <div style="font-weight:800; color:#9A3412; margin-bottom:4px;">{pro['bhagyodaya_title']}</div>
+                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{pro['bhagyodaya_desc']}</p>
+                <div style="background:#FFFFFF; border-left:3px solid #EA580C; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
+                    <b style="color:#C2410C;">पत्नी के सहयोग का स्वरूप:</b> <span style="font-weight:700; color:#0F172A;">{pro['wife_role_title']}</span><br/>
+                    <small style="color:#475569;">{pro['wife_role_desc']}</small>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 6. Vedic Remedies for Marital Harmony
+            st.markdown("#### 📿 दांपत्य सुख एवं समृद्धि हेतु अचूक वैदिक उपाय:")
+            for r in deep_res.get('remedies', []):
+                st.markdown(f"• {r}")
+
+
 
 # =============================================================
 # TAB 15: AI SAHAYAK (CHAT CONSULTATION)
@@ -8009,7 +8132,6 @@ elif selected_idx == 28:
                 </p>
             </div>
             """, unsafe_allow_html=True)
-
 
 
 
