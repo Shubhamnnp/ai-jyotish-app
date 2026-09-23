@@ -2910,6 +2910,10 @@ with st.container(key="top_frozen_header_container", border=True):
         st.session_state.active_module_idx = new_idx
         st.session_state.top_bar_module_selector = MODULE_OPTIONS[new_idx]
 
+    def _nav_to_rules_bank():
+        st.session_state.active_module_idx = 19
+        st.session_state.top_bar_module_selector = MODULE_OPTIONS[19]
+
     def _on_module_selector_change():
         chosen = st.session_state.top_bar_module_selector
         if chosen in MODULE_OPTIONS:
@@ -3024,10 +3028,7 @@ with col_gr_bar:
     </div>
     """, unsafe_allow_html=True)
 with col_gr_btn:
-    if st.button("🔍 नियम बैंक खोलें ❯", key="global_open_rules_bank_btn", use_container_width=True, help="१२,५००+ महा-शास्त्रीय नियम बैंक (मॉड्यूल १९) खोलें"):
-        st.session_state.active_module_idx = 19
-        st.session_state.top_bar_module_selector = MODULE_OPTIONS[19]
-        st.rerun()
+    st.button("🔍 नियम बैंक खोलें ❯", key="global_open_rules_bank_btn", use_container_width=True, help="१२,५००+ महा-शास्त्रीय नियम बैंक (मॉड्यूल १९) खोलें", on_click=_nav_to_rules_bank)
 
 # -------------------------------------------------------------
 # ⏱️ Quick Time Stepper (काल गति नियंत्रक — Live Time Travel / BTR Bar)
