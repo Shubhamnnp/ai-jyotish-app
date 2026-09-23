@@ -603,3 +603,4 @@ if __name__ == "__main__":
     build_numerology()
     build_classic_misc()
     print("All Phase 1 Grantha rules successfully generated!")
+

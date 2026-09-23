@@ -300,3 +300,4 @@ class UniversalConditionEvaluator:
             delta = round(0.15 * (matched_count / len(criteria)), 2)
 
         return fired, explanations, delta
+
