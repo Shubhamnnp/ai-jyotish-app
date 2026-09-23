@@ -1,0 +1,5545 @@
+{
+  "metadata": {
+    "grantha": "Sarvatobhadra & Kota Chakra Shastra",
+    "author": "Classical Sages",
+    "count": 173
+  },
+  "rules": [
+    {
+      "rule_id": "SBC_VEDHA_JANMA_NAKSHATRA_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर सूर्य का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Janma_Nakshatra by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर सूर्य का वेध: शारीरिक कष्ट अथवा तेज की वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_JANMA_NAKSHATRA_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर चन्द्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Janma_Nakshatra by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर चन्द्र का वेध: शारीरिक कष्ट अथवा तेज की वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_JANMA_NAKSHATRA_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर मंगल का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Janma_Nakshatra by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर मंगल का वेध: शारीरिक कष्ट अथवा तेज की वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_JANMA_NAKSHATRA_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर बुध का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Janma_Nakshatra by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर बुध का वेध: शारीरिक कष्ट अथवा तेज की वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_JANMA_NAKSHATRA_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर गुरु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Janma_Nakshatra by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर गुरु का वेध: शारीरिक कष्ट अथवा तेज की वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_JANMA_NAKSHATRA_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर शुक्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Janma_Nakshatra by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर शुक्र का वेध: शारीरिक कष्ट अथवा तेज की वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_JANMA_NAKSHATRA_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर शनि का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Janma_Nakshatra by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर शनि का वेध: शारीरिक कष्ट अथवा तेज की वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_JANMA_NAKSHATRA_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर राहु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Janma_Nakshatra by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर राहु का वेध: शारीरिक कष्ट अथवा तेज की वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_JANMA_NAKSHATRA_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर केतु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Janma_Nakshatra by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार जन्म नक्षत्र (प्रथम नक्षत्र - देह व स्वास्थ्य) पर केतु का वेध: शारीरिक कष्ट अथवा तेज की वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_KARMA_NAKSHATRA_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर सूर्य का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Karma_Nakshatra by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर सूर्य का वेध: कार्यक्षेत्र में प्रतिष्ठा अथवा स्थानांतरण।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_KARMA_NAKSHATRA_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर चन्द्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Karma_Nakshatra by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर चन्द्र का वेध: कार्यक्षेत्र में प्रतिष्ठा अथवा स्थानांतरण।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_KARMA_NAKSHATRA_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर मंगल का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Karma_Nakshatra by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर मंगल का वेध: कार्यक्षेत्र में प्रतिष्ठा अथवा स्थानांतरण।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_KARMA_NAKSHATRA_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर बुध का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Karma_Nakshatra by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर बुध का वेध: कार्यक्षेत्र में प्रतिष्ठा अथवा स्थानांतरण।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_KARMA_NAKSHATRA_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर गुरु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Karma_Nakshatra by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर गुरु का वेध: कार्यक्षेत्र में प्रतिष्ठा अथवा स्थानांतरण।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_KARMA_NAKSHATRA_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर शुक्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Karma_Nakshatra by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर शुक्र का वेध: कार्यक्षेत्र में प्रतिष्ठा अथवा स्थानांतरण।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_KARMA_NAKSHATRA_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर शनि का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Karma_Nakshatra by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर शनि का वेध: कार्यक्षेत्र में प्रतिष्ठा अथवा स्थानांतरण।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_KARMA_NAKSHATRA_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर राहु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Karma_Nakshatra by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर राहु का वेध: कार्यक्षेत्र में प्रतिष्ठा अथवा स्थानांतरण।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_KARMA_NAKSHATRA_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर केतु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Karma_Nakshatra by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार कर्म नक्षत्र (१०वां नक्षत्र - आजीविका व पद) पर केतु का वेध: कार्यक्षेत्र में प्रतिष्ठा अथवा स्थानांतरण।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_ADHANA_NAKSHATRA_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर सूर्य का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Adhana_Nakshatra by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर सूर्य का वेध: पारिवारिक सुख अथवा आंतरिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_ADHANA_NAKSHATRA_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर चन्द्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Adhana_Nakshatra by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर चन्द्र का वेध: पारिवारिक सुख अथवा आंतरिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_ADHANA_NAKSHATRA_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर मंगल का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Adhana_Nakshatra by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर मंगल का वेध: पारिवारिक सुख अथवा आंतरिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_ADHANA_NAKSHATRA_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर बुध का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Adhana_Nakshatra by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर बुध का वेध: पारिवारिक सुख अथवा आंतरिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_ADHANA_NAKSHATRA_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर गुरु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Adhana_Nakshatra by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर गुरु का वेध: पारिवारिक सुख अथवा आंतरिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_ADHANA_NAKSHATRA_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर शुक्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Adhana_Nakshatra by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर शुक्र का वेध: पारिवारिक सुख अथवा आंतरिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_ADHANA_NAKSHATRA_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर शनि का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Adhana_Nakshatra by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर शनि का वेध: पारिवारिक सुख अथवा आंतरिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_ADHANA_NAKSHATRA_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर राहु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Adhana_Nakshatra by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर राहु का वेध: पारिवारिक सुख अथवा आंतरिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_ADHANA_NAKSHATRA_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर केतु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Adhana_Nakshatra by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार आधान नक्षत्र (१९वां नक्षत्र - मानसिक शांति) पर केतु का वेध: पारिवारिक सुख अथवा आंतरिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_VAINASHIKA_NAKSHATRA_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर सूर्य का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Vainashika_Nakshatra by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर सूर्य का वेध: अचानक बाधा से सतर्कता, दान व शांति जरूरी।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_VAINASHIKA_NAKSHATRA_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर चन्द्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Vainashika_Nakshatra by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर चन्द्र का वेध: अचानक बाधा से सतर्कता, दान व शांति जरूरी।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_VAINASHIKA_NAKSHATRA_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर मंगल का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Vainashika_Nakshatra by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर मंगल का वेध: अचानक बाधा से सतर्कता, दान व शांति जरूरी।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_VAINASHIKA_NAKSHATRA_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर बुध का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Vainashika_Nakshatra by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर बुध का वेध: अचानक बाधा से सतर्कता, दान व शांति जरूरी।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_VAINASHIKA_NAKSHATRA_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर गुरु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Vainashika_Nakshatra by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर गुरु का वेध: अचानक बाधा से सतर्कता, दान व शांति जरूरी।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_VAINASHIKA_NAKSHATRA_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर शुक्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Vainashika_Nakshatra by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर शुक्र का वेध: अचानक बाधा से सतर्कता, दान व शांति जरूरी।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_VAINASHIKA_NAKSHATRA_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर शनि का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Vainashika_Nakshatra by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर शनि का वेध: अचानक बाधा से सतर्कता, दान व शांति जरूरी।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_VAINASHIKA_NAKSHATRA_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर राहु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Vainashika_Nakshatra by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर राहु का वेध: अचानक बाधा से सतर्कता, दान व शांति जरूरी।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_VAINASHIKA_NAKSHATRA_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर केतु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Vainashika_Nakshatra by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार वैनाशिक नक्षत्र (२३वां नक्षत्र - संकट व बाधा) पर केतु का वेध: अचानक बाधा से सतर्कता, दान व शांति जरूरी।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SANGHATIKA_NAKSHATRA_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर सूर्य का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Sanghatika_Nakshatra by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर सूर्य का वेध: संबंधियों से सहयोग अथवा विवाद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SANGHATIKA_NAKSHATRA_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर चन्द्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Sanghatika_Nakshatra by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर चन्द्र का वेध: संबंधियों से सहयोग अथवा विवाद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SANGHATIKA_NAKSHATRA_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर मंगल का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Sanghatika_Nakshatra by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर मंगल का वेध: संबंधियों से सहयोग अथवा विवाद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SANGHATIKA_NAKSHATRA_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर बुध का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Sanghatika_Nakshatra by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर बुध का वेध: संबंधियों से सहयोग अथवा विवाद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SANGHATIKA_NAKSHATRA_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर गुरु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Sanghatika_Nakshatra by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर गुरु का वेध: संबंधियों से सहयोग अथवा विवाद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SANGHATIKA_NAKSHATRA_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर शुक्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Sanghatika_Nakshatra by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर शुक्र का वेध: संबंधियों से सहयोग अथवा विवाद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SANGHATIKA_NAKSHATRA_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर शनि का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Sanghatika_Nakshatra by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर शनि का वेध: संबंधियों से सहयोग अथवा विवाद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SANGHATIKA_NAKSHATRA_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर राहु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Sanghatika_Nakshatra by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर राहु का वेध: संबंधियों से सहयोग अथवा विवाद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SANGHATIKA_NAKSHATRA_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर केतु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Sanghatika_Nakshatra by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सांघातिक नक्षत्र (१६वां नक्षत्र - रिश्तेदारी) पर केतु का वेध: संबंधियों से सहयोग अथवा विवाद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SAMUDAYIKA_NAKSHATRA_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर सूर्य का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Samudayika_Nakshatra by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर सूर्य का वेध: जनता में प्रभाव व सामूहिक कार्यों में लाभ।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SAMUDAYIKA_NAKSHATRA_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर चन्द्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Samudayika_Nakshatra by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर चन्द्र का वेध: जनता में प्रभाव व सामूहिक कार्यों में लाभ।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SAMUDAYIKA_NAKSHATRA_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर मंगल का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Samudayika_Nakshatra by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर मंगल का वेध: जनता में प्रभाव व सामूहिक कार्यों में लाभ।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SAMUDAYIKA_NAKSHATRA_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर बुध का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Samudayika_Nakshatra by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर बुध का वेध: जनता में प्रभाव व सामूहिक कार्यों में लाभ।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SAMUDAYIKA_NAKSHATRA_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर गुरु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Samudayika_Nakshatra by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर गुरु का वेध: जनता में प्रभाव व सामूहिक कार्यों में लाभ।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SAMUDAYIKA_NAKSHATRA_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर शुक्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Samudayika_Nakshatra by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर शुक्र का वेध: जनता में प्रभाव व सामूहिक कार्यों में लाभ।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SAMUDAYIKA_NAKSHATRA_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर शनि का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Samudayika_Nakshatra by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर शनि का वेध: जनता में प्रभाव व सामूहिक कार्यों में लाभ।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SAMUDAYIKA_NAKSHATRA_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर राहु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Samudayika_Nakshatra by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर राहु का वेध: जनता में प्रभाव व सामूहिक कार्यों में लाभ।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SAMUDAYIKA_NAKSHATRA_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर केतु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Samudayika_Nakshatra by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार सामुदायिक नक्षत्र (१८वां नक्षत्र - सामाजिक दायरा) पर केतु का वेध: जनता में प्रभाव व सामूहिक कार्यों में लाभ।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MANASA_NAKSHATRA_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर सूर्य का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Manasa_Nakshatra by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर सूर्य का वेध: मन की एकाग्रता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MANASA_NAKSHATRA_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर चन्द्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Manasa_Nakshatra by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर चन्द्र का वेध: मन की एकाग्रता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MANASA_NAKSHATRA_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर मंगल का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Manasa_Nakshatra by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर मंगल का वेध: मन की एकाग्रता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MANASA_NAKSHATRA_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर बुध का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Manasa_Nakshatra by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर बुध का वेध: मन की एकाग्रता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MANASA_NAKSHATRA_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर गुरु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Manasa_Nakshatra by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर गुरु का वेध: मन की एकाग्रता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MANASA_NAKSHATRA_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर शुक्र का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Manasa_Nakshatra by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर शुक्र का वेध: मन की एकाग्रता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MANASA_NAKSHATRA_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर शनि का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Manasa_Nakshatra by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर शनि का वेध: मन की एकाग्रता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MANASA_NAKSHATRA_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर राहु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Manasa_Nakshatra by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर राहु का वेध: मन की एकाग्रता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MANASA_NAKSHATRA_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र वेध: मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर केतु का वेध",
+      "rule_name_en": "Sarvatobhadra Chakra Vedha on Manasa_Nakshatra by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Vedha Prakaranam",
+        "author": "Classical Tantra & Jyotish Sages",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_impact"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र अनुसार मानस नक्षत्र (२५वां नक्षत्र - मन की स्थिति) पर केतु का वेध: मन की एकाग्रता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_SATURN_STAMBHA",
+      "rule_name_hi": "कोटा चक्र: शनि स्तम्भ (कोटा का केंद्र) में",
+      "rule_name_en": "Kota Chakra Saturn in Stambha",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार स्तम्भ (कोटा का केंद्र) में शनि: गहन रक्षा कवच अथवा सीधा आघात।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_SATURN_DURGANTARA",
+      "rule_name_hi": "कोटा चक्र: शनि दुर्गान्तर (कोटा का आंतरिक भाग) में",
+      "rule_name_en": "Kota Chakra Saturn in Durgantara",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार दुर्गान्तर (कोटा का आंतरिक भाग) में शनि: आंतरिक कलह अथवा गुप्त सहयोग।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_SATURN_PRAKARA",
+      "rule_name_hi": "कोटा चक्र: शनि प्राकार (कोटा की दीवार) में",
+      "rule_name_en": "Kota Chakra Saturn in Prakara",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार प्राकार (कोटा की दीवार) में शनि: सुरक्षा सीमा व संघर्ष।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_SATURN_BAHYA",
+      "rule_name_hi": "कोटा चक्र: शनि बाह्य (कोटा का बाहरी क्षेत्र) में",
+      "rule_name_en": "Kota Chakra Saturn in Bahya",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार बाह्य (कोटा का बाहरी क्षेत्र) में शनि: बाहरी शत्रुओं से संपर्क।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_MARS_STAMBHA",
+      "rule_name_hi": "कोटा चक्र: मंगल स्तम्भ (कोटा का केंद्र) में",
+      "rule_name_en": "Kota Chakra Mars in Stambha",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार स्तम्भ (कोटा का केंद्र) में मंगल: गहन रक्षा कवच अथवा सीधा आघात।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_MARS_DURGANTARA",
+      "rule_name_hi": "कोटा चक्र: मंगल दुर्गान्तर (कोटा का आंतरिक भाग) में",
+      "rule_name_en": "Kota Chakra Mars in Durgantara",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार दुर्गान्तर (कोटा का आंतरिक भाग) में मंगल: आंतरिक कलह अथवा गुप्त सहयोग।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_MARS_PRAKARA",
+      "rule_name_hi": "कोटा चक्र: मंगल प्राकार (कोटा की दीवार) में",
+      "rule_name_en": "Kota Chakra Mars in Prakara",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार प्राकार (कोटा की दीवार) में मंगल: सुरक्षा सीमा व संघर्ष।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_MARS_BAHYA",
+      "rule_name_hi": "कोटा चक्र: मंगल बाह्य (कोटा का बाहरी क्षेत्र) में",
+      "rule_name_en": "Kota Chakra Mars in Bahya",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार बाह्य (कोटा का बाहरी क्षेत्र) में मंगल: बाहरी शत्रुओं से संपर्क।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_RAHU_STAMBHA",
+      "rule_name_hi": "कोटा चक्र: राहु स्तम्भ (कोटा का केंद्र) में",
+      "rule_name_en": "Kota Chakra Rahu in Stambha",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार स्तम्भ (कोटा का केंद्र) में राहु: गहन रक्षा कवच अथवा सीधा आघात।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_RAHU_DURGANTARA",
+      "rule_name_hi": "कोटा चक्र: राहु दुर्गान्तर (कोटा का आंतरिक भाग) में",
+      "rule_name_en": "Kota Chakra Rahu in Durgantara",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार दुर्गान्तर (कोटा का आंतरिक भाग) में राहु: आंतरिक कलह अथवा गुप्त सहयोग।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_RAHU_PRAKARA",
+      "rule_name_hi": "कोटा चक्र: राहु प्राकार (कोटा की दीवार) में",
+      "rule_name_en": "Kota Chakra Rahu in Prakara",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार प्राकार (कोटा की दीवार) में राहु: सुरक्षा सीमा व संघर्ष।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_RAHU_BAHYA",
+      "rule_name_hi": "कोटा चक्र: राहु बाह्य (कोटा का बाहरी क्षेत्र) में",
+      "rule_name_en": "Kota Chakra Rahu in Bahya",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार बाह्य (कोटा का बाहरी क्षेत्र) में राहु: बाहरी शत्रुओं से संपर्क।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_JUPITER_STAMBHA",
+      "rule_name_hi": "कोटा चक्र: गुरु स्तम्भ (कोटा का केंद्र) में",
+      "rule_name_en": "Kota Chakra Jupiter in Stambha",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार स्तम्भ (कोटा का केंद्र) में गुरु: गहन रक्षा कवच अथवा सीधा आघात।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_JUPITER_DURGANTARA",
+      "rule_name_hi": "कोटा चक्र: गुरु दुर्गान्तर (कोटा का आंतरिक भाग) में",
+      "rule_name_en": "Kota Chakra Jupiter in Durgantara",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार दुर्गान्तर (कोटा का आंतरिक भाग) में गुरु: आंतरिक कलह अथवा गुप्त सहयोग।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_JUPITER_PRAKARA",
+      "rule_name_hi": "कोटा चक्र: गुरु प्राकार (कोटा की दीवार) में",
+      "rule_name_en": "Kota Chakra Jupiter in Prakara",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार प्राकार (कोटा की दीवार) में गुरु: सुरक्षा सीमा व संघर्ष।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_JUPITER_BAHYA",
+      "rule_name_hi": "कोटा चक्र: गुरु बाह्य (कोटा का बाहरी क्षेत्र) में",
+      "rule_name_en": "Kota Chakra Jupiter in Bahya",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार बाह्य (कोटा का बाहरी क्षेत्र) में गुरु: बाहरी शत्रुओं से संपर्क।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_VENUS_STAMBHA",
+      "rule_name_hi": "कोटा चक्र: शुक्र स्तम्भ (कोटा का केंद्र) में",
+      "rule_name_en": "Kota Chakra Venus in Stambha",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार स्तम्भ (कोटा का केंद्र) में शुक्र: गहन रक्षा कवच अथवा सीधा आघात।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_VENUS_DURGANTARA",
+      "rule_name_hi": "कोटा चक्र: शुक्र दुर्गान्तर (कोटा का आंतरिक भाग) में",
+      "rule_name_en": "Kota Chakra Venus in Durgantara",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार दुर्गान्तर (कोटा का आंतरिक भाग) में शुक्र: आंतरिक कलह अथवा गुप्त सहयोग।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_VENUS_PRAKARA",
+      "rule_name_hi": "कोटा चक्र: शुक्र प्राकार (कोटा की दीवार) में",
+      "rule_name_en": "Kota Chakra Venus in Prakara",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार प्राकार (कोटा की दीवार) में शुक्र: सुरक्षा सीमा व संघर्ष।"
+      }
+    },
+    {
+      "rule_id": "KOTA_CHAKRA_VENUS_BAHYA",
+      "rule_name_hi": "कोटा चक्र: शुक्र बाह्य (कोटा का बाहरी क्षेत्र) में",
+      "rule_name_en": "Kota Chakra Venus in Bahya",
+      "source": {
+        "text": "Kota Chakra Shastra",
+        "chapter": "Durga Raksha Prakaranam",
+        "author": "Classical Astrological Tradition",
+        "era": "Classical Post-Vedic"
+      },
+      "school": "Kota Chakra",
+      "category": "kota_chakra",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "kota_chakra",
+          "defense",
+          "adversity"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कोटा चक्र अनुसार बाह्य (कोटा का बाहरी क्षेत्र) में शुक्र: बाहरी शत्रुओं से संपर्क।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_A_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: अ स्वर पर सूर्य का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha A by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर अ स्वर पर सूर्य का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_A_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र: अ स्वर पर चन्द्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha A by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर अ स्वर पर चन्द्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_A_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: अ स्वर पर मंगल का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha A by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर अ स्वर पर मंगल का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_A_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र: अ स्वर पर बुध का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha A by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर अ स्वर पर बुध का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_A_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र: अ स्वर पर गुरु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha A by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर अ स्वर पर गुरु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_A_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: अ स्वर पर शुक्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha A by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर अ स्वर पर शुक्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_A_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: अ स्वर पर शनि का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha A by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर अ स्वर पर शनि का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_A_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: अ स्वर पर राहु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha A by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर अ स्वर पर राहु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_A_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: अ स्वर पर केतु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha A by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर अ स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AA_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: आ स्वर पर सूर्य का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Aa by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर आ स्वर पर सूर्य का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AA_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र: आ स्वर पर चन्द्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Aa by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर आ स्वर पर चन्द्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AA_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: आ स्वर पर मंगल का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Aa by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर आ स्वर पर मंगल का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AA_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र: आ स्वर पर बुध का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Aa by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर आ स्वर पर बुध का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AA_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र: आ स्वर पर गुरु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Aa by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर आ स्वर पर गुरु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AA_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: आ स्वर पर शुक्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Aa by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर आ स्वर पर शुक्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AA_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: आ स्वर पर शनि का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Aa by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर आ स्वर पर शनि का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AA_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: आ स्वर पर राहु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Aa by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर आ स्वर पर राहु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AA_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: आ स्वर पर केतु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Aa by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर आ स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_I_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: इ स्वर पर सूर्य का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha I by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर इ स्वर पर सूर्य का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_I_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र: इ स्वर पर चन्द्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha I by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर इ स्वर पर चन्द्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_I_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: इ स्वर पर मंगल का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha I by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर इ स्वर पर मंगल का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_I_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र: इ स्वर पर बुध का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha I by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर इ स्वर पर बुध का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_I_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र: इ स्वर पर गुरु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha I by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर इ स्वर पर गुरु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_I_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: इ स्वर पर शुक्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha I by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर इ स्वर पर शुक्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_I_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: इ स्वर पर शनि का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha I by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर इ स्वर पर शनि का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_I_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: इ स्वर पर राहु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha I by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर इ स्वर पर राहु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_I_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: इ स्वर पर केतु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha I by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर इ स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_EE_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ई स्वर पर सूर्य का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ee by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ई स्वर पर सूर्य का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_EE_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ई स्वर पर चन्द्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ee by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ई स्वर पर चन्द्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_EE_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ई स्वर पर मंगल का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ee by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ई स्वर पर मंगल का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_EE_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ई स्वर पर बुध का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ee by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ई स्वर पर बुध का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_EE_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ई स्वर पर गुरु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ee by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ई स्वर पर गुरु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_EE_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ई स्वर पर शुक्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ee by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ई स्वर पर शुक्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_EE_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ई स्वर पर शनि का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ee by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ई स्वर पर शनि का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_EE_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ई स्वर पर राहु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ee by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ई स्वर पर राहु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_EE_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ई स्वर पर केतु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ee by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ई स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_U_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: उ स्वर पर सूर्य का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha U by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर उ स्वर पर सूर्य का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_U_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र: उ स्वर पर चन्द्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha U by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर उ स्वर पर चन्द्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_U_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: उ स्वर पर मंगल का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha U by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर उ स्वर पर मंगल का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_U_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र: उ स्वर पर बुध का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha U by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर उ स्वर पर बुध का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_U_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र: उ स्वर पर गुरु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha U by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर उ स्वर पर गुरु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_U_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: उ स्वर पर शुक्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha U by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर उ स्वर पर शुक्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_U_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: उ स्वर पर शनि का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha U by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर उ स्वर पर शनि का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_U_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: उ स्वर पर राहु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha U by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर उ स्वर पर राहु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_U_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: उ स्वर पर केतु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha U by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर उ स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_OO_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऊ स्वर पर सूर्य का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Oo by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऊ स्वर पर सूर्य का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_OO_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऊ स्वर पर चन्द्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Oo by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऊ स्वर पर चन्द्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_OO_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऊ स्वर पर मंगल का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Oo by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऊ स्वर पर मंगल का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_OO_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऊ स्वर पर बुध का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Oo by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऊ स्वर पर बुध का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_OO_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऊ स्वर पर गुरु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Oo by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऊ स्वर पर गुरु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_OO_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऊ स्वर पर शुक्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Oo by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऊ स्वर पर शुक्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_OO_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऊ स्वर पर शनि का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Oo by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऊ स्वर पर शनि का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_OO_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऊ स्वर पर राहु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Oo by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऊ स्वर पर राहु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_OO_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऊ स्वर पर केतु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Oo by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऊ स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_E_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ए स्वर पर सूर्य का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha E by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ए स्वर पर सूर्य का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_E_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ए स्वर पर चन्द्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha E by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ए स्वर पर चन्द्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_E_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ए स्वर पर मंगल का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha E by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ए स्वर पर मंगल का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_E_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ए स्वर पर बुध का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha E by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ए स्वर पर बुध का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_E_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ए स्वर पर गुरु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha E by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ए स्वर पर गुरु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_E_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ए स्वर पर शुक्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha E by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ए स्वर पर शुक्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_E_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ए स्वर पर शनि का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha E by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ए स्वर पर शनि का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_E_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ए स्वर पर राहु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha E by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ए स्वर पर राहु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_E_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ए स्वर पर केतु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha E by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ए स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AI_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऐ स्वर पर सूर्य का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ai by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऐ स्वर पर सूर्य का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AI_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऐ स्वर पर चन्द्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ai by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऐ स्वर पर चन्द्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AI_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऐ स्वर पर मंगल का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ai by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऐ स्वर पर मंगल का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AI_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऐ स्वर पर बुध का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ai by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऐ स्वर पर बुध का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AI_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऐ स्वर पर गुरु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ai by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऐ स्वर पर गुरु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AI_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऐ स्वर पर शुक्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ai by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऐ स्वर पर शुक्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AI_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऐ स्वर पर शनि का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ai by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऐ स्वर पर शनि का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AI_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऐ स्वर पर राहु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ai by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऐ स्वर पर राहु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AI_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ऐ स्वर पर केतु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Ai by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ऐ स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_O_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ओ स्वर पर सूर्य का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha O by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ओ स्वर पर सूर्य का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_O_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ओ स्वर पर चन्द्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha O by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ओ स्वर पर चन्द्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_O_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ओ स्वर पर मंगल का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha O by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ओ स्वर पर मंगल का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_O_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ओ स्वर पर बुध का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha O by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ओ स्वर पर बुध का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_O_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ओ स्वर पर गुरु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha O by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ओ स्वर पर गुरु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_O_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ओ स्वर पर शुक्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha O by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ओ स्वर पर शुक्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_O_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ओ स्वर पर शनि का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha O by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ओ स्वर पर शनि का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_O_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ओ स्वर पर राहु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha O by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ओ स्वर पर राहु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_O_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: ओ स्वर पर केतु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha O by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर ओ स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AU_SUN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: औ स्वर पर सूर्य का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Au by Sun",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर औ स्वर पर सूर्य का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AU_MOON",
+      "rule_name_hi": "सर्वतोभद्र चक्र: औ स्वर पर चन्द्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Au by Moon",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर औ स्वर पर चन्द्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AU_MARS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: औ स्वर पर मंगल का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Au by Mars",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर औ स्वर पर मंगल का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AU_MERCURY",
+      "rule_name_hi": "सर्वतोभद्र चक्र: औ स्वर पर बुध का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Au by Mercury",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर औ स्वर पर बुध का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AU_JUPITER",
+      "rule_name_hi": "सर्वतोभद्र चक्र: औ स्वर पर गुरु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Au by Jupiter",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर औ स्वर पर गुरु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AU_VENUS",
+      "rule_name_hi": "सर्वतोभद्र चक्र: औ स्वर पर शुक्र का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Au by Venus",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर औ स्वर पर शुक्र का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AU_SATURN",
+      "rule_name_hi": "सर्वतोभद्र चक्र: औ स्वर पर शनि का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Au by Saturn",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर औ स्वर पर शनि का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AU_RAHU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: औ स्वर पर राहु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Au by Rahu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर औ स्वर पर राहु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_SWARA_VEDHA_AU_KETU",
+      "rule_name_hi": "सर्वतोभद्र चक्र: औ स्वर पर केतु का स्वर वेध",
+      "rule_name_en": "SBC Swara Vedha Au by Ketu",
+      "source": {
+        "text": "Sarvatobhadra Chakra Shastra",
+        "chapter": "Swara Vedha Prakaranam",
+        "author": "Classical Tantra Sages",
+        "era": "Classical"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_swara",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "quality": "in_dusthana"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "swara_vedha",
+          "name_vibration"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर औ स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    }
+  ]
+}

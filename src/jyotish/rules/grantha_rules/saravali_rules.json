@@ -1,7 +1,7 @@
 {
   "metadata": {
     "grantha": "Saravali",
-    "count": 834
+    "count": 947
   },
   "rules": [
     {
@@ -33320,6 +33320,3818 @@
         "polarity": "-",
         "strength_base": 0.85,
         "description_hi": "सारावली स्त्री जातक: सूर्य का 9वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H1",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 1वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 1वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H2",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 2वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 2वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H3",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 3वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 3",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 3वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H4",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 4वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 4वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H5",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 5वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 5",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 5वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H6",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 6वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 6",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 6वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H7",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 7वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 7वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H8",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 8वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 8वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H9",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 9वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 9वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H10",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 10वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 10",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 10वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H11",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 11वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 11",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 11वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_JUPITER_H12",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 12वें भाव में गुरु फल",
+      "rule_name_en": "Saravali Chandra Lagna Jupiter in House 12",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 12वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H1",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 1वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 1वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H2",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 2वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 2वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H3",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 3वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 3",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 3वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H4",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 4वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 4वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H5",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 5वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 5",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 5वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H6",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 6वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 6",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 6वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H7",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 7वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 7वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H8",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 8वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 8वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H9",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 9वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 9वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H10",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 10वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 10",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 10वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H11",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 11वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 11",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 11वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_VENUS_H12",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 12वें भाव में शुक्र फल",
+      "rule_name_en": "Saravali Chandra Lagna Venus in House 12",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 12वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H1",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 1वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 1वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H2",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 2वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 2वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H3",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 3वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 3",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 3वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H4",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 4वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 4वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H5",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 5वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 5",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 5वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H6",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 6वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 6",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 6वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H7",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 7वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 7वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H8",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 8वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 8वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H9",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 9वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 9वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H10",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 10वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 10",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 10वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H11",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 11वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 11",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 11वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MERCURY_H12",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 12वें भाव में बुध फल",
+      "rule_name_en": "Saravali Chandra Lagna Mercury in House 12",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 12वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H1",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 1वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 1वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H2",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 2वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 2वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H3",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 3वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 3",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 3वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H4",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 4वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 4वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H5",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 5वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 5",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 5वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H6",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 6वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 6",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 6वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H7",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 7वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 7वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H8",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 8वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 8वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H9",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 9वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 9वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H10",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 10वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 10",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 10वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H11",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 11वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 11",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 11वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_MARS_H12",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 12वें भाव में मंगल फल",
+      "rule_name_en": "Saravali Chandra Lagna Mars in House 12",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 12वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H1",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 1वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 1वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H2",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 2वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 2वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H3",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 3वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 3",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 3वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H4",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 4वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 4वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H5",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 5वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 5",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 5वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H6",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 6वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 6",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 6वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H7",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 7वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 7वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H8",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 8वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 8वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H9",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 9वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 9वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H10",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 10वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 10",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 10वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H11",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 11वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 11",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 11वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SUN_H12",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 12वें भाव में सूर्य फल",
+      "rule_name_en": "Saravali Chandra Lagna Sun in House 12",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 12वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H1",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 1वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 1वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H2",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 2वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 2वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H3",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 3वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 3",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 3वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H4",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 4वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 4वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H5",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 5वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 5",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 5वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H6",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 6वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 6",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 6वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H7",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 7वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 7वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H8",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 8वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 8वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H9",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 9वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 9वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H10",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 10वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 10",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 10वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H11",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 11वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 11",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "kendra_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 11वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_CHANDRA_LAGNA_SATURN_H12",
+      "rule_name_hi": "सारावली: चन्द्र लग्न से 12वें भाव में शनि फल",
+      "rule_name_en": "Saravali Chandra Lagna Saturn in House 12",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 31 (Chandra Lagna Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "chandra_lagna",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "shadashtaka_from",
+            "with": "Moon"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "chandra_lagna",
+          "mind",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्रमा से 12वें भाव का संबंध। जातक के मनोबल, धन-वैभव व सामाजिक प्रतिष्ठा को बल देता है।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_SUN_KENDRA_LAGNA",
+      "rule_name_hi": "सारावली: सूर्य का नीचभंग राजयोग (Kendra_Lagna)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Sun (Kendra_Lagna)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Sun",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार सूर्य का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_SUN_KENDRA_MOON",
+      "rule_name_hi": "सारावली: सूर्य का नीचभंग राजयोग (Kendra_Moon)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Sun (Kendra_Moon)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Sun",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार सूर्य का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_SUN_EXALTED_LORD",
+      "rule_name_hi": "सारावली: सूर्य का नीचभंग राजयोग (Exalted_Lord)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Sun (Exalted_Lord)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Sun",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार सूर्य का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_MOON_KENDRA_LAGNA",
+      "rule_name_hi": "सारावली: चन्द्र का नीचभंग राजयोग (Kendra_Lagna)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Moon (Kendra_Lagna)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार चन्द्र का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_MOON_KENDRA_MOON",
+      "rule_name_hi": "सारावली: चन्द्र का नीचभंग राजयोग (Kendra_Moon)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Moon (Kendra_Moon)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार चन्द्र का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_MOON_EXALTED_LORD",
+      "rule_name_hi": "सारावली: चन्द्र का नीचभंग राजयोग (Exalted_Lord)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Moon (Exalted_Lord)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Moon",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार चन्द्र का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_MARS_KENDRA_LAGNA",
+      "rule_name_hi": "सारावली: मंगल का नीचभंग राजयोग (Kendra_Lagna)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Mars (Kendra_Lagna)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Mars",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार मंगल का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_MARS_KENDRA_MOON",
+      "rule_name_hi": "सारावली: मंगल का नीचभंग राजयोग (Kendra_Moon)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Mars (Kendra_Moon)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Mars",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार मंगल का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_MARS_EXALTED_LORD",
+      "rule_name_hi": "सारावली: मंगल का नीचभंग राजयोग (Exalted_Lord)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Mars (Exalted_Lord)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Mars",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार मंगल का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_MERCURY_KENDRA_LAGNA",
+      "rule_name_hi": "सारावली: बुध का नीचभंग राजयोग (Kendra_Lagna)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Mercury (Kendra_Lagna)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार बुध का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_MERCURY_KENDRA_MOON",
+      "rule_name_hi": "सारावली: बुध का नीचभंग राजयोग (Kendra_Moon)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Mercury (Kendra_Moon)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार बुध का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_MERCURY_EXALTED_LORD",
+      "rule_name_hi": "सारावली: बुध का नीचभंग राजयोग (Exalted_Lord)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Mercury (Exalted_Lord)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Mercury",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार बुध का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_JUPITER_KENDRA_LAGNA",
+      "rule_name_hi": "सारावली: गुरु का नीचभंग राजयोग (Kendra_Lagna)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Jupiter (Kendra_Lagna)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार गुरु का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_JUPITER_KENDRA_MOON",
+      "rule_name_hi": "सारावली: गुरु का नीचभंग राजयोग (Kendra_Moon)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Jupiter (Kendra_Moon)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार गुरु का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_JUPITER_EXALTED_LORD",
+      "rule_name_hi": "सारावली: गुरु का नीचभंग राजयोग (Exalted_Lord)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Jupiter (Exalted_Lord)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Jupiter",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार गुरु का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_VENUS_KENDRA_LAGNA",
+      "rule_name_hi": "सारावली: शुक्र का नीचभंग राजयोग (Kendra_Lagna)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Venus (Kendra_Lagna)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार शुक्र का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_VENUS_KENDRA_MOON",
+      "rule_name_hi": "सारावली: शुक्र का नीचभंग राजयोग (Kendra_Moon)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Venus (Kendra_Moon)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार शुक्र का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_VENUS_EXALTED_LORD",
+      "rule_name_hi": "सारावली: शुक्र का नीचभंग राजयोग (Exalted_Lord)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Venus (Exalted_Lord)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Venus",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार शुक्र का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_SATURN_KENDRA_LAGNA",
+      "rule_name_hi": "सारावली: शनि का नीचभंग राजयोग (Kendra_Lagna)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Saturn (Kendra_Lagna)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Saturn",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार शनि का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_SATURN_KENDRA_MOON",
+      "rule_name_hi": "सारावली: शनि का नीचभंग राजयोग (Kendra_Moon)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Saturn (Kendra_Moon)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Saturn",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार शनि का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_NBRY_SATURN_EXALTED_LORD",
+      "rule_name_hi": "सारावली: शनि का नीचभंग राजयोग (Exalted_Lord)",
+      "rule_name_en": "Saravali Neechabhanga Raja Yoga Saturn (Exalted_Lord)",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 35 (Neechabhanga Raja Yoga Adhyaya)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "quality": "debilitated"
+          },
+          {
+            "entity": "Saturn",
+            "quality": "in_kendra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "neechabhanga",
+          "raja_yoga",
+          "resilience"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "सारावली अनुसार शनि का नीचत्व भंग होकर प्रबल राजयोग में रूपांतरित होता है: प्रारंभिक संघर्ष उपरांत असाधारण यश, सत्ता व समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_MARS_MERCURY",
+      "rule_name_hi": "सारावली: मंगल व बुध का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Mars vs Mercury",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "conjunction",
+            "with": "Mercury",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: मंगल व बुध के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_MARS_JUPITER",
+      "rule_name_hi": "सारावली: मंगल व गुरु का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Mars vs Jupiter",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "conjunction",
+            "with": "Jupiter",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: मंगल व गुरु के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_MARS_VENUS",
+      "rule_name_hi": "सारावली: मंगल व शुक्र का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Mars vs Venus",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "conjunction",
+            "with": "Venus",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: मंगल व शुक्र के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_MARS_SATURN",
+      "rule_name_hi": "सारावली: मंगल व शनि का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Mars vs Saturn",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "relationship": "conjunction",
+            "with": "Saturn",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: मंगल व शनि के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_MERCURY_MARS",
+      "rule_name_hi": "सारावली: बुध व मंगल का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Mercury vs Mars",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "conjunction",
+            "with": "Mars",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: बुध व मंगल के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_MERCURY_JUPITER",
+      "rule_name_hi": "सारावली: बुध व गुरु का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Mercury vs Jupiter",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "conjunction",
+            "with": "Jupiter",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: बुध व गुरु के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_MERCURY_VENUS",
+      "rule_name_hi": "सारावली: बुध व शुक्र का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Mercury vs Venus",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "conjunction",
+            "with": "Venus",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: बुध व शुक्र के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_MERCURY_SATURN",
+      "rule_name_hi": "सारावली: बुध व शनि का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Mercury vs Saturn",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "relationship": "conjunction",
+            "with": "Saturn",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: बुध व शनि के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_JUPITER_MARS",
+      "rule_name_hi": "सारावली: गुरु व मंगल का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Jupiter vs Mars",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "conjunction",
+            "with": "Mars",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: गुरु व मंगल के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_JUPITER_MERCURY",
+      "rule_name_hi": "सारावली: गुरु व बुध का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Jupiter vs Mercury",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "conjunction",
+            "with": "Mercury",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: गुरु व बुध के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_JUPITER_VENUS",
+      "rule_name_hi": "सारावली: गुरु व शुक्र का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Jupiter vs Venus",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "conjunction",
+            "with": "Venus",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: गुरु व शुक्र के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_JUPITER_SATURN",
+      "rule_name_hi": "सारावली: गुरु व शनि का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Jupiter vs Saturn",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "relationship": "conjunction",
+            "with": "Saturn",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: गुरु व शनि के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_VENUS_MARS",
+      "rule_name_hi": "सारावली: शुक्र व मंगल का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Venus vs Mars",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "conjunction",
+            "with": "Mars",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: शुक्र व मंगल के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_VENUS_MERCURY",
+      "rule_name_hi": "सारावली: शुक्र व बुध का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Venus vs Mercury",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "conjunction",
+            "with": "Mercury",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: शुक्र व बुध के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_VENUS_JUPITER",
+      "rule_name_hi": "सारावली: शुक्र व गुरु का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Venus vs Jupiter",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "conjunction",
+            "with": "Jupiter",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: शुक्र व गुरु के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_VENUS_SATURN",
+      "rule_name_hi": "सारावली: शुक्र व शनि का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Venus vs Saturn",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "relationship": "conjunction",
+            "with": "Saturn",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: शुक्र व शनि के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_SATURN_MARS",
+      "rule_name_hi": "सारावली: शनि व मंगल का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Saturn vs Mars",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "conjunction",
+            "with": "Mars",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: शनि व मंगल के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_SATURN_MERCURY",
+      "rule_name_hi": "सारावली: शनि व बुध का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Saturn vs Mercury",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "conjunction",
+            "with": "Mercury",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: शनि व बुध के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_SATURN_JUPITER",
+      "rule_name_hi": "सारावली: शनि व गुरु का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Saturn vs Jupiter",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "conjunction",
+            "with": "Jupiter",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: शनि व गुरु के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_GRAHA_YUDDHA_SATURN_VENUS",
+      "rule_name_hi": "सारावली: शनि व शुक्र का ग्रह युद्ध (१° के भीतर)",
+      "rule_name_en": "Saravali Graha Yuddha Saturn vs Venus",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 17 (Graha Yuddha Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "graha_yuddha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "relationship": "conjunction",
+            "with": "Venus",
+            "orb_degrees": 1.0
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "graha_yuddha",
+          "planetary_war",
+          "struggle"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "सारावली ग्रह युद्ध अध्याय: शनि व शुक्र के मध्य युद्ध में जो ग्रह उत्तर दिशा अथवा क्रांति में बलवान होगा, वही विजयी होकर फल देगा।"
       }
     }
   ]

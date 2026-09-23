@@ -1,0 +1,3465 @@
+{
+  "metadata": {
+    "grantha": "Tajika Neelakanthi",
+    "author": "Neelakantha Daivajna",
+    "count": 108
+  },
+  "rules": [
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H1",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 1वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा लग्न में - मान-सम्मान, उत्तम स्वास्थ्य व यश।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H2",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 2वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा धन भाव में - धन लाभ, व्यापारिक विस्तार व पारिवारिक सुख।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H3",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 3वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 3",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा सहज भाव में - भाइयों का सहयोग, लघु यात्रा व पराक्रम।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H4",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 4वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा सुख भाव में - भूमि, भवन, वाहन सुख व माता का आशीर्वाद।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H5",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 5वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा पुत्र भाव में - संतान लाभ, उच्च विद्या व सट्टा मुनाफा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H6",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 6वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 6",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा रिपु भाव में - शत्रु पीड़ा, रोग व मुकदमेबाजी से कष्ट।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H7",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 7वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा कलत्र भाव में - विवाह योग, दांपत्य सुख व व्यापारिक लाभ।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H8",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 8वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 8",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा आयु भाव में - दुर्घटना, शारीरिक कष्ट व अचानक धन हानि।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H9",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 9वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा भाग्य भाव में - तीर्थ यात्रा, भाग्योदय व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H10",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 10वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा कर्म भाव में - पदोन्नति, राजकीय सम्मान व करियर में सफलता।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H11",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 11वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा लाभ भाव में - अथाह धन लाभ, मित्रों का सहयोग व मनोरथ सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_MUNTHAHA_H12",
+      "rule_name_hi": "ताजिक नीलकण्ठी: वर्षफल में मुन्थहा 12वें भाव में",
+      "rule_name_en": "Tajika Neelakanthi Munthaha in House 12",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Munthaha Vichara Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_munthaha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "munthaha",
+          "annual_horoscope"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "ताजिक नीलकण्ठी अनुसार वर्षफल में मुन्थहा व्यय भाव में - अत्यधिक खर्च, अस्पताल का चक्कर व मानसिक तनाव।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_PUNYA_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Punya_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) का 1वें भाव में प्रभाव—धार्मिक कार्य, दान-पुण्य व आत्म-संतोष।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_PUNYA_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Punya_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) का 2वें भाव में प्रभाव—धार्मिक कार्य, दान-पुण्य व आत्म-संतोष।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_PUNYA_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Punya_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) का 4वें भाव में प्रभाव—धार्मिक कार्य, दान-पुण्य व आत्म-संतोष।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_PUNYA_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Punya_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) का 5वें भाव में प्रभाव—धार्मिक कार्य, दान-पुण्य व आत्म-संतोष।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_PUNYA_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Punya_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) का 7वें भाव में प्रभाव—धार्मिक कार्य, दान-पुण्य व आत्म-संतोष।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_PUNYA_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Punya_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) का 9वें भाव में प्रभाव—धार्मिक कार्य, दान-पुण्य व आत्म-संतोष।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_PUNYA_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Punya_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) का 10वें भाव में प्रभाव—धार्मिक कार्य, दान-पुण्य व आत्म-संतोष।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_PUNYA_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Punya_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: पुण्य सहम (धार्मिक पुण्य व भाग्योदय) का 11वें भाव में प्रभाव—धार्मिक कार्य, दान-पुण्य व आत्म-संतोष।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIDYA_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Vidya_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) का 1वें भाव में प्रभाव—परीक्षा में सफलता व ज्ञान का विस्तार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIDYA_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Vidya_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) का 2वें भाव में प्रभाव—परीक्षा में सफलता व ज्ञान का विस्तार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIDYA_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Vidya_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) का 4वें भाव में प्रभाव—परीक्षा में सफलता व ज्ञान का विस्तार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIDYA_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Vidya_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) का 5वें भाव में प्रभाव—परीक्षा में सफलता व ज्ञान का विस्तार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIDYA_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Vidya_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) का 7वें भाव में प्रभाव—परीक्षा में सफलता व ज्ञान का विस्तार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIDYA_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Vidya_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) का 9वें भाव में प्रभाव—परीक्षा में सफलता व ज्ञान का विस्तार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIDYA_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Vidya_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) का 10वें भाव में प्रभाव—परीक्षा में सफलता व ज्ञान का विस्तार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIDYA_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Vidya_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विद्या सहम (उच्च विद्या व बौद्धिक सिद्धि) का 11वें भाव में प्रभाव—परीक्षा में सफलता व ज्ञान का विस्तार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_YASHA_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: यश सहम (प्रसिद्धि व सामाजिक मान) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Yasha_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: यश सहम (प्रसिद्धि व सामाजिक मान) का 1वें भाव में प्रभाव—सर्वत्र प्रशंसा व राजकीय सम्मान।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_YASHA_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: यश सहम (प्रसिद्धि व सामाजिक मान) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Yasha_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: यश सहम (प्रसिद्धि व सामाजिक मान) का 2वें भाव में प्रभाव—सर्वत्र प्रशंसा व राजकीय सम्मान।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_YASHA_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: यश सहम (प्रसिद्धि व सामाजिक मान) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Yasha_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: यश सहम (प्रसिद्धि व सामाजिक मान) का 4वें भाव में प्रभाव—सर्वत्र प्रशंसा व राजकीय सम्मान।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_YASHA_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: यश सहम (प्रसिद्धि व सामाजिक मान) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Yasha_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: यश सहम (प्रसिद्धि व सामाजिक मान) का 5वें भाव में प्रभाव—सर्वत्र प्रशंसा व राजकीय सम्मान।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_YASHA_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: यश सहम (प्रसिद्धि व सामाजिक मान) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Yasha_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: यश सहम (प्रसिद्धि व सामाजिक मान) का 7वें भाव में प्रभाव—सर्वत्र प्रशंसा व राजकीय सम्मान।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_YASHA_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: यश सहम (प्रसिद्धि व सामाजिक मान) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Yasha_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: यश सहम (प्रसिद्धि व सामाजिक मान) का 9वें भाव में प्रभाव—सर्वत्र प्रशंसा व राजकीय सम्मान।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_YASHA_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: यश सहम (प्रसिद्धि व सामाजिक मान) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Yasha_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: यश सहम (प्रसिद्धि व सामाजिक मान) का 10वें भाव में प्रभाव—सर्वत्र प्रशंसा व राजकीय सम्मान।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_YASHA_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: यश सहम (प्रसिद्धि व सामाजिक मान) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Yasha_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: यश सहम (प्रसिद्धि व सामाजिक मान) का 11वें भाव में प्रभाव—सर्वत्र प्रशंसा व राजकीय सम्मान।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MITRA_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: मित्र सहम (मित्रों व सहयोगियों का लाभ) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Mitra_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: मित्र सहम (मित्रों व सहयोगियों का लाभ) का 1वें भाव में प्रभाव—सच्चे मित्रों का साथ व व्यापारिक साझेदारी।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MITRA_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: मित्र सहम (मित्रों व सहयोगियों का लाभ) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Mitra_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: मित्र सहम (मित्रों व सहयोगियों का लाभ) का 2वें भाव में प्रभाव—सच्चे मित्रों का साथ व व्यापारिक साझेदारी।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MITRA_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: मित्र सहम (मित्रों व सहयोगियों का लाभ) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Mitra_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: मित्र सहम (मित्रों व सहयोगियों का लाभ) का 4वें भाव में प्रभाव—सच्चे मित्रों का साथ व व्यापारिक साझेदारी।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MITRA_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: मित्र सहम (मित्रों व सहयोगियों का लाभ) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Mitra_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: मित्र सहम (मित्रों व सहयोगियों का लाभ) का 5वें भाव में प्रभाव—सच्चे मित्रों का साथ व व्यापारिक साझेदारी।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MITRA_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: मित्र सहम (मित्रों व सहयोगियों का लाभ) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Mitra_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: मित्र सहम (मित्रों व सहयोगियों का लाभ) का 7वें भाव में प्रभाव—सच्चे मित्रों का साथ व व्यापारिक साझेदारी।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MITRA_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: मित्र सहम (मित्रों व सहयोगियों का लाभ) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Mitra_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: मित्र सहम (मित्रों व सहयोगियों का लाभ) का 9वें भाव में प्रभाव—सच्चे मित्रों का साथ व व्यापारिक साझेदारी।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MITRA_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: मित्र सहम (मित्रों व सहयोगियों का लाभ) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Mitra_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: मित्र सहम (मित्रों व सहयोगियों का लाभ) का 10वें भाव में प्रभाव—सच्चे मित्रों का साथ व व्यापारिक साझेदारी।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MITRA_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: मित्र सहम (मित्रों व सहयोगियों का लाभ) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Mitra_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: मित्र सहम (मित्रों व सहयोगियों का लाभ) का 11वें भाव में प्रभाव—सच्चे मित्रों का साथ व व्यापारिक साझेदारी।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MAHATMYA_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: माहात्म्य सहम (महत्ता व गौरव) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Mahatmya_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: माहात्म्य सहम (महत्ता व गौरव) का 1वें भाव में प्रभाव—कुल का गौरव व उच्च प्रतिष्ठा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MAHATMYA_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: माहात्म्य सहम (महत्ता व गौरव) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Mahatmya_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: माहात्म्य सहम (महत्ता व गौरव) का 2वें भाव में प्रभाव—कुल का गौरव व उच्च प्रतिष्ठा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MAHATMYA_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: माहात्म्य सहम (महत्ता व गौरव) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Mahatmya_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: माहात्म्य सहम (महत्ता व गौरव) का 4वें भाव में प्रभाव—कुल का गौरव व उच्च प्रतिष्ठा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MAHATMYA_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: माहात्म्य सहम (महत्ता व गौरव) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Mahatmya_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: माहात्म्य सहम (महत्ता व गौरव) का 5वें भाव में प्रभाव—कुल का गौरव व उच्च प्रतिष्ठा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MAHATMYA_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: माहात्म्य सहम (महत्ता व गौरव) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Mahatmya_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: माहात्म्य सहम (महत्ता व गौरव) का 7वें भाव में प्रभाव—कुल का गौरव व उच्च प्रतिष्ठा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MAHATMYA_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: माहात्म्य सहम (महत्ता व गौरव) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Mahatmya_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: माहात्म्य सहम (महत्ता व गौरव) का 9वें भाव में प्रभाव—कुल का गौरव व उच्च प्रतिष्ठा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MAHATMYA_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: माहात्म्य सहम (महत्ता व गौरव) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Mahatmya_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: माहात्म्य सहम (महत्ता व गौरव) का 10वें भाव में प्रभाव—कुल का गौरव व उच्च प्रतिष्ठा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_MAHATMYA_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: माहात्म्य सहम (महत्ता व गौरव) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Mahatmya_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: माहात्म्य सहम (महत्ता व गौरव) का 11वें भाव में प्रभाव—कुल का गौरव व उच्च प्रतिष्ठा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_ASHA_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: आशा सहम (इच्छा पूर्ति) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Asha_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: आशा सहम (इच्छा पूर्ति) का 1वें भाव में प्रभाव—मनोकामनाओं की पूर्ति व सकारात्मक परिणाम।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_ASHA_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: आशा सहम (इच्छा पूर्ति) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Asha_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: आशा सहम (इच्छा पूर्ति) का 2वें भाव में प्रभाव—मनोकामनाओं की पूर्ति व सकारात्मक परिणाम।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_ASHA_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: आशा सहम (इच्छा पूर्ति) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Asha_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: आशा सहम (इच्छा पूर्ति) का 4वें भाव में प्रभाव—मनोकामनाओं की पूर्ति व सकारात्मक परिणाम।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_ASHA_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: आशा सहम (इच्छा पूर्ति) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Asha_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: आशा सहम (इच्छा पूर्ति) का 5वें भाव में प्रभाव—मनोकामनाओं की पूर्ति व सकारात्मक परिणाम।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_ASHA_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: आशा सहम (इच्छा पूर्ति) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Asha_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: आशा सहम (इच्छा पूर्ति) का 7वें भाव में प्रभाव—मनोकामनाओं की पूर्ति व सकारात्मक परिणाम।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_ASHA_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: आशा सहम (इच्छा पूर्ति) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Asha_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: आशा सहम (इच्छा पूर्ति) का 9वें भाव में प्रभाव—मनोकामनाओं की पूर्ति व सकारात्मक परिणाम।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_ASHA_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: आशा सहम (इच्छा पूर्ति) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Asha_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: आशा सहम (इच्छा पूर्ति) का 10वें भाव में प्रभाव—मनोकामनाओं की पूर्ति व सकारात्मक परिणाम।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_ASHA_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: आशा सहम (इच्छा पूर्ति) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Asha_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: आशा सहम (इच्छा पूर्ति) का 11वें भाव में प्रभाव—मनोकामनाओं की पूर्ति व सकारात्मक परिणाम।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SAMARTHYA_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: सामर्थ्य सहम (शक्ति व प्रभाव) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Samarthya_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: सामर्थ्य सहम (शक्ति व प्रभाव) का 1वें भाव में प्रभाव—प्रशासनिक प्रभुता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SAMARTHYA_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: सामर्थ्य सहम (शक्ति व प्रभाव) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Samarthya_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: सामर्थ्य सहम (शक्ति व प्रभाव) का 2वें भाव में प्रभाव—प्रशासनिक प्रभुता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SAMARTHYA_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: सामर्थ्य सहम (शक्ति व प्रभाव) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Samarthya_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: सामर्थ्य सहम (शक्ति व प्रभाव) का 4वें भाव में प्रभाव—प्रशासनिक प्रभुता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SAMARTHYA_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: सामर्थ्य सहम (शक्ति व प्रभाव) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Samarthya_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: सामर्थ्य सहम (शक्ति व प्रभाव) का 5वें भाव में प्रभाव—प्रशासनिक प्रभुता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SAMARTHYA_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: सामर्थ्य सहम (शक्ति व प्रभाव) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Samarthya_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: सामर्थ्य सहम (शक्ति व प्रभाव) का 7वें भाव में प्रभाव—प्रशासनिक प्रभुता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SAMARTHYA_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: सामर्थ्य सहम (शक्ति व प्रभाव) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Samarthya_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: सामर्थ्य सहम (शक्ति व प्रभाव) का 9वें भाव में प्रभाव—प्रशासनिक प्रभुता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SAMARTHYA_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: सामर्थ्य सहम (शक्ति व प्रभाव) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Samarthya_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: सामर्थ्य सहम (शक्ति व प्रभाव) का 10वें भाव में प्रभाव—प्रशासनिक प्रभुता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SAMARTHYA_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: सामर्थ्य सहम (शक्ति व प्रभाव) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Samarthya_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: सामर्थ्य सहम (शक्ति व प्रभाव) का 11वें भाव में प्रभाव—प्रशासनिक प्रभुता व निर्णय क्षमता।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_BHRATRI_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: भ्रातृ सहम (सहोदरों का सुख) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Bhratri_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: भ्रातृ सहम (सहोदरों का सुख) का 1वें भाव में प्रभाव—भाइयों से प्रेम व संपत्ति का बंटवारा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_BHRATRI_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: भ्रातृ सहम (सहोदरों का सुख) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Bhratri_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: भ्रातृ सहम (सहोदरों का सुख) का 2वें भाव में प्रभाव—भाइयों से प्रेम व संपत्ति का बंटवारा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_BHRATRI_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: भ्रातृ सहम (सहोदरों का सुख) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Bhratri_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: भ्रातृ सहम (सहोदरों का सुख) का 4वें भाव में प्रभाव—भाइयों से प्रेम व संपत्ति का बंटवारा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_BHRATRI_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: भ्रातृ सहम (सहोदरों का सुख) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Bhratri_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: भ्रातृ सहम (सहोदरों का सुख) का 5वें भाव में प्रभाव—भाइयों से प्रेम व संपत्ति का बंटवारा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_BHRATRI_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: भ्रातृ सहम (सहोदरों का सुख) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Bhratri_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: भ्रातृ सहम (सहोदरों का सुख) का 7वें भाव में प्रभाव—भाइयों से प्रेम व संपत्ति का बंटवारा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_BHRATRI_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: भ्रातृ सहम (सहोदरों का सुख) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Bhratri_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: भ्रातृ सहम (सहोदरों का सुख) का 9वें भाव में प्रभाव—भाइयों से प्रेम व संपत्ति का बंटवारा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_BHRATRI_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: भ्रातृ सहम (सहोदरों का सुख) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Bhratri_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: भ्रातृ सहम (सहोदरों का सुख) का 10वें भाव में प्रभाव—भाइयों से प्रेम व संपत्ति का बंटवारा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_BHRATRI_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: भ्रातृ सहम (सहोदरों का सुख) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Bhratri_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: भ्रातृ सहम (सहोदरों का सुख) का 11वें भाव में प्रभाव—भाइयों से प्रेम व संपत्ति का बंटवारा।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_GOURAV_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: गौरव सहम (सम्मान व विशिष्टता) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Gourav_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: गौरव सहम (सम्मान व विशिष्टता) का 1वें भाव में प्रभाव—विद्वानों में प्रतिष्ठा व पुरस्कार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_GOURAV_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: गौरव सहम (सम्मान व विशिष्टता) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Gourav_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: गौरव सहम (सम्मान व विशिष्टता) का 2वें भाव में प्रभाव—विद्वानों में प्रतिष्ठा व पुरस्कार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_GOURAV_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: गौरव सहम (सम्मान व विशिष्टता) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Gourav_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: गौरव सहम (सम्मान व विशिष्टता) का 4वें भाव में प्रभाव—विद्वानों में प्रतिष्ठा व पुरस्कार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_GOURAV_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: गौरव सहम (सम्मान व विशिष्टता) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Gourav_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: गौरव सहम (सम्मान व विशिष्टता) का 5वें भाव में प्रभाव—विद्वानों में प्रतिष्ठा व पुरस्कार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_GOURAV_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: गौरव सहम (सम्मान व विशिष्टता) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Gourav_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: गौरव सहम (सम्मान व विशिष्टता) का 7वें भाव में प्रभाव—विद्वानों में प्रतिष्ठा व पुरस्कार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_GOURAV_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: गौरव सहम (सम्मान व विशिष्टता) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Gourav_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: गौरव सहम (सम्मान व विशिष्टता) का 9वें भाव में प्रभाव—विद्वानों में प्रतिष्ठा व पुरस्कार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_GOURAV_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: गौरव सहम (सम्मान व विशिष्टता) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Gourav_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: गौरव सहम (सम्मान व विशिष्टता) का 10वें भाव में प्रभाव—विद्वानों में प्रतिष्ठा व पुरस्कार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_GOURAV_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: गौरव सहम (सम्मान व विशिष्टता) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Gourav_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: गौरव सहम (सम्मान व विशिष्टता) का 11वें भाव में प्रभाव—विद्वानों में प्रतिष्ठा व पुरस्कार।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIVAHA_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: विवाह सहम (दांपत्य सूत्र) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Vivaha_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विवाह सहम (दांपत्य सूत्र) का 1वें भाव में प्रभाव—शुभ विवाह संस्कार व जीवनसाथी का सुख।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIVAHA_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: विवाह सहम (दांपत्य सूत्र) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Vivaha_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विवाह सहम (दांपत्य सूत्र) का 2वें भाव में प्रभाव—शुभ विवाह संस्कार व जीवनसाथी का सुख।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIVAHA_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: विवाह सहम (दांपत्य सूत्र) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Vivaha_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विवाह सहम (दांपत्य सूत्र) का 4वें भाव में प्रभाव—शुभ विवाह संस्कार व जीवनसाथी का सुख।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIVAHA_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: विवाह सहम (दांपत्य सूत्र) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Vivaha_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विवाह सहम (दांपत्य सूत्र) का 5वें भाव में प्रभाव—शुभ विवाह संस्कार व जीवनसाथी का सुख।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIVAHA_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: विवाह सहम (दांपत्य सूत्र) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Vivaha_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विवाह सहम (दांपत्य सूत्र) का 7वें भाव में प्रभाव—शुभ विवाह संस्कार व जीवनसाथी का सुख।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIVAHA_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: विवाह सहम (दांपत्य सूत्र) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Vivaha_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विवाह सहम (दांपत्य सूत्र) का 9वें भाव में प्रभाव—शुभ विवाह संस्कार व जीवनसाथी का सुख।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIVAHA_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: विवाह सहम (दांपत्य सूत्र) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Vivaha_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विवाह सहम (दांपत्य सूत्र) का 10वें भाव में प्रभाव—शुभ विवाह संस्कार व जीवनसाथी का सुख।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_VIVAHA_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: विवाह सहम (दांपत्य सूत्र) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Vivaha_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: विवाह सहम (दांपत्य सूत्र) का 11वें भाव में प्रभाव—शुभ विवाह संस्कार व जीवनसाथी का सुख।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SANTANA_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: संतान सहम (पुत्र/पुत्री लाभ) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Santana_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: संतान सहम (पुत्र/पुत्री लाभ) का 1वें भाव में प्रभाव—संतान प्राप्ति व कुल वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SANTANA_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: संतान सहम (पुत्र/पुत्री लाभ) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Santana_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: संतान सहम (पुत्र/पुत्री लाभ) का 2वें भाव में प्रभाव—संतान प्राप्ति व कुल वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SANTANA_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: संतान सहम (पुत्र/पुत्री लाभ) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Santana_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: संतान सहम (पुत्र/पुत्री लाभ) का 4वें भाव में प्रभाव—संतान प्राप्ति व कुल वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SANTANA_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: संतान सहम (पुत्र/पुत्री लाभ) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Santana_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: संतान सहम (पुत्र/पुत्री लाभ) का 5वें भाव में प्रभाव—संतान प्राप्ति व कुल वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SANTANA_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: संतान सहम (पुत्र/पुत्री लाभ) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Santana_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: संतान सहम (पुत्र/पुत्री लाभ) का 7वें भाव में प्रभाव—संतान प्राप्ति व कुल वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SANTANA_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: संतान सहम (पुत्र/पुत्री लाभ) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Santana_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: संतान सहम (पुत्र/पुत्री लाभ) का 9वें भाव में प्रभाव—संतान प्राप्ति व कुल वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SANTANA_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: संतान सहम (पुत्र/पुत्री लाभ) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Santana_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: संतान सहम (पुत्र/पुत्री लाभ) का 10वें भाव में प्रभाव—संतान प्राप्ति व कुल वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SANTANA_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: संतान सहम (पुत्र/पुत्री लाभ) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Santana_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: संतान सहम (पुत्र/पुत्री लाभ) का 11वें भाव में प्रभाव—संतान प्राप्ति व कुल वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SATRU_SAHAM_H1",
+      "rule_name_hi": "ताजिक सहम: शत्रु सहम (विरोधी व अड़चनें) 1वें भाव में",
+      "rule_name_en": "Tajika Saham Satru_Saham in House 1",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: शत्रु सहम (विरोधी व अड़चनें) का 1वें भाव में प्रभाव—गुप्त शत्रुओं से सतर्कता आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SATRU_SAHAM_H2",
+      "rule_name_hi": "ताजिक सहम: शत्रु सहम (विरोधी व अड़चनें) 2वें भाव में",
+      "rule_name_en": "Tajika Saham Satru_Saham in House 2",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: शत्रु सहम (विरोधी व अड़चनें) का 2वें भाव में प्रभाव—गुप्त शत्रुओं से सतर्कता आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SATRU_SAHAM_H4",
+      "rule_name_hi": "ताजिक सहम: शत्रु सहम (विरोधी व अड़चनें) 4वें भाव में",
+      "rule_name_en": "Tajika Saham Satru_Saham in House 4",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: शत्रु सहम (विरोधी व अड़चनें) का 4वें भाव में प्रभाव—गुप्त शत्रुओं से सतर्कता आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SATRU_SAHAM_H5",
+      "rule_name_hi": "ताजिक सहम: शत्रु सहम (विरोधी व अड़चनें) 5वें भाव में",
+      "rule_name_en": "Tajika Saham Satru_Saham in House 5",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: शत्रु सहम (विरोधी व अड़चनें) का 5वें भाव में प्रभाव—गुप्त शत्रुओं से सतर्कता आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SATRU_SAHAM_H7",
+      "rule_name_hi": "ताजिक सहम: शत्रु सहम (विरोधी व अड़चनें) 7वें भाव में",
+      "rule_name_en": "Tajika Saham Satru_Saham in House 7",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: शत्रु सहम (विरोधी व अड़चनें) का 7वें भाव में प्रभाव—गुप्त शत्रुओं से सतर्कता आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SATRU_SAHAM_H9",
+      "rule_name_hi": "ताजिक सहम: शत्रु सहम (विरोधी व अड़चनें) 9वें भाव में",
+      "rule_name_en": "Tajika Saham Satru_Saham in House 9",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: शत्रु सहम (विरोधी व अड़चनें) का 9वें भाव में प्रभाव—गुप्त शत्रुओं से सतर्कता आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SATRU_SAHAM_H10",
+      "rule_name_hi": "ताजिक सहम: शत्रु सहम (विरोधी व अड़चनें) 10वें भाव में",
+      "rule_name_en": "Tajika Saham Satru_Saham in House 10",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: शत्रु सहम (विरोधी व अड़चनें) का 10वें भाव में प्रभाव—गुप्त शत्रुओं से सतर्कता आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "TAJIKA_SAHAM_SATRU_SAHAM_H11",
+      "rule_name_hi": "ताजिक सहम: शत्रु सहम (विरोधी व अड़चनें) 11वें भाव में",
+      "rule_name_en": "Tajika Saham Satru_Saham in House 11",
+      "source": {
+        "text": "Tajika Neelakanthi (वर्षफल)",
+        "chapter": "Saham Nirnaya Adhyaya",
+        "author": "Neelakantha Daivajna",
+        "era": "Classical Tajika 16th Century CE"
+      },
+      "school": "Tajika",
+      "category": "tajika_saham",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "tajika",
+          "saham",
+          "annual_destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "ताजिक नीलकण्ठी सहम विचार: शत्रु सहम (विरोधी व अड़चनें) का 11वें भाव में प्रभाव—गुप्त शत्रुओं से सतर्कता आवश्यक।"
+      }
+    }
+  ]
+}
