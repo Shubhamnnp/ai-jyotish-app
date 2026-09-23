@@ -229,8 +229,6 @@ class ChartRenderer:
 
     @classmethod
     def render_east_indian_svg(cls, chart: KundaliChart, title: str = "East Indian (Surya) Kundali", varga_code: str = "D1") -> str:
-        """Renders East Indian (Bengali/Odia style) Kundali."""
-        return cls.render_south_indian_svg(chart, title=f"East Indian (Prachya) - {title}", varga_code=varga_code)
         """
         Renders a classical East Indian (Bengali / Odia / Prachya Surya Chakra) kundali in SVG format.
         Layout is a 3x3 square structure where the 4 corner squares are split diagonally into two triangles each,
