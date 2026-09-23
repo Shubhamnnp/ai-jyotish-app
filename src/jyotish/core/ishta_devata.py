@@ -265,6 +265,14 @@ class IshtaDevataEngine:
         mantra_info = cls.DEITY_ATTRIBUTES.get(mantra_planet, cls.DEITY_ATTRIBUTES["Mercury"])
         kula_info = cls.DEITY_ATTRIBUTES.get(kula_planet, cls.DEITY_ATTRIBUTES["Venus"])
 
+        # 6. Navratri Shastriya Vrat & Vidhan Computation
+        navratri_data = cls._compute_navratri_guidelines(
+            chart=chart,
+            lagna_s_id=lagna_s_id,
+            ishta_planet=ishta_planet,
+            ak_planet=ak_planet
+        )
+
         return {
             "atmakaraka": ak_planet,
             "karakamsha_sign": karakamsha_s_name,
@@ -293,5 +301,176 @@ class IshtaDevataEngine:
             "mantra_deity": mantra_info["ishta_hi"],
             "mantra_sadhana": mantra_info["primary_mantra"],
             "kula_planet": kula_planet,
-            "kula_deity": kula_info["ishta_hi"]
+            "kula_deity": kula_info["ishta_hi"],
+            "navratri": navratri_data
         }
+
+    @classmethod
+    def _compute_navratri_guidelines(
+        cls,
+        chart: KundaliChart,
+        lagna_s_id: int,
+        ishta_planet: str,
+        ak_planet: str
+    ) -> Dict[str, Any]:
+        """Calculates Shastriya Navratri Vrat pattern, dietary fasting mode
+
+        (Nirjala, Sajala/Jala, Dugdhahari, Phalahari, Naktam), suitable Navadurga
+        aspect, and rituals based on native's physical constitution (Tridosha/Element)
+        and planetary yogas.
+        """
+        # Element mapping: 1,5,9=Agni(Fire); 2,6,10=Prithvi(Earth); 3,7,11=Vayu(Air); 4,8,12=Jala(Water)
+        if lagna_s_id in (1, 5, 9):
+            element = "अग्नि तत्त्व (Fire Element - पित्त प्रकृति)"
+            element_code = "fire"
+        elif lagna_s_id in (2, 6, 10):
+            element = "पृथ्वी तत्त्व (Earth Element - कफ-वात सम प्रकृति)"
+            element_code = "earth"
+        elif lagna_s_id in (3, 7, 11):
+            element = "वायु तत्त्व (Air Element - वात प्रधान प्रकृति)"
+            element_code = "air"
+        else:
+            element = "जल तत्त्व (Water Element - कफ-जल प्रधान प्रकृति)"
+            element_code = "water"
+
+        # Check endurance/vitality
+        lagna_lord = chart.lagna_lord or "Mars"
+        h6_planets = [p for p, obj in chart.planets.items() if obj.house_from_lagna == 6]
+        h8_planets = [p for p, obj in chart.planets.items() if obj.house_from_lagna == 8]
+        is_sensitive = len(h6_planets) >= 2 or len(h8_planets) >= 2
+
+        # 1. Navratri Vrat Pattern Recommendation
+        if is_sensitive:
+            vrat_pattern_title = "युग्म (जोड़ा) व्रत अथवा नक्तव्रत (शास्त्रीय सुगम व्रत)"
+            vrat_pattern_desc = (
+                "देवी भागवत एवं निर्णयसिंधु का शास्त्रीय निर्देश है: 'आदौ चान्ते च कर्तव्यं यदि शक्तो न जायते' "
+                "— अर्थात शारीरिक व्याधि या ऊर्जा संवेदनशीलता की स्थिति में प्रतिपदा (पहला दिन) तथा महाअष्टमी/महानवमी "
+                "का जोड़ा व्रत रखना चाहिए। शेष दिनों में नित्य चंडी पाठ एवं सात्विक एकभुक्त आहार सर्वोत्तम है।"
+            )
+            recommended_days = "प्रतिपदा (प्रथम दिवस) एवं महाअष्टमी / महानवमी (जोड़ा व्रत)"
+        elif element_code in ("fire", "water"):
+            vrat_pattern_title = "९ दिवसीय अखण्ड पूर्ण महाव्रत (Full 9-Day Navratri Vrata)"
+            vrat_pattern_desc = (
+                "आपकी कुण्डली में ऊर्जा व संकल्प बल पर्याप्त है। ९ दिनों तक नियमपूर्वक अखंड व्रत धारण करना "
+                "शारीरिक एवं आध्यात्मिक रूप से अत्यंत फलदायी व कुण्डलिनी शोधक सिद्ध होगा।"
+            )
+            recommended_days = "प्रतिपदा से महानवमी तक पूर्ण ९ दिवस"
+        else:
+            vrat_pattern_title = "सप्तमी-अष्टमी-नवमी त्रिरत्रि महाव्रत अथवा ९ दिवसीय फलाहार"
+            vrat_pattern_desc = (
+                "शास्त्रों में त्रिरत्रि व्रत (सप्तमी, अष्टमी व नवमी) को ९ दिनों के व्रत के समान ही पूर्ण फलदायी "
+                "माना गया है। जातक यदि ९ दिन पूर्ण व्रत न रख सके तो इन अंतिम ३ दिनों में विशेष व्रत अवश्य रखें।"
+            )
+            recommended_days = "९ दिवसीय फलाहार अथवा अंतिम ३ दिन (सप्तमी, अष्टमी, नवमी) का त्रिरत्रि व्रत"
+
+        # 2. Fasting Modes (Nirjala, Sajala, Dugdhadhari, Phalahari, Naktam)
+        if element_code == "water":
+            nirjala_status = "✅ अनुकूल (शर्तों के साथ)"
+            nirjala_note = (
+                "जल तत्व लग्न होने से शरीर में तरलता धारण की क्षमता अच्छी रहती है। "
+                "आप केवल महाअष्टमी अथवा महानवमी के दिन १ दिवस का 'निर्जला व्रत' सफलतापूर्वक रख सकते हैं। "
+                "९ दिन लगातार निर्जला कभी न रखें।"
+            )
+            primary_vidhan = "सजला (जलाहार) एवं फलाहार व्रत"
+            sajala_note = "सर्वोत्तम विधान: दिनभर में केवल गंगाजल, नारियल पानी, नींबू-मिश्री जल एवं ऋतु फल लें।"
+        elif element_code == "fire":
+            nirjala_status = "⚠️ वर्जित / अत्यधिक सावधानी"
+            nirjala_note = (
+                "अग्नि तत्व प्रधान लग्न होने से जठराग्नि तीव्र रहती है। निर्जला रहने पर पित्त का तीव्र प्रकोप, "
+                "सिरदर्द, अत्यधिक प्यास अथवा एसिडिटी हो सकती है। अतः निर्जला व्रत न रखकर जलाहार या फलाहार ही करें।"
+            )
+            primary_vidhan = "शीतल जलाहार एवं दुग्ध-फलाहार व्रत"
+            sajala_note = "शीतल पेयों का सेवन करें: नारियल जल, कच्चा दूध, मिश्री जल, खरबूजा, खीरा, सेब।"
+        elif element_code == "air":
+            nirjala_status = "❌ निषिद्ध (स्वास्थ्य हेतु अहितकर)"
+            nirjala_note = (
+                "वायु तत्व लग्न में वात दोष जल्दी प्रकुपित होता है। निर्जला या अत्यधिक कठोर उपवास से "
+                "अनिद्रा, दुर्बलता, जोड़ों में दर्द अथवा घबराहट हो सकती है। शास्त्रानुसार ऐसे जातकों को 'पयोव्रत' या 'फलाहार' ही ग्राह्य है।"
+            )
+            primary_vidhan = "दुग्धाहार (पयोव्रत) अथवा फलाहार व्रत"
+            sajala_note = "गुनगुना गाय का दूध, मखाना खीर, बादाम-मिश्री एवं जल का प्रचुर सेवन करें।"
+        else: # earth
+            nirjala_status = "⚖️ मध्यम (केवल अष्टमी संकल्प)"
+            nirjala_note = (
+                "पृथ्वी तत्व में शारीरिक सहनशक्ति संतुलित होती है। यदि जातक चाहे तो केवल महाअष्टमी को "
+                "सूर्योदय से सायंकाल आरती तक निर्जला संकल्प ले सकता है।"
+            )
+            primary_vidhan = "फलाहार एवं अल्प जलाहार व्रत"
+            sajala_note = "दिन में ताजे फल, मखाना, साबूदाना, सेंधा नमक युक्त कुट्टू/सिंघाड़ा फलाहार लें।"
+
+        # 3. Dedicated Navadurga Form based on Ishta/AK/Lagna
+        navadurga_mapping = {
+            "Sun": {
+                "name": "माँ शैलपुत्री एवं माँ कूष्माण्डा",
+                "significance": "आत्मबल, तेज, निरोगता, मान-सम्मान एवं सूर्य जनित समस्त दोषों की शांति।",
+                "mantra": "ॐ ऐं ह्रीं क्लीं शैलपुत्र्यै नमः || अथवा || ॐ कूष्माण्डायै नमः",
+                "bhog": "गाय का शुद्ध घी, मालपुआ, लाल सेब, अनार"
+            },
+            "Moon": {
+                "name": "माँ ब्रह्मचारिणी एवं माँ महागौरी",
+                "significance": "तपस्या, मानसिक शांति, एकाग्रता, पारिवारिक सुख एवं चंद्र दोष शांति।",
+                "mantra": "ॐ ऐं ह्रीं क्लीं ब्रह्मचारिण्यै नमः || अथवा || ॐ महागौर्ये नमः",
+                "bhog": "चावल की खीर, मिश्री, मखाना, दूध का पेड़ा"
+            },
+            "Mars": {
+                "name": "माँ स्कन्दमाता एवं माँ कालरात्रि",
+                "significance": "शत्रु विजय, साहस, पराक्रम, भूमि-भवन लाभ एवं मंगल दोष शमन।",
+                "mantra": "ॐ ह्रीं क्लीं स्कन्दमात्रे नमः || अथवा || ॐ कालरात्र्यै नमः",
+                "bhog": "केले, गुड़-चना, अनार, लाल पेड़ा"
+            },
+            "Mercury": {
+                "name": "माँ कात्यायनी",
+                "significance": "बुद्धि, मेधा, वाणी सिद्धि, व्यापार में उन्नति एवं शीघ्र मंगल विवाह।",
+                "mantra": "ॐ ह्रीं श्रीं कात्यायन्यै स्वाहा || अथवा || ॐ क्लीं कात्यायन्यै नमः",
+                "bhog": "शुद्ध शहद, मीठी पूड़ी, हरी इलायची, खीर"
+            },
+            "Jupiter": {
+                "name": "माँ महागौरी एवं माँ ब्रह्मचारिणी",
+                "significance": "अखंड ज्ञान, धर्म, संतान सुख, गुरु कृपा एवं आध्यात्मिक साधना की पूर्णता।",
+                "mantra": "ॐ श्रीं क्लीं महागौर्ये नमः || अथवा || ॐ ह्रीं क्लीं ब्रह्मचारिण्यै नमः",
+                "bhog": "बेसन के लड्डू, पके केले, केसर युक्त खीर"
+            },
+            "Venus": {
+                "name": "माँ चन्द्रघण्टा एवं माँ सिद्धिदात्री",
+                "significance": "अखंड सौभाग्य, सौंदर्य, ऐश्वर्य, दांपत्य माधुर्य एवं समस्त कामनाओं की सिद्धि।",
+                "mantra": "ॐ ऐं ह्रीं क्लीं चन्द्रघण्टायै नमः || अथवा || ॐ सिद्धिदात्र्यै नमः",
+                "bhog": "दूध की बर्फी, मिश्री-मक्खन, काजू कतली, अनार"
+            },
+            "Saturn": {
+                "name": "माँ कालरात्रि",
+                "significance": "काल व संकटों से रक्षा, साढ़ेसाती निवारण, भय नाश एवं पापों का भस्म होना।",
+                "mantra": "ॐ ऐं ह्रीं क्लीं चामुण्डायै विच्चे || अथवा || ॐ कालरात्र्यै नमः",
+                "bhog": "गुड़, हलवा-पूरी, काले तिल के लड्डू"
+            },
+            "Rahu": {
+                "name": "माँ कालरात्रि एवं माँ दुर्गा (महिषासुरमर्दिनी)",
+                "significance": "तंत्र-बाधा, आकस्मिक भय, मानसिक भ्रम, रोग व राहु जनित कष्टों का निवारण।",
+                "mantra": "ॐ ऐं ह्रीं क्लीं चामुण्डायै विच्चे",
+                "bhog": "मालपुआ, गुड़ की खीर, नारियल"
+            },
+            "Ketu": {
+                "name": "माँ सिद्धिदात्री",
+                "significance": "मोक्ष, अंतर्ज्ञान, वैराग्य, कुण्डलिनी जागरण एवं अष्टसिद्धियों की प्राप्ति।",
+                "mantra": "ॐ ह्रीं क्लीं सिद्धिदात्र्यै नमः",
+                "bhog": "तिल-गुड़, पंचामृत, नारियल का भोग"
+            }
+        }
+        nd_info = navadurga_mapping.get(ishta_planet, navadurga_mapping.get(ak_planet, navadurga_mapping["Sun"]))
+
+        return {
+            "element": element,
+            "element_code": element_code,
+            "vrat_pattern_title": vrat_pattern_title,
+            "vrat_pattern_desc": vrat_pattern_desc,
+            "recommended_days": recommended_days,
+            "primary_vidhan": primary_vidhan,
+            "nirjala_status": nirjala_status,
+            "nirjala_note": nirjala_note,
+            "sajala_note": sajala_note,
+            "navadurga_name": nd_info["name"],
+            "navadurga_significance": nd_info["significance"],
+            "navadurga_mantra": nd_info["mantra"],
+            "navadurga_bhog": nd_info["bhog"]
+        }
+
+

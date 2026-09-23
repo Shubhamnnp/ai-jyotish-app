@@ -7896,6 +7896,105 @@ elif selected_idx == 28:
         </div>
         """, unsafe_allow_html=True)
 
+        # ----------------------------------------------------
+        # Shastriya Navratri Vrat & Vidhan Section
+        # ----------------------------------------------------
+        nv = ishta_res.get("navratri", {})
+        if nv:
+            st.markdown("---")
+            st.markdown("### 🚩 कुण्डली अनुसार शास्त्रीय 'नवरात्रि व्रत' एवं संपूर्ण विधान")
+            st.caption("देवी भागवत, निर्णय सिंधु, कालिका पुराण एवं चरक संहिता के अनुसार जातक की कुण्डली अनुसार सटीक व्रत निर्णय:")
+
+            st.markdown(f"""
+            <div style="background:#FFF1F2; border:2px solid #E11D48; border-radius:12px; padding:16px; margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                    <span style="font-size:18px; font-weight:900; color:#9F1239;">🕉️ नवरात्रि में कौन सा व्रत रखें: {nv.get('vrat_pattern_title')}</span>
+                    <span style="background:#FFE4E6; color:#BE123C; padding:4px 10px; border-radius:20px; font-size:13px; font-weight:700;">{nv.get('element')}</span>
+                </div>
+                <p style="margin:6px 0; color:#1E293B; font-size:14.5px; line-height:1.6;">{nv.get('vrat_pattern_desc')}</p>
+                <div style="background:#FFFFFF; border-left:4px solid #E11D48; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
+                    <b style="color:#881337;">📅 आपके लिए सर्वोत्तम व्रत दिवस:</b> <span style="color:#0F172A; font-weight:700;">{nv.get('recommended_days')}</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("#### 🥣 उपवास के ५ शास्त्रीय भेद — निर्जला, जलाहार व फलाहार निर्णय:")
+            
+            c_v1, c_v2 = st.columns(2)
+            with c_v1:
+                st.markdown(f"""
+                <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:10px; padding:14px; margin-bottom:12px; height:100%;">
+                    <b style="color:#0F172A; font-size:15px;">💧 १. निर्जला उपवास (Nirjala Vrata):</b><br/>
+                    <div style="margin:6px 0; font-weight:800; font-size:14px; color:{'#15803D' if '✅' in nv.get('nirjala_status','') else '#B91C1C'};">
+                        स्थिति: {nv.get('nirjala_status')}
+                    </div>
+                    <p style="margin:4px 0; font-size:13px; color:#334155; line-height:1.5;">{nv.get('nirjala_note')}</p>
+                    <small style="color:#64748B;"><b>शास्त्रीय नियम:</b> सूर्योदय से अगले सूर्योदय तक जल की बूंद भी ग्रहण न करना। यदि कुण्डली में पित्त या वात दोष हो तो पूर्ण ९ दिन निर्जला रखना शास्त्रों में सर्वथा निषिद्ध है। केवल महाअष्टमी को १ दिन का निर्जला संकल्प लिया जा सकता है।</small>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with c_v2:
+                st.markdown(f"""
+                <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:14px; margin-bottom:12px; height:100%;">
+                    <b style="color:#15803D; font-size:15px;">🚰 २. सजला / जलाहार उपवास (Jalahar Vrata):</b><br/>
+                    <div style="margin:6px 0; font-weight:800; font-size:14px; color:#166534;">
+                        मुख्य विधान: {nv.get('primary_vidhan')}
+                    </div>
+                    <p style="margin:4px 0; font-size:13px; color:#14532D; line-height:1.5;">{nv.get('sajala_note')}</p>
+                    <small style="color:#15803D;"><b>पेय पदार्थ:</b> शुद्ध गंगाजल मिश्रित जल, ताजा नारियल पानी, नींबू-मिश्री जल तथा बिना नमक के फलों का ताजा रस। यह शरीर की शुद्धि (डिटॉक्स) एवं साधना एकाग्रता हेतु सर्वोत्तम है।</small>
+                </div>
+                """, unsafe_allow_html=True)
+
+            c_v3, c_v4 = st.columns(2)
+            with c_v3:
+                st.markdown("""
+                <div style="background:#FFFBEB; border:1.5px solid #FDE68A; border-radius:10px; padding:14px; margin-bottom:12px; height:100%;">
+                    <b style="color:#B45309; font-size:15px;">🥛 ३. दुग्धाहार (पयोव्रत) एवं ४. फलाहार:</b><br/>
+                    <p style="margin:4px 0; font-size:13px; color:#78350F; line-height:1.5;">
+                        • <b>पयोव्रत:</b> केवल देशी गाय का ताजा दूध, मखाना व मिश्री का सेवन।<br/>
+                        • <b>फलाहार:</b> ऋतु फल (सेब, केला, अनार, पपीता), सूखे मेवे (बादाम, काजू, किशमिश), कुट्टू/सिंघाड़े का आटा एवं सेंधा नमक का दिन में केवल <b>एक बार</b> सेवन।
+                    </p>
+                    <small style="color:#92400E;"><b>सेंधा नमक नियम:</b> नमक का सेवन केवल सूर्यास्त से पूर्व या सायंकाल आरती के बाद ही एक बार करें। बार-बार नमक युक्त भोजन करने से उपवास खंडित माना जाता है।</small>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with c_v4:
+                st.markdown("""
+                <div style="background:#FAF5FF; border:1.5px solid #E9D5FF; border-radius:10px; padding:14px; margin-bottom:12px; height:100%;">
+                    <b style="color:#7E22CE; font-size:15px;">🌙 ५. एकभुक्त / नक्तव्रत (Evening Satvik Meal):</b><br/>
+                    <p style="margin:4px 0; font-size:13px; color:#581C87; line-height:1.5;">
+                        • <b>विधान:</b> दिनभर पूर्ण उपवास (केवल जल या फल) रखें। सायंकाल माँ भगवती की आरती व दुर्गा चालीसा/सप्तशती पाठ के उपरांत केवल <b>एक समय शुद्ध सात्विक भोजन</b> ग्रहण करें।<br/>
+                        • <b>किसके लिए:</b> जो जातक नौकरी/व्यवसाय में अत्यधिक श्रम करते हैं या जिन्हें शारीरिक दुर्बलता है।
+                    </p>
+                    <small style="color:#6B21A8;">शास्त्रों में नक्तव्रत को भी पूर्ण तपस्या के समतुल्य फलदायी घोषित किया गया है।</small>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # Navadurga deity card
+            st.markdown(f"""
+            <div style="background:#FEF3C7; border:1.5px solid #F59E0B; border-radius:10px; padding:16px; margin-top:10px; margin-bottom:14px;">
+                <b style="color:#92400E; font-size:16px;">🌸 आपकी कुण्डली अनुसार नवरात्रि की मुख्य इष्ट देवी: <u>{nv.get('navadurga_name')}</u></b>
+                <p style="margin:6px 0; font-size:14px; color:#1E293B;"><b>विशेष महात्म्य:</b> {nv.get('navadurga_significance')}</p>
+                <p style="margin:6px 0; font-size:14px; color:#1E293B;"><b>प्रिय नैवेद्य (भोग):</b> {nv.get('navadurga_bhog')}</p>
+                <div style="background:#FFFFFF; border:1px dashed #D97706; padding:8px 12px; border-radius:6px; margin-top:8px;">
+                    <b style="color:#B45309;">सिद्ध मंत्र:</b> <code style="font-size:14px; color:#B45309;">{nv.get('navadurga_mantra')}</code>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Ghatasthapana & Parana rules
+            st.markdown("""
+            <div style="background:#F1F5F9; border:1px solid #CBD5E1; border-radius:8px; padding:14px; margin-bottom:14px;">
+                <b style="color:#0F172A; font-size:15px;">🏺 घटस्थापना, कन्या पूजन एवं पारण के शास्त्रीय नियम:</b>
+                <p style="margin:4px 0; font-size:13px; color:#334155;">
+                    • <b>कलश स्थापना दिशा:</b> घर या पूजा कक्ष के <b>ईशान कोण (North-East)</b> अथवा पूर्व दिशा में शुद्ध मिट्टी की वेदी बनाकर जौ (ज्वारे) बोएं और उस पर जल-गंगाजल पूरित तांबे या मिट्टी का कलश स्थापित करें।<br/>
+                    • <b>अखण्ड ज्योति विधान:</b> यदि घी का दीपक जलाएं तो वह देवी प्रतिमा के <b>दाहिनी ओर (Right Side)</b> रखें; यदि तिल के तेल का दीपक हो तो <b>बाईं ओर (Left Side)</b> रखें।<br/>
+                    • <b>कन्या पूजन (Kanya Poojan):</b> अष्टमी अथवा नवमी के दिन २ वर्ष से ९ वर्ष तक की कन्याओं (कुमारिका, त्रिमूर्ति, कल्याणी, रोहिणी आदि) का पाद प्रक्षालन कर हलवा, पूरी व काले चने का भोग लगाकर दक्षिणा देकर आशीर्वाद लें।<br/>
+                    • <b>पारण का शास्त्रीय समय:</b> नवमी तिथि के हवन व कन्या पूजन की समाप्ति के उपरांत अथवा दशमी तिथि के सूर्योदय पर ही व्रत का पारण करें। पारण में सर्वप्रथम माँ का चरणामृत व प्रसाद ग्रहण करें।
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
         st.markdown("""
         #### 📜 उपवास एवं पारण के शाश्वत नियम:
         1. **संकल्प:** प्रातः स्नान के उपरांत पूर्व या उत्तर मुख होकर हाथ में जल, अक्षत व पुष्प लेकर व्रत का संकल्प लें।
@@ -7903,6 +8002,7 @@ elif selected_idx == 28:
         3. **पारण समय:** सायंकाल पूजा व आरती के पश्चात, अथवा अगले दिन सूर्योदय के उपरांत ही शुद्ध सात्विक भोजन से पारण करें।
         4. **दान की महिमा:** व्रत पूर्ण होने पर किसी ब्राह्मण, साधु अथवा निर्धन व्यक्ति को अपनी क्षमता अनुसार भोजन या अन्न-दान अवश्य करें।
         """)
+
 
 
 
