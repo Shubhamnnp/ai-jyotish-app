@@ -63,6 +63,17 @@ class AshtakootaScore(BaseModel):
     manglik_match: bool = False
     manglik_cancellation_reason: str = ""
     nadi_cancellation_reason: str = ""
+    rajju_dosha: bool = False
+    rajju_type: str = ""
+    rajju_desc: str = ""
+    vedha_dosha: bool = False
+    vedha_desc: str = ""
+    stree_deergha: str = ""
+    mahendra_koota: bool = False
+    mahendra_desc: str = ""
+    dasha_sandhi: bool = False
+    dasha_sandhi_diff_days: int = 0
+    dasha_sandhi_desc: str = ""
     recommendation_hi: str
     recommendation_en: str
     deep_analysis: Optional[Dict[str, Any]] = None
@@ -119,6 +130,18 @@ class MilanService:
         b_manglik = self._is_manglik(bride_chart)
         manglik_match, manglik_canc_reason = self._evaluate_manglik_cancellation(groom_chart, bride_chart, g_manglik, b_manglik)
 
+        # 9. Rajju Dosha
+        rajju_dosha, rajju_type, rajju_desc = self._calc_rajju(g_nak_idx, b_nak_idx)
+
+        # 10. Vedha Dosha
+        vedha_dosha, vedha_desc = self._calc_vedha(g_nak_idx, b_nak_idx)
+
+        # 11. Stree-Deergha & Mahendra
+        stree_deergha, mahendra_koota, mahendra_desc = self._calc_stree_deergha_mahendra(g_nak_idx, b_nak_idx)
+
+        # 12. Dasha Sandhi
+        dasha_sandhi, dasha_sandhi_diff_days, dasha_sandhi_desc = self._calc_dasha_sandhi(groom_chart, bride_chart)
+
         # Determine strict, honest Shastriya Verdict based on Gunas AND Doshas
         has_uncancelled_nadi = (nadi_dosha and not nadi_canc)
         has_uncancelled_bhakoot = (bhakoot_dosha and not bhakoot_canc)
@@ -132,6 +155,14 @@ class MilanService:
                 "शास्त्रानुसार यह विवाह उचित नहीं है। यदि विवाह करना ही हो तो महामृत्युंजय अनुष्ठान व सुवर्ण/गौ दान अनिवार्य है।"
             )
             rec_en = f"Critical Nadi Dosha without cancellation ({total}/36 gunas). Marriage not recommended as per classical texts."
+        elif rajju_dosha and "शिरो" in rajju_type:
+            verdict = "शिरो रज्जु महादोष (अति-सावधानी / Critical Risk)"
+            rec_hi = (
+                f"कुल 36 में से {total} गुण हैं, किंतु 'शिरो रज्जु महादोष' विद्यमान है। "
+                "दक्षिण भारतीय व मुहूर्त ग्रंथों के अनुसार शिरो रज्जु वर के आयु व स्वास्थ्य के लिए अत्यंत अनिष्टकारी माना गया है। "
+                "विशेष महामृत्युंजय अनुष्ठान एवं आयु परीक्षा के बिना यह संबंध स्वीकार्य नहीं है।"
+            )
+            rec_en = f"Critical Siro Rajju Dosha present ({total}/36 gunas). Poses risk to longevity; caution and remedies essential."
         elif has_uncancelled_bhakoot:
             verdict = "भकूट दोष (गंभीर कलह व आर्थिक संकट)"
             rec_hi = (
@@ -148,6 +179,13 @@ class MilanService:
                 "विवाह पूर्व कुंभ विवाह अथवा मंगल शांति आवश्यक है।"
             )
             rec_en = f"Manglik imbalance detected ({total}/36 gunas). Pre-marital remedies required."
+        elif vedha_dosha:
+            verdict = "नक्षत्र वेध दोष (विवाह पूर्व शांति आवश्यक)"
+            rec_hi = (
+                f"कुल 36 में से {total} गुण हैं, किंतु 'नक्षत्र वेध दोष' उपस्थित है। "
+                "परस्पर वेध नक्षत्रों के कारण दांपत्य में गुप्त कलह व अकस्मात बाधाओं का भय रहता है। नक्षत्र शांति पूजा अनुशंसित है।"
+            )
+            rec_en = f"Nakshatra Vedha Dosha present ({total}/36 gunas). Planetary propitiation advised."
         elif total < 18:
             verdict = "अधम / विवाह अनुचित (Strictly Incompatible)"
             rec_hi = (
@@ -188,6 +226,17 @@ class MilanService:
             bride_manglik=b_manglik,
             manglik_match=manglik_match,
             manglik_cancellation_reason=manglik_canc_reason,
+            rajju_dosha=rajju_dosha,
+            rajju_type=rajju_type,
+            rajju_desc=rajju_desc,
+            vedha_dosha=vedha_dosha,
+            vedha_desc=vedha_desc,
+            stree_deergha=stree_deergha,
+            mahendra_koota=mahendra_koota,
+            mahendra_desc=mahendra_desc,
+            dasha_sandhi=dasha_sandhi,
+            dasha_sandhi_diff_days=dasha_sandhi_diff_days,
+            dasha_sandhi_desc=dasha_sandhi_desc,
             recommendation_hi=rec_hi,
             recommendation_en=rec_en,
             deep_analysis=deep_analysis
@@ -358,6 +407,115 @@ class MilanService:
             return True, f"गुरु दृष्टि परिहार: {m_person} की कुण्डली में देवगुरु बृहस्पति केन्द्र में स्थित होकर मांगलिक दोष का शमन कर रहे हैं।"
 
         return False, f"असंतुलित मांगलिक: केवल {m_person} मांगलिक हैं और {c_person} की कुण्डली में पर्याप्त परिहार नहीं है। विवाह पूर्व कुंभ/अर्क विवाह उपाय अनुशंसित है।"
+
+    def _calc_rajju(self, g_nak: int, b_nak: int) -> Tuple[bool, str, str]:
+        """
+        Calculates Rajju Koota & Dosha (5 Rajjus):
+        Siro (Head), Kantha (Neck), Nabhi (Navel), Ooru (Thigh), Pada (Foot).
+        Sharing the same Rajju triggers Rajju Dosha.
+        """
+        rajju_data = {
+            # 0-indexed nakshatra IDs (0 to 26)
+            # 1. Siro (Head) - Danger to Groom/Husband
+            4: ("शिरो रज्जु (Head)", "पति की आयु, स्वास्थ्य व अनिष्ट का भय (Danger to husband)"),
+            13: ("शिरो रज्जु (Head)", "पति की आयु, स्वास्थ्य व अनिष्ट का भय (Danger to husband)"),
+            22: ("शिरो रज्जु (Head)", "पति की आयु, स्वास्थ्य व अनिष्ट का भय (Danger to husband)"),
+
+            # 2. Kantha (Neck) - Danger to Bride/Wife
+            3: ("कण्ठ रज्जु (Neck)", "स्त्री के सौभाग्य व जीवन पर संकट (Danger to wife)"),
+            5: ("कण्ठ रज्जु (Neck)", "स्त्री के सौभाग्य व जीवन पर संकट (Danger to wife)"),
+            12: ("कण्ठ रज्जु (Neck)", "स्त्री के सौभाग्य व जीवन पर संकट (Danger to wife)"),
+            14: ("कण्ठ रज्जु (Neck)", "स्त्री के सौभाग्य व जीवन पर संकट (Danger to wife)"),
+            21: ("कण्ठ रज्जु (Neck)", "स्त्री के सौभाग्य व जीवन पर संकट (Danger to wife)"),
+            23: ("कण्ठ रज्जु (Neck)", "स्त्री के सौभाग्य व जीवन पर संकट (Danger to wife)"),
+
+            # 3. Nabhi (Navel) - Loss of Children / Progeny
+            2: ("नाभि रज्जु (Navel)", "संतान कष्ट, गर्भपात व वंश वृद्धि में बाधा (Progeny obstacles)"),
+            6: ("नाभि रज्जु (Navel)", "संतान कष्ट, गर्भपात व वंश वृद्धि में बाधा (Progeny obstacles)"),
+            11: ("नाभि रज्जु (Navel)", "संतान कष्ट, गर्भपात व वंश वृद्धि में बाधा (Progeny obstacles)"),
+            15: ("नाभि रज्जु (Navel)", "संतान कष्ट, गर्भपात व वंश वृद्धि में बाधा (Progeny obstacles)"),
+            20: ("नाभि रज्जु (Navel)", "संतान कष्ट, गर्भपात व वंश वृद्धि में बाधा (Progeny obstacles)"),
+            24: ("नाभि रज्जु (Navel)", "संतान कष्ट, गर्भपात व वंश वृद्धि में बाधा (Progeny obstacles)"),
+
+            # 4. Ooru (Thigh) - Financial Ruin
+            1: ("ऊरू रज्जु (Thigh)", "आर्थिक विनाश, कर्ज व भारी दरिद्रता (Financial decline)"),
+            7: ("ऊरू रज्जु (Thigh)", "आर्थिक विनाश, कर्ज व भारी दरिद्रता (Financial decline)"),
+            10: ("ऊरू रज्जु (Thigh)", "आर्थिक विनाश, कर्ज व भारी दरिद्रता (Financial decline)"),
+            16: ("ऊरू रज्जु (Thigh)", "आर्थिक विनाश, कर्ज व भारी दरिद्रता (Financial decline)"),
+            19: ("ऊरू रज्जु (Thigh)", "आर्थिक विनाश, कर्ज व भारी दरिद्रता (Financial decline)"),
+            25: ("ऊरू रज्जु (Thigh)", "आर्थिक विनाश, कर्ज व भारी दरिद्रता (Financial decline)"),
+
+            # 5. Pada (Foot) - Restlessness / Instability
+            0: ("पाद रज्जु (Foot)", "निरंतर देशाटन, मानसिक अस्थिरता व कलह (Instability/wandering)"),
+            8: ("पाद रज्जु (Foot)", "निरंतर देशाटन, मानसिक अस्थिरता व कलह (Instability/wandering)"),
+            9: ("पाद रज्जु (Foot)", "निरंतर देशाटन, मानसिक अस्थिरता व कलह (Instability/wandering)"),
+            17: ("पाद रज्जु (Foot)", "निरंतर देशाटन, मानसिक अस्थिरता व कलह (Instability/wandering)"),
+            18: ("पाद रज्जु (Foot)", "निरंतर देशाटन, मानसिक अस्थिरता व कलह (Instability/wandering)"),
+            26: ("पाद रज्जु (Foot)", "निरंतर देशाटन, मानसिक अस्थिरता व कलह (Instability/wandering)"),
+        }
+
+        g_info = rajju_data.get(g_nak, ("रज्जु अज्ञात", "सामान्य"))
+        b_info = rajju_data.get(b_nak, ("रज्जु अज्ञात", "सामान्य"))
+
+        if g_info[0] == b_info[0]:
+            return True, g_info[0], f"⚠️ {g_info[0]} महादोष सक्रिय: वर एवं कन्या दोनों एक ही रज्जु वर्ग में आते हैं। शास्त्रीय फल: {g_info[1]}। (महामृत्युंजय जाप व शांति आवश्यक)।"
+        return False, f"वर: {g_info[0]} | कन्या: {b_info[0]}", f"✅ रज्जु दोष मुक्त: वर एवं कन्या के भिन्न रज्जु हैं (वर: {g_info[0]}, कन्या: {b_info[0]}), जिससे दांपत्य में दीर्घायु व स्थायित्व प्राप्त होता है।"
+
+    def _calc_vedha(self, g_nak: int, b_nak: int) -> Tuple[bool, str]:
+        """Calculates Nakshatra Vedha (mutually repellent/hostile nakshatras)."""
+        vedha_pairs = {
+            (0, 17), (1, 16), (2, 15), (3, 14), (5, 21), (6, 20), (7, 19), (8, 18),
+            (9, 26), (10, 25), (11, 24), (12, 23), (4, 22)
+        }
+        if (g_nak, b_nak) in vedha_pairs or (b_nak, g_nak) in vedha_pairs:
+            return True, "⚠️ नक्षत्र वेध महादोष: वर और कन्या के नक्षत्र परस्पर वेध (स्वभावतः शत्रुतापूर्ण नक्षत्र युग्म) बनाते हैं। बिना शांति के दांपत्य में गुप्त द्वेष व अनपेक्षित विपत्ति का भय रहता है।"
+        return False, "✅ वेध दोष रहित: वर और कन्या के नक्षत्र परस्पर वेध रहित, मैत्रीपूर्ण एवं सामंजस्यकारी हैं।"
+
+    def _calc_stree_deergha_mahendra(self, g_nak: int, b_nak: int) -> Tuple[str, bool, str]:
+        """Calculates Stree-Deergha and Mahendra Kootas."""
+        dist = ((g_nak - b_nak) % 27) + 1
+        if dist > 13:
+            stree_d = f"🟢 अति-प्रशस्त ({dist} नक्षत्र अंतर — प्रचुर सुख व सौभाग्य कारक)"
+        elif dist >= 7:
+            stree_d = f"🟡 मध्यम अनुकूल ({dist} नक्षत्र अंतर)"
+        else:
+            stree_d = f"🔴 न्यून अंतर ({dist} नक्षत्र अंतर — सामान्य)"
+
+        has_mahendra = dist in [4, 7, 10, 13, 16, 19, 22, 25]
+        mahendra_desc = "✅ महेन्द्र कूट उपस्थित: वंश वृद्धि, पुत्र-पौत्र सुख एवं दीर्घ दांपत्य सौख्य।" if has_mahendra else "❌ महेन्द्र कूट अनुपस्थित (सामान्य दांपत्य)।"
+        return stree_d, has_mahendra, mahendra_desc
+
+    def _calc_dasha_sandhi(self, groom_chart: KundaliChart, bride_chart: KundaliChart) -> Tuple[bool, int, str]:
+        """
+        Calculates Dasha Sandhi (दशा-संधि):
+        If both groom and bride are undergoing Mahadasha changes within 1 year (365 days)
+        of each other, it triggers Dasha Sandhi Dosha (instability, health/career turbulence).
+        """
+        from datetime import datetime
+        try:
+            from ..dasha.vimshottari import default_dasha_engine
+        except (ImportError, ValueError):
+            from src.jyotish.dasha.vimshottari import default_dasha_engine
+
+        today = datetime.now().date()
+        try:
+            g_dasha = default_dasha_engine.get_active_hierarchy(groom_chart, today)
+            b_dasha = default_dasha_engine.get_active_hierarchy(bride_chart, today)
+            g_end = g_dasha.mahadasha.end_date
+            b_end = b_dasha.mahadasha.end_date
+
+            diff_days = abs((g_end - b_end).days)
+            is_dosha = diff_days <= 365
+
+            if diff_days <= 180:
+                desc = f"⚠️ अति-गंभीर दशा संधि दोष: वर ({g_dasha.mahadasha.lord} महादशा) व कन्या ({b_dasha.mahadasha.lord} महादशा) दोनों का महादशा परिवर्तन केवल {diff_days} दिनों ({round(diff_days/30, 1)} माह) के अंतराल में हो रहा है। विवाह के प्रारंभिक वर्षों में भारी उथल-पुथल की आशंका। महामृत्युंजय जप आवश्यक।"
+            elif is_dosha:
+                desc = f"⚠️ दशा संधि दोष: वर एवं कन्या दोनों की महादशाएं १ वर्ष के अंतराल ({diff_days} दिन) में समाप्त हो रही हैं। दांपत्य व आर्थिक जीवन में पूर्व-सावधानी व ग्रह शांति आवश्यक।"
+            else:
+                desc = f"✅ दशा संधि दोष नहीं है: वर ({g_dasha.mahadasha.lord}) व कन्या ({b_dasha.mahadasha.lord}) के महादशा परिवर्तन में {diff_days} दिनों ({round(diff_days/365, 1)} वर्ष) का पर्याप्त सुरक्षित अंतर है।"
+            return is_dosha, diff_days, desc
+        except Exception:
+            return False, 999, "✅ दशा संधि का कोई तात्कालिक संकट नहीं है।"
 
     def _get_sphuta_details(self, long_val: float) -> Tuple[int, str, int, str, bool, bool]:
         norm_long = long_val % 360.0
@@ -858,6 +1016,341 @@ class MilanService:
             "overall_rating": overall_rating
         }
 
+    def render_milan_report_html(self, groom_data: BirthData, bride_data: BirthData, score: AshtakootaScore) -> str:
+        """
+        Renders a Parashara's Light / Jagannatha Hora grade printable HTML dossier
+        for Kundali Milan with full Guna breakdown, Mahadoshas, Dasha Sandhi, and Remedies.
+        """
+        g_name = groom_data.name or "वर (Groom)"
+        b_name = bride_data.name or "कन्या (Bride)"
+
+        # Verdict Badge Color
+        if score.total_score >= 28 and not (score.nadi_dosha and not score.nadi_dosha_cancelled):
+            verdict_badge = "#10b981"  # Emerald
+            verdict_text = "उत्कृष्ट एवं शुभ मिलान (Highly Recommended)"
+        elif score.total_score >= 18 and not (score.nadi_dosha and not score.nadi_dosha_cancelled) and not (score.rajju_dosha and "शिरो" in score.rajju_type):
+            verdict_badge = "#3b82f6"  # Blue
+            verdict_text = "मध्यम एवं अनुकूल मिलान (Suitable / Favorable)"
+        else:
+            verdict_badge = "#ef4444"  # Red
+            verdict_text = "सावधानी / शांति अनुष्ठान अनिवार्य (Caution / Remedies Required)"
+
+        # Koota Table Rows
+        kootas = [
+            ("वर्ण (Varna)", "कार्य प्रवृत्ति एवं अहंकार सामंजस्य", score.varna, 1.0),
+            ("वश्य (Vashya)", "पारस्परिक आकर्षण व प्रभुत्व नियंत्रण", score.vashya, 2.0),
+            ("तारा (Tara)", "भाग्य, स्वास्थ्य एवं दीर्घायु अनुकूलता", score.tara, 3.0),
+            ("योनि (Yoni)", "शारीरिक, जैविक एवं वैवाहिक संतुष्टि", score.yoni, 4.0),
+            ("ग्रह मैत्री (Graha Maitri)", "मानसिक तालमेल, मित्रता एवं दृष्टिकोण", score.graha_maitri, 5.0),
+            ("गण (Gana)", "स्वभाव, चरित्र एवं संस्कार सामंजस्य", score.gana, 6.0),
+            ("भकूट (Bhakoot)", "वंश वृद्धि, आर्थिक समृद्धि एवं परिवार", score.bhakoot, 7.0),
+            ("नाड़ी (Nadi)", "आनुवंशिक स्वास्थ्य, रक्त एवं संतान योग", score.nadi, 8.0),
+        ]
+
+        table_rows = ""
+        for name, meaning, obt, mx in kootas:
+            pct = (obt / mx) * 100
+            bar_color = "#10b981" if pct >= 70 else ("#f59e0b" if pct >= 40 else "#ef4444")
+            table_rows += f"""
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 10px 12px; font-weight: 600; color: #1e293b;">{name}</td>
+                <td style="padding: 10px 12px; color: #64748b; font-size: 13px;">{meaning}</td>
+                <td style="padding: 10px 12px; text-align: center; font-weight: 700; color: #0f172a;">{obt} / {mx}</td>
+                <td style="padding: 10px 12px;">
+                    <div style="background: #e2e8f0; border-radius: 6px; height: 10px; width: 100%; overflow: hidden;">
+                        <div style="background: {bar_color}; width: {pct}%; height: 100%;"></div>
+                    </div>
+                </td>
+            </tr>
+            """
+
+        # Deep synastry highlights
+        syn = score.deep_analysis or {}
+        santana = syn.get("santana", {})
+        prosperity = syn.get("prosperity", {})
+        remedies = syn.get("remedies", [])
+        rem_html = "".join([f"<li style='margin-bottom: 6px;'>{r}</li>" for r in remedies]) if remedies else "<li>नियमित रूप से शिव-पार्वती पूजन व सुखद दांपत्य हेतु परस्पर सम्मान रखें।</li>"
+
+        html_content = f"""
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>विवाह मेलापक विस्तृत रिपोर्ट — {g_name} एवं {b_name}</title>
+<style>
+    @page {{ size: A4; margin: 15mm; }}
+    body {{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #1e293b;
+        background: #ffffff;
+        margin: 0;
+        padding: 20px;
+        line-height: 1.5;
+    }}
+    .no-print {{
+        text-align: right;
+        margin-bottom: 15px;
+    }}
+    .print-btn {{
+        background: #1e3a8a;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }}
+    .print-btn:hover {{ background: #1d4ed8; }}
+    .header-box {{
+        background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+        color: #ffffff;
+        padding: 24px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 24px;
+        border: 2px solid #f59e0b;
+    }}
+    .header-box h1 {{ margin: 0 0 6px 0; font-size: 24px; letter-spacing: 0.5px; }}
+    .header-box h2 {{ margin: 0; font-size: 15px; font-weight: 400; color: #fde68a; }}
+    .cards-row {{
+        display: flex;
+        gap: 16px;
+        margin-bottom: 20px;
+    }}
+    .profile-card {{
+        flex: 1;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        padding: 16px;
+        background: #f8fafc;
+    }}
+    .profile-card h3 {{
+        margin-top: 0;
+        margin-bottom: 12px;
+        color: #1e3a8a;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 6px;
+        font-size: 16px;
+    }}
+    .info-line {{ font-size: 13.5px; margin-bottom: 6px; }}
+    .info-label {{ font-weight: 600; color: #475569; }}
+    .section-title {{
+        font-size: 17px;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 22px 0 10px 0;
+        border-left: 4px solid #f59e0b;
+        padding-left: 10px;
+    }}
+    .table-container {{
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }}
+    table {{
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+    }}
+    th {{
+        background: #0f172a;
+        color: #ffffff;
+        padding: 12px;
+        text-align: left;
+        font-size: 13.5px;
+    }}
+    .dosha-grid {{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-bottom: 20px;
+    }}
+    .dosha-box {{
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        padding: 14px;
+        background: #ffffff;
+    }}
+    .dosha-title {{
+        font-weight: 700;
+        font-size: 14.5px;
+        margin-bottom: 6px;
+        display: flex;
+        justify-content: space-between;
+    }}
+    .verdict-banner {{
+        background: {verdict_badge};
+        color: #ffffff;
+        padding: 16px 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 18px;
+        margin: 20px 0;
+    }}
+    .footer-note {{
+        text-align: center;
+        font-size: 12px;
+        color: #94a3b8;
+        margin-top: 30px;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 12px;
+    }}
+    @media print {{
+        .no-print {{ display: none; }}
+        body {{ padding: 0; }}
+        .header-box {{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
+        .verdict-banner {{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
+    }}
+</style>
+</head>
+<body>
+
+<div class="no-print">
+    <button class="print-btn" onclick="window.print()">🖨️ रिपोर्ट प्रिंट करें / PDF डाउनलोड</button>
+</div>
+
+<div class="header-box">
+    <h1>॥ श्री गणेशाय नमः ॥</h1>
+    <h1>विवाह मेलापक एवं महा-दोष परीक्षण रिपोर्ट</h1>
+    <h2>वैदिक अष्टकूट (३६ गुण), रज्जु, वेध, दशा संधि एवं गहन सिनास्ट्री विश्लेषण</h2>
+</div>
+
+<div class="cards-row">
+    <div class="profile-card">
+        <h3>🤵 वर विवरण (Groom Profile)</h3>
+        <div class="info-line"><span class="info-label">नाम:</span> {g_name}</div>
+        <div class="info-line"><span class="info-label">जन्म दिनांक:</span> {groom_data.birth_date.strftime('%d-%b-%Y')}</div>
+        <div class="info-line"><span class="info-label">जन्म समय:</span> {groom_data.birth_time.strftime('%H:%M')}</div>
+        <div class="info-line"><span class="info-label">जन्म स्थान:</span> {groom_data.city or 'अज्ञात'} ({groom_data.latitude:.2f}°, {groom_data.longitude:.2f}°)</div>
+        <div class="info-line"><span class="info-label">मांगलिक स्थिति:</span> {'⚠️ मांगलिक' if score.groom_manglik else '✅ अमांगलिक'}</div>
+    </div>
+    <div class="profile-card">
+        <h3>👰 कन्या विवरण (Bride Profile)</h3>
+        <div class="info-line"><span class="info-label">नाम:</span> {b_name}</div>
+        <div class="info-line"><span class="info-label">जन्म दिनांक:</span> {bride_data.birth_date.strftime('%d-%b-%Y')}</div>
+        <div class="info-line"><span class="info-label">जन्म समय:</span> {bride_data.birth_time.strftime('%H:%M')}</div>
+        <div class="info-line"><span class="info-label">जन्म स्थान:</span> {bride_data.city or 'अज्ञात'} ({bride_data.latitude:.2f}°, {bride_data.longitude:.2f}°)</div>
+        <div class="info-line"><span class="info-label">मांगलिक स्थिति:</span> {'⚠️ मांगलिक' if score.bride_manglik else '✅ अमांगलिक'}</div>
+    </div>
+</div>
+
+<div class="verdict-banner">
+    कुल प्राप्तांक: {score.total_score} / 36.0 गुण — {verdict_text}
+</div>
+
+<div class="section-title">📊 अष्टकूट ३६ गुण मिलान विवरण (Ashtakoota Breakdown)</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 25%;">कूट का नाम</th>
+                <th style="width: 40%;">शास्त्रीय विचार</th>
+                <th style="width: 15%; text-align: center;">प्राप्त / कुल</th>
+                <th style="width: 20%;">अनुकूलता अनुपात</th>
+            </tr>
+        </thead>
+        <tbody>
+            {table_rows}
+            <tr style="background: #f1f5f9; font-weight: 800;">
+                <td style="padding: 12px;" colspan="2">कुल योग (TOTAL SCORE)</td>
+                <td style="padding: 12px; text-align: center; font-size: 16px; color: #1e3a8a;">{score.total_score} / 36.0</td>
+                <td style="padding: 12px; font-size: 13px; color: #475569;">न्यूनतम १८ गुण आवश्यक</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section-title">🚨 महा-दोष एवं सूक्ष्म कूट विश्लेषण (Critical Dosha Scan)</div>
+<div class="dosha-grid">
+    <div class="dosha-box">
+        <div class="dosha-title">
+            <span>🔥 मांगलिक दोष विचार</span>
+            <span>{'✅ अनुकूल' if score.manglik_match else '⚠️ असंतुलित'}</span>
+        </div>
+        <div style="font-size: 13px; color: #475569;">
+            {score.manglik_cancellation_reason}
+        </div>
+    </div>
+
+    <div class="dosha-box">
+        <div class="dosha-title">
+            <span>🧬 नाड़ी दोष एवं परिहार</span>
+            <span>{'✅ दोष मुक्त / परिहार' if (not score.nadi_dosha or score.nadi_dosha_cancelled) else '❌ नाड़ी महादोष'}</span>
+        </div>
+        <div style="font-size: 13px; color: #475569;">
+            {score.nadi_cancellation_reason}
+        </div>
+    </div>
+
+    <div class="dosha-box">
+        <div class="dosha-title">
+            <span>⭕ रज्जु दोष (Rajju Dosha)</span>
+            <span>{'⚠️ रज्जु दोष' if score.rajju_dosha else '✅ रज्जु दोष मुक्त'}</span>
+        </div>
+        <div style="font-size: 13px; color: #475569;">
+            {score.rajju_desc}
+        </div>
+    </div>
+
+    <div class="dosha-box">
+        <div class="dosha-title">
+            <span>⚡ नक्षत्र वेध दोष (Nakshatra Vedha)</span>
+            <span>{'⚠️ वेध उपस्थित' if score.vedha_dosha else '✅ वेध रहित'}</span>
+        </div>
+        <div style="font-size: 13px; color: #475569;">
+            {score.vedha_desc}
+        </div>
+    </div>
+
+    <div class="dosha-box">
+        <div class="dosha-title">
+            <span>⏳ दशा संधि विचार (Dasha Sandhi)</span>
+            <span>{'⚠️ दशा संधि' if score.dasha_sandhi else '✅ सुरक्षित अंतर'}</span>
+        </div>
+        <div style="font-size: 13px; color: #475569;">
+            {score.dasha_sandhi_desc}
+        </div>
+    </div>
+
+    <div class="dosha-box">
+        <div class="dosha-title">
+            <span>🌟 स्त्री-दीर्घ एवं महेन्द्र कूट</span>
+            <span>{'✅ महेन्द्र शुभ' if score.mahendra_koota else '🟡 सामान्य'}</span>
+        </div>
+        <div style="font-size: 13px; color: #475569;">
+            स्त्री-दीर्घ: {score.stree_deergha}<br>{score.mahendra_desc}
+        </div>
+    </div>
+</div>
+
+<div class="section-title">🔮 गहन शास्त्रीय सिनास्ट्री एवं जीवन फलादेश (Deep Synastry)</div>
+<div class="profile-card" style="margin-bottom: 20px;">
+    <div class="info-line"><strong>👶 संतान एवं वंश वृद्धि (बीज/क्षेत्र स्फुट):</strong> {santana.get('lineage_text', 'अनुकूल')} | {santana.get('first_child_desc', '')}</div>
+    <div class="info-line"><strong>💰 विवाह उपरांत भाग्योदय एवं समृद्धि:</strong> {prosperity.get('bhagyodaya_title', '')} — {prosperity.get('bhagyodaya_desc', '')}</div>
+    <div class="info-line"><strong>⚖️ दांपत्य जीवन की स्थिरता:</strong> {score.recommendation_hi}</div>
+</div>
+
+<div class="section-title">🕉️ अनुशंसित वैदिक शांति एवं उपाय (Remedies & Recommendations)</div>
+<div class="profile-card" style="background: #fffbeb; border-color: #fde68a;">
+    <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #92400e;">
+        {rem_html}
+    </ul>
+</div>
+
+<div class="footer-note">
+    कंप्यूटर जनित प्रामाणिक वैदिक कुंडली मिलान रिपोर्ट • बृहत्पाराशर होराशास्त्र, मुहूर्त चिंतामणि एवं जातक पारिजात पर आधारित
+</div>
+
+</body>
+</html>
+        """
+        return html_content
+
 
 # Singleton Milan service
 default_milan_service = MilanService()
+

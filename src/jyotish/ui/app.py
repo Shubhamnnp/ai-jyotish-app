@@ -2704,96 +2704,192 @@ with st.container(key="top_frozen_header_container", border=True):
                         st.session_state.gla_active_tool = None
                         st.rerun()
 
-        # 3. TOOL: OPEN / SAVED CHARTS & CLOUD FOLDERS
+        # 3. TOOL: OPEN / CLIENT KUNDALI VAULT & QUICK SWITCH
         elif st.session_state.gla_active_tool == "open":
             with st.container(border=True):
-                st.markdown("### 📁 सहेजी गई कुण्डलियां एवं क्लाउड सिंक (Open Charts & Cloud Folders)")
-                all_local_folders = default_folder_manager.list_folders()
-                flat_saved_charts = []
-                for f in all_local_folders:
-                    for c in f.get("charts", []):
-                        flat_saved_charts.append({
-                            "label": f"[{f['name'].split()[0]}] {c['name']}",
-                            "data": c.get("birth_data", {})
-                        })
+                st.markdown("### 🗄️ क्लाइंट कुण्डली वॉल्ट एवं क्विक स्विच (Client Kundali Vault & Quick Switch)")
+                
+                try:
+                    import importlib
+                    import src.jyotish.services.vault as vault_mod
+                    importlib.reload(vault_mod)
+                    v_service = vault_mod.default_vault_service
 
-                col_op1, col_op2 = st.columns([2.5, 1.5])
-                with col_op1:
-                    if flat_saved_charts:
-                        sel_saved_label = st.selectbox("स्थानीय व डेमो कुण्डली चुनें (Select Profile)", [sc["label"] for sc in flat_saved_charts], key="gla_sel_saved_profile")
-                        if st.button("📥 लोड करें (Load Chart)", type="primary", use_container_width=True, key="gla_load_saved_btn"):
-                            chosen = next((sc for sc in flat_saved_charts if sc["label"] == sel_saved_label), None)
-                            if chosen and chosen["data"]:
-                                bd = chosen["data"]
-                                st.session_state.birth_name = bd.get("name", "Client")
-                                st.session_state.birth_lat = float(bd.get("latitude", 28.6139))
-                                st.session_state.birth_lon = float(bd.get("longitude", 77.2090))
-                                st.session_state.birth_city = bd.get("city", "Delhi")
-                                try:
-                                    st.session_state.birth_date = datetime.strptime(bd["birth_date"], "%Y-%m-%d").date()
-                                    st.session_state.birth_time = datetime.strptime(bd["birth_time"], "%H:%M:%S").time()
-                                except Exception:
-                                    pass
-                                st.session_state.gla_active_tool = None
-                                st.toast(f"✅ {st.session_state.birth_name} का विवरण लोड किया गया!", icon="🔮")
-                                st.rerun()
-                    else:
-                        st.info("कोई स्थानीय कुण्डली उपलब्ध नहीं है।")
+                    tab_v_browse, tab_v_backup, tab_v_cloud = st.tabs([
+                        "🗂️ क्लाइंट डायरेक्टरी एवं क्विक लोड (Directory & Quick Load)",
+                        "📦 बैकअप एवं रिस्टोर (JSON Backup & Restore)",
+                        "☁️ क्लाउड सिंक (Grahalakshanam Cloud)"
+                    ])
 
-                with col_op2:
-                    st.markdown("#### ☁️ Grahalakshanam Cloud Sync")
-                    if st.button("☁️ सर्वर से सिंक करें (Sync API)", use_container_width=True, key="gla_sync_in_open_btn"):
-                        with st.spinner("Connecting to Grahalakshanam Cloud..."):
-                            active_u = st.session_state.get("gla_user", "shubham8jyotish@gmail.com")
-                            active_p = st.session_state.get("gla_pass", "Bahraich@123")
-                            client = GrahalakshanamClient(GrahalakshanamConfig(username=active_u, password=active_p))
-                            if client.authenticate():
-                                ff = client.get_folders_with_files()
-                                st.session_state.gla_charts = ff.get("files", [])
-                                default_folder_manager.sync_from_grahalakshanam(ff)
-                                st.session_state.gla_authenticated = True
-                                st.success(f"✅ Synced {len(st.session_state.gla_charts)} cloud charts!")
-                            else:
-                                st.error("❌ Authentication failed. Please verify credentials.")
+                    with tab_v_browse:
+                        col_vs1, col_vs2 = st.columns([3, 1.5])
+                        with col_vs1:
+                            v_search = st.text_input("🔍 नाम, शहर अथवा नोट्स द्वारा खोजें (Search Clients):", placeholder="जैसे: Vivek, Delhi, विवाह, VIP...", key="v_search_in")
+                        with col_vs2:
+                            tag_options = ["सभी (All)"] + vault_mod.AVAILABLE_TAGS
+                            v_tag = st.selectbox("🏷️ श्रेणी / टैग फ़िल्टर (Tag Filter):", tag_options, index=0, key="v_tag_sel")
+
+                        clients_list = v_service.list_all_clients(search_query=v_search, tag_filter=v_tag)
+
+                        st.caption(f"कुल {len(clients_list)} कुण्डलियाँ उपलब्ध:")
+
+                        if not clients_list:
+                            st.info("वॉल्ट में कोई मिलान नहीं मिला।")
+                        else:
+                            for c_entry in clients_list[:30]:  # limit to top 30
+                                b_data = c_entry.get("birth_data", {})
+                                c_id = c_entry.get("id")
+                                c_name = c_entry.get("name", "Client")
+                                c_city = b_data.get("city", "अज्ञात")
+                                c_dob = b_data.get("birth_date", "")
+                                c_tob = b_data.get("birth_time", "")
+                                c_tags = c_entry.get("tags", [" सामान्य"])
+                                c_notes = c_entry.get("notes", "")
+
+                                tags_html = " ".join([f"<span style='background:#E0E7FF; color:#3730A3; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700;'>{t}</span>" for t in c_tags])
+
+                                c_col1, c_col2, c_col3 = st.columns([4, 1.2, 0.8])
+                                with c_col1:
+                                    st.markdown(f"""
+                                    <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 12px; margin-bottom:8px;">
+                                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                                            <b style="font-size:15px; color:#0F172A;">👤 {c_name}</b>
+                                            <div>{tags_html}</div>
+                                        </div>
+                                        <div style="font-size:12.5px; color:#475569; margin-top:3px;">
+                                            📅 {c_dob} | ⏰ {c_tob} | 📍 {c_city} ({c_entry.get('folder_name', 'General')})
+                                        </div>
+                                        {f'<div style="font-size:12px; color:#6B21A8; margin-top:4px; font-style:italic;">📝 {c_notes}</div>' if c_notes else ''}
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                                with c_col2:
+                                    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+                                    if st.button("⚡ लोड करें", key=f"btn_load_c_{c_id}", type="primary", use_container_width=True):
+                                        st.session_state.birth_name = b_data.get("name", c_name)
+                                        st.session_state.birth_lat = float(b_data.get("latitude", 28.6139))
+                                        st.session_state.birth_lon = float(b_data.get("longitude", 77.2090))
+                                        st.session_state.birth_city = b_data.get("city", "Delhi")
+                                        try:
+                                            st.session_state.birth_date = datetime.strptime(b_data["birth_date"], "%Y-%m-%d").date()
+                                            st.session_state.birth_time = datetime.strptime(b_data["birth_time"][:8], "%H:%M:%S").time()
+                                        except Exception:
+                                            pass
+                                        st.session_state.gla_active_tool = None
+                                        st.toast(f"✅ {st.session_state.birth_name} की कुण्डली सक्रिय सत्र में लोड कर दी गई!", icon="⚡")
+                                        st.rerun()
+                                with c_col3:
+                                    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+                                    if st.button("🗑️", key=f"btn_del_c_{c_id}", help="वॉल्ट से हटाएं"):
+                                        v_service.delete_client(c_id)
+                                        st.toast(f"कुण्डली हटाई गई!", icon="🗑️")
+                                        st.rerun()
+
+                    with tab_v_backup:
+                        st.markdown("#### 📦 कुण्डली वॉल्ट बैकअप एवं रिस्टोर (Backup & Restore)")
+                        st.write("अपने सभी सहेजे गए क्लाइंट्स एवं कुण्डलियों का संपूर्ण डेटा JSON बैकअप के रूप में डाउनलोड करें अथवा पूर्व बैकअप से पुनः स्थापित करें:")
+
+                        c_bk1, c_bk2 = st.columns(2)
+                        with c_bk1:
+                            st.markdown("##### 📥 बैकअप डाउनलोड")
+                            vault_json = v_service.export_backup_json()
+                            st.download_button(
+                                label="📥 सम्पूर्ण कुण्डली वॉल्ट डाउनलोड करें (JSON Backup)",
+                                data=vault_json,
+                                file_name=f"JyotishOS_Kundali_Vault_{datetime.now().strftime('%Y%m%d_%H%M')}.json",
+                                mime="application/json",
+                                use_container_width=True,
+                                key="btn_dl_vault_json"
+                            )
+                        with c_bk2:
+                            st.markdown("##### 📤 बैकअप आयात (Restore)")
+                            up_file = st.file_uploader("JSON बैकअप फ़ाइल अपलोड करें:", type=["json"], key="vault_file_uploader")
+                            if up_file is not None:
+                                if st.button("🔄 बैकअप आयात करें (Confirm Import)", type="primary", use_container_width=True):
+                                    content = up_file.getvalue().decode("utf-8")
+                                    ok, msg, cnt = v_service.import_backup_json(content)
+                                    if ok:
+                                        st.success(msg)
+                                        st.rerun()
+                                    else:
+                                        st.error(msg)
+
+                    with tab_v_cloud:
+                        st.markdown("#### ☁️ Grahalakshanam Cloud Sync")
+                        if st.button("☁️ सर्वर से सिंक करें (Sync API)", use_container_width=True, key="gla_sync_in_open_btn"):
+                            with st.spinner("Connecting to Grahalakshanam Cloud..."):
+                                active_u = st.session_state.get("gla_user", "shubham8jyotish@gmail.com")
+                                active_p = st.session_state.get("gla_pass", "Bahraich@123")
+                                client = GrahalakshanamClient(GrahalakshanamConfig(username=active_u, password=active_p))
+                                if client.authenticate():
+                                    ff = client.get_folders_with_files()
+                                    st.session_state.gla_charts = ff.get("files", [])
+                                    default_folder_manager.sync_from_grahalakshanam(ff)
+                                    st.session_state.gla_authenticated = True
+                                    st.success(f"✅ Synced {len(st.session_state.gla_charts)} cloud charts!")
+                                else:
+                                    st.error("❌ Authentication failed. Please verify credentials.")
 
                     if st.button("❌ बंद करें (Close)", use_container_width=True, key="gla_close_open_btn"):
                         st.session_state.gla_active_tool = None
                         st.rerun()
 
-        # 4. TOOL: SAVE CHART
+                except Exception as _e_vault:
+                    st.error(f"वॉल्ट सेवा में त्रुटि: {_e_vault}")
+
+        # 4. TOOL: SAVE CHART TO VAULT WITH TAGS & NOTES
         elif st.session_state.gla_active_tool == "save":
             with st.container(border=True):
-                st.markdown("### 💾 कुण्डली सहेजें (Save / Save As)")
-                col_sv1, col_sv2, col_sv3 = st.columns([2, 1.5, 1])
-                with col_sv1:
-                    save_name_input = st.text_input("कुण्डली का नाम (Chart Name)", value=st.session_state.birth_name, key="gla_save_chart_name")
-                with col_sv2:
-                    all_local_folders = default_folder_manager.list_folders()
-                    f_options = {f["id"]: f["name"] for f in all_local_folders}
-                    sel_fid = st.selectbox("फ़ोल्डर चुनें (Select Folder)", list(f_options.keys()), format_func=lambda x: f_options[x], key="gla_save_folder_sel")
-                with col_sv3:
-                    st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
-                    if st.button("💾 सुरक्षित करें (Confirm Save)", type="primary", use_container_width=True, key="gla_confirm_save_btn"):
-                        save_payload = {
-                            "name": save_name_input,
-                            "gender": st.session_state.get("birth_gender", "Male"),
-                            "birth_date": st.session_state.birth_date.strftime("%Y-%m-%d"),
-                            "birth_time": st.session_state.birth_time.strftime("%H:%M:%S"),
-                            "latitude": st.session_state.birth_lat,
-                            "longitude": st.session_state.birth_lon,
-                            "timezone_offset": st.session_state.get("birth_tz", 5.5),
-                            "city": st.session_state.birth_city,
-                            "confidence": st.session_state.get("birth_conf", "Exact")
-                        }
-                        default_folder_manager.save_chart(folder_id=sel_fid, chart_name=save_name_input, birth_data=save_payload)
-                        st.session_state.birth_name = save_name_input
-                        st.session_state.gla_active_tool = None
-                        st.toast(f"✅ कुण्डली '{save_name_input}' सफलतापूर्वक सहेज ली गई!", icon="💾")
-                        st.rerun()
+                st.markdown("### 💾 क्लाइंट कुण्डली वॉल्ट में सुरक्षित करें (Save to Vault)")
+                
+                try:
+                    import importlib
+                    import src.jyotish.services.vault as vault_mod
+                    importlib.reload(vault_mod)
+                    v_service = vault_mod.default_vault_service
 
-                if st.button("❌ बंद करें (Close)", key="gla_close_save_btn"):
-                    st.session_state.gla_active_tool = None
-                    st.rerun()
+                    col_sv1, col_sv2 = st.columns([2, 2])
+                    with col_sv1:
+                        save_name_input = st.text_input("जातक / क्लाइंट का नाम (Client Name)", value=st.session_state.birth_name, key="gla_save_chart_name")
+                        sel_tags = st.multiselect("🏷️ श्रेणी / टैग्स चुनें (Tags):", vault_mod.AVAILABLE_TAGS, default=["🌟 VIP"], key="gla_save_tags_ms")
+                    with col_sv2:
+                        all_local_folders = default_folder_manager.list_folders()
+                        f_options = {f["id"]: f["name"] for f in all_local_folders}
+                        sel_fid = st.selectbox("📁 फ़ोल्डर चुनें (Select Folder)", list(f_options.keys()), format_func=lambda x: f_options[x], key="gla_save_folder_sel")
+                        save_notes_input = st.text_area("📝 परामर्श नोट्स (Consultant Notes):", placeholder="जैसे: करियर व विवाह विचार, नीलम व पन्ना रत्न संस्तुति...", key="gla_save_notes_ta", height=85)
+
+                    col_sv_act1, col_sv_act2 = st.columns([2, 1])
+                    with col_sv_act1:
+                        if st.button("💾 सुरक्षित करें (Confirm Save)", type="primary", use_container_width=True, key="gla_confirm_save_btn"):
+                            save_payload = {
+                                "name": save_name_input,
+                                "gender": st.session_state.get("birth_gender", "Male"),
+                                "birth_date": st.session_state.birth_date.strftime("%Y-%m-%d"),
+                                "birth_time": st.session_state.birth_time.strftime("%H:%M:%S"),
+                                "latitude": st.session_state.birth_lat,
+                                "longitude": st.session_state.birth_lon,
+                                "timezone_offset": st.session_state.get("birth_tz", 5.5),
+                                "city": st.session_state.birth_city,
+                                "confidence": st.session_state.get("birth_conf", "Exact")
+                            }
+                            v_service.save_client(
+                                name=save_name_input,
+                                birth_data=save_payload,
+                                tags=sel_tags,
+                                notes=save_notes_input,
+                                folder_id=sel_fid
+                            )
+                            st.session_state.birth_name = save_name_input
+                            st.session_state.gla_active_tool = None
+                            st.toast(f"✅ कुण्डली '{save_name_input}' टैग्स एवं नोट्स सहित सुरक्षित कर ली गई!", icon="💾")
+                            st.rerun()
+
+                    with col_sv_act2:
+                        if st.button("❌ बंद करें (Close)", use_container_width=True, key="gla_close_save_btn"):
+                            st.session_state.gla_active_tool = None
+                            st.rerun()
+
+                except Exception as _e_save_v:
+                    st.error(f"सहेजने में त्रुटि: {_e_save_v}")
 
         # 5. TOOL: SETTINGS (Ayanamsa, House System, Chart Style, Pro Mode)
         elif st.session_state.gla_active_tool == "settings":
@@ -4878,10 +4974,55 @@ elif selected_idx == 9:
     st.subheader("⏱️ दशा प्रणालियाँ एवं एकीकृत जीवन टाइमलाइन (Dasha & Predictive Life Timeline)")
     st.write("विंशोत्तरी, जैमिनी चर, योगिनी, कालचक्र, शूल व दृग दशाओं का ०-१०० वर्ष एकीकृत जीवन टाइमलाइन एवं बहु-स्तरीय विश्लेषण।")
 
-    tab_dasha_unified, tab_dasha_individual = st.tabs([
+    tab_dasha_gantt, tab_dasha_unified, tab_dasha_individual = st.tabs([
+        "📊 दृश्य दशा टाइमलाइन (Visual Gantt Timeline)",
         "⏳ ०-१०० वर्ष एकीकृत जीवन टाइमलाइन (Unified Predictive Life Timeline)",
         "🗂️ पृथक बहु-स्तरीय दशा प्रणालियाँ (10 Individual Dasha Systems)"
     ])
+
+    with tab_dasha_gantt:
+        st.markdown("### 📊 विंशोत्तरी बहु-स्तरीय दृश्य दशा टाइमलाइन (120-Year Gantt Timeline)")
+        st.caption("पाराशर-स्तरीय १२०-वर्षीय आनुपातिक महादशा, अंतर्दशा एवं प्रत्यन्तर्दशा गेंट चार्ट — '📍 आज' स्थिति एवं काल-खंड प्रगति:")
+
+        try:
+            import importlib
+            import src.jyotish.services.dasha_timeline as dt_mod
+            importlib.reload(dt_mod)
+            import streamlit.components.v1 as components
+
+            c_gt1, c_gt2 = st.columns([2, 2])
+            with c_gt1:
+                gantt_target_date = st.date_input(
+                    "📅 लक्षित अवलोकन दिनांक (Target Date / Event Date):",
+                    value=date.today(),
+                    min_value=date(1900, 1, 1),
+                    max_value=date(2100, 12, 31),
+                    format="DD/MM/YYYY",
+                    key="gantt_target_dt"
+                )
+
+            # Allow user to pick which Mahadasha to expand
+            m_list = dt_mod.default_dasha_timeline_service.engine.generate_timeline(chart)
+            m_options = ["वर्तमान सक्रिय महादशा (Auto)"] + [
+                f"{m['lord']} महादशा ({m['start_date'].strftime('%Y')} - {m['end_date'].strftime('%Y')})"
+                for m in m_list
+            ]
+            with c_gt2:
+                sel_m_str = st.selectbox("🔍 विस्तारित महादशा चुनें (Expand Mahadasha):", m_options, index=0, key="sel_gantt_m")
+
+            sel_idx = None
+            if sel_m_str != "वर्तमान सक्रिय महादशा (Auto)":
+                sel_idx = m_options.index(sel_m_str) - 1
+
+            gantt_html = dt_mod.default_dasha_timeline_service.render_gantt_html(
+                chart,
+                target_date=gantt_target_date,
+                selected_maha_idx=sel_idx
+            )
+            components.html(gantt_html, height=580, scrolling=True)
+
+        except Exception as _e_gantt:
+            st.error(f"टाइमलाइन निर्माण में त्रुटि: {_e_gantt}")
 
     with tab_dasha_unified:
         st.markdown("### ⏳ ० से १०० वर्ष सम्पूर्ण एकीकृत जीवन टाइमलाइन व घटना संभावना")
@@ -5867,9 +6008,10 @@ elif selected_idx == 10:
     rashi_names_hi = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"]
     rashi_symbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"]
 
-    tab_g0, tab_g1, tab_g2, tab_g3, tab_g4, tab_g5, tab_g6 = st.tabs([
+    tab_g0, tab_g1, tab_g_kakshya, tab_g2, tab_g3, tab_g4, tab_g5, tab_g6 = st.tabs([
         "🎯 जन्म-गोचर ओवरले चक्र (Bi-Wheel Dual Chart)",
         "🪐 दैनिक गोचर व अष्टकवर्ग (Live Transits & BAV/SAV)",
+        "🔬 अष्टकवर्ग कक्षी गोचर स्कैनर (Kakshya Transit Scanner)",
         "🛡️ सर्वतोभद्र चक्र (9x9 Sarvatobhadra Vedha)",
         "🏰 कोटा चक्र (Kota Chakra 4-Zone Fortress)",
         "📈 वित्तीय ज्योतिष व शेयर बाज़ार वेध (Financial & Commodity Trader)",
@@ -6216,6 +6358,101 @@ elif selected_idx == 10:
                 st.dataframe(pd.DataFrame(k_table_data), use_container_width=True, hide_index=True)
         except Exception as _ekk:
             st.error(f"कक्ष्य गोचर त्रुटि: {str(_ekk)[:200]}")
+
+    with tab_g_kakshya:
+        st.markdown("### 🪐 अष्टकवर्ग कक्षी गोचर स्कैनर (Ashtakavarga Kakshya Transit Scanner)")
+        st.caption("जगन्नाथ होरा स्तरीय ३°४५' (3.75°) अष्ट-कक्षी सूक्ष्म गोचर वेध — शनि, गुरु, मंगल, सूर्य, शुक्र, बुध, चन्द्र एवं लग्न कक्षी में बिन्दु (१=शुभ / ०=रिक्ता) परीक्षण:")
+
+        try:
+            import importlib
+            import src.jyotish.services.kakshya as kakshya_mod
+            importlib.reload(kakshya_mod)
+            kak_svc = kakshya_mod.default_kakshya_service
+
+            kak_res = kak_svc.scan_all_transits(chart, target_date=t_date)
+            planets_data = kak_res["planets"]
+
+            # Top KPI Summary Cards
+            ck_kpi1, ck_kpi2, ck_kpi3, ck_kpi4 = st.columns(4)
+            with ck_kpi1:
+                st.metric("कुल शुभ कक्षी (Subha)", f"{kak_res['subha_count']} / {kak_res['total_count']} ग्रह", f"{kak_res['overall_kakshya_pct']}% अनुकूलता")
+            with ck_kpi2:
+                st.metric("अवरुद्ध कक्षी (Asubha)", f"{kak_res['asubha_count']} ग्रह", "रिक्ता / संघर्ष")
+            with ck_kpi3:
+                sat_info = planets_data.get("Saturn", {})
+                st.metric("🪐 शनि कक्षी गोचर", f"कक्षी {sat_info.get('kakshya_num', '-')}: {sat_info.get('kakshya_lord_hi', '-')}", "🟢 १ बिन्दु (शुभ)" if sat_info.get('bindu_val') == 1 else "🔴 ० बिन्दु (अशुभ)")
+            with ck_kpi4:
+                jup_info = planets_data.get("Jupiter", {})
+                st.metric("♃ गुरु कक्षी गोचर", f"कक्षी {jup_info.get('kakshya_num', '-')}: {jup_info.get('kakshya_lord_hi', '-')}", "🟢 १ बिन्दु (शुभ)" if jup_info.get('bindu_val') == 1 else "🔴 ० बिन्दु (अशुभ)")
+
+            # Visual 8-Segment Kakshya Strips per Planet
+            st.markdown("#### ⚡ तात्कालिक कक्षी स्थिति एवं ८-खंडीय अष्टकवर्ग पट्टी")
+
+            for p_name, p_d in planets_data.items():
+                p_badge_color = "#10B981" if p_d["bindu_val"] == 1 else "#EF4444"
+                p_badge_bg = "#DCFCE7" if p_d["bindu_val"] == 1 else "#FEE2E2"
+
+                # Build 8-box segmented horizontal strip
+                strip_cells = ""
+                for k in p_d["full_kakshyas"]:
+                    is_curr = k["is_current"]
+                    has_b = (k["bindu"] == 1)
+
+                    bg = "#10B981" if has_b else "#E2E8F0"
+                    txt_color = "#FFFFFF" if has_b else "#64748B"
+                    border = "3px solid #F59E0B; box-shadow: 0 0 8px rgba(245,158,11,0.8);" if is_curr else "1px solid rgba(0,0,0,0.1);"
+                    curr_marker = "<div style='font-size:9px; background:#F59E0B; color:#000; font-weight:900; border-radius:3px; padding:1px;'>सक्रिय</div>" if is_curr else ""
+
+                    strip_cells += f"""
+                    <div style="flex:1; background:{bg}; color:{txt_color}; border:{border}; border-radius:6px; padding:6px 2px; text-align:center; min-width:38px;">
+                        {curr_marker}
+                        <div style="font-size:11px; font-weight:700;">{k['icon']} {k['lord_hi']}</div>
+                        <div style="font-size:12px; font-weight:900; margin-top:2px;">{k['bindu']}</div>
+                    </div>
+                    """
+
+                st.markdown(f"""
+                <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:10px; padding:14px; margin-bottom:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                        <div>
+                            <b style="font-size:15px; color:#0F172A;">{p_d['planet_hi']} ({p_name})</b> — 
+                            <span style="color:#2563EB; font-weight:600;">{p_d['sign_name']} राशि ({p_d['deg_in_sign']:.2f}°)</span> | 
+                            <span>कक्षी {p_d['kakshya_num']}: <b>{p_d['kakshya_icon']} {p_d['kakshya_lord_hi']}</b> ({p_d['start_deg']:.2f}° - {p_d['end_deg']:.2f}°)</span>
+                        </div>
+                        <span style="background:{p_badge_bg}; color:{p_badge_color}; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:800;">
+                            {p_d['verdict_badge']}
+                        </span>
+                    </div>
+                    <div style="display:flex; gap:6px; margin:8px 0;">
+                        {strip_cells}
+                    </div>
+                    <small style="color:#475569; font-size:12px;">💡 <b>शास्त्रीय वेध:</b> {p_d['verdict_desc']} (इस राशि में कुल BAV बिन्दु: <b>{p_d['bav_sign_score']}/8</b>)</small>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # 30-Day Forward Kakshya Timeline
+            st.markdown("---")
+            st.markdown("#### ⏳ ३०-दिवसीय आगामी कक्षी संक्रमण कालक्रम (30-Day Forward Kakshya Timeline)")
+            st.caption("शनि, गुरु एवं मंगल के कक्षी परिवर्तन एवं 'गोल्डन ट्रांजिट विण्डो' (जब ग्रह शून्य से १ बिन्दु कक्षी में प्रवेश करते हैं):")
+
+            k_timeline = kak_svc.generate_30day_kakshya_timeline(chart, start_date=t_date, days=30)
+            tl_rows = []
+            for item in k_timeline:
+                sat_b = f"{'🟢 1 (शुभ)' if item['saturn']['bindu_val']==1 else '🔴 0 (अशुभ)'} - {item['saturn']['kakshya_lord_hi']}" if item['saturn'] else "-"
+                jup_b = f"{'🟢 1 (शुभ)' if item['jupiter']['bindu_val']==1 else '🔴 0 (अशुभ)'} - {item['jupiter']['kakshya_lord_hi']}" if item['jupiter'] else "-"
+                ev_str = " | ".join(item['events']) if item['events'] else "—"
+
+                tl_rows.append({
+                    "दिनांक": item["date_str"],
+                    "🪐 शनि कक्षी (Bindu)": sat_b,
+                    "♃ गुरु कक्षी (Bindu)": jup_b,
+                    "⚡ कक्षी परिवर्तन / घटना": ev_str
+                })
+
+            st.dataframe(pd.DataFrame(tl_rows), use_container_width=True, hide_index=True)
+
+        except Exception as _e_kak:
+            st.error(f"कक्षी गोचर गणना में त्रुटि: {_e_kak}")
 
     with tab_g2:
         st.markdown("#### 🛡️ सर्वतोभद्र चक्र (9x9 Sarvatobhadra Vedha Matrix)")
@@ -7355,7 +7592,7 @@ elif selected_idx == 16:
                 st.dataframe(koota_df, use_container_width=True)
 
                 # Advanced Shastriya Cancellations & Balancing Analysis (with defensive fallback)
-                st.markdown("#### 🛡️ शास्त्रीय दोष परिहार एवं साम्य विश्लेषण (Shastriya Cancellations)")
+                st.markdown("#### 🛡️ शास्त्रीय महा-दोष, रज्जु, वेध एवं दशा-संधि विश्लेषण")
                 c_mc1, c_mc2, c_mc3 = st.columns(3)
 
                 m_canc_reason = getattr(m_score, 'manglik_cancellation_reason', '') or (
@@ -7387,6 +7624,43 @@ elif selected_idx == 16:
                         st.error("**⚠️ भकूट दोष सक्रिय:**\n\nषडाष्टक/द्विर्द्वादश/नवपंचम संबंध सक्रिय है (बिना परिहार)।")
                     else:
                         st.info("**🌙 भकूट मिलान:**\n\nभकूट दोष से पूर्णतः मुक्त अनुकूल संबंध।")
+
+                # Second Row of Mahadoshas: Rajju, Vedha, Dasha Sandhi
+                c_rj1, c_rj2, c_rj3 = st.columns(3)
+                with c_rj1:
+                    rajju_is_dosha = getattr(m_score, 'rajju_dosha', False)
+                    rajju_t = getattr(m_score, 'rajju_type', '')
+                    rajju_d = getattr(m_score, 'rajju_desc', '')
+                    if rajju_is_dosha:
+                        st.error(f"**⭕ {rajju_t}:**\n\n{rajju_d}")
+                    else:
+                        st.success(f"**⭕ रज्जु अनुकूलता:**\n\n{rajju_d}")
+
+                with c_rj2:
+                    vedha_is_dosha = getattr(m_score, 'vedha_dosha', False)
+                    vedha_d = getattr(m_score, 'vedha_desc', '')
+                    if vedha_is_dosha:
+                        st.error(f"**⚡ नक्षत्र वेध दोष:**\n\n{vedha_d}")
+                    else:
+                        st.success(f"**⚡ वेध अनुकूलता:**\n\n{vedha_d}")
+
+                with c_rj3:
+                    ds_dosha = getattr(m_score, 'dasha_sandhi', False)
+                    ds_desc = getattr(m_score, 'dasha_sandhi_desc', '')
+                    if ds_dosha:
+                        st.warning(f"**⏳ दशा संधि विचार:**\n\n{ds_desc}")
+                    else:
+                        st.info(f"**⏳ दशा संधि अनुकूलता:**\n\n{ds_desc}")
+
+                # Stree-Deergha & Mahendra Koota
+                stree_d = getattr(m_score, 'stree_deergha', '')
+                mahendra_d = getattr(m_score, 'mahendra_desc', '')
+                if stree_d or mahendra_d:
+                    c_sd1, c_sd2 = st.columns(2)
+                    with c_sd1:
+                        st.info(f"**🌟 स्त्री-दीर्घ कूट:** {stree_d}")
+                    with c_sd2:
+                        st.info(f"**👑 महेन्द्र कूट:** {mahendra_d}")
 
                 # ============================================================
                 # DEEP SHASTRIYA SYNASTRY & LIFE COMPATIBILITY (शास्त्रीय गहन फलादेश)
@@ -7554,8 +7828,24 @@ elif selected_idx == 16:
                     for r in deep_res.get('remedies', []):
                         st.markdown(f"• {r}")
 
-
-
+                # Printable Matchmaking Dossier (Parashara's Light / Jagannatha Hora Grade)
+                st.markdown("---")
+                st.markdown("### 📄 १-क्लिक प्रिंटेबल विवाह मेलापक रिपोर्ट (Printable Matchmaking Dossier)")
+                st.caption("पाराशर व जगन्नाथ होरा स्तरीय सम्पूर्ण कुंडली मिलान रिपोर्ट। सीधे प्रिंट करें अथवा PDF के रूप में सुरक्षित करें:")
+                try:
+                    report_html = milan_mod.default_milan_service.render_milan_report_html(groom_data, bride_data, m_score)
+                    import streamlit.components.v1 as components
+                    components.html(report_html, height=750, scrolling=True)
+                    st.download_button(
+                        label="📥 सम्पूर्ण विवाह मेलापक रिपोर्ट डाउनलोड करें (HTML/PDF)",
+                        data=report_html,
+                        file_name=f"Kundali_Milan_{g_name}_{b_name}.html",
+                        mime="text/html",
+                        key="btn_dl_milan_dossier",
+                        use_container_width=True
+                    )
+                except Exception as _e_rep:
+                    st.error(f"रिपोर्ट रेंडर करने में त्रुटि: {_e_rep}")
 
     with tab_milan_biz:
         st.markdown("### 💼 व्यापारिक साझेदारी एवं व्यावसायिक अनुकूलता (Business Partner Synastry)")
