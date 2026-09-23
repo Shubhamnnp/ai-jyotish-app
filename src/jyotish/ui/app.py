@@ -6690,16 +6690,15 @@ elif selected_idx == 16:
                 </div>
                 <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{san['lineage_text']}</p>
                 <p style="margin:4px 0; color:#0F172A; font-size:13.5px;">• <b>प्रथम संतान स्वभाव:</b> {san['first_child_desc']}</p>
-
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;">
-                    <div style="background:#FFFFFF; border:1px solid #FDE68A; border-radius:8px; padding:10px;">
+                <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+                    <div style="flex:1; min-width:240px; background:#FFFFFF; border:1px solid #FDE68A; border-radius:8px; padding:10px;">
                         <b style="color:#B45309; font-size:13px;">🌾 वर बीज स्फुट (Beeja Sphuta):</b><br/>
-                        <small style="color:#0F172A;"><b>स्थिति:</b> {san['beeja']['status']}</small><br/>
+                        <span style="color:#0F172A; font-weight:700; font-size:13px;">स्थिति: {san['beeja']['status']}</span><br/>
                         <small style="color:#475569;">{san['beeja']['desc']}</small>
                     </div>
-                    <div style="background:#FFFFFF; border:1px solid #FDE68A; border-radius:8px; padding:10px;">
+                    <div style="flex:1; min-width:240px; background:#FFFFFF; border:1px solid #FDE68A; border-radius:8px; padding:10px;">
                         <b style="color:#B45309; font-size:13px;">🌸 कन्या क्षेत्र स्फुट (Kshetra Sphuta):</b><br/>
-                        <small style="color:#0F172A;"><b>स्थिति:</b> {san['kshetra']['status']}</small><br/>
+                        <span style="color:#0F172A; font-weight:700; font-size:13px;">स्थिति: {san['kshetra']['status']}</span><br/>
                         <small style="color:#475569;">{san['kshetra']['desc']}</small>
                     </div>
                 </div>
@@ -8132,7 +8131,6 @@ elif selected_idx == 28:
                 </p>
             </div>
             """, unsafe_allow_html=True)
-
 
 
 

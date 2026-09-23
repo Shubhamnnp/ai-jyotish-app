@@ -5,8 +5,10 @@ Varna (1), Vashya (2), Tara (3), Yoni (4), Graha Maitri (5), Gana (6), Bhakoot (
 along with classical cancellations (Nadi/Bhakoot dosha) and mutual Manglik Dosha analysis.
 """
 
+from typing import Dict, Any, List, Tuple
 from typing import Dict, Any, List, Tuple, Optional
 from pydantic import BaseModel, Field
+from ..core.constants import SIGN_LORDS, NATURAL_FRIENDS, NATURAL_ENEMIES
 from ..core.constants import SIGN_LORDS, NATURAL_FRIENDS, NATURAL_ENEMIES, SIGN_NAMES
 from ..core.models import BirthData, KundaliChart
 from ..core.calculator import default_chart_calculator
@@ -154,6 +156,7 @@ class MilanService:
             manglik_match=manglik_match,
             manglik_cancellation_reason=manglik_canc_reason,
             recommendation_hi=rec_hi,
+            recommendation_en=rec_en
             recommendation_en=rec_en,
             deep_analysis=deep_analysis
         )
