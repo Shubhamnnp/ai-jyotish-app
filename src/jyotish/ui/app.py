@@ -152,18 +152,232 @@ st.set_page_config(
 )
 
 if "app_theme_mode" not in st.session_state:
-    q_theme = st.query_params.get("theme", None)
-    if q_theme in ["night", "day"]:
-        st.session_state.app_theme_mode = q_theme
-    else:
-        st.session_state.app_theme_mode = "night"
+    st.session_state.app_theme_mode = "astrallis"
 
+is_astrallis_mode = (st.session_state.app_theme_mode == "astrallis")
 is_night_mode = (st.session_state.app_theme_mode == "night")
 
 # -------------------------------------------------------------
-# Unified High-Contrast Cosmic Vedic Theme (Solid Black Font & Zero Washout)
+# Three-Way Precision Theme Engine: Astrallis Observatory / Cosmic Obsidian / Royal Pearl
 # -------------------------------------------------------------
-if is_night_mode:
+if is_astrallis_mode:
+    theme_mode_css = """
+    /* =========================================================
+       Astrallis Scientific Observatory Workstation Theme
+       ========================================================= */
+    html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
+        background-color: #050811 !important;
+        color: #E2E8F0 !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Noto Sans", sans-serif !important;
+        -webkit-font-smoothing: antialiased !important;
+    }
+    [data-testid="stSidebar"], section[data-testid="stSidebar"] {
+        background-color: #0A0E1A !important;
+        border-right: 1.5px solid #1E293B !important;
+    }
+    [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
+        color: #E2E8F0 !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
+    section[data-testid="stSidebar"] .stRadio label,
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label,
+    div[data-testid="stRadio"] label {
+        background: #0D1322 !important;
+        border: 1.5px solid #1E293B !important;
+        color: #E2E8F0 !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label p,
+    section[data-testid="stSidebar"] .stRadio label p,
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p,
+    div[data-testid="stRadio"] label p {
+        color: #CBD5E1 !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover,
+    section[data-testid="stSidebar"] .stRadio label:hover,
+    div[data-testid="stRadio"] label:hover {
+        background: #1E293B !important;
+        border-color: #00E5FF !important;
+        transform: translateY(-1px) !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked),
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="true"],
+    section[data-testid="stSidebar"] .stRadio label:has(input:checked),
+    div[data-testid="stRadio"] label:has(input:checked) {
+        background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%) !important;
+        border: 2px solid #00E5FF !important;
+        box-shadow: 0 4px 14px rgba(0, 229, 255, 0.25) !important;
+    }
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) p,
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) span,
+    div[data-testid="stRadio"] label:has(input:checked) p {
+        color: #FFFFFF !important;
+        font-weight: 800 !important;
+    }
+    h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
+        color: #E2E8F0 !important;
+    }
+    input, textarea, select,
+    div[data-baseweb="input"] input,
+    div[data-baseweb="base-input"] input,
+    div[data-baseweb="input"] {
+        background-color: #0A0E1A !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        border: 1.5px solid #1E293B !important;
+        border-radius: 6px !important;
+    }
+    input:focus, textarea:focus, div[data-baseweb="input"]:focus-within {
+        border-color: #00E5FF !important;
+        box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.25) !important;
+    }
+    div[data-baseweb="select"] > div {
+        background-color: #0A0E1A !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #1E293B !important;
+        border-radius: 6px !important;
+    }
+    div[data-baseweb="select"] * {
+        color: #FFFFFF !important;
+    }
+    header.top-nav-bar {
+        background: #0A0E1A !important;
+        border-color: #1E293B !important;
+        border-bottom: 3px solid #00E5FF !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+    }
+    .top-nav-bar * {
+        color: #E2E8F0 !important;
+    }
+    .app-brand-title {
+        background: linear-gradient(90deg, #00E5FF 0%, #38BDF8 50%, #F59E0B 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+    .app-brand-sub {
+        color: #94A3B8 !important;
+    }
+    .active-profile-pill {
+        background: #0D1322 !important;
+        border: 1.5px solid #00E5FF !important;
+        color: #E0F2FE !important;
+    }
+    .active-profile-pill * {
+        color: #E0F2FE !important;
+    }
+    .header-sub-pill {
+        background: #0D1322 !important;
+        border: 1.5px solid #1E293B !important;
+        color: #CBD5E1 !important;
+    }
+    .header-sub-pill * {
+        color: #CBD5E1 !important;
+    }
+    .header-sub-pill b {
+        color: #F8FAFC !important;
+    }
+    .digital-hud {
+        background: #080C14 !important;
+        border-color: #1E293B !important;
+    }
+    .digital-hud * {
+        color: #E2E8F0 !important;
+    }
+    .hud-pill {
+        background: #0D1322 !important;
+        border: 1.5px solid #1E293B !important;
+        color: #E2E8F0 !important;
+    }
+    .hud-pill b, .hud-pill strong {
+        color: #00E5FF !important;
+    }
+    .rule-card, .vastu-card {
+        background: #080C14 !important;
+        border: 1.5px solid #1E293B !important;
+        color: #E2E8F0 !important;
+    }
+    .rule-card *, .vastu-card * {
+        color: #E2E8F0 !important;
+    }
+    div[data-testid="stExpander"] {
+        background: #080C14 !important;
+        border: 1.5px solid #1E293B !important;
+    }
+    div[data-testid="stMetricValue"], div[data-testid="stMetricValue"] * {
+        color: #00E5FF !important;
+        font-family: 'JetBrains Mono', monospace !important;
+    }
+    div[data-testid="stMetricLabel"], div[data-testid="stMetricLabel"] * {
+        color: #94A3B8 !important;
+    }
+    [data-testid="stMetric"] {
+        background: #080C14 !important;
+        border: 1.5px solid #1E293B !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+    }
+    [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+        background-color: #050811 !important;
+        color: #F1F5F9 !important;
+        font-family: 'JetBrains Mono', monospace !important;
+    }
+    button[kind="secondary"] {
+        background-color: #0D1322 !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #1E293B !important;
+    }
+    button[kind="secondary"]:hover {
+        background-color: #1E293B !important;
+        border-color: #00E5FF !important;
+    }
+    /* Astrallis Tabs */
+    [data-testid="stTabs"] [data-baseweb="tab-list"] {
+        background: #080C14 !important;
+        border: 1.5px solid #1E293B !important;
+    }
+    [data-testid="stTabs"] button[role="tab"] {
+        color: #94A3B8 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:hover {
+        color: #F8FAFC !important;
+        background: rgba(30, 41, 59, 0.7) !important;
+    }
+    [data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+        background: #1E293B !important;
+        color: #00E5FF !important;
+        border: 1.5px solid #00E5FF !important;
+        box-shadow: 0 2px 12px rgba(0, 229, 255, 0.25) !important;
+    }
+    /* Astrallis Chat */
+    [data-testid="stChatMessage"] {
+        background: #080C14 !important;
+        border: 1.5px solid #1E293B !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+    }
+    [data-testid="stChatInput"] {
+        background-color: #080C14 !important;
+        border-color: #1E293B !important;
+    }
+    div[style*="background:#FFFFFF"], div[style*="background: #FFFFFF"],
+    div[style*="background:#F8FAFC"], div[style*="background: #F8FAFC"],
+    div[style*="background:#EFF6FF"], div[style*="background: #EFF6FF"] {
+        background: #080C14 !important;
+        border-color: #1E293B !important;
+        color: #E2E8F0 !important;
+    }
+    /* Aspect Ray Glow Classes */
+    .aspect-trine { stroke: #22C55E !important; stroke-width: 1.6 !important; opacity: 0.9 !important; }
+    .aspect-square { stroke: #EF4444 !important; stroke-width: 1.6 !important; opacity: 0.9 !important; }
+    .aspect-sextile { stroke: #06B6D4 !important; stroke-width: 1.4 !important; opacity: 0.85 !important; }
+    .aspect-opp { stroke: #F43F5E !important; stroke-width: 1.8 !important; stroke-dasharray: 4,2 !important; opacity: 0.95 !important; }
+    .aspect-conj { stroke: #EAB308 !important; stroke-width: 2 !important; opacity: 0.9 !important; }
+    .aspect-quincunx { stroke: #A855F7 !important; stroke-width: 1.2 !important; stroke-dasharray: 2,2 !important; opacity: 0.8 !important; }
+    .observatory-canvas {
+        background: radial-gradient(circle at center, #060911 0%, #000000 100%) !important;
+        border: 1.5px solid #1E293B !important;
+        border-radius: 12px !important;
+    }
+    """
+elif is_night_mode:
     theme_mode_css = """
     /* =========================================================
        Cosmic Vedic Obsidian Luxury Theme (Night Mode)
@@ -1743,20 +1957,248 @@ components.html("""
             const parentWin = window.parent || window;
             if (!parentDoc) return;
 
-            const NIGHT_STYLE_ID = "jyotish-night-mode-override-style";
+            const THEME_STYLE_ID = "jyotish-theme-override-style";
 
             function applyTheme(mode) {
+                const isAstrallis = (mode === "astrallis");
                 const isNight = (mode === "night");
                 try {
-                    localStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
-                    sessionStorage.setItem("jyotish_theme_mode", isNight ? "night" : "day");
+                    localStorage.setItem("jyotish_theme_mode", mode);
+                    sessionStorage.setItem("jyotish_theme_mode", mode);
                 } catch(e) {}
 
-                let styleEl = parentDoc.getElementById(NIGHT_STYLE_ID);
+                let styleEl = parentDoc.getElementById(THEME_STYLE_ID);
+                if (!styleEl) {
+                    styleEl = parentDoc.getElementById("jyotish-night-mode-override-style");
+                    if (styleEl) styleEl.id = THEME_STYLE_ID;
+                }
 
-                if (isNight) {
+                if (isAstrallis) {
+                    parentDoc.body.classList.remove("night-mode");
+                    parentDoc.body.classList.add("astrallis-mode");
+                    if (parentDoc.documentElement) {
+                        parentDoc.documentElement.classList.remove("night-mode");
+                        parentDoc.documentElement.classList.add("astrallis-mode");
+                    }
+                    
+                    const astrallisCss = `
+                        html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
+                            background-color: #050811 !important;
+                            color: #E2E8F0 !important;
+                        }
+                        [data-testid="stSidebar"], section[data-testid="stSidebar"] {
+                            background-color: #0A0E1A !important;
+                            border-right: 1.5px solid #1E293B !important;
+                        }
+                        [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
+                            color: #E2E8F0 !important;
+                        }
+                        section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
+                        section[data-testid="stSidebar"] .stRadio label,
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label,
+                        div[data-testid="stRadio"] label {
+                            background: #0D1322 !important;
+                            border: 1.5px solid #1E293B !important;
+                            color: #E2E8F0 !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p {
+                            color: #CBD5E1 !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {
+                            background: #1E293B !important;
+                            border-color: #00E5FF !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"],
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) {
+                            background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%) !important;
+                            border: 2px solid #00E5FF !important;
+                            box-shadow: 0 4px 14px rgba(0, 229, 255, 0.25) !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"] p,
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) p {
+                            color: #FFFFFF !important;
+                            font-weight: 800 !important;
+                        }
+                        h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
+                            color: #E2E8F0 !important;
+                        }
+                        input, textarea, select,
+                        div[data-baseweb="input"] input,
+                        div[data-baseweb="base-input"] input,
+                        div[data-baseweb="input"] {
+                            background-color: #0A0E1A !important;
+                            color: #FFFFFF !important;
+                            -webkit-text-fill-color: #FFFFFF !important;
+                            border: 1.5px solid #1E293B !important;
+                            border-radius: 6px !important;
+                        }
+                        div[data-baseweb="select"] > div {
+                            background-color: #0A0E1A !important;
+                            color: #FFFFFF !important;
+                            border: 1.5px solid #1E293B !important;
+                            border-radius: 6px !important;
+                        }
+                        div[data-baseweb="select"] * {
+                            color: #FFFFFF !important;
+                        }
+                        header.top-nav-bar {
+                            background: #0A0E1A !important;
+                            border-color: #1E293B !important;
+                            border-bottom: 3px solid #00E5FF !important;
+                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+                        }
+                        .top-nav-bar * {
+                            color: #E2E8F0 !important;
+                        }
+                        .app-brand-title {
+                            background: linear-gradient(90deg, #00E5FF 0%, #38BDF8 50%, #F59E0B 100%) !important;
+                            -webkit-background-clip: text !important;
+                            -webkit-text-fill-color: transparent !important;
+                        }
+                        .app-brand-sub {
+                            color: #94A3B8 !important;
+                        }
+                        .active-profile-pill {
+                            background: #0D1322 !important;
+                            border: 1.5px solid #00E5FF !important;
+                            color: #E0F2FE !important;
+                        }
+                        .active-profile-pill * {
+                            color: #E0F2FE !important;
+                        }
+                        .header-sub-pill {
+                            background: #0D1322 !important;
+                            border: 1.5px solid #1E293B !important;
+                            color: #CBD5E1 !important;
+                        }
+                        .header-sub-pill * {
+                            color: #CBD5E1 !important;
+                        }
+                        .header-sub-pill b {
+                            color: #F8FAFC !important;
+                        }
+                        .theme-select-box {
+                            background: #0D1322 !important;
+                            border-color: #00E5FF !important;
+                        }
+                        .theme-select-box select, .theme-select-box b, .theme-select-box span {
+                            color: #00E5FF !important;
+                        }
+                        .theme-select-box option {
+                            background: #0A0E1A !important;
+                            color: #FFFFFF !important;
+                        }
+                        .digital-hud {
+                            background: #080C14 !important;
+                            border-color: #1E293B !important;
+                        }
+                        .digital-hud * {
+                            color: #E2E8F0 !important;
+                        }
+                        .hud-pill {
+                            background: #0D1322 !important;
+                            border: 1.5px solid #1E293B !important;
+                            color: #E2E8F0 !important;
+                        }
+                        .hud-pill b, .hud-pill strong {
+                            color: #00E5FF !important;
+                        }
+                        .rule-card, .vastu-card {
+                            background: #080C14 !important;
+                            border: 1.5px solid #1E293B !important;
+                            color: #E2E8F0 !important;
+                        }
+                        .rule-card *, .vastu-card * {
+                            color: #E2E8F0 !important;
+                        }
+                        div[data-testid="stExpander"] {
+                            background: #080C14 !important;
+                            border: 1.5px solid #1E293B !important;
+                        }
+                        div[data-testid="stMetricValue"], div[data-testid="stMetricValue"] * {
+                            color: #00E5FF !important;
+                            font-family: 'JetBrains Mono', monospace !important;
+                        }
+                        div[data-testid="stMetricLabel"], div[data-testid="stMetricLabel"] * {
+                            color: #94A3B8 !important;
+                        }
+                        [data-testid="stMetric"] {
+                            background: #080C14 !important;
+                            border: 1.5px solid #1E293B !important;
+                            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+                        }
+                        [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+                            background-color: #050811 !important;
+                            color: #F1F5F9 !important;
+                            font-family: 'JetBrains Mono', monospace !important;
+                        }
+                        button[kind="secondary"] {
+                            background-color: #0D1322 !important;
+                            color: #FFFFFF !important;
+                            border: 1.5px solid #1E293B !important;
+                        }
+                        button[kind="secondary"]:hover {
+                            background-color: #1E293B !important;
+                            border-color: #00E5FF !important;
+                        }
+                        [data-testid="stTabs"] [data-baseweb="tab-list"] {
+                            background: #080C14 !important;
+                            border: 1.5px solid #1E293B !important;
+                        }
+                        [data-testid="stTabs"] button[role="tab"] {
+                            color: #94A3B8 !important;
+                        }
+                        [data-testid="stTabs"] button[role="tab"]:hover {
+                            color: #F8FAFC !important;
+                            background: rgba(30, 41, 59, 0.7) !important;
+                        }
+                        [data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+                            background: #1E293B !important;
+                            color: #00E5FF !important;
+                            border: 1.5px solid #00E5FF !important;
+                            box-shadow: 0 2px 12px rgba(0, 229, 255, 0.25) !important;
+                        }
+                        [data-testid="stChatMessage"] {
+                            background: #080C14 !important;
+                            border: 1.5px solid #1E293B !important;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+                        }
+                        [data-testid="stChatInput"] {
+                            background-color: #080C14 !important;
+                            border-color: #1E293B !important;
+                        }
+                        div[style*="background:#FFFFFF"], div[style*="background: #FFFFFF"],
+                        div[style*="background:#F8FAFC"], div[style*="background: #F8FAFC"],
+                        div[style*="background:#EFF6FF"], div[style*="background: #EFF6FF"] {
+                            background: #080C14 !important;
+                            border-color: #1E293B !important;
+                            color: #E2E8F0 !important;
+                        }
+                        .aspect-trine { stroke: #22C55E !important; stroke-width: 1.6 !important; opacity: 0.9 !important; }
+                        .aspect-square { stroke: #EF4444 !important; stroke-width: 1.6 !important; opacity: 0.9 !important; }
+                        .aspect-sextile { stroke: #06B6D4 !important; stroke-width: 1.4 !important; opacity: 0.85 !important; }
+                        .aspect-opp { stroke: #F43F5E !important; stroke-width: 1.8 !important; stroke-dasharray: 4,2 !important; opacity: 0.95 !important; }
+                        .aspect-conj { stroke: #EAB308 !important; stroke-width: 2 !important; opacity: 0.9 !important; }
+                        .aspect-quincunx { stroke: #A855F7 !important; stroke-width: 1.2 !important; stroke-dasharray: 2,2 !important; opacity: 0.8 !important; }
+                        .observatory-canvas {
+                            background: radial-gradient(circle at center, #060911 0%, #000000 100%) !important;
+                            border: 1.5px solid #1E293B !important;
+                            border-radius: 12px !important;
+                        }
+                    `;
+                    if (!styleEl) {
+                        styleEl = parentDoc.createElement("style");
+                        styleEl.id = THEME_STYLE_ID;
+                        parentDoc.head.appendChild(styleEl);
+                    }
+                    styleEl.innerHTML = astrallisCss;
+                } else if (isNight) {
+                    parentDoc.body.classList.remove("astrallis-mode");
                     parentDoc.body.classList.add("night-mode");
-                    if (parentDoc.documentElement) parentDoc.documentElement.classList.add("night-mode");
+                    if (parentDoc.documentElement) {
+                        parentDoc.documentElement.classList.remove("astrallis-mode");
+                        parentDoc.documentElement.classList.add("night-mode");
+                    }
                     
                     const nightCss = `
                         html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
@@ -1944,35 +2386,6 @@ components.html("""
                             background-color: #111827 !important;
                             border-color: #374151 !important;
                         }
-                        .gla-toolbar-container {
-                            background: #0D1322 !important;
-                            border: 1.5px solid #1E293B !important;
-                        }
-                        .gla-btn-tile {
-                            background-color: #111827 !important;
-                            border: 2px solid #1F2937 !important;
-                            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
-                        }
-                        .gla-btn-tile:hover {
-                            border-color: #F59E0B !important;
-                            background-color: #1E293B !important;
-                        }
-                        .gla-btn-tile span {
-                            color: #F8FAFC !important;
-                        }
-                        .gla-info-strip {
-                            background: linear-gradient(135deg, #0D1322 0%, #111827 50%, #1E293B 100%) !important;
-                            border: 1.5px solid #F59E0B !important;
-                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
-                        }
-                        .gla-info-strip b {
-                            color: #F59E0B !important;
-                        }
-                        .gla-active-tag {
-                            background: rgba(16, 185, 129, 0.2) !important;
-                            border: 1px solid #10B981 !important;
-                            color: #34D399 !important;
-                        }
                         div[style*="background:#FFFFFF"], div[style*="background: #FFFFFF"],
                         div[style*="background:#F8FAFC"], div[style*="background: #F8FAFC"],
                         div[style*="background:#EFF6FF"], div[style*="background: #EFF6FF"] {
@@ -1984,34 +2397,34 @@ components.html("""
                     
                     if (!styleEl) {
                         styleEl = parentDoc.createElement("style");
-                        styleEl.id = NIGHT_STYLE_ID;
+                        styleEl.id = THEME_STYLE_ID;
                         parentDoc.head.appendChild(styleEl);
                     }
                     styleEl.innerHTML = nightCss;
-                    if (document.body) document.body.classList.add("night-mode");
-                    if (document.documentElement) document.documentElement.classList.add("night-mode");
                 } else {
+                    parentDoc.body.classList.remove("astrallis-mode");
                     parentDoc.body.classList.remove("night-mode");
-                    if (parentDoc.documentElement) parentDoc.documentElement.classList.remove("night-mode");
+                    if (parentDoc.documentElement) {
+                        parentDoc.documentElement.classList.remove("astrallis-mode");
+                        parentDoc.documentElement.classList.remove("night-mode");
+                    }
                     if (styleEl) {
                         styleEl.remove();
                     }
-                    if (document.body) document.body.classList.remove("night-mode");
-                    if (document.documentElement) document.documentElement.classList.remove("night-mode");
                 }
 
                 // Sync all select elements
                 const selects = parentDoc.querySelectorAll("#software-theme-select");
                 selects.forEach(function(sel) {
-                    if (sel.value !== (isNight ? "night" : "day")) {
-                        sel.value = isNight ? "night" : "day";
+                    if (sel.value !== mode) {
+                        sel.value = mode;
                     }
                 });
 
                 // Sync icon
                 const icons = parentDoc.querySelectorAll("#theme-mode-icon, .theme-mode-icon");
                 icons.forEach(function(ic) {
-                    ic.innerText = isNight ? "🌙" : "☀️";
+                    ic.innerText = (mode === "astrallis" ? "🔬" : (mode === "night" ? "🌙" : "☀️"));
                 });
             }
 
@@ -2038,7 +2451,7 @@ components.html("""
                 }
             });
 
-            const currentSaved = localStorage.getItem("jyotish_theme_mode") || sessionStorage.getItem("jyotish_theme_mode") || "day";
+            const currentSaved = localStorage.getItem("jyotish_theme_mode") || sessionStorage.getItem("jyotish_theme_mode") || "astrallis";
             applyTheme(currentSaved);
         } catch (e) {
             console.error("Theme mode error:", e);
@@ -2130,9 +2543,10 @@ def render_login_page():
         <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border-color:#CBD5E1 !important; color:#0F172A !important; padding:4px 12px !important; display:inline-flex; align-items:center; gap:6px;" title="थीम चुनें (Select Day / Night Mode)">
             <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:14px;">☀️</span>
             <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:12px;">थीम:</b>
-            <select id="software-theme-select" class="notranslate" translate="no" onchange="(function(sel){var v=sel.value; try{var pd=(window.parent&&window.parent.document)?window.parent.document:document; if(v==='night'){document.documentElement.classList.add('night-mode'); document.body.classList.add('night-mode'); pd.documentElement.classList.add('night-mode'); pd.body.classList.add('night-mode'); localStorage.setItem('jyotish_theme_mode','night'); sessionStorage.setItem('jyotish_theme_mode','night');} else {document.documentElement.classList.remove('night-mode'); document.body.classList.remove('night-mode'); pd.documentElement.classList.remove('night-mode'); pd.body.classList.remove('night-mode'); localStorage.setItem('jyotish_theme_mode','day'); sessionStorage.setItem('jyotish_theme_mode','day');} var ics=(pd||document).querySelectorAll('#theme-mode-icon, .theme-mode-icon'); ics.forEach(function(i){i.innerText=(v==='night'?'🌙':'☀️');}); if(window.changeSoftwareTheme) window.changeSoftwareTheme(v); if(window.parent&&window.parent.changeSoftwareTheme) window.parent.changeSoftwareTheme(v);}catch(e){}})(this)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:12px; cursor:pointer; outline:none; padding:0 2px;">
-                <option value="day" class="notranslate" translate="no">☀️ डे मोड (Day Mode)</option>
-                <option value="night" class="notranslate" translate="no">🌙 नाइट मोड (Night Mode)</option>
+            <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:800; font-size:12px; cursor:pointer; outline:none; padding:0 2px;">
+                <option value="astrallis" class="notranslate" translate="no">🔬 एस्ट्रैलिस वेधशाला (Astrallis Observatory)</option>
+                <option value="night" class="notranslate" translate="no">🌙 कॉस्मिक ओब्सीडियन (Cosmic Obsidian)</option>
+                <option value="day" class="notranslate" translate="no">☀️ वैदिक रॉयल पर्ल (Royal Pearl)</option>
             </select>
         </div>
         <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border-color:#86EFAC !important; color:#166534 !important; padding:4px 12px !important;">
@@ -2727,114 +3141,88 @@ with st.container(key="top_frozen_header_container", border=True):
             pass
 
 
-    gla_bg = "#0D1322" if is_night_mode else "#F8FAFC"
-    gla_border = "#1E293B" if is_night_mode else "#CBD5E1"
-    tile_bg = "#111827" if is_night_mode else "#FFFFFF"
-    tile_border = "#1F2937" if is_night_mode else "#CBD5E1"
-    tile_hover_bg = "#1E293B" if is_night_mode else "#EFF6FF"
-    tile_hover_border = "#F59E0B" if is_night_mode else "#2563EB"
-    tile_text_color = "#F8FAFC" if is_night_mode else "#0F172A"
-    strip_bg = "linear-gradient(135deg, #0D1322 0%, #111827 50%, #1E293B 100%)" if is_night_mode else "linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%)"
-    strip_border = "#F59E0B" if is_night_mode else "#3B82F6"
-    strip_b_color = "#F59E0B" if is_night_mode else "#FEF08A"
-    tag_bg = "rgba(16, 185, 129, 0.2)" if is_night_mode else "rgba(255, 255, 255, 0.25)"
-    tag_border = "#10B981" if is_night_mode else "rgba(255, 255, 255, 0.6)"
-    tag_color = "#34D399" if is_night_mode else "#FFFFFF"
-
-    st.markdown(f"""
+    st.markdown("""
     <style>
-    .gla-toolbar-container {{
+    .gla-toolbar-container {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
         gap: 12px;
         padding: 10px 14px;
-        background: {gla_bg};
+        background: #f8f9fa;
         border-radius: 14px;
-        border: 1.5px solid {gla_border};
+        border: 1px solid #e2e8f0;
         margin-top: 6px;
         margin-bottom: 8px;
         overflow-x: auto;
-    }}
-    .gla-btn-tile {{
+    }
+    .gla-btn-tile {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         width: 78px;
         height: 78px;
-        background-color: {tile_bg} !important;
-        border: 2px solid {tile_border} !important;
-        border-radius: 15px !important;
+        background-color: #f2f2f2;
+        border: 3px solid #00b0f0;
+        border-radius: 15px;
         cursor: pointer;
         padding: 5px;
-        box-shadow: {'0 4px 14px rgba(0, 0, 0, 0.4)' if is_night_mode else '0 2px 8px rgba(0, 0, 0, 0.05)'} !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 6px rgba(0, 176, 240, 0.2);
+        transition: all 0.2s ease-in-out;
         text-align: center;
         margin: 0 auto;
-    }}
-    .gla-btn-tile:hover {{
+    }
+    .gla-btn-tile:hover {
         transform: translateY(-2px);
-        box-shadow: {'0 6px 18px rgba(245, 158, 11, 0.35)' if is_night_mode else '0 6px 16px rgba(37, 99, 235, 0.25)'} !important;
-        border-color: {tile_hover_border} !important;
-        background-color: {tile_hover_bg} !important;
-    }}
-    .gla-btn-tile img {{
-        width: 40px;
-        height: 40px;
+        box-shadow: 0 5px 12px rgba(0, 176, 240, 0.35);
+        background-color: #e0f4fc;
+    }
+    .gla-btn-tile img {
+        width: 42px;
+        height: 42px;
         object-fit: contain;
-    }}
-    .gla-btn-tile span {{
-        font-size: 11px;
-        font-weight: 800;
-        color: {tile_text_color} !important;
+    }
+    .gla-btn-tile span {
+        font-size: 10px;
+        font-weight: 700;
+        color: #1e293b;
         margin-top: 2px;
         white-space: nowrap;
-    }}
-    .gla-info-strip {{
+    }
+    .gla-info-strip {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: {strip_bg} !important;
+        background: #00b0f0;
         color: #ffffff;
-        padding: 8px 16px;
-        border-radius: 10px;
-        border: 1.5px solid {strip_border};
-        box-shadow: {'0 4px 20px rgba(0, 0, 0, 0.6)' if is_night_mode else '0 4px 16px rgba(37, 99, 235, 0.2)'};
-        font-size: 13.5px;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 13px;
         font-weight: 700;
         margin-bottom: 8px;
-    }}
-    .gla-info-strip b {{
-        color: {strip_b_color};
-    }}
-    .gla-active-tag {{
-        background: {tag_bg} !important;
-        border: 1px solid {tag_border} !important;
-        color: {tag_color} !important;
-        padding: 3px 10px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 800;
-    }}
+    }
+    .gla-info-strip b {
+        color: #ffffff;
+    }
     /* Transparent button overlaid exactly on top of the tile in gla-tile-box */
-    .gla-tile-box {{
+    .gla-tile-box {
         position: relative;
         width: 78px;
         height: 78px;
         margin: 0 auto;
-    }}
-    div[data-testid="stColumn"]:has(.gla-tile-box) {{
+    }
+    div[data-testid="stColumn"]:has(.gla-tile-box) {
         position: relative !important;
-    }}
-    div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {{
+    }
+    div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {
         position: relative !important;
         height: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
-    }}
-    div[data-testid="stColumn"]:has(.gla-tile-box) button {{
+    }
+    div[data-testid="stColumn"]:has(.gla-tile-box) button {
         position: absolute !important;
         top: -78px !important;
         left: 50% !important;
@@ -2850,14 +3238,14 @@ with st.container(key="top_frozen_header_container", border=True):
         padding: 0 !important;
         border: none !important;
         background: transparent !important;
-    }}
+    }
     div[data-testid="stColumn"]:has(.gla-tile-box) div[data-testid="stTooltipHoverTarget"],
-    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-baseweb="tooltip"] {{
+    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-baseweb="tooltip"] {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
         pointer-events: none !important;
-    }}
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -2880,11 +3268,7 @@ with st.container(key="top_frozen_header_container", border=True):
     def render_tool_tile(col, icon_b64, label_text, tool_key):
         with col:
             is_active = (st.session_state.gla_active_tool == tool_key)
-            if is_night_mode:
-                active_style = "border-color:#F59E0B !important; background: linear-gradient(135deg, #1E293B 0%, #1E3A8A 100%) !important; box-shadow:0 0 14px rgba(245,158,11,0.5) !important;" if is_active else ""
-            else:
-                active_style = "border-color:#2563EB !important; background-color:#EFF6FF !important; box-shadow:0 0 12px rgba(37,99,235,0.4) !important;" if is_active else ""
-
+            active_style = "border-color:#ff9800; background-color:#fff8e7; box-shadow:0 0 10px rgba(255,152,0,0.5);" if is_active else ""
             st.markdown(f"""
             <div class="gla-tile-box">
                 <a href="?gla_tool={tool_key}" target="_self" style="text-decoration:none; color:inherit; display:block;">
@@ -2896,15 +3280,8 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
             """, unsafe_allow_html=True)
             if st.button(" ", key=f"gla_tile_btn_{tool_key}", use_container_width=True):
-                if tool_key == "theme":
-                    new_mode = "day" if is_night_mode else "night"
-                    st.session_state.app_theme_mode = new_mode
-                    st.session_state.gla_active_tool = None
-                    st.toast(f"✨ {'🌙 नाइट मोड (Obsidian)' if new_mode == 'night' else '☀️ डे मोड (Royal Pearl)'} सक्रिय!", icon="🎨")
-                    st.rerun()
-                else:
-                    st.session_state.gla_active_tool = tool_key if st.session_state.gla_active_tool != tool_key else None
-                    st.rerun()
+                st.session_state.gla_active_tool = tool_key if st.session_state.gla_active_tool != tool_key else None
+                st.rerun()
 
     # 1. New Chart
     render_tool_tile(tb_cols[0], ICON_NOTEPAD_B64, "New", "new")
@@ -2930,9 +3307,8 @@ with st.container(key="top_frozen_header_container", border=True):
     # 8. Current Location
     render_tool_tile(tb_cols[7], ICON_LOCATION_B64, "Location", "location")
 
-    # 9. Theme Mode (Shows live active theme icon)
-    theme_label = f"Theme ({'🌙' if is_night_mode else '☀️'})"
-    render_tool_tile(tb_cols[8], ICON_THEME_B64, theme_label, "theme")
+    # 9. Theme Mode
+    render_tool_tile(tb_cols[8], ICON_THEME_B64, "Theme", "theme")
 
     # 10. Logout
     render_tool_tile(tb_cols[9], ICON_LOGOUT_B64, "Logout", "logout")
@@ -3428,20 +3804,26 @@ with st.container(key="top_frozen_header_container", border=True):
         # 9. TOOL: THEME MODE (थीम मोड)
         elif st.session_state.gla_active_tool == "theme":
             with st.container(border=True):
-                st.markdown("### ☀️🌙 थीम मोड स्विच करें (Day / Night Mode)")
-                cur_th = st.session_state.get("app_theme_mode", "day")
-                col_th1, col_th2, col_th3 = st.columns([1.5, 1.5, 1])
-                with col_th1:
-                    if st.button("☀️ डे मोड (Day Mode)", type="primary" if cur_th == "day" else "secondary", use_container_width=True, key="gla_set_day_theme_btn"):
-                        st.session_state.app_theme_mode = "day"
+                st.markdown("### 🔬🌙☀️ वैज्ञानिक एवं वैदिक थीम मोड (Astrallis & Vedic Themes)")
+                cur_th = st.session_state.get("app_theme_mode", "astrallis")
+                col_th0, col_th1, col_th2, col_th3 = st.columns([1.8, 1.8, 1.8, 1])
+                with col_th0:
+                    if st.button("🔬 एस्ट्रैलिस वेधशाला (Astrallis)", type="primary" if cur_th == "astrallis" else "secondary", use_container_width=True, key="gla_set_astrallis_theme_btn"):
+                        st.session_state.app_theme_mode = "astrallis"
                         st.session_state.gla_active_tool = None
-                        st.toast("☀️ डे मोड सक्रिय किया गया!", icon="☀️")
+                        st.toast("🔬 एस्ट्रैलिस वेधशाला वर्कस्टेशन सक्रिय किया गया!", icon="🔬")
                         st.rerun()
-                with col_th2:
-                    if st.button("🌙 नाइट मोड (Night Mode)", type="primary" if cur_th == "night" else "secondary", use_container_width=True, key="gla_set_night_theme_btn"):
+                with col_th1:
+                    if st.button("🌙 कॉस्मिक ओब्सीडियन (Night)", type="primary" if cur_th == "night" else "secondary", use_container_width=True, key="gla_set_night_theme_btn"):
                         st.session_state.app_theme_mode = "night"
                         st.session_state.gla_active_tool = None
-                        st.toast("🌙 नाइट मोड सक्रिय किया गया!", icon="🌙")
+                        st.toast("🌙 कॉस्मिक ओब्सीडियन नाइट मोड सक्रिय किया गया!", icon="🌙")
+                        st.rerun()
+                with col_th2:
+                    if st.button("☀️ वैदिक रॉयल पर्ल (Day)", type="primary" if cur_th == "day" else "secondary", use_container_width=True, key="gla_set_day_theme_btn"):
+                        st.session_state.app_theme_mode = "day"
+                        st.session_state.gla_active_tool = None
+                        st.toast("☀️ वैदिक रॉयल पर्ल डे मोड सक्रिय किया गया!", icon="☀️")
                         st.rerun()
                 with col_th3:
                     if st.button("❌ बंद करें", use_container_width=True, key="gla_close_theme_btn"):
