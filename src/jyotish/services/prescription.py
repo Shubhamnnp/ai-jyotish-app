@@ -7,8 +7,13 @@ and a quarterly transit precaution. Printable as A4 or shareable via WhatsApp.
 
 from typing import Dict, List, Any, Optional
 from datetime import datetime, date
-from ..core.constants import SIGN_NAMES, SIGN_LORDS, NATURAL_FRIENDS, NATURAL_ENEMIES
-from ..core.models import KundaliChart
+
+try:
+    from ..core.constants import SIGN_NAMES, SIGN_LORDS, NATURAL_FRIENDS, NATURAL_ENEMIES
+    from ..core.models import KundaliChart
+except (ImportError, ValueError):
+    from src.jyotish.core.constants import SIGN_NAMES, SIGN_LORDS, NATURAL_FRIENDS, NATURAL_ENEMIES
+    from src.jyotish.core.models import KundaliChart
 
 GEMSTONE_DATA = {
     "Sun": {"gem": "माणिक्य (Ruby)", "sub": "गार्नेट / लाल तुरमली", "metal": "स्वर्ण (Gold) अथवा तांबा", "finger": "अनामिका (Ring Finger)", "day": "रविवार प्रातः", "mantra": "ॐ घृणिः सूर्याय नमः (७,००० जप)"},

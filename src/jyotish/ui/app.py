@@ -45,9 +45,37 @@ from src.jyotish.core.upagraha import default_upagraha_calculator
 from src.jyotish.core.chakras import default_sarvatobhadra_engine, default_kota_chakra_engine
 from src.jyotish.core.ayurdaya import default_ayurdaya_engine
 from src.jyotish.core.kp import default_kp_engine
-from src.jyotish.services.muhurta import default_muhurta_engine, default_muhurta_scanner
-from src.jyotish.services.prescription import default_prescription_service
-from src.jyotish.services.transit_calendar import default_transit_calendar_service
+import importlib
+try:
+    from src.jyotish.services.muhurta import default_muhurta_engine, default_muhurta_scanner
+except ImportError:
+    try:
+        import src.jyotish.services.muhurta as _muh_mod
+        importlib.reload(_muh_mod)
+        from src.jyotish.services.muhurta import default_muhurta_engine, default_muhurta_scanner
+    except Exception:
+        from src.jyotish.services.muhurta import default_muhurta_engine
+        default_muhurta_scanner = None
+
+try:
+    from src.jyotish.services.prescription import default_prescription_service
+except ImportError:
+    try:
+        import src.jyotish.services.prescription as _presc_mod
+        importlib.reload(_presc_mod)
+        from src.jyotish.services.prescription import default_prescription_service
+    except Exception:
+        default_prescription_service = None
+
+try:
+    from src.jyotish.services.transit_calendar import default_transit_calendar_service
+except ImportError:
+    try:
+        import src.jyotish.services.transit_calendar as _cal_mod
+        importlib.reload(_cal_mod)
+        from src.jyotish.services.transit_calendar import default_transit_calendar_service
+    except Exception:
+        default_transit_calendar_service = None
 from src.jyotish.ui.sudarshan import default_sudarshan_engine
 from src.jyotish.core.affliction import AfflictionEngine, LIFE_AREAS
 from src.jyotish.dasha.vimshottari import default_dasha_engine
@@ -6499,7 +6527,10 @@ elif selected_idx == 10:
         st.markdown("### 📅 मासिक व्यक्तिगत गोचर पंचांग कैलेंडर (Personalized Monthly Transit Calendar)")
         st.caption("Shri Jyoti Star के समान मासिक कैलेंडर ग्रिड—माह के प्रत्येक दिन जातक की जन्म राशि अनुसार व्यक्तिगत भाग्य रेटिंग (१-५ स्टार), राशि परिवर्तन (Ingress), और मुख्य पर्व।")
 
-        from src.jyotish.services.transit_calendar import default_transit_calendar_service
+        t_cal = default_transit_calendar_service
+        if t_cal is None:
+            from src.jyotish.services.transit_calendar import PersonalTransitCalendarService
+            t_cal = PersonalTransitCalendarService()
 
         col_cal1, col_cal2 = st.columns(2)
         with col_cal1:
@@ -6519,7 +6550,7 @@ elif selected_idx == 10:
             )
 
         with st.spinner("मासिक गोचर पंचांग व चंद्र शुद्धि की गणना जारी..."):
-            cal_data = default_transit_calendar_service.generate_monthly_calendar(cal_year, cal_month, chart)
+            cal_data = t_cal.generate_monthly_calendar(cal_year, cal_month, chart)
 
         # Top Summary KPIs
         days_5star = sum(1 for d in cal_data["days"] if d["stars"] == 5)
@@ -7048,7 +7079,11 @@ elif selected_idx == 12:
             import datetime
             scan_end = scan_start + datetime.timedelta(days=scan_days)
             with st.spinner(f"{scan_days} दिनों में श्रेष्ठ मुहूर्त खोजे जा रहे हैं..."):
-                top_muhurtas = default_muhurta_scanner.scan_range(
+                m_scanner = default_muhurta_scanner
+                if m_scanner is None:
+                    from src.jyotish.services.muhurta import MuhurtaRangeScanner
+                    m_scanner = MuhurtaRangeScanner()
+                top_muhurtas = m_scanner.scan_range(
                     activity_type=scan_activity[0],
                     start_date=scan_start,
                     end_date=scan_end,
@@ -7803,14 +7838,19 @@ elif selected_idx == 18:
         st.markdown("#### 📋 १-पेज डॉक्टरी-शैली ज्योतिषी परामर्श पर्ची (Consultation Prescription Slip)")
         st.caption("क्लाइंट को परामर्श के बाद सीधे देने हेतु त्वरित १-पेज पर्ची — अनुकूल रत्न, पूर्ण वर्जित रत्न, वैदिक मंत्र, अनिष्ट शांति दान, जीवनशैली एवं ९० दिनों की गोचर सावधानी।")
 
-        p_data = default_prescription_service.generate_prescription(chart)
-        p_html = default_prescription_service.render_prescription_html(
+        p_service = default_prescription_service
+        if p_service is None:
+            from src.jyotish.services.prescription import ConsultationSlipService
+            p_service = ConsultationSlipService()
+
+        p_data = p_service.generate_prescription(chart)
+        p_html = p_service.render_prescription_html(
             p_data,
             astro_name=astro_name,
             astro_center=astro_org,
             astro_contact=astro_phone
         )
-        p_wa_text = default_prescription_service.generate_whatsapp_text(p_data)
+        p_wa_text = p_service.generate_whatsapp_text(p_data)
         import urllib.parse
         wa_url = f"https://wa.me/?text={urllib.parse.quote(p_wa_text)}"
 

@@ -7,9 +7,14 @@ lunar transits, planetary ingresses (Rashi transitions), and auspicious festival
 from typing import Dict, List, Any, Optional
 import calendar
 from datetime import datetime, date, time, timedelta, timezone
-from ..core.ephemeris import PyEphemProvider
-from ..core.constants import SIGN_NAMES
-from ..core.models import KundaliChart
+try:
+    from ..core.ephemeris import PyEphemProvider
+    from ..core.constants import SIGN_NAMES
+    from ..core.models import KundaliChart
+except (ImportError, ValueError):
+    from src.jyotish.core.ephemeris import PyEphemProvider
+    from src.jyotish.core.constants import SIGN_NAMES
+    from src.jyotish.core.models import KundaliChart
 
 PLANET_ICONS = {
     "Sun": "☀️",

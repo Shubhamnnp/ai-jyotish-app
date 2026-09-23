@@ -10,6 +10,13 @@ Calculates:
 from typing import Dict, List, Tuple, Optional, Any
 from datetime import datetime, date, time, timedelta
 
+try:
+    from ..core.ephemeris import PyEphemProvider
+    from ..core.constants import NAKSHATRAS, SIGN_NAMES
+except (ImportError, ValueError):
+    from src.jyotish.core.ephemeris import PyEphemProvider
+    from src.jyotish.core.constants import NAKSHATRAS, SIGN_NAMES
+
 
 CHOGHADIYA_TYPES = {
     "Amrit": {"name_hi": "अमृत (Amrit)", "nature": "उत्तम शुभ (Supreme Benefic)", "color": "#065F46", "bg": "#D1FAE5"},
@@ -203,9 +210,14 @@ class MuhurtaRangeScanner:
 
     MALIFIC_YOGAS = [1, 6, 9, 10, 17, 27]  # Vishkambha(1), Atiganda(6), Shula(9), Ganda(10), Vyatipata(17), Vaidhriti(27)
 
-    def __init__(self):
-        from ..core.ephemeris import PyEphemProvider
-        self.provider = PyEphemProvider()
+    def __init__(self, provider: Optional[Any] = None):
+        if provider is not None:
+            self.provider = provider
+        else:
+            try:
+                self.provider = PyEphemProvider()
+            except Exception:
+                self.provider = None
 
     def scan_range(
         self,
@@ -219,14 +231,15 @@ class MuhurtaRangeScanner:
         Scans all dates between start_date and end_date.
         Ranks top dates by Shubh Score (0-100%).
         """
+        if self.provider is None:
+            self.provider = PyEphemProvider()
+
         results = []
         cur_d = start_date
         delta = timedelta(days=1)
 
         fav_naks = self.FAVORABLE_NAKSHATRAS.get(activity_type, self.FAVORABLE_NAKSHATRAS["vyapar"])
         natal_moon_sign = natal_chart.planets["Moon"].sign_id if (natal_chart and "Moon" in natal_chart.planets) else None
-
-        from ..core.constants import NAKSHATRAS, SIGN_NAMES
 
         while cur_d <= end_date:
             dt_noon = datetime.combine(cur_d, time(12, 0))
