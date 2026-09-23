@@ -65,14 +65,19 @@ class PyEphemProvider(BaseEphemerisProvider):
         # Precession ~ 50.290966 arcsec / year = 5029.0966 arcsec / century
         lahiri_base = 23.857092 + (5029.0966 * centuries + 1.1116 * centuries**2) / 3600.0
 
-        ayanamsa_name_lower = ayanamsa_name.strip().lower()
+        ayanamsa_name_lower = ayanamsa_name.strip().lower().replace("-", "_").replace(" ", "_")
         if ayanamsa_name_lower in ("lahiri", "chitra_paksha", "default"):
             return lahiri_base % 360.0
-        elif ayanamsa_name_lower == "raman":
-            return (lahiri_base - 1.45) % 360.0
-        elif ayanamsa_name_lower in ("kp", "krishnamurti"):
+        elif ayanamsa_name_lower in ("raman", "bv_raman"):
+            return (lahiri_base - 1.4444) % 360.0
+        elif ayanamsa_name_lower in ("kp", "krishnamurti", "kp_old"):
             return (lahiri_base - 0.10) % 360.0
-        elif ayanamsa_name_lower == "true_chitra":
+        elif ayanamsa_name_lower in ("kp_new", "kp_straight_line"):
+            return (lahiri_base - 0.04) % 360.0
+        elif "pushya" in ayanamsa_name_lower:
+            # PVR Narasimha Rao's Pushya-Paksha Ayanamsha (Pushya center at 106° sidereal)
+            return (lahiri_base - 1.838) % 360.0
+        elif "chitra" in ayanamsa_name_lower:
             # True Chitra anchors Spica at exact 180.0 degrees sidereal
             try:
                 spica = ephem.Star("Spica")
@@ -83,6 +88,12 @@ class PyEphemProvider(BaseEphemerisProvider):
                 return (trop_spica_deg - 180.0) % 360.0
             except Exception:
                 return lahiri_base % 360.0
+        elif "yukteshwar" in ayanamsa_name_lower:
+            return (lahiri_base + 0.28) % 360.0
+        elif "bhasin" in ayanamsa_name_lower:
+            return (lahiri_base - 0.35) % 360.0
+        elif "fagan" in ayanamsa_name_lower:
+            return (lahiri_base + 0.88) % 360.0
         else:
             return lahiri_base % 360.0
 
@@ -100,22 +111,37 @@ class PyEphemProvider(BaseEphemerisProvider):
 
     def calculate_true_lunar_nodes(self, dt_utc: datetime) -> Tuple[float, float]:
         """
-        Computes True (Sphutha) Lunar Node (Rahu) using PyEphem's precise Moon tracking.
-        True node oscillates around the mean node with a ±1.5° amplitude.
+        Computes True (Sphutha) Lunar Node (Rahu) using Meeus Astronomical Algorithms
+        with periodic perturbation terms for high orbital precision (±1.5° oscillation).
         """
         try:
-            # PyEphem tracks the Moon's actual ascending node via Moon._n_dot / _node
-            m = ephem.Moon()
-            m.compute(ephem.Date(dt_utc))
-            # PyEphem internal: moon._node is the longitude of ascending node in radians
-            if hasattr(m, '_node'):
-                rahu_trop = math.degrees(m._node) % 360.0
-            else:
-                # Fallback: use mean node
-                jd = self.datetime_to_jd(dt_utc)
-                rahu_trop, _ = self.calculate_mean_lunar_nodes(jd)
-            ketu_trop = (rahu_trop + 180.0) % 360.0
-            return rahu_trop, ketu_trop
+            jd = self.datetime_to_jd(dt_utc)
+            t = (jd - 2451545.0) / 36525.0
+            mean_rahu, _ = self.calculate_mean_lunar_nodes(jd)
+
+            # Fundamental arguments (radians):
+            # D: Mean elongation of Moon from Sun
+            d_arg = math.radians(297.85036 + 445267.111480 * t - 0.0019142 * (t**2) + (t**3) / 189474.0)
+            # M: Mean anomaly of the Sun
+            m_sun = math.radians(357.52772 + 35999.050340 * t - 0.0001603 * (t**2) - (t**3) / 300000.0)
+            # M': Mean anomaly of the Moon
+            m_moon = math.radians(134.96298 + 477198.867398 * t + 0.0086972 * (t**2) + (t**3) / 56250.0)
+            # F: Moon's argument of latitude
+            f_arg = math.radians(93.27191 + 483202.017538 * t - 0.0036825 * (t**2) + (t**3) / 327270.0)
+
+            # Periodic perturbation terms for True Ascending Node:
+            delta_omega = (
+                -1.4979 * math.sin(2.0 * (d_arg - f_arg))
+                - 0.2057 * math.sin(2.0 * d_arg)
+                - 0.1714 * math.sin(m_sun)
+                - 0.0526 * math.sin(2.0 * f_arg)
+                + 0.0402 * math.sin(2.0 * (d_arg - m_moon))
+                + 0.0163 * math.sin(2.0 * d_arg - m_sun)
+                - 0.0142 * math.sin(2.0 * m_moon)
+            )
+            true_rahu = (mean_rahu + delta_omega) % 360.0
+            true_ketu = (true_rahu + 180.0) % 360.0
+            return true_rahu, true_ketu
         except Exception:
             jd = self.datetime_to_jd(dt_utc)
             return self.calculate_mean_lunar_nodes(jd)

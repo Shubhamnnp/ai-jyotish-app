@@ -4,7 +4,7 @@ Implements Parashari Bhinna Ashtakavarga (BAV) and Sarva Ashtakavarga (SAV).
 Ensures exact classical conservation of 337 total bindus.
 """
 
-from typing import Dict, List
+from typing import Dict, List, Any, Optional, Tuple
 from .constants import ASHTAKAVARGA_RULES
 from .models import AshtakavargaResult, KundaliChart
 
@@ -289,4 +289,81 @@ class AshtakavargaCalculator:
             }
 
         return prastara
+
+    KAKSHYA_LORDS = ["Saturn", "Jupiter", "Mars", "Sun", "Venus", "Mercury", "Moon", "Lagna"]
+
+    @classmethod
+    def calculate_kakshya_transit(
+        cls,
+        natal_chart: KundaliChart,
+        transit_chart: KundaliChart
+    ) -> List[Dict[str, Any]]:
+        """
+        Calculates the classical Kakshya (3°45' subdivision) transit status
+        for each transiting planet according to Parashari Ashtakavarga.
+        """
+        contributors = {
+            "Sun": natal_chart.planets["Sun"].sign_id,
+            "Moon": natal_chart.planets["Moon"].sign_id,
+            "Mars": natal_chart.planets["Mars"].sign_id,
+            "Mercury": natal_chart.planets["Mercury"].sign_id,
+            "Jupiter": natal_chart.planets["Jupiter"].sign_id,
+            "Venus": natal_chart.planets["Venus"].sign_id,
+            "Saturn": natal_chart.planets["Saturn"].sign_id,
+            "Lagna": natal_chart.lagna_sign_id,
+        }
+
+        kakshya_results = []
+        planets_to_track = ["Saturn", "Jupiter", "Mars", "Sun", "Venus", "Mercury", "Moon", "Rahu", "Ketu"]
+
+        for p_name in planets_to_track:
+            if p_name not in transit_chart.planets:
+                continue
+            tp = transit_chart.planets[p_name]
+            sign_idx = tp.sign_id - 1
+            deg_in_sign = tp.sign_degree
+            kakshya_idx = min(7, max(0, int(deg_in_sign // 3.75)))
+            kakshya_lord = cls.KAKSHYA_LORDS[kakshya_idx]
+
+            k_start = kakshya_idx * 3.75
+            k_end = (kakshya_idx + 1) * 3.75
+
+            # For Rahu/Ketu, use Saturn's/Mars's BAV rules
+            target_bav_planet = p_name if p_name in ASHTAKAVARGA_RULES else ("Saturn" if p_name == "Rahu" else "Mars")
+
+            # Check if kakshya_lord contributed a bindu to target_bav_planet in this sign
+            contrib_rules = ASHTAKAVARGA_RULES.get(target_bav_planet, {}).get(kakshya_lord, [])
+            ref_sign = contributors[kakshya_lord]
+            house_offset = ((tp.sign_id - ref_sign) % 12) + 1
+
+            has_bindu = house_offset in contrib_rules
+            bindu_status = 1 if has_bindu else 0
+
+            sav_bindus = natal_chart.ashtakavarga.sav[sign_idx] if (natal_chart.ashtakavarga and natal_chart.ashtakavarga.sav) else 28
+
+            if has_bindu:
+                status_label = "शुभ फलदायी (Auspicious / Unobstructed)"
+                badge = "success"
+                desc = f"{p_name} वर्तमान में {kakshya_lord} के कक्ष्य ({k_start:.1f}° - {k_end:.1f}°) में १ बिन्दु युक्त है। कार्य सिद्धि व अनुकूलता प्राप्त होगी।"
+            else:
+                status_label = "अवरुद्ध / संघर्ष (Obstructed / Rekha)"
+                badge = "warning"
+                desc = f"{p_name} वर्तमान में {kakshya_lord} के कक्ष्य ({k_start:.1f}° - {k_end:.1f}°) में ० बिन्दु (रेखा) में है। तात्कालिक रुकावटें संभव हैं।"
+
+            kakshya_results.append({
+                "planet": p_name,
+                "transit_sign": tp.sign_name,
+                "transit_degree": round(deg_in_sign, 2),
+                "kakshya_index": kakshya_idx + 1,
+                "kakshya_lord": kakshya_lord,
+                "kakshya_span": f"{k_start:.2f}° - {k_end:.2f}°",
+                "bindu": bindu_status,
+                "is_favorable": has_bindu,
+                "sav_bindus": sav_bindus,
+                "status_label": status_label,
+                "badge": badge,
+                "description_hi": desc
+            })
+
+        return kakshya_results
 

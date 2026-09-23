@@ -1986,6 +1986,7 @@ default_city_name = st.session_state.get("birth_city", "New Delhi, Delhi, India"
 tz_offset = float(st.session_state.get("birth_tz", 5.5))
 confidence = st.session_state.get("birth_conf", "Exact")
 ayanamsa = st.session_state.get("app_ayanamsa", "Lahiri")
+node_type_val = "true" if "True" in str(st.session_state.get("app_node_type", "Mean")) else "mean"
 house_system = st.session_state.get("app_house_system", "Whole Sign")
 chart_style = st.session_state.get("app_chart_style", "North Indian (Diamond)")
 pro_mode = st.session_state.get("app_pro_mode", True)
@@ -2002,7 +2003,7 @@ birth_profile = BirthData(
     confidence=confidence
 )
 
-chart = default_chart_calculator.calculate_full_chart(birth_profile, ayanamsa_name=ayanamsa, house_system=house_system)
+chart = default_chart_calculator.calculate_full_chart(birth_profile, ayanamsa_name=ayanamsa, house_system=house_system, node_type=node_type_val)
 affliction_engine = AfflictionEngine(chart)
 vastu_engine = VastuJyotishEngine(chart)
 
@@ -2749,35 +2750,45 @@ with st.container(key="top_frozen_header_container", border=True):
         elif st.session_state.gla_active_tool == "settings":
             with st.container(border=True):
                 st.markdown("### ⚙️ गणना एवं सॉफ़्टवेयर प्राथमिकताएं (Settings & Calculation Engine)")
-                col_st1, col_st2, col_st3, col_st4 = st.columns(4)
+                col_st1, col_st2, col_st3, col_st4, col_st5 = st.columns([2.2, 1.8, 1.6, 2.0, 1.4])
                 with col_st1:
-                    ay_opts = ["Lahiri", "Raman", "KP", "True Chitra", "Yukteshwar", "Fagan-Bradley"]
+                    ay_opts = [
+                        "Lahiri", "Pushya-Paksha (PVR Rao)", "KP Old", "KP New (Straight Line)",
+                        "Raman", "True Chitra (Spica 180°)", "Yukteshwar", "Fagan-Bradley"
+                    ]
                     cur_ay = st.session_state.get("app_ayanamsa", "Lahiri")
                     ay_idx = ay_opts.index(cur_ay) if cur_ay in ay_opts else 0
                     in_ay = st.selectbox("अयनांश (Ayanamsa)", ay_opts, index=ay_idx, key="gla_settings_ayanamsa")
                     st.session_state.app_ayanamsa = in_ay
 
                 with col_st2:
+                    node_opts = ["Mean Node (पारंपरिक औसत)", "True Node (सच्चे पात - Meeus)"]
+                    cur_node = st.session_state.get("app_node_type", "Mean Node (पारंपरिक औसत)")
+                    node_idx = node_opts.index(cur_node) if cur_node in node_opts else 0
+                    in_node = st.selectbox("राहु-केतु गणना (Nodes)", node_opts, index=node_idx, key="gla_settings_node")
+                    st.session_state.app_node_type = in_node
+
+                with col_st3:
                     hs_opts = ["Whole Sign", "Equal", "Placidus", "Shripati", "Koch"]
                     cur_hs = st.session_state.get("app_house_system", "Whole Sign")
                     hs_idx = hs_opts.index(cur_hs) if cur_hs in hs_opts else 0
-                    in_hs = st.selectbox("भाव पद्धति (House System)", hs_opts, index=hs_idx, key="gla_settings_hs")
+                    in_hs = st.selectbox("भाव पद्धति (Houses)", hs_opts, index=hs_idx, key="gla_settings_hs")
                     st.session_state.app_house_system = in_hs
 
-                with col_st3:
+                with col_st4:
                     chart_styles_list = ["North Indian (Diamond)", "South Indian (Box)", "East Indian (Surya)"]
                     if "app_chart_style" not in st.session_state or st.session_state.app_chart_style not in chart_styles_list:
                         st.session_state.app_chart_style = "North Indian (Diamond)"
                     cs_idx = chart_styles_list.index(st.session_state.app_chart_style)
                     def _on_gla_cs_change():
                         st.session_state.app_chart_style = st.session_state.gla_settings_cs_select
-                    in_cs = st.selectbox("कुण्डली चक्र शैली (Chart Style)", chart_styles_list, index=cs_idx, key="gla_settings_cs_select", on_change=_on_gla_cs_change)
+                    in_cs = st.selectbox("कुण्डली चक्र शैली (Style)", chart_styles_list, index=cs_idx, key="gla_settings_cs_select", on_change=_on_gla_cs_change)
 
-                with col_st4:
-                    in_pm = st.toggle("⚡ Pro Mode (उच्च परिशुद्धता)", value=st.session_state.get("app_pro_mode", True), key="gla_settings_pm_toggle")
+                with col_st5:
+                    in_pm = st.toggle("⚡ Pro Mode", value=st.session_state.get("app_pro_mode", True), key="gla_settings_pm_toggle")
                     st.session_state.app_pro_mode = in_pm
-                    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-                    if st.button("✅ लागू करें एवं बंद करें", type="primary", use_container_width=True, key="gla_apply_settings_btn"):
+                    st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
+                    if st.button("✅ लागू करें", type="primary", use_container_width=True, key="gla_apply_settings_btn"):
                         st.session_state.gla_active_tool = None
                         st.rerun()
 
@@ -3227,13 +3238,63 @@ if selected_idx == 0:
         })
     st.dataframe(pd.DataFrame(p_data), use_container_width=True, hide_index=True)
 
+    # 🌟 विशेष लग्न HUD (J.Hora Special Lagnas: HL, GL, SL, Indu, PP, VL)
+    if chart.jaimini:
+        jm = chart.jaimini
+        st.markdown(f"""
+        <div style="background: linear-gradient(90deg, #FFFBEB 0%, #FEF3C7 100%); border: 1.5px solid #F59E0B; border-radius: 10px; padding: 12px 18px; margin: 15px 0; box-shadow: 0 2px 6px rgba(217, 119, 6, 0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div style="color: #92400E; font-size: 13.5px; font-weight: 900; display: flex; align-items: center; gap: 6px;">
+                    <span>👑 <b>विशेष जैमिनी लग्न (Special Lagnas - J.Hora Standard)</b></span>
+                </div>
+                <div style="font-size: 11.5px; color: #78350F; font-weight: 800; background: #FDE68A; padding: 2px 8px; border-radius: 6px;">
+                    अयनांश: {chart.ayanamsa_name} ({chart.ayanamsa_value:.2f}°) | नोड: {st.session_state.get('app_node_type', 'Mean Node').split('(')[0]}
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="font-size: 11px; color: #B45309; font-weight: 800;">💰 होरा लग्न (HL)</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.hora_lagna_sign_name}</div>
+                    <div style="font-size: 10px; color: #64748B;">धन, संचित संपदा</div>
+                </div>
+                <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="font-size: 11px; color: #B45309; font-weight: 800;">🏛️ घटी लग्न (GL)</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.ghati_lagna_sign_name}</div>
+                    <div style="font-size: 10px; color: #64748B;">सत्ता, अधिकार, पद</div>
+                </div>
+                <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="font-size: 11px; color: #B45309; font-weight: 800;">🪷 श्री लग्न (SL)</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.sri_lagna_sign_name}</div>
+                    <div style="font-size: 10px; color: #64748B;">महालक्ष्मी कृपा, समृद्धि</div>
+                </div>
+                <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="font-size: 11px; color: #B45309; font-weight: 800;">💎 इन्दु लग्न (Indu)</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.indu_lagna_sign_name}</div>
+                    <div style="font-size: 10px; color: #64748B;">करोड़पति/धनागमन योग</div>
+                </div>
+                <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="font-size: 11px; color: #B45309; font-weight: 800;">💨 प्राणपद लग्न (PP)</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.pranapada_lagna_sign_name}</div>
+                    <div style="font-size: 10px; color: #64748B;">प्राण शक्ति, BTR सत्यता</div>
+                </div>
+                <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="font-size: 11px; color: #B45309; font-weight: 800;">⚔️ वर्णद लग्न (VL)</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.varnada_lagna_sign_name}</div>
+                    <div style="font-size: 10px; color: #64748B;">सामाजिक दायित्व, वृत्ति</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     # ---- Extra Kundali Views ----
     st.markdown("---")
-    _m0t1, _m0t2, _m0t3, _m0t4 = st.tabs([
+    _m0t1, _m0t2, _m0t3, _m0t4, _m0t5, _m0t6 = st.tabs([
         "🌙 चन्द्र कुण्डली",
         "☀️ सूर्य कुण्डली",
         "🏠 भाव चलित चक्र",
-        "⚔️ ग्रह युद्ध"
+        "⚔️ ग्रह युद्ध",
+        "👑 विशेष लग्न (HL, GL, SL, Indu)",
+        "🏰 कोटा चक्र (Kota Chakra)"
     ])
 
     with _m0t1:
@@ -3334,6 +3395,78 @@ if selected_idx == 0:
                 st.success("✅ इस कुण्डली में कोई ग्रह युद्ध नहीं है।")
         except Exception as _egy:
             st.error(f"ग्रह युद्ध त्रुटि: {str(_egy)[:200]}")
+
+    with _m0t5:
+        st.markdown("### 👑 विशेष जैमिनी लग्न एवं आरूढ़ फलादेश (Special Lagnas Deep Dive)")
+        if chart.jaimini:
+            jm = chart.jaimini
+            col_sp1, col_sp2 = st.columns(2)
+            with col_sp1:
+                st.markdown(f"""
+                <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px; margin-bottom:12px;">
+                    <h4 style="color:#B45309; margin:0 0 6px 0;">💰 होरा लग्न (Hora Lagna - HL): {jm.hora_lagna_sign_name}</h4>
+                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
+                    <b>शास्त्रीय प्रयोजन:</b> चल एवं अचल संपत्ति, वित्तीय सफलता, व्यापारिक लेन-देन एवं संचित धन का विचार।<br/>
+                    <b>नियम:</b> यदि होरा लग्न शुभ ग्रहों से दृष्ट या युत हो तो जातक धनवान एवं आर्थिक संकटों से सुरक्षित रहता है।
+                    </p>
+                </div>
+                <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:14px; margin-bottom:12px;">
+                    <h4 style="color:#1D4ED8; margin:0 0 6px 0;">🏛️ घटी लग्न (Ghati Lagna - GL): {jm.ghati_lagna_sign_name}</h4>
+                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
+                    <b>शास्त्रीय प्रयोजन:</b> सामाजिक प्रतिष्ठा, राजसत्ता, राजनीतिक प्रभाव, उच्च पद, शक्ति एवं मान-सम्मान।<br/>
+                    <b>नियम:</b> जन्म लग्न और घटी लग्न के स्वामियों में सम्बंध हो तो जातक को राजकीय सम्मान एवं उच्च पद प्राप्त होता है।
+                    </p>
+                </div>
+                <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:10px; padding:14px;">
+                    <h4 style="color:#047857; margin:0 0 6px 0;">🪷 श्री लग्न (Sri Lagna - SL): {jm.sri_lagna_sign_name}</h4>
+                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
+                    <b>शास्त्रीय प्रयोजन:</b> महालक्ष्मी की विशेष कृपा, सौभाग्य, आकस्मिक समृद्धि एवं वैवाहिक सुख।<br/>
+                    <b>नियम:</b> श्री लग्न का स्वामी जब केंद्र या त्रिकोण में उच्च का हो तो जातक को जीवन भर धन का अभाव नहीं होता।
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+            with col_sp2:
+                st.markdown(f"""
+                <div style="background:#FAF5FF; border:1.5px solid #8B5CF6; border-radius:10px; padding:14px; margin-bottom:12px;">
+                    <h4 style="color:#6D28D9; margin:0 0 6px 0;">💎 इन्दु लग्न (Indu Lagna): {jm.indu_lagna_sign_name}</h4>
+                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
+                    <b>शास्त्रीय प्रयोजन:</b> करोड़पति योग, गुप्त धन, वित्तीय साम्राज्य एवं अकूत संपदा का मुख्य सूचक।<br/>
+                    <b>नियम:</b> इन्दु लग्न में शुभ ग्रह स्थित हों तो जातक विपुल धनोपार्जन करता है; पापी ग्रह हों तो उतार-चढ़ाव रहता है।
+                    </p>
+                </div>
+                <div style="background:#F0FDF4; border:1.5px solid #22C55E; border-radius:10px; padding:14px; margin-bottom:12px;">
+                    <h4 style="color:#15803D; margin:0 0 6px 0;">💨 प्राणपद लग्न (Pranapada Lagna): {jm.pranapada_lagna_sign_name}</h4>
+                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
+                    <b>शास्त्रीय प्रयोजन:</b> जीवन शक्ति, श्वास, आत्मा का देह से सम्बंध एवं जन्म समय शुद्धि (BTR) का प्रमाण।<br/>
+                    <b>नियम:</b> प्राणपद लग्न का त्रिकोण सम्बंध जन्म लग्न से होना सटीक जन्म समय का द्योतक है।
+                    </p>
+                </div>
+                <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:10px; padding:14px;">
+                    <h4 style="color:#B91C1C; margin:0 0 6px 0;">⚔️ वर्णद लग्न (Varnada Lagna): {jm.varnada_lagna_sign_name}</h4>
+                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
+                    <b>शास्त्रीय प्रयोजन:</b> आजीविका की प्रकृति, सामाजिक कर्तव्य, जातिगत व व्यावसायिक दायित्व।<br/>
+                    <b>नियम:</b> वर्णद लग्न पर शुभ प्रभाव जातक को समाज में प्रतिष्ठित वृत्ति एवं निष्ठावान कार्यशैली देता है।
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.info("जैमिनी विशेष लग्न गणना उपलब्ध नहीं।")
+
+    with _m0t6:
+        st.markdown("### 🏰 कोटा चक्र दुर्ग आरेख (Kota Chakra Durga Fortress)")
+        st.write("जन्म नक्षत्र अनुसार ४-स्तरीय दुर्ग रचना एवं जन्म ग्रहों की रक्षा/आघात स्थिति:")
+        try:
+            import importlib
+            import src.jyotish.core.chakras as chak_mod
+            import src.jyotish.ui.chart_renderer as cr_mod
+            importlib.reload(chak_mod)
+            importlib.reload(cr_mod)
+            kota_engine = chak_mod.default_kota_chakra_engine
+            kota_data_m0 = kota_engine.calculate(chart)
+            kota_svg_m0 = cr_mod.ChartRenderer.render_kota_chakra_svg(kota_data_m0, title=f"कोटा चक्र — {name}")
+            st.markdown(kota_svg_m0, unsafe_allow_html=True)
+        except Exception as _ekc:
+            st.error(f"कोटा चक्र त्रुटि: {str(_ekc)[:200]}")
 
 
 # =============================================================
@@ -4670,7 +4803,8 @@ elif selected_idx == 9:
             "🕉️ अष्टोत्तरी दशा (Ashtottari 108 Yrs - 8 Planets)",
             "🪐 नारायण दशा (Narayana Rashi Dasha - Jaimini)",
             "⏳ द्विसप्ततिसम दशा (Dwisaptati Sama 72 Yrs)",
-            "🔷 स्थिर दशा (Sthira Dasha - Jaimini Fixed)"
+            "🔷 स्थिर दशा (Sthira Dasha - Jaimini Fixed)",
+            "👁️ दृग दशा (Drig Dasha - Spiritual Jaimini)"
         ],
         horizontal=True,
         key="dasha_system_mode_radio"
@@ -4703,6 +4837,7 @@ elif selected_idx == 9:
     narayana_engine = narayana_mod.default_narayana_engine
     dwisaptati_engine = sama_mod.default_dwisaptati_engine
     sthira_engine = sthira_mod.default_sthira_engine
+    drig_engine = sthira_mod.default_drigdasha_engine
 
     # =========================================================================
     # 1. VIMSHOTTARI DASHA (5 LEVELS: MAHA -> ANTAR -> PRAT -> SOOKSHMA -> PRANA)
@@ -5238,6 +5373,16 @@ elif selected_idx == 9:
         )
         st.markdown(b_str_kcd, unsafe_allow_html=True)
 
+        # Classical KCD Gati Jump Alerts (Manduka, Markati, Simhavalokana)
+        _gati_str = act_kcd.get('gati', '')
+        if any(w in _gati_str for w in ["मंडूक", "मर्कटी", "सिंहावलोकन", "Jump", "Frog", "Monkey", "Lion"]):
+            st.warning(f"""
+            🚨 **कालचक्र विशेष छलांग (KCD Gati Alert — {_gati_str}):**
+            वर्तमान कालचक्र महादशा में **{_gati_str}** सक्रिय है। 
+            बृहत्पाराशर होरा शास्त्र (BPHS) अनुसार यह काल जातक के जीवन में आकस्मिक युगांतरकारी मोड़ लाता है — यथा कार्यक्षेत्र में बड़ा परिवर्तन, पदोन्नति/स्थानांतरण, स्थान परिवर्तन अथवा स्वास्थ्य व मानसिक स्थिति में तीव्र उतार-चढ़ाव। 
+            विशेष सावधानी व महामृत्युंजय अनुष्ठान प्रशस्त रहेगा।
+            """, icon="⚠️")
+
         # 4 Styled Metric Cards
         col_kc1, col_kc2, col_kc3, col_kc4 = st.columns(4)
         with col_kc1:
@@ -5432,6 +5577,33 @@ elif selected_idx == 9:
                 st.dataframe(pd.DataFrame(tl_st_rows), use_container_width=True, hide_index=True)
         except Exception as e_st:
             st.error(f"स्थिर दशा त्रुटि: {str(e_st)[:300]}")
+
+    # 10. DRIG DASHA (JAIMINI SPIRITUAL VISION)
+    elif "दृग" in d_mode:
+        try:
+            st.markdown("### 👁️ दृग दशा (Drig Dasha — Jaimini Spiritual Vision & Aspects)")
+            st.info("दृग दशा (दृष्टि आधारित दशा): लग्न पर दृष्टि डालने वाली राशियों का विशिष्ट क्रम। साधना, मंत्र सिद्धि, ईश्वरीय कृपा एवं आत्म-ज्ञान का काल।")
+            active_drig = drig_engine.get_active_dasha_at(chart, dasha_target_date)
+            cd1, cd2 = st.columns(2)
+            cd1.metric("सक्रिय महादशा (राशि)", active_drig["mahadasha"]["sign_name"], f"{active_drig['mahadasha']['type']} ({active_drig['mahadasha']['duration_years']} वर्ष)")
+            cd2.metric("दशा विस्तार", f"{active_drig['mahadasha']['start_date'].strftime('%d-%b-%Y')} ~ {active_drig['mahadasha']['end_date'].strftime('%d-%b-%Y')}")
+            st.success(f"👁️ **शास्त्रीय फलादेश:** वर्तमान में {active_drig['mahadasha']['sign_name']} राशि की दृग दशा प्रभावी है। यह काल आध्यात्मिक उन्नति, अंतर्दृष्टि एवं जीवन दर्शन को परिपक्व करने का समय है।")
+            with st.expander("👁️ दृग दशा सम्पूर्ण समय-चक्र (Timeline)", expanded=True):
+                tl_drig = drig_engine.generate_timeline(chart)
+                tl_drig_rows = [
+                    {
+                        "राशि (Sign)": md["sign_name"],
+                        "प्रकृति (Type)": md["type"],
+                        "आरंभ तिथि": md["start_date"].strftime("%d-%b-%Y"),
+                        "समाप्ति तिथि": md["end_date"].strftime("%d-%b-%Y"),
+                        "अवधि (वर्ष)": md["duration_years"],
+                        "स्थिति": "🔴 सक्रिय" if md["start_date"] <= target_dt <= md["end_date"] else "—"
+                    }
+                    for md in tl_drig
+                ]
+                st.dataframe(pd.DataFrame(tl_drig_rows), use_container_width=True, hide_index=True)
+        except Exception as e_dr:
+            st.error(f"दृग दशा गणना त्रुटि: {str(e_dr)[:300]}")
 
 
 
@@ -5788,6 +5960,47 @@ elif selected_idx == 10:
                 st.dataframe(pd.DataFrame(pinda_data), use_container_width=True)
                 st.caption("💡 **शोधित पिण्ड फल:** त्रिकोण शोधन एवं एकाधिपत्य शोधन के उपरांत प्राप्त योग पिण्ड से आयुर्दाय एवं गोचर वेध का निर्णय किया जाता है।")
 
+        # -------------------------------------------------------------
+        # 5. Kakshya Transit Engine (3°45' Subdivision Parashari Timing)
+        # -------------------------------------------------------------
+        st.markdown("---")
+        st.markdown("#### 🎯 अष्टकवर्ग कक्ष्य गोचर ट्रैकर (Kakshya 3°45' Transit Timing)")
+        st.caption("पाराशरी अष्टकवर्ग का गूढ़ नियम: प्रत्येक राशि ३°४५' के ८ कक्ष्य भागों में विभाजित होती है (शनि, गुरु, मंगल, सूर्य, शुक्र, बुध, चन्द्र, लग्न)। जब गोचर का ग्रह उस कक्ष्य में होता है जिसमें जन्म कुण्डली में बिन्दु (१) प्राप्त हुआ हो, तभी वह पूर्ण अनुकूल व फलदायी होता है। यदि बिन्दु ० (रेखा) हो, तो वह कार्य अवरुद्ध होता है:")
+
+        try:
+            import importlib
+            import src.jyotish.core.ashtakavarga as ak_mod
+            importlib.reload(ak_mod)
+            kakshya_list = ak_mod.AshtakavargaCalculator.calculate_kakshya_transit(chart, t_chart)
+            if kakshya_list:
+                fav_count = sum(1 for k in kakshya_list if k["is_favorable"])
+                obs_count = len(kakshya_list) - fav_count
+
+                col_k_m1, col_k_m2, col_k_m3 = st.columns([1.5, 1.5, 3])
+                with col_k_m1:
+                    st.metric("🟢 फलदायी कक्ष्य (Bindu = 1)", f"{fav_count} ग्रह", "कार्य सिद्धि एवं अनुकूलता")
+                with col_k_m2:
+                    st.metric("🔴 अवरुद्ध कक्ष्य (Rekha = 0)", f"{obs_count} ग्रह", "विलंब व संघर्ष")
+                with col_k_m3:
+                    st.info(f"🗓️ वर्तमान में **{fav_count}** ग्रह अपने अनुकूल कक्ष्य में गोचरस्थ होकर बिन्दु प्रदान कर रहे हैं।")
+
+                k_table_data = []
+                for k in kakshya_list:
+                    p_icon = planet_icons.get(k["planet"], k["planet"])
+                    k_status_badge = "🟢 १ बिन्दु (फलदायी)" if k["is_favorable"] else "🔴 ० बिन्दु (अवरुद्ध)"
+                    k_table_data.append({
+                        "ग्रह (Graha)": p_icon,
+                        "गोचर राशि व अंश": f"{k['transit_sign']} ({k['transit_degree']:.2f}°)",
+                        "कक्ष्य स्वामी (Lord)": f"कक्ष्य {k['kakshya_index']}: {k['kakshya_lord']}",
+                        "कक्ष्य विस्तार": k["kakshya_span"],
+                        "बिन्दु स्थिति": k_status_badge,
+                        "SAV राशि बिन्दु": f"{k['sav_bindus']} बिन्दु",
+                        "शास्त्रीय फलादेश": k["description_hi"]
+                    })
+                st.dataframe(pd.DataFrame(k_table_data), use_container_width=True, hide_index=True)
+        except Exception as _ekk:
+            st.error(f"कक्ष्य गोचर त्रुटि: {str(_ekk)[:200]}")
+
     with tab_g2:
         st.markdown("#### 🛡️ सर्वतोभद्र चक्र (9x9 Sarvatobhadra Vedha Matrix)")
         st.write("28 नक्षत्रों (अभिजित सहित), 12 राशियों, स्वरों, तिथियों एवं संवेदनशील नक्षत्रों पर गोचर ग्रहों के सम्मुख व तिर्यक (Diagonal) वेध का शास्त्रीय विश्लेषण।")
@@ -5880,6 +6093,16 @@ elif selected_idx == 10:
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+        # Render Visual Kota Chakra Fortress SVG Diagram
+        try:
+            import src.jyotish.ui.chart_renderer as cr_mod
+            importlib.reload(cr_mod)
+            kota_svg_m10 = cr_mod.ChartRenderer.render_kota_chakra_svg(kota_res, title=f"कोटा चक्र दुर्ग आरेख (Kota Chakra — {t_date.strftime('%d-%b-%Y')})")
+            st.markdown(kota_svg_m10, unsafe_allow_html=True)
+            st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+        except Exception as _ekc:
+            pass
 
         col_kt1, col_kt2 = st.columns(2)
         with col_kt1:

@@ -522,3 +522,98 @@ class ChartRenderer:
         svg_parts.append('</svg>')
         return "".join(svg_parts)
 
+    @classmethod
+    def render_kota_chakra_svg(cls, kota_data: Dict[str, Any], title: str = "कोटा चक्र दुर्ग आरेख (Kota Chakra Durga Fortress)") -> str:
+        """
+        Renders a classical 4-tiered Durga Fortress SVG diagram with
+        Stambha (Center Core), Madhya, Prakaara, and Bahya zones,
+        indicating planet placements, Ingress/Egress, and siege evaluation.
+        """
+        W, H = 540, 520
+        swami = kota_data.get("kota_swami", "Moon")
+        pala = kota_data.get("kota_pala", "Mercury")
+        status = kota_data.get("defense_status", "सामान्य स्थिति")
+        allocations = kota_data.get("planet_allocations", [])
+        stambha_malefics = kota_data.get("stambha_malefics", [])
+        stambha_benefics = kota_data.get("stambha_benefics", [])
+
+        # Stambha fill color depends on affliction
+        if len(stambha_malefics) >= 2:
+            stambha_fill = "#FEE2E2"
+            stambha_stroke = "#DC2626"
+        elif len(stambha_benefics) >= 1:
+            stambha_fill = "#DCFCE7"
+            stambha_stroke = "#16A34A"
+        else:
+            stambha_fill = "#FEF3C7"
+            stambha_stroke = "#D97706"
+
+        planets_by_zone = {"Stambha": [], "Madhya": [], "Prakaara": [], "Bahya": []}
+        for item in allocations:
+            z_str = item.get("zone", "")
+            if "Stambha" in z_str or "स्तम्भ" in z_str:
+                planets_by_zone["Stambha"].append(item)
+            elif "Madhya" in z_str or "मध्य" in z_str:
+                planets_by_zone["Madhya"].append(item)
+            elif "Prakaara" in z_str or "प्राकार" in z_str:
+                planets_by_zone["Prakaara"].append(item)
+            else:
+                planets_by_zone["Bahya"].append(item)
+
+        svg = [
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="480" style="background:#FFFFFF; border:2px solid #E2E8F0; border-radius:14px; box-shadow:0 4px 15px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
+            f'<rect x="0" y="0" width="{W}" height="40" fill="#1E1B4B" rx="12 12 0 0"/>',
+            f'<text x="{W//2}" y="25" text-anchor="middle" fill="#F8FAFC" font-size="14.5" font-weight="900">🏰 {title}</text>',
+            f'<rect x="20" y="48" width="{W-40}" height="28" fill="#F1F5F9" rx="6" stroke="#CBD5E1"/>',
+            f'<text x="35" y="66" fill="#1E293B" font-size="12" font-weight="800">👑 कोटा स्वामी: <tspan fill="#D97706">{swami}</tspan> | 🛡️ कोटा पाल: <tspan fill="#2563EB">{pala}</tspan></text>',
+            f'<text x="{W-35}" y="66" text-anchor="end" fill="#0F172A" font-size="11.5" font-weight="900">{status}</text>',
+            f'<rect x="30" y="85" width="480" height="380" fill="#F8FAFC" stroke="#94A3B8" stroke-width="2" rx="10"/>',
+            f'<text x="45" y="105" fill="#64748B" font-size="11" font-weight="800">🌾 बाह्य क्षेत्र (Bahya - Outer Grounds)</text>',
+            f'<rect x="80" y="130" width="380" height="290" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="6,4" rx="8"/>',
+            f'<text x="95" y="150" fill="#B45309" font-size="11" font-weight="800">🧱 प्राकार (Prakaara - Fort Walls)</text>',
+            f'<rect x="135" y="175" width="270" height="200" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2" rx="8"/>',
+            f'<text x="150" y="195" fill="#1D4ED8" font-size="11" font-weight="800">🏛️ मध्य (Madhya - Inner Court)</text>',
+            f'<rect x="195" y="220" width="150" height="110" fill="{stambha_fill}" stroke="{stambha_stroke}" stroke-width="3" rx="8"/>',
+            f'<text x="270" y="242" text-anchor="middle" fill="#1E293B" font-size="12" font-weight="900">⚡ स्तम्भ (Stambha)</text>',
+        ]
+
+        s_pls = planets_by_zone["Stambha"]
+        for idx, pl in enumerate(s_pls):
+            p_name = pl["planet"]
+            p_color = "#DC2626" if pl["nature"] == "Malefic" else "#15803D"
+            m_arrow = "➡️" if "प्रवेश" in pl["motion"] else "⬅️"
+            py = 265 + (idx * 20)
+            svg.append(f'<text x="270" y="{py}" text-anchor="middle" fill="{p_color}" font-size="12" font-weight="900">{m_arrow} {p_name} ({pl["nakshatra"][:4]})</text>')
+
+        m_pls = planets_by_zone["Madhya"]
+        for idx, pl in enumerate(m_pls):
+            p_name = pl["planet"]
+            p_color = "#DC2626" if pl["nature"] == "Malefic" else "#1D4ED8"
+            m_arrow = "➡️" if "प्रवेश" in pl["motion"] else "⬅️"
+            px = 150 + ((idx % 2) * 140)
+            py = 345 + ((idx // 2) * 18)
+            svg.append(f'<text x="{px}" y="{py}" fill="{p_color}" font-size="11" font-weight="800">{m_arrow} {p_name}</text>')
+
+        p_pls = planets_by_zone["Prakaara"]
+        for idx, pl in enumerate(p_pls):
+            p_name = pl["planet"]
+            p_color = "#DC2626" if pl["nature"] == "Malefic" else "#0D9488"
+            m_arrow = "➡️" if "प्रवेश" in pl["motion"] else "⬅️"
+            px = 95 + ((idx % 4) * 85)
+            py = 405
+            svg.append(f'<text x="{px}" y="{py}" fill="{p_color}" font-size="10.5" font-weight="800">{m_arrow} {p_name}</text>')
+
+        b_pls = planets_by_zone["Bahya"]
+        for idx, pl in enumerate(b_pls):
+            p_name = pl["planet"]
+            p_color = "#DC2626" if pl["nature"] == "Malefic" else "#059669"
+            m_arrow = "➡️" if "प्रवेश" in pl["motion"] else "⬅️"
+            px = 45 + ((idx % 6) * 75)
+            py = 452
+            svg.append(f'<text x="{px}" y="{py}" fill="{p_color}" font-size="10" font-weight="700">{m_arrow} {p_name}</text>')
+
+        svg.append(f'<rect x="20" y="475" width="{W-40}" height="32" fill="#F8FAFC" rx="6" stroke="#E2E8F0"/>')
+        svg.append(f'<text x="{W//2}" y="495" text-anchor="middle" fill="#475569" font-size="11" font-weight="800">🟢 शुभ ग्रह (Defense) | 🔴 पाप ग्रह (Attacker) | ➡️ प्रवेश (Entering/Siege) | ⬅️ निर्गम (Exiting/Relief)</text>')
+        svg.append('</svg>')
+        return "".join(svg)
+
