@@ -395,9 +395,14 @@ unified_css = f"""
         display: none !important;
         visibility: hidden !important;
     }}
+    /* Hide Streamlit's native top header bar (empty white strip) completely */
     header[data-testid="stHeader"] {{
         background: transparent !important;
-        height: 50px !important;
+        height: 0px !important;
+        min-height: 0px !important;
+        overflow: hidden !important;
+        padding: 0px !important;
+        margin: 0px !important;
         z-index: 1000002 !important;
     }}
 
@@ -411,7 +416,7 @@ unified_css = f"""
         visibility: visible !important;
         opacity: 1 !important;
         position: fixed !important;
-        top: 10px !important;
+        top: 4px !important;
         left: 10px !important;
         z-index: 1000005 !important;
         background: #2563EB !important;
