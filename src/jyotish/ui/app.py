@@ -2003,7 +2003,26 @@ birth_profile = BirthData(
     confidence=confidence
 )
 
-chart = default_chart_calculator.calculate_full_chart(birth_profile, ayanamsa_name=ayanamsa, house_system=house_system, node_type=node_type_val)
+try:
+    chart = default_chart_calculator.calculate_full_chart(
+        birth_profile,
+        ayanamsa_name=ayanamsa,
+        house_system=house_system,
+        node_type=node_type_val
+    )
+except TypeError:
+    try:
+        chart = default_chart_calculator.calculate_full_chart(
+            birth_profile,
+            ayanamsa_name=ayanamsa,
+            house_system=house_system
+        )
+    except Exception:
+        chart = default_chart_calculator.calculate_chart(
+            birth_profile,
+            ayanamsa_name=ayanamsa,
+            house_system=house_system
+        )
 affliction_engine = AfflictionEngine(chart)
 vastu_engine = VastuJyotishEngine(chart)
 
@@ -5649,7 +5668,10 @@ elif selected_idx == 10:
         timezone_offset=tz_offset,
         city=default_city_name
     )
-    t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system, node_type=node_type_val)
+    try:
+        t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system, node_type=node_type_val)
+    except TypeError:
+        t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system)
 
     rashi_names_hi = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"]
     rashi_symbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"]

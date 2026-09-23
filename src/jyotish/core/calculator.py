@@ -222,8 +222,21 @@ class ChartCalculator:
     ) -> KundaliChart:
         """Full Natal Kundali Calculation Pipeline."""
         # 1. Convert local birth time to UTC
-        birth_dt = datetime.combine(birth_data.birth_date, birth_data.birth_time)
-        dt_utc = birth_dt - timedelta(hours=birth_data.timezone_offset)
+        b_d = birth_data.birth_date
+        b_t = birth_data.birth_time
+        if isinstance(b_d, str):
+            b_d = datetime.strptime(b_d, "%Y-%m-%d").date()
+        elif isinstance(b_d, datetime):
+            b_d = b_d.date()
+        if isinstance(b_t, str):
+            try:
+                b_t = datetime.strptime(b_t, "%H:%M:%S").time()
+            except ValueError:
+                b_t = datetime.strptime(b_t, "%H:%M").time()
+        elif isinstance(b_t, datetime):
+            b_t = b_t.time()
+        birth_dt = datetime.combine(b_d, b_t)
+        dt_utc = birth_dt - timedelta(hours=float(birth_data.timezone_offset))
 
         # 2. Compute Planetary Positions & Ayanamsa
         raw_positions, ayanamsa_val = self.provider.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type, **kwargs)
