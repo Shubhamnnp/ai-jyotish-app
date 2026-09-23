@@ -510,3 +510,4 @@ with open(bphs_file, "w", encoding="utf-8") as f:
     json.dump(bphs_data, f, ensure_ascii=False, indent=2)
 
 print(f"Updated BPHS rules count: {len(bphs_rules)} (+{len(new_bphs_rules)} new)")
+

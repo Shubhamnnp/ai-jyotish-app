@@ -1,7 +1,7 @@
 {
   "metadata": {
     "grantha": "Phaladeepika",
-    "count": 120
+    "count": 180
   },
   "rules": [
     {
@@ -3842,6 +3842,1986 @@
         "polarity": "-",
         "strength_base": 0.65,
         "description_hi": "फलदीपिका (मंत्रेश्वर): Ketu का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फलादेश — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान से संबंधित विशिष्ट परिणाम।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H1",
+      "rule_name_hi": "फलदीपिका: तनु में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 1",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.1",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 1वें भाव में प्रभाव: शारीरिक दुर्बलता, नेत्र विकार व संकोची स्वभाव। उपाय: शिव रुद्राभिषेक।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H2",
+      "rule_name_hi": "फलदीपिका: धन में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 2",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.2",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 2वें भाव में प्रभाव: कटु वाणी, धन संचय में बाधा व खानपान में अशुद्धि।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H3",
+      "rule_name_hi": "फलदीपिका: सहज में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 3",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.3",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 3वें भाव में प्रभाव: भाइयों से विरोध, अत्यधिक साहस व गुप्त शत्रुओं पर विजय।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H4",
+      "rule_name_hi": "फलदीपिका: सुख में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 4",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.4",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 4वें भाव में प्रभाव: माता के स्वास्थ्य की चिंता, भूमि-भवन में विवाद।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H5",
+      "rule_name_hi": "फलदीपिका: पुत्र में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 5",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.5",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 5वें भाव में प्रभाव: संतान सुख में विलंब, पेट की व्याधि व अस्थिर बुद्धि।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H6",
+      "rule_name_hi": "फलदीपिका: रिपु में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 6",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.6",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 6वें भाव में प्रभाव: शत्रुओं का समूल नाश, मुकदमों में जीत व दृढ़ पराक्रम।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H7",
+      "rule_name_hi": "फलदीपिका: कलत्र में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 7",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.7",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 7वें भाव में प्रभाव: वैवाहिक विलंब, जीवनसाथी से मतभेद व साझेदारी में सतर्कता।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H8",
+      "rule_name_hi": "फलदीपिका: आयु में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 8",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.8",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 8वें भाव में प्रभाव: दीर्घकालीन रोग, विष भय व अचानक जीवन परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H9",
+      "rule_name_hi": "फलदीपिका: धर्म में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 9",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.9",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 9वें भाव में प्रभाव: पिता से मतभेद, धार्मिक कार्यों में संशय व भाग्य में विलंब।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H10",
+      "rule_name_hi": "फलदीपिका: कर्म में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 10",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 10वें भाव में प्रभाव: कार्यक्षेत्र में कड़ा संघर्ष, परिश्रम उपरांत सफलता व जनसेवा।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H11",
+      "rule_name_hi": "फलदीपिका: आय में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 11",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.11",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 11वें भाव में प्रभाव: अकूत धन लाभ, संपत्ति की वृद्धि व संतान से सुख।"
+      }
+    },
+    {
+      "rule_id": "PD_MANDI_DEEP_H12",
+      "rule_name_hi": "फलदीपिका: व्यय में मांदी (उपग्रह मांदी फल)",
+      "rule_name_en": "Phaladeepika Mandi in House 12",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 25 (Upagraha Mandi Phala)",
+        "shloka": "Phaladeepika 25.12",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "upagraha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "upagraha",
+          "mandi",
+          "destiny"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "मंत्रेश्वर कृत फलदीपिका अनुसार उपग्रह मांदी का 12वें भाव में प्रभाव: अत्यधिक खर्च, निद्रा में विघ्न व वैराग्य भावना।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VESI_H1",
+      "rule_name_hi": "फलदीपिका: भाव 1 पर वेशी योग (सूर्य से द्वितीय में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vesi Yoga on House 1",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वेशी योग (सूर्य से द्वितीय में शुभ ग्रह) का प्रभाव—सुवक्ता, यशस्वी, धनवान व धर्मपरायण।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VESI_H2",
+      "rule_name_hi": "फलदीपिका: भाव 2 पर वेशी योग (सूर्य से द्वितीय में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vesi Yoga on House 2",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वेशी योग (सूर्य से द्वितीय में शुभ ग्रह) का प्रभाव—सुवक्ता, यशस्वी, धनवान व धर्मपरायण।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VESI_H4",
+      "rule_name_hi": "फलदीपिका: भाव 4 पर वेशी योग (सूर्य से द्वितीय में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vesi Yoga on House 4",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वेशी योग (सूर्य से द्वितीय में शुभ ग्रह) का प्रभाव—सुवक्ता, यशस्वी, धनवान व धर्मपरायण।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VESI_H7",
+      "rule_name_hi": "फलदीपिका: भाव 7 पर वेशी योग (सूर्य से द्वितीय में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vesi Yoga on House 7",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वेशी योग (सूर्य से द्वितीय में शुभ ग्रह) का प्रभाव—सुवक्ता, यशस्वी, धनवान व धर्मपरायण।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VESI_H9",
+      "rule_name_hi": "फलदीपिका: भाव 9 पर वेशी योग (सूर्य से द्वितीय में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vesi Yoga on House 9",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वेशी योग (सूर्य से द्वितीय में शुभ ग्रह) का प्रभाव—सुवक्ता, यशस्वी, धनवान व धर्मपरायण।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VESI_H10",
+      "rule_name_hi": "फलदीपिका: भाव 10 पर वेशी योग (सूर्य से द्वितीय में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vesi Yoga on House 10",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वेशी योग (सूर्य से द्वितीय में शुभ ग्रह) का प्रभाव—सुवक्ता, यशस्वी, धनवान व धर्मपरायण।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VASI_H1",
+      "rule_name_hi": "फलदीपिका: भाव 1 पर वाशी योग (सूर्य से द्वादश में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vasi Yoga on House 1",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वाशी योग (सूर्य से द्वादश में शुभ ग्रह) का प्रभाव—विद्वान, स्मरण-शक्ति सम्पन्न, निरोगी व लोकहितैषी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VASI_H2",
+      "rule_name_hi": "फलदीपिका: भाव 2 पर वाशी योग (सूर्य से द्वादश में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vasi Yoga on House 2",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वाशी योग (सूर्य से द्वादश में शुभ ग्रह) का प्रभाव—विद्वान, स्मरण-शक्ति सम्पन्न, निरोगी व लोकहितैषी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VASI_H4",
+      "rule_name_hi": "फलदीपिका: भाव 4 पर वाशी योग (सूर्य से द्वादश में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vasi Yoga on House 4",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वाशी योग (सूर्य से द्वादश में शुभ ग्रह) का प्रभाव—विद्वान, स्मरण-शक्ति सम्पन्न, निरोगी व लोकहितैषी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VASI_H7",
+      "rule_name_hi": "फलदीपिका: भाव 7 पर वाशी योग (सूर्य से द्वादश में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vasi Yoga on House 7",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वाशी योग (सूर्य से द्वादश में शुभ ग्रह) का प्रभाव—विद्वान, स्मरण-शक्ति सम्पन्न, निरोगी व लोकहितैषी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VASI_H9",
+      "rule_name_hi": "फलदीपिका: भाव 9 पर वाशी योग (सूर्य से द्वादश में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vasi Yoga on House 9",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वाशी योग (सूर्य से द्वादश में शुभ ग्रह) का प्रभाव—विद्वान, स्मरण-शक्ति सम्पन्न, निरोगी व लोकहितैषी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_VASI_H10",
+      "rule_name_hi": "फलदीपिका: भाव 10 पर वाशी योग (सूर्य से द्वादश में शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Vasi Yoga on House 10",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: वाशी योग (सूर्य से द्वादश में शुभ ग्रह) का प्रभाव—विद्वान, स्मरण-शक्ति सम्पन्न, निरोगी व लोकहितैषी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_UBHAYACHARI_H1",
+      "rule_name_hi": "फलदीपिका: भाव 1 पर उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Ubhayachari Yoga on House 1",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह) का प्रभाव—राजा के समान वैभवशाली, सर्वप्रिय व स्थिर कीर्ति।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_UBHAYACHARI_H2",
+      "rule_name_hi": "फलदीपिका: भाव 2 पर उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Ubhayachari Yoga on House 2",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह) का प्रभाव—राजा के समान वैभवशाली, सर्वप्रिय व स्थिर कीर्ति।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_UBHAYACHARI_H4",
+      "rule_name_hi": "फलदीपिका: भाव 4 पर उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Ubhayachari Yoga on House 4",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह) का प्रभाव—राजा के समान वैभवशाली, सर्वप्रिय व स्थिर कीर्ति।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_UBHAYACHARI_H7",
+      "rule_name_hi": "फलदीपिका: भाव 7 पर उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Ubhayachari Yoga on House 7",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह) का प्रभाव—राजा के समान वैभवशाली, सर्वप्रिय व स्थिर कीर्ति।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_UBHAYACHARI_H9",
+      "rule_name_hi": "फलदीपिका: भाव 9 पर उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Ubhayachari Yoga on House 9",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह) का प्रभाव—राजा के समान वैभवशाली, सर्वप्रिय व स्थिर कीर्ति।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_UBHAYACHARI_H10",
+      "rule_name_hi": "फलदीपिका: भाव 10 पर उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Ubhayachari Yoga on House 10",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: उभयचारी योग (सूर्य के दोनों ओर शुभ ग्रह) का प्रभाव—राजा के समान वैभवशाली, सर्वप्रिय व स्थिर कीर्ति।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SUNAPHA_H1",
+      "rule_name_hi": "फलदीपिका: भाव 1 पर सुनफा योग (चन्द्र से द्वितीय में ग्रह)",
+      "rule_name_en": "Phaladeepika Sunapha Yoga on House 1",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: सुनफा योग (चन्द्र से द्वितीय में ग्रह) का प्रभाव—स्वअर्जित धन, नीतिज्ञ, विद्या सम्पन्न व सुखी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SUNAPHA_H2",
+      "rule_name_hi": "फलदीपिका: भाव 2 पर सुनफा योग (चन्द्र से द्वितीय में ग्रह)",
+      "rule_name_en": "Phaladeepika Sunapha Yoga on House 2",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: सुनफा योग (चन्द्र से द्वितीय में ग्रह) का प्रभाव—स्वअर्जित धन, नीतिज्ञ, विद्या सम्पन्न व सुखी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SUNAPHA_H4",
+      "rule_name_hi": "फलदीपिका: भाव 4 पर सुनफा योग (चन्द्र से द्वितीय में ग्रह)",
+      "rule_name_en": "Phaladeepika Sunapha Yoga on House 4",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: सुनफा योग (चन्द्र से द्वितीय में ग्रह) का प्रभाव—स्वअर्जित धन, नीतिज्ञ, विद्या सम्पन्न व सुखी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SUNAPHA_H7",
+      "rule_name_hi": "फलदीपिका: भाव 7 पर सुनफा योग (चन्द्र से द्वितीय में ग्रह)",
+      "rule_name_en": "Phaladeepika Sunapha Yoga on House 7",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: सुनफा योग (चन्द्र से द्वितीय में ग्रह) का प्रभाव—स्वअर्जित धन, नीतिज्ञ, विद्या सम्पन्न व सुखी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SUNAPHA_H9",
+      "rule_name_hi": "फलदीपिका: भाव 9 पर सुनफा योग (चन्द्र से द्वितीय में ग्रह)",
+      "rule_name_en": "Phaladeepika Sunapha Yoga on House 9",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: सुनफा योग (चन्द्र से द्वितीय में ग्रह) का प्रभाव—स्वअर्जित धन, नीतिज्ञ, विद्या सम्पन्न व सुखी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SUNAPHA_H10",
+      "rule_name_hi": "फलदीपिका: भाव 10 पर सुनफा योग (चन्द्र से द्वितीय में ग्रह)",
+      "rule_name_en": "Phaladeepika Sunapha Yoga on House 10",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: सुनफा योग (चन्द्र से द्वितीय में ग्रह) का प्रभाव—स्वअर्जित धन, नीतिज्ञ, विद्या सम्पन्न व सुखी।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_ANAFA_H1",
+      "rule_name_hi": "फलदीपिका: भाव 1 पर अनफा योग (चन्द्र से द्वादश में ग्रह)",
+      "rule_name_en": "Phaladeepika Anafa Yoga on House 1",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: अनफा योग (चन्द्र से द्वादश में ग्रह) का प्रभाव—सुन्दर देह, उत्तम वस्त्र-आभूषण, सदाचारी व सम्मानित।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_ANAFA_H2",
+      "rule_name_hi": "फलदीपिका: भाव 2 पर अनफा योग (चन्द्र से द्वादश में ग्रह)",
+      "rule_name_en": "Phaladeepika Anafa Yoga on House 2",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: अनफा योग (चन्द्र से द्वादश में ग्रह) का प्रभाव—सुन्दर देह, उत्तम वस्त्र-आभूषण, सदाचारी व सम्मानित।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_ANAFA_H4",
+      "rule_name_hi": "फलदीपिका: भाव 4 पर अनफा योग (चन्द्र से द्वादश में ग्रह)",
+      "rule_name_en": "Phaladeepika Anafa Yoga on House 4",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: अनफा योग (चन्द्र से द्वादश में ग्रह) का प्रभाव—सुन्दर देह, उत्तम वस्त्र-आभूषण, सदाचारी व सम्मानित।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_ANAFA_H7",
+      "rule_name_hi": "फलदीपिका: भाव 7 पर अनफा योग (चन्द्र से द्वादश में ग्रह)",
+      "rule_name_en": "Phaladeepika Anafa Yoga on House 7",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: अनफा योग (चन्द्र से द्वादश में ग्रह) का प्रभाव—सुन्दर देह, उत्तम वस्त्र-आभूषण, सदाचारी व सम्मानित।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_ANAFA_H9",
+      "rule_name_hi": "फलदीपिका: भाव 9 पर अनफा योग (चन्द्र से द्वादश में ग्रह)",
+      "rule_name_en": "Phaladeepika Anafa Yoga on House 9",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: अनफा योग (चन्द्र से द्वादश में ग्रह) का प्रभाव—सुन्दर देह, उत्तम वस्त्र-आभूषण, सदाचारी व सम्मानित।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_ANAFA_H10",
+      "rule_name_hi": "फलदीपिका: भाव 10 पर अनफा योग (चन्द्र से द्वादश में ग्रह)",
+      "rule_name_en": "Phaladeepika Anafa Yoga on House 10",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: अनफा योग (चन्द्र से द्वादश में ग्रह) का प्रभाव—सुन्दर देह, उत्तम वस्त्र-आभूषण, सदाचारी व सम्मानित।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_DURUDHURA_H1",
+      "rule_name_hi": "फलदीपिका: भाव 1 पर दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह)",
+      "rule_name_en": "Phaladeepika Durudhura Yoga on House 1",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह) का प्रभाव—अखंड सम्पत्ति, वाहन-सुख, त्यागशील व परम ऐश्वर्यवान।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_DURUDHURA_H2",
+      "rule_name_hi": "फलदीपिका: भाव 2 पर दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह)",
+      "rule_name_en": "Phaladeepika Durudhura Yoga on House 2",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह) का प्रभाव—अखंड सम्पत्ति, वाहन-सुख, त्यागशील व परम ऐश्वर्यवान।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_DURUDHURA_H4",
+      "rule_name_hi": "फलदीपिका: भाव 4 पर दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह)",
+      "rule_name_en": "Phaladeepika Durudhura Yoga on House 4",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह) का प्रभाव—अखंड सम्पत्ति, वाहन-सुख, त्यागशील व परम ऐश्वर्यवान।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_DURUDHURA_H7",
+      "rule_name_hi": "फलदीपिका: भाव 7 पर दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह)",
+      "rule_name_en": "Phaladeepika Durudhura Yoga on House 7",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह) का प्रभाव—अखंड सम्पत्ति, वाहन-सुख, त्यागशील व परम ऐश्वर्यवान।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_DURUDHURA_H9",
+      "rule_name_hi": "फलदीपिका: भाव 9 पर दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह)",
+      "rule_name_en": "Phaladeepika Durudhura Yoga on House 9",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह) का प्रभाव—अखंड सम्पत्ति, वाहन-सुख, त्यागशील व परम ऐश्वर्यवान।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_DURUDHURA_H10",
+      "rule_name_hi": "फलदीपिका: भाव 10 पर दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह)",
+      "rule_name_en": "Phaladeepika Durudhura Yoga on House 10",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: दुरुधुरा योग (चन्द्र के दोनों ओर ग्रह) का प्रभाव—अखंड सम्पत्ति, वाहन-सुख, त्यागशील व परम ऐश्वर्यवान।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_PAPAKARTARI_H1",
+      "rule_name_hi": "फलदीपिका: भाव 1 पर पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह)",
+      "rule_name_en": "Phaladeepika Papakartari Yoga on House 1",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह) का प्रभाव—संबंधित भाव के शुभ फलों का हनन, घुटन व रुकावट।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_PAPAKARTARI_H2",
+      "rule_name_hi": "फलदीपिका: भाव 2 पर पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह)",
+      "rule_name_en": "Phaladeepika Papakartari Yoga on House 2",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह) का प्रभाव—संबंधित भाव के शुभ फलों का हनन, घुटन व रुकावट।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_PAPAKARTARI_H4",
+      "rule_name_hi": "फलदीपिका: भाव 4 पर पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह)",
+      "rule_name_en": "Phaladeepika Papakartari Yoga on House 4",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह) का प्रभाव—संबंधित भाव के शुभ फलों का हनन, घुटन व रुकावट।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_PAPAKARTARI_H7",
+      "rule_name_hi": "फलदीपिका: भाव 7 पर पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह)",
+      "rule_name_en": "Phaladeepika Papakartari Yoga on House 7",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह) का प्रभाव—संबंधित भाव के शुभ फलों का हनन, घुटन व रुकावट।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_PAPAKARTARI_H9",
+      "rule_name_hi": "फलदीपिका: भाव 9 पर पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह)",
+      "rule_name_en": "Phaladeepika Papakartari Yoga on House 9",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह) का प्रभाव—संबंधित भाव के शुभ फलों का हनन, घुटन व रुकावट।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_PAPAKARTARI_H10",
+      "rule_name_hi": "फलदीपिका: भाव 10 पर पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह)",
+      "rule_name_en": "Phaladeepika Papakartari Yoga on House 10",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: पापकर्तरी योग (भाव के दोनों ओर पापी ग्रह) का प्रभाव—संबंधित भाव के शुभ फलों का हनन, घुटन व रुकावट।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SHUBHAKARTARI_H1",
+      "rule_name_hi": "फलदीपिका: भाव 1 पर शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Shubhakartari Yoga on House 1",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह) का प्रभाव—सुरक्षा कवच, निरंतर उन्नति व सौभाग्य की पुष्टि।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SHUBHAKARTARI_H2",
+      "rule_name_hi": "फलदीपिका: भाव 2 पर शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Shubhakartari Yoga on House 2",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह) का प्रभाव—सुरक्षा कवच, निरंतर उन्नति व सौभाग्य की पुष्टि।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SHUBHAKARTARI_H4",
+      "rule_name_hi": "फलदीपिका: भाव 4 पर शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Shubhakartari Yoga on House 4",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह) का प्रभाव—सुरक्षा कवच, निरंतर उन्नति व सौभाग्य की पुष्टि।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SHUBHAKARTARI_H7",
+      "rule_name_hi": "फलदीपिका: भाव 7 पर शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Shubhakartari Yoga on House 7",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह) का प्रभाव—सुरक्षा कवच, निरंतर उन्नति व सौभाग्य की पुष्टि।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SHUBHAKARTARI_H9",
+      "rule_name_hi": "फलदीपिका: भाव 9 पर शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Shubhakartari Yoga on House 9",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह) का प्रभाव—सुरक्षा कवच, निरंतर उन्नति व सौभाग्य की पुष्टि।"
+      }
+    },
+    {
+      "rule_id": "PD_YOGA_SHUBHAKARTARI_H10",
+      "rule_name_hi": "फलदीपिका: भाव 10 पर शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह)",
+      "rule_name_en": "Phaladeepika Shubhakartari Yoga on House 10",
+      "source": {
+        "text": "Phaladeepika",
+        "chapter": "Adhyaya 6 (Yoga Adhyaya)",
+        "shloka": "Phaladeepika 6.1-6.10",
+        "author": "Mantreshwara",
+        "era": "Classical 13th Century CE"
+      },
+      "school": "Phaladeepika",
+      "category": "yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "yoga",
+          "kartari",
+          "status"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "फलदीपिका योगाध्याय: शुभकर्तरी योग (भाव के दोनों ओर शुभ ग्रह) का प्रभाव—सुरक्षा कवच, निरंतर उन्नति व सौभाग्य की पुष्टि।"
       }
     }
   ]

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "grantha": "Jaimini Upadesha Sutras",
-    "count": 20
+    "count": 104
   },
   "rules": [
     {
@@ -650,6 +650,2778 @@
         "polarity": "+",
         "strength_base": 0.8,
         "description_hi": "कारकांश कुण्डली के अनुसार द्वादश (व्यय/मोक्ष) का फल आत्मा के संचित प्रारब्ध को उजागर करता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H1",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 1वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 1",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.1",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 1वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H2",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 2वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 2",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.2",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 2वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H3",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 3वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 3",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.3",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 3वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H4",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 4वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 4",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.4",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 4वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H5",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 5वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 5",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.5",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 5वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H6",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 6वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 6",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.6",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 6वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H7",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 7वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 7",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.7",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 7वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H8",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 8वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 8",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.8",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 8वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H9",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 9वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 9",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.9",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 9वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H10",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 10वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 10",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.10",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 10वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H11",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 11वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 11",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.11",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 11वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AK_IN_H12",
+      "rule_name_hi": "जैमिनी सूत्र: आत्मकारक (Atmakaraka) का 12वें भाव में फल",
+      "rule_name_en": "Jaimini AK in House 12",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.12",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: आत्मकारक (Atmakaraka) का 12वें भाव में अवस्थान। आत्मा का परम उद्देश्य, मोक्ष, जीवन का मुख्य संघर्ष व आध्यात्मिक पाठ। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H1",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 1वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 1",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.1",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 1वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H2",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 2वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 2",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.2",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 2वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H3",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 3वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 3",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.3",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 3वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H4",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 4वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 4",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.4",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 4वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H5",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 5वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 5",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.5",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 5वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H6",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 6वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 6",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.6",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 6वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H7",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 7वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 7",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.7",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 7वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H8",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 8वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 8",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.8",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 8वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H9",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 9वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 9",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.9",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 9वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H10",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 10वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 10",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.10",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 10वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H11",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 11वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 11",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.11",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 11वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AmK_IN_H12",
+      "rule_name_hi": "जैमिनी सूत्र: अमात्यकारक (Amatyakaraka) का 12वें भाव में फल",
+      "rule_name_en": "Jaimini AmK in House 12",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.12",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: अमात्यकारक (Amatyakaraka) का 12वें भाव में अवस्थान। कैरियर, आजीविका, सामाजिक प्रतिष्ठा व राज्य-मान्यता। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H1",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 1वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 1",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.1",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 1वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H2",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 2वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 2",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.2",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 2वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H3",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 3वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 3",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.3",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 3वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H4",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 4वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 4",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.4",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 4वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H5",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 5वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 5",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.5",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 5वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H6",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 6वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 6",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.6",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 6वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H7",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 7वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 7",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.7",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 7वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H8",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 8वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 8",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.8",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 8वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H9",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 9वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 9",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.9",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 9वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H10",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 10वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 10",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.10",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 10वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H11",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 11वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 11",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.11",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 11वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_BK_IN_H12",
+      "rule_name_hi": "जैमिनी सूत्र: भ्रातृकारक (Bhratrukaraka) का 12वें भाव में फल",
+      "rule_name_en": "Jaimini BK in House 12",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.12",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: भ्रातृकारक (Bhratrukaraka) का 12वें भाव में अवस्थान। सहोदर, गुरु, आध्यात्मिक मार्गदर्शक व पराक्रम। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H1",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 1वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 1",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.1",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 1वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H2",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 2वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 2",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.2",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 2वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H3",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 3वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 3",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.3",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 3वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H4",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 4वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 4",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.4",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 4वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H5",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 5वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 5",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.5",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 5वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H6",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 6वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 6",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.6",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 6वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H7",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 7वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 7",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.7",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 7वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H8",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 8वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 8",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.8",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 8वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H9",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 9वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 9",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.9",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 9वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H10",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 10वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 10",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.10",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 10वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H11",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 11वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 11",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.11",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 11वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_MK_IN_H12",
+      "rule_name_hi": "जैमिनी सूत्र: मातृकारक (Matrukaraka) का 12वें भाव में फल",
+      "rule_name_en": "Jaimini MK in House 12",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.12",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मातृकारक (Matrukaraka) का 12वें भाव में अवस्थान। माता, वाहन, आंतरिक सुख व गृह-शांति। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H1",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 1वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 1",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.1",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 1वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H2",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 2वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 2",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.2",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 2वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H3",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 3वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 3",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.3",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 3वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H4",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 4वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 4",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.4",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 4वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H5",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 5वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 5",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.5",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 5वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H6",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 6वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 6",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.6",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 6वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H7",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 7वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 7",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.7",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 7वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H8",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 8वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 8",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.8",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 8वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H9",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 9वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 9",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.9",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 9वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H10",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 10वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 10",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.10",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 10वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H11",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 11वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 11",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.11",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 11वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_PK_IN_H12",
+      "rule_name_hi": "जैमिनी सूत्र: पुत्रकारक (Putrakaraka) का 12वें भाव में फल",
+      "rule_name_en": "Jaimini PK in House 12",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.12",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: पुत्रकारक (Putrakaraka) का 12वें भाव में अवस्थान। संतान, बुद्धि, पूर्वपुण्य, मेधा व मंत्र सिद्धि। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H1",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 1वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 1",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.1",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 1वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H2",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 2वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 2",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.2",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 2वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H3",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 3वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 3",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.3",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 3वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H4",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 4वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 4",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.4",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 4वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H5",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 5वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 5",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.5",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 5वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H6",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 6वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 6",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.6",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 6वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H7",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 7वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 7",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.7",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 7वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H8",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 8वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 8",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.8",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 8वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H9",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 9वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 9",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.9",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 9वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H10",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 10वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 10",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.10",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 10वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H11",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 11वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 11",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.11",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 11वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_GK_IN_H12",
+      "rule_name_hi": "जैमिनी सूत्र: ज्ञातिरक (Gnatikaraka) का 12वें भाव में फल",
+      "rule_name_en": "Jaimini GK in House 12",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.12",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: ज्ञातिरक (Gnatikaraka) का 12वें भाव में अवस्थान। शत्रु, रोग, ऋण, विवाद व रिश्तेदारी में संघर्ष। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H1",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 1वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 1",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.1",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 1वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H2",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 2वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 2",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.2",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 2वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H3",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 3वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 3",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.3",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 3वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H4",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 4वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 4",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.4",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 4वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H5",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 5वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 5",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.5",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 5वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H6",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 6वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 6",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.6",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 6वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H7",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 7वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 7",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.7",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 7वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H8",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 8वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 8",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.8",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 8वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H9",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 9वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 9",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.9",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 9वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H10",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 10वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 10",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.10",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 10वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H11",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 11वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 11",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.11",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 11वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। शुभ फलों में निरंतर वृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_DK_IN_H12",
+      "rule_name_hi": "जैमिनी सूत्र: दाराकारक (Darakaraka) का 12वें भाव में फल",
+      "rule_name_en": "Jaimini DK in House 12",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 2 (Chara Karaka Phala Adhyaya)",
+        "shloka": "Jaimini Sutra 2.12",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_karaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_karaka",
+          "soul_path"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 12वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
       }
     }
   ]
