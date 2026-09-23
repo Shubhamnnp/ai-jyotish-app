@@ -3017,13 +3017,14 @@ _gr_neg = _gr_summ.get("total_negative", 0)
 col_gr_bar, col_gr_btn = st.columns([4.2, 1.8])
 with col_gr_bar:
     st.markdown(f"""
-    <div style="background:linear-gradient(90deg, #1E1B4B 0%, #311042 100%); border:1.5px solid #8B5CF6; border-radius:8px; padding:6px 14px; display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <div style="color:#F5F3FF; font-size:12px; font-weight:700;">
-            📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b> <span style="color:#FBBF24;">{_gr_fired:,} सक्रिय नियम फलित</span>
+    <div style="background: linear-gradient(90deg, #F5F3FF 0%, #EDE9FE 100%); border: 1.5px solid #8B5CF6; border-radius: 8px; padding: 6px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
+        <div style="color: #2E1065 !important; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <span style="color: #2E1065 !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
+            <span style="background: #FEF3C7; color: #92400E !important; border: 1px solid #F59E0B; padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 12px;">{_gr_fired:,} सक्रिय नियम फलित</span>
         </div>
-        <div style="font-size:11px; color:#DDD6FE;">
-            <span style="background:#065F46; color:#A7F3D0; padding:2px 8px; border-radius:10px; font-weight:700; margin-right:4px;">🟢 {_gr_pos:,} शुभ (+)</span>
-            <span style="background:#7F1D1D; color:#FECACA; padding:2px 8px; border-radius:10px; font-weight:700;">🔴 {_gr_neg:,} सतर्कता (-)</span>
+        <div style="font-size: 11.5px; display: flex; gap: 6px; align-items: center;">
+            <span style="background: #DCFCE7; color: #14532D !important; border: 1px solid #86EFAC; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
+            <span style="background: #FEE2E2; color: #991B1B !important; border: 1px solid #FCA5A5; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
