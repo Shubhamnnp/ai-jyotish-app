@@ -4,7 +4,7 @@ Generates authentic, high-contrast, vector-rendered North Indian Diamond,
 South Indian Box, and East Indian Surya charts with classical high-contrast color grading.
 """
 
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional, Any
 from ..core.models import KundaliChart, VargaChart
 
 

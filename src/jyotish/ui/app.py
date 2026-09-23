@@ -5425,6 +5425,11 @@ elif selected_idx == 10:
         st.markdown("#### 🎯 जन्म एवं तात्कालिक गोचर संयुक्त ओवरले चक्र (Dual-Ring Bi-Wheel Overlay)")
         st.caption("अंदर जन्म के ग्रह (नीले रंग में) और बाहर तात्कालिक गोचर ग्रह (सुनहरे रंग में ⚡ चिन्ह के साथ):")
         
+        import importlib
+        import src.jyotish.ui.chart_renderer as cr_mod
+        importlib.reload(cr_mod)
+        ChartRenderer = cr_mod.ChartRenderer
+
         t_pos_dict = {p_n: p_o.sign_id for p_n, p_o in t_chart.planets.items()}
         bw_svg = ChartRenderer.render_transit_biwheel_svg(chart, t_pos_dict, title=f"जन्म-गोचर ओवरले कुण्डली ({t_date.strftime('%d-%b-%Y')})")
         
