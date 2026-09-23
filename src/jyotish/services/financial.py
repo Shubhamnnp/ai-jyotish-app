@@ -244,3 +244,4 @@ class FinancialAstrologyService:
 
 
 default_financial_service = FinancialAstrologyService()
+

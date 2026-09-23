@@ -7331,8 +7331,8 @@ elif selected_idx == 16:
                 p1_data = BirthData(name=p1_name, birth_date=p1_date, birth_time=p1_time, latitude=p1_lat, longitude=p1_lon, timezone_offset=p1_tz, city=p1_city)
                 p2_data = BirthData(name=p2_name, birth_date=p2_date, birth_time=p2_time, latitude=p2_lat, longitude=p2_lon, timezone_offset=p2_tz, city=p2_city)
 
-                chart_1 = default_calculation_service.calculate_chart(p1_data)
-                chart_2 = default_calculation_service.calculate_chart(p2_data)
+                chart_1 = default_chart_calculator.calculate_chart(p1_data)
+                chart_2 = default_chart_calculator.calculate_chart(p2_data)
 
                 biz_res = BusinessPartnershipService.evaluate_partnership(chart_1, chart_2, p1_name, p2_name)
 

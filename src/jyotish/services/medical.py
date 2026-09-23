@@ -292,3 +292,4 @@ class MedicalAstrologyService:
 
 
 default_medical_service = MedicalAstrologyService()
+

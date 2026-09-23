@@ -142,56 +142,95 @@ class BusinessPartnershipService:
         total_score = fin_score + lead_score + safety_score + longevity_score
 
         if total_score >= 80:
+            grade = "A+" if total_score >= 85 else "A"
             verdict_badge = "🟢 अत्युत्कृष्ट साझेदारी (Highly Auspicious & Lucrative)"
             verdict_text = "यह साझेदारी अत्यंत फलदायी, वित्तीय समृद्धि दायक एवं दीर्घकालिक स्थायित्व वाली सिद्ध होगी। दोनों एक-दूसरे के पूरक बनकर विशाल व्यापारिक साम्राज्य खड़ा कर सकते हैं।"
             rating_color = "#16A34A"
         elif total_score >= 60:
+            grade = "B"
             verdict_badge = "🟡 अनुकूल साझेदारी (Favorable with Clear Agreements)"
             verdict_text = "साझेदारी सामान्यतः लाभदायक व सहयोगपूर्ण रहेगी। व्यापार में वित्तीय व प्रशासनिक जिम्मेदारियों का स्पष्ट लिखित अनुबंध (MOU / Partnership Deed) अनिवार्य रूप से करें।"
             rating_color = "#D97706"
         elif total_score >= 45:
+            grade = "C"
             verdict_badge = "⚠️ मध्यम सतर्कता (Moderate Risk — Requires Audits)"
             verdict_text = "साझेदारी में मतभेद व वित्तीय संदेह उत्पन्न होने की संभावना है। खातों का त्रैमासिक ऑडिट एवं निर्णयों में स्पष्टता बनाए रखना अत्यंत आवश्यक है।"
             rating_color = "#EA580C"
         else:
+            grade = "D"
             verdict_badge = "🔴 उच्च जोखिम / असहयोग (High Dispute & Loss Risk)"
             verdict_text = "शास्त्रीय दृष्टि से यह साझेदारी अनुकूल नहीं है। अहंकार टकराव, वित्तीय नुकसान या कानूनी विवाद की प्रबल आशंका है। संयुक्त व्यापार के स्थान पर स्वतंत्र कार्य श्रेयस्कर होगा।"
             rating_color = "#DC2626"
+
+        fin_dict = {
+            "score": fin_score,
+            "max": 25,
+            "label": "वित्तीय विश्वास व लाभ (Financial Trust)",
+            "reasons": fin_reasons,
+            "desc": " | ".join(fin_reasons) if fin_reasons else "वित्तीय स्थिति सामान्य व स्थिर है।"
+        }
+        lead_dict = {
+            "score": lead_score,
+            "max": 25,
+            "label": "नेतृत्व व कार्य विभाजन (Leadership Synergy)",
+            "reasons": lead_reasons,
+            "desc": " | ".join(lead_reasons) if lead_reasons else "नेतृत्व क्षमता संतुलित है।"
+        }
+        safety_dict = {
+            "score": safety_score,
+            "max": 25,
+            "label": "विवाद व मुकदमा सुरक्षा (Legal & Conflict Safety)",
+            "reasons": conflict_reasons,
+            "desc": " | ".join(conflict_reasons) if conflict_reasons else "विवाद का कोई गंभीर शास्त्रीय योग नहीं है।"
+        }
+        longevity_dict = {
+            "score": longevity_score,
+            "max": 25,
+            "label": "दीर्घकालिक स्थायित्व व भाग्य (Longevity & Growth)",
+            "reasons": growth_reasons,
+            "desc": " | ".join(growth_reasons) if growth_reasons else "साझेदारी का स्थायित्व संतोषजनक है।"
+        }
+
+        strengths = [r for r in (fin_reasons + lead_reasons + conflict_reasons + growth_reasons) if "⚠️" not in r and "शत्रुता" not in r and "षडाष्टक" not in r]
+        cautions = [r for r in (fin_reasons + lead_reasons + conflict_reasons + growth_reasons) if "⚠️" in r or "शत्रुता" in r or "षडाष्टक" in r or "अहंकार" in r]
+
+        if not strengths:
+            strengths = ["दोनों की मूल कुण्डलियों में कर्मेश व लाभेश का स्वाभाविक संबंध व्यापार वृद्धि हेतु सकारात्मक है।"]
+        if not cautions:
+            cautions = ["व्यापारिक निर्णयों एवं लाभ के बंटवारे का स्पष्ट लिखित दस्तावेजीकरण रखें।"]
+
+        recommended_structure = {
+            "equity_split": "५०-५० बराबर" if abs(fin_score - lead_score) <= 3 else "६०-४० (सक्रिय साझेदार व पूंजी के अनुसार)",
+            "partner_a_role": f"{name_a}: वित्तीय नियंत्रण, मुख्य रणनीति एवं दीर्घावधि विजन",
+            "partner_b_role": f"{name_b}: दैनिक संचालन, ग्राहक संबंध व बाज़ार विस्तार",
+            "finance_control": "द्वि-हस्ताक्षर बैंक खाते (Dual-Signatory) एवं पारदर्शी त्रैमासिक ऑडिट"
+        }
 
         return {
             "name_a": name_a,
             "name_b": name_b,
             "total_score": total_score,
+            "grade": grade,
+            "verdict": verdict_badge,
             "verdict_badge": verdict_badge,
+            "summary_hi": verdict_text,
             "verdict_text": verdict_text,
             "rating_color": rating_color,
+            "strengths": strengths,
+            "cautions": cautions,
+            "recommended_structure": recommended_structure,
             "pillars": {
-                "financial_integrity": {
-                    "score": fin_score,
-                    "max": 25,
-                    "label": "वित्तीय विश्वास व लाभ (Financial Trust)",
-                    "reasons": fin_reasons
-                },
-                "leadership_synergy": {
-                    "score": lead_score,
-                    "max": 25,
-                    "label": "नेतृत्व व कार्य विभाजन (Leadership Synergy)",
-                    "reasons": lead_reasons
-                },
-                "conflict_safety": {
-                    "score": safety_score,
-                    "max": 25,
-                    "label": "विवाद व मुकदमा सुरक्षा (Legal & Conflict Safety)",
-                    "reasons": conflict_reasons
-                },
-                "partnership_longevity": {
-                    "score": longevity_score,
-                    "max": 25,
-                    "label": "दीर्घकालिक स्थायित्व व भाग्य (Longevity & Growth)",
-                    "reasons": growth_reasons
-                }
+                "financial": fin_dict,
+                "financial_integrity": fin_dict,
+                "leadership": lead_dict,
+                "leadership_synergy": lead_dict,
+                "dispute_risk": safety_dict,
+                "conflict_safety": safety_dict,
+                "longevity": longevity_dict,
+                "partnership_longevity": longevity_dict
             }
         }
 
 
 default_partnership_service = BusinessPartnershipService()
+
