@@ -7884,26 +7884,67 @@ elif selected_idx == 28:
 
     with tab_i4:
         st.markdown("### 📅 अनुकूल व्रत, उपवास एवं पारण नियम")
-        st.caption("धर्म सिंधु एवं निर्णय सिंधु अनुसार आपकी कुण्डली के लिए सर्वाधिक कल्याणकारी व्रत:")
+        st.caption("धर्म सिंधु एवं निर्णय सिंधु अनुसार कुण्डली आधारित नित्य जीवन के व्रत तथा नवरात्रि पर्व के विशेष नियम:")
 
-        st.markdown(f"""
-        <div style="background:#FEF3C7; border:1.5px solid #D97706; border-radius:10px; padding:16px; margin-bottom:14px;">
-            <div style="font-size:16px; font-weight:900; color:#78350F; margin-bottom:6px;">
-                🌟 आपका मुख्य साप्ताहिक व्रत दिवस: <b>{ishta_res['ishta_vrat_day']}</b>
+        sub_tab_normal, sub_tab_navratri = st.tabs([
+            "📅 सामान्य कुण्डली व्रत एवं नित्य उपवास नियम",
+            "🚩 केवल नवरात्रि पर्व: विशेष व्रत एवं उपवास विधान (निर्जला/जल/फल)"
+        ])
+
+        with sub_tab_normal:
+            st.markdown("#### 🌟 सामान्य जीवन के लिए कुण्डली आधारित अनुकूल व्रत")
+            st.caption("यह व्रत आपकी जन्म कुण्डली के इष्ट ग्रह, राशि एवं दशा के दोष शमन व पुण्य संचय हेतु आजीवन मान्य हैं:")
+
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border:1.5px solid #D97706; border-radius:10px; padding:16px; margin-bottom:14px;">
+                <div style="font-size:17px; font-weight:900; color:#78350F; margin-bottom:6px;">
+                    🌟 आपका मुख्य साप्ताहिक व्रत दिवस: <b>{ishta_res['ishta_vrat_day']}</b>
+                </div>
+                <p style="margin:6px 0; color:#1E293B;">• <b>नियामक इष्ट ग्रह व देवता:</b> <b>{ishta_res['ishta_planet']}</b> — {ishta_res['ishta_deity']}</p>
+                <p style="margin:6px 0; color:#1E293B;">• <b>उपवास के शास्त्रीय नियम:</b> {ishta_res['ishta_vrat_rules']}</p>
+                <p style="margin:6px 0; color:#15803D;">• <b>आध्यात्मिक एवं भौतिक फल:</b> {ishta_res['ishta_fruit']}</p>
             </div>
-            <p style="margin:6px 0;">• <b>मुख्य पावन तिथियाँ:</b> {ishta_res['ishta_vrat_tithi']}</p>
-            <p style="margin:6px 0;">• <b>उपवास के शास्त्रीय नियम:</b> {ishta_res['ishta_vrat_rules']}</p>
-        </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
-        # ----------------------------------------------------
-        # Shastriya Navratri Vrat & Vidhan Section
-        # ----------------------------------------------------
-        nv = ishta_res.get("navratri", {})
-        if nv:
-            st.markdown("---")
-            st.markdown("### 🚩 कुण्डली अनुसार शास्त्रीय 'नवरात्रि व्रत' एवं संपूर्ण विधान")
-            st.caption("देवी भागवत, निर्णय सिंधु, कालिका पुराण एवं चरक संहिता के अनुसार जातक की कुण्डली अनुसार सटीक व्रत निर्णय:")
+            c_n1, c_n2 = st.columns(2)
+            with c_n1:
+                st.markdown(f"""
+                <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:14px; height:100%;">
+                    <b style="color:#1D4ED8; font-size:15px;">🗓️ कुण्डली अनुसार पावन तिथियाँ:</b>
+                    <p style="margin:8px 0; font-weight:700; color:#0F172A;">{ishta_res['ishta_vrat_tithi']}</p>
+                    <small style="color:#475569;">
+                        इन तिथियों पर उपवास, गंगा स्नान अथवा सत्यनारायण कथा/शिव आराधना करने से जन्म जन्मांतर के पापों का शमन होता है तथा सुख-शांति मिलती है।
+                    </small>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with c_n2:
+                st.markdown("""
+                <div style="background:#F0FDF4; border:1px solid #86EFAC; border-radius:8px; padding:14px; height:100%;">
+                    <b style="color:#15803D; font-size:15px;">🥗 सामान्य उपवास में आहार व खानपान:</b>
+                    <p style="margin:8px 0; color:#14532D; font-size:13.5px;">
+                        • दिन में केवल ताजे फल, गाय का दूध, मखाना, मिश्री या जल ग्रहण करें।<br/>
+                        • यदि सेंधा नमक का फलाहार लेना हो तो केवल सायंकाल आरती के बाद <b>एक बार</b> ही लें।<br/>
+                        • अनाज, दालें, लहसुन-प्याज व तामसिक भोजन सर्वथा वर्जित रखें।
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div style="margin-top:14px;">
+                <h4>📜 उपवास एवं पारण के शाश्वत नियम:</h4>
+                <ol style="color:#334155; line-height:1.7;">
+                    <li><b>संकल्प:</b> प्रातः स्नान के उपरांत पूर्व या उत्तर मुख होकर हाथ में जल, अक्षत व पुष्प लेकर व्रत का संकल्प लें।</li>
+                    <li><b>इन्द्रिय संयम:</b> उपवास के दिन क्रोध, झूठ, निंदा, परनिंदा, दिन में सोना एवं तामसिक संगति सर्वथा वर्जित है।</li>
+                    <li><b>पारण समय:</b> सायंकाल पूजा व आरती के पश्चात, अथवा अगले दिन सूर्योदय के उपरांत ही शुद्ध सात्विक भोजन से पारण करें।</li>
+                    <li><b>दान की महिमा:</b> व्रत पूर्ण होने पर किसी ब्राह्मण, साधु अथवा निर्धन व्यक्ति को अपनी क्षमता अनुसार भोजन या अन्न-दान अवश्य करें।</li>
+                </ol>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with sub_tab_navratri:
+            nv = ishta_res.get("navratri", {})
+            st.info("ℹ️ **विशेष सूचना:** यह खंड केवल वर्ष में आने वाली चैत्र एवं शारदीय **नवरात्रि के ९ दिनों** के लिए है। सामान्य दिनों में पूर्व टैब 'सामान्य कुण्डली व्रत' के नियम ही लागू होते हैं।")
 
             st.markdown(f"""
             <div style="background:#FFF1F2; border:2px solid #E11D48; border-radius:12px; padding:16px; margin-bottom:16px;">
@@ -7918,7 +7959,7 @@ elif selected_idx == 28:
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("#### 🥣 उपवास के ५ शास्त्रीय भेद — निर्जला, जलाहार व फलाहार निर्णय:")
+            st.markdown("#### 🥣 केवल नवरात्रि के दिनों में उपवास के ५ शास्त्रीय भेद (निर्जला, जलाहार व फलाहार):")
             
             c_v1, c_v2 = st.columns(2)
             with c_v1:
@@ -7994,14 +8035,6 @@ elif selected_idx == 28:
                 </p>
             </div>
             """, unsafe_allow_html=True)
-
-        st.markdown("""
-        #### 📜 उपवास एवं पारण के शाश्वत नियम:
-        1. **संकल्प:** प्रातः स्नान के उपरांत पूर्व या उत्तर मुख होकर हाथ में जल, अक्षत व पुष्प लेकर व्रत का संकल्प लें।
-        2. **इन्द्रिय संयम:** उपवास के दिन क्रोध, झूठ, निंदा, परनिंदा, दिन में सोना एवं तामसिक संगति सर्वथा वर्जित है।
-        3. **पारण समय:** सायंकाल पूजा व आरती के पश्चात, अथवा अगले दिन सूर्योदय के उपरांत ही शुद्ध सात्विक भोजन से पारण करें।
-        4. **दान की महिमा:** व्रत पूर्ण होने पर किसी ब्राह्मण, साधु अथवा निर्धन व्यक्ति को अपनी क्षमता अनुसार भोजन या अन्न-दान अवश्य करें।
-        """)
 
 
 
