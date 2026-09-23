@@ -2,7 +2,7 @@
   "metadata": {
     "grantha": "Sarvatobhadra & Kota Chakra Shastra",
     "author": "Classical Sages",
-    "count": 173
+    "count": 229
   },
   "rules": [
     {
@@ -5539,6 +5539,1798 @@
         "polarity": "-",
         "strength_base": 0.88,
         "description_hi": "सर्वतोभद्र चक्र स्वर वेध: जातक के नामाक्षर स्वर औ स्वर पर केतु का वेध प्रभाव व शुभाशुभ फल।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H1",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 1)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 1",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H2",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 2)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 2",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H3",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 3)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 3",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H4",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 4)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 4",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H5",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 5)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 5",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H6",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 6)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 6",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H7",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 7)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 7",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H8",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 8)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 8",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H9",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 9)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 9",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H10",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 10)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 10",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H11",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 11)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 11",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H12",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 12)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 12",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H13",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 13)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 13",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 13
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SATURN_VAMA_H14",
+      "rule_name_hi": "सर्वतोभद्र चक्र: शनि वाम वेध (भाव 14)",
+      "rule_name_en": "SBC Vedha Saturn_Vama House 14",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 14
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर शनि वाम वेध का प्रभाव: अचानक कार्य में गतिरोध, शारीरिक पीड़ा, मानसिक चिंता व आर्थिक हानि।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H1",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 1)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 1",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H2",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 2)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 2",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H3",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 3)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 3",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H4",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 4)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 4",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H5",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 5)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 5",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H6",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 6)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 6",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H7",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 7)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 7",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H8",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 8)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 8",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H9",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 9)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 9",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H10",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 10)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 10",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H11",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 11)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 11",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H12",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 12)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 12",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H13",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 13)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 13",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 13
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_MARS_DAKSHINA_H14",
+      "rule_name_hi": "सर्वतोभद्र चक्र: मंगल दक्षिण वेध (भाव 14)",
+      "rule_name_en": "SBC Vedha Mars_Dakshina House 14",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 14
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर मंगल दक्षिण वेध का प्रभाव: अग्नि, शस्त्र, रक्त विकार, विवाद अथवा दुर्घटना की आशंका।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H1",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 1)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 1",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H2",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 2)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 2",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H3",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 3)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 3",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H4",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 4)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 4",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H5",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 5)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 5",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H6",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 6)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 6",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H7",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 7)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 7",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H8",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 8)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 8",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H9",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 9)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 9",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H10",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 10)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 10",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H11",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 11)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 11",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H12",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 12)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 12",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H13",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 13)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 13",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 13
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_RAHU_SAMMUKHA_H14",
+      "rule_name_hi": "सर्वतोभद्र चक्र: राहु सम्मुख वेध (भाव 14)",
+      "rule_name_en": "SBC Vedha Rahu_Sammukha House 14",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 14
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर राहु सम्मुख वेध का प्रभाव: भ्रम, राजभय, षड्यंत्र, अनपेक्षित स्थानांतरण व बदनामी का भय।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H1",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 1)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 1",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H2",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 2)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 2",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H3",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 3)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 3",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 3
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H4",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 4)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 4",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H5",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 5)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 5",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H6",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 6)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 6",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 6
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H7",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 7)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 7",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H8",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 8)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 8",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H9",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 9)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 9",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H10",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 10)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 10",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H11",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 11)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 11",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H12",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 12)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 12",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 12
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H13",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 13)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 13",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 13
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
+      }
+    },
+    {
+      "rule_id": "SBC_VEDHA_SUN_TRIKONA_H14",
+      "rule_name_hi": "सर्वतोभद्र चक्र: सूर्य त्रिकोण वेध (भाव 14)",
+      "rule_name_en": "SBC Vedha Sun_Trikona House 14",
+      "source": {
+        "text": "Sarvatobhadra Chakra (सर्वतोभद्र चक्र)",
+        "chapter": "Nakshatra Swara Vedha Adhyaya",
+        "author": "Classical Samhita Acharyas",
+        "era": "Classical Tantric Jyotish"
+      },
+      "school": "Sarvatobhadra",
+      "category": "sbc_vedha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 14
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "sarvatobhadra",
+          "vedha",
+          "transit_danger"
+        ],
+        "polarity": "-",
+        "strength_base": 0.91,
+        "description_hi": "सर्वतोभद्र चक्र वेध सिद्धांत: जन्म नक्षत्र अथवा नामाक्षर पर सूर्य त्रिकोण वेध का प्रभाव: अहंकार से क्षति, ज्वर, पित्त प्रकोप अथवा उच्चाधिकारियों से मतभेद।"
       }
     }
   ]

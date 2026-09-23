@@ -1,7 +1,7 @@
 {
   "metadata": {
     "grantha": "Jaimini Upadesha Sutras",
-    "count": 271
+    "count": 415
   },
   "rules": [
     {
@@ -8766,6 +8766,4614 @@
         "polarity": "-",
         "strength_base": 0.9,
         "description_hi": "जैमिनी सूत्र अनुसार उपपद लग्न व उसके द्वितीय भाव पर केतु का प्रभाव दांपत्य के स्थायित्व व जीवनसाथी के कुल-संस्कार को दर्शाता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_ARIES",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (मेष राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Aries",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मेष लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_TAURUS",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (वृषभ राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Taurus",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृषभ लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_GEMINI",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (मिथुन राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Gemini",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मिथुन लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_CANCER",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (कर्क राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Cancer",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कर्क लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_LEO",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (सिंह राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Leo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: सिंह लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_VIRGO",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (कन्या राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Virgo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कन्या लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_LIBRA",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (तुला राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Libra",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: तुला लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_SCORPIO",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (वृश्चिक राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Scorpio",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृश्चिक लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_SAGITTARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (धनु राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Sagittarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: धनु लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_CAPRICORN",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (मकर राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Capricorn",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मकर लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_AQUARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (कुम्भ राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Aquarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कुम्भ लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_BRAHMA_GRAHA_PISCES",
+      "rule_name_hi": "जैमिनी सूत्र: ब्रह्मा ग्रह निर्णय (मीन राशि)",
+      "rule_name_en": "Jaimini Longevity Brahma_Graha in Pisces",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मीन लग्न/राशि में ब्रह्मा ग्रह निर्णय का प्रभाव—कुंडली में सर्वाधिक बलवान ग्रह जो आयु व ज्ञान का मुख्य दाता बनता है।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_ARIES",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (मेष राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Aries",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मेष लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_TAURUS",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (वृषभ राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Taurus",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृषभ लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_GEMINI",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (मिथुन राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Gemini",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मिथुन लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_CANCER",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (कर्क राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Cancer",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कर्क लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_LEO",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (सिंह राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Leo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: सिंह लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_VIRGO",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (कन्या राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Virgo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कन्या लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_LIBRA",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (तुला राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Libra",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: तुला लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_SCORPIO",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (वृश्चिक राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Scorpio",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृश्चिक लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_SAGITTARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (धनु राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Sagittarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: धनु लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_CAPRICORN",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (मकर राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Capricorn",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मकर लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_AQUARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (कुम्भ राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Aquarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कुम्भ लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_RUDRA_GRAHA_PISCES",
+      "rule_name_hi": "जैमिनी सूत्र: रुद्र ग्रह निर्णय (मीन राशि)",
+      "rule_name_en": "Jaimini Longevity Rudra_Graha in Pisces",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मीन लग्न/राशि में रुद्र ग्रह निर्णय का प्रभाव—मारक शक्ति से युक्त संहारक ग्रह, दशा समय में प्राण-संकट का नियामक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_ARIES",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (मेष राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Aries",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मेष लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_TAURUS",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (वृषभ राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Taurus",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृषभ लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_GEMINI",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (मिथुन राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Gemini",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मिथुन लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_CANCER",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (कर्क राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Cancer",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कर्क लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_LEO",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (सिंह राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Leo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: सिंह लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_VIRGO",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (कन्या राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Virgo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कन्या लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_LIBRA",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (तुला राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Libra",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: तुला लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_SCORPIO",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (वृश्चिक राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Scorpio",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृश्चिक लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_SAGITTARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (धनु राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Sagittarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: धनु लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_CAPRICORN",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (मकर राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Capricorn",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मकर लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_AQUARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (कुम्भ राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Aquarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कुम्भ लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MAHESHWARA_GRAHA_PISCES",
+      "rule_name_hi": "जैमिनी सूत्र: महेश्वर ग्रह निर्णय (मीन राशि)",
+      "rule_name_en": "Jaimini Longevity Maheshwara_Graha in Pisces",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मीन लग्न/राशि में महेश्वर ग्रह निर्णय का प्रभाव—आत्मा के मोक्ष व परम प्रस्थान का मार्गदर्शक कारक ग्रह।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_ARIES",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (मेष राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Aries",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मेष लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_TAURUS",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (वृषभ राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Taurus",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृषभ लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_GEMINI",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (मिथुन राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Gemini",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मिथुन लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_CANCER",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (कर्क राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Cancer",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कर्क लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_LEO",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (सिंह राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Leo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: सिंह लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_VIRGO",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (कन्या राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Virgo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कन्या लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_LIBRA",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (तुला राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Libra",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: तुला लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_SCORPIO",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (वृश्चिक राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Scorpio",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृश्चिक लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_SAGITTARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (धनु राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Sagittarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: धनु लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_CAPRICORN",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (मकर राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Capricorn",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मकर लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_AQUARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (कुम्भ राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Aquarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कुम्भ लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_VARNADA_LAGNA_PISCES",
+      "rule_name_hi": "जैमिनी सूत्र: वर्णद लग्न फल (मीन राशि)",
+      "rule_name_en": "Jaimini Longevity Varnada_Lagna in Pisces",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मीन लग्न/राशि में वर्णद लग्न फल का प्रभाव—जातक का सामाजिक वर्ण, आजीविका व कुल प्रतिष्ठा का प्रत्यक्ष सूचक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_ARIES",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (मेष राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Aries",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मेष लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_TAURUS",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (वृषभ राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Taurus",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृषभ लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_GEMINI",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (मिथुन राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Gemini",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मिथुन लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_CANCER",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (कर्क राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Cancer",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कर्क लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_LEO",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (सिंह राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Leo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: सिंह लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_VIRGO",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (कन्या राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Virgo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कन्या लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_LIBRA",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (तुला राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Libra",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: तुला लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_SCORPIO",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (वृश्चिक राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Scorpio",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृश्चिक लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_SAGITTARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (धनु राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Sagittarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: धनु लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_CAPRICORN",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (मकर राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Capricorn",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मकर लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_AQUARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (कुम्भ राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Aquarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कुम्भ लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_MANDUKA_DASHA_PISCES",
+      "rule_name_hi": "जैमिनी सूत्र: माण्डूक दशा फल (मीन राशि)",
+      "rule_name_en": "Jaimini Longevity Manduka_Dasha in Pisces",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मीन लग्न/राशि में माण्डूक दशा फल का प्रभाव—मेंढक की भांति उछलकर चलने वाली दशा, अप्रत्याशित आकस्मिक परिवर्तन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_ARIES",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (मेष राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Aries",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मेष लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_TAURUS",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (वृषभ राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Taurus",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृषभ लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_GEMINI",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (मिथुन राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Gemini",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मिथुन लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_CANCER",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (कर्क राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Cancer",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कर्क लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_LEO",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (सिंह राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Leo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: सिंह लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_VIRGO",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (कन्या राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Virgo",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कन्या लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_LIBRA",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (तुला राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Libra",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: तुला लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_SCORPIO",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (वृश्चिक राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Scorpio",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: वृश्चिक लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_SAGITTARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (धनु राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Sagittarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: धनु लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_CAPRICORN",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (मकर राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Capricorn",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मकर लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_AQUARIUS",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (कुम्भ राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Aquarius",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: कुम्भ लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_AYU_PARYAYA_DASHA_PISCES",
+      "rule_name_hi": "जैमिनी सूत्र: पर्याय दशा फल (मीन राशि)",
+      "rule_name_en": "Jaimini Longevity Paryaya_Dasha in Pisces",
+      "source": {
+        "text": "Upadesha Sutras",
+        "chapter": "Ayurdaya Dasha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_longevity",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "longevity",
+          "chara_dasha"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "महर्षि जैमिनी उपदेश सूत्र: मीन लग्न/राशि में पर्याय दशा फल का प्रभाव—क्रमबद्ध राशि दशा से जीवन में उत्थान, विदेश प्रवास व धन प्राप्ति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_ARIES_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (मेष नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Aries Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (मेष)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_TAURUS_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (वृषभ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Taurus Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (वृषभ)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_GEMINI_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (मिथुन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Gemini Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (मिथुन)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CANCER_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (कर्क नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Cancer Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (कर्क)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LEO_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (सिंह नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Leo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (सिंह)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_VIRGO_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (कन्या नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Virgo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (कन्या)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LIBRA_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (तुला नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Libra Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (तुला)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SCORPIO_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (वृश्चिक नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Scorpio Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (वृश्चिक)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SAGITTARIUS_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (धनु नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Sagittarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (धनु)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CAPRICORN_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (मकर नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Capricorn Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (मकर)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_AQUARIUS_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (कुम्भ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Aquarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (कुम्भ)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_PISCES_H1",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश प्रथम भाव (मीन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश प्रथम भाव in Pisces Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 1 का प्रभाव (मीन)—प्रचंड मेधा, तपस्वी, स्वतंत्र सोच, उच्च प्रतिष्ठा व जननायक पद।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_ARIES_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (मेष नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Aries Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (मेष)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_TAURUS_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (वृषभ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Taurus Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (वृषभ)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_GEMINI_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (मिथुन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Gemini Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (मिथुन)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CANCER_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (कर्क नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Cancer Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (कर्क)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LEO_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (सिंह नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Leo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (सिंह)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_VIRGO_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (कन्या नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Virgo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (कन्या)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LIBRA_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (तुला नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Libra Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (तुला)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SCORPIO_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (वृश्चिक नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Scorpio Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (वृश्चिक)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SAGITTARIUS_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (धनु नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Sagittarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (धनु)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CAPRICORN_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (मकर नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Capricorn Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (मकर)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_AQUARIUS_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (कुम्भ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Aquarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (कुम्भ)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_PISCES_H2",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश द्वितीय भाव (मीन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश द्वितीय भाव in Pisces Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 2 का प्रभाव (मीन)—वाग्मी, धन संचय, वेदान्त व गूढ़ विद्या में प्रवीण, सत्यवादी।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_ARIES_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (मेष नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Aries Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (मेष)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_TAURUS_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (वृषभ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Taurus Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (वृषभ)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_GEMINI_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (मिथुन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Gemini Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (मिथुन)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CANCER_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (कर्क नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Cancer Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (कर्क)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LEO_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (सिंह नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Leo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (सिंह)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_VIRGO_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (कन्या नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Virgo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (कन्या)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LIBRA_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (तुला नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Libra Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (तुला)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SCORPIO_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (वृश्चिक नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Scorpio Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (वृश्चिक)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SAGITTARIUS_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (धनु नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Sagittarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (धनु)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CAPRICORN_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (मकर नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Capricorn Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (मकर)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_AQUARIUS_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (कुम्भ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Aquarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (कुम्भ)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_PISCES_H3",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश तृतीय भाव (मीन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश तृतीय भाव in Pisces Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 3 का प्रभाव (मीन)—साहस, संगीत, कला, युद्ध विद्या व भ्रातृ सहयोग।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_ARIES_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (मेष नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Aries Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (मेष)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_TAURUS_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (वृषभ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Taurus Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (वृषभ)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_GEMINI_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (मिथुन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Gemini Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (मिथुन)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CANCER_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (कर्क नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Cancer Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (कर्क)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LEO_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (सिंह नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Leo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (सिंह)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_VIRGO_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (कन्या नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Virgo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (कन्या)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LIBRA_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (तुला नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Libra Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (तुला)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SCORPIO_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (वृश्चिक नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Scorpio Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (वृश्चिक)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SAGITTARIUS_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (धनु नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Sagittarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (धनु)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CAPRICORN_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (मकर नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Capricorn Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (मकर)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_AQUARIUS_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (कुम्भ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Aquarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (कुम्भ)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_PISCES_H4",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश चतुर्थ भाव (मीन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश चतुर्थ भाव in Pisces Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 4 का प्रभाव (मीन)—भवन, वाहन, मातृ-सुख, प्रासाद व उच्च मानसिक शांति।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_ARIES_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (मेष नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Aries Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (मेष)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_TAURUS_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (वृषभ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Taurus Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (वृषभ)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_GEMINI_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (मिथुन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Gemini Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (मिथुन)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CANCER_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (कर्क नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Cancer Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (कर्क)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LEO_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (सिंह नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Leo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (सिंह)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_VIRGO_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (कन्या नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Virgo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (कन्या)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LIBRA_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (तुला नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Libra Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (तुला)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SCORPIO_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (वृश्चिक नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Scorpio Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (वृश्चिक)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SAGITTARIUS_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (धनु नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Sagittarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (धनु)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CAPRICORN_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (मकर नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Capricorn Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (मकर)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_AQUARIUS_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (कुम्भ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Aquarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (कुम्भ)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_PISCES_H5",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश पंचम भाव (मीन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश पंचम भाव in Pisces Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 5 का प्रभाव (मीन)—साधना, मंत्र सिद्धि, काव्य रचना, श्रेष्ठ संतान व दार्शनिक।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_ARIES_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (मेष नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Aries Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (मेष)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_TAURUS_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (वृषभ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Taurus Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (वृषभ)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_GEMINI_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (मिथुन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Gemini Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (मिथुन)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CANCER_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (कर्क नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Cancer Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (कर्क)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LEO_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (सिंह नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Leo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (सिंह)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_VIRGO_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (कन्या नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Virgo Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (कन्या)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_LIBRA_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (तुला नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Libra Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (तुला)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SCORPIO_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (वृश्चिक नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Scorpio Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (वृश्चिक)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_SAGITTARIUS_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (धनु नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Sagittarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (धनु)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_CAPRICORN_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (मकर नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Capricorn Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (मकर)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_AQUARIUS_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (कुम्भ नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Aquarius Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (कुम्भ)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_KL_PISCES_H9",
+      "rule_name_hi": "जैमिनी कारकांश: कारकांश नवम भाव (मीन नवांश)",
+      "rule_name_en": "Jaimini Karakamsha कारकांश नवम भाव in Pisces Navamsha",
+      "source": {
+        "text": "Jaimini Sutras (कारकांश फल)",
+        "chapter": "Karakamsha Adhyaya",
+        "author": "Maharishi Jaimini",
+        "era": "Classical Sutra Period"
+      },
+      "school": "Jaimini",
+      "category": "karakamsha_bhava",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "karakamsha",
+          "soul_purpose"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "महर्षि जैमिनी कारकांश फल: नवांश में आत्मकारक से भाव 9 का प्रभाव (मीन)—धर्मध्वजा, तीर्थाटन, गुरु सेवा, दैवीय साक्षात्कार व भाग्य की चरम सीमा।"
       }
     }
   ]

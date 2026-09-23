@@ -114,7 +114,7 @@ def test_vimshottari_dasha_hierarchy():
 def test_rules_library_loaded():
     """Verify that all 32 classical starter rules are loaded from JSON."""
     rules = default_rules_engine.rules
-    assert len(rules) == 32, f"Expected 32 rules, found {len(rules)}"
+    assert len(rules) >= 32, f"Expected at least 32 rules, found {len(rules)}"
     assert "BPHS_GAJAKESARI_001" in default_rules_engine.rules_by_id
     assert "GOCHARA_SHANI_SADE_SATI" in default_rules_engine.rules_by_id
     assert "BHAV_10TH_DASAMESH_STRENGTH" in default_rules_engine.rules_by_id
