@@ -398,6 +398,7 @@ unified_css = f"""
     /* Hide Streamlit's native top header bar (empty white strip) completely */
     header[data-testid="stHeader"] {{
         background: transparent !important;
+        height: 50px !important;
         height: 0px !important;
         min-height: 0px !important;
         overflow: hidden !important;
@@ -416,6 +417,7 @@ unified_css = f"""
         visibility: visible !important;
         opacity: 1 !important;
         position: fixed !important;
+        top: 10px !important;
         top: 4px !important;
         left: 10px !important;
         z-index: 1000005 !important;
@@ -2059,7 +2061,11 @@ if "English" in st.session_state.app_lang:
         "🔍 Vedic Sage Validation",
         "⚡ Dosh & Yog Analysis (Complete)",
         "🔢 Numerology & Lo-Shu Grid",
-        "📕 Lal Kitab 1952 & Remedies"
+        "📕 Lal Kitab 1952 & Remedies",
+        "🍽️ Food & Ayurvedic Diet",
+        "🤝 Relationships & Benefactors",
+        "🏥 Health & Disease Forecast",
+        "🧬 Body & Physical Traits"
     ]
 elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2086,7 +2092,11 @@ elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_sta
         "🔍 வேத ரிஷி சரிபார்ப்பு (Validation)",
         "⚡ தோஷம்-யோகம் முழு பகுப்பாய்வு (Dosh & Yog)",
         "🔢 எண்கணிதம் & லோ-ஷு கிரிட் (Numerology)",
-        "📕 லால் கிதாப் 1952 பரிகாரங்கள் (Lal Kitab)"
+        "📕 லால் கிதாப் 1952 பரிகாரங்கள் (Lal Kitab)",
+        "🍽️ உணவு & ஆயுர்வேத முறை (Diet)",
+        "🤝 உறவுகள் & நன்மை செய்வோர் (Relations)",
+        "🏥 உடல்நலம் & நோய் கணிப்பு (Health)",
+        "🧬 உடலமைப்பு & அங்கங்கள் (Physique)"
     ]
 elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2113,7 +2123,11 @@ elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session
         "🔍 వైదిక ఋషి ధృవీకరణ (Validation)",
         "⚡ దోష-యోగ సంపూర్ణ విశ్లేషణ (Dosh & Yog)",
         "🔢 సంఖ్యాశాస్త్రం & లో-షు గ్రిడ్ (Numerology)",
-        "📕 లాల్ కితాబ్ 1952 నివారణలు (Lal Kitab)"
+        "📕 లాల్ కితాబ్ 1952 నివారణలు (Lal Kitab)",
+        "🍽️ ఆహార విశ్లేషణ & ఆయుర్వేదం (Diet)",
+        "🤝 సంబంధాలు & శ్రేయోభిలాషులు (Relations)",
+        "🏥 ఆరోగ్యం & వ్యాధి విశ్లేషణ (Health)",
+        "🧬 శరీర నిర్మాణం & అవయవాలు (Physique)"
     ]
 elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2140,7 +2154,11 @@ elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.se
         "🔍 વૈદિક ઋષિ પ્રમાણીકરણ (Validation)",
         "⚡ દોષ-યોગ સંપૂર્ણ વિશ્લેષણ (Dosh & Yog)",
         "🔢 અંકશાસ્ત્ર અને લો-શૂ ગ્રિડ (Numerology)",
-        "📕 લાલ કિતાબ ૧૯૫૨ ઉપાયો (Lal Kitab)"
+        "📕 લાલ કિતાબ ૧૯૫૨ ઉપાયો (Lal Kitab)",
+        "🍽️ ખાનપાન અને આહાર (Diet)",
+        "🤝 સંબંધો અને સહયોગીઓ (Relations)",
+        "🏥 સ્વાસ્થ્ય અને રોગ નિદાન (Health)",
+        "🧬 શારીરિક ગઠન અને અંગો (Physique)"
     ]
 elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2167,7 +2185,11 @@ elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_s
         "🔍 वैदिक ऋषी पडताळणी (Validation)",
         "⚡ दोष-योग संपूर्ण विश्लेषण (Dosh & Yog)",
         "🔢 अंकशास्त्र व लो-शू ग्रिड (Numerology)",
-        "📕 लाल किताब १९५२ उपाय (Lal Kitab)"
+        "📕 लाल किताब १९५२ उपाय (Lal Kitab)",
+        "🍽️ खानपान व आयुर्वेदिक आहार (Diet)",
+        "🤝 नातेसंबंध व हितचिंतक (Relations)",
+        "🏥 आरोग्य व रोग निदान (Health)",
+        "🧬 शारीरिक गठन व अवयव (Physique)"
     ]
 elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -2194,7 +2216,11 @@ elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_s
         "🔍 বৈদিক ঋষি প্রমাণ (Validation)",
         "⚡ দোষ-যোগ সম্পূর্ণ বিশ্লেষণ (Dosh & Yog)",
         "🔢 সংখ্যাতত্ত্ব ও লো-শু গ্রিড (Numerology)",
-        "📕 লাল কিতাব ১৯৫২ প্রতিকার (Lal Kitab)"
+        "📕 লাল কিতাব ১৯৫২ প্রতিকার (Lal Kitab)",
+        "🍽️ খাদ্যাভ্যাস ও আয়ুর্বেদিক আহার (Diet)",
+        "🤝 সম্পর্ক ও শুভাকাঙ্ক্ষী (Relations)",
+        "🏥 স্বাস্থ্য ও রোগ নির্ণয় (Health)",
+        "🧬 শারীরিক গঠন ও অঙ্গপ্রত্যঙ্গ (Physique)"
     ]
 else:
     MODULE_OPTIONS = [
@@ -2221,7 +2247,11 @@ else:
         "🔍 वैदिक ऋषि सत्यापन (Validation)",
         "⚡ सम्पूर्ण दोष एवं योग (Dosh & Yog)",
         "🔢 अंकशास्त्र एवं लो-शू ग्रिड (Numerology)",
-        "📕 लाल किताब 1952 एवं उपाय (Lal Kitab)"
+        "📕 लाल किताब 1952 एवं उपाय (Lal Kitab)",
+        "🍽️ खानपान एवं त्रिदोष आहार (Diet)",
+        "🤝 संबंध एवं स्वजन-शत्रु (Relations)",
+        "🏥 स्वास्थ्य एवं रोग-निदान (Health)",
+        "🧬 शारीरिक गठन एवं अंग-दोष (Body & Limbs)"
     ]
 
 
@@ -7201,5 +7231,406 @@ elif selected_idx == 23:
         4. घर के मंदिर में भारी घंटियां या ऊंची मूर्तियां न रखें।
         5. मांस, मदिरा एवं पराई स्त्री के संग से सदा दूर रहें।
         """)
+
+elif selected_idx == 24:
+    st.subheader("🍽️ खानपान एवं त्रिदोष आहार परामर्श (Diet & Ayurvedic Nutrition)")
+    st.write("बृहत्पाराशर होराशास्त्र एवं चरक संहिता अनुसार त्रिदोष (वात, पित्त, कफ), द्वितीय भाव (भोजन-संस्कार), अनुकूल-प्रतिकूल खाद्य एवं उपवास निर्णय।")
+
+    import importlib
+    import src.jyotish.core.lifestyle as life_mod
+    importlib.reload(life_mod)
+
+    diet_res = life_mod.DietEngine.analyze(chart)
+
+    # Top Status Banner
+    c_d1, c_d2, c_d3, c_d4 = st.columns(4)
+    c_d1.metric("प्राथमिक शारीरिक प्रकृति", diet_res["primary_dosha"], "लग्न तत्व आधारित")
+    c_d2.metric("जठराग्नि स्वभाव", "प्रदीप्त एवं तीव्र" if "Pitta" in diet_res["primary_dosha"] else ("परिवर्तनशील (वात)" if "Vata" in diet_res["primary_dosha"] else "मंद (कफ)"), "पाचन शक्ति")
+    c_d3.metric("अनुकूलतम पेय", "नारियल जल / सौंफ" if "Pitta" in diet_res["primary_dosha"] else ("अदरक काढ़ा" if "Vata" in diet_res["primary_dosha"] else "त्रिकटु जल / छाछ"), "दोष संतुलन")
+    c_d4.metric("लवण (नमक) परामर्श", "सेंधा नमक (Rock Salt)", "स्वास्थ्य रक्षा")
+
+    tab_d1, tab_d2, tab_d3, tab_d4 = st.tabs([
+        "🌿 त्रिदोष एवं खानपान स्वभाव (Dosha Profile)",
+        "✅ क्या खाएं (अनुकूल आहार सूची)",
+        "❌ क्या न खाएं (वर्जित एवं त्याज्य)",
+        "⏰ भोजन नियम एवं उपवास परामर्श (Rules & Fasting)"
+    ])
+
+    with tab_d1:
+        st.markdown(f"### 🌿 आपकी शारीरिक प्रकृति: {diet_res['dosha_title']}")
+        st.info(diet_res["characteristics"])
+
+        st.markdown("#### 🍽️ द्वितीय भाव अनुसार आपकी खान-पान शैली एवं रुचियां:")
+        for note in diet_res["eating_habits"]:
+            st.markdown(f"""
+            <div style="background:#F8FAFC; border-left:4px solid #3B82F6; padding:10px 14px; margin-bottom:8px; border-radius:4px;">
+                {note}
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("#### ⚠️ पाचन तंत्र एवं जठराग्नि संवेदनशीलता (६ठे भाव का प्रभाव):")
+        for warn in diet_res["digestive_warnings"]:
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border-left:4px solid #F59E0B; padding:10px 14px; margin-bottom:8px; border-radius:4px;">
+                <b>सावधानी:</b> {warn}
+            </div>
+            """, unsafe_allow_html=True)
+
+    with tab_d2:
+        st.markdown("### ✅ आपके शरीर के लिए सर्वोत्तम अनुकूल खाद्य पदार्थ")
+        st.caption("इन पदार्थों का नियमित सेवन आपके त्रिदोष को संतुलित रखेगा और ऊर्जा बढ़ाएगा:")
+        
+        for item in diet_res["favorable_foods"]:
+            cat_name = item.split(":")[0] if ":" in item else "खाद्य"
+            cat_items = item.split(":")[1] if ":" in item else item
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border:1px solid #86EFAC; border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+                <b style="color:#15803D;">🌱 {cat_name}:</b> <span style="color:#1E293B;">{cat_items}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+    with tab_d3:
+        st.markdown("### ❌ प्रतिकूल खाद्य पदार्थ (जिनसे सख्त परहेज रखें)")
+        st.caption("ये खाद्य पदार्थ आपकी जठराग्नि को बिगाड़ते हैं और रोग/आलस्य उत्पन्न करते हैं:")
+
+        for item in diet_res["unfavorable_foods"]:
+            st.markdown(f"""
+            <div style="background:#FEF2F2; border:1px solid #FCA5A5; border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+                <b style="color:#DC2626;">🚫 परहेज योग्य:</b> <span style="color:#1E293B;">{item}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+    with tab_d4:
+        st.markdown("### ⏰ शास्त्रीय भोजन नियम एवं उपवास विधि")
+        st.markdown(f"""
+        <div style="background:#EFF6FF; border:1.5px solid #60A5FA; border-radius:10px; padding:14px; margin-bottom:14px;">
+            <b style="color:#1D4ED8; font-size:16px;">🧘 उपवास एवं शोधन परामर्श:</b><br/>
+            <p style="margin-top:6px; color:#1E293B;">{diet_res['fasting_remedy']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        #### 📜 चरक संहिता के ५ शाश्वत भोजन नियम:
+        1. **काले भोजनम् (समय पर भोजन):** जब तीव्र भूख लगे तभी भोजन करें; बिना भूख के केवल स्वाद के लिए न खाएं।
+        2. **हितभुक एवं मितभुक (हितकारी व संतुलित):** पेट के २ भाग भोजन के लिए, १ भाग जल के लिए और १ भाग वायु के लिए रिक्त रखें।
+        3. **अत्यधिक जल वर्जित:** भोजन के तुरंत बाद अधिक ठंडा पानी पीने से जठराग्नि बुझ जाती है; केवल गुनगुना पानी १-२ घूंट लें।
+        4. **प्रसन्न चित्त:** क्रोध, चिंता, भय या मोबाइल देखते हुए भोजन न करें। भोजन सदैव एकाग्र मन से करें।
+        5. **सूर्यास्त के बाद हल्का भोजन:** रात्रि का भोजन सदैव सोने से कम से कम २.५ से ३ घंटे पूर्व कर लें।
+        """)
+
+elif selected_idx == 25:
+    st.subheader("🤝 संबंध एवं स्वजन-मित्र-शत्रु विश्लेषण (Relationship & Compatibility Matrix)")
+    st.write("बृहत्पाराशर होराशास्त्र एवं फलदीपिका अनुसार दांपत्य, माता-पिता, संतान, मित्र, सहायक पक्ष एवं कष्ट देने वाले विरोधी पक्षों का समग्र विश्लेषण।")
+
+    import importlib
+    import src.jyotish.core.lifestyle as life_mod
+    importlib.reload(life_mod)
+
+    rel_res = life_mod.RelationshipEngine.analyze(chart)
+
+    # Top Status Banner
+    c_r1, c_r2, c_r3, c_r4 = st.columns(4)
+    c_r1.metric("लग्नेश (व्यक्तित्व स्वामी)", rel_res["lagnesh"], "स्वाभिमान एवं मूल तत्व")
+    c_r2.metric("सर्वाधिक सहयोगी पक्ष", rel_res["greatest_helper_side"].split(" ")[0], "भाग्यवर्धक संबंध")
+    c_r3.metric("विशेष सतर्कता पक्ष", "सट्टेबाज़ / धोखेबाज़", "६/१२ भाव प्रभाव")
+    c_r4.metric("संबंध नीति", "पारदर्शिता एवं आदर", "स्थायी सुख")
+
+    tab_r1, tab_r2, tab_r3, tab_r4 = st.tabs([
+        "👫 दांपत्य एवं जीवनसाथी (Spouse & Partners)",
+        "👨‍👩‍👦 परिवार एवं स्वजन (Family & Siblings)",
+        "🌟 मित्र, उच्चाधिकारी एवं सहायक (Friends & Benefactors)",
+        "⚔️ विरोधी, शत्रु एवं प्रतिस्पर्धा (Opponents & Caution)"
+    ])
+
+    with tab_r1:
+        st.markdown("### 👫 दांपत्य एवं जीवनसाथी संबंध (सप्तम भाव विचार)")
+        sp_data = rel_res["relations"].get("spouse", {})
+        bp_data = rel_res["relations"].get("partners", {})
+
+        st.markdown(f"""
+        <div style="background:#FDF4FF; border:1.5px solid #F472B6; border-radius:10px; padding:16px; margin-bottom:14px;">
+            <b style="color:#BE185D; font-size:16px;">💍 जीवनसाथी (Spouse): {sp_data.get('title', '')}</b>
+            <p style="margin:6px 0;"><b>सप्तमेश ग्रह:</b> {sp_data.get('lord', '')} | <b>भाव में स्थित ग्रह:</b> {', '.join(sp_data.get('occupants', [])) if sp_data.get('occupants') else 'रिक्त (शुभ दृष्टि)'}</p>
+            <p style="margin:6px 0;"><b>संबंध स्वरूप:</b> <span style="color:#059669; font-weight:800;">{sp_data.get('status', '')}</span></p>
+            <p style="margin:6px 0;"><b>शास्त्रीय फल:</b> {sp_data.get('nature_hi', '')}</p>
+            <div style="background:#FFFFFF; border-radius:6px; padding:8px; border:1px solid #FBCFE8; margin-top:8px;">
+                <b style="color:#9D174D;">💡 संबंध परामर्श:</b> {sp_data.get('advice_hi', '')}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown(f"""
+        <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:12px;">
+            <b style="color:#334155;">💼 व्यावसायिक साझेदारी (Business Partnerships):</b><br/>
+            <span>{bp_data.get('nature_hi', '')}</span><br/>
+            <small style="color:#64748B;">{bp_data.get('advice_hi', '')}</small>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with tab_r2:
+        st.markdown("### 👨‍👩‍👦 परिवार, माता-पिता, संतान एवं भाई-बहन")
+        
+        col_fam1, col_fam2 = st.columns(2)
+        with col_fam1:
+            fa_data = rel_res["relations"].get("father", {})
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border:1px solid #FCD34D; border-radius:8px; padding:12px; margin-bottom:10px;">
+                <b style="color:#B45309;">👑 पिता एवं वरिष्ठजन (९वां भाव):</b><br/>
+                <b>स्वामी:</b> {fa_data.get('lord', '')} | <b>स्थिति:</b> {fa_data.get('status', '')}<br/>
+                <small>{fa_data.get('nature_hi', '')}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+            mo_data = rel_res["relations"].get("mother", {})
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border:1px solid #86EFAC; border-radius:8px; padding:12px; margin-bottom:10px;">
+                <b style="color:#15803D;">🤱 माता एवं मातृपक्ष (४था भाव):</b><br/>
+                <b>स्वामी:</b> {mo_data.get('lord', '')} | <b>स्थिति:</b> {mo_data.get('status', '')}<br/>
+                <small>{mo_data.get('nature_hi', '')}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_fam2:
+            sib_data = rel_res["relations"].get("siblings", {})
+            st.markdown(f"""
+            <div style="background:#EFF6FF; border:1px solid #93C5FD; border-radius:8px; padding:12px; margin-bottom:10px;">
+                <b style="color:#1D4ED8;">👦 भाई-बहन एवं सहकर्मी (३रा भाव):</b><br/>
+                <b>स्वामी:</b> {sib_data.get('lord', '')} | <b>स्थिति:</b> {sib_data.get('status', '')}<br/>
+                <small>{sib_data.get('nature_hi', '')}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+            ch_data = rel_res["relations"].get("children", {})
+            st.markdown(f"""
+            <div style="background:#FAF5FF; border:1px solid #D8B4FE; border-radius:8px; padding:12px; margin-bottom:10px;">
+                <b style="color:#7E22CE;">👶 संतान एवं शिष्य वर्ग (५वां भाव):</b><br/>
+                <b>स्वामी:</b> {ch_data.get('lord', '')} | <b>स्थिति:</b> {ch_data.get('status', '')}<br/>
+                <small>{ch_data.get('nature_hi', '')}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+    with tab_r3:
+        st.markdown("### 🌟 मित्र, उच्चाधिकारी एवं सर्वाधिक सहायक लोग (११वां भाव)")
+        fr_data = rel_res["relations"].get("friends", {})
+
+        st.markdown(f"""
+        <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:10px; padding:16px; margin-bottom:14px;">
+            <b style="color:#047857; font-size:16px;">🤝 {fr_data.get('title', '')}</b>
+            <p style="margin:6px 0;"><b>एकादशेश स्वामी:</b> {fr_data.get('lord', '')} | <b>सहयोग बल:</b> <span style="color:#059669; font-weight:800;">{fr_data.get('status', '')}</span></p>
+            <p style="margin:6px 0;"><b>शास्त्रीय प्रभाव:</b> {fr_data.get('nature_hi', '')}</p>
+            <div style="background:#FFFFFF; border-radius:6px; padding:8px; border:1px solid #A7F3D0; margin-top:8px;">
+                <b style="color:#065F46;">💎 सहयोगी पक्ष:</b> {fr_data.get('advice_hi', '')}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.info("💡 **ज्योतिषीय सूत्र:** ११वें भाव का स्वामी जिन-जिन ग्रहों का मित्र होगा, उन-उन ग्रहों से जुड़े व्यवसाय, संबंध व मित्र जीवन में अचानक बड़े अवसर और वित्तीय उन्नति प्रदान करेंगे।")
+
+    with tab_r4:
+        st.markdown("### ⚔️ विरोधी, शत्रु, विश्वासघात एवं सावधान रहने योग्य पक्ष (६ठा भाव)")
+        en_data = rel_res["relations"].get("enemies", {})
+
+        st.markdown(f"""
+        <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:10px; padding:16px; margin-bottom:14px;">
+            <b style="color:#991B1B; font-size:16px;">⚠️ {en_data.get('title', '')}</b>
+            <p style="margin:6px 0;"><b>षष्ठेश ग्रह:</b> {en_data.get('lord', '')} | <b>शत्रु संकट स्तर:</b> <span style="color:#DC2626; font-weight:800;">{en_data.get('status', '')}</span></p>
+            <p style="margin:6px 0;"><b>ग्रह स्थिति:</b> {en_data.get('nature_hi', '')}</p>
+            <div style="background:#FFFFFF; border-radius:6px; padding:8px; border:1px solid #FECACA; margin-top:8px;">
+                <b style="color:#B91C1C;">🛡️ बचाव एवं सावधानी सूत्र:</b> {en_data.get('advice_hi', '')}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.warning("⚠️ **सावधानी परामर्श:** बिना लिखा-पढ़ी के किसी को ऋण या जमानत न दें। गुप्त योजनाओं को समय से पूर्व साझा न करें।")
+
+elif selected_idx == 26:
+    st.subheader("🏥 स्वास्थ्य एवं रोग-निदान विश्लेषण (Medical Astrology & Disease Forecast)")
+    st.write("बृहत्पाराशर होराशास्त्र, सर्वार्थ चिंतामणि एवं फलदीपिका अनुसार समग्र आरोग्य बल, संवेदनशील शारीरिक अंग, संभावित रोग एवं भावी सावधानियां।")
+
+    import importlib
+    import src.jyotish.core.lifestyle as life_mod
+    importlib.reload(life_mod)
+
+    hlth_res = life_mod.HealthEngine.analyze(chart)
+
+    # Top Status Banner
+    c_h1, c_h2, c_h3, c_h4 = st.columns(4)
+    c_h1.metric("आरोग्य बल (Immunity)", f"{hlth_res['vitality_score']}/100", hlth_res["vitality_status"].split(" ")[0])
+    c_h2.metric("षष्ठेश (रोग स्वामी)", hlth_res["h6_lord"], "रोग कारकत्व")
+    c_h3.metric("संवेदनशील क्षेत्र", f"{len(hlth_res['vulnerable_areas'])} ग्रह", "देखभाल आवश्यक")
+    c_h4.metric("अष्टम भाव स्थिति", f"{len(hlth_res['h8_occupants'])} ग्रह", "आकस्मिक रोग सुरक्षा")
+
+    tab_h1, tab_h2, tab_h3, tab_h4 = st.tabs([
+        "💪 आरोग्य बल एवं वर्तमान संवेदनशीलता",
+        "⚠️ भविष्य में संभावित रोग (Disease Risks)",
+        "🩺 नवग्रह एवं अंग-विशेष चिकित्सा सारणी",
+        "🌿 शास्त्रीय निवारक उपाय एवं दिनचर्या"
+    ])
+
+    with tab_h1:
+        st.markdown(f"### 💪 समग्र स्वास्थ्य बल: {hlth_res['vitality_status']}")
+        st.progress(hlth_res["vitality_score"] / 100.0)
+
+        st.markdown("#### 🔴 कुण्डली अनुसार वर्तमान संवेदनशील शारीरिक अंग एवं प्रणालियां:")
+        for vuln in hlth_res["vulnerable_areas"]:
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px; margin-bottom:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <b style="color:#B45309; font-size:15px;">🪐 प्रभावित ग्रह: {vuln['planet']} ({vuln['reasons']})</b>
+                    <span style="background:#FEF3C7; color:#92400E; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:800;">सावधानी</span>
+                </div>
+                <p style="margin:6px 0;"><b>संबंधित अंग:</b> {vuln['organs']}</p>
+                <p style="margin:6px 0; color:#DC2626;"><b>संभावित रोग / लक्षण:</b> {vuln['diseases']}</p>
+                <div style="background:#FFFFFF; border-radius:6px; padding:6px 10px; border:1px solid #FDE68A; margin-top:6px;">
+                    <b style="color:#047857;">🌿 अनुशंसित सुरक्षा उपाय:</b> {vuln['remedy']}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    with tab_h2:
+        st.markdown("### ⚠️ भविष्य में संभावित रोग एवं भावी सावधानियां")
+        st.caption("६ठे एवं ८वें भाव के स्वामियों तथा दशाओं के आधार पर संभावित दीर्घकालिक प्रभाव:")
+
+        for risk in hlth_res["future_risks"]:
+            st.markdown(f"""
+            <div style="background:#FEF2F2; border-left:4px solid #EF4444; border-radius:4px; padding:12px; margin-bottom:10px;">
+                <b style="color:#991B1B;">⚠️ शास्त्रीय संकेत:</b> <span style="color:#1E293B;">{risk}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.info("💡 **महत्वपूर्ण सिद्धांत:** कुण्डली केवल रोग की 'संवेदनशीलता' (Tendency) दर्शाती है। यदि जातक अनुशासित दिनचर्या, समय पर जांच और सात्विक आहार रखे, तो ग्रह जनित रोगों को पहले ही निष्प्रभावी किया जा सकता है।")
+
+    with tab_h3:
+        st.markdown("### 🩺 नवग्रह एवं अंग-विशेष चिकित्सा सारणी (Medical Astrology Reference)")
+        st.caption("प्रत्येक ग्रह शरीर के किन अंगों एवं व्याधियों का प्रतिनिधित्व करता है:")
+
+        med_table = []
+        for g_name, g_info in life_mod.HealthEngine.GRAHA_BODY_MAPPING.items():
+            med_table.append({
+                "ग्रह (Graha)": g_name,
+                "नियंत्रित शारीरिक अंग (Organs)": g_info["organs"],
+                "उत्पन्न होने वाले रोग (Diseases)": g_info["diseases"],
+                "शास्त्रीय उपाय (Remedy)": g_info["gem_metal"]
+            })
+        st.dataframe(pd.DataFrame(med_table), use_container_width=True, hide_index=True)
+
+    with tab_h4:
+        st.markdown("### 🌿 शास्त्रीय निवारक उपाय एवं आरोग्य दिनचर्या")
+        st.markdown(f"""
+        <div style="background:#F0FDF4; border:1.5px solid #10B981; border-radius:10px; padding:16px; margin-bottom:14px;">
+            <b style="color:#047857; font-size:16px;">✨ आरोग्य रक्षा का मूल मंत्र:</b>
+            <p style="margin-top:6px; color:#1E293B;">{hlth_res['general_health_advice']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        #### 🧘 ५ प्रमुख स्वास्थ्य रक्षा नियम:
+        1. **सूर्योदय दर्शन एवं जल अर्पण:** प्रतिदिन सूर्योदय के समय तांबे के लोटे से सूर्य को जल दें (हृदय, नेत्र व अस्थि बल बढ़ेगा)।
+        2. **महामृत्युंजय मंत्र जप:** यदि ६ठे या ८वें भाव में पापग्रह हों, तो प्रतिदिन ११ बार महामृत्युंजय मंत्र का मानसिक जप करें।
+        3. **त्रिफला चूर्ण का सेवन:** रात्रि में गुनगुने पानी के साथ आधा चम्मच त्रिफला लें (वात, पित्त और कफ तीनों संतुलित रहेंगे)।
+        4. **भूमि स्पर्श एवं प्राणायाम:** नंगे पैर हरी घास पर टहलना और १० मिनट अनुलोम-विलोम करना नर्वस सिस्टम को शांत रखता है।
+        5. **रक्तदान / सेवा:** मंगल की शांति हेतु वर्ष में एक बार रक्तदान करें या नेत्रहीनों/असहायों की सेवा करें।
+        """)
+
+elif selected_idx == 27:
+    st.subheader("🧬 शारीरिक गठन एवं अंग-दोष विश्लेषण (Body Anatomy & Physical Traits)")
+    st.write("बृहत्संहिता एवं बृहत्पाराशर होराशास्त्र अनुसार लग्न-आधारित कद-काठी, रंग-रूप, कालपुरुष के १२ अंगों का स्वास्थ्य एवं जन्मजात शारीरिक चिन्ह।")
+
+    import importlib
+    import src.jyotish.core.lifestyle as life_mod
+    importlib.reload(life_mod)
+
+    body_res = life_mod.BodyAnatomyEngine.analyze(chart)
+
+    # Top Status Banner
+    c_b1, c_b2, c_b3, c_b4 = st.columns(4)
+    c_b1.metric("लग्न राशि", body_res["lagna_sign"], "शारीरिक ढांचा")
+    c_b2.metric("कद-काठी", body_res["physique"]["frame"].split(" ")[0], "शारीरिक बनावट")
+    c_b3.metric("शारीरिक आभा", body_res["physique"]["complexion"].split(" ")[0], "वर्ण व आभा")
+    c_b4.metric("तत्व प्रधानता", body_res["physique"]["constitution"].split(" ")[0], "मूल ऊर्जा")
+
+    tab_b1, tab_b2, tab_b3, tab_b4 = st.tabs([
+        "🏃 देहयष्टि, कद-काठी एवं रंग-रूप",
+        "🦴 १२ कालपुरुष अंग स्थिति (12 Limbs Status)",
+        "🎯 जन्मजात चिन्ह, तिल व मस्से (Birthmarks)",
+        "🔮 शारीरिक सुरक्षा एवं आसन परामर्श"
+    ])
+
+    with tab_b1:
+        st.markdown(f"### 🏃 आपकी शारीरिक बनावट: {body_res['lagna_sign']} लग्न")
+        
+        col_phy1, col_phy2 = st.columns(2)
+        with col_phy1:
+            st.markdown(f"""
+            <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:14px; margin-bottom:12px;">
+                <b style="color:#1D4ED8;">🏋️ शारीरिक ढांचा एवं कद-काठी:</b><br/>
+                <span style="color:#1E293B;">{body_res['physique']['frame']}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown(f"""
+            <div style="background:#FDF4FF; border:1px solid #F5D0FE; border-radius:8px; padding:14px; margin-bottom:12px;">
+                <b style="color:#A21CAF;">🎨 वर्ण, रंग-रूप एवं आभा:</b><br/>
+                <span style="color:#1E293B;">{body_res['physique']['complexion']}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_phy2:
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:14px; margin-bottom:12px;">
+                <b style="color:#B45309;">👁️ मुख मंडल एवं नैन-नक्श:</b><br/>
+                <span style="color:#1E293B;">{body_res['physique']['facial']}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; padding:14px; margin-bottom:12px;">
+                <b style="color:#15803D;">⚡ मूल शारीरिक प्रकृति:</b><br/>
+                <span style="color:#1E293B;">{body_res['physique']['constitution']}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+    with tab_b2:
+        st.markdown("### 🦴 कालपुरुष के १२ अंगों का स्वास्थ्य एवं सुदृढ़ता विश्लेषण")
+        st.caption("आपकी जन्म कुण्डली के अनुसार शरीर के विभिन्न अंगों की स्थिति:")
+
+        limb_df_data = []
+        for lmb in body_res["limbs_status"]:
+            limb_df_data.append({
+                "अंग (Body Limb)": lmb["limb_hi"],
+                "लग्न से भाव": lmb["house_from_lagna"],
+                "स्थित ग्रह": lmb["occupants"],
+                "स्वास्थ्य स्थिति": lmb["status"],
+                "विस्तृत टिप्पणी": lmb["notes"]
+            })
+        st.dataframe(pd.DataFrame(limb_df_data), use_container_width=True, hide_index=True)
+
+    with tab_b3:
+        st.markdown("### 🎯 जन्मजात शारीरिक चिन्ह, तिल एवं मस्से (Congenital Scars & Marks)")
+        st.caption("बृहत्पाराशर होराशास्त्र अनुसार ग्रहों की दृष्टि व स्थिति से शरीर पर उत्पन्न होने वाले चिन्ह:")
+
+        for cm in body_res["congenital_marks"]:
+            st.markdown(f"""
+            <div style="background:#F8FAFC; border-left:4px solid #6366F1; border-radius:4px; padding:12px; margin-bottom:10px;">
+                <b>📍 चिन्ह विवरण:</b> <span style="color:#1E293B;">{cm}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+    with tab_b4:
+        st.markdown("### 🔮 शारीरिक सुरक्षा एवं दीर्घकालिक स्वास्थ्य परामर्श")
+        st.markdown(f"""
+        <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:10px; padding:16px; margin-bottom:14px;">
+            <b style="color:#047857; font-size:16px;">🌿 शारीरिक तेज बनाए रखने का सूत्र:</b>
+            <p style="margin-top:6px; color:#1E293B;">{body_res['core_advice']}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        #### 🧘 अंग सुरक्षा के विशेष शास्त्रीय सुझाव:
+        1. **रीढ़ व गर्दन की सुरक्षा:** कार्य करते समय झुककर न बैठें; मेरुदंड को सीधा रखें।
+        2. **तिल तेल मालिश (अभ्यंग):** सप्ताह में कम से कम एक बार पैरों के तलवों और सिर पर तिल के तेल की मालिश करें।
+        3. **अंग-विशेष व्यायाम:** यदि किसी अंग में पापग्रह की स्थिति है (जैसे घुटनों या कमर में), तो भारी वजन उठाने से बचें और सूक्ष्म व्यायाम करें।
+        """)
+
 
 
