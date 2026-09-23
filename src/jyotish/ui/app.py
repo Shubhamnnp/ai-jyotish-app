@@ -152,7 +152,11 @@ st.set_page_config(
 )
 
 if "app_theme_mode" not in st.session_state:
-    st.session_state.app_theme_mode = "day"
+    q_theme = st.query_params.get("theme", None)
+    if q_theme in ["night", "day"]:
+        st.session_state.app_theme_mode = q_theme
+    else:
+        st.session_state.app_theme_mode = "night"
 
 is_night_mode = (st.session_state.app_theme_mode == "night")
 
@@ -1940,6 +1944,35 @@ components.html("""
                             background-color: #111827 !important;
                             border-color: #374151 !important;
                         }
+                        .gla-toolbar-container {
+                            background: #0D1322 !important;
+                            border: 1.5px solid #1E293B !important;
+                        }
+                        .gla-btn-tile {
+                            background-color: #111827 !important;
+                            border: 2px solid #1F2937 !important;
+                            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+                        }
+                        .gla-btn-tile:hover {
+                            border-color: #F59E0B !important;
+                            background-color: #1E293B !important;
+                        }
+                        .gla-btn-tile span {
+                            color: #F8FAFC !important;
+                        }
+                        .gla-info-strip {
+                            background: linear-gradient(135deg, #0D1322 0%, #111827 50%, #1E293B 100%) !important;
+                            border: 1.5px solid #F59E0B !important;
+                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+                        }
+                        .gla-info-strip b {
+                            color: #F59E0B !important;
+                        }
+                        .gla-active-tag {
+                            background: rgba(16, 185, 129, 0.2) !important;
+                            border: 1px solid #10B981 !important;
+                            color: #34D399 !important;
+                        }
                         div[style*="background:#FFFFFF"], div[style*="background: #FFFFFF"],
                         div[style*="background:#F8FAFC"], div[style*="background: #F8FAFC"],
                         div[style*="background:#EFF6FF"], div[style*="background: #EFF6FF"] {
@@ -2694,88 +2727,114 @@ with st.container(key="top_frozen_header_container", border=True):
             pass
 
 
-    st.markdown("""
+    gla_bg = "#0D1322" if is_night_mode else "#F8FAFC"
+    gla_border = "#1E293B" if is_night_mode else "#CBD5E1"
+    tile_bg = "#111827" if is_night_mode else "#FFFFFF"
+    tile_border = "#1F2937" if is_night_mode else "#CBD5E1"
+    tile_hover_bg = "#1E293B" if is_night_mode else "#EFF6FF"
+    tile_hover_border = "#F59E0B" if is_night_mode else "#2563EB"
+    tile_text_color = "#F8FAFC" if is_night_mode else "#0F172A"
+    strip_bg = "linear-gradient(135deg, #0D1322 0%, #111827 50%, #1E293B 100%)" if is_night_mode else "linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%)"
+    strip_border = "#F59E0B" if is_night_mode else "#3B82F6"
+    strip_b_color = "#F59E0B" if is_night_mode else "#FEF08A"
+    tag_bg = "rgba(16, 185, 129, 0.2)" if is_night_mode else "rgba(255, 255, 255, 0.25)"
+    tag_border = "#10B981" if is_night_mode else "rgba(255, 255, 255, 0.6)"
+    tag_color = "#34D399" if is_night_mode else "#FFFFFF"
+
+    st.markdown(f"""
     <style>
-    .gla-toolbar-container {
+    .gla-toolbar-container {{
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
         gap: 12px;
         padding: 10px 14px;
-        background: #f8f9fa;
+        background: {gla_bg};
         border-radius: 14px;
-        border: 1px solid #e2e8f0;
+        border: 1.5px solid {gla_border};
         margin-top: 6px;
         margin-bottom: 8px;
         overflow-x: auto;
-    }
-    .gla-btn-tile {
+    }}
+    .gla-btn-tile {{
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         width: 78px;
         height: 78px;
-        background-color: #f2f2f2;
-        border: 3px solid #00b0f0;
-        border-radius: 15px;
+        background-color: {tile_bg} !important;
+        border: 2px solid {tile_border} !important;
+        border-radius: 15px !important;
         cursor: pointer;
         padding: 5px;
-        box-shadow: 0 2px 6px rgba(0, 176, 240, 0.2);
-        transition: all 0.2s ease-in-out;
+        box-shadow: {'0 4px 14px rgba(0, 0, 0, 0.4)' if is_night_mode else '0 2px 8px rgba(0, 0, 0, 0.05)'} !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         text-align: center;
         margin: 0 auto;
-    }
-    .gla-btn-tile:hover {
+    }}
+    .gla-btn-tile:hover {{
         transform: translateY(-2px);
-        box-shadow: 0 5px 12px rgba(0, 176, 240, 0.35);
-        background-color: #e0f4fc;
-    }
-    .gla-btn-tile img {
-        width: 42px;
-        height: 42px;
+        box-shadow: {'0 6px 18px rgba(245, 158, 11, 0.35)' if is_night_mode else '0 6px 16px rgba(37, 99, 235, 0.25)'} !important;
+        border-color: {tile_hover_border} !important;
+        background-color: {tile_hover_bg} !important;
+    }}
+    .gla-btn-tile img {{
+        width: 40px;
+        height: 40px;
         object-fit: contain;
-    }
-    .gla-btn-tile span {
-        font-size: 10px;
-        font-weight: 700;
-        color: #1e293b;
+    }}
+    .gla-btn-tile span {{
+        font-size: 11px;
+        font-weight: 800;
+        color: {tile_text_color} !important;
         margin-top: 2px;
         white-space: nowrap;
-    }
-    .gla-info-strip {
+    }}
+    .gla-info-strip {{
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: #00b0f0;
+        background: {strip_bg} !important;
         color: #ffffff;
-        padding: 6px 14px;
-        border-radius: 8px;
-        font-size: 13px;
+        padding: 8px 16px;
+        border-radius: 10px;
+        border: 1.5px solid {strip_border};
+        box-shadow: {'0 4px 20px rgba(0, 0, 0, 0.6)' if is_night_mode else '0 4px 16px rgba(37, 99, 235, 0.2)'};
+        font-size: 13.5px;
         font-weight: 700;
         margin-bottom: 8px;
-    }
-    .gla-info-strip b {
-        color: #ffffff;
-    }
+    }}
+    .gla-info-strip b {{
+        color: {strip_b_color};
+    }}
+    .gla-active-tag {{
+        background: {tag_bg} !important;
+        border: 1px solid {tag_border} !important;
+        color: {tag_color} !important;
+        padding: 3px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 800;
+    }}
     /* Transparent button overlaid exactly on top of the tile in gla-tile-box */
-    .gla-tile-box {
+    .gla-tile-box {{
         position: relative;
         width: 78px;
         height: 78px;
         margin: 0 auto;
-    }
-    div[data-testid="stColumn"]:has(.gla-tile-box) {
+    }}
+    div[data-testid="stColumn"]:has(.gla-tile-box) {{
         position: relative !important;
-    }
-    div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {
+    }}
+    div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {{
         position: relative !important;
         height: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
-    }
-    div[data-testid="stColumn"]:has(.gla-tile-box) button {
+    }}
+    div[data-testid="stColumn"]:has(.gla-tile-box) button {{
         position: absolute !important;
         top: -78px !important;
         left: 50% !important;
@@ -2791,14 +2850,14 @@ with st.container(key="top_frozen_header_container", border=True):
         padding: 0 !important;
         border: none !important;
         background: transparent !important;
-    }
+    }}
     div[data-testid="stColumn"]:has(.gla-tile-box) div[data-testid="stTooltipHoverTarget"],
-    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-baseweb="tooltip"] {
+    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-baseweb="tooltip"] {{
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
         pointer-events: none !important;
-    }
+    }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -2821,7 +2880,11 @@ with st.container(key="top_frozen_header_container", border=True):
     def render_tool_tile(col, icon_b64, label_text, tool_key):
         with col:
             is_active = (st.session_state.gla_active_tool == tool_key)
-            active_style = "border-color:#ff9800; background-color:#fff8e7; box-shadow:0 0 10px rgba(255,152,0,0.5);" if is_active else ""
+            if is_night_mode:
+                active_style = "border-color:#F59E0B !important; background: linear-gradient(135deg, #1E293B 0%, #1E3A8A 100%) !important; box-shadow:0 0 14px rgba(245,158,11,0.5) !important;" if is_active else ""
+            else:
+                active_style = "border-color:#2563EB !important; background-color:#EFF6FF !important; box-shadow:0 0 12px rgba(37,99,235,0.4) !important;" if is_active else ""
+
             st.markdown(f"""
             <div class="gla-tile-box">
                 <a href="?gla_tool={tool_key}" target="_self" style="text-decoration:none; color:inherit; display:block;">
@@ -2833,8 +2896,15 @@ with st.container(key="top_frozen_header_container", border=True):
             </div>
             """, unsafe_allow_html=True)
             if st.button(" ", key=f"gla_tile_btn_{tool_key}", use_container_width=True):
-                st.session_state.gla_active_tool = tool_key if st.session_state.gla_active_tool != tool_key else None
-                st.rerun()
+                if tool_key == "theme":
+                    new_mode = "day" if is_night_mode else "night"
+                    st.session_state.app_theme_mode = new_mode
+                    st.session_state.gla_active_tool = None
+                    st.toast(f"✨ {'🌙 नाइट मोड (Obsidian)' if new_mode == 'night' else '☀️ डे मोड (Royal Pearl)'} सक्रिय!", icon="🎨")
+                    st.rerun()
+                else:
+                    st.session_state.gla_active_tool = tool_key if st.session_state.gla_active_tool != tool_key else None
+                    st.rerun()
 
     # 1. New Chart
     render_tool_tile(tb_cols[0], ICON_NOTEPAD_B64, "New", "new")
@@ -2860,8 +2930,9 @@ with st.container(key="top_frozen_header_container", border=True):
     # 8. Current Location
     render_tool_tile(tb_cols[7], ICON_LOCATION_B64, "Location", "location")
 
-    # 9. Theme Mode
-    render_tool_tile(tb_cols[8], ICON_THEME_B64, "Theme", "theme")
+    # 9. Theme Mode (Shows live active theme icon)
+    theme_label = f"Theme ({'🌙' if is_night_mode else '☀️'})"
+    render_tool_tile(tb_cols[8], ICON_THEME_B64, theme_label, "theme")
 
     # 10. Logout
     render_tool_tile(tb_cols[9], ICON_LOGOUT_B64, "Logout", "logout")
