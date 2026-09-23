@@ -491,18 +491,139 @@ class MilanService:
             )
             first_child_desc = "संतान धर्मपरायण एवं कुल परंपरा का निर्वहन करने वाली होगी।"
 
-        # 4. Sasural Paksha se Sahayog
+        # 4. Sasural Paksha se Sahayog & Relatives (ससुराल पक्ष, सास, ससुर, देवर, ननद आदि)
+        # 4.1 Groom's Sasural (वर का ससुराल पक्ष):
         g_h8_planets = [p for p, obj in g_chart.planets.items() if obj.house_from_lagna == 8]
         if not g_h8_planets:
-            groom_sasural_desc = "वर को ससुराल पक्ष से भरपूर मान-सम्मान, आतिथ्य एवं स्नेह मिलेगा। ससुर व सासू माँ का वर के प्रति अपनत्व रहेगा।"
+            groom_sasural_desc = "वर को ससुराल पक्ष से भरपूर मान-सम्मान, आतिथ्य एवं स्नेह मिलेगा। ससुराल वाले वर की प्रतिष्ठा व निर्णयों का पूर्ण आदर करेंगे।"
         else:
             groom_sasural_desc = "वर को ससुराल पक्ष से औपचारिक व आदरयुक्त संबंध बनाए रखना चाहिए। आर्थिक लेन-देन में पारदर्शिता रखें।"
 
+        # 4.2 Bride's general Sasural (कन्या का ससुराल में स्थान):
         bride_sasural_desc = (
             "कन्या को ससुराल में कुलवधू के रूप में उचित सम्मान व बेटी जैसा स्नेह मिलने का सुंदर योग है। "
             "कन्या अपनी समझदारी व सेवाभाव से ससुराल के सभी सदस्यों का दिल जीत लेगी।"
         )
-        sasural_score = 85
+
+        # 4.3 ससुर (Father-in-law / श्वसुर संबंध):
+        # Shastriya rule: 9th from 7th = 3rd house of Bride
+        b_3rd_planets = [p for p, obj in b_chart.planets.items() if obj.house_from_lagna == 3]
+        b_3rd_sign_id = ((b_chart.lagna_sign_id - 1 + 2) % 12) + 1
+        b_3rd_lord = SIGN_LORDS.get(SIGN_NAMES[b_3rd_sign_id - 1], "Mars")
+        b_3rd_lord_obj = b_chart.planets.get(b_3rd_lord)
+        b_3rd_lord_h = b_3rd_lord_obj.house_from_lagna if b_3rd_lord_obj else 3
+
+        has_benefic_3rd = any(p in ["Jupiter", "Venus", "Mercury", "Moon"] for p in b_3rd_planets)
+        has_malefic_3rd = any(p in ["Saturn", "Rahu", "Ketu", "Mars"] for p in b_3rd_planets)
+
+        if has_benefic_3rd or b_3rd_lord_h in (1, 3, 5, 9, 10, 11):
+            sasur_title = "पुत्रीवत वात्सल्य एवं संरक्षक ससुर योग (Paternal Guidance & Blessings)"
+            sasur_status = "अत्यंत अनुकूल एवं स्नेहमयी"
+            sasur_desc = (
+                "ससुर का दृष्टिकोण अत्यंत उदार, संरक्षक एवं मार्गदर्शक रहेगा। कन्या को ससुर से पिता तुल्य मान-सम्मान व आशीर्वाद प्राप्त होगा। "
+                "परिवार के महत्वपूर्ण निर्णयों में कन्या के विचारों को सम्मान दिया जाएगा तथा वर के पिता हर परिस्थिति में उसके संबल बनेंगे।"
+            )
+            sasur_score = 92
+        elif has_malefic_3rd:
+            sasur_title = "पारंपरिक अनुशासन एवं मर्यादा युक्त संबंध (Disciplined & Traditional)"
+            sasur_status = "मर्यादापूर्ण एवं अनुशासित"
+            sasur_desc = (
+                "ससुर थोड़े गंभीर, पारंपरिक नियमों का कड़ाई से पालन करने वाले अथवा अनुशासित स्वभाव के हो सकते हैं। "
+                "कन्या द्वारा समयबद्धता, शिष्टाचार, कुल परंपराओं का आदर व विनम्र संवाद रखने से संबंध सदैव गरिमामयी और सुदृढ़ बने रहेंगे।"
+            )
+            sasur_score = 75
+        else:
+            sasur_title = "संतुलित सौहार्द एवं पारस्परिक आदर (Balanced & Cordial)"
+            sasur_status = "संतुलित एवं सौहार्दपूर्ण"
+            sasur_desc = (
+                "ससुर के साथ व्यावहारिक, शांत व सौहार्दपूर्ण संबंध रहेंगे। दैनिक पारिवारिक कार्यों में कोई अनावश्यक हस्तक्षेप नहीं होगा "
+                "और परस्पर मान-सम्मान सदैव बना रहेगा।"
+            )
+            sasur_score = 84
+
+        # 4.4 सासू माँ (Mother-in-law / सासू माँ संबंध):
+        # Shastriya rule: 4th from 7th = 10th house of Bride
+        b_10th_planets = [p for p, obj in b_chart.planets.items() if obj.house_from_lagna == 10]
+        b_10th_sign_id = ((b_chart.lagna_sign_id - 1 + 9) % 12) + 1
+        b_10th_lord = SIGN_LORDS.get(SIGN_NAMES[b_10th_sign_id - 1], "Saturn")
+        b_10th_lord_obj = b_chart.planets.get(b_10th_lord)
+        b_10th_lord_h = b_10th_lord_obj.house_from_lagna if b_10th_lord_obj else 10
+
+        has_benefic_10th = any(p in ["Jupiter", "Venus", "Mercury", "Moon"] for p in b_10th_planets)
+        has_malefic_10th = any(p in ["Mars", "Saturn", "Rahu", "Ketu", "Sun"] for p in b_10th_planets)
+
+        if has_benefic_10th or (b_10th_lord_h in (1, 2, 4, 5, 7, 9, 10, 11) and not has_malefic_10th):
+            saas_title = "मातृवत वात्सल्य एवं उत्तम गृह-प्रबंधन योग (Motherly Affection & Household Synergy)"
+            saas_status = "मातृवत स्नेह एवं कुशल तालमेल"
+            saas_desc = (
+                "सासू माँ ममतामयी, कुशल गृहस्वामिनी एवं कन्या को सगी पुत्री जैसा स्नेह देने वाली होंगी। "
+                "रसोई, रीति-रिवाजों व गृहस्थी के संचालन में दोनों के बीच सुंदर तालमेल रहेगा। "
+                "सासू माँ कन्या को घर की बागडोर सौंपकर प्रसन्न रहेंगी तथा सास-बहू में मां-बेटी जैसा प्यार रहेगा।"
+            )
+            saas_score = 90
+        elif has_malefic_10th:
+            saas_title = "स्वाभिमान एवं कार्यशैली में संतुलन अपेक्षित (Patience & Tact Needed)"
+            saas_status = "सतर्कता एवं धैर्य अपेक्षित"
+            saas_desc = (
+                "सासू माँ का स्वभाव थोड़ा प्रभुत्वशाली (authoritative) या कार्यप्रणाली में पूर्णता (perfection) चाहने वाला हो सकता है। "
+                "शुरुआती दौर में विचारों का अंतर आ सकता है। कन्या को सासू माँ की आदतों व अनुभवों का सम्मान करते हुए धैर्य, "
+                "मीठी वाणी व सेवाभाव से काम लेना चाहिए, जिससे शीघ्र ही अगाध विश्वास स्थापित होगा।"
+            )
+            saas_score = 72
+        else:
+            saas_title = "सहज तालमेल एवं परस्पर सम्मान (Cooperative & Respectful)"
+            saas_status = "सहयोगात्मक एवं शांत"
+            saas_desc = (
+                "सासू माँ और बहू के मध्य व्यावहारिक, सहयोगात्मक और सम्मानजनक संबंध रहेंगे। "
+                "दोनों एक-दूसरे के कार्यक्षेत्र व स्वतंत्रता का आदर करेंगे और घर का वातावरण शांत रहेगा।"
+            )
+            saas_score = 82
+
+        # 4.5 देवर / जेठ (Husband's Brothers):
+        # Shastriya rule: 3rd from 7th = 9th house (Younger / Devar), 11th from 7th = 5th house (Elder / Jeth)
+        b_9th_planets = [p for p, obj in b_chart.planets.items() if obj.house_from_lagna == 9]
+        b_5th_planets = [p for p, obj in b_chart.planets.items() if obj.house_from_lagna == 5]
+        has_affliction_brothers = any(p in ["Saturn", "Rahu", "Mars"] for p in b_9th_planets + b_5th_planets)
+
+        if not has_affliction_brothers:
+            devar_title = "स्नेहपूर्ण देवर-भाभी व जेठ आदर योग (Harmonious Brother-in-Law Bond)"
+            devar_status = "मित्रवत, आदरयुक्त एवं सहयोगात्मक"
+            devar_desc = (
+                "देवर भाभी को बड़ी बहन अथवा माँ तुल्य आदर देगा और हर घरेलू व सामाजिक कार्य में बढ़-चढ़कर साथ देगा। "
+                "जेठ के साथ अत्यंत मर्यादित, सौम्य व सम्माननीय संबंध रहेंगे। परिवार में भ्रातृ-सौहार्द बना रहेगा।"
+            )
+            devar_score = 88
+        else:
+            devar_title = "मर्यादित एवं व्यावहारिक संबंध योग (Formal & Respectful)"
+            devar_status = "मर्यादित एवं व्यावहारिक"
+            devar_desc = (
+                "देवर व जेठ के साथ संबंध व्यावहारिक और मर्यादित रहेंगे। पारिवारिक दायित्वों व वित्तीय मामलों में "
+                "स्पष्टता रखने तथा अनावश्यक तर्क-वितर्क से दूर रहने पर सौहार्द बना रहेगा।"
+            )
+            devar_score = 75
+
+        # 4.6 ननद (Husband's Sister) एवं साला/साली (Wife's Siblings):
+        # Mercury & Venus karakas, plus 3rd from lagna / 9th from lagna
+        merc_obj = b_chart.planets.get("Mercury")
+        merc_h = merc_obj.house_from_lagna if merc_obj else 1
+        if merc_h not in (6, 8, 12):
+            nanad_title = "सखीवत ननद-भाभी एवं मधुर साला-साली संबंध (Sisterly Warmth & Joyful Bond)"
+            nanad_status = "सहेलीवत स्नेह एवं सखी भाव"
+            nanad_desc = (
+                "कन्या और ननद के बीच सहेलियों (बहनों) जैसा सहज, खुला व आत्मीय संबंध रहेगा। दोनों सुख-दुख साझा करेंगी। "
+                "वहीं वर को भी अपने साले व सालियों से भरपूर आदर, अपनत्व एवं हास्य-विनोद पूर्ण वातावरण प्राप्त होगा।"
+            )
+            nanad_score = 89
+        else:
+            nanad_title = "पारस्परिक समझ व आदर योग (Warm with Mindful Speech)"
+            nanad_status = "संवाद में मधुरता अपेक्षित"
+            nanad_desc = (
+                "ननद व साले-साली के साथ संबंध सामान्य व अच्छे रहेंगे। कभी-कभार हंसी-मजाक में ग़लतफ़हमी से बचने हेतु "
+                "स्पष्टता व मधुर वाणी रखें। त्योहारों पर उपहारों के आदान-प्रदान से रिश्ते अधिक घनिष्ठ होंगे।"
+            )
+            nanad_score = 78
+
+        sasural_score = round((sasur_score * 0.25) + (saas_score * 0.30) + (devar_score * 0.25) + (nanad_score * 0.20))
 
         # 5. Patni ka Sahayog & Bhagyodaya
         g_7th_sign_id = ((g_chart.lagna_sign_id - 1 + 6) % 12) + 1
@@ -590,7 +711,35 @@ class MilanService:
             "sasural": {
                 "score": sasural_score,
                 "groom_inlaws": groom_sasural_desc,
-                "bride_inlaws": bride_sasural_desc
+                "bride_inlaws": bride_sasural_desc,
+                "sasur": {
+                    "title": sasur_title,
+                    "status": sasur_status,
+                    "desc": sasur_desc,
+                    "score": sasur_score,
+                    "bhavat_bhavam": "७वें से ९वां (तृतीय भाव) - ससुर स्थान"
+                },
+                "saas": {
+                    "title": saas_title,
+                    "status": saas_status,
+                    "desc": saas_desc,
+                    "score": saas_score,
+                    "bhavat_bhavam": "७वें से ४था (दशम भाव) - सासू माँ स्थान"
+                },
+                "devar_jeth": {
+                    "title": devar_title,
+                    "status": devar_status,
+                    "desc": devar_desc,
+                    "score": devar_score,
+                    "bhavat_bhavam": "७वें से ३रा (९वां - देवर) व ११वां (५वां - जेठ)"
+                },
+                "nanad_sala": {
+                    "title": nanad_title,
+                    "status": nanad_status,
+                    "desc": nanad_desc,
+                    "score": nanad_score,
+                    "bhavat_bhavam": "बुध/शुक्र कारक एवं सहोदर भाव"
+                }
             },
             "prosperity": {
                 "score": prosperity_score,

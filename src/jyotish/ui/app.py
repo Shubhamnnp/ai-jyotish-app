@@ -6562,19 +6562,31 @@ elif selected_idx == 16:
         g_name = st.text_input("वर का नाम", value="वर")
         g_date = st.date_input("वर जन्म तिथि", value=date(1995, 8, 20), min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="g_d")
         g_time = st.time_input("वर जन्म समय", value=time(14, 30), key="g_t")
+        g_city = st.text_input("वर जन्म स्थान (शहर/राज्य)", value="नई दिल्ली", key="g_city_in")
     with col_m2:
         st.markdown("#### 👧 वधू विवरण (Bride Details)")
         b_name = st.text_input("वधू का नाम", value="वधू")
         b_date = st.date_input("वधू जन्म तिथि", value=date(1997, 3, 15), min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="b_d")
         b_time = st.time_input("वधू जन्म समय", value=time(9, 15), key="b_t")
+        b_city = st.text_input("वधू जन्म स्थान (शहर/राज्य)", value="नई दिल्ली", key="b_city_in")
 
     if st.button("💑 कुण्डली मिलान करें", type="primary"):
         import importlib
         import src.jyotish.services.milan as milan_mod
         importlib.reload(milan_mod)
 
-        groom_data = BirthData(name=g_name, birth_date=g_date, birth_time=g_time, latitude=28.61, longitude=77.20)
-        bride_data = BirthData(name=b_name, birth_date=b_date, birth_time=b_time, latitude=28.61, longitude=77.20)
+        g_loc = default_geocoding_service.resolve(g_city.strip()) if g_city else None
+        g_lat = g_loc.get("latitude", 28.6139) if isinstance(g_loc, dict) else (getattr(g_loc, "latitude", 28.6139) if g_loc else 28.6139)
+        g_lon = g_loc.get("longitude", 77.2090) if isinstance(g_loc, dict) else (getattr(g_loc, "longitude", 77.2090) if g_loc else 77.2090)
+        g_tz = g_loc.get("timezone_offset", 5.5) if isinstance(g_loc, dict) else (getattr(g_loc, "timezone_offset", 5.5) if g_loc else 5.5)
+
+        b_loc = default_geocoding_service.resolve(b_city.strip()) if b_city else None
+        b_lat = b_loc.get("latitude", 28.6139) if isinstance(b_loc, dict) else (getattr(b_loc, "latitude", 28.6139) if b_loc else 28.6139)
+        b_lon = b_loc.get("longitude", 77.2090) if isinstance(b_loc, dict) else (getattr(b_loc, "longitude", 77.2090) if b_loc else 77.2090)
+        b_tz = b_loc.get("timezone_offset", 5.5) if isinstance(b_loc, dict) else (getattr(b_loc, "timezone_offset", 5.5) if b_loc else 5.5)
+
+        groom_data = BirthData(name=g_name, birth_date=g_date, birth_time=g_time, latitude=g_lat, longitude=g_lon, timezone_offset=g_tz, city=g_city)
+        bride_data = BirthData(name=b_name, birth_date=b_date, birth_time=b_time, latitude=b_lat, longitude=b_lon, timezone_offset=b_tz, city=b_city)
         m_score = milan_mod.default_milan_service.match_charts(groom_data, bride_data)
 
         st.metric("अष्टकूट गुण मिलान", f"{m_score.total_score} / 36.0", m_score.verdict)
@@ -6705,16 +6717,61 @@ elif selected_idx == 16:
             </div>
             """, unsafe_allow_html=True)
 
-            # 4. Sasural Paksha se Sahayog
+            # 4. Sasural Paksha se Sahayog & Relatives
             sas = deep_res['sasural']
+            sasur = sas.get('sasur', {})
+            saas = sas.get('saas', {})
+            devar = sas.get('devar_jeth', {})
+            nanad = sas.get('nanad_sala', {})
+
             st.markdown(f"""
             <div style="background:#FDF4FF; border:1.5px solid #F0ABFC; border-radius:10px; padding:16px; margin-bottom:14px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
-                    <b style="color:#86198F; font-size:16px;">🏛️ ४. ससुराल पक्ष से सहयोग, संबंध एवं सत्कार (In-Laws Compatibility)</b>
-                    <span style="background:#FAE8FF; color:#701A75; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">अनुकूलता: {sas['score']}%</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                    <b style="color:#86198F; font-size:16px;">🏛️ ४. ससुराल पक्ष से सहयोग, संबंध एवं पारिवारिक सामंजस्य (In-Laws & Extended Family Harmony)</b>
+                    <span style="background:#FAE8FF; color:#701A75; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">अनुकूलता: {sas.get('score', 85)}%</span>
                 </div>
-                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">• <b>वर के लिए ससुराल संबंध:</b> {sas['groom_inlaws']}</p>
-                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">• <b>कन्या के लिए ससुराल संबंध:</b> {sas['bride_inlaws']}</p>
+                <div style="background:#FFFFFF; border:1px solid #F5D0FE; border-radius:8px; padding:10px 14px; margin-bottom:12px;">
+                    <p style="margin:2px 0; color:#1E293B; font-size:13px; line-height:1.5;">• <b>वर के लिए ससुराल संबंध:</b> {sas.get('groom_inlaws', '')}</p>
+                    <p style="margin:2px 0; color:#1E293B; font-size:13px; line-height:1.5;">• <b>कन्या के लिए ससुराल संबंध:</b> {sas.get('bride_inlaws', '')}</p>
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px;">
+                    <div style="background:#FFFFFF; border:1.5px solid #E9D5FF; border-left:4px solid #9333EA; border-radius:8px; padding:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <b style="color:#6B21A8; font-size:13px;">👴 ससुर (Father-in-law) संबंध</b>
+                            <span style="background:#F3E8FF; color:#7E22CE; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{sasur.get('status', 'अनुकूल')}</span>
+                        </div>
+                        <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{sasur.get('title', '')}</div>
+                        <small style="color:#6B7280; font-size:11px;">📐 {sasur.get('bhavat_bhavam', '')}</small>
+                        <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{sasur.get('desc', '')}</p>
+                    </div>
+                    <div style="background:#FFFFFF; border:1.5px solid #FCE7F3; border-left:4px solid #DB2777; border-radius:8px; padding:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <b style="color:#9D174D; font-size:13px;">👵 सासू माँ (Mother-in-law) तालमेल</b>
+                            <span style="background:#FCE7F3; color:#BE185D; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{saas.get('status', 'अनुकूल')}</span>
+                        </div>
+                        <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{saas.get('title', '')}</div>
+                        <small style="color:#6B7280; font-size:11px;">📐 {saas.get('bhavat_bhavam', '')}</small>
+                        <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{saas.get('desc', '')}</p>
+                    </div>
+                    <div style="background:#FFFFFF; border:1.5px solid #CFFAFE; border-left:4px solid #0891B2; border-radius:8px; padding:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <b style="color:#155E75; font-size:13px;">👦 देवर एवं जेठ (Brothers-in-law)</b>
+                            <span style="background:#E0F2FE; color:#0369A1; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{devar.get('status', 'अनुकूल')}</span>
+                        </div>
+                        <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{devar.get('title', '')}</div>
+                        <small style="color:#6B7280; font-size:11px;">📐 {devar.get('bhavat_bhavam', '')}</small>
+                        <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{devar.get('desc', '')}</p>
+                    </div>
+                    <div style="background:#FFFFFF; border:1.5px solid #CCFBF1; border-left:4px solid #0D9488; border-radius:8px; padding:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <b style="color:#115E59; font-size:13px;">👧 ननद एवं साला-साली (Sisters & Siblings)</b>
+                            <span style="background:#E6FFFA; color:#0F766E; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{nanad.get('status', 'अनुकूल')}</span>
+                        </div>
+                        <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{nanad.get('title', '')}</div>
+                        <small style="color:#6B7280; font-size:11px;">📐 {nanad.get('bhavat_bhavam', '')}</small>
+                        <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{nanad.get('desc', '')}</p>
+                    </div>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
