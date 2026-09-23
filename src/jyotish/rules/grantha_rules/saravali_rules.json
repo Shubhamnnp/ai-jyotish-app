@@ -1,7 +1,7 @@
 {
   "metadata": {
     "grantha": "Saravali",
-    "count": 690
+    "count": 834
   },
   "rules": [
     {
@@ -28712,6 +28712,4614 @@
         "polarity": "-",
         "strength_base": 0.76,
         "description_hi": "कल्याणवर्मा कृत सारावली अनुसार 12वें भाव में केतु: संबंधित भाव संबंधी संघर्ष, व्यय अथवा मानसिक सतर्कता आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_ARIES",
+      "rule_name_hi": "सारावली: सूर्य का मेष राशि में फल",
+      "rule_name_en": "Saravali Sun in Aries Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का मेष राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_TAURUS",
+      "rule_name_hi": "सारावली: सूर्य का वृषभ राशि में फल",
+      "rule_name_en": "Saravali Sun in Taurus Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का वृषभ राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_GEMINI",
+      "rule_name_hi": "सारावली: सूर्य का मिथुन राशि में फल",
+      "rule_name_en": "Saravali Sun in Gemini Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का मिथुन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_CANCER",
+      "rule_name_hi": "सारावली: सूर्य का कर्क राशि में फल",
+      "rule_name_en": "Saravali Sun in Cancer Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का कर्क राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_LEO",
+      "rule_name_hi": "सारावली: सूर्य का सिंह राशि में फल",
+      "rule_name_en": "Saravali Sun in Leo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का सिंह राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_VIRGO",
+      "rule_name_hi": "सारावली: सूर्य का कन्या राशि में फल",
+      "rule_name_en": "Saravali Sun in Virgo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का कन्या राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_LIBRA",
+      "rule_name_hi": "सारावली: सूर्य का तुला राशि में फल",
+      "rule_name_en": "Saravali Sun in Libra Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का तुला राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_SCORPIO",
+      "rule_name_hi": "सारावली: सूर्य का वृश्चिक राशि में फल",
+      "rule_name_en": "Saravali Sun in Scorpio Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का वृश्चिक राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_SAGITTARIUS",
+      "rule_name_hi": "सारावली: सूर्य का धनु राशि में फल",
+      "rule_name_en": "Saravali Sun in Sagittarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का धनु राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_CAPRICORN",
+      "rule_name_hi": "सारावली: सूर्य का मकर राशि में फल",
+      "rule_name_en": "Saravali Sun in Capricorn Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का मकर राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_AQUARIUS",
+      "rule_name_hi": "सारावली: सूर्य का कुम्भ राशि में फल",
+      "rule_name_en": "Saravali Sun in Aquarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का कुम्भ राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SUN_PISCES",
+      "rule_name_hi": "सारावली: सूर्य का मीन राशि में फल",
+      "rule_name_en": "Saravali Sun in Pisces Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: सूर्य का मीन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_ARIES",
+      "rule_name_hi": "सारावली: चन्द्र का मेष राशि में फल",
+      "rule_name_en": "Saravali Moon in Aries Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का मेष राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_TAURUS",
+      "rule_name_hi": "सारावली: चन्द्र का वृषभ राशि में फल",
+      "rule_name_en": "Saravali Moon in Taurus Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का वृषभ राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_GEMINI",
+      "rule_name_hi": "सारावली: चन्द्र का मिथुन राशि में फल",
+      "rule_name_en": "Saravali Moon in Gemini Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का मिथुन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_CANCER",
+      "rule_name_hi": "सारावली: चन्द्र का कर्क राशि में फल",
+      "rule_name_en": "Saravali Moon in Cancer Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का कर्क राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_LEO",
+      "rule_name_hi": "सारावली: चन्द्र का सिंह राशि में फल",
+      "rule_name_en": "Saravali Moon in Leo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का सिंह राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_VIRGO",
+      "rule_name_hi": "सारावली: चन्द्र का कन्या राशि में फल",
+      "rule_name_en": "Saravali Moon in Virgo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का कन्या राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_LIBRA",
+      "rule_name_hi": "सारावली: चन्द्र का तुला राशि में फल",
+      "rule_name_en": "Saravali Moon in Libra Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का तुला राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_SCORPIO",
+      "rule_name_hi": "सारावली: चन्द्र का वृश्चिक राशि में फल",
+      "rule_name_en": "Saravali Moon in Scorpio Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का वृश्चिक राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_SAGITTARIUS",
+      "rule_name_hi": "सारावली: चन्द्र का धनु राशि में फल",
+      "rule_name_en": "Saravali Moon in Sagittarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का धनु राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_CAPRICORN",
+      "rule_name_hi": "सारावली: चन्द्र का मकर राशि में फल",
+      "rule_name_en": "Saravali Moon in Capricorn Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का मकर राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_AQUARIUS",
+      "rule_name_hi": "सारावली: चन्द्र का कुम्भ राशि में फल",
+      "rule_name_en": "Saravali Moon in Aquarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का कुम्भ राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MOON_PISCES",
+      "rule_name_hi": "सारावली: चन्द्र का मीन राशि में फल",
+      "rule_name_en": "Saravali Moon in Pisces Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: चन्द्र का मीन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_ARIES",
+      "rule_name_hi": "सारावली: मंगल का मेष राशि में फल",
+      "rule_name_en": "Saravali Mars in Aries Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का मेष राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_TAURUS",
+      "rule_name_hi": "सारावली: मंगल का वृषभ राशि में फल",
+      "rule_name_en": "Saravali Mars in Taurus Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का वृषभ राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_GEMINI",
+      "rule_name_hi": "सारावली: मंगल का मिथुन राशि में फल",
+      "rule_name_en": "Saravali Mars in Gemini Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का मिथुन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_CANCER",
+      "rule_name_hi": "सारावली: मंगल का कर्क राशि में फल",
+      "rule_name_en": "Saravali Mars in Cancer Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का कर्क राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_LEO",
+      "rule_name_hi": "सारावली: मंगल का सिंह राशि में फल",
+      "rule_name_en": "Saravali Mars in Leo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का सिंह राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_VIRGO",
+      "rule_name_hi": "सारावली: मंगल का कन्या राशि में फल",
+      "rule_name_en": "Saravali Mars in Virgo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का कन्या राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_LIBRA",
+      "rule_name_hi": "सारावली: मंगल का तुला राशि में फल",
+      "rule_name_en": "Saravali Mars in Libra Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का तुला राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_SCORPIO",
+      "rule_name_hi": "सारावली: मंगल का वृश्चिक राशि में फल",
+      "rule_name_en": "Saravali Mars in Scorpio Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का वृश्चिक राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_SAGITTARIUS",
+      "rule_name_hi": "सारावली: मंगल का धनु राशि में फल",
+      "rule_name_en": "Saravali Mars in Sagittarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का धनु राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_CAPRICORN",
+      "rule_name_hi": "सारावली: मंगल का मकर राशि में फल",
+      "rule_name_en": "Saravali Mars in Capricorn Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का मकर राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_AQUARIUS",
+      "rule_name_hi": "सारावली: मंगल का कुम्भ राशि में फल",
+      "rule_name_en": "Saravali Mars in Aquarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का कुम्भ राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MARS_PISCES",
+      "rule_name_hi": "सारावली: मंगल का मीन राशि में फल",
+      "rule_name_en": "Saravali Mars in Pisces Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: मंगल का मीन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_ARIES",
+      "rule_name_hi": "सारावली: बुध का मेष राशि में फल",
+      "rule_name_en": "Saravali Mercury in Aries Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का मेष राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_TAURUS",
+      "rule_name_hi": "सारावली: बुध का वृषभ राशि में फल",
+      "rule_name_en": "Saravali Mercury in Taurus Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का वृषभ राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_GEMINI",
+      "rule_name_hi": "सारावली: बुध का मिथुन राशि में फल",
+      "rule_name_en": "Saravali Mercury in Gemini Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का मिथुन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_CANCER",
+      "rule_name_hi": "सारावली: बुध का कर्क राशि में फल",
+      "rule_name_en": "Saravali Mercury in Cancer Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का कर्क राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_LEO",
+      "rule_name_hi": "सारावली: बुध का सिंह राशि में फल",
+      "rule_name_en": "Saravali Mercury in Leo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का सिंह राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_VIRGO",
+      "rule_name_hi": "सारावली: बुध का कन्या राशि में फल",
+      "rule_name_en": "Saravali Mercury in Virgo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का कन्या राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_LIBRA",
+      "rule_name_hi": "सारावली: बुध का तुला राशि में फल",
+      "rule_name_en": "Saravali Mercury in Libra Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का तुला राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_SCORPIO",
+      "rule_name_hi": "सारावली: बुध का वृश्चिक राशि में फल",
+      "rule_name_en": "Saravali Mercury in Scorpio Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का वृश्चिक राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_SAGITTARIUS",
+      "rule_name_hi": "सारावली: बुध का धनु राशि में फल",
+      "rule_name_en": "Saravali Mercury in Sagittarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का धनु राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_CAPRICORN",
+      "rule_name_hi": "सारावली: बुध का मकर राशि में फल",
+      "rule_name_en": "Saravali Mercury in Capricorn Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का मकर राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_AQUARIUS",
+      "rule_name_hi": "सारावली: बुध का कुम्भ राशि में फल",
+      "rule_name_en": "Saravali Mercury in Aquarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का कुम्भ राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_MERCURY_PISCES",
+      "rule_name_hi": "सारावली: बुध का मीन राशि में फल",
+      "rule_name_en": "Saravali Mercury in Pisces Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mercury",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: बुध का मीन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_ARIES",
+      "rule_name_hi": "सारावली: गुरु का मेष राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Aries Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का मेष राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_TAURUS",
+      "rule_name_hi": "सारावली: गुरु का वृषभ राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Taurus Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का वृषभ राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_GEMINI",
+      "rule_name_hi": "सारावली: गुरु का मिथुन राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Gemini Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का मिथुन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_CANCER",
+      "rule_name_hi": "सारावली: गुरु का कर्क राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Cancer Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का कर्क राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_LEO",
+      "rule_name_hi": "सारावली: गुरु का सिंह राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Leo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का सिंह राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_VIRGO",
+      "rule_name_hi": "सारावली: गुरु का कन्या राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Virgo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का कन्या राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_LIBRA",
+      "rule_name_hi": "सारावली: गुरु का तुला राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Libra Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का तुला राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_SCORPIO",
+      "rule_name_hi": "सारावली: गुरु का वृश्चिक राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Scorpio Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का वृश्चिक राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_SAGITTARIUS",
+      "rule_name_hi": "सारावली: गुरु का धनु राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Sagittarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का धनु राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_CAPRICORN",
+      "rule_name_hi": "सारावली: गुरु का मकर राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Capricorn Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का मकर राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_AQUARIUS",
+      "rule_name_hi": "सारावली: गुरु का कुम्भ राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Aquarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का कुम्भ राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_JUPITER_PISCES",
+      "rule_name_hi": "सारावली: गुरु का मीन राशि में फल",
+      "rule_name_en": "Saravali Jupiter in Pisces Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: गुरु का मीन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_ARIES",
+      "rule_name_hi": "सारावली: शुक्र का मेष राशि में फल",
+      "rule_name_en": "Saravali Venus in Aries Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का मेष राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_TAURUS",
+      "rule_name_hi": "सारावली: शुक्र का वृषभ राशि में फल",
+      "rule_name_en": "Saravali Venus in Taurus Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का वृषभ राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_GEMINI",
+      "rule_name_hi": "सारावली: शुक्र का मिथुन राशि में फल",
+      "rule_name_en": "Saravali Venus in Gemini Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का मिथुन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_CANCER",
+      "rule_name_hi": "सारावली: शुक्र का कर्क राशि में फल",
+      "rule_name_en": "Saravali Venus in Cancer Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का कर्क राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_LEO",
+      "rule_name_hi": "सारावली: शुक्र का सिंह राशि में फल",
+      "rule_name_en": "Saravali Venus in Leo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का सिंह राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_VIRGO",
+      "rule_name_hi": "सारावली: शुक्र का कन्या राशि में फल",
+      "rule_name_en": "Saravali Venus in Virgo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का कन्या राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_LIBRA",
+      "rule_name_hi": "सारावली: शुक्र का तुला राशि में फल",
+      "rule_name_en": "Saravali Venus in Libra Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का तुला राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_SCORPIO",
+      "rule_name_hi": "सारावली: शुक्र का वृश्चिक राशि में फल",
+      "rule_name_en": "Saravali Venus in Scorpio Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का वृश्चिक राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_SAGITTARIUS",
+      "rule_name_hi": "सारावली: शुक्र का धनु राशि में फल",
+      "rule_name_en": "Saravali Venus in Sagittarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का धनु राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_CAPRICORN",
+      "rule_name_hi": "सारावली: शुक्र का मकर राशि में फल",
+      "rule_name_en": "Saravali Venus in Capricorn Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का मकर राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_AQUARIUS",
+      "rule_name_hi": "सारावली: शुक्र का कुम्भ राशि में फल",
+      "rule_name_en": "Saravali Venus in Aquarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का कुम्भ राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_VENUS_PISCES",
+      "rule_name_hi": "सारावली: शुक्र का मीन राशि में फल",
+      "rule_name_en": "Saravali Venus in Pisces Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शुक्र का मीन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_ARIES",
+      "rule_name_hi": "सारावली: शनि का मेष राशि में फल",
+      "rule_name_en": "Saravali Saturn in Aries Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का मेष राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_TAURUS",
+      "rule_name_hi": "सारावली: शनि का वृषभ राशि में फल",
+      "rule_name_en": "Saravali Saturn in Taurus Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का वृषभ राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_GEMINI",
+      "rule_name_hi": "सारावली: शनि का मिथुन राशि में फल",
+      "rule_name_en": "Saravali Saturn in Gemini Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का मिथुन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_CANCER",
+      "rule_name_hi": "सारावली: शनि का कर्क राशि में फल",
+      "rule_name_en": "Saravali Saturn in Cancer Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का कर्क राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_LEO",
+      "rule_name_hi": "सारावली: शनि का सिंह राशि में फल",
+      "rule_name_en": "Saravali Saturn in Leo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का सिंह राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_VIRGO",
+      "rule_name_hi": "सारावली: शनि का कन्या राशि में फल",
+      "rule_name_en": "Saravali Saturn in Virgo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का कन्या राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_LIBRA",
+      "rule_name_hi": "सारावली: शनि का तुला राशि में फल",
+      "rule_name_en": "Saravali Saturn in Libra Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का तुला राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_SCORPIO",
+      "rule_name_hi": "सारावली: शनि का वृश्चिक राशि में फल",
+      "rule_name_en": "Saravali Saturn in Scorpio Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का वृश्चिक राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_SAGITTARIUS",
+      "rule_name_hi": "सारावली: शनि का धनु राशि में फल",
+      "rule_name_en": "Saravali Saturn in Sagittarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का धनु राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_CAPRICORN",
+      "rule_name_hi": "सारावली: शनि का मकर राशि में फल",
+      "rule_name_en": "Saravali Saturn in Capricorn Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का मकर राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_AQUARIUS",
+      "rule_name_hi": "सारावली: शनि का कुम्भ राशि में फल",
+      "rule_name_en": "Saravali Saturn in Aquarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का कुम्भ राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_SATURN_PISCES",
+      "rule_name_hi": "सारावली: शनि का मीन राशि में फल",
+      "rule_name_en": "Saravali Saturn in Pisces Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: शनि का मीन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_ARIES",
+      "rule_name_hi": "सारावली: राहु का मेष राशि में फल",
+      "rule_name_en": "Saravali Rahu in Aries Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का मेष राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_TAURUS",
+      "rule_name_hi": "सारावली: राहु का वृषभ राशि में फल",
+      "rule_name_en": "Saravali Rahu in Taurus Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का वृषभ राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_GEMINI",
+      "rule_name_hi": "सारावली: राहु का मिथुन राशि में फल",
+      "rule_name_en": "Saravali Rahu in Gemini Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का मिथुन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_CANCER",
+      "rule_name_hi": "सारावली: राहु का कर्क राशि में फल",
+      "rule_name_en": "Saravali Rahu in Cancer Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का कर्क राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_LEO",
+      "rule_name_hi": "सारावली: राहु का सिंह राशि में फल",
+      "rule_name_en": "Saravali Rahu in Leo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का सिंह राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_VIRGO",
+      "rule_name_hi": "सारावली: राहु का कन्या राशि में फल",
+      "rule_name_en": "Saravali Rahu in Virgo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का कन्या राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_LIBRA",
+      "rule_name_hi": "सारावली: राहु का तुला राशि में फल",
+      "rule_name_en": "Saravali Rahu in Libra Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का तुला राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_SCORPIO",
+      "rule_name_hi": "सारावली: राहु का वृश्चिक राशि में फल",
+      "rule_name_en": "Saravali Rahu in Scorpio Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का वृश्चिक राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_SAGITTARIUS",
+      "rule_name_hi": "सारावली: राहु का धनु राशि में फल",
+      "rule_name_en": "Saravali Rahu in Sagittarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का धनु राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_CAPRICORN",
+      "rule_name_hi": "सारावली: राहु का मकर राशि में फल",
+      "rule_name_en": "Saravali Rahu in Capricorn Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का मकर राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_AQUARIUS",
+      "rule_name_hi": "सारावली: राहु का कुम्भ राशि में फल",
+      "rule_name_en": "Saravali Rahu in Aquarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का कुम्भ राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_RAHU_PISCES",
+      "rule_name_hi": "सारावली: राहु का मीन राशि में फल",
+      "rule_name_en": "Saravali Rahu in Pisces Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: राहु का मीन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_ARIES",
+      "rule_name_hi": "सारावली: केतु का मेष राशि में फल",
+      "rule_name_en": "Saravali Ketu in Aries Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का मेष राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_TAURUS",
+      "rule_name_hi": "सारावली: केतु का वृषभ राशि में फल",
+      "rule_name_en": "Saravali Ketu in Taurus Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का वृषभ राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_GEMINI",
+      "rule_name_hi": "सारावली: केतु का मिथुन राशि में फल",
+      "rule_name_en": "Saravali Ketu in Gemini Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का मिथुन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_CANCER",
+      "rule_name_hi": "सारावली: केतु का कर्क राशि में फल",
+      "rule_name_en": "Saravali Ketu in Cancer Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का कर्क राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_LEO",
+      "rule_name_hi": "सारावली: केतु का सिंह राशि में फल",
+      "rule_name_en": "Saravali Ketu in Leo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का सिंह राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_VIRGO",
+      "rule_name_hi": "सारावली: केतु का कन्या राशि में फल",
+      "rule_name_en": "Saravali Ketu in Virgo Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का कन्या राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_LIBRA",
+      "rule_name_hi": "सारावली: केतु का तुला राशि में फल",
+      "rule_name_en": "Saravali Ketu in Libra Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का तुला राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_SCORPIO",
+      "rule_name_hi": "सारावली: केतु का वृश्चिक राशि में फल",
+      "rule_name_en": "Saravali Ketu in Scorpio Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का वृश्चिक राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_SAGITTARIUS",
+      "rule_name_hi": "सारावली: केतु का धनु राशि में फल",
+      "rule_name_en": "Saravali Ketu in Sagittarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "+",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का धनु राशि में वास। गुणवान, यशस्वी व कार्यकुशल।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_CAPRICORN",
+      "rule_name_hi": "सारावली: केतु का मकर राशि में फल",
+      "rule_name_en": "Saravali Ketu in Capricorn Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का मकर राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_AQUARIUS",
+      "rule_name_hi": "सारावली: केतु का कुम्भ राशि में फल",
+      "rule_name_en": "Saravali Ketu in Aquarius Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का कुम्भ राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_RASHI_KETU_PISCES",
+      "rule_name_hi": "सारावली: केतु का मीन राशि में फल",
+      "rule_name_en": "Saravali Ketu in Pisces Sign",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 24 (Graha Rashi Phala)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "rashi_phala",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Ketu",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "saravali",
+          "rashi_phala",
+          "personality"
+        ],
+        "polarity": "-",
+        "strength_base": 0.82,
+        "description_hi": "कल्याणवर्मा कृत सारावली: केतु का मीन राशि में वास। परिश्रम, संघर्ष व स्वावलंबन।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_VENUS_H1",
+      "rule_name_hi": "सारावली स्त्री जातक: शुक्र का 1वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Venus in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शुक्र का 1वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_VENUS_H2",
+      "rule_name_hi": "सारावली स्त्री जातक: शुक्र का 2वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Venus in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शुक्र का 2वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_VENUS_H4",
+      "rule_name_hi": "सारावली स्त्री जातक: शुक्र का 4वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Venus in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शुक्र का 4वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_VENUS_H7",
+      "rule_name_hi": "सारावली स्त्री जातक: शुक्र का 7वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Venus in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शुक्र का 7वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_VENUS_H8",
+      "rule_name_hi": "सारावली स्त्री जातक: शुक्र का 8वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Venus in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शुक्र का 8वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_VENUS_H9",
+      "rule_name_hi": "सारावली स्त्री जातक: शुक्र का 9वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Venus in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Venus",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शुक्र का 9वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_JUPITER_H1",
+      "rule_name_hi": "सारावली स्त्री जातक: गुरु का 1वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Jupiter in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: गुरु का 1वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_JUPITER_H2",
+      "rule_name_hi": "सारावली स्त्री जातक: गुरु का 2वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Jupiter in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: गुरु का 2वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_JUPITER_H4",
+      "rule_name_hi": "सारावली स्त्री जातक: गुरु का 4वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Jupiter in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: गुरु का 4वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_JUPITER_H7",
+      "rule_name_hi": "सारावली स्त्री जातक: गुरु का 7वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Jupiter in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: गुरु का 7वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_JUPITER_H8",
+      "rule_name_hi": "सारावली स्त्री जातक: गुरु का 8वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Jupiter in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: गुरु का 8वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_JUPITER_H9",
+      "rule_name_hi": "सारावली स्त्री जातक: गुरु का 9वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Jupiter in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: गुरु का 9वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MOON_H1",
+      "rule_name_hi": "सारावली स्त्री जातक: चन्द्र का 1वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Moon in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: चन्द्र का 1वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MOON_H2",
+      "rule_name_hi": "सारावली स्त्री जातक: चन्द्र का 2वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Moon in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: चन्द्र का 2वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MOON_H4",
+      "rule_name_hi": "सारावली स्त्री जातक: चन्द्र का 4वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Moon in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: चन्द्र का 4वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MOON_H7",
+      "rule_name_hi": "सारावली स्त्री जातक: चन्द्र का 7वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Moon in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: चन्द्र का 7वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MOON_H8",
+      "rule_name_hi": "सारावली स्त्री जातक: चन्द्र का 8वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Moon in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: चन्द्र का 8वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MOON_H9",
+      "rule_name_hi": "सारावली स्त्री जातक: चन्द्र का 9वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Moon in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: चन्द्र का 9वें भाव में अवस्थान। सौभाग्यवती, पतिप्रिया व कुलवर्धिनी।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MARS_H1",
+      "rule_name_hi": "सारावली स्त्री जातक: मंगल का 1वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Mars in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: मंगल का 1वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MARS_H2",
+      "rule_name_hi": "सारावली स्त्री जातक: मंगल का 2वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Mars in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: मंगल का 2वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MARS_H4",
+      "rule_name_hi": "सारावली स्त्री जातक: मंगल का 4वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Mars in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: मंगल का 4वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MARS_H7",
+      "rule_name_hi": "सारावली स्त्री जातक: मंगल का 7वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Mars in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: मंगल का 7वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MARS_H8",
+      "rule_name_hi": "सारावली स्त्री जातक: मंगल का 8वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Mars in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: मंगल का 8वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_MARS_H9",
+      "rule_name_hi": "सारावली स्त्री जातक: मंगल का 9वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Mars in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: मंगल का 9वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SATURN_H1",
+      "rule_name_hi": "सारावली स्त्री जातक: शनि का 1वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Saturn in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शनि का 1वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SATURN_H2",
+      "rule_name_hi": "सारावली स्त्री जातक: शनि का 2वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Saturn in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शनि का 2वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SATURN_H4",
+      "rule_name_hi": "सारावली स्त्री जातक: शनि का 4वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Saturn in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शनि का 4वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SATURN_H7",
+      "rule_name_hi": "सारावली स्त्री जातक: शनि का 7वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Saturn in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शनि का 7वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SATURN_H8",
+      "rule_name_hi": "सारावली स्त्री जातक: शनि का 8वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Saturn in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शनि का 8वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SATURN_H9",
+      "rule_name_hi": "सारावली स्त्री जातक: शनि का 9वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Saturn in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: शनि का 9वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SUN_H1",
+      "rule_name_hi": "सारावली स्त्री जातक: सूर्य का 1वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Sun in House 1",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: सूर्य का 1वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SUN_H2",
+      "rule_name_hi": "सारावली स्त्री जातक: सूर्य का 2वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Sun in House 2",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: सूर्य का 2वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SUN_H4",
+      "rule_name_hi": "सारावली स्त्री जातक: सूर्य का 4वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Sun in House 4",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: सूर्य का 4वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SUN_H7",
+      "rule_name_hi": "सारावली स्त्री जातक: सूर्य का 7वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Sun in House 7",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: सूर्य का 7वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SUN_H8",
+      "rule_name_hi": "सारावली स्त्री जातक: सूर्य का 8वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Sun in House 8",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 8
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: सूर्य का 8वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
+      }
+    },
+    {
+      "rule_id": "SARAVALI_STRI_SUN_H9",
+      "rule_name_hi": "सारावली स्त्री जातक: सूर्य का 9वें भाव में फल",
+      "rule_name_en": "Saravali Stri Jataka Sun in House 9",
+      "source": {
+        "text": "Saravali",
+        "chapter": "Adhyaya 46 (Stri Jataka)",
+        "author": "Kalyanavarma",
+        "era": "Classical 8th Century CE"
+      },
+      "school": "Saravali",
+      "category": "stri_jataka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "stri_jataka",
+          "marriage",
+          "soubhagya"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "सारावली स्त्री जातक: सूर्य का 9वें भाव में अवस्थान। वैवाहिक जीवन में धैर्य व समझदारी आवश्यक।"
       }
     }
   ]

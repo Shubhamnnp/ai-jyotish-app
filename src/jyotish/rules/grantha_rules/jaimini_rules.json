@@ -1,7 +1,7 @@
 {
   "metadata": {
     "grantha": "Jaimini Upadesha Sutras",
-    "count": 104
+    "count": 152
   },
   "rules": [
     {
@@ -3422,6 +3422,1542 @@
         "polarity": "-",
         "strength_base": 0.86,
         "description_hi": "महर्षि जैमिनी उपदेश सूत्र: दाराकारक (Darakaraka) का 12वें भाव में अवस्थान। जीवनसाथी, वैवाहिक सुख, साझेदारी व जनसंपर्क। आत्म-मंथन व प्रारब्ध ऋण मुक्ति का संकेत।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_ARIES_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: मेष राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Aries (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मेष राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_ARIES_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: मेष राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Aries (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मेष राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_ARIES_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: मेष राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Aries (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मेष राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_ARIES_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: मेष राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Aries (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मेष राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_TAURUS_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: वृषभ राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Taurus (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार वृषभ राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_TAURUS_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: वृषभ राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Taurus (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार वृषभ राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_TAURUS_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: वृषभ राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Taurus (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार वृषभ राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_TAURUS_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: वृषभ राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Taurus (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार वृषभ राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_GEMINI_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: मिथुन राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Gemini (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मिथुन राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_GEMINI_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: मिथुन राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Gemini (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मिथुन राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_GEMINI_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: मिथुन राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Gemini (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मिथुन राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_GEMINI_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: मिथुन राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Gemini (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मिथुन राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_CANCER_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: कर्क राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Cancer (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कर्क राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_CANCER_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: कर्क राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Cancer (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कर्क राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_CANCER_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: कर्क राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Cancer (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कर्क राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_CANCER_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: कर्क राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Cancer (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कर्क राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_LEO_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: सिंह राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Leo (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार सिंह राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_LEO_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: सिंह राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Leo (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार सिंह राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_LEO_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: सिंह राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Leo (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार सिंह राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_LEO_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: सिंह राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Leo (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार सिंह राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_VIRGO_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: कन्या राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Virgo (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कन्या राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_VIRGO_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: कन्या राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Virgo (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कन्या राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_VIRGO_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: कन्या राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Virgo (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कन्या राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_VIRGO_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: कन्या राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Virgo (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कन्या राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_LIBRA_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: तुला राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Libra (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार तुला राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_LIBRA_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: तुला राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Libra (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार तुला राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_LIBRA_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: तुला राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Libra (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार तुला राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_LIBRA_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: तुला राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Libra (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार तुला राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_SCORPIO_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: वृश्चिक राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Scorpio (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार वृश्चिक राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_SCORPIO_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: वृश्चिक राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Scorpio (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार वृश्चिक राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_SCORPIO_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: वृश्चिक राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Scorpio (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार वृश्चिक राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_SCORPIO_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: वृश्चिक राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Scorpio (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार वृश्चिक राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_SAGITTARIUS_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: धनु राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Sagittarius (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार धनु राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_SAGITTARIUS_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: धनु राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Sagittarius (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार धनु राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_SAGITTARIUS_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: धनु राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Sagittarius (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार धनु राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_SAGITTARIUS_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: धनु राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Sagittarius (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार धनु राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_CAPRICORN_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: मकर राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Capricorn (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मकर राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_CAPRICORN_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: मकर राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Capricorn (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मकर राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_CAPRICORN_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: मकर राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Capricorn (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मकर राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_CAPRICORN_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: मकर राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Capricorn (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मकर राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_AQUARIUS_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: कुम्भ राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Aquarius (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कुम्भ राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_AQUARIUS_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: कुम्भ राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Aquarius (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कुम्भ राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_AQUARIUS_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: कुम्भ राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Aquarius (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कुम्भ राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_AQUARIUS_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: कुम्भ राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Aquarius (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार कुम्भ राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_PISCES_DHANA",
+      "rule_name_hi": "जैमिनी चर दशा: मीन राशि दशा (धन व संपत्ति) फल",
+      "rule_name_en": "Jaimini Chara Dasha Pisces (DHANA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मीन राशि की दशा में: विपुल आर्थिक लाभ, व्यापारिक विस्तार व कुल समृद्धि।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_PISCES_RAJAYOGA",
+      "rule_name_hi": "जैमिनी चर दशा: मीन राशि दशा (राजयोग व सत्ता) फल",
+      "rule_name_en": "Jaimini Chara Dasha Pisces (RAJAYOGA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.92,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मीन राशि की दशा में: शासन में उच्च पद, मान-प्रतिष्ठा व जनसमर्थन।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_PISCES_MOKSHA",
+      "rule_name_hi": "जैमिनी चर दशा: मीन राशि दशा (अध्यात्म व मोक्ष) फल",
+      "rule_name_en": "Jaimini Chara Dasha Pisces (MOKSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "+",
+        "strength_base": 0.86,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मीन राशि की दशा में: साधना सिद्धि, तीर्थाटन व गुरु कृपा।"
+      }
+    },
+    {
+      "rule_id": "JAIMINI_CHARA_DASHA_PISCES_SANGHARSHA",
+      "rule_name_hi": "जैमिनी चर दशा: मीन राशि दशा (संघर्ष व परीक्षा) फल",
+      "rule_name_en": "Jaimini Chara Dasha Pisces (SANGHARSHA)",
+      "source": {
+        "text": "Jaimini Upadesha Sutras",
+        "chapter": "Adhyaya 3 (Chara Dasha Adhyaya)",
+        "author": "Maharishi Jaimini",
+        "era": "Vedic Classical"
+      },
+      "school": "Jaimini",
+      "category": "jaimini_dasha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "jaimini",
+          "chara_dasha",
+          "timing"
+        ],
+        "polarity": "-",
+        "strength_base": 0.8,
+        "description_hi": "जैमिनी चर दशाध्याय अनुसार मीन राशि की दशा में: स्वास्थ्य संबंधी सतर्कता, स्थान परिवर्तन अथवा पारिवारिक चिंता।"
       }
     }
   ]

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "grantha": "Classic Misc",
-    "count": 118
+    "count": 226
   },
   "rules": [
     {
@@ -3778,6 +3778,3846 @@
         "polarity": "-",
         "strength_base": 0.65,
         "description_hi": "वराहमिहिर कृत बृहज्जातक: Ketu का द्वादश (व्यय/मोक्ष भाव) में शास्त्रीय फल — मोक्ष, विदेश वास, शयन सुख व परोपकारी दान।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_ARIES_SUN_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: मेष लग्न - योगकारक सूर्य 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aries Lagna Sun in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aries Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          },
+          {
+            "entity": "Sun",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मेष लग्न हेतु सूर्य-गुरु की युति परम राजयोगकारक है, जबकि शनि बाधक व शुक्र मारक है। सूर्य का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_ARIES_SUN_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: मेष लग्न - योगकारक सूर्य 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aries Lagna Sun in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aries Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          },
+          {
+            "entity": "Sun",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मेष लग्न हेतु सूर्य-गुरु की युति परम राजयोगकारक है, जबकि शनि बाधक व शुक्र मारक है। सूर्य का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_ARIES_SUN_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: मेष लग्न - योगकारक सूर्य 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aries Lagna Sun in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aries Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          },
+          {
+            "entity": "Sun",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मेष लग्न हेतु सूर्य-गुरु की युति परम राजयोगकारक है, जबकि शनि बाधक व शुक्र मारक है। सूर्य का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_ARIES_SUN_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: मेष लग्न - योगकारक सूर्य 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aries Lagna Sun in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aries Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          },
+          {
+            "entity": "Sun",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मेष लग्न हेतु सूर्य-गुरु की युति परम राजयोगकारक है, जबकि शनि बाधक व शुक्र मारक है। सूर्य का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_ARIES_SUN_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: मेष लग्न - योगकारक सूर्य 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aries Lagna Sun in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aries Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          },
+          {
+            "entity": "Sun",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मेष लग्न हेतु सूर्य-गुरु की युति परम राजयोगकारक है, जबकि शनि बाधक व शुक्र मारक है। सूर्य का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_ARIES_SUN_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: मेष लग्न - योगकारक सूर्य 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aries Lagna Sun in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aries Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          },
+          {
+            "entity": "Sun",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मेष लग्न हेतु सूर्य-गुरु की युति परम राजयोगकारक है, जबकि शनि बाधक व शुक्र मारक है। सूर्य का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_ARIES_SUN_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: मेष लग्न - योगकारक सूर्य 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aries Lagna Sun in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aries Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          },
+          {
+            "entity": "Sun",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मेष लग्न हेतु सूर्य-गुरु की युति परम राजयोगकारक है, जबकि शनि बाधक व शुक्र मारक है। सूर्य का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_ARIES_SUN_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: मेष लग्न - योगकारक सूर्य 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aries Lagna Sun in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aries Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aries"
+          },
+          {
+            "entity": "Sun",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मेष लग्न हेतु सूर्य-गुरु की युति परम राजयोगकारक है, जबकि शनि बाधक व शुक्र मारक है। सूर्य का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_TAURUS_SATURN_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृषभ लग्न - योगकारक शनि 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Taurus Lagna Saturn in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Taurus Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          },
+          {
+            "entity": "Saturn",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृषभ लग्न हेतु शनि अकेला नवमेश व दशमेश होकर सर्वोच्च राजयोग देता है (योगकारक)। शनि का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_TAURUS_SATURN_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृषभ लग्न - योगकारक शनि 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Taurus Lagna Saturn in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Taurus Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          },
+          {
+            "entity": "Saturn",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृषभ लग्न हेतु शनि अकेला नवमेश व दशमेश होकर सर्वोच्च राजयोग देता है (योगकारक)। शनि का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_TAURUS_SATURN_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृषभ लग्न - योगकारक शनि 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Taurus Lagna Saturn in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Taurus Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          },
+          {
+            "entity": "Saturn",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृषभ लग्न हेतु शनि अकेला नवमेश व दशमेश होकर सर्वोच्च राजयोग देता है (योगकारक)। शनि का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_TAURUS_SATURN_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृषभ लग्न - योगकारक शनि 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Taurus Lagna Saturn in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Taurus Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          },
+          {
+            "entity": "Saturn",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृषभ लग्न हेतु शनि अकेला नवमेश व दशमेश होकर सर्वोच्च राजयोग देता है (योगकारक)। शनि का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_TAURUS_SATURN_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृषभ लग्न - योगकारक शनि 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Taurus Lagna Saturn in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Taurus Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          },
+          {
+            "entity": "Saturn",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृषभ लग्न हेतु शनि अकेला नवमेश व दशमेश होकर सर्वोच्च राजयोग देता है (योगकारक)। शनि का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_TAURUS_SATURN_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृषभ लग्न - योगकारक शनि 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Taurus Lagna Saturn in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Taurus Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          },
+          {
+            "entity": "Saturn",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृषभ लग्न हेतु शनि अकेला नवमेश व दशमेश होकर सर्वोच्च राजयोग देता है (योगकारक)। शनि का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_TAURUS_SATURN_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृषभ लग्न - योगकारक शनि 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Taurus Lagna Saturn in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Taurus Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          },
+          {
+            "entity": "Saturn",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृषभ लग्न हेतु शनि अकेला नवमेश व दशमेश होकर सर्वोच्च राजयोग देता है (योगकारक)। शनि का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_TAURUS_SATURN_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृषभ लग्न - योगकारक शनि 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Taurus Lagna Saturn in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Taurus Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Taurus"
+          },
+          {
+            "entity": "Saturn",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृषभ लग्न हेतु शनि अकेला नवमेश व दशमेश होकर सर्वोच्च राजयोग देता है (योगकारक)। शनि का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_GEMINI_VENUS_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: मिथुन लग्न - योगकारक शुक्र 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Gemini Lagna Venus in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Gemini Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          },
+          {
+            "entity": "Venus",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मिथुन लग्न हेतु शुक्र पंचमेश होकर विद्या, लक्ष्मी व सन्तान सुख का प्रदाता है। शुक्र का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_GEMINI_VENUS_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: मिथुन लग्न - योगकारक शुक्र 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Gemini Lagna Venus in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Gemini Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          },
+          {
+            "entity": "Venus",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मिथुन लग्न हेतु शुक्र पंचमेश होकर विद्या, लक्ष्मी व सन्तान सुख का प्रदाता है। शुक्र का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_GEMINI_VENUS_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: मिथुन लग्न - योगकारक शुक्र 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Gemini Lagna Venus in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Gemini Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          },
+          {
+            "entity": "Venus",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मिथुन लग्न हेतु शुक्र पंचमेश होकर विद्या, लक्ष्मी व सन्तान सुख का प्रदाता है। शुक्र का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_GEMINI_VENUS_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: मिथुन लग्न - योगकारक शुक्र 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Gemini Lagna Venus in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Gemini Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          },
+          {
+            "entity": "Venus",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मिथुन लग्न हेतु शुक्र पंचमेश होकर विद्या, लक्ष्मी व सन्तान सुख का प्रदाता है। शुक्र का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_GEMINI_VENUS_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: मिथुन लग्न - योगकारक शुक्र 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Gemini Lagna Venus in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Gemini Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          },
+          {
+            "entity": "Venus",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मिथुन लग्न हेतु शुक्र पंचमेश होकर विद्या, लक्ष्मी व सन्तान सुख का प्रदाता है। शुक्र का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_GEMINI_VENUS_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: मिथुन लग्न - योगकारक शुक्र 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Gemini Lagna Venus in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Gemini Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          },
+          {
+            "entity": "Venus",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मिथुन लग्न हेतु शुक्र पंचमेश होकर विद्या, लक्ष्मी व सन्तान सुख का प्रदाता है। शुक्र का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_GEMINI_VENUS_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: मिथुन लग्न - योगकारक शुक्र 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Gemini Lagna Venus in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Gemini Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          },
+          {
+            "entity": "Venus",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मिथुन लग्न हेतु शुक्र पंचमेश होकर विद्या, लक्ष्मी व सन्तान सुख का प्रदाता है। शुक्र का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_GEMINI_VENUS_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: मिथुन लग्न - योगकारक शुक्र 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Gemini Lagna Venus in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Gemini Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Gemini"
+          },
+          {
+            "entity": "Venus",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मिथुन लग्न हेतु शुक्र पंचमेश होकर विद्या, लक्ष्मी व सन्तान सुख का प्रदाता है। शुक्र का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CANCER_MARS_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: कर्क लग्न - योगकारक मंगल 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Cancer Lagna Mars in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Cancer Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          },
+          {
+            "entity": "Mars",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कर्क लग्न हेतु मंगल पंचमेश व दशमेश होकर अकेला महा-राजयोगकारक बनता है। मंगल का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CANCER_MARS_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: कर्क लग्न - योगकारक मंगल 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Cancer Lagna Mars in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Cancer Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          },
+          {
+            "entity": "Mars",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कर्क लग्न हेतु मंगल पंचमेश व दशमेश होकर अकेला महा-राजयोगकारक बनता है। मंगल का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CANCER_MARS_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: कर्क लग्न - योगकारक मंगल 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Cancer Lagna Mars in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Cancer Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          },
+          {
+            "entity": "Mars",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कर्क लग्न हेतु मंगल पंचमेश व दशमेश होकर अकेला महा-राजयोगकारक बनता है। मंगल का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CANCER_MARS_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: कर्क लग्न - योगकारक मंगल 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Cancer Lagna Mars in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Cancer Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          },
+          {
+            "entity": "Mars",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कर्क लग्न हेतु मंगल पंचमेश व दशमेश होकर अकेला महा-राजयोगकारक बनता है। मंगल का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CANCER_MARS_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: कर्क लग्न - योगकारक मंगल 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Cancer Lagna Mars in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Cancer Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          },
+          {
+            "entity": "Mars",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कर्क लग्न हेतु मंगल पंचमेश व दशमेश होकर अकेला महा-राजयोगकारक बनता है। मंगल का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CANCER_MARS_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: कर्क लग्न - योगकारक मंगल 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Cancer Lagna Mars in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Cancer Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          },
+          {
+            "entity": "Mars",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कर्क लग्न हेतु मंगल पंचमेश व दशमेश होकर अकेला महा-राजयोगकारक बनता है। मंगल का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CANCER_MARS_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: कर्क लग्न - योगकारक मंगल 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Cancer Lagna Mars in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Cancer Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          },
+          {
+            "entity": "Mars",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कर्क लग्न हेतु मंगल पंचमेश व दशमेश होकर अकेला महा-राजयोगकारक बनता है। मंगल का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CANCER_MARS_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: कर्क लग्न - योगकारक मंगल 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Cancer Lagna Mars in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Cancer Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Cancer"
+          },
+          {
+            "entity": "Mars",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कर्क लग्न हेतु मंगल पंचमेश व दशमेश होकर अकेला महा-राजयोगकारक बनता है। मंगल का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LEO_MARS_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: सिंह लग्न - योगकारक मंगल 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Leo Lagna Mars in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Leo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          },
+          {
+            "entity": "Mars",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: सिंह लग्न हेतु मंगल चतुर्थेश व नवमेश होकर सर्व कार्य सिद्धि व ऐश्वर्य प्रदान करता है। मंगल का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LEO_MARS_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: सिंह लग्न - योगकारक मंगल 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Leo Lagna Mars in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Leo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          },
+          {
+            "entity": "Mars",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: सिंह लग्न हेतु मंगल चतुर्थेश व नवमेश होकर सर्व कार्य सिद्धि व ऐश्वर्य प्रदान करता है। मंगल का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LEO_MARS_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: सिंह लग्न - योगकारक मंगल 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Leo Lagna Mars in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Leo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          },
+          {
+            "entity": "Mars",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: सिंह लग्न हेतु मंगल चतुर्थेश व नवमेश होकर सर्व कार्य सिद्धि व ऐश्वर्य प्रदान करता है। मंगल का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LEO_MARS_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: सिंह लग्न - योगकारक मंगल 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Leo Lagna Mars in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Leo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          },
+          {
+            "entity": "Mars",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: सिंह लग्न हेतु मंगल चतुर्थेश व नवमेश होकर सर्व कार्य सिद्धि व ऐश्वर्य प्रदान करता है। मंगल का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LEO_MARS_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: सिंह लग्न - योगकारक मंगल 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Leo Lagna Mars in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Leo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          },
+          {
+            "entity": "Mars",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: सिंह लग्न हेतु मंगल चतुर्थेश व नवमेश होकर सर्व कार्य सिद्धि व ऐश्वर्य प्रदान करता है। मंगल का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LEO_MARS_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: सिंह लग्न - योगकारक मंगल 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Leo Lagna Mars in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Leo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          },
+          {
+            "entity": "Mars",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: सिंह लग्न हेतु मंगल चतुर्थेश व नवमेश होकर सर्व कार्य सिद्धि व ऐश्वर्य प्रदान करता है। मंगल का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LEO_MARS_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: सिंह लग्न - योगकारक मंगल 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Leo Lagna Mars in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Leo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          },
+          {
+            "entity": "Mars",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: सिंह लग्न हेतु मंगल चतुर्थेश व नवमेश होकर सर्व कार्य सिद्धि व ऐश्वर्य प्रदान करता है। मंगल का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LEO_MARS_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: सिंह लग्न - योगकारक मंगल 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Leo Lagna Mars in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Leo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Leo"
+          },
+          {
+            "entity": "Mars",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: सिंह लग्न हेतु मंगल चतुर्थेश व नवमेश होकर सर्व कार्य सिद्धि व ऐश्वर्य प्रदान करता है। मंगल का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_VIRGO_VENUS_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: कन्या लग्न - योगकारक शुक्र 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Virgo Lagna Venus in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Virgo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          },
+          {
+            "entity": "Venus",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कन्या लग्न हेतु शुक्र द्वितीयेश व नवमेश होकर अपार धन-सम्पदा का स्वामी है। शुक्र का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_VIRGO_VENUS_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: कन्या लग्न - योगकारक शुक्र 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Virgo Lagna Venus in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Virgo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          },
+          {
+            "entity": "Venus",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कन्या लग्न हेतु शुक्र द्वितीयेश व नवमेश होकर अपार धन-सम्पदा का स्वामी है। शुक्र का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_VIRGO_VENUS_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: कन्या लग्न - योगकारक शुक्र 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Virgo Lagna Venus in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Virgo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          },
+          {
+            "entity": "Venus",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कन्या लग्न हेतु शुक्र द्वितीयेश व नवमेश होकर अपार धन-सम्पदा का स्वामी है। शुक्र का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_VIRGO_VENUS_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: कन्या लग्न - योगकारक शुक्र 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Virgo Lagna Venus in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Virgo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          },
+          {
+            "entity": "Venus",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कन्या लग्न हेतु शुक्र द्वितीयेश व नवमेश होकर अपार धन-सम्पदा का स्वामी है। शुक्र का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_VIRGO_VENUS_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: कन्या लग्न - योगकारक शुक्र 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Virgo Lagna Venus in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Virgo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          },
+          {
+            "entity": "Venus",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कन्या लग्न हेतु शुक्र द्वितीयेश व नवमेश होकर अपार धन-सम्पदा का स्वामी है। शुक्र का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_VIRGO_VENUS_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: कन्या लग्न - योगकारक शुक्र 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Virgo Lagna Venus in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Virgo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          },
+          {
+            "entity": "Venus",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कन्या लग्न हेतु शुक्र द्वितीयेश व नवमेश होकर अपार धन-सम्पदा का स्वामी है। शुक्र का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_VIRGO_VENUS_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: कन्या लग्न - योगकारक शुक्र 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Virgo Lagna Venus in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Virgo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          },
+          {
+            "entity": "Venus",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कन्या लग्न हेतु शुक्र द्वितीयेश व नवमेश होकर अपार धन-सम्पदा का स्वामी है। शुक्र का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_VIRGO_VENUS_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: कन्या लग्न - योगकारक शुक्र 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Virgo Lagna Venus in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Virgo Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Virgo"
+          },
+          {
+            "entity": "Venus",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कन्या लग्न हेतु शुक्र द्वितीयेश व नवमेश होकर अपार धन-सम्पदा का स्वामी है। शुक्र का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LIBRA_SATURN_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: तुला लग्न - योगकारक शनि 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Libra Lagna Saturn in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Libra Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          },
+          {
+            "entity": "Saturn",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: तुला लग्न हेतु शनि चतुर्थेश व पंचमेश होकर परम योगकारक और राजसम्मान प्रदाता है। शनि का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LIBRA_SATURN_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: तुला लग्न - योगकारक शनि 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Libra Lagna Saturn in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Libra Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          },
+          {
+            "entity": "Saturn",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: तुला लग्न हेतु शनि चतुर्थेश व पंचमेश होकर परम योगकारक और राजसम्मान प्रदाता है। शनि का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LIBRA_SATURN_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: तुला लग्न - योगकारक शनि 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Libra Lagna Saturn in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Libra Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          },
+          {
+            "entity": "Saturn",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: तुला लग्न हेतु शनि चतुर्थेश व पंचमेश होकर परम योगकारक और राजसम्मान प्रदाता है। शनि का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LIBRA_SATURN_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: तुला लग्न - योगकारक शनि 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Libra Lagna Saturn in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Libra Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          },
+          {
+            "entity": "Saturn",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: तुला लग्न हेतु शनि चतुर्थेश व पंचमेश होकर परम योगकारक और राजसम्मान प्रदाता है। शनि का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LIBRA_SATURN_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: तुला लग्न - योगकारक शनि 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Libra Lagna Saturn in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Libra Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          },
+          {
+            "entity": "Saturn",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: तुला लग्न हेतु शनि चतुर्थेश व पंचमेश होकर परम योगकारक और राजसम्मान प्रदाता है। शनि का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LIBRA_SATURN_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: तुला लग्न - योगकारक शनि 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Libra Lagna Saturn in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Libra Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          },
+          {
+            "entity": "Saturn",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: तुला लग्न हेतु शनि चतुर्थेश व पंचमेश होकर परम योगकारक और राजसम्मान प्रदाता है। शनि का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LIBRA_SATURN_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: तुला लग्न - योगकारक शनि 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Libra Lagna Saturn in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Libra Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          },
+          {
+            "entity": "Saturn",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: तुला लग्न हेतु शनि चतुर्थेश व पंचमेश होकर परम योगकारक और राजसम्मान प्रदाता है। शनि का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_LIBRA_SATURN_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: तुला लग्न - योगकारक शनि 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Libra Lagna Saturn in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Libra Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Libra"
+          },
+          {
+            "entity": "Saturn",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: तुला लग्न हेतु शनि चतुर्थेश व पंचमेश होकर परम योगकारक और राजसम्मान प्रदाता है। शनि का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SCORPIO_JUPITER_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृश्चिक लग्न - योगकारक गुरु 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Scorpio Lagna Jupiter in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Scorpio Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          },
+          {
+            "entity": "Jupiter",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृश्चिक लग्न हेतु गुरु पंचमेश व चन्द्रमा नवमेश मिलकर महालक्ष्मी योग बनाते हैं। गुरु का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SCORPIO_JUPITER_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृश्चिक लग्न - योगकारक गुरु 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Scorpio Lagna Jupiter in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Scorpio Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          },
+          {
+            "entity": "Jupiter",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृश्चिक लग्न हेतु गुरु पंचमेश व चन्द्रमा नवमेश मिलकर महालक्ष्मी योग बनाते हैं। गुरु का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SCORPIO_JUPITER_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृश्चिक लग्न - योगकारक गुरु 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Scorpio Lagna Jupiter in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Scorpio Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          },
+          {
+            "entity": "Jupiter",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृश्चिक लग्न हेतु गुरु पंचमेश व चन्द्रमा नवमेश मिलकर महालक्ष्मी योग बनाते हैं। गुरु का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SCORPIO_JUPITER_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृश्चिक लग्न - योगकारक गुरु 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Scorpio Lagna Jupiter in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Scorpio Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          },
+          {
+            "entity": "Jupiter",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृश्चिक लग्न हेतु गुरु पंचमेश व चन्द्रमा नवमेश मिलकर महालक्ष्मी योग बनाते हैं। गुरु का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SCORPIO_JUPITER_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृश्चिक लग्न - योगकारक गुरु 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Scorpio Lagna Jupiter in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Scorpio Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          },
+          {
+            "entity": "Jupiter",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृश्चिक लग्न हेतु गुरु पंचमेश व चन्द्रमा नवमेश मिलकर महालक्ष्मी योग बनाते हैं। गुरु का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SCORPIO_JUPITER_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृश्चिक लग्न - योगकारक गुरु 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Scorpio Lagna Jupiter in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Scorpio Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          },
+          {
+            "entity": "Jupiter",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृश्चिक लग्न हेतु गुरु पंचमेश व चन्द्रमा नवमेश मिलकर महालक्ष्मी योग बनाते हैं। गुरु का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SCORPIO_JUPITER_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृश्चिक लग्न - योगकारक गुरु 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Scorpio Lagna Jupiter in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Scorpio Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          },
+          {
+            "entity": "Jupiter",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृश्चिक लग्न हेतु गुरु पंचमेश व चन्द्रमा नवमेश मिलकर महालक्ष्मी योग बनाते हैं। गुरु का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SCORPIO_JUPITER_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: वृश्चिक लग्न - योगकारक गुरु 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Scorpio Lagna Jupiter in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Scorpio Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Scorpio"
+          },
+          {
+            "entity": "Jupiter",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: वृश्चिक लग्न हेतु गुरु पंचमेश व चन्द्रमा नवमेश मिलकर महालक्ष्मी योग बनाते हैं। गुरु का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SAGITTARIUS_SUN_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: धनु लग्न - योगकारक सूर्य 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Sagittarius Lagna Sun in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Sagittarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          },
+          {
+            "entity": "Sun",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: धनु लग्न हेतु सूर्य नवमेश व मंगल पंचमेश होकर प्रतापी राजयोग का निर्माण करते हैं। सूर्य का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SAGITTARIUS_SUN_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: धनु लग्न - योगकारक सूर्य 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Sagittarius Lagna Sun in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Sagittarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          },
+          {
+            "entity": "Sun",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: धनु लग्न हेतु सूर्य नवमेश व मंगल पंचमेश होकर प्रतापी राजयोग का निर्माण करते हैं। सूर्य का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SAGITTARIUS_SUN_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: धनु लग्न - योगकारक सूर्य 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Sagittarius Lagna Sun in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Sagittarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          },
+          {
+            "entity": "Sun",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: धनु लग्न हेतु सूर्य नवमेश व मंगल पंचमेश होकर प्रतापी राजयोग का निर्माण करते हैं। सूर्य का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SAGITTARIUS_SUN_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: धनु लग्न - योगकारक सूर्य 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Sagittarius Lagna Sun in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Sagittarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          },
+          {
+            "entity": "Sun",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: धनु लग्न हेतु सूर्य नवमेश व मंगल पंचमेश होकर प्रतापी राजयोग का निर्माण करते हैं। सूर्य का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SAGITTARIUS_SUN_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: धनु लग्न - योगकारक सूर्य 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Sagittarius Lagna Sun in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Sagittarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          },
+          {
+            "entity": "Sun",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: धनु लग्न हेतु सूर्य नवमेश व मंगल पंचमेश होकर प्रतापी राजयोग का निर्माण करते हैं। सूर्य का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SAGITTARIUS_SUN_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: धनु लग्न - योगकारक सूर्य 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Sagittarius Lagna Sun in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Sagittarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          },
+          {
+            "entity": "Sun",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: धनु लग्न हेतु सूर्य नवमेश व मंगल पंचमेश होकर प्रतापी राजयोग का निर्माण करते हैं। सूर्य का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SAGITTARIUS_SUN_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: धनु लग्न - योगकारक सूर्य 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Sagittarius Lagna Sun in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Sagittarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          },
+          {
+            "entity": "Sun",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: धनु लग्न हेतु सूर्य नवमेश व मंगल पंचमेश होकर प्रतापी राजयोग का निर्माण करते हैं। सूर्य का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_SAGITTARIUS_SUN_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: धनु लग्न - योगकारक सूर्य 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Sagittarius Lagna Sun in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Sagittarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Sagittarius"
+          },
+          {
+            "entity": "Sun",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: धनु लग्न हेतु सूर्य नवमेश व मंगल पंचमेश होकर प्रतापी राजयोग का निर्माण करते हैं। सूर्य का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CAPRICORN_VENUS_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: मकर लग्न - योगकारक शुक्र 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Capricorn Lagna Venus in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Capricorn Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          },
+          {
+            "entity": "Venus",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मकर लग्न हेतु शुक्र पंचमेश व दशमेश होकर अकेला सर्वोच्च योगकारक ग्रह है। शुक्र का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CAPRICORN_VENUS_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: मकर लग्न - योगकारक शुक्र 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Capricorn Lagna Venus in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Capricorn Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          },
+          {
+            "entity": "Venus",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मकर लग्न हेतु शुक्र पंचमेश व दशमेश होकर अकेला सर्वोच्च योगकारक ग्रह है। शुक्र का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CAPRICORN_VENUS_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: मकर लग्न - योगकारक शुक्र 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Capricorn Lagna Venus in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Capricorn Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          },
+          {
+            "entity": "Venus",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मकर लग्न हेतु शुक्र पंचमेश व दशमेश होकर अकेला सर्वोच्च योगकारक ग्रह है। शुक्र का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CAPRICORN_VENUS_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: मकर लग्न - योगकारक शुक्र 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Capricorn Lagna Venus in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Capricorn Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          },
+          {
+            "entity": "Venus",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मकर लग्न हेतु शुक्र पंचमेश व दशमेश होकर अकेला सर्वोच्च योगकारक ग्रह है। शुक्र का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CAPRICORN_VENUS_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: मकर लग्न - योगकारक शुक्र 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Capricorn Lagna Venus in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Capricorn Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          },
+          {
+            "entity": "Venus",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मकर लग्न हेतु शुक्र पंचमेश व दशमेश होकर अकेला सर्वोच्च योगकारक ग्रह है। शुक्र का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CAPRICORN_VENUS_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: मकर लग्न - योगकारक शुक्र 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Capricorn Lagna Venus in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Capricorn Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          },
+          {
+            "entity": "Venus",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मकर लग्न हेतु शुक्र पंचमेश व दशमेश होकर अकेला सर्वोच्च योगकारक ग्रह है। शुक्र का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CAPRICORN_VENUS_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: मकर लग्न - योगकारक शुक्र 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Capricorn Lagna Venus in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Capricorn Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          },
+          {
+            "entity": "Venus",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मकर लग्न हेतु शुक्र पंचमेश व दशमेश होकर अकेला सर्वोच्च योगकारक ग्रह है। शुक्र का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_CAPRICORN_VENUS_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: मकर लग्न - योगकारक शुक्र 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Capricorn Lagna Venus in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Capricorn Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Capricorn"
+          },
+          {
+            "entity": "Venus",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मकर लग्न हेतु शुक्र पंचमेश व दशमेश होकर अकेला सर्वोच्च योगकारक ग्रह है। शुक्र का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_AQUARIUS_VENUS_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: कुम्भ लग्न - योगकारक शुक्र 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aquarius Lagna Venus in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aquarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          },
+          {
+            "entity": "Venus",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कुम्भ लग्न हेतु शुक्र चतुर्थेश व नवमेश होकर अखंड भूमि, वाहन व ऐश्वर्य देता है। शुक्र का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_AQUARIUS_VENUS_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: कुम्भ लग्न - योगकारक शुक्र 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aquarius Lagna Venus in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aquarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          },
+          {
+            "entity": "Venus",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कुम्भ लग्न हेतु शुक्र चतुर्थेश व नवमेश होकर अखंड भूमि, वाहन व ऐश्वर्य देता है। शुक्र का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_AQUARIUS_VENUS_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: कुम्भ लग्न - योगकारक शुक्र 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aquarius Lagna Venus in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aquarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          },
+          {
+            "entity": "Venus",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कुम्भ लग्न हेतु शुक्र चतुर्थेश व नवमेश होकर अखंड भूमि, वाहन व ऐश्वर्य देता है। शुक्र का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_AQUARIUS_VENUS_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: कुम्भ लग्न - योगकारक शुक्र 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aquarius Lagna Venus in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aquarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          },
+          {
+            "entity": "Venus",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कुम्भ लग्न हेतु शुक्र चतुर्थेश व नवमेश होकर अखंड भूमि, वाहन व ऐश्वर्य देता है। शुक्र का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_AQUARIUS_VENUS_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: कुम्भ लग्न - योगकारक शुक्र 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aquarius Lagna Venus in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aquarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          },
+          {
+            "entity": "Venus",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कुम्भ लग्न हेतु शुक्र चतुर्थेश व नवमेश होकर अखंड भूमि, वाहन व ऐश्वर्य देता है। शुक्र का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_AQUARIUS_VENUS_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: कुम्भ लग्न - योगकारक शुक्र 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aquarius Lagna Venus in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aquarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          },
+          {
+            "entity": "Venus",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कुम्भ लग्न हेतु शुक्र चतुर्थेश व नवमेश होकर अखंड भूमि, वाहन व ऐश्वर्य देता है। शुक्र का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_AQUARIUS_VENUS_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: कुम्भ लग्न - योगकारक शुक्र 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aquarius Lagna Venus in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aquarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          },
+          {
+            "entity": "Venus",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कुम्भ लग्न हेतु शुक्र चतुर्थेश व नवमेश होकर अखंड भूमि, वाहन व ऐश्वर्य देता है। शुक्र का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_AQUARIUS_VENUS_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: कुम्भ लग्न - योगकारक शुक्र 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Aquarius Lagna Venus in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Aquarius Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Aquarius"
+          },
+          {
+            "entity": "Venus",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: कुम्भ लग्न हेतु शुक्र चतुर्थेश व नवमेश होकर अखंड भूमि, वाहन व ऐश्वर्य देता है। शुक्र का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_PISCES_MOON_H1",
+      "rule_name_hi": "भावार्थ रत्नाकर: मीन लग्न - योगकारक चन्द्र 1वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Pisces Lagna Moon in House 1",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Pisces Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          },
+          {
+            "entity": "Moon",
+            "house": 1
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मीन लग्न हेतु चन्द्रमा पंचमेश व मंगल नवमेश होकर कुलदीपक योग बनाते हैं। चन्द्र का 1वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_PISCES_MOON_H2",
+      "rule_name_hi": "भावार्थ रत्नाकर: मीन लग्न - योगकारक चन्द्र 2वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Pisces Lagna Moon in House 2",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Pisces Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          },
+          {
+            "entity": "Moon",
+            "house": 2
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मीन लग्न हेतु चन्द्रमा पंचमेश व मंगल नवमेश होकर कुलदीपक योग बनाते हैं। चन्द्र का 2वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_PISCES_MOON_H4",
+      "rule_name_hi": "भावार्थ रत्नाकर: मीन लग्न - योगकारक चन्द्र 4वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Pisces Lagna Moon in House 4",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Pisces Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          },
+          {
+            "entity": "Moon",
+            "house": 4
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मीन लग्न हेतु चन्द्रमा पंचमेश व मंगल नवमेश होकर कुलदीपक योग बनाते हैं। चन्द्र का 4वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_PISCES_MOON_H5",
+      "rule_name_hi": "भावार्थ रत्नाकर: मीन लग्न - योगकारक चन्द्र 5वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Pisces Lagna Moon in House 5",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Pisces Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          },
+          {
+            "entity": "Moon",
+            "house": 5
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मीन लग्न हेतु चन्द्रमा पंचमेश व मंगल नवमेश होकर कुलदीपक योग बनाते हैं। चन्द्र का 5वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_PISCES_MOON_H7",
+      "rule_name_hi": "भावार्थ रत्नाकर: मीन लग्न - योगकारक चन्द्र 7वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Pisces Lagna Moon in House 7",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Pisces Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          },
+          {
+            "entity": "Moon",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मीन लग्न हेतु चन्द्रमा पंचमेश व मंगल नवमेश होकर कुलदीपक योग बनाते हैं। चन्द्र का 7वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_PISCES_MOON_H9",
+      "rule_name_hi": "भावार्थ रत्नाकर: मीन लग्न - योगकारक चन्द्र 9वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Pisces Lagna Moon in House 9",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Pisces Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          },
+          {
+            "entity": "Moon",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मीन लग्न हेतु चन्द्रमा पंचमेश व मंगल नवमेश होकर कुलदीपक योग बनाते हैं। चन्द्र का 9वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_PISCES_MOON_H10",
+      "rule_name_hi": "भावार्थ रत्नाकर: मीन लग्न - योगकारक चन्द्र 10वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Pisces Lagna Moon in House 10",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Pisces Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          },
+          {
+            "entity": "Moon",
+            "house": 10
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मीन लग्न हेतु चन्द्रमा पंचमेश व मंगल नवमेश होकर कुलदीपक योग बनाते हैं। चन्द्र का 10वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "BR_LAGNA_PISCES_MOON_H11",
+      "rule_name_hi": "भावार्थ रत्नाकर: मीन लग्न - योगकारक चन्द्र 11वें भाव में",
+      "rule_name_en": "Bhavartha Ratnakara Pisces Lagna Moon in House 11",
+      "source": {
+        "text": "Bhavartha Ratnakara",
+        "chapter": "Pisces Lagna Yoga Adhyaya",
+        "author": "Sri Ramanujacharya",
+        "era": "Classical 12th Century CE"
+      },
+      "school": "Classical",
+      "category": "raja_yoga",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Lord_1",
+            "sign": "Pisces"
+          },
+          {
+            "entity": "Moon",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "raja_yoga",
+          "bhavartha_ratnakara",
+          "wealth"
+        ],
+        "polarity": "+",
+        "strength_base": 0.94,
+        "description_hi": "रामानुजाचार्य कृत भावार्थ रत्नाकर: मीन लग्न हेतु चन्द्रमा पंचमेश व मंगल नवमेश होकर कुलदीपक योग बनाते हैं। चन्द्र का 11वें भाव में होना उत्कृष्ट फल देता है।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_CHARA_SATURN_H11",
+      "rule_name_hi": "उत्तर कालामृत: चर राशि (मेष, कर्क, तुला, मकर) - बाधकेश शनि का 11वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Saturn in House 11",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: चर राशि (मेष, कर्क, तुला, मकर) हेतु एकादश भाव बाधक स्थान होता है। लाभ में व्यवधान अथवा गुप्त शत्रु।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_CHARA_MARS_H11",
+      "rule_name_hi": "उत्तर कालामृत: चर राशि (मेष, कर्क, तुला, मकर) - बाधकेश मंगल का 11वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Mars in House 11",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: चर राशि (मेष, कर्क, तुला, मकर) हेतु एकादश भाव बाधक स्थान होता है। लाभ में व्यवधान अथवा गुप्त शत्रु।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_CHARA_RAHU_H11",
+      "rule_name_hi": "उत्तर कालामृत: चर राशि (मेष, कर्क, तुला, मकर) - बाधकेश राहु का 11वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Rahu in House 11",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: चर राशि (मेष, कर्क, तुला, मकर) हेतु एकादश भाव बाधक स्थान होता है। लाभ में व्यवधान अथवा गुप्त शत्रु।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_CHARA_SUN_H11",
+      "rule_name_hi": "उत्तर कालामृत: चर राशि (मेष, कर्क, तुला, मकर) - बाधकेश सूर्य का 11वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Sun in House 11",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 11
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: चर राशि (मेष, कर्क, तुला, मकर) हेतु एकादश भाव बाधक स्थान होता है। लाभ में व्यवधान अथवा गुप्त शत्रु।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_STHIRA_SATURN_H9",
+      "rule_name_hi": "उत्तर कालामृत: स्थिर राशि (वृषभ, सिंह, वृश्चिक, कुम्भ) - बाधकेश शनि का 9वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Saturn in House 9",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: स्थिर राशि (वृषभ, सिंह, वृश्चिक, कुम्भ) हेतु नवम भाव बाधक स्थान होता है। पिता से मतभेद अथवा भाग्य में अचानक अड़चन।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_STHIRA_MARS_H9",
+      "rule_name_hi": "उत्तर कालामृत: स्थिर राशि (वृषभ, सिंह, वृश्चिक, कुम्भ) - बाधकेश मंगल का 9वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Mars in House 9",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: स्थिर राशि (वृषभ, सिंह, वृश्चिक, कुम्भ) हेतु नवम भाव बाधक स्थान होता है। पिता से मतभेद अथवा भाग्य में अचानक अड़चन।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_STHIRA_RAHU_H9",
+      "rule_name_hi": "उत्तर कालामृत: स्थिर राशि (वृषभ, सिंह, वृश्चिक, कुम्भ) - बाधकेश राहु का 9वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Rahu in House 9",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: स्थिर राशि (वृषभ, सिंह, वृश्चिक, कुम्भ) हेतु नवम भाव बाधक स्थान होता है। पिता से मतभेद अथवा भाग्य में अचानक अड़चन।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_STHIRA_SUN_H9",
+      "rule_name_hi": "उत्तर कालामृत: स्थिर राशि (वृषभ, सिंह, वृश्चिक, कुम्भ) - बाधकेश सूर्य का 9वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Sun in House 9",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 9
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: स्थिर राशि (वृषभ, सिंह, वृश्चिक, कुम्भ) हेतु नवम भाव बाधक स्थान होता है। पिता से मतभेद अथवा भाग्य में अचानक अड़चन।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_DWISWABHAVA_SATURN_H7",
+      "rule_name_hi": "उत्तर कालामृत: द्विस्वभाव राशि (मिथुन, कन्या, धनु, मीन) - बाधकेश शनि का 7वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Saturn in House 7",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Saturn",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: द्विस्वभाव राशि (मिथुन, कन्या, धनु, मीन) हेतु सप्तम भाव बाधक स्थान होता है। साझेदारी व दांपत्य में सतर्कता अनिवार्य।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_DWISWABHAVA_MARS_H7",
+      "rule_name_hi": "उत्तर कालामृत: द्विस्वभाव राशि (मिथुन, कन्या, धनु, मीन) - बाधकेश मंगल का 7वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Mars in House 7",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Mars",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: द्विस्वभाव राशि (मिथुन, कन्या, धनु, मीन) हेतु सप्तम भाव बाधक स्थान होता है। साझेदारी व दांपत्य में सतर्कता अनिवार्य।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_DWISWABHAVA_RAHU_H7",
+      "rule_name_hi": "उत्तर कालामृत: द्विस्वभाव राशि (मिथुन, कन्या, धनु, मीन) - बाधकेश राहु का 7वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Rahu in House 7",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Rahu",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: द्विस्वभाव राशि (मिथुन, कन्या, धनु, मीन) हेतु सप्तम भाव बाधक स्थान होता है। साझेदारी व दांपत्य में सतर्कता अनिवार्य।"
+      }
+    },
+    {
+      "rule_id": "UK_BADHAKA_DWISWABHAVA_SUN_H7",
+      "rule_name_hi": "उत्तर कालामृत: द्विस्वभाव राशि (मिथुन, कन्या, धनु, मीन) - बाधकेश सूर्य का 7वें भाव में फल",
+      "rule_name_en": "Uttara Kalamrita Badhaka Sun in House 7",
+      "source": {
+        "text": "Uttara Kalamrita",
+        "chapter": "Karakatwa & Badhaka Adhyaya",
+        "author": "Mahakavi Kalidasa",
+        "era": "Classical 4th Century CE"
+      },
+      "school": "Classical",
+      "category": "badhaka",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Sun",
+            "house": 7
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "badhaka",
+          "maraka",
+          "caution"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "महाकवि कालिदास कृत उत्तर कालामृत: द्विस्वभाव राशि (मिथुन, कन्या, धनु, मीन) हेतु सप्तम भाव बाधक स्थान होता है। साझेदारी व दांपत्य में सतर्कता अनिवार्य।"
       }
     }
   ]

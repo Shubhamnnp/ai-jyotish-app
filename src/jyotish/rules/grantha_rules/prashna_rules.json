@@ -1,7 +1,7 @@
 {
   "metadata": {
     "grantha": "Prashna Marga",
-    "count": 78
+    "count": 210
   },
   "rules": [
     {
@@ -2498,6 +2498,4230 @@
         "polarity": "+",
         "strength_base": 0.85,
         "description_hi": "प्रश्न मार्ग: विदेश वास व मोक्ष प्रश्न। द्वादशेश चर राशि में हो तो विदेश गमन सफल।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: आरोग्य व जीवन प्रश्न - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 1 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार आरोग्य व जीवन प्रश्न में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: आरोग्य व जीवन प्रश्न - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 1 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार आरोग्य व जीवन प्रश्न में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: आरोग्य व जीवन प्रश्न - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 1 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार आरोग्य व जीवन प्रश्न में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: आरोग्य व जीवन प्रश्न - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 1 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार आरोग्य व जीवन प्रश्न में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: आरोग्य व जीवन प्रश्न - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 1 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार आरोग्य व जीवन प्रश्न में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: आरोग्य व जीवन प्रश्न - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 1 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार आरोग्य व जीवन प्रश्न में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: आरोग्य व जीवन प्रश्न - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 1 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार आरोग्य व जीवन प्रश्न में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: आरोग्य व जीवन प्रश्न - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 1 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार आरोग्य व जीवन प्रश्न में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: आरोग्य व जीवन प्रश्न - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 1 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार आरोग्य व जीवन प्रश्न में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_1_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: आरोग्य व जीवन प्रश्न - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 1 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 6 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_1",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार आरोग्य व जीवन प्रश्न में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: धन, कोष व स्वर्ण प्राप्ति - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 2 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_2",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार धन, कोष व स्वर्ण प्राप्ति में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: धन, कोष व स्वर्ण प्राप्ति - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 2 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_2",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार धन, कोष व स्वर्ण प्राप्ति में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: धन, कोष व स्वर्ण प्राप्ति - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 2 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_2",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार धन, कोष व स्वर्ण प्राप्ति में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: धन, कोष व स्वर्ण प्राप्ति - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 2 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_2",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार धन, कोष व स्वर्ण प्राप्ति में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: धन, कोष व स्वर्ण प्राप्ति - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 2 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_2",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार धन, कोष व स्वर्ण प्राप्ति में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: धन, कोष व स्वर्ण प्राप्ति - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 2 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_2",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार धन, कोष व स्वर्ण प्राप्ति में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: धन, कोष व स्वर्ण प्राप्ति - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 2 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_2",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार धन, कोष व स्वर्ण प्राप्ति में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: धन, कोष व स्वर्ण प्राप्ति - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 2 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_2",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार धन, कोष व स्वर्ण प्राप्ति में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: धन, कोष व स्वर्ण प्राप्ति - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 2 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_2",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार धन, कोष व स्वर्ण प्राप्ति में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_2_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: धन, कोष व स्वर्ण प्राप्ति - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 2 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 7 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_2",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार धन, कोष व स्वर्ण प्राप्ति में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: साहस, संधि व यात्रा - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 3 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_3",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार साहस, संधि व यात्रा में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: साहस, संधि व यात्रा - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 3 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_3",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार साहस, संधि व यात्रा में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: साहस, संधि व यात्रा - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 3 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_3",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार साहस, संधि व यात्रा में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: साहस, संधि व यात्रा - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 3 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_3",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार साहस, संधि व यात्रा में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: साहस, संधि व यात्रा - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 3 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_3",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार साहस, संधि व यात्रा में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: साहस, संधि व यात्रा - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 3 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_3",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार साहस, संधि व यात्रा में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: साहस, संधि व यात्रा - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 3 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_3",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार साहस, संधि व यात्रा में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: साहस, संधि व यात्रा - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 3 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_3",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार साहस, संधि व यात्रा में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: साहस, संधि व यात्रा - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 3 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_3",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार साहस, संधि व यात्रा में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_3_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: साहस, संधि व यात्रा - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 3 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_3",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार साहस, संधि व यात्रा में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: भूमि, गृह व वाहन क्रय - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 4 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_4",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार भूमि, गृह व वाहन क्रय में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: भूमि, गृह व वाहन क्रय - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 4 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_4",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार भूमि, गृह व वाहन क्रय में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: भूमि, गृह व वाहन क्रय - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 4 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_4",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार भूमि, गृह व वाहन क्रय में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: भूमि, गृह व वाहन क्रय - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 4 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_4",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार भूमि, गृह व वाहन क्रय में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: भूमि, गृह व वाहन क्रय - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 4 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_4",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार भूमि, गृह व वाहन क्रय में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: भूमि, गृह व वाहन क्रय - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 4 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_4",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार भूमि, गृह व वाहन क्रय में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: भूमि, गृह व वाहन क्रय - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 4 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_4",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार भूमि, गृह व वाहन क्रय में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: भूमि, गृह व वाहन क्रय - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 4 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_4",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार भूमि, गृह व वाहन क्रय में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: भूमि, गृह व वाहन क्रय - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 4 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_4",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार भूमि, गृह व वाहन क्रय में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_4_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: भूमि, गृह व वाहन क्रय - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 4 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 9 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_4",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार भूमि, गृह व वाहन क्रय में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: संतान, विद्या व सट्टा लाभ - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 5 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_5",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार संतान, विद्या व सट्टा लाभ में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: संतान, विद्या व सट्टा लाभ - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 5 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_5",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार संतान, विद्या व सट्टा लाभ में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: संतान, विद्या व सट्टा लाभ - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 5 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_5",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार संतान, विद्या व सट्टा लाभ में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: संतान, विद्या व सट्टा लाभ - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 5 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_5",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार संतान, विद्या व सट्टा लाभ में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: संतान, विद्या व सट्टा लाभ - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 5 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_5",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार संतान, विद्या व सट्टा लाभ में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: संतान, विद्या व सट्टा लाभ - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 5 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_5",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार संतान, विद्या व सट्टा लाभ में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: संतान, विद्या व सट्टा लाभ - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 5 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_5",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार संतान, विद्या व सट्टा लाभ में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: संतान, विद्या व सट्टा लाभ - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 5 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_5",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार संतान, विद्या व सट्टा लाभ में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: संतान, विद्या व सट्टा लाभ - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 5 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_5",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार संतान, विद्या व सट्टा लाभ में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_5_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: संतान, विद्या व सट्टा लाभ - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 5 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 10 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_5",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार संतान, विद्या व सट्टा लाभ में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: रोग मुक्ति, शत्रु व मुकदमा - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 6 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_6",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार रोग मुक्ति, शत्रु व मुकदमा में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: रोग मुक्ति, शत्रु व मुकदमा - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 6 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_6",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार रोग मुक्ति, शत्रु व मुकदमा में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: रोग मुक्ति, शत्रु व मुकदमा - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 6 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_6",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार रोग मुक्ति, शत्रु व मुकदमा में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: रोग मुक्ति, शत्रु व मुकदमा - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 6 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_6",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार रोग मुक्ति, शत्रु व मुकदमा में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: रोग मुक्ति, शत्रु व मुकदमा - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 6 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_6",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार रोग मुक्ति, शत्रु व मुकदमा में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: रोग मुक्ति, शत्रु व मुकदमा - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 6 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_6",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार रोग मुक्ति, शत्रु व मुकदमा में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: रोग मुक्ति, शत्रु व मुकदमा - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 6 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_6",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार रोग मुक्ति, शत्रु व मुकदमा में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: रोग मुक्ति, शत्रु व मुकदमा - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 6 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_6",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार रोग मुक्ति, शत्रु व मुकदमा में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: रोग मुक्ति, शत्रु व मुकदमा - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 6 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_6",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार रोग मुक्ति, शत्रु व मुकदमा में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_6_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: रोग मुक्ति, शत्रु व मुकदमा - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 6 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 11 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_6",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार रोग मुक्ति, शत्रु व मुकदमा में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: विवाह, जीवनसाथी व व्यापार - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 7 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_7",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार विवाह, जीवनसाथी व व्यापार में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: विवाह, जीवनसाथी व व्यापार - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 7 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_7",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार विवाह, जीवनसाथी व व्यापार में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: विवाह, जीवनसाथी व व्यापार - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 7 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_7",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार विवाह, जीवनसाथी व व्यापार में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: विवाह, जीवनसाथी व व्यापार - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 7 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_7",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार विवाह, जीवनसाथी व व्यापार में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: विवाह, जीवनसाथी व व्यापार - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 7 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_7",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार विवाह, जीवनसाथी व व्यापार में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: विवाह, जीवनसाथी व व्यापार - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 7 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_7",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार विवाह, जीवनसाथी व व्यापार में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: विवाह, जीवनसाथी व व्यापार - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 7 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_7",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार विवाह, जीवनसाथी व व्यापार में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: विवाह, जीवनसाथी व व्यापार - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 7 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_7",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार विवाह, जीवनसाथी व व्यापार में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: विवाह, जीवनसाथी व व्यापार - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 7 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_7",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार विवाह, जीवनसाथी व व्यापार में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_7_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: विवाह, जीवनसाथी व व्यापार - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 7 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 12 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_7",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार विवाह, जीवनसाथी व व्यापार में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: मृत्यु, संकट व गुप्त धन - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 8 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_8",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार मृत्यु, संकट व गुप्त धन में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: मृत्यु, संकट व गुप्त धन - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 8 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_8",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार मृत्यु, संकट व गुप्त धन में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: मृत्यु, संकट व गुप्त धन - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 8 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_8",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार मृत्यु, संकट व गुप्त धन में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: मृत्यु, संकट व गुप्त धन - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 8 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_8",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार मृत्यु, संकट व गुप्त धन में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: मृत्यु, संकट व गुप्त धन - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 8 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_8",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार मृत्यु, संकट व गुप्त धन में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: मृत्यु, संकट व गुप्त धन - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 8 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_8",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार मृत्यु, संकट व गुप्त धन में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: मृत्यु, संकट व गुप्त धन - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 8 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_8",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार मृत्यु, संकट व गुप्त धन में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: मृत्यु, संकट व गुप्त धन - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 8 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_8",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार मृत्यु, संकट व गुप्त धन में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: मृत्यु, संकट व गुप्त धन - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 8 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_8",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार मृत्यु, संकट व गुप्त धन में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_8_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: मृत्यु, संकट व गुप्त धन - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 8 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 13 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_8",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार मृत्यु, संकट व गुप्त धन में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: तीर्थ, भाग्य व विदेश गमन - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 9 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_9",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार तीर्थ, भाग्य व विदेश गमन में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: तीर्थ, भाग्य व विदेश गमन - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 9 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_9",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार तीर्थ, भाग्य व विदेश गमन में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: तीर्थ, भाग्य व विदेश गमन - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 9 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_9",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार तीर्थ, भाग्य व विदेश गमन में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: तीर्थ, भाग्य व विदेश गमन - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 9 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_9",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार तीर्थ, भाग्य व विदेश गमन में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: तीर्थ, भाग्य व विदेश गमन - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 9 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_9",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार तीर्थ, भाग्य व विदेश गमन में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: तीर्थ, भाग्य व विदेश गमन - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 9 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_9",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार तीर्थ, भाग्य व विदेश गमन में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: तीर्थ, भाग्य व विदेश गमन - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 9 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_9",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार तीर्थ, भाग्य व विदेश गमन में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: तीर्थ, भाग्य व विदेश गमन - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 9 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_9",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार तीर्थ, भाग्य व विदेश गमन में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: तीर्थ, भाग्य व विदेश गमन - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 9 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_9",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार तीर्थ, भाग्य व विदेश गमन में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_9_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: तीर्थ, भाग्य व विदेश गमन - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 9 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 14 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_9",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार तीर्थ, भाग्य व विदेश गमन में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: राजकीय सत्ता, पद व प्रतिष्ठा - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 10 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_10",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार राजकीय सत्ता, पद व प्रतिष्ठा में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: राजकीय सत्ता, पद व प्रतिष्ठा - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 10 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_10",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार राजकीय सत्ता, पद व प्रतिष्ठा में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: राजकीय सत्ता, पद व प्रतिष्ठा - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 10 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_10",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार राजकीय सत्ता, पद व प्रतिष्ठा में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: राजकीय सत्ता, पद व प्रतिष्ठा - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 10 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_10",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार राजकीय सत्ता, पद व प्रतिष्ठा में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: राजकीय सत्ता, पद व प्रतिष्ठा - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 10 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_10",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार राजकीय सत्ता, पद व प्रतिष्ठा में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: राजकीय सत्ता, पद व प्रतिष्ठा - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 10 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_10",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार राजकीय सत्ता, पद व प्रतिष्ठा में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: राजकीय सत्ता, पद व प्रतिष्ठा - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 10 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_10",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार राजकीय सत्ता, पद व प्रतिष्ठा में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: राजकीय सत्ता, पद व प्रतिष्ठा - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 10 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_10",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार राजकीय सत्ता, पद व प्रतिष्ठा में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: राजकीय सत्ता, पद व प्रतिष्ठा - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 10 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_10",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार राजकीय सत्ता, पद व प्रतिष्ठा में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_10_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: राजकीय सत्ता, पद व प्रतिष्ठा - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 10 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 15 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_10",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार राजकीय सत्ता, पद व प्रतिष्ठा में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: इच्छा पूर्ति, लाभ व मित्रता - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 11 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_11",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार इच्छा पूर्ति, लाभ व मित्रता में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: इच्छा पूर्ति, लाभ व मित्रता - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 11 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_11",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार इच्छा पूर्ति, लाभ व मित्रता में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: इच्छा पूर्ति, लाभ व मित्रता - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 11 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_11",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार इच्छा पूर्ति, लाभ व मित्रता में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: इच्छा पूर्ति, लाभ व मित्रता - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 11 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_11",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार इच्छा पूर्ति, लाभ व मित्रता में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: इच्छा पूर्ति, लाभ व मित्रता - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 11 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_11",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार इच्छा पूर्ति, लाभ व मित्रता में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: इच्छा पूर्ति, लाभ व मित्रता - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 11 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_11",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार इच्छा पूर्ति, लाभ व मित्रता में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: इच्छा पूर्ति, लाभ व मित्रता - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 11 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_11",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार इच्छा पूर्ति, लाभ व मित्रता में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: इच्छा पूर्ति, लाभ व मित्रता - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 11 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_11",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार इच्छा पूर्ति, लाभ व मित्रता में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: इच्छा पूर्ति, लाभ व मित्रता - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 11 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_11",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार इच्छा पूर्ति, लाभ व मित्रता में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_11_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: इच्छा पूर्ति, लाभ व मित्रता - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 11 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 16 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_11",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार इच्छा पूर्ति, लाभ व मित्रता में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_ITHASHALA",
+      "rule_name_hi": "प्रश्न मार्ग: व्यय, अस्पताल, विदेश वास - इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति)",
+      "rule_name_en": "Prashna House 12 Ithashala Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_12",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.95,
+        "description_hi": "प्रश्न मार्ग अनुसार व्यय, अस्पताल, विदेश वास में इत्थशाल योग (दीप्त अंशों में परस्पर दृष्टि/युति) का प्रभाव: कार्य की निश्चित व त्वरित सिद्धि। दोनों ग्रह परस्पर शुभ संपर्क में हैं।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_ISHRAFA",
+      "rule_name_hi": "प्रश्न मार्ग: व्यय, अस्पताल, विदेश वास - ईशराफ़ योग (अंशों का अलगाव/विच्छेद)",
+      "rule_name_en": "Prashna House 12 Ishrafa Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_12",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार व्यय, अस्पताल, विदेश वास में ईशराफ़ योग (अंशों का अलगाव/विच्छेद) का प्रभाव: कार्य में असफलता अथवा अंतिम समय में विघ्न। गति में अलगाव।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_NAKTA",
+      "rule_name_hi": "प्रश्न मार्ग: व्यय, अस्पताल, विदेश वास - नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन)",
+      "rule_name_en": "Prashna House 12 Nakta Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_12",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार व्यय, अस्पताल, विदेश वास में नक्त योग (मध्यस्थ ग्रह द्वारा संबंध स्थापन) का प्रभाव: किसी तीसरे व्यक्ति अथवा मध्यस्थ (Agent/Mediator) के सहयोग से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_YAMAYA",
+      "rule_name_hi": "प्रश्न मार्ग: व्यय, अस्पताल, विदेश वास - यमया योग (भारी ग्रह द्वारा मध्यस्थता)",
+      "rule_name_en": "Prashna House 12 Yamaya Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_12",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.88,
+        "description_hi": "प्रश्न मार्ग अनुसार व्यय, अस्पताल, विदेश वास में यमया योग (भारी ग्रह द्वारा मध्यस्थता) का प्रभाव: वरिष्ठ अथवा उच्चाधिकारी के हस्तक्षेप से अटका हुआ कार्य संपन्न।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_MANAHOO",
+      "rule_name_hi": "प्रश्न मार्ग: व्यय, अस्पताल, विदेश वास - मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि)",
+      "rule_name_en": "Prashna House 12 Manahoo Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_12",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.9,
+        "description_hi": "प्रश्न मार्ग अनुसार व्यय, अस्पताल, विदेश वास में मनाऊ योग (पाप ग्रहों की क्रूर दृष्टि) का प्रभाव: शत्रु बाधा, विश्वासघात अथवा कार्य में भारी नुकसान।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: व्यय, अस्पताल, विदेश वास - कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल)",
+      "rule_name_en": "Prashna House 12 Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_12",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.96,
+        "description_hi": "प्रश्न मार्ग अनुसार व्यय, अस्पताल, विदेश वास में कम्बूल योग (चन्द्रमा की शुभ युति सहित इत्थशाल) का प्रभाव: परम कार्य सिद्धि, धन-लाभ, विवाह अथवा यात्रा में अखंड सफलता।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_GAIRI_KAMBOOLA",
+      "rule_name_hi": "प्रश्न मार्ग: व्यय, अस्पताल, विदेश वास - गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त)",
+      "rule_name_en": "Prashna House 12 Gairi_Kamboola Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_12",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.86,
+        "description_hi": "प्रश्न मार्ग अनुसार व्यय, अस्पताल, विदेश वास में गैरी-कम्बूल योग (चन्द्रमा पाप ग्रह से युक्त) का प्रभाव: प्रयासों के बाद भी निराशा अथवा मानसिक असंतोष।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_KHALLASARA",
+      "rule_name_hi": "प्रश्न मार्ग: व्यय, अस्पताल, विदेश वास - खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना)",
+      "rule_name_en": "Prashna House 12 Khallasara Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_12",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न मार्ग अनुसार व्यय, अस्पताल, विदेश वास में खल्लासर योग (ग्रहों का दीप्त अंशों से बाहर होना) का प्रभाव: समय से पूर्व प्रयास व्यर्थ, अवसर हाथ से निकल जाना।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_RADDA",
+      "rule_name_hi": "प्रश्न मार्ग: व्यय, अस्पताल, विदेश वास - रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल)",
+      "rule_name_en": "Prashna House 12 Radda Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_12",
+            "quality": "malefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "-",
+        "strength_base": 0.92,
+        "description_hi": "प्रश्न मार्ग अनुसार व्यय, अस्पताल, विदेश वास में रद्द योग (वक्री अथवा अस्त ग्रह से इत्थशाल) का प्रभाव: बना बनाया कार्य बिगड़ना, कानूनी अड़चन अथवा वापसी।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_BHAVA_12_DUTTAVIRA",
+      "rule_name_hi": "प्रश्न मार्ग: व्यय, अस्पताल, विदेश वास - दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति)",
+      "rule_name_en": "Prashna House 12 Duttavira Yoga",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 17 (Prashna Bhava Viveka)",
+        "author": "Namboodiri Scholar & Varahamihira",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_karya",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "House_12",
+            "quality": "benefic_lord"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "horary",
+          "karya_siddhi"
+        ],
+        "polarity": "+",
+        "strength_base": 0.91,
+        "description_hi": "प्रश्न मार्ग अनुसार व्यय, अस्पताल, विदेश वास में दुत्तवीर योग (बलवान ग्रह द्वारा निर्बल को शक्ति) का प्रभाव: अचानक किसी बलवान संरक्षक के आगे आने से कार्य सिद्धि।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_ARIES",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न मेष राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Aries Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aries"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के मेष राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_TAURUS",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न वृषभ राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Taurus Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Taurus"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के वृषभ राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_GEMINI",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न मिथुन राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Gemini Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Gemini"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के मिथुन राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_CANCER",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न कर्क राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Cancer Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Cancer"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के कर्क राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_LEO",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न सिंह राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Leo Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Leo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के सिंह राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_VIRGO",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न कन्या राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Virgo Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Virgo"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के कन्या राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_LIBRA",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न तुला राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Libra Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Libra"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के तुला राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_SCORPIO",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न वृश्चिक राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Scorpio Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Scorpio"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के वृश्चिक राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_SAGITTARIUS",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न धनु राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Sagittarius Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Sagittarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के धनु राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_CAPRICORN",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न मकर राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Capricorn Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Capricorn"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के मकर राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_AQUARIUS",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न कुम्भ राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Aquarius Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Aquarius"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के कुम्भ राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
+      }
+    },
+    {
+      "rule_id": "PRASHNA_ARUDHA_PISCES",
+      "rule_name_hi": "प्रश्न मार्ग: आरूढ़ लग्न मीन राशि में प्रश्न फल",
+      "rule_name_en": "Prashna Arudha in Pisces Sign",
+      "source": {
+        "text": "Prashna Marga (प्रश्न मार्ग)",
+        "chapter": "Adhyaya 8 (Arudha Nirnaya)",
+        "author": "Namboodiri Scholar",
+        "era": "Classical Horary"
+      },
+      "school": "Prashna",
+      "category": "prashna_arudha",
+      "condition": {
+        "type": "ALL",
+        "criteria": [
+          {
+            "entity": "Moon",
+            "sign": "Pisces"
+          }
+        ]
+      },
+      "effect": {
+        "themes": [
+          "prashna",
+          "arudha",
+          "query_outcome"
+        ],
+        "polarity": "+",
+        "strength_base": 0.85,
+        "description_hi": "प्रश्न काल में स्वर्ण आरूढ़ के मीन राशि में होने से: प्रश्नकर्ता के मन की गुप्त अभिलाषा, तत्व-स्वभाव व प्रश्न की शुभता का प्रकटीकरण।"
       }
     }
   ]

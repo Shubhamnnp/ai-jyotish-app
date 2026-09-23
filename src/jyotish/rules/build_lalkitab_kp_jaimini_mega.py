@@ -516,3 +516,4 @@ with open(pd_file, "w", encoding="utf-8") as f:
     json.dump(pd_data, f, ensure_ascii=False, indent=2)
 
 print(f"Updated Phaladeepika rules count: {len(pd_rules)} (+{len(new_pd_rules)} new)")
+
