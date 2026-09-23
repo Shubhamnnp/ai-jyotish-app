@@ -7203,24 +7203,35 @@ elif selected_idx == 17:
                         c_m3.metric("शुभ राजयोग (+)", f"{latest_scan['total_positive']:,}")
                         c_m4.metric("सतर्कता/दोष (-)", f"{latest_scan['total_negative']:,}")
 
-                        st.markdown("**📖 सक्रिय ग्रन्थ परंपराएं:**")
-                        badge_items = [f"<span style='background:#1E293B; border:1px solid #3B82F6; padding:3px 8px; border-radius:12px; margin-right:6px; font-size:12px; color:#93C5FD;'><b>{k}</b>: {v}</span>" for k, v in list(latest_scan.get("grantha_breakdown", {}).items())[:6]]
+                        st.markdown("<b style='font-size:13.5px; color:#1E293B;'>📖 सक्रिय ग्रन्थ परंपराएं:</b>", unsafe_allow_html=True)
+                        badge_items = [
+                            f"<span style='background:#F1F5F9; border:1.5px solid #CBD5E1; padding:4px 11px; border-radius:14px; margin-right:6px; font-size:12px; color:#0F172A; font-weight:700; box-shadow:0 1px 2px rgba(0,0,0,0.04); display:inline-block; margin-bottom:6px;'><b>{k}</b>: <span style=\"color:#2563EB;\">{v}</span></span>"
+                            for k, v in list(latest_scan.get("grantha_breakdown", {}).items())[:6]
+                        ]
                         st.markdown(" ".join(badge_items), unsafe_allow_html=True)
-                        st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+                        st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
 
                         for r in latest_scan["relevant_rules"]:
-                            pol_badge = "🟢 शुभ योग (+)" if r.polarity == "+" else "🔴 सतर्कता नियम (-)"
+                            is_pos = (r.polarity == "+")
+                            pol_badge = "🟢 शुभ योग (+)" if is_pos else "🔴 सतर्कता नियम (-)"
+                            card_bg = "#F0FDF4" if is_pos else "#FEF2F2"
+                            card_border = "#86EFAC" if is_pos else "#FCA5A5"
+                            card_border_left = "#16A34A" if is_pos else "#DC2626"
+                            badge_bg = "#DCFCE7" if is_pos else "#FEE2E2"
+                            badge_fg = "#166534" if is_pos else "#991B1B"
+                            badge_border = "#86EFAC" if is_pos else "#FCA5A5"
+
                             shastra = r.source_text
                             if r.source_chapter and r.source_chapter != "General":
                                 shastra += f" • {r.source_chapter}"
                             st.markdown(f"""
-                            <div style='background:#0F172A; border-left:4px solid {'#10B981' if r.polarity == '+' else '#EF4444'}; padding:10px 14px; margin-bottom:8px; border-radius:6px;'>
+                            <div style='background:{card_bg}; border:1px solid {card_border}; border-left:5px solid {card_border_left}; padding:12px 16px; margin-bottom:10px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);'>
                                 <div style='display:flex; justify-content:space-between; align-items:center;'>
-                                    <b style='font-size:14px; color:#F8FAFC;'>{r.rule_name_hi} ({r.rule_name_en})</b>
-                                    <span style='background:{'#065F46' if r.polarity == '+' else '#7F1D1D'}; color:#F8FAFC; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;'>{pol_badge}</span>
+                                    <b style='font-size:14.5px; color:#0F172A; font-weight:800;'>{r.rule_name_hi} <span style='font-size:12.5px; font-weight:600; color:#475569;'>({r.rule_name_en})</span></b>
+                                    <span style='background:{badge_bg}; color:{badge_fg}; border:1px solid {badge_border}; padding:3px 10px; border-radius:12px; font-size:11.5px; font-weight:800;'>{pol_badge}</span>
                                 </div>
-                                <div style='font-size:12px; color:#94A3B8; margin-top:2px;'>📚 <i>{shastra}</i> | प्रभाव क्षेत्र: {', '.join(r.themes)} (सिग्नल बल: {round(r.signal_score * 100)}%)</div>
-                                <div style='font-size:13px; color:#E2E8F0; margin-top:6px; line-height:1.4;'>{r.explanation_hi}</div>
+                                <div style='font-size:12.5px; color:#334155; margin-top:4px; font-weight:600;'>📚 <i style='color:#1D4ED8;'>{shastra}</i> &nbsp;|&nbsp; 🎯 प्रभाव क्षेत्र: <span style='color:#0F172A;'>{', '.join(r.themes)}</span> &nbsp;|&nbsp; ⚡ सिग्नल बल: <b style='color:#047857;'>{round(r.signal_score * 100)}%</b></div>
+                                <div style='font-size:13.5px; color:#0F172A; margin-top:8px; line-height:1.55; font-weight:500; background:#FFFFFF; padding:9px 13px; border-radius:6px; border:1px solid rgba(0,0,0,0.08);'>{r.explanation_hi}</div>
                             </div>
                             """, unsafe_allow_html=True)
 
