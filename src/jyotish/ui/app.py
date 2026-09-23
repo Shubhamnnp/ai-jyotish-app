@@ -161,15 +161,28 @@ is_night_mode = (st.session_state.app_theme_mode == "night")
 # -------------------------------------------------------------
 if is_night_mode:
     theme_mode_css = """
+    /* ========================================================= */
+    /* COSMIC OBSERVATORY NIGHT MODE (अंतरिक्ष वेधशाला रात्रि)   */
+    /* ========================================================= */
     html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
         background-color: #0A0E1A !important;
         color: #F8FAFC !important;
+    }
+    h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b,
+    [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span,
+    [data-testid="stMarkdownContainer"] li, [data-testid="stMarkdownContainer"] strong,
+    [data-testid="stMarkdownContainer"] b {
+        color: #F8FAFC !important;
+    }
+    small, .text-muted, [data-testid="stCaptionContainer"] {
+        color: #94A3B8 !important;
     }
     [data-testid="stSidebar"], section[data-testid="stSidebar"] {
         background-color: #0F172A !important;
         border-right: 2px solid #1E293B !important;
     }
-    [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
+    [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
         color: #F1F5F9 !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
@@ -180,17 +193,12 @@ if is_night_mode:
         border: 1.5px solid #334155 !important;
         color: #F1F5F9 !important;
     }
-    section[data-testid="stSidebar"] div[data-testid="stRadio"] label p,
-    section[data-testid="stSidebar"] .stRadio label p,
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p,
-    div[data-testid="stRadio"] label p {
-        color: #F1F5F9 !important;
-    }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover,
     section[data-testid="stSidebar"] .stRadio label:hover,
     div[data-testid="stRadio"] label:hover {
         background: #2E3E5B !important;
         border-color: #F59E0B !important;
+        color: #FFFFFF !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked),
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="true"],
@@ -198,14 +206,13 @@ if is_night_mode:
     div[data-testid="stRadio"] label:has(input:checked) {
         background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%) !important;
         border: 2px solid #3B82F6 !important;
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.4) !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) p,
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) span,
     div[data-testid="stRadio"] label:has(input:checked) p {
         color: #FFFFFF !important;
-    }
-    h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
-        color: #F1F5F9 !important;
+        font-weight: 800 !important;
     }
     input, textarea, select,
     div[data-baseweb="input"] input,
@@ -215,19 +222,21 @@ if is_night_mode:
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         border: 1.5px solid #3B82F6 !important;
+        border-radius: 8px !important;
     }
     div[data-baseweb="select"] > div {
         background-color: #1E293B !important;
         color: #FFFFFF !important;
         border: 1.5px solid #475569 !important;
+        border-radius: 8px !important;
     }
     div[data-baseweb="select"] * {
         color: #FFFFFF !important;
     }
-    header.top-nav-bar {
+    header.top-nav-bar, .top-nav-bar {
         background: #0F172A !important;
         border-color: #1E293B !important;
-        border-bottom: 3.5px solid #3B82F6 !important;
+        border-bottom: 3px solid #3B82F6 !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
     }
     .top-nav-bar * {
@@ -286,6 +295,7 @@ if is_night_mode:
     div[data-testid="stExpander"] {
         background: #1E293B !important;
         border: 1.5px solid #334155 !important;
+        border-radius: 8px !important;
     }
     div[data-testid="stMetricValue"], div[data-testid="stMetricValue"] * {
         color: #F8FAFC !important;
@@ -302,6 +312,10 @@ if is_night_mode:
         color: #FFFFFF !important;
         border: 1.5px solid #475569 !important;
     }
+    button[kind="secondary"]:hover {
+        background-color: #334155 !important;
+        border-color: #60A5FA !important;
+    }
     div[style*="background:#FFFFFF"], div[style*="background: #FFFFFF"],
     div[style*="background:#F8FAFC"], div[style*="background: #F8FAFC"],
     div[style*="background:#EFF6FF"], div[style*="background: #EFF6FF"] {
@@ -317,64 +331,37 @@ if is_night_mode:
         border-bottom: 2.5px solid #1E293B !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
     }
-    .top-nav-bar {
-        background: #111827 !important;
-        border: 1.5px solid #1E293B !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+    /* Tabs in night mode */
+    [data-testid="stTabs"] button[data-baseweb="tab"] {
+        color: #94A3B8 !important;
     }
-    .top-nav-bar * {
-        color: #F8FAFC !important;
-    }
-    .header-sub-pill {
-        background: #1E293B !important;
-        border: 1.5px solid #334155 !important;
-        color: #F8FAFC !important;
-    }
-    .header-sub-pill b {
-        color: #F8FAFC !important;
-    }
-    .active-profile-pill {
-        background: #1E293B !important;
-        border: 1.5px solid #3B82F6 !important;
-        color: #93C5FD !important;
-    }
-    .st-key-top_frozen_header_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
-    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-        background: #1E293B !important;
-        border-color: #3B82F6 !important;
-        color: #F8FAFC !important;
-    }
-    .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"],
-    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"] {
-        background: #1E293B !important;
-        border-color: #475569 !important;
-        color: #F8FAFC !important;
-    }
-    .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"]:hover,
-    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"]:hover {
-        background: #334155 !important;
-        border-color: #60A5FA !important;
-        color: #FFFFFF !important;
-    }
-    .st-key-top_frozen_header_container [data-testid="stExpander"],
-    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] {
-        background: #111827 !important;
-        border-color: #1E293B !important;
+    [data-testid="stTabs"] button[data-baseweb="tab"][aria-selected="true"] {
+        color: #F59E0B !important;
+        border-bottom-color: #F59E0B !important;
     }
     """
 else:
     theme_mode_css = """
-    body .stApp {
+    /* ========================================================= */
+    /* ROYAL VEDIC DAY MODE (राजसी सुवर्ण प्रभात - High Contrast) */
+    /* ========================================================= */
+    html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
         background-color: #F8FAFC !important;
-        color: #000000 !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        color: #0F172A !important;
     }
-    h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b {
-        color: #000000 !important;
+    h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b,
+    [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span,
+    [data-testid="stMarkdownContainer"] li, [data-testid="stMarkdownContainer"] strong,
+    [data-testid="stMarkdownContainer"] b {
+        color: #0F172A !important;
+    }
+    small, .text-muted, [data-testid="stCaptionContainer"] {
+        color: #475569 !important;
+        font-weight: 600 !important;
     }
     label, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] span {
-        color: #000000 !important;
-        font-weight: 700 !important;
+        color: #0F172A !important;
+        font-weight: 800 !important;
         font-size: 0.92rem !important;
     }
     input, textarea, select, 
@@ -382,56 +369,94 @@ else:
     div[data-baseweb="base-input"] input,
     div[data-baseweb="input"] {
         background-color: #FFFFFF !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
         border: 1.5px solid #94A3B8 !important;
         border-radius: 8px !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
+    }
+    input:focus, textarea:focus, div[data-baseweb="input"]:focus-within {
+        border-color: #2563EB !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
     }
     div[data-baseweb="select"] > div {
         background-color: #FFFFFF !important;
-        color: #000000 !important;
+        color: #0F172A !important;
         border: 1.5px solid #94A3B8 !important;
         border-radius: 8px !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
     }
     div[data-baseweb="select"] * {
-        color: #000000 !important;
+        color: #0F172A !important;
     }
     [data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
-        color: #000000 !important;
+        color: #0F172A !important;
         font-weight: 900 !important;
         font-size: 1.65rem !important;
     }
     [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] * {
-        color: #1E293B !important;
-        font-weight: 700 !important;
-        font-size: 0.88rem !important;
+        color: #1E3A8A !important;
+        font-weight: 800 !important;
+        font-size: 0.90rem !important;
     }
-    [data-testid="stSidebar"] {
+    [data-testid="stSidebar"], section[data-testid="stSidebar"] {
         background-color: #F1F5F9 !important;
         border-right: 2px solid #CBD5E1 !important;
     }
     [data-testid="stSidebar"] * {
-        color: #000000 !important;
+        color: #0F172A !important;
     }
     [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
-        color: #000000 !important;
+        color: #1E3A8A !important;
         font-weight: 800 !important;
+    }
+    /* Tabs in day mode */
+    [data-testid="stTabs"] button[data-baseweb="tab"] {
+        color: #475569 !important;
+        font-weight: 700 !important;
+    }
+    [data-testid="stTabs"] button[data-baseweb="tab"][aria-selected="true"] {
+        color: #1E3A8A !important;
+        border-bottom-color: #2563EB !important;
+        font-weight: 900 !important;
+    }
+    div[data-testid="stExpander"] {
+        background: #FFFFFF !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04) !important;
+    }
+    div[data-testid="stExpander"] summary {
+        color: #0F172A !important;
+        font-weight: 800 !important;
+    }
+    [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+        background-color: #FFFFFF !important;
+        color: #0F172A !important;
     }
     """
 
 unified_css = f"""
 <style>
-    /* Hide Streamlit Deploy button, 3-dots menu, and footer */
+    /* ========================================================= */
+    /* MASTER UNIFIED THEME & MULTI-DEVICE RESPONSIVE ENGINE     */
+    /* (Parashara's Light + Shri Jyoti Star + Jagannatha Hora)   */
+    /* ========================================================= */
+
+    /* Universal Box Sizing & Smooth Rendering */
+    *, *::before, *::after {{
+        box-sizing: border-box !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }}
+
+    /* Hide Streamlit Native Chrome Elements */
     .stDeployButton, #MainMenu, footer, [data-testid="stDecoration"], div[data-testid="stToolbar"] {{
         display: none !important;
         visibility: hidden !important;
     }}
-    /* Hide Streamlit's native top header bar (empty white strip) completely */
     header[data-testid="stHeader"] {{
         background: transparent !important;
-        height: 50px !important;
         height: 0px !important;
         min-height: 0px !important;
         overflow: hidden !important;
@@ -440,7 +465,14 @@ unified_css = f"""
         z-index: 1000002 !important;
     }}
 
-    /* Keep Sidebar Open/Close Expand Button (>>) Always Visible, High-Contrast & Clickable */
+    /* Global Responsive Typography */
+    body, .stApp {{
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        font-size: clamp(13px, 1.1vw, 15px) !important;
+        line-height: 1.55 !important;
+    }}
+
+    /* Collapsed Sidebar Toggle (>>) Button */
     [data-testid="collapsedControl"],
     [data-testid="stSidebarCollapsedControl"],
     button[data-testid="stSidebarCollapsedControl"],
@@ -450,7 +482,6 @@ unified_css = f"""
         visibility: visible !important;
         opacity: 1 !important;
         position: fixed !important;
-        top: 10px !important;
         top: 4px !important;
         left: 10px !important;
         z-index: 1000005 !important;
@@ -468,16 +499,13 @@ unified_css = f"""
     }}
     [data-testid="collapsedControl"]:hover,
     [data-testid="stSidebarCollapsedControl"]:hover,
-    button[data-testid="stSidebarCollapsedControl"]:hover,
-    header[data-testid="stHeader"] button:hover {{
+    button[data-testid="stSidebarCollapsedControl"]:hover {{
         background: #1D4ED8 !important;
         border-color: #1E3A8A !important;
         transform: scale(1.05) !important;
     }}
     [data-testid="collapsedControl"] svg,
-    [data-testid="stSidebarCollapsedControl"] svg,
-    button[data-testid="stSidebarCollapsedControl"] svg,
-    header[data-testid="stHeader"] button svg {{
+    [data-testid="stSidebarCollapsedControl"] svg {{
         fill: #FFFFFF !important;
         color: #FFFFFF !important;
         stroke: #FFFFFF !important;
@@ -506,11 +534,8 @@ unified_css = f"""
         transform: scale(1.06) !important;
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5) !important;
     }}
-    .sidebar-toggle-btn:active {{
-        transform: scale(0.95) !important;
-    }}
 
-    /* Clean top spacing & allow frozen sticky header */
+    /* Scroll & Container Controls */
     [data-testid="stAppViewContainer"] {{
         overflow-x: hidden !important;
         overflow-y: hidden !important;
@@ -523,90 +548,52 @@ unified_css = f"""
     }}
     .block-container {{
         padding-top: 0px !important;
-        padding-bottom: 2rem !important;
-        padding-left: 2rem !important;
-        padding-right: 2rem !important;
-        overflow: visible !important;
-    }}
-    div[data-testid="stVerticalBlock"] {{
+        padding-bottom: 2.5rem !important;
+        padding-left: clamp(0.75rem, 2.5vw, 2rem) !important;
+        padding-right: clamp(0.75rem, 2.5vw, 2rem) !important;
         overflow: visible !important;
     }}
 
-    /* Frozen Sticky Header Container (Pins to the Top of the App) */
+    /* Frozen Sticky Header (Pins Top Bar) */
     .st-key-top_frozen_header_container,
     div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor),
-    div[data-testid="stVerticalBlock"] > div:has([data-testid="stMarkdownContainer"] .fixed-header-anchor),
     div[data-testid="stVerticalBlockBorderWrapper"]:has(.fixed-header-anchor),
     div.st-key-top_frozen_header_container > div[data-testid="stVerticalBlock"] {{
         position: -webkit-sticky !important;
         position: sticky !important;
         top: 0px !important;
         z-index: 999990 !important;
-        background: #F8FAFC !important;
         border: none !important;
         border-bottom: 2px solid #CBD5E1 !important;
         border-radius: 0px !important;
-        padding-top: 2px !important;
-        padding-bottom: 4px !important;
-        padding-left: 6px !important;
-        padding-right: 6px !important;
-        margin-bottom: 6px !important;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06) !important;
+        padding: 4px 8px !important;
+        margin-bottom: 8px !important;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07) !important;
     }}
 
-    /* Top Module Navigation Bar (Slim 34px Height) */
+    /* Top Module Selector Box */
     .st-key-top_frozen_header_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
     div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
-        min-height: 34px !important;
-        height: 34px !important;
-        border-radius: 6px !important;
+        min-height: 36px !important;
+        height: 36px !important;
+        border-radius: 8px !important;
         border: 1.5px solid #2563EB !important;
-        background: #FFFFFF !important;
         font-weight: 800 !important;
-        font-size: 13px !important;
+        font-size: 13.5px !important;
         display: flex !important;
         align-items: center !important;
     }}
     .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"],
     div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"] {{
-        min-height: 34px !important;
-        height: 34px !important;
-        border-radius: 6px !important;
-        border: 1.5px solid #94A3B8 !important;
-        background: #FFFFFF !important;
-        font-weight: 800 !important;
-        font-size: 12.5px !important;
-        color: #1E293B !important;
-        padding: 0px 10px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        transition: all 0.15s ease !important;
-    }}
-    .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"]:hover,
-    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"]:hover {{
-        background: #EFF6FF !important;
-        border-color: #2563EB !important;
-        color: #1D4ED8 !important;
-    }}
-    .st-key-top_frozen_header_container [data-testid="stExpander"],
-    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] {{
-        background: #FFFFFF !important;
-        border: 1.5px solid #CBD5E1 !important;
+        min-height: 36px !important;
+        height: 36px !important;
         border-radius: 8px !important;
-        margin-bottom: 4px !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
-    }}
-    .st-key-top_frozen_header_container [data-testid="stExpander"] summary,
-    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] summary {{
         font-weight: 800 !important;
-        color: #1E293B !important;
-        padding: 4px 10px !important;
-        font-size: 12.5px !important;
-        min-height: 30px !important;
+        font-size: 13px !important;
+        padding: 0px 12px !important;
     }}
 
-    /* Sidebar Radio Navigation List (18 Modules as Clean, 100% Equal Size Cards) */
+    /* Sidebar Radio Navigation List (30 Modules as Luxury Rounded Cards) */
     [data-testid="stSidebar"] .stRadio,
     [data-testid="stSidebar"] .stRadio > div,
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] {{
@@ -618,56 +605,28 @@ unified_css = f"""
     }}
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label {{
         width: 100% !important;
-        min-height: 48px !important;
+        min-height: 46px !important;
         box-sizing: border-box !important;
-        background: #FFFFFF !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 10px !important;
         padding: 8px 12px !important;
         margin-bottom: 2px !important;
-        color: #000000 !important;
         font-weight: 700 !important;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
         cursor: pointer !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
         display: flex !important;
         align-items: center !important;
-    }}
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label > div {{
-        display: flex !important;
-        align-items: center !important;
-    }}
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label div[data-testid="stMarkdownContainer"] {{
-        width: 100% !important;
-        flex: 1 !important;
-    }}
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p {{
-        margin: 0px !important;
-        font-size: 13px !important;
-        font-weight: 700 !important;
-        color: #000000 !important;
-        line-height: 1.3 !important;
-        width: 100% !important;
     }}
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {{
-        background: #FEF3C7 !important;
         border-color: #D97706 !important;
-        transform: translateY(-1px);
+        transform: translateY(-1px) !important;
     }}
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"],
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) {{
-        background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%) !important;
-        border-color: #2563EB !important;
         border-width: 2px !important;
-        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2) !important;
-    }}
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"] p,
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) p {{
-        color: #1E3A8A !important;
-        font-weight: 800 !important;
     }}
 
-    /* Primary Calculate Button (Side me Janm Vivran ke niche) */
+    /* Primary Calculate Button (Royal Saffron & Amber Gradient) */
     button[kind="primary"] {{
         background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
         color: #FFFFFF !important;
@@ -675,10 +634,10 @@ unified_css = f"""
         font-size: 1.05rem !important;
         border: none !important;
         border-radius: 10px !important;
-        padding: 12px 20px !important;
+        padding: 12px 24px !important;
         box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4) !important;
         cursor: pointer !important;
-        transition: all 0.15s ease !important;
+        transition: all 0.2s ease !important;
     }}
     button[kind="primary"] * {{
         color: #FFFFFF !important;
@@ -689,220 +648,80 @@ unified_css = f"""
         box-shadow: 0 6px 20px rgba(217, 119, 6, 0.5) !important;
     }}
 
-    /* Secondary Buttons */
+    /* Secondary Action Buttons */
     button[kind="secondary"] {{
-        background-color: #FFFFFF !important;
-        color: #000000 !important;
-        border: 1.5px solid #CBD5E1 !important;
         border-radius: 8px !important;
         font-weight: 700 !important;
-    }}
-    button[kind="secondary"]:hover {{
-        background-color: #F8FAFC !important;
-        border-color: #94A3B8 !important;
+        transition: all 0.15s ease !important;
     }}
 
-    /* Unified Frozen Top Header Bar */
-    .top-nav-bar {{
-        background: #FFFFFF !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-radius: 8px !important;
-        padding: 4px 12px !important;
-        margin-bottom: 4px !important;
-        margin-top: 0px !important;
-        margin-left: 0px !important;
-        margin-right: 0px !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        flex-wrap: wrap !important;
-        gap: 8px !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }}
-    .nav-left {{
-        display: flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-    }}
-    .logo-circle {{
-        width: 32px !important;
-        height: 32px !important;
-        border-radius: 8px !important;
-        background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%) !important;
-        border: 1.5px solid #D97706 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 18px !important;
-        box-shadow: 0 2px 6px rgba(217, 119, 6, 0.2) !important;
-    }}
-    .app-brand-title {{
-        font-size: 1.15rem !important;
-        font-weight: 800 !important;
-        background: linear-gradient(90deg, #B45309 0%, #D97706 45%, #2563EB 100%) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        line-height: 1.15 !important;
-        letter-spacing: -0.3px !important;
-    }}
-    .app-brand-sub {{
-        font-size: 0.72rem !important;
-        color: #475569 !important;
-        font-weight: 700 !important;
-        letter-spacing: 0.1px !important;
-    }}
-    .header-sub-pills-row {{
-        display: flex !important;
-        align-items: center !important;
-        gap: 6px !important;
-        flex-wrap: wrap !important;
-        justify-content: flex-end !important;
-    }}
-    .header-sub-pill {{
-        background: #F8FAFC !important;
+    /* Digital HUD Banner & Metrics */
+    .digital-hud {{
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 12px !important;
-        padding: 2px 8px !important;
-        font-size: 11px !important;
-        color: #0F172A !important;
-        font-weight: 700 !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 4px !important;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
-        white-space: nowrap !important;
-    }}
-    .header-sub-pill b {{
-        font-weight: 800 !important;
-        color: #0F172A !important;
-    }}
-    .pulse-dot {{
-        width: 8px !important;
-        height: 8px !important;
-        border-radius: 50% !important;
-        background: #10B981 !important;
-        box-shadow: 0 0 8px #10B981 !important;
-        display: inline-block !important;
-    }}
-
-    .main-header {{
-        font-size: 2.2rem;
-        font-weight: 900;
-        background: linear-gradient(90deg, #B45309 0%, #D97706 40%, #2563EB 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 12px;
-        letter-spacing: -0.5px;
-    }}
-    .digital-hud {{
-        background: #FFFFFF !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-radius: 10px !important;
-        padding: 8px 14px !important;
-        margin-bottom: 12px !important;
+        padding: 10px 16px !important;
+        margin-bottom: 14px !important;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-    }}
-    .digital-hud * {{
-        color: #000000 !important;
     }}
     .hud-grid {{
         display: grid !important;
         grid-template-columns: repeat(4, 1fr) !important;
-        gap: 6px !important;
+        gap: 8px !important;
         width: 100% !important;
     }}
-    @media (max-width: 992px) {{
-        .hud-grid {{
-            grid-template-columns: repeat(2, 1fr) !important;
-        }}
-    }}
     .hud-pill {{
-        background: #F8FAFC !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-radius: 6px !important;
-        padding: 4px 10px !important;
-        font-size: 12px !important;
-        color: #000000 !important;
+        border-radius: 8px !important;
+        padding: 6px 12px !important;
+        font-size: 12.5px !important;
         font-weight: 700 !important;
         display: flex !important;
         align-items: center !important;
         gap: 6px !important;
-        min-height: 30px !important;
-        box-sizing: border-box !important;
+        min-height: 34px !important;
         width: 100% !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
     }}
     .hud-pill b, .hud-pill strong {{
-        color: #000000 !important;
         font-weight: 900 !important;
     }}
-    .hud-pill-highlight {{
-        border-color: #D97706 !important;
-        background: #FEF3C7 !important;
-        color: #92400E !important;
-        display: inline-flex !important;
-        padding: 3px 10px !important;
-        font-size: 12px !important;
-    }}
-    .hud-pill-highlight b {{
-        color: #78350F !important;
-    }}
-    .rule-card {{
-        background: #FFFFFF !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-radius: 10px !important;
-        padding: 14px !important;
-        margin-bottom: 12px !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
-    }}
-    .rule-card * {{
-        color: #000000 !important;
+
+    /* Responsive SVG Charts (Bi-Wheel, Ephemeris Waves, Sudarshan, Kota) */
+    svg, .chart-svg {{
+        max-width: 100% !important;
+        height: auto !important;
+        display: block !important;
     }}
 
-    /* Vastu-Jyotish Grid & Uniform High-Contrast Cards */
-    .vastu-grid {{
-        display: grid !important;
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 16px !important;
-        margin-top: 14px !important;
-        margin-bottom: 24px !important;
+    /* Tables, DataFrames & Horizontal Scrolling */
+    [data-testid="stDataFrame"], [data-testid="stTable"] {{
+        border-radius: 8px !important;
         width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
     }}
-    @media (max-width: 992px) {{
-        .vastu-grid {{
-            grid-template-columns: repeat(2, 1fr) !important;
-        }}
+    div[style*="overflow-x: auto"] {{
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: thin !important;
     }}
-    @media (max-width: 640px) {{
-        .vastu-grid {{
-            grid-template-columns: 1fr !important;
-        }}
+
+    /* Custom Slim Scrollbars for Data Grids */
+    ::-webkit-scrollbar {{
+        width: 6px !important;
+        height: 6px !important;
     }}
-    .vastu-card {{
-        background: #FFFFFF !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-radius: 12px !important;
-        padding: 16px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
-        height: 100% !important;
-        min-height: 380px !important;
-        box-sizing: border-box !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-        transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+    ::-webkit-scrollbar-track {{
+        background: rgba(0, 0, 0, 0.05) !important;
+        border-radius: 4px !important;
     }}
-    .vastu-card:hover {{
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
-        border-color: #94A3B8 !important;
+    ::-webkit-scrollbar-thumb {{
+        background: #94A3B8 !important;
+        border-radius: 4px !important;
     }}
-    .vastu-card * {{
-        color: #0F172A !important;
+    ::-webkit-scrollbar-thumb:hover {{
+        background: #64748B !important;
     }}
 
     /* High-contrast Badges */
@@ -911,50 +730,80 @@ unified_css = f"""
     .exalt-badge {{ color: #1E40AF !important; font-weight: 800; background: #DBEAFE !important; border: 1.5px solid #3B82F6 !important; padding: 3px 8px; border-radius: 6px; }}
     .deb-badge {{ color: #991B1B !important; font-weight: 800; background: #FEE2E2 !important; border: 1.5px solid #EF4444 !important; padding: 3px 8px; border-radius: 6px; }}
 
-    [data-testid="stDataFrame"] {{
-        border: 1.5px solid #CBD5E1 !important;
-        border-radius: 8px !important;
-    }}
-    [data-testid="stDataFrame"] * {{
-        color: #000000 !important;
-        font-weight: 600 !important;
+    /* ========================================================= */
+    /* MULTI-DEVICE RESPONSIVE BREAKPOINTS                       */
+    /* ========================================================= */
+
+    /* Tablet & Medium Screen Devices (<= 992px) */
+    @media (max-width: 992px) {{
+        .hud-grid {{
+            grid-template-columns: repeat(2, 1fr) !important;
+        }}
+        .vastu-grid {{
+            grid-template-columns: repeat(2, 1fr) !important;
+        }}
+        .block-container {{
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
+        }}
     }}
 
-    /* Google Translate Clean Styling - Zero Distortion */
-    .goog-te-banner-frame.skiptranslate, .goog-te-gadget, #goog-gt-tt, .goog-te-spinner-pos, iframe.goog-te-banner-frame {{
-        display: none !important;
-        visibility: hidden !important;
+    /* Mobile Phones & Touch Screens (<= 768px) */
+    @media (max-width: 768px) {{
+        .block-container {{
+            padding-left: 0.6rem !important;
+            padding-right: 0.6rem !important;
+            padding-bottom: 2rem !important;
+        }}
+        .hud-grid {{
+            grid-template-columns: 1fr !important;
+            gap: 6px !important;
+        }}
+        .vastu-grid {{
+            grid-template-columns: 1fr !important;
+        }}
+        /* Ensure touch targets meet Apple & Google 44px min target guideline */
+        button, input, select, [data-baseweb="tab"] {{
+            min-height: 44px !important;
+        }}
+        /* Stack columns naturally on mobile */
+        [data-testid="column"] {{
+            width: 100% !important;
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+            margin-bottom: 8px !important;
+        }}
+        /* Allow tables and aspectarium grids full horizontal scroll on touch */
+        table, .aspectarium-table {{
+            min-width: 600px !important;
+            display: table !important;
+        }}
+        /* Compact top header on mobile */
+        .top-nav-bar {{
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 4px !important;
+        }}
+        .header-sub-pills-row {{
+            width: 100% !important;
+            justify-content: flex-start !important;
+            overflow-x: auto !important;
+            padding-bottom: 4px !important;
+        }}
     }}
-    body {{
-        top: 0px !important;
-    }}
-    #google_translate_element {{
-        display: none !important;
-    }}
-    .skiptranslate iframe {{
-        display: none !important;
-    }}
-    .goog-tooltip, .goog-tooltip:hover {{
-        display: none !important;
-    }}
-    .goog-text-highlight {{
-        background-color: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-    }}
-    #software-lang-select {{
-        border: none !important;
-        background: transparent !important;
-        font-weight: 800 !important;
-        font-size: 11.5px !important;
-        color: #166534 !important;
-        cursor: pointer !important;
-        outline: none !important;
-    }}
-    #software-lang-select option {{
-        background: #FFFFFF !important;
-        color: #0F172A !important;
-        font-weight: 700 !important;
+
+    /* Small Screen Phones (<= 480px) */
+    @media (max-width: 480px) {{
+        .app-brand-title {{
+            font-size: 1rem !important;
+        }}
+        .app-brand-sub {{
+            display: none !important;
+        }}
+        .hud-pill {{
+            font-size: 11.5px !important;
+            padding: 4px 8px !important;
+        }}
     }}
 
     {theme_mode_css}

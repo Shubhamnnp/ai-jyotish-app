@@ -243,3 +243,4 @@ class EphemerisWavesService:
 
 # Singleton instance
 default_ephemeris_waves_service = EphemerisWavesService()
+
