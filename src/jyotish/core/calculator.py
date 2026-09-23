@@ -217,7 +217,8 @@ class ChartCalculator:
         birth_data: BirthData,
         ayanamsa_name: str = "Lahiri",
         house_system: str = "Whole Sign",
-        node_type: str = "mean"
+        node_type: str = "mean",
+        **kwargs
     ) -> KundaliChart:
         """Full Natal Kundali Calculation Pipeline."""
         # 1. Convert local birth time to UTC
@@ -225,7 +226,7 @@ class ChartCalculator:
         dt_utc = birth_dt - timedelta(hours=birth_data.timezone_offset)
 
         # 2. Compute Planetary Positions & Ayanamsa
-        raw_positions, ayanamsa_val = self.provider.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type)
+        raw_positions, ayanamsa_val = self.provider.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type, **kwargs)
 
         # 3. Compute Lagna
         lagna_lon = self.provider.calculate_ascendant(
@@ -318,7 +319,8 @@ class ChartCalculator:
         birth_data: BirthData,
         ayanamsa_name: str = "Lahiri",
         house_system: str = "Whole Sign",
-        node_type: str = "mean"
+        node_type: str = "mean",
+        **kwargs
     ) -> KundaliChart:
         """Calculates complete chart including Vargas, Ashtakavarga with Shodhana, Shadbala, Jaimini, and Upagrahas."""
         from .varga import VargaCalculator
@@ -327,7 +329,7 @@ class ChartCalculator:
         from .jaimini import default_jaimini_calculator
         from .upagraha import default_upagraha_calculator
 
-        chart = self.calculate_chart(birth_data, ayanamsa_name, house_system, node_type=node_type)
+        chart = self.calculate_chart(birth_data, ayanamsa_name, house_system, node_type=node_type, **kwargs)
         chart.vargas = VargaCalculator.calculate_all_vargas(chart)
         chart.ashtakavarga = AshtakavargaCalculator.calculate(chart)
         chart.shadbala = default_shadbala_calculator.calculate(chart)

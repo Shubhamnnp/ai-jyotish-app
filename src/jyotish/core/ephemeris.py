@@ -28,7 +28,9 @@ class BaseEphemerisProvider(ABC):
     def get_planet_positions(
         self,
         dt_utc: datetime,
-        ayanamsa_name: str = "Lahiri"
+        ayanamsa_name: str = "Lahiri",
+        node_type: str = "mean",
+        **kwargs
     ) -> Tuple[Dict[str, Dict[str, float]], float]:
         """Returns ({planet_name: {longitude, latitude, speed, is_retrograde}}, ayanamsa_deg)"""
         pass
@@ -150,7 +152,8 @@ class PyEphemProvider(BaseEphemerisProvider):
         self,
         dt_utc: datetime,
         ayanamsa_name: str = "Lahiri",
-        node_type: str = "mean"
+        node_type: str = "mean",
+        **kwargs
     ) -> Tuple[Dict[str, Dict[str, float]], float]:
         """
         Calculates sidereal planetary positions for 9 grahas.
@@ -360,17 +363,20 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
     def get_planet_positions(
         self,
         dt_utc: datetime,
-        ayanamsa_name: str = "Lahiri"
+        ayanamsa_name: str = "Lahiri",
+        node_type: str = "mean",
+        **kwargs
     ) -> Tuple[Dict[str, Dict[str, float]], float]:
         if not self._has_swisseph or not self._swe:
-            return self._fallback.get_planet_positions(dt_utc, ayanamsa_name)
+            return self._fallback.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type, **kwargs)
 
         try:
             swe = self._swe
             jd = self.datetime_to_jd(dt_utc)
             ayanamsa_val = self.calculate_ayanamsa(jd, ayanamsa_name)
 
-            # Swiss Ephemeris body IDs (Sun=0, Moon=1, Mercury=2, Venus=3, Mars=4, Jupiter=5, Saturn=6, Mean Node=10)
+            # Swiss Ephemeris body IDs (Sun=0, Moon=1, Mercury=2, Venus=3, Mars=4, Jupiter=5, Saturn=6, Mean Node=10, True Node=11)
+            rahu_id = getattr(swe, "TRUE_NODE", 11) if str(node_type).lower() == "true" else getattr(swe, "MEAN_NODE", 10)
             planet_map = {
                 "Sun": getattr(swe, "SUN", 0),
                 "Moon": getattr(swe, "MOON", 1),
@@ -379,7 +385,7 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
                 "Jupiter": getattr(swe, "JUPITER", 5),
                 "Venus": getattr(swe, "VENUS", 3),
                 "Saturn": getattr(swe, "SATURN", 6),
-                "Rahu": getattr(swe, "MEAN_NODE", 10),
+                "Rahu": rahu_id,
             }
 
             flg_swieph = getattr(swe, "FLG_SWIEPH", 2)
@@ -417,7 +423,7 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
 
             return results, ayanamsa_val
         except BaseException:
-            return self._fallback.get_planet_positions(dt_utc, ayanamsa_name)
+            return self._fallback.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type, **kwargs)
 
     def calculate_ascendant(
         self,
