@@ -441,7 +441,20 @@ class NatalReportGenerator:
             vp_sahams_html += f"<li><b>{sh.get('saham_hi', '')}:</b> {sh.get('sign', '')} ({sh.get('house', '')}) - <small>{sh.get('significance', '')}</small></li>"
 
         # -------------------------------------------------------------
-        # 13. COMPREHENSIVE VEDIC REMEDIES (RATNA, RUDRAKSHA, MANTRAS)
+        # 13. AYURVEDIC LIFESTYLE, DIET, HEALTH, RELATIONS & PHYSIQUE
+        # -------------------------------------------------------------
+        from ..core.lifestyle import DietEngine, RelationshipEngine, HealthEngine, BodyAnatomyEngine
+        diet_data = DietEngine.analyze(chart)
+        rel_data = RelationshipEngine.analyze(chart)
+        hlth_data = HealthEngine.analyze(chart)
+        body_data = BodyAnatomyEngine.analyze(chart)
+
+        fav_foods_html = "".join([f"<li><b>{f.split(':')[0] if ':' in f else 'खाद्य'}:</b> {f.split(':')[1] if ':' in f else f}</li>" for f in diet_data["favorable_foods"][:5]])
+        unfav_foods_html = "".join([f"<li><span style='color:#DC2626;'>🚫</span> {uf}</li>" for uf in diet_data["unfavorable_foods"][:4]])
+        vuln_organs_html = "".join([f"<li><b>{v['planet']}:</b> {v['organs']} — <span style='color:#DC2626;'>{v['diseases']}</span> (उपाय: {v['remedy']})</li>" for v in hlth_data["vulnerable_areas"][:4]])
+
+        # -------------------------------------------------------------
+        # 14. COMPREHENSIVE VEDIC REMEDIES (RATNA, RUDRAKSHA, MANTRAS)
         # -------------------------------------------------------------
         ak_planet = chart.atmakaraka if chart.atmakaraka else "Jupiter"
         gemstones_map = {
@@ -946,8 +959,51 @@ class NatalReportGenerator:
         <ul style="line-height:1.8;">{vp_sahams_html}</ul>
     </div>
 
-    <!-- CHAPTER 15: COMPREHENSIVE VEDIC & VASTU REMEDIES -->
-    <h2 class="section-title">१५. सर्वांगीण शास्त्रीय उपाय, रत्न, रुद्राक्ष, मन्त्र, वास्तु व दान विधान</h2>
+    <div class="page-break"></div>
+
+    <!-- CHAPTER 15: AYURVEDIC LIFESTYLE, DIET, HEALTH & RELATIONSHIPS -->
+    <h2 class="section-title">१५. जातक जीवनशैली, खानपान (त्रिदोष), स्वास्थ्य एवं संबंध संहिता</h2>
+    
+    <div class="card" style="margin-bottom:14px;">
+        <h4 style="color:#1E40AF; margin-top:0;">🍽️ १. त्रिदोष एवं खानपान परामर्श (Ayurvedic Nutrition)</h4>
+        <p><b>प्राथमिक प्रकृति:</b> <b>{diet_data['dosha_title']}</b> | <b>अनुकूलतम पेय:</b> {diet_data['favorable_drink']}</p>
+        <p><b>पाचन एवं स्वभाव:</b> {diet_data['characteristics']}</p>
+        <div style="display:flex; gap:20px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:250px;">
+                <b style="color:#15803D;">✅ अनुशंसित अनुकूल आहार:</b>
+                <ul style="line-height:1.6; margin-top:6px;">{fav_foods_html}</ul>
+            </div>
+            <div style="flex:1; min-width:250px;">
+                <b style="color:#DC2626;">❌ परहेज योग्य प्रतिकूल खाद्य:</b>
+                <ul style="line-height:1.6; margin-top:6px;">{unfav_foods_html}</ul>
+            </div>
+        </div>
+        <p style="background:#F0FDF4; border:1px solid #86EFAC; border-radius:6px; padding:8px 12px; margin-top:10px;">
+            <b>उपवास एवं दिनचर्या नियम:</b> {diet_data['fasting_remedy']} | <b>लवण परामर्श:</b> {diet_data['salt_recommendation']}
+        </p>
+    </div>
+
+    <div class="card" style="margin-bottom:14px;">
+        <h4 style="color:#1E40AF; margin-top:0;">🏥 २. आरोग्य बल एवं चिकित्सा ज्योतिष (Health & Disease Diagnostics)</h4>
+        <p><b>समग्र आरोग्य बल (Vitality Score):</b> <b>{hlth_data['vitality_score']}/100</b> ({hlth_data['vitality_status']})</p>
+        <b>संवेदनशील शारीरिक अंग एवं ग्रह प्रभाव:</b>
+        <ul style="line-height:1.7; margin-top:6px;">{vuln_organs_html}</ul>
+        <p style="background:#FEF2F2; border:1px solid #FCA5A5; border-radius:6px; padding:8px 12px; margin-top:8px;">
+            <b>दीर्घकालिक सावधानी:</b> {hlth_data['future_risks'][0] if hlth_data['future_risks'] else 'नियमित दिनचर्या से आरोग्य बना रहेगा।'}
+        </p>
+    </div>
+
+    <div class="card" style="margin-bottom:14px;">
+        <h4 style="color:#1E40AF; margin-top:0;">🤝 ३. संबंध विश्लेषण एवं शारीरिक गठन (Relationships & Constitution)</h4>
+        <p><b>सर्वाधिक सहयोगी पक्ष:</b> {rel_data['greatest_helper_side']} | <b>सतर्कता पक्ष:</b> {rel_data['caution_side']}</p>
+        <p><b>शारीरिक गठन ({body_data['lagna_sign']} लग्न):</b> {body_data['physique']['frame']} | <b>वर्ण व आभा:</b> {body_data['physique']['complexion']}</p>
+        <p><b>जन्मजात चिन्ह:</b> {body_data['congenital_marks'][0]}</p>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- CHAPTER 16: COMPREHENSIVE VEDIC & VASTU REMEDIES -->
+    <h2 class="section-title">१६. सर्वांगीण शास्त्रीय उपाय, रत्न, रुद्राक्ष, मन्त्र, वास्तु व दान विधान</h2>
     <div class="remedy-box">
         <h4 style="color:#78350F; margin-top:0; font-size:16px;">💎 १. रत्न विचार एवं प्राण-प्रतिष्ठा विधान (Gemstone Recommendation)</h4>
         <p>

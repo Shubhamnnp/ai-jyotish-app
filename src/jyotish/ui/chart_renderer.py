@@ -415,3 +415,110 @@ class ChartRenderer:
 
         svg_parts.append('</svg>')
         return "".join(svg_parts)
+
+    @classmethod
+    def render_transit_biwheel_svg(
+        cls,
+        chart: KundaliChart,
+        transit_positions: Optional[Dict[str, int]] = None,
+        title: str = "जन्म एवं तात्कालिक गोचर ओवरले चक्र (Natal & Transit Bi-Wheel)"
+    ) -> str:
+        """
+        Renders a Dual-Ring Bi-Wheel chart overlaying Natal planets (Inner)
+        and Current Transiting planets (Outer Amber/Gold with '⚡') on the same North Indian diamond chart.
+        """
+        lagna_s_id = chart.lagna_sign_id
+
+        # Natal planets by house
+        natal_house_planets: Dict[int, List[str]] = {h: [] for h in range(1, 13)}
+        for p_name, p in chart.planets.items():
+            short = p_name[:2]
+            if p.is_retrograde:
+                short += "(R)"
+            natal_house_planets[p.house_from_lagna].append(short)
+
+        # Transit planets by house (sign_id 1..12)
+        transit_house_planets: Dict[int, List[str]] = {h: [] for h in range(1, 13)}
+        if transit_positions:
+            for p_name, s_id in transit_positions.items():
+                short = p_name[:2]
+                h_num = ((s_id - lagna_s_id) % 12) + 1
+                transit_house_planets[h_num].append(short)
+
+        W, H = 460, 460
+        house_polygons = {
+            1: ("230,35 335,135 230,235 125,135", "#FFFBEB"),
+            2: ("25,35 230,35 125,135", "#F8FAFC"),
+            3: ("25,35 125,135 25,235", "#F8FAFC"),
+            4: ("25,235 125,135 230,235 125,335", "#FFFBEB"),
+            5: ("25,235 125,335 25,435", "#ECFDF5"),
+            6: ("25,435 125,335 230,435", "#FEF2F2"),
+            7: ("230,235 335,335 230,435 125,335", "#FFFBEB"),
+            8: ("230,435 335,335 435,435", "#FEF2F2"),
+            9: ("435,435 335,335 435,235", "#ECFDF5"),
+            10: ("230,235 335,135 435,235 335,335", "#FFFBEB"),
+            11: ("435,235 335,135 435,35", "#F8FAFC"),
+            12: ("435,35 335,135 230,35", "#FEF2F2"),
+        }
+
+        house_coords = {
+            1: (230, 130, 230, 75),
+            2: (120, 75, 145, 55),
+            3: (75, 120, 50, 145),
+            4: (130, 230, 85, 230),
+            5: (75, 335, 50, 315),
+            6: (120, 395, 145, 415),
+            7: (230, 335, 230, 395),
+            8: (335, 395, 310, 415),
+            9: (395, 335, 420, 315),
+            10: (335, 230, 380, 230),
+            11: (395, 120, 420, 145),
+            12: (335, 75, 310, 55),
+        }
+
+        svg_parts = [
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="420" style="background:#FFFFFF; border:2px solid #CBD5E1; border-radius:14px; box-shadow:0 4px 15px rgba(0,0,0,0.08); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
+            f'<text x="{W//2}" y="24" text-anchor="middle" fill="#78350F" font-size="14.5" font-weight="900">{title}</text>',
+        ]
+
+        for h_num, (poly_pts, bg_color) in house_polygons.items():
+            svg_parts.append(f'<polygon points="{poly_pts}" fill="{bg_color}" stroke="none"/>')
+
+        svg_parts.append(f'<rect x="25" y="35" width="410" height="400" fill="none" stroke="#D97706" stroke-width="2.5"/>')
+        svg_parts.append(f'<line x1="25" y1="35" x2="435" y2="435" stroke="#D97706" stroke-width="1.8"/>')
+        svg_parts.append(f'<line x1="435" y1="35" x2="25" y2="435" stroke="#D97706" stroke-width="1.8"/>')
+        svg_parts.append(f'<polygon points="230,35 435,235 230,435 25,235" fill="none" stroke="#D97706" stroke-width="2"/>')
+
+        for h in range(1, 13):
+            s_id = ((lagna_s_id - 1 + (h - 1)) % 12) + 1
+            cx, cy, lx, ly = house_coords[h]
+
+            # Sign number
+            s_color = "#DC2626" if h == 1 else "#64748B"
+            s_weight = "900" if h == 1 else "800"
+            svg_parts.append(f'<text x="{lx}" y="{ly}" text-anchor="middle" fill="{s_color}" font-size="11" font-weight="{s_weight}">{s_id}</text>')
+
+            # Natal Planets (Blue / Purple)
+            n_pls = natal_house_planets.get(h, [])
+            # Transit Planets (Orange / Red with ⚡)
+            t_pls = transit_house_planets.get(h, [])
+
+            start_y = cy - ((len(n_pls) + len(t_pls) - 1) * 7)
+            line_idx = 0
+            for np_str in n_pls:
+                py = start_y + line_idx * 13
+                svg_parts.append(f'<text x="{cx}" y="{py}" text-anchor="middle" fill="#1E40AF" font-size="11" font-weight="900">{np_str}</text>')
+                line_idx += 1
+
+            for tp_str in t_pls:
+                py = start_y + line_idx * 13
+                svg_parts.append(f'<text x="{cx}" y="{py}" text-anchor="middle" fill="#D97706" font-size="10.5" font-weight="900">⚡{tp_str}</text>')
+                line_idx += 1
+
+        # Legend at bottom
+        svg_parts.append(f'<rect x="35" y="438" width="390" height="18" fill="#F8FAFC" rx="4"/>')
+        svg_parts.append(f'<text x="230" y="451" text-anchor="middle" fill="#475569" font-size="10" font-weight="800">🔵 जन्म ग्रह (Natal) | 🟠 ⚡ वर्तमान गोचर ग्रह (Real-time Transit)</text>')
+
+        svg_parts.append('</svg>')
+        return "".join(svg_parts)
+

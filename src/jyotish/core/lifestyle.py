@@ -603,3 +603,4 @@ class BodyAnatomyEngine:
             "congenital_marks": congenital_marks,
             "core_advice": "प्रतिदिन सूर्योदय के समय योग, नियमित तेल मालिश (अभ्यंग) और शारीरिक मुद्रा (Posture) सीधी रखने से आपका शारीरिक तेज सदा बना रहेगा।"
         }
+

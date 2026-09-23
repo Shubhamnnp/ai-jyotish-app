@@ -2957,11 +2957,50 @@ st.markdown(f"""
 
 # Active Module Breadcrumb Pill
 st.markdown(f"""
-<div style="display:flex; justify-content:space-between; align-items:center; background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:8px; padding:8px 16px; margin-bottom:16px;">
+<div style="display:flex; justify-content:space-between; align-items:center; background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:8px; padding:8px 16px; margin-bottom:10px;">
     <div style="font-weight:800; color:#1E40AF; font-size:14px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
     <div style="font-size:12.5px; color:#1E293B; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
 </div>
 """, unsafe_allow_html=True)
+
+# -------------------------------------------------------------
+# ⏱️ Quick Time Stepper (काल गति नियंत्रक — Live Time Travel / BTR Bar)
+# -------------------------------------------------------------
+c_ts_info, c_ts_ctrl = st.columns([1.5, 3.5])
+with c_ts_info:
+    st.markdown(f"""
+    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:8px; padding:5px 10px; height:100%; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-size:11px; font-weight:800; color:#B45309;">⏱️ काल गति नियंत्रक (Time Travel)</div>
+        <div style="font-size:12.5px; font-weight:900; color:#1E293B;">📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with c_ts_ctrl:
+    def _step_time_action(delta_minutes=0, delta_hours=0, delta_days=0, reset_to_now=False):
+        from datetime import datetime as dt_cls, timedelta as td_cls
+        if reset_to_now:
+            now_curr = dt_cls.now()
+            st.session_state.birth_date = now_curr.date()
+            st.session_state.birth_time = now_curr.time().replace(microsecond=0)
+        else:
+            curr_b_d = st.session_state.get("birth_date", _init_now.date())
+            curr_b_t = st.session_state.get("birth_time", _init_now.time())
+            c_combo = dt_cls.combine(curr_b_d, curr_b_t)
+            n_combo = c_combo + td_cls(days=delta_days, hours=delta_hours, minutes=delta_minutes)
+            st.session_state.birth_date = n_combo.date()
+            st.session_state.birth_time = n_combo.time().replace(microsecond=0)
+        st.rerun()
+
+    ts_b_cols = st.columns(9)
+    if ts_b_cols[0].button("⏪ -1द", key="ts_btn_m1d", help="-1 दिन पीछे जाएं"): _step_time_action(delta_days=-1)
+    if ts_b_cols[1].button("◀ -1घं", key="ts_btn_m1h", help="-1 घंटा पीछे जाएं"): _step_time_action(delta_hours=-1)
+    if ts_b_cols[2].button("‹ -15म", key="ts_btn_m15m", help="-15 मिनट पीछे जाएं"): _step_time_action(delta_minutes=-15)
+    if ts_b_cols[3].button("‹ -1म", key="ts_btn_m1m", help="-1 मिनट (BTR सूक्ष्म शोधन)"): _step_time_action(delta_minutes=-1)
+    if ts_b_cols[4].button("🔄 अब", key="ts_btn_now", type="primary", help="वर्तमान समय (Current Time) पर सेट करें"): _step_time_action(reset_to_now=True)
+    if ts_b_cols[5].button("+1म ›", key="ts_btn_p1m", help="+1 मिनट (BTR सूक्ष्म शोधन)"): _step_time_action(delta_minutes=1)
+    if ts_b_cols[6].button("+15म ›", key="ts_btn_p15m", help="+15 मिनट आगे जाएं"): _step_time_action(delta_minutes=15)
+    if ts_b_cols[7].button("+1घं ▶", key="ts_btn_p1h", help="+1 घंटा आगे जाएं"): _step_time_action(delta_hours=1)
+    if ts_b_cols[8].button("+1द ⏩", key="ts_btn_p1d", help="+1 दिन आगे जाएं"): _step_time_action(delta_days=1)
 
 
 # -------------------------------------------------------------
@@ -3000,6 +3039,43 @@ if selected_idx == 0:
     if c_st3.button("🔺 पूर्व भारतीय (Bengal/Odisha)", use_container_width=True, type="primary" if "East" in curr_style else "secondary", key="btn_style_east"):
         st.session_state.app_chart_style = "East Indian (Surya)"
         st.rerun()
+
+    # View Mode Toggle: Single vs 4-in-1 Quad Dashboard
+    c_view1, c_view2 = st.columns(2)
+    chart_view_mode = st.session_state.get("app_chart_view_mode", "Single")
+    if c_view1.button("📱 एकल चक्र दृश्य (Single Varga)", use_container_width=True, type="primary" if chart_view_mode == "Single" else "secondary", key="btn_vm_single"):
+        st.session_state.app_chart_view_mode = "Single"
+        st.rerun()
+    if c_view2.button("🖥️ ४-चार्ट वर्कबेंच (4-in-1 Quad Dashboard: D1, D9, D10, D7)", use_container_width=True, type="primary" if chart_view_mode == "Quad" else "secondary", key="btn_vm_quad"):
+        st.session_state.app_chart_view_mode = "Quad"
+        st.rerun()
+
+    if chart_view_mode == "Quad":
+        st.markdown("#### 🖥️ ४-कुण्डली एकीकृत्त वर्कबेंच (D1 लग्न + D9 नवांश + D10 दशमांश + D7 सप्तांश)")
+        st.caption("विश्वस्तरीय सॉफ्टवेयर (Parashara's Light / JHora) समान एक ही स्क्रीन पर प्रमुख वर्ग चक्रों का एक साथ अध्ययन:")
+        
+        q_col1, q_col2 = st.columns(2)
+        with q_col1:
+            svg_d1 = render_chart_svg(chart, "D1 जन्म लग्न (Rashi)", varga_code="D1")
+            st.markdown(svg_d1, unsafe_allow_html=True)
+            st.caption(f"**D1 लग्न:** {chart.lagna_sign_name} ({chart.lagna_sign_id}) | आत्मकारक (AK): {chart.atmakaraka}")
+        with q_col2:
+            svg_d9 = render_chart_svg(chart, "D9 नवांश (Navamsha — धर्म व दांपत्य)", varga_code="D9")
+            st.markdown(svg_d9, unsafe_allow_html=True)
+            d9_v = chart.vargas.get("D9")
+            st.caption(f"**D9 नवांश लग्न:** {d9_v.lagna_sign_name if d9_v else '—'} | विवाह, भाग्य व ग्रहों का आंतरिक बल")
+        
+        q_col3, q_col4 = st.columns(2)
+        with q_col3:
+            svg_d10 = render_chart_svg(chart, "D10 दशमांश (Dashamsha — कर्म व पद)", varga_code="D10")
+            st.markdown(svg_d10, unsafe_allow_html=True)
+            d10_v = chart.vargas.get("D10")
+            st.caption(f"**D10 दशमांश लग्न:** {d10_v.lagna_sign_name if d10_v else '—'} | आजीविका, नेतृत्व व करियर")
+        with q_col4:
+            svg_d7 = render_chart_svg(chart, "D7 सप्तांश (Saptamsha — संतान व सृजन)", varga_code="D7")
+            st.markdown(svg_d7, unsafe_allow_html=True)
+            d7_v = chart.vargas.get("D7")
+            st.caption(f"**D7 सप्तांश लग्न:** {d7_v.lagna_sign_name if d7_v else '—'} | वंश वृद्धि, संतान सुख व रचनात्मकता")
 
     col_chart1, col_chart2 = st.columns([1, 1])
     with col_chart1:
@@ -5335,11 +5411,51 @@ elif selected_idx == 10:
     )
     t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system)
 
-    tab_g1, tab_g2, tab_g3 = st.tabs([
+    rashi_names_hi = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"]
+    rashi_symbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"]
+
+    tab_g0, tab_g1, tab_g2, tab_g3 = st.tabs([
+        "🎯 जन्म-गोचर ओवरले चक्र (Bi-Wheel Dual Chart)",
         "🪐 दैनिक गोचर व अष्टकवर्ग (Live Transits & BAV/SAV)",
         "🛡️ सर्वतोभद्र चक्र (9x9 Sarvatobhadra Vedha)",
         "🏰 कोटा चक्र (Kota Chakra 4-Zone Fortress)"
     ])
+
+    with tab_g0:
+        st.markdown("#### 🎯 जन्म एवं तात्कालिक गोचर संयुक्त ओवरले चक्र (Dual-Ring Bi-Wheel Overlay)")
+        st.caption("अंदर जन्म के ग्रह (नीले रंग में) और बाहर तात्कालिक गोचर ग्रह (सुनहरे रंग में ⚡ चिन्ह के साथ):")
+        
+        t_pos_dict = {p_n: p_o.sign_id for p_n, p_o in t_chart.planets.items()}
+        bw_svg = ChartRenderer.render_transit_biwheel_svg(chart, t_pos_dict, title=f"जन्म-गोचर ओवरले कुण्डली ({t_date.strftime('%d-%b-%Y')})")
+        
+        c_bw1, c_bw2 = st.columns([1.2, 0.8])
+        with c_bw1:
+            st.markdown(bw_svg, unsafe_allow_html=True)
+        with c_bw2:
+            st.markdown("##### ⚡ गोचर एवं जन्म ग्रह युति वेध (Direct Conjunctions)")
+            
+            natal_h_map = {p: chart.planets[p].house_from_lagna for p in chart.planets}
+            transit_h_map = {p: ((t_chart.planets[p].sign_id - chart.lagna_sign_id) % 12) + 1 for p in t_chart.planets}
+            
+            co_presence_found = False
+            for h in range(1, 13):
+                n_here = [p for p, h_num in natal_h_map.items() if h_num == h]
+                t_here = [p for p, h_num in transit_h_map.items() if h_num == h]
+                if n_here and t_here:
+                    co_presence_found = True
+                    s_id = ((chart.lagna_sign_id - 1 + (h - 1)) % 12) + 1
+                    s_name = rashi_names_hi[s_id - 1]
+                    st.markdown(f"""
+                    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:8px; padding:10px; margin-bottom:8px;">
+                        <b style="color:#B45309;">📍 भाव {h} ({s_name}):</b><br/>
+                        🔵 <b>जन्म ग्रह:</b> {', '.join(n_here)}<br/>
+                        🟧 <b>गोचर ग्रह:</b> {', '.join(t_here)}<br/>
+                        <small style="color:#475569;">वर्तमान में गोचर ग्रह जन्म ग्रहों के साथ एक ही भाव में हैं।</small>
+                    </div>
+                    """, unsafe_allow_html=True)
+            
+            if not co_presence_found:
+                st.info("वर्तमान गोचर ग्रह जन्म ग्रहों से अलग भावों में स्वतंत्र संचरण कर रहे हैं।")
 
     with tab_g1:
         # -------------------------------------------------------------
