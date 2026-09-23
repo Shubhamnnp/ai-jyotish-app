@@ -6400,35 +6400,38 @@ elif selected_idx == 10:
 
                     bg = "#10B981" if has_b else "#E2E8F0"
                     txt_color = "#FFFFFF" if has_b else "#64748B"
-                    border = "3px solid #F59E0B; box-shadow: 0 0 8px rgba(245,158,11,0.8);" if is_curr else "1px solid rgba(0,0,0,0.1);"
+                    box_border = "border: 2.5px solid #F59E0B; box-shadow: 0 0 8px rgba(245,158,11,0.8);" if is_curr else "border: 1px solid rgba(0,0,0,0.12);"
                     curr_marker = "<div style='font-size:9px; background:#F59E0B; color:#000; font-weight:900; border-radius:3px; padding:1px;'>सक्रिय</div>" if is_curr else ""
 
-                    strip_cells += f"""
-                    <div style="flex:1; background:{bg}; color:{txt_color}; border:{border}; border-radius:6px; padding:6px 2px; text-align:center; min-width:38px;">
-                        {curr_marker}
-                        <div style="font-size:11px; font-weight:700;">{k['icon']} {k['lord_hi']}</div>
-                        <div style="font-size:12px; font-weight:900; margin-top:2px;">{k['bindu']}</div>
-                    </div>
-                    """
+                    cell_html = (
+                        f'<div style="flex:1; background:{bg}; color:{txt_color}; {box_border} '
+                        f'border-radius:6px; padding:6px 2px; text-align:center; min-width:38px;">'
+                        f'{curr_marker}'
+                        f'<div style="font-size:11px; font-weight:700;">{k["icon"]} {k["lord_hi"]}</div>'
+                        f'<div style="font-size:12px; font-weight:900; margin-top:2px;">{k["bindu"]}</div>'
+                        f'</div>'
+                    )
+                    strip_cells += cell_html
 
-                st.markdown(f"""
-                <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:10px; padding:14px; margin-bottom:12px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
-                        <div>
-                            <b style="font-size:15px; color:#0F172A;">{p_d['planet_hi']} ({p_name})</b> — 
-                            <span style="color:#2563EB; font-weight:600;">{p_d['sign_name']} राशि ({p_d['deg_in_sign']:.2f}°)</span> | 
-                            <span>कक्षी {p_d['kakshya_num']}: <b>{p_d['kakshya_icon']} {p_d['kakshya_lord_hi']}</b> ({p_d['start_deg']:.2f}° - {p_d['end_deg']:.2f}°)</span>
-                        </div>
-                        <span style="background:{p_badge_bg}; color:{p_badge_color}; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:800;">
-                            {p_d['verdict_badge']}
-                        </span>
-                    </div>
-                    <div style="display:flex; gap:6px; margin:8px 0;">
-                        {strip_cells}
-                    </div>
-                    <small style="color:#475569; font-size:12px;">💡 <b>शास्त्रीय वेध:</b> {p_d['verdict_desc']} (इस राशि में कुल BAV बिन्दु: <b>{p_d['bav_sign_score']}/8</b>)</small>
-                </div>
-                """, unsafe_allow_html=True)
+                card_html = (
+                    f'<div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:10px; padding:14px; margin-bottom:12px;">'
+                    f'<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">'
+                    f'<div>'
+                    f'<b style="font-size:15px; color:#0F172A;">{p_d["planet_hi"]} ({p_name})</b> — '
+                    f'<span style="color:#2563EB; font-weight:600;">{p_d["sign_name"]} राशि ({p_d["deg_in_sign"]:.2f}°)</span> | '
+                    f'<span>कक्षी {p_d["kakshya_num"]}: <b>{p_d["kakshya_icon"]} {p_d["kakshya_lord_hi"]}</b> ({p_d["start_deg"]:.2f}° - {p_d["end_deg"]:.2f}°)</span>'
+                    f'</div>'
+                    f'<span style="background:{p_badge_bg}; color:{p_badge_color}; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:800;">'
+                    f'{p_d["verdict_badge"]}'
+                    f'</span>'
+                    f'</div>'
+                    f'<div style="display:flex; gap:6px; margin:8px 0; overflow-x:auto;">'
+                    f'{strip_cells}'
+                    f'</div>'
+                    f'<small style="color:#475569; font-size:12px;">💡 <b>शास्त्रीय वेध:</b> {p_d["verdict_desc"]} (इस राशि में कुल BAV बिन्दु: <b>{p_d["bav_sign_score"]}/8</b>)</small>'
+                    f'</div>'
+                )
+                st.markdown(card_html, unsafe_allow_html=True)
 
             # 30-Day Forward Kakshya Timeline
             st.markdown("---")
