@@ -3177,13 +3177,57 @@ if selected_idx == 0:
 
     col_chart1, col_chart2 = st.columns([1, 1])
     with col_chart1:
+        # Sampradaya Variations Expander
+        with st.expander("⚙️ वर्ग गणना शास्त्रीय संप्रदाय मत (Classical Sampradaya Variations)", expanded=False):
+            c_v1, c_v2, c_v3 = st.columns(3)
+            d3_method = c_v1.selectbox(
+                "D3 द्रेष्काण मत",
+                ["parashari", "jagannatha", "somanatha", "parivritti_traya"],
+                format_func=lambda x: {
+                    "parashari": "महर्षि पाराशर (१-५-९ त्रिकोण)",
+                    "jagannatha": "जगन्नाथ द्रेष्काण (PVR / Rath)",
+                    "somanatha": "सोमनाथ द्रेष्काण (अनुलोम/विलोम)",
+                    "parivritti_traya": "परिवृत्ति त्रय (३६ चक्रीय)"
+                }[x],
+                key="v_d3_meth"
+            )
+            d9_method = c_v2.selectbox(
+                "D9 नवांश मत",
+                ["parashari", "krishna_mishra"],
+                format_func=lambda x: {
+                    "parashari": "महर्षि पाराशर (१०८ पाद सतत)",
+                    "krishna_mishra": "कृष्णमिश्र नवांश (जैमिनी परंपरा)"
+                }[x],
+                key="v_d9_meth"
+            )
+            d2_method = c_v3.selectbox(
+                "D2 होरा मत",
+                ["parashari", "parivritti"],
+                format_func=lambda x: {
+                    "parashari": "पाराशरी होरा (कर्क/सिंह)",
+                    "parivritti": "परिवृत्ति होरा (२४ होरा चक्रीय)"
+                }[x],
+                key="v_d2_meth"
+            )
+
         varga_options = list(chart.vargas.keys()) if chart.vargas else ["D1"]
         varga_choice = st.selectbox(
             "वर्ग चक्र चयन (Select Varga Chart)",
             varga_options,
             format_func=lambda x: f"{x} - {chart.vargas[x].varga_name}" if x in chart.vargas else x
         )
-        target_varga = chart.vargas.get(varga_choice, chart.vargas.get("D1"))
+        # Dynamic Sampradaya Variation Allocation
+        if varga_choice == "D3" and d3_method != "parashari":
+            target_varga = VargaCalculator.calculate_d3(chart, variation=d3_method)
+            chart.vargas["D3"] = target_varga
+        elif varga_choice == "D9" and d9_method != "parashari":
+            target_varga = VargaCalculator.calculate_d9(chart, variation=d9_method)
+            chart.vargas["D9"] = target_varga
+        elif varga_choice == "D2" and d2_method != "parashari":
+            target_varga = VargaCalculator.calculate_d2(chart, variation=d2_method)
+            chart.vargas["D2"] = target_varga
+        else:
+            target_varga = chart.vargas.get(varga_choice, chart.vargas.get("D1"))
         v_name = target_varga.varga_name if target_varga else "Rashi"
         v_lagna_sign = target_varga.lagna_sign_name if target_varga else chart.lagna_sign_name
         v_lagna_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
@@ -5793,12 +5837,13 @@ elif selected_idx == 10:
     rashi_names_hi = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"]
     rashi_symbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"]
 
-    tab_g0, tab_g1, tab_g2, tab_g3, tab_g4 = st.tabs([
+    tab_g0, tab_g1, tab_g2, tab_g3, tab_g4, tab_g5 = st.tabs([
         "🎯 जन्म-गोचर ओवरले चक्र (Bi-Wheel Dual Chart)",
         "🪐 दैनिक गोचर व अष्टकवर्ग (Live Transits & BAV/SAV)",
         "🛡️ सर्वतोभद्र चक्र (9x9 Sarvatobhadra Vedha)",
         "🏰 कोटा चक्र (Kota Chakra 4-Zone Fortress)",
-        "📈 वित्तीय ज्योतिष व शेयर बाज़ार वेध (Financial & Commodity Trader)"
+        "📈 वित्तीय ज्योतिष व शेयर बाज़ार वेध (Financial & Commodity Trader)",
+        "📊 ग्रह गति व वक्रता वक्र (Dynamic Transit Speed & Waves)"
     ])
 
     with tab_g0:
@@ -6390,6 +6435,62 @@ elif selected_idx == 10:
 
 # =============================================================
 # TAB 12: KP ASTROLOGY (KRISHNAMURTI PADDHATI)
+
+    with tab_g5:
+        st.markdown("### 📊 डायनेमिक गोचर गति व वक्रता वक्र (Dynamic Planetary Speed & Retrograde Curves)")
+        st.caption("Shri Jyoti Star एवं Jagannatha Hora के समान ग्रहों की दैनिक कोणीय गति (°/दिन), वक्र-मार्गी मोड़ बिंदु (Stationary Points), अतिचार व मन्द गति का दृश्य वक्र।")
+
+        from src.jyotish.services.transit_graph import default_transit_graph_service, PLANET_NAMES_HI, PLANET_COLORS
+
+        col_sp1, col_sp2, col_sp3 = st.columns([1.5, 1.5, 3])
+        with col_sp1:
+            spd_start_date = st.date_input("आरंभिक तिथि (Start Date)", value=t_date, key="spd_start_d")
+        with col_sp2:
+            spd_days = st.selectbox("अवधि (Time Horizon)", [30, 60, 90, 180, 365], index=2, format_func=lambda x: f"{x} दिन", key="spd_days_sel")
+        with col_sp3:
+            all_pl_opts = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Sun", "Moon", "Rahu"]
+            spd_planets = st.multiselect("ग्रह चयन (Select Planets)", all_pl_opts, default=["Mars", "Mercury", "Jupiter", "Venus", "Saturn"], format_func=lambda x: PLANET_NAMES_HI.get(x, x), key="spd_pl_sel")
+
+        if not spd_planets:
+            spd_planets = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
+
+        with st.spinner("ग्रह गति वक्र की खगोलीय गणना जारी..."):
+            spd_res = default_transit_graph_service.calculate_speed_timeline(spd_start_date, days=spd_days, planet_names=spd_planets)
+
+        # SVG Chart
+        spd_svg = default_transit_graph_service.render_speed_svg(spd_res)
+        st.markdown(spd_svg, unsafe_allow_html=True)
+
+        st.markdown("---")
+        # Current Moment Speedometer & Motion Status Cards
+        st.markdown("#### ⚡ तात्कालिक ग्रह गति एवं खगोलीय स्थिति (Current Motion Status):")
+        cols_st = st.columns(len(spd_planets))
+        for idx, p in enumerate(spd_planets):
+            info = spd_res["current_status"].get(p)
+            if info:
+                with cols_st[idx]:
+                    st.metric(
+                        info["planet_hi"].split(" ")[0],
+                        f"{info['speed']:+.3f}°/दिन",
+                        f"{info['status'].split(' ')[0]} ({info['sign']})"
+                    )
+
+        # Turning Points / Stationary Events Table
+        st.markdown("#### 🔄 आगामी वक्र/मार्गी मोड़ बिंदु (Upcoming Stationary Turning Points):")
+        if spd_res.get("turning_points"):
+            tp_rows = []
+            for tp in spd_res["turning_points"]:
+                tp_rows.append({
+                    "दिनांक (Date)": tp["date"],
+                    "ग्रह (Planet)": tp["planet_hi"],
+                    "परिवर्तन (Event)": tp["shift_type"],
+                    "गोचर राशि (Sign)": tp["sign"],
+                    "स्पष्ट अंश (Degree)": tp["degree_str"],
+                    "गति (Speed)": f"{tp['speed']:+.4f}°/दिन"
+                })
+            st.dataframe(pd.DataFrame(tp_rows), use_container_width=True, hide_index=True)
+        else:
+            st.info("💡 चुने गए कालखंड में किसी चयनित ग्रह के वक्र/मार्गी मोड़ बिंदु (Zero Crossing) नहीं हैं। सभी ग्रह अपनी वर्तमान गति में अग्रसर हैं।")
 
 elif selected_idx == 11:
     st.subheader("📐 के.पी. ज्योतिष प्रणाली (Krishnamurti Paddhati - KP System & Future Prediction)")
@@ -7580,116 +7681,194 @@ elif selected_idx == 18:
 # TAB 17: 100 SHASTRIYA RULES LIBRARY
 
 elif selected_idx == 19:
-    st.subheader("📚 १२,५००+ महा-शास्त्रीय नियम बैंक (Grand Vedic Rules Library & Consensus Engine)")
-    st.write("पाराशर, सारावली, बृहज्जातक, जैमिनी, लाल किताब, कृष्णमूर्ति पद्धति (KP), फलदीपिका, प्रश्न मार्ग, अंकशास्त्र एवं उत्तर कालामृत का सार्वभौमिक स्वचालित मूल्यांकन इंजन।")
+    st.subheader("📚 १२,५००+ महा-शास्त्रीय नियम बैंक एवं अनुसंधान इंजन (Vedic Rules & Research Engine)")
+    tab_rules_bank, tab_research_engine = st.tabs([
+        "📚 १२,५००+ महा-शास्त्रीय नियम बैंक (Grand Rules Library)",
+        "🔍 शास्त्रीय योग एवं कुण्डली अनुसंधान इंजन (Astrological Research & Query Engine)"
+    ])
+    with tab_rules_bank:
 
-    import importlib
-    import src.jyotish.rules.engine as rules_mod
-    importlib.reload(rules_mod)
-    rules_engine = rules_mod.RulesEngine()
-    all_rules = rules_engine.rules
+            import importlib
+            import src.jyotish.rules.engine as rules_mod
+            importlib.reload(rules_mod)
+            rules_engine = rules_mod.RulesEngine()
+            all_rules = rules_engine.rules
 
-    # Evaluate all rules on current chart dynamically
-    with st.spinner("१,२५०+ शास्त्रीय नियमों का स्वचालित मूल्यांकन जारी..."):
-        evidences = rules_engine.evaluate_all(chart, None, {}, None)
-        ev_by_id = {ev.rule_id: ev for ev in evidences}
+            # Evaluate all rules on current chart dynamically
+            with st.spinner("१,२५०+ शास्त्रीय नियमों का स्वचालित मूल्यांकन जारी..."):
+                evidences = rules_engine.evaluate_all(chart, None, {}, None)
+                ev_by_id = {ev.rule_id: ev for ev in evidences}
 
-    fired_evs = [ev for ev in evidences if ev.fired]
-    fired_yogas = [ev for ev in fired_evs if ev.polarity == "+"]
-    fired_doshas = [ev for ev in fired_evs if ev.polarity == "-"]
+            fired_evs = [ev for ev in evidences if ev.fired]
+            fired_yogas = [ev for ev in fired_evs if ev.polarity == "+"]
+            fired_doshas = [ev for ev in fired_evs if ev.polarity == "-"]
 
-    # Top Status Metrics
-    col_rm1, col_rm2, col_rm3, col_rm4 = st.columns(4)
-    col_rm1.metric("कुल शास्त्रीय नियम", f"{len(all_rules):,}", "१० महा-ग्रंथ")
-    col_rm2.metric("कुण्डली में सक्रिय नियम", f"{len(fired_evs)}", f"सत्यापित ({round((len(fired_evs)/max(1, len(all_rules)))*100)}%)")
-    col_rm3.metric("सक्रिय शुभ योग", f"{len(fired_yogas)}", "शुभ फलित")
-    col_rm4.metric("सक्रिय दोष / चेतावनियां", f"{len(fired_doshas)}", "सावधानी अपेक्षित")
+            # Top Status Metrics
+            col_rm1, col_rm2, col_rm3, col_rm4 = st.columns(4)
+            col_rm1.metric("कुल शास्त्रीय नियम", f"{len(all_rules):,}", "१० महा-ग्रंथ")
+            col_rm2.metric("कुण्डली में सक्रिय नियम", f"{len(fired_evs)}", f"सत्यापित ({round((len(fired_evs)/max(1, len(all_rules)))*100)}%)")
+            col_rm3.metric("सक्रिय शुभ योग", f"{len(fired_yogas)}", "शुभ फलित")
+            col_rm4.metric("सक्रिय दोष / चेतावनियां", f"{len(fired_doshas)}", "सावधानी अपेक्षित")
 
-    st.markdown("---")
+            st.markdown("---")
 
-    # Filter Controls
-    c_f1, c_f2, c_f3 = st.columns([2.5, 2, 1.8])
-    search_kw = c_f1.text_input("🔍 नियम खोजें (Search Rule)", placeholder="e.g. गजकेसरी, बुधादित्य, धनेश, षष्ठम, शनि, राहु...")
+            # Filter Controls
+            c_f1, c_f2, c_f3 = st.columns([2.5, 2, 1.8])
+            search_kw = c_f1.text_input("🔍 नियम खोजें (Search Rule)", placeholder="e.g. गजकेसरी, बुधादित्य, धनेश, षष्ठम, शनि, राहु...")
 
-    grantha_list = ["सभी १० महा-ग्रंथ (All Granthas)"] + sorted(list({r.get('source', {}).get('text', 'Unknown') for r in all_rules}))
-    sel_grantha = c_f2.selectbox("📖 ग्रन्थ अनुसार फ़िल्टर (By Grantha)", grantha_list)
+            grantha_list = ["सभी १० महा-ग्रंथ (All Granthas)"] + sorted(list({r.get('source', {}).get('text', 'Unknown') for r in all_rules}))
+            sel_grantha = c_f2.selectbox("📖 ग्रन्थ अनुसार फ़िल्टर (By Grantha)", grantha_list)
 
-    cat_list = ["सभी श्रेणियां (All Categories)"] + sorted(list({r.get('category', 'general') for r in all_rules}))
-    sel_cat = c_f3.selectbox("🏷️ श्रेणी अनुसार फ़िल्टर (By Category)", cat_list)
+            cat_list = ["सभी श्रेणियां (All Categories)"] + sorted(list({r.get('category', 'general') for r in all_rules}))
+            sel_cat = c_f3.selectbox("🏷️ श्रेणी अनुसार फ़िल्टर (By Category)", cat_list)
 
-    col_chk1, col_chk2 = st.columns([2, 1])
-    show_only_fired = col_chk1.checkbox("⭐ केवल आपकी कुण्डली में सक्रिय नियम देखें (Show Only Fired Rules)", value=False)
-    sort_order = col_chk2.selectbox("क्रम (Sort)", ["सक्रिय नियम पहले (Fired First)", "ग्रन्थ क्रमानुसार (By Grantha)"])
+            col_chk1, col_chk2 = st.columns([2, 1])
+            show_only_fired = col_chk1.checkbox("⭐ केवल आपकी कुण्डली में सक्रिय नियम देखें (Show Only Fired Rules)", value=False)
+            sort_order = col_chk2.selectbox("क्रम (Sort)", ["सक्रिय नियम पहले (Fired First)", "ग्रन्थ क्रमानुसार (By Grantha)"])
 
-    # Filtering
-    filtered_rules = []
-    for r in all_rules:
-        r_id = r.get("rule_id", "")
-        ev = ev_by_id.get(r_id)
-        is_fired = ev.fired if ev else False
+            # Filtering
+            filtered_rules = []
+            for r in all_rules:
+                r_id = r.get("rule_id", "")
+                ev = ev_by_id.get(r_id)
+                is_fired = ev.fired if ev else False
 
-        if show_only_fired and not is_fired:
-            continue
-        if sel_grantha != "सभी १० महा-ग्रंथ (All Granthas)" and r.get('source', {}).get('text') != sel_grantha:
-            continue
-        if sel_cat != "सभी श्रेणियां (All Categories)" and r.get('category') != sel_cat:
-            continue
-        if search_kw:
-            kw_l = search_kw.lower()
-            match_txt = f"{r.get('rule_name_hi', '')} {r.get('rule_name_en', '')} {r_id} {r.get('effect', {}).get('description_hi', '')}".lower()
-            if kw_l not in match_txt:
-                continue
-        filtered_rules.append(r)
+                if show_only_fired and not is_fired:
+                    continue
+                if sel_grantha != "सभी १० महा-ग्रंथ (All Granthas)" and r.get('source', {}).get('text') != sel_grantha:
+                    continue
+                if sel_cat != "सभी श्रेणियां (All Categories)" and r.get('category') != sel_cat:
+                    continue
+                if search_kw:
+                    kw_l = search_kw.lower()
+                    match_txt = f"{r.get('rule_name_hi', '')} {r.get('rule_name_en', '')} {r_id} {r.get('effect', {}).get('description_hi', '')}".lower()
+                    if kw_l not in match_txt:
+                        continue
+                filtered_rules.append(r)
 
-    if sort_order == "सक्रिय नियम पहले (Fired First)":
-        filtered_rules.sort(key=lambda r: (0 if ev_by_id.get(r['rule_id'], None) and ev_by_id[r['rule_id']].fired else 1, r.get('source', {}).get('text', '')))
+            if sort_order == "सक्रिय नियम पहले (Fired First)":
+                filtered_rules.sort(key=lambda r: (0 if ev_by_id.get(r['rule_id'], None) and ev_by_id[r['rule_id']].fired else 1, r.get('source', {}).get('text', '')))
 
-    st.caption(f"प्रदर्शित शास्त्रीय नियम: **{len(filtered_rules)}** / {len(all_rules)} (सक्रिय: {sum(1 for r in filtered_rules if ev_by_id.get(r['rule_id']) and ev_by_id[r['rule_id']].fired)})")
+            st.caption(f"प्रदर्शित शास्त्रीय नियम: **{len(filtered_rules)}** / {len(all_rules)} (सक्रिय: {sum(1 for r in filtered_rules if ev_by_id.get(r['rule_id']) and ev_by_id[r['rule_id']].fired)})")
 
-    # Render Rules (Paginate to top 150 for ultra-fast rendering)
-    limit = 150
-    rules_slice = filtered_rules[:limit]
+            # Render Rules (Paginate to top 150 for ultra-fast rendering)
+            limit = 150
+            rules_slice = filtered_rules[:limit]
 
-    for r in rules_slice:
-        r_id = r.get("rule_id", "")
-        ev = ev_by_id.get(r_id)
-        is_fired = ev.fired if ev else False
-        pol = r.get("effect", {}).get("polarity", "+")
-        pol_badge = "🟢 शुभ योग (+)" if pol == "+" else "🔴 अनिष्ट / दोष (-)"
-        status_badge = "✅ आपकी कुण्डली में सक्रिय (Fired)" if is_fired else "⚪ निष्क्रिय (Inactive)"
-        status_color = "#15803D" if is_fired else "#64748B"
-        border_color = "#86EFAC" if is_fired else "#CBD5E1"
-        bg_color = "#F0FDF4" if is_fired else "#FFFFFF"
+            for r in rules_slice:
+                r_id = r.get("rule_id", "")
+                ev = ev_by_id.get(r_id)
+                is_fired = ev.fired if ev else False
+                pol = r.get("effect", {}).get("polarity", "+")
+                pol_badge = "🟢 शुभ योग (+)" if pol == "+" else "🔴 अनिष्ट / दोष (-)"
+                status_badge = "✅ आपकी कुण्डली में सक्रिय (Fired)" if is_fired else "⚪ निष्क्रिय (Inactive)"
+                status_color = "#15803D" if is_fired else "#64748B"
+                border_color = "#86EFAC" if is_fired else "#CBD5E1"
+                bg_color = "#F0FDF4" if is_fired else "#FFFFFF"
 
-        with st.expander(f"{'⭐ ' if is_fired else ''}{r.get('rule_name_hi', '')} — {r.get('rule_name_en', '')} [{status_badge}]", expanded=is_fired):
-            st.markdown(f"""
-            <div style="background:{bg_color}; border:1px solid {border_color}; border-radius:8px; padding:12px; margin-bottom:8px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
-                    <b style="color:{status_color}; font-size:14px;">स्थिति: {status_badge}</b>
-                    <span style="font-size:12px; color:#475569;"><b>नियम ID:</b> {r_id} | <b>प्रभाव:</b> {pol_badge}</span>
-                </div>
-                <div style="font-size:13px; color:#1E293B; margin-bottom:6px;">
-                    <b>📖 ग्रन्थ:</b> {r.get('source', {}).get('text', 'Unknown')} <i>({r.get('source', {}).get('chapter', 'General')})</i> | 
-                    <b>ऋषि/लेखक:</b> {r.get('source', {}).get('author', 'Vedic')} | 
-                    <b>पद्धति:</b> {r.get('school', 'Classical')} | 
-                    <b>श्रेणी:</b> {r.get('category', 'yoga')}
-                </div>
-                <p style="margin:6px 0; color:#0F172A; font-size:13.5px; line-height:1.5;">
-                    <b>शास्त्रीय फलित:</b> {ev.explanation_hi if (ev and is_fired) else r.get('effect', {}).get('description_hi', '')}
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
+                with st.expander(f"{'⭐ ' if is_fired else ''}{r.get('rule_name_hi', '')} — {r.get('rule_name_en', '')} [{status_badge}]", expanded=is_fired):
+                    st.markdown(f"""
+                    <div style="background:{bg_color}; border:1px solid {border_color}; border-radius:8px; padding:12px; margin-bottom:8px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                            <b style="color:{status_color}; font-size:14px;">स्थिति: {status_badge}</b>
+                            <span style="font-size:12px; color:#475569;"><b>नियम ID:</b> {r_id} | <b>प्रभाव:</b> {pol_badge}</span>
+                        </div>
+                        <div style="font-size:13px; color:#1E293B; margin-bottom:6px;">
+                            <b>📖 ग्रन्थ:</b> {r.get('source', {}).get('text', 'Unknown')} <i>({r.get('source', {}).get('chapter', 'General')})</i> | 
+                            <b>ऋषि/लेखक:</b> {r.get('source', {}).get('author', 'Vedic')} | 
+                            <b>पद्धति:</b> {r.get('school', 'Classical')} | 
+                            <b>श्रेणी:</b> {r.get('category', 'yoga')}
+                        </div>
+                        <p style="margin:6px 0; color:#0F172A; font-size:13.5px; line-height:1.5;">
+                            <b>शास्त्रीय फलित:</b> {ev.explanation_hi if (ev and is_fired) else r.get('effect', {}).get('description_hi', '')}
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
-            if r.get('modifiers'):
-                mods_txt = " • ".join([f"{m.get('condition', '')} ({m.get('delta', '')})" for m in r['modifiers']])
-                st.caption(f"🔧 संशोधक (Modifiers): {mods_txt}")
+                    if r.get('modifiers'):
+                        mods_txt = " • ".join([f"{m.get('condition', '')} ({m.get('delta', '')})" for m in r['modifiers']])
+                        st.caption(f"🔧 संशोधक (Modifiers): {mods_txt}")
 
-    if len(filtered_rules) > limit:
-        st.info(f"💡 कुल {len(filtered_rules)} में से प्रथम {limit} नियम प्रदर्शित हैं। विशिष्ट नियम खोजने हेतु ऊपर 'खोजें' बॉक्स या 'ग्रन्थ' फ़िल्टर का प्रयोग करें।")
+            if len(filtered_rules) > limit:
+                st.info(f"💡 कुल {len(filtered_rules)} में से प्रथम {limit} नियम प्रदर्शित हैं। विशिष्ट नियम खोजने हेतु ऊपर 'खोजें' बॉक्स या 'ग्रन्थ' फ़िल्टर का प्रयोग करें।")
 
 
-# =============================================================
-# TAB 18: VEDIC RISHI VALIDATION
+        # =============================================================
+        # TAB 18: VEDIC RISHI VALIDATION
+
+
+    with tab_research_engine:
+        st.markdown("### 🔍 शास्त्रीय योग एवं कुण्डली अनुसंधान इंजन (Astrological Research & Query Engine)")
+        st.write("Jagannatha Hora एवं Shri Jyoti Star के शोध इंजन के समान अपने सहेजे गए जातकों एवं ऐतिहासिक बेंचमार्क कुण्डलियों में विशिष्ट शास्त्रीय योगों, ग्रह स्थितियों व उच्च-नीच अवस्थाओं की खोज।")
+
+        from src.jyotish.services.research_engine import default_research_engine, AVAILABLE_RESEARCH_YOGAS
+
+        c_rq1, c_rq2 = st.columns([2, 1])
+        with c_rq1:
+            sel_yogas = st.multiselect(
+                "🎯 शास्त्रीय योग फ़िल्टर (Select Classical Yogas)",
+                options=[y["key"] for y in AVAILABLE_RESEARCH_YOGAS],
+                format_func=lambda x: next((y["name_hi"] for y in AVAILABLE_RESEARCH_YOGAS if y["key"] == x), x),
+                placeholder="उदा. गजकेसरी, बुधादित्य, रुचक, विपरीत राजयोग, नीचभंग, मांगलिक..."
+            )
+        with c_rq2:
+            sel_lagna = st.multiselect(
+                "🏛️ लग्न राशि फ़िल्टर (Lagna Sign)",
+                options=list(range(1, 13)),
+                format_func=lambda x: f"{x}. {SIGN_NAMES[x-1]}",
+                placeholder="सभी लग्न (All)"
+            )
+
+        c_rq3, c_rq4, c_rq5 = st.columns(3)
+        with c_rq3:
+            p_house_p = st.selectbox("🪐 ग्रह (Planet in House)", ["कोई नहीं (None)", "Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"])
+            p_house_h = st.selectbox("📍 भाव (House 1-12)", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) if p_house_p != "कोई नहीं (None)" else None
+        with c_rq4:
+            p_sign_p = st.selectbox("🪐 ग्रह (Planet in Sign)", ["कोई नहीं (None)", "Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"])
+            p_sign_s = st.selectbox("♈ राशि (Sign 1-12)", list(range(1, 13)), format_func=lambda x: f"{x}. {SIGN_NAMES[x-1]}") if p_sign_p != "कोई नहीं (None)" else None
+        with c_rq5:
+            p_dig_p = st.selectbox("🪐 ग्रह (Planet Dignity)", ["कोई नहीं (None)", "Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"])
+            p_dig_d = st.selectbox("👑 अवस्था (Dignity)", ["exalted", "debilitated", "own", "retrograde"], format_func=lambda x: {"exalted": "🌟 उच्च (Exalted)", "debilitated": "⚠️ नीच (Debilitated)", "own": "👑 स्वराशि (Own Sign)", "retrograde": "🔄 वक्री (Retrograde)"}[x]) if p_dig_p != "कोई नहीं (None)" else None
+
+        btn_search = st.button("🔍 अनुसंधान एवं खोज प्रारंभ करें (Execute Search)", type="primary", key="btn_run_research_query")
+
+        p_in_h = {"planet": p_house_p, "house": p_house_h} if p_house_p != "कोई नहीं (None)" else None
+        p_in_s = {"planet": p_sign_p, "sign": p_sign_s} if p_sign_p != "कोई नहीं (None)" else None
+        p_in_d = {"planet": p_dig_p, "dignity": p_dig_d} if p_dig_p != "कोई नहीं (None)" else None
+
+        search_results = default_research_engine.search(
+            yoga_keys=sel_yogas if sel_yogas else None,
+            lagna_signs=sel_lagna if sel_lagna else None,
+            planet_in_house=p_in_h,
+            planet_in_sign=p_in_s,
+            planet_dignity=p_in_d
+        )
+
+        st.markdown(f"#### 📋 अनुसंधान परिणाम: **{len(search_results)}** कुण्डलियां मेल खाती हैं")
+
+        if search_results:
+            for idx, r in enumerate(search_results):
+                with st.container():
+                    c_card1, c_card2, c_card3 = st.columns([2.5, 3.5, 1.2])
+                    with c_card1:
+                        st.markdown(f"**👤 {r['name']}**")
+                        st.caption(f"📁 {r['folder']} | लग्न: **{r['lagna']}** | चंद्र: **{r['moon_sign']} ({r['nakshatra']})**")
+                    with c_card2:
+                        tags_html = " ".join([f"<span style='background:#EFF6FF; color:#1D4ED8; padding:3px 8px; border-radius:6px; font-size:12px; margin-right:4px; font-weight:700;'>{m}</span>" for m in r["matched_criteria"]])
+                        st.markdown(tags_html, unsafe_allow_html=True)
+                    with c_card3:
+                        if st.button("📂 कुण्डली खोलें", key=f"load_res_c_{idx}_{r['id']}"):
+                            bd = r["birth_data"]
+                            st.session_state["birth_name"] = bd.get("name", r["name"])
+                            st.session_state["birth_date"] = datetime.strptime(bd["birth_date"], "%Y-%m-%d").date() if isinstance(bd.get("birth_date"), str) else bd.get("birth_date")
+                            st.session_state["birth_time"] = datetime.strptime(bd["birth_time"], "%H:%M:%S").time() if isinstance(bd.get("birth_time"), str) and ":" in bd.get("birth_time") else bd.get("birth_time")
+                            st.session_state["birth_city"] = bd.get("city", "नई दिल्ली")
+                            st.success(f"कुण्डली '{r['name']}' सक्रिय हो गई!")
+                            st.rerun()
+                    st.divider()
+        else:
+            st.warning("दिए गए मापदंडों से मेल खाती कोई कुण्डली नहीं मिली। कृपया फ़िल्टर शिथिल करके पुनः प्रयास करें।")
+
 
 elif selected_idx == 20:
     st.subheader("🔍 वैदिक ऋषि API सत्यापन एवं बेंचमार्क (Vedic Rishi Cross-Validation)")

@@ -4,7 +4,7 @@ Implements classical algorithms from Brihat Parashara Hora Shastra (BPHS Ch. 6)
 for D1, D2, D3, D7, D9, D10, D12, and D60.
 """
 
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Optional, Any, List
 from .constants import SIGN_NAMES
 from .models import VargaChart, VargaPlanetPosition, KundaliChart
 
@@ -34,18 +34,23 @@ class VargaCalculator:
         )
 
     @staticmethod
-    def calculate_d2(chart: KundaliChart) -> VargaChart:
+    def calculate_d2(chart: KundaliChart, variation: str = "parashari") -> VargaChart:
         """
         D2 (Hora Chart - Wealth & Prosperity).
-        Odd signs: 0-15 deg = Sun (Leo), 15-30 deg = Moon (Cancer).
-        Even signs: 0-15 deg = Moon (Cancer), 15-30 deg = Sun (Leo).
+        Variations:
+          - 'parashari' (default): Odd signs: 0-15 Sun (Leo), 15-30 Moon (Cancer). Even: 0-15 Moon, 15-30 Sun.
+          - 'parivritti': Cyclical 24 horas across the zodiac (Aries, Taurus, Gemini...).
         """
         def get_d2_sign(sign_id: int, deg: float) -> int:
             is_odd = (sign_id % 2 != 0)
-            if is_odd:
-                return 5 if deg < 15.0 else 4
+            if variation == "parivritti":
+                hora_idx = (sign_id - 1) * 2 + (0 if deg < 15.0 else 1)
+                return (hora_idx % 12) + 1
             else:
-                return 4 if deg < 15.0 else 5
+                if is_odd:
+                    return 5 if deg < 15.0 else 4
+                else:
+                    return 4 if deg < 15.0 else 5
 
         lagna_d2_sign = get_d2_sign(chart.lagna_sign_id, chart.lagna_degree)
         planets: Dict[str, VargaPlanetPosition] = {}
@@ -61,9 +66,10 @@ class VargaCalculator:
                 house_number=house
             )
 
+        v_label = "Hora (Parivritti)" if variation == "parivritti" else "Hora (Parashari)"
         return VargaChart(
             varga_code="D2",
-            varga_name="Hora",
+            varga_name=v_label,
             division=2,
             lagna_sign_id=lagna_d2_sign,
             lagna_sign_name=SIGN_NAMES[lagna_d2_sign - 1],
@@ -71,23 +77,38 @@ class VargaCalculator:
         )
 
     @staticmethod
-    def calculate_d9(chart: KundaliChart) -> VargaChart:
+    def calculate_d9(chart: KundaliChart, variation: str = "parashari") -> VargaChart:
         """
         D9 (Navamsha Chart - Dharma, Marriage, Soul Strength).
-        Each navamsha = 3 deg 20 min = 3.333333 deg (108 total in zodiac).
+        Variations:
+          - 'parashari' (default): Continuous 108 padas.
+          - 'krishna_mishra': Jaimini Krishna Mishra tradition (Movable from sign, Fixed from 9th, Dual from 5th).
         """
-        def get_d9_sign(lon: float) -> int:
-            # 108 navamshas in 360 degrees
-            # Aries 0 is navamsha 0 (Aries)
-            pada_index = int((lon % 360.0) // (360.0 / 108.0))
-            sign_id = (pada_index % 12) + 1
-            return sign_id
+        def get_d9_sign(sign_id: int, deg: float, lon: float) -> int:
+            if variation == "krishna_mishra":
+                pada = min(8, int(deg // (30.0 / 9.0)))
+                sign_type = sign_id % 3
+                if sign_type == 1:
+                    start = sign_id
+                elif sign_type == 2:
+                    start = ((sign_id - 1 + 8) % 12) + 1
+                else:
+                    start = ((sign_id - 1 + 4) % 12) + 1
 
-        lagna_d9_sign = get_d9_sign(chart.lagna_longitude)
+                if sign_id % 2 != 0:
+                    return ((start - 1 + pada) % 12) + 1
+                else:
+                    return ((start - 1 - pada) % 12) + 1
+            else:
+                # 108 navamshas in 360 degrees (Standard Parashari)
+                pada_index = int((lon % 360.0) // (360.0 / 108.0))
+                return (pada_index % 12) + 1
+
+        lagna_d9_sign = get_d9_sign(chart.lagna_sign_id, chart.lagna_degree, chart.lagna_longitude)
         planets: Dict[str, VargaPlanetPosition] = {}
 
         for name, p in chart.planets.items():
-            s_id = get_d9_sign(p.longitude)
+            s_id = get_d9_sign(p.sign_id, p.sign_degree, p.longitude)
             house = ((s_id - lagna_d9_sign) % 12) + 1
             span = 360.0 / 108.0
             deg_in_varga = ((p.longitude % span) / span) * 30.0
@@ -99,9 +120,10 @@ class VargaCalculator:
                 house_number=house
             )
 
+        v_label = "Navamsha (Krishna Mishra)" if variation == "krishna_mishra" else "Navamsha (Parashari)"
         return VargaChart(
             varga_code="D9",
-            varga_name="Navamsha",
+            varga_name=v_label,
             division=9,
             lagna_sign_id=lagna_d9_sign,
             lagna_sign_name=SIGN_NAMES[lagna_d9_sign - 1],
@@ -189,12 +211,44 @@ class VargaCalculator:
         )
 
     @staticmethod
-    def calculate_d3(chart: KundaliChart) -> VargaChart:
-        """D3 (Drekkana - Siblings, Courage, Vitality). 3 parts of 10 deg."""
+    def calculate_d3(chart: KundaliChart, variation: str = "parashari") -> VargaChart:
+        """
+        D3 (Drekkana - Siblings, Courage, Vitality). 3 parts of 10 deg.
+        Variations:
+          - 'parashari' (default): 1st, 5th, 9th from sign (BPHS Ch. 6)
+          - 'jagannatha': Movable (1-5-9), Fixed (9-1-5), Dual (5-9-1)
+          - 'somanatha': Odd signs direct count, Even signs reverse count
+          - 'parivritti_traya': Continuous 36 decans from Aries
+        """
         def get_d3_sign(sign_id: int, deg: float) -> int:
-            part = int(deg // 10.0)  # 0, 1, 2
-            offsets = [0, 4, 8]  # Same, 5th, 9th
-            return ((sign_id - 1 + offsets[min(2, part)]) % 12) + 1
+            part = min(2, int(deg // 10.0))  # 0, 1, 2
+
+            if variation == "jagannatha":
+                sign_type = sign_id % 3  # 1=Movable, 2=Fixed, 0=Dual
+                if sign_type == 1:
+                    offsets = [0, 4, 8]
+                elif sign_type == 2:
+                    offsets = [8, 0, 4]
+                else:
+                    offsets = [4, 8, 0]
+                return ((sign_id - 1 + offsets[part]) % 12) + 1
+
+            elif variation == "somanatha":
+                is_odd = (sign_id % 2 != 0)
+                if is_odd:
+                    offsets = [0, 4, 8]
+                else:
+                    offsets = [0, 8, 4]  # Reverse direction
+                return ((sign_id - 1 + offsets[part]) % 12) + 1
+
+            elif variation == "parivritti_traya":
+                total_part = (sign_id - 1) * 3 + part
+                return (total_part % 12) + 1
+
+            else:
+                # Standard Parashari
+                offsets = [0, 4, 8]
+                return ((sign_id - 1 + offsets[part]) % 12) + 1
 
         lagna_d3 = get_d3_sign(chart.lagna_sign_id, chart.lagna_degree)
         planets: Dict[str, VargaPlanetPosition] = {}
@@ -206,7 +260,15 @@ class VargaCalculator:
                 degree_in_varga=((p.sign_degree % 10.0) / 10.0) * 30.0,
                 house_number=house
             )
-        return VargaChart(varga_code="D3", varga_name="Drekkana", division=3,
+
+        var_labels = {
+            "jagannatha": "Drekkana (Jagannatha)",
+            "somanatha": "Drekkana (Somanatha)",
+            "parivritti_traya": "Drekkana (Parivritti Traya)",
+            "parashari": "Drekkana (Parashari)"
+        }
+        v_name = var_labels.get(variation, "Drekkana (Parashari)")
+        return VargaChart(varga_code="D3", varga_name=v_name, division=3,
                           lagna_sign_id=lagna_d3, lagna_sign_name=SIGN_NAMES[lagna_d3 - 1], planets=planets)
 
     @staticmethod
@@ -459,15 +521,20 @@ class VargaCalculator:
         return scores
 
     @classmethod
-    def calculate_all_vargas(cls, chart: KundaliChart) -> Dict[str, VargaChart]:
-        """Compute all 16 Parashari divisional charts (Shodashavarga)."""
+    def calculate_all_vargas(cls, chart: KundaliChart, variations: Optional[Dict[str, str]] = None) -> Dict[str, VargaChart]:
+        """Compute all 16 divisional charts with optional classical sampradaya variations."""
+        v_map = variations or {}
+        d2_var = v_map.get("D2", "parashari")
+        d3_var = v_map.get("D3", "parashari")
+        d9_var = v_map.get("D9", "parashari")
+
         return {
             "D1": cls.calculate_d1(chart),
-            "D2": cls.calculate_d2(chart),
-            "D3": cls.calculate_d3(chart),
+            "D2": cls.calculate_d2(chart, variation=d2_var),
+            "D3": cls.calculate_d3(chart, variation=d3_var),
             "D4": cls.calculate_d4(chart),
             "D7": cls.calculate_d7(chart),
-            "D9": cls.calculate_d9(chart),
+            "D9": cls.calculate_d9(chart, variation=d9_var),
             "D10": cls.calculate_d10(chart),
             "D12": cls.calculate_d12(chart),
             "D16": cls.calculate_d16(chart),
