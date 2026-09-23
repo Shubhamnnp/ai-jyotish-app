@@ -622,3 +622,4 @@ with open(prashna_file, "w", encoding="utf-8") as f:
 print(f"Prashna updated to {len(prashna_rules)} rules (+{len(new_prashna_rules)} new)")
 
 print("=== Phase 3 Expansion Complete ===")
+
