@@ -617,3 +617,85 @@ class ChartRenderer:
         svg.append('</svg>')
         return "".join(svg)
 
+    @classmethod
+    def render_kalapurusha_anatomy_svg(
+        cls,
+        health_data: Dict[str, Any],
+        title: str = "कालपुरुष देह वेध आरेख (Kalapurusha Anatomical Health Map)"
+    ) -> str:
+        """
+        Renders an interactive-style SVG diagram of the 12 anatomical organ zones
+        color-coded by affliction and vitality status.
+        """
+        W, H = 640, 560
+        organ_zones = health_data.get("organ_zones", [])
+        vitality = health_data.get("vitality_score", 85)
+        tridosha = health_data.get("tridosha", {})
+
+        v_color = "#16A34A" if vitality >= 75 else ("#D97706" if vitality >= 50 else "#DC2626")
+
+        svg = [
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="520" style="background:#FFFFFF; border:2px solid #E2E8F0; border-radius:14px; box-shadow:0 4px 15px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
+            f'<rect x="0" y="0" width="{W}" height="42" fill="#0F172A" rx="12 12 0 0"/>',
+            f'<text x="{W//2}" y="26" text-anchor="middle" fill="#F8FAFC" font-size="15" font-weight="900">🩺 {title}</text>',
+            f'<rect x="18" y="50" width="{W-36}" height="32" fill="#F8FAFC" rx="6" stroke="#CBD5E1"/>',
+            f'<text x="32" y="71" fill="#1E293B" font-size="12.5" font-weight="800">💪 आरोग्य बल (Vitality): <tspan fill="{v_color}" font-weight="900">{vitality}/100</tspan> | 🌿 त्रिदोष: <tspan fill="#2563EB">{tridosha.get("dominant", "संतुलित")}</tspan></text>',
+        ]
+
+        # 2 Columns of 6 organ cards each
+        # Left col: Houses 1 to 6 (Head to Digestion)
+        # Right col: Houses 7 to 12 (Pelvis to Feet)
+        col_w = (W - 54) // 2
+        card_h = 66
+        start_y = 92
+
+        for idx, org in enumerate(organ_zones):
+            h_num = org["house"]
+            col_idx = 0 if h_num <= 6 else 1
+            row_idx = (h_num - 1) if col_idx == 0 else (h_num - 7)
+
+            cx = 18 if col_idx == 0 else (18 + col_w + 18)
+            cy = start_y + (row_idx * (card_h + 8))
+
+            score = org["affliction_score"]
+            if score >= 60:
+                bg = "#FEF2F2"
+                stroke = "#DC2626"
+                badge_bg = "#FEE2E2"
+                badge_fg = "#991B1B"
+                badge_txt = f"🔴 {score}% पीड़ित"
+            elif score >= 35:
+                bg = "#FFFBEB"
+                stroke = "#D97706"
+                badge_bg = "#FEF3C7"
+                badge_fg = "#92400E"
+                badge_txt = f"🟡 {score}% सतर्क"
+            else:
+                bg = "#F0FDF4"
+                stroke = "#16A34A"
+                badge_bg = "#DCFCE7"
+                badge_fg = "#166534"
+                badge_txt = f"🟢 {score}% बलिष्ठ"
+
+            svg.append(f'<g transform="translate({cx}, {cy})">')
+            svg.append(f'<rect width="{col_w}" height="{card_h}" fill="{bg}" stroke="{stroke}" stroke-width="1.8" rx="8"/>')
+            svg.append(f'<rect width="6" height="{card_h}" fill="{stroke}" rx="8 0 0 8"/>')
+            # Header
+            svg.append(f'<text x="14" y="20" fill="#0F172A" font-size="12" font-weight="900">भाव {h_num}: {org["organ_hi"].split("(")[0].strip()}</text>')
+            svg.append(f'<rect x="{col_w-85}" y="8" width="75" height="18" fill="{badge_bg}" rx="4"/>')
+            svg.append(f'<text x="{col_w-48}" y="21" text-anchor="middle" fill="{badge_fg}" font-size="10" font-weight="800">{badge_txt}</text>')
+            # Issues
+            issues_trunc = org["potential_issues"][:42] + ("..." if len(org["potential_issues"]) > 42 else "")
+            svg.append(f'<text x="14" y="38" fill="#475569" font-size="10.5" font-weight="600">⚠️ {issues_trunc}</text>')
+            # Reasons
+            reasons_trunc = ", ".join(org["reasons"])[:38] + ("..." if len(", ".join(org["reasons"])) > 38 else "")
+            svg.append(f'<text x="14" y="54" fill="#64748B" font-size="9.5" font-weight="500">🔍 {reasons_trunc}</text>')
+            svg.append('</g>')
+
+        # Footer Legend
+        svg.append(f'<rect x="18" y="525" width="{W-36}" height="26" fill="#F8FAFC" rx="6" stroke="#E2E8F0"/>')
+        svg.append(f'<text x="{W//2}" y="542" text-anchor="middle" fill="#475569" font-size="10.5" font-weight="800">🟢 0-34% बलिष्ठ एवं स्वस्थ | 🟡 35-59% सामान्य संवेदनशील | 🔴 60-100% विशेष ध्यान योग्य व पीड़ित अंग</text>')
+        svg.append('</svg>')
+        return "".join(svg)
+
+

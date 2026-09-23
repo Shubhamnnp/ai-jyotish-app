@@ -4801,832 +4801,949 @@ elif selected_idx == 8:
 # TAB 10: DASHA SYSTEMS
 
 elif selected_idx == 9:
-    st.subheader("⏱️ दशा प्रणालियाँ (Multi-Level Dasha Systems)")
-    st.write("विंशोत्तरी दशा (महादशा, अंतर्दशा, प्रत्यंतर्दशा, सूक्ष्मदशा एवं प्राणदशा), योगिनी, जैमिनी चर, कालचक्र एवं शूल दशाओं का सम्पूर्ण बहु-स्तरीय विश्लेषण।")
+    st.subheader("⏱️ दशा प्रणालियाँ एवं एकीकृत जीवन टाइमलाइन (Dasha & Predictive Life Timeline)")
+    st.write("विंशोत्तरी, जैमिनी चर, योगिनी, कालचक्र, शूल व दृग दशाओं का ०-१०० वर्ष एकीकृत जीवन टाइमलाइन एवं बहु-स्तरीय विश्लेषण।")
 
-    # Target Date Picker for Point-in-Time Dasha Calculation
-    c_dt1, c_dt2 = st.columns([2, 4])
-    with c_dt1:
-        dasha_target_date = st.date_input("🎯 लक्षित दिनांक पर दशा देखें (Target Date)", value=date.today(), format="DD/MM/YYYY", key="dasha_target_date_picker")
-    with c_dt2:
-        st.caption(f"🗓️ वर्तमान में **{dasha_target_date.strftime('%d-%b-%Y')}** के लिए तात्कालिक सक्रिय सूक्ष्म दशाओं का मूल्यांकन प्रदर्शित किया जा रहा है।")
+    tab_dasha_unified, tab_dasha_individual = st.tabs([
+        "⏳ ०-१०० वर्ष एकीकृत जीवन टाइमलाइन (Unified Predictive Life Timeline)",
+        "🗂️ पृथक बहु-स्तरीय दशा प्रणालियाँ (10 Individual Dasha Systems)"
+    ])
 
-    d_mode = st.radio(
-        "दशा प्रणाली चयन (Select Dasha System)",
-        [
-            "🌟 विंशोत्तरी दशा (Vimshottari 120 Yrs - 5 Levels)",
-            "🌸 योगिनी दशा (Yogini 36 Yrs - 3 Levels)",
-            "🔱 जैमिनी चर दशा (Jaimini Chara Dasha)",
-            "🔄 कालचक्र दशा (Kaalachakra Dasha - BPHS)",
-            "⚔️ शूल दशा (Shoola Dasha - Ayurdaya & Maraka)",
-            "🕉️ अष्टोत्तरी दशा (Ashtottari 108 Yrs - 8 Planets)",
-            "🪐 नारायण दशा (Narayana Rashi Dasha - Jaimini)",
-            "⏳ द्विसप्ततिसम दशा (Dwisaptati Sama 72 Yrs)",
-            "🔷 स्थिर दशा (Sthira Dasha - Jaimini Fixed)",
-            "👁️ दृग दशा (Drig Dasha - Spiritual Jaimini)"
-        ],
-        horizontal=True,
-        key="dasha_system_mode_radio"
-    )
+    with tab_dasha_unified:
+        st.markdown("### ⏳ ० से १०० वर्ष सम्पूर्ण एकीकृत जीवन टाइमलाइन व घटना संभावना")
+        st.caption("विंशोत्तरी, जैमिनी चर, योगिनी दशा, वर्षफल मुन्था एवं गोचर गुरु-शनि का संश्लेषित संयुक्त विश्लेषण:")
 
-    birth_dt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
-    moon_lon = chart.planets["Moon"].longitude
-    target_dt = datetime.combine(dasha_target_date, datetime.now().time())
+        try:
+            import importlib
+            import src.jyotish.services.timeline as tl_mod
+            importlib.reload(tl_mod)
+            tl_service = tl_mod.default_timeline_service
+            tl_bundle = tl_service.calculate_life_timeline(chart, 0, 100)
+            records = tl_bundle["records"]
+            event_win = tl_bundle["event_windows"]
+            curr_age = tl_bundle["current_age"]
 
-    import importlib
-    import src.jyotish.dasha.vimshottari as vim_mod
-    import src.jyotish.dasha.yogini as yog_mod
-    import src.jyotish.dasha.chara as chara_mod
-    import src.jyotish.dasha.ashtottari as ashto_mod
-    import src.jyotish.dasha.narayana as narayana_mod
-    import src.jyotish.dasha.sama_dashas as sama_mod
-    import src.jyotish.dasha.sthira_drig as sthira_mod
-    
-    if not hasattr(default_dasha_engine, "get_5level_hierarchy"):
-        importlib.reload(vim_mod)
-    if not hasattr(default_yogini_engine, "generate_antardashas"):
-        importlib.reload(yog_mod)
-    if not hasattr(default_chara_engine, "generate_antardashas"):
-        importlib.reload(chara_mod)
+            col_ag1, col_ag2 = st.columns([3, 1])
+            with col_ag1:
+                sel_age = st.slider("🎯 जातक की आयु का चयन करें (Select Age):", min_value=0, max_value=100, value=min(100, curr_age), key="tl_slider_sel_age")
+            with col_ag2:
+                st.metric("चुनी गई आयु / वर्ष", f"{sel_age} वर्ष", f"{tl_bundle['birth_year'] + sel_age} ईस्वी")
 
-    d_engine = vim_mod.default_dasha_engine
-    y_engine = yog_mod.default_yogini_engine
-    c_engine = chara_mod.default_chara_engine
-    ashto_engine = ashto_mod.default_ashtottari_engine
-    narayana_engine = narayana_mod.default_narayana_engine
-    dwisaptati_engine = sama_mod.default_dwisaptati_engine
-    sthira_engine = sthira_mod.default_sthira_engine
-    drig_engine = sthira_mod.default_drigdasha_engine
+            sel_rec = next((r for r in records if r["age"] == sel_age), records[0])
 
-    # =========================================================================
-    # 1. VIMSHOTTARI DASHA (5 LEVELS: MAHA -> ANTAR -> PRAT -> SOOKSHMA -> PRANA)
-    # =========================================================================
-    if "विंशोत्तरी" in d_mode:
-        h5 = d_engine.get_5level_hierarchy(birth_dt, moon_lon, target_dt)
-
-        act_m = h5["mahadasha"]
-        act_a = h5["antardasha"]
-        act_pr = h5["pratyantardasha"]
-        act_s = h5["sookshmadasha"]
-        act_p = h5["pranadasha"]
-
-        # 1. Active 5-Level HUD
-        st.markdown(f"#### 🔴 सक्रिय 5-स्तरीय विंशोत्तरी दशा ({dasha_target_date.strftime('%d-%b-%Y')})")
-
-        # Breadcrumb Banner
-        p_icons = {
-            "Sun": "☀️ सूर्य (Sun)", "Moon": "🌙 चन्द्र (Moon)", "Mars": "⚔️ मंगल (Mars)",
-            "Mercury": "☿️ बुध (Mercury)", "Jupiter": "🪐 गुरु (Jupiter)", "Venus": "💎 शुक्र (Venus)",
-            "Saturn": "⚖️ शनि (Saturn)", "Rahu": "🐉 राहु (Rahu)", "Ketu": "☄️ केतु (Ketu)"
-        }
-        b_str = (
-            f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
-            f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय 5-स्तरीय दशा पदानुक्रम (Active Dasha Hierarchy):</div>"
-            f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
-            f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>👑 {p_icons.get(act_m['lord'], act_m['lord'])}</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>🪐 {p_icons.get(act_a['lord'], act_a['lord'])}</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ {p_icons.get(act_pr['lord'], act_pr['lord'])}</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#FDF2F8; border:1.5px solid #EC4899; color:#831843; padding:5px 12px; border-radius:8px;'>🔍 {p_icons.get(act_s['lord'], act_s['lord'])}</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#F1F5F9; border:1.5px solid #64748B; color:#0F172A; padding:5px 12px; border-radius:8px;'>🧬 {p_icons.get(act_p['lord'], act_p['lord'])}</span>"
-            f"</div>"
-            f"</div>"
-        )
-        st.markdown(b_str, unsafe_allow_html=True)
-
-        # 5 Metric Cards
-        c1, c2, c3, c4, c5 = st.columns(5)
-        with c1:
             st.markdown(f"""
-            <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#4338CA; font-weight:800;">👑 महादशा (L1)</div>
-                <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_m['lord']}</div>
-                <div style="font-size:10.5px; color:#475569;">{act_m['start_date'].strftime('%d-%b-%y')} ~ {act_m['end_date'].strftime('%d-%b-%y')}</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with c2:
-            st.markdown(f"""
-            <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#15803D; font-weight:800;">🪐 अंतर्दशा (L2)</div>
-                <div style="font-size:18px; font-weight:900; color:#064E3B;">{act_a['lord']}</div>
-                <div style="font-size:10.5px; color:#475569;">{act_a['start_date'].strftime('%d-%b-%y')} ~ {act_a['end_date'].strftime('%d-%b-%y')}</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with c3:
-            st.markdown(f"""
-            <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ प्रत्यंतर्दशा (L3)</div>
-                <div style="font-size:18px; font-weight:900; color:#78350F;">{act_pr['lord']}</div>
-                <div style="font-size:10.5px; color:#475569;">{act_pr['start_date'].strftime('%d-%b-%y')} ~ {act_pr['end_date'].strftime('%d-%b-%y')}</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with c4:
-            st.markdown(f"""
-            <div style="background:#FDF2F8; border: 2px solid #EC4899; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#BE185D; font-weight:800;">🔍 सूक्ष्मदशा (L4)</div>
-                <div style="font-size:18px; font-weight:900; color:#831843;">{act_s['lord']}</div>
-                <div style="font-size:10.5px; color:#475569;">{act_s['start_date'].strftime('%d-%b')} ~ {act_s['end_date'].strftime('%d-%b')} ({act_s.get('duration_days', 0)}d)</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with c5:
-            st.markdown(f"""
-            <div style="background:#F3F4F6; border: 2px solid #64748B; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#334155; font-weight:800;">🧬 प्राणदशा (L5)</div>
-                <div style="font-size:18px; font-weight:900; color:#0F172A;">{act_p['lord']}</div>
-                <div style="font-size:10.5px; color:#475569;">{act_p['start_date'].strftime('%d-%b %H:%M')} ~ {act_p['end_date'].strftime('%d-%b %H:%M')}</div>
+            <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:12px; padding:16px; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #E2E8F0; padding-bottom:8px; margin-bottom:12px;">
+                    <b style="font-size:16px; color:#0F172A;">🗓️ आयु {sel_rec['age']} वर्ष (वर्ष {sel_rec['year']}) की संयुक्त खगोलीय व दशा स्थिति</b>
+                    <span style="background:{'#DCFCE7' if sel_rec['is_current'] else '#EFF6FF'}; color:{'#166534' if sel_rec['is_current'] else '#1E40AF'}; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:800;">
+                        {'🔴 वर्तमान प्रभावी वर्ष (Current)' if sel_rec['is_current'] else f'वर्ष {sel_rec["year"]}'}
+                    </span>
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:12px;">
+                    <div style="background:#FFFFFF; padding:10px; border-radius:8px; border:1px solid #E2E8F0;">
+                        <span style="font-size:11px; color:#64748B; font-weight:700;">🌟 विंशोत्तरी दशा</span><br/>
+                        <b style="font-size:14px; color:#0F172A;">{sel_rec['dasha_code']}</b><br/>
+                        <small style="color:#2563EB;">प्रत्यंतर: {sel_rec['vimshottari_pd']}</small>
+                    </div>
+                    <div style="background:#FFFFFF; padding:10px; border-radius:8px; border:1px solid #E2E8F0;">
+                        <span style="font-size:11px; color:#64748B; font-weight:700;">🔱 जैमिनी चर दशा</span><br/>
+                        <b style="font-size:14px; color:#7C3AED;">{sel_rec['chara_sign']} राशि</b><br/>
+                        <small style="color:#6B7280;">राशि आधारित काल</small>
+                    </div>
+                    <div style="background:#FFFFFF; padding:10px; border-radius:8px; border:1px solid #E2E8F0;">
+                        <span style="font-size:11px; color:#64748B; font-weight:700;">🌸 योगिनी दशा</span><br/>
+                        <b style="font-size:14px; color:#DB2777;">{sel_rec['yogini']}</b><br/>
+                        <small style="color:#6B7280;">३६ वर्षीय चक्र</small>
+                    </div>
+                    <div style="background:#FFFFFF; padding:10px; border-radius:8px; border:1px solid #E2E8F0;">
+                        <span style="font-size:11px; color:#64748B; font-weight:700;">📅 वर्षफल मुन्था</span><br/>
+                        <b style="font-size:14px; color:#D97706;">भाव {sel_rec['muntha_house']} ({sel_rec['muntha_sign']})</b><br/>
+                        <small style="color:{'#16A34A' if 'Fav' in sel_rec['muntha_status'] else '#DC2626'}; font-weight:700;">{sel_rec['muntha_status']}</small>
+                    </div>
+                    <div style="background:#FFFFFF; padding:10px; border-radius:8px; border:1px solid #E2E8F0;">
+                        <span style="font-size:11px; color:#64748B; font-weight:700;">🪐 शनि / साढ़ेसाती स्थिति</span><br/>
+                        <b style="font-size:14px; color:{'#DC2626' if sel_rec['sade_sati']!='नहीं' else '#16A34A'};">{sel_rec['sade_sati']}</b><br/>
+                        <small style="color:#6B7280;">चन्द्र से प्रभाव</small>
+                    </div>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
-        # Progress calculation for active Antardasha
-        a_total_sec = (act_a["end_date"] - act_a["start_date"]).total_seconds()
-        a_elapsed_sec = max(0.0, min(a_total_sec, (target_dt - act_a["start_date"]).total_seconds()))
-        a_pct = (a_elapsed_sec / max(1.0, a_total_sec))
-        st.write("")
-        st.markdown(f"**🪐 सक्रिय अंतर्दशा ({act_m['lord']}-{act_a['lord']}) प्रगति: {int(a_pct * 100)}% संपन्न**")
-        st.progress(a_pct)
+            st.markdown("#### 🎯 इस वर्ष जीवन घटनाओं की संभावना मीटर (Probability Meters 0-100%):")
+            col_ev1, col_ev2 = st.columns(2)
+            with col_ev1:
+                st.markdown(f"💼 **करियर एवं पदोन्नति अनुकूलता:** {sel_rec['career_score']}%")
+                st.progress(sel_rec['career_score'] / 100.0)
+                st.markdown(f"💍 **विवाह एवं दांपत्य अनुकूलता:** {sel_rec['marriage_score']}%")
+                st.progress(sel_rec['marriage_score'] / 100.0)
+                st.markdown(f"💰 **धन लाभ एवं संपत्ति क्रय:** {sel_rec['wealth_score']}%")
+                st.progress(sel_rec['wealth_score'] / 100.0)
+            with col_ev2:
+                st.markdown(f"✈️ **विदेश गमन / स्थानांतरण:** {sel_rec['travel_score']}%")
+                st.progress(sel_rec['travel_score'] / 100.0)
+                st.markdown(f"🛡️ **स्वास्थ्य सतर्कता सूचकांक:** {sel_rec['health_caution_score']}%")
+                st.progress(sel_rec['health_caution_score'] / 100.0)
 
-        st.markdown("---")
+            with st.expander("🌟 जातक के जीवन के प्रमुख अनुकूल समय-खिड़कियां (Life Event Windows Highlights)", expanded=True):
+                col_w1, col_w2, col_w3 = st.columns(3)
+                with col_w1:
+                    st.markdown("**💼 शीर्ष करियर उत्थान वर्ष:**")
+                    c_items = [f"• वर्ष {w['year']} (आयु {w['age']} वर्ष, दशा: {w['dasha']}) — {w['score']}%" for w in event_win["career"][:5]]
+                    st.markdown("\n".join(c_items) if c_items else "—")
+                with col_w2:
+                    st.markdown("**💍 प्रबल विवाह योग वर्ष:**")
+                    m_items = [f"• वर्ष {w['year']} (आयु {w['age']} वर्ष, दशा: {w['dasha']}) — {w['score']}%" for w in event_win["marriage"][:5]]
+                    st.markdown("\n".join(m_items) if m_items else "—")
+                with col_w3:
+                    st.markdown("**💰 भारी धन लाभ / संपत्ति वर्ष:**")
+                    w_items = [f"• वर्ष {w['year']} (आयु {w['age']} वर्ष, दशा: {w['dasha']}) — {w['score']}%" for w in event_win["wealth"][:5]]
+                    st.markdown("\n".join(w_items) if w_items else "—")
 
-        # 2. Interactive Multi-Level Dasha Explorer
-        st.markdown("#### 🌳 विंशोत्तरी दशा बहु-स्तरीय विस्तृत अन्वेषक (5-Level Interactive Explorer)")
-
-        tab_v1, tab_v2, tab_v3, tab_v4, tab_v5, tab_v_all = st.tabs([
-            "👑 स्तर 1: महादशा (Mahadasha)",
-            "🪐 स्तर 2: अंतर्दशा (Antardasha)",
-            "⚡ स्तर 3: प्रत्यंतर्दशा (Pratyantardasha)",
-            "🔍 स्तर 4: सूक्ष्मदशा (Sookshmadasha)",
-            "🧬 स्तर 5: प्राणदशा (Pranadasha)",
-            "📜 सम्पूर्ण 120-वर्षीय कालक्रम (All Mahadashas)"
-        ])
-
-        v_mahadashas = d_engine.generate_mahadasha_sequence(birth_dt, moon_lon, num_cycles=2)
-        maha_options = [f"{m['lord']} ({m['start_date'].strftime('%d-%b-%Y')} से {m['end_date'].strftime('%d-%b-%Y')})" for m in v_mahadashas]
-        default_maha_idx = next((i for i, m in enumerate(v_mahadashas) if m['lord'] == act_m['lord'] and m['start_date'] <= target_dt <= m['end_date']), 0)
-
-        with tab_v1:
-            st.markdown("##### 👑 समस्त 9 महादशाएँ (120 Years Vimshottari Cycle)")
-            m_rows = []
-            for m in v_mahadashas:
-                is_active = (m["start_date"] <= target_dt <= m["end_date"])
-                m_rows.append({
-                    "महादशा स्वामी (Lord)": f"👑 {m['lord']}" + (" (⭐ वर्तमान सक्रिय)" if is_active else ""),
-                    "आरंभ दिनांक (Start)": m["start_date"].strftime("%d-%b-%Y"),
-                    "समाप्ति दिनांक (End)": m["end_date"].strftime("%d-%b-%Y"),
-                    "अवधि (Years)": f"{m['duration_years']:.2f} वर्ष",
-                    "प्रकार": "जन्म शेष (Birth Balance)" if m.get("is_partial") else "पूर्ण महादशा",
-                    "सक्रियता": "✅ सक्रिय" if is_active else "—"
-                })
-            st.dataframe(pd.DataFrame(m_rows), use_container_width=True, hide_index=True)
-
-        with tab_v2:
-            st.markdown("##### 🪐 महादशा अंतर्गत समस्त 9 अंतर्दशाएं (Antardashas / Bhuktis)")
-            sel_maha_idx = st.selectbox("महादशा चुनें (Select Mahadasha)", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_maha_for_antar")
-            sel_m_obj = v_mahadashas[sel_maha_idx]
-            
-            antars = d_engine.generate_antardashas(
-                sel_m_obj["lord"], sel_m_obj["start_date"], sel_m_obj["end_date"], is_partial=sel_m_obj.get("is_partial", False)
-            )
-            a_rows = []
-            for a in antars:
-                is_a_active = (a["start_date"] <= target_dt <= a["end_date"])
-                a_rows.append({
-                    "महादशा / अंतर्दशा": f"{sel_m_obj['lord']} — {a['lord']}" + (" (⭐ सक्रिय)" if is_a_active else ""),
-                    "अंतर्दशा स्वामी (Lord)": a["lord"],
-                    "आरंभ दिनांक (Start)": a["start_date"].strftime("%d-%b-%Y"),
-                    "समाप्ति दिनांक (End)": a["end_date"].strftime("%d-%b-%Y"),
-                    "अवधि (Years)": f"{a['duration_years']:.2f} वर्ष",
-                    "अवधि (माह / दिन)": f"{int(a['duration_years']*12)} माह {int((a['duration_years']*12 % 1)*30)} दिन",
-                    "सक्रियता": "✅ सक्रिय" if is_a_active else "—"
-                })
-            st.dataframe(pd.DataFrame(a_rows), use_container_width=True, hide_index=True)
-
-        with tab_v3:
-            st.markdown("##### ⚡ अंतर्दशा अंतर्गत समस्त 9 प्रत्यंतर्दशाएं (Pratyantardashas)")
-            col_sel1, col_sel2 = st.columns(2)
-            with col_sel1:
-                sel_m_prat_idx = st.selectbox("महादशा चुनें", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_prat")
-            sel_m_for_p = v_mahadashas[sel_m_prat_idx]
-            antars_for_p = d_engine.generate_antardashas(sel_m_for_p["lord"], sel_m_for_p["start_date"], sel_m_for_p["end_date"], is_partial=sel_m_for_p.get("is_partial", False))
-            antar_p_options = [f"{a['lord']} ({a['start_date'].strftime('%d-%b-%Y')} से {a['end_date'].strftime('%d-%b-%Y')})" for a in antars_for_p]
-            default_a_idx = next((i for i, a in enumerate(antars_for_p) if a['lord'] == act_a['lord'] and a['start_date'] <= target_dt <= a['end_date']), 0)
-            with col_sel2:
-                sel_a_prat_idx = st.selectbox("अंतर्दशा चुनें", range(len(antar_p_options)), format_func=lambda i: antar_p_options[i], index=default_a_idx, key="sel_a_for_prat")
-            
-            sel_a_for_p = antars_for_p[sel_a_prat_idx]
-            pratyantars = d_engine.generate_pratyantardashas(
-                sel_m_for_p["lord"], sel_a_for_p["lord"], sel_a_for_p["start_date"], sel_a_for_p["end_date"]
-            )
-            pr_rows = []
-            for pr in pratyantars:
-                is_pr_act = (pr["start_date"] <= target_dt <= pr["end_date"])
-                dur_days = (pr["end_date"] - pr["start_date"]).total_seconds() / 86400.0
-                pr_rows.append({
-                    "दशा क्रम": f"{sel_m_for_p['lord']} / {sel_a_for_p['lord']} / {pr['lord']}" + (" (⭐ सक्रिय)" if is_pr_act else ""),
-                    "प्रत्यंतर्दशा स्वामी": pr["lord"],
-                    "आरंभ दिनांक": pr["start_date"].strftime("%d-%b-%Y"),
-                    "समाप्ति दिनांक": pr["end_date"].strftime("%d-%b-%Y"),
-                    "अवधि (दिन)": f"{dur_days:.1f} दिन",
-                    "सक्रियता": "✅ सक्रिय" if is_pr_act else "—"
-                })
-            st.dataframe(pd.DataFrame(pr_rows), use_container_width=True, hide_index=True)
-
-        with tab_v4:
-            st.markdown("##### 🔍 प्रत्यंतर्दशा अंतर्गत समस्त 9 सूक्ष्मदशाएं (Sookshmadashas - Level 4)")
-            col_s1, col_s2, col_s3 = st.columns(3)
-            with col_s1:
-                sel_m_s_idx = st.selectbox("महादशा", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_sookshma")
-            sel_m_s = v_mahadashas[sel_m_s_idx]
-            antars_s = d_engine.generate_antardashas(sel_m_s["lord"], sel_m_s["start_date"], sel_m_s["end_date"], is_partial=sel_m_s.get("is_partial", False))
-            with col_s2:
-                sel_a_s_idx = st.selectbox("अंतर्दशा", range(len(antars_s)), format_func=lambda i: f"{antars_s[i]['lord']} ({antars_s[i]['start_date'].strftime('%d-%b-%y')})", index=min(default_a_idx, len(antars_s)-1), key="sel_a_for_sookshma")
-            sel_a_s = antars_s[sel_a_s_idx]
-            prats_s = d_engine.generate_pratyantardashas(sel_m_s["lord"], sel_a_s["lord"], sel_a_s["start_date"], sel_a_s["end_date"])
-            default_pr_idx = next((i for i, p in enumerate(prats_s) if p['lord'] == act_pr['lord'] and p['start_date'] <= target_dt <= p['end_date']), 0)
-            with col_s3:
-                sel_pr_s_idx = st.selectbox("प्रत्यंतर्दशा", range(len(prats_s)), format_func=lambda i: f"{prats_s[i]['lord']} ({prats_s[i]['start_date'].strftime('%d-%b-%y')})", index=min(default_pr_idx, len(prats_s)-1), key="sel_pr_for_sookshma")
-            
-            sel_pr_s = prats_s[sel_pr_s_idx]
-            sookshmas = d_engine.generate_sookshmadashas(sel_m_s["lord"], sel_a_s["lord"], sel_pr_s["lord"], sel_pr_s["start_date"], sel_pr_s["end_date"])
-            s_rows = []
-            for s in sookshmas:
-                is_s_act = (s["start_date"] <= target_dt <= s["end_date"])
-                s_rows.append({
-                    "4-स्तरीय दशा": f"{sel_m_s['lord']}/{sel_a_s['lord']}/{sel_pr_s['lord']}/{s['lord']}" + (" (⭐ सक्रिय)" if is_s_act else ""),
-                    "सूक्ष्मदशा स्वामी": s["lord"],
-                    "आरंभ समय": s["start_date"].strftime("%d-%b-%Y %I:%M %p"),
-                    "समाप्ति समय": s["end_date"].strftime("%d-%b-%Y %I:%M %p"),
-                    "अवधि": f"{s['duration_days']} दिन",
-                    "सक्रियता": "✅ सक्रिय" if is_s_act else "—"
-                })
-            st.dataframe(pd.DataFrame(s_rows), use_container_width=True, hide_index=True)
-
-        with tab_v5:
-            st.markdown("##### 🧬 सूक्ष्मदशा अंतर्गत समस्त 9 प्राणदशाएं (Pranadashas - Level 5 / Hourly Precision)")
-            c_p1, c_p2, c_p3, c_p4 = st.columns(4)
-            with c_p1:
-                sel_m_p_idx = st.selectbox("महादशा (Maha)", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_prana")
-            sel_m_p = v_mahadashas[sel_m_p_idx]
-            antars_p = d_engine.generate_antardashas(sel_m_p["lord"], sel_m_p["start_date"], sel_m_p["end_date"], is_partial=sel_m_p.get("is_partial", False))
-            with c_p2:
-                sel_a_p_idx = st.selectbox("अंतर्दशा (Antar)", range(len(antars_p)), format_func=lambda i: f"{antars_p[i]['lord']}", index=min(default_a_idx, len(antars_p)-1), key="sel_a_for_prana")
-            sel_a_p = antars_p[sel_a_p_idx]
-            prats_p = d_engine.generate_pratyantardashas(sel_m_p["lord"], sel_a_p["lord"], sel_a_p["start_date"], sel_a_p["end_date"])
-            with c_p3:
-                sel_pr_p_idx = st.selectbox("प्रत्यंतर्दशा (Prat)", range(len(prats_p)), format_func=lambda i: f"{prats_p[i]['lord']}", index=min(default_pr_idx, len(prats_p)-1), key="sel_pr_for_prana")
-            sel_pr_p = prats_p[sel_pr_p_idx]
-            sookshmas_p = d_engine.generate_sookshmadashas(sel_m_p["lord"], sel_a_p["lord"], sel_pr_p["lord"], sel_pr_p["start_date"], sel_pr_p["end_date"])
-            default_s_idx = next((i for i, s in enumerate(sookshmas_p) if s['lord'] == act_s['lord'] and s['start_date'] <= target_dt <= s['end_date']), 0)
-            with c_p4:
-                sel_s_p_idx = st.selectbox("सूक्ष्मदशा (Sookshma)", range(len(sookshmas_p)), format_func=lambda i: f"{sookshmas_p[i]['lord']}", index=min(default_s_idx, len(sookshmas_p)-1), key="sel_s_for_prana")
-            sel_s_p = sookshmas_p[sel_s_p_idx]
-
-            pranas = d_engine.generate_pranadashas(sel_m_p["lord"], sel_a_p["lord"], sel_pr_p["lord"], sel_s_p["lord"], sel_s_p["start_date"], sel_s_p["end_date"])
-            p_rows = []
-            for prn in pranas:
-                is_p_act = (prn["start_date"] <= target_dt <= prn["end_date"])
-                p_rows.append({
-                    "5-स्तरीय प्राणदशा": f"{sel_m_p['lord']}/{sel_a_p['lord']}/{sel_pr_p['lord']}/{sel_s_p['lord']}/{prn['lord']}" + (" (⭐ सक्रिय)" if is_p_act else ""),
-                    "प्राणदशा स्वामी": prn["lord"],
-                    "आरंभ समय": prn["start_date"].strftime("%d-%b-%Y %I:%M %p"),
-                    "समाप्ति समय": prn["end_date"].strftime("%d-%b-%Y %I:%M %p"),
-                    "अवधि (घंटे)": f"{prn['duration_hours']} घंटे",
-                    "सक्रियता": "✅ सक्रिय" if is_p_act else "—"
-                })
-            st.dataframe(pd.DataFrame(p_rows), use_container_width=True, hide_index=True)
-
-        with tab_v_all:
-            st.markdown("##### 📜 संपूर्ण 120-वर्षीय जीवन कालक्रम तालिका")
-            full_rows = []
-            for m in v_mahadashas:
-                m_antars = d_engine.generate_antardashas(m["lord"], m["start_date"], m["end_date"], is_partial=m.get("is_partial", False))
-                for a in m_antars:
-                    is_active = (a["start_date"] <= target_dt <= a["end_date"])
-                    full_rows.append({
-                        "महादशा (L1)": m["lord"],
-                        "अंतर्दशा (L2)": a["lord"],
-                        "आरंभ दिनांक": a["start_date"].strftime("%d-%b-%Y"),
-                        "समाप्ति दिनांक": a["end_date"].strftime("%d-%b-%Y"),
-                        "अवधि (वर्ष)": f"{a['duration_years']:.2f}",
-                        "सक्रियता": "⭐ वर्तमान सक्रिय" if is_active else ""
+            with st.expander("📜 ० से १०० वर्ष सम्पूर्ण जीवन डेटा तालिका (Full Table)", expanded=False):
+                tbl_rows = []
+                for r in records:
+                    tbl_rows.append({
+                        "आयु": f"{r['age']} वर्ष",
+                        "ईस्वी वर्ष": r["year"],
+                        "विंशोत्तरी दशा": r["dasha_code"],
+                        "चर दशा": r["chara_sign"],
+                        "योगिनी": r["yogini"],
+                        "मुन्था भाव": f"भाव {r['muntha_house']}",
+                        "मुन्था स्थिति": r["muntha_status"],
+                        "साढ़ेसाती": r["sade_sati"],
+                        "करियर %": f"{r['career_score']}%",
+                        "विवाह %": f"{r['marriage_score']}%",
+                        "धन %": f"{r['wealth_score']}%",
+                        "स्वास्थ्य जोखिम": f"{r['health_caution_score']}%"
                     })
-            st.dataframe(pd.DataFrame(full_rows), use_container_width=True, hide_index=True)
+                st.dataframe(pd.DataFrame(tbl_rows), use_container_width=True, hide_index=True)
+        except Exception as _e_tl:
+            st.error(f"टाइमलाइन गणना त्रुटि: {str(_e_tl)[:300]}")
 
-    # =========================================================================
-    # 2. YOGINI DASHA (3 LEVELS: MAJOR -> ANTAR -> PRATYANTAR)
-    # =========================================================================
-    elif "योगिनी" in d_mode:
-        st.markdown(f"#### 🌸 योगिनी दशा (36-Year Classical Cycle — Major, Antar & Pratyantar)")
-        try:
-            yog_dashas = y_engine.generate_timeline(birth_dt, moon_lon)
-        except TypeError:
-            yog_dashas = y_engine.generate_timeline(chart)
+    with tab_dasha_individual:
+        # Target Date Picker for Point-in-Time Dasha Calculation
+        c_dt1, c_dt2 = st.columns([2, 4])
+        with c_dt1:
+            dasha_target_date = st.date_input("🎯 लक्षित दिनांक पर दशा देखें (Target Date)", value=date.today(), format="DD/MM/YYYY", key="dasha_target_date_picker")
+        with c_dt2:
+            st.caption(f"🗓️ वर्तमान में **{dasha_target_date.strftime('%d-%b-%Y')}** के लिए तात्कालिक सक्रिय सूक्ष्म दशाओं का मूल्यांकन प्रदर्शित किया जा रहा है।")
 
-        act_yog = next((y for y in yog_dashas if y["start_date"] <= target_dt <= y["end_date"]), yog_dashas[0])
+        d_mode = st.radio(
+            "दशा प्रणाली चयन (Select Dasha System)",
+            [
+                "🌟 विंशोत्तरी दशा (Vimshottari 120 Yrs - 5 Levels)",
+                "🌸 योगिनी दशा (Yogini 36 Yrs - 3 Levels)",
+                "🔱 जैमिनी चर दशा (Jaimini Chara Dasha)",
+                "🔄 कालचक्र दशा (Kaalachakra Dasha - BPHS)",
+                "⚔️ शूल दशा (Shoola Dasha - Ayurdaya & Maraka)",
+                "🕉️ अष्टोत्तरी दशा (Ashtottari 108 Yrs - 8 Planets)",
+                "🪐 नारायण दशा (Narayana Rashi Dasha - Jaimini)",
+                "⏳ द्विसप्ततिसम दशा (Dwisaptati Sama 72 Yrs)",
+                "🔷 स्थिर दशा (Sthira Dasha - Jaimini Fixed)",
+                "👁️ दृग दशा (Drig Dasha - Spiritual Jaimini)"
+            ],
+            horizontal=True,
+            key="dasha_system_mode_radio"
+        )
+
+        birth_dt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
+        moon_lon = chart.planets["Moon"].longitude
+        target_dt = datetime.combine(dasha_target_date, datetime.now().time())
+    
+        import importlib
+        import src.jyotish.dasha.vimshottari as vim_mod
+        import src.jyotish.dasha.yogini as yog_mod
+        import src.jyotish.dasha.chara as chara_mod
+        import src.jyotish.dasha.ashtottari as ashto_mod
+        import src.jyotish.dasha.narayana as narayana_mod
+        import src.jyotish.dasha.sama_dashas as sama_mod
+        import src.jyotish.dasha.sthira_drig as sthira_mod
         
-        # Calculate Active Antardasha & Pratyantardasha for current target_dt
-        y_antars_for_act = y_engine.generate_antardashas(
-            act_yog.get("yogini_name", act_yog.get("yogini")), act_yog["start_date"], act_yog["end_date"]
-        )
-        act_ya = next((a for a in y_antars_for_act if a["start_date"] <= target_dt <= a["end_date"]), y_antars_for_act[0])
-        
-        y_prats_for_act = y_engine.generate_pratyantardashas(
-            act_yog.get("yogini_name", act_yog.get("yogini")), act_ya["yogini"], act_ya["start_date"], act_ya["end_date"]
-        )
-        act_ypr = next((p for p in y_prats_for_act if p["start_date"] <= target_dt <= p["end_date"]), y_prats_for_act[0])
-
-        # Active Yogini Hierarchy Top Banner
-        b_str_yog = (
-            f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
-            f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय 3-स्तरीय योगिनी दशा पदानुक्रम (Active Yogini Dasha Hierarchy):</div>"
-            f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
-            f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🌸 मुख्य योगिनी: {act_yog.get('yogini_name', act_yog.get('yogini'))} ({act_yog.get('lord')})</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>💫 योगिनी अंतर्दशा: {act_ya['yogini']} ({act_ya['lord']})</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ योगिनी प्रत्यंतर: {act_ypr['yogini']} ({act_ypr['lord']})</span>"
-            f"</div>"
-            f"</div>"
-        )
-        st.markdown(b_str_yog, unsafe_allow_html=True)
-
-        # 3 Styled Metric Cards
-        y_col1, y_col2, y_col3 = st.columns(3)
-        with y_col1:
-            st.markdown(f"""
-            <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🌸 मुख्य योगिनी (Major)</div>
-                <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_yog.get('yogini_name', act_yog.get('yogini'))} ({act_yog.get('lord')})</div>
-                <div style="font-size:10.5px; color:#475569;">{act_yog['start_date'].strftime('%d-%b-%y')} ~ {act_yog['end_date'].strftime('%d-%b-%y')} ({act_yog['duration_years']} वर्ष)</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with y_col2:
-            st.markdown(f"""
-            <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#15803D; font-weight:800;">💫 अंतर्दशा (Sub-Period)</div>
-                <div style="font-size:18px; font-weight:900; color:#064E3B;">{act_ya['yogini']} ({act_ya['lord']})</div>
-                <div style="font-size:10.5px; color:#475569;">{act_ya['start_date'].strftime('%d-%b-%y')} ~ {act_ya['end_date'].strftime('%d-%b-%y')}</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with y_col3:
-            st.markdown(f"""
-            <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ प्रत्यंतर्दशा (Pratyantar)</div>
-                <div style="font-size:18px; font-weight:900; color:#78350F;">{act_ypr['yogini']} ({act_ypr['lord']})</div>
-                <div style="font-size:10.5px; color:#475569;">{act_ypr['start_date'].strftime('%d-%b-%y')} ~ {act_ypr['end_date'].strftime('%d-%b-%y')}</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.write("")
-
-        tab_y1, tab_y2, tab_y3 = st.tabs([
-            "🌸 मुख्य योगिनी दशा (Major Periods)",
-            "💫 योगिनी अंतर्दशा (Antardashas)",
-            "⚡ योगिनी प्रत्यंतर्दशा (Pratyantardashas)"
-        ])
-
-        with tab_y1:
-            st.markdown("##### 🌸 मुख्य योगिनी दशा चक्र (36 वर्ष)")
-            st.dataframe(pd.DataFrame([{
-                "योगिनी (Yogini)": y.get("yogini_name") or y.get("yogini", "Yogini"),
-                "स्वामी ग्रह (Lord)": y.get("lord", ""),
-                "आरंभ दिनांक (Start)": y["start_date"].strftime("%d-%b-%Y"),
-                "समाप्ति दिनांक (End)": y["end_date"].strftime("%d-%b-%Y"),
-                "अवधि (वर्ष)": f"{y['duration_years']} वर्ष",
-                "स्थिति": "जन्म शेष (Birth Balance)" if y.get("is_partial") else "पूर्ण दशा",
-                "सक्रियता": "⭐ वर्तमान सक्रिय" if (y["start_date"] <= target_dt <= y["end_date"]) else ""
-            } for y in yog_dashas]), use_container_width=True, hide_index=True)
-
-        with tab_y2:
-            st.markdown("##### 💫 योगिनी अंतर्दशा (8 Sub-periods per Yogini)")
-            y_options = [f"{y.get('yogini_name', y.get('yogini'))} ({y['start_date'].strftime('%d-%b-%Y')} ~ {y['end_date'].strftime('%d-%b-%Y')})" for y in yog_dashas]
-            default_y_idx = next((i for i, y in enumerate(yog_dashas) if y["start_date"] <= target_dt <= y["end_date"]), 0)
-            sel_y_idx = st.selectbox("मुख्य योगिनी चुनें", range(len(y_options)), format_func=lambda i: y_options[i], index=default_y_idx, key="sel_yogini_for_antar")
-            sel_y_obj = yog_dashas[sel_y_idx]
-
-            y_antars = y_engine.generate_antardashas(
-                sel_y_obj.get("yogini_name", sel_y_obj.get("yogini")), sel_y_obj["start_date"], sel_y_obj["end_date"]
+        if not hasattr(default_dasha_engine, "get_5level_hierarchy"):
+            importlib.reload(vim_mod)
+        if not hasattr(default_yogini_engine, "generate_antardashas"):
+            importlib.reload(yog_mod)
+        if not hasattr(default_chara_engine, "generate_antardashas"):
+            importlib.reload(chara_mod)
+    
+        d_engine = vim_mod.default_dasha_engine
+        y_engine = yog_mod.default_yogini_engine
+        c_engine = chara_mod.default_chara_engine
+        ashto_engine = ashto_mod.default_ashtottari_engine
+        narayana_engine = narayana_mod.default_narayana_engine
+        dwisaptati_engine = sama_mod.default_dwisaptati_engine
+        sthira_engine = sthira_mod.default_sthira_engine
+        drig_engine = sthira_mod.default_drigdasha_engine
+    
+        # =========================================================================
+        # 1. VIMSHOTTARI DASHA (5 LEVELS: MAHA -> ANTAR -> PRAT -> SOOKSHMA -> PRANA)
+        # =========================================================================
+        if "विंशोत्तरी" in d_mode:
+            h5 = d_engine.get_5level_hierarchy(birth_dt, moon_lon, target_dt)
+    
+            act_m = h5["mahadasha"]
+            act_a = h5["antardasha"]
+            act_pr = h5["pratyantardasha"]
+            act_s = h5["sookshmadasha"]
+            act_p = h5["pranadasha"]
+    
+            # 1. Active 5-Level HUD
+            st.markdown(f"#### 🔴 सक्रिय 5-स्तरीय विंशोत्तरी दशा ({dasha_target_date.strftime('%d-%b-%Y')})")
+    
+            # Breadcrumb Banner
+            p_icons = {
+                "Sun": "☀️ सूर्य (Sun)", "Moon": "🌙 चन्द्र (Moon)", "Mars": "⚔️ मंगल (Mars)",
+                "Mercury": "☿️ बुध (Mercury)", "Jupiter": "🪐 गुरु (Jupiter)", "Venus": "💎 शुक्र (Venus)",
+                "Saturn": "⚖️ शनि (Saturn)", "Rahu": "🐉 राहु (Rahu)", "Ketu": "☄️ केतु (Ketu)"
+            }
+            b_str = (
+                f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
+                f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय 5-स्तरीय दशा पदानुक्रम (Active Dasha Hierarchy):</div>"
+                f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
+                f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>👑 {p_icons.get(act_m['lord'], act_m['lord'])}</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>🪐 {p_icons.get(act_a['lord'], act_a['lord'])}</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ {p_icons.get(act_pr['lord'], act_pr['lord'])}</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#FDF2F8; border:1.5px solid #EC4899; color:#831843; padding:5px 12px; border-radius:8px;'>🔍 {p_icons.get(act_s['lord'], act_s['lord'])}</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#F1F5F9; border:1.5px solid #64748B; color:#0F172A; padding:5px 12px; border-radius:8px;'>🧬 {p_icons.get(act_p['lord'], act_p['lord'])}</span>"
+                f"</div>"
+                f"</div>"
             )
-            st.dataframe(pd.DataFrame([{
-                "योगिनी / अंतर्दशा": f"{sel_y_obj.get('yogini_name', sel_y_obj.get('yogini'))} — {ya['yogini']}",
-                "अंतर्दशा स्वामी": ya["lord"],
-                "आरंभ दिनांक": ya["start_date"].strftime("%d-%b-%Y"),
-                "समाप्ति दिनांक": ya["end_date"].strftime("%d-%b-%Y"),
-                "अवधि (माह / दिन)": f"{ya['duration_months']} माह ({ya['duration_days']} दिन)",
-                "सक्रियता": "⭐ सक्रिय" if (ya["start_date"] <= target_dt <= ya["end_date"]) else ""
-            } for ya in y_antars]), use_container_width=True, hide_index=True)
-
-        with tab_y3:
-            st.markdown("##### ⚡ योगिनी प्रत्यंतर्दशा (Pratyantardashas)")
-            col_y_p1, col_y_p2 = st.columns(2)
-            with col_y_p1:
-                sel_y_m_idx = st.selectbox("मुख्य योगिनी", range(len(y_options)), format_func=lambda i: y_options[i], index=default_y_idx, key="sel_y_m_for_prat")
-            sel_y_m_p = yog_dashas[sel_y_m_idx]
-            y_antars_p = y_engine.generate_antardashas(sel_y_m_p.get("yogini_name", sel_y_m_p.get("yogini")), sel_y_m_p["start_date"], sel_y_m_p["end_date"])
-            with col_y_p2:
-                sel_y_a_idx = st.selectbox("अंतर्दशा योगिनी", range(len(y_antars_p)), format_func=lambda i: f"{y_antars_p[i]['yogini']} ({y_antars_p[i]['start_date'].strftime('%d-%b-%y')})", key="sel_y_a_for_prat")
-            sel_y_a_p = y_antars_p[sel_y_a_idx]
+            st.markdown(b_str, unsafe_allow_html=True)
+    
+            # 5 Metric Cards
+            c1, c2, c3, c4, c5 = st.columns(5)
+            with c1:
+                st.markdown(f"""
+                <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#4338CA; font-weight:800;">👑 महादशा (L1)</div>
+                    <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_m['lord']}</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_m['start_date'].strftime('%d-%b-%y')} ~ {act_m['end_date'].strftime('%d-%b-%y')}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with c2:
+                st.markdown(f"""
+                <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#15803D; font-weight:800;">🪐 अंतर्दशा (L2)</div>
+                    <div style="font-size:18px; font-weight:900; color:#064E3B;">{act_a['lord']}</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_a['start_date'].strftime('%d-%b-%y')} ~ {act_a['end_date'].strftime('%d-%b-%y')}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with c3:
+                st.markdown(f"""
+                <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ प्रत्यंतर्दशा (L3)</div>
+                    <div style="font-size:18px; font-weight:900; color:#78350F;">{act_pr['lord']}</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_pr['start_date'].strftime('%d-%b-%y')} ~ {act_pr['end_date'].strftime('%d-%b-%y')}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with c4:
+                st.markdown(f"""
+                <div style="background:#FDF2F8; border: 2px solid #EC4899; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#BE185D; font-weight:800;">🔍 सूक्ष्मदशा (L4)</div>
+                    <div style="font-size:18px; font-weight:900; color:#831843;">{act_s['lord']}</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_s['start_date'].strftime('%d-%b')} ~ {act_s['end_date'].strftime('%d-%b')} ({act_s.get('duration_days', 0)}d)</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with c5:
+                st.markdown(f"""
+                <div style="background:#F3F4F6; border: 2px solid #64748B; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#334155; font-weight:800;">🧬 प्राणदशा (L5)</div>
+                    <div style="font-size:18px; font-weight:900; color:#0F172A;">{act_p['lord']}</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_p['start_date'].strftime('%d-%b %H:%M')} ~ {act_p['end_date'].strftime('%d-%b %H:%M')}</div>
+                </div>
+                """, unsafe_allow_html=True)
+    
+            # Progress calculation for active Antardasha
+            a_total_sec = (act_a["end_date"] - act_a["start_date"]).total_seconds()
+            a_elapsed_sec = max(0.0, min(a_total_sec, (target_dt - act_a["start_date"]).total_seconds()))
+            a_pct = (a_elapsed_sec / max(1.0, a_total_sec))
+            st.write("")
+            st.markdown(f"**🪐 सक्रिय अंतर्दशा ({act_m['lord']}-{act_a['lord']}) प्रगति: {int(a_pct * 100)}% संपन्न**")
+            st.progress(a_pct)
+    
+            st.markdown("---")
+    
+            # 2. Interactive Multi-Level Dasha Explorer
+            st.markdown("#### 🌳 विंशोत्तरी दशा बहु-स्तरीय विस्तृत अन्वेषक (5-Level Interactive Explorer)")
+    
+            tab_v1, tab_v2, tab_v3, tab_v4, tab_v5, tab_v_all = st.tabs([
+                "👑 स्तर 1: महादशा (Mahadasha)",
+                "🪐 स्तर 2: अंतर्दशा (Antardasha)",
+                "⚡ स्तर 3: प्रत्यंतर्दशा (Pratyantardasha)",
+                "🔍 स्तर 4: सूक्ष्मदशा (Sookshmadasha)",
+                "🧬 स्तर 5: प्राणदशा (Pranadasha)",
+                "📜 सम्पूर्ण 120-वर्षीय कालक्रम (All Mahadashas)"
+            ])
+    
+            v_mahadashas = d_engine.generate_mahadasha_sequence(birth_dt, moon_lon, num_cycles=2)
+            maha_options = [f"{m['lord']} ({m['start_date'].strftime('%d-%b-%Y')} से {m['end_date'].strftime('%d-%b-%Y')})" for m in v_mahadashas]
+            default_maha_idx = next((i for i, m in enumerate(v_mahadashas) if m['lord'] == act_m['lord'] and m['start_date'] <= target_dt <= m['end_date']), 0)
+    
+            with tab_v1:
+                st.markdown("##### 👑 समस्त 9 महादशाएँ (120 Years Vimshottari Cycle)")
+                m_rows = []
+                for m in v_mahadashas:
+                    is_active = (m["start_date"] <= target_dt <= m["end_date"])
+                    m_rows.append({
+                        "महादशा स्वामी (Lord)": f"👑 {m['lord']}" + (" (⭐ वर्तमान सक्रिय)" if is_active else ""),
+                        "आरंभ दिनांक (Start)": m["start_date"].strftime("%d-%b-%Y"),
+                        "समाप्ति दिनांक (End)": m["end_date"].strftime("%d-%b-%Y"),
+                        "अवधि (Years)": f"{m['duration_years']:.2f} वर्ष",
+                        "प्रकार": "जन्म शेष (Birth Balance)" if m.get("is_partial") else "पूर्ण महादशा",
+                        "सक्रियता": "✅ सक्रिय" if is_active else "—"
+                    })
+                st.dataframe(pd.DataFrame(m_rows), use_container_width=True, hide_index=True)
+    
+            with tab_v2:
+                st.markdown("##### 🪐 महादशा अंतर्गत समस्त 9 अंतर्दशाएं (Antardashas / Bhuktis)")
+                sel_maha_idx = st.selectbox("महादशा चुनें (Select Mahadasha)", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_maha_for_antar")
+                sel_m_obj = v_mahadashas[sel_maha_idx]
+                
+                antars = d_engine.generate_antardashas(
+                    sel_m_obj["lord"], sel_m_obj["start_date"], sel_m_obj["end_date"], is_partial=sel_m_obj.get("is_partial", False)
+                )
+                a_rows = []
+                for a in antars:
+                    is_a_active = (a["start_date"] <= target_dt <= a["end_date"])
+                    a_rows.append({
+                        "महादशा / अंतर्दशा": f"{sel_m_obj['lord']} — {a['lord']}" + (" (⭐ सक्रिय)" if is_a_active else ""),
+                        "अंतर्दशा स्वामी (Lord)": a["lord"],
+                        "आरंभ दिनांक (Start)": a["start_date"].strftime("%d-%b-%Y"),
+                        "समाप्ति दिनांक (End)": a["end_date"].strftime("%d-%b-%Y"),
+                        "अवधि (Years)": f"{a['duration_years']:.2f} वर्ष",
+                        "अवधि (माह / दिन)": f"{int(a['duration_years']*12)} माह {int((a['duration_years']*12 % 1)*30)} दिन",
+                        "सक्रियता": "✅ सक्रिय" if is_a_active else "—"
+                    })
+                st.dataframe(pd.DataFrame(a_rows), use_container_width=True, hide_index=True)
+    
+            with tab_v3:
+                st.markdown("##### ⚡ अंतर्दशा अंतर्गत समस्त 9 प्रत्यंतर्दशाएं (Pratyantardashas)")
+                col_sel1, col_sel2 = st.columns(2)
+                with col_sel1:
+                    sel_m_prat_idx = st.selectbox("महादशा चुनें", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_prat")
+                sel_m_for_p = v_mahadashas[sel_m_prat_idx]
+                antars_for_p = d_engine.generate_antardashas(sel_m_for_p["lord"], sel_m_for_p["start_date"], sel_m_for_p["end_date"], is_partial=sel_m_for_p.get("is_partial", False))
+                antar_p_options = [f"{a['lord']} ({a['start_date'].strftime('%d-%b-%Y')} से {a['end_date'].strftime('%d-%b-%Y')})" for a in antars_for_p]
+                default_a_idx = next((i for i, a in enumerate(antars_for_p) if a['lord'] == act_a['lord'] and a['start_date'] <= target_dt <= a['end_date']), 0)
+                with col_sel2:
+                    sel_a_prat_idx = st.selectbox("अंतर्दशा चुनें", range(len(antar_p_options)), format_func=lambda i: antar_p_options[i], index=default_a_idx, key="sel_a_for_prat")
+                
+                sel_a_for_p = antars_for_p[sel_a_prat_idx]
+                pratyantars = d_engine.generate_pratyantardashas(
+                    sel_m_for_p["lord"], sel_a_for_p["lord"], sel_a_for_p["start_date"], sel_a_for_p["end_date"]
+                )
+                pr_rows = []
+                for pr in pratyantars:
+                    is_pr_act = (pr["start_date"] <= target_dt <= pr["end_date"])
+                    dur_days = (pr["end_date"] - pr["start_date"]).total_seconds() / 86400.0
+                    pr_rows.append({
+                        "दशा क्रम": f"{sel_m_for_p['lord']} / {sel_a_for_p['lord']} / {pr['lord']}" + (" (⭐ सक्रिय)" if is_pr_act else ""),
+                        "प्रत्यंतर्दशा स्वामी": pr["lord"],
+                        "आरंभ दिनांक": pr["start_date"].strftime("%d-%b-%Y"),
+                        "समाप्ति दिनांक": pr["end_date"].strftime("%d-%b-%Y"),
+                        "अवधि (दिन)": f"{dur_days:.1f} दिन",
+                        "सक्रियता": "✅ सक्रिय" if is_pr_act else "—"
+                    })
+                st.dataframe(pd.DataFrame(pr_rows), use_container_width=True, hide_index=True)
+    
+            with tab_v4:
+                st.markdown("##### 🔍 प्रत्यंतर्दशा अंतर्गत समस्त 9 सूक्ष्मदशाएं (Sookshmadashas - Level 4)")
+                col_s1, col_s2, col_s3 = st.columns(3)
+                with col_s1:
+                    sel_m_s_idx = st.selectbox("महादशा", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_sookshma")
+                sel_m_s = v_mahadashas[sel_m_s_idx]
+                antars_s = d_engine.generate_antardashas(sel_m_s["lord"], sel_m_s["start_date"], sel_m_s["end_date"], is_partial=sel_m_s.get("is_partial", False))
+                with col_s2:
+                    sel_a_s_idx = st.selectbox("अंतर्दशा", range(len(antars_s)), format_func=lambda i: f"{antars_s[i]['lord']} ({antars_s[i]['start_date'].strftime('%d-%b-%y')})", index=min(default_a_idx, len(antars_s)-1), key="sel_a_for_sookshma")
+                sel_a_s = antars_s[sel_a_s_idx]
+                prats_s = d_engine.generate_pratyantardashas(sel_m_s["lord"], sel_a_s["lord"], sel_a_s["start_date"], sel_a_s["end_date"])
+                default_pr_idx = next((i for i, p in enumerate(prats_s) if p['lord'] == act_pr['lord'] and p['start_date'] <= target_dt <= p['end_date']), 0)
+                with col_s3:
+                    sel_pr_s_idx = st.selectbox("प्रत्यंतर्दशा", range(len(prats_s)), format_func=lambda i: f"{prats_s[i]['lord']} ({prats_s[i]['start_date'].strftime('%d-%b-%y')})", index=min(default_pr_idx, len(prats_s)-1), key="sel_pr_for_sookshma")
+                
+                sel_pr_s = prats_s[sel_pr_s_idx]
+                sookshmas = d_engine.generate_sookshmadashas(sel_m_s["lord"], sel_a_s["lord"], sel_pr_s["lord"], sel_pr_s["start_date"], sel_pr_s["end_date"])
+                s_rows = []
+                for s in sookshmas:
+                    is_s_act = (s["start_date"] <= target_dt <= s["end_date"])
+                    s_rows.append({
+                        "4-स्तरीय दशा": f"{sel_m_s['lord']}/{sel_a_s['lord']}/{sel_pr_s['lord']}/{s['lord']}" + (" (⭐ सक्रिय)" if is_s_act else ""),
+                        "सूक्ष्मदशा स्वामी": s["lord"],
+                        "आरंभ समय": s["start_date"].strftime("%d-%b-%Y %I:%M %p"),
+                        "समाप्ति समय": s["end_date"].strftime("%d-%b-%Y %I:%M %p"),
+                        "अवधि": f"{s['duration_days']} दिन",
+                        "सक्रियता": "✅ सक्रिय" if is_s_act else "—"
+                    })
+                st.dataframe(pd.DataFrame(s_rows), use_container_width=True, hide_index=True)
+    
+            with tab_v5:
+                st.markdown("##### 🧬 सूक्ष्मदशा अंतर्गत समस्त 9 प्राणदशाएं (Pranadashas - Level 5 / Hourly Precision)")
+                c_p1, c_p2, c_p3, c_p4 = st.columns(4)
+                with c_p1:
+                    sel_m_p_idx = st.selectbox("महादशा (Maha)", range(len(maha_options)), format_func=lambda i: maha_options[i], index=default_maha_idx, key="sel_m_for_prana")
+                sel_m_p = v_mahadashas[sel_m_p_idx]
+                antars_p = d_engine.generate_antardashas(sel_m_p["lord"], sel_m_p["start_date"], sel_m_p["end_date"], is_partial=sel_m_p.get("is_partial", False))
+                with c_p2:
+                    sel_a_p_idx = st.selectbox("अंतर्दशा (Antar)", range(len(antars_p)), format_func=lambda i: f"{antars_p[i]['lord']}", index=min(default_a_idx, len(antars_p)-1), key="sel_a_for_prana")
+                sel_a_p = antars_p[sel_a_p_idx]
+                prats_p = d_engine.generate_pratyantardashas(sel_m_p["lord"], sel_a_p["lord"], sel_a_p["start_date"], sel_a_p["end_date"])
+                with c_p3:
+                    sel_pr_p_idx = st.selectbox("प्रत्यंतर्दशा (Prat)", range(len(prats_p)), format_func=lambda i: f"{prats_p[i]['lord']}", index=min(default_pr_idx, len(prats_p)-1), key="sel_pr_for_prana")
+                sel_pr_p = prats_p[sel_pr_p_idx]
+                sookshmas_p = d_engine.generate_sookshmadashas(sel_m_p["lord"], sel_a_p["lord"], sel_pr_p["lord"], sel_pr_p["start_date"], sel_pr_p["end_date"])
+                default_s_idx = next((i for i, s in enumerate(sookshmas_p) if s['lord'] == act_s['lord'] and s['start_date'] <= target_dt <= s['end_date']), 0)
+                with c_p4:
+                    sel_s_p_idx = st.selectbox("सूक्ष्मदशा (Sookshma)", range(len(sookshmas_p)), format_func=lambda i: f"{sookshmas_p[i]['lord']}", index=min(default_s_idx, len(sookshmas_p)-1), key="sel_s_for_prana")
+                sel_s_p = sookshmas_p[sel_s_p_idx]
+    
+                pranas = d_engine.generate_pranadashas(sel_m_p["lord"], sel_a_p["lord"], sel_pr_p["lord"], sel_s_p["lord"], sel_s_p["start_date"], sel_s_p["end_date"])
+                p_rows = []
+                for prn in pranas:
+                    is_p_act = (prn["start_date"] <= target_dt <= prn["end_date"])
+                    p_rows.append({
+                        "5-स्तरीय प्राणदशा": f"{sel_m_p['lord']}/{sel_a_p['lord']}/{sel_pr_p['lord']}/{sel_s_p['lord']}/{prn['lord']}" + (" (⭐ सक्रिय)" if is_p_act else ""),
+                        "प्राणदशा स्वामी": prn["lord"],
+                        "आरंभ समय": prn["start_date"].strftime("%d-%b-%Y %I:%M %p"),
+                        "समाप्ति समय": prn["end_date"].strftime("%d-%b-%Y %I:%M %p"),
+                        "अवधि (घंटे)": f"{prn['duration_hours']} घंटे",
+                        "सक्रियता": "✅ सक्रिय" if is_p_act else "—"
+                    })
+                st.dataframe(pd.DataFrame(p_rows), use_container_width=True, hide_index=True)
+    
+            with tab_v_all:
+                st.markdown("##### 📜 संपूर्ण 120-वर्षीय जीवन कालक्रम तालिका")
+                full_rows = []
+                for m in v_mahadashas:
+                    m_antars = d_engine.generate_antardashas(m["lord"], m["start_date"], m["end_date"], is_partial=m.get("is_partial", False))
+                    for a in m_antars:
+                        is_active = (a["start_date"] <= target_dt <= a["end_date"])
+                        full_rows.append({
+                            "महादशा (L1)": m["lord"],
+                            "अंतर्दशा (L2)": a["lord"],
+                            "आरंभ दिनांक": a["start_date"].strftime("%d-%b-%Y"),
+                            "समाप्ति दिनांक": a["end_date"].strftime("%d-%b-%Y"),
+                            "अवधि (वर्ष)": f"{a['duration_years']:.2f}",
+                            "सक्रियता": "⭐ वर्तमान सक्रिय" if is_active else ""
+                        })
+                st.dataframe(pd.DataFrame(full_rows), use_container_width=True, hide_index=True)
+    
+        # =========================================================================
+        # 2. YOGINI DASHA (3 LEVELS: MAJOR -> ANTAR -> PRATYANTAR)
+        # =========================================================================
+        elif "योगिनी" in d_mode:
+            st.markdown(f"#### 🌸 योगिनी दशा (36-Year Classical Cycle — Major, Antar & Pratyantar)")
+            try:
+                yog_dashas = y_engine.generate_timeline(birth_dt, moon_lon)
+            except TypeError:
+                yog_dashas = y_engine.generate_timeline(chart)
+    
+            act_yog = next((y for y in yog_dashas if y["start_date"] <= target_dt <= y["end_date"]), yog_dashas[0])
             
-            y_prats = y_engine.generate_pratyantardashas(
-                sel_y_m_p.get("yogini_name", sel_y_m_p.get("yogini")), sel_y_a_p["yogini"], sel_y_a_p["start_date"], sel_y_a_p["end_date"]
+            # Calculate Active Antardasha & Pratyantardasha for current target_dt
+            y_antars_for_act = y_engine.generate_antardashas(
+                act_yog.get("yogini_name", act_yog.get("yogini")), act_yog["start_date"], act_yog["end_date"]
             )
-            st.dataframe(pd.DataFrame([{
-                "3-स्तरीय योगिनी": f"{sel_y_m_p.get('yogini_name', sel_y_m_p.get('yogini'))} / {sel_y_a_p['yogini']} / {yp['yogini']}",
-                "प्रत्यंतर स्वामी": yp["lord"],
-                "आरंभ समय": yp["start_date"].strftime("%d-%b-%Y %I:%M %p"),
-                "समाप्ति समय": yp["end_date"].strftime("%d-%b-%Y %I:%M %p"),
-                "अवधि (दिन)": f"{yp['duration_days']} दिन",
-                "सक्रियता": "⭐ सक्रिय" if (yp["start_date"] <= target_dt <= yp["end_date"]) else ""
-            } for yp in y_prats]), use_container_width=True, hide_index=True)
-
-    # =========================================================================
-    # 3. JAIMINI CHARA DASHA (3 LEVELS: MAJOR SIGN -> ANTARDASHA -> PRATYANTAR)
-    # =========================================================================
-    elif "जैमिनी" in d_mode:
-        st.markdown("#### 🔱 जैमिनी चर दशा (Jaimini Rashi Chara Dasha — Major & Antar)")
-        chara_dashas = c_engine.generate_timeline(chart)
-        act_chara = next((c for c in chara_dashas if c["start_date"] <= target_dt <= c["end_date"]), chara_dashas[0])
-
-        # Active Antardasha & Pratyantar
-        c_antars_for_act = c_engine.generate_antardashas(act_chara["sign_id"], act_chara["start_date"], act_chara["end_date"])
-        act_ca = next((a for a in c_antars_for_act if a["start_date"] <= target_dt <= a["end_date"]), c_antars_for_act[0])
-
-        c_prats_for_act = c_engine.generate_pratyantardashas(act_ca["sign_id"], act_ca["start_date"], act_ca["end_date"])
-        act_cpr = next((p for p in c_prats_for_act if p["start_date"] <= target_dt <= p["end_date"]), c_prats_for_act[0])
-
-        # Top Banner
-        b_str_chara = (
-            f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
-            f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय 3-स्तरीय जैमिनी चर दशा पदानुक्रम (Active Jaimini Chara Dasha Hierarchy):</div>"
-            f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
-            f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🔱 चर महादशा: {act_chara['sign_name']} (#{act_chara['sign_id']})</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>💫 चर अंतर्दशा: {act_ca['sign_name']} (स्वामी: {act_ca['lord']})</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ चर प्रत्यंतर: {act_cpr['sign_name']} (स्वामी: {act_cpr['lord']})</span>"
-            f"</div>"
-            f"</div>"
-        )
-        st.markdown(b_str_chara, unsafe_allow_html=True)
-
-        # 3 Styled Metric Cards
-        c_col1, c_col2, c_col3 = st.columns(3)
-        with c_col1:
-            st.markdown(f"""
-            <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🔱 सक्रिय चर महादशा</div>
-                <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_chara['sign_name']} (#{act_chara['sign_id']})</div>
-                <div style="font-size:10.5px; color:#475569;">{act_chara['start_date'].strftime('%d-%b-%y')} ~ {act_chara['end_date'].strftime('%d-%b-%y')} ({act_chara['duration_years']} वर्ष)</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with c_col2:
-            st.markdown(f"""
-            <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#15803D; font-weight:800;">💫 चर अंतर्दशा</div>
-                <div style="font-size:18px; font-weight:900; color:#064E3B;">{act_ca['sign_name']} (स्वामी: {act_ca['lord']})</div>
-                <div style="font-size:10.5px; color:#475569;">{act_ca['start_date'].strftime('%d-%b-%y')} ~ {act_ca['end_date'].strftime('%d-%b-%y')}</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with c_col3:
-            st.markdown(f"""
-            <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ चर प्रत्यंतर्दशा</div>
-                <div style="font-size:18px; font-weight:900; color:#78350F;">{act_cpr['sign_name']} (स्वामी: {act_cpr['lord']})</div>
-                <div style="font-size:10.5px; color:#475569;">{act_cpr['start_date'].strftime('%d-%b-%y')} ~ {act_cpr['end_date'].strftime('%d-%b-%y')}</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.write("")
-
-        tab_c1, tab_c2, tab_c3 = st.tabs([
-            "🔱 चर महादशा (12 Signs)",
-            "💫 चर अंतर्दशा (12 Sub-Signs per Sign)",
-            "⚡ चर प्रत्यंतर्दशा (Pratyantardasha)"
-        ])
-
-        with tab_c1:
-            st.markdown("##### 🔱 12 राशियों का चर महादशा कालक्रम")
-            st.dataframe(pd.DataFrame([{
-                "राशि (Sign)": f"{c['sign_name']} (#{c['sign_id']})",
-                "आरंभ दिनांक (Start)": c["start_date"].strftime("%d-%b-%Y"),
-                "समाप्ति दिनांक (End)": c["end_date"].strftime("%d-%b-%Y"),
-                "अवधि (वर्ष)": f"{c['duration_years']} वर्ष",
-                "सक्रियता": "⭐ वर्तमान सक्रिय" if (c["start_date"] <= target_dt <= c["end_date"]) else ""
-            } for c in chara_dashas]), use_container_width=True, hide_index=True)
-
-        with tab_c2:
-            st.markdown("##### 💫 चर अंतर्दशा (12 Sub-signs under Selected Rashi)")
-            c_options = [f"{c['sign_name']} ({c['start_date'].strftime('%d-%b-%Y')} ~ {c['end_date'].strftime('%d-%b-%Y')})" for c in chara_dashas]
-            default_c_idx = next((i for i, c in enumerate(chara_dashas) if c["start_date"] <= target_dt <= c["end_date"]), 0)
-            sel_c_idx = st.selectbox("चर दशा राशि चुनें", range(len(c_options)), format_func=lambda i: c_options[i], index=default_c_idx, key="sel_chara_for_antar")
-            sel_c_obj = chara_dashas[sel_c_idx]
-
-            c_antars = c_engine.generate_antardashas(sel_c_obj["sign_id"], sel_c_obj["start_date"], sel_c_obj["end_date"])
-            st.dataframe(pd.DataFrame([{
-                "चर महादशा / अंतर्दशा": f"{sel_c_obj['sign_name']} — {ca['sign_name']}",
-                "राशि स्वामी (Lord)": ca["lord"],
-                "आरंभ दिनांक": ca["start_date"].strftime("%d-%b-%Y"),
-                "समाप्ति दिनांक": ca["end_date"].strftime("%d-%b-%Y"),
-                "अवधि": f"{ca['duration_months']} माह ({ca['duration_days']} दिन)",
-                "सक्रियता": "⭐ सक्रिय" if (ca["start_date"] <= target_dt <= ca["end_date"]) else ""
-            } for ca in c_antars]), use_container_width=True, hide_index=True)
-
-        with tab_c3:
-            st.markdown("##### ⚡ चर प्रत्यंतर्दशा (12 Sub-divisions per Antardasha)")
-            col_c_p1, col_c_p2 = st.columns(2)
-            with col_c_p1:
-                sel_c_m_idx = st.selectbox("महादशा राशि", range(len(c_options)), format_func=lambda i: c_options[i], index=default_c_idx, key="sel_c_m_for_prat")
-            sel_c_m_p = chara_dashas[sel_c_m_idx]
-            c_antars_p = c_engine.generate_antardashas(sel_c_m_p["sign_id"], sel_c_m_p["start_date"], sel_c_m_p["end_date"])
-            with col_c_p2:
-                sel_c_a_idx = st.selectbox("अंतर्दशा राशि", range(len(c_antars_p)), format_func=lambda i: f"{c_antars_p[i]['sign_name']} ({c_antars_p[i]['start_date'].strftime('%d-%b-%y')})", key="sel_c_a_for_prat")
-            sel_c_a_p = c_antars_p[sel_c_a_idx]
-
-            c_prats = c_engine.generate_pratyantardashas(sel_c_a_p["sign_id"], sel_c_a_p["start_date"], sel_c_a_p["end_date"])
-            st.dataframe(pd.DataFrame([{
-                "3-स्तरीय चर दशा": f"{sel_c_m_p['sign_name']} / {sel_c_a_p['sign_name']} / {cp['sign_name']}",
-                "राशि स्वामी": cp["lord"],
-                "आरंभ दिनांक": cp["start_date"].strftime("%d-%b-%Y"),
-                "समाप्ति दिनांक": cp["end_date"].strftime("%d-%b-%Y"),
-                "अवधि (दिन)": f"{cp['duration_days']} दिन",
-                "सक्रियता": "⭐ सक्रिय" if (cp["start_date"] <= target_dt <= cp["end_date"]) else ""
-            } for cp in c_prats]), use_container_width=True, hide_index=True)
-
-    # =========================================================================
-    # 4. KAALACHAKRA DASHA (BPHS)
-    # =========================================================================
-    elif "कालचक्र" in d_mode:
-        st.markdown("#### 🔄 कालचक्र महादशा (Kaalachakra Dasha - BPHS)")
-        kcd_res = default_kcd_engine.calculate(chart)
-
-        # Determine active KCD period
-        act_kcd = None
-        for item in kcd_res["timeline"]:
+            act_ya = next((a for a in y_antars_for_act if a["start_date"] <= target_dt <= a["end_date"]), y_antars_for_act[0])
+            
+            y_prats_for_act = y_engine.generate_pratyantardashas(
+                act_yog.get("yogini_name", act_yog.get("yogini")), act_ya["yogini"], act_ya["start_date"], act_ya["end_date"]
+            )
+            act_ypr = next((p for p in y_prats_for_act if p["start_date"] <= target_dt <= p["end_date"]), y_prats_for_act[0])
+    
+            # Active Yogini Hierarchy Top Banner
+            b_str_yog = (
+                f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
+                f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय 3-स्तरीय योगिनी दशा पदानुक्रम (Active Yogini Dasha Hierarchy):</div>"
+                f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
+                f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🌸 मुख्य योगिनी: {act_yog.get('yogini_name', act_yog.get('yogini'))} ({act_yog.get('lord')})</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>💫 योगिनी अंतर्दशा: {act_ya['yogini']} ({act_ya['lord']})</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ योगिनी प्रत्यंतर: {act_ypr['yogini']} ({act_ypr['lord']})</span>"
+                f"</div>"
+                f"</div>"
+            )
+            st.markdown(b_str_yog, unsafe_allow_html=True)
+    
+            # 3 Styled Metric Cards
+            y_col1, y_col2, y_col3 = st.columns(3)
+            with y_col1:
+                st.markdown(f"""
+                <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🌸 मुख्य योगिनी (Major)</div>
+                    <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_yog.get('yogini_name', act_yog.get('yogini'))} ({act_yog.get('lord')})</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_yog['start_date'].strftime('%d-%b-%y')} ~ {act_yog['end_date'].strftime('%d-%b-%y')} ({act_yog['duration_years']} वर्ष)</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with y_col2:
+                st.markdown(f"""
+                <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#15803D; font-weight:800;">💫 अंतर्दशा (Sub-Period)</div>
+                    <div style="font-size:18px; font-weight:900; color:#064E3B;">{act_ya['yogini']} ({act_ya['lord']})</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_ya['start_date'].strftime('%d-%b-%y')} ~ {act_ya['end_date'].strftime('%d-%b-%y')}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with y_col3:
+                st.markdown(f"""
+                <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ प्रत्यंतर्दशा (Pratyantar)</div>
+                    <div style="font-size:18px; font-weight:900; color:#78350F;">{act_ypr['yogini']} ({act_ypr['lord']})</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_ypr['start_date'].strftime('%d-%b-%y')} ~ {act_ypr['end_date'].strftime('%d-%b-%y')}</div>
+                </div>
+                """, unsafe_allow_html=True)
+    
+            st.write("")
+    
+            tab_y1, tab_y2, tab_y3 = st.tabs([
+                "🌸 मुख्य योगिनी दशा (Major Periods)",
+                "💫 योगिनी अंतर्दशा (Antardashas)",
+                "⚡ योगिनी प्रत्यंतर्दशा (Pratyantardashas)"
+            ])
+    
+            with tab_y1:
+                st.markdown("##### 🌸 मुख्य योगिनी दशा चक्र (36 वर्ष)")
+                st.dataframe(pd.DataFrame([{
+                    "योगिनी (Yogini)": y.get("yogini_name") or y.get("yogini", "Yogini"),
+                    "स्वामी ग्रह (Lord)": y.get("lord", ""),
+                    "आरंभ दिनांक (Start)": y["start_date"].strftime("%d-%b-%Y"),
+                    "समाप्ति दिनांक (End)": y["end_date"].strftime("%d-%b-%Y"),
+                    "अवधि (वर्ष)": f"{y['duration_years']} वर्ष",
+                    "स्थिति": "जन्म शेष (Birth Balance)" if y.get("is_partial") else "पूर्ण दशा",
+                    "सक्रियता": "⭐ वर्तमान सक्रिय" if (y["start_date"] <= target_dt <= y["end_date"]) else ""
+                } for y in yog_dashas]), use_container_width=True, hide_index=True)
+    
+            with tab_y2:
+                st.markdown("##### 💫 योगिनी अंतर्दशा (8 Sub-periods per Yogini)")
+                y_options = [f"{y.get('yogini_name', y.get('yogini'))} ({y['start_date'].strftime('%d-%b-%Y')} ~ {y['end_date'].strftime('%d-%b-%Y')})" for y in yog_dashas]
+                default_y_idx = next((i for i, y in enumerate(yog_dashas) if y["start_date"] <= target_dt <= y["end_date"]), 0)
+                sel_y_idx = st.selectbox("मुख्य योगिनी चुनें", range(len(y_options)), format_func=lambda i: y_options[i], index=default_y_idx, key="sel_yogini_for_antar")
+                sel_y_obj = yog_dashas[sel_y_idx]
+    
+                y_antars = y_engine.generate_antardashas(
+                    sel_y_obj.get("yogini_name", sel_y_obj.get("yogini")), sel_y_obj["start_date"], sel_y_obj["end_date"]
+                )
+                st.dataframe(pd.DataFrame([{
+                    "योगिनी / अंतर्दशा": f"{sel_y_obj.get('yogini_name', sel_y_obj.get('yogini'))} — {ya['yogini']}",
+                    "अंतर्दशा स्वामी": ya["lord"],
+                    "आरंभ दिनांक": ya["start_date"].strftime("%d-%b-%Y"),
+                    "समाप्ति दिनांक": ya["end_date"].strftime("%d-%b-%Y"),
+                    "अवधि (माह / दिन)": f"{ya['duration_months']} माह ({ya['duration_days']} दिन)",
+                    "सक्रियता": "⭐ सक्रिय" if (ya["start_date"] <= target_dt <= ya["end_date"]) else ""
+                } for ya in y_antars]), use_container_width=True, hide_index=True)
+    
+            with tab_y3:
+                st.markdown("##### ⚡ योगिनी प्रत्यंतर्दशा (Pratyantardashas)")
+                col_y_p1, col_y_p2 = st.columns(2)
+                with col_y_p1:
+                    sel_y_m_idx = st.selectbox("मुख्य योगिनी", range(len(y_options)), format_func=lambda i: y_options[i], index=default_y_idx, key="sel_y_m_for_prat")
+                sel_y_m_p = yog_dashas[sel_y_m_idx]
+                y_antars_p = y_engine.generate_antardashas(sel_y_m_p.get("yogini_name", sel_y_m_p.get("yogini")), sel_y_m_p["start_date"], sel_y_m_p["end_date"])
+                with col_y_p2:
+                    sel_y_a_idx = st.selectbox("अंतर्दशा योगिनी", range(len(y_antars_p)), format_func=lambda i: f"{y_antars_p[i]['yogini']} ({y_antars_p[i]['start_date'].strftime('%d-%b-%y')})", key="sel_y_a_for_prat")
+                sel_y_a_p = y_antars_p[sel_y_a_idx]
+                
+                y_prats = y_engine.generate_pratyantardashas(
+                    sel_y_m_p.get("yogini_name", sel_y_m_p.get("yogini")), sel_y_a_p["yogini"], sel_y_a_p["start_date"], sel_y_a_p["end_date"]
+                )
+                st.dataframe(pd.DataFrame([{
+                    "3-स्तरीय योगिनी": f"{sel_y_m_p.get('yogini_name', sel_y_m_p.get('yogini'))} / {sel_y_a_p['yogini']} / {yp['yogini']}",
+                    "प्रत्यंतर स्वामी": yp["lord"],
+                    "आरंभ समय": yp["start_date"].strftime("%d-%b-%Y %I:%M %p"),
+                    "समाप्ति समय": yp["end_date"].strftime("%d-%b-%Y %I:%M %p"),
+                    "अवधि (दिन)": f"{yp['duration_days']} दिन",
+                    "सक्रियता": "⭐ सक्रिय" if (yp["start_date"] <= target_dt <= yp["end_date"]) else ""
+                } for yp in y_prats]), use_container_width=True, hide_index=True)
+    
+        # =========================================================================
+        # 3. JAIMINI CHARA DASHA (3 LEVELS: MAJOR SIGN -> ANTARDASHA -> PRATYANTAR)
+        # =========================================================================
+        elif "जैमिनी" in d_mode:
+            st.markdown("#### 🔱 जैमिनी चर दशा (Jaimini Rashi Chara Dasha — Major & Antar)")
+            chara_dashas = c_engine.generate_timeline(chart)
+            act_chara = next((c for c in chara_dashas if c["start_date"] <= target_dt <= c["end_date"]), chara_dashas[0])
+    
+            # Active Antardasha & Pratyantar
+            c_antars_for_act = c_engine.generate_antardashas(act_chara["sign_id"], act_chara["start_date"], act_chara["end_date"])
+            act_ca = next((a for a in c_antars_for_act if a["start_date"] <= target_dt <= a["end_date"]), c_antars_for_act[0])
+    
+            c_prats_for_act = c_engine.generate_pratyantardashas(act_ca["sign_id"], act_ca["start_date"], act_ca["end_date"])
+            act_cpr = next((p for p in c_prats_for_act if p["start_date"] <= target_dt <= p["end_date"]), c_prats_for_act[0])
+    
+            # Top Banner
+            b_str_chara = (
+                f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
+                f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय 3-स्तरीय जैमिनी चर दशा पदानुक्रम (Active Jaimini Chara Dasha Hierarchy):</div>"
+                f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
+                f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🔱 चर महादशा: {act_chara['sign_name']} (#{act_chara['sign_id']})</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>💫 चर अंतर्दशा: {act_ca['sign_name']} (स्वामी: {act_ca['lord']})</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ चर प्रत्यंतर: {act_cpr['sign_name']} (स्वामी: {act_cpr['lord']})</span>"
+                f"</div>"
+                f"</div>"
+            )
+            st.markdown(b_str_chara, unsafe_allow_html=True)
+    
+            # 3 Styled Metric Cards
+            c_col1, c_col2, c_col3 = st.columns(3)
+            with c_col1:
+                st.markdown(f"""
+                <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🔱 सक्रिय चर महादशा</div>
+                    <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_chara['sign_name']} (#{act_chara['sign_id']})</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_chara['start_date'].strftime('%d-%b-%y')} ~ {act_chara['end_date'].strftime('%d-%b-%y')} ({act_chara['duration_years']} वर्ष)</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with c_col2:
+                st.markdown(f"""
+                <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#15803D; font-weight:800;">💫 चर अंतर्दशा</div>
+                    <div style="font-size:18px; font-weight:900; color:#064E3B;">{act_ca['sign_name']} (स्वामी: {act_ca['lord']})</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_ca['start_date'].strftime('%d-%b-%y')} ~ {act_ca['end_date'].strftime('%d-%b-%y')}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with c_col3:
+                st.markdown(f"""
+                <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ चर प्रत्यंतर्दशा</div>
+                    <div style="font-size:18px; font-weight:900; color:#78350F;">{act_cpr['sign_name']} (स्वामी: {act_cpr['lord']})</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_cpr['start_date'].strftime('%d-%b-%y')} ~ {act_cpr['end_date'].strftime('%d-%b-%y')}</div>
+                </div>
+                """, unsafe_allow_html=True)
+    
+            st.write("")
+    
+            tab_c1, tab_c2, tab_c3 = st.tabs([
+                "🔱 चर महादशा (12 Signs)",
+                "💫 चर अंतर्दशा (12 Sub-Signs per Sign)",
+                "⚡ चर प्रत्यंतर्दशा (Pratyantardasha)"
+            ])
+    
+            with tab_c1:
+                st.markdown("##### 🔱 12 राशियों का चर महादशा कालक्रम")
+                st.dataframe(pd.DataFrame([{
+                    "राशि (Sign)": f"{c['sign_name']} (#{c['sign_id']})",
+                    "आरंभ दिनांक (Start)": c["start_date"].strftime("%d-%b-%Y"),
+                    "समाप्ति दिनांक (End)": c["end_date"].strftime("%d-%b-%Y"),
+                    "अवधि (वर्ष)": f"{c['duration_years']} वर्ष",
+                    "सक्रियता": "⭐ वर्तमान सक्रिय" if (c["start_date"] <= target_dt <= c["end_date"]) else ""
+                } for c in chara_dashas]), use_container_width=True, hide_index=True)
+    
+            with tab_c2:
+                st.markdown("##### 💫 चर अंतर्दशा (12 Sub-signs under Selected Rashi)")
+                c_options = [f"{c['sign_name']} ({c['start_date'].strftime('%d-%b-%Y')} ~ {c['end_date'].strftime('%d-%b-%Y')})" for c in chara_dashas]
+                default_c_idx = next((i for i, c in enumerate(chara_dashas) if c["start_date"] <= target_dt <= c["end_date"]), 0)
+                sel_c_idx = st.selectbox("चर दशा राशि चुनें", range(len(c_options)), format_func=lambda i: c_options[i], index=default_c_idx, key="sel_chara_for_antar")
+                sel_c_obj = chara_dashas[sel_c_idx]
+    
+                c_antars = c_engine.generate_antardashas(sel_c_obj["sign_id"], sel_c_obj["start_date"], sel_c_obj["end_date"])
+                st.dataframe(pd.DataFrame([{
+                    "चर महादशा / अंतर्दशा": f"{sel_c_obj['sign_name']} — {ca['sign_name']}",
+                    "राशि स्वामी (Lord)": ca["lord"],
+                    "आरंभ दिनांक": ca["start_date"].strftime("%d-%b-%Y"),
+                    "समाप्ति दिनांक": ca["end_date"].strftime("%d-%b-%Y"),
+                    "अवधि": f"{ca['duration_months']} माह ({ca['duration_days']} दिन)",
+                    "सक्रियता": "⭐ सक्रिय" if (ca["start_date"] <= target_dt <= ca["end_date"]) else ""
+                } for ca in c_antars]), use_container_width=True, hide_index=True)
+    
+            with tab_c3:
+                st.markdown("##### ⚡ चर प्रत्यंतर्दशा (12 Sub-divisions per Antardasha)")
+                col_c_p1, col_c_p2 = st.columns(2)
+                with col_c_p1:
+                    sel_c_m_idx = st.selectbox("महादशा राशि", range(len(c_options)), format_func=lambda i: c_options[i], index=default_c_idx, key="sel_c_m_for_prat")
+                sel_c_m_p = chara_dashas[sel_c_m_idx]
+                c_antars_p = c_engine.generate_antardashas(sel_c_m_p["sign_id"], sel_c_m_p["start_date"], sel_c_m_p["end_date"])
+                with col_c_p2:
+                    sel_c_a_idx = st.selectbox("अंतर्दशा राशि", range(len(c_antars_p)), format_func=lambda i: f"{c_antars_p[i]['sign_name']} ({c_antars_p[i]['start_date'].strftime('%d-%b-%y')})", key="sel_c_a_for_prat")
+                sel_c_a_p = c_antars_p[sel_c_a_idx]
+    
+                c_prats = c_engine.generate_pratyantardashas(sel_c_a_p["sign_id"], sel_c_a_p["start_date"], sel_c_a_p["end_date"])
+                st.dataframe(pd.DataFrame([{
+                    "3-स्तरीय चर दशा": f"{sel_c_m_p['sign_name']} / {sel_c_a_p['sign_name']} / {cp['sign_name']}",
+                    "राशि स्वामी": cp["lord"],
+                    "आरंभ दिनांक": cp["start_date"].strftime("%d-%b-%Y"),
+                    "समाप्ति दिनांक": cp["end_date"].strftime("%d-%b-%Y"),
+                    "अवधि (दिन)": f"{cp['duration_days']} दिन",
+                    "सक्रियता": "⭐ सक्रिय" if (cp["start_date"] <= target_dt <= cp["end_date"]) else ""
+                } for cp in c_prats]), use_container_width=True, hide_index=True)
+    
+        # =========================================================================
+        # 4. KAALACHAKRA DASHA (BPHS)
+        # =========================================================================
+        elif "कालचक्र" in d_mode:
+            st.markdown("#### 🔄 कालचक्र महादशा (Kaalachakra Dasha - BPHS)")
+            kcd_res = default_kcd_engine.calculate(chart)
+    
+            # Determine active KCD period
+            act_kcd = None
+            for item in kcd_res["timeline"]:
+                try:
+                    s_dt = datetime.strptime(item["start_date"], "%d-%b-%Y")
+                    e_dt = datetime.strptime(item["end_date"], "%d-%b-%Y")
+                    if s_dt <= target_dt <= e_dt:
+                        act_kcd = item
+                        break
+                except Exception:
+                    pass
+            if not act_kcd and kcd_res["timeline"]:
+                act_kcd = kcd_res["timeline"][0]
+    
+            # Top Banner
+            b_str_kcd = (
+                f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
+                f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय कालचक्र दशा स्थिति (Active Kaalachakra Dasha Overview):</div>"
+                f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
+                f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🔄 सक्रिय राशि: {act_kcd['rashi']} ({act_kcd.get('role', '') or 'दशा'})</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>👤 देह राशि: {kcd_res['deha_rashi']}</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>❤️ जीव राशि: {kcd_res['jeeva_rashi']}</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#FDF2F8; border:1.5px solid #EC4899; color:#831843; padding:5px 12px; border-radius:8px;'>🌀 गति: {act_kcd['gati'].split('/')[0]}</span>"
+                f"</div>"
+                f"</div>"
+            )
+            st.markdown(b_str_kcd, unsafe_allow_html=True)
+    
+            # Classical KCD Gati Jump Alerts (Manduka, Markati, Simhavalokana)
+            _gati_str = act_kcd.get('gati', '')
+            if any(w in _gati_str for w in ["मंडूक", "मर्कटी", "सिंहावलोकन", "Jump", "Frog", "Monkey", "Lion"]):
+                st.warning(f"""
+                🚨 **कालचक्र विशेष छलांग (KCD Gati Alert — {_gati_str}):**
+                वर्तमान कालचक्र महादशा में **{_gati_str}** सक्रिय है। 
+                बृहत्पाराशर होरा शास्त्र (BPHS) अनुसार यह काल जातक के जीवन में आकस्मिक युगांतरकारी मोड़ लाता है — यथा कार्यक्षेत्र में बड़ा परिवर्तन, पदोन्नति/स्थानांतरण, स्थान परिवर्तन अथवा स्वास्थ्य व मानसिक स्थिति में तीव्र उतार-चढ़ाव। 
+                विशेष सावधानी व महामृत्युंजय अनुष्ठान प्रशस्त रहेगा।
+                """, icon="⚠️")
+    
+            # 4 Styled Metric Cards
+            col_kc1, col_kc2, col_kc3, col_kc4 = st.columns(4)
+            with col_kc1:
+                st.markdown(f"""
+                <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🔄 सक्रिय कालचक्र राशि</div>
+                    <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_kcd['rashi']}</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_kcd['start_date']} ~ {act_kcd['end_date']}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with col_kc2:
+                st.markdown(f"""
+                <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#15803D; font-weight:800;">👤 देह राशि (Deha Rashi)</div>
+                    <div style="font-size:18px; font-weight:900; color:#064E3B;">{kcd_res['deha_rashi']}</div>
+                    <div style="font-size:10.5px; color:#475569;">शारीरिक सुख व स्वास्थ्य</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with col_kc3:
+                st.markdown(f"""
+                <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#B45309; font-weight:800;">❤️ जीव राशि (Jeeva Rashi)</div>
+                    <div style="font-size:18px; font-weight:900; color:#78350F;">{kcd_res['jeeva_rashi']}</div>
+                    <div style="font-size:10.5px; color:#475569;">मानसिक एवं आत्मिक शांति</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with col_kc4:
+                st.markdown(f"""
+                <div style="background:#FDF2F8; border: 2px solid #EC4899; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#BE185D; font-weight:800;">✨ चक्र वर्ग एवं नक्षत्र</div>
+                    <div style="font-size:18px; font-weight:900; color:#831843;">{kcd_res['nakshatra']} (पद {kcd_res['pada']})</div>
+                    <div style="font-size:10.5px; color:#475569;">{kcd_res['group_type']}</div>
+                </div>
+                """, unsafe_allow_html=True)
+    
+            st.write("")
+            st.dataframe(pd.DataFrame(kcd_res["timeline"]), use_container_width=True)
+    
+            st.info("💡 **कालचक्र गति फल:** 'मण्डूक गति' (Frog Jump) अथवा 'सिंहावलोकन' (Lion's Gaze) की दशा में जीवन में अचानक बड़े परिवर्तन, स्थान परिवर्तन अथवा अप्रत्याशित उत्थान/पतन घटित होता है। देह राशि शारीरिक सुख-स्वास्थ्य और जीव राशि मानसिक व आत्मिक शांति का नियंत्रण करती है।")
+    
+        # =========================================================================
+        # 5. SHOOLA DASHA (AYURDAYA & MARAKA)
+        # =========================================================================
+        elif "शूल" in d_mode:
+            st.markdown("#### 🔱 शूल महादशा (Shoola Dasha - Ayurdaya & Maraka Timing)")
+            shoola_res = default_shoola_engine.calculate(chart)
+    
+            # Determine active Shoola period
+            act_shoola = None
+            for item in shoola_res["timeline"]:
+                try:
+                    s_dt = datetime.strptime(item["start_date"], "%d-%b-%Y")
+                    e_dt = datetime.strptime(item["end_date"], "%d-%b-%Y")
+                    if s_dt <= target_dt <= e_dt:
+                        act_shoola = item
+                        break
+                except Exception:
+                    pass
+            if not act_shoola and shoola_res["timeline"]:
+                act_shoola = shoola_res["timeline"][0]
+    
+            # Top Banner
+            b_str_shoola = (
+                f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
+                f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय शूल दशा एवं आयुर्दाय स्थिति (Active Shoola Dasha & Ayurdaya Status):</div>"
+                f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
+                f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🔱 सक्रिय शूल राशि: {act_shoola['sign']} ({act_shoola['duration_years']} वर्ष)</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>🎯 आरंभिक बीज राशि: {shoola_res['start_sign']}</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ त्रिशूल राशियाँ: {', '.join(shoola_res['trishoola_signs'])}</span> "
+                f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
+                f"<span style='background:#FDF2F8; border:1.5px solid #EC4899; color:#831843; padding:5px 12px; border-radius:8px;'>🛡️ जोखिम स्तर: {act_shoola['risk_level'].split('/')[0]}</span>"
+                f"</div>"
+                f"</div>"
+            )
+            st.markdown(b_str_shoola, unsafe_allow_html=True)
+    
+            # 4 Styled Metric Cards
+            col_sh1, col_sh2, col_sh3, col_sh4 = st.columns(4)
+            with col_sh1:
+                st.markdown(f"""
+                <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🔱 सक्रिय शूल दशा राशि</div>
+                    <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_shoola['sign']}</div>
+                    <div style="font-size:10.5px; color:#475569;">{act_shoola['start_date']} ~ {act_shoola['end_date']}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with col_sh2:
+                st.markdown(f"""
+                <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#15803D; font-weight:800;">🎯 आरंभिक बीज राशि</div>
+                    <div style="font-size:18px; font-weight:900; color:#064E3B;">{shoola_res['start_sign']}</div>
+                    <div style="font-size:10.5px; color:#475569;">{shoola_res['direction']}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with col_sh3:
+                st.markdown(f"""
+                <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ त्रिशूल राशियाँ (Trishoola)</div>
+                    <div style="font-size:16px; font-weight:900; color:#78350F;">{', '.join(shoola_res['trishoola_signs'])}</div>
+                    <div style="font-size:10.5px; color:#475569;">रुद्रांश त्रिकोण राशियाँ</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with col_sh4:
+                st.markdown(f"""
+                <div style="background:#FDF2F8; border: 2px solid #EC4899; border-radius:10px; padding:10px; text-align:center;">
+                    <div style="font-size:11.5px; color:#BE185D; font-weight:800;">🛡️ वर्तमान जोखिम स्थिति</div>
+                    <div style="font-size:16px; font-weight:900; color:#831843;">{act_shoola['risk_level'].split('/')[0]}</div>
+                    <div style="font-size:10.5px; color:#475569;">ग्रह स्थिति: {act_shoola['occupants']}</div>
+                </div>
+                """, unsafe_allow_html=True)
+    
+            st.write("")
+            st.dataframe(pd.DataFrame(shoola_res["timeline"]), use_container_width=True)
+    
+            st.warning("⚠️ **शूल दशा शास्त्रीय उपयोग:** शूल दशा जातक के जीवन में स्वास्थ्य संकट, शल्यक्रिया (Surgery), दुर्घटना एवं मारक काल के सूक्ष्म परीक्षण हेतु उपयोग की जाती है। जब दशा त्रिशूल राशि में हो और उस पर क्रूर ग्रहों का प्रभाव हो, तो वह काल विशेष रूप से संवेदनशील होता है।")
+    
+        # =========================================================================
+        # 6. ASHTOTTARI DASHA
+        elif "अष्टोत्तरी" in d_mode:
             try:
-                s_dt = datetime.strptime(item["start_date"], "%d-%b-%Y")
-                e_dt = datetime.strptime(item["end_date"], "%d-%b-%Y")
-                if s_dt <= target_dt <= e_dt:
-                    act_kcd = item
-                    break
-            except Exception:
-                pass
-        if not act_kcd and kcd_res["timeline"]:
-            act_kcd = kcd_res["timeline"][0]
-
-        # Top Banner
-        b_str_kcd = (
-            f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
-            f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय कालचक्र दशा स्थिति (Active Kaalachakra Dasha Overview):</div>"
-            f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
-            f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🔄 सक्रिय राशि: {act_kcd['rashi']} ({act_kcd.get('role', '') or 'दशा'})</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>👤 देह राशि: {kcd_res['deha_rashi']}</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>❤️ जीव राशि: {kcd_res['jeeva_rashi']}</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#FDF2F8; border:1.5px solid #EC4899; color:#831843; padding:5px 12px; border-radius:8px;'>🌀 गति: {act_kcd['gati'].split('/')[0]}</span>"
-            f"</div>"
-            f"</div>"
-        )
-        st.markdown(b_str_kcd, unsafe_allow_html=True)
-
-        # Classical KCD Gati Jump Alerts (Manduka, Markati, Simhavalokana)
-        _gati_str = act_kcd.get('gati', '')
-        if any(w in _gati_str for w in ["मंडूक", "मर्कटी", "सिंहावलोकन", "Jump", "Frog", "Monkey", "Lion"]):
-            st.warning(f"""
-            🚨 **कालचक्र विशेष छलांग (KCD Gati Alert — {_gati_str}):**
-            वर्तमान कालचक्र महादशा में **{_gati_str}** सक्रिय है। 
-            बृहत्पाराशर होरा शास्त्र (BPHS) अनुसार यह काल जातक के जीवन में आकस्मिक युगांतरकारी मोड़ लाता है — यथा कार्यक्षेत्र में बड़ा परिवर्तन, पदोन्नति/स्थानांतरण, स्थान परिवर्तन अथवा स्वास्थ्य व मानसिक स्थिति में तीव्र उतार-चढ़ाव। 
-            विशेष सावधानी व महामृत्युंजय अनुष्ठान प्रशस्त रहेगा।
-            """, icon="⚠️")
-
-        # 4 Styled Metric Cards
-        col_kc1, col_kc2, col_kc3, col_kc4 = st.columns(4)
-        with col_kc1:
-            st.markdown(f"""
-            <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🔄 सक्रिय कालचक्र राशि</div>
-                <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_kcd['rashi']}</div>
-                <div style="font-size:10.5px; color:#475569;">{act_kcd['start_date']} ~ {act_kcd['end_date']}</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with col_kc2:
-            st.markdown(f"""
-            <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#15803D; font-weight:800;">👤 देह राशि (Deha Rashi)</div>
-                <div style="font-size:18px; font-weight:900; color:#064E3B;">{kcd_res['deha_rashi']}</div>
-                <div style="font-size:10.5px; color:#475569;">शारीरिक सुख व स्वास्थ्य</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with col_kc3:
-            st.markdown(f"""
-            <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#B45309; font-weight:800;">❤️ जीव राशि (Jeeva Rashi)</div>
-                <div style="font-size:18px; font-weight:900; color:#78350F;">{kcd_res['jeeva_rashi']}</div>
-                <div style="font-size:10.5px; color:#475569;">मानसिक एवं आत्मिक शांति</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with col_kc4:
-            st.markdown(f"""
-            <div style="background:#FDF2F8; border: 2px solid #EC4899; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#BE185D; font-weight:800;">✨ चक्र वर्ग एवं नक्षत्र</div>
-                <div style="font-size:18px; font-weight:900; color:#831843;">{kcd_res['nakshatra']} (पद {kcd_res['pada']})</div>
-                <div style="font-size:10.5px; color:#475569;">{kcd_res['group_type']}</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.write("")
-        st.dataframe(pd.DataFrame(kcd_res["timeline"]), use_container_width=True)
-
-        st.info("💡 **कालचक्र गति फल:** 'मण्डूक गति' (Frog Jump) अथवा 'सिंहावलोकन' (Lion's Gaze) की दशा में जीवन में अचानक बड़े परिवर्तन, स्थान परिवर्तन अथवा अप्रत्याशित उत्थान/पतन घटित होता है। देह राशि शारीरिक सुख-स्वास्थ्य और जीव राशि मानसिक व आत्मिक शांति का नियंत्रण करती है।")
-
-    # =========================================================================
-    # 5. SHOOLA DASHA (AYURDAYA & MARAKA)
-    # =========================================================================
-    elif "शूल" in d_mode:
-        st.markdown("#### 🔱 शूल महादशा (Shoola Dasha - Ayurdaya & Maraka Timing)")
-        shoola_res = default_shoola_engine.calculate(chart)
-
-        # Determine active Shoola period
-        act_shoola = None
-        for item in shoola_res["timeline"]:
+                st.markdown("### 🕉️ अष्टोत्तरी दशा (Ashtottari Dasha — 108 वर्ष)")
+                st.info("108 वर्ष का चक्र, 8 ग्रह — राहु सहित, केतु को छोड़कर। नक्षत्र-आधारित।")
+                active_a = ashto_engine.get_active_dasha_at(chart, dasha_target_date)
+                ca1, ca2, ca3 = st.columns(3)
+                ca1.metric("महादशा", active_a["mahadasha"]["lord"], active_a["mahadasha"]["start_date"].strftime('%d-%b-%Y'))
+                ca2.metric("अंतर्दशा", active_a["antardasha"]["lord"], active_a["antardasha"]["start_date"].strftime('%d-%b-%Y'))
+                ca3.metric("प्रत्यंतर्दशा", active_a["pratyantardasha"]["lord"], active_a["pratyantardasha"]["start_date"].strftime('%d-%b-%Y'))
+                st.success(f"सक्रिय: {active_a['summary']}")
+                with st.expander("सम्पूर्ण अष्टोत्तरी कालक्रम", expanded=False):
+                    tl_a = ashto_engine.generate_timeline(chart)
+                    tl_a_rows = [{"महादशा": md["lord"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": f"{md['duration_years']:.2f}", "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_a[:16]]
+                    st.dataframe(pd.DataFrame(tl_a_rows), use_container_width=True, hide_index=True)
+                with st.expander("सक्रिय महादशा के अंतर्दशाएँ", expanded=True):
+                    ads = ashto_engine.generate_antardashas(active_a["mahadasha"]["lord"], active_a["mahadasha"]["start_date"], active_a["mahadasha"]["end_date"], active_a["mahadasha"].get("is_partial", False))
+                    ad_rows = [{"अंतर्दशा": ad["lord"], "प्रारम्भ": ad["start_date"].strftime("%d-%b-%Y"), "समाप्ति": ad["end_date"].strftime("%d-%b-%Y"), "वर्ष": f"{ad['duration_years']:.3f}", "स्थिति": "🔴" if ad["start_date"] <= target_dt <= ad["end_date"] else "—"} for ad in ads]
+                    st.dataframe(pd.DataFrame(ad_rows), use_container_width=True, hide_index=True)
+            except Exception as e_a:
+                st.error(f"अष्टोत्तरी दशा त्रुटि: {str(e_a)[:300]}")
+    
+        # =========================================================================
+        # 7. NARAYANA DASHA
+        elif "नारायण" in d_mode:
             try:
-                s_dt = datetime.strptime(item["start_date"], "%d-%b-%Y")
-                e_dt = datetime.strptime(item["end_date"], "%d-%b-%Y")
-                if s_dt <= target_dt <= e_dt:
-                    act_shoola = item
-                    break
-            except Exception:
-                pass
-        if not act_shoola and shoola_res["timeline"]:
-            act_shoola = shoola_res["timeline"][0]
-
-        # Top Banner
-        b_str_shoola = (
-            f"<div style='background: #FFFBEB; border: 2px solid #F59E0B; padding: 14px 18px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);'>"
-            f"<div style='font-size: 13px; color: #92400E; font-weight: 800; margin-bottom: 8px;'>🧭 सक्रिय शूल दशा एवं आयुर्दाय स्थिति (Active Shoola Dasha & Ayurdaya Status):</div>"
-            f"<div style='font-size: 15px; font-weight: 800; color: #1E293B; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;'>"
-            f"<span style='background:#EEF2FF; border:1.5px solid #6366F1; color:#312E81; padding:5px 12px; border-radius:8px;'>🔱 सक्रिय शूल राशि: {act_shoola['sign']} ({act_shoola['duration_years']} वर्ष)</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#F0FDF4; border:1.5px solid #22C55E; color:#064E3B; padding:5px 12px; border-radius:8px;'>🎯 आरंभिक बीज राशि: {shoola_res['start_sign']}</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#FEF3C7; border:1.5px solid #F59E0B; color:#78350F; padding:5px 12px; border-radius:8px;'>⚡ त्रिशूल राशियाँ: {', '.join(shoola_res['trishoola_signs'])}</span> "
-            f"<span style='color:#F59E0B; font-weight:900;'>➔</span> "
-            f"<span style='background:#FDF2F8; border:1.5px solid #EC4899; color:#831843; padding:5px 12px; border-radius:8px;'>🛡️ जोखिम स्तर: {act_shoola['risk_level'].split('/')[0]}</span>"
-            f"</div>"
-            f"</div>"
-        )
-        st.markdown(b_str_shoola, unsafe_allow_html=True)
-
-        # 4 Styled Metric Cards
-        col_sh1, col_sh2, col_sh3, col_sh4 = st.columns(4)
-        with col_sh1:
-            st.markdown(f"""
-            <div style="background:#EEF2FF; border: 2px solid #6366F1; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#4338CA; font-weight:800;">🔱 सक्रिय शूल दशा राशि</div>
-                <div style="font-size:18px; font-weight:900; color:#1E1B4B;">{act_shoola['sign']}</div>
-                <div style="font-size:10.5px; color:#475569;">{act_shoola['start_date']} ~ {act_shoola['end_date']}</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with col_sh2:
-            st.markdown(f"""
-            <div style="background:#F0FDF4; border: 2px solid #22C55E; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#15803D; font-weight:800;">🎯 आरंभिक बीज राशि</div>
-                <div style="font-size:18px; font-weight:900; color:#064E3B;">{shoola_res['start_sign']}</div>
-                <div style="font-size:10.5px; color:#475569;">{shoola_res['direction']}</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with col_sh3:
-            st.markdown(f"""
-            <div style="background:#FEF3C7; border: 2px solid #F59E0B; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#B45309; font-weight:800;">⚡ त्रिशूल राशियाँ (Trishoola)</div>
-                <div style="font-size:16px; font-weight:900; color:#78350F;">{', '.join(shoola_res['trishoola_signs'])}</div>
-                <div style="font-size:10.5px; color:#475569;">रुद्रांश त्रिकोण राशियाँ</div>
-            </div>
-            """, unsafe_allow_html=True)
-        with col_sh4:
-            st.markdown(f"""
-            <div style="background:#FDF2F8; border: 2px solid #EC4899; border-radius:10px; padding:10px; text-align:center;">
-                <div style="font-size:11.5px; color:#BE185D; font-weight:800;">🛡️ वर्तमान जोखिम स्थिति</div>
-                <div style="font-size:16px; font-weight:900; color:#831843;">{act_shoola['risk_level'].split('/')[0]}</div>
-                <div style="font-size:10.5px; color:#475569;">ग्रह स्थिति: {act_shoola['occupants']}</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.write("")
-        st.dataframe(pd.DataFrame(shoola_res["timeline"]), use_container_width=True)
-
-        st.warning("⚠️ **शूल दशा शास्त्रीय उपयोग:** शूल दशा जातक के जीवन में स्वास्थ्य संकट, शल्यक्रिया (Surgery), दुर्घटना एवं मारक काल के सूक्ष्म परीक्षण हेतु उपयोग की जाती है। जब दशा त्रिशूल राशि में हो और उस पर क्रूर ग्रहों का प्रभाव हो, तो वह काल विशेष रूप से संवेदनशील होता है।")
-
-    # =========================================================================
-    # 6. ASHTOTTARI DASHA
-    elif "अष्टोत्तरी" in d_mode:
-        try:
-            st.markdown("### 🕉️ अष्टोत्तरी दशा (Ashtottari Dasha — 108 वर्ष)")
-            st.info("108 वर्ष का चक्र, 8 ग्रह — राहु सहित, केतु को छोड़कर। नक्षत्र-आधारित।")
-            active_a = ashto_engine.get_active_dasha_at(chart, dasha_target_date)
-            ca1, ca2, ca3 = st.columns(3)
-            ca1.metric("महादशा", active_a["mahadasha"]["lord"], active_a["mahadasha"]["start_date"].strftime('%d-%b-%Y'))
-            ca2.metric("अंतर्दशा", active_a["antardasha"]["lord"], active_a["antardasha"]["start_date"].strftime('%d-%b-%Y'))
-            ca3.metric("प्रत्यंतर्दशा", active_a["pratyantardasha"]["lord"], active_a["pratyantardasha"]["start_date"].strftime('%d-%b-%Y'))
-            st.success(f"सक्रिय: {active_a['summary']}")
-            with st.expander("सम्पूर्ण अष्टोत्तरी कालक्रम", expanded=False):
-                tl_a = ashto_engine.generate_timeline(chart)
-                tl_a_rows = [{"महादशा": md["lord"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": f"{md['duration_years']:.2f}", "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_a[:16]]
-                st.dataframe(pd.DataFrame(tl_a_rows), use_container_width=True, hide_index=True)
-            with st.expander("सक्रिय महादशा के अंतर्दशाएँ", expanded=True):
-                ads = ashto_engine.generate_antardashas(active_a["mahadasha"]["lord"], active_a["mahadasha"]["start_date"], active_a["mahadasha"]["end_date"], active_a["mahadasha"].get("is_partial", False))
-                ad_rows = [{"अंतर्दशा": ad["lord"], "प्रारम्भ": ad["start_date"].strftime("%d-%b-%Y"), "समाप्ति": ad["end_date"].strftime("%d-%b-%Y"), "वर्ष": f"{ad['duration_years']:.3f}", "स्थिति": "🔴" if ad["start_date"] <= target_dt <= ad["end_date"] else "—"} for ad in ads]
-                st.dataframe(pd.DataFrame(ad_rows), use_container_width=True, hide_index=True)
-        except Exception as e_a:
-            st.error(f"अष्टोत्तरी दशा त्रुटि: {str(e_a)[:300]}")
-
-    # =========================================================================
-    # 7. NARAYANA DASHA
-    elif "नारायण" in d_mode:
-        try:
-            st.markdown("### 🪐 नारायण दशा (Narayana Rashi Dasha — जैमिनी)")
-            st.info("जैमिनी राशि-आधारित दशा। विषम लग्न से आगे, सम लग्न से पीछे।")
-            active_n = narayana_engine.get_active_dasha_at(chart, dasha_target_date)
-            cn1, cn2 = st.columns(2)
-            cn1.metric("महादशा (राशि)", active_n["mahadasha"]["sign_name"], f"{active_n['mahadasha']['duration_years']} वर्ष")
-            cn2.metric("अंतर्दशा (राशि)", active_n["antardasha"]["sign_name"], active_n["antardasha"]["start_date"].strftime('%d-%b-%Y'))
-            st.success(f"सक्रिय: {active_n['summary']}")
-            with st.expander("नारायण दशा कालक्रम (12 राशि)", expanded=True):
-                tl_n = narayana_engine.generate_timeline(chart)
-                tl_n_rows = [{"राशि": md["sign_name"], "स्वामी": md["lord"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": md["duration_years"], "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_n]
-                st.dataframe(pd.DataFrame(tl_n_rows), use_container_width=True, hide_index=True)
-        except Exception as e_n:
-            st.error(f"नारायण दशा त्रुटि: {str(e_n)[:300]}")
-
-    # =========================================================================
-    # 8. DWISAPTATI SAMA DASHA
-    elif "द्विसप्ततिसम" in d_mode:
-        try:
-            st.markdown("### ⏳ द्विसप्ततिसम दशा (Dwisaptati Sama — 72 वर्ष)")
-            st.info("72 वर्ष, 8 ग्रह, प्रत्येक को 9 वर्ष।")
-            active_dw = dwisaptati_engine.get_active_dasha_at(chart, dasha_target_date)
-            cdw1, cdw2 = st.columns(2)
-            cdw1.metric("महादशा", active_dw["mahadasha"]["lord"], active_dw["mahadasha"]["start_date"].strftime('%d-%b-%Y'))
-            cdw2.metric("अंतर्दशा", active_dw["antardasha"]["lord"], active_dw["antardasha"]["start_date"].strftime('%d-%b-%Y'))
-            st.success(f"सक्रिय: {active_dw['summary']}")
-            with st.expander("द्विसप्ततिसम कालक्रम", expanded=True):
-                tl_dw = dwisaptati_engine.generate_timeline(chart)
-                tl_dw_rows = [{"महादशा": md["lord"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": f"{md['duration_years']:.2f}", "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_dw[:16]]
-                st.dataframe(pd.DataFrame(tl_dw_rows), use_container_width=True, hide_index=True)
-        except Exception as e_dw:
-            st.error(f"द्विसप्ततिसम दशा त्रुटि: {str(e_dw)[:300]}")
-
-    # =========================================================================
-    # 9. STHIRA DASHA
-    elif "स्थिर" in d_mode:
-        try:
-            st.markdown("### 🔷 स्थिर दशा (Sthira Dasha — जैमिनी)")
-            st.info("चर=7, स्थिर=8, द्विस्वभाव=9 वर्ष। लग्न से आगे क्रम।")
-            active_st = sthira_engine.get_active_dasha_at(chart, dasha_target_date)
-            cst1, cst2 = st.columns(2)
-            cst1.metric("महादशा (राशि)", active_st["mahadasha"]["sign_name"], f"{active_st['mahadasha']['type']} — {active_st['mahadasha']['duration_years']}yr")
-            cst2.metric("अंतर्दशा (राशि)", active_st["antardasha"]["sign_name"], active_st["antardasha"]["start_date"].strftime('%d-%b-%Y'))
-            st.success(f"सक्रिय: {active_st['summary']}")
-            with st.expander("स्थिर दशा कालक्रम (12 राशि)", expanded=True):
-                tl_st = sthira_engine.generate_timeline(chart)
-                tl_st_rows = [{"राशि": md["sign_name"], "प्रकार": md["type"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": md["duration_years"], "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_st]
-                st.dataframe(pd.DataFrame(tl_st_rows), use_container_width=True, hide_index=True)
-        except Exception as e_st:
-            st.error(f"स्थिर दशा त्रुटि: {str(e_st)[:300]}")
-
-    # 10. DRIG DASHA (JAIMINI SPIRITUAL VISION)
-    elif "दृग" in d_mode:
-        try:
-            st.markdown("### 👁️ दृग दशा (Drig Dasha — Jaimini Spiritual Vision & Aspects)")
-            st.info("दृग दशा (दृष्टि आधारित दशा): लग्न पर दृष्टि डालने वाली राशियों का विशिष्ट क्रम। साधना, मंत्र सिद्धि, ईश्वरीय कृपा एवं आत्म-ज्ञान का काल।")
-            active_drig = drig_engine.get_active_dasha_at(chart, dasha_target_date)
-            cd1, cd2 = st.columns(2)
-            cd1.metric("सक्रिय महादशा (राशि)", active_drig["mahadasha"]["sign_name"], f"{active_drig['mahadasha']['type']} ({active_drig['mahadasha']['duration_years']} वर्ष)")
-            cd2.metric("दशा विस्तार", f"{active_drig['mahadasha']['start_date'].strftime('%d-%b-%Y')} ~ {active_drig['mahadasha']['end_date'].strftime('%d-%b-%Y')}")
-            st.success(f"👁️ **शास्त्रीय फलादेश:** वर्तमान में {active_drig['mahadasha']['sign_name']} राशि की दृग दशा प्रभावी है। यह काल आध्यात्मिक उन्नति, अंतर्दृष्टि एवं जीवन दर्शन को परिपक्व करने का समय है।")
-            with st.expander("👁️ दृग दशा सम्पूर्ण समय-चक्र (Timeline)", expanded=True):
-                tl_drig = drig_engine.generate_timeline(chart)
-                tl_drig_rows = [
-                    {
-                        "राशि (Sign)": md["sign_name"],
-                        "प्रकृति (Type)": md["type"],
-                        "आरंभ तिथि": md["start_date"].strftime("%d-%b-%Y"),
-                        "समाप्ति तिथि": md["end_date"].strftime("%d-%b-%Y"),
-                        "अवधि (वर्ष)": md["duration_years"],
-                        "स्थिति": "🔴 सक्रिय" if md["start_date"] <= target_dt <= md["end_date"] else "—"
-                    }
-                    for md in tl_drig
-                ]
-                st.dataframe(pd.DataFrame(tl_drig_rows), use_container_width=True, hide_index=True)
-        except Exception as e_dr:
-            st.error(f"दृग दशा गणना त्रुटि: {str(e_dr)[:300]}")
-
-
-
-# =============================================================
+                st.markdown("### 🪐 नारायण दशा (Narayana Rashi Dasha — जैमिनी)")
+                st.info("जैमिनी राशि-आधारित दशा। विषम लग्न से आगे, सम लग्न से पीछे।")
+                active_n = narayana_engine.get_active_dasha_at(chart, dasha_target_date)
+                cn1, cn2 = st.columns(2)
+                cn1.metric("महादशा (राशि)", active_n["mahadasha"]["sign_name"], f"{active_n['mahadasha']['duration_years']} वर्ष")
+                cn2.metric("अंतर्दशा (राशि)", active_n["antardasha"]["sign_name"], active_n["antardasha"]["start_date"].strftime('%d-%b-%Y'))
+                st.success(f"सक्रिय: {active_n['summary']}")
+                with st.expander("नारायण दशा कालक्रम (12 राशि)", expanded=True):
+                    tl_n = narayana_engine.generate_timeline(chart)
+                    tl_n_rows = [{"राशि": md["sign_name"], "स्वामी": md["lord"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": md["duration_years"], "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_n]
+                    st.dataframe(pd.DataFrame(tl_n_rows), use_container_width=True, hide_index=True)
+            except Exception as e_n:
+                st.error(f"नारायण दशा त्रुटि: {str(e_n)[:300]}")
+    
+        # =========================================================================
+        # 8. DWISAPTATI SAMA DASHA
+        elif "द्विसप्ततिसम" in d_mode:
+            try:
+                st.markdown("### ⏳ द्विसप्ततिसम दशा (Dwisaptati Sama — 72 वर्ष)")
+                st.info("72 वर्ष, 8 ग्रह, प्रत्येक को 9 वर्ष।")
+                active_dw = dwisaptati_engine.get_active_dasha_at(chart, dasha_target_date)
+                cdw1, cdw2 = st.columns(2)
+                cdw1.metric("महादशा", active_dw["mahadasha"]["lord"], active_dw["mahadasha"]["start_date"].strftime('%d-%b-%Y'))
+                cdw2.metric("अंतर्दशा", active_dw["antardasha"]["lord"], active_dw["antardasha"]["start_date"].strftime('%d-%b-%Y'))
+                st.success(f"सक्रिय: {active_dw['summary']}")
+                with st.expander("द्विसप्ततिसम कालक्रम", expanded=True):
+                    tl_dw = dwisaptati_engine.generate_timeline(chart)
+                    tl_dw_rows = [{"महादशा": md["lord"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": f"{md['duration_years']:.2f}", "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_dw[:16]]
+                    st.dataframe(pd.DataFrame(tl_dw_rows), use_container_width=True, hide_index=True)
+            except Exception as e_dw:
+                st.error(f"द्विसप्ततिसम दशा त्रुटि: {str(e_dw)[:300]}")
+    
+        # =========================================================================
+        # 9. STHIRA DASHA
+        elif "स्थिर" in d_mode:
+            try:
+                st.markdown("### 🔷 स्थिर दशा (Sthira Dasha — जैमिनी)")
+                st.info("चर=7, स्थिर=8, द्विस्वभाव=9 वर्ष। लग्न से आगे क्रम।")
+                active_st = sthira_engine.get_active_dasha_at(chart, dasha_target_date)
+                cst1, cst2 = st.columns(2)
+                cst1.metric("महादशा (राशि)", active_st["mahadasha"]["sign_name"], f"{active_st['mahadasha']['type']} — {active_st['mahadasha']['duration_years']}yr")
+                cst2.metric("अंतर्दशा (राशि)", active_st["antardasha"]["sign_name"], active_st["antardasha"]["start_date"].strftime('%d-%b-%Y'))
+                st.success(f"सक्रिय: {active_st['summary']}")
+                with st.expander("स्थिर दशा कालक्रम (12 राशि)", expanded=True):
+                    tl_st = sthira_engine.generate_timeline(chart)
+                    tl_st_rows = [{"राशि": md["sign_name"], "प्रकार": md["type"], "प्रारम्भ": md["start_date"].strftime("%d-%b-%Y"), "समाप्ति": md["end_date"].strftime("%d-%b-%Y"), "वर्ष": md["duration_years"], "स्थिति": "🔴" if md["start_date"] <= target_dt <= md["end_date"] else "—"} for md in tl_st]
+                    st.dataframe(pd.DataFrame(tl_st_rows), use_container_width=True, hide_index=True)
+            except Exception as e_st:
+                st.error(f"स्थिर दशा त्रुटि: {str(e_st)[:300]}")
+    
+        # 10. DRIG DASHA (JAIMINI SPIRITUAL VISION)
+        elif "दृग" in d_mode:
+            try:
+                st.markdown("### 👁️ दृग दशा (Drig Dasha — Jaimini Spiritual Vision & Aspects)")
+                st.info("दृग दशा (दृष्टि आधारित दशा): लग्न पर दृष्टि डालने वाली राशियों का विशिष्ट क्रम। साधना, मंत्र सिद्धि, ईश्वरीय कृपा एवं आत्म-ज्ञान का काल।")
+                active_drig = drig_engine.get_active_dasha_at(chart, dasha_target_date)
+                cd1, cd2 = st.columns(2)
+                cd1.metric("सक्रिय महादशा (राशि)", active_drig["mahadasha"]["sign_name"], f"{active_drig['mahadasha']['type']} ({active_drig['mahadasha']['duration_years']} वर्ष)")
+                cd2.metric("दशा विस्तार", f"{active_drig['mahadasha']['start_date'].strftime('%d-%b-%Y')} ~ {active_drig['mahadasha']['end_date'].strftime('%d-%b-%Y')}")
+                st.success(f"👁️ **शास्त्रीय फलादेश:** वर्तमान में {active_drig['mahadasha']['sign_name']} राशि की दृग दशा प्रभावी है। यह काल आध्यात्मिक उन्नति, अंतर्दृष्टि एवं जीवन दर्शन को परिपक्व करने का समय है।")
+                with st.expander("👁️ दृग दशा सम्पूर्ण समय-चक्र (Timeline)", expanded=True):
+                    tl_drig = drig_engine.generate_timeline(chart)
+                    tl_drig_rows = [
+                        {
+                            "राशि (Sign)": md["sign_name"],
+                            "प्रकृति (Type)": md["type"],
+                            "आरंभ तिथि": md["start_date"].strftime("%d-%b-%Y"),
+                            "समाप्ति तिथि": md["end_date"].strftime("%d-%b-%Y"),
+                            "अवधि (वर्ष)": md["duration_years"],
+                            "स्थिति": "🔴 सक्रिय" if md["start_date"] <= target_dt <= md["end_date"] else "—"
+                        }
+                        for md in tl_drig
+                    ]
+                    st.dataframe(pd.DataFrame(tl_drig_rows), use_container_width=True, hide_index=True)
+            except Exception as e_dr:
+                st.error(f"दृग दशा गणना त्रुटि: {str(e_dr)[:300]}")
+    
+    
+    
+    # =============================================================
 # TAB 11: GOCHAR & ASHTAKAVARGA & CHAKRAS
 
 elif selected_idx == 10:
@@ -5676,11 +5793,12 @@ elif selected_idx == 10:
     rashi_names_hi = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"]
     rashi_symbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"]
 
-    tab_g0, tab_g1, tab_g2, tab_g3 = st.tabs([
+    tab_g0, tab_g1, tab_g2, tab_g3, tab_g4 = st.tabs([
         "🎯 जन्म-गोचर ओवरले चक्र (Bi-Wheel Dual Chart)",
         "🪐 दैनिक गोचर व अष्टकवर्ग (Live Transits & BAV/SAV)",
         "🛡️ सर्वतोभद्र चक्र (9x9 Sarvatobhadra Vedha)",
-        "🏰 कोटा चक्र (Kota Chakra 4-Zone Fortress)"
+        "🏰 कोटा चक्र (Kota Chakra 4-Zone Fortress)",
+        "📈 वित्तीय ज्योतिष व शेयर बाज़ार वेध (Financial & Commodity Trader)"
     ])
 
     with tab_g0:
@@ -6215,6 +6333,59 @@ elif selected_idx == 10:
                 st.info("अष्टकवर्ग गणना उपलब्ध नहीं।")
         except Exception as _epr:
             st.error(f"प्रस्तार त्रुटि: {str(_epr)[:200]}")
+
+    with tab_g4:
+        st.markdown("#### 📈 वित्तीय ज्योतिष, कमोडिटी एवं शेयर बाज़ार वेध (Financial Astrology & Trader Radar)")
+        st.caption("बृहत्संहिता, नारद संहिता एवं सर्वतोभद्र चक्र वेध अनुसार स्वर्ण, चांदी, कच्चा तेल, धातु, निफ्टी/इक्विटी का बाजार रुख एवं जातक की व्यक्तिगत ट्रेडिंग/निवेश कुण्डली:")
+
+        try:
+            import importlib
+            import src.jyotish.services.financial as fin_mod
+            importlib.reload(fin_mod)
+            fin_service = fin_mod.default_financial_service
+
+            c_f_radar, c_f_personal = st.tabs([
+                "🌐 बाज़ार कमोडिटी व शेयर वेध राडार (Market Trends)",
+                "👤 जातक व्यक्तिगत ट्रेडिंग व निवेश कुण्डली (Personal Wealth & Trading)"
+            ])
+
+            with c_f_radar:
+                st.markdown("##### 🪙 प्रमुख कमोडिटी व शेयर बाज़ार तात्कालिक वेध रुझान:")
+                comm_trends = fin_service.analyze_commodity_market_trends(t_chart)
+
+                c_c1, c_c2 = st.columns(2)
+                for idx, c_item in enumerate(comm_trends):
+                    target_col = c_c1 if idx % 2 == 0 else c_c2
+                    with target_col:
+                        st.markdown(f"""
+                        <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-left:5px solid {c_item['badge_color']}; border-radius:10px; padding:12px 14px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <b style="font-size:14.5px; color:#0F172A;">{c_item['icon']} {c_item['commodity']}</b>
+                                <span style="background:#FFFFFF; color:{c_item['badge_color']}; border:1.5px solid {c_item['badge_color']}; padding:2px 8px; border-radius:10px; font-size:11.5px; font-weight:800;">{c_item['trend']}</span>
+                            </div>
+                            <div style="font-size:12px; color:#475569; margin-top:4px;">{c_item['description']}</div>
+                            <div style="font-size:11.5px; color:#1E40AF; margin-top:4px; font-weight:600;">🎯 संवेदनशील नक्षत्र: {c_item['sensitive_nakshatras']}</div>
+                            <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:6px; padding:6px 10px; margin-top:8px; font-size:12px; color:#334155;">
+                                <b>🔍 वेध शास्त्रीय कारण:</b> {' | '.join(c_item['reasons'])}
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+
+            with c_f_personal:
+                st.markdown("##### 👤 जातक की कुण्डली अनुसार व्यक्तिगत निवेश व ट्रेडिंग अनुकूलता:")
+                p_wealth = fin_service.evaluate_personal_wealth_and_trading(chart)
+
+                col_pw1, col_pw2, col_pw3, col_pw4 = st.columns(4)
+                col_pw1.metric("⚡ डे ट्रेडिंग / इंट्राडे", f"{p_wealth['day_trading_score']}%", "अल्पकालिक सट्टा")
+                col_pw2.metric("📈 दीर्घकालिक शेयर निवेश", f"{p_wealth['long_term_score']}%", "म्यूचुअल फंड्स")
+                col_pw3.metric("🏛️ रियल एस्टेट / भूमि", f"{p_wealth['property_score']}%", "अचल संपत्ति")
+                col_pw4.metric("🪙 स्वर्ण व सॉवरेन बॉन्ड", f"{p_wealth['gold_score']}%", "कीमती धातु")
+
+                st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+                for adv in p_wealth["strategic_advice"]:
+                    st.info(adv)
+        except Exception as _efin:
+            st.error(f"वित्तीय ज्योतिष गणना त्रुटि: {str(_efin)[:300]}")
 
 
 # =============================================================
@@ -6861,262 +7032,374 @@ elif selected_idx == 15:
 # TAB 14: KUNDALI MILAN
 
 elif selected_idx == 16:
-    st.subheader("💍 कुण्डली मिलान (36-Guna Ashtakoota & Manglik Matching)")
-    col_m1, col_m2 = st.columns(2)
-    with col_m1:
-        st.markdown("#### 👦 वर विवरण (Groom Details)")
-        g_name = st.text_input("वर का नाम", value="वर")
-        g_date = st.date_input("वर जन्म तिथि", value=date(1995, 8, 20), min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="g_d")
-        g_time = st.time_input("वर जन्म समय", value=time(14, 30), key="g_t")
-        g_city = st.text_input("वर जन्म स्थान (शहर/राज्य)", value="नई दिल्ली", key="g_city_in")
-    with col_m2:
-        st.markdown("#### 👧 वधू विवरण (Bride Details)")
-        b_name = st.text_input("वधू का नाम", value="वधू")
-        b_date = st.date_input("वधू जन्म तिथि", value=date(1997, 3, 15), min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="b_d")
-        b_time = st.time_input("वधू जन्म समय", value=time(9, 15), key="b_t")
-        b_city = st.text_input("वधू जन्म स्थान (शहर/राज्य)", value="नई दिल्ली", key="b_city_in")
+    st.subheader("💍 कुण्डली मिलान एवं सिनैस्ट्री (Kundali Milan & Synastry)")
+    tab_milan_vivah, tab_milan_biz = st.tabs([
+        "💍 दांपत्य एवं विवाह मिलान (36-Guna & Manglik)",
+        "💼 व्यापारिक साझेदारी सिनैस्ट्री (Business Partner Synastry)"
+    ])
+    with tab_milan_vivah:
+            col_m1, col_m2 = st.columns(2)
+            with col_m1:
+                st.markdown("#### 👦 वर विवरण (Groom Details)")
+                g_name = st.text_input("वर का नाम", value="वर")
+                g_date = st.date_input("वर जन्म तिथि", value=date(1995, 8, 20), min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="g_d")
+                g_time = st.time_input("वर जन्म समय", value=time(14, 30), key="g_t")
+                g_city = st.text_input("वर जन्म स्थान (शहर/राज्य)", value="नई दिल्ली", key="g_city_in")
+            with col_m2:
+                st.markdown("#### 👧 वधू विवरण (Bride Details)")
+                b_name = st.text_input("वधू का नाम", value="वधू")
+                b_date = st.date_input("वधू जन्म तिथि", value=date(1997, 3, 15), min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="b_d")
+                b_time = st.time_input("वधू जन्म समय", value=time(9, 15), key="b_t")
+                b_city = st.text_input("वधू जन्म स्थान (शहर/राज्य)", value="नई दिल्ली", key="b_city_in")
 
-    if st.button("💑 कुण्डली मिलान करें", type="primary"):
-        import importlib
-        import src.jyotish.services.milan as milan_mod
-        importlib.reload(milan_mod)
+            if st.button("💑 कुण्डली मिलान करें", type="primary"):
+                import importlib
+                import src.jyotish.services.milan as milan_mod
+                importlib.reload(milan_mod)
 
-        g_loc = default_geocoding_service.resolve(g_city.strip()) if g_city else None
-        g_lat = g_loc.get("latitude", 28.6139) if isinstance(g_loc, dict) else (getattr(g_loc, "latitude", 28.6139) if g_loc else 28.6139)
-        g_lon = g_loc.get("longitude", 77.2090) if isinstance(g_loc, dict) else (getattr(g_loc, "longitude", 77.2090) if g_loc else 77.2090)
-        g_tz = g_loc.get("timezone_offset", 5.5) if isinstance(g_loc, dict) else (getattr(g_loc, "timezone_offset", 5.5) if g_loc else 5.5)
+                g_loc = default_geocoding_service.resolve(g_city.strip()) if g_city else None
+                g_lat = g_loc.get("latitude", 28.6139) if isinstance(g_loc, dict) else (getattr(g_loc, "latitude", 28.6139) if g_loc else 28.6139)
+                g_lon = g_loc.get("longitude", 77.2090) if isinstance(g_loc, dict) else (getattr(g_loc, "longitude", 77.2090) if g_loc else 77.2090)
+                g_tz = g_loc.get("timezone_offset", 5.5) if isinstance(g_loc, dict) else (getattr(g_loc, "timezone_offset", 5.5) if g_loc else 5.5)
 
-        b_loc = default_geocoding_service.resolve(b_city.strip()) if b_city else None
-        b_lat = b_loc.get("latitude", 28.6139) if isinstance(b_loc, dict) else (getattr(b_loc, "latitude", 28.6139) if b_loc else 28.6139)
-        b_lon = b_loc.get("longitude", 77.2090) if isinstance(b_loc, dict) else (getattr(b_loc, "longitude", 77.2090) if b_loc else 77.2090)
-        b_tz = b_loc.get("timezone_offset", 5.5) if isinstance(b_loc, dict) else (getattr(b_loc, "timezone_offset", 5.5) if b_loc else 5.5)
+                b_loc = default_geocoding_service.resolve(b_city.strip()) if b_city else None
+                b_lat = b_loc.get("latitude", 28.6139) if isinstance(b_loc, dict) else (getattr(b_loc, "latitude", 28.6139) if b_loc else 28.6139)
+                b_lon = b_loc.get("longitude", 77.2090) if isinstance(b_loc, dict) else (getattr(b_loc, "longitude", 77.2090) if b_loc else 77.2090)
+                b_tz = b_loc.get("timezone_offset", 5.5) if isinstance(b_loc, dict) else (getattr(b_loc, "timezone_offset", 5.5) if b_loc else 5.5)
 
-        groom_data = BirthData(name=g_name, birth_date=g_date, birth_time=g_time, latitude=g_lat, longitude=g_lon, timezone_offset=g_tz, city=g_city)
-        bride_data = BirthData(name=b_name, birth_date=b_date, birth_time=b_time, latitude=b_lat, longitude=b_lon, timezone_offset=b_tz, city=b_city)
-        m_score = milan_mod.default_milan_service.match_charts(groom_data, bride_data)
+                groom_data = BirthData(name=g_name, birth_date=g_date, birth_time=g_time, latitude=g_lat, longitude=g_lon, timezone_offset=g_tz, city=g_city)
+                bride_data = BirthData(name=b_name, birth_date=b_date, birth_time=b_time, latitude=b_lat, longitude=b_lon, timezone_offset=b_tz, city=b_city)
+                m_score = milan_mod.default_milan_service.match_charts(groom_data, bride_data)
 
-        st.metric("अष्टकूट गुण मिलान", f"{m_score.total_score} / 36.0", m_score.verdict)
-        if "वर्जित" in m_score.verdict or "अनुचित" in m_score.verdict or "महादोष" in m_score.verdict:
-            st.error(f"**🚫 शास्त्रीय निर्णय एवं निषेध:** {m_score.recommendation_hi}")
-        elif "दोष" in m_score.verdict or "असंतुलित" in m_score.verdict:
-            st.warning(f"**⚠️ शास्त्रीय परामर्श एवं सावधानी:** {m_score.recommendation_hi}")
-        elif "उत्कृष्ट" in m_score.verdict:
-            st.success(f"**✨ शास्त्रीय परामर्श:** {m_score.recommendation_hi}")
-        else:
-            st.info(f"**शास्त्रीय परामर्श:** {m_score.recommendation_hi}")
+                st.metric("अष्टकूट गुण मिलान", f"{m_score.total_score} / 36.0", m_score.verdict)
+                if "वर्जित" in m_score.verdict or "अनुचित" in m_score.verdict or "महादोष" in m_score.verdict:
+                    st.error(f"**🚫 शास्त्रीय निर्णय एवं निषेध:** {m_score.recommendation_hi}")
+                elif "दोष" in m_score.verdict or "असंतुलित" in m_score.verdict:
+                    st.warning(f"**⚠️ शास्त्रीय परामर्श एवं सावधानी:** {m_score.recommendation_hi}")
+                elif "उत्कृष्ट" in m_score.verdict:
+                    st.success(f"**✨ शास्त्रीय परामर्श:** {m_score.recommendation_hi}")
+                else:
+                    st.info(f"**शास्त्रीय परामर्श:** {m_score.recommendation_hi}")
 
-        koota_df = pd.DataFrame([
-            {"Koota": "वर्ण (Varna)", "Score": m_score.varna, "Max": 1.0},
-            {"Koota": "वश्य (Vashya)", "Score": m_score.vashya, "Max": 2.0},
-            {"Koota": "तारा (Tara)", "Score": m_score.tara, "Max": 3.0},
-            {"Koota": "योनि (Yoni)", "Score": m_score.yoni, "Max": 4.0},
-            {"Koota": "ग्रह मैत्री (Maitri)", "Score": m_score.graha_maitri, "Max": 5.0},
-            {"Koota": "गण (Gana)", "Score": m_score.gana, "Max": 6.0},
-            {"Koota": "भकूट (Bhakoot)", "Score": m_score.bhakoot, "Max": 7.0},
-            {"Koota": "नाड़ी (Nadi)", "Score": m_score.nadi, "Max": 8.0},
-        ])
-        st.dataframe(koota_df, use_container_width=True)
+                koota_df = pd.DataFrame([
+                    {"Koota": "वर्ण (Varna)", "Score": m_score.varna, "Max": 1.0},
+                    {"Koota": "वश्य (Vashya)", "Score": m_score.vashya, "Max": 2.0},
+                    {"Koota": "तारा (Tara)", "Score": m_score.tara, "Max": 3.0},
+                    {"Koota": "योनि (Yoni)", "Score": m_score.yoni, "Max": 4.0},
+                    {"Koota": "ग्रह मैत्री (Maitri)", "Score": m_score.graha_maitri, "Max": 5.0},
+                    {"Koota": "गण (Gana)", "Score": m_score.gana, "Max": 6.0},
+                    {"Koota": "भकूट (Bhakoot)", "Score": m_score.bhakoot, "Max": 7.0},
+                    {"Koota": "नाड़ी (Nadi)", "Score": m_score.nadi, "Max": 8.0},
+                ])
+                st.dataframe(koota_df, use_container_width=True)
 
-        # Advanced Shastriya Cancellations & Balancing Analysis (with defensive fallback)
-        st.markdown("#### 🛡️ शास्त्रीय दोष परिहार एवं साम्य विश्लेषण (Shastriya Cancellations)")
-        c_mc1, c_mc2, c_mc3 = st.columns(3)
-        
-        m_canc_reason = getattr(m_score, 'manglik_cancellation_reason', '') or (
-            "समान मांगलिक सामंजस्य: दोनों मांगलिक हैं।" if getattr(m_score, 'groom_manglik', False) and getattr(m_score, 'bride_manglik', False)
-            else ("दोष रहित: दोनों मांगलिक नहीं हैं।" if not getattr(m_score, 'groom_manglik', False) and not getattr(m_score, 'bride_manglik', False)
-            else "असंतुलित मांगलिक: एक पक्ष मांगलिक है।")
-        )
-        n_canc_reason = getattr(m_score, 'nadi_cancellation_reason', '') or (
-            "नाड़ी दोष परिहार लागू।" if getattr(m_score, 'nadi_dosha_cancelled', False)
-            else ("नाड़ी महादोष सक्रिय है।" if getattr(m_score, 'nadi_dosha', False) else "नाड़ी दोष नहीं है।")
-        )
+                # Advanced Shastriya Cancellations & Balancing Analysis (with defensive fallback)
+                st.markdown("#### 🛡️ शास्त्रीय दोष परिहार एवं साम्य विश्लेषण (Shastriya Cancellations)")
+                c_mc1, c_mc2, c_mc3 = st.columns(3)
 
-        with c_mc1:
-            if getattr(m_score, 'manglik_match', False):
-                st.success(f"**🔥 मांगलिक सामंजस्य:**\n\n{m_canc_reason}")
-            else:
-                st.error(f"**⚠️ मांगलिक असंतुलन:**\n\n{m_canc_reason}")
-        with c_mc2:
-            if getattr(m_score, 'nadi_dosha_cancelled', False):
-                st.success(f"**🧬 नाड़ी परिहार:**\n\n{n_canc_reason}")
-            elif getattr(m_score, 'nadi_dosha', False):
-                st.error(f"**🚫 नाड़ी महादोष:**\n\n{n_canc_reason}")
-            else:
-                st.info(f"**🧬 नाड़ी मिलान:**\n\n{n_canc_reason}")
-        with c_mc3:
-            if getattr(m_score, 'bhakoot_dosha_cancelled', False):
-                st.success("**🌙 भकूट परिहार:**\n\nराशि स्वामी एक या परस्पर मित्र होने से भकूट दोष निष्प्रभावी।")
-            elif getattr(m_score, 'bhakoot_dosha', False):
-                st.error("**⚠️ भकूट दोष सक्रिय:**\n\nषडाष्टक/द्विर्द्वादश/नवपंचम संबंध सक्रिय है (बिना परिहार)।")
-            else:
-                st.info("**🌙 भकूट मिलान:**\n\nभकूट दोष से पूर्णतः मुक्त अनुकूल संबंध।")
+                m_canc_reason = getattr(m_score, 'manglik_cancellation_reason', '') or (
+                    "समान मांगलिक सामंजस्य: दोनों मांगलिक हैं।" if getattr(m_score, 'groom_manglik', False) and getattr(m_score, 'bride_manglik', False)
+                    else ("दोष रहित: दोनों मांगलिक नहीं हैं।" if not getattr(m_score, 'groom_manglik', False) and not getattr(m_score, 'bride_manglik', False)
+                    else "असंतुलित मांगलिक: एक पक्ष मांगलिक है।")
+                )
+                n_canc_reason = getattr(m_score, 'nadi_cancellation_reason', '') or (
+                    "नाड़ी दोष परिहार लागू।" if getattr(m_score, 'nadi_dosha_cancelled', False)
+                    else ("नाड़ी महादोष सक्रिय है।" if getattr(m_score, 'nadi_dosha', False) else "नाड़ी दोष नहीं है।")
+                )
 
-        # ============================================================
-        # DEEP SHASTRIYA SYNASTRY & LIFE COMPATIBILITY (शास्त्रीय गहन फलादेश)
-        # ============================================================
-        deep_res = getattr(m_score, 'deep_analysis', None)
-        if deep_res:
-            st.markdown("---")
-            st.markdown("### 🔮 कुण्डली स्कैनिंग आधारित शास्त्रीय गहन दांपत्य फलादेश")
-            st.caption("बृहत्पाराशर होराशास्त्र, फलदीपिका, जातक पारिजात एवं महर्षि जैमिनी उपदेश सूत्र के आधार पर ५ प्रमुख स्तंभों का विश्लेषण:")
+                with c_mc1:
+                    if getattr(m_score, 'manglik_match', False):
+                        st.success(f"**🔥 मांगलिक सामंजस्य:**\n\n{m_canc_reason}")
+                    else:
+                        st.error(f"**⚠️ मांगलिक असंतुलन:**\n\n{m_canc_reason}")
+                with c_mc2:
+                    if getattr(m_score, 'nadi_dosha_cancelled', False):
+                        st.success(f"**🧬 नाड़ी परिहार:**\n\n{n_canc_reason}")
+                    elif getattr(m_score, 'nadi_dosha', False):
+                        st.error(f"**🚫 नाड़ी महादोष:**\n\n{n_canc_reason}")
+                    else:
+                        st.info(f"**🧬 नाड़ी मिलान:**\n\n{n_canc_reason}")
+                with c_mc3:
+                    if getattr(m_score, 'bhakoot_dosha_cancelled', False):
+                        st.success("**🌙 भकूट परिहार:**\n\nराशि स्वामी एक या परस्पर मित्र होने से भकूट दोष निष्प्रभावी।")
+                    elif getattr(m_score, 'bhakoot_dosha', False):
+                        st.error("**⚠️ भकूट दोष सक्रिय:**\n\nषडाष्टक/द्विर्द्वादश/नवपंचम संबंध सक्रिय है (बिना परिहार)।")
+                    else:
+                        st.info("**🌙 भकूट मिलान:**\n\nभकूट दोष से पूर्णतः मुक्त अनुकूल संबंध।")
 
-            # Top Summary Scorecard Banner
-            ov_rating = deep_res.get('overall_rating', 85)
-            ov_badge = "उत्कृष्ट दांपत्य योग (Highly Auspicious)" if ov_rating >= 85 else ("उत्तम एवं अनुकूल दांपत्य (Favorable)" if ov_rating >= 75 else "मध्यम (धैर्य व उपाय अपेक्षित)")
-            st.markdown(f"""
-            <div style="background:linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%); border:2px solid #A855F7; border-radius:12px; padding:16px; margin-bottom:16px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
-                    <div>
-                        <span style="font-size:18px; font-weight:900; color:#6B21A8;">🌟 समग्र दांपत्य सामंजस्य सूचकांक: {ov_rating}%</span><br/>
-                        <small style="color:#7E22CE; font-weight:600;">{ov_badge}</small>
-                    </div>
-                    <div style="background:#FFFFFF; border:1px solid #C084FC; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:700; color:#581C87;">
-                        ५-स्तंभ कुण्डली संश्लेषण
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+                # ============================================================
+                # DEEP SHASTRIYA SYNASTRY & LIFE COMPATIBILITY (शास्त्रीय गहन फलादेश)
+                # ============================================================
+                deep_res = getattr(m_score, 'deep_analysis', None)
+                if deep_res:
+                    st.markdown("---")
+                    st.markdown("### 🔮 कुण्डली स्कैनिंग आधारित शास्त्रीय गहन दांपत्य फलादेश")
+                    st.caption("बृहत्पाराशर होराशास्त्र, फलदीपिका, जातक पारिजात एवं महर्षि जैमिनी उपदेश सूत्र के आधार पर ५ प्रमुख स्तंभों का विश्लेषण:")
 
-            # 1. Pati-Patni Vyavahar & Svabhav
-            vy = deep_res['vyavahar']
-            st.markdown(f"""
-            <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:16px; margin-bottom:14px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
-                    <b style="color:#15803D; font-size:16px;">💑 १. पति-पत्नी का आपसी व्यवहार एवं स्वभाव सामंजस्य</b>
-                    <span style="background:#DCFCE7; color:#166534; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">अनुकूलता: {vy['score']}%</span>
-                </div>
-                <div style="font-weight:800; color:#14532D; margin-bottom:4px;">{vy['title']}</div>
-                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{vy['desc']}</p>
-                <div style="background:#FFFFFF; border-left:3px solid #22C55E; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
-                    <small style="color:#15803D;"><b>तत्त्व साम्य (Element Harmony):</b> {vy['element_desc']} (वर लग्नेश: <b>{vy['g_lagna_lord']}</b> | कन्या लग्नेश: <b>{vy['b_lagna_lord']}</b>)</small>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-            # 2. Relationship Reliability & Marital Longevity (Upapada Lagna)
-            rel = deep_res['reliability']
-            st.markdown(f"""
-            <div style="background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:10px; padding:16px; margin-bottom:14px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
-                    <b style="color:#1E40AF; font-size:16px;">🛡️ २. दांपत्य विश्वसनीयता, निष्ठा एवं स्थायित्व (Relationship Reliability)</b>
-                    <span style="background:#DBEAFE; color:#1E40AF; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">विश्वसनीयता: {rel['score']}%</span>
-                </div>
-                <div style="font-weight:800; color:#1D4ED8; margin-bottom:4px;">{rel['title']}</div>
-                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{rel['desc']}</p>
-                <div style="background:#FFFFFF; border-left:3px solid #3B82F6; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
-                    <small style="color:#1E40AF;"><b>जैमिनी उपपद लग्न (UL):</b> वर उपपद: <b>{rel['g_ul']}</b> | कन्या उपपद: <b>{rel['b_ul']}</b> (सामाजिक मर्यादा व अखंड निष्ठा का प्रमाण)</small>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-            # 3. Santana Yoga & Beeja / Kshetra Sphuta
-            san = deep_res['santana']
-            st.markdown(f"""
-            <div style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:10px; padding:16px; margin-bottom:14px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
-                    <b style="color:#B45309; font-size:16px;">👶 ३. संतान सुख, बच्चे कितने होंगे एवं वंश वृद्धि निर्णय (Progeny Analysis)</b>
-                    <span style="background:#FEF3C7; color:#92400E; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">संतति बल: {san['score']}%</span>
-                </div>
-                <div style="font-size:15px; font-weight:900; color:#78350F; margin-bottom:6px;">
-                    🌟 अनुमानित संतान संख्या: <u>{san['children_count']}</u>
-                </div>
-                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{san['lineage_text']}</p>
-                <p style="margin:4px 0; color:#0F172A; font-size:13.5px;">• <b>प्रथम संतान स्वभाव:</b> {san['first_child_desc']}</p>
-                <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
-                    <div style="flex:1; min-width:240px; background:#FFFFFF; border:1px solid #FDE68A; border-radius:8px; padding:10px;">
-                        <b style="color:#B45309; font-size:13px;">🌾 वर बीज स्फुट (Beeja Sphuta):</b><br/>
-                        <span style="color:#0F172A; font-weight:700; font-size:13px;">स्थिति: {san['beeja']['status']}</span><br/>
-                        <small style="color:#475569;">{san['beeja']['desc']}</small>
-                    </div>
-                    <div style="flex:1; min-width:240px; background:#FFFFFF; border:1px solid #FDE68A; border-radius:8px; padding:10px;">
-                        <b style="color:#B45309; font-size:13px;">🌸 कन्या क्षेत्र स्फुट (Kshetra Sphuta):</b><br/>
-                        <span style="color:#0F172A; font-weight:700; font-size:13px;">स्थिति: {san['kshetra']['status']}</span><br/>
-                        <small style="color:#475569;">{san['kshetra']['desc']}</small>
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-            # 4. Sasural Paksha se Sahayog & Relatives
-            sas = deep_res['sasural']
-            sasur = sas.get('sasur', {})
-            saas = sas.get('saas', {})
-            devar = sas.get('devar_jeth', {})
-            nanad = sas.get('nanad_sala', {})
-
-            st.markdown(f"""
-            <div style="background:#FDF4FF; border:1.5px solid #F0ABFC; border-radius:10px; padding:16px; margin-bottom:14px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
-                    <b style="color:#86198F; font-size:16px;">🏛️ ४. ससुराल पक्ष से सहयोग, संबंध एवं पारिवारिक सामंजस्य (In-Laws & Extended Family Harmony)</b>
-                    <span style="background:#FAE8FF; color:#701A75; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">अनुकूलता: {sas.get('score', 85)}%</span>
-                </div>
-                <div style="background:#FFFFFF; border:1px solid #F5D0FE; border-radius:8px; padding:10px 14px; margin-bottom:12px;">
-                    <p style="margin:2px 0; color:#1E293B; font-size:13px; line-height:1.5;">• <b>वर के लिए ससुराल संबंध:</b> {sas.get('groom_inlaws', '')}</p>
-                    <p style="margin:2px 0; color:#1E293B; font-size:13px; line-height:1.5;">• <b>कन्या के लिए ससुराल संबंध:</b> {sas.get('bride_inlaws', '')}</p>
-                </div>
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px;">
-                    <div style="background:#FFFFFF; border:1.5px solid #E9D5FF; border-left:4px solid #9333EA; border-radius:8px; padding:12px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                            <b style="color:#6B21A8; font-size:13px;">👴 ससुर (Father-in-law) संबंध</b>
-                            <span style="background:#F3E8FF; color:#7E22CE; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{sasur.get('status', 'अनुकूल')}</span>
+                    # Top Summary Scorecard Banner
+                    ov_rating = deep_res.get('overall_rating', 85)
+                    ov_badge = "उत्कृष्ट दांपत्य योग (Highly Auspicious)" if ov_rating >= 85 else ("उत्तम एवं अनुकूल दांपत्य (Favorable)" if ov_rating >= 75 else "मध्यम (धैर्य व उपाय अपेक्षित)")
+                    st.markdown(f"""
+                    <div style="background:linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%); border:2px solid #A855F7; border-radius:12px; padding:16px; margin-bottom:16px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                            <div>
+                                <span style="font-size:18px; font-weight:900; color:#6B21A8;">🌟 समग्र दांपत्य सामंजस्य सूचकांक: {ov_rating}%</span><br/>
+                                <small style="color:#7E22CE; font-weight:600;">{ov_badge}</small>
+                            </div>
+                            <div style="background:#FFFFFF; border:1px solid #C084FC; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:700; color:#581C87;">
+                                ५-स्तंभ कुण्डली संश्लेषण
+                            </div>
                         </div>
-                        <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{sasur.get('title', '')}</div>
-                        <small style="color:#6B7280; font-size:11px;">📐 {sasur.get('bhavat_bhavam', '')}</small>
-                        <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{sasur.get('desc', '')}</p>
                     </div>
-                    <div style="background:#FFFFFF; border:1.5px solid #FCE7F3; border-left:4px solid #DB2777; border-radius:8px; padding:12px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                            <b style="color:#9D174D; font-size:13px;">👵 सासू माँ (Mother-in-law) तालमेल</b>
-                            <span style="background:#FCE7F3; color:#BE185D; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{saas.get('status', 'अनुकूल')}</span>
-                        </div>
-                        <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{saas.get('title', '')}</div>
-                        <small style="color:#6B7280; font-size:11px;">📐 {saas.get('bhavat_bhavam', '')}</small>
-                        <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{saas.get('desc', '')}</p>
-                    </div>
-                    <div style="background:#FFFFFF; border:1.5px solid #CFFAFE; border-left:4px solid #0891B2; border-radius:8px; padding:12px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                            <b style="color:#155E75; font-size:13px;">👦 देवर एवं जेठ (Brothers-in-law)</b>
-                            <span style="background:#E0F2FE; color:#0369A1; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{devar.get('status', 'अनुकूल')}</span>
-                        </div>
-                        <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{devar.get('title', '')}</div>
-                        <small style="color:#6B7280; font-size:11px;">📐 {devar.get('bhavat_bhavam', '')}</small>
-                        <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{devar.get('desc', '')}</p>
-                    </div>
-                    <div style="background:#FFFFFF; border:1.5px solid #CCFBF1; border-left:4px solid #0D9488; border-radius:8px; padding:12px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                            <b style="color:#115E59; font-size:13px;">👧 ननद एवं साला-साली (Sisters & Siblings)</b>
-                            <span style="background:#E6FFFA; color:#0F766E; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{nanad.get('status', 'अनुकूल')}</span>
-                        </div>
-                        <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{nanad.get('title', '')}</div>
-                        <small style="color:#6B7280; font-size:11px;">📐 {nanad.get('bhavat_bhavam', '')}</small>
-                        <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{nanad.get('desc', '')}</p>
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+                    """, unsafe_allow_html=True)
 
-            # 5. Patni ka Sahayog & Bhagyodaya
-            pro = deep_res['prosperity']
-            st.markdown(f"""
-            <div style="background:#FFF7ED; border:1.5px solid #FDBA74; border-radius:10px; padding:16px; margin-bottom:14px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
-                    <b style="color:#C2410C; font-size:16px;">📈 ५. पत्नी का सहयोग एवं विवाह उपरांत भाग्योदय (Post-Marital Prosperity)</b>
-                    <span style="background:#FFEDD5; color:#9A3412; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">भाग्योदय बल: {pro['score']}%</span>
-                </div>
-                <div style="font-weight:800; color:#9A3412; margin-bottom:4px;">{pro['bhagyodaya_title']}</div>
-                <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{pro['bhagyodaya_desc']}</p>
-                <div style="background:#FFFFFF; border-left:3px solid #EA580C; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
-                    <b style="color:#C2410C;">पत्नी के सहयोग का स्वरूप:</b> <span style="font-weight:700; color:#0F172A;">{pro['wife_role_title']}</span><br/>
-                    <small style="color:#475569;">{pro['wife_role_desc']}</small>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+                    # 1. Pati-Patni Vyavahar & Svabhav
+                    vy = deep_res['vyavahar']
+                    st.markdown(f"""
+                    <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:16px; margin-bottom:14px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                            <b style="color:#15803D; font-size:16px;">💑 १. पति-पत्नी का आपसी व्यवहार एवं स्वभाव सामंजस्य</b>
+                            <span style="background:#DCFCE7; color:#166534; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">अनुकूलता: {vy['score']}%</span>
+                        </div>
+                        <div style="font-weight:800; color:#14532D; margin-bottom:4px;">{vy['title']}</div>
+                        <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{vy['desc']}</p>
+                        <div style="background:#FFFFFF; border-left:3px solid #22C55E; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
+                            <small style="color:#15803D;"><b>तत्त्व साम्य (Element Harmony):</b> {vy['element_desc']} (वर लग्नेश: <b>{vy['g_lagna_lord']}</b> | कन्या लग्नेश: <b>{vy['b_lagna_lord']}</b>)</small>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
-            # 6. Vedic Remedies for Marital Harmony
-            st.markdown("#### 📿 दांपत्य सुख एवं समृद्धि हेतु अचूक वैदिक उपाय:")
-            for r in deep_res.get('remedies', []):
-                st.markdown(f"• {r}")
+                    # 2. Relationship Reliability & Marital Longevity (Upapada Lagna)
+                    rel = deep_res['reliability']
+                    st.markdown(f"""
+                    <div style="background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:10px; padding:16px; margin-bottom:14px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                            <b style="color:#1E40AF; font-size:16px;">🛡️ २. दांपत्य विश्वसनीयता, निष्ठा एवं स्थायित्व (Relationship Reliability)</b>
+                            <span style="background:#DBEAFE; color:#1E40AF; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">विश्वसनीयता: {rel['score']}%</span>
+                        </div>
+                        <div style="font-weight:800; color:#1D4ED8; margin-bottom:4px;">{rel['title']}</div>
+                        <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{rel['desc']}</p>
+                        <div style="background:#FFFFFF; border-left:3px solid #3B82F6; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
+                            <small style="color:#1E40AF;"><b>जैमिनी उपपद लग्न (UL):</b> वर उपपद: <b>{rel['g_ul']}</b> | कन्या उपपद: <b>{rel['b_ul']}</b> (सामाजिक मर्यादा व अखंड निष्ठा का प्रमाण)</small>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
+                    # 3. Santana Yoga & Beeja / Kshetra Sphuta
+                    san = deep_res['santana']
+                    st.markdown(f"""
+                    <div style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:10px; padding:16px; margin-bottom:14px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                            <b style="color:#B45309; font-size:16px;">👶 ३. संतान सुख, बच्चे कितने होंगे एवं वंश वृद्धि निर्णय (Progeny Analysis)</b>
+                            <span style="background:#FEF3C7; color:#92400E; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">संतति बल: {san['score']}%</span>
+                        </div>
+                        <div style="font-size:15px; font-weight:900; color:#78350F; margin-bottom:6px;">
+                            🌟 अनुमानित संतान संख्या: <u>{san['children_count']}</u>
+                        </div>
+                        <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{san['lineage_text']}</p>
+                        <p style="margin:4px 0; color:#0F172A; font-size:13.5px;">• <b>प्रथम संतान स्वभाव:</b> {san['first_child_desc']}</p>
+                        <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+                            <div style="flex:1; min-width:240px; background:#FFFFFF; border:1px solid #FDE68A; border-radius:8px; padding:10px;">
+                                <b style="color:#B45309; font-size:13px;">🌾 वर बीज स्फुट (Beeja Sphuta):</b><br/>
+                                <span style="color:#0F172A; font-weight:700; font-size:13px;">स्थिति: {san['beeja']['status']}</span><br/>
+                                <small style="color:#475569;">{san['beeja']['desc']}</small>
+                            </div>
+                            <div style="flex:1; min-width:240px; background:#FFFFFF; border:1px solid #FDE68A; border-radius:8px; padding:10px;">
+                                <b style="color:#B45309; font-size:13px;">🌸 कन्या क्षेत्र स्फुट (Kshetra Sphuta):</b><br/>
+                                <span style="color:#0F172A; font-weight:700; font-size:13px;">स्थिति: {san['kshetra']['status']}</span><br/>
+                                <small style="color:#475569;">{san['kshetra']['desc']}</small>
+                            </div>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                    # 4. Sasural Paksha se Sahayog & Relatives
+                    sas = deep_res['sasural']
+                    sasur = sas.get('sasur', {})
+                    saas = sas.get('saas', {})
+                    devar = sas.get('devar_jeth', {})
+                    nanad = sas.get('nanad_sala', {})
+
+                    st.markdown(f"""
+                    <div style="background:#FDF4FF; border:1.5px solid #F0ABFC; border-radius:10px; padding:16px; margin-bottom:14px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                            <b style="color:#86198F; font-size:16px;">🏛️ ४. ससुराल पक्ष से सहयोग, संबंध एवं पारिवारिक सामंजस्य (In-Laws & Extended Family Harmony)</b>
+                            <span style="background:#FAE8FF; color:#701A75; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">अनुकूलता: {sas.get('score', 85)}%</span>
+                        </div>
+                        <div style="background:#FFFFFF; border:1px solid #F5D0FE; border-radius:8px; padding:10px 14px; margin-bottom:12px;">
+                            <p style="margin:2px 0; color:#1E293B; font-size:13px; line-height:1.5;">• <b>वर के लिए ससुराल संबंध:</b> {sas.get('groom_inlaws', '')}</p>
+                            <p style="margin:2px 0; color:#1E293B; font-size:13px; line-height:1.5;">• <b>कन्या के लिए ससुराल संबंध:</b> {sas.get('bride_inlaws', '')}</p>
+                        </div>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px;">
+                            <div style="background:#FFFFFF; border:1.5px solid #E9D5FF; border-left:4px solid #9333EA; border-radius:8px; padding:12px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                                    <b style="color:#6B21A8; font-size:13px;">👴 ससुर (Father-in-law) संबंध</b>
+                                    <span style="background:#F3E8FF; color:#7E22CE; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{sasur.get('status', 'अनुकूल')}</span>
+                                </div>
+                                <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{sasur.get('title', '')}</div>
+                                <small style="color:#6B7280; font-size:11px;">📐 {sasur.get('bhavat_bhavam', '')}</small>
+                                <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{sasur.get('desc', '')}</p>
+                            </div>
+                            <div style="background:#FFFFFF; border:1.5px solid #FCE7F3; border-left:4px solid #DB2777; border-radius:8px; padding:12px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                                    <b style="color:#9D174D; font-size:13px;">👵 सासू माँ (Mother-in-law) तालमेल</b>
+                                    <span style="background:#FCE7F3; color:#BE185D; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{saas.get('status', 'अनुकूल')}</span>
+                                </div>
+                                <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{saas.get('title', '')}</div>
+                                <small style="color:#6B7280; font-size:11px;">📐 {saas.get('bhavat_bhavam', '')}</small>
+                                <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{saas.get('desc', '')}</p>
+                            </div>
+                            <div style="background:#FFFFFF; border:1.5px solid #CFFAFE; border-left:4px solid #0891B2; border-radius:8px; padding:12px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                                    <b style="color:#155E75; font-size:13px;">👦 देवर एवं जेठ (Brothers-in-law)</b>
+                                    <span style="background:#E0F2FE; color:#0369A1; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{devar.get('status', 'अनुकूल')}</span>
+                                </div>
+                                <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{devar.get('title', '')}</div>
+                                <small style="color:#6B7280; font-size:11px;">📐 {devar.get('bhavat_bhavam', '')}</small>
+                                <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{devar.get('desc', '')}</p>
+                            </div>
+                            <div style="background:#FFFFFF; border:1.5px solid #CCFBF1; border-left:4px solid #0D9488; border-radius:8px; padding:12px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                                    <b style="color:#115E59; font-size:13px;">👧 ननद एवं साला-साली (Sisters & Siblings)</b>
+                                    <span style="background:#E6FFFA; color:#0F766E; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{nanad.get('status', 'अनुकूल')}</span>
+                                </div>
+                                <div style="color:#0F172A; font-weight:700; font-size:13px; margin-bottom:3px;">{nanad.get('title', '')}</div>
+                                <small style="color:#6B7280; font-size:11px;">📐 {nanad.get('bhavat_bhavam', '')}</small>
+                                <p style="margin:5px 0 0 0; color:#374151; font-size:12px; line-height:1.45;">{nanad.get('desc', '')}</p>
+                            </div>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                    # 5. Patni ka Sahayog & Bhagyodaya
+                    pro = deep_res['prosperity']
+                    st.markdown(f"""
+                    <div style="background:#FFF7ED; border:1.5px solid #FDBA74; border-radius:10px; padding:16px; margin-bottom:14px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                            <b style="color:#C2410C; font-size:16px;">📈 ५. पत्नी का सहयोग एवं विवाह उपरांत भाग्योदय (Post-Marital Prosperity)</b>
+                            <span style="background:#FFEDD5; color:#9A3412; padding:3px 10px; border-radius:12px; font-size:13px; font-weight:700;">भाग्योदय बल: {pro['score']}%</span>
+                        </div>
+                        <div style="font-weight:800; color:#9A3412; margin-bottom:4px;">{pro['bhagyodaya_title']}</div>
+                        <p style="margin:4px 0; color:#1E293B; font-size:14px; line-height:1.6;">{pro['bhagyodaya_desc']}</p>
+                        <div style="background:#FFFFFF; border-left:3px solid #EA580C; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
+                            <b style="color:#C2410C;">पत्नी के सहयोग का स्वरूप:</b> <span style="font-weight:700; color:#0F172A;">{pro['wife_role_title']}</span><br/>
+                            <small style="color:#475569;">{pro['wife_role_desc']}</small>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                    # 6. Vedic Remedies for Marital Harmony
+                    st.markdown("#### 📿 दांपत्य सुख एवं समृद्धि हेतु अचूक वैदिक उपाय:")
+                    for r in deep_res.get('remedies', []):
+                        st.markdown(f"• {r}")
+
+
+
+
+    with tab_milan_biz:
+        st.markdown("### 💼 व्यापारिक साझेदारी एवं व्यावसायिक अनुकूलता (Business Partner Synastry)")
+        st.write("बृहत्पाराशर होराशास्त्र एवं प्रश्नमार्ग के अनुसार दो साझेदारों के मध्य वित्तीय विश्वास, नेतृत्व तालमेल, कानूनी विवाद जोखिम एवं व्यावसायिक दीर्घायु का वैज्ञानिक वेध।")
+
+        from src.jyotish.services.partners import BusinessPartnershipService
+
+        col_b1, col_b2 = st.columns(2)
+        with col_b1:
+            st.markdown("#### 👤 प्रथम साझेदार (Partner 1 / मुख्य संचालक)")
+            p1_name = st.text_input("साझेदार १ नाम", value=chart.birth_data.name or "साझेदार १", key="p1_n")
+            p1_date = st.date_input("जन्म तिथि (P1)", value=chart.birth_data.birth_date, min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="p1_d")
+            p1_time = st.time_input("जन्म समय (P1)", value=chart.birth_data.birth_time, key="p1_t")
+            p1_city = st.text_input("जन्म स्थान (P1)", value=chart.birth_data.city or "नई दिल्ली", key="p1_c")
+        with col_b2:
+            st.markdown("#### 👥 द्वितीय साझेदार (Partner 2 / सह-साझेदार)")
+            p2_name = st.text_input("साझेदार २ नाम", value="साझेदार २", key="p2_n")
+            p2_date = st.date_input("जन्म तिथि (P2)", value=date(1992, 5, 14), min_value=date(1950, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="p2_d")
+            p2_time = st.time_input("जन्म समय (P2)", value=time(11, 45), key="p2_t")
+            p2_city = st.text_input("जन्म स्थान (P2)", value="मुंबई", key="p2_c")
+
+        if st.button("🤝 व्यापारिक अनुकूलता एवं सिनैस्ट्री वेध करें", type="primary", key="btn_biz_synastry"):
+            with st.spinner("साझेदारी कुण्डलियों का विश्लेषण हो रहा है..."):
+                p1_loc = default_geocoding_service.resolve(p1_city.strip()) if p1_city else None
+                p1_lat = p1_loc.get("latitude", 28.6139) if isinstance(p1_loc, dict) else (getattr(p1_loc, "latitude", 28.6139) if p1_loc else 28.6139)
+                p1_lon = p1_loc.get("longitude", 77.2090) if isinstance(p1_loc, dict) else (getattr(p1_loc, "longitude", 77.2090) if p1_loc else 77.2090)
+                p1_tz = p1_loc.get("timezone_offset", 5.5) if isinstance(p1_loc, dict) else (getattr(p1_loc, "timezone_offset", 5.5) if p1_loc else 5.5)
+
+                p2_loc = default_geocoding_service.resolve(p2_city.strip()) if p2_city else None
+                p2_lat = p2_loc.get("latitude", 19.0760) if isinstance(p2_loc, dict) else (getattr(p2_loc, "latitude", 19.0760) if p2_loc else 19.0760)
+                p2_lon = p2_loc.get("longitude", 72.8777) if isinstance(p2_loc, dict) else (getattr(p2_loc, "longitude", 72.8777) if p2_loc else 72.8777)
+                p2_tz = p2_loc.get("timezone_offset", 5.5) if isinstance(p2_loc, dict) else (getattr(p2_loc, "timezone_offset", 5.5) if p2_loc else 5.5)
+
+                p1_data = BirthData(name=p1_name, birth_date=p1_date, birth_time=p1_time, latitude=p1_lat, longitude=p1_lon, timezone_offset=p1_tz, city=p1_city)
+                p2_data = BirthData(name=p2_name, birth_date=p2_date, birth_time=p2_time, latitude=p2_lat, longitude=p2_lon, timezone_offset=p2_tz, city=p2_city)
+
+                chart_1 = default_calculation_service.calculate_chart(p1_data)
+                chart_2 = default_calculation_service.calculate_chart(p2_data)
+
+                biz_res = BusinessPartnershipService.evaluate_partnership(chart_1, chart_2, p1_name, p2_name)
+
+                # Hero KPI Cards
+                c_bp1, c_bp2, c_bp3 = st.columns(3)
+                c_bp1.metric("व्यापारिक सामंजस्य स्कोर", f"{biz_res['total_score']} / 100", f"ग्रेड: {biz_res['grade']}")
+                c_bp2.metric("शास्त्रीय निर्णय", biz_res['verdict'])
+                c_bp3.metric("विवाद व कानूनी सुरक्षा", f"{biz_res['pillars']['dispute_risk']['score']} / 25")
+
+                st.info(f"**💡 शास्त्रीय सारांश:** {biz_res['summary_hi']}")
+
+                # 4 Pillars Grid
+                st.markdown("#### 🏛️ ४ प्रमुख व्यावसायिक स्तंभ (4 Pillars of Partnership)")
+                col_pil1, col_pil2 = st.columns(2)
+                with col_pil1:
+                    st.markdown(f"""
+                    <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:14px; margin-bottom:12px;">
+                        <b style="color:#15803D; font-size:15px;">💰 १. वित्तीय विश्वास व लाभ वृद्धि: {biz_res['pillars']['financial']['score']}/25</b>
+                        <p style="margin:6px 0 0 0; color:#1E293B; font-size:13px;">{biz_res['pillars']['financial']['desc']}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    st.markdown(f"""
+                    <div style="background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:10px; padding:14px; margin-bottom:12px;">
+                        <b style="color:#1D4ED8; font-size:15px;">👔 २. नेतृत्व व कार्यविभाजन: {biz_res['pillars']['leadership']['score']}/25</b>
+                        <p style="margin:6px 0 0 0; color:#1E293B; font-size:13px;">{biz_res['pillars']['leadership']['desc']}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with col_pil2:
+                    st.markdown(f"""
+                    <div style="background:#FEF2F2; border:1.5px solid #FCA5A5; border-radius:10px; padding:14px; margin-bottom:12px;">
+                        <b style="color:#B91C1C; font-size:15px;">⚖️ ३. विवाद, अहंकार व कानूनी सुरक्षा: {biz_res['pillars']['dispute_risk']['score']}/25</b>
+                        <p style="margin:6px 0 0 0; color:#1E293B; font-size:13px;">{biz_res['pillars']['dispute_risk']['desc']}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    st.markdown(f"""
+                    <div style="background:#FAF5FF; border:1.5px solid #D8B4FE; border-radius:10px; padding:14px; margin-bottom:12px;">
+                        <b style="color:#7E22CE; font-size:15px;">⏳ ४. साझेदारी की दीर्घायु (Longevity): {biz_res['pillars']['longevity']['score']}/25</b>
+                        <p style="margin:6px 0 0 0; color:#1E293B; font-size:13px;">{biz_res['pillars']['longevity']['desc']}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                # Strengths & Cautions
+                col_st, col_ca = st.columns(2)
+                with col_st:
+                    st.markdown("#### ✅ मुख्य अनुकूलताएं (Key Strengths)")
+                    for s in biz_res.get('strengths', []):
+                        st.markdown(f"• {s}")
+                with col_ca:
+                    st.markdown("#### ⚠️ सावधानियां एवं जोखिम निवारण (Cautions)")
+                    for c in biz_res.get('cautions', []):
+                        st.markdown(f"• {c}")
+
+                # Recommended Structure
+                st.markdown("#### 📋 अनुशंसित व्यावसायिक भूमिका एवं हिस्सेदारी प्रारूप")
+                rec = biz_res.get('recommended_structure', {})
+                st.markdown(f"""
+                <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:16px; margin-top:10px;">
+                    <b style="color:#B45309; font-size:15px;">🤝 पार्टनरशिप संरचना परामर्श:</b>
+                    <ul style="margin:8px 0 0 16px; color:#1E293B; font-size:13.5px; line-height:1.6;">
+                        <li><b>अनुशंसित हिस्सेदारी प्रारूप (Equity):</b> {rec.get('equity_split', '५०-५० या पूर्व निर्धारित अनुपात')}</li>
+                        <li><b>{p1_name} की श्रेष्ठ भूमिका:</b> {rec.get('partner_a_role', 'मुख्य रणनीति एवं निर्णय')}</li>
+                        <li><b>{p2_name} की श्रेष्ठ भूमिका:</b> {rec.get('partner_b_role', 'दैनिक प्रबंधन व संबंध')}</li>
+                        <li><b>वित्तीय नियंत्रण व्यवस्था:</b> {rec.get('finance_control', 'संयुक्त हस्ताक्षर एवं पारदर्शी बहीखाता')}</li>
+                    </ul>
+                </div>
+                """, unsafe_allow_html=True)
 
 
 # =============================================================
@@ -8192,12 +8475,53 @@ elif selected_idx == 26:
     c_h3.metric("संवेदनशील क्षेत्र", f"{len(hlth_res['vulnerable_areas'])} ग्रह", "देखभाल आवश्यक")
     c_h4.metric("अष्टम भाव स्थिति", f"{len(hlth_res['h8_occupants'])} ग्रह", "आकस्मिक रोग सुरक्षा")
 
-    tab_h1, tab_h2, tab_h3, tab_h4 = st.tabs([
+    from src.jyotish.services.medical import MedicalAstrologyService
+    med_profile = MedicalAstrologyService.analyze_health_profile(chart)
+
+    tab_h0, tab_h1, tab_h2, tab_h3, tab_h4 = st.tabs([
+        "🩺 कालपुरुष देह वेध आरेख (12-Organ Anatomy Map & Tridosha)",
         "💪 आरोग्य बल एवं वर्तमान संवेदनशीलता",
         "⚠️ भविष्य में संभावित रोग (Disease Risks)",
-        "🩺 नवग्रह एवं अंग-विशेष चिकित्सा सारणी",
+        "📋 नवग्रह एवं अंग-विशेष चिकित्सा सारणी",
         "🌿 शास्त्रीय निवारक उपाय एवं दिनचर्या"
     ])
+
+    with tab_h0:
+        st.markdown("### 🩺 कालपुरुष देह वेध आरेख (12-Organ Anatomy Map)")
+        st.caption("बृहत्संहिता एवं फलदीपिका के अनुसार कालपुरुष के १२ अंगों, राशियों व भावों पर ग्रहों का प्रभाव:")
+        
+        anatomy_svg = ChartRenderer.render_kalapurusha_anatomy_svg(med_profile, title=f"कालपुरुष देह वेध चक्र — {chart.birth_data.name}")
+        st.markdown(anatomy_svg, unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.markdown("### 🌿 आयुर्वेदिक त्रिदोष संतुलन (Ayurvedic Tridosha Constitution)")
+        trid = med_profile.get("tridosha", {})
+        col_t1, col_t2, col_t3, col_t4 = st.columns(4)
+        col_t1.metric("वात दोष (Vata - वायु/आकाश)", f"{trid.get('vata_percent', 33)}%")
+        col_t2.metric("पित्त दोष (Pitta - अग्नि)", f"{trid.get('pitta_percent', 33)}%")
+        col_t3.metric("कफ दोष (Kapha - जल/पृथ्वी)", f"{trid.get('kapha_percent', 34)}%")
+        col_t4.metric("प्रधान प्रकृति (Dominant)", trid.get('dominant_dosha', 'समदोषज'))
+
+        st.info(f"**🍃 त्रिदोष फलादेश एवं जीवनशैली परामर्श:** {trid.get('recommendation', 'सात्विक आहार व नियमित दिनचर्या रखें।')}")
+
+        st.markdown("#### 🔴 संवेदनशील शारीरिक अंग (Vulnerable Body Zones Breakdown)")
+        afflicted_zones = [z for z in med_profile.get("organ_zones", []) if z["affliction_score"] > 35]
+        if afflicted_zones:
+            zone_rows = []
+            for z in afflicted_zones:
+                zone_rows.append({
+                    "भाव": f"भाव {z['house']}",
+                    "संबंधित अंग": z['organs'],
+                    "दोष स्कोर": f"{z['affliction_score']}%",
+                    "स्थिति": z['status'],
+                    "भावाधिपति": z['lord'],
+                    "स्थित ग्रह": ", ".join(z['occupants']) if z['occupants'] else "कोई नहीं",
+                    "दृष्टि": ", ".join(z['aspects']) if z['aspects'] else "शुभ"
+                })
+            st.dataframe(pd.DataFrame(zone_rows), use_container_width=True, hide_index=True)
+        else:
+            st.success("✨ कुण्डली में किसी भी मुख्य शारीरिक अंग में अत्यधिक संवेदनशीलता या गंभीर दोष नहीं पाया गया। समग्र आरोग्य बल उत्तम है।")
+
 
     with tab_h1:
         st.markdown(f"### 💪 समग्र स्वास्थ्य बल: {hlth_res['vitality_status']}")
