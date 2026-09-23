@@ -8505,18 +8505,18 @@ elif selected_idx == 26:
         st.info(f"**🍃 त्रिदोष फलादेश एवं जीवनशैली परामर्श:** {trid.get('recommendation', 'सात्विक आहार व नियमित दिनचर्या रखें।')}")
 
         st.markdown("#### 🔴 संवेदनशील शारीरिक अंग (Vulnerable Body Zones Breakdown)")
-        afflicted_zones = [z for z in med_profile.get("organ_zones", []) if z["affliction_score"] > 35]
+        afflicted_zones = [z for z in med_profile.get("organ_zones", []) if z.get("affliction_score", 0) > 35]
         if afflicted_zones:
             zone_rows = []
             for z in afflicted_zones:
                 zone_rows.append({
-                    "भाव": f"भाव {z['house']}",
-                    "संबंधित अंग": z['organs'],
-                    "दोष स्कोर": f"{z['affliction_score']}%",
-                    "स्थिति": z['status'],
-                    "भावाधिपति": z['lord'],
-                    "स्थित ग्रह": ", ".join(z['occupants']) if z['occupants'] else "कोई नहीं",
-                    "दृष्टि": ", ".join(z['aspects']) if z['aspects'] else "शुभ"
+                    "भाव": f"भाव {z.get('house', '')}",
+                    "संबंधित अंग": z.get('organ_hi') or z.get('organs', ''),
+                    "दोष स्कोर": f"{z.get('affliction_score', 0)}%",
+                    "स्थिति": z.get('status_badge') or z.get('status', ''),
+                    "भावाधिपति": z.get('lord', ''),
+                    "स्थित ग्रह": ", ".join(z.get('occupants', [])) if z.get('occupants') else "कोई नहीं",
+                    "दृष्टि / कारण": ", ".join(z.get('reasons', [])) if z.get('reasons') else "शुभ संरक्षण"
                 })
             st.dataframe(pd.DataFrame(zone_rows), use_container_width=True, hide_index=True)
         else:

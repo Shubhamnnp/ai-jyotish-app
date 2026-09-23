@@ -202,10 +202,17 @@ class MedicalAstrologyService:
                 "zone_key": item["zone_key"],
                 "organ_hi": item["organ_hi"],
                 "organ_en": item["organ_en"],
+                "organs": item["organ_hi"],
+                "organ": item["organ_hi"],
                 "affliction_score": affliction_score,
+                "status": status_badge,
                 "status_badge": status_badge,
                 "status_color": status_color,
+                "lord": h_lord,
+                "occupants": house_occupants,
+                "aspects": [r for r in reasons if "दृष्टि" in r],
                 "potential_issues": item["potential_issues"],
+                "issues": item["potential_issues"],
                 "reasons": reasons if reasons else ["कोई प्रतिकूल योग नहीं, सामान्य संरक्षण।"]
             })
 
