@@ -334,7 +334,7 @@ class IshtaDevataEngine:
             element_code = "water"
 
         # Check endurance/vitality
-        lagna_lord = chart.lagna_lord or "Mars"
+        lagna_lord = SIGN_LORDS.get(chart.lagna_sign_name, "Mars")
         h6_planets = [p for p, obj in chart.planets.items() if obj.house_from_lagna == 6]
         h8_planets = [p for p, obj in chart.planets.items() if obj.house_from_lagna == 8]
         is_sensitive = len(h6_planets) >= 2 or len(h8_planets) >= 2
