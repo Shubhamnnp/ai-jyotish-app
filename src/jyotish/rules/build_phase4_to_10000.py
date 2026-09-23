@@ -467,3 +467,4 @@ with open(lk_file, "w", encoding="utf-8") as f:
 print(f"Lal Kitab updated to {len(lk_rules)} rules (+{len(new_lk_rules)} new)")
 
 print("=== Phase 4 Complete: 10,000+ Rules Milestone Achieved! ===")
+

@@ -2971,11 +2971,44 @@ st.markdown(f"""
 
 # Active Module Breadcrumb Pill
 st.markdown(f"""
-<div style="display:flex; justify-content:space-between; align-items:center; background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:8px; padding:8px 16px; margin-bottom:10px;">
+<div style="display:flex; justify-content:space-between; align-items:center; background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:8px; padding:8px 16px; margin-bottom:8px;">
     <div style="font-weight:800; color:#1E40AF; font-size:14px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
     <div style="font-size:12.5px; color:#1E293B; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
 </div>
 """, unsafe_allow_html=True)
+
+# -------------------------------------------------------------
+# 📚 १२,५००+ महा-शास्त्रीय नियम लाइव स्कैन पट्टी (Global Shastriya Rules HUD - Linked Across All Modules)
+# -------------------------------------------------------------
+if "global_rules_scan_cache" not in st.session_state or st.session_state.get("global_rules_scan_chart_id") != id(chart):
+    _scan_summ = default_narrative_service.scan_shastriya_rules(chart, "general", limit=10)
+    st.session_state["global_rules_scan_cache"] = _scan_summ
+    st.session_state["global_rules_scan_chart_id"] = id(chart)
+
+_gr_summ = st.session_state.get("global_rules_scan_cache", {})
+_gr_scanned = _gr_summ.get("total_scanned", 12578)
+_gr_fired = _gr_summ.get("total_fired", 0)
+_gr_pos = _gr_summ.get("total_positive", 0)
+_gr_neg = _gr_summ.get("total_negative", 0)
+
+col_gr_bar, col_gr_btn = st.columns([4.2, 1.8])
+with col_gr_bar:
+    st.markdown(f"""
+    <div style="background:linear-gradient(90deg, #1E1B4B 0%, #311042 100%); border:1.5px solid #8B5CF6; border-radius:8px; padding:6px 14px; display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <div style="color:#F5F3FF; font-size:12px; font-weight:700;">
+            📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b> <span style="color:#FBBF24;">{_gr_fired:,} सक्रिय नियम फलित</span>
+        </div>
+        <div style="font-size:11px; color:#DDD6FE;">
+            <span style="background:#065F46; color:#A7F3D0; padding:2px 8px; border-radius:10px; font-weight:700; margin-right:4px;">🟢 {_gr_pos:,} शुभ (+)</span>
+            <span style="background:#7F1D1D; color:#FECACA; padding:2px 8px; border-radius:10px; font-weight:700;">🔴 {_gr_neg:,} सतर्कता (-)</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+with col_gr_btn:
+    if st.button("🔍 नियम बैंक खोलें ❯", key="global_open_rules_bank_btn", use_container_width=True, help="१२,५००+ महा-शास्त्रीय नियम बैंक (मॉड्यूल १९) खोलें"):
+        st.session_state.active_module_idx = 19
+        st.session_state.top_bar_module_selector = MODULE_OPTIONS[19]
+        st.rerun()
 
 # -------------------------------------------------------------
 # ⏱️ Quick Time Stepper (काल गति नियंत्रक — Live Time Travel / BTR Bar)
@@ -6902,6 +6935,37 @@ elif selected_idx == 17:
                 st.markdown(ai_response)
                 st.session_state.ai_chat_history.append({"role": "assistant", "content": ai_response})
 
+                # Render Live Shastriya Rules Scan Evidence Card for this query
+                latest_scan = st.session_state.get("ai_latest_rules_scan")
+                if latest_scan and latest_scan.get("relevant_rules"):
+                    with st.expander(f"📜 १२,५००+ महा-शास्त्रीय नियम लाइव स्कैन प्रमाण ({latest_scan.get('matched_topic', '').title()} — {len(latest_scan.get('relevant_rules', []))} प्रासंगिक नियम फलित)", expanded=True):
+                        c_m1, c_m2, c_m3, c_m4 = st.columns(4)
+                        c_m1.metric("कुल स्कैन नियम", f"{latest_scan['total_scanned']:,}")
+                        c_m2.metric("कुण्डली में सक्रिय", f"{latest_scan['total_fired']:,}")
+                        c_m3.metric("शुभ राजयोग (+)", f"{latest_scan['total_positive']:,}")
+                        c_m4.metric("सतर्कता/दोष (-)", f"{latest_scan['total_negative']:,}")
+
+                        st.markdown("**📖 सक्रिय ग्रन्थ परंपराएं:**")
+                        badge_items = [f"<span style='background:#1E293B; border:1px solid #3B82F6; padding:3px 8px; border-radius:12px; margin-right:6px; font-size:12px; color:#93C5FD;'><b>{k}</b>: {v}</span>" for k, v in list(latest_scan.get("grantha_breakdown", {}).items())[:6]]
+                        st.markdown(" ".join(badge_items), unsafe_allow_html=True)
+                        st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+
+                        for r in latest_scan["relevant_rules"]:
+                            pol_badge = "🟢 शुभ योग (+)" if r.polarity == "+" else "🔴 सतर्कता नियम (-)"
+                            shastra = r.source_text
+                            if r.source_chapter and r.source_chapter != "General":
+                                shastra += f" • {r.source_chapter}"
+                            st.markdown(f"""
+                            <div style='background:#0F172A; border-left:4px solid {'#10B981' if r.polarity == '+' else '#EF4444'}; padding:10px 14px; margin-bottom:8px; border-radius:6px;'>
+                                <div style='display:flex; justify-content:space-between; align-items:center;'>
+                                    <b style='font-size:14px; color:#F8FAFC;'>{r.rule_name_hi} ({r.rule_name_en})</b>
+                                    <span style='background:{'#065F46' if r.polarity == '+' else '#7F1D1D'}; color:#F8FAFC; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;'>{pol_badge}</span>
+                                </div>
+                                <div style='font-size:12px; color:#94A3B8; margin-top:2px;'>📚 <i>{shastra}</i> | प्रभाव क्षेत्र: {', '.join(r.themes)} (सिग्नल बल: {round(r.signal_score * 100)}%)</div>
+                                <div style='font-size:13px; color:#E2E8F0; margin-top:6px; line-height:1.4;'>{r.explanation_hi}</div>
+                            </div>
+                            """, unsafe_allow_html=True)
+
     # Clear Chat Button
     if len(st.session_state.ai_chat_history) > 1:
         if st.button("🗑️ संवाद इतिहास साफ करें (Clear Chat)"):
@@ -7239,7 +7303,7 @@ elif selected_idx == 21:
     _dy_t1, _dy_t2, _dy_t3, _dy_t4 = st.tabs([
         f"🔴 सक्रिय एवं संभावित दोष ({len(_active_doshas)}/{len(_doshas_ev)})",
         f"🟢 शुभ राजयोग एवं धनयोग ({len(_active_yogas)}/{len(_yogas_ev)})",
-        f"📋 सम्पूर्ण 100 शास्त्रीय नियम तालिका ({len(_evidences)})",
+        f"📋 सम्पूर्ण १२,५००+ महा-शास्त्रीय नियम ({len(_evidences):,} नियम)",
         f"💊 कुण्डली अनुसार विशेष उपाय ({len(_active_doshas)} सक्रिय दोष)"
     ])
 
@@ -7309,8 +7373,8 @@ elif selected_idx == 21:
                 )
 
     with _dy_t3:
-        st.markdown("### 📋 सम्पूर्ण १०० शास्त्रीय नियमों का लाइव स्कैन")
-        st.caption("प्रत्येक नियम की तात्कालिक स्थिति, शास्त्र प्रमाण, प्रभाव प्रकार एवं स्कोर:")
+        st.markdown(f"### 📋 सम्पूर्ण १२,५००+ महा-शास्त्रीय नियमों का लाइव स्कैन ({len(_evidences):,} नियम)")
+        st.caption("१६ प्राचीन ग्रन्थों से संकलित नियमों की तात्कालिक स्थिति, शास्त्र प्रमाण, प्रभाव प्रकार एवं स्कोर:")
 
         _table_data = []
         for ev in _evidences:
