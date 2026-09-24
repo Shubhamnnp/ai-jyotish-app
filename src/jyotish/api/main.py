@@ -330,7 +330,7 @@ def grahalakshanam_login(payload: GlaLoginRequest):
     client = GrahalakshanamClient(GrahalakshanamConfig(username=payload.username, password=payload.password))
     success = client.authenticate()
     if not success:
-        raise HTTPException(status_code=401, detail="Grahalakshanam authentication failed")
+        raise HTTPException(status_code=401, detail="Server authentication failed")
     return {"token": client.token, "user": client.user_data}
 
 

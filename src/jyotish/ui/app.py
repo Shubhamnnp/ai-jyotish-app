@@ -4110,7 +4110,7 @@ with st.container(key="top_frozen_header_container", border=True):
             👤 <b>जातक:</b> {name} &nbsp;|&nbsp; 📅 {birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name}
         </div>
         <div>
-            <span class="gla-active-tag">🟢 Grahalakshanam Active</span>
+            <span class="gla-active-tag">🟢 Server Active</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -4213,7 +4213,7 @@ with st.container(key="top_frozen_header_container", border=True):
                 st.markdown("""
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #00b0f0; padding-bottom:6px; margin-bottom:12px;">
                     <div style="font-size:1.15rem; font-weight:800; color:#0077b6;">
-                        👶 Grahalakshanam जन्म विवरण प्रपत्र (Birth Data Entry)
+                        👶 Server जन्म विवरण प्रपत्र (Birth Data Entry)
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -4361,7 +4361,7 @@ with st.container(key="top_frozen_header_container", border=True):
                     tab_v_browse, tab_v_backup, tab_v_cloud = st.tabs([
                         "🗂️ क्लाइंट डायरेक्टरी एवं क्विक लोड (Directory & Quick Load)",
                         "📦 बैकअप एवं रिस्टोर (JSON Backup & Restore)",
-                        "☁️ क्लाउड सिंक (Grahalakshanam Cloud)"
+                        "☁️ क्लाउड सिंक (Server Cloud)"
                     ])
 
                     with tab_v_browse:
@@ -4457,9 +4457,9 @@ with st.container(key="top_frozen_header_container", border=True):
                                         st.error(msg)
 
                     with tab_v_cloud:
-                        st.markdown("#### ☁️ Grahalakshanam Cloud Sync")
+                        st.markdown("#### ☁️ Server Cloud Sync")
                         if st.button("☁️ सर्वर से सिंक करें (Sync API)", use_container_width=True, key="gla_sync_in_open_btn"):
-                            with st.spinner("Connecting to Grahalakshanam Cloud..."):
+                            with st.spinner("Connecting to Server Cloud..."):
                                 active_u = st.session_state.get("gla_user", "shubham8jyotish@gmail.com")
                                 active_p = st.session_state.get("gla_pass", "Bahraich@123")
                                 client = GrahalakshanamClient(GrahalakshanamConfig(username=active_u, password=active_p))
@@ -4688,7 +4688,7 @@ with st.container(key="top_frozen_header_container", border=True):
         elif st.session_state.gla_active_tool == "logout":
             with st.container(border=True):
                 st.markdown("### 🚪 सत्र से लॉगआउट करें (Logout Confirmation)")
-                st.write("क्या आप वर्तमान Grahalakshanam / JyotishOS सत्र से लॉगआउट करना चाहते हैं?")
+                st.write("क्या आप वर्तमान Server / JyotishOS सत्र से लॉगआउट करना चाहते हैं?")
                 col_lg1, col_lg2, col_lg3 = st.columns([1.5, 1.5, 2])
                 with col_lg1:
                     if st.button("🚪 हाँ, लॉगआउट करें", type="primary", use_container_width=True, key="gla_confirm_logout_btn"):
