@@ -1994,15 +1994,31 @@ unified_css = f"""
 
     /* Server Component Toolbar & 10-Tile Suite (Compact Screen Fit & Ultra-Slim 48px) */
     div[data-testid="column"]:has(.gla-tile-box) {{
+        min-height: 52px !important;
+        height: 52px !important;
         padding: 0 !important;
-        margin: 0 !important;
+        margin: 0 0 6px 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
     }}
     div[data-testid="column"]:has(.gla-tile-box) > div[data-testid="stVerticalBlock"] {{
         gap: 0 !important;
+        height: 52px !important;
+        min-height: 52px !important;
     }}
     div[data-testid="column"]:has(.gla-tile-box) div[data-testid="stElementContainer"] {{
         margin: 0 !important;
         padding: 0 !important;
+        height: 50px !important;
+        min-height: 50px !important;
+    }}
+    div[data-testid="stHorizontalBlock"]:has(.gla-tile-box) {{
+        min-height: 52px !important;
+        margin-top: 4px !important;
+        margin-bottom: 12px !important;
+        position: relative !important;
+        clear: both !important;
     }}
     .gla-tile-box {{
         width: 100% !important;
@@ -3209,17 +3225,22 @@ client_bridge_code = """
                             padding: 2px 4px !important;
                         }
                         div[data-testid="column"]:has(.gla-tile-box) {
+                            min-height: 52px !important;
+                            height: 52px !important;
                             padding: 0 !important;
                             margin: 0 !important;
                         }
                         div[data-testid="column"]:has(.gla-tile-box) > div[data-testid="stVerticalBlock"] {
                             gap: 0 !important;
+                            height: 52px !important;
+                            min-height: 52px !important;
                         }
                         div[data-testid="stHorizontalBlock"]:has(.gla-tile-box) {
                             min-height: 52px !important;
                             margin-top: 4px !important;
-                            margin-bottom: 8px !important;
+                            margin-bottom: 12px !important;
                             position: relative !important;
+                            clear: both !important;
                         }
                         .gla-tile-box {
                             width: 100% !important;
@@ -4884,6 +4905,7 @@ with st.container(key="top_frozen_header_container", border=False):
             st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen)
 
     # 3. 21 Modules Selector (Inside the Frozen Top Container)
+    st.markdown("<div style='height: 10px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
     col_btn_prev, col_mod_sel, col_btn_next = st.columns([1.1, 3.8, 1.1])
     with col_btn_prev:
         st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn", on_click=_nav_prev_module)
