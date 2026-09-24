@@ -7,10 +7,11 @@ enableCORS = false
 enableXsrfProtection = false
 enableStaticServing = true
 maxUploadSize = 50
+
 [theme]
 base = "light"
-primaryColor = "#2563EB"
-backgroundColor = "#F8FAFC"
+primaryColor = "#4D7C0F"
+backgroundColor = "#F5F9EC"
 secondaryBackgroundColor = "#FFFFFF"
-textColor = "#0F172A"
+textColor = "#000000"
 font = "sans serif"
