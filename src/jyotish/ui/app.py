@@ -635,13 +635,12 @@ else:
         -webkit-font-smoothing: antialiased !important;
         -moz-osx-font-smoothing: grayscale !important;
     }
-    h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
     h1, h2, h3, h4, h5, h6 {
         color: #0F172A !important;
         font-weight: 850 !important;
         letter-spacing: -0.3px !important;
     }
-    p, span, li, a, label, caption, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
+    p, span, li, a, caption, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
         color: #0F172A !important;
         font-weight: 600 !important;
     }
@@ -651,7 +650,6 @@ else:
     }
     label, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] span {
         color: #0F172A !important;
-        font-weight: 700 !important;
         font-weight: 750 !important;
         font-size: 0.92rem !important;
     }
@@ -739,6 +737,7 @@ else:
     [data-testid="stTabs"] button[role="tab"]:hover {
         color: #0F172A !important;
         background: rgba(255, 255, 255, 0.6) !important;
+    }
 
     /* Tab 1: Ruby Crimson (Surya) */
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1) {
@@ -746,8 +745,6 @@ else:
         color: #9F1239 !important;
         border: 1.5px solid #FECDD3 !important;
     }
-    [data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
-        background: #FFFFFF !important;
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1):hover {
         background: #FFE4E6 !important;
         border-color: #F43F5E !important;
@@ -972,10 +969,6 @@ else:
         border-radius: 12px !important;
         border: 1.5px solid #CBD5E1 !important;
     }
-    /* Day Mode Tables & DataFrames */
-    [data-testid="stTable"], [data-testid="stDataFrame"],
-    [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
-
     /* Day Mode Tables */
     [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #FFFFFF !important;
@@ -1573,8 +1566,6 @@ unified_css = f"""
         display: none !important;
     }}
 
-    /* Responsive SVG & Kundali Charts Auto-Scaling */
-    svg {{
     /* Distinct Luxury Gemstone Colors for Every Module Tab */
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1) {{ background: #FFF1F2 !important; color: #9F1239 !important; border: 1.5px solid #FECDD3 !important; }}
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1)[aria-selected="true"] {{ background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%) !important; color: #FFFFFF !important; border: 1.5px solid #9F1239 !important; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35) !important; }}
@@ -1619,7 +1610,6 @@ unified_css = f"""
         display: block !important;
         margin: 0 auto !important;
     }}
-    div:has(> svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
     div:has(> svg.kundali-svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
         max-width: 100% !important;
         overflow-x: auto !important;
@@ -2780,13 +2770,196 @@ components.html("""
                 } else {
                     parentDoc.body.classList.remove("astrallis-mode");
                     parentDoc.body.classList.remove("night-mode");
+                    parentDoc.body.classList.add("day-mode");
                     if (parentDoc.documentElement) {
                         parentDoc.documentElement.classList.remove("astrallis-mode");
                         parentDoc.documentElement.classList.remove("night-mode");
+                        parentDoc.documentElement.classList.add("day-mode");
                     }
-                    if (styleEl) {
-                        styleEl.remove();
+                    
+                    const dayCss = `
+                        html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
+                            background-color: #F8FAFC !important;
+                            background: #F8FAFC !important;
+                            color: #0F172A !important;
+                        }
+                        header[data-testid="stHeader"] {
+                            background-color: #F8FAFC !important;
+                            background: #F8FAFC !important;
+                        }
+                        [data-testid="stSidebar"], section[data-testid="stSidebar"] {
+                            background-color: #F1F5F9 !important;
+                            background: #F1F5F9 !important;
+                            border-right: 1.5px solid #CBD5E1 !important;
+                        }
+                        [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
+                            color: #0F172A !important;
+                        }
+                        section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
+                        section[data-testid="stSidebar"] .stRadio label,
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label,
+                        div[data-testid="stRadio"] label {
+                            background: #FFFFFF !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                            color: #0F172A !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p {
+                            color: #0F172A !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {
+                            background: #F8FAFC !important;
+                            border-color: #2563EB !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"],
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) {
+                            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%) !important;
+                            border: 2px solid #2563EB !important;
+                            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.2) !important;
+                        }
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-checked="true"] p,
+                        [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:has(input:checked) p {
+                            color: #1E40AF !important;
+                            font-weight: 800 !important;
+                        }
+                        h1, h2, h3, h4, h5, h6 {
+                            color: #0F172A !important;
+                            font-weight: 850 !important;
+                        }
+                        p, span, li, a, caption, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
+                            color: #0F172A !important;
+                            font-weight: 600 !important;
+                        }
+                        strong, b {
+                            color: #020617 !important;
+                            font-weight: 850 !important;
+                        }
+                        input, textarea, select,
+                        div[data-baseweb="input"] input,
+                        div[data-baseweb="base-input"] input,
+                        div[data-baseweb="input"] {
+                            background-color: #FFFFFF !important;
+                            color: #0F172A !important;
+                            -webkit-text-fill-color: #0F172A !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                            border-radius: 8px !important;
+                        }
+                        div[data-baseweb="select"] > div {
+                            background-color: #FFFFFF !important;
+                            color: #0F172A !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                            border-radius: 8px !important;
+                        }
+                        div[data-baseweb="select"] * {
+                            color: #0F172A !important;
+                        }
+                        header.top-nav-bar {
+                            background: #FFFFFF !important;
+                            border-color: #CBD5E1 !important;
+                            border-bottom: 3.5px solid #D97706 !important;
+                            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08) !important;
+                        }
+                        .top-nav-bar * {
+                            color: #0F172A !important;
+                        }
+                        .active-profile-pill {
+                            background: #EFF6FF !important;
+                            border: 1.5px solid #2563EB !important;
+                            color: #1E40AF !important;
+                        }
+                        .active-profile-pill * {
+                            color: #1E40AF !important;
+                        }
+                        .header-sub-pill {
+                            background: #F8FAFC !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                            color: #0F172A !important;
+                        }
+                        .header-sub-pill * {
+                            color: #0F172A !important;
+                        }
+                        .header-sub-pill b {
+                            color: #0F172A !important;
+                        }
+                        .theme-select-box {
+                            background: #FFFFFF !important;
+                            border-color: #D97706 !important;
+                        }
+                        .theme-select-box select, .theme-select-box b, .theme-select-box span {
+                            color: #B45309 !important;
+                        }
+                        .theme-select-box option {
+                            background: #FFFFFF !important;
+                            color: #0F172A !important;
+                        }
+                        .digital-hud {
+                            background: #FFFFFF !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                        }
+                        .digital-hud * {
+                            color: #0F172A !important;
+                        }
+                        .hud-pill {
+                            background: #F8FAFC !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                            color: #0F172A !important;
+                        }
+                        .hud-pill b, .hud-pill strong {
+                            color: #B45309 !important;
+                        }
+                        .rule-card, .vastu-card {
+                            background: #FFFFFF !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+                        }
+                        [data-testid="stTable"], [data-testid="stTable"] * {
+                            background-color: #FFFFFF !important;
+                            color: #0F172A !important;
+                        }
+                        button[kind="secondary"] {
+                            background-color: #FFFFFF !important;
+                            color: #0F172A !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                        }
+                        button[kind="secondary"]:hover {
+                            background-color: #F8FAFC !important;
+                            border-color: #2563EB !important;
+                        }
+                        [data-testid="stTabs"] [data-baseweb="tab-list"] {
+                            background: #F8FAFC !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                        }
+                        [data-testid="stChatMessage"] {
+                            background: #FFFFFF !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+                        }
+                        [data-testid="stChatInput"] {
+                            background-color: #FFFFFF !important;
+                            border-color: #CBD5E1 !important;
+                        }
+                        div[style*="background:#050811"], div[style*="background: #050811"],
+                        div[style*="background:#111827"], div[style*="background: #111827"],
+                        div[style*="background:#0D1322"], div[style*="background: #0D1322"],
+                        div[style*="background:#080C14"], div[style*="background: #080C14"],
+                        div[style*="background:#0A0E1A"], div[style*="background: #0A0E1A"],
+                        div[style*="background:#1E293B"], div[style*="background: #1E293B"],
+                        div[style*="background:#1F2937"], div[style*="background: #1F2937"],
+                        div[style*="background:#070A12"], div[style*="background: #070A12"],
+                        div[style*="background:#0A1628"], div[style*="background: #0A1628"],
+                        div[style*="background:#000000"], div[style*="background: #000000"],
+                        div[style*="background: black"], div[style*="background:black"] {
+                            background: #FFFFFF !important;
+                            border-color: #CBD5E1 !important;
+                            color: #0F172A !important;
+                        }
+                    `;
+                    
+                    if (!styleEl) {
+                        styleEl = parentDoc.createElement("style");
+                        styleEl.id = THEME_STYLE_ID;
+                        parentDoc.head.appendChild(styleEl);
                     }
+                    styleEl.innerHTML = dayCss;
                 }
 
                 // Sync all select elements
