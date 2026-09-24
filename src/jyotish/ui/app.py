@@ -722,6 +722,23 @@ else:
         border-radius: 12px !important;
         border: 1.5px solid #CBD5E1 !important;
     }
+    /* Day Mode Tables & DataFrames */
+    [data-testid="stTable"], [data-testid="stDataFrame"],
+    [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+        background-color: #FFFFFF !important;
+        color: #0F172A !important;
+    }
+    [data-testid="stTable"] th {
+        background-color: #F1F5F9 !important;
+        color: #1E3A8A !important;
+        font-weight: 800 !important;
+        border-bottom: 2px solid #CBD5E1 !important;
+    }
+    [data-testid="stTable"] td {
+        background-color: #FFFFFF !important;
+        color: #0F172A !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+    }
     """
 
 unified_css = f"""
@@ -841,20 +858,16 @@ unified_css = f"""
     div[data-testid="stVerticalBlock"] > div:has([data-testid="stMarkdownContainer"] .fixed-header-anchor),
     div[data-testid="stVerticalBlockBorderWrapper"]:has(.fixed-header-anchor),
     div.st-key-top_frozen_header_container > div[data-testid="stVerticalBlock"] {{
-        position: -webkit-sticky !important;
-        position: sticky !important;
-        top: 0px !important;
-        z-index: 999990 !important;
-        background: #F8FAFC !important;
+        position: relative !important;
+        background: transparent !important;
         border: none !important;
-        border-bottom: 2px solid #CBD5E1 !important;
+        border-bottom: 1.5px solid #CBD5E1 !important;
         border-radius: 0px !important;
         padding-top: 2px !important;
         padding-bottom: 4px !important;
         padding-left: 6px !important;
         padding-right: 6px !important;
         margin-bottom: 6px !important;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06) !important;
     }}
 
     /* Top Module Navigation Bar (Slim 34px Height) */
@@ -2519,25 +2532,13 @@ components.html("""
                                       anchor.closest('[data-testid="stVerticalBlockBorderWrapper"]') ||
                                       anchor.closest('[data-testid="stVerticalBlock"] > div');
                 if (headerContainer) {
-                    const isNight = parentDoc.body.classList.contains('night-mode') || 
-                                    parentDoc.querySelector('#software-theme-select')?.value === 'night' ||
-                                    (window.parent && window.parent.currentSoftwareTheme === 'night');
-
-                    headerContainer.style.setProperty('position', '-webkit-sticky', 'important');
-                    headerContainer.style.setProperty('position', 'sticky', 'important');
-                    headerContainer.style.setProperty('top', '0px', 'important');
-                    headerContainer.style.setProperty('z-index', '999990', 'important');
-                    headerContainer.style.setProperty('background', isNight ? '#0A0E1A' : '#F8FAFC', 'important');
-                    headerContainer.style.setProperty('border', 'none', 'important');
-                    headerContainer.style.setProperty('border-bottom', isNight ? '2.5px solid #1E293B' : '2.5px solid #CBD5E1', 'important');
-                    headerContainer.style.setProperty('box-shadow', '0 6px 20px rgba(0, 0, 0, 0.12)', 'important');
-                    headerContainer.style.setProperty('padding-top', '4px', 'important');
-                    headerContainer.style.setProperty('padding-bottom', '8px', 'important');
-                    headerContainer.style.setProperty('margin-bottom', '8px', 'important');
-
-                    if (headerContainer.parentElement) {
-                        headerContainer.parentElement.style.setProperty('overflow', 'visible', 'important');
-                    }
+                    headerContainer.style.setProperty('position', 'relative', 'important');
+                    headerContainer.style.setProperty('top', 'auto', 'important');
+                    headerContainer.style.setProperty('z-index', 'auto', 'important');
+                    headerContainer.style.setProperty('box-shadow', 'none', 'important');
+                    headerContainer.style.setProperty('padding-top', '2px', 'important');
+                    headerContainer.style.setProperty('padding-bottom', '4px', 'important');
+                    headerContainer.style.setProperty('margin-bottom', '4px', 'important');
                 }
             }
         } catch(e) {
@@ -3258,33 +3259,33 @@ with st.container(key="top_frozen_header_container", border=True):
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 78px;
-        height: 78px;
+        width: 54px;
+        height: 54px;
         background-color: #f2f2f2;
-        border: 3px solid #00b0f0;
-        border-radius: 15px;
+        border: 2px solid #00b0f0;
+        border-radius: 10px;
         cursor: pointer;
-        padding: 5px;
-        box-shadow: 0 2px 6px rgba(0, 176, 240, 0.2);
-        transition: all 0.2s ease-in-out;
+        padding: 3px;
+        box-shadow: 0 1px 4px rgba(0, 176, 240, 0.15);
+        transition: all 0.15s ease-in-out;
         text-align: center;
         margin: 0 auto;
     }
     .gla-btn-tile:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 12px rgba(0, 176, 240, 0.35);
+        transform: translateY(-1px);
+        box-shadow: 0 3px 8px rgba(0, 176, 240, 0.25);
         background-color: #e0f4fc;
     }
     .gla-btn-tile img {
-        width: 42px;
-        height: 42px;
+        width: 26px;
+        height: 26px;
         object-fit: contain;
     }
     .gla-btn-tile span {
-        font-size: 10px;
+        font-size: 8.5px;
         font-weight: 700;
         color: #1e293b;
-        margin-top: 2px;
+        margin-top: 1px;
         white-space: nowrap;
     }
     .gla-info-strip {
@@ -3293,11 +3294,11 @@ with st.container(key="top_frozen_header_container", border=True):
         justify-content: space-between;
         background: #00b0f0;
         color: #ffffff;
-        padding: 6px 14px;
-        border-radius: 8px;
-        font-size: 13px;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 11.5px;
         font-weight: 700;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
     }
     .gla-info-strip b {
         color: #ffffff;
@@ -3305,8 +3306,8 @@ with st.container(key="top_frozen_header_container", border=True):
     /* Transparent button overlaid exactly on top of the tile in gla-tile-box */
     .gla-tile-box {
         position: relative;
-        width: 78px;
-        height: 78px;
+        width: 54px;
+        height: 54px;
         margin: 0 auto;
     }
     div[data-testid="stColumn"]:has(.gla-tile-box) {
@@ -3320,13 +3321,13 @@ with st.container(key="top_frozen_header_container", border=True):
     }
     div[data-testid="stColumn"]:has(.gla-tile-box) button {
         position: absolute !important;
-        top: -78px !important;
+        top: -54px !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
-        width: 78px !important;
-        height: 78px !important;
-        min-height: 78px !important;
-        max-height: 78px !important;
+        width: 54px !important;
+        height: 54px !important;
+        min-height: 54px !important;
+        max-height: 54px !important;
         opacity: 0 !important;
         z-index: 20 !important;
         cursor: pointer !important;
@@ -4008,14 +4009,12 @@ st.markdown(f"""
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 4px;">
         <div style="font-weight: 800; font-size: 12.5px; display: flex; align-items: center; gap: 6px;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981; box-shadow:0 0 6px #10B981;"></span>
-            <span style="color:#000000; font-weight:900;">⚡ डिजिटल पंचांग एवं काल गणना (Panchang & Ephemeris HUD)</span>
             <span style="color:{_hud_title_color}; font-weight:900;">⚡ डिजिटल पंचांग एवं काल गणना (Panchang &amp; Ephemeris HUD)</span>
         </div>
         <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
             <div class="hud-pill-highlight" style="border-radius: 6px; border: 1.5px solid #D97706; font-weight: 800;">
                 👑 होरा स्वामी: <b>{hora_lord}</b>
             </div>
-            <div style="background: #EFF6FF; border: 1.5px solid #2563EB; color: #1E40AF; border-radius: 6px; padding: 3px 8px; font-size: 11.5px; font-weight: 800;">
             <div style="background: {_hud_accuracy_bg}; border: 1.5px solid {_hud_accuracy_border}; color: {_hud_accuracy_color}; border-radius: 6px; padding: 3px 8px; font-size: 11.5px; font-weight: 800;">
                 🛡️ 99.9% परिशुद्धता
             </div>
@@ -4036,12 +4035,9 @@ st.markdown(f"""
 
 # Active Module Breadcrumb Pill
 st.markdown(f"""
-<div style="display:flex; justify-content:space-between; align-items:center; background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:8px; padding:8px 16px; margin-bottom:8px;">
-    <div style="font-weight:800; color:#1E40AF; font-size:14px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
-    <div style="font-size:12.5px; color:#1E293B; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
-<div style="display:flex; justify-content:space-between; align-items:center; background:{_breadcrumb_bg}; border:1.5px solid {_breadcrumb_border}; border-radius:8px; padding:8px 16px; margin-bottom:8px;">
-    <div style="font-weight:800; color:{_breadcrumb_title_color}; font-size:14px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
-    <div style="font-size:12.5px; color:{_breadcrumb_text_color}; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
+<div style="display:flex; justify-content:space-between; align-items:center; background:{_breadcrumb_bg}; border:1.5px solid {_breadcrumb_border}; border-radius:8px; padding:6px 14px; margin-bottom:6px;">
+    <div style="font-weight:800; color:{_breadcrumb_title_color}; font-size:13px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
+    <div style="font-size:12px; color:{_breadcrumb_text_color}; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -4088,18 +4084,12 @@ with col_gr_bar:
     _neg_bg = "#450a0a" if is_astrallis_mode else ("#7f1d1d" if is_night_mode else "#FEE2E2")
     _neg_color = "#F87171" if is_astrallis_mode else ("#FCA5A5" if is_night_mode else "#991B1B")
     st.markdown(f"""
-    <div style="background: linear-gradient(90deg, #F5F3FF 0%, #EDE9FE 100%); border: 1.5px solid #8B5CF6; border-radius: 8px; padding: 6px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
-        <div style="color: #2E1065 !important; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-            <span style="color: #2E1065 !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
-            <span style="background: #FEF3C7; color: #92400E !important; border: 1px solid #F59E0B; padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 12px;">{_gr_fired:,} सक्रिय नियम फलित</span>
-    <div style="background: {_rules_bg}; border: 1.5px solid {_rules_border}; border-radius: 8px; padding: 6px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
+    <div style="background: {_rules_bg}; border: 1.5px solid {_rules_border}; border-radius: 8px; padding: 6px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
         <div style="color: {_rules_text_color} !important; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
             <span style="color: {_rules_text_color} !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
             <span style="background: {_rules_count_bg}; color: {_rules_count_color} !important; border: 1px solid {_rules_count_border}; padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 12px;">{_gr_fired:,} सक्रिय नियम फलित</span>
         </div>
         <div style="font-size: 11.5px; display: flex; gap: 6px; align-items: center;">
-            <span style="background: #DCFCE7; color: #14532D !important; border: 1px solid #86EFAC; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
-            <span style="background: #FEE2E2; color: #991B1B !important; border: 1px solid #FCA5A5; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
             <span style="background: {_pos_bg}; color: {_pos_color} !important; border: 1px solid {_pos_color}; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
             <span style="background: {_neg_bg}; color: {_neg_color} !important; border: 1px solid {_neg_color}; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
         </div>
@@ -4118,9 +4108,6 @@ with c_ts_info:
     _ts_label_color = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#B45309")
     _ts_value_color = "#E2E8F0" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
     st.markdown(f"""
-    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:8px; padding:5px 10px; height:100%; display:flex; flex-direction:column; justify-content:center;">
-        <div style="font-size:11px; font-weight:800; color:#B45309;">⏱️ काल गति नियंत्रक (Time Travel)</div>
-        <div style="font-size:12.5px; font-weight:900; color:#1E293B;">📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
     <div style="background:{_ts_bg}; border:1.5px solid {_ts_border}; border-radius:8px; padding:5px 10px; height:100%; display:flex; flex-direction:column; justify-content:center;">
         <div style="font-size:11px; font-weight:800; color:{_ts_label_color};">⏱️ काल गति नियंत्रक (Time Travel)</div>
         <div style="font-size:12.5px; font-weight:900; color:{_ts_value_color};">📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
@@ -4300,24 +4287,51 @@ if selected_idx == 0:
         _is_astrallis_chart = ("Astrallis" in curr_style or "Circular" in curr_style)
         if _is_astrallis_chart:
             # ─── Astrallis Scientific Observatory Data Console ───
-            _dc_bg  = "#050811" if is_astrallis_mode else "#111827"
-            _dc_row = "#0A1628" if is_astrallis_mode else "#1F2937"
-            _dc_bdr = "#1E3A5F" if is_astrallis_mode else "#374151"
-            _dc_hdr = "#00E5FF" if is_astrallis_mode else "#F59E0B"
-            _dc_txt = "#CBD5E1"
-            _dc_val = "#E2E8F0"
+            if is_astrallis_mode:
+                _dc_bg  = "#050811"
+                _dc_row = "#0A1628"
+                _dc_bdr = "#1E3A5F"
+                _dc_hdr = "#00E5FF"
+                _dc_txt = "#CBD5E1"
+                _dc_val = "#E2E8F0"
+                _dc_th_col = "#00E5FF"
+                _pts_good = "#44FF88"
+                _pts_mid  = "#FFD700"
+                _pts_low  = "#FF4444"
+            elif is_night_mode:
+                _dc_bg  = "#111827"
+                _dc_row = "#1F2937"
+                _dc_bdr = "#374151"
+                _dc_hdr = "#F59E0B"
+                _dc_txt = "#D1D5DB"
+                _dc_val = "#F8FAFC"
+                _dc_th_col = "#F59E0B"
+                _pts_good = "#44FF88"
+                _pts_mid  = "#FFD700"
+                _pts_low  = "#FF4444"
+            else:  # Day Mode (Royal Pearl / Vedic Classic)
+                _dc_bg  = "#FFFFFF"
+                _dc_row = "#F8FAFC"
+                _dc_bdr = "#CBD5E1"
+                _dc_hdr = "#1E40AF"
+                _dc_txt = "#475569"
+                _dc_val = "#0F172A"
+                _dc_th_col = "#1E3A8A"
+                _pts_good = "#059669"
+                _pts_mid  = "#D97706"
+                _pts_low  = "#DC2626"
 
             # Jataka Info Console
             st.markdown(f"""
-<div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;">
+<div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
   <div style="color:{_dc_hdr};font-weight:900;font-size:13px;margin-bottom:8px;letter-spacing:0.5px;">⚡ JATAKA DATA CONSOLE</div>
   <table style="width:100%;border-collapse:collapse;">
     <tr><td style="color:{_dc_txt};padding:2px 4px;">Name</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{name}</td></tr>
     <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Place</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{city}</td></tr>
     <tr><td style="color:{_dc_txt};padding:2px 4px;">Date &amp; Time</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{birth_d.strftime('%d-%b-%Y')} {birth_t.strftime('%I:%M %p')}</td></tr>
     <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Ayanamsa</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{chart.ayanamsa_name} ({chart.ayanamsa_value:.4f}°)</td></tr>
-    <tr><td style="color:{_dc_txt};padding:2px 4px;">Lagna (Asc)</td><td style="color:#00E5FF;font-weight:900;padding:2px 4px;">{chart.lagna_sign_name} ({chart.lagna_sign_id})</td></tr>
-    <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Atmakaraka</td><td style="color:#FFD700;font-weight:900;padding:2px 4px;">{chart.atmakaraka}</td></tr>
+    <tr><td style="color:{_dc_txt};padding:2px 4px;">Lagna (Asc)</td><td style="color:{_dc_hdr};font-weight:900;padding:2px 4px;">{chart.lagna_sign_name} ({chart.lagna_sign_id})</td></tr>
+    <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Atmakaraka</td><td style="color:{_pts_mid};font-weight:900;padding:2px 4px;">{chart.atmakaraka}</td></tr>
     <tr><td style="color:{_dc_txt};padding:2px 4px;">House System</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">Equal (Vedic) / Placidus</td></tr>
   </table>
 </div>""", unsafe_allow_html=True)
@@ -4341,20 +4355,20 @@ if selected_idx == 0:
                     f'<td style="color:{nc};padding:2px 4px;font-size:11px;">{pp_o.sign_name[:3]}</td>'
                     f'<td style="color:{_dc_txt};padding:2px 4px;font-size:11px;">{pp_o.sign_degree:.2f}°</td>'
                     f'<td style="color:{_dc_txt};padding:2px 4px;font-size:10px;">{pp_o.nakshatra_name[:5]}-P{pp_o.nakshatra_pada}</td>'
-                    f'<td style="color:{"#44FF88" if d_pts>=15 else ("#FFD700" if d_pts>=10 else "#FF4444")};padding:2px 4px;font-size:10px;">{d_pts}pts</td>'
+                    f'<td style="color:{_pts_good if d_pts>=15 else (_pts_mid if d_pts>=10 else _pts_low)};padding:2px 4px;font-size:10px;font-weight:700;">{d_pts}pts</td>'
                     f'</tr>'
                 )
             st.markdown(f"""
-<div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:8px 10px;margin-bottom:8px;">
+<div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:8px 10px;margin-bottom:8px;box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
   <div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:6px;letter-spacing:0.5px;">🪐 SWISS EPHEMERIS — {varga_choice} {v_name}</div>
   <table style="width:100%;border-collapse:collapse;font-size:11px;">
     <tr style="background:{_dc_row};">
-      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Sym</th>
-      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Planet</th>
-      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Sign</th>
-      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Deg°</th>
-      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Nakshatra</th>
-      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Bala</th>
+      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Sym</th>
+      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Planet</th>
+      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Sign</th>
+      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Deg°</th>
+      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Nakshatra</th>
+      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Bala</th>
     </tr>
     {"".join(eph_rows)}
   </table>
@@ -4370,7 +4384,7 @@ if selected_idx == 0:
     <div style="color:{_dc_txt};">Nakshatra: <span style="color:{_dc_val};font-weight:800;">{p.nakshatra_name}</span></div>
     <div style="color:{_dc_txt};">Yoga: <span style="color:{_dc_val};font-weight:800;">{p.yoga_name}</span></div>
     <div style="color:{_dc_txt};">Karana: <span style="color:{_dc_val};font-weight:800;">{p.karana_name}</span></div>
-    <div style="color:{_dc_txt};">Atmakaraka: <span style="color:#FFD700;font-weight:900;">{chart.atmakaraka}</span></div>
+    <div style="color:{_dc_txt};">Atmakaraka: <span style="color:{_pts_mid};font-weight:900;">{chart.atmakaraka}</span></div>
   </div>
 </div>""", unsafe_allow_html=True)
 

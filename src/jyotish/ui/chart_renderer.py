@@ -108,7 +108,7 @@ class ChartRenderer:
         }
 
         svg_parts = [
-            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="380" style="background:#FFFFFF; border:2px solid #CBD5E1; border-radius:14px; box-shadow:0 4px 15px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="320" style="max-width:350px; max-height:330px; margin:0 auto; display:block; background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
             f'<text x="{W//2}" y="22" text-anchor="middle" fill="#78350F" font-size="14" font-weight="900" letter-spacing="0.5">{title}</text>',
         ]
 
@@ -196,7 +196,7 @@ class ChartRenderer:
         }
 
         svg_parts = [
-            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="380" style="background:#FFFFFF; border:2px solid #CBD5E1; border-radius:14px; box-shadow:0 4px 15px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="320" style="max-width:350px; max-height:330px; margin:0 auto; display:block; background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
             f'<text x="{W//2}" y="25" text-anchor="middle" fill="#78350F" font-size="14" font-weight="900">{title}</text>',
             f'<rect x="{ox}" y="{oy}" width="{cell_w*4}" height="{cell_h*4}" fill="none" stroke="#D97706" stroke-width="2.5"/>',
             f'<rect x="{ox + cell_w}" y="{oy + cell_h}" width="{cell_w*2}" height="{cell_h*2}" fill="#F8FAFC" stroke="#D97706" stroke-width="2"/>',
@@ -375,7 +375,7 @@ class ChartRenderer:
         }
 
         svg_parts = [
-            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="380" style="background:#FFFFFF; border:2px solid #CBD5E1; border-radius:14px; box-shadow:0 4px 15px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="320" style="max-width:350px; max-height:330px; margin:0 auto; display:block; background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
             f'<text x="{W//2}" y="25" text-anchor="middle" fill="#78350F" font-size="14" font-weight="900">{title}</text>',
             # Center Square: Brand / Watermark
             f'<rect x="{x1}" y="{y1}" width="{s3}" height="{s3}" fill="#FFFBEB" stroke="#D97706" stroke-width="2"/>',
@@ -767,7 +767,7 @@ class ChartRenderer:
         p = []
         p.append(
             f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
-            f'width="100%" style="background:{bg_color};border-radius:12px;">'
+            f'width="100%" height="340" style="max-width:350px; max-height:340px; margin:0 auto; display:block; background:{bg_color}; border:1.5px solid {ring_stroke}; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06);">'
         )
         p.append('<defs>')
         p.append('<radialGradient id="bg2" cx="50%" cy="50%" r="50%">'
@@ -941,11 +941,14 @@ def render_aspect_orb_matrix_html(chart: "KundaliChart", dark_bg: bool = True) -
     bg       = "#050811" if dark_bg else "#FFFFFF"
     hdr_bg   = "#0A1628" if dark_bg else "#F1F5F9"
     cell_bg  = "#070D1A" if dark_bg else "#FFFFFF"
-    bdr      = "#1E3A5F" if dark_bg else "#D97706"
+    bdr      = "#1E3A5F" if dark_bg else "#CBD5E1"
+    th_col   = "#00E5FF" if dark_bg else "#1E3A8A"
+    diag_bg  = "#0D1A2E" if dark_bg else "#E2E8F0"
+    dot_col  = "#1E3A5F" if dark_bg else "#94A3B8"
 
-    rows = [f'<div style="overflow-x:auto;background:{bg};border-radius:8px;padding:4px;">',
+    rows = [f'<div style="overflow-x:auto;background:{bg};border-radius:8px;padding:4px;border:1px solid {bdr};">',
             f'<table style="border-collapse:collapse;font-size:11px;width:100%;background:{bg};">',
-            f'<tr><th style="background:{hdr_bg};color:#00E5FF;padding:3px 5px;border:1px solid {bdr};font-size:10px;">P/O</th>']
+            f'<tr><th style="background:{hdr_bg};color:{th_col};padding:3px 5px;border:1px solid {bdr};font-size:10px;">P/O</th>']
     for pn in PLANETS:
         sym = SYMS.get(pn, pn[:2])
         pc = P_COLS.get(pn, "#CCC")
@@ -958,7 +961,7 @@ def render_aspect_orb_matrix_html(chart: "KundaliChart", dark_bg: bool = True) -
         rows.append(f'<tr><td style="background:{hdr_bg};color:{pc1};padding:3px 4px;border:1px solid {bdr};font-weight:900;font-size:11px;">{sym1}</td>')
         for pn2 in PLANETS:
             if pn1 == pn2:
-                rows.append(f'<td style="background:#0D1A2E;border:1px solid {bdr};text-align:center;color:#1E3A5F;font-size:12px;">■</td>')
+                rows.append(f'<td style="background:{diag_bg};border:1px solid {bdr};text-align:center;color:{dot_col};font-size:12px;">■</td>')
                 continue
             if pn1 not in lons or pn2 not in lons:
                 rows.append(f'<td style="background:{cell_bg};border:1px solid {bdr};text-align:center;"></td>')
@@ -977,7 +980,7 @@ def render_aspect_orb_matrix_html(chart: "KundaliChart", dark_bg: bool = True) -
                     matched = True
                     break
             if not matched:
-                rows.append(f'<td style="background:{cell_bg};border:1px solid {bdr};text-align:center;color:#1E3A5F;font-size:10px;">·</td>')
+                rows.append(f'<td style="background:{cell_bg};border:1px solid {bdr};text-align:center;color:{dot_col};font-size:10px;">·</td>')
         rows.append('</tr>')
     rows.append('</table></div>')
     return "".join(rows)
