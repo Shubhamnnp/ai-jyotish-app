@@ -1133,14 +1133,15 @@ unified_css = f"""
     }}
     /* Hide Streamlit's native top header bar (empty white strip) completely */
     header[data-testid="stHeader"] {{
-        background: transparent !important;
-        height: 50px !important;
+        display: none !important;
+        visibility: hidden !important;
         height: 0px !important;
         min-height: 0px !important;
+        max-height: 0px !important;
         overflow: hidden !important;
         padding: 0px !important;
         margin: 0px !important;
-        z-index: 1000002 !important;
+        z-index: -1 !important;
     }}
 
     /* Keep Sidebar Open/Close Expand Button (>>) Always Visible, High-Contrast & Clickable */
@@ -1225,14 +1226,29 @@ unified_css = f"""
         height: 100vh !important;
     }}
     .block-container {{
-        padding-top: 0px !important;
-        padding-bottom: 2rem !important;
-        padding-left: 2rem !important;
-        padding-right: 2rem !important;
+        padding-top: 2px !important;
+        padding-bottom: 0.5rem !important;
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+        max-width: 100% !important;
         overflow: visible !important;
     }}
     div[data-testid="stVerticalBlock"] {{
         overflow: visible !important;
+        gap: 0.35rem !important;
+    }}
+    div[data-testid="stHorizontalBlock"] {{
+        gap: 0.35rem !important;
+    }}
+    div[data-testid="stCustomComponentV1"],
+    div.element-container:has(iframe),
+    div.element-container:has(style),
+    div.element-container:has(.fixed-header-anchor) {{
+        display: none !important;
+        height: 0px !important;
+        min-height: 0px !important;
+        margin: 0px !important;
+        padding: 0px !important;
     }}
 
     /* Frozen Sticky Header Container (Pins to the Top of the App) */
@@ -1244,13 +1260,12 @@ unified_css = f"""
         position: relative !important;
         background: transparent !important;
         border: none !important;
-        border-bottom: 1.5px solid #CBD5E1 !important;
+        border-bottom: none !important;
         border-radius: 0px !important;
-        padding-top: 2px !important;
-        padding-bottom: 4px !important;
-        padding-left: 6px !important;
-        padding-right: 6px !important;
-        margin-bottom: 6px !important;
+        padding: 0px !important;
+        margin-top: 0px !important;
+        margin-bottom: 4px !important;
+        box-shadow: none !important;
     }}
 
     /* Top Module Navigation Bar (Slim 34px Height) */
@@ -1931,6 +1946,112 @@ unified_css = f"""
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch !important;
         }}
+    }}
+
+    /* Server Component Toolbar & 10-Tile Suite (Compact Screen Fit) */
+    .gla-toolbar-container {{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 6px;
+        padding: 4px 8px;
+        border-radius: 8px;
+        border: 1px solid #CBDCB8;
+        margin-top: 2px;
+        margin-bottom: 4px;
+        overflow-x: auto;
+    }}
+    .gla-btn-tile {{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        background-color: #f2f2f2;
+        border: 1.5px solid #00b0f0;
+        border-radius: 8px;
+        cursor: pointer;
+        padding: 2px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        transition: all 0.15s ease-in-out;
+        text-align: center;
+        margin: 0 auto;
+    }}
+    .gla-btn-tile:hover {{
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(0, 176, 240, 0.25);
+        background-color: #e0f4fc;
+    }}
+    .gla-btn-tile img {{
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+    }}
+    .gla-btn-tile span {{
+        font-size: 8px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-top: 1px;
+        white-space: nowrap;
+    }}
+    .gla-info-strip {{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #E2F0D9;
+        color: #000000;
+        padding: 4px 10px;
+        border-radius: 6px;
+        border: 1.5px solid #A8D08D;
+        font-size: 11.5px;
+        font-weight: 700;
+        margin-top: 0px;
+        margin-bottom: 4px;
+    }}
+    .gla-info-strip b {{
+        color: #000000;
+    }}
+    .gla-tile-box {{
+        position: relative;
+        width: 48px;
+        height: 48px;
+        margin: 0 auto;
+    }}
+    div[data-testid="stColumn"]:has(.gla-tile-box) {{
+        position: relative !important;
+        padding: 0 2px !important;
+    }}
+    div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {{
+        position: relative !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }}
+    div[data-testid="stColumn"]:has(.gla-tile-box) button {{
+        position: absolute !important;
+        top: -48px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 48px !important;
+        height: 48px !important;
+        min-height: 48px !important;
+        max-height: 48px !important;
+        opacity: 0 !important;
+        z-index: 20 !important;
+        cursor: pointer !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+    }}
+    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-testid="stTooltipHoverTarget"],
+    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-baseweb="tooltip"] {{
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
     }}
 
     {theme_mode_css}
@@ -2911,8 +3032,38 @@ client_bridge_code = """
                             color: #000000 !important;
                         }
                         header[data-testid="stHeader"] {
-                            background-color: #F5F9EC !important;
-                            background: #F5F9EC !important;
+                            display: none !important;
+                            height: 0px !important;
+                            min-height: 0px !important;
+                            max-height: 0px !important;
+                            padding: 0px !important;
+                            margin: 0px !important;
+                            visibility: hidden !important;
+                        }
+                        .block-container {
+                            padding-top: 2px !important;
+                            padding-bottom: 0.5rem !important;
+                            padding-left: 0.75rem !important;
+                            padding-right: 0.75rem !important;
+                            max-width: 100% !important;
+                        }
+                        div[data-testid="stVerticalBlock"] {
+                            gap: 0.35rem !important;
+                        }
+                        div[data-testid="stCustomComponentV1"],
+                        div.element-container:has(iframe) {
+                            display: none !important;
+                            height: 0px !important;
+                            min-height: 0px !important;
+                            margin: 0px !important;
+                            padding: 0px !important;
+                        }
+                        .st-key-top_frozen_header_container {
+                            border: none !important;
+                            box-shadow: none !important;
+                            padding: 0px !important;
+                            margin: 0px 0px 4px 0px !important;
+                            background: transparent !important;
                         }
                         [data-testid="stSidebar"], section[data-testid="stSidebar"] {
                             background-color: #EDF4E2 !important;
@@ -3267,6 +3418,10 @@ client_bridge_code = """
             if (stHeader) {
                 stHeader.style.setProperty('display', 'none', 'important');
                 stHeader.style.setProperty('height', '0px', 'important');
+                stHeader.style.setProperty('min-height', '0px', 'important');
+                stHeader.style.setProperty('max-height', '0px', 'important');
+                stHeader.style.setProperty('padding', '0px', 'important');
+                stHeader.style.setProperty('margin', '0px', 'important');
             }
 
             const mainSec = parentDoc.querySelector('[data-testid="stMain"], section.main');
@@ -3278,7 +3433,10 @@ client_bridge_code = """
 
             const blockContainer = parentDoc.querySelector('.block-container');
             if (blockContainer) {
-                blockContainer.style.setProperty('padding-top', '0px', 'important');
+                blockContainer.style.setProperty('padding-top', '2px', 'important');
+                blockContainer.style.setProperty('padding-left', '8px', 'important');
+                blockContainer.style.setProperty('padding-right', '8px', 'important');
+                blockContainer.style.setProperty('max-width', '100%', 'important');
                 blockContainer.style.setProperty('overflow', 'visible', 'important');
             }
 
@@ -3977,10 +4135,8 @@ if ("top_bar_module_selector" not in st.session_state or
 # -------------------------------------------------------------
 # 🌟 FROZEN STICKY TOP HEADER SECTION (Pinned at Top)
 # -------------------------------------------------------------
-with st.container(key="top_frozen_header_container", border=True):
-    st.markdown('<div class="fixed-header-anchor"></div>', unsafe_allow_html=True)
-    
-    # 1. Authentic Grahalakshanam Component Toolbar & Modals (Exact UI Parity - 10 Icons Suite)
+with st.container(key="top_frozen_header_container", border=False):
+    # 1. Authentic Server Component Toolbar & Modals (Exact UI Parity - 10 Icons Suite)
     if "gla_active_tool" not in st.session_state:
         st.session_state.gla_active_tool = None
 
@@ -3994,117 +4150,9 @@ with st.container(key="top_frozen_header_container", border=True):
         except Exception:
             pass
 
-
-    st.markdown("""
-    <style>
-    .gla-toolbar-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 12px;
-        padding: 10px 14px;
-        background: #f8f9fa;
-        border-radius: 14px;
-        border: 1px solid #e2e8f0;
-        margin-top: 6px;
-        margin-bottom: 8px;
-        overflow-x: auto;
-    }
-    .gla-btn-tile {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 54px;
-        height: 54px;
-        background-color: #f2f2f2;
-        border: 2px solid #00b0f0;
-        border-radius: 10px;
-        cursor: pointer;
-        padding: 3px;
-        box-shadow: 0 1px 4px rgba(0, 176, 240, 0.15);
-        transition: all 0.15s ease-in-out;
-        text-align: center;
-        margin: 0 auto;
-    }
-    .gla-btn-tile:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 3px 8px rgba(0, 176, 240, 0.25);
-        background-color: #e0f4fc;
-    }
-    .gla-btn-tile img {
-        width: 26px;
-        height: 26px;
-        object-fit: contain;
-    }
-    .gla-btn-tile span {
-        font-size: 8.5px;
-        font-weight: 700;
-        color: #1e293b;
-        margin-top: 1px;
-        white-space: nowrap;
-    }
-    .gla-info-strip {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: #00b0f0;
-        color: #ffffff;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 11.5px;
-        font-weight: 700;
-        margin-bottom: 4px;
-    }
-    .gla-info-strip b {
-        color: #ffffff;
-    }
-    /* Transparent button overlaid exactly on top of the tile in gla-tile-box */
-    .gla-tile-box {
-        position: relative;
-        width: 54px;
-        height: 54px;
-        margin: 0 auto;
-    }
-    div[data-testid="stColumn"]:has(.gla-tile-box) {
-        position: relative !important;
-    }
-    div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {
-        position: relative !important;
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    div[data-testid="stColumn"]:has(.gla-tile-box) button {
-        position: absolute !important;
-        top: -54px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: 54px !important;
-        height: 54px !important;
-        min-height: 54px !important;
-        max-height: 54px !important;
-        opacity: 0 !important;
-        z-index: 20 !important;
-        cursor: pointer !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-        background: transparent !important;
-    }
-    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-testid="stTooltipHoverTarget"],
-    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-baseweb="tooltip"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-    # Active profile banner with live info
+    # Active profile banner with live info (incorporating anchor with 0 space)
     st.markdown(f"""
+    <div class="fixed-header-anchor" style="display:none; height:0px; margin:0; padding:0;"></div>
     <div class="gla-info-strip">
         <div>
             👤 <b>जातक:</b> {name} &nbsp;|&nbsp; 📅 {birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name}
