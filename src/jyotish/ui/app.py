@@ -1287,8 +1287,7 @@ unified_css = f"""
     }}
     div[data-testid="stCustomComponentV1"],
     div.element-container:has(iframe),
-    div.element-container:has(style),
-    div.element-container:has(.fixed-header-anchor) {{
+    div.element-container:has(style) {{
         display: none !important;
         height: 0px !important;
         min-height: 0px !important;
@@ -2086,45 +2085,12 @@ unified_css = f"""
     .gla-info-strip b {{
         color: #000000;
     }}
-    .gla-tile-box {{
-        position: relative;
-        width: 48px;
-        height: 48px;
-        margin: 0 auto;
-    }}
-    div[data-testid="stColumn"]:has(.gla-tile-box) {{
+    /* Toolbelt Row: Ensure full height and clean spacing */
+    div[data-testid="stHorizontalBlock"]:has(.gla-tile-box) {{
+        min-height: 52px !important;
+        margin-top: 4px !important;
+        margin-bottom: 8px !important;
         position: relative !important;
-        padding: 0 2px !important;
-    }}
-    div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {{
-        position: relative !important;
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }}
-    div[data-testid="stColumn"]:has(.gla-tile-box) button {{
-        position: absolute !important;
-        top: -48px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: 48px !important;
-        height: 48px !important;
-        min-height: 48px !important;
-        max-height: 48px !important;
-        opacity: 0 !important;
-        z-index: 20 !important;
-        cursor: pointer !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-        background: transparent !important;
-    }}
-    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-testid="stTooltipHoverTarget"],
-    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-baseweb="tooltip"] {{
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
     }}
 
     {theme_mode_css}
@@ -3249,9 +3215,11 @@ client_bridge_code = """
                         div[data-testid="column"]:has(.gla-tile-box) > div[data-testid="stVerticalBlock"] {
                             gap: 0 !important;
                         }
-                        div[data-testid="column"]:has(.gla-tile-box) div[data-testid="stElementContainer"] {
-                            margin: 0 !important;
-                            padding: 0 !important;
+                        div[data-testid="stHorizontalBlock"]:has(.gla-tile-box) {
+                            min-height: 52px !important;
+                            margin-top: 4px !important;
+                            margin-bottom: 8px !important;
+                            position: relative !important;
                         }
                         .gla-tile-box {
                             width: 100% !important;
@@ -4295,7 +4263,6 @@ with st.container(key="top_frozen_header_container", border=False):
 
     # Active profile banner with live info (incorporating anchor with 0 space)
     st.markdown(f"""
-    <div class="fixed-header-anchor" style="display:none; height:0px; margin:0; padding:0;"></div>
     <div class="gla-info-strip">
         <div>
             👤 <b>जातक:</b> {name} &nbsp;|&nbsp; 📅 {birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name}
@@ -4355,6 +4322,9 @@ with st.container(key="top_frozen_header_container", border=False):
 
     # 10. Logout
     render_tool_tile(tb_cols[9], ICON_LOGOUT_B64, "Logout", "logout")
+
+    # Physical spacer between toolbelt and module selector/dialogs
+    st.markdown("<div style='height: 10px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
 
 
 
