@@ -2846,11 +2846,15 @@ affliction_engine = AfflictionEngine(chart)
 vastu_engine = VastuJyotishEngine(chart)
 
 # Helper function to render chart in selected style
+from src.jyotish.ui.chart_renderer import render_aspect_orb_matrix_html
+
 def render_chart_svg(c_obj: KundaliChart, chart_title: str, varga_code: str = "D1") -> str:
     if "South" in chart_style:
         return ChartRenderer.render_south_indian_svg(c_obj, title=chart_title, varga_code=varga_code)
     elif "East" in chart_style:
         return ChartRenderer.render_east_indian_svg(c_obj, title=chart_title, varga_code=varga_code)
+    elif "Astrallis" in chart_style or "Circular" in chart_style:
+        return ChartRenderer.render_astrallis_circular_svg(c_obj, title=chart_title, varga_code=varga_code, dark_bg=is_astrallis_mode or is_night_mode)
     return ChartRenderer.render_north_indian_svg(c_obj, title=chart_title, varga_code=varga_code)
 
 def get_varga_dignity_info(planet: str, sign_name: str, aff_eng: Optional[AfflictionEngine] = None) -> Tuple[str, int, str]:
@@ -3912,12 +3916,14 @@ st.markdown(f"""
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 4px;">
         <div style="font-weight: 800; font-size: 12.5px; display: flex; align-items: center; gap: 6px;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981; box-shadow:0 0 6px #10B981;"></span>
+            <span style="color:#000000; font-weight:900;">⚡ डिजिटल पंचांग एवं काल गणना (Panchang & Ephemeris HUD)</span>
             <span style="color:{_hud_title_color}; font-weight:900;">⚡ डिजिटल पंचांग एवं काल गणना (Panchang &amp; Ephemeris HUD)</span>
         </div>
         <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
             <div class="hud-pill-highlight" style="border-radius: 6px; border: 1.5px solid #D97706; font-weight: 800;">
                 👑 होरा स्वामी: <b>{hora_lord}</b>
             </div>
+            <div style="background: #EFF6FF; border: 1.5px solid #2563EB; color: #1E40AF; border-radius: 6px; padding: 3px 8px; font-size: 11.5px; font-weight: 800;">
             <div style="background: {_hud_accuracy_bg}; border: 1.5px solid {_hud_accuracy_border}; color: {_hud_accuracy_color}; border-radius: 6px; padding: 3px 8px; font-size: 11.5px; font-weight: 800;">
                 🛡️ 99.9% परिशुद्धता
             </div>
@@ -3938,6 +3944,9 @@ st.markdown(f"""
 
 # Active Module Breadcrumb Pill
 st.markdown(f"""
+<div style="display:flex; justify-content:space-between; align-items:center; background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:8px; padding:8px 16px; margin-bottom:8px;">
+    <div style="font-weight:800; color:#1E40AF; font-size:14px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
+    <div style="font-size:12.5px; color:#1E293B; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
 <div style="display:flex; justify-content:space-between; align-items:center; background:{_breadcrumb_bg}; border:1.5px solid {_breadcrumb_border}; border-radius:8px; padding:8px 16px; margin-bottom:8px;">
     <div style="font-weight:800; color:{_breadcrumb_title_color}; font-size:14px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
     <div style="font-size:12.5px; color:{_breadcrumb_text_color}; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
@@ -3987,12 +3996,18 @@ with col_gr_bar:
     _neg_bg = "#450a0a" if is_astrallis_mode else ("#7f1d1d" if is_night_mode else "#FEE2E2")
     _neg_color = "#F87171" if is_astrallis_mode else ("#FCA5A5" if is_night_mode else "#991B1B")
     st.markdown(f"""
+    <div style="background: linear-gradient(90deg, #F5F3FF 0%, #EDE9FE 100%); border: 1.5px solid #8B5CF6; border-radius: 8px; padding: 6px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
+        <div style="color: #2E1065 !important; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <span style="color: #2E1065 !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
+            <span style="background: #FEF3C7; color: #92400E !important; border: 1px solid #F59E0B; padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 12px;">{_gr_fired:,} सक्रिय नियम फलित</span>
     <div style="background: {_rules_bg}; border: 1.5px solid {_rules_border}; border-radius: 8px; padding: 6px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
         <div style="color: {_rules_text_color} !important; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
             <span style="color: {_rules_text_color} !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
             <span style="background: {_rules_count_bg}; color: {_rules_count_color} !important; border: 1px solid {_rules_count_border}; padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 12px;">{_gr_fired:,} सक्रिय नियम फलित</span>
         </div>
         <div style="font-size: 11.5px; display: flex; gap: 6px; align-items: center;">
+            <span style="background: #DCFCE7; color: #14532D !important; border: 1px solid #86EFAC; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
+            <span style="background: #FEE2E2; color: #991B1B !important; border: 1px solid #FCA5A5; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
             <span style="background: {_pos_bg}; color: {_pos_color} !important; border: 1px solid {_pos_color}; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
             <span style="background: {_neg_bg}; color: {_neg_color} !important; border: 1px solid {_neg_color}; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
         </div>
@@ -4011,6 +4026,9 @@ with c_ts_info:
     _ts_label_color = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#B45309")
     _ts_value_color = "#E2E8F0" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
     st.markdown(f"""
+    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:8px; padding:5px 10px; height:100%; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-size:11px; font-weight:800; color:#B45309;">⏱️ काल गति नियंत्रक (Time Travel)</div>
+        <div style="font-size:12.5px; font-weight:900; color:#1E293B;">📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
     <div style="background:{_ts_bg}; border:1.5px solid {_ts_border}; border-radius:8px; padding:5px 10px; height:100%; display:flex; flex-direction:column; justify-content:center;">
         <div style="font-size:11px; font-weight:800; color:{_ts_label_color};">⏱️ काल गति नियंत्रक (Time Travel)</div>
         <div style="font-size:12.5px; font-weight:900; color:{_ts_value_color};">📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
@@ -4070,15 +4088,18 @@ if selected_idx == 0:
 
     # 1-Click Quick Chart Style Switcher
     st.markdown("##### 🎨 कुण्डली चक्र शैली टॉगल (Switch Chart Style)")
-    c_st1, c_st2, c_st3 = st.columns(3)
-    curr_style = st.session_state.get("app_chart_style", "North Indian (Diamond)")
-    if c_st1.button("💎 उत्तर भारतीय (Diamond)", use_container_width=True, type="primary" if "North" in curr_style else "secondary", key="btn_style_north"):
+    c_st1, c_st2, c_st3, c_st4 = st.columns(4)
+    curr_style = st.session_state.get("app_chart_style", "Astrallis Circular (Western Wheel)" if is_astrallis_mode else "North Indian (Diamond)")
+    if c_st1.button("🔵 Astrallis Circular", use_container_width=True, type="primary" if "Astrallis" in curr_style or "Circular" in curr_style else "secondary", key="btn_style_astrallis"):
+        st.session_state.app_chart_style = "Astrallis Circular (Western Wheel)"
+        st.rerun()
+    if c_st2.button("💎 उत्तर भारतीय (Diamond)", use_container_width=True, type="primary" if "North" in curr_style else "secondary", key="btn_style_north"):
         st.session_state.app_chart_style = "North Indian (Diamond)"
         st.rerun()
-    if c_st2.button("🔲 दक्षिण भारतीय (Square Box)", use_container_width=True, type="primary" if "South" in curr_style else "secondary", key="btn_style_south"):
+    if c_st3.button("🔲 दक्षिण भारतीय (Box)", use_container_width=True, type="primary" if "South" in curr_style else "secondary", key="btn_style_south"):
         st.session_state.app_chart_style = "South Indian (Box)"
         st.rerun()
-    if c_st3.button("🔺 पूर्व भारतीय (Bengal/Odisha)", use_container_width=True, type="primary" if "East" in curr_style else "secondary", key="btn_style_east"):
+    if c_st4.button("🔺 पूर्व भारतीय (Bengal)", use_container_width=True, type="primary" if "East" in curr_style else "secondary", key="btn_style_east"):
         st.session_state.app_chart_style = "East Indian (Surya)"
         st.rerun()
 
@@ -4184,32 +4205,116 @@ if selected_idx == 0:
         st.info(f"🎯 **{varga_choice} ({v_name}) शास्त्रीय प्रयोजन:** {v_desc}")
 
     with col_chart2:
-        st.markdown(f"#### 🌟 {varga_choice} ({v_name}) सारांश एवं पंचांग")
-        p_col1, p_col2 = st.columns(2)
-        p_col1.markdown(f"- **वर्ग लग्न:** {v_lagna_sign} ({v_lagna_id})")
-        p_col1.markdown(f"- **जन्म लग्न (D1):** {chart.lagna_sign_name} ({chart.lagna_sign_id})")
-        p_col1.markdown(f"- **आत्मकारक (AK):** {chart.atmakaraka}")
-        p_col2.markdown(f"- **तिथि:** {p.tithi_name}")
-        p_col2.markdown(f"- **नक्षत्र:** {p.nakshatra_name}")
-        p_col2.markdown(f"- **वार:** {p.vara_name}")
+        _is_astrallis_chart = ("Astrallis" in curr_style or "Circular" in curr_style)
+        if _is_astrallis_chart:
+            # ─── Astrallis Scientific Observatory Data Console ───
+            _dc_bg  = "#050811" if is_astrallis_mode else "#111827"
+            _dc_row = "#0A1628" if is_astrallis_mode else "#1F2937"
+            _dc_bdr = "#1E3A5F" if is_astrallis_mode else "#374151"
+            _dc_hdr = "#00E5FF" if is_astrallis_mode else "#F59E0B"
+            _dc_txt = "#CBD5E1"
+            _dc_val = "#E2E8F0"
 
-        # Dynamic Planetary Dignity & Strength Bar Chart for the selected Varga
-        st.markdown(f"#### 📊 {varga_choice} ({v_name}) ग्रह गरिमा एवं बल सूचकांक")
-        varga_scores = {}
-        target_planets_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
-        for p_name in target_planets_order:
-            vp_obj = target_varga.planets.get(p_name) if target_varga else None
-            if vp_obj:
-                _, d_pts, _ = get_varga_dignity_info(p_name, vp_obj.sign_name, affliction_engine)
-                varga_scores[p_name] = d_pts
-            else:
-                varga_scores[p_name] = 7
+            # Jataka Info Console
+            st.markdown(f"""
+<div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;">
+  <div style="color:{_dc_hdr};font-weight:900;font-size:13px;margin-bottom:8px;letter-spacing:0.5px;">⚡ JATAKA DATA CONSOLE</div>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="color:{_dc_txt};padding:2px 4px;">Name</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{name}</td></tr>
+    <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Place</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{city}</td></tr>
+    <tr><td style="color:{_dc_txt};padding:2px 4px;">Date &amp; Time</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{birth_d.strftime('%d-%b-%Y')} {birth_t.strftime('%I:%M %p')}</td></tr>
+    <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Ayanamsa</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{chart.ayanamsa_name} ({chart.ayanamsa_value:.4f}°)</td></tr>
+    <tr><td style="color:{_dc_txt};padding:2px 4px;">Lagna (Asc)</td><td style="color:#00E5FF;font-weight:900;padding:2px 4px;">{chart.lagna_sign_name} ({chart.lagna_sign_id})</td></tr>
+    <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Atmakaraka</td><td style="color:#FFD700;font-weight:900;padding:2px 4px;">{chart.atmakaraka}</td></tr>
+    <tr><td style="color:{_dc_txt};padding:2px 4px;">House System</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">Equal (Vedic) / Placidus</td></tr>
+  </table>
+</div>""", unsafe_allow_html=True)
 
-        st.bar_chart(pd.DataFrame(list(varga_scores.items()), columns=["Planet", f"{varga_choice} Dignity Score"]).set_index("Planet"))
+            # Swiss Ephemeris Planet Table
+            SYMS_CONS = {"Sun":"☉","Moon":"☽","Mars":"♂","Mercury":"☿","Jupiter":"♃","Venus":"♀","Saturn":"♄","Rahu":"☊","Ketu":"☋"}
+            P_NC = {"Sun":"#FFB800","Moon":"#88AAFF","Mars":"#FF4444","Mercury":"#44DD88","Jupiter":"#FFD700","Venus":"#FF88CC","Saturn":"#AAAACC","Rahu":"#CC88FF","Ketu":"#AA6633"}
+            eph_rows = []
+            for pn in ["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"]:
+                pp_o = chart.planets.get(pn)
+                if not pp_o:
+                    continue
+                sym = SYMS_CONS.get(pn, pn[:2])
+                nc = P_NC.get(pn, "#CCC")
+                retro = "℞" if pp_o.is_retrograde else ""
+                combust = "☌" if pp_o.is_combust else ""
+                d_label, d_pts, _ = get_varga_dignity_info(pn, pp_o.sign_name, affliction_engine)
+                eph_rows.append(
+                    f'<tr><td style="color:{nc};font-weight:900;padding:2px 5px;font-size:13px;">{sym}</td>'
+                    f'<td style="color:{_dc_val};padding:2px 4px;font-size:11px;">{pn}{retro}{combust}</td>'
+                    f'<td style="color:{nc};padding:2px 4px;font-size:11px;">{pp_o.sign_name[:3]}</td>'
+                    f'<td style="color:{_dc_txt};padding:2px 4px;font-size:11px;">{pp_o.sign_degree:.2f}°</td>'
+                    f'<td style="color:{_dc_txt};padding:2px 4px;font-size:10px;">{pp_o.nakshatra_name[:5]}-P{pp_o.nakshatra_pada}</td>'
+                    f'<td style="color:{"#44FF88" if d_pts>=15 else ("#FFD700" if d_pts>=10 else "#FF4444")};padding:2px 4px;font-size:10px;">{d_pts}pts</td>'
+                    f'</tr>'
+                )
+            st.markdown(f"""
+<div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:8px 10px;margin-bottom:8px;">
+  <div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:6px;letter-spacing:0.5px;">🪐 SWISS EPHEMERIS — {varga_choice} {v_name}</div>
+  <table style="width:100%;border-collapse:collapse;font-size:11px;">
+    <tr style="background:{_dc_row};">
+      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Sym</th>
+      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Planet</th>
+      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Sign</th>
+      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Deg°</th>
+      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Nakshatra</th>
+      <th style="color:#00E5FF;padding:2px 4px;text-align:left;font-size:10px;">Bala</th>
+    </tr>
+    {"".join(eph_rows)}
+  </table>
+</div>""", unsafe_allow_html=True)
 
-        with st.expander("🏆 समग्र विंशोपक बल (20 Point Shadvarga Bala)", expanded=False):
-            vimsopaka = VargaCalculator.calculate_vimsopaka_bala(chart)
-            st.bar_chart(pd.DataFrame(list(vimsopaka.items()), columns=["Planet", "Vimsopaka Score"]).set_index("Planet"))
+            # Panchang Quick Console
+            st.markdown(f"""
+<div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:8px 10px;margin-bottom:8px;">
+  <div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:6px;">🌙 PANCHANG CONSOLE</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;">
+    <div style="color:{_dc_txt};">Tithi: <span style="color:{_dc_val};font-weight:800;">{p.tithi_name}</span></div>
+    <div style="color:{_dc_txt};">Vara: <span style="color:{_dc_val};font-weight:800;">{p.vara_name}</span></div>
+    <div style="color:{_dc_txt};">Nakshatra: <span style="color:{_dc_val};font-weight:800;">{p.nakshatra_name}</span></div>
+    <div style="color:{_dc_txt};">Yoga: <span style="color:{_dc_val};font-weight:800;">{p.yoga_name}</span></div>
+    <div style="color:{_dc_txt};">Karana: <span style="color:{_dc_val};font-weight:800;">{p.karana_name}</span></div>
+    <div style="color:{_dc_txt};">Atmakaraka: <span style="color:#FFD700;font-weight:900;">{chart.atmakaraka}</span></div>
+  </div>
+</div>""", unsafe_allow_html=True)
+
+            # 9×9 Aspect Orb Matrix
+            st.markdown(f'<div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:4px;letter-spacing:0.5px;">🔬 NATAL ASPECT ORB MATRIX (9×9)</div>', unsafe_allow_html=True)
+            orb_html = render_aspect_orb_matrix_html(chart, dark_bg=is_astrallis_mode or is_night_mode)
+            st.markdown(orb_html, unsafe_allow_html=True)
+
+        else:
+            # Standard panel for non-Astrallis modes
+            st.markdown(f"#### 🌟 {varga_choice} ({v_name}) सारांश एवं पंचांग")
+            p_col1, p_col2 = st.columns(2)
+            p_col1.markdown(f"- **वर्ग लग्न:** {v_lagna_sign} ({v_lagna_id})")
+            p_col1.markdown(f"- **जन्म लग्न (D1):** {chart.lagna_sign_name} ({chart.lagna_sign_id})")
+            p_col1.markdown(f"- **आत्मकारक (AK):** {chart.atmakaraka}")
+            p_col2.markdown(f"- **तिथि:** {p.tithi_name}")
+            p_col2.markdown(f"- **नक्षत्र:** {p.nakshatra_name}")
+            p_col2.markdown(f"- **वार:** {p.vara_name}")
+
+            # Dynamic Planetary Dignity & Strength Bar Chart for the selected Varga
+            st.markdown(f"#### 📊 {varga_choice} ({v_name}) ग्रह गरिमा एवं बल सूचकांक")
+            varga_scores = {}
+            target_planets_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
+            for p_name in target_planets_order:
+                vp_obj = target_varga.planets.get(p_name) if target_varga else None
+                if vp_obj:
+                    _, d_pts, _ = get_varga_dignity_info(p_name, vp_obj.sign_name, affliction_engine)
+                    varga_scores[p_name] = d_pts
+                else:
+                    varga_scores[p_name] = 7
+
+            st.bar_chart(pd.DataFrame(list(varga_scores.items()), columns=["Planet", f"{varga_choice} Dignity Score"]).set_index("Planet"))
+
+            with st.expander("🏆 समग्र विंशोपक बल (20 Point Shadvarga Bala)", expanded=False):
+                vimsopaka = VargaCalculator.calculate_vimsopaka_bala(chart)
+                st.bar_chart(pd.DataFrame(list(vimsopaka.items()), columns=["Planet", "Vimsopaka Score"]).set_index("Planet"))
 
     st.markdown(f"### 🪐 {varga_choice} ({v_name}) चक्र — नवग्रह स्पष्ट स्थिति, भाव एवं गरिमा तालिका")
     p_data = []
@@ -11139,6 +11244,5 @@ elif selected_idx == 29:
             <small style="color:#64748B;"><b>शास्त्रीय संदर्भ:</b> {krm['shastriya_basis']}</small>
         </div>
         """, unsafe_allow_html=True)
-
 
 

@@ -698,4 +698,286 @@ class ChartRenderer:
         svg.append('</svg>')
         return "".join(svg)
 
+    @classmethod
+    def render_astrallis_circular_svg(
+        cls,
+        chart: "KundaliChart",
+        title: str = "Natal Chart",
+        varga_code: str = "D1",
+        dark_bg: bool = True,
+    ) -> str:
+        """
+        Renders an Astrallis Scientific Observatory-style circular Western zodiac wheel with:
+        - Deep black background (#050811)
+        - Outer zodiac sign ring with neon sign glyphs & degree ticks
+        - House cusp radial spokes
+        - Neon-coloured aspect lines: Trine=green, Square=red, Sextile=cyan,
+          Opposition=magenta, Conjunction=yellow-dashed
+        - Planet glyphs with neon colours & degree labels
+        - Lagna/Asc marker
+        """
+        import math
 
+        target_varga = chart.vargas.get(varga_code) if (chart.vargas and varga_code in chart.vargas) else None
+        lagna_s_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
+
+        bg_color = "#050811" if dark_bg else "#FFFFFF"
+        ring_stroke = "#1E3A5F" if dark_bg else "#D97706"
+        text_color = "#E2E8F0" if dark_bg else "#0F172A"
+        tick_color = "#2D4A6A" if dark_bg else "#94A3B8"
+        sign_ring_bg = "#0A1628" if dark_bg else "#FEF3C7"
+        house_line_color = "#1E3A5F" if dark_bg else "#D97706"
+
+        SIGN_GLYPHS  = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"]
+        SIGN_NEON = [
+            "#FF4444","#88CC22","#44DDFF","#4488FF",
+            "#FFB800","#44CC88","#FF88CC","#FF5555",
+            "#BB8833","#88AACC","#44AAFF","#6688BB"
+        ]
+        PLANET_NEON = {
+            "Sun":     ("Su", "#FFB800"),
+            "Moon":    ("Mo", "#88AAFF"),
+            "Mars":    ("Ma", "#FF4444"),
+            "Mercury": ("Me", "#44DD88"),
+            "Jupiter": ("Ju", "#FFD700"),
+            "Venus":   ("Ve", "#FF88CC"),
+            "Saturn":  ("Sa", "#AAAACC"),
+            "Rahu":    ("Ra", "#CC88FF"),
+            "Ketu":    ("Ke", "#AA6633"),
+        }
+
+        W, H = 560, 560
+        cx_c, cy_c = W // 2, H // 2
+        R_outer     = 252
+        R_sign_out  = 252
+        R_sign_in   = 210
+        R_house_out = 210
+        R_house_in  = 40
+        R_planet    = 170
+        R_asp       = 150
+
+        def lon2rad(lon_deg: float) -> float:
+            lagna_lon = (lagna_s_id - 1) * 30.0
+            rotated = lon_deg - lagna_lon + 180.0
+            return math.radians(-rotated)
+
+        def polar(r: float, a: float):
+            return (cx_c + r * math.cos(a), cy_c + r * math.sin(a))
+
+        p = []
+        p.append(
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
+            f'width="100%" style="background:{bg_color};border-radius:12px;">'
+        )
+        p.append('<defs>')
+        p.append('<radialGradient id="bg2" cx="50%" cy="50%" r="50%">'
+                 f'<stop offset="0%" stop-color="#0A1628"/>'
+                 f'<stop offset="100%" stop-color="{bg_color}"/></radialGradient>')
+        p.append('<filter id="gl"><feGaussianBlur stdDeviation="2.5" result="b"/>'
+                 '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>')
+        p.append('<filter id="gl2"><feGaussianBlur stdDeviation="1.2" result="b"/>'
+                 '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>')
+        p.append('</defs>')
+
+        p.append(f'<circle cx="{cx_c}" cy="{cy_c}" r="{R_outer}" fill="url(#bg2)"/>')
+        p.append(f'<circle cx="{cx_c}" cy="{cy_c}" r="{R_outer}" fill="none" stroke="#00E5FF" stroke-width="1.5" opacity="0.5"/>')
+
+        # Sign ring
+        p.append(f'<circle cx="{cx_c}" cy="{cy_c}" r="{R_sign_out}" fill="none" stroke="{ring_stroke}" stroke-width="1"/>')
+        p.append(f'<circle cx="{cx_c}" cy="{cy_c}" r="{R_sign_in}" fill="none" stroke="{ring_stroke}" stroke-width="1"/>')
+
+        for i, (glyph, scol) in enumerate(zip(SIGN_GLYPHS, SIGN_NEON)):
+            mid_lon = i * 30.0 + 15.0
+            a = lon2rad(mid_lon)
+            R_mid = (R_sign_out + R_sign_in) / 2
+            sx, sy = polar(R_mid, a)
+            p.append(f'<text x="{sx:.1f}" y="{sy:.1f}" text-anchor="middle" dominant-baseline="central" fill="{scol}" font-size="15" font-weight="900" filter="url(#gl2)">{glyph}</text>')
+
+            bnd_a = lon2rad(i * 30.0)
+            b1 = polar(R_sign_in, bnd_a); b2 = polar(R_sign_out, bnd_a)
+            p.append(f'<line x1="{b1[0]:.1f}" y1="{b1[1]:.1f}" x2="{b2[0]:.1f}" y2="{b2[1]:.1f}" stroke="{ring_stroke}" stroke-width="1.2"/>')
+
+        # Degree ticks
+        for deg in range(0, 360, 5):
+            a = lon2rad(float(deg))
+            tl = 8 if deg % 30 == 0 else (5 if deg % 10 == 0 else 3)
+            t1 = polar(R_sign_out - tl, a); t2 = polar(R_sign_out, a)
+            p.append(f'<line x1="{t1[0]:.1f}" y1="{t1[1]:.1f}" x2="{t2[0]:.1f}" y2="{t2[1]:.1f}" stroke="{tick_color}" stroke-width="0.7"/>')
+
+        # House cusp lines
+        p.append(f'<circle cx="{cx_c}" cy="{cy_c}" r="{R_house_out}" fill="none" stroke="{ring_stroke}" stroke-width="0.7" stroke-dasharray="3,3"/>')
+        ROMAN = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"]
+        for h in range(1, 13):
+            h_lon = (lagna_s_id - 1) * 30.0 + (h - 1) * 30.0
+            a = lon2rad(h_lon)
+            lp1 = polar(R_house_in, a); lp2 = polar(R_house_out, a)
+            lw = "1.8" if h in [1,4,7,10] else "0.7"
+            lc = "#00E5FF" if h == 1 else ("#4488FF" if h in [4,7,10] else house_line_color)
+            p.append(f'<line x1="{lp1[0]:.1f}" y1="{lp1[1]:.1f}" x2="{lp2[0]:.1f}" y2="{lp2[1]:.1f}" stroke="{lc}" stroke-width="{lw}"/>')
+            # House label
+            mid_lon_h = (lagna_s_id - 1) * 30.0 + (h - 1) * 30.0 + 15.0
+            am = lon2rad(mid_lon_h)
+            R_hl = (R_house_out + R_sign_in) / 2 - 4
+            hlx, hly = polar(R_hl, am)
+            hcol = "#00E5FF" if h in [1,4,7,10] else "#3A5A7A"
+            p.append(f'<text x="{hlx:.1f}" y="{hly:.1f}" text-anchor="middle" dominant-baseline="central" fill="{hcol}" font-size="9" font-weight="800">{ROMAN[h-1]}</text>')
+
+        # Hub
+        p.append(f'<circle cx="{cx_c}" cy="{cy_c}" r="{R_house_in}" fill="{sign_ring_bg}" stroke="#00E5FF" stroke-width="1.2"/>')
+        p.append(f'<text x="{cx_c}" y="{cy_c-5}" text-anchor="middle" fill="#00E5FF" font-size="8" font-weight="900">Asc</text>')
+        p.append(f'<text x="{cx_c}" y="{cy_c+8}" text-anchor="middle" fill="#4A6080" font-size="7">Lagna</text>')
+
+        # Aspect lines
+        ASP_DEFS = [
+            (0,   10, "#FFD700", "6,3",   "1.8"),
+            (60,  6,  "#00E5FF", "none",  "1.4"),
+            (90,  8,  "#FF4444", "none",  "1.8"),
+            (120, 8,  "#44FF88", "none",  "1.8"),
+            (150, 3,  "#666688", "4,3",   "0.9"),
+            (180, 8,  "#FF44FF", "none",  "1.8"),
+        ]
+        planet_lons_list: list = []
+        for pn in ["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"]:
+            pp_obj = chart.planets.get(pn)
+            if pp_obj:
+                planet_lons_list.append((pn, float(pp_obj.longitude)))
+
+        for i, (pn1, lon1) in enumerate(planet_lons_list):
+            for j, (pn2, lon2) in enumerate(planet_lons_list):
+                if j <= i:
+                    continue
+                diff = abs(lon1 - lon2)
+                if diff > 180:
+                    diff = 360 - diff
+                for asp_d, orb, ac, dash, lw in ASP_DEFS:
+                    if abs(diff - asp_d) <= orb:
+                        a1 = lon2rad(lon1); a2 = lon2rad(lon2)
+                        ax1, ay1 = polar(R_asp, a1)
+                        ax2, ay2 = polar(R_asp, a2)
+                        sd = f' stroke-dasharray="{dash}"' if dash != "none" else ""
+                        p.append(f'<line x1="{ax1:.1f}" y1="{ay1:.1f}" x2="{ax2:.1f}" y2="{ay2:.1f}" stroke="{ac}" stroke-width="{lw}" opacity="0.82"{sd}/>')
+                        break
+
+        # Planets
+        # Spread planets in same sign by slight angular offset
+        sign_counts: dict = {}
+        for pn, lon in planet_lons_list:
+            s_idx = int(lon // 30)
+            sign_counts[s_idx] = sign_counts.get(s_idx, 0) + 1
+        sign_offset_idx: dict = {}
+        for pn, lon in planet_lons_list:
+            s_idx = int(lon // 30)
+            oi = sign_offset_idx.get(s_idx, 0)
+            sign_offset_idx[s_idx] = oi + 1
+            total = sign_counts[s_idx]
+            spread = (oi - (total - 1) / 2.0) * 4.0  # 4° per planet in same sign
+            p_lon_adj = lon + spread
+            a = lon2rad(p_lon_adj)
+            px, py = polar(R_planet, a)
+            gl_txt, nc = PLANET_NEON.get(pn, (pn[:2], "#CCCCCC"))
+            pp_obj = chart.planets.get(pn)
+            lbl = gl_txt
+            if pp_obj and pp_obj.is_retrograde:
+                lbl += "℞"
+            # Dot
+            p.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="3.5" fill="{nc}" filter="url(#gl)"/>')
+            # Name
+            p.append(f'<text x="{px:.1f}" y="{py-9:.1f}" text-anchor="middle" fill="{nc}" font-size="10" font-weight="900" filter="url(#gl2)">{lbl}</text>')
+            # Degree
+            deg_str = f"{(lon % 30.0):.1f}°"
+            p.append(f'<text x="{px:.1f}" y="{py+14:.1f}" text-anchor="middle" fill="{nc}" font-size="7.5" opacity="0.8">{deg_str}</text>')
+            # Spoke
+            sp = polar(R_house_in + 6, a)
+            p.append(f'<line x1="{px:.1f}" y1="{py:.1f}" x2="{sp[0]:.1f}" y2="{sp[1]:.1f}" stroke="{nc}" stroke-width="0.5" opacity="0.35"/>')
+
+        # Asc / Dsc labels on outer ring
+        asc_a = lon2rad((lagna_s_id - 1) * 30.0)
+        asc_lx, asc_ly = polar(R_sign_in - 8, asc_a)
+        p.append(f'<text x="{asc_lx:.1f}" y="{asc_ly:.1f}" text-anchor="middle" dominant-baseline="central" fill="#00E5FF" font-size="11" font-weight="900" filter="url(#gl)">Asc</text>')
+        dsc_a = lon2rad((lagna_s_id - 1) * 30.0 + 180.0)
+        dsc_lx, dsc_ly = polar(R_sign_in - 8, dsc_a)
+        p.append(f'<text x="{dsc_lx:.1f}" y="{dsc_ly:.1f}" text-anchor="middle" dominant-baseline="central" fill="#4488FF" font-size="11" font-weight="900">Dsc</text>')
+
+        # Title
+        p.append(f'<text x="{cx_c}" y="16" text-anchor="middle" fill="#00E5FF" font-size="12" font-weight="900">{title}</text>')
+
+        # Aspect legend
+        legend = [("━","#FFD700","Conj"),("━","#44FF88","Trine"),("━","#FF4444","Sqr"),("━","#00E5FF","Sex"),("━","#FF44FF","Opp")]
+        ly_pos = H - 6
+        p.append(f'<text x="{cx_c}" y="{ly_pos}" text-anchor="middle" fill="#3A5A7A" font-size="8">')
+        for sym, lc, ln in legend:
+            p.append(f'<tspan fill="{lc}"> {sym} {ln} </tspan>')
+        p.append('</text>')
+        p.append('</svg>')
+        return "".join(p)
+
+
+def render_aspect_orb_matrix_html(chart: "KundaliChart", dark_bg: bool = True) -> str:
+    """
+    Renders an Astrallis-style 9x9 aspect orb matrix as an HTML table.
+    Color-coded: Conjunction=gold, Trine=green, Square=red, Sextile=cyan,
+    Opposition=magenta, Quincunx=grey, blank=dot.
+    """
+    PLANETS = ["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"]
+    SYMS = {"Sun":"☉","Moon":"☽","Mars":"♂","Mercury":"☿","Jupiter":"♃",
+             "Venus":"♀","Saturn":"♄","Rahu":"☊","Ketu":"☋"}
+    P_COLS = {"Sun":"#FFB800","Moon":"#88AAFF","Mars":"#FF4444",
+              "Mercury":"#44DD88","Jupiter":"#FFD700","Venus":"#FF88CC",
+              "Saturn":"#AAAACC","Rahu":"#CC88FF","Ketu":"#AA6633"}
+    ASPECTS = [
+        (0,   10, "#FFD700", "☌"),
+        (60,  6,  "#00E5FF", "✶"),
+        (90,  8,  "#FF4444", "□"),
+        (120, 8,  "#44FF88", "△"),
+        (150, 3,  "#888888", "⚻"),
+        (180, 8,  "#FF44FF", "☍"),
+    ]
+    lons: dict = {}
+    for pn in PLANETS:
+        pp = chart.planets.get(pn)
+        if pp:
+            lons[pn] = float(pp.longitude)
+
+    bg       = "#050811" if dark_bg else "#FFFFFF"
+    hdr_bg   = "#0A1628" if dark_bg else "#F1F5F9"
+    cell_bg  = "#070D1A" if dark_bg else "#FFFFFF"
+    bdr      = "#1E3A5F" if dark_bg else "#D97706"
+
+    rows = [f'<div style="overflow-x:auto;background:{bg};border-radius:8px;padding:4px;">',
+            f'<table style="border-collapse:collapse;font-size:11px;width:100%;background:{bg};">',
+            f'<tr><th style="background:{hdr_bg};color:#00E5FF;padding:3px 5px;border:1px solid {bdr};font-size:10px;">P/O</th>']
+    for pn in PLANETS:
+        sym = SYMS.get(pn, pn[:2])
+        pc = P_COLS.get(pn, "#CCC")
+        rows.append(f'<th style="background:{hdr_bg};color:{pc};padding:3px 4px;border:1px solid {bdr};font-size:11px;font-weight:900;">{sym}</th>')
+    rows.append('</tr>')
+
+    for pn1 in PLANETS:
+        pc1 = P_COLS.get(pn1, "#CCC")
+        sym1 = SYMS.get(pn1, pn1[:2])
+        rows.append(f'<tr><td style="background:{hdr_bg};color:{pc1};padding:3px 4px;border:1px solid {bdr};font-weight:900;font-size:11px;">{sym1}</td>')
+        for pn2 in PLANETS:
+            if pn1 == pn2:
+                rows.append(f'<td style="background:#0D1A2E;border:1px solid {bdr};text-align:center;color:#1E3A5F;font-size:12px;">■</td>')
+                continue
+            if pn1 not in lons or pn2 not in lons:
+                rows.append(f'<td style="background:{cell_bg};border:1px solid {bdr};text-align:center;"></td>')
+                continue
+            diff = abs(lons[pn1] - lons[pn2])
+            if diff > 180:
+                diff = 360 - diff
+            matched = False
+            for asp_deg, orb, ac, sym in ASPECTS:
+                if abs(diff - asp_deg) <= orb:
+                    orb_v = round(abs(diff - asp_deg), 1)
+                    rows.append(
+                        f'<td style="background:{ac}22;border:1px solid {bdr};text-align:center;'
+                        f'color:{ac};font-weight:900;font-size:13px;" title="{pn1}-{pn2}:{int(asp_deg)}°({orb_v}° orb)">{sym}</td>'
+                    )
+                    matched = True
+                    break
+            if not matched:
+                rows.append(f'<td style="background:{cell_bg};border:1px solid {bdr};text-align:center;color:#1E3A5F;font-size:10px;">·</td>')
+        rows.append('</tr>')
+    rows.append('</table></div>')
+    return "".join(rows)
