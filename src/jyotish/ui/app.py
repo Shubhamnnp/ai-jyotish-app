@@ -745,15 +745,59 @@ else:
     }
     .gla-tile-belt {
         background: #FFFFFF !important;
-        border: 1.5px solid #CBDCB8 !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 6px !important;
+        padding: 2px 4px !important;
     }
     .gla-btn-tile {
-        background-color: #F4F8EC !important;
-        border: 2px solid #84CC16 !important;
+        background-color: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 6px !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+        padding: 2px !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
+        transition: all 0.15s ease !important;
+    }
+    .gla-btn-tile:hover {
+        background-color: #F0FDF4 !important;
+        border-color: #16A34A !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 5px rgba(22, 163, 74, 0.15) !important;
+    }
+    .gla-tile-box.gla-active-tile .gla-btn-tile {
+        background-color: #FEF3C7 !important;
+        border: 1.5px solid #D97706 !important;
+        box-shadow: 0 0 8px rgba(217, 119, 6, 0.4) !important;
+    }
+    .gla-btn-tile img {
+        width: 18px !important;
+        height: 18px !important;
+        max-width: 18px !important;
+        max-height: 18px !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin: 0 auto !important;
     }
     .gla-btn-tile span {
-        color: #000000 !important;
-        font-weight: 850 !important;
+        color: #0F172A !important;
+        font-weight: 750 !important;
+        font-size: 9.5px !important;
+        line-height: 1.1 !important;
+        margin-top: 1px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
+        text-align: center !important;
+        width: 100% !important;
     }
     .digital-hud {
         background: #FFFFFF !important;
@@ -1948,53 +1992,111 @@ unified_css = f"""
         }}
     }}
 
-    /* Server Component Toolbar & 10-Tile Suite (Compact Screen Fit) */
-    .gla-toolbar-container {{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 6px;
-        padding: 4px 8px;
-        border-radius: 8px;
-        border: 1px solid #CBDCB8;
-        margin-top: 2px;
-        margin-bottom: 4px;
-        overflow-x: auto;
+    /* Server Component Toolbar & 10-Tile Suite (Compact Screen Fit & Ultra-Slim) */
+    div[data-testid="column"]:has(.gla-tile-box) {{
+        position: relative !important;
+        padding: 0 !important;
+        min-height: 38px !important;
+        max-height: 40px !important;
+    }}
+    div[data-testid="column"]:has(.gla-tile-box) > div[data-testid="stVerticalBlock"] {{
+        position: relative !important;
+        gap: 0 !important;
+    }}
+    div[data-testid="column"]:has(.gla-tile-box) div[data-testid="stElementContainer"] {{
+        margin: 0 !important;
+        padding: 0 !important;
+    }}
+    .gla-tile-box {{
+        width: 100% !important;
+        height: 38px !important;
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
     }}
     .gla-btn-tile {{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 48px;
-        height: 48px;
-        background-color: #f2f2f2;
-        border: 1.5px solid #00b0f0;
-        border-radius: 8px;
-        cursor: pointer;
-        padding: 2px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-        transition: all 0.15s ease-in-out;
-        text-align: center;
-        margin: 0 auto;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: 90px !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+        background-color: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 6px !important;
+        cursor: pointer !important;
+        padding: 2px !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+        transition: all 0.15s ease-in-out !important;
+        text-align: center !important;
+        margin: 0 auto !important;
     }}
+    div[data-testid="column"]:has(.gla-tile-box):hover .gla-btn-tile,
     .gla-btn-tile:hover {{
-        transform: translateY(-1px);
-        box-shadow: 0 2px 6px rgba(0, 176, 240, 0.25);
-        background-color: #e0f4fc;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 6px rgba(22, 163, 74, 0.18) !important;
+        background-color: #F0FDF4 !important;
+        border-color: #16A34A !important;
+    }}
+    .gla-tile-box.gla-active-tile .gla-btn-tile {{
+        background-color: #FEF3C7 !important;
+        border: 1.5px solid #D97706 !important;
+        box-shadow: 0 0 8px rgba(217, 119, 6, 0.4) !important;
     }}
     .gla-btn-tile img {{
-        width: 22px;
-        height: 22px;
-        object-fit: contain;
+        width: 18px !important;
+        height: 18px !important;
+        max-width: 18px !important;
+        max-height: 18px !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin: 0 auto !important;
     }}
     .gla-btn-tile span {{
-        font-size: 8px;
-        font-weight: 700;
-        color: #1e293b;
-        margin-top: 1px;
-        white-space: nowrap;
+        font-size: 9.5px !important;
+        font-weight: 750 !important;
+        color: #0F172A !important;
+        line-height: 1.1 !important;
+        margin-top: 1px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
+        width: 100% !important;
+        text-align: center !important;
+    }}
+
+    /* Overlay Streamlit button directly over the tile so no extra bar or button exists below */
+    div[data-testid="column"]:has(.gla-tile-box) div[data-testid="stButton"] {{
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        z-index: 10 !important;
+        opacity: 0 !important;
+    }}
+    div[data-testid="column"]:has(.gla-tile-box) div[data-testid="stButton"] button {{
+        width: 100% !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        opacity: 0 !important;
+        cursor: pointer !important;
     }}
     .gla-info-strip {{
         display: flex;
@@ -3165,15 +3267,112 @@ client_bridge_code = """
                         }
                         .gla-tile-belt {
                             background: #FFFFFF !important;
-                            border: 1.5px solid #CBDCB8 !important;
+                            border: 1px solid #CBD5E1 !important;
+                            border-radius: 6px !important;
+                            padding: 2px 4px !important;
+                        }
+                        div[data-testid="column"]:has(.gla-tile-box) {
+                            position: relative !important;
+                            padding: 0 !important;
+                            min-height: 38px !important;
+                            max-height: 40px !important;
+                        }
+                        div[data-testid="column"]:has(.gla-tile-box) > div[data-testid="stVerticalBlock"] {
+                            position: relative !important;
+                            gap: 0 !important;
+                        }
+                        div[data-testid="column"]:has(.gla-tile-box) div[data-testid="stElementContainer"] {
+                            margin: 0 !important;
+                            padding: 0 !important;
+                        }
+                        .gla-tile-box {
+                            width: 100% !important;
+                            height: 38px !important;
+                            position: relative !important;
+                            display: flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            box-sizing: border-box !important;
                         }
                         .gla-btn-tile {
-                            background-color: #F4F8EC !important;
-                            border: 2px solid #84CC16 !important;
+                            background-color: #FFFFFF !important;
+                            border: 1px solid #CBD5E1 !important;
+                            border-radius: 6px !important;
+                            width: 100% !important;
+                            max-width: 90px !important;
+                            height: 38px !important;
+                            min-height: 38px !important;
+                            max-height: 38px !important;
+                            padding: 2px !important;
+                            box-sizing: border-box !important;
+                            display: flex !important;
+                            flex-direction: column !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            cursor: pointer !important;
+                            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+                            transition: all 0.15s ease-in-out !important;
+                            text-align: center !important;
+                            margin: 0 auto !important;
+                        }
+                        div[data-testid="column"]:has(.gla-tile-box):hover .gla-btn-tile,
+                        .gla-btn-tile:hover {
+                            background-color: #F0FDF4 !important;
+                            border-color: #16A34A !important;
+                            transform: translateY(-1px) !important;
+                            box-shadow: 0 2px 6px rgba(22, 163, 74, 0.18) !important;
+                        }
+                        .gla-tile-box.gla-active-tile .gla-btn-tile {
+                            background-color: #FEF3C7 !important;
+                            border: 1.5px solid #D97706 !important;
+                            box-shadow: 0 0 8px rgba(217, 119, 6, 0.4) !important;
+                        }
+                        .gla-btn-tile img {
+                            width: 18px !important;
+                            height: 18px !important;
+                            max-width: 18px !important;
+                            max-height: 18px !important;
+                            object-fit: contain !important;
+                            display: block !important;
+                            margin: 0 auto !important;
                         }
                         .gla-btn-tile span {
-                            color: #000000 !important;
-                            font-weight: 850 !important;
+                            color: #0F172A !important;
+                            font-weight: 750 !important;
+                            font-size: 9.5px !important;
+                            line-height: 1.1 !important;
+                            margin-top: 1px !important;
+                            white-space: nowrap !important;
+                            overflow: hidden !important;
+                            text-overflow: ellipsis !important;
+                            display: block !important;
+                            width: 100% !important;
+                            text-align: center !important;
+                        }
+                        div[data-testid="column"]:has(.gla-tile-box) div[data-testid="stButton"] {
+                            position: absolute !important;
+                            top: 0 !important;
+                            left: 0 !important;
+                            width: 100% !important;
+                            height: 38px !important;
+                            min-height: 38px !important;
+                            max-height: 38px !important;
+                            margin: 0 !important;
+                            padding: 0 !important;
+                            z-index: 10 !important;
+                            opacity: 0 !important;
+                        }
+                        div[data-testid="column"]:has(.gla-tile-box) div[data-testid="stButton"] button {
+                            width: 100% !important;
+                            height: 38px !important;
+                            min-height: 38px !important;
+                            max-height: 38px !important;
+                            margin: 0 !important;
+                            padding: 0 !important;
+                            border: none !important;
+                            background: transparent !important;
+                            opacity: 0 !important;
+                            cursor: pointer !important;
                         }
                         .active-profile-pill {
                             background: #EDF4E2 !important;
@@ -3455,6 +3654,32 @@ client_bridge_code = """
                     headerContainer.style.setProperty('margin-bottom', '4px', 'important');
                 }
             }
+
+            // Overlay toolbelt buttons over tiles to eliminate extra button row
+            parentDoc.querySelectorAll('div[data-testid="column"]').forEach(function(col) {
+                const tile = col.querySelector('.gla-tile-box');
+                const btn = col.querySelector('div[data-testid="stButton"]');
+                if (tile && btn) {
+                    col.style.setProperty('position', 'relative', 'important');
+                    btn.style.setProperty('position', 'absolute', 'important');
+                    btn.style.setProperty('top', '0px', 'important');
+                    btn.style.setProperty('left', '0px', 'important');
+                    btn.style.setProperty('width', '100%', 'important');
+                    btn.style.setProperty('height', '38px', 'important');
+                    btn.style.setProperty('opacity', '0', 'important');
+                    btn.style.setProperty('z-index', '10', 'important');
+                    btn.style.setProperty('margin', '0px', 'important');
+                    btn.style.setProperty('padding', '0px', 'important');
+                    const b = btn.querySelector('button');
+                    if (b) {
+                        b.style.setProperty('width', '100%', 'important');
+                        b.style.setProperty('height', '38px', 'important');
+                        b.style.setProperty('opacity', '0', 'important');
+                        b.style.setProperty('margin', '0px', 'important');
+                        b.style.setProperty('padding', '0px', 'important');
+                    }
+                }
+            });
         } catch(e) {
             console.error("Error freezing top header:", e);
         }
@@ -4163,22 +4388,21 @@ with st.container(key="top_frozen_header_container", border=False):
     </div>
     """, unsafe_allow_html=True)
 
-    # 10-Tile Complete Grahalakshanam Toolbelt Columns (Exact UI Parity - Clickable Tiles)
-    tb_cols = st.columns(10)
+    # 10-Tile Complete Server Toolbelt Columns (Ultra-Slim & Screen-Fit Clickable Tiles)
+    tb_cols = st.columns(10, gap="small")
 
     # Helper function for rendering clickable tile
     def render_tool_tile(col, icon_b64, label_text, tool_key):
         with col:
             is_active = (st.session_state.gla_active_tool == tool_key)
-            active_style = "border-color:#ff9800; background-color:#fff8e7; box-shadow:0 0 10px rgba(255,152,0,0.5);" if is_active else ""
+            active_cls = "gla-active-tile" if is_active else ""
+            active_style = "border-color:#D97706 !important; background-color:#FEF3C7 !important; box-shadow:0 0 8px rgba(217,119,6,0.4) !important;" if is_active else ""
             st.markdown(f"""
-            <div class="gla-tile-box">
-                <a href="?gla_tool={tool_key}" target="_self" style="text-decoration:none; color:inherit; display:block;">
-                    <div class="gla-btn-tile" style="{active_style}">
-                        <img src="{icon_b64}" alt="{label_text}" />
-                        <span>{label_text}</span>
-                    </div>
-                </a>
+            <div class="gla-tile-box {active_cls}">
+                <div class="gla-btn-tile" style="{active_style}">
+                    <img src="{icon_b64}" alt="{label_text}" />
+                    <span>{label_text}</span>
+                </div>
             </div>
             """, unsafe_allow_html=True)
             if st.button(" ", key=f"gla_tile_btn_{tool_key}", use_container_width=True):
