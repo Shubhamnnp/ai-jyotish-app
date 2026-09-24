@@ -315,6 +315,7 @@ if is_astrallis_mode:
         border: 1.5px solid #1E293B !important;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
     }
+    [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
     [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #050811 !important;
         color: #F1F5F9 !important;
@@ -532,6 +533,7 @@ elif is_night_mode:
         border: 1.5px solid #1F2937 !important;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
     }
+    [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
     [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #111827 !important;
         color: #FFFFFF !important;
@@ -722,6 +724,9 @@ else:
         border-radius: 12px !important;
         border: 1.5px solid #CBD5E1 !important;
     }
+    /* Day Mode Tables & DataFrames */
+    [data-testid="stTable"], [data-testid="stDataFrame"],
+    [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
     /* Day Mode Tables */
     [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #FFFFFF !important;
@@ -1226,6 +1231,8 @@ unified_css = f"""
     .exalt-badge {{ color: #1E40AF !important; font-weight: 800; background: #DBEAFE !important; border: 1.5px solid #3B82F6 !important; padding: 3px 8px; border-radius: 6px; }}
     .deb-badge {{ color: #991B1B !important; font-weight: 800; background: #FEE2E2 !important; border: 1.5px solid #EF4444 !important; padding: 3px 8px; border-radius: 6px; }}
 
+    /* Responsive DataFrames & Tables */
+    [data-testid="stTable"], [data-testid="stDataFrame"] {{
     /* Responsive Tables */
     [data-testid="stTable"] {{
         border: 1.5px solid #CBD5E1 !important;
@@ -1235,6 +1242,10 @@ unified_css = f"""
         width: 100% !important;
         max-width: 100% !important;
         margin-bottom: 12px !important;
+    }}
+    [data-testid="stDataFrame"] * {{
+        color: #000000 !important;
+        font-weight: 600 !important;
     }}
     [data-testid="stTable"] table {{
         width: 100% !important;
@@ -1278,12 +1289,16 @@ unified_css = f"""
         display: none !important;
     }}
 
+    /* Responsive SVG & Kundali Charts Auto-Scaling */
+    svg {{
     /* Responsive SVG & Kundali Charts Auto-Scaling (Scoped strictly to Kundali SVGs, never global svg or Vega-Lite charts) */
     .kundali-chart svg, .chart-container svg, .observatory-canvas svg, div:has(> svg.kundali-svg) svg {{
         max-width: 100% !important;
+        height: auto !important;
         display: block !important;
         margin: 0 auto !important;
     }}
+    div:has(> svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
     div:has(> svg.kundali-svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
         max-width: 100% !important;
         overflow-x: auto !important;
@@ -2165,6 +2180,7 @@ components.html("""
                             border: 1.5px solid #1E293B !important;
                             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
                         }
+                        [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
                         [data-testid="stTable"], [data-testid="stTable"] * {
                             background-color: #050811 !important;
                             color: #F1F5F9 !important;
@@ -2383,6 +2399,7 @@ components.html("""
                             border: 1.5px solid #1F2937 !important;
                             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
                         }
+                        [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
                         [data-testid="stTable"], [data-testid="stTable"] * {
                             background-color: #111827 !important;
                             color: #FFFFFF !important;
@@ -4316,13 +4333,19 @@ if selected_idx == 0:
                 _pts_low  = "#DC2626"
 
             # Jataka Info Console
+            _j_name = chart.birth_data.name if (chart.birth_data and chart.birth_data.name) else (name if 'name' in locals() else "Jataka")
+            _j_city = (getattr(chart.birth_data, 'city', None) or (default_city_name if 'default_city_name' in locals() else (city if 'city' in locals() else "New Delhi")))
+            _j_bdate = chart.birth_data.birth_date if (chart.birth_data and hasattr(chart.birth_data, 'birth_date')) else (birth_d if 'birth_d' in locals() else None)
+            _j_btime = chart.birth_data.birth_time if (chart.birth_data and hasattr(chart.birth_data, 'birth_time')) else (birth_t if 'birth_t' in locals() else None)
+            _j_dt_str = f"{_j_bdate.strftime('%d-%b-%Y') if _j_bdate else ''} {_j_btime.strftime('%I:%M %p') if _j_btime else ''}".strip()
+
             st.markdown(f"""
 <div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
   <div style="color:{_dc_hdr};font-weight:900;font-size:13px;margin-bottom:8px;letter-spacing:0.5px;">⚡ JATAKA DATA CONSOLE</div>
   <table style="width:100%;border-collapse:collapse;">
-    <tr><td style="color:{_dc_txt};padding:2px 4px;">Name</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{name}</td></tr>
-    <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Place</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{city}</td></tr>
-    <tr><td style="color:{_dc_txt};padding:2px 4px;">Date &amp; Time</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{birth_d.strftime('%d-%b-%Y')} {birth_t.strftime('%I:%M %p')}</td></tr>
+    <tr><td style="color:{_dc_txt};padding:2px 4px;">Name</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{_j_name}</td></tr>
+    <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Place</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{_j_city}</td></tr>
+    <tr><td style="color:{_dc_txt};padding:2px 4px;">Date &amp; Time</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{_j_dt_str}</td></tr>
     <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Ayanamsa</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{chart.ayanamsa_name} ({chart.ayanamsa_value:.4f}°)</td></tr>
     <tr><td style="color:{_dc_txt};padding:2px 4px;">Lagna (Asc)</td><td style="color:{_dc_hdr};font-weight:900;padding:2px 4px;">{chart.lagna_sign_name} ({chart.lagna_sign_id})</td></tr>
     <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Atmakaraka</td><td style="color:{_pts_mid};font-weight:900;padding:2px 4px;">{chart.atmakaraka}</td></tr>
@@ -7926,6 +7949,8 @@ elif selected_idx == 10:
                     target_col = c_c1 if idx % 2 == 0 else c_c2
                     with target_col:
                         st.markdown(f"""
+                        <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-left:5px solid {c_item['badge_color']}; border-radius:10px; padding:12px 14px; margin-botto
+... [truncated for diff preview]
                         <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-left:5px solid {c_item['badge_color']}; border-radius:10px; padding:12px 14px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
                             <div style="display:flex; justify-content:space-between; align-items:center;">
                                 <b style="font-size:14.5px; color:#0F172A;">{c_item['icon']} {c_item['commodity']}</b>
@@ -11471,5 +11496,4 @@ elif selected_idx == 29:
             <small style="color:#64748B;"><b>शास्त्रीय संदर्भ:</b> {krm['shastriya_basis']}</small>
         </div>
         """, unsafe_allow_html=True)
-
 
