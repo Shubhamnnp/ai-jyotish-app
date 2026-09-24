@@ -194,7 +194,7 @@ class PersonalTransitCalendarService:
 
         # Header Row
         for h in headers:
-            html.append(f'<div style="background:#0F172A; color:#FFFFFF; text-align:center; padding:8px 4px; border-radius:6px; font-size:11.5px; font-weight:800;">{h}</div>')
+            html.append(f'<div style="background:#F1F5F9; border:1px solid #CBD5E1; color:#0F172A; text-align:center; padding:8px 4px; border-radius:6px; font-size:11.5px; font-weight:850;">{h}</div>')
 
         # Empty padding cells before 1st of month
         for _ in range(start_pad):

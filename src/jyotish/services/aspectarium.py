@@ -166,7 +166,7 @@ class AspectariumService:
         }
 
     @classmethod
-    def render_aspectarium_html(cls, chart: KundaliChart, theme: str = "day") -> str:
+    def render_aspectarium_html(cls, chart: KundaliChart) -> str:
         """
         Renders an interactive, responsive Aspectarium Grid in HTML.
         """
@@ -174,16 +174,11 @@ class AspectariumService:
         planets = data["planets"]
         matrix = data["matrix_data"]
 
-        is_day = (theme == "day")
-        hdr_bg = "#1E40AF" if is_day else "#0F172A"
-        hdr_txt = "#FFFFFF"
-        hdr_border = "#3B82F6" if is_day else "#334155"
-
-        headers_html = "".join([f'<th style="padding:8px 6px; text-align:center; font-size:12px; color:{hdr_txt}; background:{hdr_bg}; border:1px solid {hdr_border};">{PLANET_SYMBOLS.get(p, "")}<br>{PLANET_NAMES_HI.get(p, p)[:2]}</th>' for p in planets])
+        headers_html = "".join([f'<th style="padding:8px 6px; text-align:center; font-size:12px; color:#0F172A; font-weight:800; background:#F1F5F9; border:1px solid #CBD5E1;">{PLANET_SYMBOLS.get(p, "")}<br>{PLANET_NAMES_HI.get(p, p)[:2]}</th>' for p in planets])
 
         rows_html = ""
         for i, p1 in enumerate(planets):
-            row_cells = f'<td style="padding:6px 10px; font-weight:700; font-size:13px; color:#0F172A; background:#F1F5F9; border:1px solid #CBD5E1; white-space:nowrap;">{PLANET_SYMBOLS.get(p1, "")} {PLANET_NAMES_HI.get(p1, p1)}</td>'
+            row_cells = f'<td style="padding:6px 10px; font-weight:700; font-size:13px; color:#0F172A; background:#F8FAFC; border:1px solid #CBD5E1; white-space:nowrap;">{PLANET_SYMBOLS.get(p1, "")} {PLANET_NAMES_HI.get(p1, p1)}</td>'
             for j, p2 in enumerate(planets):
                 if i == j:
                     cell = '<td style="background:#E2E8F0; text-align:center; color:#94A3B8; font-size:11px; border:1px solid #CBD5E1;">—</td>'
@@ -207,7 +202,7 @@ class AspectariumService:
     <table style="width: 100%; border-collapse: collapse; text-align: center; border: 1.5px solid #CBD5E1; border-radius: 8px; overflow: hidden; background: #FFFFFF;">
         <thead>
             <tr>
-                <th style="padding: 10px; background: {hdr_bg}; color: {hdr_txt}; font-size: 13px; text-align: left;">ग्रह (Graha)</th>
+                <th style="padding: 10px; background: #F1F5F9; color: #0F172A; font-weight: 850; font-size: 13px; text-align: left; border-bottom: 2px solid #CBD5E1;">ग्रह (Graha)</th>
                 {headers_html}
             </tr>
         </thead>

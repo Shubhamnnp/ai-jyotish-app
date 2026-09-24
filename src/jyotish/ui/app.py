@@ -534,6 +534,7 @@ elif is_night_mode:
         border: 1.5px solid #1F2937 !important;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
     }
+    [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
     [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #111827 !important;
         color: #FFFFFF !important;
@@ -634,6 +635,7 @@ else:
         -webkit-font-smoothing: antialiased !important;
         -moz-osx-font-smoothing: grayscale !important;
     }
+    h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
     h1, h2, h3, h4, h5, h6 {
         color: #0F172A !important;
         font-weight: 850 !important;
@@ -649,6 +651,7 @@ else:
     }
     label, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] span {
         color: #0F172A !important;
+        font-weight: 700 !important;
         font-weight: 750 !important;
         font-size: 0.92rem !important;
     }
@@ -735,8 +738,7 @@ else:
     }
     [data-testid="stTabs"] button[role="tab"]:hover {
         color: #0F172A !important;
-        background: rgba(255, 255, 255, 0.8) !important;
-    }
+        background: rgba(255, 255, 255, 0.6) !important;
 
     /* Tab 1: Ruby Crimson (Surya) */
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1) {
@@ -744,6 +746,8 @@ else:
         color: #9F1239 !important;
         border: 1.5px solid #FECDD3 !important;
     }
+    [data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+        background: #FFFFFF !important;
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1):hover {
         background: #FFE4E6 !important;
         border-color: #F43F5E !important;
@@ -6152,8 +6156,7 @@ elif selected_idx == 7:
             import src.jyotish.services.aspectarium as asp_mod
             importlib.reload(asp_mod)
             asp_data = asp_mod.default_aspectarium_service.calculate_aspectarium(chart)
-            _asp_theme = "day" if st.session_state.get("app_theme_mode", "day") != "night" else "night"
-            asp_html = asp_mod.default_aspectarium_service.render_aspectarium_html(chart, theme=_asp_theme)
+            asp_html = asp_mod.default_aspectarium_service.render_aspectarium_html(chart)
 
             # Top KPI metrics
             c_as1, c_as2, c_as3 = st.columns(3)
@@ -6607,12 +6610,12 @@ elif selected_idx == 9:
             if sel_m_str != "वर्तमान सक्रिय महादशा (Auto)":
                 sel_idx = m_options.index(sel_m_str) - 1
 
-            _dasha_theme = "day" if st.session_state.get("app_theme_mode", "day") != "night" else "night"
+            cur_th = st.session_state.get("app_theme_mode", "day")
             gantt_html = dt_mod.default_dasha_timeline_service.render_gantt_html(
                 chart,
                 target_date=gantt_target_date,
                 selected_maha_idx=sel_idx,
-                theme=_dasha_theme
+                theme_mode=cur_th
             )
             components.html(gantt_html, height=580, scrolling=True)
 
@@ -8333,8 +8336,7 @@ elif selected_idx == 10:
                 spd_res = default_transit_graph_service.calculate_speed_timeline(spd_start_date, days=spd_days, planet_names=spd_planets)
 
             # SVG Chart
-            _spd_theme = "day" if st.session_state.get("app_theme_mode", "day") != "night" else "night"
-            spd_svg = default_transit_graph_service.render_speed_svg(spd_res, theme=_spd_theme)
+            spd_svg = default_transit_graph_service.render_speed_svg(spd_res)
             st.markdown(spd_svg, unsafe_allow_html=True)
 
             st.markdown("---")
@@ -8386,11 +8388,11 @@ elif selected_idx == 10:
 
                 with st.spinner("५-वर्षीय खगोलीय वेव चक्र एवं राशि परिवर्तन की गणना जारी..."):
                     waves_data = ew_svc.generate_multi_year_waves(start_year=w_start_year, duration_years=w_duration)
-                    waves_theme = "day" if st.session_state.get("app_theme_mode", "day") != "night" else "night"
-                    waves_svg = ew_svc.render_waves_svg_html(start_year=w_start_year, duration_years=w_duration, theme=waves_theme)
+                    cur_th = st.session_state.get("app_theme_mode", "day")
+                    waves_svg = ew_svc.render_waves_svg_html(start_year=w_start_year, duration_years=w_duration, theme_mode=cur_th)
 
-                # Render SVG Wave Chart cleanly without markdown parsing interference
-                st.components.v1.html(waves_svg, height=500, scrolling=True)
+                # Render SVG Wave Chart cleanly via components.html
+                st.components.v1.html(waves_svg, height=490, scrolling=True)
 
                 col_we1, col_we2 = st.columns(2)
                 with col_we1:

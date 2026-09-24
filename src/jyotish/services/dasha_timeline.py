@@ -39,7 +39,7 @@ class DashaTimelineService:
         chart: KundaliChart,
         target_date: Optional[date] = None,
         selected_maha_idx: Optional[int] = None,
-        theme: str = "day"
+        theme_mode: str = "day"
     ) -> str:
         """
         Generates responsive HTML/CSS Gantt timeline with:
@@ -48,6 +48,7 @@ class DashaTimelineService:
         - Expandable Antardasha breakdown for active/selected Mahadasha
         - Active Antardasha's Pratyantardasha breakdown
         - Glowing 'TODAY' indicator line with exact percentage progress
+        - Supports Day Mode (Pearl White) and Night/Astrallis Mode
         """
         if target_date is None:
             target_date = date.today()
@@ -245,45 +246,54 @@ class DashaTimelineService:
         active_a_theme = PLANET_THEME.get(active_a_lord, {"name_hi": active_a_lord, "color": "#3B82F6", "symbol": "🪐"})
         active_p_theme = PLANET_THEME.get(active_p_lord, {"name_hi": active_p_lord, "color": "#10B981", "symbol": "☿"})
 
-        is_day = (theme == "day")
-        card_bg = "#FFFFFF" if is_day else "#0F172A"
-        card_color = "#0F172A" if is_day else "#F8FAFC"
-        card_border = "#CBD5E1" if is_day else "#334155"
+        is_day = (theme_mode.lower() == "day")
+
+        # Color tokens based on theme
+        main_bg = "#FFFFFF" if is_day else "#0F172A"
+        main_border = "#CBD5E1" if is_day else "#334155"
+        main_color = "#0F172A" if is_day else "#F8FAFC"
+        main_shadow = "0 4px 16px rgba(15, 23, 42, 0.08)" if is_day else "0 8px 24px rgba(0,0,0,0.25)"
+
         hud_bg = "#F8FAFC" if is_day else "rgba(30, 41, 59, 0.85)"
-        hud_lbl = "#475569" if is_day else "#94A3B8"
-        hud_val = "#0F172A" if is_day else "#F8FAFC"
-        track_bg = "#E2E8F0" if is_day else "#334155"
-        t1_hdr = "#0F172A" if is_day else "#E2E8F0"
-        t1_sub = "#475569" if is_day else "#94A3B8"
-        t2_bg = "#F8FAFC" if is_day else "rgba(30, 41, 59, 0.6)"
-        t2_border = "#CBD5E1" if is_day else "#334155"
-        t2_hdr = "#B45309" if is_day else "#F59E0B"
-        t3_bg = "#F8FAFC" if is_day else "rgba(30, 41, 59, 0.4)"
-        t3_border = "#CBD5E1" if is_day else "#475569"
-        t3_hdr = "#047857" if is_day else "#10B981"
+        hud_label_color = "#475569" if is_day else "#94A3B8"
+        hud_sub_color = "#334155" if is_day else "#CBD5E1"
+        hud_strong_color = "#0F172A" if is_day else "#F8FAFC"
+        hud_progress_bg = "#E2E8F0" if is_day else "#334155"
+
+        t1_title_color = "#0F172A" if is_day else "#E2E8F0"
+        t1_sub_color = "#475569" if is_day else "#94A3B8"
+        t1_bar_shadow = "inset 0 1px 3px rgba(0,0,0,0.15)" if is_day else "inset 0 2px 4px rgba(0,0,0,0.4)"
+
+        tier2_bg = "#F8FAFC" if is_day else "rgba(30, 41, 59, 0.6)"
+        tier2_border = "#CBD5E1" if is_day else "#334155"
+        tier2_title = "#B45309" if is_day else "#F59E0B"
+
+        tier3_bg = "#F1F5F9" if is_day else "rgba(30, 41, 59, 0.4)"
+        tier3_border = "#94A3B8" if is_day else "#475569"
+        tier3_title = "#047857" if is_day else "#10B981"
 
         html = f"""
-<div style="font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; background: {card_bg}; color: {card_color}; border: 1.5px solid {card_border}; border-radius: 14px; padding: 20px; box-shadow: 0 4px 16px rgba(15,23,42,0.06); margin-bottom: 20px;">
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: {main_bg}; color: {main_color}; border: 1.5px solid {main_border}; border-radius: 14px; padding: 20px; box-shadow: {main_shadow}; margin-bottom: 20px;">
     
     <!-- Top Active Dasha HUD -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 22px;">
         <div style="background: {hud_bg}; border: 1.5px solid {active_m_theme['color']}; border-radius: 10px; padding: 12px 14px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; color: {hud_lbl}; font-weight: 700;">सक्रिय महादशा (Tier 1)</span>
+                <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; color: {hud_label_color}; font-weight: 700;">सक्रिय महादशा (Tier 1)</span>
                 <span style="font-size: 18px;">{active_m_theme['symbol']}</span>
             </div>
             <div style="font-size: 20px; font-weight: 900; color: {active_m_theme['color']}; margin: 4px 0 2px 0;">
                 {active_m_theme['name_hi']} ({active_m_lord})
             </div>
-            <div style="font-size: 11.5px; color: {hud_val}; font-weight: 600;">
+            <div style="font-size: 11.5px; color: {hud_sub_color};">
                 {active_m['start_date'].strftime('%d %b %Y')} → {active_m['end_date'].strftime('%d %b %Y')}
             </div>
             <div style="margin-top: 8px;">
-                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px; color: {hud_lbl}; font-weight: 600;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px; color: {hud_label_color};">
                     <span>प्रगति: {active_m_pct:.1f}%</span>
                     <span>शेष: {100.0 - active_m_pct:.1f}%</span>
                 </div>
-                <div style="background: {track_bg}; border-radius: 4px; height: 6px; overflow: hidden;">
+                <div style="background: {hud_progress_bg}; border-radius: 4px; height: 6px; overflow: hidden;">
                     <div style="background: {active_m_theme['color']}; width: {active_m_pct:.1f}%; height: 100%;"></div>
                 </div>
             </div>
@@ -291,29 +301,29 @@ class DashaTimelineService:
 
         <div style="background: {hud_bg}; border: 1.5px solid {active_a_theme['color']}; border-radius: 10px; padding: 12px 14px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; color: {hud_lbl}; font-weight: 700;">सक्रिय अंतर्दशा (Tier 2)</span>
+                <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; color: {hud_label_color}; font-weight: 700;">सक्रिय अंतर्दशा (Tier 2)</span>
                 <span style="font-size: 18px;">{active_a_theme['symbol']}</span>
             </div>
             <div style="font-size: 20px; font-weight: 900; color: {active_a_theme['color']}; margin: 4px 0 2px 0;">
                 {active_m_theme['name_hi']}-{active_a_theme['name_hi']} ({active_a_lord})
             </div>
-            <div style="font-size: 11.5px; color: {hud_val}; font-weight: 600;">
+            <div style="font-size: 11.5px; color: {hud_sub_color};">
                 {active_hier.antardasha.start_date.strftime('%d %b %Y') if active_hier else ''} → {active_hier.antardasha.end_date.strftime('%d %b %Y') if active_hier else ''}
             </div>
-            <div style="font-size: 11px; color: {hud_lbl}; margin-top: 8px;">
-                वर्तमान आयु: <b style="color: {hud_val};">{years_age} वर्ष</b> | चक्र प्रगति: <b style="color: {hud_val};">{today_pct:.1f}%</b>
+            <div style="font-size: 11px; color: {hud_label_color}; margin-top: 8px;">
+                वर्तमान आयु: <b style="color: {hud_strong_color};">{years_age} वर्ष</b> | चक्र प्रगति: <b style="color: {hud_strong_color};">{today_pct:.1f}%</b>
             </div>
         </div>
 
         <div style="background: {hud_bg}; border: 1.5px solid {active_p_theme['color']}; border-radius: 10px; padding: 12px 14px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; color: {hud_lbl}; font-weight: 700;">सक्रिय प्रत्यन्तर्दशा (Tier 3)</span>
+                <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px; color: {hud_label_color}; font-weight: 700;">सक्रिय प्रत्यन्तर्दशा (Tier 3)</span>
                 <span style="font-size: 18px;">{active_p_theme['symbol']}</span>
             </div>
             <div style="font-size: 18px; font-weight: 800; color: {active_p_theme['color']}; margin: 4px 0 2px 0;">
                 {active_m_theme['name_hi']}-{active_a_theme['name_hi']}-{active_p_theme['name_hi']}
             </div>
-            <div style="font-size: 11.5px; color: {hud_val}; font-weight: 600;">
+            <div style="font-size: 11.5px; color: {hud_sub_color};">
                 {active_hier.pratyantardasha.start_date.strftime('%d %b %Y') if active_hier else ''} → {active_hier.pratyantardasha.end_date.strftime('%d %b %Y') if active_hier else ''}
             </div>
             <div style="font-size: 11px; color: #047857; margin-top: 8px; font-weight: 700;">
@@ -325,39 +335,39 @@ class DashaTimelineService:
     <!-- Tier 1: 120-Year Full Cycle Gantt Bar -->
     <div style="margin-bottom: 26px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <span style="font-size: 13.5px; font-weight: 800; color: {t1_hdr};">
+            <span style="font-size: 13.5px; font-weight: 800; color: {t1_title_color};">
                 📊 १२०-वर्षीय सम्पूर्ण महादशा चक्र (Lifetime Vimshottari Cycle)
             </span>
-            <span style="font-size: 11.5px; color: {t1_sub}; font-weight: 600;">
+            <span style="font-size: 11.5px; color: {t1_sub_color}; font-weight: 600;">
                 जन्म: {timeline_start.strftime('%d-%b-%Y')} • पूर्ण: {timeline_end.strftime('%d-%b-%Y')}
             </span>
         </div>
         
         <div style="position: relative; padding-top: 14px; padding-bottom: 6px;">
             {today_marker_t1}
-            <div style="display: flex; width: 100%; border-radius: 8px; overflow: hidden; height: 58px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);">
+            <div style="display: flex; width: 100%; border-radius: 8px; overflow: hidden; height: 58px; box-shadow: {t1_bar_shadow};">
                 {m_blocks_html}
             </div>
         </div>
-        <div style="font-size: 11px; color: {t1_sub}; margin-top: 4px; text-align: right;">
+        <div style="font-size: 11px; color: #64748B; margin-top: 4px; text-align: right;">
             * प्रत्येक महादशा खंड की चौड़ाई उसकी शास्त्रीय वर्ष अवधि के अनुपात में है
         </div>
     </div>
 
     <!-- Tier 2: Selected / Active Mahadasha Expanded (Antardashas) -->
-    <div style="background: {t2_bg}; border: 1.5px solid {t2_border}; border-radius: 10px; padding: 16px; margin-bottom: 20px;">
+    <div style="background: {tier2_bg}; border: 1px solid {tier2_border}; border-radius: 10px; padding: 16px; margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <span style="font-size: 13px; font-weight: 800; color: {t2_hdr};">
+            <span style="font-size: 13px; font-weight: 800; color: {tier2_title};">
                 🔍 महादशा विस्तार (Tier 2 Antardasha Breakdown): {PLANET_THEME.get(display_m['lord'], {}).get('name_hi', display_m['lord'])} महादशा ({display_m['start_date'].strftime('%d-%b-%Y')} से {display_m['end_date'].strftime('%d-%b-%Y')})
             </span>
-            <span style="font-size: 11px; color: {t1_sub}; font-weight: 600;">
+            <span style="font-size: 11px; color: {t1_sub_color};">
                 अवधि: {display_m['duration_years']:.1f} वर्ष
             </span>
         </div>
 
         <div style="position: relative; padding-top: 10px; padding-bottom: 4px;">
             {today_marker_t2}
-            <div style="display: flex; width: 100%; border-radius: 6px; overflow: hidden; height: 48px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);">
+            <div style="display: flex; width: 100%; border-radius: 6px; overflow: hidden; height: 48px; box-shadow: {t1_bar_shadow};">
                 {a_blocks_html}
             </div>
         </div>
@@ -365,12 +375,12 @@ class DashaTimelineService:
 
     <!-- Tier 3: Active Antardasha Expanded (Pratyantardashas) -->
     {f'''
-    <div style="background: {t3_bg}; border: 1.5px dashed {t3_border}; border-radius: 10px; padding: 14px;">
+    <div style="background: {tier3_bg}; border: 1px dashed {tier3_border}; border-radius: 10px; padding: 14px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <span style="font-size: 12.5px; font-weight: 800; color: {t3_hdr};">
+            <span style="font-size: 12.5px; font-weight: 800; color: {tier3_title};">
                 ⚡ सूक्ष्म प्रत्यन्तर्दशा स्तर (Tier 3 Pratyantardasha Breakdown)
             </span>
-            <span style="font-size: 11px; color: {t1_sub}; font-weight: 600;">
+            <span style="font-size: 11px; color: {t1_sub_color};">
                 दैनिक/साप्ताहिक घटना वेध
             </span>
         </div>

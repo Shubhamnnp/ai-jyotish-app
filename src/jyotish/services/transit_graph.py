@@ -170,7 +170,7 @@ class TransitGraphService:
         }
 
     @classmethod
-    def render_speed_svg(cls, timeline_data: Dict[str, Any], width: int = 860, height: int = 420, theme: str = "day") -> str:
+    def render_speed_svg(cls, timeline_data: Dict[str, Any], width: int = 860, height: int = 420) -> str:
         """Renders an SVG graph of planetary speed curves with zero-line and date axis."""
         timeline = timeline_data.get("timeline", [])
         if not timeline or len(timeline) < 2:
@@ -182,15 +182,6 @@ class TransitGraphService:
         pad_left, pad_right, pad_top, pad_bot = 65, 40, 45, 60
         plot_w = width - pad_left - pad_right
         plot_h = height - pad_top - pad_bot
-
-        is_day = (theme == "day")
-        hdr_bg = "#F1F5F9" if is_day else "#0F172A"
-        hdr_stroke = ' stroke="#CBD5E1" stroke-width="1"' if is_day else ""
-        hdr_txt = "#0F172A" if is_day else "#F8FAFC"
-        plot_bg = "#FFFFFF" if is_day else "#1E293B"
-        plot_border = "#CBD5E1" if is_day else "#334155"
-        card_bg = "#FFFFFF" if is_day else "#0F172A"
-        card_border = "#CBD5E1" if is_day else "#334155"
 
         # Find min and max speeds
         all_speeds = []
@@ -216,11 +207,12 @@ class TransitGraphService:
         zero_y = y_coord(0.0)
 
         svg = [
-            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="{height}" style="background:{card_bg}; border:1.5px solid {card_border}; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.05); font-family:-apple-system,BlinkMacSystemFont,sans-serif;">',
-            f'<rect width="{width}" height="38" fill="{hdr_bg}"{hdr_stroke} rx="12 12 0 0"/>',
-            f'<text x="{width//2}" y="24" text-anchor="middle" fill="{hdr_txt}" font-size="14" font-weight="900">📊 डायनेमिक गोचर गति व वक्रता वक्र (Planetary Speed & Retrograde Curves — {timeline_data.get("days", 90)} Days)</text>',
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="{height}" style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.05); font-family:-apple-system,BlinkMacSystemFont,sans-serif;">',
+            f'<rect width="{width}" height="38" fill="#F8FAFC" rx="12 12 0 0"/>',
+            f'<line x1="0" y1="38" x2="{width}" y2="38" stroke="#CBD5E1" stroke-width="1"/>',
+            f'<text x="{width//2}" y="24" text-anchor="middle" fill="#0F172A" font-size="14" font-weight="850">📊 डायनेमिक गोचर गति व वक्रता वक्र (Planetary Speed & Retrograde Curves — {timeline_data.get("days", 90)} Days)</text>',
             # Plot background
-            f'<rect x="{pad_left}" y="{pad_top}" width="{plot_w}" height="{plot_h}" fill="{plot_bg}" rx="4" stroke="{plot_border}"/>',
+            f'<rect x="{pad_left}" y="{pad_top}" width="{plot_w}" height="{plot_h}" fill="#FFFFFF" rx="4" stroke="#CBD5E1"/>',
         ]
 
         # Horizontal Zero line (Retrograde vs Direct threshold)
