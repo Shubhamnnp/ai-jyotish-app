@@ -152,7 +152,7 @@ st.set_page_config(
 )
 
 if "app_theme_mode" not in st.session_state:
-    st.session_state.app_theme_mode = "astrallis"
+    st.session_state.app_theme_mode = "day"
 
 is_astrallis_mode = (st.session_state.app_theme_mode == "astrallis")
 is_night_mode = (st.session_state.app_theme_mode == "night")
@@ -634,12 +634,22 @@ else:
         -webkit-font-smoothing: antialiased !important;
         -moz-osx-font-smoothing: grayscale !important;
     }
-    h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
+    h1, h2, h3, h4, h5, h6 {
         color: #0F172A !important;
+        font-weight: 850 !important;
+        letter-spacing: -0.3px !important;
+    }
+    p, span, li, a, label, caption, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
+        color: #0F172A !important;
+        font-weight: 600 !important;
+    }
+    strong, b {
+        color: #020617 !important;
+        font-weight: 850 !important;
     }
     label, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] span {
         color: #0F172A !important;
-        font-weight: 700 !important;
+        font-weight: 750 !important;
         font-size: 0.92rem !important;
     }
     input, textarea, select, 
@@ -668,21 +678,21 @@ else:
         color: #0F172A !important;
     }
     [data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
-        color: #0F172A !important;
+        color: #1E40AF !important;
         font-weight: 900 !important;
         font-size: 1.6rem !important;
     }
     [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] * {
-        color: #475569 !important;
-        font-weight: 700 !important;
+        color: #334155 !important;
+        font-weight: 800 !important;
         font-size: 0.88rem !important;
     }
     [data-testid="stMetric"] {
         background: #FFFFFF !important;
-        border: 1.5px solid #E2E8F0 !important;
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 12px !important;
         padding: 12px 16px !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
     }
     [data-testid="stSidebar"] {
         background-color: #F1F5F9 !important;
@@ -695,28 +705,247 @@ else:
         color: #0F172A !important;
         font-weight: 800 !important;
     }
-    /* Day Mode Tabs */
+
+    /* ═══════════════════════════════════════════════════════════════
+       Distinct Luxury Gemstone Colors for Every Module Tab in Day Mode
+       ═══════════════════════════════════════════════════════════════ */
     [data-testid="stTabs"] [data-baseweb="tab-list"] {
-        background: #F1F5F9 !important;
+        background: #F8FAFC !important;
         border: 1.5px solid #E2E8F0 !important;
+        border-radius: 12px !important;
+        padding: 6px !important;
+        gap: 8px !important;
     }
     [data-testid="stTabs"] button[role="tab"] {
-        color: #475569 !important;
+        border-radius: 8px !important;
+        padding: 8px 16px !important;
+        font-weight: 800 !important;
+        font-size: 13px !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        white-space: nowrap !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
     }
-    [data-testid="stTabs"] button[role="tab"]:hover {
-        color: #0F172A !important;
-        background: rgba(255, 255, 255, 0.6) !important;
+
+    /* Tab 1: Ruby Crimson (Surya) */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1) {
+        background: #FFF1F2 !important;
+        color: #9F1239 !important;
+        border: 1.5px solid #FECDD3 !important;
     }
-    [data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
-        background: #FFFFFF !important;
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1):hover {
+        background: #FFE4E6 !important;
+        border-color: #F43F5E !important;
+        color: #881337 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1)[aria-selected="true"] {
+        background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #9F1239 !important;
+        box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35) !important;
+    }
+
+    /* Tab 2: Sapphire Ocean Blue (Chandra) */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 2) {
+        background: #EFF6FF !important;
+        color: #1D4ED8 !important;
+        border: 1.5px solid #BFDBFE !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 2):hover {
+        background: #DBEAFE !important;
+        border-color: #3B82F6 !important;
+        color: #1E40AF !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 2)[aria-selected="true"] {
+        background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #1E40AF !important;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+    }
+
+    /* Tab 3: Emerald Jade Green (Budha) */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 3) {
+        background: #ECFDF5 !important;
+        color: #047857 !important;
+        border: 1.5px solid #A7F3D0 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 3):hover {
+        background: #D1FAE5 !important;
+        border-color: #10B981 !important;
+        color: #065F46 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 3)[aria-selected="true"] {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #065F46 !important;
+        box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35) !important;
+    }
+
+    /* Tab 4: Topaz Gold Amber (Guru) */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 4) {
+        background: #FEF3C7 !important;
+        color: #92400E !important;
+        border: 1.5px solid #FDE68A !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 4):hover {
+        background: #FDE68A !important;
+        border-color: #F59E0B !important;
+        color: #78350F !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 4)[aria-selected="true"] {
+        background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #78350F !important;
+        box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35) !important;
+    }
+
+    /* Tab 5: Coral Crimson Orange (Mangal) */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 5) {
+        background: #FFF7ED !important;
+        color: #C2410C !important;
+        border: 1.5px solid #FFEDD5 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 5):hover {
+        background: #FFEDD5 !important;
+        border-color: #F97316 !important;
+        color: #9A3412 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 5)[aria-selected="true"] {
+        background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #9A3412 !important;
+        box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35) !important;
+    }
+
+    /* Tab 6: Amethyst Royal Purple (Rahu) */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 6) {
+        background: #FAF5FF !important;
+        color: #6B21A8 !important;
+        border: 1.5px solid #E9D5FF !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 6):hover {
+        background: #F3E8FF !important;
+        border-color: #A855F7 !important;
+        color: #581C87 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 6)[aria-selected="true"] {
+        background: linear-gradient(135deg, #7E22CE 0%, #6B21A8 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #581C87 !important;
+        box-shadow: 0 4px 14px rgba(126, 34, 206, 0.35) !important;
+    }
+
+    /* Tab 7: Turquoise Cyan (Ketu) */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 7) {
+        background: #ECFEFF !important;
+        color: #0E7490 !important;
+        border: 1.5px solid #A5F3FC !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 7):hover {
+        background: #CFFAFE !important;
+        border-color: #06B6D4 !important;
+        color: #155E75 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 7)[aria-selected="true"] {
+        background: linear-gradient(135deg, #0891B2 0%, #0E7490 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #155E75 !important;
+        box-shadow: 0 4px 14px rgba(8, 145, 178, 0.35) !important;
+    }
+
+    /* Tab 8: Diamond Violet Magenta (Shukra) */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 8) {
+        background: #FDF4FF !important;
+        color: #86198F !important;
+        border: 1.5px solid #F5D0FE !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 8):hover {
+        background: #FAE8FF !important;
+        border-color: #D946EF !important;
+        color: #701A75 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 8)[aria-selected="true"] {
+        background: linear-gradient(135deg, #C026D3 0%, #9333EA 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #701A75 !important;
+        box-shadow: 0 4px 14px rgba(192, 38, 211, 0.35) !important;
+    }
+
+    /* Tab 9: Deep Indigo Midnight (Shani) */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 9) {
+        background: #EEF2FF !important;
+        color: #4338CA !important;
+        border: 1.5px solid #C7D2FE !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 9):hover {
+        background: #E0E7FF !important;
+        border-color: #6366F1 !important;
+        color: #3730A3 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 9)[aria-selected="true"] {
+        background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #312E81 !important;
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+    }
+
+    /* Tab 10: Rose Blossom */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 10) {
+        background: #FFF1F2 !important;
+        color: #BE185D !important;
+        border: 1.5px solid #FBCFE8 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 10):hover {
+        background: #FCE7F3 !important;
+        border-color: #EC4899 !important;
+        color: #9D174D !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 10)[aria-selected="true"] {
+        background: linear-gradient(135deg, #DB2777 0%, #BE185D 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #9D174D !important;
+        box-shadow: 0 4px 14px rgba(219, 39, 119, 0.35) !important;
+    }
+
+    /* Tab 11: Vibrant Teal Ocean */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 11) {
+        background: #F0FDFA !important;
+        color: #0F766E !important;
+        border: 1.5px solid #99F6E4 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 11):hover {
+        background: #CCFBF1 !important;
+        border-color: #14B8A6 !important;
+        color: #115E59 !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 11)[aria-selected="true"] {
+        background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #115E59 !important;
+        box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35) !important;
+    }
+
+    /* Tab 12: Warm Saffron Amber */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 12) {
+        background: #FFFBEB !important;
         color: #B45309 !important;
-        border: 1.5px solid #D97706 !important;
-        box-shadow: 0 2px 8px rgba(217, 119, 6, 0.15) !important;
+        border: 1.5px solid #FDE68A !important;
     }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 12):hover {
+        background: #FEF3C7 !important;
+        border-color: #F59E0B !important;
+        color: #92400E !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 12)[aria-selected="true"] {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #B45309 !important;
+        box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35) !important;
+    }
+
     /* Day Mode Chat */
     [data-testid="stChatMessage"] {
         background: #FFFFFF !important;
-        border: 1.5px solid #E2E8F0 !important;
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 12px !important;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
     }
@@ -724,9 +953,7 @@ else:
         border-radius: 12px !important;
         border: 1.5px solid #CBD5E1 !important;
     }
-    /* Day Mode Tables & DataFrames */
-    [data-testid="stTable"], [data-testid="stDataFrame"],
-    [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+
     /* Day Mode Tables */
     [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #FFFFFF !important;
@@ -742,6 +969,37 @@ else:
         background-color: #FFFFFF !important;
         color: #0F172A !important;
         border-bottom: 1px solid #E2E8F0 !important;
+    }
+
+    /* Day Mode Universal Contrast Enforcement - Never black backgrounds in Day Mode */
+    div[style*="background:#050811"], div[style*="background: #050811"],
+    div[style*="background:#111827"], div[style*="background: #111827"],
+    div[style*="background:#0D1322"], div[style*="background: #0D1322"],
+    div[style*="background:#080C14"], div[style*="background: #080C14"],
+    div[style*="background:#0A0E1A"], div[style*="background: #0A0E1A"],
+    div[style*="background:#1E293B"], div[style*="background: #1E293B"],
+    div[style*="background:#1F2937"], div[style*="background: #1F2937"],
+    div[style*="background:#070A12"], div[style*="background: #070A12"],
+    div[style*="background:#0A1628"], div[style*="background: #0A1628"],
+    div[style*="background:#000000"], div[style*="background: #000000"],
+    div[style*="background: black"], div[style*="background:black"] {
+        background: #FFFFFF !important;
+        border-color: #CBD5E1 !important;
+        color: #0F172A !important;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;
+    }
+    div[style*="background:#050811"] *, div[style*="background: #050811"] *,
+    div[style*="background:#111827"] *, div[style*="background: #111827"] *,
+    div[style*="background:#0D1322"] *, div[style*="background: #0D1322"] *,
+    div[style*="background:#080C14"] *, div[style*="background: #080C14"] *,
+    div[style*="background:#0A0E1A"] *, div[style*="background: #0A0E1A"] *,
+    div[style*="background:#1E293B"] *, div[style*="background: #1E293B"] *,
+    div[style*="background:#1F2937"] *, div[style*="background: #1F2937"] *,
+    div[style*="background:#070A12"] *, div[style*="background: #070A12"] *,
+    div[style*="background:#0A1628"] *, div[style*="background: #0A1628"] *,
+    div[style*="background:#000000"] *, div[style*="background: #000000"] *,
+    div[style*="background: black"] *, div[style*="background:black"] * {
+        color: #0F172A !important;
     }
     """
 
@@ -1231,8 +1489,6 @@ unified_css = f"""
     .exalt-badge {{ color: #1E40AF !important; font-weight: 800; background: #DBEAFE !important; border: 1.5px solid #3B82F6 !important; padding: 3px 8px; border-radius: 6px; }}
     .deb-badge {{ color: #991B1B !important; font-weight: 800; background: #FEE2E2 !important; border: 1.5px solid #EF4444 !important; padding: 3px 8px; border-radius: 6px; }}
 
-    /* Responsive DataFrames & Tables */
-    [data-testid="stTable"], [data-testid="stDataFrame"] {{
     /* Responsive Tables */
     [data-testid="stTable"] {{
         border: 1.5px solid #CBD5E1 !important;
@@ -1242,10 +1498,6 @@ unified_css = f"""
         width: 100% !important;
         max-width: 100% !important;
         margin-bottom: 12px !important;
-    }}
-    [data-testid="stDataFrame"] * {{
-        color: #000000 !important;
-        font-weight: 600 !important;
     }}
     [data-testid="stTable"] table {{
         width: 100% !important;
@@ -1267,8 +1519,8 @@ unified_css = f"""
         -webkit-overflow-scrolling: touch !important;
         scrollbar-width: none !important;
         border-radius: 12px !important;
-        padding: 5px !important;
-        gap: 6px !important;
+        padding: 6px !important;
+        gap: 8px !important;
     }}
     [data-testid="stTabs"] [data-baseweb="tab-list"]::-webkit-scrollbar {{
         display: none !important;
@@ -1277,8 +1529,8 @@ unified_css = f"""
         flex-shrink: 0 !important;
         border-radius: 8px !important;
         padding: 8px 16px !important;
-        font-weight: 700 !important;
-        font-size: 13.5px !important;
+        font-weight: 800 !important;
+        font-size: 13px !important;
         border: 1.5px solid transparent !important;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
         white-space: nowrap !important;
@@ -1289,16 +1541,49 @@ unified_css = f"""
         display: none !important;
     }}
 
-    /* Responsive SVG & Kundali Charts Auto-Scaling */
-    svg {{
+    /* Distinct Luxury Gemstone Colors for Every Module Tab */
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1) {{ background: #FFF1F2 !important; color: #9F1239 !important; border: 1.5px solid #FECDD3 !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1)[aria-selected="true"] {{ background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%) !important; color: #FFFFFF !important; border: 1.5px solid #9F1239 !important; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 2) {{ background: #EFF6FF !important; color: #1D4ED8 !important; border: 1.5px solid #BFDBFE !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 2)[aria-selected="true"] {{ background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important; color: #FFFFFF !important; border: 1.5px solid #1E40AF !important; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 3) {{ background: #ECFDF5 !important; color: #047857 !important; border: 1.5px solid #A7F3D0 !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 3)[aria-selected="true"] {{ background: linear-gradient(135deg, #059669 0%, #047857 100%) !important; color: #FFFFFF !important; border: 1.5px solid #065F46 !important; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 4) {{ background: #FEF3C7 !important; color: #92400E !important; border: 1.5px solid #FDE68A !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 4)[aria-selected="true"] {{ background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important; color: #FFFFFF !important; border: 1.5px solid #78350F !important; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 5) {{ background: #FFF7ED !important; color: #C2410C !important; border: 1.5px solid #FFEDD5 !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 5)[aria-selected="true"] {{ background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%) !important; color: #FFFFFF !important; border: 1.5px solid #9A3412 !important; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 6) {{ background: #FAF5FF !important; color: #6B21A8 !important; border: 1.5px solid #E9D5FF !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 6)[aria-selected="true"] {{ background: linear-gradient(135deg, #7E22CE 0%, #6B21A8 100%) !important; color: #FFFFFF !important; border: 1.5px solid #581C87 !important; box-shadow: 0 4px 14px rgba(126, 34, 206, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 7) {{ background: #ECFEFF !important; color: #0E7490 !important; border: 1.5px solid #A5F3FC !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 7)[aria-selected="true"] {{ background: linear-gradient(135deg, #0891B2 0%, #0E7490 100%) !important; color: #FFFFFF !important; border: 1.5px solid #155E75 !important; box-shadow: 0 4px 14px rgba(8, 145, 178, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 8) {{ background: #FDF4FF !important; color: #86198F !important; border: 1.5px solid #F5D0FE !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 8)[aria-selected="true"] {{ background: linear-gradient(135deg, #C026D3 0%, #9333EA 100%) !important; color: #FFFFFF !important; border: 1.5px solid #701A75 !important; box-shadow: 0 4px 14px rgba(192, 38, 211, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 9) {{ background: #EEF2FF !important; color: #4338CA !important; border: 1.5px solid #C7D2FE !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 9)[aria-selected="true"] {{ background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%) !important; color: #FFFFFF !important; border: 1.5px solid #312E81 !important; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 10) {{ background: #FFF1F2 !important; color: #BE185D !important; border: 1.5px solid #FBCFE8 !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 10)[aria-selected="true"] {{ background: linear-gradient(135deg, #DB2777 0%, #BE185D 100%) !important; color: #FFFFFF !important; border: 1.5px solid #9D174D !important; box-shadow: 0 4px 14px rgba(219, 39, 119, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 11) {{ background: #F0FDFA !important; color: #0F766E !important; border: 1.5px solid #99F6E4 !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 11)[aria-selected="true"] {{ background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%) !important; color: #FFFFFF !important; border: 1.5px solid #115E59 !important; box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35) !important; }}
+
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 12) {{ background: #FFFBEB !important; color: #B45309 !important; border: 1.5px solid #FDE68A !important; }}
+    [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 12)[aria-selected="true"] {{ background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important; color: #FFFFFF !important; border: 1.5px solid #B45309 !important; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35) !important; }}
+
     /* Responsive SVG & Kundali Charts Auto-Scaling (Scoped strictly to Kundali SVGs, never global svg or Vega-Lite charts) */
     .kundali-chart svg, .chart-container svg, .observatory-canvas svg, div:has(> svg.kundali-svg) svg {{
         max-width: 100% !important;
-        height: auto !important;
         display: block !important;
         margin: 0 auto !important;
     }}
-    div:has(> svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
     div:has(> svg.kundali-svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
         max-width: 100% !important;
         overflow-x: auto !important;
