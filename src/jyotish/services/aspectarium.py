@@ -166,7 +166,7 @@ class AspectariumService:
         }
 
     @classmethod
-    def render_aspectarium_html(cls, chart: KundaliChart) -> str:
+    def render_aspectarium_html(cls, chart: KundaliChart, theme: str = "day") -> str:
         """
         Renders an interactive, responsive Aspectarium Grid in HTML.
         """
@@ -174,7 +174,12 @@ class AspectariumService:
         planets = data["planets"]
         matrix = data["matrix_data"]
 
-        headers_html = "".join([f'<th style="padding:8px 6px; text-align:center; font-size:12px; color:#F8FAFC; background:#0F172A; border:1px solid #334155;">{PLANET_SYMBOLS.get(p, "")}<br>{PLANET_NAMES_HI.get(p, p)[:2]}</th>' for p in planets])
+        is_day = (theme == "day")
+        hdr_bg = "#1E40AF" if is_day else "#0F172A"
+        hdr_txt = "#FFFFFF"
+        hdr_border = "#3B82F6" if is_day else "#334155"
+
+        headers_html = "".join([f'<th style="padding:8px 6px; text-align:center; font-size:12px; color:{hdr_txt}; background:{hdr_bg}; border:1px solid {hdr_border};">{PLANET_SYMBOLS.get(p, "")}<br>{PLANET_NAMES_HI.get(p, p)[:2]}</th>' for p in planets])
 
         rows_html = ""
         for i, p1 in enumerate(planets):
@@ -202,7 +207,7 @@ class AspectariumService:
     <table style="width: 100%; border-collapse: collapse; text-align: center; border: 1.5px solid #CBD5E1; border-radius: 8px; overflow: hidden; background: #FFFFFF;">
         <thead>
             <tr>
-                <th style="padding: 10px; background: #0F172A; color: #FFFFFF; font-size: 13px; text-align: left;">ग्रह (Graha)</th>
+                <th style="padding: 10px; background: {hdr_bg}; color: {hdr_txt}; font-size: 13px; text-align: left;">ग्रह (Graha)</th>
                 {headers_html}
             </tr>
         </thead>

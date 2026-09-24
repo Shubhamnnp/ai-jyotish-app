@@ -141,15 +141,39 @@ class EphemerisWavesService:
     def render_waves_svg_html(
         self,
         start_year: Optional[int] = None,
-        duration_years: int = 5
+        duration_years: int = 5,
+        theme: str = "day"
     ) -> str:
         """
         Renders a high-contrast, responsive SVG trajectory graph for multi-year transits.
+        Supports 'day' (Royal Pearl Light) and 'night' (Dark/Astrallis) themes.
         """
         data = self.generate_multi_year_waves(start_year, duration_years)
         start_yr = data["start_year"]
         end_yr = data["end_year"]
         trajectories = data["trajectories"]
+
+        is_day = (theme == "day")
+        card_bg = "#FFFFFF" if is_day else "#0F172A"
+        card_border = "#CBD5E1" if is_day else "#334155"
+        card_text = "#0F172A" if is_day else "#FFFFFF"
+        title_color = "#B45309" if is_day else "#F59E0B"
+        sub_color = "#475569" if is_day else "#94A3B8"
+        leg_box_bg = "#F8FAFC" if is_day else "#1E293B"
+        leg_box_border = "#CBD5E1" if is_day else "#475569"
+        grid_fill = "#F8FAFC" if is_day else "#1E293B"
+        grid_border = "#CBD5E1" if is_day else "#334155"
+        y_line_stroke = "#E2E8F0" if is_day else "#334155"
+        y_text_fill = "#334155" if is_day else "#94A3B8"
+        x_line_stroke = "#CBD5E1" if is_day else "#475569"
+        x_text_fill = "#0F172A" if is_day else "#E2E8F0"
+
+        planet_colors = {
+            "Saturn": "#1D4ED8" if is_day else "#3B82F6",
+            "Jupiter": "#B45309" if is_day else "#F59E0B",
+            "Rahu": "#475569" if is_day else "#94A3B8",
+            "Mars": "#DC2626" if is_day else "#EF4444",
+        }
 
         # SVG dimensions
         svg_w = 950
@@ -162,28 +186,26 @@ class EphemerisWavesService:
         plot_h = svg_h - margin_t - margin_b
 
         # Sign labels on Y axis (0 to 360 deg)
-        y_labels = ""
+        y_labels = []
         for i in range(12):
             y_pos = margin_t + (plot_h * (11 - i) / 11)
-            y_labels += f"""
-            <line x1="{margin_l}" y1="{y_pos}" x2="{svg_w - margin_r}" y2="{y_pos}" stroke="#334155" stroke-dasharray="2 4" stroke-width="0.8"/>
-            <text x="{margin_l - 8}" y="{y_pos + 4}" fill="#94A3B8" font-size="11" text-anchor="end" font-weight="600">{SIGN_NAMES[i][:4]}</text>
-            """
+            y_labels.append(f'<line x1="{margin_l}" y1="{y_pos:.1f}" x2="{svg_w - margin_r}" y2="{y_pos:.1f}" stroke="{y_line_stroke}" stroke-dasharray="2 4" stroke-width="0.8"/>')
+            y_labels.append(f'<text x="{margin_l - 8}" y="{y_pos + 4:.1f}" fill="{y_text_fill}" font-size="11" text-anchor="end" font-weight="700">{SIGN_NAMES[i][:4]}</text>')
+        y_labels_str = "".join(y_labels)
 
         # Year labels on X axis
-        x_labels = ""
+        x_labels = []
         for y_idx in range(duration_years + 1):
             yr = start_yr + y_idx
             x_pos = margin_l + (plot_w * y_idx / duration_years)
-            x_labels += f"""
-            <line x1="{x_pos}" y1="{margin_t}" x2="{x_pos}" y2="{svg_h - margin_b}" stroke="#475569" stroke-width="1"/>
-            <text x="{x_pos}" y="{svg_h - margin_b + 20}" fill="#E2E8F0" font-size="12" text-anchor="middle" font-weight="700">{yr}</text>
-            """
+            x_labels.append(f'<line x1="{x_pos:.1f}" y1="{margin_t}" x2="{x_pos:.1f}" y2="{svg_h - margin_b}" stroke="{x_line_stroke}" stroke-width="1"/>')
+            x_labels.append(f'<text x="{x_pos:.1f}" y="{svg_h - margin_b + 20}" fill="{x_text_fill}" font-size="12" text-anchor="middle" font-weight="800">{yr}</text>')
+        x_labels_str = "".join(x_labels)
 
         # Plot paths per planet
-        paths_html = ""
+        paths = []
         for p_name, pts in trajectories.items():
-            cfg = PLANET_CONFIGS.get(p_name, {"color": "#6366F1", "name_hi": p_name})
+            stroke_col = planet_colors.get(p_name, "#6366F1")
             path_segments = []
             cur_seg = []
 
@@ -205,39 +227,36 @@ class EphemerisWavesService:
                 if len(seg) < 2:
                     continue
                 d_str = f"M {seg[0][0]:.1f} {seg[0][1]:.1f} " + " ".join([f"L {pt[0]:.1f} {pt[1]:.1f}" for pt in seg[1:]])
-                paths_html += f"""
-                <path d="{d_str}" fill="none" stroke="{cfg['color']}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-                """
+                paths.append(f'<path d="{d_str}" fill="none" stroke="{stroke_col}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>')
+        paths_str = "".join(paths)
 
         # Legend
         legend_items = "".join([
-            f'<span style="margin-right:16px; font-size:12.5px; font-weight:700; color:{cfg["color"]};">{cfg["symbol"]} {cfg["name_hi"]} ({p})</span>'
+            f'<span style="margin-right:16px; font-size:12.5px; font-weight:800; color:{planet_colors.get(p, cfg["color"])};">{cfg["symbol"]} {cfg["name_hi"]} ({p})</span>'
             for p, cfg in PLANET_CONFIGS.items()
         ])
 
-        html = f"""
-<div style="background: #0F172A; border: 1.5px solid #334155; border-radius: 12px; padding: 18px; color: #FFFFFF; font-family: 'Segoe UI', Tahoma, sans-serif; margin-bottom: 20px;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap;">
-        <div>
-            <b style="font-size: 16px; color: #F59E0B;">📈 ५-वर्षीय बहु-ग्रहीय गोचर वक्रता एवं वेव आरेख ({start_yr} - {end_yr})</b><br/>
-            <small style="color: #94A3B8;">शनि, गुरु, राहु एवं मंगल के गोचर चक्र, मार्गी-वक्री दोलन एवं राशि संक्रमण</small>
-        </div>
-        <div style="background: #1E293B; border: 1px solid #475569; padding: 6px 14px; border-radius: 20px;">
-            {legend_items}
-        </div>
-    </div>
-
-    <div style="overflow-x: auto;">
-        <svg viewBox="0 0 {svg_w} {svg_h}" style="width: 100%; min-width: 750px; height: auto; display: block;">
-            <!-- Grid Background -->
-            <rect x="{margin_l}" y="{margin_t}" width="{plot_w}" height="{plot_h}" fill="#1E293B" rx="6"/>
-            {y_labels}
-            {x_labels}
-            {paths_html}
-        </svg>
-    </div>
-</div>
-        """
+        html = (
+            f'<div style="background:{card_bg}; border:1.5px solid {card_border}; border-radius:12px; padding:18px; color:{card_text}; font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,sans-serif; margin-bottom:20px; box-shadow:0 4px 16px rgba(15,23,42,0.06);">'
+            f'<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">'
+            f'<div>'
+            f'<b style="font-size:16px; color:{title_color}; font-weight:850;">📈 ५-वर्षीय बहु-ग्रहीय गोचर वक्रता एवं वेव आरेख ({start_yr} - {end_yr})</b><br/>'
+            f'<small style="color:{sub_color}; font-weight:600;">शनि, गुरु, राहु एवं मंगल के गोचर चक्र, मार्गी-वक्री दोलन एवं राशि संक्रमण</small>'
+            f'</div>'
+            f'<div style="background:{leg_box_bg}; border:1px solid {leg_box_border}; padding:6px 14px; border-radius:20px;">'
+            f'{legend_items}'
+            f'</div>'
+            f'</div>'
+            f'<div style="overflow-x:auto;">'
+            f'<svg viewBox="0 0 {svg_w} {svg_h}" style="width:100%; min-width:750px; height:auto; display:block;">'
+            f'<rect x="{margin_l}" y="{margin_t}" width="{plot_w}" height="{plot_h}" fill="{grid_fill}" stroke="{grid_border}" stroke-width="1" rx="6"/>'
+            f'{y_labels_str}'
+            f'{x_labels_str}'
+            f'{paths_str}'
+            f'</svg>'
+            f'</div>'
+            f'</div>'
+        )
         return html
 
 

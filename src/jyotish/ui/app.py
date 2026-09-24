@@ -152,6 +152,7 @@ st.set_page_config(
 )
 
 if "app_theme_mode" not in st.session_state:
+    st.session_state.app_theme_mode = "astrallis"
     st.session_state.app_theme_mode = "day"
 
 is_astrallis_mode = (st.session_state.app_theme_mode == "astrallis")
@@ -533,7 +534,6 @@ elif is_night_mode:
         border: 1.5px solid #1F2937 !important;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
     }
-    [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
     [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #111827 !important;
         color: #FFFFFF !important;
@@ -678,20 +678,25 @@ else:
         color: #0F172A !important;
     }
     [data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
+        color: #0F172A !important;
         color: #1E40AF !important;
         font-weight: 900 !important;
         font-size: 1.6rem !important;
     }
     [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] * {
+        color: #475569 !important;
+        font-weight: 700 !important;
         color: #334155 !important;
         font-weight: 800 !important;
         font-size: 0.88rem !important;
     }
     [data-testid="stMetric"] {
         background: #FFFFFF !important;
+        border: 1.5px solid #E2E8F0 !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 12px !important;
         padding: 12px 16px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
     }
     [data-testid="stSidebar"] {
@@ -705,11 +710,13 @@ else:
         color: #0F172A !important;
         font-weight: 800 !important;
     }
+    /* Day Mode Tabs */
 
     /* ═══════════════════════════════════════════════════════════════
        Distinct Luxury Gemstone Colors for Every Module Tab in Day Mode
        ═══════════════════════════════════════════════════════════════ */
     [data-testid="stTabs"] [data-baseweb="tab-list"] {
+        background: #F1F5F9 !important;
         background: #F8FAFC !important;
         border: 1.5px solid #E2E8F0 !important;
         border-radius: 12px !important;
@@ -717,6 +724,7 @@ else:
         gap: 8px !important;
     }
     [data-testid="stTabs"] button[role="tab"] {
+        color: #475569 !important;
         border-radius: 8px !important;
         padding: 8px 16px !important;
         font-weight: 800 !important;
@@ -724,6 +732,10 @@ else:
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
         white-space: nowrap !important;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    }
+    [data-testid="stTabs"] button[role="tab"]:hover {
+        color: #0F172A !important;
+        background: rgba(255, 255, 255, 0.8) !important;
     }
 
     /* Tab 1: Ruby Crimson (Surya) */
@@ -928,6 +940,8 @@ else:
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 12) {
         background: #FFFBEB !important;
         color: #B45309 !important;
+        border: 1.5px solid #D97706 !important;
+        box-shadow: 0 2px 8px rgba(217, 119, 6, 0.15) !important;
         border: 1.5px solid #FDE68A !important;
     }
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 12):hover {
@@ -945,6 +959,7 @@ else:
     /* Day Mode Chat */
     [data-testid="stChatMessage"] {
         background: #FFFFFF !important;
+        border: 1.5px solid #E2E8F0 !important;
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 12px !important;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
@@ -953,6 +968,9 @@ else:
         border-radius: 12px !important;
         border: 1.5px solid #CBD5E1 !important;
     }
+    /* Day Mode Tables & DataFrames */
+    [data-testid="stTable"], [data-testid="stDataFrame"],
+    [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
 
     /* Day Mode Tables */
     [data-testid="stTable"], [data-testid="stTable"] * {
@@ -1489,6 +1507,8 @@ unified_css = f"""
     .exalt-badge {{ color: #1E40AF !important; font-weight: 800; background: #DBEAFE !important; border: 1.5px solid #3B82F6 !important; padding: 3px 8px; border-radius: 6px; }}
     .deb-badge {{ color: #991B1B !important; font-weight: 800; background: #FEE2E2 !important; border: 1.5px solid #EF4444 !important; padding: 3px 8px; border-radius: 6px; }}
 
+    /* Responsive DataFrames & Tables */
+    [data-testid="stTable"], [data-testid="stDataFrame"] {{
     /* Responsive Tables */
     [data-testid="stTable"] {{
         border: 1.5px solid #CBD5E1 !important;
@@ -1498,6 +1518,10 @@ unified_css = f"""
         width: 100% !important;
         max-width: 100% !important;
         margin-bottom: 12px !important;
+    }}
+    [data-testid="stDataFrame"] * {{
+        color: #000000 !important;
+        font-weight: 600 !important;
     }}
     [data-testid="stTable"] table {{
         width: 100% !important;
@@ -1519,6 +1543,8 @@ unified_css = f"""
         -webkit-overflow-scrolling: touch !important;
         scrollbar-width: none !important;
         border-radius: 12px !important;
+        padding: 5px !important;
+        gap: 6px !important;
         padding: 6px !important;
         gap: 8px !important;
     }}
@@ -1529,6 +1555,8 @@ unified_css = f"""
         flex-shrink: 0 !important;
         border-radius: 8px !important;
         padding: 8px 16px !important;
+        font-weight: 700 !important;
+        font-size: 13.5px !important;
         font-weight: 800 !important;
         font-size: 13px !important;
         border: 1.5px solid transparent !important;
@@ -1541,6 +1569,8 @@ unified_css = f"""
         display: none !important;
     }}
 
+    /* Responsive SVG & Kundali Charts Auto-Scaling */
+    svg {{
     /* Distinct Luxury Gemstone Colors for Every Module Tab */
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1) {{ background: #FFF1F2 !important; color: #9F1239 !important; border: 1.5px solid #FECDD3 !important; }}
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1)[aria-selected="true"] {{ background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%) !important; color: #FFFFFF !important; border: 1.5px solid #9F1239 !important; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35) !important; }}
@@ -1581,9 +1611,11 @@ unified_css = f"""
     /* Responsive SVG & Kundali Charts Auto-Scaling (Scoped strictly to Kundali SVGs, never global svg or Vega-Lite charts) */
     .kundali-chart svg, .chart-container svg, .observatory-canvas svg, div:has(> svg.kundali-svg) svg {{
         max-width: 100% !important;
+        height: auto !important;
         display: block !important;
         margin: 0 auto !important;
     }}
+    div:has(> svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
     div:has(> svg.kundali-svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
         max-width: 100% !important;
         overflow-x: auto !important;
@@ -6120,7 +6152,8 @@ elif selected_idx == 7:
             import src.jyotish.services.aspectarium as asp_mod
             importlib.reload(asp_mod)
             asp_data = asp_mod.default_aspectarium_service.calculate_aspectarium(chart)
-            asp_html = asp_mod.default_aspectarium_service.render_aspectarium_html(chart)
+            _asp_theme = "day" if st.session_state.get("app_theme_mode", "day") != "night" else "night"
+            asp_html = asp_mod.default_aspectarium_service.render_aspectarium_html(chart, theme=_asp_theme)
 
             # Top KPI metrics
             c_as1, c_as2, c_as3 = st.columns(3)
@@ -6574,10 +6607,12 @@ elif selected_idx == 9:
             if sel_m_str != "वर्तमान सक्रिय महादशा (Auto)":
                 sel_idx = m_options.index(sel_m_str) - 1
 
+            _dasha_theme = "day" if st.session_state.get("app_theme_mode", "day") != "night" else "night"
             gantt_html = dt_mod.default_dasha_timeline_service.render_gantt_html(
                 chart,
                 target_date=gantt_target_date,
-                selected_maha_idx=sel_idx
+                selected_maha_idx=sel_idx,
+                theme=_dasha_theme
             )
             components.html(gantt_html, height=580, scrolling=True)
 
@@ -8143,6 +8178,7 @@ elif selected_idx == 10:
         st.info("राहु और चन्द्रमा के मध्य बिन्दु। इस पर ग्रह गोचर = महत्त्वपूर्ण जीवन घटना।")
         try:
             import importlib
+            import src.jyotish.core.ashtakava
             import src.jyotish.core.ashtakavarga as ak_mod
             importlib.reload(ak_mod)
             _bb = ak_mod.AshtakavargaCalculator.calculate_bhrigu_bindu(chart)
@@ -8297,7 +8333,8 @@ elif selected_idx == 10:
                 spd_res = default_transit_graph_service.calculate_speed_timeline(spd_start_date, days=spd_days, planet_names=spd_planets)
 
             # SVG Chart
-            spd_svg = default_transit_graph_service.render_speed_svg(spd_res)
+            _spd_theme = "day" if st.session_state.get("app_theme_mode", "day") != "night" else "night"
+            spd_svg = default_transit_graph_service.render_speed_svg(spd_res, theme=_spd_theme)
             st.markdown(spd_svg, unsafe_allow_html=True)
 
             st.markdown("---")
@@ -8349,10 +8386,11 @@ elif selected_idx == 10:
 
                 with st.spinner("५-वर्षीय खगोलीय वेव चक्र एवं राशि परिवर्तन की गणना जारी..."):
                     waves_data = ew_svc.generate_multi_year_waves(start_year=w_start_year, duration_years=w_duration)
-                    waves_svg = ew_svc.render_waves_svg_html(start_year=w_start_year, duration_years=w_duration)
+                    waves_theme = "day" if st.session_state.get("app_theme_mode", "day") != "night" else "night"
+                    waves_svg = ew_svc.render_waves_svg_html(start_year=w_start_year, duration_years=w_duration, theme=waves_theme)
 
-                # Render SVG Wave Chart
-                st.markdown(waves_svg.strip(), unsafe_allow_html=True)
+                # Render SVG Wave Chart cleanly without markdown parsing interference
+                st.components.v1.html(waves_svg, height=500, scrolling=True)
 
                 col_we1, col_we2 = st.columns(2)
                 with col_we1:
@@ -11781,4 +11819,3 @@ elif selected_idx == 29:
             <small style="color:#64748B;"><b>शास्त्रीय संदर्भ:</b> {krm['shastriya_basis']}</small>
         </div>
         """, unsafe_allow_html=True)
-
