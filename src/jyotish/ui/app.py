@@ -152,8 +152,12 @@ st.set_page_config(
 )
 
 if "app_theme_mode" not in st.session_state:
-    st.session_state.app_theme_mode = "astrallis"
     st.session_state.app_theme_mode = "day"
+
+if "theme" in st.query_params:
+    _qp_th = str(st.query_params.get("theme", "")).lower().strip()
+    if _qp_th in ["day", "night", "astrallis"]:
+        st.session_state.app_theme_mode = _qp_th
 
 is_astrallis_mode = (st.session_state.app_theme_mode == "astrallis")
 is_night_mode = (st.session_state.app_theme_mode == "night")
@@ -1936,7 +1940,8 @@ unified_css = f"""
 st.markdown(unified_css, unsafe_allow_html=True)
 
 # Client-Side Sidebar Toggle Bridge, Multi-Language Engine & Live GPS Resolver
-components.html("""
+cur_active_theme = st.session_state.get("app_theme_mode", "day")
+client_bridge_code = """
 <script>
 (function() {
     function setupSidebarToggle() {
@@ -2427,8 +2432,12 @@ components.html("""
             if (!parentDoc) return;
 
             const THEME_STYLE_ID = "jyotish-theme-override-style";
+            const SERVER_THEME_MODE = "__ACTIVE_THEME_MODE__";
 
             function applyTheme(mode) {
+                if (!mode || (mode !== "astrallis" && mode !== "night" && mode !== "day")) {
+                    mode = "day";
+                }
                 const isAstrallis = (mode === "astrallis");
                 const isNight = (mode === "night");
                 try {
@@ -2440,6 +2449,13 @@ components.html("""
                 if (!styleEl) {
                     styleEl = parentDoc.getElementById("jyotish-night-mode-override-style");
                     if (styleEl) styleEl.id = THEME_STYLE_ID;
+                }
+
+                if (parentDoc.body && parentDoc.body.dataset.appliedThemeMode === mode && styleEl && styleEl.innerHTML.length > 50) {
+                    return;
+                }
+                if (parentDoc.body) {
+                    parentDoc.body.dataset.appliedThemeMode = mode;
                 }
 
                 if (isAstrallis) {
@@ -3102,10 +3118,46 @@ components.html("""
                             background-color: #F4F8EC !important;
                             border-color: #4D7C0F !important;
                         }
+                        /* Tabs Day Mode - Multi-color tabs */
                         [data-testid="stTabs"] [data-baseweb="tab-list"] {
                             background: #F4F8EC !important;
                             border: 1.5px solid #CBDCB8 !important;
+                            border-radius: 10px !important;
+                            padding: 4px 6px !important;
+                            gap: 4px !important;
                         }
+                        [data-testid="stTabs"] button[role="tab"] {
+                            border-radius: 8px !important;
+                            font-weight: 800 !important;
+                            font-size: 0.88rem !important;
+                            padding: 6px 14px !important;
+                            margin: 2px 3px !important;
+                            transition: all 0.2s ease !important;
+                        }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1) { background: #FFF1F2 !important; color: #9F1239 !important; border: 1.5px solid #FECDD3 !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1)[aria-selected="true"] { background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%) !important; color: #FFFFFF !important; border: 1.5px solid #9F1239 !important; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 2) { background: #EFF6FF !important; color: #1D4ED8 !important; border: 1.5px solid #BFDBFE !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 2)[aria-selected="true"] { background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important; color: #FFFFFF !important; border: 1.5px solid #1E40AF !important; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 3) { background: #ECFDF5 !important; color: #047857 !important; border: 1.5px solid #A7F3D0 !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 3)[aria-selected="true"] { background: linear-gradient(135deg, #059669 0%, #047857 100%) !important; color: #FFFFFF !important; border: 1.5px solid #065F46 !important; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 4) { background: #FEF3C7 !important; color: #92400E !important; border: 1.5px solid #FDE68A !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 4)[aria-selected="true"] { background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important; color: #FFFFFF !important; border: 1.5px solid #78350F !important; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 5) { background: #FFF7ED !important; color: #C2410C !important; border: 1.5px solid #FFEDD5 !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 5)[aria-selected="true"] { background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%) !important; color: #FFFFFF !important; border: 1.5px solid #9A3412 !important; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 6) { background: #FAF5FF !important; color: #6B21A8 !important; border: 1.5px solid #E9D5FF !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 6)[aria-selected="true"] { background: linear-gradient(135deg, #7E22CE 0%, #6B21A8 100%) !important; color: #FFFFFF !important; border: 1.5px solid #581C87 !important; box-shadow: 0 4px 14px rgba(126, 34, 206, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 7) { background: #ECFEFF !important; color: #0E7490 !important; border: 1.5px solid #A5F3FC !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 7)[aria-selected="true"] { background: linear-gradient(135deg, #0891B2 0%, #0E7490 100%) !important; color: #FFFFFF !important; border: 1.5px solid #155E75 !important; box-shadow: 0 4px 14px rgba(8, 145, 178, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 8) { background: #FDF4FF !important; color: #86198F !important; border: 1.5px solid #F5D0FE !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 8)[aria-selected="true"] { background: linear-gradient(135deg, #C026D3 0%, #9333EA 100%) !important; color: #FFFFFF !important; border: 1.5px solid #701A75 !important; box-shadow: 0 4px 14px rgba(192, 38, 211, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 9) { background: #EEF2FF !important; color: #4338CA !important; border: 1.5px solid #C7D2FE !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 9)[aria-selected="true"] { background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%) !important; color: #FFFFFF !important; border: 1.5px solid #312E81 !important; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 10) { background: #FFF1F2 !important; color: #BE185D !important; border: 1.5px solid #FBCFE8 !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 10)[aria-selected="true"] { background: linear-gradient(135deg, #DB2777 0%, #BE185D 100%) !important; color: #FFFFFF !important; border: 1.5px solid #9D174D !important; box-shadow: 0 4px 14px rgba(219, 39, 119, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 11) { background: #F0FDFA !important; color: #0F766E !important; border: 1.5px solid #99F6E4 !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 11)[aria-selected="true"] { background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%) !important; color: #FFFFFF !important; border: 1.5px solid #115E59 !important; box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35) !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 12) { background: #FFFBEB !important; color: #B45309 !important; border: 1.5px solid #FDE68A !important; }
+                        [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 12)[aria-selected="true"] { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important; color: #FFFFFF !important; border: 1.5px solid #B45309 !important; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35) !important; }
                         [data-testid="stChatMessage"] {
                             background: #FFFFFF !important;
                             border: 1.5px solid #CBDCB8 !important;
@@ -3139,10 +3191,12 @@ components.html("""
                         div[style*="color:#ffffff"], div[style*="color: #ffffff"],
                         div[style*="color:#F8FAFC"], div[style*="color: #F8FAFC"],
                         div[style*="color:#E2E8F0"], div[style*="color: #E2E8F0"],
+                        div[style*="color:#CBD5E1"], div[style*="color: #CBD5E1"],
                         span[style*="color:#FFFFFF"], span[style*="color: #FFFFFF"],
                         span[style*="color:#ffffff"], span[style*="color: #ffffff"],
                         span[style*="color:#F8FAFC"], span[style*="color: #F8FAFC"],
                         span[style*="color:#E2E8F0"], span[style*="color: #E2E8F0"],
+                        span[style*="color:#CBD5E1"], span[style*="color: #CBD5E1"],
                         b[style*="color:#FFFFFF"], b[style*="color: #FFFFFF"],
                         b[style*="color:#ffffff"], b[style*="color: #ffffff"],
                         strong[style*="color:#FFFFFF"], strong[style*="color: #FFFFFF"],
@@ -3169,6 +3223,9 @@ components.html("""
             }
 
             const handleThemeSwitch = function(themeMode) {
+                if (parentDoc.body) {
+                    delete parentDoc.body.dataset.appliedThemeMode;
+                }
                 applyTheme(themeMode);
             };
 
@@ -3191,8 +3248,11 @@ components.html("""
                 }
             });
 
-            const currentSaved = localStorage.getItem("jyotish_theme_mode") || sessionStorage.getItem("jyotish_theme_mode") || "astrallis";
-            applyTheme(currentSaved);
+            // Master resolution: server session theme takes precedence, then localStorage, default to day
+            const authoritativeTheme = (SERVER_THEME_MODE && SERVER_THEME_MODE !== "__ACTIVE_THEME_MODE__") 
+                ? SERVER_THEME_MODE 
+                : (localStorage.getItem("jyotish_theme_mode") || "day");
+            applyTheme(authoritativeTheme);
         } catch (e) {
             console.error("Theme mode error:", e);
         }
@@ -3320,7 +3380,8 @@ components.html("""
     }, 250);
 })();
 </script>
-""", height=0, width=0)
+"""
+components.html(client_bridge_code.replace("__ACTIVE_THEME_MODE__", cur_active_theme), height=0, width=0)
 
 
 # -------------------------------------------------------------
@@ -4598,7 +4659,7 @@ with st.container(key="top_frozen_header_container", border=True):
         elif st.session_state.gla_active_tool == "theme":
             with st.container(border=True):
                 st.markdown("### 🔬🌙☀️ वैज्ञानिक एवं वैदिक थीम मोड (Astrallis & Vedic Themes)")
-                cur_th = st.session_state.get("app_theme_mode", "astrallis")
+                cur_th = st.session_state.get("app_theme_mode", "day")
                 col_th0, col_th1, col_th2, col_th3 = st.columns([1.8, 1.8, 1.8, 1])
                 with col_th0:
                     if st.button("🔬 एस्ट्रैलिस वेधशाला (Astrallis)", type="primary" if cur_th == "astrallis" else "secondary", use_container_width=True, key="gla_set_astrallis_theme_btn"):
