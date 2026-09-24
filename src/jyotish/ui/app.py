@@ -315,7 +315,7 @@ if is_astrallis_mode:
         border: 1.5px solid #1E293B !important;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
     }
-    [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+    [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #050811 !important;
         color: #F1F5F9 !important;
         font-family: 'JetBrains Mono', monospace !important;
@@ -532,7 +532,7 @@ elif is_night_mode:
         border: 1.5px solid #1F2937 !important;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
     }
-    [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+    [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #111827 !important;
         color: #FFFFFF !important;
     }
@@ -722,9 +722,8 @@ else:
         border-radius: 12px !important;
         border: 1.5px solid #CBD5E1 !important;
     }
-    /* Day Mode Tables & DataFrames */
-    [data-testid="stTable"], [data-testid="stDataFrame"],
-    [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+    /* Day Mode Tables */
+    [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #FFFFFF !important;
         color: #0F172A !important;
     }
@@ -1227,8 +1226,8 @@ unified_css = f"""
     .exalt-badge {{ color: #1E40AF !important; font-weight: 800; background: #DBEAFE !important; border: 1.5px solid #3B82F6 !important; padding: 3px 8px; border-radius: 6px; }}
     .deb-badge {{ color: #991B1B !important; font-weight: 800; background: #FEE2E2 !important; border: 1.5px solid #EF4444 !important; padding: 3px 8px; border-radius: 6px; }}
 
-    /* Responsive DataFrames & Tables */
-    [data-testid="stTable"], [data-testid="stDataFrame"] {{
+    /* Responsive Tables */
+    [data-testid="stTable"] {{
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 10px !important;
         overflow-x: auto !important;
@@ -1236,10 +1235,6 @@ unified_css = f"""
         width: 100% !important;
         max-width: 100% !important;
         margin-bottom: 12px !important;
-    }}
-    [data-testid="stDataFrame"] * {{
-        color: #000000 !important;
-        font-weight: 600 !important;
     }}
     [data-testid="stTable"] table {{
         width: 100% !important;
@@ -1283,14 +1278,13 @@ unified_css = f"""
         display: none !important;
     }}
 
-    /* Responsive SVG & Kundali Charts Auto-Scaling */
-    svg {{
+    /* Responsive SVG & Kundali Charts Auto-Scaling (Scoped strictly to Kundali SVGs, never global svg or Vega-Lite charts) */
+    .kundali-chart svg, .chart-container svg, .observatory-canvas svg, div:has(> svg.kundali-svg) svg {{
         max-width: 100% !important;
-        height: auto !important;
         display: block !important;
         margin: 0 auto !important;
     }}
-    div:has(> svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
+    div:has(> svg.kundali-svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
         max-width: 100% !important;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch !important;
@@ -2171,7 +2165,7 @@ components.html("""
                             border: 1.5px solid #1E293B !important;
                             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
                         }
-                        [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+                        [data-testid="stTable"], [data-testid="stTable"] * {
                             background-color: #050811 !important;
                             color: #F1F5F9 !important;
                             font-family: 'JetBrains Mono', monospace !important;
@@ -2389,7 +2383,7 @@ components.html("""
                             border: 1.5px solid #1F2937 !important;
                             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
                         }
-                        [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
+                        [data-testid="stTable"], [data-testid="stTable"] * {
                             background-color: #111827 !important;
                             color: #FFFFFF !important;
                         }
@@ -4454,6 +4448,85 @@ if selected_idx == 0:
             "गति (Motion)": "वक्री (R)" if (d1_p and d1_p.is_retrograde) else "मार्गी",
             "अवस्था / शास्त्रीय प्रभाव": d_impact,
         })
+
+    # ─── Render Rich Classical Planetary Dignity HTML Table ───
+    if is_astrallis_mode:
+        _t_bg = "#050811"; _t_th_bg = "#0A1628"; _t_bdr = "#1E3A5F"; _t_txt = "#CBD5E1"; _t_th = "#00E5FF"; _t_alt = "#070E1C"
+    elif is_night_mode:
+        _t_bg = "#111827"; _t_th_bg = "#1F2937"; _t_bdr = "#374151"; _t_txt = "#E2E8F0"; _t_th = "#F59E0B"; _t_alt = "#172033"
+    else:  # Day Mode (Royal Pearl)
+        _t_bg = "#FFFFFF"; _t_th_bg = "#F1F5F9"; _t_bdr = "#CBD5E1"; _t_txt = "#0F172A"; _t_th = "#1E3A8A"; _t_alt = "#F8FAFC"
+
+    _GRAHA_SYMS = {"Sun": "☉ सूर्य", "Moon": "☽ चन्द्र", "Mars": "♂ मंगल", "Mercury": "☿ बुध", "Jupiter": "♃ गुरु", "Venus": "♀ शुक्र", "Saturn": "♄ शनि", "Rahu": "☊ राहु", "Ketu": "☋ केतु"}
+    _P_COLS = {"Sun":"#E11D48","Moon":"#2563EB","Mars":"#DC2626","Mercury":"#059669","Jupiter":"#D97706","Venus":"#DB2777","Saturn":"#475569","Rahu":"#7C3AED","Ketu":"#B45309"}
+
+    t_rows = []
+    for idx, row in enumerate(p_data):
+        p_nm = row["ग्रह (Graha)"]
+        sym_nm = _GRAHA_SYMS.get(p_nm, p_nm)
+        pc = _P_COLS.get(p_nm, "#2563EB")
+        d_lbl = row["वर्ग गरिमा (Dignity)"]
+        
+        # Dignity badge styling
+        if "उच्च" in d_lbl:
+            b_bg, b_fg, b_bdr = "#DBEAFE", "#1E40AF", "#93C5FD"
+        elif "मूलत्रिकोण" in d_lbl:
+            b_bg, b_fg, b_bdr = "#CCFBF1", "#0F766E", "#5EEAD4"
+        elif "स्वराशि" in d_lbl:
+            b_bg, b_fg, b_bdr = "#D1FAE5", "#065F46", "#6EE7B7"
+        elif "नीच" in d_lbl:
+            b_bg, b_fg, b_bdr = "#FEE2E2", "#991B1B", "#FCA5A5"
+        elif "शत्रु" in d_lbl:
+            b_bg, b_fg, b_bdr = "#FFEDD5", "#9A3412", "#FDBA74"
+        elif "मित्र" in d_lbl:
+            b_bg, b_fg, b_bdr = "#ECFDF5", "#047857", "#A7F3D0"
+        else:
+            b_bg, b_fg, b_bdr = "#F1F5F9", "#334155", "#CBD5E1"
+
+        # Motion badge
+        is_ret = "वक्री" in row["गति (Motion)"]
+        m_bg = "#FEE2E2" if is_ret else "#ECFDF5"
+        m_fg = "#DC2626" if is_ret else "#059669"
+        m_bdr = "#F87171" if is_ret else "#86EFAC"
+
+        row_bg = _t_alt if idx % 2 == 1 else _t_bg
+
+        t_rows.append(
+            f'<tr style="background:{row_bg};border-bottom:1px solid {_t_bdr};">'
+            f'<td style="padding:7px 10px;font-weight:900;color:{pc};white-space:nowrap;font-size:12.5px;">{sym_nm}</td>'
+            f'<td style="padding:7px 10px;font-weight:700;color:{_t_txt};font-size:12px;">{row["वर्ग राशि (Sign)"]}</td>'
+            f'<td style="padding:7px 10px;color:{_t_txt};font-size:12px;">{row["राशि स्वामी (Lord)"]}</td>'
+            f'<td style="padding:7px 10px;font-weight:700;color:{pc};font-size:12px;font-family:monospace;">{row["वर्ग अंश (Degree)"]}</td>'
+            f'<td style="padding:7px 10px;color:{_t_txt};font-size:12px;">{row["वर्ग भाव (Varga House)"]}</td>'
+            f'<td style="padding:7px 10px;"><span style="background:{b_bg};color:{b_fg};border:1px solid {b_bdr};padding:2px 8px;border-radius:6px;font-size:11px;font-weight:800;white-space:nowrap;">{d_lbl}</span></td>'
+            f'<td style="padding:7px 10px;color:{_t_txt};font-size:11.5px;">{row["D1 राशि (Ref)"]} / {row["D1 भाव (Ref)"]}</td>'
+            f'<td style="padding:7px 10px;"><span style="background:{m_bg};color:{m_fg};border:1px solid {m_bdr};padding:2px 7px;border-radius:6px;font-size:11px;font-weight:800;">{row["गति (Motion)"]}</span></td>'
+            f'<td style="padding:7px 10px;color:{_t_txt};font-size:11.5px;">{row["अवस्था / शास्त्रीय प्रभाव"]}</td>'
+            f'</tr>'
+        )
+
+    table_html = f"""
+<div style="width:100%;overflow-x:auto;background:{_t_bg};border:1.5px solid {_t_bdr};border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.04);margin-bottom:14px;">
+  <table style="width:100%;border-collapse:collapse;text-align:left;font-family:inherit;">
+    <thead>
+      <tr style="background:{_t_th_bg};border-bottom:2px solid {_t_bdr};">
+        <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">ग्रह (Graha)</th>
+        <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">वर्ग राशि (Sign)</th>
+        <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">स्वामी (Lord)</th>
+        <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">वर्ग अंश (Deg)</th>
+        <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">वर्ग भाव (House)</th>
+        <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">गरिमा (Dignity)</th>
+        <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">D1 संदर्भ (Ref)</th>
+        <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">गति (Motion)</th>
+        <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">अवस्था / शास्त्रीय फल</th>
+      </tr>
+    </thead>
+    <tbody>
+      {"".join(t_rows)}
+    </tbody>
+  </table>
+</div>"""
+    st.markdown(table_html, unsafe_allow_html=True)
     st.dataframe(pd.DataFrame(p_data), use_container_width=True, hide_index=True)
 
     # 🌟 विशेष लग्न HUD (J.Hora Special Lagnas: HL, GL, SL, Indu, PP, VL)
