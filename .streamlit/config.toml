@@ -5,4 +5,6 @@ showErrorDetails = true
 headless = true
 enableCORS = false
 enableXsrfProtection = false
+enableStaticServing = true
+maxUploadSize = 50
 

@@ -1460,6 +1460,37 @@ unified_css = f"""
         font-weight: 700 !important;
     }}
 
+    /* Mobile & PWA Responsive Optimization */
+    @media (max-width: 768px) {{
+        .block-container {{
+            padding-left: 0.6rem !important;
+            padding-right: 0.6rem !important;
+            padding-top: 0.4rem !important;
+        }}
+        .top-nav-bar {{
+            padding: 8px 10px !important;
+            flex-wrap: wrap !important;
+            gap: 6px !important;
+        }}
+        .app-brand-title {{
+            font-size: 1.1rem !important;
+        }}
+        .active-profile-pill, .header-sub-pill, .hud-pill {{
+            font-size: 0.72rem !important;
+            padding: 3px 6px !important;
+        }}
+        /* Mobile touch button sizing */
+        button, .stButton > button, [data-testid="baseButton-secondary"], [data-testid="baseButton-primary"] {{
+            min-height: 42px !important;
+            touch-action: manipulation !important;
+        }}
+        /* Prevent horizontal overflow on tables and charts */
+        div[data-testid="stHorizontalBlock"] {{
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }}
+    }}
+
     {theme_mode_css}
 </style>
 """
@@ -2514,12 +2545,73 @@ components.html("""
         }
     }
 
+    function setupPWAandMobile() {
+        try {
+            const parentDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            if (!parentDoc) return;
+            const head = parentDoc.head || parentDoc.getElementsByTagName('head')[0];
+            if (!head) return;
+
+            // 1. PWA Manifest link
+            if (!parentDoc.querySelector('link[rel="manifest"]')) {
+                const manifestLink = parentDoc.createElement('link');
+                manifestLink.rel = 'manifest';
+                manifestLink.href = '/app/static/manifest.json';
+                head.appendChild(manifestLink);
+            }
+
+            // 2. Mobile web app capable & Apple touch meta tags
+            if (!parentDoc.querySelector('meta[name="apple-mobile-web-app-capable"]')) {
+                const m1 = parentDoc.createElement('meta');
+                m1.name = 'apple-mobile-web-app-capable';
+                m1.content = 'yes';
+                head.appendChild(m1);
+
+                const m2 = parentDoc.createElement('meta');
+                m2.name = 'apple-mobile-web-app-status-bar-style';
+                m2.content = 'black-translucent';
+                head.appendChild(m2);
+
+                const m3 = parentDoc.createElement('meta');
+                m3.name = 'apple-mobile-web-app-title';
+                m3.content = 'AI ज्योतिषाचार्य';
+                head.appendChild(m3);
+
+                const m4 = parentDoc.createElement('meta');
+                m4.name = 'mobile-web-app-capable';
+                m4.content = 'yes';
+                head.appendChild(m4);
+
+                const m5 = parentDoc.createElement('meta');
+                m5.name = 'theme-color';
+                m5.content = '#050811';
+                head.appendChild(m5);
+
+                const iconLink = parentDoc.createElement('link');
+                iconLink.rel = 'apple-touch-icon';
+                iconLink.href = '/app/static/icon-192.png';
+                head.appendChild(iconLink);
+            }
+
+            // 3. Register Service Worker on parent window navigator
+            const winNav = (window.parent && window.parent.navigator) ? window.parent.navigator : navigator;
+            if (winNav && 'serviceWorker' in winNav && !window.__sw_registered) {
+                window.__sw_registered = true;
+                winNav.serviceWorker.register('/app/static/sw.js').then(function(reg) {
+                    console.log('Jyotish PWA active:', reg.scope);
+                }).catch(function(e) {});
+            }
+        } catch(e) {}
+    }
+
+    setupPWAandMobile();
     setupSidebarToggle();
     setupLanguageBridge();
     setupThemeMode();
     setupStickyTopHeader();
     resolveClientGPS();
     setInterval(function() {
+        setupPWAandMobile();
         setupSidebarToggle();
         setupLanguageBridge();
         setupThemeMode();
@@ -9256,19 +9348,47 @@ elif selected_idx == 18:
                 astro_org=astro_org
             )
 
-        col_rep_btn1, col_rep_btn2 = st.columns([2, 2])
+        import src.jyotish.services.pdf_generator as pdf_mod
+        importlib.reload(pdf_mod)
+        pdf_service = pdf_mod.default_pdf_service
+
+        chart_cache_key = f"pdf_{birth_profile.name}_{birth_profile.birth_date}_{birth_profile.birth_time}"
+        pdf_bytes = st.session_state.get(chart_cache_key, None)
+
+        col_rep_btn1, col_rep_btn2, col_rep_btn3 = st.columns([1.8, 1.4, 1.2])
         with col_rep_btn1:
+            if pdf_bytes:
+                st.download_button(
+                    label=f"⚡ असली PDF डाउनलोड करें ({len(pdf_bytes)/1024:.0f} KB)",
+                    data=pdf_bytes,
+                    file_name=f"{birth_profile.name}_Sampurna_Kundali_Report.pdf",
+                    mime="application/pdf",
+                    type="primary",
+                    use_container_width=True,
+                    key="rep_btn_download_pdf"
+                )
+            else:
+                if st.button("⚡ 1-क्लिक असली PDF तैयार करें (Direct Native PDF)", type="primary", use_container_width=True, key="rep_btn_gen_pdf"):
+                    with st.spinner("🔮 क्रोमियम इंजन द्वारा सम्पूर्ण 50+ पेज सचित्र पत्रिका PDF तैयार की जा रही है (लगभग 10-15 सेकंड)..."):
+                        pdf_data = pdf_service.html_to_pdf_bytes(html_rep, timeout_sec=90)
+                        if pdf_data:
+                            st.session_state[chart_cache_key] = pdf_data
+                            st.toast("✅ सम्पूर्ण 50+ पेज PDF सफलतापूर्वक तैयार हो गई है! डाउनलोड बटन पर क्लिक करें।")
+                            st.rerun()
+                        else:
+                            st.error("⚠️ PDF इंजन निष्पादित नहीं हो सका। कृपया बगल में दिए गए HTML डाउनलोड का उपयोग करें।")
+
+        with col_rep_btn2:
             st.download_button(
-                label="📥 रंगीन PDF / HTML पत्रिका डाउनलोड करें (Download Full Kundali)",
+                label="📥 रंगीन HTML पत्रिका (.html)",
                 data=html_rep,
                 file_name=f"{birth_profile.name}_Sampurna_Kundali_Report.html",
                 mime="text/html",
-                type="primary",
                 use_container_width=True,
                 key="rep_btn_download"
             )
-        with col_rep_btn2:
-            st.button("🖨️ सीधे प्रिंट करें (Direct Print via Browser)", on_click=lambda: st.toast("प्रिंट करने हेतु डाउनलोड फाइल को ब्राउज़र में खोलकर Ctrl+P दबाएं।"), use_container_width=True, key="rep_btn_print")
+        with col_rep_btn3:
+            st.button("🖨️ सीधे प्रिंट करें (Ctrl+P)", on_click=lambda: st.toast("प्रिंट करने हेतु डाउनलोड फाइल को ब्राउज़र में खोलकर Ctrl+P दबाएं।"), use_container_width=True, key="rep_btn_print")
 
         with st.expander("👁️ पत्रिका सम्पूर्ण लाइव पूर्वावलोकन (Live 20+ Chapter Preview)", expanded=True):
             st.components.v1.html(html_rep, height=850, scrolling=True)
@@ -9293,25 +9413,45 @@ elif selected_idx == 18:
         import urllib.parse
         wa_url = f"https://wa.me/?text={urllib.parse.quote(p_wa_text)}"
 
-        col_slip1, col_slip2, col_slip3 = st.columns([1.5, 1.5, 1.5])
+        slip_cache_key = f"slip_pdf_{birth_profile.name}_{birth_profile.birth_date}"
+        slip_pdf = st.session_state.get(slip_cache_key, None)
+
+        col_slip1, col_slip2, col_slip3, col_slip4 = st.columns([1.6, 1.2, 1.4, 1.0])
         with col_slip1:
+            if slip_pdf:
+                st.download_button(
+                    "⚡ असली पर्ची PDF डाउनलोड (.pdf)",
+                    data=slip_pdf,
+                    file_name=f"{birth_profile.name}_Consultation_Prescription.pdf",
+                    mime="application/pdf",
+                    type="primary",
+                    use_container_width=True,
+                    key="btn_dl_slip_pdf"
+                )
+            else:
+                if st.button("⚡ 1-क्लिक पर्ची PDF बनाएं", type="primary", use_container_width=True, key="btn_gen_slip_pdf"):
+                    with st.spinner("📄 1-पेज पर्ची PDF तैयार हो रही है..."):
+                        s_data = pdf_service.html_to_pdf_bytes(p_html, timeout_sec=30)
+                        if s_data:
+                            st.session_state[slip_cache_key] = s_data
+                            st.rerun()
+        with col_slip2:
             st.download_button(
-                "📥 १-पेज पर्ची HTML / PDF डाउनलोड करें",
+                "📥 पर्ची HTML",
                 data=p_html,
                 file_name=f"{birth_profile.name}_Consultation_Prescription.html",
                 mime="text/html",
-                type="primary",
                 use_container_width=True,
                 key="btn_dl_slip"
             )
-        with col_slip2:
+        with col_slip3:
             st.link_button(
-                "💬 WhatsApp पर परामर्श साझा करें (Share to WhatsApp)",
+                "💬 WhatsApp पर भेजें",
                 url=wa_url,
                 use_container_width=True
             )
-        with col_slip3:
-            st.button("🖨️ A4 प्रिंटेबल रेडी (Ctrl+P)", on_click=lambda: st.toast("डाउनलोड की गई पर्ची ब्राउज़र में खोलकर Ctrl+P से A4 आकार में तुरंत प्रिंट करें।"), use_container_width=True, key="btn_print_slip")
+        with col_slip4:
+            st.button("🖨️ A4 प्रिंट (Ctrl+P)", on_click=lambda: st.toast("डाउनलोड की गई पर्ची ब्राउज़र में खोलकर Ctrl+P से A4 आकार में तुरंत प्रिंट करें।"), use_container_width=True, key="btn_print_slip")
 
         st.components.v1.html(p_html, height=720, scrolling=True)
 

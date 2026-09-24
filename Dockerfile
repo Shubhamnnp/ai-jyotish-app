@@ -8,10 +8,15 @@ ENV PORT=8501
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies & Chromium for Native PDF generation
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
+    chromium \
+    chromium-driver \
+    fonts-noto-cjk \
+    fonts-deva \
+    fonts-indic \
     && rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies

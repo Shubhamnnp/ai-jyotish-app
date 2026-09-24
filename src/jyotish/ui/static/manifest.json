@@ -1,0 +1,24 @@
+{
+  "name": "AI ज्योतिषाचार्य SaaS Pro",
+  "short_name": "AI Jyotish",
+  "description": "Enterprise Shastriya Vedic Astrology & Horoscope Workstation",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0B0F19",
+  "theme_color": "#D97706",
+  "icons": [
+    {
+      "src": "/app/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/app/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
