@@ -3898,18 +3898,27 @@ ghati_val = round((birth_t.hour + birth_t.minute / 60.0 - 5.3) * 2.5, 2)
 if ghati_val < 0:
     ghati_val += 60.0
 
+_hud_title_color = "#00E5FF" if is_astrallis_mode else ("#F8C471" if is_night_mode else "#000000")
+_hud_accuracy_bg = "#0A1628" if is_astrallis_mode else ("#1A2340" if is_night_mode else "#EFF6FF")
+_hud_accuracy_border = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#2563EB")
+_hud_accuracy_color = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#1E40AF")
+_breadcrumb_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#EFF6FF")
+_breadcrumb_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#93C5FD")
+_breadcrumb_title_color = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#1E40AF")
+_breadcrumb_text_color = "#CBD5E1" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
+
 st.markdown(f"""
 <div class="digital-hud">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 4px;">
         <div style="font-weight: 800; font-size: 12.5px; display: flex; align-items: center; gap: 6px;">
             <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981; box-shadow:0 0 6px #10B981;"></span>
-            <span style="color:#000000; font-weight:900;">⚡ डिजिटल पंचांग एवं काल गणना (Panchang & Ephemeris HUD)</span>
+            <span style="color:{_hud_title_color}; font-weight:900;">⚡ डिजिटल पंचांग एवं काल गणना (Panchang &amp; Ephemeris HUD)</span>
         </div>
         <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
             <div class="hud-pill-highlight" style="border-radius: 6px; border: 1.5px solid #D97706; font-weight: 800;">
                 👑 होरा स्वामी: <b>{hora_lord}</b>
             </div>
-            <div style="background: #EFF6FF; border: 1.5px solid #2563EB; color: #1E40AF; border-radius: 6px; padding: 3px 8px; font-size: 11.5px; font-weight: 800;">
+            <div style="background: {_hud_accuracy_bg}; border: 1.5px solid {_hud_accuracy_border}; color: {_hud_accuracy_color}; border-radius: 6px; padding: 3px 8px; font-size: 11.5px; font-weight: 800;">
                 🛡️ 99.9% परिशुद्धता
             </div>
         </div>
@@ -3929,9 +3938,9 @@ st.markdown(f"""
 
 # Active Module Breadcrumb Pill
 st.markdown(f"""
-<div style="display:flex; justify-content:space-between; align-items:center; background:#EFF6FF; border:1.5px solid #93C5FD; border-radius:8px; padding:8px 16px; margin-bottom:8px;">
-    <div style="font-weight:800; color:#1E40AF; font-size:14px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
-    <div style="font-size:12.5px; color:#1E293B; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
+<div style="display:flex; justify-content:space-between; align-items:center; background:{_breadcrumb_bg}; border:1.5px solid {_breadcrumb_border}; border-radius:8px; padding:8px 16px; margin-bottom:8px;">
+    <div style="font-weight:800; color:{_breadcrumb_title_color}; font-size:14px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
+    <div style="font-size:12.5px; color:{_breadcrumb_text_color}; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -3967,15 +3976,25 @@ _gr_neg = _gr_summ.get("total_negative", 0)
 
 col_gr_bar, col_gr_btn = st.columns([4.2, 1.8])
 with col_gr_bar:
+    _rules_bg = "linear-gradient(90deg, #0A0F22 0%, #0D1330 100%)" if is_astrallis_mode else ("linear-gradient(90deg, #111827 0%, #1F2937 100%)" if is_night_mode else "linear-gradient(90deg, #F5F3FF 0%, #EDE9FE 100%)")
+    _rules_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#8B5CF6")
+    _rules_text_color = "#00E5FF" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#2E1065")
+    _rules_count_bg = "#0A1628" if is_astrallis_mode else ("#1F2937" if is_night_mode else "#FEF3C7")
+    _rules_count_color = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#92400E")
+    _rules_count_border = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#F59E0B")
+    _pos_bg = "#052e16" if is_astrallis_mode else ("#064e3b" if is_night_mode else "#DCFCE7")
+    _pos_color = "#10B981" if is_astrallis_mode else ("#6EE7B7" if is_night_mode else "#14532D")
+    _neg_bg = "#450a0a" if is_astrallis_mode else ("#7f1d1d" if is_night_mode else "#FEE2E2")
+    _neg_color = "#F87171" if is_astrallis_mode else ("#FCA5A5" if is_night_mode else "#991B1B")
     st.markdown(f"""
-    <div style="background: linear-gradient(90deg, #F5F3FF 0%, #EDE9FE 100%); border: 1.5px solid #8B5CF6; border-radius: 8px; padding: 6px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
-        <div style="color: #2E1065 !important; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-            <span style="color: #2E1065 !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
-            <span style="background: #FEF3C7; color: #92400E !important; border: 1px solid #F59E0B; padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 12px;">{_gr_fired:,} सक्रिय नियम फलित</span>
+    <div style="background: {_rules_bg}; border: 1.5px solid {_rules_border}; border-radius: 8px; padding: 6px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
+        <div style="color: {_rules_text_color} !important; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <span style="color: {_rules_text_color} !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
+            <span style="background: {_rules_count_bg}; color: {_rules_count_color} !important; border: 1px solid {_rules_count_border}; padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 12px;">{_gr_fired:,} सक्रिय नियम फलित</span>
         </div>
         <div style="font-size: 11.5px; display: flex; gap: 6px; align-items: center;">
-            <span style="background: #DCFCE7; color: #14532D !important; border: 1px solid #86EFAC; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
-            <span style="background: #FEE2E2; color: #991B1B !important; border: 1px solid #FCA5A5; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
+            <span style="background: {_pos_bg}; color: {_pos_color} !important; border: 1px solid {_pos_color}; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
+            <span style="background: {_neg_bg}; color: {_neg_color} !important; border: 1px solid {_neg_color}; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -3987,10 +4006,14 @@ with col_gr_btn:
 # -------------------------------------------------------------
 c_ts_info, c_ts_ctrl = st.columns([1.5, 3.5])
 with c_ts_info:
+    _ts_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#FFFBEB")
+    _ts_border = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#F59E0B")
+    _ts_label_color = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#B45309")
+    _ts_value_color = "#E2E8F0" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
     st.markdown(f"""
-    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:8px; padding:5px 10px; height:100%; display:flex; flex-direction:column; justify-content:center;">
-        <div style="font-size:11px; font-weight:800; color:#B45309;">⏱️ काल गति नियंत्रक (Time Travel)</div>
-        <div style="font-size:12.5px; font-weight:900; color:#1E293B;">📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
+    <div style="background:{_ts_bg}; border:1.5px solid {_ts_border}; border-radius:8px; padding:5px 10px; height:100%; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-size:11px; font-weight:800; color:{_ts_label_color};">⏱️ काल गति नियंत्रक (Time Travel)</div>
+        <div style="font-size:12.5px; font-weight:900; color:{_ts_value_color};">📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
     </div>
     """, unsafe_allow_html=True)
 
