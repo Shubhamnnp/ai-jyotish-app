@@ -2130,10 +2130,14 @@ unified_css = f"""
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
-        margin-bottom: 4px !important;
+        margin-bottom: 0px !important;
     }}
-    .pl-box-header * {{
+    .pl-box-header,
+    .pl-box-header *,
+    .pl-box-header span,
+    .pl-box-header b {{
         color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
     }}
     .pl-tab-pill-bar {{
         display: flex !important;
@@ -2884,6 +2888,12 @@ client_bridge_code = """
                             border: 1.5px solid #1E293B !important;
                             border-radius: 12px !important;
                         }
+                        .pl-box-header, .pl-box-header *, .pl-box-header span, .pl-box-header b {
+                            background: linear-gradient(180deg, #1E3A8A 0%, #0F172A 100%) !important;
+                            color: #00E5FF !important;
+                            -webkit-text-fill-color: #00E5FF !important;
+                            border-bottom: 1px solid #00E5FF !important;
+                        }
                     `;
                     if (!styleEl) {
                         styleEl = parentDoc.createElement("style");
@@ -3092,6 +3102,12 @@ client_bridge_code = """
                             background: #111827 !important;
                             border-color: #1F2937 !important;
                             color: #F8FAFC !important;
+                        }
+                        .pl-box-header, .pl-box-header *, .pl-box-header span, .pl-box-header b {
+                            background: linear-gradient(180deg, #374151 0%, #1F2937 100%) !important;
+                            color: #F59E0B !important;
+                            -webkit-text-fill-color: #F59E0B !important;
+                            border-bottom: 1px solid #F59E0B !important;
                         }
                     `;
                     
@@ -3525,6 +3541,12 @@ client_bridge_code = """
                         strong[style*="color:#FFFFFF"], strong[style*="color: #FFFFFF"],
                         strong[style*="color:#ffffff"], strong[style*="color: #ffffff"] {
                             color: #000000 !important;
+                        }
+                        /* Keep Parashara Header green with crisp white text */
+                        .pl-box-header, .pl-box-header *, .pl-box-header span, .pl-box-header b {
+                            background: linear-gradient(180deg, #388E3C 0%, #2E7D32 100%) !important;
+                            color: #FFFFFF !important;
+                            -webkit-text-fill-color: #FFFFFF !important;
                         }
                     `;
                     dayStyleEl.innerHTML = dayCss;
@@ -5284,12 +5306,7 @@ if selected_idx == 0:
         # Row 1: Box 1 (Vimshottari Dasha 5-Level) & Box 2 (Shadbala & Vimsopaka Strength)
         pl_r1_c1, pl_r1_c2 = st.columns(2, gap="small")
         with pl_r1_c1:
-            st.markdown("""
-            <div class="pl-box-header">
-                <span>⏱️ विंशोत्तरी दशा (Vimshottari Dasha — 5-स्तरीय)</span>
-                <span style="font-size:11px;">सक्रिय काल</span>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("""<div class="pl-box-header"><span>⏱️ विंशोत्तरी दशा (Vimshottari Dasha — 5-स्तरीय)</span><span style="font-size:11px;">सक्रिय काल</span></div>""", unsafe_allow_html=True)
             try:
                 _b_dt = datetime.combine(birth_d, birth_t)
                 _m_lon = chart.planets["Moon"].longitude if "Moon" in chart.planets else 0.0
@@ -5311,45 +5328,14 @@ if selected_idx == 0:
                 _p_s = _h5["pranadasha"]["start_date"].strftime("%d-%b-%y")
                 _p_e = _h5["pranadasha"]["end_date"].strftime("%d-%b-%y")
 
-                st.markdown(f"""
-                <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:none; border-radius:0 0 6px 6px; padding:6px; font-size:11.5px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; background:#EEF2FF; border:1px solid #C7D2FE; border-radius:4px; padding:3px 6px; margin-bottom:4px;">
-                        <span style="font-weight:800; color:#312E81;">👑 महादशा (L1):</span>
-                        <span style="font-weight:900; color:#1E1B4B; background:#C7D2FE; padding:1px 6px; border-radius:4px;">{_m_lord}</span>
-                        <span style="color:#475569; font-size:10.5px;">{_m_s} ~ {_m_e}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; background:#F0FDF4; border:1px solid #BBF7D0; border-radius:4px; padding:3px 6px; margin-bottom:4px;">
-                        <span style="font-weight:800; color:#064E3B;">🪐 अंतर्दशा (L2):</span>
-                        <span style="font-weight:900; color:#065F46; background:#BBF7D0; padding:1px 6px; border-radius:4px;">{_a_lord}</span>
-                        <span style="color:#475569; font-size:10.5px;">{_a_s} ~ {_a_e}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; background:#FFFBEB; border:1px solid #FDE68A; border-radius:4px; padding:3px 6px; margin-bottom:4px;">
-                        <span style="font-weight:800; color:#78350F;">⚡ प्रत्यंतर (L3):</span>
-                        <span style="font-weight:900; color:#92400E; background:#FDE68A; padding:1px 6px; border-radius:4px;">{_pr_lord}</span>
-                        <span style="color:#475569; font-size:10.5px;">{_pr_s} ~ {_pr_e}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; background:#FDF2F8; border:1px solid #FBCFE8; border-radius:4px; padding:3px 6px; margin-bottom:4px;">
-                        <span style="font-weight:800; color:#831843;">🔍 सूक्ष्मदशा (L4):</span>
-                        <span style="font-weight:900; color:#9D174D; background:#FBCFE8; padding:1px 6px; border-radius:4px;">{_s_lord}</span>
-                        <span style="color:#475569; font-size:10.5px;">{_s_s} ~ {_s_e}</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:4px; padding:3px 6px;">
-                        <span style="font-weight:800; color:#0F172A;">🧬 प्राणदशा (L5):</span>
-                        <span style="font-weight:900; color:#1E293B; background:#E2E8F0; padding:1px 6px; border-radius:4px;">{_p_lord}</span>
-                        <span style="color:#475569; font-size:10.5px;">{_p_s} ~ {_p_e}</span>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+                _dasha_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:none; border-radius:0 0 6px 6px; padding:6px; font-size:11.5px;"><div style="display:flex; justify-content:space-between; align-items:center; background:#EEF2FF; border:1px solid #C7D2FE; border-radius:4px; padding:3px 6px; margin-bottom:4px;"><span style="font-weight:800; color:#312E81;">👑 महादशा (L1):</span><span style="font-weight:900; color:#1E1B4B; background:#C7D2FE; padding:1px 6px; border-radius:4px;">{_m_lord}</span><span style="color:#475569; font-size:10.5px;">{_m_s} ~ {_m_e}</span></div><div style="display:flex; justify-content:space-between; align-items:center; background:#F0FDF4; border:1px solid #BBF7D0; border-radius:4px; padding:3px 6px; margin-bottom:4px;"><span style="font-weight:800; color:#064E3B;">🪐 अंतर्दशा (L2):</span><span style="font-weight:900; color:#065F46; background:#BBF7D0; padding:1px 6px; border-radius:4px;">{_a_lord}</span><span style="color:#475569; font-size:10.5px;">{_a_s} ~ {_a_e}</span></div><div style="display:flex; justify-content:space-between; align-items:center; background:#FFFBEB; border:1px solid #FDE68A; border-radius:4px; padding:3px 6px; margin-bottom:4px;"><span style="font-weight:800; color:#78350F;">⚡ प्रत्यंतर (L3):</span><span style="font-weight:900; color:#92400E; background:#FDE68A; padding:1px 6px; border-radius:4px;">{_pr_lord}</span><span style="color:#475569; font-size:10.5px;">{_pr_s} ~ {_pr_e}</span></div><div style="display:flex; justify-content:space-between; align-items:center; background:#FDF2F8; border:1px solid #FBCFE8; border-radius:4px; padding:3px 6px; margin-bottom:4px;"><span style="font-weight:800; color:#831843;">🔍 सूक्ष्मदशा (L4):</span><span style="font-weight:900; color:#9D174D; background:#FBCFE8; padding:1px 6px; border-radius:4px;">{_s_lord}</span><span style="color:#475569; font-size:10.5px;">{_s_s} ~ {_s_e}</span></div><div style="display:flex; justify-content:space-between; align-items:center; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:4px; padding:3px 6px;"><span style="font-weight:800; color:#0F172A;">🧬 प्राणदशा (L5):</span><span style="font-weight:900; color:#1E293B; background:#E2E8F0; padding:1px 6px; border-radius:4px;">{_p_lord}</span><span style="color:#475569; font-size:10.5px;">{_p_s} ~ {_p_e}</span></div></div>'
+                st.markdown(_dasha_html, unsafe_allow_html=True)
             except Exception as _e_d:
                 st.caption(f"दशा लोड हो रही है: {_e_d}")
 
+
         with pl_r1_c2:
-            st.markdown("""
-            <div class="pl-box-header">
-                <span>⚖️ षड्बल एवं विंशोपक बल (Shadbala & Strength)</span>
-                <span style="font-size:11px;">7 ग्रह शक्ति</span>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("""<div class="pl-box-header"><span>⚖️ षड्बल एवं विंशोपक बल (Shadbala & Strength)</span><span style="font-size:11px;">7 ग्रह शक्ति</span></div>""", unsafe_allow_html=True)
             try:
                 _sb_res = chart.shadbala
                 _vimsopaka = VargaCalculator.calculate_vimsopaka_bala(chart)
@@ -5362,33 +5348,10 @@ if selected_idx == 0:
                     _is_str = _sb_o.is_strong if _sb_o else True
                     _str_badge = f'<span style="background:{"#DCFCE7" if _is_str else "#FEE2E2"}; color:{"#166534" if _is_str else "#991B1B"}; font-weight:800; padding:1px 6px; border-radius:4px;">{"बलवान" if _is_str else "निर्बल"}</span>'
                     _v_score = _vimsopaka.get(_pn, 10.0)
-                    _sb_rows.append(f"""
-                    <tr style="border-bottom:1px solid #E2E8F0;">
-                        <td style="padding:4px 6px; font-weight:800; color:#1E293B;">{_pn}</td>
-                        <td style="padding:4px 6px; text-align:center;">{_rupas} R</td>
-                        <td style="padding:4px 6px; text-align:center;">{_ratio:.2f}</td>
-                        <td style="padding:4px 6px; text-align:center;">{_v_score:.1f}/20</td>
-                        <td style="padding:4px 6px; text-align:center;">{_str_badge}</td>
-                    </tr>
-                    """)
-                st.markdown(f"""
-                <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:none; border-radius:0 0 6px 6px; padding:4px; max-height:175px; overflow-y:auto;">
-                    <table style="width:100%; border-collapse:collapse; font-size:11px;">
-                        <thead>
-                            <tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;">
-                                <th style="padding:3px 6px; text-align:left;">ग्रह</th>
-                                <th style="padding:3px 6px; text-align:center;">रूप</th>
-                                <th style="padding:3px 6px; text-align:center;">अनुपात</th>
-                                <th style="padding:3px 6px; text-align:center;">विंशोपक</th>
-                                <th style="padding:3px 6px; text-align:center;">स्थिति</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {"".join(_sb_rows)}
-                        </tbody>
-                    </table>
-                </div>
-                """, unsafe_allow_html=True)
+                    _sb_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:4px 6px; font-weight:800; color:#1E293B;">{_pn}</td><td style="padding:4px 6px; text-align:center;">{_rupas} R</td><td style="padding:4px 6px; text-align:center;">{_ratio:.2f}</td><td style="padding:4px 6px; text-align:center;">{_v_score:.1f}/20</td><td style="padding:4px 6px; text-align:center;">{_str_badge}</td></tr>')
+                
+                _sb_table_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:none; border-radius:0 0 6px 6px; padding:4px; max-height:175px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; font-size:11px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:3px 6px; text-align:left;">ग्रह</th><th style="padding:3px 6px; text-align:center;">रूप</th><th style="padding:3px 6px; text-align:center;">अनुपात</th><th style="padding:3px 6px; text-align:center;">विंशोपक</th><th style="padding:3px 6px; text-align:center;">स्थिति</th></tr></thead><tbody>{"".join(_sb_rows)}</tbody></table></div>'
+                st.markdown(_sb_table_html, unsafe_allow_html=True)
             except Exception as _e_sb:
                 st.caption(f"षड्बल लोड हो रहा है: {_e_sb}")
 
@@ -5397,12 +5360,7 @@ if selected_idx == 0:
         # Row 2: Box 3 (Planetary Longitudes & Dignity Table) & Box 4 (Sarvashtakavarga 12-Sign Matrix)
         pl_r2_c1, pl_r2_c2 = st.columns(2, gap="small")
         with pl_r2_c1:
-            st.markdown("""
-            <div class="pl-box-header">
-                <span>🪐 ग्रह स्पष्ट तालिका (Planetary Longitudes & Dignity)</span>
-                <span style="font-size:11px;">D1 स्पष्ट</span>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("""<div class="pl-box-header"><span>🪐 ग्रह स्पष्ट तालिका (Planetary Longitudes & Dignity)</span><span style="font-size:11px;">D1 स्पष्ट</span></div>""", unsafe_allow_html=True)
             _p_rows_box = []
             _p_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
             for _pn in _p_order:
@@ -5413,41 +5371,13 @@ if selected_idx == 0:
                 _motion = "℞" if _po.is_retrograde else ""
                 _comb = "☌" if _po.is_combust else ""
                 _badge_color = "#1E40AF" if "उच्च" in _d_lbl else ("#047857" if "स्वराशि" in _d_lbl or "मूल" in _d_lbl else ("#B91C1C" if "नीच" in _d_lbl else "#475569"))
-                _p_rows_box.append(f"""
-                <tr style="border-bottom:1px solid #E2E8F0;">
-                    <td style="padding:3px 5px; font-weight:800; color:#0F172A; white-space:nowrap;">{_sym} <span style="color:#DC2626; font-size:10px;">{_motion}{_comb}</span></td>
-                    <td style="padding:3px 5px; font-weight:700; color:#1E3A8A;">{_po.sign_name[:4]}</td>
-                    <td style="padding:3px 5px; font-family:monospace; font-weight:700; color:#0F172A;">{_po.sign_degree:.2f}°</td>
-                    <td style="padding:3px 5px; font-size:10px; color:#475569;">{_po.nakshatra_name[:4]}-P{_po.nakshatra_pada}</td>
-                    <td style="padding:3px 5px; font-weight:800; color:{_badge_color}; font-size:10px;">{_d_lbl[:6]}</td>
-                </tr>
-                """)
-            st.markdown(f"""
-            <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:none; border-radius:0 0 6px 6px; padding:4px; max-height:190px; overflow-y:auto;">
-                <table style="width:100%; border-collapse:collapse; font-size:11px;">
-                    <thead>
-                        <tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;">
-                            <th style="padding:3px 5px; text-align:left;">ग्रह</th>
-                            <th style="padding:3px 5px; text-align:left;">राशि</th>
-                            <th style="padding:3px 5px; text-align:left;">अंश</th>
-                            <th style="padding:3px 5px; text-align:left;">नक्षत्र</th>
-                            <th style="padding:3px 5px; text-align:left;">गरिमा</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {"".join(_p_rows_box)}
-                    </tbody>
-                </table>
-            </div>
-            """, unsafe_allow_html=True)
+                _p_rows_box.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:3px 5px; font-weight:800; color:#0F172A; white-space:nowrap;">{_sym} <span style="color:#DC2626; font-size:10px;">{_motion}{_comb}</span></td><td style="padding:3px 5px; font-weight:700; color:#1E3A8A;">{_po.sign_name[:4]}</td><td style="padding:3px 5px; font-family:monospace; font-weight:700; color:#0F172A;">{_po.sign_degree:.2f}°</td><td style="padding:3px 5px; font-size:10px; color:#475569;">{_po.nakshatra_name[:4]}-P{_po.nakshatra_pada}</td><td style="padding:3px 5px; font-weight:800; color:{_badge_color}; font-size:10px;">{_d_lbl[:6]}</td></tr>')
+            
+            _p_table_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:none; border-radius:0 0 6px 6px; padding:4px; max-height:190px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; font-size:11px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:3px 5px; text-align:left;">ग्रह</th><th style="padding:3px 5px; text-align:left;">राशि</th><th style="padding:3px 5px; text-align:left;">अंश</th><th style="padding:3px 5px; text-align:left;">नक्षत्र</th><th style="padding:3px 5px; text-align:left;">गरिमा</th></tr></thead><tbody>{"".join(_p_rows_box)}</tbody></table></div>'
+            st.markdown(_p_table_html, unsafe_allow_html=True)
 
         with pl_r2_c2:
-            st.markdown("""
-            <div class="pl-box-header">
-                <span>📊 सर्वाष्टकवर्ग सारणी (Sarvashtakavarga 12 Signs)</span>
-                <span style="font-size:11px;">बिन्दु योग (337)</span>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown("""<div class="pl-box-header"><span>📊 सर्वाष्टकवर्ग सारणी (Sarvashtakavarga 12 Signs)</span><span style="font-size:11px;">बिन्दु योग (337)</span></div>""", unsafe_allow_html=True)
             try:
                 _sav_arr = chart.ashtakavarga.sav if chart.ashtakavarga else [28]*12
                 _rashi_names_12 = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुंभ", "मीन"]
@@ -5456,25 +5386,10 @@ if selected_idx == 0:
                     _pts = _sav_arr[_s_idx]
                     _bg = "#DCFCE7" if _pts >= 30 else ("#FEF3C7" if _pts >= 25 else "#FEE2E2")
                     _fg = "#166534" if _pts >= 30 else ("#92400E" if _pts >= 25 else "#991B1B")
-                    _sav_cells.append(f"""
-                    <div style="background:{_bg}; border:1px solid #CBD5E1; border-radius:6px; padding:4px 6px; text-align:center;">
-                        <div style="font-size:10px; color:#475569; font-weight:700;">{_s_idx+1}. {_rashi_names_12[_s_idx]}</div>
-                        <div style="font-size:14px; font-weight:900; color:{_fg};">{_pts}</div>
-                    </div>
-                    """)
-                st.markdown(f"""
-                <div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:none; border-radius:0 0 6px 6px; padding:6px;">
-                    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:6px;">
-                        {"".join(_sav_cells)}
-                    </div>
-                    <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:10.5px; color:#64748B; padding:2px 4px; background:#F8FAFC; border-radius:4px;">
-                        <span>🟢 ≥30 शुभ</span>
-                        <span>🟡 25-29 मध्यम</span>
-                        <span>🔴 &lt;25 शोधन आवश्यक</span>
-                        <span>कुल: <b>{sum(_sav_arr)}</b></span>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+                    _sav_cells.append(f'<div style="background:{_bg}; border:1px solid #CBD5E1; border-radius:6px; padding:4px 6px; text-align:center;"><div style="font-size:10px; color:#475569; font-weight:700;">{_s_idx+1}. {_rashi_names_12[_s_idx]}</div><div style="font-size:14px; font-weight:900; color:{_fg};">{_pts}</div></div>')
+                
+                _sav_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:none; border-radius:0 0 6px 6px; padding:6px;"><div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:6px;">{"".join(_sav_cells)}</div><div style="display:flex; justify-content:space-between; margin-top:6px; font-size:10.5px; color:#64748B; padding:2px 4px; background:#F8FAFC; border-radius:4px;"><span>🟢 ≥30 शुभ</span><span>🟡 25-29 मध्यम</span><span>🔴 &lt;25 शोधन आवश्यक</span><span>कुल: <b>{sum(_sav_arr)}</b></span></div></div>'
+                st.markdown(_sav_html, unsafe_allow_html=True)
             except Exception as _e_sav:
                 st.caption(f"अष्टकवर्ग लोड हो रहा है: {_e_sav}")
 
