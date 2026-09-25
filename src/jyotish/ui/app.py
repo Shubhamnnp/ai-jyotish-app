@@ -5149,7 +5149,8 @@ if is_parashara_layout:
         """, unsafe_allow_html=True)
         svg_d1_fixed = render_chart_svg(chart, f"लग्न: {chart.lagna_sign_name} ({chart.lagna_sign_id})", varga_code="D1")
         st.markdown(svg_d1_fixed, unsafe_allow_html=True)
-        st.caption(f"**लग्न:** {chart.lagna_sign_name} | **लग्नपति:** {chart.lagna_lord} | **आत्मकारक:** {chart.atmakaraka}")
+        lagna_lord_name = SIGN_LORDS.get(chart.lagna_sign_id, "—")
+        st.caption(f"**लग्न:** {chart.lagna_sign_name} | **लग्नपति:** {lagna_lord_name} | **आत्मकारक:** {chart.atmakaraka}")
 
         st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
         pl_sub_chart = st.radio(
