@@ -1287,7 +1287,8 @@ unified_css = f"""
     }}
     div[data-testid="stCustomComponentV1"],
     div.element-container:has(iframe),
-    div.element-container:has(style) {{
+    div.element-container:has(style),
+    div.element-container:has(.fixed-header-anchor) {{
         display: none !important;
         height: 0px !important;
         min-height: 0px !important;
@@ -1997,6 +1998,7 @@ unified_css = f"""
         min-height: 52px !important;
         height: 52px !important;
         padding: 0 !important;
+        margin: 0 !important;
         margin: 0 0 6px 0 !important;
         display: flex !important;
         flex-direction: column !important;
@@ -2101,12 +2103,49 @@ unified_css = f"""
     .gla-info-strip b {{
         color: #000000;
     }}
+    .gla-tile-box {{
+        position: relative;
+        width: 48px;
+        height: 48px;
+        margin: 0 auto;
+    }}
     /* Toolbelt Row: Ensure full height and clean spacing */
     div[data-testid="stHorizontalBlock"]:has(.gla-tile-box) {{
         min-height: 52px !important;
         margin-top: 4px !important;
         margin-bottom: 8px !important;
         position: relative !important;
+        padding: 0 2px !important;
+    }}
+    div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {{
+        position: relative !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }}
+    div[data-testid="stColumn"]:has(.gla-tile-box) button {{
+        position: absolute !important;
+        top: -48px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 48px !important;
+        height: 48px !important;
+        min-height: 48px !important;
+        max-height: 48px !important;
+        opacity: 0 !important;
+        z-index: 20 !important;
+        cursor: pointer !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+    }}
+    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-testid="stTooltipHoverTarget"],
+    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-baseweb="tooltip"] {{
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
     }}
 
     {theme_mode_css}
@@ -3235,6 +3274,10 @@ client_bridge_code = """
                             height: 52px !important;
                             min-height: 52px !important;
                         }
+                        div[data-testid="column"]:has(.gla-tile-box) div[data-testid="stElementContainer"] {
+                            margin: 0 !important;
+                            padding: 0 !important;
+                        }
                         div[data-testid="stHorizontalBlock"]:has(.gla-tile-box) {
                             min-height: 52px !important;
                             margin-top: 4px !important;
@@ -4281,9 +4324,9 @@ with st.container(key="top_frozen_header_container", border=False):
             del st.query_params["gla_tool"]
         except Exception:
             pass
-
     # Active profile banner with live info (incorporating anchor with 0 space)
     st.markdown(f"""
+    <div class="fixed-header-anchor" style="display:none; height:0px; margin:0; padding:0;"></div>
     <div class="gla-info-strip">
         <div>
             👤 <b>जातक:</b> {name} &nbsp;|&nbsp; 📅 {birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name}
@@ -4304,6 +4347,7 @@ with st.container(key="top_frozen_header_container", border=False):
             active_cls = "active" if is_active else ""
             active_style = "border-color:#D97706 !important; background-color:#FEF3C7 !important; box-shadow:0 0 10px rgba(217,119,6,0.4) !important;" if is_active else ""
             st.markdown(f"""
+            <div class="fixed-header-anchor" style="display:none; height:0px; margin:0; padding:0;"></div>
             <a href="?gla_tool={tool_key}" target="_self" style="text-decoration:none; color:inherit; display:block; width:100%;">
                 <div class="gla-tile-box">
                     <div class="gla-btn-tile {active_cls}" style="{active_style}">
@@ -8048,6 +8092,7 @@ elif selected_idx == 9:
                     <div style="font-size:11.5px; color:#BE185D; font-weight:800;">🛡️ वर्तमान जोखिम स्थिति</div>
                     <div style="font-size:16px; font-weight:900; color:#831843;">{act_shoola['risk_level'].split('/')[0]}</div>
                     <div style="font-size:10.5px; color:#475569;">ग्रह स्थिति: {act_shoola['occupants']}</div>
+     
                 </div>
                 """, unsafe_allow_html=True)
     
@@ -8524,7 +8569,6 @@ elif selected_idx == 10:
 
         # -------------------------------------------------------------
         # 5. Kakshya Transit Engine (3°45' Subdivision Parashari Timing)
-        # ---------
         # -------------------------------------------------------------
         st.markdown("---")
         st.markdown("#### 🎯 अष्टकवर्ग कक्ष्य गोचर ट्रैकर (Kakshya 3°45' Transit Timing)")
@@ -8788,7 +8832,6 @@ elif selected_idx == 10:
         st.info("राहु और चन्द्रमा के मध्य बिन्दु। इस पर ग्रह गोचर = महत्त्वपूर्ण जीवन घटना।")
         try:
             import importlib
-            import src.jyotish.core.ashtakava
             import src.jyotish.core.ashtakavarga as ak_mod
             importlib.reload(ak_mod)
             _bb = ak_mod.AshtakavargaCalculator.calculate_bhrigu_bindu(chart)
@@ -8880,8 +8923,6 @@ elif selected_idx == 10:
                     target_col = c_c1 if idx % 2 == 0 else c_c2
                     with target_col:
                         st.markdown(f"""
-                        <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-left:5px solid {c_item['badge_color']}; border-radius:10px; padding:12px 14px; margin-botto
-... [truncated for diff preview]
                         <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-left:5px solid {c_item['badge_color']}; border-radius:10px; padding:12px 14px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
                             <div style="display:flex; justify-content:space-between; align-items:center;">
                                 <b style="font-size:14.5px; color:#0F172A;">{c_item['icon']} {c_item['commodity']}</b>
@@ -8995,11 +9036,10 @@ elif selected_idx == 10:
 
                 with st.spinner("५-वर्षीय खगोलीय वेव चक्र एवं राशि परिवर्तन की गणना जारी..."):
                     waves_data = ew_svc.generate_multi_year_waves(start_year=w_start_year, duration_years=w_duration)
-                    cur_th = st.session_state.get("app_theme_mode", "day")
-                    waves_svg = ew_svc.render_waves_svg_html(start_year=w_start_year, duration_years=w_duration, theme_mode=cur_th)
+                    waves_svg = ew_svc.render_waves_svg_html(start_year=w_start_year, duration_years=w_duration)
 
-                # Render SVG Wave Chart cleanly via components.html
-                st.components.v1.html(waves_svg, height=490, scrolling=True)
+                # Render SVG Wave Chart
+                st.markdown(waves_svg.strip(), unsafe_allow_html=True)
 
                 col_we1, col_we2 = st.columns(2)
                 with col_we1:
@@ -12428,3 +12468,5 @@ elif selected_idx == 29:
             <small style="color:#64748B;"><b>शास्त्रीय संदर्भ:</b> {krm['shastriya_basis']}</small>
         </div>
         """, unsafe_allow_html=True)
+
+
