@@ -1287,8 +1287,7 @@ unified_css = f"""
     }}
     div[data-testid="stCustomComponentV1"],
     div.element-container:has(iframe),
-    div.element-container:has(style),
-    div.element-container:has(.fixed-header-anchor) {{
+    div.element-container:has(style) {{
         display: none !important;
         height: 0px !important;
         min-height: 0px !important;
@@ -2116,36 +2115,6 @@ unified_css = f"""
         margin-bottom: 8px !important;
         position: relative !important;
         padding: 0 2px !important;
-    }}
-    div[data-testid="stColumn"]:has(.gla-tile-box) div:has(> button) {{
-        position: relative !important;
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }}
-    div[data-testid="stColumn"]:has(.gla-tile-box) button {{
-        position: absolute !important;
-        top: -48px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: 48px !important;
-        height: 48px !important;
-        min-height: 48px !important;
-        max-height: 48px !important;
-        opacity: 0 !important;
-        z-index: 20 !important;
-        cursor: pointer !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-        background: transparent !important;
-    }}
-    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-testid="stTooltipHoverTarget"],
-    div[data-testid="stColumn"]:has(.gla-tile-box) div[data-baseweb="tooltip"] {{
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
     }}
 
     {theme_mode_css}
