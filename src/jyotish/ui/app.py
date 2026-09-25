@@ -2110,11 +2110,40 @@ unified_css = f"""
     }}
     /* Toolbelt Row: Ensure full height and clean spacing */
     div[data-testid="stHorizontalBlock"]:has(.gla-tile-box) {{
-        min-height: 52px !important;
-        margin-top: 4px !important;
-        margin-bottom: 8px !important;
-        position: relative !important;
         padding: 0 2px !important;
+    }}
+    /* 🏛️ Authentic Parashara's Light Workstation Styling */
+    .pl-workstation-left {{
+        background: #FFFFFF !important;
+        border: 1.5px solid #2E7D32 !important;
+        border-radius: 6px !important;
+        padding: 6px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+    }}
+    .pl-box-header {{
+        background: linear-gradient(180deg, #388E3C 0%, #2E7D32 100%) !important;
+        color: #FFFFFF !important;
+        font-size: 12px !important;
+        font-weight: 800 !important;
+        padding: 4px 8px !important;
+        border-radius: 4px 4px 0 0 !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: 4px !important;
+    }}
+    .pl-box-header * {{
+        color: #FFFFFF !important;
+    }}
+    .pl-tab-pill-bar {{
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 4px !important;
+        margin-bottom: 8px !important;
+        padding: 4px !important;
+        background: #EDF4E2 !important;
+        border: 1px solid #CBDCB8 !important;
+        border-radius: 6px !important;
     }}
 
     {theme_mode_css}
@@ -4919,7 +4948,10 @@ with st.container(key="top_frozen_header_container", border=False):
 
     # 3. 21 Modules Selector (Inside the Frozen Top Container)
     st.markdown("<div style='height: 10px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
-    col_btn_prev, col_mod_sel, col_btn_next = st.columns([1.1, 3.8, 1.1])
+    if "app_ui_layout_mode" not in st.session_state:
+        st.session_state.app_ui_layout_mode = "parashara"  # Default to Parashara Workstation 30:70
+
+    col_btn_prev, col_mod_sel, col_btn_next, col_view_toggle = st.columns([0.9, 3.2, 0.9, 1.4])
     with col_btn_prev:
         st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn", on_click=_nav_prev_module)
 
@@ -4936,6 +4968,14 @@ with st.container(key="top_frozen_header_container", border=False):
 
     with col_btn_next:
         st.button("अगला (Next) ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="top_next_mod_btn", on_click=_nav_next_module)
+
+    with col_view_toggle:
+        is_parashara = (st.session_state.app_ui_layout_mode == "parashara")
+        view_lbl = "🏛️ पाराशर (30:70)" if is_parashara else "📱 वर्टिकल लेआउट"
+        view_help = "क्लिक करके पाराशर 30:70 वर्कस्टेशन अथवा क्लासिक वर्टिकल दृश्य में बदलें"
+        if st.button(view_lbl, use_container_width=True, help=view_help, key="top_ui_layout_toggle_btn", type="primary" if is_parashara else "secondary"):
+            st.session_state.app_ui_layout_mode = "vertical" if is_parashara else "parashara"
+            st.rerun()
 
 
 p = chart.panchang
@@ -5092,6 +5132,72 @@ with c_ts_ctrl:
     if ts_b_cols[7].button("+1घं ▶", key="ts_btn_p1h", help="+1 घंटा आगे जाएं"): _step_time_action(delta_hours=1)
     if ts_b_cols[8].button("+1द ⏩", key="ts_btn_p1d", help="+1 दिन आगे जाएं"): _step_time_action(delta_days=1)
 
+
+# -------------------------------------------------------------
+# 🏛️ PARASHARA WORKSTATION 30:70 LAYOUT ENGINE
+# -------------------------------------------------------------
+is_parashara_layout = (st.session_state.get("app_ui_layout_mode", "parashara") == "parashara")
+
+if is_parashara_layout:
+    col_pl_charts_left, col_pl_module_right = st.columns([1.15, 2.35], gap="medium")
+    with col_pl_charts_left:
+        st.markdown("""
+        <div class="pl-box-header">
+            <span>💎 मुख्य लग्न कुण्डली (D1 Natal Chart)</span>
+            <span style="font-size:11px;">उत्तर भारतीय</span>
+        </div>
+        """, unsafe_allow_html=True)
+        svg_d1_fixed = render_chart_svg(chart, f"लग्न: {chart.lagna_sign_name} ({chart.lagna_sign_id})", varga_code="D1")
+        st.markdown(svg_d1_fixed, unsafe_allow_html=True)
+        st.caption(f"**लग्न:** {chart.lagna_sign_name} | **लग्नपति:** {chart.lagna_lord} | **आत्मकारक:** {chart.atmakaraka}")
+
+        st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+        pl_sub_chart = st.radio(
+            "सहायक वर्ग चक्र",
+            ["नवांश (D9)", "चंद्र कुण्डली", "भाव चलित", "दशमांश (D10)"],
+            horizontal=True,
+            label_visibility="collapsed",
+            key="pl_left_aux_chart_choice"
+        )
+        if "नवांश" in pl_sub_chart:
+            st.markdown("""
+            <div class="pl-box-header">
+                <span>🌸 नवमांश चक्र (D9 Navamsha — धर्म व दांपत्य)</span>
+                <span style="font-size:11px;">D9</span>
+            </div>
+            """, unsafe_allow_html=True)
+            svg_d9_fixed = render_chart_svg(chart, "D9 नवांश", varga_code="D9")
+            st.markdown(svg_d9_fixed, unsafe_allow_html=True)
+        elif "चंद्र" in pl_sub_chart:
+            st.markdown("""
+            <div class="pl-box-header">
+                <span>🌙 चंद्र कुण्डली (Chandra Kundali — मन व सुख)</span>
+                <span style="font-size:11px;">Moon</span>
+            </div>
+            """, unsafe_allow_html=True)
+            svg_chandra_fixed = render_chart_svg(chart, "चंद्र कुण्डली", varga_code="D1")
+            st.markdown(svg_chandra_fixed, unsafe_allow_html=True)
+        elif "चलित" in pl_sub_chart:
+            st.markdown("""
+            <div class="pl-box-header">
+                <span>📐 भाव चलित चक्र (Bhava Chalit — कस्प्स स्थिति)</span>
+                <span style="font-size:11px;">Chalit</span>
+            </div>
+            """, unsafe_allow_html=True)
+            svg_chalit_fixed = render_chart_svg(chart, "भाव चलित", varga_code="D1")
+            st.markdown(svg_chalit_fixed, unsafe_allow_html=True)
+        else:
+            st.markdown("""
+            <div class="pl-box-header">
+                <span>💼 दशमांश चक्र (D10 Dashamsha — कर्म व पद)</span>
+                <span style="font-size:11px;">D10</span>
+            </div>
+            """, unsafe_allow_html=True)
+            svg_d10_fixed = render_chart_svg(chart, "D10 दशमांश", varga_code="D10")
+            st.markdown(svg_d10_fixed, unsafe_allow_html=True)
+
+    # Right 70% Module Workspace Container
+    col_pl_module_right.__enter__()
 
 # -------------------------------------------------------------
 # Module Routing
@@ -12437,5 +12543,10 @@ elif selected_idx == 29:
             <small style="color:#64748B;"><b>शास्त्रीय संदर्भ:</b> {krm['shastriya_basis']}</small>
         </div>
         """, unsafe_allow_html=True)
+
+# Close Parashara right column context if active
+if is_parashara_layout:
+    col_pl_module_right.__exit__(None, None, None)
+
 
 
