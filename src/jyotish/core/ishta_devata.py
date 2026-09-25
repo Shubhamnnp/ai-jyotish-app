@@ -619,7 +619,6 @@ class IshtaDevataEngine:
             "navadurga_name": nd_info["name"],
             "navadurga_significance": nd_info["significance"],
             "navadurga_mantra": nd_info["mantra"],
-            "navadurga_bhog": nd_info["bhog"]
             "navadurga_bhog": nd_info["bhog"],
             "nine_days": nine_days
         }
