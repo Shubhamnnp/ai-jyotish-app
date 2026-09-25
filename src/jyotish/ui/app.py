@@ -10560,7 +10560,7 @@ elif selected_idx == 19:
             all_rules = rules_engine.rules
 
             # Evaluate all rules on current chart dynamically
-            with st.spinner("१,२५०+ शास्त्रीय नियमों का स्वचालित मूल्यांकन जारी..."):
+            with st.spinner("१२,५००+ शास्त्रीय नियमों का स्वचालित मूल्यांकन जारी..."):
                 evidences = rules_engine.evaluate_all(chart, None, {}, None)
                 ev_by_id = {ev.rule_id: ev for ev in evidences}
 
