@@ -22,8 +22,5 @@ Thumbs.db
 *.log
 scratch/
 test_*.json
-# Database backups
-data/backups/
-*.db-journal
-
+saved_charts_test_*.json
 
