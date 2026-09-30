@@ -51,6 +51,7 @@ jobs:
         run: |
           python -m pytest tests/test_past_event_verification.py -v
 
-      - name: Run Full Enterprise Test Suite (All 57 Tests)
+      - name: Run Full Enterprise Test Suite (All 72 Tests)
         run: |
           python -m pytest -v
+
