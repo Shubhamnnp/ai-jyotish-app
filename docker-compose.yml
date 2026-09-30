@@ -1,16 +1,79 @@
 version: '3.8'
 
 services:
-  ai-jyotish-ui:
-    build: .
-    container_name: ai_jyotish_app
+  # 1. FastAPI REST Gateway (/api/v1)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jyotish_api_gateway
+    command: uvicorn src.jyotish.api.main:app --host 0.0.0.0 --port 8000 --workers 4
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://jyotish_admin:BharatJyotish2026@postgres:5432/jyotish_enterprise
+      - REDIS_URL=redis://redis:6379/0
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - JWT_SECRET=${JWT_SECRET:-jyotish-saas-enterprise-secret-key-2026}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./data:/app/data
+
+  # 2. Streamlit Astrologer Dashboard
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jyotish_streamlit_ui
+    command: streamlit run src/jyotish/ui/app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true
     restart: always
     ports:
       - "8501:8501"
     environment:
       - PORT=8501
+      - API_GATEWAY_URL=http://api:8000
+      - DATABASE_URL=postgresql://jyotish_admin:BharatJyotish2026@postgres:5432/jyotish_enterprise
       - GEMINI_API_KEY=${GEMINI_API_KEY}
+    depends_on:
+      - api
     volumes:
       - ./data:/app/data
       - ./saved_charts_db.json:/app/saved_charts_db.json
 
+  # 3. High-Performance Enterprise Relational Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: jyotish_postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: jyotish_admin
+      POSTGRES_PASSWORD: BharatJyotish2026
+      POSTGRES_DB: jyotish_enterprise
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jyotish_admin -d jyotish_enterprise"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 4. Redis In-Memory Caching & Rate Limiting Engine
+  redis:
+    image: redis:7-alpine
+    container_name: jyotish_redis_cache
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:

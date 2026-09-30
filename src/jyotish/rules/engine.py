@@ -74,6 +74,8 @@ class RulesEngine:
                         print(f"Warning loading grantha rule {fname}: {ge}")
 
         self.rules_metadata["total_rules"] = len(self.rules)
+        from .inverted_index import InvertedRuleIndex
+        self.inverted_index = InvertedRuleIndex(self.rules)
 
     def evaluate_rule(
         self,
@@ -1144,23 +1146,38 @@ class RulesEngine:
         active_dasha: ActiveDashaHierarchy,
         transits: Dict[str, Any],
         transit_summary: TransitSummary,
-        filter_theme: str = "all"
+        filter_theme: str = "all",
+        use_inverted_index: bool = False
     ) -> List[RuleEvidence]:
-        """Evaluates all rules matching theme filter (or all rules)."""
+        """Evaluates all rules matching theme filter (or all rules), optionally with O(1) indexed pruning."""
         evidences = []
         theme_lower = filter_theme.strip().lower()
 
-        for rule in self.rules:
-            themes = [t.lower() for t in rule["effect"].get("themes", [])]
-            if theme_lower != "all" and theme_lower not in themes:
-                # Still include Dasha-Gochar and Bhav-based rules as they apply globally
-                if rule["category"] not in ("dasha-gochar", "bhav-based"):
+        if use_inverted_index and hasattr(self, "inverted_index"):
+            candidate_rules = self.inverted_index.get_candidate_rules(chart, filter_theme=theme_lower)
+        else:
+            candidate_rules = self.rules
+
+        for rule in candidate_rules:
+            themes = [t.lower() for t in rule.get("effect", {}).get("themes", [])]
+            if not use_inverted_index and theme_lower != "all" and theme_lower not in themes:
+                if rule.get("category") not in ("dasha-gochar", "bhav-based"):
                     continue
 
             ev = self.evaluate_rule(rule, chart, active_dasha, transits, transit_summary)
             evidences.append(ev)
 
         return evidences
+
+    def synthesize_conflicts(
+        self,
+        evidences: List[RuleEvidence],
+        chart: KundaliChart,
+        target_theme: str = "career"
+    ):
+        """Synthesizes rule conflicts and assigns Rule 5 evidence status via default_conflict_graph."""
+        from .conflict_graph import default_conflict_graph
+        return default_conflict_graph.synthesize_conflicts(evidences, chart, target_theme=target_theme)
 
 
 # Singleton engine instance

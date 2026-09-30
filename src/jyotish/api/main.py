@@ -356,5 +356,8 @@ def grahalakshanam_sync():
     imported = default_folder_manager.sync_from_grahalakshanam(folders_files)
     return {"status": "success", "imported_charts": imported}
 
-
-
+# =============================================================
+# Enterprise API Gateway v1 Mount
+# =============================================================
+from .v1.router import api_v1_router
+app.include_router(api_v1_router, prefix="/api/v1")

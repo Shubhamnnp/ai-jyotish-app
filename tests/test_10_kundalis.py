@@ -8,7 +8,11 @@ import sys
 import io
 from datetime import datetime
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+if hasattr(sys.stdout, 'reconfigure') and not sys.stdout.closed:
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
 
 # Ensure project root is in sys.path
 curr_dir = os.path.dirname(os.path.abspath(__file__))

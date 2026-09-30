@@ -6,8 +6,11 @@ import sys
 import os
 import io
 sys.path.insert(0, os.path.abspath("."))
-if sys.platform == "win32":
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+if sys.platform == "win32" and hasattr(sys.stdout, 'reconfigure') and not sys.stdout.closed:
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
 
 from fastapi.testclient import TestClient
 from src.jyotish.api.main import app
