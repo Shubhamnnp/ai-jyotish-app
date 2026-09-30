@@ -1,0 +1,425 @@
+{
+  "info": {
+    "name": "Bharat Jyotish AI SaaS - Enterprise API v1",
+    "_postman_id": "bharat-jyotish-v1-collection-2026",
+    "description": "Deterministic Vedic Astrology Calculation, Inverted 12,578 Classical Rules Engine, 6-Pillar Retrospective Event Verification, and Grounded AI Consultation API Gateway.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Login (Argon2id + JWT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.access_token) {",
+                  "    pm.collectionVariables.set('jwt_token', jsonData.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin@jyotish.com\",\n  \"password\": \"AdminPassword123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Current User Profile & Tier",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/me",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Astrological Chart Calculations",
+      "item": [
+        {
+          "name": "Calculate Full Natal Kundali (D1 to D10, Ashtakavarga)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Native\",\n  \"birth_date\": \"1995-05-15\",\n  \"birth_time\": \"14:30:00\",\n  \"latitude\": 28.6139,\n  \"longitude\": 77.209,\n  \"timezone_offset\": 5.5,\n  \"ayanamsa\": \"Lahiri\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/charts/calculate?ayanamsa=Lahiri",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "charts",
+                "calculate"
+              ],
+              "query": [
+                {
+                  "key": "ayanamsa",
+                  "value": "Lahiri"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Retrospective Past Event Verification (6 Pillars)",
+      "item": [
+        {
+          "name": "Verify Past Event (e.g. Marriage Inquiry)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"birth_data\": {\n    \"name\": \"Test Native\",\n    \"birth_date\": \"1995-05-15\",\n    \"birth_time\": \"14:30:00\",\n    \"latitude\": 28.6139,\n    \"longitude\": 77.209,\n    \"timezone_offset\": 5.5\n  },\n  \"target_event_date\": \"2021-12-10\",\n  \"event_category\": \"marriage\",\n  \"natural_query_text\": \"\\u0915\\u094d\\u092f\\u093e \\u092e\\u0947\\u0930\\u0940 \\u0936\\u093e\\u0926\\u0940 \\u0939\\u094b \\u091a\\u0941\\u0915\\u0940 \\u0939\\u0948?\",\n  \"ayanamsa\": \"Lahiri\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/events/verify-past",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "events",
+                "verify-past"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Shastriya Classical Rules Knowledge Base",
+      "item": [
+        {
+          "name": "Get Total Classical Rules Count (12,578)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/rules/count",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rules",
+                "count"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Inverted Index Fast Rule Search",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/rules/search?planet=Jupiter&house=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rules",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "planet",
+                  "value": "Jupiter"
+                },
+                {
+                  "key": "house",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. SaaS Billing & Monetization",
+      "item": [
+        {
+          "name": "List Subscription Plans Catalog",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/billing/plans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "billing",
+                "plans"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Check Subscription Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/billing/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "billing",
+                "status"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Checkout Session (Stripe / Razorpay)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plan_id\": \"pro_monthly\",\n  \"provider\": \"stripe\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/billing/checkout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "billing",
+                "checkout"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Master Report Exports",
+      "item": [
+        {
+          "name": "Generate Master Natal Kundali HTML Report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Report Subject\",\n  \"birth_date\": \"1995-05-15\",\n  \"birth_time\": \"14:30:00\",\n  \"latitude\": 28.6139,\n  \"longitude\": 77.209,\n  \"timezone_offset\": 5.5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/reports/master-html",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reports",
+                "master-html"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Generate Event Verification Certificate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"verification_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/reports/event-verification-certificate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reports",
+                "event-verification-certificate"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Grounded AI Consultation",
+      "item": [
+        {
+          "name": "Grounded Astrological Chat (Gemini 2.5 Flash)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"\\u092e\\u0947\\u0930\\u0940 \\u0935\\u0930\\u094d\\u0924\\u092e\\u093e\\u0928 \\u0926\\u0936\\u093e \\u0914\\u0930 \\u0917\\u094b\\u091a\\u0930 \\u0915\\u0947 \\u0905\\u0928\\u0941\\u0938\\u093e\\u0930 \\u0915\\u0930\\u093f\\u092f\\u0930 \\u092e\\u0947\\u0902 \\u0915\\u094d\\u092f\\u093e \\u092c\\u0926\\u0932\\u093e\\u0935 \\u0926\\u093f\\u0916 \\u0930\\u0939\\u0947 \\u0939\\u0948\\u0902?\",\n  \"language\": \"Hindi\",\n  \"birth_data\": {\n    \"name\": \"Consult Native\",\n    \"birth_date\": \"1995-05-15\",\n    \"birth_time\": \"14:30:00\",\n    \"latitude\": 28.6139,\n    \"longitude\": 77.209,\n    \"timezone_offset\": 5.5\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/chat/consult",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chat",
+                "consult"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
