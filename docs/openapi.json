@@ -1033,6 +1033,138 @@
         }
       }
     },
+    "/api/v1/charts/dashas": {
+      "post": {
+        "tags": [
+          "v1-charts"
+        ],
+        "summary": "Calculate Multi Dashas",
+        "description": "Calculates 4 classical Dasha systems simultaneously for a given target date:\n1. Vimshottari (Maha, Antar, Pratyantar)\n2. Yogini (36-year cycle)\n3. Jaimini Chara Dasha (Sign-based)\n4. Ashtottari Dasha (108-year conditional cycle)",
+        "operationId": "calculate_multi_dashas_api_v1_charts_dashas_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MultiDashaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/charts/shadbala": {
+      "post": {
+        "tags": [
+          "v1-charts"
+        ],
+        "summary": "Calculate Shadbala Endpoint",
+        "description": "Calculates 6-fold Shadbala strengths, Rupas, and planetary rank order.",
+        "operationId": "calculate_shadbala_endpoint_api_v1_charts_shadbala_post",
+        "parameters": [
+          {
+            "name": "ayanamsa",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Lahiri",
+              "title": "Ayanamsa"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BirthData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/charts/milan": {
+      "post": {
+        "tags": [
+          "v1-charts"
+        ],
+        "summary": "Calculate Milan Endpoint",
+        "description": "Calculates 36-Guna Ashtakoota Milan compatibility and Manglik Dosha analysis.",
+        "operationId": "calculate_milan_endpoint_api_v1_charts_milan_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MilanRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/events/verify-past": {
       "post": {
         "tags": [
@@ -2641,6 +2773,35 @@
           "bride"
         ],
         "title": "MilanRequest"
+      },
+      "MultiDashaRequest": {
+        "properties": {
+          "birth_data": {
+            "$ref": "#/components/schemas/BirthData"
+          },
+          "target_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Date"
+          },
+          "ayanamsa": {
+            "type": "string",
+            "title": "Ayanamsa",
+            "default": "Lahiri"
+          }
+        },
+        "type": "object",
+        "required": [
+          "birth_data"
+        ],
+        "title": "MultiDashaRequest"
       },
       "PanchangData": {
         "properties": {

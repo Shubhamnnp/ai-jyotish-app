@@ -104,3 +104,75 @@ def test_v1_rules_count_and_search():
     search_data = search_res.json()
     assert "rules" in search_data
     assert search_data["matched_count"] > 0
+
+
+def test_v1_charts_multi_dashas():
+    """Test 4-system multi-dasha calculation endpoint."""
+    payload = {
+        "birth_data": {
+            "name": "Dasha Native",
+            "birth_date": "1995-05-15",
+            "birth_time": "14:30:00",
+            "latitude": 28.6139,
+            "longitude": 77.2090,
+            "timezone_offset": 5.5
+        },
+        "target_date": "2026-09-30",
+        "ayanamsa": "Lahiri"
+    }
+    res = client.post("/api/v1/charts/dashas", json=payload)
+    assert res.status_code == 200, f"Multi-dasha failed: {res.text}"
+    data = res.json()
+    assert "vimshottari" in data
+    assert "yogini" in data
+    assert "ashtottari" in data
+    assert "chara" in data
+    assert data["vimshottari"]["summary"] is not None
+    assert data["yogini"]["yogini"] is not None
+
+
+def test_v1_charts_shadbala():
+    """Test Shadbala calculation endpoint."""
+    payload = {
+        "name": "Shadbala Native",
+        "birth_date": "1990-01-01",
+        "birth_time": "12:00:00",
+        "latitude": 28.6139,
+        "longitude": 77.2090,
+        "timezone_offset": 5.5
+    }
+    res = client.post("/api/v1/charts/shadbala", json=payload)
+    assert res.status_code == 200, f"Shadbala failed: {res.text}"
+    data = res.json()
+    assert "planets" in data
+    assert "Sun" in data["planets"]
+    assert "bhava_bala" in data
+
+
+def test_v1_charts_milan():
+    """Test 36-guna Kundali Milan compatibility endpoint."""
+    payload = {
+        "groom": {
+            "name": "Groom",
+            "birth_date": "1992-04-10",
+            "birth_time": "08:15:00",
+            "latitude": 28.6139,
+            "longitude": 77.2090,
+            "timezone_offset": 5.5
+        },
+        "bride": {
+            "name": "Bride",
+            "birth_date": "1995-08-22",
+            "birth_time": "16:45:00",
+            "latitude": 28.6139,
+            "longitude": 77.2090,
+            "timezone_offset": 5.5
+        }
+    }
+    res = client.post("/api/v1/charts/milan", json=payload)
+    assert res.status_code == 200, f"Milan failed: {res.text}"
+    data = res.json()
+    assert "total_score" in data
+    assert "varna" in data
+    assert "nadi" in data
+    assert "verdict" in data
