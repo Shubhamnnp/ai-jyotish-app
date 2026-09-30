@@ -5416,6 +5416,11 @@ if selected_idx == 0:
                 vims_score = VargaCalculator.calculate_vimsopaka_bala(chart)
                 st.bar_chart(pd.DataFrame(list(vims_score.items()), columns=["Planet", "Vimsopaka"]).set_index("Planet"))
 
+        varga_choice = sel_pl_varga
+        target_varga = chart.vargas.get(varga_choice, chart.vargas.get("D1"))
+        v_name = target_varga.varga_name if target_varga else "Rashi"
+        v_lagna_sign = target_varga.lagna_sign_name if target_varga else chart.lagna_sign_name
+        v_lagna_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
     else:
         # Standard Single / Quad Dashboard Layout (Classic Vertical Stack)
         col_chart1, col_chart2 = st.columns([1, 1])
@@ -5482,150 +5487,150 @@ if selected_idx == 0:
         v_desc = VARGA_SIGNIFICANCE.get(varga_choice, "शास्त्रीय सूक्ष्म विश्लेषण")
         st.info(f"🎯 **{varga_choice} ({v_name}) शास्त्रीय प्रयोजन:** {v_desc}")
 
-    with col_chart2:
-        _is_astrallis_chart = ("Astrallis" in curr_style or "Circular" in curr_style)
-        if _is_astrallis_chart:
-            # ─── Astrallis Scientific Observatory Data Console ───
-            if is_astrallis_mode:
-                _dc_bg  = "#050811"
-                _dc_row = "#0A1628"
-                _dc_bdr = "#1E3A5F"
-                _dc_hdr = "#00E5FF"
-                _dc_txt = "#CBD5E1"
-                _dc_val = "#E2E8F0"
-                _dc_th_col = "#00E5FF"
-                _pts_good = "#44FF88"
-                _pts_mid  = "#FFD700"
-                _pts_low  = "#FF4444"
-            elif is_night_mode:
-                _dc_bg  = "#111827"
-                _dc_row = "#1F2937"
-                _dc_bdr = "#374151"
-                _dc_hdr = "#F59E0B"
-                _dc_txt = "#D1D5DB"
-                _dc_val = "#F8FAFC"
-                _dc_th_col = "#F59E0B"
-                _pts_good = "#44FF88"
-                _pts_mid  = "#FFD700"
-                _pts_low  = "#FF4444"
-            else:  # Day Mode (Royal Pearl / Vedic Classic)
-                _dc_bg  = "#FFFFFF"
-                _dc_row = "#F8FAFC"
-                _dc_bdr = "#CBD5E1"
-                _dc_hdr = "#1E40AF"
-                _dc_txt = "#475569"
-                _dc_val = "#0F172A"
-                _dc_th_col = "#1E3A8A"
-                _pts_good = "#059669"
-                _pts_mid  = "#D97706"
-                _pts_low  = "#DC2626"
+        with col_chart2:
+            _is_astrallis_chart = ("Astrallis" in curr_style or "Circular" in curr_style)
+            if _is_astrallis_chart:
+                # ─── Astrallis Scientific Observatory Data Console ───
+                if is_astrallis_mode:
+                    _dc_bg  = "#050811"
+                    _dc_row = "#0A1628"
+                    _dc_bdr = "#1E3A5F"
+                    _dc_hdr = "#00E5FF"
+                    _dc_txt = "#CBD5E1"
+                    _dc_val = "#E2E8F0"
+                    _dc_th_col = "#00E5FF"
+                    _pts_good = "#44FF88"
+                    _pts_mid  = "#FFD700"
+                    _pts_low  = "#FF4444"
+                elif is_night_mode:
+                    _dc_bg  = "#111827"
+                    _dc_row = "#1F2937"
+                    _dc_bdr = "#374151"
+                    _dc_hdr = "#F59E0B"
+                    _dc_txt = "#D1D5DB"
+                    _dc_val = "#F8FAFC"
+                    _dc_th_col = "#F59E0B"
+                    _pts_good = "#44FF88"
+                    _pts_mid  = "#FFD700"
+                    _pts_low  = "#FF4444"
+                else:  # Day Mode (Royal Pearl / Vedic Classic)
+                    _dc_bg  = "#FFFFFF"
+                    _dc_row = "#F8FAFC"
+                    _dc_bdr = "#CBD5E1"
+                    _dc_hdr = "#1E40AF"
+                    _dc_txt = "#475569"
+                    _dc_val = "#0F172A"
+                    _dc_th_col = "#1E3A8A"
+                    _pts_good = "#059669"
+                    _pts_mid  = "#D97706"
+                    _pts_low  = "#DC2626"
 
-            # Jataka Info Console
-            _j_name = chart.birth_data.name if (chart.birth_data and chart.birth_data.name) else (name if 'name' in locals() else "Jataka")
-            _j_city = (getattr(chart.birth_data, 'city', None) or (default_city_name if 'default_city_name' in locals() else (city if 'city' in locals() else "New Delhi")))
-            _j_bdate = chart.birth_data.birth_date if (chart.birth_data and hasattr(chart.birth_data, 'birth_date')) else (birth_d if 'birth_d' in locals() else None)
-            _j_btime = chart.birth_data.birth_time if (chart.birth_data and hasattr(chart.birth_data, 'birth_time')) else (birth_t if 'birth_t' in locals() else None)
-            _j_dt_str = f"{_j_bdate.strftime('%d-%b-%Y') if _j_bdate else ''} {_j_btime.strftime('%I:%M %p') if _j_btime else ''}".strip()
+                # Jataka Info Console
+                _j_name = chart.birth_data.name if (chart.birth_data and chart.birth_data.name) else (name if 'name' in locals() else "Jataka")
+                _j_city = (getattr(chart.birth_data, 'city', None) or (default_city_name if 'default_city_name' in locals() else (city if 'city' in locals() else "New Delhi")))
+                _j_bdate = chart.birth_data.birth_date if (chart.birth_data and hasattr(chart.birth_data, 'birth_date')) else (birth_d if 'birth_d' in locals() else None)
+                _j_btime = chart.birth_data.birth_time if (chart.birth_data and hasattr(chart.birth_data, 'birth_time')) else (birth_t if 'birth_t' in locals() else None)
+                _j_dt_str = f"{_j_bdate.strftime('%d-%b-%Y') if _j_bdate else ''} {_j_btime.strftime('%I:%M %p') if _j_btime else ''}".strip()
 
-            st.markdown(f"""
-<div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
-  <div style="color:{_dc_hdr};font-weight:900;font-size:13px;margin-bottom:8px;letter-spacing:0.5px;">⚡ JATAKA DATA CONSOLE</div>
-  <table style="width:100%;border-collapse:collapse;">
-    <tr><td style="color:{_dc_txt};padding:2px 4px;">Name</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{_j_name}</td></tr>
-    <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Place</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{_j_city}</td></tr>
-    <tr><td style="color:{_dc_txt};padding:2px 4px;">Date &amp; Time</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{_j_dt_str}</td></tr>
-    <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Ayanamsa</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{chart.ayanamsa_name} ({chart.ayanamsa_value:.4f}°)</td></tr>
-    <tr><td style="color:{_dc_txt};padding:2px 4px;">Lagna (Asc)</td><td style="color:{_dc_hdr};font-weight:900;padding:2px 4px;">{chart.lagna_sign_name} ({chart.lagna_sign_id})</td></tr>
-    <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Atmakaraka</td><td style="color:{_pts_mid};font-weight:900;padding:2px 4px;">{chart.atmakaraka}</td></tr>
-    <tr><td style="color:{_dc_txt};padding:2px 4px;">House System</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">Equal (Vedic) / Placidus</td></tr>
-  </table>
-</div>""", unsafe_allow_html=True)
+                st.markdown(f"""
+    <div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:12px;box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
+      <div style="color:{_dc_hdr};font-weight:900;font-size:13px;margin-bottom:8px;letter-spacing:0.5px;">⚡ JATAKA DATA CONSOLE</div>
+      <table style="width:100%;border-collapse:collapse;">
+        <tr><td style="color:{_dc_txt};padding:2px 4px;">Name</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{_j_name}</td></tr>
+        <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Place</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{_j_city}</td></tr>
+        <tr><td style="color:{_dc_txt};padding:2px 4px;">Date &amp; Time</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{_j_dt_str}</td></tr>
+        <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Ayanamsa</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">{chart.ayanamsa_name} ({chart.ayanamsa_value:.4f}°)</td></tr>
+        <tr><td style="color:{_dc_txt};padding:2px 4px;">Lagna (Asc)</td><td style="color:{_dc_hdr};font-weight:900;padding:2px 4px;">{chart.lagna_sign_name} ({chart.lagna_sign_id})</td></tr>
+        <tr style="background:{_dc_row};"><td style="color:{_dc_txt};padding:2px 4px;">Atmakaraka</td><td style="color:{_pts_mid};font-weight:900;padding:2px 4px;">{chart.atmakaraka}</td></tr>
+        <tr><td style="color:{_dc_txt};padding:2px 4px;">House System</td><td style="color:{_dc_val};font-weight:800;padding:2px 4px;">Equal (Vedic) / Placidus</td></tr>
+      </table>
+    </div>""", unsafe_allow_html=True)
 
-            # Swiss Ephemeris Planet Table
-            SYMS_CONS = {"Sun":"☉","Moon":"☽","Mars":"♂","Mercury":"☿","Jupiter":"♃","Venus":"♀","Saturn":"♄","Rahu":"☊","Ketu":"☋"}
-            P_NC = {"Sun":"#FFB800","Moon":"#88AAFF","Mars":"#FF4444","Mercury":"#44DD88","Jupiter":"#FFD700","Venus":"#FF88CC","Saturn":"#AAAACC","Rahu":"#CC88FF","Ketu":"#AA6633"}
-            eph_rows = []
-            for pn in ["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"]:
-                pp_o = chart.planets.get(pn)
-                if not pp_o:
-                    continue
-                sym = SYMS_CONS.get(pn, pn[:2])
-                nc = P_NC.get(pn, "#CCC")
-                retro = "℞" if pp_o.is_retrograde else ""
-                combust = "☌" if pp_o.is_combust else ""
-                d_label, d_pts, _ = get_varga_dignity_info(pn, pp_o.sign_name, affliction_engine)
-                eph_rows.append(
-                    f'<tr><td style="color:{nc};font-weight:900;padding:2px 5px;font-size:13px;">{sym}</td>'
-                    f'<td style="color:{_dc_val};padding:2px 4px;font-size:11px;">{pn}{retro}{combust}</td>'
-                    f'<td style="color:{nc};padding:2px 4px;font-size:11px;">{pp_o.sign_name[:3]}</td>'
-                    f'<td style="color:{_dc_txt};padding:2px 4px;font-size:11px;">{pp_o.sign_degree:.2f}°</td>'
-                    f'<td style="color:{_dc_txt};padding:2px 4px;font-size:10px;">{pp_o.nakshatra_name[:5]}-P{pp_o.nakshatra_pada}</td>'
-                    f'<td style="color:{_pts_good if d_pts>=15 else (_pts_mid if d_pts>=10 else _pts_low)};padding:2px 4px;font-size:10px;font-weight:700;">{d_pts}pts</td>'
-                    f'</tr>'
-                )
-            st.markdown(f"""
-<div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:8px 10px;margin-bottom:8px;box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
-  <div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:6px;letter-spacing:0.5px;">🪐 SWISS EPHEMERIS — {varga_choice} {v_name}</div>
-  <table style="width:100%;border-collapse:collapse;font-size:11px;">
-    <tr style="background:{_dc_row};">
-      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Sym</th>
-      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Planet</th>
-      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Sign</th>
-      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Deg°</th>
-      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Nakshatra</th>
-      <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Bala</th>
-    </tr>
-    {"".join(eph_rows)}
-  </table>
-</div>""", unsafe_allow_html=True)
+                # Swiss Ephemeris Planet Table
+                SYMS_CONS = {"Sun":"☉","Moon":"☽","Mars":"♂","Mercury":"☿","Jupiter":"♃","Venus":"♀","Saturn":"♄","Rahu":"☊","Ketu":"☋"}
+                P_NC = {"Sun":"#FFB800","Moon":"#88AAFF","Mars":"#FF4444","Mercury":"#44DD88","Jupiter":"#FFD700","Venus":"#FF88CC","Saturn":"#AAAACC","Rahu":"#CC88FF","Ketu":"#AA6633"}
+                eph_rows = []
+                for pn in ["Sun","Moon","Mars","Mercury","Jupiter","Venus","Saturn","Rahu","Ketu"]:
+                    pp_o = chart.planets.get(pn)
+                    if not pp_o:
+                        continue
+                    sym = SYMS_CONS.get(pn, pn[:2])
+                    nc = P_NC.get(pn, "#CCC")
+                    retro = "℞" if pp_o.is_retrograde else ""
+                    combust = "☌" if pp_o.is_combust else ""
+                    d_label, d_pts, _ = get_varga_dignity_info(pn, pp_o.sign_name, affliction_engine)
+                    eph_rows.append(
+                        f'<tr><td style="color:{nc};font-weight:900;padding:2px 5px;font-size:13px;">{sym}</td>'
+                        f'<td style="color:{_dc_val};padding:2px 4px;font-size:11px;">{pn}{retro}{combust}</td>'
+                        f'<td style="color:{nc};padding:2px 4px;font-size:11px;">{pp_o.sign_name[:3]}</td>'
+                        f'<td style="color:{_dc_txt};padding:2px 4px;font-size:11px;">{pp_o.sign_degree:.2f}°</td>'
+                        f'<td style="color:{_dc_txt};padding:2px 4px;font-size:10px;">{pp_o.nakshatra_name[:5]}-P{pp_o.nakshatra_pada}</td>'
+                        f'<td style="color:{_pts_good if d_pts>=15 else (_pts_mid if d_pts>=10 else _pts_low)};padding:2px 4px;font-size:10px;font-weight:700;">{d_pts}pts</td>'
+                        f'</tr>'
+                    )
+                st.markdown(f"""
+    <div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:8px 10px;margin-bottom:8px;box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
+      <div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:6px;letter-spacing:0.5px;">🪐 SWISS EPHEMERIS — {varga_choice} {v_name}</div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px;">
+        <tr style="background:{_dc_row};">
+          <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Sym</th>
+          <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Planet</th>
+          <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Sign</th>
+          <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Deg°</th>
+          <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Nakshatra</th>
+          <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Bala</th>
+        </tr>
+        {"".join(eph_rows)}
+      </table>
+    </div>""", unsafe_allow_html=True)
 
-            # Panchang Quick Console
-            st.markdown(f"""
-<div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:8px 10px;margin-bottom:8px;">
-  <div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:6px;">🌙 PANCHANG CONSOLE</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;">
-    <div style="color:{_dc_txt};">Tithi: <span style="color:{_dc_val};font-weight:800;">{p.tithi_name}</span></div>
-    <div style="color:{_dc_txt};">Vara: <span style="color:{_dc_val};font-weight:800;">{p.vara_name}</span></div>
-    <div style="color:{_dc_txt};">Nakshatra: <span style="color:{_dc_val};font-weight:800;">{p.nakshatra_name}</span></div>
-    <div style="color:{_dc_txt};">Yoga: <span style="color:{_dc_val};font-weight:800;">{p.yoga_name}</span></div>
-    <div style="color:{_dc_txt};">Karana: <span style="color:{_dc_val};font-weight:800;">{p.karana_name}</span></div>
-    <div style="color:{_dc_txt};">Atmakaraka: <span style="color:{_pts_mid};font-weight:900;">{chart.atmakaraka}</span></div>
-  </div>
-</div>""", unsafe_allow_html=True)
+                # Panchang Quick Console
+                st.markdown(f"""
+    <div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:8px 10px;margin-bottom:8px;">
+      <div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:6px;">🌙 PANCHANG CONSOLE</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;">
+        <div style="color:{_dc_txt};">Tithi: <span style="color:{_dc_val};font-weight:800;">{p.tithi_name}</span></div>
+        <div style="color:{_dc_txt};">Vara: <span style="color:{_dc_val};font-weight:800;">{p.vara_name}</span></div>
+        <div style="color:{_dc_txt};">Nakshatra: <span style="color:{_dc_val};font-weight:800;">{p.nakshatra_name}</span></div>
+        <div style="color:{_dc_txt};">Yoga: <span style="color:{_dc_val};font-weight:800;">{p.yoga_name}</span></div>
+        <div style="color:{_dc_txt};">Karana: <span style="color:{_dc_val};font-weight:800;">{p.karana_name}</span></div>
+        <div style="color:{_dc_txt};">Atmakaraka: <span style="color:{_pts_mid};font-weight:900;">{chart.atmakaraka}</span></div>
+      </div>
+    </div>""", unsafe_allow_html=True)
 
-            # 9×9 Aspect Orb Matrix
-            st.markdown(f'<div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:4px;letter-spacing:0.5px;">🔬 NATAL ASPECT ORB MATRIX (9×9)</div>', unsafe_allow_html=True)
-            orb_html = render_aspect_orb_matrix_html(chart, dark_bg=is_astrallis_mode or is_night_mode)
-            st.markdown(orb_html, unsafe_allow_html=True)
+                # 9×9 Aspect Orb Matrix
+                st.markdown(f'<div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:4px;letter-spacing:0.5px;">🔬 NATAL ASPECT ORB MATRIX (9×9)</div>', unsafe_allow_html=True)
+                orb_html = render_aspect_orb_matrix_html(chart, dark_bg=is_astrallis_mode or is_night_mode)
+                st.markdown(orb_html, unsafe_allow_html=True)
 
-        else:
-            # Standard panel for non-Astrallis modes
-            st.markdown(f"#### 🌟 {varga_choice} ({v_name}) सारांश एवं पंचांग")
-            p_col1, p_col2 = st.columns(2)
-            p_col1.markdown(f"- **वर्ग लग्न:** {v_lagna_sign} ({v_lagna_id})")
-            p_col1.markdown(f"- **जन्म लग्न (D1):** {chart.lagna_sign_name} ({chart.lagna_sign_id})")
-            p_col1.markdown(f"- **आत्मकारक (AK):** {chart.atmakaraka}")
-            p_col2.markdown(f"- **तिथि:** {p.tithi_name}")
-            p_col2.markdown(f"- **नक्षत्र:** {p.nakshatra_name}")
-            p_col2.markdown(f"- **वार:** {p.vara_name}")
+            else:
+                # Standard panel for non-Astrallis modes
+                st.markdown(f"#### 🌟 {varga_choice} ({v_name}) सारांश एवं पंचांग")
+                p_col1, p_col2 = st.columns(2)
+                p_col1.markdown(f"- **वर्ग लग्न:** {v_lagna_sign} ({v_lagna_id})")
+                p_col1.markdown(f"- **जन्म लग्न (D1):** {chart.lagna_sign_name} ({chart.lagna_sign_id})")
+                p_col1.markdown(f"- **आत्मकारक (AK):** {chart.atmakaraka}")
+                p_col2.markdown(f"- **तिथि:** {p.tithi_name}")
+                p_col2.markdown(f"- **नक्षत्र:** {p.nakshatra_name}")
+                p_col2.markdown(f"- **वार:** {p.vara_name}")
 
-            # Dynamic Planetary Dignity & Strength Bar Chart for the selected Varga
-            st.markdown(f"#### 📊 {varga_choice} ({v_name}) ग्रह गरिमा एवं बल सूचकांक")
-            varga_scores = {}
-            target_planets_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
-            for p_name in target_planets_order:
-                vp_obj = target_varga.planets.get(p_name) if target_varga else None
-                if vp_obj:
-                    _, d_pts, _ = get_varga_dignity_info(p_name, vp_obj.sign_name, affliction_engine)
-                    varga_scores[p_name] = d_pts
-                else:
-                    varga_scores[p_name] = 7
+                # Dynamic Planetary Dignity & Strength Bar Chart for the selected Varga
+                st.markdown(f"#### 📊 {varga_choice} ({v_name}) ग्रह गरिमा एवं बल सूचकांक")
+                varga_scores = {}
+                target_planets_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
+                for p_name in target_planets_order:
+                    vp_obj = target_varga.planets.get(p_name) if target_varga else None
+                    if vp_obj:
+                        _, d_pts, _ = get_varga_dignity_info(p_name, vp_obj.sign_name, affliction_engine)
+                        varga_scores[p_name] = d_pts
+                    else:
+                        varga_scores[p_name] = 7
 
-            st.bar_chart(pd.DataFrame(list(varga_scores.items()), columns=["Planet", f"{varga_choice} Dignity Score"]).set_index("Planet"))
+                st.bar_chart(pd.DataFrame(list(varga_scores.items()), columns=["Planet", f"{varga_choice} Dignity Score"]).set_index("Planet"))
 
-            with st.expander("🏆 समग्र विंशोपक बल (20 Point Shadvarga Bala)", expanded=False):
-                vimsopaka = VargaCalculator.calculate_vimsopaka_bala(chart)
-                st.bar_chart(pd.DataFrame(list(vimsopaka.items()), columns=["Planet", "Vimsopaka Score"]).set_index("Planet"))
+                with st.expander("🏆 समग्र विंशोपक बल (20 Point Shadvarga Bala)", expanded=False):
+                    vimsopaka = VargaCalculator.calculate_vimsopaka_bala(chart)
+                    st.bar_chart(pd.DataFrame(list(vimsopaka.items()), columns=["Planet", "Vimsopaka Score"]).set_index("Planet"))
 
     st.markdown(f"### 🪐 {varga_choice} ({v_name}) चक्र — नवग्रह स्पष्ट स्थिति, भाव एवं गरिमा तालिका")
     p_data = []
@@ -5975,158 +5980,69 @@ if selected_idx == 0:
 # TAB 3: AFFLICTION & FREE WILL ANALYSIS (GRAHALAKSHANAM CORE)
 
 elif selected_idx == 1:
-    st.subheader("🎯 घटना विश्लेषण एवं भूतपूर्व सत्यापन (Event Intelligence & Verification)")
-    ghatna_tab1, ghatna_tab2 = st.tabs([
-        "🔮 भविष्य घटना पूर्वानुमान (Future Event Window Analysis)",
-        "⏳ भूतपूर्व घटना सत्यापन (Retrospective Past Event Verification - 6 Pillars)"
-    ])
+    st.subheader("🎯 घटना विश्लेषण (Event Window Analysis)")
+    st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का बहु-पद्धति शास्त्रीय विश्लेषण प्राप्त करें।")
 
-    with ghatna_tab1:
-        st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का बहु-पद्धति शास्त्रीय विश्लेषण प्राप्त करें।")
+    col_q1, col_q2, col_q3 = st.columns([2, 2, 2])
+    target_event_date = col_q1.date_input("लक्षित तिथि (Target Date)", value=date(2027, 4, 12), format="DD/MM/YYYY")
+    theme = col_q2.selectbox(
+        "विश्लेषण विषय (Theme)",
+        ["career", "marriage", "wealth", "health", "travel", "spirituality", "all"],
+        format_func=lambda x: {
+            "career": "💼 आजीविका / करियर (Career)",
+            "marriage": "💍 विवाह / संबंध (Marriage)",
+            "wealth": "💰 धन / संपत्ति (Wealth)",
+            "health": "🌿 स्वास्थ्य (Health)",
+            "travel": "✈️ विदेश / यात्रा (Travel)",
+            "spirituality": "🕉️ आध्यात्म (Spirituality)",
+            "all": "🌐 समग्र विश्लेषण (All Themes)"
+        }.get(x, x)
+    )
+    scan_range = col_q3.checkbox("30-दिवसीय विंडो स्कैन करें (30-Day Window)")
 
-        col_q1, col_q2, col_q3 = st.columns([2, 2, 2])
-        target_event_date = col_q1.date_input("लक्षित तिथि (Target Date)", value=date(2027, 4, 12), format="DD/MM/YYYY")
-        theme = col_q2.selectbox(
-            "विश्लेषण विषय (Theme)",
-            ["career", "marriage", "wealth", "health", "travel", "spirituality", "all"],
-            format_func=lambda x: {
-                "career": "💼 आजीविका / करियर (Career)",
-                "marriage": "💍 विवाह / संबंध (Marriage)",
-                "wealth": "💰 धन / संपत्ति (Wealth)",
-                "health": "🌿 स्वास्थ्य (Health)",
-                "travel": "✈️ विदेश / यात्रा (Travel)",
-                "spirituality": "🕉️ आध्यात्म (Spirituality)",
-                "all": "🌐 समग्र विश्लेषण (All Themes)"
-            }.get(x, x)
-        )
-        scan_range = col_q3.checkbox("30-दिवसीय विंडो स्कैन करें (30-Day Window)")
+    query_input = GhatnaQueryInput(
+        birth_data=birth_profile,
+        target_date=target_event_date,
+        theme=theme
+    )
+    result = default_event_query_service.execute_query(query_input, precomputed_chart=chart)
 
-        query_input = GhatnaQueryInput(
-            birth_data=birth_profile,
-            target_date=target_event_date,
-            theme=theme
-        )
-        result = default_event_query_service.execute_query(query_input, precomputed_chart=chart)
+    st.markdown("---")
+    m_col1, m_col2, m_col3, m_col4 = st.columns(4)
+    m_col1.metric("लक्षित तिथि", result.target_date.strftime("%d-%b-%Y"))
+    m_col2.metric("संभावना सूचकांक", f"{result.composite_score:.2f}")
+    m_col3.metric("विश्वास स्तर", result.confidence_band.split(" ")[0])
+    m_col4.metric("सक्रिय विंशोत्तरी दशा", result.active_dasha.formatted_summary)
 
-        st.markdown("---")
-        m_col1, m_col2, m_col3, m_col4 = st.columns(4)
-        m_col1.metric("लक्षित तिथि", result.target_date.strftime("%d-%b-%Y"))
-        m_col2.metric("संभावना सूचकांक", f"{result.composite_score:.2f}")
-        m_col3.metric("विश्वास स्तर", result.confidence_band.split(" ")[0])
-        m_col4.metric("सक्रिय विंशोत्तरी दशा", result.active_dasha.formatted_summary)
+    st.info(f"📊 **पद्धति सहमति अनुपात (Consensus):** {result.consensus_ratio}")
 
-        st.info(f"📊 **पद्धति सहमति अनुपात (Consensus):** {result.consensus_ratio}")
+    col_res1, col_res2 = st.columns([3, 2])
+    with col_res1:
+        st.markdown("### 📖 शास्त्रीय साक्ष्य सार (Classical Narrative)")
+        st.markdown(result.narrative_hi)
+        with st.expander("English Summary"):
+            st.markdown(result.narrative_en)
 
-        col_res1, col_res2 = st.columns([3, 2])
-        with col_res1:
-            st.markdown("### 📖 शास्त्रीय साक्ष्य सार (Classical Narrative)")
-            st.markdown(result.narrative_hi)
-            with st.expander("English Summary"):
-                st.markdown(result.narrative_en)
+    with col_res2:
+        st.markdown("### 🪐 गोचर स्थिति (Transit Snapshot)")
+        t = result.transit_summary
+        st.markdown(f"- **शनि गोचर:** चंद्र से {t.saturn_house_from_moon}वां | लग्न से {t.saturn_house_from_lagna}वां भाव")
+        st.markdown(f"- **गुरु गोचर:** चंद्र से {t.jupiter_house_from_moon}वां | लग्न से {t.jupiter_house_from_lagna}वां भाव")
+        st.markdown(f"- **साढ़े साती:** {'✅ सक्रिय - ' + (t.sade_sati_phase or '') if t.is_sade_sati else '❌ निष्क्रिय'}")
+        st.markdown(f"- **ढैय्या:** {'✅ सक्रिय - ' + (t.dhaiya_type or '') if t.is_dhaiya else '❌ निष्क्रिय'}")
 
-        with col_res2:
-            st.markdown("### 🪐 गोचर स्थिति (Transit Snapshot)")
-            t = result.transit_summary
-            st.markdown(f"- **शनि गोचर:** चंद्र से {t.saturn_house_from_moon}वां | लग्न से {t.saturn_house_from_lagna}वां भाव")
-            st.markdown(f"- **गुरु गोचर:** चंद्र से {t.jupiter_house_from_moon}वां | लग्न से {t.jupiter_house_from_lagna}वां भाव")
-            st.markdown(f"- **साढ़े साती:** {'✅ सक्रिय - ' + (t.sade_sati_phase or '') if t.is_sade_sati else '❌ निष्क्रिय'}")
-            st.markdown(f"- **ढैय्या:** {'✅ सक्रिय - ' + (t.dhaiya_type or '') if t.is_dhaiya else '❌ निष्क्रिय'}")
-
-        st.markdown("### 🔍 सक्रिय शास्त्रीय नियम एवं साक्ष्य (Fired Rules Evidence)")
-        if result.top_positive_signals:
-            st.markdown("##### 🟢 अनुकूल शास्त्रीय योग:")
-            for r in result.top_positive_signals:
-                st.markdown(f"""
-                <div class="rule-card">
-                    <b>{r.rule_name_hi}</b> ({r.rule_name_en})<br/>
-                    <small style="color:#F59E0B;">स्रोत: {r.source_text} | अध्याय: {r.source_chapter} | पद्धति: {r.school}</small><br/>
-                    <span>{r.explanation_hi}</span><br/>
-                    <small style="color:#6EE7B7;">सिग्नल शक्ति: {r.signal_score:.2f} | पुष्टि: {'हाँ' if r.varga_confirmed else 'सामान्य'}</small>
-                </div>
-                """, unsafe_allow_html=True)
-
-    with ghatna_tab2:
-        st.markdown("### ⏳ भूतपूर्व घटना सत्यापन इंजन (Retrospective 6-Pillar Verification)")
-        st.write("मास्टर डायरेक्टिव नियम ५ के अनुसार अतीत की घटनाओं का निष्पक्ष एवं ६-स्तंभ शास्त्रीय सत्यापन करें।")
-
-        from ..events.past_verification import PastEventVerificationInput, default_past_event_engine
-
-        c_pv1, c_pv2, c_pv3 = st.columns([2, 3, 2])
-        past_theme = c_pv1.selectbox(
-            "सत्यापन विषय (Event Theme)",
-            ["marriage", "career_breakthrough", "property_purchase", "accident_illness"],
-            format_func=lambda x: {
-                "marriage": "💍 विवाह (Marriage / Relationship)",
-                "career_breakthrough": "💼 करियर में बड़ा बदलाव (Career Breakthrough)",
-                "property_purchase": "🏠 भूमि / भवन क्रय (Property)",
-                "accident_illness": "⚠️ आकस्मिक रोग / दुर्घटना (Accident / Illness)"
-            }.get(x, x),
-            key="pv_theme_select"
-        )
-        past_query_text = c_pv2.text_input(
-            "भूतपूर्व प्रश्न / जिज्ञासा",
-            value="क्या इस अवधि में विवाह संपन्न हुआ था?",
-            key="pv_query_input"
-        )
-        past_target_date = c_pv3.date_input(
-            "घटना संभावित तिथि / वर्ष",
-            value=date(2018, 6, 15),
-            key="pv_date_input"
-        )
-
-        if st.button("🔍 ६-स्तंभ शास्त्रीय सत्यापन निष्पादित करें", type="primary", key="btn_run_pv"):
-            with st.spinner("६ शास्त्रीय स्तंभों एवं १२,५००+ नियमों का सत्यापन जारी..."):
-                p_inp = PastEventVerificationInput(
-                    birth_data=birth_profile,
-                    event_theme=past_theme,
-                    query_text=past_query_text,
-                    target_date=past_target_date,
-                    search_window_start=date(past_target_date.year, 1, 1),
-                    search_window_end=date(past_target_date.year, 12, 31)
-                )
-                pv_res = default_past_event_engine.verify_past_event(p_inp, precomputed_chart=chart)
-
-                st.markdown("---")
-                badge_color = {
-                    "Strongly Supported": "#16a34a",
-                    "Supported": "#22c55e",
-                    "Moderately Supported": "#d97706",
-                    "Weakly Supported": "#eab308",
-                    "Conflicting": "#dc2626",
-                    "Inconclusive": "#6b7280",
-                    "Not Supported": "#991b1b"
-                }.get(pv_res.status.value, "#3b82f6")
-
-                st.markdown(f"""
-                <div style="background:#1e293b; border-left:6px solid {badge_color}; padding:16px 20px; border-radius:10px; margin-bottom:20px;">
-                    <div style="font-size:13px; color:#94a3b8; font-weight:700;">शास्त्रीय साक्ष्य स्थिति (Rule 5 Calibrated Consensus):</div>
-                    <div style="font-size:22px; font-weight:800; color:{badge_color}; margin:6px 0;">
-                        {pv_res.status.value} (प्रमाण स्कोर: {pv_res.confidence_score*100:.1f}%)
-                    </div>
-                    <div style="font-size:13px; color:#cbd5e1;">प्रश्न: <i>"{pv_res.query_text}"</i> | लक्षित तिथि: {pv_res.target_date.strftime('%d-%b-%Y')}</div>
-                </div>
-                """, unsafe_allow_html=True)
-
-                col_pv_a, col_pv_b = st.columns(2)
-                with col_pv_a:
-                    st.markdown("#### 📜 दैवज्ञ AI शास्त्रीय विवेचना (हिंदी)")
-                    st.info(pv_res.ai_explanation_hi)
-                with col_pv_b:
-                    st.markdown("#### 🌐 Classical Assessment (English)")
-                    st.write(pv_res.ai_explanation_en)
-
-                st.markdown("#### 🏛️ षट्-स्तंभ साक्ष्य मैट्रिक्स (6 Pillars Breakdown)")
-                p_c1, p_c2, p_c3 = st.columns(3)
-                with p_c1:
-                    st.markdown(f"**1. जन्मलग्न (D1 Potential)**\n- स्थिति: {pv_res.pillar_1_d1_evidence.get('status', 'Analyzed')}\n- समर्थक कारक: {len(pv_res.pillar_1_d1_evidence.get('supporting_factors', []))}")
-                    st.markdown(f"**4. विंशोत्तरी दशा**\n- महादशा: {pv_res.pillar_4_dasha_evidence.get('mahadasha', 'N/A')}\n- अंतर्दशा: {pv_res.pillar_4_dasha_evidence.get('antardasha', 'N/A')}")
-                with p_c2:
-                    st.markdown(f"**2. प्रश्न कुण्डली (Horary)**\n- कार्येश: {(pv_res.pillar_2_prashna_evidence or {}).get('karyesh', 'N/A')}\n- इत्थशाल योग: {(pv_res.pillar_2_prashna_evidence or {}).get('itthashala_formed', False)}")
-                    st.markdown(f"**5. द्वि-गोचर (Double Transit)**\n- संरेखण: {pv_res.pillar_5_transit_evidence.get('transit_alignment', 'Neutral')}\n- गुरु/शनि दृष्टि: {pv_res.pillar_5_transit_evidence.get('double_transit_active', False)}")
-                with p_c3:
-                    st.markdown(f"**3. सूक्ष्म वर्ग ({pv_res.pillar_3_varga_evidence.get('varga_code', 'D9')})**\n- कारक बल: {pv_res.pillar_3_varga_evidence.get('karaka_strength', 'Balavan')}\n- वर्ग लग्न: {pv_res.pillar_3_varga_evidence.get('varga_lagna', 'Valid')}")
-                    st.markdown(f"**6. शास्त्रीय नियम साक्ष्य**\n- सक्रिय सूत्र: {len(pv_res.pillar_6_rules_evidence.get('active_rules', []))}\n- निरस्त/भंग: {len(pv_res.pillar_6_rules_evidence.get('cancellations', []))}")
-
+    st.markdown("### 🔍 सक्रिय शास्त्रीय नियम एवं साक्ष्य (Fired Rules Evidence)")
+    if result.top_positive_signals:
+        st.markdown("##### 🟢 अनुकूल शास्त्रीय योग:")
+        for r in result.top_positive_signals:
+            st.markdown(f"""
+            <div class="rule-card">
+                <b>{r.rule_name_hi}</b> ({r.rule_name_en})<br/>
+                <small style="color:#F59E0B;">स्रोत: {r.source_text} | अध्याय: {r.source_chapter} | पद्धति: {r.school}</small><br/>
+                <span>{r.explanation_hi}</span><br/>
+                <small style="color:#6EE7B7;">सिग्नल शक्ति: {r.signal_score:.2f} | पुष्टि: {'हाँ' if r.varga_confirmed else 'सामान्य'}</small>
+            </div>
+            """, unsafe_allow_html=True)
 
 
 # =============================================================
