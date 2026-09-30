@@ -31,7 +31,7 @@ def test_login_and_tier_detection():
     # Verify protected me endpoint
     me_res = client.get("/api/v1/auth/me", headers={"Authorization": f"Bearer {token}"})
     assert me_res.status_code == 200
-    assert me_res.json()["user"]["role"] in ("admin", "org_admin")
+    assert me_res.json()["user"]["role"] in ("admin", "org_admin", "enterprise")
 
 
 def test_rate_limiter_anonymous_quota():

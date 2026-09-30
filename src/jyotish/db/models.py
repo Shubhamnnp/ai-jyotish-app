@@ -236,11 +236,12 @@ class EventVerificationModel(Base):
 class AuditLog(Base):
     __tablename__ = "audit_logs"
 
-    id = Column(String(36), primary_key=True, default=generate_uuid)
-    organization_id = Column(String(36), nullable=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    organization_id = Column(String(36), nullable=False, default="default-org")
     user_id = Column(String(36), nullable=True)
     action = Column(String(100), nullable=False)
     resource_type = Column(String(100), nullable=False)
-    resource_id = Column(String(100), nullable=True)
+    resource_id = Column(String(255), nullable=True)
     ip_address = Column(String(50), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
