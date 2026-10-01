@@ -1291,14 +1291,31 @@ unified_css = f"""
     div[data-testid="stHorizontalBlock"] {{
         gap: 0.35rem !important;
     }}
-    div[data-testid="stCustomComponentV1"],
-    div.element-container:has(iframe),
+    div[data-testid="stCustomComponentV1"]:has(iframe[height="0"]),
+    div.element-container:has(iframe[height="0"]),
     div.element-container:has(style) {{
-        display: none !important;
+        position: absolute !important;
+        opacity: 0 !important;
         height: 0px !important;
         min-height: 0px !important;
+        max-height: 0px !important;
         margin: 0px !important;
         padding: 0px !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
+    }}
+
+    /* Sidebar and collapse control must always sit above the fixed header */
+    section[data-testid="stSidebar"],
+    [data-testid="stSidebar"] {{
+        z-index: 10000000 !important;
+    }}
+    [data-testid="collapsedControl"],
+    [data-testid="collapsedControl"] button,
+    [data-testid="stSidebarCollapsedControl"],
+    [data-testid="stSidebarCollapsedControl"] button {{
+        z-index: 10000005 !important;
+        pointer-events: auto !important;
     }}
 
     /* Frozen Locked Toolbelt (Pins the 8 Top Action Buttons Permanently to the Top of the Viewport) */
@@ -1309,7 +1326,7 @@ unified_css = f"""
         left: 0px !important;
         right: 0px !important;
         width: 100% !important;
-        z-index: 999990 !important;
+        z-index: 9990 !important;
         background: #F5F9EC !important;
         padding-top: 6px !important;
         padding-bottom: 6px !important;
@@ -2219,6 +2236,19 @@ client_bridge_code = """
                     });
                 }
             });
+
+            // Direct capture-phase click handler on parent document for the Sidebar button
+            if (!parentDoc.dataset.sidebarBound) {
+                parentDoc.dataset.sidebarBound = "true";
+                parentDoc.addEventListener('click', function(e) {
+                    const btn = e.target.closest('button');
+                    if (btn && (btn.innerText.includes('Sidebar') || (btn.getAttribute('key') && btn.getAttribute('key').includes('sidebar')))) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        doToggle();
+                    }
+                }, true);
+            }
             
             function doToggle() {
                 // 1. Try finding and clicking native Streamlit sidebar buttons (target button directly)
@@ -3214,13 +3244,28 @@ client_bridge_code = """
                         div[data-testid="stVerticalBlock"] {
                             gap: 0.35rem !important;
                         }
-                        div[data-testid="stCustomComponentV1"],
-                        div.element-container:has(iframe) {
-                            display: none !important;
+                        div[data-testid="stCustomComponentV1"]:has(iframe[height="0"]),
+                        div.element-container:has(iframe[height="0"]) {
+                            position: absolute !important;
+                            opacity: 0 !important;
                             height: 0px !important;
                             min-height: 0px !important;
+                            max-height: 0px !important;
                             margin: 0px !important;
                             padding: 0px !important;
+                            overflow: hidden !important;
+                            pointer-events: none !important;
+                        }
+                        section[data-testid="stSidebar"],
+                        [data-testid="stSidebar"] {
+                            z-index: 10000000 !important;
+                        }
+                        [data-testid="collapsedControl"],
+                        [data-testid="collapsedControl"] button,
+                        [data-testid="stSidebarCollapsedControl"],
+                        [data-testid="stSidebarCollapsedControl"] button {
+                            z-index: 10000005 !important;
+                            pointer-events: auto !important;
                         }
                         .st-key-frozen_toolbelt_container,
                         div.st-key-frozen_toolbelt_container {
@@ -3229,7 +3274,7 @@ client_bridge_code = """
                             left: 0px !important;
                             right: 0px !important;
                             width: 100% !important;
-                            z-index: 999990 !important;
+                            z-index: 9990 !important;
                             background: #F5F9EC !important;
                             border-bottom: 2.5px solid #00B0F0 !important;
                             box-shadow: 0 4px 14px rgba(0, 115, 207, 0.15) !important;
@@ -3725,7 +3770,7 @@ client_bridge_code = """
 
                 frozenTb.style.setProperty('position', 'fixed', 'important');
                 frozenTb.style.setProperty('top', '0px', 'important');
-                frozenTb.style.setProperty('z-index', '999990', 'important');
+                frozenTb.style.setProperty('z-index', '9990', 'important');
                 frozenTb.style.setProperty('padding-top', '6px', 'important');
                 frozenTb.style.setProperty('padding-bottom', '6px', 'important');
                 frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
