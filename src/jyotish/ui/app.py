@@ -5027,8 +5027,6 @@ with st.container(key="top_frozen_header_container", border=False):
     def _nav_prev_module():
         new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
         st.session_state.active_module_idx = new_idx
-        if "sidebar_module_radio" in st.session_state:
-            st.session_state.sidebar_module_radio = MODULE_OPTIONS[new_idx]
         if "sb_cat_filter_select" in st.session_state:
             st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
         if "sb_search_filter_input" in st.session_state:
@@ -5037,8 +5035,6 @@ with st.container(key="top_frozen_header_container", border=False):
     def _nav_next_module():
         new_idx = (st.session_state.active_module_idx + 1) % len(MODULE_OPTIONS)
         st.session_state.active_module_idx = new_idx
-        if "sidebar_module_radio" in st.session_state:
-            st.session_state.sidebar_module_radio = MODULE_OPTIONS[new_idx]
         if "sb_cat_filter_select" in st.session_state:
             st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
         if "sb_search_filter_input" in st.session_state:
@@ -5046,8 +5042,6 @@ with st.container(key="top_frozen_header_container", border=False):
 
     def _nav_to_rules_bank():
         st.session_state.active_module_idx = 19
-        if "sidebar_module_radio" in st.session_state:
-            st.session_state.sidebar_module_radio = MODULE_OPTIONS[19]
         if "sb_cat_filter_select" in st.session_state:
             st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
         if "sb_search_filter_input" in st.session_state:
@@ -5103,11 +5097,12 @@ with st.container(key="top_frozen_header_container", border=False):
             "वैदिक मॉड्यूल्स (३० मॉड्यूल)",
             filtered_mods,
             index=radio_idx,
-            key="sidebar_module_radio",
             label_visibility="collapsed"
         )
         selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else curr_idx
-        st.session_state.active_module_idx = selected_idx
+        if selected_idx != curr_idx:
+            st.session_state.active_module_idx = selected_idx
+            st.rerun()
 
     # ---------------------------------------------------------
     # 3. TOP HEADER CONTAINER: QUICK CONTROLS & BREADCRUMB
@@ -5124,14 +5119,11 @@ with st.container(key="top_frozen_header_container", border=False):
             "सक्रिय मॉड्यूल (Active Module)",
             MODULE_OPTIONS,
             index=MODULE_OPTIONS.index(_cur_m_name),
-            key="top_bar_active_module_select",
             label_visibility="collapsed",
             help="किसी भी मॉड्यूल पर तुरंत जाने के लिए यहाँ से चुनें"
         )
         if chosen_module != _cur_m_name:
             st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen_module)
-            if "sidebar_module_radio" in st.session_state:
-                st.session_state.sidebar_module_radio = chosen_module
             st.rerun()
 
     with col_btn_next:
