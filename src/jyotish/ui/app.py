@@ -1182,17 +1182,16 @@ unified_css = f"""
         display: none !important;
         visibility: hidden !important;
     }}
-    /* Hide Streamlit's native top header bar (empty white strip) completely */
+    /* Streamlit top header bar: transparent & non-blocking so sidebar toggle controls remain visible */
     header[data-testid="stHeader"] {{
-        display: none !important;
-        visibility: hidden !important;
+        background: transparent !important;
+        border: none !important;
         height: 0px !important;
         min-height: 0px !important;
-        max-height: 0px !important;
-        overflow: hidden !important;
         padding: 0px !important;
         margin: 0px !important;
-        z-index: -1 !important;
+        pointer-events: none !important;
+        z-index: 999999 !important;
     }}
 
     /* Keep Sidebar Open/Close Expand Button (>>) Always Visible, High-Contrast & Clickable */
@@ -3150,13 +3149,14 @@ client_bridge_code = """
                             color: #000000 !important;
                         }
                         header[data-testid="stHeader"] {
-                            display: none !important;
+                            background: transparent !important;
+                            border: none !important;
                             height: 0px !important;
                             min-height: 0px !important;
-                            max-height: 0px !important;
                             padding: 0px !important;
                             margin: 0px !important;
-                            visibility: hidden !important;
+                            pointer-events: none !important;
+                            z-index: 999999 !important;
                         }
                         .block-container {
                             padding-top: 2px !important;
@@ -3620,13 +3620,23 @@ client_bridge_code = """
 
             const stHeader = parentDoc.querySelector('header[data-testid="stHeader"]');
             if (stHeader) {
-                stHeader.style.setProperty('display', 'none', 'important');
+                stHeader.style.setProperty('background', 'transparent', 'important');
+                stHeader.style.setProperty('border', 'none', 'important');
                 stHeader.style.setProperty('height', '0px', 'important');
                 stHeader.style.setProperty('min-height', '0px', 'important');
-                stHeader.style.setProperty('max-height', '0px', 'important');
                 stHeader.style.setProperty('padding', '0px', 'important');
                 stHeader.style.setProperty('margin', '0px', 'important');
+                stHeader.style.setProperty('pointer-events', 'none', 'important');
+                stHeader.style.setProperty('z-index', '999999', 'important');
             }
+
+            // Auto-expand sidebar if it is currently collapsed
+            try {
+                const autoCollapsedBtn = parentDoc.querySelector('[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"], button[aria-label="Expand sidebar"], button[title="Expand sidebar"]');
+                if (autoCollapsedBtn && (autoCollapsedBtn.offsetParent !== null || window.getComputedStyle(autoCollapsedBtn).display !== 'none')) {
+                    autoCollapsedBtn.click();
+                }
+            } catch (e) {}
 
             const mainSec = parentDoc.querySelector('[data-testid="stMain"], section.main');
             if (mainSec) {
@@ -4374,8 +4384,8 @@ with st.container(key="top_frozen_header_container", border=False):
     </div>
     """, unsafe_allow_html=True)
 
-    # 7 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered)
-    tb_cols = st.columns(7, gap="small")
+    # 8 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered)
+    tb_cols = st.columns(8, gap="small")
 
     # Helper function for rendering clickable tile (Streamlit Native Button - In-Session Instant Trigger)
     def render_tool_tile(col, emoji_icon, label_text, tool_key):
@@ -4384,32 +4394,54 @@ with st.container(key="top_frozen_header_container", border=False):
             btn_type = "primary" if is_active else "secondary"
             btn_label = f"{emoji_icon} {label_text}"
             if st.button(btn_label, key=f"gla_tile_btn_{tool_key}", use_container_width=True, type=btn_type, help=f"{label_text} मेन्यू खोलें"):
-                if st.session_state.gla_active_tool == tool_key:
+                if tool_key == "sidebar":
+                    st.session_state.sidebar_toggle_requested = True
+                elif st.session_state.gla_active_tool == tool_key:
                     st.session_state.gla_active_tool = None
                 else:
                     st.session_state.gla_active_tool = tool_key
                 st.rerun()
 
-    # 1. New Chart
-    render_tool_tile(tb_cols[0], "✨", "New", "new")
+    # 1. Sidebar Toggle Button
+    render_tool_tile(tb_cols[0], "☰", "Sidebar", "sidebar")
 
-    # 2. Birth Data
-    render_tool_tile(tb_cols[1], "📅", "Birth Data", "birth")
+    # 2. New Chart
+    render_tool_tile(tb_cols[1], "✨", "New", "new")
 
-    # 3. Open Folder (Client Kundali Vault)
-    render_tool_tile(tb_cols[2], "📂", "Open Vault", "open")
+    # 3. Birth Data
+    render_tool_tile(tb_cols[2], "📅", "Birth Data", "birth")
 
-    # 4. Save Chart
-    render_tool_tile(tb_cols[3], "💾", "Save", "save")
+    # 4. Open Folder (Client Kundali Vault)
+    render_tool_tile(tb_cols[3], "📂", "Open Vault", "open")
 
-    # 5. Time Stepper (Time Travel)
-    render_tool_tile(tb_cols[4], "⏱️", "Time Travel", "clock")
+    # 5. Save Chart
+    render_tool_tile(tb_cols[4], "💾", "Save", "save")
 
-    # 6. Theme Mode
-    render_tool_tile(tb_cols[5], "🌓", "Theme", "theme")
+    # 6. Time Stepper (Time Travel)
+    render_tool_tile(tb_cols[5], "⏱️", "Time Travel", "clock")
 
-    # 7. Logout
-    render_tool_tile(tb_cols[6], "🚪", "Logout", "logout")
+    # 7. Theme Mode
+    render_tool_tile(tb_cols[6], "🌓", "Theme", "theme")
+
+    # 8. Logout
+    render_tool_tile(tb_cols[7], "🚪", "Logout", "logout")
+
+    if st.session_state.get("sidebar_toggle_requested"):
+        st.session_state.sidebar_toggle_requested = False
+        components.html("""
+        <script>
+        try {
+            const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            const expBtn = pDoc.querySelector('[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"], button[aria-label="Expand sidebar"], button[title="Expand sidebar"]');
+            if (expBtn && (expBtn.offsetParent !== null || window.getComputedStyle(expBtn).display !== 'none')) {
+                expBtn.click();
+            } else {
+                const colBtn = pDoc.querySelector('[data-testid="stSidebarCollapseButton"], button[aria-label="Collapse sidebar"], button[title="Collapse sidebar"]');
+                if (colBtn) { colBtn.click(); }
+            }
+        } catch(e) {}
+        </script>
+        """, height=0, width=0)
 
     # Physical spacer between toolbelt and module selector/dialogs
     st.markdown("<div style='height: 10px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
