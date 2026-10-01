@@ -4391,18 +4391,8 @@ with st.container(key="top_frozen_header_container", border=False):
             del st.query_params["gla_tool"]
         except Exception:
             pass
-    # Active profile banner with live info (incorporating anchor with 0 space)
-    st.markdown(f"""
-    <div class="fixed-header-anchor" style="display:none; height:0px; margin:0; padding:0;"></div>
-    <div class="gla-info-strip">
-        <div>
-            👤 <b>जातक:</b> {name} &nbsp;|&nbsp; 📅 {birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')} &nbsp;|&nbsp; 📍 {default_city_name}
-        </div>
-        <div>
-            <span class="gla-active-tag">🟢 Server Active</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    # Invisible anchor for sticky top header calculations
+    st.markdown('<div class="fixed-header-anchor" style="display:none; height:0px; margin:0; padding:0;"></div>', unsafe_allow_html=True)
 
     # 8 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered)
     tb_cols = st.columns(8, gap="small")
