@@ -4366,8 +4366,8 @@ with st.container(key="top_frozen_header_container", border=False):
     </div>
     """, unsafe_allow_html=True)
 
-    # 10-Tile Complete Server Toolbelt Columns (Ultra-Slim & Screen-Fit Clickable Tiles)
-    tb_cols = st.columns(10, gap="small")
+    # 7 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered)
+    tb_cols = st.columns(7, gap="small")
 
     # Helper function for rendering clickable tile (Streamlit Native Button - In-Session Instant Trigger)
     def render_tool_tile(col, emoji_icon, label_text, tool_key):
@@ -4386,31 +4386,22 @@ with st.container(key="top_frozen_header_container", border=False):
     render_tool_tile(tb_cols[0], "✨", "New", "new")
 
     # 2. Birth Data
-    render_tool_tile(tb_cols[1], "📝", "Birth", "birth")
+    render_tool_tile(tb_cols[1], "📅", "Birth Data", "birth")
 
     # 3. Open Folder (Client Kundali Vault)
-    render_tool_tile(tb_cols[2], "📂", "Open", "open")
+    render_tool_tile(tb_cols[2], "📂", "Open Vault", "open")
 
     # 4. Save Chart
     render_tool_tile(tb_cols[3], "💾", "Save", "save")
 
-    # 5. Settings
-    render_tool_tile(tb_cols[4], "⚙️", "Settings", "settings")
+    # 5. Time Stepper (Time Travel)
+    render_tool_tile(tb_cols[4], "⏱️", "Time Travel", "clock")
 
-    # 6. Languages
-    render_tool_tile(tb_cols[5], "🌐", "Lang", "lang")
+    # 6. Theme Mode
+    render_tool_tile(tb_cols[5], "🌓", "Theme", "theme")
 
-    # 7. Current Time
-    render_tool_tile(tb_cols[6], "⏱️", "Time", "clock")
-
-    # 8. Current Location
-    render_tool_tile(tb_cols[7], "📍", "Location", "location")
-
-    # 9. Theme Mode
-    render_tool_tile(tb_cols[8], "🎨", "Theme", "theme")
-
-    # 10. Logout
-    render_tool_tile(tb_cols[9], "🚪", "Logout", "logout")
+    # 7. Logout
+    render_tool_tile(tb_cols[6], "🚪", "Logout", "logout")
 
     # Physical spacer between toolbelt and module selector/dialogs
     st.markdown("<div style='height: 10px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
