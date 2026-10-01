@@ -1177,67 +1177,59 @@ else:
 
 unified_css = f"""
 <style>
-    /* Hide Streamlit Deploy button, 3-dots menu, and footer */
-    .stDeployButton, #MainMenu, footer, [data-testid="stDecoration"], div[data-testid="stToolbar"] {{
+    /* Hide Streamlit Deploy button, 3-dots menu, status widget and footer, but keep stToolbar transparent */
+    .stDeployButton,
+    button[data-testid="stDeployButton"],
+    #MainMenu,
+    [data-testid="stMainMenuTrigger"],
+    footer,
+    [data-testid="stDecoration"],
+    [data-testid="stStatusWidget"],
+    [data-testid="stToolbarActions"] {{
         display: none !important;
         visibility: hidden !important;
+        pointer-events: none !important;
+    }}
+    div[data-testid="stToolbar"] {{
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        pointer-events: none !important;
     }}
     /* Streamlit top header bar: transparent & non-blocking so sidebar toggle controls remain visible */
     header[data-testid="stHeader"] {{
         background: transparent !important;
         border: none !important;
-        height: 0px !important;
-        min-height: 0px !important;
         padding: 0px !important;
         margin: 0px !important;
         pointer-events: none !important;
-        z-index: 999999 !important;
+        z-index: 10000000 !important;
     }}
 
     /* Keep Sidebar Open/Close Expand Button (>>) Always Visible, High-Contrast & Clickable */
+    [data-testid="stExpandSidebarButton"],
+    [data-testid="stExpandSidebarButton"] button,
+    button[data-testid="stExpandSidebarButton"],
+    [data-testid="stSidebarCollapseButton"],
+    [data-testid="stSidebarCollapseButton"] button,
+    button[data-testid="stSidebarCollapseButton"],
     [data-testid="collapsedControl"],
     [data-testid="collapsedControl"] button,
     [data-testid="stSidebarCollapsedControl"],
     [data-testid="stSidebarCollapsedControl"] button,
-    button[data-testid="stSidebarCollapsedControl"],
-    header[data-testid="stHeader"] button {{
+    button[data-testid="stSidebarCollapsedControl"] {{
         pointer-events: auto !important;
         display: inline-flex !important;
         visibility: visible !important;
         opacity: 1 !important;
-        position: fixed !important;
-        top: 6px !important;
-        left: 6px !important;
         z-index: 10000005 !important;
-        background: #2563EB !important;
-        color: #FFFFFF !important;
-        border: 2px solid #1D4ED8 !important;
-        border-radius: 8px !important;
-        padding: 6px 12px !important;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
         cursor: pointer !important;
-        min-width: 38px !important;
-        min-height: 38px !important;
-        align-items: center !important;
-        justify-content: center !important;
     }}
-    [data-testid="collapsedControl"]:hover,
-    [data-testid="stSidebarCollapsedControl"]:hover,
-    button[data-testid="stSidebarCollapsedControl"]:hover,
-    header[data-testid="stHeader"] button:hover {{
-        background: #1D4ED8 !important;
-        border-color: #1E3A8A !important;
+    [data-testid="stExpandSidebarButton"]:hover,
+    button[data-testid="stExpandSidebarButton"]:hover,
+    [data-testid="stSidebarCollapseButton"]:hover,
+    button[data-testid="stSidebarCollapseButton"]:hover {{
         transform: scale(1.05) !important;
-    }}
-    [data-testid="collapsedControl"] svg,
-    [data-testid="stSidebarCollapsedControl"] svg,
-    button[data-testid="stSidebarCollapsedControl"] svg,
-    header[data-testid="stHeader"] button svg {{
-        fill: #FFFFFF !important;
-        color: #FFFFFF !important;
-        stroke: #FFFFFF !important;
-        width: 22px !important;
-        height: 22px !important;
     }}
 
     .sidebar-toggle-btn {{
@@ -2257,59 +2249,75 @@ client_bridge_code = """
                 parentDoc.dataset.sidebarBound = "true";
                 parentDoc.addEventListener('click', function(e) {
                     const btn = e.target.closest('button');
-                    if (btn && (btn.innerText.includes('Sidebar') || (btn.getAttribute('key') && btn.getAttribute('key').includes('sidebar')))) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        doToggle();
+                    if (btn && (btn.innerText.includes('Sidebar') || btn.innerText.includes('☰') || (btn.getAttribute('key') && btn.getAttribute('key').includes('sidebar')))) {
+                        if (btn.closest('.st-key-frozen_toolbelt_container') || btn.innerText.includes('Sidebar')) {
+                            const success = doToggle();
+                            if (success) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }
+                        }
                     }
                 }, true);
             }
             
             function doToggle() {
-                // 1. Try finding and clicking native Streamlit sidebar buttons (target button directly)
-                const collapsedBtn = parentDoc.querySelector(
-                    '[data-testid="stSidebarCollapsedControl"] button, ' +
-                    'button[data-testid="stSidebarCollapsedControl"], ' +
-                    '[data-testid="collapsedControl"] button, ' +
-                    'button[aria-label*="Expand sidebar"], ' +
-                    'button[title*="Expand sidebar"], ' +
-                    'button[aria-label*="sidebar"]'
-                );
-                const collapseBtn = parentDoc.querySelector(
-                    'button[data-testid="stSidebarCollapseButton"], ' +
-                    '[data-testid="stSidebarCollapseButton"] button, ' +
-                    '[data-testid="stSidebarHeader"] button, ' +
-                    'button[aria-label*="Collapse sidebar"], ' +
-                    'button[title*="Collapse sidebar"]'
-                );
-                
-                if (collapsedBtn && (collapsedBtn.offsetParent !== null || window.getComputedStyle(collapsedBtn).display !== 'none')) {
-                    collapsedBtn.click();
-                    return;
-                }
-                if (collapseBtn && (collapseBtn.offsetParent !== null || window.getComputedStyle(collapseBtn).display !== 'none')) {
-                    collapseBtn.click();
-                    return;
-                }
-                
-                // 2. Fallback: Dispatch '[' key event to toggle Streamlit sidebar
-                const keyEvent = new KeyboardEvent('keydown', {
-                    key: '[',
-                    code: 'BracketLeft',
-                    keyCode: 219,
-                    which: 219,
-                    bubbles: true,
-                    cancelable: true
-                });
-                parentDoc.dispatchEvent(keyEvent);
-                if (window.parent) {
-                    window.parent.dispatchEvent(keyEvent);
-                }
+                try {
+                    const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
+                    const isExpanded = sb && (
+                        sb.getAttribute('aria-expanded') === 'true' ||
+                        (sb.getAttribute('aria-expanded') !== 'false' && (sb.offsetWidth > 50 || (sb.getBoundingClientRect && sb.getBoundingClientRect().width > 50)))
+                    );
 
-                // Recalculate header width smoothly across sidebar transition frames
-                [20, 60, 120, 200, 300, 400].forEach(function(delay) {
-                    setTimeout(setupStickyTopHeader, delay);
-                });
+                    const expandBtn = parentDoc.querySelector(
+                        'button[data-testid="stExpandSidebarButton"], ' +
+                        '[data-testid="stExpandSidebarButton"] button, ' +
+                        '[data-testid="stExpandSidebarButton"], ' +
+                        '[data-testid="stSidebarCollapsedControl"] button, ' +
+                        'button[data-testid="stSidebarCollapsedControl"], ' +
+                        '[data-testid="collapsedControl"] button, ' +
+                        'button[aria-label*="Expand sidebar"], ' +
+                        'button[title*="Expand sidebar"]'
+                    );
+
+                    const collapseBtn = parentDoc.querySelector(
+                        'button[data-testid="stSidebarCollapseButton"], ' +
+                        '[data-testid="stSidebarCollapseButton"] button, ' +
+                        '[data-testid="stSidebarCollapseButton"], ' +
+                        '[data-testid="stSidebarHeader"] button, ' +
+                        'button[aria-label*="Collapse sidebar"], ' +
+                        'button[title*="Collapse sidebar"]'
+                    );
+
+                    let clicked = false;
+                    if (isExpanded) {
+                        if (collapseBtn) {
+                            collapseBtn.click();
+                            clicked = true;
+                        } else if (expandBtn) {
+                            expandBtn.click();
+                            clicked = true;
+                        }
+                    } else {
+                        if (expandBtn) {
+                            expandBtn.click();
+                            clicked = true;
+                        } else if (collapseBtn) {
+                            collapseBtn.click();
+                            clicked = true;
+                        }
+                    }
+
+                    if (clicked) {
+                        [20, 60, 120, 200, 300, 450].forEach(function(delay) {
+                            setTimeout(setupStickyTopHeader, delay);
+                        });
+                    }
+                    return clicked;
+                } catch (err) {
+                    console.error('Sidebar toggle bridge error:', err);
+                    return false;
+                }
             }
         } catch (err) {
             console.error('Sidebar toggle bridge error:', err);
@@ -3247,12 +3255,14 @@ client_bridge_code = """
                         header[data-testid="stHeader"] {
                             background: transparent !important;
                             border: none !important;
-                            height: 0px !important;
-                            min-height: 0px !important;
                             padding: 0px !important;
                             margin: 0px !important;
                             pointer-events: none !important;
-                            z-index: 999999 !important;
+                            z-index: 10000000 !important;
+                        }
+                        div[data-testid="stToolbar"] {
+                            background: transparent !important;
+                            pointer-events: none !important;
                         }
                         .block-container {
                             padding-top: 2px !important;
@@ -3280,6 +3290,11 @@ client_bridge_code = """
                         [data-testid="stSidebar"] {
                             z-index: 10000000 !important;
                         }
+                        [data-testid="stExpandSidebarButton"],
+                        [data-testid="stExpandSidebarButton"] button,
+                        button[data-testid="stExpandSidebarButton"],
+                        [data-testid="stSidebarCollapseButton"],
+                        [data-testid="stSidebarCollapseButton"] button,
                         [data-testid="collapsedControl"],
                         [data-testid="collapsedControl"] button,
                         [data-testid="stSidebarCollapsedControl"],
@@ -3767,27 +3782,9 @@ client_bridge_code = """
             if (stHeader) {
                 stHeader.style.setProperty('background', 'transparent', 'important');
                 stHeader.style.setProperty('border', 'none', 'important');
-                stHeader.style.setProperty('height', '0px', 'important');
-                stHeader.style.setProperty('min-height', '0px', 'important');
-                stHeader.style.setProperty('padding', '0px', 'important');
-                stHeader.style.setProperty('margin', '0px', 'important');
                 stHeader.style.setProperty('pointer-events', 'none', 'important');
-                stHeader.style.setProperty('z-index', '999999', 'important');
+                stHeader.style.setProperty('z-index', '10000000', 'important');
             }
-
-            // Auto-expand sidebar if it is currently collapsed (click inner button)
-            try {
-                const autoCollapsedBtn = parentDoc.querySelector(
-                    '[data-testid="stSidebarCollapsedControl"] button, ' +
-                    'button[data-testid="stSidebarCollapsedControl"], ' +
-                    '[data-testid="collapsedControl"] button, ' +
-                    'button[aria-label*="Expand sidebar"], ' +
-                    'button[title*="Expand sidebar"]'
-                );
-                if (autoCollapsedBtn) {
-                    autoCollapsedBtn.click();
-                }
-            } catch (e) {}
 
             const mainSec = parentDoc.querySelector('[data-testid="stMain"], section.main');
             if (mainSec) {
@@ -4595,30 +4592,35 @@ with st.container(key="top_frozen_header_container", border=False):
         <script>
         try {
             const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            const sb = pDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
+            const isExp = sb && (
+                sb.getAttribute('aria-expanded') === 'true' ||
+                (sb.getAttribute('aria-expanded') !== 'false' && (sb.offsetWidth > 50 || (sb.getBoundingClientRect && sb.getBoundingClientRect().width > 50)))
+            );
             const expBtn = pDoc.querySelector(
+                'button[data-testid="stExpandSidebarButton"], ' +
+                '[data-testid="stExpandSidebarButton"] button, ' +
+                '[data-testid="stExpandSidebarButton"], ' +
                 '[data-testid="stSidebarCollapsedControl"] button, ' +
                 'button[data-testid="stSidebarCollapsedControl"], ' +
                 '[data-testid="collapsedControl"] button, ' +
                 'button[aria-label*="Expand sidebar"], ' +
                 'button[title*="Expand sidebar"]'
             );
-            if (expBtn) {
+            const colBtn = pDoc.querySelector(
+                'button[data-testid="stSidebarCollapseButton"], ' +
+                '[data-testid="stSidebarCollapseButton"] button, ' +
+                '[data-testid="stSidebarCollapseButton"], ' +
+                '[data-testid="stSidebarHeader"] button, ' +
+                'button[aria-label*="Collapse sidebar"], ' +
+                'button[title*="Collapse sidebar"]'
+            );
+            if (isExp && colBtn) {
+                colBtn.click();
+            } else if (expBtn) {
                 expBtn.click();
-            } else {
-                const colBtn = pDoc.querySelector(
-                    'button[data-testid="stSidebarCollapseButton"], ' +
-                    '[data-testid="stSidebarCollapseButton"] button, ' +
-                    '[data-testid="stSidebarHeader"] button, ' +
-                    'button[aria-label*="Collapse sidebar"], ' +
-                    'button[title*="Collapse sidebar"]'
-                );
-                if (colBtn) {
-                    colBtn.click();
-                } else {
-                    const evt = new KeyboardEvent('keydown', { key: '[', code: 'BracketLeft', keyCode: 219, which: 219, bubbles: true, cancelable: true });
-                    pDoc.dispatchEvent(evt);
-                    if (window.parent) window.parent.dispatchEvent(evt);
-                }
+            } else if (colBtn) {
+                colBtn.click();
             }
         } catch(e) {}
         </script>
