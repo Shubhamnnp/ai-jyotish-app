@@ -3842,6 +3842,7 @@ def render_login_page():
                 user_info = default_auth_service.authenticate(login_email, login_password)
                 if user_info:
                     st.session_state.is_logged_in = True
+                    st.query_params["session_auth"] = "active"
                     st.session_state.user_role = user_info.get("role", "🔮 मुख्य ज्योतिषी (Chief Astrologer)")
                     st.session_state.user_email = user_info.get("email", login_email)
                     st.session_state.birth_name = user_info.get("name", "Shubham Tiwari")
@@ -3857,6 +3858,7 @@ def render_login_page():
                         client = GrahalakshanamClient()
                         if client.authenticate(login_email, login_password):
                             st.session_state.is_logged_in = True
+                            st.query_params["session_auth"] = "active"
                             st.session_state.gla_authenticated = True
                             ff = client.get_folders_with_files()
                             st.session_state.gla_charts = ff.get("files", [])
@@ -3867,6 +3869,7 @@ def render_login_page():
                             st.rerun()
                         else:
                             st.session_state.is_logged_in = True
+                            st.query_params["session_auth"] = "active"
                             st.session_state.user_role = user_info.get("role")
                             st.session_state.user_email = user_info.get("email")
                             st.toast("✅ ऑफलाइन सुरक्षित मोड में प्रवेश किया गया!", icon="🔮")
@@ -3934,7 +3937,13 @@ def render_login_page():
 
 # Initialize Session State
 if "is_logged_in" not in st.session_state:
-    st.session_state.is_logged_in = False
+    if st.query_params.get("session_auth") == "active":
+        st.session_state.is_logged_in = True
+        st.session_state.user_role = "🔮 मुख्य ज्योतिषी (Chief Astrologer)"
+        st.session_state.user_email = "shubham8jyotish@gmail.com"
+        st.session_state.birth_name = "Shubham Tiwari"
+    else:
+        st.session_state.is_logged_in = False
 
 if "saved_charts" not in st.session_state:
     st.session_state.saved_charts = default_folder_manager.list_recent_charts()
@@ -4360,53 +4369,48 @@ with st.container(key="top_frozen_header_container", border=False):
     # 10-Tile Complete Server Toolbelt Columns (Ultra-Slim & Screen-Fit Clickable Tiles)
     tb_cols = st.columns(10, gap="small")
 
-    # Helper function for rendering clickable tile (Pure Clean Link - No Empty Button Widgets!)
-    def render_tool_tile(col, icon_b64, label_text, tool_key):
+    # Helper function for rendering clickable tile (Streamlit Native Button - In-Session Instant Trigger)
+    def render_tool_tile(col, emoji_icon, label_text, tool_key):
         with col:
             is_active = (st.session_state.gla_active_tool == tool_key)
-            active_cls = "active" if is_active else ""
-            active_style = "border-color:#D97706 !important; background-color:#FEF3C7 !important; box-shadow:0 0 10px rgba(217,119,6,0.4) !important;" if is_active else ""
-            st.markdown(f"""
-            <div class="fixed-header-anchor" style="display:none; height:0px; margin:0; padding:0;"></div>
-            <a href="?gla_tool={tool_key}" target="_self" style="text-decoration:none; color:inherit; display:block; width:100%;">
-                <div class="gla-tile-box">
-                    <div class="gla-btn-tile {active_cls}" style="{active_style}">
-                        <img src="{icon_b64}" alt="{label_text}" />
-                        <span>{label_text}</span>
-                    </div>
-                </div>
-            </a>
-            """, unsafe_allow_html=True)
+            btn_type = "primary" if is_active else "secondary"
+            btn_label = f"{emoji_icon} {label_text}"
+            if st.button(btn_label, key=f"gla_tile_btn_{tool_key}", use_container_width=True, type=btn_type, help=f"{label_text} मेन्यू खोलें"):
+                if st.session_state.gla_active_tool == tool_key:
+                    st.session_state.gla_active_tool = None
+                else:
+                    st.session_state.gla_active_tool = tool_key
+                st.rerun()
 
     # 1. New Chart
-    render_tool_tile(tb_cols[0], ICON_NOTEPAD_B64, "New", "new")
+    render_tool_tile(tb_cols[0], "✨", "New", "new")
 
     # 2. Birth Data
-    render_tool_tile(tb_cols[1], ICON_BIRTH_B64, "Birth Data", "birth")
+    render_tool_tile(tb_cols[1], "📝", "Birth", "birth")
 
-    # 3. Open Folder
-    render_tool_tile(tb_cols[2], ICON_FOLDER_B64, "Open", "open")
+    # 3. Open Folder (Client Kundali Vault)
+    render_tool_tile(tb_cols[2], "📂", "Open", "open")
 
     # 4. Save Chart
-    render_tool_tile(tb_cols[3], ICON_SAVE_B64, "Save", "save")
+    render_tool_tile(tb_cols[3], "💾", "Save", "save")
 
     # 5. Settings
-    render_tool_tile(tb_cols[4], ICON_SETTINGS_B64, "Settings", "settings")
+    render_tool_tile(tb_cols[4], "⚙️", "Settings", "settings")
 
     # 6. Languages
-    render_tool_tile(tb_cols[5], ICON_LANGUAGES_B64, "Languages", "lang")
+    render_tool_tile(tb_cols[5], "🌐", "Lang", "lang")
 
     # 7. Current Time
-    render_tool_tile(tb_cols[6], ICON_CLOCK_B64, "Time", "clock")
+    render_tool_tile(tb_cols[6], "⏱️", "Time", "clock")
 
     # 8. Current Location
-    render_tool_tile(tb_cols[7], ICON_LOCATION_B64, "Location", "location")
+    render_tool_tile(tb_cols[7], "📍", "Location", "location")
 
     # 9. Theme Mode
-    render_tool_tile(tb_cols[8], ICON_THEME_B64, "Theme", "theme")
+    render_tool_tile(tb_cols[8], "🎨", "Theme", "theme")
 
     # 10. Logout
-    render_tool_tile(tb_cols[9], ICON_LOGOUT_B64, "Logout", "logout")
+    render_tool_tile(tb_cols[9], "🚪", "Logout", "logout")
 
     # Physical spacer between toolbelt and module selector/dialogs
     st.markdown("<div style='height: 10px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
@@ -4940,6 +4944,8 @@ with st.container(key="top_frozen_header_container", border=False):
                         st.session_state.gla_authenticated = False
                         st.session_state.pop("auth_user", None)
                         st.session_state.gla_active_tool = None
+                        if "session_auth" in st.query_params:
+                            del st.query_params["session_auth"]
                         st.toast("✅ आप सुरक्षित रूप से लॉगआउट हो गए हैं।", icon="🚪")
                         st.rerun()
                 with col_lg2:
