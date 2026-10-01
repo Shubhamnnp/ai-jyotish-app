@@ -630,35 +630,35 @@ elif is_night_mode:
 else:
     theme_mode_css = """
     /* =========================================================
-       Vedic Royal Chrysolite Theme (Day Mode - Light Yellow Greenish)
+       Grahalakshanam Authentic Theme (Day Mode - Royal Azure & Cyan)
        ========================================================= */
     html, body, #root, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
-        background-color: #F5F9EC !important;
-        background: #F5F9EC !important;
-        color: #000000 !important;
+        background-color: #F8FAFC !important;
+        background: #F8FAFC !important;
+        color: #0F172A !important;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Noto Sans", sans-serif !important;
         -webkit-font-smoothing: antialiased !important;
         -moz-osx-font-smoothing: grayscale !important;
     }
     header[data-testid="stHeader"] {
-        background-color: #F5F9EC !important;
-        background: #F5F9EC !important;
+        background-color: #F8FAFC !important;
+        background: #F8FAFC !important;
     }
     h1, h2, h3, h4, h5, h6 {
-        color: #000000 !important;
+        color: #0F172A !important;
         font-weight: 900 !important;
         letter-spacing: -0.3px !important;
     }
     p, span, li, a, caption, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
-        color: #000000 !important;
+        color: #0F172A !important;
         font-weight: 600 !important;
     }
     strong, b {
-        color: #000000 !important;
+        color: #0F172A !important;
         font-weight: 900 !important;
     }
     label, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] span {
-        color: #000000 !important;
+        color: #0F172A !important;
         font-weight: 800 !important;
         font-size: 0.92rem !important;
     }
@@ -667,92 +667,92 @@ else:
     div[data-baseweb="base-input"] input,
     div[data-baseweb="input"] {
         background-color: #FFFFFF !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        border: 1.5px solid #CBDCB8 !important;
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 8px !important;
         font-weight: 700 !important;
     }
     input:focus, textarea:focus, div[data-baseweb="input"]:focus-within {
-        border-color: #4D7C0F !important;
-        box-shadow: 0 0 0 2px rgba(77, 124, 15, 0.2) !important;
+        border-color: #0073CF !important;
+        box-shadow: 0 0 0 2px rgba(0, 115, 207, 0.2) !important;
     }
     div[data-baseweb="select"] > div {
         background-color: #FFFFFF !important;
-        color: #000000 !important;
-        border: 1.5px solid #CBDCB8 !important;
+        color: #0F172A !important;
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 8px !important;
         font-weight: 700 !important;
     }
     div[data-baseweb="select"] * {
-        color: #000000 !important;
+        color: #0F172A !important;
     }
     [data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
-        color: #000000 !important;
+        color: #0073CF !important;
         font-weight: 900 !important;
         font-size: 1.6rem !important;
     }
     [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] * {
-        color: #000000 !important;
+        color: #475569 !important;
         font-weight: 850 !important;
         font-size: 0.88rem !important;
     }
     [data-testid="stMetric"] {
         background: #FFFFFF !important;
-        border: 1.5px solid #CBDCB8 !important;
+        border: 1.5px solid #00B0F0 !important;
         border-radius: 12px !important;
         padding: 12px 16px !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+        box-shadow: 0 2px 8px rgba(0, 115, 207, 0.08) !important;
     }
     [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-        background-color: #EDF4E2 !important;
-        background: #EDF4E2 !important;
-        border-right: 1.5px solid #CBDCB8 !important;
+        background-color: #FFFFFF !important;
+        background: #FFFFFF !important;
+        border-right: 1.5px solid #E2E8F0 !important;
     }
     [data-testid="stSidebar"] * {
-        color: #000000 !important;
+        color: #0F172A !important;
     }
     [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
-        color: #000000 !important;
+        color: #0073CF !important;
         font-weight: 900 !important;
     }
     header.top-nav-bar {
-        background: #FFFFFF !important;
-        border-color: #CBDCB8 !important;
-        border-bottom: 3.5px solid #65A30D !important;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06) !important;
+        background: #0073CF !important;
+        border-color: #00B0F0 !important;
+        border-bottom: 3.5px solid #00B0F0 !important;
+        box-shadow: 0 4px 18px rgba(0, 115, 207, 0.15) !important;
     }
     .top-nav-bar * {
-        color: #000000 !important;
+        color: #FFFFFF !important;
     }
     .gla-info-strip {
-        background: #E2F0D9 !important;
-        border: 1.5px solid #A8D08D !important;
-        color: #000000 !important;
+        background: linear-gradient(90deg, #0073CF 0%, #0077B6 100%) !important;
+        border: 1.5px solid #00B0F0 !important;
+        color: #FFFFFF !important;
     }
     .gla-info-strip * {
-        color: #000000 !important;
+        color: #FFFFFF !important;
     }
     .gla-info-strip b {
-        color: #000000 !important;
+        color: #FFFFFF !important;
         font-weight: 900 !important;
     }
     .gla-active-tag {
-        color: #000000 !important;
-        background: #C5E0B4 !important;
-        border: 1px solid #70AD47 !important;
+        color: #FFFFFF !important;
+        background: #00B0F0 !important;
+        border: 1px solid #38BDF8 !important;
         font-weight: 800 !important;
     }
     .gla-tile-belt {
         background: #FFFFFF !important;
-        border: 1px solid #CBD5E1 !important;
-        border-radius: 6px !important;
-        padding: 2px 4px !important;
+        border: 1.5px solid #00B0F0 !important;
+        border-radius: 8px !important;
+        padding: 3px 6px !important;
     }
     .gla-btn-tile {
-        background-color: #FFFFFF !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-radius: 8px !important;
+        background-color: #F2F2F2 !important;
+        border: 2px solid #00B0F0 !important;
+        border-radius: 10px !important;
         height: 48px !important;
         min-height: 48px !important;
         max-height: 48px !important;
@@ -767,16 +767,20 @@ else:
         transition: all 0.15s ease !important;
     }
     .gla-btn-tile:hover {
-        background-color: #F0FDF4 !important;
-        border-color: #16A34A !important;
+        background-color: #E0F2FE !important;
+        border-color: #0073CF !important;
         transform: translateY(-1px) !important;
-        box-shadow: 0 3px 8px rgba(22, 163, 74, 0.2) !important;
+        box-shadow: 0 3px 8px rgba(0, 115, 207, 0.25) !important;
     }
     .gla-tile-box.gla-active-tile .gla-btn-tile,
     .gla-btn-tile.active {
-        background-color: #FEF3C7 !important;
-        border: 2px solid #D97706 !important;
-        box-shadow: 0 0 10px rgba(217, 119, 6, 0.4) !important;
+        background-color: #0073CF !important;
+        border: 2px solid #00B0F0 !important;
+        box-shadow: 0 0 10px rgba(0, 115, 207, 0.45) !important;
+    }
+    .gla-tile-box.gla-active-tile .gla-btn-tile span,
+    .gla-btn-tile.active span {
+        color: #FFFFFF !important;
     }
     .gla-btn-tile img {
         width: 20px !important;
@@ -788,7 +792,7 @@ else:
         margin: 0 auto !important;
     }
     .gla-btn-tile span {
-        color: #0F172A !important;
+        color: #0077B6 !important;
         font-weight: 750 !important;
         font-size: 10px !important;
         line-height: 1.2 !important;
@@ -802,47 +806,49 @@ else:
     }
     .digital-hud {
         background: #FFFFFF !important;
-        border: 1.5px solid #CBDCB8 !important;
+        border: 1.5px solid #00B0F0 !important;
+        box-shadow: 0 2px 8px rgba(0, 115, 207, 0.08) !important;
     }
     .digital-hud * {
-        color: #000000 !important;
+        color: #0F172A !important;
     }
     .hud-pill {
-        background: #F4F8EC !important;
-        border: 1.5px solid #CBDCB8 !important;
-        color: #000000 !important;
+        background: #F0F9FF !important;
+        border: 1.5px solid #BAE6FD !important;
+        color: #0C4A6E !important;
     }
     .hud-pill b, .hud-pill strong {
-        color: #365314 !important;
+        color: #0284C7 !important;
         font-weight: 900 !important;
     }
     .rule-card, .vastu-card {
         background: #FFFFFF !important;
-        border: 1.5px solid #CBDCB8 !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-        color: #000000 !important;
+        border: 1.5px solid #00B0F0 !important;
+        box-shadow: 0 2px 8px rgba(0, 115, 207, 0.08) !important;
+        color: #0F172A !important;
     }
     .rule-card *, .vastu-card * {
-        color: #000000 !important;
+        color: #0F172A !important;
     }
     div[data-testid="stExpander"] {
         background: #FFFFFF !important;
-        border: 1.5px solid #CBDCB8 !important;
-        color: #000000 !important;
+        border: 1.5px solid #00B0F0 !important;
+        color: #0F172A !important;
     }
     div[data-testid="stExpander"] * {
-        color: #000000 !important;
+        color: #0F172A !important;
     }
     button[kind="secondary"], button[kind="secondary"] * {
-        background-color: #FFFFFF !important;
-        color: #000000 !important;
-        border: 1.5px solid #CBDCB8 !important;
+        background-color: #F2F2F2 !important;
+        color: #0077B6 !important;
+        border: 2px solid #00B0F0 !important;
+        border-radius: 8px !important;
         font-weight: 800 !important;
     }
     button[kind="secondary"]:hover {
-        background-color: #F4F8EC !important;
-        border-color: #4D7C0F !important;
-        color: #000000 !important;
+        background-color: #E0F2FE !important;
+        border-color: #0073CF !important;
+        color: #0073CF !important;
     }
     /* Day Mode Tabs */
 
@@ -1425,16 +1431,16 @@ unified_css = f"""
         font-weight: 800 !important;
     }}
 
-    /* Primary Calculate Button (Side me Janm Vivran ke niche) */
+    /* Primary Calculate Button (Grahalakshanam Royal Azure Gradient) */
     button[kind="primary"] {{
-        background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+        background: linear-gradient(135deg, #0073CF 0%, #0077B6 100%) !important;
         color: #FFFFFF !important;
         font-weight: 900 !important;
         font-size: 1.05rem !important;
-        border: none !important;
+        border: 1px solid #00B0F0 !important;
         border-radius: 10px !important;
         padding: 12px 20px !important;
-        box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4) !important;
+        box-shadow: 0 4px 15px rgba(0, 115, 207, 0.35) !important;
         cursor: pointer !important;
         transition: all 0.15s ease !important;
     }}
@@ -1444,7 +1450,7 @@ unified_css = f"""
     }}
     button[kind="primary"]:hover {{
         transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(217, 119, 6, 0.5) !important;
+        box-shadow: 0 6px 20px rgba(0, 176, 240, 0.45) !important;
     }}
 
     /* Secondary Buttons */
@@ -2089,18 +2095,22 @@ unified_css = f"""
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: #E2F0D9;
-        color: #000000;
-        padding: 4px 10px;
-        border-radius: 6px;
-        border: 1.5px solid #A8D08D;
-        font-size: 11.5px;
+        background: linear-gradient(90deg, #0073CF 0%, #0077B6 100%);
+        color: #FFFFFF;
+        padding: 5px 12px;
+        border-radius: 8px;
+        border: 1.5px solid #00B0F0;
+        font-size: 12px;
         font-weight: 700;
         margin-top: 0px;
         margin-bottom: 4px;
+        box-shadow: 0 2px 8px rgba(0, 115, 207, 0.15);
     }}
     .gla-info-strip b {{
-        color: #000000;
+        color: #FFFFFF;
+    }}
+    .gla-info-strip * {{
+        color: #FFFFFF;
     }}
     .gla-tile-box {{
         position: relative;
@@ -2112,21 +2122,21 @@ unified_css = f"""
     div[data-testid="stHorizontalBlock"]:has(.gla-tile-box) {{
         padding: 0 2px !important;
     }}
-    /* 🏛️ Authentic Parashara's Light Workstation Styling */
+    /* 🏛️ Authentic Grahalakshanam Workstation Styling */
     .pl-workstation-left {{
         background: #FFFFFF !important;
-        border: 1.5px solid #2E7D32 !important;
-        border-radius: 6px !important;
+        border: 1.5px solid #00B0F0 !important;
+        border-radius: 8px !important;
         padding: 6px !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+        box-shadow: 0 2px 8px rgba(0, 115, 207, 0.08) !important;
     }}
     .pl-box-header {{
-        background: linear-gradient(180deg, #388E3C 0%, #2E7D32 100%) !important;
+        background: linear-gradient(180deg, #0073CF 0%, #005FAD 100%) !important;
         color: #FFFFFF !important;
         font-size: 12px !important;
         font-weight: 800 !important;
-        padding: 4px 8px !important;
-        border-radius: 4px 4px 0 0 !important;
+        padding: 5px 10px !important;
+        border-radius: 6px 6px 0 0 !important;
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
@@ -2145,8 +2155,8 @@ unified_css = f"""
         gap: 4px !important;
         margin-bottom: 8px !important;
         padding: 4px !important;
-        background: #EDF4E2 !important;
-        border: 1px solid #CBDCB8 !important;
+        background: #F0F9FF !important;
+        border: 1px solid #BAE6FD !important;
         border-radius: 6px !important;
     }}
 
@@ -4974,24 +4984,27 @@ with st.container(key="top_frozen_header_container", border=False):
             st.session_state.sb_search_filter_input = ""
 
     # ---------------------------------------------------------
-    # 🎨 THEME STYLING TOKENS FOR SIDEBAR & HEADER BREADCRUMB
+    # 🎨 THEME STYLING TOKENS FOR SIDEBAR & HEADER BREADCRUMB (Grahalakshanam Palette)
     # ---------------------------------------------------------
-    _sb_card_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#EFF6FF")
-    _sb_card_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#93C5FD")
-    _breadcrumb_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#EFF6FF")
-    _breadcrumb_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#93C5FD")
-    _breadcrumb_title_color = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#1E40AF")
+    _sb_card_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#F2F4F7")
+    _sb_card_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#00B0F0")
+    _breadcrumb_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#F2F4F7")
+    _breadcrumb_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#00B0F0")
+    _breadcrumb_title_color = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#0073CF")
     _breadcrumb_text_color = "#CBD5E1" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
 
     # ---------------------------------------------------------
     # 📚 LEFT SIDEBAR: ACTIVE CLIENT PROFILE & ALL 30 VEDIC MODULES
     # ---------------------------------------------------------
     with st.sidebar:
+        _sb_prof_tag = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#0073CF")
+        _sb_prof_name = "#FFFFFF" if (is_astrallis_mode or is_night_mode) else "#0F172A"
+        _sb_prof_sub = "#CBD5E1" if (is_astrallis_mode or is_night_mode) else "#475569"
         st.markdown(f"""
-        <div style="background:{_sb_card_bg}; border:1.5px solid {_sb_card_border}; border-radius:10px; padding:10px 12px; margin-bottom:12px;">
-            <div style="font-size:11px; font-weight:800; color:#F59E0B; text-transform:uppercase;">👤 सक्रिय जातक प्रोफाइल</div>
-            <div style="font-size:15px; font-weight:900; color:#FFFFFF; margin:3px 0;">{name}</div>
-            <div style="font-size:11.5px; color:#CBD5E1; line-height:1.4;">
+        <div style="background:{_sb_card_bg}; border:2px solid {_sb_card_border}; border-radius:12px; padding:10px 14px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,176,240,0.12);">
+            <div style="font-size:11px; font-weight:800; color:{_sb_prof_tag}; text-transform:uppercase; letter-spacing:0.5px;">👤 सक्रिय जातक प्रोफाइल</div>
+            <div style="font-size:15.5px; font-weight:900; color:{_sb_prof_name}; margin:3px 0;">{name}</div>
+            <div style="font-size:11.5px; color:{_sb_prof_sub}; line-height:1.4;">
                 📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M %p')}<br/>
                 📍 {default_city_name} | <b>लग्न:</b> {chart.lagna_sign_name}
             </div>
@@ -5664,8 +5677,8 @@ if selected_idx == 0:
         _t_bg = "#050811"; _t_th_bg = "#0A1628"; _t_bdr = "#1E3A5F"; _t_txt = "#CBD5E1"; _t_th = "#00E5FF"; _t_alt = "#070E1C"
     elif is_night_mode:
         _t_bg = "#111827"; _t_th_bg = "#1F2937"; _t_bdr = "#374151"; _t_txt = "#E2E8F0"; _t_th = "#F59E0B"; _t_alt = "#172033"
-    else:  # Day Mode (Royal Pearl)
-        _t_bg = "#FFFFFF"; _t_th_bg = "#F1F5F9"; _t_bdr = "#CBD5E1"; _t_txt = "#0F172A"; _t_th = "#1E3A8A"; _t_alt = "#F8FAFC"
+    else:  # Day Mode (Grahalakshanam Royal Azure & Cyan)
+        _t_bg = "#FFFFFF"; _t_th_bg = "#0070C0"; _t_bdr = "#00B0F0"; _t_txt = "#0F172A"; _t_th = "#FFFFFF"; _t_alt = "#F2F4F7"
 
     _GRAHA_SYMS = {"Sun": "☉ सूर्य", "Moon": "☽ चन्द्र", "Mars": "♂ मंगल", "Mercury": "☿ बुध", "Jupiter": "♃ गुरु", "Venus": "♀ शुक्र", "Saturn": "♄ शनि", "Rahu": "☊ राहु", "Ketu": "☋ केतु"}
     _P_COLS = {"Sun":"#E11D48","Moon":"#2563EB","Mars":"#DC2626","Mercury":"#059669","Jupiter":"#D97706","Venus":"#DB2777","Saturn":"#475569","Rahu":"#7C3AED","Ketu":"#B45309"}
@@ -5677,21 +5690,21 @@ if selected_idx == 0:
         pc = _P_COLS.get(p_nm, "#2563EB")
         d_lbl = row["वर्ग गरिमा (Dignity)"]
         
-        # Dignity badge styling
+        # Dignity badge styling (Authentic Grahalakshanam: Lime Exalted, Red Debilitated, Cobalt Own)
         if "उच्च" in d_lbl:
-            b_bg, b_fg, b_bdr = "#DBEAFE", "#1E40AF", "#93C5FD"
+            b_bg, b_fg, b_bdr = "#BCE636", "#1E293B", "#A4D024"
         elif "मूलत्रिकोण" in d_lbl:
-            b_bg, b_fg, b_bdr = "#CCFBF1", "#0F766E", "#5EEAD4"
+            b_bg, b_fg, b_bdr = "#CAF0F8", "#0077B6", "#00B4D8"
         elif "स्वराशि" in d_lbl:
-            b_bg, b_fg, b_bdr = "#D1FAE5", "#065F46", "#6EE7B7"
+            b_bg, b_fg, b_bdr = "#0073CF", "#FFFFFF", "#00B0F0"
         elif "नीच" in d_lbl:
-            b_bg, b_fg, b_bdr = "#FEE2E2", "#991B1B", "#FCA5A5"
+            b_bg, b_fg, b_bdr = "#FF0000", "#FFFFFF", "#CC0000"
         elif "शत्रु" in d_lbl:
-            b_bg, b_fg, b_bdr = "#FFEDD5", "#9A3412", "#FDBA74"
+            b_bg, b_fg, b_bdr = "#FFE2E5", "#D92D20", "#FCA5A5"
         elif "मित्र" in d_lbl:
-            b_bg, b_fg, b_bdr = "#ECFDF5", "#047857", "#A7F3D0"
+            b_bg, b_fg, b_bdr = "#E0F2FE", "#0284C7", "#7DD3FC"
         else:
-            b_bg, b_fg, b_bdr = "#F1F5F9", "#334155", "#CBD5E1"
+            b_bg, b_fg, b_bdr = "#F2F4F7", "#334155", "#CBD5E1"
 
         # Motion badge
         is_ret = "वक्री" in row["गति (Motion)"]
