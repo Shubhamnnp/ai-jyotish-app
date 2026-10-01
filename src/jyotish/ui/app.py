@@ -1324,19 +1324,35 @@ unified_css = f"""
         position: fixed !important;
         top: 0px !important;
         left: 0px !important;
-        right: 0px !important;
-        width: 100% !important;
+        width: 100vw !important;
         z-index: 9990 !important;
         background: #F5F9EC !important;
         padding-top: 6px !important;
         padding-bottom: 6px !important;
         padding-left: 52px !important;
-        padding-right: 16px !important;
+        padding-right: 14px !important;
         margin-top: 0px !important;
         margin-bottom: 0px !important;
         border-bottom: 2.5px solid #00B0F0 !important;
         box-shadow: 0 4px 14px rgba(0, 115, 207, 0.15) !important;
         box-sizing: border-box !important;
+        transition: left 0.18s cubic-bezier(0.4, 0, 0.2, 1), width 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }}
+    .st-key-frozen_toolbelt_container div[data-testid="column"] {{
+        min-width: 0 !important;
+        padding-left: 2px !important;
+        padding-right: 2px !important;
+        flex: 1 1 0px !important;
+    }}
+    .st-key-frozen_toolbelt_container button {{
+        padding: 4px 4px !important;
+        font-size: 12.5px !important;
+        font-weight: 700 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        min-height: 36px !important;
+        height: 36px !important;
     }}
     .block-container {{
         padding-top: 58px !important;
@@ -1345,8 +1361,8 @@ unified_css = f"""
         [data-testid="stSidebar"][aria-expanded="true"] ~ [data-testid="stMain"] .st-key-frozen_toolbelt_container,
         section[data-testid="stSidebar"]:not([aria-expanded="false"]) ~ section[data-testid="stMain"] .st-key-frozen_toolbelt_container {{
             left: 336px !important;
-            width: calc(100% - 336px) !important;
-            padding-left: 16px !important;
+            width: calc(100vw - 336px) !important;
+            padding-left: 14px !important;
         }}
     }}
 
@@ -2290,6 +2306,11 @@ client_bridge_code = """
                 if (window.parent) {
                     window.parent.dispatchEvent(keyEvent);
                 }
+
+                // Recalculate header width smoothly across sidebar transition frames
+                [20, 60, 120, 200, 300, 400].forEach(function(delay) {
+                    setTimeout(setupStickyTopHeader, delay);
+                });
             }
         } catch (err) {
             console.error('Sidebar toggle bridge error:', err);
@@ -3272,8 +3293,7 @@ client_bridge_code = """
                             position: fixed !important;
                             top: 0px !important;
                             left: 0px !important;
-                            right: 0px !important;
-                            width: 100% !important;
+                            width: 100vw !important;
                             z-index: 9990 !important;
                             background: #F5F9EC !important;
                             border-bottom: 2.5px solid #00B0F0 !important;
@@ -3281,8 +3301,25 @@ client_bridge_code = """
                             padding-top: 6px !important;
                             padding-bottom: 6px !important;
                             padding-left: 52px !important;
-                            padding-right: 16px !important;
+                            padding-right: 14px !important;
                             box-sizing: border-box !important;
+                            transition: left 0.18s cubic-bezier(0.4, 0, 0.2, 1), width 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                        }
+                        .st-key-frozen_toolbelt_container div[data-testid="column"] {
+                            min-width: 0 !important;
+                            padding-left: 2px !important;
+                            padding-right: 2px !important;
+                            flex: 1 1 0px !important;
+                        }
+                        .st-key-frozen_toolbelt_container button {
+                            padding: 4px 4px !important;
+                            font-size: 12.5px !important;
+                            font-weight: 700 !important;
+                            white-space: nowrap !important;
+                            overflow: hidden !important;
+                            text-overflow: ellipsis !important;
+                            min-height: 36px !important;
+                            height: 36px !important;
                         }
                         .block-container {
                             padding-top: 58px !important;
@@ -3765,7 +3802,8 @@ client_bridge_code = """
             const frozenTb = parentDoc.querySelector('.st-key-frozen_toolbelt_container');
             if (frozenTb) {
                 const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
-                const isSbExpanded = sb && (sb.getAttribute('aria-expanded') === 'true' || (sb.offsetWidth > 100 && window.getComputedStyle(sb).display !== 'none'));
+                const sbRect = sb ? sb.getBoundingClientRect() : null;
+                const isSbOpen = sbRect && sbRect.right > 50 && sb.getAttribute('aria-expanded') !== 'false';
                 const isDesktop = window.innerWidth >= 769;
 
                 frozenTb.style.setProperty('position', 'fixed', 'important');
@@ -3774,18 +3812,19 @@ client_bridge_code = """
                 frozenTb.style.setProperty('padding-top', '6px', 'important');
                 frozenTb.style.setProperty('padding-bottom', '6px', 'important');
                 frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
+                frozenTb.style.setProperty('transition', 'left 0.18s cubic-bezier(0.4, 0, 0.2, 1), width 0.18s cubic-bezier(0.4, 0, 0.2, 1)', 'important');
 
-                if (isSbExpanded && isDesktop) {
-                    const sbWidth = sb.offsetWidth || 336;
-                    frozenTb.style.setProperty('left', sbWidth + 'px', 'important');
-                    frozenTb.style.setProperty('width', 'calc(100% - ' + sbWidth + 'px)', 'important');
-                    frozenTb.style.setProperty('padding-left', '16px', 'important');
-                    frozenTb.style.setProperty('padding-right', '16px', 'important');
+                if (isSbOpen && isDesktop) {
+                    const sbRight = Math.max(0, Math.round(sbRect.right));
+                    frozenTb.style.setProperty('left', sbRight + 'px', 'important');
+                    frozenTb.style.setProperty('width', 'calc(100vw - ' + sbRight + 'px)', 'important');
+                    frozenTb.style.setProperty('padding-left', '14px', 'important');
+                    frozenTb.style.setProperty('padding-right', '14px', 'important');
                 } else {
                     frozenTb.style.setProperty('left', '0px', 'important');
-                    frozenTb.style.setProperty('width', '100%', 'important');
+                    frozenTb.style.setProperty('width', '100vw', 'important');
                     frozenTb.style.setProperty('padding-left', '52px', 'important');
-                    frozenTb.style.setProperty('padding-right', '16px', 'important');
+                    frozenTb.style.setProperty('padding-right', '14px', 'important');
                 }
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
