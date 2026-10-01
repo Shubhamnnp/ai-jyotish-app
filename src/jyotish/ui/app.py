@@ -5980,70 +5980,271 @@ if selected_idx == 0:
 # TAB 3: AFFLICTION & FREE WILL ANALYSIS (GRAHALAKSHANAM CORE)
 
 elif selected_idx == 1:
-    st.subheader("🎯 घटना विश्लेषण (Event Window Analysis)")
-    st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का बहु-पद्धति शास्त्रीय विश्लेषण प्राप्त करें।")
+    st.subheader("🎯 घटना विश्लेषण एवं काल सत्यापन (Event Analysis & Verification)")
 
-    col_q1, col_q2, col_q3 = st.columns([2, 2, 2])
-    target_event_date = col_q1.date_input("लक्षित तिथि (Target Date)", value=date(2027, 4, 12), format="DD/MM/YYYY")
-    theme = col_q2.selectbox(
-        "विश्लेषण विषय (Theme)",
-        ["career", "marriage", "wealth", "health", "travel", "spirituality", "all"],
-        format_func=lambda x: {
-            "career": "💼 आजीविका / करियर (Career)",
-            "marriage": "💍 विवाह / संबंध (Marriage)",
-            "wealth": "💰 धन / संपत्ति (Wealth)",
-            "health": "🌿 स्वास्थ्य (Health)",
-            "travel": "✈️ विदेश / यात्रा (Travel)",
-            "spirituality": "🕉️ आध्यात्म (Spirituality)",
-            "all": "🌐 समग्र विश्लेषण (All Themes)"
-        }.get(x, x)
-    )
-    scan_range = col_q3.checkbox("30-दिवसीय विंडो स्कैन करें (30-Day Window)")
+    tab_future_event, tab_past_event = st.tabs([
+        "🔮 भविष्य घटना पूर्वानुमान (Future Event Prediction)",
+        "🔍 6-Pillar भूतकाल घटना सत्यापन (6-Pillar Past Event Verification)"
+    ])
 
-    query_input = GhatnaQueryInput(
-        birth_data=birth_profile,
-        target_date=target_event_date,
-        theme=theme
-    )
-    result = default_event_query_service.execute_query(query_input, precomputed_chart=chart)
+    with tab_future_event:
+        st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का बहु-पद्धति शास्त्रीय विश्लेषण प्राप्त करें।")
 
-    st.markdown("---")
-    m_col1, m_col2, m_col3, m_col4 = st.columns(4)
-    m_col1.metric("लक्षित तिथि", result.target_date.strftime("%d-%b-%Y"))
-    m_col2.metric("संभावना सूचकांक", f"{result.composite_score:.2f}")
-    m_col3.metric("विश्वास स्तर", result.confidence_band.split(" ")[0])
-    m_col4.metric("सक्रिय विंशोत्तरी दशा", result.active_dasha.formatted_summary)
+        col_q1, col_q2, col_q3 = st.columns([2, 2, 2])
+        target_event_date = col_q1.date_input("लक्षित तिथि (Target Date)", value=date(2027, 4, 12), format="DD/MM/YYYY")
+        theme = col_q2.selectbox(
+            "विश्लेषण विषय (Theme)",
+            ["career", "marriage", "wealth", "health", "travel", "spirituality", "all"],
+            format_func=lambda x: {
+                "career": "💼 आजीविका / करियर (Career)",
+                "marriage": "💍 विवाह / संबंध (Marriage)",
+                "wealth": "💰 धन / संपत्ति (Wealth)",
+                "health": "🌿 स्वास्थ्य (Health)",
+                "travel": "✈️ विदेश / यात्रा (Travel)",
+                "spirituality": "🕉️ आध्यात्म (Spirituality)",
+                "all": "🌐 समग्र विश्लेषण (All Themes)"
+            }.get(x, x)
+        )
+        scan_range = col_q3.checkbox("30-दिवसीय विंडो स्कैन करें (30-Day Window)")
 
-    st.info(f"📊 **पद्धति सहमति अनुपात (Consensus):** {result.consensus_ratio}")
+        query_input = GhatnaQueryInput(
+            birth_data=birth_profile,
+            target_date=target_event_date,
+            theme=theme
+        )
+        result = default_event_query_service.execute_query(query_input, precomputed_chart=chart)
 
-    col_res1, col_res2 = st.columns([3, 2])
-    with col_res1:
-        st.markdown("### 📖 शास्त्रीय साक्ष्य सार (Classical Narrative)")
-        st.markdown(result.narrative_hi)
-        with st.expander("English Summary"):
-            st.markdown(result.narrative_en)
+        st.markdown("---")
+        m_col1, m_col2, m_col3, m_col4 = st.columns(4)
+        m_col1.metric("लक्षित तिथि", result.target_date.strftime("%d-%b-%Y"))
+        m_col2.metric("संभावना सूचकांक", f"{result.composite_score:.2f}")
+        m_col3.metric("विश्वास स्तर", result.confidence_band.split(" ")[0])
+        m_col4.metric("सक्रिय विंशोत्तरी दशा", result.active_dasha.formatted_summary)
 
-    with col_res2:
-        st.markdown("### 🪐 गोचर स्थिति (Transit Snapshot)")
-        t = result.transit_summary
-        st.markdown(f"- **शनि गोचर:** चंद्र से {t.saturn_house_from_moon}वां | लग्न से {t.saturn_house_from_lagna}वां भाव")
-        st.markdown(f"- **गुरु गोचर:** चंद्र से {t.jupiter_house_from_moon}वां | लग्न से {t.jupiter_house_from_lagna}वां भाव")
-        st.markdown(f"- **साढ़े साती:** {'✅ सक्रिय - ' + (t.sade_sati_phase or '') if t.is_sade_sati else '❌ निष्क्रिय'}")
-        st.markdown(f"- **ढैय्या:** {'✅ सक्रिय - ' + (t.dhaiya_type or '') if t.is_dhaiya else '❌ निष्क्रिय'}")
+        st.info(f"📊 **पद्धति सहमति अनुपात (Consensus):** {result.consensus_ratio}")
 
-    st.markdown("### 🔍 सक्रिय शास्त्रीय नियम एवं साक्ष्य (Fired Rules Evidence)")
-    if result.top_positive_signals:
-        st.markdown("##### 🟢 अनुकूल शास्त्रीय योग:")
-        for r in result.top_positive_signals:
-            st.markdown(f"""
-            <div class="rule-card">
-                <b>{r.rule_name_hi}</b> ({r.rule_name_en})<br/>
-                <small style="color:#F59E0B;">स्रोत: {r.source_text} | अध्याय: {r.source_chapter} | पद्धति: {r.school}</small><br/>
-                <span>{r.explanation_hi}</span><br/>
-                <small style="color:#6EE7B7;">सिग्नल शक्ति: {r.signal_score:.2f} | पुष्टि: {'हाँ' if r.varga_confirmed else 'सामान्य'}</small>
-            </div>
-            """, unsafe_allow_html=True)
+        col_res1, col_res2 = st.columns([3, 2])
+        with col_res1:
+            st.markdown("### 📖 शास्त्रीय साक्ष्य सार (Classical Narrative)")
+            st.markdown(result.narrative_hi)
+            with st.expander("English Summary"):
+                st.markdown(result.narrative_en)
 
+        with col_res2:
+            st.markdown("### 🪐 गोचर स्थिति (Transit Snapshot)")
+            t = result.transit_summary
+            st.markdown(f"- **शनि गोचर:** चंद्र से {t.saturn_house_from_moon}वां | लग्न से {t.saturn_house_from_lagna}वां भाव")
+            st.markdown(f"- **गुरु गोचर:** चंद्र से {t.jupiter_house_from_moon}वां | लग्न से {t.jupiter_house_from_lagna}वां भाव")
+            st.markdown(f"- **साढ़े साती:** {'✅ सक्रिय - ' + (t.sade_sati_phase or '') if t.is_sade_sati else '❌ निष्क्रिय'}")
+            st.markdown(f"- **ढैय्या:** {'✅ सक्रिय - ' + (t.dhaiya_type or '') if t.is_dhaiya else '❌ निष्क्रिय'}")
+
+        st.markdown("### 🔍 सक्रिय शास्त्रीय नियम एवं साक्ष्य (Fired Rules Evidence)")
+        if result.top_positive_signals:
+            st.markdown("##### 🟢 अनुकूल शास्त्रीय योग:")
+            for r in result.top_positive_signals:
+                st.markdown(f"""
+                <div class="rule-card">
+                    <b>{r.rule_name_hi}</b> ({r.rule_name_en})<br/>
+                    <small style="color:#F59E0B;">स्रोत: {r.source_text} | अध्याय: {r.source_chapter} | पद्धति: {r.school}</small><br/>
+                    <span>{r.explanation_hi}</span><br/>
+                    <small style="color:#6EE7B7;">सिग्नल शक्ति: {r.signal_score:.2f} | पुष्टि: {'हाँ' if r.varga_confirmed else 'सामान्य'}</small>
+                </div>
+                """, unsafe_allow_html=True)
+
+    with tab_past_event:
+        st.write("विगत जीवन की किसी भी ऐतिहासिक घटना (उदा: विवाह, प्रथम नौकरी, पदोन्नति, मकान क्रय, संतान जन्म, विदेश यात्रा आदि) का **६ शास्त्रीय स्तंभों** द्वारा वैज्ञानिक एवं शास्त्र-सम्मत सत्यापन प्राप्त करें।")
+
+        col_p1, col_p2, col_p3 = st.columns([2, 2, 2])
+        default_past_date = date(2021, 5, 20)
+        past_target_date = col_p1.date_input("भूतपूर्व घटना तिथि (Past Event Date)", value=default_past_date, format="DD/MM/YYYY", key="pe_target_date_inp")
+        past_theme = col_p2.selectbox(
+            "घटना का विषय (Event Theme)",
+            ["marriage", "career", "wealth", "education", "children", "health"],
+            format_func=lambda x: {
+                "marriage": "💍 विवाह / संबंध (Marriage)",
+                "career": "💼 आजीविका / नौकरी / पदोन्नति (Career)",
+                "wealth": "💰 धन / संपत्ति / वाहन क्रय (Wealth)",
+                "education": "🎓 उच्च शिक्षा / उपाधि (Education)",
+                "children": "👶 संतान प्राप्ति (Children)",
+                "health": "🌿 स्वास्थ्य संकट / रोग (Health)"
+            }.get(x, x),
+            key="pe_theme_sel"
+        )
+        past_desc = col_p3.text_input("घटना विवरण (Event Description)", value="विवाह संपन्न हुआ", key="pe_desc_inp")
+
+        run_past_verify = st.button("🔍 ६-स्तंभ शास्त्रीय सत्यापन करें (Verify Across 6 Classical Pillars)", type="primary", use_container_width=True, key="pe_verify_btn")
+
+        if run_past_verify or st.session_state.get("pe_last_verified", False):
+            st.session_state["pe_last_verified"] = True
+            try:
+                from src.jyotish.events.past_verification import default_past_event_engine, PastEventVerificationInput
+                from src.jyotish.rules.conflict_graph import AstrologicalEvidenceStatus
+
+                pe_inp = PastEventVerificationInput(
+                    birth_data=birth_profile,
+                    event_theme=past_theme,
+                    query_text=past_desc,
+                    target_date=past_target_date
+                )
+                ver_res = default_past_event_engine.verify_past_event(pe_inp, precomputed_chart=chart)
+
+                st.markdown("---")
+
+                # Verdict Status Header Card
+                st_val = ver_res.status
+                if st_val == AstrologicalEvidenceStatus.VERIFIED:
+                    card_bg = "#064E3B" if (is_astrallis_mode or is_night_mode) else "#ECFDF5"
+                    card_border = "#10B981"
+                    card_text = "#6EE7B7" if (is_astrallis_mode or is_night_mode) else "#065F46"
+                    card_title = "✅ शास्त्रीय दृष्टि से पूर्णतः सत्यापित (VERIFIED)"
+                    card_desc = "इस ऐतिहासिक तिथि पर जन्म कुण्डली, विंशोत्तरी दशा, ऐतिहासिक गोचर एवं षोडशवर्ग चक्रों में घटना के पूर्ण शास्त्रीय योग उपस्थित पाए गए।"
+                elif st_val == AstrologicalEvidenceStatus.PARTIALLY_SUPPORTED:
+                    card_bg = "#78350F" if (is_astrallis_mode or is_night_mode) else "#FFFBEB"
+                    card_border = "#F59E0B"
+                    card_text = "#FCD34D" if (is_astrallis_mode or is_night_mode) else "#92400E"
+                    card_title = "⚠️ आंशिक शास्त्रीय समर्थन (PARTIALLY SUPPORTED)"
+                    card_desc = "इस तिथि पर कुछ मुख्य शास्त्रीय स्तंभ (जैसे दशा या गोचर) अनुकूल रहे, जबकि कुछ स्तंभ तटस्थ अथवा सूक्ष्म स्तर पर सक्रिय थे।"
+                elif st_val == AstrologicalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+                    card_bg = "#1E293B" if (is_astrallis_mode or is_night_mode) else "#F1F5F9"
+                    card_border = "#64748B"
+                    card_text = "#CBD5E1" if (is_astrallis_mode or is_night_mode) else "#334155"
+                    card_title = "ℹ️ अपर्याप्त साक्ष्य (INSUFFICIENT EVIDENCE)"
+                    card_desc = "शास्त्रीय गणनाओं में इस तिथि पर घटना के स्पष्ट और निर्णायक योगों की पर्याप्त पुष्टि नहीं हो सकी।"
+                else:
+                    card_bg = "#7F1D1D" if (is_astrallis_mode or is_night_mode) else "#FEF2F2"
+                    card_border = "#EF4444"
+                    card_text = "#FCA5A5" if (is_astrallis_mode or is_night_mode) else "#991B1B"
+                    card_title = "❌ शास्त्रीय समर्थन का अभाव (NOT SUPPORTED)"
+                    card_desc = "इस तिथि पर संबंधित भाव एवं भावेश के प्रतिकूल योग तथा दशा-गोचर की अनुपस्थिति पाई गई।"
+
+                st.markdown(f"""
+                <div style="background:{card_bg}; border:2px solid {card_border}; border-radius:10px; padding:16px; margin-bottom:16px;">
+                    <div style="font-size:18px; font-weight:900; color:{card_text}; margin-bottom:4px;">{card_title}</div>
+                    <div style="font-size:13.5px; color:{card_text}; font-weight:600;">{card_desc}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                # Metrics Row
+                m_c1, m_c2, m_c3, m_c4 = st.columns(4)
+                m_c1.metric("लक्षित भूतपूर्व तिथि", ver_res.target_date.strftime("%d-%b-%Y"))
+                m_c2.metric("शास्त्रीय विश्वास स्तर", f"{ver_res.confidence_score*100:.1f}%")
+                m_c3.metric("सत्यापन स्थिति (Status)", ver_res.status.value.upper())
+                m_c4.metric("सक्रिय विंशोत्तरी दशा", ver_res.pillar_4_dasha_evidence.get("summary", "—"))
+
+                st.markdown("### 🏛️ ६ शास्त्रीय स्तंभों का विस्तृत साक्ष्य (The 6 Classical Pillars Evidence)")
+
+                p_row1_c1, p_row1_c2, p_row1_c3 = st.columns(3)
+                p_row2_c1, p_row2_c2, p_row2_c3 = st.columns(3)
+
+                # Pillar 1: D1 Natal Potential
+                p1 = ver_res.pillar_1_d1_evidence
+                with p_row1_c1:
+                    st.markdown(f"""
+                    <div style="border:1.5px solid #3B82F6; border-radius:8px; padding:12px; height:100%; background:rgba(59,130,246,0.06);">
+                        <b style="color:#2563EB; font-size:14px;">१. जन्म लग्न विभव (Natal D1)</b><br/>
+                        <div style="margin-top:6px; font-size:12.5px;">
+                            • <b>प्राथमिक भाव:</b> {p1.get('house')}वां भाव<br/>
+                            • <b>भावेश:</b> {p1.get('lord')}<br/>
+                            • <b>भावेश स्थिति:</b> {p1.get('lord_house')}वां भाव ({p1.get('lord_dignity', 'neutral')})<br/>
+                            • <b>लग्न विभव स्कोर:</b> <b>{p1.get('score', 0.5)*100:.0f}%</b>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                # Pillar 2: Prashna Overlay
+                p2 = ver_res.pillar_2_prashna_evidence or {}
+                with p_row1_c2:
+                    p2_fav = "✅ अनुकूल" if p2.get("prashna_favorable") else "ℹ️ सामान्य"
+                    st.markdown(f"""
+                    <div style="border:1.5px solid #8B5CF6; border-radius:8px; padding:12px; height:100%; background:rgba(139,92,246,0.06);">
+                        <b style="color:#7C3AED; font-size:14px;">२. प्रश्न लग्न कुण्डली (Horary Overlay)</b><br/>
+                        <div style="margin-top:6px; font-size:12.5px;">
+                            • <b>प्रश्न लग्न:</b> {p2.get('prashna_lagna', 'उपलब्ध नहीं')}<br/>
+                            • <b>कार्याध्यक्ष स्थिति:</b> {p2_fav}<br/>
+                            • <b>प्रश्न कुण्डली समय:</b> वर्तमान जिज्ञासा क्षण<br/>
+                            • <b>प्रश्न बल स्कोर:</b> <b>{p2.get('score', 0.5)*100:.0f}%</b>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                # Pillar 3: Varga Confirmation
+                p3 = ver_res.pillar_3_varga_evidence
+                with p_row1_c3:
+                    p3_conf = "✅ वर्ग पुष्टि" if p3.get("confirmed") else "⚠️ सामान्य स्थिति"
+                    st.markdown(f"""
+                    <div style="border:1.5px solid #10B981; border-radius:8px; padding:12px; height:100%; background:rgba(16,185,129,0.06);">
+                        <b style="color:#059669; font-size:14px;">३. वर्ग कुण्डली पुष्टि (Divisional Varga)</b><br/>
+                        <div style="margin-top:6px; font-size:12.5px;">
+                            • <b>संबद्ध वर्ग चक्र:</b> {p3.get('varga', 'D9')}<br/>
+                            • <b>वर्ग भावेश:</b> {p3.get('varga_lord')} ({p3.get('varga_dignity', 'neutral')})<br/>
+                            • <b>वर्ग स्थिति:</b> {p3.get('varga_house')}वां भाव ({p3_conf})<br/>
+                            • <b>वर्ग पुष्टि स्कोर:</b> <b>{p3.get('score', 0.5)*100:.0f}%</b>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                # Pillar 4: Operating Vimshottari Dasha
+                p4 = ver_res.pillar_4_dasha_evidence
+                with p_row2_c1:
+                    p4_fav = "✅ पूर्ण फलित योग" if p4.get("dasha_favorable") else "ℹ️ तटस्थ/सामान्य दशा"
+                    st.markdown(f"""
+                    <div style="border:1.5px solid #F59E0B; border-radius:8px; padding:12px; height:100%; background:rgba(245,158,11,0.06);">
+                        <b style="color:#D97706; font-size:14px;">४. सक्रिय दशा विन्यास (Operating Dasha)</b><br/>
+                        <div style="margin-top:6px; font-size:12.5px;">
+                            • <b>महादशा:</b> {p4.get('mahadasha')} | <b>अंतर्दशा:</b> {p4.get('antardasha')}<br/>
+                            • <b>प्रत्यंतर्दशा:</b> {p4.get('pratyantardasha', '—')}<br/>
+                            • <b>दशा अनुकूलता:</b> {p4_fav}<br/>
+                            • <b>दशा सक्रियता स्कोर:</b> <b>{p4.get('score', 0.5)*100:.0f}%</b>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                # Pillar 5: Historical Double Transit
+                p5 = ver_res.pillar_5_transit_evidence
+                with p_row2_c2:
+                    p5_sat = "✅ अनुकूल" if p5.get("saturn_favorable") else "सामान्य"
+                    p5_jup = "✅ शुभ/दृष्टि" if p5.get("jupiter_favorable") else "सामान्य"
+                    st.markdown(f"""
+                    <div style="border:1.5px solid #06B6D4; border-radius:8px; padding:12px; height:100%; background:rgba(6,182,212,0.06);">
+                        <b style="color:#0891B2; font-size:14px;">५. ऐतिहासिक गोचर (Double Transit)</b><br/>
+                        <div style="margin-top:6px; font-size:12.5px;">
+                            • <b>शनि गोचर भाव:</b> {p5.get('saturn_transit_house')}वां भाव ({p5_sat})<br/>
+                            • <b>गुरु गोचर भाव:</b> {p5.get('jupiter_transit_house')}वां भाव ({p5_jup})<br/>
+                            • <b>द्वि-गोचर चक्र सक्रियता:</b> {p5.get('transit_score', 0.5)*100:.0f}%<br/>
+                            • <b>गोचर संरेखण स्कोर:</b> <b>{p5.get('transit_score', 0.5)*100:.0f}%</b>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                # Pillar 6: Classical Shastriya Rules Consensus
+                p6 = ver_res.pillar_6_rules_evidence
+                with p_row2_c3:
+                    st.markdown(f"""
+                    <div style="border:1.5px solid #EC4899; border-radius:8px; padding:12px; height:100%; background:rgba(236,72,153,0.06);">
+                        <b style="color:#DB2777; font-size:14px;">६. शास्त्रीय नियम बैंक (12,500+ Rules)</b><br/>
+                        <div style="margin-top:6px; font-size:12.5px;">
+                            • <b>सक्रिय नियम (Fired Rules):</b> {p6.get('rules_fired_count', 0)} नियम<br/>
+                            • <b>अनुकूल शास्त्रीय साक्ष्य:</b> {p6.get('rules_favorable_count', 0)} योग<br/>
+                            • <b>ज्ञानकोष स्रोत:</b> BPHS, फलदीपिका, सारावली<br/>
+                            • <b>शास्त्रीय सहमति स्कोर:</b> <b>{p6.get('score', 0.5)*100:.0f}%</b>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+
+                # Shastriya Narrative
+                st.markdown("### 📖 शास्त्रीय साक्ष्य सार (Classical Verification Narrative)")
+                st.markdown(ver_res.ai_explanation_hi)
+
+                with st.expander("Classical English Synthesis"):
+                    st.markdown(ver_res.ai_explanation_en)
+
+                # Master Directive Rule 5 Disclaimer
+                st.info(f"⚖️ **शास्त्रीय प्रमाण नीति (Master Directive Rule 5):** {ver_res.disclaimer_hi}")
+
+            except Exception as pe_err:
+                st.error(f"सत्यापन गणना में त्रुटि: {str(pe_err)}")
 
 # =============================================================
 # TAB 2: JANM KUNDALI & SHODASHAVARGA
