@@ -148,7 +148,7 @@ st.set_page_config(
     page_title="JyotishOS - Enterprise Vedic Astrology Platform",
     page_icon="🔮",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 if "app_theme_mode" not in st.session_state:
@@ -4958,41 +4958,64 @@ with st.container(key="top_frozen_header_container", border=False):
     def _nav_prev_module():
         new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
         st.session_state.active_module_idx = new_idx
-        st.session_state.top_bar_module_selector = MODULE_OPTIONS[new_idx]
+        st.session_state.sidebar_module_radio = MODULE_OPTIONS[new_idx]
 
     def _nav_next_module():
         new_idx = (st.session_state.active_module_idx + 1) % len(MODULE_OPTIONS)
         st.session_state.active_module_idx = new_idx
-        st.session_state.top_bar_module_selector = MODULE_OPTIONS[new_idx]
+        st.session_state.sidebar_module_radio = MODULE_OPTIONS[new_idx]
 
     def _nav_to_rules_bank():
         st.session_state.active_module_idx = 19
-        st.session_state.top_bar_module_selector = MODULE_OPTIONS[19]
+        st.session_state.sidebar_module_radio = MODULE_OPTIONS[19]
 
-    def _on_module_selector_change():
-        chosen = st.session_state.top_bar_module_selector
-        if chosen in MODULE_OPTIONS:
-            st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen)
+    # ---------------------------------------------------------
+    # 📚 LEFT SIDEBAR: ACTIVE CLIENT PROFILE & ALL 30 VEDIC MODULES
+    # ---------------------------------------------------------
+    with st.sidebar:
+        _sb_card_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#EFF6FF")
+        _sb_card_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#93C5FD")
+        st.markdown(f"""
+        <div style="background:{_sb_card_bg}; border:1.5px solid {_sb_card_border}; border-radius:10px; padding:10px 12px; margin-bottom:12px;">
+            <div style="font-size:11px; font-weight:800; color:#F59E0B; text-transform:uppercase;">👤 सक्रिय जातक प्रोफाइल</div>
+            <div style="font-size:15px; font-weight:900; color:#FFFFFF; margin:3px 0;">{name}</div>
+            <div style="font-size:11.5px; color:#CBD5E1; line-height:1.4;">
+                📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M %p')}<br/>
+                📍 {default_city_name} | <b>लग्न:</b> {chart.lagna_sign_name}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
-    # 3. 21 Modules Selector (Inside the Frozen Top Container)
+        st.markdown("### 📚 समस्त ३० वैदिक मॉड्यूल")
+        curr_idx = st.session_state.get("active_module_idx", 0)
+        curr_idx = curr_idx if (0 <= curr_idx < len(MODULE_OPTIONS)) else 0
+        selected_module = st.radio(
+            "वैदिक मॉड्यूल्स",
+            MODULE_OPTIONS,
+            index=curr_idx,
+            key="sidebar_module_radio",
+            label_visibility="collapsed"
+        )
+        selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else curr_idx
+        st.session_state.active_module_idx = selected_idx
+
+    # ---------------------------------------------------------
+    # 3. TOP HEADER CONTAINER: QUICK CONTROLS & BREADCRUMB
+    # ---------------------------------------------------------
     st.markdown("<div style='height: 10px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
     if "app_ui_layout_mode" not in st.session_state:
         st.session_state.app_ui_layout_mode = "parashara"  # Default to Parashara Workstation 30:70
 
-    col_btn_prev, col_mod_sel, col_btn_next, col_view_toggle = st.columns([0.9, 3.2, 0.9, 1.4])
+    col_btn_prev, col_active_info, col_btn_next, col_view_toggle = st.columns([1.1, 3.8, 1.1, 1.5])
     with col_btn_prev:
         st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn", on_click=_nav_prev_module)
 
-    with col_mod_sel:
-        selected_module = st.selectbox(
-            "मॉड्यूल चयन",
-            MODULE_OPTIONS,
-            key="top_bar_module_selector",
-            label_visibility="collapsed",
-            on_change=_on_module_selector_change
-        )
-        selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else st.session_state.active_module_idx
-        st.session_state.active_module_idx = selected_idx
+    with col_active_info:
+        st.markdown(f"""
+        <div style="background:{_breadcrumb_bg}; border:1.5px solid {_breadcrumb_border}; border-radius:8px; padding:6px 14px; text-align:center; height:100%; display:flex; align-items:center; justify-content:center;">
+            <span style="font-size:13px; font-weight:800; color:{_breadcrumb_title_color};">📍 <b>{selected_module}</b></span>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col_btn_next:
         st.button("अगला (Next) ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="top_next_mod_btn", on_click=_nav_next_module)
