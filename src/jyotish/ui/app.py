@@ -3212,6 +3212,20 @@ client_bridge_code = """
                             margin: 0px !important;
                             padding: 0px !important;
                         }
+                        .st-key-frozen_toolbelt_container,
+                        div.st-key-frozen_toolbelt_container,
+                        div[data-testid="stVerticalBlockBorderWrapper"]:has(.st-key-frozen_toolbelt_container),
+                        div[data-testid="stVerticalBlock"] > div:has(.st-key-frozen_toolbelt_container) {
+                            position: -webkit-sticky !important;
+                            position: sticky !important;
+                            top: 0px !important;
+                            z-index: 999999 !important;
+                            background: #F5F9EC !important;
+                            border-bottom: 2.5px solid #00B0F0 !important;
+                            box-shadow: 0 4px 14px rgba(0, 115, 207, 0.15) !important;
+                            padding-top: 6px !important;
+                            padding-bottom: 6px !important;
+                        }
                         .st-key-top_frozen_header_container {
                             border: none !important;
                             box-shadow: none !important;
@@ -3701,21 +3715,17 @@ client_bridge_code = """
                 frozenTb.style.setProperty('position', 'sticky', 'important');
                 frozenTb.style.setProperty('top', '0px', 'important');
                 frozenTb.style.setProperty('z-index', '999999', 'important');
-            }
+                const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
+                const isAstrallis = parentDoc.body.classList.contains('astrallis-mode') || localStorage.getItem('jyotish_theme_mode') === 'astrallis';
+                frozenTb.style.setProperty('background', isAstrallis ? '#070A12' : (isNight ? '#111827' : '#F5F9EC'), 'important');
+                frozenTb.style.setProperty('border-bottom', isAstrallis ? '2.5px solid #00E5FF' : (isNight ? '2.5px solid #374151' : '2.5px solid #00B0F0'), 'important');
 
-            const anchor = parentDoc.querySelector('.fixed-header-anchor, .frozen-header-marker');
-            if (anchor) {
-                let headerContainer = anchor.closest('.st-key-top_frozen_header_container') ||
-                                      anchor.closest('[data-testid="stVerticalBlockBorderWrapper"]') ||
-                                      anchor.closest('[data-testid="stVerticalBlock"] > div');
-                if (headerContainer) {
-                    headerContainer.style.setProperty('position', 'relative', 'important');
-                    headerContainer.style.setProperty('top', 'auto', 'important');
-                    headerContainer.style.setProperty('z-index', 'auto', 'important');
-                    headerContainer.style.setProperty('box-shadow', 'none', 'important');
-                    headerContainer.style.setProperty('padding-top', '2px', 'important');
-                    headerContainer.style.setProperty('padding-bottom', '4px', 'important');
-                    headerContainer.style.setProperty('margin-bottom', '4px', 'important');
+                let parentWrapper = frozenTb.closest('[data-testid="stVerticalBlockBorderWrapper"]') || frozenTb.parentElement;
+                if (parentWrapper) {
+                    parentWrapper.style.setProperty('position', 'sticky', 'important');
+                    parentWrapper.style.setProperty('top', '0px', 'important');
+                    parentWrapper.style.setProperty('z-index', '999999', 'important');
+                    parentWrapper.style.setProperty('overflow', 'visible', 'important');
                 }
             }
 
