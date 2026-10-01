@@ -1299,8 +1299,26 @@ unified_css = f"""
 
     /* Sidebar and collapse control must always sit above the fixed header */
     section[data-testid="stSidebar"],
-    [data-testid="stSidebar"] {{
+    [data-testid="stSidebar"],
+    [data-testid="stSidebarContent"],
+    [data-testid="stSidebarUserContent"] {{
         z-index: 10000000 !important;
+        background-color: #0074cb !important;
+        background: #0074cb !important;
+        border-right: 2px solid #005fa8 !important;
+    }}
+    section[data-testid="stSidebar"] *,
+    [data-testid="stSidebar"] *,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] div,
+    [data-testid="stSidebar"] b,
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] h4 {{
+        color: #000000 !important;
     }}
     [data-testid="collapsedControl"],
     [data-testid="collapsedControl"] button,
@@ -1316,15 +1334,16 @@ unified_css = f"""
         position: fixed !important;
         top: 0px !important;
         z-index: 9990 !important;
-        background: #F5F9EC !important;
+        background: #0074cb !important;
+        background-color: #0074cb !important;
         padding-top: 6px !important;
         padding-bottom: 6px !important;
         padding-left: 52px !important;
         padding-right: 14px !important;
         margin-top: 0px !important;
         margin-bottom: 0px !important;
-        border-bottom: 2.5px solid #00B0F0 !important;
-        box-shadow: 0 4px 14px rgba(0, 115, 207, 0.15) !important;
+        border-bottom: 2.5px solid #005fa8 !important;
+        box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
         box-sizing: border-box !important;
         transition: left 0.15s ease, width 0.15s ease !important;
     }}
@@ -1343,6 +1362,29 @@ unified_css = f"""
         text-overflow: ellipsis !important;
         min-height: 36px !important;
         height: 36px !important;
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 8px !important;
+    }}
+    .st-key-frozen_toolbelt_container button * {{
+        color: #000000 !important;
+        font-weight: 700 !important;
+    }}
+    .st-key-frozen_toolbelt_container button:hover {{
+        background: #F0F7FF !important;
+        border-color: #005fa8 !important;
+        color: #000000 !important;
+    }}
+    .st-key-frozen_toolbelt_container button[kind="primary"],
+    .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] {{
+        background: #E0F2FE !important;
+        border: 2px solid #005fa8 !important;
+        color: #000000 !important;
+    }}
+    .st-key-frozen_toolbelt_container button[kind="primary"] *,
+    .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] * {{
+        color: #000000 !important;
     }}
     .block-container {{
         padding-top: 58px !important;
@@ -3307,9 +3349,10 @@ client_bridge_code = """
                             position: fixed !important;
                             top: 0px !important;
                             z-index: 9990 !important;
-                            background: #F5F9EC !important;
-                            border-bottom: 2.5px solid #00B0F0 !important;
-                            box-shadow: 0 4px 14px rgba(0, 115, 207, 0.15) !important;
+                            background: #0074cb !important;
+                            background-color: #0074cb !important;
+                            border-bottom: 2.5px solid #005fa8 !important;
+                            box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
                             padding-top: 6px !important;
                             padding-bottom: 6px !important;
                             padding-left: 52px !important;
@@ -3332,6 +3375,29 @@ client_bridge_code = """
                             text-overflow: ellipsis !important;
                             min-height: 36px !important;
                             height: 36px !important;
+                            background: #FFFFFF !important;
+                            color: #000000 !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                            border-radius: 8px !important;
+                        }
+                        .st-key-frozen_toolbelt_container button * {
+                            color: #000000 !important;
+                            font-weight: 700 !important;
+                        }
+                        .st-key-frozen_toolbelt_container button:hover {
+                            background: #F0F7FF !important;
+                            border-color: #005fa8 !important;
+                            color: #000000 !important;
+                        }
+                        .st-key-frozen_toolbelt_container button[kind="primary"],
+                        .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] {
+                            background: #E0F2FE !important;
+                            border: 2px solid #005fa8 !important;
+                            color: #000000 !important;
+                        }
+                        .st-key-frozen_toolbelt_container button[kind="primary"] *,
+                        .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] * {
+                            color: #000000 !important;
                         }
                         .block-container {
                             padding-top: 58px !important;
@@ -3343,12 +3409,14 @@ client_bridge_code = """
                             margin: 0px 0px 4px 0px !important;
                             background: transparent !important;
                         }
-                        [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-                            background-color: #EDF4E2 !important;
-                            background: #EDF4E2 !important;
-                            border-right: 1.5px solid #CBDCB8 !important;
+                        [data-testid="stSidebar"], section[data-testid="stSidebar"],
+                        [data-testid="stSidebarContent"], [data-testid="stSidebarUserContent"] {
+                            background-color: #0074cb !important;
+                            background: #0074cb !important;
+                            border-right: 2px solid #005fa8 !important;
                         }
-                        [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
+                        [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b,
+                        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] h4 {
                             color: #000000 !important;
                         }
                         section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
@@ -3826,7 +3894,7 @@ client_bridge_code = """
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
                 const isAstrallis = parentDoc.body.classList.contains('astrallis-mode') || localStorage.getItem('jyotish_theme_mode') === 'astrallis';
-                frozenTb.style.setProperty('background', isAstrallis ? '#070A12' : (isNight ? '#111827' : '#F5F9EC'), 'important');
+                frozenTb.style.setProperty('background', isAstrallis ? '#070A12' : (isNight ? '#111827' : '#0074cb'), 'important');
                 frozenTb.style.setProperty('border-bottom', isAstrallis ? '2.5px solid #00E5FF' : (isNight ? '2.5px solid #374151' : '2.5px solid #00B0F0'), 'important');
                 frozenTb.style.setProperty('box-shadow', '0 4px 14px rgba(0, 115, 207, 0.15)', 'important');
             }
