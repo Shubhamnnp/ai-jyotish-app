@@ -6092,29 +6092,29 @@ elif selected_idx == 1:
 
                 # Verdict Status Header Card
                 st_val = ver_res.status
-                if st_val == AstrologicalEvidenceStatus.VERIFIED:
+                if st_val in (AstrologicalEvidenceStatus.STRONGLY_SUPPORTED, AstrologicalEvidenceStatus.SUPPORTED):
                     card_bg = "#064E3B" if (is_astrallis_mode or is_night_mode) else "#ECFDF5"
                     card_border = "#10B981"
                     card_text = "#6EE7B7" if (is_astrallis_mode or is_night_mode) else "#065F46"
-                    card_title = "✅ शास्त्रीय दृष्टि से पूर्णतः सत्यापित (VERIFIED)"
+                    card_title = f"✅ शास्त्र-सम्मत सत्यापन: {st_val.value.upper()}"
                     card_desc = "इस ऐतिहासिक तिथि पर जन्म कुण्डली, विंशोत्तरी दशा, ऐतिहासिक गोचर एवं षोडशवर्ग चक्रों में घटना के पूर्ण शास्त्रीय योग उपस्थित पाए गए।"
-                elif st_val == AstrologicalEvidenceStatus.PARTIALLY_SUPPORTED:
+                elif st_val in (AstrologicalEvidenceStatus.MODERATELY_SUPPORTED, AstrologicalEvidenceStatus.WEAKLY_SUPPORTED):
                     card_bg = "#78350F" if (is_astrallis_mode or is_night_mode) else "#FFFBEB"
                     card_border = "#F59E0B"
                     card_text = "#FCD34D" if (is_astrallis_mode or is_night_mode) else "#92400E"
-                    card_title = "⚠️ आंशिक शास्त्रीय समर्थन (PARTIALLY SUPPORTED)"
+                    card_title = f"⚠️ आंशिक शास्त्रीय समर्थन: {st_val.value.upper()}"
                     card_desc = "इस तिथि पर कुछ मुख्य शास्त्रीय स्तंभ (जैसे दशा या गोचर) अनुकूल रहे, जबकि कुछ स्तंभ तटस्थ अथवा सूक्ष्म स्तर पर सक्रिय थे।"
-                elif st_val == AstrologicalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+                elif st_val in (AstrologicalEvidenceStatus.INCONCLUSIVE, AstrologicalEvidenceStatus.CONFLICTING):
                     card_bg = "#1E293B" if (is_astrallis_mode or is_night_mode) else "#F1F5F9"
                     card_border = "#64748B"
                     card_text = "#CBD5E1" if (is_astrallis_mode or is_night_mode) else "#334155"
-                    card_title = "ℹ️ अपर्याप्त साक्ष्य (INSUFFICIENT EVIDENCE)"
+                    card_title = f"ℹ️ अनिर्णायक/विरोधाभासी साक्ष्य: {st_val.value.upper()}"
                     card_desc = "शास्त्रीय गणनाओं में इस तिथि पर घटना के स्पष्ट और निर्णायक योगों की पर्याप्त पुष्टि नहीं हो सकी।"
                 else:
                     card_bg = "#7F1D1D" if (is_astrallis_mode or is_night_mode) else "#FEF2F2"
                     card_border = "#EF4444"
                     card_text = "#FCA5A5" if (is_astrallis_mode or is_night_mode) else "#991B1B"
-                    card_title = "❌ शास्त्रीय समर्थन का अभाव (NOT SUPPORTED)"
+                    card_title = f"❌ शास्त्रीय समर्थन का अभाव: {st_val.value.upper()}"
                     card_desc = "इस तिथि पर संबंधित भाव एवं भावेश के प्रतिकूल योग तथा दशा-गोचर की अनुपस्थिति पाई गई।"
 
                 st.markdown(f"""
