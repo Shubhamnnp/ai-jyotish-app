@@ -4611,9 +4611,9 @@ with st.container(key="top_frozen_header_container", border=False):
     # Invisible anchor for sticky top header calculations
     st.markdown('<div class="fixed-header-anchor" style="display:none; height:0px; margin:0; padding:0;"></div>', unsafe_allow_html=True)
 
-    # 8 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered - Frozen Sticky at Top)
+    # 7 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered - Frozen Sticky at Top)
     with st.container(key="frozen_toolbelt_container", border=False):
-        tb_cols = st.columns(8, gap="small")
+        tb_cols = st.columns(7, gap="small")
 
         # Helper function for rendering clickable tile (Streamlit Native Button - In-Session Instant Trigger)
         def render_tool_tile(col, emoji_icon, label_text, tool_key):
@@ -4622,37 +4622,32 @@ with st.container(key="top_frozen_header_container", border=False):
                 btn_type = "primary" if is_active else "secondary"
                 btn_label = f"{emoji_icon} {label_text}"
                 if st.button(btn_label, key=f"gla_tile_btn_{tool_key}", use_container_width=True, type=btn_type, help=f"{label_text} मेन्यू खोलें"):
-                    if tool_key == "sidebar":
-                        st.session_state.sidebar_toggle_requested = True
-                    elif st.session_state.gla_active_tool == tool_key:
+                    if st.session_state.gla_active_tool == tool_key:
                         st.session_state.gla_active_tool = None
                     else:
                         st.session_state.gla_active_tool = tool_key
                     st.rerun()
 
-        # 1. Sidebar Toggle Button
-        render_tool_tile(tb_cols[0], "☰", "Sidebar", "sidebar")
+        # 1. New Chart
+        render_tool_tile(tb_cols[0], "✨", "New", "new")
 
-        # 2. New Chart
-        render_tool_tile(tb_cols[1], "✨", "New", "new")
+        # 2. Birth Data
+        render_tool_tile(tb_cols[1], "📅", "Birth Data", "birth")
 
-        # 3. Birth Data
-        render_tool_tile(tb_cols[2], "📅", "Birth Data", "birth")
+        # 3. Open Folder (Client Kundali Vault)
+        render_tool_tile(tb_cols[2], "📂", "Open Vault", "open")
 
-        # 4. Open Folder (Client Kundali Vault)
-        render_tool_tile(tb_cols[3], "📂", "Open Vault", "open")
+        # 4. Save Chart
+        render_tool_tile(tb_cols[3], "💾", "Save", "save")
 
-        # 5. Save Chart
-        render_tool_tile(tb_cols[4], "💾", "Save", "save")
+        # 5. Time Stepper (Time Travel)
+        render_tool_tile(tb_cols[4], "⏱️", "Time Travel", "clock")
 
-        # 6. Time Stepper (Time Travel)
-        render_tool_tile(tb_cols[5], "⏱️", "Time Travel", "clock")
+        # 6. Theme Mode
+        render_tool_tile(tb_cols[5], "🌓", "Theme", "theme")
 
-        # 7. Theme Mode
-        render_tool_tile(tb_cols[6], "🌓", "Theme", "theme")
-
-        # 8. Logout
-        render_tool_tile(tb_cols[7], "🚪", "Logout", "logout")
+        # 7. Logout
+        render_tool_tile(tb_cols[6], "🚪", "Logout", "logout")
 
     if st.session_state.get("sidebar_toggle_requested"):
         st.session_state.sidebar_toggle_requested = False
