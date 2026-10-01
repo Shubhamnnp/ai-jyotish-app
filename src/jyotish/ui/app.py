@@ -1196,7 +1196,9 @@ unified_css = f"""
 
     /* Keep Sidebar Open/Close Expand Button (>>) Always Visible, High-Contrast & Clickable */
     [data-testid="collapsedControl"],
+    [data-testid="collapsedControl"] button,
     [data-testid="stSidebarCollapsedControl"],
+    [data-testid="stSidebarCollapsedControl"] button,
     button[data-testid="stSidebarCollapsedControl"],
     header[data-testid="stHeader"] button {{
         pointer-events: auto !important;
@@ -1204,10 +1206,9 @@ unified_css = f"""
         visibility: visible !important;
         opacity: 1 !important;
         position: fixed !important;
-        top: 10px !important;
-        top: 4px !important;
-        left: 10px !important;
-        z-index: 1000005 !important;
+        top: 6px !important;
+        left: 6px !important;
+        z-index: 10000005 !important;
         background: #2563EB !important;
         color: #FFFFFF !important;
         border: 2px solid #1D4ED8 !important;
@@ -2188,9 +2189,22 @@ client_bridge_code = """
             });
             
             function doToggle() {
-                // 1. Try finding and clicking native Streamlit sidebar buttons
-                const collapsedBtn = parentDoc.querySelector('[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"], button[aria-label="Expand sidebar"], button[title="Expand sidebar"]');
-                const collapseBtn = parentDoc.querySelector('button[data-testid="stSidebarCollapseButton"], [data-testid="stSidebarHeader"] button, button[aria-label="Collapse sidebar"], button[title="Collapse sidebar"]');
+                // 1. Try finding and clicking native Streamlit sidebar buttons (target button directly)
+                const collapsedBtn = parentDoc.querySelector(
+                    '[data-testid="stSidebarCollapsedControl"] button, ' +
+                    'button[data-testid="stSidebarCollapsedControl"], ' +
+                    '[data-testid="collapsedControl"] button, ' +
+                    'button[aria-label*="Expand sidebar"], ' +
+                    'button[title*="Expand sidebar"], ' +
+                    'button[aria-label*="sidebar"]'
+                );
+                const collapseBtn = parentDoc.querySelector(
+                    'button[data-testid="stSidebarCollapseButton"], ' +
+                    '[data-testid="stSidebarCollapseButton"] button, ' +
+                    '[data-testid="stSidebarHeader"] button, ' +
+                    'button[aria-label*="Collapse sidebar"], ' +
+                    'button[title*="Collapse sidebar"]'
+                );
                 
                 if (collapsedBtn && (collapsedBtn.offsetParent !== null || window.getComputedStyle(collapsedBtn).display !== 'none')) {
                     collapsedBtn.click();
@@ -3630,10 +3644,16 @@ client_bridge_code = """
                 stHeader.style.setProperty('z-index', '999999', 'important');
             }
 
-            // Auto-expand sidebar if it is currently collapsed
+            // Auto-expand sidebar if it is currently collapsed (click inner button)
             try {
-                const autoCollapsedBtn = parentDoc.querySelector('[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"], button[aria-label="Expand sidebar"], button[title="Expand sidebar"]');
-                if (autoCollapsedBtn && (autoCollapsedBtn.offsetParent !== null || window.getComputedStyle(autoCollapsedBtn).display !== 'none')) {
+                const autoCollapsedBtn = parentDoc.querySelector(
+                    '[data-testid="stSidebarCollapsedControl"] button, ' +
+                    'button[data-testid="stSidebarCollapsedControl"], ' +
+                    '[data-testid="collapsedControl"] button, ' +
+                    'button[aria-label*="Expand sidebar"], ' +
+                    'button[title*="Expand sidebar"]'
+                );
+                if (autoCollapsedBtn) {
                     autoCollapsedBtn.click();
                 }
             } catch (e) {}
@@ -4432,12 +4452,30 @@ with st.container(key="top_frozen_header_container", border=False):
         <script>
         try {
             const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
-            const expBtn = pDoc.querySelector('[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"], button[aria-label="Expand sidebar"], button[title="Expand sidebar"]');
-            if (expBtn && (expBtn.offsetParent !== null || window.getComputedStyle(expBtn).display !== 'none')) {
+            const expBtn = pDoc.querySelector(
+                '[data-testid="stSidebarCollapsedControl"] button, ' +
+                'button[data-testid="stSidebarCollapsedControl"], ' +
+                '[data-testid="collapsedControl"] button, ' +
+                'button[aria-label*="Expand sidebar"], ' +
+                'button[title*="Expand sidebar"]'
+            );
+            if (expBtn) {
                 expBtn.click();
             } else {
-                const colBtn = pDoc.querySelector('[data-testid="stSidebarCollapseButton"], button[aria-label="Collapse sidebar"], button[title="Collapse sidebar"]');
-                if (colBtn) { colBtn.click(); }
+                const colBtn = pDoc.querySelector(
+                    'button[data-testid="stSidebarCollapseButton"], ' +
+                    '[data-testid="stSidebarCollapseButton"] button, ' +
+                    '[data-testid="stSidebarHeader"] button, ' +
+                    'button[aria-label*="Collapse sidebar"], ' +
+                    'button[title*="Collapse sidebar"]'
+                );
+                if (colBtn) {
+                    colBtn.click();
+                } else {
+                    const evt = new KeyboardEvent('keydown', { key: '[', code: 'BracketLeft', keyCode: 219, which: 219, bubbles: true, cancelable: true });
+                    pDoc.dispatchEvent(evt);
+                    if (window.parent) window.parent.dispatchEvent(evt);
+                }
             }
         } catch(e) {}
         </script>
@@ -5080,11 +5118,21 @@ with st.container(key="top_frozen_header_container", border=False):
         st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn", on_click=_nav_prev_module)
 
     with col_active_info:
-        st.markdown(f"""
-        <div style="background:{_breadcrumb_bg}; border:1.5px solid {_breadcrumb_border}; border-radius:8px; padding:6px 14px; text-align:center; height:100%; display:flex; align-items:center; justify-content:center;">
-            <span style="font-size:13px; font-weight:800; color:{_breadcrumb_title_color};">📍 <b>{selected_module}</b></span>
-        </div>
-        """, unsafe_allow_html=True)
+        # Instant direct 30-module switcher (accessible always, even if sidebar is closed)
+        _cur_m_name = MODULE_OPTIONS[st.session_state.active_module_idx] if 0 <= st.session_state.active_module_idx < len(MODULE_OPTIONS) else MODULE_OPTIONS[0]
+        chosen_module = st.selectbox(
+            "सक्रिय मॉड्यूल (Active Module)",
+            MODULE_OPTIONS,
+            index=MODULE_OPTIONS.index(_cur_m_name),
+            key="top_bar_active_module_select",
+            label_visibility="collapsed",
+            help="किसी भी मॉड्यूल पर तुरंत जाने के लिए यहाँ से चुनें"
+        )
+        if chosen_module != _cur_m_name:
+            st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen_module)
+            if "sidebar_module_radio" in st.session_state:
+                st.session_state.sidebar_module_radio = chosen_module
+            st.rerun()
 
     with col_btn_next:
         st.button("अगला (Next) ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="top_next_mod_btn", on_click=_nav_next_module)
