@@ -1301,26 +1301,36 @@ unified_css = f"""
         padding: 0px !important;
     }}
 
-    /* Frozen Sticky Toolbelt (Pins the 8 Top Action Buttons to the Top of the Screen) */
+    /* Frozen Locked Toolbelt (Pins the 8 Top Action Buttons Permanently to the Top of the Viewport) */
     .st-key-frozen_toolbelt_container,
-    div.st-key-frozen_toolbelt_container,
-    div[data-testid="stVerticalBlock"] > div:has(.st-key-frozen_toolbelt_container),
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(.st-key-frozen_toolbelt_container) {{
-        position: -webkit-sticky !important;
-        position: sticky !important;
+    div.st-key-frozen_toolbelt_container {{
+        position: fixed !important;
         top: 0px !important;
-        z-index: 999999 !important;
+        left: 0px !important;
+        right: 0px !important;
+        width: 100% !important;
+        z-index: 999990 !important;
         background: #F5F9EC !important;
         padding-top: 6px !important;
         padding-bottom: 6px !important;
+        padding-left: 52px !important;
+        padding-right: 16px !important;
         margin-top: 0px !important;
-        margin-bottom: 6px !important;
+        margin-bottom: 0px !important;
         border-bottom: 2.5px solid #00B0F0 !important;
         box-shadow: 0 4px 14px rgba(0, 115, 207, 0.15) !important;
+        box-sizing: border-box !important;
     }}
-    .block-container,
-    div[data-testid="stVerticalBlock"] {{
-        overflow: visible !important;
+    .block-container {{
+        padding-top: 58px !important;
+    }}
+    @media (min-width: 769px) {{
+        [data-testid="stSidebar"][aria-expanded="true"] ~ [data-testid="stMain"] .st-key-frozen_toolbelt_container,
+        section[data-testid="stSidebar"]:not([aria-expanded="false"]) ~ section[data-testid="stMain"] .st-key-frozen_toolbelt_container {{
+            left: 336px !important;
+            width: calc(100% - 336px) !important;
+            padding-left: 16px !important;
+        }}
     }}
 
     /* Frozen Sticky Header Container (Pins to the Top of the App) */
@@ -3213,18 +3223,24 @@ client_bridge_code = """
                             padding: 0px !important;
                         }
                         .st-key-frozen_toolbelt_container,
-                        div.st-key-frozen_toolbelt_container,
-                        div[data-testid="stVerticalBlockBorderWrapper"]:has(.st-key-frozen_toolbelt_container),
-                        div[data-testid="stVerticalBlock"] > div:has(.st-key-frozen_toolbelt_container) {
-                            position: -webkit-sticky !important;
-                            position: sticky !important;
+                        div.st-key-frozen_toolbelt_container {
+                            position: fixed !important;
                             top: 0px !important;
-                            z-index: 999999 !important;
+                            left: 0px !important;
+                            right: 0px !important;
+                            width: 100% !important;
+                            z-index: 999990 !important;
                             background: #F5F9EC !important;
                             border-bottom: 2.5px solid #00B0F0 !important;
                             box-shadow: 0 4px 14px rgba(0, 115, 207, 0.15) !important;
                             padding-top: 6px !important;
                             padding-bottom: 6px !important;
+                            padding-left: 52px !important;
+                            padding-right: 16px !important;
+                            box-sizing: border-box !important;
+                        }
+                        .block-container {
+                            padding-top: 58px !important;
                         }
                         .st-key-top_frozen_header_container {
                             border: none !important;
@@ -3701,32 +3717,45 @@ client_bridge_code = """
                 mainSec.style.setProperty('position', 'relative', 'important');
             }
 
-            const blockContainer = parentDoc.querySelector('.block-container');
-            if (blockContainer) {
-                blockContainer.style.setProperty('padding-top', '2px', 'important');
-                blockContainer.style.setProperty('padding-left', '8px', 'important');
-                blockContainer.style.setProperty('padding-right', '8px', 'important');
-                blockContainer.style.setProperty('max-width', '100%', 'important');
-                blockContainer.style.setProperty('overflow', 'visible', 'important');
-            }
-
             const frozenTb = parentDoc.querySelector('.st-key-frozen_toolbelt_container');
             if (frozenTb) {
-                frozenTb.style.setProperty('position', 'sticky', 'important');
+                const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
+                const isSbExpanded = sb && (sb.getAttribute('aria-expanded') === 'true' || (sb.offsetWidth > 100 && window.getComputedStyle(sb).display !== 'none'));
+                const isDesktop = window.innerWidth >= 769;
+
+                frozenTb.style.setProperty('position', 'fixed', 'important');
                 frozenTb.style.setProperty('top', '0px', 'important');
-                frozenTb.style.setProperty('z-index', '999999', 'important');
+                frozenTb.style.setProperty('z-index', '999990', 'important');
+                frozenTb.style.setProperty('padding-top', '6px', 'important');
+                frozenTb.style.setProperty('padding-bottom', '6px', 'important');
+                frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
+
+                if (isSbExpanded && isDesktop) {
+                    const sbWidth = sb.offsetWidth || 336;
+                    frozenTb.style.setProperty('left', sbWidth + 'px', 'important');
+                    frozenTb.style.setProperty('width', 'calc(100% - ' + sbWidth + 'px)', 'important');
+                    frozenTb.style.setProperty('padding-left', '16px', 'important');
+                    frozenTb.style.setProperty('padding-right', '16px', 'important');
+                } else {
+                    frozenTb.style.setProperty('left', '0px', 'important');
+                    frozenTb.style.setProperty('width', '100%', 'important');
+                    frozenTb.style.setProperty('padding-left', '52px', 'important');
+                    frozenTb.style.setProperty('padding-right', '16px', 'important');
+                }
+
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
                 const isAstrallis = parentDoc.body.classList.contains('astrallis-mode') || localStorage.getItem('jyotish_theme_mode') === 'astrallis';
                 frozenTb.style.setProperty('background', isAstrallis ? '#070A12' : (isNight ? '#111827' : '#F5F9EC'), 'important');
                 frozenTb.style.setProperty('border-bottom', isAstrallis ? '2.5px solid #00E5FF' : (isNight ? '2.5px solid #374151' : '2.5px solid #00B0F0'), 'important');
+                frozenTb.style.setProperty('box-shadow', '0 4px 14px rgba(0, 115, 207, 0.15)', 'important');
+            }
 
-                let parentWrapper = frozenTb.closest('[data-testid="stVerticalBlockBorderWrapper"]') || frozenTb.parentElement;
-                if (parentWrapper) {
-                    parentWrapper.style.setProperty('position', 'sticky', 'important');
-                    parentWrapper.style.setProperty('top', '0px', 'important');
-                    parentWrapper.style.setProperty('z-index', '999999', 'important');
-                    parentWrapper.style.setProperty('overflow', 'visible', 'important');
-                }
+            const blockContainer = parentDoc.querySelector('.block-container');
+            if (blockContainer) {
+                blockContainer.style.setProperty('padding-top', '58px', 'important');
+                blockContainer.style.setProperty('padding-left', '8px', 'important');
+                blockContainer.style.setProperty('padding-right', '8px', 'important');
+                blockContainer.style.setProperty('max-width', '100%', 'important');
             }
 
         } catch(e) {
