@@ -52,7 +52,6 @@ def read_root():
         "total_rules": len(default_rules_engine.rules),
         "ayanamsa_default": "Lahiri (Chitra Paksha)",
         "ephemeris": "PyEphem (IAU high-precision sidereal)",
-        "web_app_url": "/web/",
     }
 
 
@@ -362,15 +361,3 @@ def grahalakshanam_sync():
 # =============================================================
 from .v1.router import api_v1_router
 app.include_router(api_v1_router, prefix="/api/v1")
-
-# =============================================================
-# Modern JyotishOS Web SPA Mount (Grahalakshanam Theme)
-# =============================================================
-import os
-from fastapi.staticfiles import StaticFiles
-
-web_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ui", "web"))
-if os.path.exists(web_dir):
-    app.mount("/web", StaticFiles(directory=web_dir, html=True), name="web")
-    app.mount("/app", StaticFiles(directory=web_dir, html=True), name="app")
-
