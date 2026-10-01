@@ -1323,8 +1323,6 @@ unified_css = f"""
     div.st-key-frozen_toolbelt_container {{
         position: fixed !important;
         top: 0px !important;
-        left: 0px !important;
-        width: 100vw !important;
         z-index: 9990 !important;
         background: #F5F9EC !important;
         padding-top: 6px !important;
@@ -1336,7 +1334,7 @@ unified_css = f"""
         border-bottom: 2.5px solid #00B0F0 !important;
         box-shadow: 0 4px 14px rgba(0, 115, 207, 0.15) !important;
         box-sizing: border-box !important;
-        transition: left 0.18s cubic-bezier(0.4, 0, 0.2, 1), width 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        transition: left 0.15s ease, width 0.15s ease !important;
     }}
     .st-key-frozen_toolbelt_container div[data-testid="column"] {{
         min-width: 0 !important;
@@ -1358,10 +1356,11 @@ unified_css = f"""
         padding-top: 58px !important;
     }}
     @media (min-width: 769px) {{
-        [data-testid="stSidebar"][aria-expanded="true"] ~ [data-testid="stMain"] .st-key-frozen_toolbelt_container,
-        section[data-testid="stSidebar"]:not([aria-expanded="false"]) ~ section[data-testid="stMain"] .st-key-frozen_toolbelt_container {{
-            left: 336px !important;
-            width: calc(100vw - 336px) !important;
+        div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .st-key-frozen_toolbelt_container,
+        div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container,
+        div.stApp:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container {{
+            left: 336px;
+            width: calc(100vw - 336px);
             padding-left: 14px !important;
         }}
     }}
@@ -3292,8 +3291,6 @@ client_bridge_code = """
                         div.st-key-frozen_toolbelt_container {
                             position: fixed !important;
                             top: 0px !important;
-                            left: 0px !important;
-                            width: 100vw !important;
                             z-index: 9990 !important;
                             background: #F5F9EC !important;
                             border-bottom: 2.5px solid #00B0F0 !important;
@@ -3303,7 +3300,7 @@ client_bridge_code = """
                             padding-left: 52px !important;
                             padding-right: 14px !important;
                             box-sizing: border-box !important;
-                            transition: left 0.18s cubic-bezier(0.4, 0, 0.2, 1), width 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                            transition: left 0.15s ease, width 0.15s ease !important;
                         }
                         .st-key-frozen_toolbelt_container div[data-testid="column"] {
                             min-width: 0 !important;
@@ -3800,29 +3797,32 @@ client_bridge_code = """
             }
 
             const frozenTb = parentDoc.querySelector('.st-key-frozen_toolbelt_container');
-            if (frozenTb) {
-                const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
-                const sbRect = sb ? sb.getBoundingClientRect() : null;
-                const isSbOpen = sbRect && sbRect.right > 50 && sb.getAttribute('aria-expanded') !== 'false';
-                const isDesktop = window.innerWidth >= 769;
+            const mainSec = parentDoc.querySelector('[data-testid="stMain"], section.main');
+            if (frozenTb && mainSec) {
+                if (!mainSec.dataset.roBound && window.ResizeObserver) {
+                    mainSec.dataset.roBound = "true";
+                    new ResizeObserver(function() {
+                        setupStickyTopHeader();
+                    }).observe(mainSec);
+                }
+
+                const rect = mainSec.getBoundingClientRect();
+                const isSidebarVisible = (rect.left > 60);
 
                 frozenTb.style.setProperty('position', 'fixed', 'important');
                 frozenTb.style.setProperty('top', '0px', 'important');
                 frozenTb.style.setProperty('z-index', '9990', 'important');
+                frozenTb.style.setProperty('left', Math.max(0, Math.round(rect.left)) + 'px', 'important');
+                frozenTb.style.setProperty('width', Math.round(rect.width) + 'px', 'important');
                 frozenTb.style.setProperty('padding-top', '6px', 'important');
                 frozenTb.style.setProperty('padding-bottom', '6px', 'important');
                 frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
-                frozenTb.style.setProperty('transition', 'left 0.18s cubic-bezier(0.4, 0, 0.2, 1), width 0.18s cubic-bezier(0.4, 0, 0.2, 1)', 'important');
+                frozenTb.style.setProperty('transition', 'left 0.15s ease, width 0.15s ease', 'important');
 
-                if (isSbOpen && isDesktop) {
-                    const sbRight = Math.max(0, Math.round(sbRect.right));
-                    frozenTb.style.setProperty('left', sbRight + 'px', 'important');
-                    frozenTb.style.setProperty('width', 'calc(100vw - ' + sbRight + 'px)', 'important');
+                if (isSidebarVisible) {
                     frozenTb.style.setProperty('padding-left', '14px', 'important');
                     frozenTb.style.setProperty('padding-right', '14px', 'important');
                 } else {
-                    frozenTb.style.setProperty('left', '0px', 'important');
-                    frozenTb.style.setProperty('width', '100vw', 'important');
                     frozenTb.style.setProperty('padding-left', '52px', 'important');
                     frozenTb.style.setProperty('padding-right', '14px', 'important');
                 }
