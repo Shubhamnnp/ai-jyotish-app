@@ -4961,6 +4961,16 @@ with st.container(key="top_frozen_header_container", border=False):
         st.session_state.sidebar_module_radio = MODULE_OPTIONS[19]
 
     # ---------------------------------------------------------
+    # 🎨 THEME STYLING TOKENS FOR SIDEBAR & HEADER BREADCRUMB
+    # ---------------------------------------------------------
+    _sb_card_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#EFF6FF")
+    _sb_card_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#93C5FD")
+    _breadcrumb_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#EFF6FF")
+    _breadcrumb_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#93C5FD")
+    _breadcrumb_title_color = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#1E40AF")
+    _breadcrumb_text_color = "#CBD5E1" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
+
+    # ---------------------------------------------------------
     # 📚 LEFT SIDEBAR: ACTIVE CLIENT PROFILE & ALL 30 VEDIC MODULES
     # ---------------------------------------------------------
     with st.sidebar:
