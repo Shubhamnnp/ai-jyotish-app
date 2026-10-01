@@ -1393,8 +1393,6 @@ unified_css = f"""
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .st-key-frozen_toolbelt_container,
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container,
         div.stApp:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container {{
-            left: 336px;
-            width: calc(100vw - 336px);
             padding-left: 14px !important;
         }}
     }}
@@ -3862,13 +3860,15 @@ client_bridge_code = """
             }
 
             const frozenTb = parentDoc.querySelector('.st-key-frozen_toolbelt_container');
-            const mainSec = parentDoc.querySelector('[data-testid="stMain"], section.main');
             if (frozenTb && mainSec) {
+                const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
                 if (!mainSec.dataset.roBound && window.ResizeObserver) {
                     mainSec.dataset.roBound = "true";
-                    new ResizeObserver(function() {
+                    const ro = new ResizeObserver(function() {
                         setupStickyTopHeader();
-                    }).observe(mainSec);
+                    });
+                    ro.observe(mainSec);
+                    if (sb) ro.observe(sb);
                 }
 
                 const rect = mainSec.getBoundingClientRect();
@@ -3882,7 +3882,7 @@ client_bridge_code = """
                 frozenTb.style.setProperty('padding-top', '6px', 'important');
                 frozenTb.style.setProperty('padding-bottom', '6px', 'important');
                 frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
-                frozenTb.style.setProperty('transition', 'left 0.15s ease, width 0.15s ease', 'important');
+                frozenTb.style.setProperty('transition', 'none', 'important');
 
                 if (isSidebarVisible) {
                     frozenTb.style.setProperty('padding-left', '14px', 'important');
