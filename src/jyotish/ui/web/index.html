@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ज्योतिष् OS (JyotishOS) - World-Class Vedic Astrology SaaS</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕉️</text></svg>">
+</head>
+<body>
+  <!-- Master Application Container -->
+  <div class="app-container">
+    
+    <!-- 1. TOP NAVIGATION HEADER -->
+    <header class="top-navbar">
+      <div class="brand-section">
+        <button class="sidebar-toggle-btn" onclick="app.toggleSidebar()" title="साइडबार छुपाएं / दिखाएं (Toggle Sidebar)">
+          ☰
+        </button>
+        <div class="app-logo">
+          <span>🕉️ ज्योतिष् OS</span>
+          <span class="app-badge-tag">ENTERPRISE</span>
+        </div>
+        <div class="header-active-client" id="hdrClientInfo" onclick="app.openNewKundliModal()" title="जातक विवरण बदलें (Edit Birth Details)">
+          <span class="client-status-dot"></span>
+          <span>लोड हो रहा है...</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="hdr-btn btn-cta" onclick="app.openNewKundliModal()">
+          <span>➕</span> नई कुण्डली
+        </button>
+        <button class="hdr-btn" onclick="alert('📂 सहेजी गई कुण्डली और Grahalakshanam क्लाउड सिंक लोड हो रहा है...')">
+          <span>📂</span> खोलें
+        </button>
+        <button class="hdr-btn" onclick="document.body.requestFullscreen ? document.body.requestFullscreen() : null" title="फुलस्क्रीन (Fullscreen)">
+          <span>⛶</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. HORIZONTAL TOOLBELT (Grahalakshanam Exact Signature Style) -->
+    <div class="toolbelt-bar">
+      <div class="tb-btn active" onclick="app.selectModule('kundli_core')">
+        <span class="tb-icon">🪐</span>
+        <span class="tb-label">कुण्डली चक्र</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('dasha_vimshottari')">
+        <span class="tb-icon">⏳</span>
+        <span class="tb-label">विंशोत्तरी दशा</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('gochar_transit')">
+        <span class="tb-icon">🌐</span>
+        <span class="tb-label">गोचर चक्र</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('ashtakavarga')">
+        <span class="tb-icon">📊</span>
+        <span class="tb-label">अष्टकवर्ग</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('varga_shodash')">
+        <span class="tb-icon">💫</span>
+        <span class="tb-label">षोडशवर्ग</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('shadbala')">
+        <span class="tb-icon">⚖️</span>
+        <span class="tb-label">षड्बल</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('panchang')">
+        <span class="tb-icon">☀️</span>
+        <span class="tb-label">पंचांग</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('varshaphal')">
+        <span class="tb-icon">📅</span>
+        <span class="tb-label">वर्षफल</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('kp_system')">
+        <span class="tb-icon">📐</span>
+        <span class="tb-label">KP सिस्टम</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('jaimini_system')">
+        <span class="tb-icon">🔮</span>
+        <span class="tb-label">जैमिनी</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('lal_kitab')">
+        <span class="tb-icon">🌿</span>
+        <span class="tb-label">लाल किताब</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('prashna_kundali')">
+        <span class="tb-icon">❓</span>
+        <span class="tb-label">प्रश्न कुण्डली</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('kundli_milan')">
+        <span class="tb-icon">💖</span>
+        <span class="tb-label">गुण मिलान</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('vastu_chakra')">
+        <span class="tb-icon">🗺️</span>
+        <span class="tb-label">वास्तु चक्र</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('ai_jyotish')">
+        <span class="tb-icon">🤖</span>
+        <span class="tb-label">AI ज्योतिषी</span>
+      </div>
+      <div class="tb-btn" onclick="app.selectModule('report_pdf')">
+        <span class="tb-icon">📄</span>
+        <span class="tb-label">PDF रिपोर्ट</span>
+      </div>
+    </div>
+
+    <!-- 3. CLIENT PROFILE INFO STRIP (HUD Bar) -->
+    <div class="client-info-strip" id="clientInfoStrip">
+      <!-- Injected reactively by app.js -->
+    </div>
+
+    <!-- 4. MAIN WORKSPACE WITH SIDEBAR -->
+    <div class="workspace-wrapper">
+      
+      <!-- Left Collapsible Sidebar -->
+      <aside class="app-sidebar" id="appSidebar">
+        <div class="sidebar-search-box">
+          <input type="text" id="sidebarSearchInput" class="search-input" placeholder="30 मॉड्यूल में खोजें (Ctrl+K)...">
+        </div>
+        <div class="sidebar-modules-tree" id="sidebarModulesContainer">
+          <!-- Injected reactively by app.js -->
+        </div>
+      </aside>
+
+      <!-- Center-Right Workstation Canvas -->
+      <main class="workstation-canvas">
+        
+        <!-- Workstation Tab Bar -->
+        <div class="workstation-tabs">
+          <button class="ws-tab-btn active" data-tab="main" onclick="app.switchTab('main')">
+            <span>🪐</span> मुख्य कुण्डली व ग्रह स्थिति
+          </button>
+          <button class="ws-tab-btn" data-tab="dasha" onclick="app.switchTab('dasha')">
+            <span>⏳</span> विंशोत्तरी दशा काल चक्र
+          </button>
+          <button class="ws-tab-btn" data-tab="ashtakavarga" onclick="app.switchTab('ashtakavarga')">
+            <span>📊</span> अष्टकवर्ग (SAV/BAV)
+          </button>
+          <button class="ws-tab-btn" data-tab="yogas" onclick="app.switchTab('yogas')">
+            <span>📜</span> 300+ शास्त्रीय राजयोग व फलित
+          </button>
+        </div>
+
+        <!-- Tab 1: Main Kundli & Planetary Table View -->
+        <div id="panelMainKundli" class="kundli-workstation-grid">
+          
+          <!-- Column 1: SVG Kundli Chart Card -->
+          <div class="gla-card">
+            <div class="gla-card-header">
+              <span id="chartCardTitle">🪐 कुण्डली चक्र [D1]</span>
+              <div class="card-hdr-actions">
+                <button id="btnNorthChart" class="card-pill-btn active" onclick="app.toggleChartStyle('north')">उत्तर (North)</button>
+                <button id="btnSouthChart" class="card-pill-btn" onclick="app.toggleChartStyle('south')">दक्षिण (South)</button>
+              </div>
+            </div>
+            <div class="gla-card-body">
+              <!-- Divisional Chart Pills -->
+              <div class="chart-varga-strip">
+                <span class="varga-pill active" data-varga="D1" onclick="app.setVarga('D1')">D1 लग्न</span>
+                <span class="varga-pill" data-varga="D2" onclick="app.setVarga('D2')">D2 होरा</span>
+                <span class="varga-pill" data-varga="D3" onclick="app.setVarga('D3')">D3 द्रेष्काण</span>
+                <span class="varga-pill" data-varga="D7" onclick="app.setVarga('D7')">D7 सप्तमांश</span>
+                <span class="varga-pill" data-varga="D9" onclick="app.setVarga('D9')">D9 नवमांश</span>
+                <span class="varga-pill" data-varga="D10" onclick="app.setVarga('D10')">D10 दशमांश</span>
+                <span class="varga-pill" data-varga="D12" onclick="app.setVarga('D12')">D12 द्वादशांश</span>
+                <span class="varga-pill" data-varga="D16" onclick="app.setVarga('D16')">D16 षोडशांश</span>
+                <span class="varga-pill" data-varga="D20" onclick="app.setVarga('D20')">D20 विंशांश</span>
+                <span class="varga-pill" data-varga="D24" onclick="app.setVarga('D24')">D24 चतुर्विंशांश</span>
+                <span class="varga-pill" data-varga="D30" onclick="app.setVarga('D30')">D30 त्रिंशांश</span>
+                <span class="varga-pill" data-varga="D60" onclick="app.setVarga('D60')">D60 षष्ट्यंश</span>
+              </div>
+
+              <!-- Vector SVG Chart Container -->
+              <div id="chartContainer" class="chart-container-box">
+                <!-- SVG dynamically injected by chart.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Classical Grahalakshanam Planetary Table Card -->
+          <div class="gla-card">
+            <div class="gla-card-header">
+              <span>🌟 ग्रह स्थिति, गरिमा व अवस्था (Planetary Dignity)</span>
+              <span style="font-size:11px; opacity:0.9;">अयनांश: लाहिरी (चित्रा)</span>
+            </div>
+            <div class="gla-card-body" style="padding: 0;">
+              <div class="table-responsive-box">
+                <table class="gla-table">
+                  <thead>
+                    <tr>
+                      <th>ग्रह (Graha)</th>
+                      <th>राशि (Sign)</th>
+                      <th>स्वामी (Lord)</th>
+                      <th>अंश (Degree)</th>
+                      <th>भाव (House)</th>
+                      <th>गरिमा (Dignity)</th>
+                      <th>गति (Motion)</th>
+                      <th>नक्षत्र व पद</th>
+                    </tr>
+                  </thead>
+                  <tbody id="planetaryTableBody">
+                    <!-- Rows dynamically injected by app.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tab 2: Vimshottari Dasha Explorer View -->
+        <div id="panelDasha" style="display: none;">
+          <div class="gla-card">
+            <div class="gla-card-header">
+              <span>⏳ विंशोत्तरी दशा चक्र (Vimshottari Dasha Hierarchy)</span>
+            </div>
+            <div class="gla-card-body" id="dashaTimelineBox">
+              <!-- Dynamically injected -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Ashtakavarga Matrix View -->
+        <div id="panelAshtakavarga" style="display: none;">
+          <div class="gla-card">
+            <div class="gla-card-header">
+              <span>📊 सर्वाष्टकवर्ग चक्र (Sarvashtakavarga 12 Houses)</span>
+              <span style="font-size:11.5px; opacity:0.9;">शुभ बिंदु मानक: ≥ 28</span>
+            </div>
+            <div class="gla-card-body" id="ashtakavargaGridBox">
+              <!-- Dynamically injected -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Yogas View -->
+        <div id="panelYogas" style="display: none;">
+          <div class="gla-card">
+            <div class="gla-card-header">
+              <span>📜 300+ शास्त्रीय राजयोग व विशेष प्रभाव</span>
+            </div>
+            <div class="gla-card-body" id="yogasContainerBox">
+              <!-- Dynamically injected -->
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL: New Kundli Input Modal -->
+  <div class="modal-overlay" id="newKundliModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <span>➕ नई जन्म कुण्डली गणना (New Horoscope Entry)</span>
+        <button class="modal-close-btn" onclick="app.closeModals()">✕</button>
+      </div>
+      <form id="newKundliForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">जातक का नाम (Full Name)</label>
+            <input type="text" id="formName" class="form-control" value="शुभम कुमार (Shubham Kumar)" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">जन्म तिथि (Date of Birth)</label>
+              <input type="date" id="formDate" class="form-control" value="1995-08-15" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">जन्म समय (Time of Birth)</label>
+              <input type="time" id="formTime" class="form-control" value="10:30" step="1" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">जन्म स्थान / शहर (City / Location)</label>
+            <input type="text" id="formCity" class="form-control" value="नई दिल्ली (New Delhi)" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">अक्षांश (Latitude)</label>
+              <input type="number" step="0.0001" id="formLat" class="form-control" value="28.6139" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">देशांतर (Longitude)</label>
+              <input type="number" step="0.0001" id="formLon" class="form-control" value="77.2090" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">अयनांश प्रणाली (Ayanamsa System)</label>
+            <select id="formAyanamsa" class="form-control">
+              <option value="Lahiri" selected>लाहिरी (Lahiri - Chitra Paksha) [शास्त्रीय मानक]</option>
+              <option value="Raman">बी. वी. रमन (B.V. Raman)</option>
+              <option value="KP">के.पी. (Krishnamurti Paddhati)</option>
+              <option value="Yukteshwar">युक्तेश्वर (Sri Yukteshwar)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary-action" style="margin-top: 8px;">
+            ⚡ कुण्डली गणना करें (Calculate Horoscope)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
