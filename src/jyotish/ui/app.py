@@ -4065,8 +4065,6 @@ def render_chart_svg(c_obj: KundaliChart, chart_title: str, varga_code: str = "D
         return ChartRenderer.render_south_indian_svg(c_obj, title=chart_title, varga_code=varga_code)
     elif "East" in chart_style:
         return ChartRenderer.render_east_indian_svg(c_obj, title=chart_title, varga_code=varga_code)
-    elif "Astrallis" in chart_style or "Circular" in chart_style:
-        return ChartRenderer.render_astrallis_circular_svg(c_obj, title=chart_title, varga_code=varga_code, dark_bg=is_astrallis_mode or is_night_mode)
     return ChartRenderer.render_north_indian_svg(c_obj, title=chart_title, varga_code=varga_code)
 
 def get_varga_dignity_info(planet: str, sign_name: str, aff_eng: Optional[AfflictionEngine] = None) -> Tuple[str, int, str]:
@@ -5046,10 +5044,7 @@ with st.container(key="top_frozen_header_container", border=False):
     # 3. TOP HEADER CONTAINER: QUICK CONTROLS & BREADCRUMB
     # ---------------------------------------------------------
     st.markdown("<div style='height: 10px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
-    if "app_ui_layout_mode" not in st.session_state:
-        st.session_state.app_ui_layout_mode = "parashara"  # Default to Parashara Workstation 30:70
-
-    col_btn_prev, col_active_info, col_btn_next, col_view_toggle = st.columns([1.1, 3.8, 1.1, 1.5])
+    col_btn_prev, col_active_info, col_btn_next = st.columns([1.2, 5.6, 1.2])
     with col_btn_prev:
         st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn", on_click=_nav_prev_module)
 
@@ -5062,14 +5057,6 @@ with st.container(key="top_frozen_header_container", border=False):
 
     with col_btn_next:
         st.button("अगला (Next) ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="top_next_mod_btn", on_click=_nav_next_module)
-
-    with col_view_toggle:
-        is_parashara = (st.session_state.app_ui_layout_mode == "parashara")
-        view_lbl = "🏛️ पाराशर (30:70)" if is_parashara else "📱 वर्टिकल लेआउट"
-        view_help = "क्लिक करके पाराशर 30:70 वर्कस्टेशन अथवा क्लासिक वर्टिकल दृश्य में बदलें"
-        if st.button(view_lbl, use_container_width=True, help=view_help, key="top_ui_layout_toggle_btn", type="primary" if is_parashara else "secondary"):
-            st.session_state.app_ui_layout_mode = "vertical" if is_parashara else "parashara"
-            st.rerun()
 
 
 p = chart.panchang
@@ -5228,71 +5215,9 @@ with c_ts_ctrl:
 
 
 # -------------------------------------------------------------
-# 🏛️ PARASHARA WORKSTATION 30:70 LAYOUT ENGINE
+# 🏛️ FULL-VIEWPORT RESPONSIVE WORKSTATION
 # -------------------------------------------------------------
-is_parashara_layout = (st.session_state.get("app_ui_layout_mode", "parashara") == "parashara")
-
-if is_parashara_layout:
-    col_pl_charts_left, col_pl_module_right = st.columns([1.15, 2.35], gap="medium")
-    with col_pl_charts_left:
-        st.markdown("""
-        <div class="pl-box-header">
-            <span>💎 मुख्य लग्न कुण्डली (D1 Natal Chart)</span>
-            <span style="font-size:11px;">उत्तर भारतीय</span>
-        </div>
-        """, unsafe_allow_html=True)
-        svg_d1_fixed = render_chart_svg(chart, f"लग्न: {chart.lagna_sign_name} ({chart.lagna_sign_id})", varga_code="D1")
-        st.markdown(svg_d1_fixed, unsafe_allow_html=True)
-        lagna_lord_name = SIGN_LORDS.get(chart.lagna_sign_id, "—")
-        st.caption(f"**लग्न:** {chart.lagna_sign_name} | **लग्नपति:** {lagna_lord_name} | **आत्मकारक:** {chart.atmakaraka}")
-
-        st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-        pl_sub_chart = st.radio(
-            "सहायक वर्ग चक्र",
-            ["नवांश (D9)", "चंद्र कुण्डली", "भाव चलित", "दशमांश (D10)"],
-            horizontal=True,
-            label_visibility="collapsed",
-            key="pl_left_aux_chart_choice"
-        )
-        if "नवांश" in pl_sub_chart:
-            st.markdown("""
-            <div class="pl-box-header">
-                <span>🌸 नवमांश चक्र (D9 Navamsha — धर्म व दांपत्य)</span>
-                <span style="font-size:11px;">D9</span>
-            </div>
-            """, unsafe_allow_html=True)
-            svg_d9_fixed = render_chart_svg(chart, "D9 नवांश", varga_code="D9")
-            st.markdown(svg_d9_fixed, unsafe_allow_html=True)
-        elif "चंद्र" in pl_sub_chart:
-            st.markdown("""
-            <div class="pl-box-header">
-                <span>🌙 चंद्र कुण्डली (Chandra Kundali — मन व सुख)</span>
-                <span style="font-size:11px;">Moon</span>
-            </div>
-            """, unsafe_allow_html=True)
-            svg_chandra_fixed = render_chart_svg(chart, "चंद्र कुण्डली", varga_code="D1")
-            st.markdown(svg_chandra_fixed, unsafe_allow_html=True)
-        elif "चलित" in pl_sub_chart:
-            st.markdown("""
-            <div class="pl-box-header">
-                <span>📐 भाव चलित चक्र (Bhava Chalit — कस्प्स स्थिति)</span>
-                <span style="font-size:11px;">Chalit</span>
-            </div>
-            """, unsafe_allow_html=True)
-            svg_chalit_fixed = render_chart_svg(chart, "भाव चलित", varga_code="D1")
-            st.markdown(svg_chalit_fixed, unsafe_allow_html=True)
-        else:
-            st.markdown("""
-            <div class="pl-box-header">
-                <span>💼 दशमांश चक्र (D10 Dashamsha — कर्म व पद)</span>
-                <span style="font-size:11px;">D10</span>
-            </div>
-            """, unsafe_allow_html=True)
-            svg_d10_fixed = render_chart_svg(chart, "D10 दशमांश", varga_code="D10")
-            st.markdown(svg_d10_fixed, unsafe_allow_html=True)
-
-    # Right 70% Module Workspace Container
-    col_pl_module_right.__enter__()
+is_parashara_layout = False
 
 # -------------------------------------------------------------
 # Module Routing
@@ -5319,18 +5244,15 @@ if selected_idx == 0:
 
     # 1-Click Quick Chart Style Switcher
     st.markdown("##### 🎨 कुण्डली चक्र शैली टॉगल (Switch Chart Style)")
-    c_st1, c_st2, c_st3, c_st4 = st.columns(4)
-    curr_style = st.session_state.get("app_chart_style", "Astrallis Circular (Western Wheel)" if is_astrallis_mode else "North Indian (Diamond)")
-    if c_st1.button("🔵 Astrallis Circular", use_container_width=True, type="primary" if "Astrallis" in curr_style or "Circular" in curr_style else "secondary", key="btn_style_astrallis"):
-        st.session_state.app_chart_style = "Astrallis Circular (Western Wheel)"
-        st.rerun()
-    if c_st2.button("💎 उत्तर भारतीय (Diamond)", use_container_width=True, type="primary" if "North" in curr_style else "secondary", key="btn_style_north"):
+    c_st1, c_st2, c_st3 = st.columns(3)
+    curr_style = st.session_state.get("app_chart_style", "North Indian (Diamond)")
+    if c_st1.button("💎 उत्तर भारतीय (North Diamond)", use_container_width=True, type="primary" if "North" in curr_style else "secondary", key="btn_style_north"):
         st.session_state.app_chart_style = "North Indian (Diamond)"
         st.rerun()
-    if c_st3.button("🔲 दक्षिण भारतीय (Box)", use_container_width=True, type="primary" if "South" in curr_style else "secondary", key="btn_style_south"):
+    if c_st2.button("🔲 दक्षिण भारतीय (South Box)", use_container_width=True, type="primary" if "South" in curr_style else "secondary", key="btn_style_south"):
         st.session_state.app_chart_style = "South Indian (Box)"
         st.rerun()
-    if c_st4.button("🔺 पूर्व भारतीय (Bengal)", use_container_width=True, type="primary" if "East" in curr_style else "secondary", key="btn_style_east"):
+    if c_st3.button("🔺 पूर्व भारतीय (East Bengal)", use_container_width=True, type="primary" if "East" in curr_style else "secondary", key="btn_style_east"):
         st.session_state.app_chart_style = "East Indian (Surya)"
         st.rerun()
 
@@ -12964,9 +12886,8 @@ elif selected_idx == 29:
         </div>
         """, unsafe_allow_html=True)
 
-# Close Parashara right column context if active
-if is_parashara_layout:
-    col_pl_module_right.__exit__(None, None, None)
+
+
 
 
 
