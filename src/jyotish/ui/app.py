@@ -4949,16 +4949,31 @@ with st.container(key="top_frozen_header_container", border=False):
     def _nav_prev_module():
         new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
         st.session_state.active_module_idx = new_idx
-        st.session_state.sidebar_module_radio = MODULE_OPTIONS[new_idx]
+        if "sidebar_module_radio" in st.session_state:
+            st.session_state.sidebar_module_radio = MODULE_OPTIONS[new_idx]
+        if "sb_cat_filter_select" in st.session_state:
+            st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
+        if "sb_search_filter_input" in st.session_state:
+            st.session_state.sb_search_filter_input = ""
 
     def _nav_next_module():
         new_idx = (st.session_state.active_module_idx + 1) % len(MODULE_OPTIONS)
         st.session_state.active_module_idx = new_idx
-        st.session_state.sidebar_module_radio = MODULE_OPTIONS[new_idx]
+        if "sidebar_module_radio" in st.session_state:
+            st.session_state.sidebar_module_radio = MODULE_OPTIONS[new_idx]
+        if "sb_cat_filter_select" in st.session_state:
+            st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
+        if "sb_search_filter_input" in st.session_state:
+            st.session_state.sb_search_filter_input = ""
 
     def _nav_to_rules_bank():
         st.session_state.active_module_idx = 19
-        st.session_state.sidebar_module_radio = MODULE_OPTIONS[19]
+        if "sidebar_module_radio" in st.session_state:
+            st.session_state.sidebar_module_radio = MODULE_OPTIONS[19]
+        if "sb_cat_filter_select" in st.session_state:
+            st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
+        if "sb_search_filter_input" in st.session_state:
+            st.session_state.sb_search_filter_input = ""
 
     # ---------------------------------------------------------
     # 🎨 THEME STYLING TOKENS FOR SIDEBAR & HEADER BREADCRUMB
@@ -4974,8 +4989,6 @@ with st.container(key="top_frozen_header_container", border=False):
     # 📚 LEFT SIDEBAR: ACTIVE CLIENT PROFILE & ALL 30 VEDIC MODULES
     # ---------------------------------------------------------
     with st.sidebar:
-        _sb_card_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#EFF6FF")
-        _sb_card_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#93C5FD")
         st.markdown(f"""
         <div style="background:{_sb_card_bg}; border:1.5px solid {_sb_card_border}; border-radius:10px; padding:10px 12px; margin-bottom:12px;">
             <div style="font-size:11px; font-weight:800; color:#F59E0B; text-transform:uppercase;">👤 सक्रिय जातक प्रोफाइल</div>
@@ -4988,12 +5001,41 @@ with st.container(key="top_frozen_header_container", border=False):
         """, unsafe_allow_html=True)
 
         st.markdown("### 📚 समस्त ३० वैदिक मॉड्यूल")
+        
+        # Categorized fast access for 30 modules
+        CAT_MAP = {
+            "📁 समस्त ३० मॉड्यूल (All Modules)": list(range(len(MODULE_OPTIONS))),
+            "🏛️ मुख्य गणनाएं (Core & Vargas)": [0, 1, 3, 7, 8, 13],
+            "⏳ काल, दशा व गोचर (Time & Dashas)": [9, 10, 11, 12, 14, 15],
+            "👑 योग, दोष व फलादेश (Yogas & Results)": [2, 19, 20, 21, 23],
+            "💖 संबंध, मिलान व स्वास्थ्य (Life & Match)": [16, 25, 26, 27],
+            "💎 सटीक उपाय, रत्न व आहार (Remedies)": [2, 18, 22, 24, 28, 29],
+            "🤖 AI पराशर, प्रश्न व वास्तु (AI & Shastra)": [4, 5, 6, 17, 19]
+        }
+        
+        sb_cat = st.selectbox("📂 श्रेणी (Category):", list(CAT_MAP.keys()), index=0, key="sb_cat_filter_select")
+        sb_query = st.text_input("🔍 मॉड्यूल खोजें (Search):", placeholder="दशा, गोचर, उपाय, मिलान...", key="sb_search_filter_input").strip().lower()
+        
+        # Filter candidate indices
+        cand_indices = CAT_MAP.get(sb_cat, list(range(len(MODULE_OPTIONS))))
+        if sb_query:
+            matched_indices = [i for i in range(len(MODULE_OPTIONS)) if sb_query in MODULE_OPTIONS[i].lower()]
+            if matched_indices:
+                cand_indices = matched_indices
+            else:
+                st.caption("⚠️ कोई मॉड्यूल नहीं मिला, श्रेणी के अनुसार प्रदर्शित:")
+        
+        filtered_mods = [MODULE_OPTIONS[i] for i in cand_indices]
+        
         curr_idx = st.session_state.get("active_module_idx", 0)
-        curr_idx = curr_idx if (0 <= curr_idx < len(MODULE_OPTIONS)) else 0
+        curr_mod_name = MODULE_OPTIONS[curr_idx] if (0 <= curr_idx < len(MODULE_OPTIONS)) else MODULE_OPTIONS[0]
+        
+        radio_idx = filtered_mods.index(curr_mod_name) if curr_mod_name in filtered_mods else 0
+        
         selected_module = st.radio(
             "वैदिक मॉड्यूल्स",
-            MODULE_OPTIONS,
-            index=curr_idx,
+            filtered_mods,
+            index=radio_idx,
             key="sidebar_module_radio",
             label_visibility="collapsed"
         )
