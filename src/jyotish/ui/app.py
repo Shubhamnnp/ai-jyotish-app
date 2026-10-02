@@ -5658,29 +5658,8 @@ if selected_idx == 0:
         "D60": "पूर्वजन्म के संचित कर्म एवं अंतिम प्रारब्ध (Past Life Karma & Core Destiny)",
     }
 
-    # 1-Click Quick Chart Style Switcher
-    st.markdown("##### 🎨 कुण्डली चक्र शैली टॉगल (Switch Chart Style)")
-    c_st1, c_st2, c_st3 = st.columns(3)
     curr_style = st.session_state.get("app_chart_style", "North Indian (Diamond)")
-    if c_st1.button("💎 उत्तर भारतीय (North Diamond)", use_container_width=True, type="primary" if "North" in curr_style else "secondary", key="btn_style_north"):
-        st.session_state.app_chart_style = "North Indian (Diamond)"
-        st.rerun()
-    if c_st2.button("🔲 दक्षिण भारतीय (South Box)", use_container_width=True, type="primary" if "South" in curr_style else "secondary", key="btn_style_south"):
-        st.session_state.app_chart_style = "South Indian (Box)"
-        st.rerun()
-    if c_st3.button("🔺 पूर्व भारतीय (East Bengal)", use_container_width=True, type="primary" if "East" in curr_style else "secondary", key="btn_style_east"):
-        st.session_state.app_chart_style = "East Indian (Surya)"
-        st.rerun()
-
-    # View Mode Toggle: Single vs 4-in-1 Quad Dashboard
-    c_view1, c_view2 = st.columns(2)
     chart_view_mode = st.session_state.get("app_chart_view_mode", "Single")
-    if c_view1.button("📱 एकल चक्र दृश्य (Single Varga)", use_container_width=True, type="primary" if chart_view_mode == "Single" else "secondary", key="btn_vm_single"):
-        st.session_state.app_chart_view_mode = "Single"
-        st.rerun()
-    if c_view2.button("🖥️ ४-चार्ट वर्कबेंच (4-in-1 Quad Dashboard: D1, D9, D10, D7)", use_container_width=True, type="primary" if chart_view_mode == "Quad" else "secondary", key="btn_vm_quad"):
-        st.session_state.app_chart_view_mode = "Quad"
-        st.rerun()
 
     if chart_view_mode == "Quad":
         st.markdown("#### 🖥️ ४-कुण्डली एकीकृत्त वर्कबेंच (D1 लग्न + D9 नवांश + D10 दशमांश + D7 सप्तांश)")
@@ -5832,73 +5811,40 @@ if selected_idx == 0:
         v_lagna_sign = target_varga.lagna_sign_name if target_varga else chart.lagna_sign_name
         v_lagna_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
     else:
-        # Standard Single / Quad Dashboard Layout (Classic Vertical Stack)
+        # Standard Single / Quad Dashboard Layout (Classic 2-Column Split: Left Chart, Right Analysis)
         col_chart1, col_chart2 = st.columns([1, 1])
         with col_chart1:
-            # Sampradaya Variations Expander
-            with st.expander("⚙️ वर्ग गणना शास्त्रीय संप्रदाय मत (Classical Sampradaya Variations)", expanded=False):
-                c_v1, c_v2, c_v3 = st.columns(3)
-                d3_method = c_v1.selectbox(
-                    "D3 द्रेष्काण मत",
-                    ["parashari", "jagannatha", "somanatha", "parivritti_traya"],
-                    format_func=lambda x: {
-                        "parashari": "महर्षि पाराशर (१-५-९ त्रिकोण)",
-                        "jagannatha": "जगन्नाथ द्रेष्काण (PVR / Rath)",
-                        "somanatha": "सोमनाथ द्रेष्काण (अनुलोम/विलोम)",
-                        "parivritti_traya": "परिवृत्ति त्रय (३६ चक्रीय)"
-                    }[x],
-                    key="v_d3_meth"
-                )
-                d9_method = c_v2.selectbox(
-                    "D9 नवांश मत",
-                    ["parashari", "krishna_mishra"],
-                    format_func=lambda x: {
-                        "parashari": "महर्षि पाराशर (१०८ पाद सतत)",
-                        "krishna_mishra": "कृष्णमिश्र नवांश (जैमिनी परंपरा)"
-                    }[x],
-                    key="v_d9_meth"
-                )
-                d2_method = c_v3.selectbox(
-                    "D2 होरा मत",
-                    ["parashari", "parivritti"],
-                    format_func=lambda x: {
-                        "parashari": "पाराशरी होरा (कर्क/सिंह)",
-                        "parivritti": "परिवृत्ति होरा (२४ होरा चक्रीय)"
-                    }[x],
-                    key="v_d2_meth"
-                )
+            varga_options = list(chart.vargas.keys()) if chart.vargas else ["D1"]
+            varga_choice = st.selectbox(
+                "वर्ग चक्र चयन (Select Varga Chart)",
+                varga_options,
+                format_func=lambda x: f"{x} - {chart.vargas[x].varga_name}" if x in chart.vargas else x
+            )
+            # Dynamic Sampradaya Variation Allocation
+            cur_d3_act = st.session_state.get("v_d3_meth", "parashari")
+            cur_d9_act = st.session_state.get("v_d9_meth", "parashari")
+            cur_d2_act = st.session_state.get("v_d2_meth", "parashari")
+            if varga_choice == "D3" and cur_d3_act != "parashari":
+                target_varga = VargaCalculator.calculate_d3(chart, variation=cur_d3_act)
+                chart.vargas["D3"] = target_varga
+            elif varga_choice == "D9" and cur_d9_act != "parashari":
+                target_varga = VargaCalculator.calculate_d9(chart, variation=cur_d9_act)
+                chart.vargas["D9"] = target_varga
+            elif varga_choice == "D2" and cur_d2_act != "parashari":
+                target_varga = VargaCalculator.calculate_d2(chart, variation=cur_d2_act)
+                chart.vargas["D2"] = target_varga
+            else:
+                target_varga = chart.vargas.get(varga_choice, chart.vargas.get("D1"))
+            v_name = target_varga.varga_name if target_varga else "Rashi"
+            v_lagna_sign = target_varga.lagna_sign_name if target_varga else chart.lagna_sign_name
+            v_lagna_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
 
-        varga_options = list(chart.vargas.keys()) if chart.vargas else ["D1"]
-        varga_choice = st.selectbox(
-            "वर्ग चक्र चयन (Select Varga Chart)",
-            varga_options,
-            format_func=lambda x: f"{x} - {chart.vargas[x].varga_name}" if x in chart.vargas else x
-        )
-        # Dynamic Sampradaya Variation Allocation
-        cur_d3_act = st.session_state.get("v_d3_meth", d3_method if 'd3_method' in locals() else "parashari")
-        cur_d9_act = st.session_state.get("v_d9_meth", d9_method if 'd9_method' in locals() else "parashari")
-        cur_d2_act = st.session_state.get("v_d2_meth", d2_method if 'd2_method' in locals() else "parashari")
-        if varga_choice == "D3" and cur_d3_act != "parashari":
-            target_varga = VargaCalculator.calculate_d3(chart, variation=cur_d3_act)
-            chart.vargas["D3"] = target_varga
-        elif varga_choice == "D9" and cur_d9_act != "parashari":
-            target_varga = VargaCalculator.calculate_d9(chart, variation=cur_d9_act)
-            chart.vargas["D9"] = target_varga
-        elif varga_choice == "D2" and cur_d2_act != "parashari":
-            target_varga = VargaCalculator.calculate_d2(chart, variation=cur_d2_act)
-            chart.vargas["D2"] = target_varga
-        else:
-            target_varga = chart.vargas.get(varga_choice, chart.vargas.get("D1"))
-        v_name = target_varga.varga_name if target_varga else "Rashi"
-        v_lagna_sign = target_varga.lagna_sign_name if target_varga else chart.lagna_sign_name
-        v_lagna_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
+            title = f"{varga_choice} {v_name} Kundali"
+            svg_code = render_chart_svg(chart, title, varga_code=varga_choice)
+            st.markdown(svg_code, unsafe_allow_html=True)
 
-        title = f"{varga_choice} {v_name} Kundali"
-        svg_code = render_chart_svg(chart, title, varga_code=varga_choice)
-        st.markdown(svg_code, unsafe_allow_html=True)
-
-        v_desc = VARGA_SIGNIFICANCE.get(varga_choice, "शास्त्रीय सूक्ष्म विश्लेषण")
-        st.info(f"🎯 **{varga_choice} ({v_name}) शास्त्रीय प्रयोजन:** {v_desc}")
+            v_desc = VARGA_SIGNIFICANCE.get(varga_choice, "शास्त्रीय सूक्ष्म विश्लेषण")
+            st.info(f"🎯 **{varga_choice} ({v_name}) शास्त्रीय प्रयोजन:** {v_desc}")
 
         with col_chart2:
             _is_astrallis_chart = ("Astrallis" in curr_style or "Circular" in curr_style)
