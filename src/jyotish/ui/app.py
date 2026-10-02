@@ -1921,6 +1921,105 @@ unified_css = f"""
     }}
 
     /* =========================================================
+       ⏱️ Quick Time Stepper & Shastriya Rules HUD (Auto-Adjusting Responsive Grid)
+       ========================================================= */
+    div[data-testid="column"]:has(div[class*="st-key-ts_btn_"]) {
+        min-width: 0 !important;
+        flex: 1 1 0% !important;
+        padding-left: 1px !important;
+        padding-right: 1px !important;
+    }
+    div[class*="st-key-ts_btn_"] {
+        width: 100% !important;
+    }
+    div[class*="st-key-ts_btn_"] button {
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 2px 1px !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+        border-radius: 7px !important;
+        box-sizing: border-box !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: 1px solid #CBD5E1 !important;
+        background: #FFFFFF !important;
+        color: #1E293B !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+        margin: 0 !important;
+        transition: all 0.15s ease-in-out !important;
+    }
+    div[class*="st-key-ts_btn_"] button:hover {
+        border-color: #F59E0B !important;
+        background: #FFFBEB !important;
+        color: #B45309 !important;
+        box-shadow: 0 2px 5px rgba(245, 158, 11, 0.2) !important;
+    }
+    div[class*="st-key-ts_btn_"] button p {
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        line-height: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        white-space: nowrap !important;
+        letter-spacing: -0.2px !important;
+    }
+    div[class*="st-key-ts_btn_now"] button {
+        background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%) !important;
+        border: 1.5px solid #0284C7 !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3) !important;
+    }
+    div[class*="st-key-ts_btn_now"] button:hover {
+        background: linear-gradient(135deg, #0369A1 0%, #075985 100%) !important;
+        border-color: #0369A1 !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 3px 8px rgba(2, 132, 199, 0.45) !important;
+    }
+    div[class*="st-key-ts_btn_now"] button p {
+        color: #FFFFFF !important;
+        font-weight: 900 !important;
+    }
+    div[class*="st-key-global_open_rules_bank_btn"] {
+        width: 100% !important;
+    }
+    div[class*="st-key-global_open_rules_bank_btn"] button {
+        width: 100% !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        max-height: 38px !important;
+        border-radius: 8px !important;
+        font-size: 12px !important;
+        font-weight: 800 !important;
+        padding: 2px 6px !important;
+        white-space: nowrap !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%) !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #6D28D9 !important;
+        box-shadow: 0 2px 6px rgba(124, 58, 237, 0.25) !important;
+        margin: 0 !important;
+        transition: all 0.15s ease-in-out !important;
+    }
+    div[class*="st-key-global_open_rules_bank_btn"] button:hover {
+        background: linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 10px rgba(124, 58, 237, 0.35) !important;
+    }
+    div[class*="st-key-global_open_rules_bank_btn"] button p {
+        color: #FFFFFF !important;
+        font-weight: 800 !important;
+        font-size: 12px !important;
+        white-space: nowrap !important;
+    }
+
+    /* =========================================================
        Comprehensive Multi-Device Responsiveness (Mobile, Tablet, Desktop)
        ========================================================= */
 
@@ -5646,7 +5745,7 @@ _breadcrumb_text_color = "#CBD5E1" if is_astrallis_mode else ("#D1D5DB" if is_ni
 
 # Active Module Breadcrumb Pill
 st.markdown(f"""
-<div style="display:flex; justify-content:space-between; align-items:center; background:{_breadcrumb_bg}; border:1.5px solid {_breadcrumb_border}; border-radius:8px; padding:6px 14px; margin-bottom:6px;">
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; background:{_breadcrumb_bg}; border:1.5px solid {_breadcrumb_border}; border-radius:8px; padding:6px 14px; margin-bottom:6px;">
     <div style="font-weight:800; color:{_breadcrumb_title_color}; font-size:13px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
     <div style="font-size:12px; color:{_breadcrumb_text_color}; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
 </div>
@@ -5683,7 +5782,7 @@ with st.expander("⏱️ काल गति नियंत्रक एवं 
     _gr_pos = _gr_summ.get("total_positive", 0)
     _gr_neg = _gr_summ.get("total_negative", 0)
 
-    col_gr_bar, col_gr_btn = st.columns([4.2, 1.8])
+    col_gr_bar, col_gr_btn = st.columns([4.8, 1.2], vertical_alignment="center", gap="small")
     with col_gr_bar:
         _rules_bg = "linear-gradient(90deg, #0A0F22 0%, #0D1330 100%)" if is_astrallis_mode else ("linear-gradient(90deg, #111827 0%, #1F2937 100%)" if is_night_mode else "linear-gradient(90deg, #F5F3FF 0%, #EDE9FE 100%)")
         _rules_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#8B5CF6")
@@ -5696,30 +5795,32 @@ with st.expander("⏱️ काल गति नियंत्रक एवं 
         _neg_bg = "#450a0a" if is_astrallis_mode else ("#7f1d1d" if is_night_mode else "#FEE2E2")
         _neg_color = "#F87171" if is_astrallis_mode else ("#FCA5A5" if is_night_mode else "#991B1B")
         st.markdown(f"""
-        <div style="background: {_rules_bg}; border: 1.5px solid {_rules_border}; border-radius: 8px; padding: 6px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
-            <div style="color: {_rules_text_color} !important; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <div style="background: {_rules_bg}; border: 1.5px solid {_rules_border}; border-radius: 8px; padding: 4px 10px; min-height: 38px; height: 38px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
+            <div style="color: {_rules_text_color} !important; font-size: 12.5px; font-weight: 800; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
                 <span style="color: {_rules_text_color} !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
-                <span style="background: {_rules_count_bg}; color: {_rules_count_color} !important; border: 1px solid {_rules_count_border}; padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 12px;">{_gr_fired:,} सक्रिय नियम फलित</span>
+                <span style="background: {_rules_count_bg}; color: {_rules_count_color} !important; border: 1px solid {_rules_count_border}; padding: 2px 7px; border-radius: 6px; font-weight: 900; font-size: 11.5px;">{_gr_fired:,} सक्रिय नियम फलित</span>
             </div>
-            <div style="font-size: 11.5px; display: flex; gap: 6px; align-items: center;">
-                <span style="background: {_pos_bg}; color: {_pos_color} !important; border: 1px solid {_pos_color}; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
-                <span style="background: {_neg_bg}; color: {_neg_color} !important; border: 1px solid {_neg_color}; padding: 2px 9px; border-radius: 12px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
+            <div style="font-size: 11px; display: flex; gap: 5px; align-items: center; flex-shrink: 0;">
+                <span style="background: {_pos_bg}; color: {_pos_color} !important; border: 1px solid {_pos_color}; padding: 2px 8px; border-radius: 10px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
+                <span style="background: {_neg_bg}; color: {_neg_color} !important; border: 1px solid {_neg_color}; padding: 2px 8px; border-radius: 10px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
     with col_gr_btn:
         st.button("🔍 नियम बैंक खोलें ❯", key="global_open_rules_bank_btn", use_container_width=True, help="१२,५००+ महा-शास्त्रीय नियम बैंक (मॉड्यूल १९) खोलें", on_click=_nav_to_rules_bank)
 
-    c_ts_info, c_ts_ctrl = st.columns([1.5, 3.5])
+    st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
+
+    c_ts_info, c_ts_ctrl = st.columns([1.15, 3.85], vertical_alignment="center", gap="small")
     with c_ts_info:
         _ts_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#FFFBEB")
         _ts_border = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#F59E0B")
         _ts_label_color = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#B45309")
         _ts_value_color = "#E2E8F0" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
         st.markdown(f"""
-        <div style="background:{_ts_bg}; border:1.5px solid {_ts_border}; border-radius:8px; padding:5px 10px; height:100%; display:flex; flex-direction:column; justify-content:center;">
-            <div style="font-size:11px; font-weight:800; color:{_ts_label_color};">⏱️ काल गति नियंत्रक (Time Travel)</div>
-            <div style="font-size:12.5px; font-weight:900; color:{_ts_value_color};">📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
+        <div style="background:{_ts_bg}; border:1.5px solid {_ts_border}; border-radius:8px; padding:3px 8px; height:38px; min-height:38px; max-height:38px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; box-shadow:0 1px 3px rgba(245, 158, 11, 0.1);">
+            <div style="font-size:10px; font-weight:800; color:{_ts_label_color}; line-height:1.1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">⏱️ काल गति नियंत्रक (Time Travel)</div>
+            <div style="font-size:11.5px; font-weight:900; color:{_ts_value_color}; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -5739,7 +5840,7 @@ with st.expander("⏱️ काल गति नियंत्रक एवं 
                 st.session_state.birth_time = n_combo.time().replace(microsecond=0)
             st.rerun()
 
-        ts_b_cols = st.columns(9)
+        ts_b_cols = st.columns(9, gap="small", vertical_alignment="center")
         if ts_b_cols[0].button("⏪ -1द", key="ts_btn_m1d", help="-1 दिन पीछे जाएं"): _step_time_action(delta_days=-1)
         if ts_b_cols[1].button("◀ -1घं", key="ts_btn_m1h", help="-1 घंटा पीछे जाएं"): _step_time_action(delta_hours=-1)
         if ts_b_cols[2].button("‹ -15म", key="ts_btn_m15m", help="-15 मिनट पीछे जाएं"): _step_time_action(delta_minutes=-15)
