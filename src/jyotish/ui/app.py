@@ -4582,6 +4582,125 @@ else:
     ]
 
 
+def render_styled_meters_html(items, max_val=20, is_dark=False):
+    card_bg = "#111827" if is_dark else "#FFFFFF"
+    card_bdr = "#374151" if is_dark else "#E2E8F0"
+    track_bg = "#1F2937" if is_dark else "#F1F5F9"
+    track_bdr = "#374151" if is_dark else "#CBD5E1"
+    val_color = "#F8FAFC" if is_dark else "#0F172A"
+    dim_color = "#94A3B8" if is_dark else "#64748B"
+
+    rows_html = []
+    for item in items:
+        p_name = item["name"]
+        sym = item.get("symbol", p_name)
+        p_color = item.get("color", "#2563EB")
+        d_lbl = item.get("dignity", "")
+        score = float(item.get("score", 0.0))
+        pct = min(100.0, max(4.0, (score / max_val) * 100.0))
+
+        if "उच्च" in d_lbl or score >= 17:
+            bar_grad = "linear-gradient(90deg, #10B981 0%, #059669 100%)"
+            b_bg, b_fg, b_bdr = ("#064E3B", "#6EE7B7", "#059669") if is_dark else ("#DCFCE7", "#166534", "#86EFAC")
+        elif "मूलत्रिकोण" in d_lbl or "स्वराशि" in d_lbl or score >= 14:
+            bar_grad = "linear-gradient(90deg, #3B82F6 0%, #1D4ED8 100%)"
+            b_bg, b_fg, b_bdr = ("#1E3A8A", "#93C5FD", "#2563EB") if is_dark else ("#DBEAFE", "#1D4ED8", "#93C5FD")
+        elif "मित्र" in d_lbl or score >= 11:
+            bar_grad = "linear-gradient(90deg, #06B6D4 0%, #0284C7 100%)"
+            b_bg, b_fg, b_bdr = ("#164E63", "#7DD3FC", "#0284C7") if is_dark else ("#E0F2FE", "#0284C7", "#7DD3FC")
+        elif "सम" in d_lbl or score >= 8:
+            bar_grad = "linear-gradient(90deg, #F59E0B 0%, #D97706 100%)"
+            b_bg, b_fg, b_bdr = ("#78350F", "#FDE68A", "#D97706") if is_dark else ("#FEF3C7", "#92400E", "#FCD34D")
+        elif "शत्रु" in d_lbl or score >= 5:
+            bar_grad = "linear-gradient(90deg, #F97316 0%, #EA580C 100%)"
+            b_bg, b_fg, b_bdr = ("#7C2D12", "#FED7AA", "#EA580C") if is_dark else ("#FFEDD5", "#C2410C", "#FDBA74")
+        else:
+            bar_grad = "linear-gradient(90deg, #EF4444 0%, #DC2626 100%)"
+            b_bg, b_fg, b_bdr = ("#7F1D1D", "#FCA5A5", "#DC2626") if is_dark else ("#FEE2E2", "#991B1B", "#FCA5A5")
+
+        dignity_badge_html = f'<div style="width:84px; text-align:center;"><span style="background:{b_bg}; color:{b_fg}; border:1px solid {b_bdr}; border-radius:4px; padding:1px 5px; font-size:10px; font-weight:800; display:inline-block; width:100%; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">{d_lbl}</span></div>' if d_lbl else ''
+
+        row = f'''<div style="display:flex; align-items:center; gap:8px; margin-bottom:7px;">
+  <div style="width:105px; font-weight:800; font-size:12px; color:{p_color}; display:flex; align-items:center; gap:4px; white-space:nowrap;">
+    <span>{sym}</span>
+  </div>
+  {dignity_badge_html}
+  <div style="flex:1; background:{track_bg}; border-radius:6px; height:12px; overflow:hidden; position:relative; border:1px solid {track_bdr};">
+    <div style="width:{pct:.1f}%; height:100%; background:{bar_grad}; border-radius:5px;"></div>
+  </div>
+  <div style="width:58px; text-align:right; font-weight:900; font-size:11.5px; color:{val_color}; font-family:monospace;">
+    {score:.1f} <span style="font-size:9.5px; color:{dim_color}; font-weight:600;">/{int(max_val)}</span>
+  </div>
+</div>'''
+        rows_html.append(row)
+
+    return f'<div style="background:{card_bg}; border:1.5px solid {card_bdr}; border-radius:10px; padding:12px 14px; box-shadow:0 2px 8px rgba(0,0,0,0.04); margin-bottom:12px;">' + "".join(rows_html) + '</div>'
+
+
+def generate_styled_vertical_svg(items, max_val=20, is_dark=False):
+    svg_bg = "#111827" if is_dark else "#FFFFFF"
+    svg_bdr = "#374151" if is_dark else "#E2E8F0"
+    grid_col = "#374151" if is_dark else "#E2E8F0"
+    base_col = "#64748B" if is_dark else "#94A3B8"
+    score_col = "#FFFFFF" if is_dark else "#0F172A"
+
+    n = len(items)
+    w_svg = 540
+    h_svg = 215
+    top_y = 28
+    base_y = 160
+    chart_h = base_y - top_y
+
+    pad_left = 32
+    col_w = (w_svg - pad_left - 10) / n
+    bar_w = min(30, col_w - 8)
+
+    grid_lines = []
+    for g_val in [5, 10, 15, 20]:
+        g_y = base_y - (g_val / max_val) * chart_h
+        grid_lines.append(f'<line x1="{pad_left}" y1="{g_y:.1f}" x2="{w_svg-10}" y2="{g_y:.1f}" stroke="{grid_col}" stroke-dasharray="3,3" stroke-width="1"/>')
+        grid_lines.append(f'<text x="{pad_left - 6}" y="{g_y + 3:.1f}" font-size="9" fill="{base_col}" font-family="sans-serif" text-anchor="end">{g_val}</text>')
+
+    bars_svg = []
+    for i, item in enumerate(items):
+        p_name = item["name"]
+        sym = item.get("symbol", p_name)
+        p_color = item.get("color", "#2563EB")
+        d_lbl = item.get("dignity", "")
+        score = float(item.get("score", 0.0))
+        bar_h = max(4.0, (score / max_val) * chart_h)
+        bar_x = pad_left + i * col_w + (col_w - bar_w) / 2
+        bar_y = base_y - bar_h
+
+        if "उच्च" in d_lbl or score >= 17:
+            fill_c = "#10B981"
+        elif "मूलत्रिकोण" in d_lbl or "स्वराशि" in d_lbl or score >= 14:
+            fill_c = "#3B82F6"
+        elif "मित्र" in d_lbl or score >= 11:
+            fill_c = "#06B6D4"
+        elif "सम" in d_lbl or score >= 8:
+            fill_c = "#F59E0B"
+        elif "शत्रु" in d_lbl or score >= 5:
+            fill_c = "#F97316"
+        else:
+            fill_c = "#EF4444"
+
+        bars_svg.append(f'<rect x="{bar_x:.1f}" y="{bar_y:.1f}" width="{bar_w:.1f}" height="{bar_h:.1f}" rx="4" ry="4" fill="{fill_c}" opacity="0.9"/>')
+        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{bar_y - 5:.1f}" font-size="10.5" font-weight="bold" fill="{score_col}" font-family="sans-serif" text-anchor="middle">{score:.1f}</text>')
+        short_sym = sym.split()[0] if " " in sym else sym
+        short_hi = sym.split()[1] if " " in sym else p_name[:3]
+        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{base_y + 16:.1f}" font-size="10" font-weight="bold" fill="{p_color}" font-family="sans-serif" text-anchor="middle">{short_sym} {short_hi}</text>')
+        if d_lbl:
+            short_d = d_lbl.split()[0] if "(" in d_lbl else d_lbl
+            bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{base_y + 30:.1f}" font-size="9" font-weight="bold" fill="{fill_c}" font-family="sans-serif" text-anchor="middle">{short_d[:4]}</text>')
+
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w_svg} {h_svg}" style="width:100%; height:auto; background:{svg_bg}; border:1.5px solid {svg_bdr}; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.04); margin-bottom:12px;">
+  {"".join(grid_lines)}
+  <line x1="{pad_left}" y1="{base_y}" x2="{w_svg-10}" y2="{base_y}" stroke="{base_col}" stroke-width="1.5"/>
+  {"".join(bars_svg)}
+</svg>'''
+
+
 if "active_module_idx" not in st.session_state:
     st.session_state.active_module_idx = 0
 st.session_state.active_module_idx = max(0, min(int(st.session_state.active_module_idx), len(MODULE_OPTIONS) - 1))
@@ -5973,23 +6092,63 @@ if selected_idx == 0:
                 p_col2.markdown(f"- **नक्षत्र:** {p.nakshatra_name}")
                 p_col2.markdown(f"- **वार:** {p.vara_name}")
 
-                # Dynamic Planetary Dignity & Strength Bar Chart for the selected Varga
-                st.markdown(f"#### 📊 {varga_choice} ({v_name}) ग्रह गरिमा एवं बल सूचकांक")
-                varga_scores = {}
+                # Dynamic Planetary Dignity & Strength Chart with Toggle Switch (Meters vs Columns)
+                c_gh1, c_gh2 = st.columns([1.5, 1.2])
+                with c_gh1:
+                    st.markdown(f"#### 📊 {varga_choice} ({v_name}) ग्रह गरिमा एवं बल")
+                with c_gh2:
+                    graph_style_choice = st.radio(
+                        "ग्राफ़ शैली",
+                        ["📊 हॉरिजॉन्टल मीटर", "📈 वर्टिकल कॉलम"],
+                        index=0 if "हॉरिजॉन्टल" in st.session_state.get("varga_graph_style", "हॉरिजॉन्टल") else 1,
+                        horizontal=True,
+                        key="varga_graph_style_radio",
+                        label_visibility="collapsed"
+                    )
+                    st.session_state.varga_graph_style = graph_style_choice
+
+                varga_items = []
                 target_planets_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
+                _GRAHA_SYMS = {"Sun": "☉ सूर्य", "Moon": "☽ चन्द्र", "Mars": "♂ मंगल", "Mercury": "☿ बुध", "Jupiter": "♃ गुरु", "Venus": "♀ शुक्र", "Saturn": "♄ शनि", "Rahu": "☊ राहु", "Ketu": "☋ केतु"}
+                _P_COLS = {"Sun":"#E11D48","Moon":"#2563EB","Mars":"#DC2626","Mercury":"#059669","Jupiter":"#D97706","Venus":"#DB2777","Saturn":"#475569","Rahu":"#7C3AED","Ketu":"#B45309"}
+
                 for p_name in target_planets_order:
                     vp_obj = target_varga.planets.get(p_name) if target_varga else None
                     if vp_obj:
-                        _, d_pts, _ = get_varga_dignity_info(p_name, vp_obj.sign_name, affliction_engine)
-                        varga_scores[p_name] = d_pts
+                        d_lbl, d_pts, _ = get_varga_dignity_info(p_name, vp_obj.sign_name, affliction_engine)
                     else:
-                        varga_scores[p_name] = 7
+                        d_lbl, d_pts = "सम (Neutral)", 7.0
+                    varga_items.append({
+                        "name": p_name,
+                        "symbol": _GRAHA_SYMS.get(p_name, p_name),
+                        "color": _P_COLS.get(p_name, "#2563EB"),
+                        "dignity": d_lbl,
+                        "score": d_pts
+                    })
 
-                st.bar_chart(pd.DataFrame(list(varga_scores.items()), columns=["Planet", f"{varga_choice} Dignity Score"]).set_index("Planet"))
+                _is_dark = is_astrallis_mode or is_night_mode
+                if "हॉरिजॉन्टल" in graph_style_choice:
+                    st.markdown(render_styled_meters_html(varga_items, max_val=20, is_dark=_is_dark), unsafe_allow_html=True)
+                else:
+                    st.markdown(generate_styled_vertical_svg(varga_items, max_val=20, is_dark=_is_dark), unsafe_allow_html=True)
 
                 with st.expander("🏆 समग्र विंशोपक बल (20 Point Shadvarga Bala)", expanded=False):
                     vimsopaka = VargaCalculator.calculate_vimsopaka_bala(chart)
-                    st.bar_chart(pd.DataFrame(list(vimsopaka.items()), columns=["Planet", "Vimsopaka Score"]).set_index("Planet"))
+                    vims_items = []
+                    for p_name in ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]:
+                        v_sc = float(vimsopaka.get(p_name, 10.0))
+                        v_qual = "अति उत्तम" if v_sc >= 15 else ("उत्तम" if v_sc >= 10 else "मध्यम")
+                        vims_items.append({
+                            "name": p_name,
+                            "symbol": _GRAHA_SYMS.get(p_name, p_name),
+                            "color": _P_COLS.get(p_name, "#2563EB"),
+                            "dignity": f"{v_qual} ({v_sc:.1f})",
+                            "score": v_sc
+                        })
+                    if "हॉरिजॉन्टल" in graph_style_choice:
+                        st.markdown(render_styled_meters_html(vims_items, max_val=20, is_dark=_is_dark), unsafe_allow_html=True)
+                    else:
+                        st.markdown(generate_styled_vertical_svg(vims_items, max_val=20, is_dark=_is_dark), unsafe_allow_html=True)
 
     st.markdown(f"### 🪐 {varga_choice} ({v_name}) चक्र — नवग्रह स्पष्ट स्थिति, भाव एवं गरिमा तालिका")
     p_data = []
