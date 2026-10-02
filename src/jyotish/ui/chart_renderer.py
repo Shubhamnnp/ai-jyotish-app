@@ -108,7 +108,7 @@ class ChartRenderer:
         }
 
         svg_parts = [
-            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="auto" class="kundali-svg" style="width:100%; max-width:100%; height:auto; aspect-ratio:1/1; margin:0 auto; display:block; background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="80%" height="auto" class="kundali-svg" style="width:80%; max-width:80%; height:auto; aspect-ratio:1/1; margin:0 auto; display:block; background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
             f'<text x="{W//2}" y="22" text-anchor="middle" fill="#78350F" font-size="14" font-weight="900" letter-spacing="0.5">{title}</text>',
         ]
 
@@ -196,7 +196,7 @@ class ChartRenderer:
         }
 
         svg_parts = [
-            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="auto" class="kundali-svg" style="width:100%; max-width:100%; height:auto; aspect-ratio:1/1; margin:0 auto; display:block; background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="80%" height="auto" class="kundali-svg" style="width:80%; max-width:80%; height:auto; aspect-ratio:1/1; margin:0 auto; display:block; background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
             f'<text x="{W//2}" y="25" text-anchor="middle" fill="#78350F" font-size="14" font-weight="900">{title}</text>',
             f'<rect x="{ox}" y="{oy}" width="{cell_w*4}" height="{cell_h*4}" fill="none" stroke="#D97706" stroke-width="2.5"/>',
             f'<rect x="{ox + cell_w}" y="{oy + cell_h}" width="{cell_w*2}" height="{cell_h*2}" fill="#F8FAFC" stroke="#D97706" stroke-width="2"/>',
@@ -375,7 +375,7 @@ class ChartRenderer:
         }
 
         svg_parts = [
-            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" height="auto" class="kundali-svg" style="width:100%; max-width:100%; height:auto; aspect-ratio:1/1; margin:0 auto; display:block; background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="80%" height="auto" class="kundali-svg" style="width:80%; max-width:80%; height:auto; aspect-ratio:1/1; margin:0 auto; display:block; background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">',
             f'<text x="{W//2}" y="25" text-anchor="middle" fill="#78350F" font-size="14" font-weight="900">{title}</text>',
             # Center Square: Brand / Watermark
             f'<rect x="{x1}" y="{y1}" width="{s3}" height="{s3}" fill="#FFFBEB" stroke="#D97706" stroke-width="2"/>',
@@ -767,7 +767,7 @@ class ChartRenderer:
         p = []
         p.append(
             f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
-            f'width="100%" height="auto" class="kundali-svg" style="width:100%; max-width:100%; height:auto; aspect-ratio:1/1; margin:0 auto; display:block; background:{bg_color}; border:1.5px solid {ring_stroke}; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06);">'
+            f'width="80%" height="auto" class="kundali-svg" style="width:80%; max-width:80%; height:auto; aspect-ratio:1/1; margin:0 auto; display:block; background:{bg_color}; border:1.5px solid {ring_stroke}; border-radius:12px; box-shadow:0 3px 12px rgba(0,0,0,0.06);">'
         )
         p.append('<defs>')
         p.append('<radialGradient id="bg2" cx="50%" cy="50%" r="50%">'

@@ -1874,8 +1874,8 @@ unified_css = f"""
 
     /* Responsive SVG & Kundali Charts Auto-Scaling (Scoped strictly to Kundali SVGs, never global svg or Vega-Lite charts) */
     .kundali-chart svg, .chart-container svg, .observatory-canvas svg, div:has(> svg.kundali-svg) svg, svg.kundali-svg {{
-        width: 100% !important;
-        max-width: 100% !important;
+        width: 80% !important;
+        max-width: 80% !important;
         height: auto !important;
         aspect-ratio: 1 / 1 !important;
         display: block !important;
@@ -6063,7 +6063,7 @@ if selected_idx == 0:
 
             title = f"{varga_choice} {v_name} Kundali"
             svg_code = render_chart_svg(chart, title, varga_code=varga_choice)
-            st.markdown(f'<div class="kundali-chart" style="width:100%; margin-bottom:10px;">{svg_code}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:10px;">{svg_code}</div>', unsafe_allow_html=True)
 
             v_desc = VARGA_SIGNIFICANCE.get(varga_choice, "शास्त्रीय सूक्ष्म विश्लेषण")
             st.info(f"🎯 **{varga_choice} ({v_name}) शास्त्रीय प्रयोजन:** {v_desc}")
