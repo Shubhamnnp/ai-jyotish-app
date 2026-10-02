@@ -1923,16 +1923,16 @@ unified_css = f"""
     /* =========================================================
        ⏱️ Quick Time Stepper & Shastriya Rules HUD (Auto-Adjusting Responsive Grid)
        ========================================================= */
-    div[data-testid="column"]:has(div[class*="st-key-ts_btn_"]) {
+    div[data-testid="column"]:has(div[class*="st-key-ts_btn_"]) {{
         min-width: 0 !important;
         flex: 1 1 0% !important;
         padding-left: 1px !important;
         padding-right: 1px !important;
-    }
-    div[class*="st-key-ts_btn_"] {
+    }}
+    div[class*="st-key-ts_btn_"] {{
         width: 100% !important;
-    }
-    div[class*="st-key-ts_btn_"] button {
+    }}
+    div[class*="st-key-ts_btn_"] button {{
         width: 100% !important;
         min-width: 0 !important;
         padding: 2px 1px !important;
@@ -1950,14 +1950,14 @@ unified_css = f"""
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
         margin: 0 !important;
         transition: all 0.15s ease-in-out !important;
-    }
-    div[class*="st-key-ts_btn_"] button:hover {
+    }}
+    div[class*="st-key-ts_btn_"] button:hover {{
         border-color: #F59E0B !important;
         background: #FFFBEB !important;
         color: #B45309 !important;
         box-shadow: 0 2px 5px rgba(245, 158, 11, 0.2) !important;
-    }
-    div[class*="st-key-ts_btn_"] button p {
+    }}
+    div[class*="st-key-ts_btn_"] button p {{
         font-size: 11px !important;
         font-weight: 800 !important;
         line-height: 1 !important;
@@ -1967,27 +1967,27 @@ unified_css = f"""
         text-overflow: clip !important;
         white-space: nowrap !important;
         letter-spacing: -0.2px !important;
-    }
-    div[class*="st-key-ts_btn_now"] button {
+    }}
+    div[class*="st-key-ts_btn_now"] button {{
         background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%) !important;
         border: 1.5px solid #0284C7 !important;
         color: #FFFFFF !important;
         box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3) !important;
-    }
-    div[class*="st-key-ts_btn_now"] button:hover {
+    }}
+    div[class*="st-key-ts_btn_now"] button:hover {{
         background: linear-gradient(135deg, #0369A1 0%, #075985 100%) !important;
         border-color: #0369A1 !important;
         color: #FFFFFF !important;
         box-shadow: 0 3px 8px rgba(2, 132, 199, 0.45) !important;
-    }
-    div[class*="st-key-ts_btn_now"] button p {
+    }}
+    div[class*="st-key-ts_btn_now"] button p {{
         color: #FFFFFF !important;
         font-weight: 900 !important;
-    }
-    div[class*="st-key-global_open_rules_bank_btn"] {
+    }}
+    div[class*="st-key-global_open_rules_bank_btn"] {{
         width: 100% !important;
-    }
-    div[class*="st-key-global_open_rules_bank_btn"] button {
+    }}
+    div[class*="st-key-global_open_rules_bank_btn"] button {{
         width: 100% !important;
         height: 38px !important;
         min-height: 38px !important;
@@ -2006,18 +2006,18 @@ unified_css = f"""
         box-shadow: 0 2px 6px rgba(124, 58, 237, 0.25) !important;
         margin: 0 !important;
         transition: all 0.15s ease-in-out !important;
-    }
-    div[class*="st-key-global_open_rules_bank_btn"] button:hover {
+    }}
+    div[class*="st-key-global_open_rules_bank_btn"] button:hover {{
         background: linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%) !important;
         transform: translateY(-1px) !important;
         box-shadow: 0 4px 10px rgba(124, 58, 237, 0.35) !important;
-    }
-    div[class*="st-key-global_open_rules_bank_btn"] button p {
+    }}
+    div[class*="st-key-global_open_rules_bank_btn"] button p {{
         color: #FFFFFF !important;
         font-weight: 800 !important;
         font-size: 12px !important;
         white-space: nowrap !important;
-    }
+    }}
 
     /* =========================================================
        Comprehensive Multi-Device Responsiveness (Mobile, Tablet, Desktop)
