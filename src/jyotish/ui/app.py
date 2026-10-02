@@ -5422,50 +5422,11 @@ with st.container(key="top_frozen_header_container", border=False):
 
 
 p = chart.panchang
-sr_time = "05:18:32 AM"
-ss_time = "06:42:25 PM"
-hora_lord = "Mars" if birth_d.weekday() == 0 else "Sun"
-ghati_val = round((birth_t.hour + birth_t.minute / 60.0 - 5.3) * 2.5, 2)
-if ghati_val < 0:
-    ghati_val += 60.0
 
-_hud_title_color = "#00E5FF" if is_astrallis_mode else ("#F8C471" if is_night_mode else "#000000")
-_hud_accuracy_bg = "#0A1628" if is_astrallis_mode else ("#1A2340" if is_night_mode else "#EFF6FF")
-_hud_accuracy_border = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#2563EB")
-_hud_accuracy_color = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#1E40AF")
 _breadcrumb_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#EFF6FF")
 _breadcrumb_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#93C5FD")
 _breadcrumb_title_color = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#1E40AF")
 _breadcrumb_text_color = "#CBD5E1" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
-
-st.markdown(f"""
-<div class="digital-hud">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 4px;">
-        <div style="font-weight: 800; font-size: 12.5px; display: flex; align-items: center; gap: 6px;">
-            <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#10B981; box-shadow:0 0 6px #10B981;"></span>
-            <span style="color:{_hud_title_color}; font-weight:900;">⚡ डिजिटल पंचांग एवं काल गणना (Panchang &amp; Ephemeris HUD)</span>
-        </div>
-        <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
-            <div class="hud-pill-highlight" style="border-radius: 6px; border: 1.5px solid #D97706; font-weight: 800;">
-                👑 होरा स्वामी: <b>{hora_lord}</b>
-            </div>
-            <div style="background: {_hud_accuracy_bg}; border: 1.5px solid {_hud_accuracy_border}; color: {_hud_accuracy_color}; border-radius: 6px; padding: 3px 8px; font-size: 11.5px; font-weight: 800;">
-                🛡️ 99.9% परिशुद्धता
-            </div>
-        </div>
-    </div>
-    <div class="hud-grid">
-        <div class="hud-pill" title="तिथि: {p.tithi_name} ({p.tithi_type})">📅 <b>तिथि:</b> {p.tithi_name}</div>
-        <div class="hud-pill" title="वार: {p.vara_name}">🪐 <b>वार:</b> {p.vara_name}</div>
-        <div class="hud-pill" title="नक्षत्र: {p.nakshatra_name}">✨ <b>नक्षत्र:</b> {p.nakshatra_name}</div>
-        <div class="hud-pill" title="योग: {p.yoga_name}">🌿 <b>योग:</b> {p.yoga_name}</div>
-        <div class="hud-pill" title="करण: {p.karana_name}">⚡ <b>करण:</b> {p.karana_name}</div>
-        <div class="hud-pill" title="सूर्योदय: {sr_time}">🌅 <b>सूर्योदय:</b> {sr_time}</div>
-        <div class="hud-pill" title="सूर्यास्त: {ss_time}">🌇 <b>सूर्यास्त:</b> {ss_time}</div>
-        <div class="hud-pill" title="जन्म घटी: {ghati_val}">⏳ <b>जन्म घटी:</b> {ghati_val}</div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
 
 # Active Module Breadcrumb Pill
 st.markdown(f"""
