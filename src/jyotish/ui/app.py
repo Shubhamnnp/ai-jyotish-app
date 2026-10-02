@@ -4613,7 +4613,7 @@ with st.container(key="top_frozen_header_container", border=False):
 
     # 7 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered - Frozen Sticky at Top)
     with st.container(key="frozen_toolbelt_container", border=False):
-        tb_cols = st.columns(7, gap="small")
+        tb_cols = st.columns(8, gap="small")
 
         # Helper function for rendering clickable tile (Streamlit Native Button - In-Session Instant Trigger)
         def render_tool_tile(col, emoji_icon, label_text, tool_key):
@@ -4646,8 +4646,11 @@ with st.container(key="top_frozen_header_container", border=False):
         # 6. Theme Mode
         render_tool_tile(tb_cols[5], "🌓", "Theme", "theme")
 
-        # 7. Logout
-        render_tool_tile(tb_cols[6], "🚪", "Logout", "logout")
+        # 7. Settings (Placed between Theme and Logout)
+        render_tool_tile(tb_cols[6], "⚙️", "Settings", "settings")
+
+        # 8. Logout
+        render_tool_tile(tb_cols[7], "🚪", "Logout", "logout")
 
     if st.session_state.get("sidebar_toggle_requested"):
         st.session_state.sidebar_toggle_requested = False
@@ -5059,11 +5062,109 @@ with st.container(key="top_frozen_header_container", border=False):
                 except Exception as _e_save_v:
                     st.error(f"सहेजने में त्रुटि: {_e_save_v}")
 
-        # 5. TOOL: SETTINGS (Ayanamsa, House System, Chart Style, Pro Mode)
+        # 5. TOOL: SETTINGS (Chart Style, View Mode, Classical Sampradaya, Ayanamsa & Engines)
         elif st.session_state.gla_active_tool == "settings":
             with st.container(border=True):
-                st.markdown("### ⚙️ गणना एवं सॉफ़्टवेयर प्राथमिकताएं (Settings & Calculation Engine)")
-                col_st1, col_st2, col_st3, col_st4, col_st5 = st.columns([2.2, 1.8, 1.6, 2.0, 1.4])
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0070C0; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#0077b6;">
+                        ⚙️ कुण्डली एवं गणना सेटिंग्स (Software & Chart Settings)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                # Row 1: Chart Style & View Mode
+                col_st_left, col_st_right = st.columns([1.5, 1.2])
+
+                with col_st_left:
+                    st.markdown("##### 🎨 कुण्डली चक्र शैली (Chart Display Style)")
+                    curr_style = st.session_state.get("app_chart_style", "North Indian (Diamond)")
+                    c_st1, c_st2, c_st3 = st.columns(3)
+                    if c_st1.button("💎 उत्तर भारतीय (North Diamond)", use_container_width=True, type="primary" if "North" in curr_style else "secondary", key="hdr_set_cs_north"):
+                        st.session_state.app_chart_style = "North Indian (Diamond)"
+                        st.rerun()
+                    if c_st2.button("🔲 दक्षिण भारतीय (South Box)", use_container_width=True, type="primary" if "South" in curr_style else "secondary", key="hdr_set_cs_south"):
+                        st.session_state.app_chart_style = "South Indian (Box)"
+                        st.rerun()
+                    if c_st3.button("🔺 पूर्व भारतीय (East Bengal)", use_container_width=True, type="primary" if "East" in curr_style else "secondary", key="hdr_set_cs_east"):
+                        st.session_state.app_chart_style = "East Indian (Surya)"
+                        st.rerun()
+
+                with col_st_right:
+                    st.markdown("##### 🖥️ चक्र प्रदर्शन दृश्य (Chart View Mode)")
+                    c_vm1, c_vm2 = st.columns(2)
+                    curr_vm = st.session_state.get("app_chart_view_mode", "Single")
+                    if c_vm1.button("📱 एकल दृश्य (Single)", use_container_width=True, type="primary" if curr_vm == "Single" else "secondary", key="hdr_set_vm_single"):
+                        st.session_state.app_chart_view_mode = "Single"
+                        st.rerun()
+                    if c_vm2.button("🖥️ ४-चार्ट दृश्य (4-Chart Grid)", use_container_width=True, type="primary" if curr_vm == "Quad" else "secondary", key="hdr_set_vm_quad"):
+                        st.session_state.app_chart_view_mode = "Quad"
+                        st.rerun()
+
+                st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+
+                # Row 2: Classical Sampradaya Variations
+                st.markdown("##### 📜 वर्ग गणना शास्त्रीय संप्रदाय मत (Classical Sampradaya Variations)")
+                c_v1, c_v2, c_v3 = st.columns(3)
+
+                cur_d3 = st.session_state.get("v_d3_meth", "parashari")
+                d3_opts = ["parashari", "jagannatha", "somanatha", "parivritti_traya"]
+                d3_idx = d3_opts.index(cur_d3) if cur_d3 in d3_opts else 0
+                sel_d3 = c_v1.selectbox(
+                    "D3 द्रेष्काण मत",
+                    d3_opts,
+                    index=d3_idx,
+                    format_func=lambda x: {
+                        "parashari": "महर्षि पाराशर (१-५-९ त्रिकोण)",
+                        "jagannatha": "जगन्नाथ द्रेष्काण (PVR / Rath)",
+                        "somanatha": "सोमनाथ द्रेष्काण (अनुलोम/विलोम)",
+                        "parivritti_traya": "परिवृत्ति त्रय (३६ चक्रीय)"
+                    }[x],
+                    key="hdr_set_v_d3_meth"
+                )
+                if sel_d3 != cur_d3:
+                    st.session_state.v_d3_meth = sel_d3
+                    st.rerun()
+
+                cur_d9 = st.session_state.get("v_d9_meth", "parashari")
+                d9_opts = ["parashari", "krishna_mishra"]
+                d9_idx = d9_opts.index(cur_d9) if cur_d9 in d9_opts else 0
+                sel_d9 = c_v2.selectbox(
+                    "D9 नवांश मत",
+                    d9_opts,
+                    index=d9_idx,
+                    format_func=lambda x: {
+                        "parashari": "महर्षि पाराशर (१०८ पाद सतत)",
+                        "krishna_mishra": "कृष्णमिश्र नवांश (जैमिनी परंपरा)"
+                    }[x],
+                    key="hdr_set_v_d9_meth"
+                )
+                if sel_d9 != cur_d9:
+                    st.session_state.v_d9_meth = sel_d9
+                    st.rerun()
+
+                cur_d2 = st.session_state.get("v_d2_meth", "parashari")
+                d2_opts = ["parashari", "parivritti"]
+                d2_idx = d2_opts.index(cur_d2) if cur_d2 in d2_opts else 0
+                sel_d2 = c_v3.selectbox(
+                    "D2 होरा मत",
+                    d2_opts,
+                    index=d2_idx,
+                    format_func=lambda x: {
+                        "parashari": "पाराशरी होरा (कर्क/सिंह)",
+                        "parivritti": "परिवृत्ति होरा (२४ होरा चक्रीय)"
+                    }[x],
+                    key="hdr_set_v_d2_meth"
+                )
+                if sel_d2 != cur_d2:
+                    st.session_state.v_d2_meth = sel_d2
+                    st.rerun()
+
+                st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+
+                # Row 3: Fundamental Calculation Engine (Ayanamsa, Nodes, Houses, Pro Mode)
+                st.markdown("##### 📐 मूल गणना प्राथमिकताएं (Fundamental Calculation Preferences)")
+                col_st1, col_st2, col_st3, col_st4 = st.columns([2.2, 1.8, 1.6, 1.4])
                 with col_st1:
                     ay_opts = [
                         "Lahiri", "Pushya-Paksha (PVR Rao)", "KP Old", "KP New (Straight Line)",
@@ -5071,37 +5172,31 @@ with st.container(key="top_frozen_header_container", border=False):
                     ]
                     cur_ay = st.session_state.get("app_ayanamsa", "Lahiri")
                     ay_idx = ay_opts.index(cur_ay) if cur_ay in ay_opts else 0
-                    in_ay = st.selectbox("अयनांश (Ayanamsa)", ay_opts, index=ay_idx, key="gla_settings_ayanamsa")
+                    in_ay = col_st1.selectbox("अयनांश (Ayanamsa)", ay_opts, index=ay_idx, key="gla_settings_ayanamsa")
                     st.session_state.app_ayanamsa = in_ay
 
                 with col_st2:
                     node_opts = ["Mean Node (पारंपरिक औसत)", "True Node (सच्चे पात - Meeus)"]
                     cur_node = st.session_state.get("app_node_type", "Mean Node (पारंपरिक औसत)")
                     node_idx = node_opts.index(cur_node) if cur_node in node_opts else 0
-                    in_node = st.selectbox("राहु-केतु गणना (Nodes)", node_opts, index=node_idx, key="gla_settings_node")
+                    in_node = col_st2.selectbox("राहु-केतु गणना (Nodes)", node_opts, index=node_idx, key="gla_settings_node")
                     st.session_state.app_node_type = in_node
 
                 with col_st3:
                     hs_opts = ["Whole Sign", "Equal", "Placidus", "Shripati", "Koch"]
                     cur_hs = st.session_state.get("app_house_system", "Whole Sign")
                     hs_idx = hs_opts.index(cur_hs) if cur_hs in hs_opts else 0
-                    in_hs = st.selectbox("भाव पद्धति (Houses)", hs_opts, index=hs_idx, key="gla_settings_hs")
+                    in_hs = col_st3.selectbox("भाव पद्धति (Houses)", hs_opts, index=hs_idx, key="gla_settings_hs")
                     st.session_state.app_house_system = in_hs
 
                 with col_st4:
-                    chart_styles_list = ["North Indian (Diamond)", "South Indian (Box)", "East Indian (Surya)"]
-                    if "app_chart_style" not in st.session_state or st.session_state.app_chart_style not in chart_styles_list:
-                        st.session_state.app_chart_style = "North Indian (Diamond)"
-                    cs_idx = chart_styles_list.index(st.session_state.app_chart_style)
-                    def _on_gla_cs_change():
-                        st.session_state.app_chart_style = st.session_state.gla_settings_cs_select
-                    in_cs = st.selectbox("कुण्डली चक्र शैली (Style)", chart_styles_list, index=cs_idx, key="gla_settings_cs_select", on_change=_on_gla_cs_change)
-
-                with col_st5:
-                    in_pm = st.toggle("⚡ Pro Mode", value=st.session_state.get("app_pro_mode", True), key="gla_settings_pm_toggle")
+                    in_pm = col_st4.toggle("⚡ Pro Mode", value=st.session_state.get("app_pro_mode", True), key="gla_settings_pm_toggle")
                     st.session_state.app_pro_mode = in_pm
-                    st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
-                    if st.button("✅ लागू करें", type="primary", use_container_width=True, key="gla_apply_settings_btn"):
+
+                st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+                col_cls1, col_cls2 = st.columns([3, 1])
+                with col_cls2:
+                    if st.button("❌ बंद करें (Close)", use_container_width=True, key="gla_close_settings_btn"):
                         st.session_state.gla_active_tool = None
                         st.rerun()
 
@@ -5780,14 +5875,17 @@ if selected_idx == 0:
             format_func=lambda x: f"{x} - {chart.vargas[x].varga_name}" if x in chart.vargas else x
         )
         # Dynamic Sampradaya Variation Allocation
-        if varga_choice == "D3" and d3_method != "parashari":
-            target_varga = VargaCalculator.calculate_d3(chart, variation=d3_method)
+        cur_d3_act = st.session_state.get("v_d3_meth", d3_method if 'd3_method' in locals() else "parashari")
+        cur_d9_act = st.session_state.get("v_d9_meth", d9_method if 'd9_method' in locals() else "parashari")
+        cur_d2_act = st.session_state.get("v_d2_meth", d2_method if 'd2_method' in locals() else "parashari")
+        if varga_choice == "D3" and cur_d3_act != "parashari":
+            target_varga = VargaCalculator.calculate_d3(chart, variation=cur_d3_act)
             chart.vargas["D3"] = target_varga
-        elif varga_choice == "D9" and d9_method != "parashari":
-            target_varga = VargaCalculator.calculate_d9(chart, variation=d9_method)
+        elif varga_choice == "D9" and cur_d9_act != "parashari":
+            target_varga = VargaCalculator.calculate_d9(chart, variation=cur_d9_act)
             chart.vargas["D9"] = target_varga
-        elif varga_choice == "D2" and d2_method != "parashari":
-            target_varga = VargaCalculator.calculate_d2(chart, variation=d2_method)
+        elif varga_choice == "D2" and cur_d2_act != "parashari":
+            target_varga = VargaCalculator.calculate_d2(chart, variation=cur_d2_act)
             chart.vargas["D2"] = target_varga
         else:
             target_varga = chart.vargas.get(varga_choice, chart.vargas.get("D1"))
