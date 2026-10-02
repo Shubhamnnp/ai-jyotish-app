@@ -34,7 +34,10 @@ for p in [curr_dir, src_dir, project_root]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
-from src.jyotish.core.models import BirthData, GhatnaQueryInput, KundaliChart
+from src.jyotish.core.models import (
+    BirthData, GhatnaQueryInput, KundaliChart,
+    VargaChart, VargaPlanetPosition
+)
 from src.jyotish.core.constants import SIGN_LORDS, SIGNS, SIGN_NAMES, NAKSHATRAS, GRAHAS
 from src.jyotish.core.calculator import default_chart_calculator
 from src.jyotish.core.varga import VargaCalculator
