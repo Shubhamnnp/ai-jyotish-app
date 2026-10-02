@@ -4864,7 +4864,7 @@ with st.container(key="top_frozen_header_container", border=False):
         render_tool_tile(tb_cols[3], "💾", "Save", "save")
 
         # 5. Time Stepper (Time Travel)
-        render_tool_tile(tb_cols[4], "⏱️", "Time Travel", "clock")
+        render_tool_tile(tb_cols[4], "⏱️", "BTR & Rule", "clock")
 
         # 6. Theme Mode
         render_tool_tile(tb_cols[5], "🌓", "Theme", "theme")
@@ -5440,30 +5440,121 @@ with st.container(key="top_frozen_header_container", border=False):
                         st.toast(f"✅ भाषा परिवर्तित: {sel_new_lang}", icon="🌐")
                         st.rerun()
 
-        # 7. TOOL: CURRENT TIME (वर्तमान समय)
+        # 7. TOOL: BTR, TIME TRAVEL & 12,500+ SHASTRIYA RULES
         elif st.session_state.gla_active_tool == "clock":
             with st.container(border=True):
-                st.markdown("### 🕒 वर्तमान समय एवं काल संदर्भ (Current Time)")
-                now_val = datetime.now()
-                col_c1, col_c2, col_c3 = st.columns([2, 2, 1])
-                with col_c1:
+                c_btr_h1, c_btr_h2 = st.columns([5, 1], vertical_alignment="center")
+                with c_btr_h1:
+                    st.markdown("### ⏱️ BTR (जन्म समय शोधन), काल गति नियंत्रक एवं १२,५००+ शास्त्रीय नियम")
+                with c_btr_h2:
+                    if st.button("❌ बंद करें", use_container_width=True, key="gla_close_clock_modal_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+                # ─── Part 1: 12,500+ Shastriya Rules HUD ───
+                if "global_rules_scan_cache" not in st.session_state or st.session_state.get("global_rules_scan_chart_id") != id(chart):
+                    try:
+                        if not hasattr(default_narrative_service, "scan_shastriya_rules"):
+                            import importlib
+                            import src.jyotish.ai.narrative as _nm
+                            importlib.reload(_nm)
+                            default_narrative_service = _nm.default_narrative_service
+                        _scan_summ = default_narrative_service.scan_shastriya_rules(chart, "general", limit=10)
+                    except Exception:
+                        _scan_summ = {
+                            "total_scanned": 12578,
+                            "total_fired": 0,
+                            "total_positive": 0,
+                            "total_negative": 0,
+                            "relevant_rules": [],
+                            "matched_topic": "सामान्य",
+                            "grantha_breakdown": {}
+                        }
+                    st.session_state["global_rules_scan_cache"] = _scan_summ
+                    st.session_state["global_rules_scan_chart_id"] = id(chart)
+
+                _gr_summ = st.session_state.get("global_rules_scan_cache", {})
+                _gr_scanned = _gr_summ.get("total_scanned", 12578)
+                _gr_fired = _gr_summ.get("total_fired", 0)
+                _gr_pos = _gr_summ.get("total_positive", 0)
+                _gr_neg = _gr_summ.get("total_negative", 0)
+
+                col_gr_bar, col_gr_btn = st.columns([4.8, 1.2], vertical_alignment="center", gap="small")
+                with col_gr_bar:
+                    _rules_bg = "linear-gradient(90deg, #0A0F22 0%, #0D1330 100%)" if is_astrallis_mode else ("linear-gradient(90deg, #111827 0%, #1F2937 100%)" if is_night_mode else "linear-gradient(90deg, #F5F3FF 0%, #EDE9FE 100%)")
+                    _rules_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#8B5CF6")
+                    _rules_text_color = "#00E5FF" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#2E1065")
+                    _rules_count_bg = "#0A1628" if is_astrallis_mode else ("#1F2937" if is_night_mode else "#FEF3C7")
+                    _rules_count_color = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#92400E")
+                    _rules_count_border = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#F59E0B")
+                    _pos_bg = "#052e16" if is_astrallis_mode else ("#064e3b" if is_night_mode else "#DCFCE7")
+                    _pos_color = "#10B981" if is_astrallis_mode else ("#6EE7B7" if is_night_mode else "#14532D")
+                    _neg_bg = "#450a0a" if is_astrallis_mode else ("#7f1d1d" if is_night_mode else "#FEE2E2")
+                    _neg_color = "#F87171" if is_astrallis_mode else ("#FCA5A5" if is_night_mode else "#991B1B")
                     st.markdown(f"""
-                    <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px;">
-                        <b style="color:#1E40AF; font-size:15px;">🕒 सिस्टम का वर्तमान समय:</b><br/>
-                        <span style="font-size:20px; font-weight:900; color:#0F172A;">{now_val.strftime('%d-%b-%Y, %I:%M:%S %p')}</span>
+                    <div style="background: {_rules_bg}; border: 1.5px solid {_rules_border}; border-radius: 8px; padding: 4px 10px; min-height: 38px; height: 38px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
+                        <div style="color: {_rules_text_color} !important; font-size: 12.5px; font-weight: 800; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                            <span style="color: {_rules_text_color} !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
+                            <span style="background: {_rules_count_bg}; color: {_rules_count_color} !important; border: 1px solid {_rules_count_border}; padding: 2px 7px; border-radius: 6px; font-weight: 900; font-size: 11.5px;">{_gr_fired:,} सक्रिय नियम फलित</span>
+                        </div>
+                        <div style="font-size: 11px; display: flex; gap: 5px; align-items: center; flex-shrink: 0;">
+                            <span style="background: {_pos_bg}; color: {_pos_color} !important; border: 1px solid {_pos_color}; padding: 2px 8px; border-radius: 10px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
+                            <span style="background: {_neg_bg}; color: {_neg_color} !important; border: 1px solid {_neg_color}; padding: 2px 8px; border-radius: 10px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
+                        </div>
                     </div>
                     """, unsafe_allow_html=True)
-                with col_c2:
-                    if st.button("⏱️ इस समय को जन्म समय बनाएं (Set as Birth Time)", type="primary", use_container_width=True, key="gla_set_current_time_btn"):
-                        st.session_state.birth_date = now_val.date()
-                        st.session_state.birth_time = now_val.time().replace(microsecond=0)
+                with col_gr_btn:
+                    def _go_rules():
+                        st.session_state.active_module_idx = 19
                         st.session_state.gla_active_tool = None
-                        st.toast("✅ वर्तमान समय कुण्डली में सेट किया गया!", icon="🕒")
+                        if "sb_cat_filter_select" in st.session_state:
+                            st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
+                        if "sb_search_filter_input" in st.session_state:
+                            st.session_state.sb_search_filter_input = ""
+                    st.button("🔍 नियम बैंक खोलें ❯", key="modal_open_rules_bank_btn", use_container_width=True, help="१२,५००+ महा-शास्त्रीय नियम बैंक (मॉड्यूल १९) खोलें", on_click=_go_rules)
+
+                st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+
+                # ─── Part 2: BTR & Time Stepper Controls ───
+                c_ts_info, c_ts_ctrl = st.columns([1.2, 3.8], vertical_alignment="center", gap="small")
+                with c_ts_info:
+                    _ts_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#FFFBEB")
+                    _ts_border = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#F59E0B")
+                    _ts_label_color = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#B45309")
+                    _ts_value_color = "#E2E8F0" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
+                    st.markdown(f"""
+                    <div style="background:{_ts_bg}; border:1.5px solid {_ts_border}; border-radius:8px; padding:6px 10px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; box-shadow:0 1px 3px rgba(245, 158, 11, 0.1);">
+                        <div style="font-size:11px; font-weight:800; color:{_ts_label_color}; line-height:1.2;">⏱️ सक्रिय जन्म काल (Active Time)</div>
+                        <div style="font-size:12.5px; font-weight:900; color:{_ts_value_color}; line-height:1.3;">📅 {birth_d.strftime('%d-%b-%Y')}<br/>⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with c_ts_ctrl:
+                    def _step_time_modal_action(delta_minutes=0, delta_hours=0, delta_days=0, reset_to_now=False):
+                        from datetime import datetime as dt_cls, timedelta as td_cls
+                        if reset_to_now:
+                            now_curr = dt_cls.now()
+                            st.session_state.birth_date = now_curr.date()
+                            st.session_state.birth_time = now_curr.time().replace(microsecond=0)
+                        else:
+                            curr_b_d = st.session_state.get("birth_date", _init_now.date())
+                            curr_b_t = st.session_state.get("birth_time", _init_now.time())
+                            c_combo = dt_cls.combine(curr_b_d, curr_b_t)
+                            n_combo = c_combo + td_cls(days=delta_days, hours=delta_hours, minutes=delta_minutes)
+                            st.session_state.birth_date = n_combo.date()
+                            st.session_state.birth_time = n_combo.time().replace(microsecond=0)
                         st.rerun()
-                with col_c3:
-                    if st.button("❌ बंद करें", use_container_width=True, key="gla_close_clock_btn"):
-                        st.session_state.gla_active_tool = None
-                        st.rerun()
+
+                    ts_b_cols = st.columns(9, gap="small", vertical_alignment="center")
+                    if ts_b_cols[0].button("⏪ -1द", key="ts_m_btn_m1d", help="-1 दिन पीछे जाएं"): _step_time_modal_action(delta_days=-1)
+                    if ts_b_cols[1].button("◀ -1घं", key="ts_m_btn_m1h", help="-1 घंटा पीछे जाएं"): _step_time_modal_action(delta_hours=-1)
+                    if ts_b_cols[2].button("‹ -15म", key="ts_m_btn_m15m", help="-15 मिनट पीछे जाएं"): _step_time_modal_action(delta_minutes=-15)
+                    if ts_b_cols[3].button("‹ -1म", key="ts_m_btn_m1m", help="-1 मिनट (BTR सूक्ष्म शोधन)"): _step_time_modal_action(delta_minutes=-1)
+                    if ts_b_cols[4].button("🔄 अब", key="ts_m_btn_now", type="primary", help="वर्तमान समय (Current Time) पर सेट करें"): _step_time_modal_action(reset_to_now=True)
+                    if ts_b_cols[5].button("+1म ›", key="ts_m_btn_p1m", help="+1 मिनट (BTR सूक्ष्म शोधन)"): _step_time_modal_action(delta_minutes=1)
+                    if ts_b_cols[6].button("+15म ›", key="ts_m_btn_p15m", help="+15 मिनट आगे जाएं"): _step_time_modal_action(delta_minutes=15)
+                    if ts_b_cols[7].button("+1घं ▶", key="ts_m_btn_p1h", help="+1 घंटा आगे जाएं"): _step_time_modal_action(delta_hours=1)
+                    if ts_b_cols[8].button("+1द ⏩", key="ts_m_btn_p1d", help="+1 दिन आगे जाएं"): _step_time_modal_action(delta_days=1)
 
         # 8. TOOL: CURRENT LOCATION (वर्तमान स्थान)
         elif st.session_state.gla_active_tool == "location":
@@ -5754,105 +5845,6 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# -------------------------------------------------------------
-# ⏱️ Quick Time Stepper & १२,५००+ Shastriya Rules HUD (Collapsible)
-# -------------------------------------------------------------
-with st.expander("⏱️ काल गति नियंत्रक एवं १२,५००+ शास्त्रीय नियम (Time Travel & Shastriya Rules)", expanded=False):
-    if "global_rules_scan_cache" not in st.session_state or st.session_state.get("global_rules_scan_chart_id") != id(chart):
-        try:
-            if not hasattr(default_narrative_service, "scan_shastriya_rules"):
-                import importlib
-                import src.jyotish.ai.narrative as _nm
-                importlib.reload(_nm)
-                default_narrative_service = _nm.default_narrative_service
-            _scan_summ = default_narrative_service.scan_shastriya_rules(chart, "general", limit=10)
-        except Exception:
-            _scan_summ = {
-                "total_scanned": 12578,
-                "total_fired": 0,
-                "total_positive": 0,
-                "total_negative": 0,
-                "relevant_rules": [],
-                "matched_topic": "सामान्य",
-                "grantha_breakdown": {}
-            }
-        st.session_state["global_rules_scan_cache"] = _scan_summ
-        st.session_state["global_rules_scan_chart_id"] = id(chart)
-
-    _gr_summ = st.session_state.get("global_rules_scan_cache", {})
-    _gr_scanned = _gr_summ.get("total_scanned", 12578)
-    _gr_fired = _gr_summ.get("total_fired", 0)
-    _gr_pos = _gr_summ.get("total_positive", 0)
-    _gr_neg = _gr_summ.get("total_negative", 0)
-
-    col_gr_bar, col_gr_btn = st.columns([4.8, 1.2], vertical_alignment="center", gap="small")
-    with col_gr_bar:
-        _rules_bg = "linear-gradient(90deg, #0A0F22 0%, #0D1330 100%)" if is_astrallis_mode else ("linear-gradient(90deg, #111827 0%, #1F2937 100%)" if is_night_mode else "linear-gradient(90deg, #F5F3FF 0%, #EDE9FE 100%)")
-        _rules_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#8B5CF6")
-        _rules_text_color = "#00E5FF" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#2E1065")
-        _rules_count_bg = "#0A1628" if is_astrallis_mode else ("#1F2937" if is_night_mode else "#FEF3C7")
-        _rules_count_color = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#92400E")
-        _rules_count_border = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#F59E0B")
-        _pos_bg = "#052e16" if is_astrallis_mode else ("#064e3b" if is_night_mode else "#DCFCE7")
-        _pos_color = "#10B981" if is_astrallis_mode else ("#6EE7B7" if is_night_mode else "#14532D")
-        _neg_bg = "#450a0a" if is_astrallis_mode else ("#7f1d1d" if is_night_mode else "#FEE2E2")
-        _neg_color = "#F87171" if is_astrallis_mode else ("#FCA5A5" if is_night_mode else "#991B1B")
-        st.markdown(f"""
-        <div style="background: {_rules_bg}; border: 1.5px solid {_rules_border}; border-radius: 8px; padding: 4px 10px; min-height: 38px; height: 38px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
-            <div style="color: {_rules_text_color} !important; font-size: 12.5px; font-weight: 800; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                <span style="color: {_rules_text_color} !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
-                <span style="background: {_rules_count_bg}; color: {_rules_count_color} !important; border: 1px solid {_rules_count_border}; padding: 2px 7px; border-radius: 6px; font-weight: 900; font-size: 11.5px;">{_gr_fired:,} सक्रिय नियम फलित</span>
-            </div>
-            <div style="font-size: 11px; display: flex; gap: 5px; align-items: center; flex-shrink: 0;">
-                <span style="background: {_pos_bg}; color: {_pos_color} !important; border: 1px solid {_pos_color}; padding: 2px 8px; border-radius: 10px; font-weight: 800;">🟢 {_gr_pos:,} शुभ (+)</span>
-                <span style="background: {_neg_bg}; color: {_neg_color} !important; border: 1px solid {_neg_color}; padding: 2px 8px; border-radius: 10px; font-weight: 800;">🔴 {_gr_neg:,} सतर्कता (-)</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col_gr_btn:
-        st.button("🔍 नियम बैंक खोलें ❯", key="global_open_rules_bank_btn", use_container_width=True, help="१२,५००+ महा-शास्त्रीय नियम बैंक (मॉड्यूल १९) खोलें", on_click=_nav_to_rules_bank)
-
-    st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
-
-    c_ts_info, c_ts_ctrl = st.columns([1.15, 3.85], vertical_alignment="center", gap="small")
-    with c_ts_info:
-        _ts_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#FFFBEB")
-        _ts_border = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#F59E0B")
-        _ts_label_color = "#F59E0B" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#B45309")
-        _ts_value_color = "#E2E8F0" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
-        st.markdown(f"""
-        <div style="background:{_ts_bg}; border:1.5px solid {_ts_border}; border-radius:8px; padding:3px 8px; height:38px; min-height:38px; max-height:38px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; box-shadow:0 1px 3px rgba(245, 158, 11, 0.1);">
-            <div style="font-size:10px; font-weight:800; color:{_ts_label_color}; line-height:1.1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">⏱️ काल गति नियंत्रक (Time Travel)</div>
-            <div style="font-size:11.5px; font-weight:900; color:{_ts_value_color}; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M:%S %p')}</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with c_ts_ctrl:
-        def _step_time_action(delta_minutes=0, delta_hours=0, delta_days=0, reset_to_now=False):
-            from datetime import datetime as dt_cls, timedelta as td_cls
-            if reset_to_now:
-                now_curr = dt_cls.now()
-                st.session_state.birth_date = now_curr.date()
-                st.session_state.birth_time = now_curr.time().replace(microsecond=0)
-            else:
-                curr_b_d = st.session_state.get("birth_date", _init_now.date())
-                curr_b_t = st.session_state.get("birth_time", _init_now.time())
-                c_combo = dt_cls.combine(curr_b_d, curr_b_t)
-                n_combo = c_combo + td_cls(days=delta_days, hours=delta_hours, minutes=delta_minutes)
-                st.session_state.birth_date = n_combo.date()
-                st.session_state.birth_time = n_combo.time().replace(microsecond=0)
-            st.rerun()
-
-        ts_b_cols = st.columns(9, gap="small", vertical_alignment="center")
-        if ts_b_cols[0].button("⏪ -1द", key="ts_btn_m1d", help="-1 दिन पीछे जाएं"): _step_time_action(delta_days=-1)
-        if ts_b_cols[1].button("◀ -1घं", key="ts_btn_m1h", help="-1 घंटा पीछे जाएं"): _step_time_action(delta_hours=-1)
-        if ts_b_cols[2].button("‹ -15म", key="ts_btn_m15m", help="-15 मिनट पीछे जाएं"): _step_time_action(delta_minutes=-15)
-        if ts_b_cols[3].button("‹ -1म", key="ts_btn_m1m", help="-1 मिनट (BTR सूक्ष्म शोधन)"): _step_time_action(delta_minutes=-1)
-        if ts_b_cols[4].button("🔄 अब", key="ts_btn_now", type="primary", help="वर्तमान समय (Current Time) पर सेट करें"): _step_time_action(reset_to_now=True)
-        if ts_b_cols[5].button("+1म ›", key="ts_btn_p1m", help="+1 मिनट (BTR सूक्ष्म शोधन)"): _step_time_action(delta_minutes=1)
-        if ts_b_cols[6].button("+15म ›", key="ts_btn_p15m", help="+15 मिनट आगे जाएं"): _step_time_action(delta_minutes=15)
-        if ts_b_cols[7].button("+1घं ▶", key="ts_btn_p1h", help="+1 घंटा आगे जाएं"): _step_time_action(delta_hours=1)
-        if ts_b_cols[8].button("+1द ⏩", key="ts_btn_p1d", help="+1 दिन आगे जाएं"): _step_time_action(delta_days=1)
 
 
 # -------------------------------------------------------------
