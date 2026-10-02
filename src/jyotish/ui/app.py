@@ -5258,8 +5258,8 @@ with st.container(key="top_frozen_header_container", border=False):
     # ---------------------------------------------------------
     # 🎨 THEME STYLING TOKENS FOR SIDEBAR & HEADER BREADCRUMB (Grahalakshanam Palette)
     # ---------------------------------------------------------
-    _sb_card_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#F2F4F7")
-    _sb_card_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#00B0F0")
+    _sb_card_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#FFFFFF")
+    _sb_card_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#CBD5E1")
     _breadcrumb_bg = "#0A1628" if is_astrallis_mode else ("#111827" if is_night_mode else "#F2F4F7")
     _breadcrumb_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_mode else "#00B0F0")
     _breadcrumb_title_color = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#0073CF")
@@ -5273,12 +5273,58 @@ with st.container(key="top_frozen_header_container", border=False):
         _sb_prof_name = "#FFFFFF" if (is_astrallis_mode or is_night_mode) else "#0F172A"
         _sb_prof_sub = "#CBD5E1" if (is_astrallis_mode or is_night_mode) else "#475569"
         st.markdown(f"""
-        <div style="background:{_sb_card_bg}; border:2px solid {_sb_card_border}; border-radius:12px; padding:10px 14px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,176,240,0.12);">
+        <div style="background:{_sb_card_bg}; border:2px solid {_sb_card_border}; border-radius:12px; padding:10px 14px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
             <div style="font-size:11px; font-weight:800; color:{_sb_prof_tag}; text-transform:uppercase; letter-spacing:0.5px;">👤 सक्रिय जातक प्रोफाइल</div>
             <div style="font-size:15.5px; font-weight:900; color:{_sb_prof_name}; margin:3px 0;">{name}</div>
             <div style="font-size:11.5px; color:{_sb_prof_sub}; line-height:1.4;">
                 📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M %p')}<br/>
                 📍 {default_city_name} | <b>लग्न:</b> {chart.lagna_sign_name}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # -----------------------------------------------------
+        # ⚡ DIGITAL PANCHANG CARD (जातक का डिजिटल पंचांग)
+        # -----------------------------------------------------
+        p_sb = getattr(chart, "panchang", None)
+        _tithi_str = getattr(p_sb, "tithi_name", "N/A") if p_sb else "N/A"
+        _vara_str = getattr(p_sb, "vara_name", "N/A") if p_sb else "N/A"
+        _nak_str = getattr(p_sb, "nakshatra_name", "N/A") if p_sb else "N/A"
+        _yoga_str = getattr(p_sb, "yoga_name", "N/A") if p_sb else "N/A"
+        _karana_str = getattr(p_sb, "karana_name", "N/A") if p_sb else "N/A"
+
+        _pill_bg = "#0D1D35" if is_astrallis_mode else ("#1F2937" if is_night_mode else "#F8FAFC")
+        _pill_border = "#1E293B" if is_astrallis_mode else ("#374151" if is_night_mode else "#E2E8F0")
+        _pill_label = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#0073CF")
+        _pill_val = "#FFFFFF" if (is_astrallis_mode or is_night_mode) else "#000000"
+
+        st.markdown(f"""
+        <div style="background:{_sb_card_bg}; border:2px solid {_sb_card_border}; border-radius:12px; padding:10px 14px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <div style="font-size:11px; font-weight:800; color:{_sb_prof_tag}; text-transform:uppercase; letter-spacing:0.5px;">⚡ जातक डिजिटल पंचांग</div>
+                <span style="font-size:10px; font-weight:800; background:{_pill_bg}; color:{_pill_label}; border:1px solid {_pill_border}; border-radius:4px; padding:1px 6px;">जन्म काल</span>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11px;">
+                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:8px; padding:5px 8px;">
+                    <span style="color:{_pill_label}; font-size:10px; font-weight:700; display:block;">📅 तिथि</span>
+                    <b style="color:{_pill_val}; font-size:11.5px; font-weight:800; word-break:break-word;">{_tithi_str}</b>
+                </div>
+                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:8px; padding:5px 8px;">
+                    <span style="color:{_pill_label}; font-size:10px; font-weight:700; display:block;">🪐 वार / दिन</span>
+                    <b style="color:{_pill_val}; font-size:11.5px; font-weight:800; word-break:break-word;">{_vara_str}</b>
+                </div>
+                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:8px; padding:5px 8px;">
+                    <span style="color:{_pill_label}; font-size:10px; font-weight:700; display:block;">✨ नक्षत्र</span>
+                    <b style="color:{_pill_val}; font-size:11.5px; font-weight:800; word-break:break-word;">{_nak_str}</b>
+                </div>
+                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:8px; padding:5px 8px;">
+                    <span style="color:{_pill_label}; font-size:10px; font-weight:700; display:block;">🌿 योग</span>
+                    <b style="color:{_pill_val}; font-size:11.5px; font-weight:800; word-break:break-word;">{_yoga_str}</b>
+                </div>
+                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:8px; padding:5px 8px; grid-column: span 2;">
+                    <span style="color:{_pill_label}; font-size:10px; font-weight:700; display:block;">⚡ करण</span>
+                    <b style="color:{_pill_val}; font-size:11.5px; font-weight:800; word-break:break-word;">{_karana_str}</b>
+                </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
