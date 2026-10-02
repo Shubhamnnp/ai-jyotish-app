@@ -6058,7 +6058,6 @@ if selected_idx == 0:
   </table>
 </div>"""
     st.markdown(table_html, unsafe_allow_html=True)
-    st.dataframe(pd.DataFrame(p_data), use_container_width=True, hide_index=True)
 
     # 🌟 विशेष लग्न HUD (J.Hora Special Lagnas: HL, GL, SL, Indu, PP, VL)
     if chart.jaimini:
