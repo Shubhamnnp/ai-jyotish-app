@@ -6265,6 +6265,52 @@ if selected_idx == 0:
                         else:
                             st.markdown(generate_styled_vertical_svg(vims_items, max_val=20, is_dark=_is_dark), unsafe_allow_html=True)
 
+        # ─── Pancha Mahapurusha Yogas & Key Yogas Banner ───
+        try:
+            _yogas_found = []
+            # Pancha Mahapurusha Yogas
+            _kendra_houses = [1, 4, 7, 10]
+            _mars = chart.planets.get("Mars")
+            if _mars and _mars.house_from_lagna in _kendra_houses and _mars.sign_name in ["Aries", "Scorpio", "Capricorn"]:
+                _yogas_found.append(("🔴 रुचक महापुरुष योग (Ruchaka)", "मंगल केंद्र में स्व/उच्च राशि — अदम्य साहस, भूमि-भवन लाभ, नेतृत्व एवं सैन्य/प्रशासनिक पराक्रम।"))
+            _merc = chart.planets.get("Mercury")
+            if _merc and _merc.house_from_lagna in _kendra_houses and _merc.sign_name in ["Gemini", "Virgo"]:
+                _yogas_found.append(("🟢 भद्र महापुरुष योग (Bhadra)", "बुध केंद्र में स्व/उच्च राशि — असाधारण बौद्धिक प्रखरता, वाणी प्रभाव, व्यापारिक कुशलता एवं दीर्घायु।"))
+            _jup = chart.planets.get("Jupiter")
+            if _jup and _jup.house_from_lagna in _kendra_houses and _jup.sign_name in ["Sagittarius", "Pisces", "Cancer"]:
+                _yogas_found.append(("🟡 हंस महापुरुष योग (Hamsa)", "गुरु केंद्र में स्व/उच्च राशि — सात्विक बुद्धि, आध्यात्मिक तेज, पूज्य सम्मान एवं सदाचार।"))
+            _ven = chart.planets.get("Venus")
+            if _ven and _ven.house_from_lagna in _kendra_houses and _ven.sign_name in ["Taurus", "Libra", "Pisces"]:
+                _yogas_found.append(("🌸 मालव्य महापुरुष योग (Malavya)", "शुक्र केंद्र में स्व/उच्च राशि — राजसी वैभव, कलात्मक सौंदर्य, ऐश्वर्य, सुखी वैवाहिक जीवन व वाहन सुख।"))
+            _sat = chart.planets.get("Saturn")
+            if _sat and _sat.house_from_lagna in _kendra_houses and _sat.sign_name in ["Capricorn", "Aquarius", "Libra"]:
+                _yogas_found.append(("🪐 शश महापुरुष योग (Sasa)", "शनि केंद्र में स्व/उच्च राशि — जननायक, अपार धैर्य, गुप्त अधिकार, राजनीतिक प्रभाव एवं स्थिर सत्ता।"))
+
+            # Gajakesari Yoga
+            _moon = chart.planets.get("Moon")
+            if _jup and _moon:
+                _jm_dist = ((_jup.house_from_lagna - _moon.house_from_lagna + 12) % 12) + 1
+                if _jm_dist in [1, 4, 7, 10]:
+                    _yogas_found.append(("🐘 गजकेसरी योग (Gajakesari)", "गुरु चन्द्र से केंद्र में स्थित — अपार यश, विद्वता, निर्भय व्यक्तित्व एवं सर्वत्र आदर-सत्कार।"))
+
+            # Budhaditya Yoga
+            _sun = chart.planets.get("Sun")
+            if _sun and _merc and _sun.sign_id == _merc.sign_id:
+                _diff = abs(_sun.longitude - _merc.longitude)
+                if _diff > 180: _diff = 360 - _diff
+                if _diff <= 10.0:
+                    _comb_txt = " (बुध अस्त नहीं)" if not _merc.is_combust else " (अंश निकट)"
+                    _yogas_found.append(("⚡ बुधादित्य योग (Budhaditya)", f"सूर्य-बुध युति (अंतर: {_diff:.1f}°){_comb_txt} — तीक्ष्ण बुद्धि, प्रशासनिक कुशलता व व्यावसायिक सफलता।"))
+
+            if _yogas_found:
+                _y_cards = []
+                for _yt, _yd in _yogas_found:
+                    _y_cards.append(f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:6px; padding:6px 10px; margin-bottom:4px;"><span style="font-weight:900; color:#1E3A8A; font-size:12px;">{_yt}</span>: <span style="font-size:11.5px; color:#334155;">{_yd}</span></div>')
+                _yoga_banner_html = f'<div style="background:linear-gradient(135deg, #EFF6FF 0%, #F0FDF4 100%); border:1.5px solid #93C5FD; border-radius:8px; padding:10px 12px; margin-bottom:12px;"><div style="font-weight:900; color:#1E40AF; font-size:13px; margin-bottom:6px; display:flex; align-items:center; gap:6px;"><span>🏆 <b>कुण्डली प्रमुख महा-योग उद्घोष (Major Planetary Yogas Detected)</b></span></div>{"".join(_y_cards)}</div>'
+                st.markdown(_yoga_banner_html, unsafe_allow_html=True)
+        except Exception as _ey:
+            pass
+
         st.markdown(f"### 🪐 {varga_choice} ({v_name}) चक्र — नवग्रह स्पष्ट स्थिति, भाव एवं गरिमा तालिका")
         p_data = []
         target_planets_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
@@ -6380,231 +6426,716 @@ if selected_idx == 0:
 
     with tab_jm_hud:
         st.markdown("### 👑 विशेष जैमिनी लग्न (Special Lagnas - J.Hora Standard)")
-        st.info("महर्षि पराशर एवं जैमिनी सूत्र अनुसार विशेष लग्नों की गणितीय स्पष्ट स्थिति:")
-        # 🌟 विशेष लग्न HUD (J.Hora Special Lagnas: HL, GL, SL, Indu, PP, VL)
+        st.info("महर्षि पराशर (BPHS) एवं जैमिनी उपदेश सूत्रों के अनुसार जीवन के विशिष्ट क्षेत्रों (धन, पद, सत्ता, आयुष्य एवं भाग्य) के सूक्ष्म आकलन हेतु विशेष लग्नों की गणितीय स्पष्ट स्थिति:")
+
         if chart.jaimini:
             jm = chart.jaimini
+            sl_details = getattr(jm, 'special_lagnas_detail', {}) or {}
+
+            # ─── Top 6 HUD Cards ───
+            hl_o = sl_details.get('HL', {})
+            gl_o = sl_details.get('GL', {})
+            sl_o = sl_details.get('SL', {})
+            il_o = sl_details.get('IL', {})
+            pp_o = sl_details.get('PP', {})
+            vl_o = sl_details.get('VL', {})
+
             st.markdown(f"""
-            <div style="background: linear-gradient(90deg, #FFFBEB 0%, #FEF3C7 100%); border: 1.5px solid #F59E0B; border-radius: 10px; padding: 12px 18px; margin: 15px 0; box-shadow: 0 2px 6px rgba(217, 119, 6, 0.1);">
+            <div style="background: linear-gradient(90deg, #FFFBEB 0%, #FEF3C7 100%); border: 1.5px solid #F59E0B; border-radius: 10px; padding: 12px 18px; margin: 10px 0 15px 0; box-shadow: 0 2px 6px rgba(217, 119, 6, 0.1);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <div style="color: #92400E; font-size: 13.5px; font-weight: 900; display: flex; align-items: center; gap: 6px;">
-                        <span>👑 <b>विशेष जैमिनी लग्न (Special Lagnas - J.Hora Standard)</b></span>
+                        <span>👑 <b>जैमिनी विशेष लग्न त्वरित अवलोकन (Quick HUD Console)</b></span>
                     </div>
                     <div style="font-size: 11.5px; color: #78350F; font-weight: 800; background: #FDE68A; padding: 2px 8px; border-radius: 6px;">
                         अयनांश: {chart.ayanamsa_name} ({chart.ayanamsa_value:.2f}°) | नोड: {st.session_state.get('app_node_type', 'Mean Node').split('(')[0]}
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 8px 10px;">
                         <div style="font-size: 11px; color: #B45309; font-weight: 800;">💰 होरा लग्न (HL)</div>
-                        <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.hora_lagna_sign_name}</div>
-                        <div style="font-size: 10px; color: #64748B;">धन, संचित संपदा</div>
+                        <div style="font-size: 14.5px; font-weight: 900; color: #1E293B;">{jm.hora_lagna_sign_name}</div>
+                        <div style="font-size: 10px; color: #64748B;">अंश: {hl_o.get('degree', 0.0):.2f}° | स्वामी: {hl_o.get('lord', '—')}</div>
+                        <div style="font-size: 10px; color: #047857; font-weight:700;">धन, संचित संपदा</div>
                     </div>
-                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 8px 10px;">
                         <div style="font-size: 11px; color: #B45309; font-weight: 800;">🏛️ घटी लग्न (GL)</div>
-                        <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.ghati_lagna_sign_name}</div>
-                        <div style="font-size: 10px; color: #64748B;">सत्ता, अधिकार, पद</div>
+                        <div style="font-size: 14.5px; font-weight: 900; color: #1E293B;">{jm.ghati_lagna_sign_name}</div>
+                        <div style="font-size: 10px; color: #64748B;">अंश: {gl_o.get('degree', 0.0):.2f}° | स्वामी: {gl_o.get('lord', '—')}</div>
+                        <div style="font-size: 10px; color: #1D4ED8; font-weight:700;">सत्ता, अधिकार, पद</div>
                     </div>
-                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 8px 10px;">
                         <div style="font-size: 11px; color: #B45309; font-weight: 800;">🪷 श्री लग्न (SL)</div>
-                        <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.sri_lagna_sign_name}</div>
-                        <div style="font-size: 10px; color: #64748B;">महालक्ष्मी कृपा, समृद्धि</div>
+                        <div style="font-size: 14.5px; font-weight: 900; color: #1E293B;">{jm.sri_lagna_sign_name}</div>
+                        <div style="font-size: 10px; color: #64748B;">अंश: {sl_o.get('degree', 0.0):.2f}° | स्वामी: {sl_o.get('lord', '—')}</div>
+                        <div style="font-size: 10px; color: #D97706; font-weight:700;">महालक्ष्मी कृपा, समृद्धि</div>
                     </div>
-                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
-                        <div style="font-size: 11px; color: #B45309; font-weight: 800;">💎 इन्दु लग्न (Indu)</div>
-                        <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.indu_lagna_sign_name}</div>
-                        <div style="font-size: 10px; color: #64748B;">करोड़पति/धनागमन योग</div>
+                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 8px 10px;">
+                        <div style="font-size: 11px; color: #B45309; font-weight: 800;">💎 इन्दु लग्न (IL)</div>
+                        <div style="font-size: 14.5px; font-weight: 900; color: #1E293B;">{jm.indu_lagna_sign_name}</div>
+                        <div style="font-size: 10px; color: #64748B;">स्वामी: {il_o.get('lord', '—')}</div>
+                        <div style="font-size: 10px; color: #7C3AED; font-weight:700;">कोटिपतित्व / धनागमन</div>
                     </div>
-                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 8px 10px;">
                         <div style="font-size: 11px; color: #B45309; font-weight: 800;">💨 प्राणपद लग्न (PP)</div>
-                        <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.pranapada_lagna_sign_name}</div>
-                        <div style="font-size: 10px; color: #64748B;">प्राण शक्ति, BTR सत्यता</div>
+                        <div style="font-size: 14.5px; font-weight: 900; color: #1E293B;">{jm.pranapada_lagna_sign_name}</div>
+                        <div style="font-size: 10px; color: #64748B;">अंश: {pp_o.get('degree', 0.0):.2f}° | स्वामी: {pp_o.get('lord', '—')}</div>
+                        <div style="font-size: 10px; color: #059669; font-weight:700;">प्राण शक्ति, BTR शोधन</div>
                     </div>
-                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 10px;">
+                    <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 8px 10px;">
                         <div style="font-size: 11px; color: #B45309; font-weight: 800;">⚔️ वर्णद लग्न (VL)</div>
-                        <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.varnada_lagna_sign_name}</div>
-                        <div style="font-size: 10px; color: #64748B;">सामाजिक दायित्व, वृत्ति</div>
+                        <div style="font-size: 14.5px; font-weight: 900; color: #1E293B;">{jm.varnada_lagna_sign_name}</div>
+                        <div style="font-size: 10px; color: #64748B;">स्वामी: {vl_o.get('lord', '—')}</div>
+                        <div style="font-size: 10px; color: #DC2626; font-weight:700;">सामाजिक दायित्व, आजीविका</div>
                     </div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
+            # ─── Detailed Comparative Table ───
+            st.markdown("#### 📊 विशेष लग्न स्पष्ट गणितीय तालिका (J.Hora Standard Mathematical Details)")
+            sl_rows = []
+            order_keys = ["HL", "GL", "SL", "IL", "BL", "PP", "VL"]
+            for k in order_keys:
+                v = sl_details.get(k)
+                if not v:
+                    continue
+                h_from_lag = ((SIGN_NAMES.index(v['sign']) - chart.lagna_sign_id + 12) % 12) + 1 if v.get('sign') in SIGN_NAMES else 1
+                sl_rows.append({
+                    "विशेष लग्न": v.get('name_hi', k),
+                    "प्रतीक": k,
+                    "राशि": v.get('sign', '—'),
+                    "स्पष्ट अंश": f"{v.get('degree', 0.0):.2f}°",
+                    "सम्पूर्ण देशांतर": f"{v.get('longitude', 0.0):.2f}°",
+                    "राशि स्वामी": v.get('lord', '—'),
+                    "लग्न से भाव": f"{h_from_lag} भाव",
+                    "शास्त्रीय प्रयोजन एवं नियम": v.get('purpose_hi', '')
+                })
+            st.dataframe(pd.DataFrame(sl_rows), use_container_width=True, hide_index=True)
 
-    with tab_bhav:
-        st.markdown("### 🏠 भाव चलित चक्र (Bhava Chalit Chart)")
-        st.info("समभाव पद्धति में mid-cusp boundaries से ग्रहों का वास्तविक भाव।")
-        try:
-            import importlib
-            import src.jyotish.core.calculator as calc_mod
-            importlib.reload(calc_mod)
-            _calc_instance = calc_mod.default_chart_calculator
-            _bc_res = _calc_instance.calculate_bhava_chalit(chart)
-            if _bc_res:
-                _bc_items = _bc_res.get("planet_positions", []) if isinstance(_bc_res, dict) else _bc_res
-                _cusps_list = _bc_res.get("bhava_cusps", []) if isinstance(_bc_res, dict) else []
-                _bc1, _bc2 = st.columns(2)
-                with _bc1:
-                    _bc_rows = []
-                    for _it in _bc_items:
-                        _rh = _it.get("rashi_house", "—")
-                        _ch = _it.get("chalit_house", "—")
-                        _bc_rows.append({"ग्रह": _it.get("planet", ""), "राशि भाव": _rh, "चलित भाव": _ch, "परिवर्तन?": "✅ बदला" if _rh != _ch else "— समान", "राशि": _it.get("sign", _it.get("sign_name", ""))})
-                    st.dataframe(pd.DataFrame(_bc_rows), use_container_width=True, hide_index=True)
-                with _bc2:
-                    if _cusps_list:
-                        _cusp_table = []
-                        for _c in _cusps_list:
-                            _cusp_table.append({
-                                "भाव": _c.get("bhava", ""),
-                                "राशि": _c.get("sign_name", ""),
-                                "Cusp अंश": f"{_c.get('cusp_degree', 0.0):.2f}°",
-                                "स्पष्ट": f"{_c.get('cusp_longitude', 0.0):.2f}°"
-                            })
-                        st.dataframe(pd.DataFrame(_cusp_table), use_container_width=True, hide_index=True)
-                    _chd = [r for r in _bc_rows if "बदला" in r["परिवर्तन?"]]
-                    if _chd:
-                        st.warning("⚠️ " + str(len(_chd)) + " ग्रह राशि-भाव और चलित-भाव में भिन्न: " + ", ".join(f"{r['ग्रह']} ({r['राशि भाव']}→{r['चलित भाव']})" for r in _chd))
-                    else:
-                        st.success("✅ सभी ग्रह राशि-भाव और चलित-भाव में समान हैं।")
-        except Exception as _ebc:
-            st.error(f"भाव चलित त्रुटि: {str(_ebc)[:200]}")
+            # ─── 3 Jaimini Special Yoga Analysis Cards ───
+            st.markdown("#### 🔬 विशेष लग्न आधारित शास्त्रीय योग फलादेश (Jaimini Classical Yoga Engine)")
+            col_y1, col_y2, col_y3 = st.columns(3)
 
-
-    with tab_chandra:
-        st.markdown("### 🌙 चन्द्र कुण्डली (Moon as Lagna)")
-        _moon = chart.planets.get("Moon")
-        if _moon:
-            _moon_sid = _moon.sign_id
-            st.info(f"चन्द्र राशि: **{_moon.sign_name}** — यह चन्द्र कुण्डली का प्रथम भाव है।")
-            _cc1, _cc2 = st.columns([1, 1])
-            with _cc1:
-                try:
-                    st.markdown(render_chart_svg(chart, f"Chandra Kundali ({_moon.sign_name} Lagna)"), unsafe_allow_html=True)
-                except Exception as _ec:
-                    st.info(f"Chart: {_ec}")
-            with _cc2:
-                _moon_tbl = []
-                for _pn, _pp in chart.planets.items():
-                    _moon_tbl.append({"ग्रह": _pn, "राशि": _pp.sign_name, "चन्द्र-लग्न से भाव": ((_pp.sign_id - _moon_sid) % 12) + 1, "देशांतर": f"{_pp.longitude:.2f}°"})
-                st.dataframe(pd.DataFrame(_moon_tbl), use_container_width=True, hide_index=True)
-                st.success("चन्द्र कुण्डली — मन, माता, सुख एवं जनजीवन का दर्पण।")
-        else:
-            st.warning("चन्द्रमा की स्थिति उपलब्ध नहीं।")
-
-
-    with tab_surya:
-        st.markdown("### ☀️ सूर्य कुण्डली (Sun as Lagna)")
-        _sun = chart.planets.get("Sun")
-        if _sun:
-            _sun_sid = _sun.sign_id
-            st.info(f"सूर्य राशि: **{_sun.sign_name}** — यह सूर्य कुण्डली का प्रथम भाव है।")
-            _sc1, _sc2 = st.columns([1, 1])
-            with _sc1:
-                try:
-                    st.markdown(render_chart_svg(chart, f"Surya Kundali ({_sun.sign_name} Lagna)"), unsafe_allow_html=True)
-                except Exception as _es:
-                    st.info(f"Chart: {_es}")
-            with _sc2:
-                _sun_tbl = []
-                for _pn, _pp in chart.planets.items():
-                    _sun_tbl.append({"ग्रह": _pn, "राशि": _pp.sign_name, "सूर्य-लग्न से भाव": ((_pp.sign_id - _sun_sid) % 12) + 1, "देशांतर": f"{_pp.longitude:.2f}°"})
-                st.dataframe(pd.DataFrame(_sun_tbl), use_container_width=True, hide_index=True)
-                st.success("सूर्य कुण्डली — आत्मा, पिता, यश एवं जीवन उद्देश्य का संकेत।")
-        else:
-            st.warning("सूर्य की स्थिति उपलब्ध नहीं।")
-
-
-    with tab_yuddha:
-        st.markdown("### ⚔️ ग्रह युद्ध (Graha Yuddha — Planetary War)")
-        st.info("जब दो ग्रह 1° के भीतर हों तो ग्रह युद्ध। उत्तर अक्षांश वाला ग्रह विजेता।")
-        try:
-            import importlib
-            import src.jyotish.core.calculator as calc_mod
-            importlib.reload(calc_mod)
-            _calc_instance = calc_mod.default_chart_calculator
-            _yw_list = _calc_instance.detect_graha_yuddha(chart)
-            if _yw_list:
-                st.error(f"⚔️ {len(_yw_list)} ग्रह युद्ध इस कुण्डली में पाए गए:")
-                for _yw in _yw_list:
-                    st.markdown(f"**⚔️ {_yw.get('planet1')} vs {_yw.get('planet2')}** — अंतर: {_yw.get('separation_deg', 0):.3f}° | 🏆 विजेता: **{_yw.get('winner')}** | पराजित: **{_yw.get('loser')}**")
-            else:
-                st.success("✅ इस कुण्डली में कोई ग्रह युद्ध नहीं है।")
-        except Exception as _egy:
-            st.error(f"ग्रह युद्ध त्रुटि: {str(_egy)[:200]}")
-
-
-    with tab_vishesh:
-        st.markdown("### 👑 विशेष जैमिनी लग्न एवं आरूढ़ फलादेश (Special Lagnas Deep Dive)")
-        if chart.jaimini:
-            jm = chart.jaimini
-            col_sp1, col_sp2 = st.columns(2)
-            with col_sp1:
+            # 1. Dhana Yoga (HL & SL)
+            with col_y1:
+                hl_s = jm.hora_lagna_sign_name
+                sl_s = jm.sri_lagna_sign_name
+                hl_lord = SIGN_LORDS.get(hl_s, '')
+                is_hl_benefic = hl_lord in ["Jupiter", "Venus", "Mercury", "Moon"]
                 st.markdown(f"""
-                <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px; margin-bottom:12px;">
-                    <h4 style="color:#B45309; margin:0 0 6px 0;">💰 होरा लग्न (Hora Lagna - HL): {jm.hora_lagna_sign_name}</h4>
-                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
-                    <b>शास्त्रीय प्रयोजन:</b> चल एवं अचल संपत्ति, वित्तीय सफलता, व्यापारिक लेन-देन एवं संचित धन का विचार।<br/>
-                    <b>नियम:</b> यदि होरा लग्न शुभ ग्रहों से दृष्ट या युत हो तो जातक धनवान एवं आर्थिक संकटों से सुरक्षित रहता है।
-                    </p>
-                </div>
-                <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:14px; margin-bottom:12px;">
-                    <h4 style="color:#1D4ED8; margin:0 0 6px 0;">🏛️ घटी लग्न (Ghati Lagna - GL): {jm.ghati_lagna_sign_name}</h4>
-                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
-                    <b>शास्त्रीय प्रयोजन:</b> सामाजिक प्रतिष्ठा, राजसत्ता, राजनीतिक प्रभाव, उच्च पद, शक्ति एवं मान-सम्मान।<br/>
-                    <b>नियम:</b> जन्म लग्न और घटी लग्न के स्वामियों में सम्बंध हो तो जातक को राजकीय सम्मान एवं उच्च पद प्राप्त होता है।
-                    </p>
-                </div>
-                <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:10px; padding:14px;">
-                    <h4 style="color:#047857; margin:0 0 6px 0;">🪷 श्री लग्न (Sri Lagna - SL): {jm.sri_lagna_sign_name}</h4>
-                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
-                    <b>शास्त्रीय प्रयोजन:</b> महालक्ष्मी की विशेष कृपा, सौभाग्य, आकस्मिक समृद्धि एवं वैवाहिक सुख।<br/>
-                    <b>नियम:</b> श्री लग्न का स्वामी जब केंद्र या त्रिकोण में उच्च का हो तो जातक को जीवन भर धन का अभाव नहीं होता।
-                    </p>
+                <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:12px; height:100%;">
+                    <h5 style="color:#B45309; margin:0 0 6px 0;">💰 जैमिनी धन योग (HL &amp; SL)</h5>
+                    <div style="font-size:12px; color:#1E293B; line-height:1.5;">
+                        <b>होरा लग्न (HL):</b> {hl_s} (स्वामी: {hl_lord})<br/>
+                        <b>श्री लग्न (SL):</b> {sl_s}<br/>
+                        <div style="margin:6px 0; padding:6px; background:#FEF3C7; border-radius:6px; font-weight:800; font-size:11.5px; color:#78350F;">
+                            {'🌟 प्रबल धन योग: होरा लग्न का स्वामी शुभ ग्रह है तथा वित्तीय संचय में स्थायित्व प्रदान करता है।' if is_hl_benefic else '⚡ कर्मप्रधान धन योग: वित्तीय सफलता पुरुषार्थ एवं निरंतर उद्यम से निर्मित होगी।'}
+                        </div>
+                        <b>शास्त्रीय सूत्र:</b> होरा लग्न और श्री लग्न पर शुभ ग्रहों (गुरु, शुक्र, बुध) की दृष्टि या युति जातक को विपुल संपदा एवं महालक्ष्मी का स्थायी अनुग्रह प्रदान करती है।
+                    </div>
                 </div>
                 """, unsafe_allow_html=True)
-            with col_sp2:
+
+            # 2. Raja Yoga (GL & Janma Lagna)
+            with col_y2:
+                gl_s = jm.ghati_lagna_sign_name
+                gl_lord = SIGN_LORDS.get(gl_s, '')
+                gl_h = ((SIGN_NAMES.index(gl_s) - chart.lagna_sign_id + 12) % 12) + 1 if gl_s in SIGN_NAMES else 1
+                is_gl_kendra = gl_h in [1, 4, 7, 10, 5, 9]
                 st.markdown(f"""
-                <div style="background:#FAF5FF; border:1.5px solid #8B5CF6; border-radius:10px; padding:14px; margin-bottom:12px;">
-                    <h4 style="color:#6D28D9; margin:0 0 6px 0;">💎 इन्दु लग्न (Indu Lagna): {jm.indu_lagna_sign_name}</h4>
-                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
-                    <b>शास्त्रीय प्रयोजन:</b> करोड़पति योग, गुप्त धन, वित्तीय साम्राज्य एवं अकूत संपदा का मुख्य सूचक।<br/>
-                    <b>नियम:</b> इन्दु लग्न में शुभ ग्रह स्थित हों तो जातक विपुल धनोपार्जन करता है; पापी ग्रह हों तो उतार-चढ़ाव रहता है।
-                    </p>
+                <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px; height:100%;">
+                    <h5 style="color:#1D4ED8; margin:0 0 6px 0;">🏛️ जैमिनी राज योग (GL &amp; Lagna)</h5>
+                    <div style="font-size:12px; color:#1E293B; line-height:1.5;">
+                        <b>घटी लग्न (GL):</b> {gl_s} ({gl_h} भाव)<br/>
+                        <b>घटी लग्न स्वामी:</b> {gl_lord}<br/>
+                        <div style="margin:6px 0; padding:6px; background:#DBEAFE; border-radius:6px; font-weight:800; font-size:11.5px; color:#1E3A8A;">
+                            {'👑 प्रतिष्ठित राजयोग: घटी लग्न केंद्र/त्रिकोण में स्थित होकर शासकीय प्रभुत्व एवं यश देता है।' if is_gl_kendra else '📈 प्रतिष्ठा योग: घटी लग्न जातक को सामाजिक दायित्व एवं प्रशासनिक प्रभाव प्रदान करता है।'}
+                        </div>
+                        <b>शास्त्रीय सूत्र:</b> यदि जन्म लग्न और घटी लग्न दोनों पर किसी एक ही ग्रह की दृष्टि हो, तो महर्षि जैमिनी अनुसार जातक को राजा समान पद, सत्ता एवं समाज में सर्वोच्च सम्मान प्राप्त होता है।
+                    </div>
                 </div>
-                <div style="background:#F0FDF4; border:1.5px solid #22C55E; border-radius:10px; padding:14px; margin-bottom:12px;">
-                    <h4 style="color:#15803D; margin:0 0 6px 0;">💨 प्राणपद लग्न (Pranapada Lagna): {jm.pranapada_lagna_sign_name}</h4>
-                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
-                    <b>शास्त्रीय प्रयोजन:</b> जीवन शक्ति, श्वास, आत्मा का देह से सम्बंध एवं जन्म समय शुद्धि (BTR) का प्रमाण।<br/>
-                    <b>नियम:</b> प्राणपद लग्न का त्रिकोण सम्बंध जन्म लग्न से होना सटीक जन्म समय का द्योतक है।
-                    </p>
-                </div>
-                <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:10px; padding:14px;">
-                    <h4 style="color:#B91C1C; margin:0 0 6px 0;">⚔️ वर्णद लग्न (Varnada Lagna): {jm.varnada_lagna_sign_name}</h4>
-                    <p style="color:#1E293B; font-size:12.5px; line-height:1.5; margin:0;">
-                    <b>शास्त्रीय प्रयोजन:</b> आजीविका की प्रकृति, सामाजिक कर्तव्य, जातिगत व व्यावसायिक दायित्व।<br/>
-                    <b>नियम:</b> वर्णद लग्न पर शुभ प्रभाव जातक को समाज में प्रतिष्ठित वृत्ति एवं निष्ठावान कार्यशैली देता है।
-                    </p>
+                """, unsafe_allow_html=True)
+
+            # 3. Indu Lagna Wealth Engine
+            with col_y3:
+                il_s = jm.indu_lagna_sign_name
+                il_lord = SIGN_LORDS.get(il_s, '')
+                il_planets = [pn for pn, p in chart.planets.items() if p.sign_name == il_s]
+                il_benefics = [p for p in il_planets if p in ["Jupiter", "Venus", "Mercury", "Moon"]]
+                st.markdown(f"""
+                <div style="background:#FAF5FF; border:1.5px solid #8B5CF6; border-radius:10px; padding:12px; height:100%;">
+                    <h5 style="color:#6D28D9; margin:0 0 6px 0;">💎 इन्दु लग्न कोटिपतित्व योग</h5>
+                    <div style="font-size:12px; color:#1E293B; line-height:1.5;">
+                        <b>इन्दु लग्न:</b> {il_s} (स्वामी: {il_lord})<br/>
+                        <b>इन्दु लग्न में स्थित ग्रह:</b> {', '.join(il_planets) if il_planets else 'शुभ दृष्टि प्रभाव'}<br/>
+                        <div style="margin:6px 0; padding:6px; background:#F3E8FF; border-radius:6px; font-weight:800; font-size:11.5px; color:#581C87;">
+                            {'🏆 कोटिपतित्व योग: शुभ ग्रह इन्दु लग्न में विद्यमान होकर अकूत संपदा का सृजन कर रहे हैं!' if il_benefics else ('⚡ उद्योगी धन योग: इन्दु लग्न स्वामी ' + il_lord + ' के बल से वित्तीय साम्राज्य खड़ा होगा।')}
+                        </div>
+                        <b>शास्त्रीय सूत्र:</b> इन्दु लग्न में केवल एक भी उच्च या शुभ ग्रह स्थित हो तो जातक बहु-करोड़पति बनता है; पाप ग्रह हों तो धन का प्रवाह उद्यम के साथ आता है।
+                    </div>
                 </div>
                 """, unsafe_allow_html=True)
         else:
             st.info("जैमिनी विशेष लग्न गणना उपलब्ध नहीं।")
 
 
+    with tab_bhav:
+        st.markdown("### 🏠 भाव चलित चक्र (Bhava Chalit Chart — Equal / Sripati Cusp System)")
+        st.info("श्रीपति एवं समभाव पद्धति अनुसार भाव के मध्य बिंदु (Cusp) से आरंभ व अंत सीमा का निर्धारण होता है। यदि कोई ग्रह राशि में होते हुए भी भाव सीमा पार कर जाता है, तो उसका प्रभाव वास्तविक चलित भाव से ही फलित होता है:")
+
+        try:
+            _bc_res = default_chart_calculator.calculate_bhava_chalit(chart)
+            _bc_items = _bc_res.get("planet_positions", []) if isinstance(_bc_res, dict) else _bc_res
+            _cusps_list = _bc_res.get("bhava_cusps", []) if isinstance(_bc_res, dict) else []
+
+            # Construct Chalit VargaChart for dynamic SVG Kundali rendering
+            _chalit_planets = {}
+            for _it in _bc_items:
+                _pn = _it.get("planet")
+                _ch = _it.get("chalit_house", 1)
+                _sn = _it.get("sign", _it.get("sign_name", "Aries"))
+                _p_orig = chart.planets.get(_pn)
+                _chalit_planets[_pn] = VargaPlanetPosition(
+                    name=_pn,
+                    sign_id=_p_orig.sign_id if _p_orig else 1,
+                    sign_name=_sn,
+                    degree_in_varga=_p_orig.sign_degree if _p_orig else 0.0,
+                    house_number=_ch
+                )
+            _v_chalit = VargaChart(
+                varga_code="CHALIT",
+                varga_name="भाव चलित",
+                division=1,
+                lagna_sign_id=chart.lagna_sign_id,
+                lagna_sign_name=chart.lagna_sign_name,
+                planets=_chalit_planets
+            )
+            chart.vargas["CHALIT"] = _v_chalit
+
+            bc_col1, bc_col2 = st.columns([1, 1], gap="medium")
+            with bc_col1:
+                svg_chalit = render_chart_svg(chart, "🏠 भाव चलित चक्र (Bhava Chalit)", varga_code="CHALIT")
+                st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:10px;">{svg_chalit}</div>', unsafe_allow_html=True)
+                st.caption(f"**लग्न:** {chart.lagna_sign_name} ({chart.lagna_sign_id}) | चलित चक्र में ग्रहों का स्थान उनकी वास्तविक भाव स्थिति को दर्शाता है।")
+
+                # Cusp Methodology Explanatory Box
+                st.markdown("""
+                <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px; font-size:12px; color:#334155; line-height:1.5;">
+                    <b>💡 चलित चक्र रहस्य (Astrological Rule):</b><br/>
+                    • <b>राशि चक्र (D1):</b> ग्रह का राशिगत बल, गरिमा (उच्च/नीच) व सम्बंध दर्शाता है।<br/>
+                    • <b>भाव चलित चक्र:</b> ग्रह वास्तव में किस भाव का भौतिक व व्यावहारिक परिणाम देगा, यह निश्चित करता है।
+                </div>
+                """, unsafe_allow_html=True)
+
+            with bc_col2:
+                st.markdown("#### 🔄 ग्रह भाव परिवर्तन विश्लेषण (Planetary House Shifts)")
+                _shift_rows = []
+                _shifted_planets = []
+                for _it in _bc_items:
+                    _pn = _it.get("planet", "")
+                    _rh = _it.get("rashi_house", 1)
+                    _ch = _it.get("chalit_house", 1)
+                    _is_diff = (_rh != _ch)
+                    if _is_diff:
+                        _shifted_planets.append(f"{_pn} ({_rh}→{_ch})")
+                        _status_badge = '<span style="background:#FEF3C7; color:#B45309; font-weight:800; padding:2px 8px; border-radius:4px; font-size:11px;">⚠️ स्थानांतरित</span>'
+                        _impact_txt = f"{_rh}वें भाव से {_ch}वें भाव का फल प्रभावी रहेगा।"
+                    else:
+                        _status_badge = '<span style="background:#DCFCE7; color:#15803D; font-weight:800; padding:2px 8px; border-radius:4px; font-size:11px;">✅ स्थिर</span>'
+                        _impact_txt = f"{_rh}वें भाव में स्थिर पूर्ण फल।"
+
+                    _shift_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:5px 8px; font-weight:800; color:#1E293B;">{_pn}</td><td style="padding:5px 8px; color:#475569;">{_it.get("sign", "")}</td><td style="padding:5px 8px; text-align:center; font-weight:700;">{_rh} भाव</td><td style="padding:5px 8px; text-align:center; font-weight:900; color:#1E40AF;">{_ch} भाव</td><td style="padding:5px 8px; text-align:center;">{_status_badge}</td><td style="padding:5px 8px; font-size:11px; color:#334155;">{_impact_txt}</td></tr>')
+
+                _shift_table_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:220px; overflow-y:auto; margin-bottom:10px;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 8px; text-align:left;">ग्रह</th><th style="padding:4px 8px; text-align:left;">राशि</th><th style="padding:4px 8px; text-align:center;">राशि भाव</th><th style="padding:4px 8px; text-align:center;">चलित भाव</th><th style="padding:4px 8px; text-align:center;">स्थिति</th><th style="padding:4px 8px; text-align:left;">फल प्रभाव</th></tr></thead><tbody>{"".join(_shift_rows)}</tbody></table></div>'
+                st.markdown(_shift_table_html, unsafe_allow_html=True)
+
+                if _shifted_planets:
+                    st.warning("⚠️ **भाव परिवर्तन प्रभाव:** " + ", ".join(_shifted_planets) + " ग्रह चलित चक्र में स्थानांतरित हो गए हैं। दशा विश्लेषण में इन ग्रहों का फल इनके चलित भाव के अनुसार घटित होगा।")
+                else:
+                    st.success("✅ **पूर्ण समरूपता:** इस कुण्डली में सभी ग्रह राशि-भाव और चलित-भाव में समान हैं।")
+
+                # Cusp Coordinates Table
+                st.markdown("#### 📐 १२ भाव मध्य (Cusps) एवं संधि स्पष्ट")
+                if _cusps_list:
+                    _c_tbl_rows = []
+                    for _c in _cusps_list:
+                        _b_num = _c.get("bhava", 1)
+                        _c_deg = _c.get("cusp_degree", 0.0)
+                        _arambha = (_c_deg - 15.0 + 30.0) % 30.0
+                        _anta = (_c_deg + 15.0) % 30.0
+                        _c_tbl_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:4px 8px; font-weight:800; color:#1E3A8A;">{_b_num} भाव</td><td style="padding:4px 8px; font-weight:700;">{_c.get("sign_name", "")}</td><td style="padding:4px 8px; font-family:monospace; color:#475569;">{_arambha:.2f}°</td><td style="padding:4px 8px; font-family:monospace; font-weight:800; color:#0F172A;">{_c_deg:.2f}°</td><td style="padding:4px 8px; font-family:monospace; color:#475569;">{_anta:.2f}°</td></tr>')
+                    _c_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:180px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 8px; text-align:left;">भाव</th><th style="padding:4px 8px; text-align:left;">राशि</th><th style="padding:4px 8px; text-align:left;">आरंभ</th><th style="padding:4px 8px; text-align:left;">मध्य (Cusp)</th><th style="padding:4px 8px; text-align:left;">संधि (अंत)</th></tr></thead><tbody>{"".join(_c_tbl_rows)}</tbody></table></div>'
+                    st.markdown(_c_tbl_html, unsafe_allow_html=True)
+
+        except Exception as _ebc:
+            st.error(f"भाव चलित गणना त्रुटि: {_ebc}")
+
+
+    with tab_chandra:
+        st.markdown("### 🌙 चन्द्र कुण्डली (Chandra Kundali — Mind & Emotional Consciousness)")
+        _moon = chart.planets.get("Moon")
+        if _moon:
+            st.info(f"चन्द्रमा मन, माता, जन-समर्थन एवं भौतिक जीवन का मुख्य कारक है। चन्द्र कुण्डली में चन्द्रमा की राशि (**{_moon.sign_name}**) को प्रथम भाव (लग्न) मानकर सम्पूर्ण जीवन का अध्ययन किया जाता है:")
+
+            # Construct Chandra VargaChart
+            _chandra_planets = {
+                _pn: VargaPlanetPosition(
+                    name=_pn,
+                    sign_id=_p.sign_id,
+                    sign_name=_p.sign_name,
+                    degree_in_varga=_p.sign_degree,
+                    house_number=((_p.sign_id - _moon.sign_id + 12) % 12) + 1
+                ) for _pn, _p in chart.planets.items()
+            }
+            _v_chandra = VargaChart(
+                varga_code="CHANDRA",
+                varga_name="चन्द्र कुण्डली",
+                division=1,
+                lagna_sign_id=_moon.sign_id,
+                lagna_sign_name=_moon.sign_name,
+                planets=_chandra_planets
+            )
+            chart.vargas["CHANDRA"] = _v_chandra
+
+            cc_col1, cc_col2 = st.columns([1, 1], gap="medium")
+            with cc_col1:
+                svg_chandra = render_chart_svg(chart, f"🌙 चन्द्र कुण्डली ({_moon.sign_name} लग्न)", varga_code="CHANDRA")
+                st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:10px;">{svg_chandra}</div>', unsafe_allow_html=True)
+
+                st.markdown(f"""
+                <div style="background:#EFF6FF; border:1px solid #93C5FD; border-radius:8px; padding:10px 14px; font-size:12px; color:#1E3A8A; line-height:1.6;">
+                    <b>🌕 चन्द्रमा का स्पष्ट परिचय:</b><br/>
+                    • <b>राशि:</b> {_moon.sign_name} ({_moon.sign_degree:.2f}°)<br/>
+                    • <b>नक्षत्र:</b> {_moon.nakshatra_name} (पाद {_moon.nakshatra_pada}) — स्वामी: {_moon.nakshatra_lord}<br/>
+                    • <b>तिथि:</b> {p.tithi_name} ({p.tithi_type})<br/>
+                    • <b>चन्द्र बल:</b> {'शुक्ल पक्ष बलिष्ठ' if 'Shukla' in p.tithi_type else 'कृष्ण पक्ष सौम्य'}
+                </div>
+                """, unsafe_allow_html=True)
+
+            with cc_col2:
+                st.markdown("#### 🪐 चन्द्र लग्न से १२ भाव स्थिति")
+                _c_house_rows = []
+                _c_signifs = [
+                    "मन, स्वभाव, मानसिक शक्ति व काया", "वाणी, संचित धन, कुटुंब व आहार", "पराक्रम, भाई-बहन, साहस व संचार",
+                    "मातृ सुख, भवन, वाहन व आंतरिक शांति", "बुद्धि, विद्या, पूर्वपुण्य व संतान", "रोग, ऋण, शत्रु व सेवा कार्य",
+                    "दांपत्य, जीवनसाथी, साझेदारी व लोक संपर्क", "आयु, मानसिक संघर्ष व गूढ़ ज्ञान", "धर्म, भाग्य, गुरु व तीर्थाटन",
+                    "कर्म, आजीविका, सामाजिक पद व कीर्ति", "लाभ, आय, मित्र व मनोकामना पूर्ति", "व्यय, शयन सुख, विदेश व मोक्ष"
+                ]
+                for _h_idx in range(1, 13):
+                    _target_sid = ((_moon.sign_id - 1 + (_h_idx - 1)) % 12) + 1
+                    _target_sname = SIGN_NAMES[_target_sid - 1]
+                    _h_lord = SIGN_LORDS.get(_target_sname, "")
+                    _occ_p = [_pn for _pn, _pp in chart.planets.items() if _pp.sign_id == _target_sid]
+                    _occ_str = ", ".join(_occ_p) if _occ_p else "—"
+                    _c_house_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:4px 6px; font-weight:800; color:#1E40AF;">{_h_idx} भाव</td><td style="padding:4px 6px; font-weight:700;">{_target_sname}</td><td style="padding:4px 6px; color:#475569;">{_h_lord}</td><td style="padding:4px 6px; font-weight:800; color:#0F172A;">{_occ_str}</td><td style="padding:4px 6px; font-size:10.5px; color:#475569;">{_c_signifs[_h_idx-1]}</td></tr>')
+
+                _ch_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:220px; overflow-y:auto; margin-bottom:10px;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 6px; text-align:left;">भाव</th><th style="padding:4px 6px; text-align:left;">राशि</th><th style="padding:4px 6px; text-align:left;">स्वामी</th><th style="padding:4px 6px; text-align:left;">स्थित ग्रह</th><th style="padding:4px 6px; text-align:left;">जीवन क्षेत्र</th></tr></thead><tbody>{"".join(_c_house_rows)}</tbody></table></div>'
+                st.markdown(_ch_tbl_html, unsafe_allow_html=True)
+
+                # ─── Lunar Yogas Engine ───
+                st.markdown("#### 🌟 चन्द्र आधारित प्रमुख योग (Classical Lunar Yogas)")
+                _lunar_yogas = []
+
+                # 1. Gajakesari
+                _jup = chart.planets.get("Jupiter")
+                if _jup:
+                    _j_dist = ((_jup.sign_id - _moon.sign_id + 12) % 12) + 1
+                    if _j_dist in [1, 4, 7, 10]:
+                        _lunar_yogas.append(("🐘 गजकेसरी योग", f"गुरु चन्द्रमा से {_j_dist}वें (केंद्र) भाव में स्थित है। जातक अत्यंत मेधावी, पूज्य, कीर्तिवान एवं संकटों को परास्त करने वाला होता है।", "#DCFCE7", "#166534"))
+
+                # 2. Sunapha, Anapha, Durdhara, Kemadruma
+                _h2_planets = [pn for pn, p in chart.planets.items() if p.sign_id == (((_moon.sign_id) % 12) + 1) and pn not in ["Sun", "Rahu", "Ketu"]]
+                _h12_planets = [pn for pn, p in chart.planets.items() if p.sign_id == (((_moon.sign_id - 2 + 12) % 12) + 1) and pn not in ["Sun", "Rahu", "Ketu"]]
+
+                if _h2_planets and _h12_planets:
+                    _lunar_yogas.append(("👑 दुरुधरा योग (Durdhara)", f"चन्द्रमा के दोनों ओर (द्वितीय में {', '.join(_h2_planets)} एवं द्वादश में {', '.join(_h12_planets)}) ग्रह विद्यमान हैं। जातक अतुल संपदा, वाहन एवं सुख-समृद्धि का स्वामी बनता है।", "#FEF3C7", "#92400E"))
+                elif _h2_planets:
+                    _lunar_yogas.append(("💰 सुनफा योग (Sunapha)", f"चन्द्रमा से द्वितीय भाव में {', '.join(_h2_planets)} स्थित हैं। जातक स्व-अर्जित धन, चतुर बुद्धि एवं उच्च सामाजिक प्रतिष्ठा प्राप्त करता है।", "#EFF6FF", "#1E40AF"))
+                elif _h12_planets:
+                    _lunar_yogas.append(("🕊️ अनफा योग (Anapha)", f"चन्द्रमा से द्वादश भाव में {', '.join(_h12_planets)} स्थित हैं। जातक निरोगी, विनम्र, उदार, आध्यात्मिक एवं नीतिवान होता है।", "#F0FDF4", "#065F46"))
+                else:
+                    # Kemadruma check
+                    _kendra_planets = [pn for pn, p in chart.planets.items() if ((p.sign_id - _moon.sign_id + 12) % 12) + 1 in [1, 4, 7, 10] and pn not in ["Moon", "Rahu", "Ketu"]]
+                    if _kendra_planets:
+                        _lunar_yogas.append(("⚖️ केमद्रुम भंग राजयोग", f"चन्द्रमा के अगल-बगल ग्रह नहीं हैं किन्तु केंद्र में {', '.join(_kendra_planets)} स्थित होकर केमद्रुम दोष का पूर्ण निवारण कर रहे हैं।", "#ECFDF5", "#047857"))
+                    else:
+                        _lunar_yogas.append(("⚠️ केमद्रुम योग (Kemadruma)", "चन्द्रमा से द्वितीय एवं द्वादश दोनों रिक्त हैं। जीवन में कभी-कभी मानसिक एकाकीपन या वित्तीय उतार-चढ़ाव संभव है; शिव आराधना शुभप्रद है।", "#FEE2E2", "#991B1B"))
+
+                # 3. Chandra-Mangala Yoga
+                _mars = chart.planets.get("Mars")
+                if _mars:
+                    _m_dist = ((_mars.sign_id - _moon.sign_id + 12) % 12) + 1
+                    if _m_dist in [1, 7]:
+                        _lunar_yogas.append(("💎 चन्द्र-मंगल महालक्ष्मी योग", f"चन्द्रमा एवं मंगल परस्पर {_m_dist}वें भाव में युत/दृष्ट हैं। यह व्यापारिक सफलता, उद्योग में धन लाभ एवं तीव्र क्रियाशीलता का कारक है।", "#FAF5FF", "#6B21A8"))
+
+                # Render Yoga Cards
+                for _yt, _yd, _bg, _fg in _lunar_yogas:
+                    st.markdown(f'<div style="background:{_bg}; border:1px solid #CBD5E1; border-radius:6px; padding:6px 10px; margin-bottom:5px;"><span style="font-weight:900; color:{_fg}; font-size:12px;">{_yt}:</span> <span style="font-size:11.5px; color:#1E293B;">{_yd}</span></div>', unsafe_allow_html=True)
+        else:
+            st.warning("चन्द्रमा की स्थिति उपलब्ध नहीं।")
+
+
+    with tab_surya:
+        st.markdown("### ☀️ सूर्य कुण्डली (Surya Kundali — Soul, Vitality & Social Stature)")
+        _sun = chart.planets.get("Sun")
+        if _sun:
+            st.info(f"भगवान सूर्य आत्मा, पिता, जीवनी शक्ति, शासकीय प्रभुत्व एवं आजीविका के मूल कारक हैं। सूर्य राशि (**{_sun.sign_name}**) को प्रथम भाव मानकर जातक के आत्मबल एवं सामाजिक प्रभाव का अध्ययन किया जाता है:")
+
+            # Construct Surya VargaChart
+            _surya_planets = {
+                _pn: VargaPlanetPosition(
+                    name=_pn,
+                    sign_id=_p.sign_id,
+                    sign_name=_p.sign_name,
+                    degree_in_varga=_p.sign_degree,
+                    house_number=((_p.sign_id - _sun.sign_id + 12) % 12) + 1
+                ) for _pn, _p in chart.planets.items()
+            }
+            _v_surya = VargaChart(
+                varga_code="SURYA",
+                varga_name="सूर्य कुण्डली",
+                division=1,
+                lagna_sign_id=_sun.sign_id,
+                lagna_sign_name=_sun.sign_name,
+                planets=_surya_planets
+            )
+            chart.vargas["SURYA"] = _v_surya
+
+            sc_col1, sc_col2 = st.columns([1, 1], gap="medium")
+            with sc_col1:
+                svg_surya = render_chart_svg(chart, f"☀️ सूर्य कुण्डली ({_sun.sign_name} लग्न)", varga_code="SURYA")
+                st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:10px;">{svg_surya}</div>', unsafe_allow_html=True)
+
+                _sun_dignity, _, _ = get_varga_dignity_info("Sun", _sun.sign_name, affliction_engine)
+                st.markdown(f"""
+                <div style="background:#FFFBEB; border:1px solid #FCD34D; border-radius:8px; padding:10px 14px; font-size:12px; color:#78350F; line-height:1.6;">
+                    <b>☀️ सूर्य देव का स्पष्ट परिचय:</b><br/>
+                    • <b>राशि:</b> {_sun.sign_name} ({_sun.sign_degree:.2f}°)<br/>
+                    • <b>नक्षत्र:</b> {_sun.nakshatra_name} (पाद {_sun.nakshatra_pada}) — स्वामी: {_sun.nakshatra_lord}<br/>
+                    • <b>गरिमा:</b> {_sun_dignity}<br/>
+                    • <b>सम्पूर्ण निरयण देशांतर:</b> {_sun.longitude:.2f}°
+                </div>
+                """, unsafe_allow_html=True)
+
+            with sc_col2:
+                st.markdown("#### 🪐 सूर्य लग्न से १२ भाव स्थिति")
+                _s_house_rows = []
+                _s_signifs = [
+                    "आत्मा, तेज, जीवन शक्ति व संकल्प", "राजकोष, पैतृक संपदा, सत्य वाणी", "शौर्य, उद्यम, शासकीय अधिकार",
+                    "आंतरिक संतोष, उच्च वाहन, जनता में प्रतिष्ठा", "प्रज्ञा, राजनीतिक सूझबूझ, मंत्र शक्ति", "प्रतिस्पर्धा, विजय, प्रशासनिक सेवा",
+                    "व्यापारिक साझेदार, संबंध व बाह्य प्रभाव", "गूढ़ रहस्य, पितृ ऋण, गुप्त संपदा", "धर्म, उच्च संस्कार, पिता का मार्गदर्शन",
+                    "शासन में पद, शासकीय मान्यता व आजीविका", "महत्वाकांक्षा पूर्ति, राजकीय लाभ, पुरस्कार", "दान, आध्यात्मिक त्याग, मोक्ष साधना"
+                ]
+                for _h_idx in range(1, 13):
+                    _target_sid = ((_sun.sign_id - 1 + (_h_idx - 1)) % 12) + 1
+                    _target_sname = SIGN_NAMES[_target_sid - 1]
+                    _h_lord = SIGN_LORDS.get(_target_sname, "")
+                    _occ_p = [_pn for _pn, _pp in chart.planets.items() if _pp.sign_id == _target_sid]
+                    _occ_str = ", ".join(_occ_p) if _occ_p else "—"
+                    _s_house_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:4px 6px; font-weight:800; color:#B45309;">{_h_idx} भाव</td><td style="padding:4px 6px; font-weight:700;">{_target_sname}</td><td style="padding:4px 6px; color:#475569;">{_h_lord}</td><td style="padding:4px 6px; font-weight:800; color:#0F172A;">{_occ_str}</td><td style="padding:4px 6px; font-size:10.5px; color:#475569;">{_s_signifs[_h_idx-1]}</td></tr>')
+
+                _sh_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:220px; overflow-y:auto; margin-bottom:10px;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 6px; text-align:left;">भाव</th><th style="padding:4px 6px; text-align:left;">राशि</th><th style="padding:4px 6px; text-align:left;">स्वामी</th><th style="padding:4px 6px; text-align:left;">स्थित ग्रह</th><th style="padding:4px 6px; text-align:left;">जीवन क्षेत्र</th></tr></thead><tbody>{"".join(_s_house_rows)}</tbody></table></div>'
+                st.markdown(_sh_tbl_html, unsafe_allow_html=True)
+
+                # ─── Solar Yogas Engine ───
+                st.markdown("#### 🌟 सूर्य आधारित प्रमुख योग (Classical Solar Yogas)")
+                _solar_yogas = []
+
+                # 1. Budhaditya
+                _merc = chart.planets.get("Mercury")
+                if _merc and _merc.sign_id == _sun.sign_id:
+                    _b_diff = abs(_sun.longitude - _merc.longitude)
+                    if _b_diff > 180: _b_diff = 360 - _b_diff
+                    if _b_diff <= 10.0:
+                        _comb_label = " (बुध अस्त नहीं / पूर्ण प्रखर)" if not _merc.is_combust else " (बुध अस्त / ज्ञान प्रबल)"
+                        _solar_yogas.append(("⚡ बुधादित्य योग (Budhaditya)", f"सूर्य एवं बुध की एक ही राशि में युति (अंतर: {_b_diff:.2f}°){_comb_label}। जातक असाधारण मेधावी, विश्लेषण में दक्ष एवं प्रशासनिक क्षमता से युक्त होता है।", "#EFF6FF", "#1E40AF"))
+
+                # 2. Vesi, Vosi, Ubhayachari
+                _h2_s_planets = [pn for pn, p in chart.planets.items() if p.sign_id == (((_sun.sign_id) % 12) + 1) and pn not in ["Moon", "Rahu", "Ketu"]]
+                _h12_s_planets = [pn for pn, p in chart.planets.items() if p.sign_id == (((_sun.sign_id - 2 + 12) % 12) + 1) and pn not in ["Moon", "Rahu", "Ketu"]]
+
+                if _h2_s_planets and _h12_s_planets:
+                    _solar_yogas.append(("👑 उभयाचारी योग (Ubhayachari)", f"सूर्य के दोनों ओर (द्वितीय में {', '.join(_h2_s_planets)} एवं द्वादश में {', '.join(_h12_s_planets)}) शुभ/ग्रह स्थित हैं। जातक राजा समान सम्मानित, वक्तृत्व कला में निपुण व सुखी होता है।", "#FEF3C7", "#92400E"))
+                elif _h2_s_planets:
+                    _solar_yogas.append(("🏛️ वेसि योग (Vesi)", f"सूर्य से द्वितीय भाव में {', '.join(_h2_s_planets)} स्थित हैं। जातक धैर्यवान, सत्यवादी, वाक्पटु एवं यशस्वी जीवन व्यतीत करता है।", "#DCFCE7", "#166534"))
+                elif _h12_s_planets:
+                    _solar_yogas.append(("📚 वोसि योग (Vosi)", f"सूर्य से द्वादश भाव में {', '.join(_h12_s_planets)} स्थित हैं। जातक बुद्धिमान, विद्यावान, परोपकारी एवं दृढ़ स्मरण शक्ति वाला होता है।", "#F0FDF4", "#065F46"))
+                else:
+                    _solar_yogas.append(("☀️ स्वतंत्र सौर तेज (Independent Sun)", "सूर्य के अगल-बगल कोई ग्रह नहीं है; जातक आत्मनिर्भर, आत्म-प्रेरित एवं स्वतंत्र व्यक्तित्व का धनी होता है।", "#F8FAFC", "#334155"))
+
+                for _yt, _yd, _bg, _fg in _solar_yogas:
+                    st.markdown(f'<div style="background:{_bg}; border:1px solid #CBD5E1; border-radius:6px; padding:6px 10px; margin-bottom:5px;"><span style="font-weight:900; color:{_fg}; font-size:12px;">{_yt}:</span> <span style="font-size:11.5px; color:#1E293B;">{_yd}</span></div>', unsafe_allow_html=True)
+        else:
+            st.warning("सूर्य की स्थिति उपलब्ध नहीं।")
+
+
+    with tab_yuddha:
+        st.markdown("### ⚔️ ग्रह युद्ध (Graha Yuddha — Classical Planetary War Engine)")
+        st.info("बृहत्संहिता (अध्याय १७) एवं सूर्य सिद्धांत अनुसार जब पांच तारा ग्रह (मंगल, बुध, गुरु, शुक्र, शनि) परस्पर १° (६० कला) के भीतर आ जाते हैं, तो उनके मध्य 'ग्रह युद्ध' घटित होता है। उत्तर अक्षांश (Greater North Latitude) वाला ग्रह विजयी होकर बलवान होता है तथा पराजित ग्रह अपनी प्राकृतिक शक्ति (षड्बल) खो देता है:")
+
+        try:
+            _yw_list = default_chart_calculator.detect_graha_yuddha(chart)
+            _tara_grahas = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
+            _GRAHA_HINDI = {"Mars": "♂ मंगल", "Mercury": "☿ बुध", "Jupiter": "♃ गुरु", "Venus": "♀ शुक्र", "Saturn": "♄ शनि"}
+
+            # ─── 5×5 Tara Grahas Distance Matrix ───
+            st.markdown("#### 🔬 पंचतारा ग्रह परस्पर कोणीय दूरी मैट्रिक्स (5×5 Angular Separation Matrix)")
+            _matrix_headers = "".join([f'<th style="padding:6px 8px; text-align:center; background:#1E293B; color:#F8FAFC; font-size:11.5px;">{_GRAHA_HINDI.get(p, p)}</th>' for p in _tara_grahas])
+            _matrix_rows = []
+
+            for p1 in _tara_grahas:
+                _cells = [f'<td style="padding:6px 8px; font-weight:800; background:#F1F5F9; color:#1E293B;">{_GRAHA_HINDI.get(p1, p1)}</td>']
+                for p2 in _tara_grahas:
+                    if p1 == p2:
+                        _cells.append('<td style="padding:6px 8px; text-align:center; background:#E2E8F0; color:#94A3B8; font-weight:700;">—</td>')
+                    else:
+                        _p1_obj = chart.planets.get(p1)
+                        _p2_obj = chart.planets.get(p2)
+                        if _p1_obj and _p2_obj:
+                            _d = abs(_p1_obj.longitude - _p2_obj.longitude) % 360.0
+                            if _d > 180.0: _d = 360.0 - _d
+                            if _d <= 1.0:
+                                _bg, _fg, _sym = "#FEE2E2", "#991B1B", "⚔️ "
+                            elif _d <= 3.0:
+                                _bg, _fg, _sym = "#FEF3C7", "#92400E", "⚠️ "
+                            elif _d <= 5.0:
+                                _bg, _fg, _sym = "#EFF6FF", "#1E40AF", "🟡 "
+                            else:
+                                _bg, _fg, _sym = "#F8FAFC", "#475569", ""
+                            _cells.append(f'<td style="padding:6px 8px; text-align:center; background:{_bg}; color:{_fg}; font-family:monospace; font-weight:800;">{_sym}{_d:.2f}°</td>')
+                        else:
+                            _cells.append('<td style="padding:6px 8px; text-align:center;">—</td>')
+                _matrix_rows.append(f'<tr style="border-bottom:1px solid #CBD5E1;">{"".join(_cells)}</tr>')
+
+            _mat_html = f'<div style="overflow-x:auto; background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:8px; margin-bottom:14px;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr><th style="padding:6px 8px; text-align:left; background:#0F172A; color:#F8FAFC;">तारा ग्रह</th>{_matrix_headers}</tr></thead><tbody>{"".join(_matrix_rows)}</tbody></table></div>'
+            st.markdown(_mat_html, unsafe_allow_html=True)
+            st.caption("🟢 >5° शांत | 🟡 3°-5° युति क्षेत्र | ⚠️ 1°-3° सन्निकट संपर्क | ⚔️ ≤1°00' प्रत्यक्ष ग्रह युद्ध")
+
+            # ─── War Status Verdict Cards ───
+            if _yw_list:
+                st.markdown("#### ⚔️ सक्रिय ग्रह युद्ध विवरण एवं फल प्रभाव")
+                for _yw in _yw_list:
+                    _p1 = _yw.get('planet1')
+                    _p2 = _yw.get('planet2')
+                    _sep = _yw.get('separation_deg', 0.0)
+                    _win = _yw.get('winner')
+                    _los = _yw.get('loser')
+
+                    # Brihat Samhita War Classification
+                    if _sep < 0.25:
+                        _w_type = "भेदम (Bhedam — पूर्ण ग्रसन / परस्पर भेदन)"
+                    elif _sep < 0.50:
+                        _w_type = "उल्लेखम (Ullekham — कोर स्पर्श / संघर्ष)"
+                    elif _sep < 0.75:
+                        _w_type = "अंशुमर्दम (Amshumardam — किरणों का टकराव)"
+                    else:
+                        _w_type = "अपसव्यम (Apasavyam — वक्र गति युक्त युद्ध)"
+
+                    _w_lord = [f"{h}वें" for h, s in chart.houses.items() if s.lord == _win] if hasattr(chart, 'houses') else []
+                    _l_lord = [f"{h}वें" for h, s in chart.houses.items() if s.lord == _los] if hasattr(chart, 'houses') else []
+
+                    st.markdown(f"""
+                    <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:10px; padding:14px; margin-bottom:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                            <span style="font-weight:900; color:#B91C1C; font-size:14px;">⚔️ {_GRAHA_HINDI.get(_p1, _p1)} बनाम {_GRAHA_HINDI.get(_p2, _p2)}</span>
+                            <span style="background:#FEE2E2; color:#991B1B; font-weight:800; padding:2px 8px; border-radius:4px; font-size:11.5px;">अंतर: {_sep:.3f}° ({_sep*60:.1f} कला)</span>
+                        </div>
+                        <div style="font-size:12.5px; color:#1E293B; line-height:1.6;">
+                            • <b>युद्ध प्रकार:</b> {_w_type}<br/>
+                            • 🏆 <b>विजेता ग्रह:</b> <b style="color:#047857;">{_GRAHA_HINDI.get(_win, _win)}</b> (उत्तर अक्षांश की प्रधानता के कारण विजयी)<br/>
+                            • ⚠️ <b>पराजित ग्रह:</b> <b style="color:#DC2626;">{_GRAHA_HINDI.get(_los, _los)}</b> (षड्बल हरण के कारण निर्बल)<br/>
+                            • <b>फल प्रभाव:</b> विजयी ग्रह के स्वामित्व वाले भावों के शुभ फल में वृद्धि होगी; पराजित ग्रह के स्वामित्व वाले भावों से संबंधित विषयों में संघर्ष अथवा विलम्ब का सामना करना पड़ सकता है।
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+            else:
+                # Find closest approach among Tara Grahas
+                _min_sep = 999.0
+                _close_pair = ("", "")
+                for i, p1 in enumerate(_tara_grahas):
+                    for p2 in _tara_grahas[i+1:]:
+                        if p1 in chart.planets and p2 in chart.planets:
+                            _d = abs(chart.planets[p1].longitude - chart.planets[p2].longitude) % 360.0
+                            if _d > 180.0: _d = 360.0 - _d
+                            if _d < _min_sep:
+                                _min_sep = _d
+                                _close_pair = (p1, p2)
+
+                st.markdown(f"""
+                <div style="background:linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%); border:1.5px solid #10B981; border-radius:10px; padding:16px; margin-bottom:12px; box-shadow:0 2px 6px rgba(16, 185, 129, 0.1);">
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                        <span style="font-size:18px;">🛡️</span>
+                        <span style="font-size:14.5px; font-weight:900; color:#065F46;">ग्रह मैत्री एवं शांति प्रशस्ति (No Planetary War Detected)</span>
+                    </div>
+                    <div style="font-size:12.5px; color:#1E293B; line-height:1.6;">
+                        इस जन्म पत्रिका में पांचों तारा ग्रह (मंगल, बुध, गुरु, शुक्र, शनि) परस्पर सुरक्षित कोणीय दूरी पर स्थित हैं। किसी भी ग्रह के मध्य १° के भीतर का संघर्ष (युद्ध) नहीं है।<br/>
+                        • <b>निकटतम संपर्क:</b> {_GRAHA_HINDI.get(_close_pair[0], _close_pair[0])} एवं {_GRAHA_HINDI.get(_close_pair[1], _close_pair[1])} — कोणीय अंतर: <b>{_min_sep:.2f}°</b><br/>
+                        • <b>शास्त्रीय लाभ:</b> समस्त ग्रह स्वतंत्र होकर अपने पूर्ण षड्बल एवं नैसर्गिक सामर्थ्य के साथ अपना शुभाशुभ फल प्रदान करने में सक्षम हैं। किसी भी ग्रह का बल हरण (Bala Harana) नहीं हुआ है।
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+        except Exception as _egy:
+            st.error(f"ग्रह युद्ध गणना त्रुटि: {_egy}")
+
+
+    with tab_vishesh:
+        st.markdown("### 🌟 विशेष लग्न एवं १२ आरूढ़ पद महा-विश्लेषण (All 12 Arudha Padas & Special Lagnas Deep Dive)")
+        st.info("महर्षि जैमिनी के सूत्र अनुसार 'पदं पितृभ्यः' — प्रत्येक भाव का आरूढ़ पद उस भाव का सांसारिक प्रतिबिंब (Maya / Worldly Manifestation) होता है। लोग जातक को सांसारिक रूप में कैसा देखते हैं, इसका रहस्य आरूढ़ पदों में समाहित है:")
+
+        if chart.jaimini and getattr(chart.jaimini, 'arudha_details', None):
+            jm = chart.jaimini
+            a_details = jm.arudha_details
+
+            # ─── Complete 12 Arudha Master Table ───
+            st.markdown("#### 📜 समस्त १२ आरूढ़ पद संपूर्ण विवरण (Master Arudha Padas Matrix)")
+            _arudha_order = ["AL", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "UL"]
+            _ar_rows = []
+            for _ak in _arudha_order:
+                _ad = a_details.get(_ak)
+                if not _ad:
+                    continue
+                _is_special = _ak in ["AL", "UL"]
+                _lbl_col = "#B45309" if _is_special else "#1E3A8A"
+                _ar_rows.append({
+                    "आरूढ़ पद": _ak,
+                    "स्रोत भाव": f"{_ad.get('house_num', 1)} भाव",
+                    "स्रोत राशि": _ad.get('house_sign', ''),
+                    "भाव स्वामी": _ad.get('lord_name', ''),
+                    "स्वामी की राशि": _ad.get('lord_sign', ''),
+                    "दूरी (कदम)": f"{_ad.get('distance', 1)} राशि",
+                    "लागू नियम": _ad.get('exception', 'सामान्य'),
+                    "आरूढ़ राशि": _ad.get('pada_sign_name', ''),
+                    "लग्न से भाव": f"{_ad.get('pada_house_from_lagna', 1)} भाव",
+                    "शास्त्रीय प्रयोजन / फल": _ad.get('signification_hi', '').split(':', 1)[-1].strip()
+                })
+            st.dataframe(pd.DataFrame(_ar_rows), use_container_width=True, hide_index=True)
+
+            # ─── Deep Dive Analytical Cards: AL, UL & Wealth ───
+            st.markdown("#### 🔬 प्रमुख आरूढ़ पदों का गहन विश्लेषण (Arudha Lagna & Upapada Deep Dive)")
+            col_ad1, col_ad2 = st.columns(2, gap="medium")
+
+            with col_ad1:
+                _al_data = a_details.get("AL", {})
+                _al_h = _al_data.get("pada_house_from_lagna", 1)
+                _al_sign = _al_data.get("pada_sign_name", "")
+
+                if _al_h in [1, 4, 7, 10]:
+                    _al_rel = "केंन्द्र संबंध (1/4/7/10 Axis) — जातक की आंतरिक क्षमता एवं बाह्य सामाजिक छवि में श्रेष्ठ सामंजस्य है।"
+                    _al_bg, _al_bdr = "#F0FDF4", "#86EFAC"
+                elif _al_h in [5, 9]:
+                    _al_rel = "त्रिकोण संबंध (5/9 Axis) — पूर्वपुण्य एवं धर्म का प्रबल प्रभाव; समाज में जातक को स्वाभाविक आदर व सम्मान प्राप्त होता है।"
+                    _al_bg, _al_bdr = "#ECFDF5", "#6EE7B7"
+                elif _al_h in [3, 6, 11]:
+                    _al_rel = "उपचय संबंध (3/6/11 Axis) — जातक निरंतर पुरुषार्थ एवं उद्योग द्वारा अपनी सामाजिक छवि को विशाल बनाता है।"
+                    _al_bg, _al_bdr = "#EFF6FF", "#93C5FD"
+                else:
+                    _al_rel = "षडाष्टक/व्यय संबंध (6/8/12 Axis) — जातक का आंतरिक सत्य एवं बाह्य छवि भिन्न हो सकती है; जनसामान्य द्वारा गलत समझे जाने का अंदेशा।"
+                    _al_bg, _al_bdr = "#FFFBEB", "#FCD34D"
+
+                st.markdown(f"""
+                <div style="background:{_al_bg}; border:1.5px solid {_al_bdr}; border-radius:10px; padding:14px; height:100%;">
+                    <h5 style="color:#1E3A8A; margin:0 0 6px 0;">👑 आरूढ़ लग्न (AL): {_al_sign} (लग्न से {_al_h} भाव)</h5>
+                    <div style="font-size:12.5px; color:#1E293B; line-height:1.6;">
+                        <b>संबंध स्वरूप:</b> {_al_rel}<br/>
+                        • <b>सामाजिक प्रतिष्ठा:</b> आरूढ़ लग्न जातक की सामाजिक स्थिति, करियर में यश एवं जनता में पहचान का निर्णायक है।<br/>
+                        • <b>शास्त्रीय नियम:</b> यदि आरूढ़ लग्न से एकादश भाव में शुभ ग्रह स्थित हों, तो जातक निरंतर प्रचुर मात्रा में धन अर्जित करता है; दशम भाव में शुभ ग्रह होने पर व्यक्ति की आजीविका स्वच्छ एवं सम्मानित होती है।
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with col_ad2:
+                _ul_data = a_details.get("UL", {})
+                _ul_h = _ul_data.get("pada_house_from_lagna", 1)
+                _ul_sign = _ul_data.get("pada_sign_name", "")
+                _ul_lord = _ul_data.get("lord_name", "")
+
+                st.markdown(f"""
+                <div style="background:#FDF2F8; border:1.5px solid #F472B6; border-radius:10px; padding:14px; height:100%;">
+                    <h5 style="color:#9D174D; margin:0 0 6px 0;">💍 उपपद लग्न (UL / A12): {_ul_sign} (लग्न से {_ul_h} भाव)</h5>
+                    <div style="font-size:12.5px; color:#1E293B; line-height:1.6;">
+                        <b>उपपद लग्न स्वामी:</b> {_ul_lord}<br/>
+                        • <b>दांपत्य स्थायित्व:</b> उपपद लग्न जीवनसाथी के कुल, वैवाहिक जीवन की स्थिरता एवं जीवनसाथी के स्वभाव का मुख्य दर्पण है।<br/>
+                        • <b>द्वितीय भाव सूत्र:</b> उपपद से द्वितीय भाव वैवाहिक संबंध के पालन-पोषण (Sustenance) का कारक है। यदि उपपद से द्वितीय भाव में शुभ ग्रह (गुरु, शुक्र) हों तो दांपत्य जीवन सुदीर्घ एवं सुखमय रहता है; पाप ग्रहों का प्रभाव रहने पर वैवाहिक समायोजन आवश्यक होता है।
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.info("आरूढ़ पद गणना लोड हो रही है...")
+
+
     with tab_kota:
         st.markdown("### 🏰 कोटा चक्र दुर्ग आरेख (Kota Chakra Durga Fortress)")
-        st.write("जन्म नक्षत्र अनुसार ४-स्तरीय दुर्ग रचना एवं जन्म ग्रहों की रक्षा/आघात स्थिति:")
+        st.info("कोटा चक्र जातक के जन्म नक्षत्र पर आधारित एक प्राचीन रक्षात्मक दुर्ग (Fortress) संरचना है। यह चार संकेन्द्री सुरक्षा दीवारों में विभाजित होता है, जो जातक की आंतरिक जीवन शक्ति, स्वास्थ्य, संकटों से सुरक्षा एवं विजय का अचूक संकेत देता है:")
+
         try:
-            import importlib
-            import src.jyotish.core.chakras as chak_mod
-            import src.jyotish.ui.chart_renderer as cr_mod
-            importlib.reload(chak_mod)
-            importlib.reload(cr_mod)
-            kota_engine = chak_mod.default_kota_chakra_engine
+            kota_engine = default_kota_chakra_engine
             kota_data_m0 = kota_engine.calculate(chart)
-            kota_svg_m0 = cr_mod.ChartRenderer.render_kota_chakra_svg(kota_data_m0, title=f"कोटा चक्र — {name}")
-            st.markdown(kota_svg_m0, unsafe_allow_html=True)
+
+            kc_col1, kc_col2 = st.columns([1, 1], gap="medium")
+            with kc_col1:
+                kota_svg_m0 = ChartRenderer.render_kota_chakra_svg(kota_data_m0, title=f"कोटा चक्र दुर्ग — {chart.birth_data.name if chart.birth_data else 'जातक'}")
+                st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:10px;">{kota_svg_m0}</div>', unsafe_allow_html=True)
+
+                st.markdown("""
+                <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px; font-size:12px; color:#334155; line-height:1.5;">
+                    <b>🏰 दुर्ग की ४ रक्षात्मक दीवारें (Concentric Enclosures):</b><br/>
+                    • <b>१. स्तम्भ (Stambha):</b> दुर्ग का गर्भगृह (Heart/Core) — जीवन शक्ति व आरोग्य।<br/>
+                    • <b>२. मध्य (Madhya):</b> दुर्ग का अन्तःपुर (Citadel) — आंतरिक संबल व परिवार।<br/>
+                    • <b>३. प्राकार (Prakaara):</b> दुर्ग का परकोटा (Outer Rampart) — सुरक्षा प्राचीर।<br/>
+                    • <b>४. बाह्य (Bahya):</b> दुर्ग के बाहर का क्षेत्र — बाह्य जगत एवं आने-जाने वाले ग्रह।
+                </div>
+                """, unsafe_allow_html=True)
+
+            with kc_col2:
+                _k_swami = kota_data_m0.get("kota_swami", "—")
+                _k_pala = kota_data_m0.get("kota_pala", "—")
+                _def_status = kota_data_m0.get("defense_status", "🛡️ सुरक्षित")
+                _def_sum = kota_data_m0.get("defense_summary", "")
+
+                # Strategic Defense Scorecard
+                st.markdown(f"""
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+                    <div style="background:#EFF6FF; border:1px solid #93C5FD; border-radius:8px; padding:8px 12px;">
+                        <div style="font-size:11px; color:#1E40AF; font-weight:800;">👑 दुर्ग स्वामी (Kota Swami)</div>
+                        <div style="font-size:15px; font-weight:900; color:#1E293B;">{_k_swami}</div>
+                        <div style="font-size:10px; color:#64748B;">दुर्ग का राजा / मूल जीवन शक्ति</div>
+                    </div>
+                    <div style="background:#F0FDF4; border:1px solid #86EFAC; border-radius:8px; padding:8px 12px;">
+                        <div style="font-size:11px; color:#166534; font-weight:800;">🛡️ दुर्ग रक्षक (Kota Pala)</div>
+                        <div style="font-size:15px; font-weight:900; color:#1E293B;">{_k_pala}</div>
+                        <div style="font-size:10px; color:#64748B;">दुर्ग का सेनापति / सुरक्षा कवच</div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                st.markdown(f"""
+                <div style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:8px; padding:10px 12px; margin-bottom:10px;">
+                    <div style="font-weight:900; color:#92400E; font-size:12.5px; margin-bottom:4px;">दुर्ग रक्षा मूल्यांकन: {_def_status}</div>
+                    <div style="font-size:11.5px; color:#1E293B; line-height:1.5;">{_def_sum}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                # Planet Allocations Table
+                st.markdown("#### 🪐 दुर्ग में ग्रहों की स्थिति एवं गति")
+                _p_allocs = kota_data_m0.get("planet_allocations", [])
+                if _p_allocs:
+                    _pl_k_rows = []
+                    for _pa in _p_allocs:
+                        _pn = _pa.get("planet", "")
+                        _zn = _pa.get("zone", "")
+                        _mo = _pa.get("motion", "")
+                        _nat = _pa.get("nature", "Benefic")
+                        _is_mal = ("Malefic" in _nat or _pn in ["Mars", "Saturn", "Rahu", "Ketu", "Sun"])
+                        _p_col = "#DC2626" if _is_mal else "#059669"
+                        _role_badge = f'<span style="background:{"#FEE2E2" if _is_mal else "#DCFCE7"}; color:{_p_col}; font-weight:800; padding:1px 6px; border-radius:4px; font-size:10.5px;">{"आक्रांता" if _is_mal else "रक्षक"}</span>'
+                        _pl_k_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:4px 6px; font-weight:800; color:#1E293B;">{_pn}</td><td style="padding:4px 6px; color:#475569;">{_pa.get("nakshatra", "")}</td><td style="padding:4px 6px; font-weight:700;">{_zn}</td><td style="padding:4px 6px; font-size:11px;">{_mo}</td><td style="padding:4px 6px; text-align:center;">{_role_badge}</td></tr>')
+
+                    _k_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:220px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 6px; text-align:left;">ग्रह</th><th style="padding:4px 6px; text-align:left;">नक्षत्र</th><th style="padding:4px 6px; text-align:left;">दुर्ग क्षेत्र</th><th style="padding:4px 6px; text-align:left;">गति दिशा</th><th style="padding:4px 6px; text-align:center;">भूमिका</th></tr></thead><tbody>{"".join(_pl_k_rows)}</tbody></table></div>'
+                    st.markdown(_k_tbl_html, unsafe_allow_html=True)
+
         except Exception as _ekc:
-            st.error(f"कोटा चक्र त्रुटि: {str(_ekc)[:200]}")
+            st.error(f"कोटा चक्र गणना त्रुटि: {_ekc}")
 
 
 # =============================================================
