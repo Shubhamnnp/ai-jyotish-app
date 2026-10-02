@@ -1873,14 +1873,16 @@ unified_css = f"""
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 12)[aria-selected="true"] {{ background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important; color: #FFFFFF !important; border: 1.5px solid #B45309 !important; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35) !important; }}
 
     /* Responsive SVG & Kundali Charts Auto-Scaling (Scoped strictly to Kundali SVGs, never global svg or Vega-Lite charts) */
-    .kundali-chart svg, .chart-container svg, .observatory-canvas svg, div:has(> svg.kundali-svg) svg {{
+    .kundali-chart svg, .chart-container svg, .observatory-canvas svg, div:has(> svg.kundali-svg) svg, svg.kundali-svg {{
+        width: 100% !important;
         max-width: 100% !important;
         height: auto !important;
+        aspect-ratio: 1 / 1 !important;
         display: block !important;
         margin: 0 auto !important;
     }}
-    div:has(> svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
     div:has(> svg.kundali-svg), .chart-container, .kundali-chart, div[data-testid="stImage"] img {{
+        width: 100% !important;
         max-width: 100% !important;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch !important;
@@ -5784,26 +5786,26 @@ if selected_idx == 0:
         st.markdown("#### 🖥️ ४-कुण्डली एकीकृत्त वर्कबेंच (D1 लग्न + D9 नवांश + D10 दशमांश + D7 सप्तांश)")
         st.caption("विश्वस्तरीय सॉफ्टवेयर (Parashara's Light / JHora) समान एक ही स्क्रीन पर प्रमुख वर्ग चक्रों का एक साथ अध्ययन:")
         
-        q_col1, q_col2 = st.columns(2)
+        q_col1, q_col2 = st.columns(2, gap="medium")
         with q_col1:
             svg_d1 = render_chart_svg(chart, "D1 जन्म लग्न (Rashi)", varga_code="D1")
-            st.markdown(svg_d1, unsafe_allow_html=True)
+            st.markdown(f'<div class="kundali-chart" style="width:100%;">{svg_d1}</div>', unsafe_allow_html=True)
             st.caption(f"**D1 लग्न:** {chart.lagna_sign_name} ({chart.lagna_sign_id}) | आत्मकारक (AK): {chart.atmakaraka}")
         with q_col2:
             svg_d9 = render_chart_svg(chart, "D9 नवांश (Navamsha — धर्म व दांपत्य)", varga_code="D9")
-            st.markdown(svg_d9, unsafe_allow_html=True)
+            st.markdown(f'<div class="kundali-chart" style="width:100%;">{svg_d9}</div>', unsafe_allow_html=True)
             d9_v = chart.vargas.get("D9")
             st.caption(f"**D9 नवांश लग्न:** {d9_v.lagna_sign_name if d9_v else '—'} | विवाह, भाग्य व ग्रहों का आंतरिक बल")
         
-        q_col3, q_col4 = st.columns(2)
+        q_col3, q_col4 = st.columns(2, gap="medium")
         with q_col3:
             svg_d10 = render_chart_svg(chart, "D10 दशमांश (Dashamsha — कर्म व पद)", varga_code="D10")
-            st.markdown(svg_d10, unsafe_allow_html=True)
+            st.markdown(f'<div class="kundali-chart" style="width:100%;">{svg_d10}</div>', unsafe_allow_html=True)
             d10_v = chart.vargas.get("D10")
             st.caption(f"**D10 दशमांश लग्न:** {d10_v.lagna_sign_name if d10_v else '—'} | आजीविका, नेतृत्व व करियर")
         with q_col4:
             svg_d7 = render_chart_svg(chart, "D7 सप्तांश (Saptamsha — संतान व सृजन)", varga_code="D7")
-            st.markdown(svg_d7, unsafe_allow_html=True)
+            st.markdown(f'<div class="kundali-chart" style="width:100%;">{svg_d7}</div>', unsafe_allow_html=True)
             d7_v = chart.vargas.get("D7")
             st.caption(f"**D7 सप्तांश लग्न:** {d7_v.lagna_sign_name if d7_v else '—'} | वंश वृद्धि, संतान सुख व रचनात्मकता")
 
@@ -5931,7 +5933,7 @@ if selected_idx == 0:
         v_lagna_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
     else:
         # Standard Single / Quad Dashboard Layout (Classic 2-Column Split: Left Chart, Right Analysis)
-        col_chart1, col_chart2 = st.columns([1, 1])
+        col_chart1, col_chart2 = st.columns([1, 1], gap="medium")
         with col_chart1:
             varga_options = list(chart.vargas.keys()) if chart.vargas else ["D1"]
             varga_choice = st.selectbox(
@@ -5960,7 +5962,7 @@ if selected_idx == 0:
 
             title = f"{varga_choice} {v_name} Kundali"
             svg_code = render_chart_svg(chart, title, varga_code=varga_choice)
-            st.markdown(svg_code, unsafe_allow_html=True)
+            st.markdown(f'<div class="kundali-chart" style="width:100%; margin-bottom:10px;">{svg_code}</div>', unsafe_allow_html=True)
 
             v_desc = VARGA_SIGNIFICANCE.get(varga_choice, "शास्त्रीय सूक्ष्म विश्लेषण")
             st.info(f"🎯 **{varga_choice} ({v_name}) शास्त्रीय प्रयोजन:** {v_desc}")
