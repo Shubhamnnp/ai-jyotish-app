@@ -139,6 +139,125 @@ class AfflictionEngine:
             table.append(row)
         return table
 
+    def calculate_shodashvarga_table(self) -> List[Dict[str, Any]]:
+        """
+        Calculates dignity for Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn
+        across all 16 Shodashvargas: D1, D2, D3, D4, D7, D9, D10, D12, D16, D20, D24, D27, D30, D40, D45, D60.
+        """
+        varga_codes = ["D1", "D2", "D3", "D4", "D7", "D9", "D10", "D12", "D16", "D20", "D24", "D27", "D30", "D40", "D45", "D60"]
+        target_planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
+
+        table = []
+        for code in varga_codes:
+            row: Dict[str, Any] = {"Planets": code}
+            vchart = self.all_vargas.get(code)
+            for p in target_planets:
+                if not vchart or p not in vchart.planets:
+                    row[p] = "Unknown"
+                    continue
+                sign_name = vchart.planets[p].sign_name
+                text, css = self.get_dignity(p, sign_name)
+                if css in ["own", "mool", "exalt", "deb"]:
+                    row[p] = {"text": text, "className": css}
+                else:
+                    row[p] = text
+            table.append(row)
+        return table
+
+    def calculate_varga_dignity_summary(self, varga_codes: Optional[List[str]] = None) -> Dict[str, Any]:
+        """
+        Computes detailed dignity breakdown, Vaisheshikamsa status, vargottama,
+        and weighted dignity score for each planet across the specified vargas.
+        """
+        if varga_codes is None:
+            varga_codes = ["D1", "D2", "D3", "D7", "D9", "D10", "D12", "D16", "D24", "D30", "D60"]
+
+        vais_titles = {
+            2: ("पारिजात", "Parijata", "सामान्य सुख, कीर्ति व स्थिरता"),
+            3: ("उत्तम", "Uttama", "उत्तम कर्म, शिष्टता व मान-सम्मान"),
+            4: ("गोपुर", "Gopura", "धन, भूमि, वाहन व बौद्धिक ऐश्वर्य"),
+            5: ("सिंहासन", "Simhasana", "राजतुल्य प्रतिष्ठा, प्रभुत्व व नेतृत्व"),
+            6: ("पारावत", "Paravata", "सर्वप्रिय, उत्तम वाहन व राजसम्मान"),
+            7: ("देवलोक", "Devaloka", "राजाधिराज, देवतुल्य आदर व दीर्घायु"),
+            8: ("ऐरावत", "Airavata", "सर्वोच्च ऐश्वर्य, गजराज तुल्य वैभव"),
+            9: ("वैशेषिक", "Vaisheshika", "अद्वितीय प्रभाव, शास्त्रज्ञ व पूजित"),
+            10: ("भास्वदांश", "Bhasvadamsa", "सूर्यसम तेज, सर्वव्यापी यश व कीर्ति"),
+            11: ("इन्द्रलोक", "Indraloka", "इन्द्रसम वैभव व भोग-सम्पत्ति"),
+            12: ("कल्पवृक्ष", "Kalpavriksha", "सर्वमनोरथ सिद्धि व अमूल्य सम्पदा"),
+            13: ("ब्रह्मलोक", "Brahmaloka", "परम ज्ञान, तप व शाश्वत प्रतिष्ठा"),
+            14: ("शिवलोक", "Shivaloka", "परम शक्ति, कल्याण व विजय"),
+            15: ("विष्णुलोक", "Vishnuloka", "अक्षय श्री, धर्म-रक्षा व पराक्रम"),
+            16: ("कामधेनु", "Kamadhenu", "अखंड साम्राज्य, मोक्ष व सर्वसिद्धि")
+        }
+
+        target_planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
+        summary = {}
+
+        d1_chart = self.all_vargas.get("D1")
+        d9_chart = self.all_vargas.get("D9")
+
+        for p in target_planets:
+            counts = {
+                "exalt": 0, "mool": 0, "own": 0, "friend": 0,
+                "neutral": 0, "enemy": 0, "deb": 0
+            }
+            varga_details = []
+
+            for code in varga_codes:
+                vchart = self.all_vargas.get(code)
+                if not vchart or p not in vchart.planets:
+                    continue
+                sign_name = vchart.planets[p].sign_name
+                text, css = self.get_dignity(p, sign_name)
+                counts[css] = counts.get(css, 0) + 1
+                varga_details.append({
+                    "varga": code,
+                    "sign": sign_name,
+                    "text": text,
+                    "css": css
+                })
+
+            auspicious_count = counts["exalt"] + counts["mool"] + counts["own"] + counts["friend"]
+            own_mool_exalt = counts["exalt"] + counts["mool"] + counts["own"]
+
+            if auspicious_count < 2:
+                vais_info = ("सामान्य", "General", "साधारण प्रभाव")
+            elif auspicious_count > 16:
+                vais_info = vais_titles[16]
+            else:
+                vais_info = vais_titles.get(auspicious_count, ("सामान्य", "General", "साधारण प्रभाव"))
+
+            is_vargottama = False
+            if d1_chart and d9_chart and p in d1_chart.planets and p in d9_chart.planets:
+                is_vargottama = (d1_chart.planets[p].sign_name == d9_chart.planets[p].sign_name)
+
+            total_points = (
+                counts["exalt"] * 20 +
+                counts["mool"] * 18 +
+                counts["own"] * 16 +
+                counts["friend"] * 12 +
+                counts["neutral"] * 8 +
+                counts["enemy"] * 4 +
+                counts["deb"] * 0
+            )
+            max_points = len(varga_codes) * 20
+            score_20 = round((total_points / max_points) * 20.0, 1) if max_points > 0 else 0.0
+
+            summary[p] = {
+                "planet": p,
+                "counts": counts,
+                "auspicious_count": auspicious_count,
+                "own_mool_exalt": own_mool_exalt,
+                "vaisheshikamsa_hi": vais_info[0],
+                "vaisheshikamsa_en": vais_info[1],
+                "vaisheshikamsa_desc": vais_info[2],
+                "is_vargottama": is_vargottama,
+                "score_20": score_20,
+                "varga_details": varga_details
+            }
+
+        return summary
+
     def calculate_house_points(self, detailed: bool = False) -> List[Dict[str, Any]]:
         """
         Calculates Free Will and Affliction points for all 12 houses.
