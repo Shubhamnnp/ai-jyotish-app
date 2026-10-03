@@ -8700,9 +8700,9 @@ elif selected_idx == 4:
     # TAB 0: समग्र वास्तु मण्डल (Overview, Compass & Comparative Table)
     # -------------------------------------------------------------
     with v_tabs[0]:
-        scores = [z["score"] for z in v_zones]
+        scores = [z.get("score", 70) for z in v_zones]
         avg_score = int(round(sum(scores) / len(scores))) if scores else 0
-        sorted_zones = sorted(v_zones, key=lambda x: x["score"], reverse=True)
+        sorted_zones = sorted(v_zones, key=lambda x: x.get("score", 70), reverse=True)
         best_zone = sorted_zones[0] if sorted_zones else None
         worst_zone = sorted_zones[-1] if sorted_zones else None
 
@@ -8712,16 +8712,16 @@ elif selected_idx == 4:
             st.markdown(f"""
             <div style="background: {card_bg}; border: 1.5px solid #10B981; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                 <div style="font-size: 11.5px; font-weight: 700; color: #10B981; text-transform: uppercase;">🏆 सर्वोच्च सामंजस्य दिशा</div>
-                <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{best_zone['hindi'] if best_zone else 'N/A'}</div>
-                <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #10B981;">{best_zone['score'] if best_zone else 0}/100</b> | {best_zone['lord'] if best_zone else ''}</div>
+                <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{best_zone.get('hindi', 'N/A') if best_zone else 'N/A'}</div>
+                <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #10B981;">{best_zone.get('score', 0) if best_zone else 0}/100</b> | {best_zone.get('lord', '') if best_zone else ''}</div>
             </div>
             """, unsafe_allow_html=True)
         with kpi_col2:
             st.markdown(f"""
             <div style="background: {card_bg}; border: 1.5px solid #EF4444; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                 <div style="font-size: 11.5px; font-weight: 700; color: #EF4444; text-transform: uppercase;">⚠️ सर्वाधिक संवेदनशील दिशा</div>
-                <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{worst_zone['hindi'] if worst_zone else 'N/A'}</div>
-                <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #EF4444;">{worst_zone['score'] if worst_zone else 0}/100</b> | {worst_zone['lord'] if worst_zone else ''}</div>
+                <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{worst_zone.get('hindi', 'N/A') if worst_zone else 'N/A'}</div>
+                <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #EF4444;">{worst_zone.get('score', 0) if worst_zone else 0}/100</b> | {worst_zone.get('lord', '') if worst_zone else ''}</div>
             </div>
             """, unsafe_allow_html=True)
         with kpi_col3:
@@ -8783,7 +8783,7 @@ elif selected_idx == 4:
 
         for idx, z in enumerate(v_zones):
             bg_r = row_alt_bg if idx % 2 == 1 else row_bg
-            r_risk = z["defect_risk"]
+            r_risk = z.get("defect_risk", "Moderate Risk")
             if r_risk == "Harmonious":
                 b_color = "#10B981"
                 b_bg = "#ECFDF5" if not _is_dark else "#064E3B"
@@ -8797,20 +8797,29 @@ elif selected_idx == 4:
                 b_bg = "#FEF2F2" if not _is_dark else "#7F1D1D"
                 b_txt = "🚨 उच्च दोष"
 
-            h_str = f"भाव {z['house']} ({z.get('sign_name', '')} {z.get('degree_str', '')})" if z['lord'] != "Cosmic (Lord Brahma)" else "केन्द्र भाव (1, 4, 7, 10)"
+            h_val = z.get('house')
+            if h_val is not None and str(h_val) != "":
+                h_str = f"भाव {h_val}"
+                if z.get('sign_name') or z.get('degree_str'):
+                    h_str += f" ({z.get('sign_name', '')} {z.get('degree_str', '')})".strip()
+            else:
+                h_str = "केन्द्र भाव (1, 4, 7, 10)" if "ब्रह्म" in str(z.get('hindi', '')) or z.get('direction') == 'Center' else "तटस्थ"
+
             d_str = z.get('status', 'सामान्य')
             if z.get('is_combust'): d_str += " [अस्त]"
             if z.get('is_retrograde'): d_str += " [वक्री]"
 
+            meta_d = z.get("meta", {})
+
             tbl_html += f'<tr style="background-color: {bg_r}; border-bottom: 1px solid {row_bdr};">'
-            tbl_html += f'<td style="padding: 8px 12px; font-weight: 700; color: {text_primary}; white-space: nowrap;">{z["hindi"]}</td>'
-            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z["meta"].get("deity", "")} / <b>{z["lord"]}</b></td>'
-            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z["element"]}</td>'
+            tbl_html += f'<td style="padding: 8px 12px; font-weight: 700; color: {text_primary}; white-space: nowrap;">{z.get("hindi", "")}</td>'
+            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{meta_d.get("deity", "")} / <b>{z.get("lord", "")}</b></td>'
+            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z.get("element", "")}</td>'
             tbl_html += f'<td style="padding: 8px 12px; color: {text_primary};">{h_str}<br><span style="font-size: 11px; color: {text_secondary};">{d_str}</span></td>'
             tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z.get("digbala", "तटस्थ")}</td>'
-            tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><b style="color: {b_color}; font-size: 13px;">{z["score"]}/100</b></td>'
+            tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><b style="color: {b_color}; font-size: 13px;">{z.get("score", 70)}/100</b></td>'
             tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><span style="background: {b_bg}; color: {b_color}; border: 1px solid {b_color}; padding: 2px 8px; border-radius: 12px; font-weight: 700; font-size: 11px;">{b_txt}</span></td>'
-            tbl_html += f'<td style="padding: 8px 12px; font-size: 11.5px; color: {text_secondary}; max-width: 250px;">{z["meta"].get("non_destructive_remedy", z["meta"].get("remedy_hi", ""))[:75]}...</td>'
+            tbl_html += f'<td style="padding: 8px 12px; font-size: 11.5px; color: {text_secondary}; max-width: 250px;">{meta_d.get("non_destructive_remedy", meta_d.get("remedy_hi", ""))[:75]}...</td>'
             tbl_html += '</tr>'
 
         tbl_html += '</tbody></table></div>'
@@ -8856,11 +8865,11 @@ elif selected_idx == 4:
             <div style="background: {card_bg}; border: 1.5px solid {border_color}; border-left: 6px solid {border_color}; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.06);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                     <div>
-                        <div style="font-size: 22px; font-weight: 900; color: {text_primary};">{z['hindi']} &nbsp;<span style="font-size: 15px; color: {text_secondary}; font-weight: 600;">({z['direction']} Zone)</span></div>
+                        <div style="font-size: 22px; font-weight: 900; color: {text_primary};">{z.get('hindi', '')} &nbsp;<span style="font-size: 15px; color: {text_secondary}; font-weight: 600;">({z.get('direction', '')} Zone)</span></div>
                         <div style="font-size: 13px; color: {text_secondary}; margin-top: 4px;">
                             🏛️ <b>दिक्पाल:</b> {meta.get('deity', '')} &nbsp;|&nbsp; 
-                            🪐 <b>स्वामी ग्रह:</b> {z['lord']} &nbsp;|&nbsp; 
-                            🌿 <b>पंचतत्व:</b> {z['element']} &nbsp;|&nbsp; 
+                            🪐 <b>स्वामी ग्रह:</b> {z.get('lord', '')} &nbsp;|&nbsp; 
+                            🌿 <b>पंचतत्व:</b> {z.get('element', '')} &nbsp;|&nbsp; 
                             📐 <b>कोणीय विस्तार:</b> {meta.get('degree_range', '')}
                         </div>
                     </div>
@@ -8890,7 +8899,7 @@ elif selected_idx == 4:
                 st.markdown(f"""
                 <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 12.5px; line-height: 1.6; color: {text_primary};">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
-                        <div><b>स्वामी ग्रह:</b> {z['lord']}</div>
+                        <div><b>स्वामी ग्रह:</b> {z.get('lord', '')}</div>
                         <div><b>राशि व अंश:</b> {z.get('sign_name', 'N/A')} {z.get('degree_str', '')}</div>
                         <div><b>कुण्डली भाव:</b> भाव {z.get('house', 'N/A')}</div>
                         <div><b>ग्रह गरिमा:</b> {z.get('status', 'सामान्य')}</div>
@@ -8975,12 +8984,12 @@ elif selected_idx == 4:
                 """, unsafe_allow_html=True)
 
             # Detailed Parameters Table for Direction
-            st.markdown(f"##### 📊 {z['hindi']} दिशा के सम्पूर्ण शास्त्रीय मापदण्ड (15-Parameter Matrix)")
+            st.markdown(f"##### 📊 {z.get('hindi', '')} दिशा के सम्पूर्ण शास्त्रीय मापदण्ड (15-Parameter Matrix)")
             
             p_rows = [
-                ("दिशा एवं दिक्पाल (Direction & Deity)", f"{z['hindi']} ({z['direction']}) — {meta.get('deity', '')}"),
-                ("दिशा स्वामी ग्रह (Ruling Planet)", f"{z['lord']}"),
-                ("पंचमहाभूत तत्व (Five Elements)", f"{z['element']}"),
+                ("दिशा एवं दिक्पाल (Direction & Deity)", f"{z.get('hindi', '')} ({z.get('direction', '')}) — {meta.get('deity', '')}"),
+                ("दिशा स्वामी ग्रह (Ruling Planet)", f"{z.get('lord', '')}"),
+                ("पंचमहाभूत तत्व (Five Elements)", f"{z.get('element', '')}"),
                 ("कोणीय विस्तार (Degree Range)", f"{meta.get('degree_range', '')}"),
                 ("संबद्ध कुण्डली भाव (Kundali House)", f"{meta.get('associated_house', '')}"),
                 ("जातक की कुण्डली में ग्रह स्थिति", f"भाव {z.get('house', 'N/A')}, {z.get('sign_name', '')} {z.get('degree_str', '')}"),
