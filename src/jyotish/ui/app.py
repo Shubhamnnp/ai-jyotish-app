@@ -5301,6 +5301,91 @@ def render_styled_varga_table_html(varga_table_data, varga_meta_dict, is_dark: b
     return tbl_html
 
 
+def render_vastu_compass_wheel_svg(zones: list, is_dark: bool = False) -> str:
+    import math
+    def polar_to_cart(cx, cy, r, deg):
+        rad = math.radians(deg - 90)
+        return cx + r * math.cos(rad), cy + r * math.sin(rad)
+
+    def get_arc_path(cx, cy, r_in, r_out, start_deg, end_deg):
+        x1_out, y1_out = polar_to_cart(cx, cy, r_out, start_deg)
+        x2_out, y2_out = polar_to_cart(cx, cy, r_out, end_deg)
+        x2_in, y2_in = polar_to_cart(cx, cy, r_in, end_deg)
+        x1_in, y1_in = polar_to_cart(cx, cy, r_in, start_deg)
+        return f"M {x1_out:.1f} {y1_out:.1f} A {r_out} {r_out} 0 0 1 {x2_out:.1f} {y2_out:.1f} L {x2_in:.1f} {y2_in:.1f} A {r_in} {r_in} 0 0 0 {x1_in:.1f} {y1_in:.1f} Z"
+
+    cx, cy = 250, 250
+    bg_circle = "#0b1021" if is_dark else "#f8fafc"
+    border_circle = "#334155" if is_dark else "#cbd5e1"
+    text_main = "#f8fafc" if is_dark else "#0f172a"
+    text_sub = "#94a3b8" if is_dark else "#64748b"
+
+    zone_dict = {z.get("direction"): z for z in zones}
+
+    dirs = [
+        ("North", 0, "उत्तर (N)", "बुध (Mercury)"),
+        ("North-East", 45, "ईशान (NE)", "गुरु (Jupiter)"),
+        ("East", 90, "पूर्व (E)", "सूर्य (Sun)"),
+        ("South-East", 135, "आग्नेय (SE)", "शुक्र (Venus)"),
+        ("South", 180, "दक्षिण (S)", "मंगल (Mars)"),
+        ("South-West", 225, "नैऋत्य (SW)", "राहु (Rahu)"),
+        ("West", 270, "पश्चिम (W)", "शनि (Saturn)"),
+        ("North-West", 315, "वायव्य (NW)", "चन्द्र (Moon)"),
+    ]
+
+    wedges_svg = []
+    for d_name, mid_ang, label, fallback_lord in dirs:
+        z = zone_dict.get(d_name, {})
+        score = z.get("score", 70)
+        lord = z.get("lord", fallback_lord)
+
+        if score >= 75:
+            color = "#10b981"
+            fill_opacity = "0.22"
+        elif score >= 50:
+            color = "#f59e0b"
+            fill_opacity = "0.22"
+        else:
+            color = "#ef4444"
+            fill_opacity = "0.25"
+
+        path_d = get_arc_path(cx, cy, 90, 230, mid_ang - 22.5, mid_ang + 22.5)
+        tx, ty = polar_to_cart(cx, cy, 160, mid_ang)
+        
+        wedges_svg.append(f"""
+        <path d="{path_d}" fill="{color}" fill-opacity="{fill_opacity}" stroke="{color}" stroke-width="2" />
+        <text x="{tx:.1f}" y="{(ty - 10):.1f}" text-anchor="middle" fill="{text_main}" font-size="12" font-weight="bold">{label}</text>
+        <text x="{tx:.1f}" y="{(ty + 6):.1f}" text-anchor="middle" fill="{text_sub}" font-size="10.5">{lord}</text>
+        <text x="{tx:.1f}" y="{(ty + 22):.1f}" text-anchor="middle" fill="{color}" font-size="12" font-weight="bold">{score}/100</text>
+        """)
+
+    b_zone = zone_dict.get("Center", {})
+    b_score = b_zone.get("score", 85)
+    b_color = "#3b82f6"
+
+    center_svg = f"""
+    <circle cx="{cx}" cy="{cy}" r="82" fill="{b_color}" fill-opacity="0.20" stroke="{b_color}" stroke-width="2.5" />
+    <text x="{cx}" y="{cy - 12}" text-anchor="middle" fill="{text_main}" font-size="13" font-weight="bold">ब्रह्मस्थान</text>
+    <text x="{cx}" y="{cy + 5}" text-anchor="middle" fill="{text_sub}" font-size="10.5">Brahmasthan (Akasha)</text>
+    <text x="{cx}" y="{cy + 22}" text-anchor="middle" fill="{b_color}" font-size="12" font-weight="bold">{b_score}/100</text>
+    """
+
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="450" style="max-width: 500px; margin: 0 auto; display: block;">
+      <defs>
+        <radialGradient id="compassBg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="{bg_circle}" stop-opacity="0.9" />
+          <stop offset="100%" stop-color="{bg_circle}" stop-opacity="1" />
+        </radialGradient>
+      </defs>
+      <circle cx="{cx}" cy="{cy}" r="240" fill="url(#compassBg)" stroke="{border_circle}" stroke-width="2" />
+      <circle cx="{cx}" cy="{cy}" r="236" fill="none" stroke="{border_circle}" stroke-width="1" stroke-dasharray="4,4" />
+      {''.join(wedges_svg)}
+      {center_svg}
+    </svg>"""
+
+    return svg
+
+
 if "active_module_idx" not in st.session_state:
     st.session_state.active_module_idx = 0
 st.session_state.active_module_idx = max(0, min(int(st.session_state.active_module_idx), len(MODULE_OPTIONS) - 1))
@@ -8580,72 +8665,366 @@ elif selected_idx == 3:
 
 elif selected_idx == 4:
     st.subheader("🏛️ वास्तु-ज्योतिष दिशा मण्डल (Vastu-Jyotish Architectural Alignment)")
-    st.write("जन्म कुण्डली के ग्रहों एवं भावों का अष्ट दिशाओं और ब्रह्मस्थान से शास्त्रीय समन्वय एवं वास्तु-दोष निवारण।")
+    st.write("जन्म कुण्डली के ग्रहों, भावों एवं दिग्बल का अष्ट दिशाओं और ब्रह्मस्थान से शास्त्रीय समन्वय, 360° दिशा चक्र, गहन गणनाएं एवं पंच-आयामी शास्त्रीय उपचार।")
 
     v_zones = vastu_engine.evaluate_vastu_zones()
+    zone_dict = {z["direction"]: z for z in v_zones}
+    _is_dark = (is_astrallis_mode or is_night_mode)
 
-    vastu_cards_html = '<div class="vastu-grid">'
-    for z in v_zones:
-        risk = z["defect_risk"]
-        if risk == "Harmonious":
-            border_color = "#10B981"
-            badge_bg = "#ECFDF5"
-            badge_color = "#065F46"
-            badge_border = "#10B981"
-            score_color = "#059669"
-            badge_text = "✨ Harmonious"
-        elif risk == "Moderate Risk":
-            border_color = "#F59E0B"
-            badge_bg = "#FFFBEB"
-            badge_color = "#92400E"
-            badge_border = "#F59E0B"
-            score_color = "#D97706"
-            badge_text = "⚠️ Moderate Risk"
-        else:
-            border_color = "#EF4444"
-            badge_bg = "#FEF2F2"
-            badge_color = "#991B1B"
-            badge_border = "#EF4444"
-            score_color = "#DC2626"
-            badge_text = "🚨 High Risk"
+    card_bg = "#111827" if _is_dark else "#FFFFFF"
+    card_bdr = "#374151" if _is_dark else "#E2E8F0"
+    hdr_bg = "#1F2937" if _is_dark else "#F8FAFC"
+    hdr_bdr = "#374151" if _is_dark else "#CBD5E1"
+    row_bg = "#111827" if _is_dark else "#FFFFFF"
+    row_alt_bg = "#1F2937" if _is_dark else "#F8FAFC"
+    row_bdr = "#374151" if _is_dark else "#E2E8F0"
+    text_primary = "#F9FAFB" if _is_dark else "#0F172A"
+    text_secondary = "#9CA3AF" if _is_dark else "#475569"
 
-        vastu_cards_html += (
-            f'<div class="vastu-card" style="border-top: 4.5px solid {border_color} !important;">'
-            f'<div>'
-            f'<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">'
-            f'<span style="font-size: 16px; font-weight: 900; color: #0F172A;">{z["direction"]}</span>'
-            f'<span style="background: {badge_bg}; color: {badge_color}; border: 1.5px solid {badge_border}; border-radius: 12px; padding: 2px 8px; font-weight: 800; font-size: 11px;">'
-            f'{badge_text}'
-            f'</span>'
-            f'</div>'
-            f'<div style="font-size: 13px; color: #334155; font-weight: 700; margin-bottom: 8px;">'
-            f'{z["hindi"]}'
-            f'</div>'
-            f'<div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; font-size: 12px; line-height: 1.5;">'
-            f'<div style="color: #0F172A;">🪐 <b>स्वामी:</b> {z["lord"]} &nbsp;|&nbsp; 🌿 <b>तत्व:</b> {z["element"]}</div>'
-            f'<div style="color: #0F172A; margin-top: 2px;">📊 <b>सामंजस्य स्कोर:</b> <b style="color: {score_color}; font-size: 13px;">{z["score"]}/100</b></div>'
-            f'</div>'
-            f'<div style="font-size: 12px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">'
-            f'<div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 6px; padding: 6px 8px; color: #166534;">'
-            f'<b style="color: #15803D;">✅ शुभ उपयोग:</b> {", ".join(z["meta"]["ideal_uses"][:2])}'
-            f'</div>'
-            f'<div style="background: #FEF2F2; border: 1px solid #FECACA; border-radius: 6px; padding: 6px 8px; color: #991B1B;">'
-            f'<b style="color: #B91C1C;">🚫 वर्जित:</b> {", ".join(z["meta"]["avoid"][:2])}'
-            f'</div>'
-            f'<div style="padding: 4px 2px; color: #0F172A;">'
-            f'<b style="color: #0F172A;">🪔 शास्त्रीय उपाय:</b> {z["meta"]["remedy_hi"]}'
-            f'</div>'
-            f'</div>'
-            f'</div>'
-            f'<div style="margin-top: 12px; padding-top: 8px; border-top: 1.5px dashed #CBD5E1;">'
-            f'<div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 6px; padding: 6px 8px; font-size: 11.5px; color: #92400E;">'
-            f'<b style="color: #B45309;">🕉️ मंत्र:</b> {z["meta"]["mantra"]}'
-            f'</div>'
-            f'</div>'
-            f'</div>'
-        )
-    vastu_cards_html += '</div>'
-    st.markdown(vastu_cards_html, unsafe_allow_html=True)
+    v_tab_titles = [
+        "🧭 समग्र वास्तु मण्डल",
+        "🌅 पूर्व (East)",
+        "⚡ आग्नेय (SE)",
+        "🔴 दक्षिण (South)",
+        "⛰️ नैऋत्य (SW)",
+        "🌊 पश्चिम (West)",
+        "💨 वायव्य (NW)",
+        "💰 उत्तर (North)",
+        "🕉️ ईशान (NE)",
+        "🌌 ब्रह्मस्थान (Center)"
+    ]
+
+    v_tabs = st.tabs(v_tab_titles)
+
+    # -------------------------------------------------------------
+    # TAB 0: समग्र वास्तु मण्डल (Overview, Compass & Comparative Table)
+    # -------------------------------------------------------------
+    with v_tabs[0]:
+        scores = [z["score"] for z in v_zones]
+        avg_score = int(round(sum(scores) / len(scores))) if scores else 0
+        sorted_zones = sorted(v_zones, key=lambda x: x["score"], reverse=True)
+        best_zone = sorted_zones[0] if sorted_zones else None
+        worst_zone = sorted_zones[-1] if sorted_zones else None
+
+        # Top KPI Summary Cards
+        kpi_col1, kpi_col2, kpi_col3, kpi_col4 = st.columns(4)
+        with kpi_col1:
+            st.markdown(f"""
+            <div style="background: {card_bg}; border: 1.5px solid #10B981; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 11.5px; font-weight: 700; color: #10B981; text-transform: uppercase;">🏆 सर्वोच्च सामंजस्य दिशा</div>
+                <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{best_zone['hindi'] if best_zone else 'N/A'}</div>
+                <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #10B981;">{best_zone['score'] if best_zone else 0}/100</b> | {best_zone['lord'] if best_zone else ''}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with kpi_col2:
+            st.markdown(f"""
+            <div style="background: {card_bg}; border: 1.5px solid #EF4444; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 11.5px; font-weight: 700; color: #EF4444; text-transform: uppercase;">⚠️ सर्वाधिक संवेदनशील दिशा</div>
+                <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{worst_zone['hindi'] if worst_zone else 'N/A'}</div>
+                <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #EF4444;">{worst_zone['score'] if worst_zone else 0}/100</b> | {worst_zone['lord'] if worst_zone else ''}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with kpi_col3:
+            st.markdown(f"""
+            <div style="background: {card_bg}; border: 1.5px solid #3B82F6; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 11.5px; font-weight: 700; color: #3B82F6; text-transform: uppercase;">🌿 पंचतत्व संतुलन</div>
+                <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">जल • अग्नि • वायु • पृथ्वी</div>
+                <div style="font-size: 12px; color: {text_secondary};">आकाश (ब्रह्मस्थान): <b style="color: #3B82F6;">{zone_dict.get('Center', {}).get('score', 85)}/100</b></div>
+            </div>
+            """, unsafe_allow_html=True)
+        with kpi_col4:
+            idx_color = "#10B981" if avg_score >= 75 else "#F59E0B" if avg_score >= 50 else "#EF4444"
+            st.markdown(f"""
+            <div style="background: {card_bg}; border: 1.5px solid {idx_color}; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 11.5px; font-weight: 700; color: {idx_color}; text-transform: uppercase;">📊 समग्र वास्तु सूचकांक</div>
+                <div style="font-size: 22px; font-weight: 900; color: {idx_color}; margin: 2px 0;">{avg_score}<span style="font-size: 14px; color: {text_secondary};">/100</span></div>
+                <div style="font-size: 12px; color: {text_secondary};">9 दिशाओं का औसत सामंजस्य</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+        # 360 Degree Cosmic Compass SVG Wheel
+        compass_col, info_col = st.columns([1.1, 1.0])
+        with compass_col:
+            st.markdown("##### 🧭 360° वास्तु दिशा चक्र (Cosmic Compass Wheel)")
+            compass_svg = render_vastu_compass_wheel_svg(v_zones, is_dark=_is_dark)
+            st.markdown(compass_svg, unsafe_allow_html=True)
+            st.caption("🟢 हरा (≥75): सुसंगत व शुभ | 🟡 पीला (50-74): मध्यम सतर्कता | 🔴 लाल (<50): संवेदनशील/दोष निवारण आवश्यक")
+
+        with info_col:
+            st.markdown("##### 📜 वास्तु-ज्योतिष आधार एवं कुण्डली समन्वय")
+            st.markdown(f"""
+            <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 12px; padding: 16px; font-size: 13px; line-height: 1.6; color: {text_primary};">
+                <p style="margin-top: 0;"><b>वास्तु-ज्योतिष का शास्त्रीय नियम:</b> जातक की जन्मकुण्डली में जिस दिशा का स्वामी ग्रह <b>उच्च, स्वराशि अथवा दिग्बली</b> होता है, भवन की वह दिशा स्वतः ऊर्जावान और भाग्यवर्धक सिद्ध होती है। इसके विपरीत जब दिशा स्वामी <b>नीच, शत्रु राशि, अस्त, वक्री अथवा ६, ८, १२वें भाव</b> में स्थित हो तो संबंधित दिशा में वास्तु दोष का दुष्प्रभाव कई गुना बढ़ जाता है।</p>
+                <div style="background: {row_alt_bg}; border-left: 4px solid #F59E0B; padding: 8px 12px; border-radius: 4px; margin: 10px 0; font-size: 12px;">
+                    <i>"यस्मिन् देशे स्थिता देवा दिशामुख्याः समन्ततः । तं देशं वास्तुमित्याहुः सर्वकामफलप्रदम् ॥"</i><br>
+                    <span style="color: {text_secondary};">— मयमतम् एवं विश्वकर्मा प्रकाश</span>
+                </div>
+                <p style="margin-bottom: 0;">ऊपर दिए गए प्रत्येक दिशा के स्वतंत्र टैब में जाकर आप अपनी कुण्डली के अनुसार उस दिशा के <b>विस्तृत पैरामीटर्स, आदर्श वास्तु नियोजन, वर्जित निर्माण, दोष के लक्षण एवं ५-आयामी अचूक शास्त्रीय उपचार</b> का अध्ययन कर सकते हैं।</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+        st.markdown("##### 📋 नवदिशा शास्त्रीय तुलनात्मक सारणी (9-Direction Master Matrix)")
+
+        tbl_html = f'<div style="overflow-x: auto; border: 1.5px solid {card_bdr}; border-radius: 10px; margin-bottom: 16px;">'
+        tbl_html += f'<table style="width: 100%; border-collapse: collapse; text-align: left; background: {card_bg}; font-size: 12px;">'
+        tbl_html += f'<thead><tr style="background: {hdr_bg}; border-bottom: 2px solid {hdr_bdr};">'
+        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिशा (Direction)</th>'
+        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिक्पाल व स्वामी</th>'
+        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">तत्व</th>'
+        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">कुण्डली भाव व स्थिति</th>'
+        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिग्बल</th>'
+        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary}; text-align: center;">सामंजस्य स्कोर</th>'
+        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary}; text-align: center;">दोष जोखिम</th>'
+        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">प्राथमिक शास्त्रीय उपचार</th>'
+        tbl_html += '</tr></thead><tbody>'
+
+        for idx, z in enumerate(v_zones):
+            bg_r = row_alt_bg if idx % 2 == 1 else row_bg
+            r_risk = z["defect_risk"]
+            if r_risk == "Harmonious":
+                b_color = "#10B981"
+                b_bg = "#ECFDF5" if not _is_dark else "#064E3B"
+                b_txt = "✨ सुसंगत"
+            elif r_risk == "Moderate Risk":
+                b_color = "#F59E0B"
+                b_bg = "#FFFBEB" if not _is_dark else "#78350F"
+                b_txt = "⚠️ मध्यम जोखिम"
+            else:
+                b_color = "#EF4444"
+                b_bg = "#FEF2F2" if not _is_dark else "#7F1D1D"
+                b_txt = "🚨 उच्च दोष"
+
+            h_str = f"भाव {z['house']} ({z.get('sign_name', '')} {z.get('degree_str', '')})" if z['lord'] != "Cosmic (Lord Brahma)" else "केन्द्र भाव (1, 4, 7, 10)"
+            d_str = z.get('status', 'सामान्य')
+            if z.get('is_combust'): d_str += " [अस्त]"
+            if z.get('is_retrograde'): d_str += " [वक्री]"
+
+            tbl_html += f'<tr style="background-color: {bg_r}; border-bottom: 1px solid {row_bdr};">'
+            tbl_html += f'<td style="padding: 8px 12px; font-weight: 700; color: {text_primary}; white-space: nowrap;">{z["hindi"]}</td>'
+            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z["meta"].get("deity", "")} / <b>{z["lord"]}</b></td>'
+            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z["element"]}</td>'
+            tbl_html += f'<td style="padding: 8px 12px; color: {text_primary};">{h_str}<br><span style="font-size: 11px; color: {text_secondary};">{d_str}</span></td>'
+            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z.get("digbala", "तटस्थ")}</td>'
+            tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><b style="color: {b_color}; font-size: 13px;">{z["score"]}/100</b></td>'
+            tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><span style="background: {b_bg}; color: {b_color}; border: 1px solid {b_color}; padding: 2px 8px; border-radius: 12px; font-weight: 700; font-size: 11px;">{b_txt}</span></td>'
+            tbl_html += f'<td style="padding: 8px 12px; font-size: 11.5px; color: {text_secondary}; max-width: 250px;">{z["meta"].get("non_destructive_remedy", z["meta"].get("remedy_hi", ""))[:75]}...</td>'
+            tbl_html += '</tr>'
+
+        tbl_html += '</tbody></table></div>'
+        st.markdown(tbl_html, unsafe_allow_html=True)
+
+    # -------------------------------------------------------------
+    # TABS 1 to 9: INDIVIDUAL DIRECTION DEEP DIVE TABS
+    # -------------------------------------------------------------
+    dir_keys_order = [
+        "East", "South-East", "South", "South-West",
+        "West", "North-West", "North", "North-East", "Center"
+    ]
+
+    for tab_idx, d_key in enumerate(dir_keys_order, start=1):
+        with v_tabs[tab_idx]:
+            z = zone_dict.get(d_key)
+            if not z:
+                st.warning(f"{d_key} दिशा का विश्लेषण उपलब्ध नहीं है।")
+                continue
+
+            meta = z.get("meta", {})
+            score = z.get("score", 70)
+            risk = z.get("defect_risk", "Harmonious")
+
+            if risk == "Harmonious":
+                border_color = "#10B981"
+                badge_bg = "#ECFDF5" if not _is_dark else "#064E3B"
+                badge_color = "#10B981"
+                badge_text = "✨ पूर्ण सुसंगत (Harmonious & Blessed)"
+            elif risk == "Moderate Risk":
+                border_color = "#F59E0B"
+                badge_bg = "#FFFBEB" if not _is_dark else "#78350F"
+                badge_color = "#F59E0B"
+                badge_text = "⚠️ मध्यम जोखिम (Moderate Sensitivity)"
+            else:
+                border_color = "#EF4444"
+                badge_bg = "#FEF2F2" if not _is_dark else "#7F1D1D"
+                badge_color = "#EF4444"
+                badge_text = "🚨 उच्च दोष जोखिम (High Risk / Requires Remediation)"
+
+            # Direction Header Hero Card
+            st.markdown(f"""
+            <div style="background: {card_bg}; border: 1.5px solid {border_color}; border-left: 6px solid {border_color}; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.06);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <div style="font-size: 22px; font-weight: 900; color: {text_primary};">{z['hindi']} &nbsp;<span style="font-size: 15px; color: {text_secondary}; font-weight: 600;">({z['direction']} Zone)</span></div>
+                        <div style="font-size: 13px; color: {text_secondary}; margin-top: 4px;">
+                            🏛️ <b>दिक्पाल:</b> {meta.get('deity', '')} &nbsp;|&nbsp; 
+                            🪐 <b>स्वामी ग्रह:</b> {z['lord']} &nbsp;|&nbsp; 
+                            🌿 <b>पंचतत्व:</b> {z['element']} &nbsp;|&nbsp; 
+                            📐 <b>कोणीय विस्तार:</b> {meta.get('degree_range', '')}
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="background: {badge_bg}; color: {badge_color}; border: 1.5px solid {border_color}; border-radius: 16px; padding: 4px 12px; font-weight: 800; font-size: 12px;">
+                            {badge_text}
+                        </span>
+                        <div style="font-size: 18px; font-weight: 900; color: {border_color}; margin-top: 6px;">
+                            सामंजस्य स्कोर: {score}/100
+                        </div>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Two Column Split
+            col_left, col_right = st.columns([1, 1])
+
+            # Left Column: Astrological Analysis & Functional Architecture
+            with col_left:
+                st.markdown("##### 🪐 जन्म कुण्डली गणना एवं ज्योतिषीय स्थिति")
+                
+                # Check combustion and retrograde badges
+                combust_badge = "🔥 अस्त (Combust)" if z.get("is_combust") else "☀️ उदित (Normal)"
+                retro_badge = "🔄 वक्री (Retrograde)" if z.get("is_retrograde") else "➡️ मार्गी (Direct)"
+                
+                st.markdown(f"""
+                <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 12.5px; line-height: 1.6; color: {text_primary};">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                        <div><b>स्वामी ग्रह:</b> {z['lord']}</div>
+                        <div><b>राशि व अंश:</b> {z.get('sign_name', 'N/A')} {z.get('degree_str', '')}</div>
+                        <div><b>कुण्डली भाव:</b> भाव {z.get('house', 'N/A')}</div>
+                        <div><b>ग्रह गरिमा:</b> {z.get('status', 'सामान्य')}</div>
+                        <div><b>दिग्बल स्थिति:</b> {z.get('digbala', 'तटस्थ')}</div>
+                        <div><b>अस्त/वक्री:</b> {combust_badge} | {retro_badge}</div>
+                    </div>
+                    <div style="border-top: 1px solid {card_bdr}; padding-top: 8px;">
+                        <div><b>👤 वास्तु पुरुष अंग:</b> {meta.get('vastu_purusha_organ', 'N/A')}</div>
+                        <div><b>🎯 संबद्ध जीवन आयाम:</b> {meta.get('chakra_organ', 'N/A')}</div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                st.markdown("##### 🏛️ वास्तु नियोजन: शुभ एवं वर्जित व्यवस्था")
+                ideal_items = "".join([f"<li>{item}</li>" for item in meta.get("ideal_uses", [])])
+                avoid_items = "".join([f"<li>{item}</li>" for item in meta.get("avoid", [])])
+
+                st.markdown(f"""
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+                    <div style="background: {'#064E3B' if _is_dark else '#F0FDF4'}; border: 1.5px solid #10B981; border-radius: 8px; padding: 10px 14px; color: {'#A7F3D0' if _is_dark else '#166534'}; font-size: 12.5px;">
+                        <b style="color: #10B981; font-size: 13px;">✅ श्रेष्ठ एवं शुभ वास्तु उपयोग:</b>
+                        <ul style="margin: 6px 0 0 16px; padding: 0;">
+                            {ideal_items}
+                        </ul>
+                    </div>
+                    <div style="background: {'#7F1D1D' if _is_dark else '#FEF2F2'}; border: 1.5px solid #EF4444; border-radius: 8px; padding: 10px 14px; color: {'#FECACA' if _is_dark else '#991B1B'}; font-size: 12.5px;">
+                        <b style="color: #EF4444; font-size: 13px;">🚫 सर्वथा वर्जित निर्माण (Defects to Avoid):</b>
+                        <ul style="margin: 6px 0 0 16px; padding: 0;">
+                            {avoid_items}
+                        </ul>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                st.markdown("##### ⚠️ दिशा दोष के प्रमुख लक्षण (Affliction Symptoms)")
+                st.markdown(f"""
+                <div style="background: {row_alt_bg}; border-left: 4px solid #F59E0B; border-radius: 4px; padding: 10px 14px; font-size: 12.5px; line-height: 1.5; color: {text_primary}; margin-bottom: 16px;">
+                    {meta.get('symptoms_of_defect', 'N/A')}
+                </div>
+                """, unsafe_allow_html=True)
+
+            # Right Column: 5-Pillar Shastriya Remedies
+            with col_right:
+                st.markdown("##### 🪔 पंच-आयामी शास्त्रीय वास्तु उपाय (5-Pillar Remedy Suite)")
+
+                st.markdown(f"""
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; font-size: 12.5px;">
+                    <!-- Pillar 1: Yantra & Metal -->
+                    <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 8px; padding: 10px 14px;">
+                        <div style="font-weight: 800; color: #D97706; margin-bottom: 4px;">1. 🪔 यंत्र एवं धातु (Yantra & Metal):</div>
+                        <div style="color: {text_primary};"><b>धातु:</b> {meta.get('metal', 'N/A')} &nbsp;|&nbsp; <b>रत्न:</b> {meta.get('gemstone', 'N/A')}</div>
+                        <div style="color: {text_secondary}; font-size: 12px; margin-top: 2px;">{meta.get('remedy_hi', '')}</div>
+                    </div>
+
+                    <!-- Pillar 2: Vedic Mantra -->
+                    <div style="background: {'#78350F' if _is_dark else '#FFFBEB'}; border: 1.5px solid #F59E0B; border-radius: 8px; padding: 10px 14px;">
+                        <div style="font-weight: 800; color: #D97706; margin-bottom: 4px;">2. 🕉️ वैदिक मंत्र एवं जप साधना:</div>
+                        <div style="font-weight: 900; color: {'#FDE68A' if _is_dark else '#92400E'}; font-size: 13.5px; margin: 2px 0;">{meta.get('mantra', 'N/A')}</div>
+                        <div style="color: {'#FDE68A' if _is_dark else '#B45309'}; font-size: 11.5px;">प्रतिदिन 108 बार अथवा दिशा शुद्धि के समय विधिवत पाठ करें।</div>
+                    </div>
+
+                    <!-- Pillar 3: Botanical Plants -->
+                    <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 8px; padding: 10px 14px;">
+                        <div style="font-weight: 800; color: #059669; margin-bottom: 4px;">3. 🌿 वनस्पति एवं कल्पवृक्ष (Botanical Plants):</div>
+                        <div style="color: {text_primary};"><b>पूज्य वृक्ष/पौधे:</b> {meta.get('botanical', 'N/A')}</div>
+                        <div style="color: {text_secondary}; font-size: 11.5px; margin-top: 2px;">इस दिशा की सकारात्मक ऊर्जा वृद्धि हेतु ये पौधे स्थापित करना अति-शुभ माना गया है।</div>
+                    </div>
+
+                    <!-- Pillar 4: Color Therapy -->
+                    <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 8px; padding: 10px 14px;">
+                        <div style="font-weight: 800; color: #2563EB; margin-bottom: 4px;">4. 🎨 रंग चिकित्सा एवं प्रकाश व्यवस्था (Color Therapy):</div>
+                        <div style="color: {text_primary};"><b>अनुकूल रंग:</b> {meta.get('color_therapy', 'N/A')}</div>
+                        <div style="color: {text_secondary}; font-size: 11.5px; margin-top: 2px;">दीवारों के रंग, परदे, प्रकाश व्यवस्था एवं सजावट में इन रंगों का उपयोग ऊर्जा को संतुलित करता है।</div>
+                    </div>
+
+                    <!-- Pillar 5: Non-destructive Corrections -->
+                    <div style="background: {'#1E1B4B' if _is_dark else '#EEF2FF'}; border: 1.5px solid #6366F1; border-radius: 8px; padding: 10px 14px;">
+                        <div style="font-weight: 800; color: #4F46E5; margin-bottom: 4px;">5. 🛠️ बिना तोड़-फोड़ के शास्त्रीय वास्तु सुधार (Non-Destructive Fix):</div>
+                        <div style="color: {'#C7D2FE' if _is_dark else '#312E81'}; font-weight: 600;">{meta.get('non_destructive_remedy', 'N/A')}</div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # Detailed Parameters Table for Direction
+            st.markdown(f"##### 📊 {z['hindi']} दिशा के सम्पूर्ण शास्त्रीय मापदण्ड (15-Parameter Matrix)")
+            
+            p_rows = [
+                ("दिशा एवं दिक्पाल (Direction & Deity)", f"{z['hindi']} ({z['direction']}) — {meta.get('deity', '')}"),
+                ("दिशा स्वामी ग्रह (Ruling Planet)", f"{z['lord']}"),
+                ("पंचमहाभूत तत्व (Five Elements)", f"{z['element']}"),
+                ("कोणीय विस्तार (Degree Range)", f"{meta.get('degree_range', '')}"),
+                ("संबद्ध कुण्डली भाव (Kundali House)", f"{meta.get('associated_house', '')}"),
+                ("जातक की कुण्डली में ग्रह स्थिति", f"भाव {z.get('house', 'N/A')}, {z.get('sign_name', '')} {z.get('degree_str', '')}"),
+                ("ग्रह गरिमा एवं अवस्था (Dignity)", f"{z.get('status', 'सामान्य')} {'[अस्त]' if z.get('is_combust') else ''} {'[वक्री]' if z.get('is_retrograde') else ''}"),
+                ("दिग्बल स्थिति (Directional Strength)", f"{z.get('digbala', 'तटस्थ')}"),
+                ("वास्तु पुरुष शरीर अंग (Anatomy)", f"{meta.get('vastu_purusha_organ', '')}"),
+                ("रत्न एवं उपरत्न (Gemstone)", f"{meta.get('gemstone', '')}"),
+                ("शुभ धातु (Auspicious Metal)", f"{meta.get('metal', '')}"),
+                ("पूज्य वनस्पति (Botanical Tree/Plant)", f"{meta.get('botanical', '')}"),
+                ("रंग चिकित्सा (Color Therapy)", f"{meta.get('color_therapy', '')}"),
+                ("सामंजस्य स्कोर एवं जोखिम स्तर", f"{score}/100 — {badge_text}"),
+                ("अचूक बिना तोड़-फोड़ उपाय", f"{meta.get('non_destructive_remedy', '')}")
+            ]
+
+            p_table_html = f'<div style="overflow-x: auto; border: 1.5px solid {card_bdr}; border-radius: 10px; margin-bottom: 20px;">'
+            p_table_html += f'<table style="width: 100%; border-collapse: collapse; text-align: left; background: {card_bg}; font-size: 12.5px;">'
+            p_table_html += f'<thead><tr style="background: {hdr_bg}; border-bottom: 2px solid {hdr_bdr};">'
+            p_table_html += f'<th style="padding: 10px 14px; font-weight: 800; color: {text_primary}; width: 30%;">शास्त्रीय मापदण्ड (Parameter)</th>'
+            p_table_html += f'<th style="padding: 10px 14px; font-weight: 800; color: {text_primary}; width: 70%;">कुण्डली एवं वास्तु विन्यास विवरण (Details)</th>'
+            p_table_html += '</tr></thead><tbody>'
+
+            for p_idx, (p_label, p_val) in enumerate(p_rows):
+                p_bg = row_alt_bg if p_idx % 2 == 1 else row_bg
+                p_table_html += f'<tr style="background-color: {p_bg}; border-bottom: 1px solid {row_bdr};">'
+                p_table_html += f'<td style="padding: 8px 14px; font-weight: 700; color: {text_primary};">{p_label}</td>'
+                p_table_html += f'<td style="padding: 8px 14px; color: {text_secondary};">{p_val}</td>'
+                p_table_html += '</tr>'
+
+            p_table_html += '</tbody></table></div>'
+            st.markdown(p_table_html, unsafe_allow_html=True)
+
+            # Shastra Shloka Callout Box
+            if meta.get("shastra_shloka"):
+                st.markdown(f"""
+                <div style="background: {row_alt_bg}; border-left: 5px solid #6366F1; border-radius: 6px; padding: 12px 16px; margin-top: 10px; margin-bottom: 20px;">
+                    <div style="font-weight: 800; color: #6366F1; font-size: 12px; text-transform: uppercase;">📜 शास्त्रीय प्रमाण एवं श्लोक (Classical Vedic Citation)</div>
+                    <div style="font-size: 14px; font-weight: 700; color: {text_primary}; margin: 6px 0; font-family: serif;">
+                        {meta.get('shastra_shloka', '')}
+                    </div>
+                    <div style="font-size: 12px; color: {text_secondary};">
+                        — विश्वकर्मा प्रकाश / मयमतम् वास्तु शास्त्र प्रमाण
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
 
 
 # =============================================================
