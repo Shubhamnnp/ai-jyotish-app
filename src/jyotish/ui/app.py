@@ -8668,8 +8668,18 @@ elif selected_idx == 4:
     st.subheader("🏛️ वास्तु-ज्योतिष दिशा मण्डल (Vastu-Jyotish Architectural Alignment)")
     st.write("जन्म कुण्डली के ग्रहों, भावों एवं दिग्बल का अष्ट दिशाओं और ब्रह्मस्थान से शास्त्रीय समन्वय, 360° दिशा चक्र, गहन गणनाएं एवं पंच-आयामी शास्त्रीय उपचार।")
 
-    v_zones = vastu_engine.evaluate_vastu_zones()
-    zone_dict = {z["direction"]: z for z in v_zones}
+    # Ensure latest vastu engine and metadata
+    try:
+        import importlib
+        import src.jyotish.services.vastu as _v_mod
+        importlib.reload(_v_mod)
+        from src.jyotish.services.vastu import VastuJyotishEngine as _VastuEngine
+        _v_engine = _VastuEngine(chart)
+    except Exception:
+        _v_engine = vastu_engine
+
+    v_zones = _v_engine.evaluate_vastu_zones()
+    zone_dict = {z.get("direction"): z for z in v_zones}
     _is_dark = (is_astrallis_mode or is_night_mode)
 
     card_bg = "#111827" if _is_dark else "#FFFFFF"
@@ -8681,6 +8691,159 @@ elif selected_idx == 4:
     row_bdr = "#374151" if _is_dark else "#E2E8F0"
     text_primary = "#F9FAFB" if _is_dark else "#0F172A"
     text_secondary = "#9CA3AF" if _is_dark else "#475569"
+
+    # Robust fallback dictionary guaranteeing no 'N/A' in 5-pillar remedies
+    VASTU_PARAM_FALLBACKS = {
+        "East": {
+            "deity": "Indra / Surya Dev",
+            "degree_range": "67.5° – 112.5° (मध्य 90°)",
+            "associated_house": "१म भाव (तनु / लग्न - देह व आत्मशक्ति)",
+            "vastu_purusha_organ": "वास्तु पुरुष का मस्तक, कपाल व नेत्र",
+            "chakra_organ": "Vitality, Eye Sight, Heart, Head, Father, Social Prestige",
+            "gemstone": "माणिक्य (Ruby)",
+            "metal": "तांबा (Copper)",
+            "botanical": "आक (मदार), लाल कनेर, जामुन",
+            "color_therapy": "सूर्योदय नारंगी, स्वर्णिम, गहरा केसरिया (Sunrise Orange / Gold)",
+            "symptoms_of_defect": "हृदय विकार, नेत्र रोग, सिरदर्द, पिता से मतभेद, सरकारी कार्यों में बाधा, मानहानि व ऊर्जाहीनता।",
+            "mantra": "ॐ ह्रां ह्रीं ह्रौं सः सूर्याय नमः ॥",
+            "remedy_hi": "पूर्व दिशा को स्वच्छ, खुला और हल्का रखें। भारी सामान न रखें। पूर्व की दीवार पर तांबे का सूर्य यंत्र या पीतल का सूर्य स्थापित करें। शुद्ध तांबे का जल पात्र रखें।",
+            "non_destructive_remedy": "यदि पूर्व दिशा बंद या भारी हो तो दीवार पर 100% तांबे की पट्टी जमीन में स्थापित करें तथा पूर्व दिशा में सूर्य पिरामिड लगाएं।",
+            "shastra_shloka": "पूर्वे शक्रः श्रियं दद्याद् दक्षिणे यमराड्भयम् । वरुणे पश्चिमे सौम्यं कुबेरश्चोत्तरे धनम् ॥"
+        },
+        "South-East": {
+            "deity": "Agni Dev (अग्नि देव)",
+            "degree_range": "112.5° – 157.5° (मध्य 135°)",
+            "associated_house": "२य व ११वां भाव (धन प्रवाह, नकदी व भोग)",
+            "vastu_purusha_organ": "वास्तु पुरुष का दक्षिण वक्षस्थल व दायां कंधा",
+            "chakra_organ": "Hormones, Reproductive Health, Liquid Cash Flow, Marital Bliss, Cooking Fire",
+            "gemstone": "हीरा / ओपल (Diamond / White Zircon)",
+            "metal": "चांदी व कांसा (Silver / Bronze)",
+            "botanical": "गूलर (Udumbara), अनार, गुलाब, पलाश",
+            "color_therapy": "क्रीम, हल्का गुलाबी, चमकदार सफेद, पेस्टल पीच (Cream / Pastel Pink)",
+            "symptoms_of_defect": "महिलाओं का निरंतर अस्वस्थ रहना, नकदी की तंगी, वैवाहिक कलह, अग्नि भय, दुर्घटना, हार्मोनल असंतुलन।",
+            "mantra": "ॐ शुं शुक्राय नमः ॥",
+            "remedy_hi": "रसोईघर और विद्युत उपकरण आग्नेय कोण में रखें। इस दिशा में पानी का बोरिंग या भूमिगत टंकी कभी न बनाएं। क्रीम या हल्का गुलाबी रंग प्रयोग करें।",
+            "non_destructive_remedy": "यदि आग्नेय में जल तत्व या टॉयलेट हो तो जिंक/कॉपर स्ट्रिप से ऊर्जा सील करें और आग्नेय कोण में २४ घंटे जलने वाला शून्य वाट का लाल बल्ब लगाएं।",
+            "shastra_shloka": "आग्नेय्यां हुतभुक् पाको भोक्ता चैव न सीदति । अत्रैव पावकस्थानं धनधान्यविवर्धनम् ॥"
+        },
+        "South": {
+            "deity": "Yama (धर्मराज यम)",
+            "degree_range": "157.5° – 202.5° (मध्य 180°)",
+            "associated_house": "१०म भाव (कर्म, पद-प्रतिष्ठा, पराक्रम व कीर्ति)",
+            "vastu_purusha_organ": "वास्तु पुरुष की दाईं कोहनी व पसलियां",
+            "chakra_organ": "Blood, Bone Marrow, Muscular Strength, Courage, Siblings, Executive Action",
+            "gemstone": "लाल मूंगा (Red Coral)",
+            "metal": "तांबा (Copper) व पीतल",
+            "botanical": "खैर (Khadira), नीम, अशोक, लाल कनेर",
+            "color_therapy": "गहरा लाल, टेराकोटा, कत्थई, महोगनी (Deep Red / Terracotta)",
+            "symptoms_of_defect": "रक्त विकार, कानूनी विवाद, भाइयों में वैमनस्य, दुर्घटना का भय, मान-प्रतिष्ठा में हानि, अनपेक्षित शत्रुता।",
+            "mantra": "ॐ क्रां क्रीं क्रौं सः भौमाय नमः ॥",
+            "remedy_hi": "दक्षिण की दीवारें उत्तर से ऊँची और भारी रखें। दक्षिण द्वार दोष पर तांबे की पट्टी व मंगल यंत्र स्थापित करें। नीम या अशोक का वृक्ष लगाएं।",
+            "non_destructive_remedy": "दक्षिण दिशा में 3 ब्रास या कॉपर हेलिक्स लगाएं। यदि दक्षिण दिशा खुली हो तो वहां भारी वजनदार वस्तुएं अथवा लाल त्रिकोण पिरामिड रखें।",
+            "shastra_shloka": "याम्ये यमः शमं कुर्याद् विश्रामं च विनिर्दिशेत् । उच्चता भारसंयुक्ता सर्वकल्याणकारिणी ॥"
+        },
+        "South-West": {
+            "deity": "Nirriti / Pitrus (पितृ देव)",
+            "degree_range": "202.5° – 247.5° (मध्य 225°)",
+            "associated_house": "८म व १२वां भाव (आयु, स्थायित्व, मोक्ष व अवचेतन)",
+            "vastu_purusha_organ": "वास्तु पुरुष की जांघ, गुदा व पैर",
+            "chakra_organ": "Stability, Lifespan, Nervous Balance, Ancestral Blessings, Authority of Head of Family",
+            "gemstone": "गोमेद (Hessonite)",
+            "metal": "रांगा / सीसा (Lead) व भारी पीतल",
+            "botanical": "दूर्वा, चंदन, भारी बड़े छायादार वृक्ष",
+            "color_therapy": "पीला-भूरा, मिट्टी का रंग, खाकी, सरसों पीला (Earthy Brown / Ochre Yellow)",
+            "symptoms_of_defect": "पारिवारिक अस्थिरता, अकाल मृत्यु भय, गृहस्वामी का कमजोर स्वास्थ्य, निर्णय दोष, कोर्ट कचहरी, असहनीय ऋण।",
+            "mantra": "ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः ॥",
+            "remedy_hi": "नैऋत्य कोण को घर का सबसे भारी और ऊँचा कोना बनाएं। यहाँ बोरिंग, गड्ढा या शौचालय कभी न बनाएं। दोष निवारण हेतु राहु यंत्र एवं लेड पिरामिड लगाएं।",
+            "non_destructive_remedy": "नैऋत्य में टॉयलेट या कट होने पर 3 लेड (सीसा) हेलिक्स जमीन में दबाएं तथा भारी ब्रास नंदी अथवा हाथी का जोड़ा रखें।",
+            "shastra_shloka": "नैऋत्यां नैऋतो रक्षो भारं तत्र समाचरेत् । गभीरं न खनेद् भूमिं स्थिरत्वं तत्र संस्थितम् ॥"
+        },
+        "West": {
+            "deity": "Varuna (वरुण देव)",
+            "degree_range": "247.5° – 292.5° (मध्य 270°)",
+            "associated_house": "७म व ११वां भाव (व्यापार, साझेदारी, लाभ व कर्मफल)",
+            "vastu_purusha_organ": "वास्तु पुरुष का उदर व बायां घुटना",
+            "chakra_organ": "Bones, Joints, Discipline, Long-term Gains, Longevity, Karma Realization",
+            "gemstone": "नीलम (Blue Sapphire) / जामुनिया",
+            "metal": "लोहा (Iron) व स्टेनलेस स्टील",
+            "botanical": "शमी (खेजड़ी), पीपल (भवन से दूर), नीले पुष्प",
+            "color_therapy": "गहरा नीला, जामुनी, स्लेटी, चारकोल (Navy Blue / Charcoal Gray)",
+            "symptoms_of_defect": "गठिया, जोड़ों का दर्द, व्यापार में धोखा, कर्म का फल न मिलना, अकारण विलंब, सेवकों का विद्रोह, असंतोष।",
+            "mantra": "ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः ॥",
+            "remedy_hi": "पश्चिम दिशा में शमी का वृक्ष शनिवार या शनि होरा में लगाएं। लोहे का शनि यंत्र अथवा नीले क्रिस्टल स्थापित करें। ओवरहेड वाटर टैंक लगाएं।",
+            "non_destructive_remedy": "पश्चिम दिशा के दोष पर स्टील या ब्रास हेलिक्स लगाएं और शनिवार को सरसों के तेल का दीपक पश्चिम दिशा में प्रज्वलित करें।",
+            "shastra_shloka": "वारुणे वरुणो दद्याद् भोजनं पानमेव च । लाभस्थानं विदुः प्राज्ञाः पश्चिमे स्थिरवृद्धये ॥"
+        },
+        "North-West": {
+            "deity": "Vayu Dev (वायु देव)",
+            "degree_range": "292.5° – 337.5° (मध्य 315°)",
+            "associated_house": "३य व १२वां भाव (यात्रा, गति, मनोभाव व संबंध)",
+            "vastu_purusha_organ": "वास्तु पुरुष की बाईं कोहनी व पसलियां",
+            "chakra_organ": "Mind, Mental Peace, Fluids, Mother's Health, Travel, Supportive Relationships",
+            "gemstone": "मोती (Natural Pearl) / मूनस्टोन",
+            "metal": "चांदी (Pure Silver) व कांस्य",
+            "botanical": "पलाश (Dhak), चमेली, मोगरा, सफेद फूल",
+            "color_therapy": "दूधिया सफेद, पर्ल व्हाइट, चमकदार सिल्वर (Milk White / Pearl Silver)",
+            "symptoms_of_defect": "अनिद्रा, अत्यधिक मानसिक चंचलता व अवसाद, माता का अस्वस्थ रहना, यात्राओं में हानि, अनपेक्षित कानूनी उलझनें।",
+            "mantra": "ॐ श्रां श्रीं श्रौं सः चन्द्रमसे नमः ॥",
+            "remedy_hi": "वायव्य दिशा में हवा का आवागमन सुगम रखें। श्वेत रंग, चांदी का स्वास्तिक या बहते पानी का छोटा फव्वारा लगाएं। चंद्र यंत्र स्थापित करें।",
+            "non_destructive_remedy": "वायव्य में 3 पीतल की विंड चाइम (Wind Chimes) लटकाएं। वायव्य कोण में सफेद संगमरमर की चौकी पर शंख में गंगाजल भरकर रखें।",
+            "shastra_shloka": "वायव्ये मारुतः स्थानं गतिशीलं विधीयते । धान्यागारं च कुर्याद्धि पशुस्थानं तथैव च ॥"
+        },
+        "North": {
+            "deity": "Kubera / Lord Vishnu",
+            "degree_range": "337.5° – 22.5° (मध्य 0°/360°)",
+            "associated_house": "४था व ११वां भाव (बुध, कुबेर व सुख-संपत्ति)",
+            "vastu_purusha_organ": "वास्तु पुरुष का हृदय व वक्षस्थल",
+            "chakra_organ": "Intellect, Communication, Financial Growth, Nervous System, Business Trade",
+            "gemstone": "पन्ना (Emerald) / हरा ओनेक्स",
+            "metal": "कांसा व पीतल (Bronze / Brass)",
+            "botanical": "अपामार्ग, तुलसी, मनी प्लांट, हरसिंगार",
+            "color_therapy": "हल्का हरा, पिस्ता, समुद्री हरा, पुदीना (Pista Green / Sea Green)",
+            "symptoms_of_defect": "व्यापार में अचानक रुकावट, वाणी दोष, नए अवसर न मिलना, फेफड़े व स्नायु विकार, संचित कोष का विनाश।",
+            "mantra": "ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः ॥",
+            "remedy_hi": "उत्तर दिशा कुबेर का स्थान है। यहाँ तिजोरी उत्तर दिशा की ओर खुलती हुई रखें। तुलसी का पौधा, बुध यंत्र व कुबेर यंत्र लगाएं।",
+            "non_destructive_remedy": "यदि उत्तर दिशा भारी या दोषयुक्त हो तो वहां ब्रास की सील पट्टी लगाएं तथा ग्रीन एवेंच्यूरिन पिरामिड व कुबेर पात्र स्थापित करें।",
+            "shastra_shloka": "कौबेरे तु कुबेरः स्यात् सर्वद्रव्यप्रदायकः । खुला जलं च तत्रैव धनवृद्धिकरं परम् ॥"
+        },
+        "North-East": {
+            "deity": "Shiva / Ishana (देवाधिदेव महादेव)",
+            "degree_range": "22.5° – 67.5° (मध्य 45°)",
+            "associated_house": "५म व ९वां भाव (धर्म, सात्विक बुद्धि व गुरु कृपा)",
+            "vastu_purusha_organ": "वास्तु पुरुष का सिर, शिखा व ललाट",
+            "chakra_organ": "Spiritual Wisdom, Progeny, Family Harmony, Higher Divine Knowledge, Brain Crown",
+            "gemstone": "पीला पुखराज (Yellow Sapphire)",
+            "metal": "स्वर्ण व पीतल (Gold / Brass)",
+            "botanical": "केला, पीपल, चंपा, तुलसी, चंदन",
+            "color_therapy": "हल्का पीला, नींबू पीला, स्वर्णिम, शुभ्र श्वेत (Lemon Yellow / Bright White)",
+            "symptoms_of_defect": "संतान कष्ट, मानसिक अवसाद, भ्रम, पूजा-पाठ में मन न लगना, वंश वृद्धि में बाधा, घोर दरिद्रता व ज्ञान शून्यता।",
+            "mantra": "ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः ॥",
+            "remedy_hi": "ईशान कोण भगवान शिव और बृहस्पति का पावन स्थान है। यहाँ पूजा घर या भूमिगत जल स्रोत रखें। यहाँ शौचालय या भारी सीढ़ी महादोष उत्पन्न करती है।",
+            "non_destructive_remedy": "ईशान में टॉयलेट या भारी सीढ़ी का दोष होने पर पीतल का गुरु यंत्र, स्फटिक श्रीयंत्र एवं 24 घंटे तांबे के पात्र में गंगाजल भरकर रखें।",
+            "shastra_shloka": "ईशाने च महादेवो जलस्थानं प्रशस्यते । देवस्थानं च तत्रैव सर्वसिद्धिकरं भवेत् ॥"
+        },
+        "Center": {
+            "deity": "Lord Brahma (सृष्टिकर्ता ब्रह्मा)",
+            "degree_range": "केंद्रीय 9 पद (Central Cosmic Core)",
+            "associated_house": "समस्त केंद्र भाव (१, ४, ७, १० - विष्णु स्थान)",
+            "vastu_purusha_organ": "वास्तु पुरुष की नाभि व उदर केंद्र",
+            "chakra_organ": "Universal Cosmic Energy, Life Equilibrium, Navel of Vastu Purusha",
+            "gemstone": "नवरत्न (Navaratna)",
+            "metal": "अष्टधातु व शुद्ध सोना (Ashtadhatu / Gold)",
+            "botanical": "तुलसी क्यारी, सुगंधित पुष्प पात्र",
+            "color_therapy": "पारदर्शी, प्राकृतिक प्रकाश, स्फटिक श्वेत (Crystal Clear / Sky White)",
+            "symptoms_of_defect": "गृहस्वामी को हृदय व उदर विकार, पूरे परिवार में मानसिक अशान्ति, धन का निरंतर पलायन, जीवन में संतुलनहीनता।",
+            "mantra": "ॐ नमो भगवते वासुदेवाय ॥",
+            "remedy_hi": "घर के मध्य भाग को ब्रह्मस्थान कहते हैं। इसे पूर्णतः खुला, प्रकाशयुक्त और भारमुक्त रखें। यहां कोई खंभा या गड्ढा न बनाएं।",
+            "non_destructive_remedy": "यदि ब्रह्मस्थान में बीम या दीवार हो तो बीम के दोनों ओर कॉपर हेलिक्स लगाएं तथा केंद्र में स्फटिक श्रीयंत्र अथवा ब्रास चक्र स्थापित करें।",
+            "shastra_shloka": "ब्रह्मस्थाने स्वयं ब्रह्मा मध्यभागे प्रतिष्ठितः । भारस्तत्र न कर्तव्यः स्तम्भो वाऽपि जलाशयः ॥"
+        }
+    }
+
+    # Helper function that eliminates any leading whitespace so Markdown never treats HTML as code blocks
+    def _v_render(html_markup: str):
+        compact = "".join(line.strip() for line in html_markup.splitlines() if line.strip())
+        st.markdown(compact, unsafe_allow_html=True)
 
     v_tab_titles = [
         "🧭 समग्र वास्तु मण्डल",
@@ -8710,52 +8873,52 @@ elif selected_idx == 4:
         # Top KPI Summary Cards
         kpi_col1, kpi_col2, kpi_col3, kpi_col4 = st.columns(4)
         with kpi_col1:
-            st.markdown(f"""
+            _v_render(f"""
             <div style="background: {card_bg}; border: 1.5px solid #10B981; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                 <div style="font-size: 11.5px; font-weight: 700; color: #10B981; text-transform: uppercase;">🏆 सर्वोच्च सामंजस्य दिशा</div>
                 <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{best_zone.get('hindi', 'N/A') if best_zone else 'N/A'}</div>
                 <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #10B981;">{best_zone.get('score', 0) if best_zone else 0}/100</b> | {best_zone.get('lord', '') if best_zone else ''}</div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
         with kpi_col2:
-            st.markdown(f"""
+            _v_render(f"""
             <div style="background: {card_bg}; border: 1.5px solid #EF4444; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                 <div style="font-size: 11.5px; font-weight: 700; color: #EF4444; text-transform: uppercase;">⚠️ सर्वाधिक संवेदनशील दिशा</div>
                 <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{worst_zone.get('hindi', 'N/A') if worst_zone else 'N/A'}</div>
                 <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #EF4444;">{worst_zone.get('score', 0) if worst_zone else 0}/100</b> | {worst_zone.get('lord', '') if worst_zone else ''}</div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
         with kpi_col3:
-            st.markdown(f"""
+            _v_render(f"""
             <div style="background: {card_bg}; border: 1.5px solid #3B82F6; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                 <div style="font-size: 11.5px; font-weight: 700; color: #3B82F6; text-transform: uppercase;">🌿 पंचतत्व संतुलन</div>
                 <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">जल • अग्नि • वायु • पृथ्वी</div>
                 <div style="font-size: 12px; color: {text_secondary};">आकाश (ब्रह्मस्थान): <b style="color: #3B82F6;">{zone_dict.get('Center', {}).get('score', 85)}/100</b></div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
         with kpi_col4:
             idx_color = "#10B981" if avg_score >= 75 else "#F59E0B" if avg_score >= 50 else "#EF4444"
-            st.markdown(f"""
+            _v_render(f"""
             <div style="background: {card_bg}; border: 1.5px solid {idx_color}; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                 <div style="font-size: 11.5px; font-weight: 700; color: {idx_color}; text-transform: uppercase;">📊 समग्र वास्तु सूचकांक</div>
                 <div style="font-size: 22px; font-weight: 900; color: {idx_color}; margin: 2px 0;">{avg_score}<span style="font-size: 14px; color: {text_secondary};">/100</span></div>
                 <div style="font-size: 12px; color: {text_secondary};">9 दिशाओं का औसत सामंजस्य</div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
-        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+        _v_render("<div style='height: 14px;'></div>")
 
         # 360 Degree Cosmic Compass SVG Wheel
         compass_col, info_col = st.columns([1.1, 1.0])
         with compass_col:
             st.markdown("##### 🧭 360° वास्तु दिशा चक्र (Cosmic Compass Wheel)")
             compass_svg = render_vastu_compass_wheel_svg(v_zones, is_dark=_is_dark)
-            st.markdown(f'<div style="width:100%;display:flex;justify-content:center;margin:8px 0;">{compass_svg}</div>', unsafe_allow_html=True)
+            _v_render(f'<div style="width:100%;display:flex;justify-content:center;margin:8px 0;">{compass_svg}</div>')
             st.caption("🟢 हरा (≥75): सुसंगत व शुभ | 🟡 पीला (50-74): मध्यम सतर्कता | 🔴 लाल (<50): संवेदनशील/दोष निवारण आवश्यक")
 
         with info_col:
             st.markdown("##### 📜 वास्तु-ज्योतिष आधार एवं कुण्डली समन्वय")
-            st.markdown(f"""
+            _v_render(f"""
             <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 12px; padding: 16px; font-size: 13px; line-height: 1.6; color: {text_primary};">
                 <p style="margin-top: 0;"><b>वास्तु-ज्योतिष का शास्त्रीय नियम:</b> जातक की जन्मकुण्डली में जिस दिशा का स्वामी ग्रह <b>उच्च, स्वराशि अथवा दिग्बली</b> होता है, भवन की वह दिशा स्वतः ऊर्जावान और भाग्यवर्धक सिद्ध होती है। इसके विपरीत जब दिशा स्वामी <b>नीच, शत्रु राशि, अस्त, वक्री अथवा ६, ८, १२वें भाव</b> में स्थित हो तो संबंधित दिशा में वास्तु दोष का दुष्प्रभाव कई गुना बढ़ जाता है।</p>
                 <div style="background: {row_alt_bg}; border-left: 4px solid #F59E0B; padding: 8px 12px; border-radius: 4px; margin: 10px 0; font-size: 12px;">
@@ -8764,9 +8927,9 @@ elif selected_idx == 4:
                 </div>
                 <p style="margin-bottom: 0;">ऊपर दिए गए प्रत्येक दिशा के स्वतंत्र टैब में जाकर आप अपनी कुण्डली के अनुसार उस दिशा के <b>विस्तृत पैरामीटर्स, आदर्श वास्तु नियोजन, वर्जित निर्माण, दोष के लक्षण एवं ५-आयामी अचूक शास्त्रीय उपचार</b> का अध्ययन कर सकते हैं।</p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
-        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+        _v_render("<div style='height: 16px;'></div>")
         st.markdown("##### 📋 नवदिशा शास्त्रीय तुलनात्मक सारणी (9-Direction Master Matrix)")
 
         tbl_html = f'<div style="overflow-x: auto; border: 1.5px solid {card_bdr}; border-radius: 10px; margin-bottom: 16px;">'
@@ -8811,20 +8974,24 @@ elif selected_idx == 4:
             if z.get('is_retrograde'): d_str += " [वक्री]"
 
             meta_d = z.get("meta", {})
+            fb_d = VASTU_PARAM_FALLBACKS.get(z.get("direction", ""), {})
+
+            deity_name = meta_d.get("deity") or fb_d.get("deity", "")
+            rem_text = meta_d.get("non_destructive_remedy") or meta_d.get("remedy_hi") or fb_d.get("non_destructive_remedy", "")
 
             tbl_html += f'<tr style="background-color: {bg_r}; border-bottom: 1px solid {row_bdr};">'
             tbl_html += f'<td style="padding: 8px 12px; font-weight: 700; color: {text_primary}; white-space: nowrap;">{z.get("hindi", "")}</td>'
-            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{meta_d.get("deity", "")} / <b>{z.get("lord", "")}</b></td>'
+            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{deity_name} / <b>{z.get("lord", "")}</b></td>'
             tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z.get("element", "")}</td>'
             tbl_html += f'<td style="padding: 8px 12px; color: {text_primary};">{h_str}<br><span style="font-size: 11px; color: {text_secondary};">{d_str}</span></td>'
             tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z.get("digbala", "तटस्थ")}</td>'
             tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><b style="color: {b_color}; font-size: 13px;">{z.get("score", 70)}/100</b></td>'
             tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><span style="background: {b_bg}; color: {b_color}; border: 1px solid {b_color}; padding: 2px 8px; border-radius: 12px; font-weight: 700; font-size: 11px;">{b_txt}</span></td>'
-            tbl_html += f'<td style="padding: 8px 12px; font-size: 11.5px; color: {text_secondary}; max-width: 250px;">{meta_d.get("non_destructive_remedy", meta_d.get("remedy_hi", ""))[:75]}...</td>'
+            tbl_html += f'<td style="padding: 8px 12px; font-size: 11.5px; color: {text_secondary}; max-width: 250px;">{rem_text[:75]}...</td>'
             tbl_html += '</tr>'
 
         tbl_html += '</tbody></table></div>'
-        st.markdown(tbl_html, unsafe_allow_html=True)
+        _v_render(tbl_html)
 
     # -------------------------------------------------------------
     # TABS 1 to 9: INDIVIDUAL DIRECTION DEEP DIVE TABS
@@ -8842,8 +9009,25 @@ elif selected_idx == 4:
                 continue
 
             meta = z.get("meta", {})
+            fb = VASTU_PARAM_FALLBACKS.get(d_key, {})
             score = z.get("score", 70)
             risk = z.get("defect_risk", "Harmonious")
+
+            # Guaranteed non-empty values using fallbacks
+            deity_val = meta.get("deity") or fb.get("deity", "")
+            deg_val = meta.get("degree_range") or fb.get("degree_range", "")
+            house_val = meta.get("associated_house") or fb.get("associated_house", "")
+            organ_val = meta.get("vastu_purusha_organ") or fb.get("vastu_purusha_organ", "")
+            chakra_val = meta.get("chakra_organ") or fb.get("chakra_organ", "")
+            gem_val = meta.get("gemstone") or fb.get("gemstone", "")
+            metal_val = meta.get("metal") or fb.get("metal", "")
+            botanical_val = meta.get("botanical") or fb.get("botanical", "")
+            color_val = meta.get("color_therapy") or fb.get("color_therapy", "")
+            symptoms_val = meta.get("symptoms_of_defect") or fb.get("symptoms_of_defect", "")
+            mantra_val = meta.get("mantra") or fb.get("mantra", "")
+            remedy_val = meta.get("remedy_hi") or fb.get("remedy_hi", "")
+            nondestr_val = meta.get("non_destructive_remedy") or fb.get("non_destructive_remedy", "")
+            shloka_val = meta.get("shastra_shloka") or fb.get("shastra_shloka", "")
 
             if risk == "Harmonious":
                 border_color = "#10B981"
@@ -8862,16 +9046,16 @@ elif selected_idx == 4:
                 badge_text = "🚨 उच्च दोष जोखिम (High Risk / Requires Remediation)"
 
             # Direction Header Hero Card
-            st.markdown(f"""
+            _v_render(f"""
             <div style="background: {card_bg}; border: 1.5px solid {border_color}; border-left: 6px solid {border_color}; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.06);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                     <div>
                         <div style="font-size: 22px; font-weight: 900; color: {text_primary};">{z.get('hindi', '')} &nbsp;<span style="font-size: 15px; color: {text_secondary}; font-weight: 600;">({z.get('direction', '')} Zone)</span></div>
                         <div style="font-size: 13px; color: {text_secondary}; margin-top: 4px;">
-                            🏛️ <b>दिक्पाल:</b> {meta.get('deity', '')} &nbsp;|&nbsp; 
+                            🏛️ <b>दिक्पाल:</b> {deity_val} &nbsp;|&nbsp; 
                             🪐 <b>स्वामी ग्रह:</b> {z.get('lord', '')} &nbsp;|&nbsp; 
                             🌿 <b>पंचतत्व:</b> {z.get('element', '')} &nbsp;|&nbsp; 
-                            📐 <b>कोणीय विस्तार:</b> {meta.get('degree_range', '')}
+                            📐 <b>कोणीय विस्तार:</b> {deg_val}
                         </div>
                     </div>
                     <div style="text-align: right;">
@@ -8884,7 +9068,7 @@ elif selected_idx == 4:
                     </div>
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
             # Two Column Split
             col_left, col_right = st.columns([1, 1])
@@ -8893,11 +9077,10 @@ elif selected_idx == 4:
             with col_left:
                 st.markdown("##### 🪐 जन्म कुण्डली गणना एवं ज्योतिषीय स्थिति")
                 
-                # Check combustion and retrograde badges
                 combust_badge = "🔥 अस्त (Combust)" if z.get("is_combust") else "☀️ उदित (Normal)"
                 retro_badge = "🔄 वक्री (Retrograde)" if z.get("is_retrograde") else "➡️ मार्गी (Direct)"
                 
-                st.markdown(f"""
+                _v_render(f"""
                 <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 12.5px; line-height: 1.6; color: {text_primary};">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
                         <div><b>स्वामी ग्रह:</b> {z.get('lord', '')}</div>
@@ -8908,17 +9091,17 @@ elif selected_idx == 4:
                         <div><b>अस्त/वक्री:</b> {combust_badge} | {retro_badge}</div>
                     </div>
                     <div style="border-top: 1px solid {card_bdr}; padding-top: 8px;">
-                        <div><b>👤 वास्तु पुरुष अंग:</b> {meta.get('vastu_purusha_organ', 'N/A')}</div>
-                        <div><b>🎯 संबद्ध जीवन आयाम:</b> {meta.get('chakra_organ', 'N/A')}</div>
+                        <div><b>👤 वास्तु पुरुष अंग:</b> {organ_val}</div>
+                        <div><b>🎯 संबद्ध जीवन आयाम:</b> {chakra_val}</div>
                     </div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
                 st.markdown("##### 🏛️ वास्तु नियोजन: शुभ एवं वर्जित व्यवस्था")
                 ideal_items = "".join([f"<li>{item}</li>" for item in meta.get("ideal_uses", [])])
                 avoid_items = "".join([f"<li>{item}</li>" for item in meta.get("avoid", [])])
 
-                st.markdown(f"""
+                _v_render(f"""
                 <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
                     <div style="background: {'#064E3B' if _is_dark else '#F0FDF4'}; border: 1.5px solid #10B981; border-radius: 8px; padding: 10px 14px; color: {'#A7F3D0' if _is_dark else '#166534'}; font-size: 12.5px;">
                         <b style="color: #10B981; font-size: 13px;">✅ श्रेष्ठ एवं शुभ वास्तु उपयोग:</b>
@@ -8933,76 +9116,67 @@ elif selected_idx == 4:
                         </ul>
                     </div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
                 st.markdown("##### ⚠️ दिशा दोष के प्रमुख लक्षण (Affliction Symptoms)")
-                st.markdown(f"""
+                _v_render(f"""
                 <div style="background: {row_alt_bg}; border-left: 4px solid #F59E0B; border-radius: 4px; padding: 10px 14px; font-size: 12.5px; line-height: 1.5; color: {text_primary}; margin-bottom: 16px;">
-                    {meta.get('symptoms_of_defect', 'N/A')}
+                    {symptoms_val}
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
             # Right Column: 5-Pillar Shastriya Remedies
             with col_right:
                 st.markdown("##### 🪔 पंच-आयामी शास्त्रीय वास्तु उपाय (5-Pillar Remedy Suite)")
 
-                st.markdown(f"""
+                _v_render(f"""
                 <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; font-size: 12.5px;">
-                    <!-- Pillar 1: Yantra & Metal -->
                     <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 8px; padding: 10px 14px;">
                         <div style="font-weight: 800; color: #D97706; margin-bottom: 4px;">1. 🪔 यंत्र एवं धातु (Yantra & Metal):</div>
-                        <div style="color: {text_primary};"><b>धातु:</b> {meta.get('metal', 'N/A')} &nbsp;|&nbsp; <b>रत्न:</b> {meta.get('gemstone', 'N/A')}</div>
-                        <div style="color: {text_secondary}; font-size: 12px; margin-top: 2px;">{meta.get('remedy_hi', '')}</div>
+                        <div style="color: {text_primary};"><b>धातु:</b> {metal_val} &nbsp;|&nbsp; <b>रत्न:</b> {gem_val}</div>
+                        <div style="color: {text_secondary}; font-size: 12px; margin-top: 2px;">{remedy_val}</div>
                     </div>
-
-                    <!-- Pillar 2: Vedic Mantra -->
                     <div style="background: {'#78350F' if _is_dark else '#FFFBEB'}; border: 1.5px solid #F59E0B; border-radius: 8px; padding: 10px 14px;">
                         <div style="font-weight: 800; color: #D97706; margin-bottom: 4px;">2. 🕉️ वैदिक मंत्र एवं जप साधना:</div>
-                        <div style="font-weight: 900; color: {'#FDE68A' if _is_dark else '#92400E'}; font-size: 13.5px; margin: 2px 0;">{meta.get('mantra', 'N/A')}</div>
+                        <div style="font-weight: 900; color: {'#FDE68A' if _is_dark else '#92400E'}; font-size: 13.5px; margin: 2px 0;">{mantra_val}</div>
                         <div style="color: {'#FDE68A' if _is_dark else '#B45309'}; font-size: 11.5px;">प्रतिदिन 108 बार अथवा दिशा शुद्धि के समय विधिवत पाठ करें।</div>
                     </div>
-
-                    <!-- Pillar 3: Botanical Plants -->
                     <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 8px; padding: 10px 14px;">
                         <div style="font-weight: 800; color: #059669; margin-bottom: 4px;">3. 🌿 वनस्पति एवं कल्पवृक्ष (Botanical Plants):</div>
-                        <div style="color: {text_primary};"><b>पूज्य वृक्ष/पौधे:</b> {meta.get('botanical', 'N/A')}</div>
+                        <div style="color: {text_primary};"><b>पूज्य वृक्ष/पौधे:</b> {botanical_val}</div>
                         <div style="color: {text_secondary}; font-size: 11.5px; margin-top: 2px;">इस दिशा की सकारात्मक ऊर्जा वृद्धि हेतु ये पौधे स्थापित करना अति-शुभ माना गया है।</div>
                     </div>
-
-                    <!-- Pillar 4: Color Therapy -->
                     <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 8px; padding: 10px 14px;">
                         <div style="font-weight: 800; color: #2563EB; margin-bottom: 4px;">4. 🎨 रंग चिकित्सा एवं प्रकाश व्यवस्था (Color Therapy):</div>
-                        <div style="color: {text_primary};"><b>अनुकूल रंग:</b> {meta.get('color_therapy', 'N/A')}</div>
+                        <div style="color: {text_primary};"><b>अनुकूल रंग:</b> {color_val}</div>
                         <div style="color: {text_secondary}; font-size: 11.5px; margin-top: 2px;">दीवारों के रंग, परदे, प्रकाश व्यवस्था एवं सजावट में इन रंगों का उपयोग ऊर्जा को संतुलित करता है।</div>
                     </div>
-
-                    <!-- Pillar 5: Non-destructive Corrections -->
                     <div style="background: {'#1E1B4B' if _is_dark else '#EEF2FF'}; border: 1.5px solid #6366F1; border-radius: 8px; padding: 10px 14px;">
                         <div style="font-weight: 800; color: #4F46E5; margin-bottom: 4px;">5. 🛠️ बिना तोड़-फोड़ के शास्त्रीय वास्तु सुधार (Non-Destructive Fix):</div>
-                        <div style="color: {'#C7D2FE' if _is_dark else '#312E81'}; font-weight: 600;">{meta.get('non_destructive_remedy', 'N/A')}</div>
+                        <div style="color: {'#C7D2FE' if _is_dark else '#312E81'}; font-weight: 600;">{nondestr_val}</div>
                     </div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
             # Detailed Parameters Table for Direction
             st.markdown(f"##### 📊 {z.get('hindi', '')} दिशा के सम्पूर्ण शास्त्रीय मापदण्ड (15-Parameter Matrix)")
             
             p_rows = [
-                ("दिशा एवं दिक्पाल (Direction & Deity)", f"{z.get('hindi', '')} ({z.get('direction', '')}) — {meta.get('deity', '')}"),
+                ("दिशा एवं दिक्पाल (Direction & Deity)", f"{z.get('hindi', '')} ({z.get('direction', '')}) — {deity_val}"),
                 ("दिशा स्वामी ग्रह (Ruling Planet)", f"{z.get('lord', '')}"),
                 ("पंचमहाभूत तत्व (Five Elements)", f"{z.get('element', '')}"),
-                ("कोणीय विस्तार (Degree Range)", f"{meta.get('degree_range', '')}"),
-                ("संबद्ध कुण्डली भाव (Kundali House)", f"{meta.get('associated_house', '')}"),
+                ("कोणीय विस्तार (Degree Range)", f"{deg_val}"),
+                ("संबद्ध कुण्डली भाव (Kundali House)", f"{house_val}"),
                 ("जातक की कुण्डली में ग्रह स्थिति", f"भाव {z.get('house', 'N/A')}, {z.get('sign_name', '')} {z.get('degree_str', '')}"),
                 ("ग्रह गरिमा एवं अवस्था (Dignity)", f"{z.get('status', 'सामान्य')} {'[अस्त]' if z.get('is_combust') else ''} {'[वक्री]' if z.get('is_retrograde') else ''}"),
                 ("दिग्बल स्थिति (Directional Strength)", f"{z.get('digbala', 'तटस्थ')}"),
-                ("वास्तु पुरुष शरीर अंग (Anatomy)", f"{meta.get('vastu_purusha_organ', '')}"),
-                ("रत्न एवं उपरत्न (Gemstone)", f"{meta.get('gemstone', '')}"),
-                ("शुभ धातु (Auspicious Metal)", f"{meta.get('metal', '')}"),
-                ("पूज्य वनस्पति (Botanical Tree/Plant)", f"{meta.get('botanical', '')}"),
-                ("रंग चिकित्सा (Color Therapy)", f"{meta.get('color_therapy', '')}"),
+                ("वास्तु पुरुष शरीर अंग (Anatomy)", f"{organ_val}"),
+                ("रत्न एवं उपरत्न (Gemstone)", f"{gem_val}"),
+                ("शुभ धातु (Auspicious Metal)", f"{metal_val}"),
+                ("पूज्य वनस्पति (Botanical Tree/Plant)", f"{botanical_val}"),
+                ("रंग चिकित्सा (Color Therapy)", f"{color_val}"),
                 ("सामंजस्य स्कोर एवं जोखिम स्तर", f"{score}/100 — {badge_text}"),
-                ("अचूक बिना तोड़-फोड़ उपाय", f"{meta.get('non_destructive_remedy', '')}")
+                ("अचूक बिना तोड़-फोड़ उपाय", f"{nondestr_val}")
             ]
 
             p_table_html = f'<div style="overflow-x: auto; border: 1.5px solid {card_bdr}; border-radius: 10px; margin-bottom: 20px;">'
@@ -9020,25 +9194,22 @@ elif selected_idx == 4:
                 p_table_html += '</tr>'
 
             p_table_html += '</tbody></table></div>'
-            st.markdown(p_table_html, unsafe_allow_html=True)
+            _v_render(p_table_html)
 
             # Shastra Shloka Callout Box
-            if meta.get("shastra_shloka"):
-                st.markdown(f"""
+            if shloka_val:
+                _v_render(f"""
                 <div style="background: {row_alt_bg}; border-left: 5px solid #6366F1; border-radius: 6px; padding: 12px 16px; margin-top: 10px; margin-bottom: 20px;">
                     <div style="font-weight: 800; color: #6366F1; font-size: 12px; text-transform: uppercase;">📜 शास्त्रीय प्रमाण एवं श्लोक (Classical Vedic Citation)</div>
                     <div style="font-size: 14px; font-weight: 700; color: {text_primary}; margin: 6px 0; font-family: serif;">
-                        {meta.get('shastra_shloka', '')}
+                        {shloka_val}
                     </div>
                     <div style="font-size: 12px; color: {text_secondary};">
                         — विश्वकर्मा प्रकाश / मयमतम् वास्तु शास्त्र प्रमाण
                     </div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
-
-# =============================================================
-# TAB 6: PRASHNA KUNDALI (HORARY ASTROLOGY)
 
 elif selected_idx == 5:
     st.subheader("❓ प्रश्न कुण्डली एवं ताजिक फलकथन (Horary Astrology)")
