@@ -5303,6 +5303,7 @@ def render_styled_varga_table_html(varga_table_data, varga_meta_dict, is_dark: b
 
 def render_vastu_compass_wheel_svg(zones: list, is_dark: bool = False) -> str:
     import math
+
     def polar_to_cart(cx, cy, r, deg):
         rad = math.radians(deg - 90)
         return cx + r * math.cos(rad), cy + r * math.sin(rad)
@@ -5351,39 +5352,39 @@ def render_vastu_compass_wheel_svg(zones: list, is_dark: bool = False) -> str:
 
         path_d = get_arc_path(cx, cy, 90, 230, mid_ang - 22.5, mid_ang + 22.5)
         tx, ty = polar_to_cart(cx, cy, 160, mid_ang)
-        
-        wedges_svg.append(f"""
-        <path d="{path_d}" fill="{color}" fill-opacity="{fill_opacity}" stroke="{color}" stroke-width="2" />
-        <text x="{tx:.1f}" y="{(ty - 10):.1f}" text-anchor="middle" fill="{text_main}" font-size="12" font-weight="bold">{label}</text>
-        <text x="{tx:.1f}" y="{(ty + 6):.1f}" text-anchor="middle" fill="{text_sub}" font-size="10.5">{lord}</text>
-        <text x="{tx:.1f}" y="{(ty + 22):.1f}" text-anchor="middle" fill="{color}" font-size="12" font-weight="bold">{score}/100</text>
-        """)
+
+        wedges_svg.append(
+            f'<path d="{path_d}" fill="{color}" fill-opacity="{fill_opacity}" stroke="{color}" stroke-width="2"/>'
+            f'<text x="{tx:.1f}" y="{(ty - 10):.1f}" text-anchor="middle" fill="{text_main}" font-size="12" font-weight="bold">{label}</text>'
+            f'<text x="{tx:.1f}" y="{(ty + 6):.1f}" text-anchor="middle" fill="{text_sub}" font-size="10.5">{lord}</text>'
+            f'<text x="{tx:.1f}" y="{(ty + 22):.1f}" text-anchor="middle" fill="{color}" font-size="12" font-weight="bold">{score}/100</text>'
+        )
 
     b_zone = zone_dict.get("Center", {})
     b_score = b_zone.get("score", 85)
     b_color = "#3b82f6"
 
-    center_svg = f"""
-    <circle cx="{cx}" cy="{cy}" r="82" fill="{b_color}" fill-opacity="0.20" stroke="{b_color}" stroke-width="2.5" />
-    <text x="{cx}" y="{cy - 12}" text-anchor="middle" fill="{text_main}" font-size="13" font-weight="bold">ब्रह्मस्थान</text>
-    <text x="{cx}" y="{cy + 5}" text-anchor="middle" fill="{text_sub}" font-size="10.5">Brahmasthan (Akasha)</text>
-    <text x="{cx}" y="{cy + 22}" text-anchor="middle" fill="{b_color}" font-size="12" font-weight="bold">{b_score}/100</text>
-    """
+    center_svg = (
+        f'<circle cx="{cx}" cy="{cy}" r="82" fill="{b_color}" fill-opacity="0.20" stroke="{b_color}" stroke-width="2.5"/>'
+        f'<text x="{cx}" y="{cy - 12}" text-anchor="middle" fill="{text_main}" font-size="13" font-weight="bold">ब्रह्मस्थान</text>'
+        f'<text x="{cx}" y="{cy + 5}" text-anchor="middle" fill="{text_sub}" font-size="10.5">Brahmasthan (Akasha)</text>'
+        f'<text x="{cx}" y="{cy + 22}" text-anchor="middle" fill="{b_color}" font-size="12" font-weight="bold">{b_score}/100</text>'
+    )
 
-    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="450" style="max-width: 500px; margin: 0 auto; display: block;">
-      <defs>
-        <radialGradient id="compassBg" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="{bg_circle}" stop-opacity="0.9" />
-          <stop offset="100%" stop-color="{bg_circle}" stop-opacity="1" />
-        </radialGradient>
-      </defs>
-      <circle cx="{cx}" cy="{cy}" r="240" fill="url(#compassBg)" stroke="{border_circle}" stroke-width="2" />
-      <circle cx="{cx}" cy="{cy}" r="236" fill="none" stroke="{border_circle}" stroke-width="1" stroke-dasharray="4,4" />
-      {''.join(wedges_svg)}
-      {center_svg}
-    </svg>"""
+    svg_parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="450" style="max-width: 500px; margin: 0 auto; display: block;">',
+        f'<defs><radialGradient id="compassBg" cx="50%" cy="50%" r="50%">',
+        f'<stop offset="0%" stop-color="{bg_circle}" stop-opacity="0.9"/>',
+        f'<stop offset="100%" stop-color="{bg_circle}" stop-opacity="1"/>',
+        f'</radialGradient></defs>',
+        f'<circle cx="{cx}" cy="{cy}" r="240" fill="url(#compassBg)" stroke="{border_circle}" stroke-width="2"/>',
+        f'<circle cx="{cx}" cy="{cy}" r="236" fill="none" stroke="{border_circle}" stroke-width="1" stroke-dasharray="4,4"/>',
+        "".join(wedges_svg),
+        center_svg,
+        '</svg>'
+    ]
 
-    return svg
+    return "".join(svg_parts)
 
 
 if "active_module_idx" not in st.session_state:
@@ -8749,7 +8750,7 @@ elif selected_idx == 4:
         with compass_col:
             st.markdown("##### 🧭 360° वास्तु दिशा चक्र (Cosmic Compass Wheel)")
             compass_svg = render_vastu_compass_wheel_svg(v_zones, is_dark=_is_dark)
-            st.markdown(compass_svg, unsafe_allow_html=True)
+            st.markdown(f'<div style="width:100%;display:flex;justify-content:center;margin:8px 0;">{compass_svg}</div>', unsafe_allow_html=True)
             st.caption("🟢 हरा (≥75): सुसंगत व शुभ | 🟡 पीला (50-74): मध्यम सतर्कता | 🔴 लाल (<50): संवेदनशील/दोष निवारण आवश्यक")
 
         with info_col:
