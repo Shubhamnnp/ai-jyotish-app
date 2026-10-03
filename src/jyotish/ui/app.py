@@ -4805,6 +4805,319 @@ def generate_styled_vertical_svg(items, max_val=20, is_dark=False):
 </svg>'''
 
 
+def render_house_freewill_svg(hp_list, is_dark: bool = False) -> str:
+    """Renders an executive, publication-grade SVG bar dashboard for 12 Houses Free Will percentage."""
+    def _house_num(item):
+        h_raw = str(item.get("house", "1"))
+        digits = "".join(c for c in h_raw if c.isdigit())
+        return int(digits) if digits else 1
+
+    def _parse_val(v):
+        try:
+            return float(str(v).replace('%', '').strip())
+        except Exception:
+            return 0.0
+
+    sorted_hp = sorted(hp_list, key=_house_num)
+
+    house_hi = {
+        1: "तनु", 2: "धन", 3: "सहज", 4: "सुख", 5: "सुत", 6: "रिपु",
+        7: "जाया", 8: "आयु", 9: "धर्म", 10: "कर्म", 11: "लाभ", 12: "व्यय"
+    }
+
+    card_bg = "#111827" if is_dark else "#FFFFFF"
+    card_bdr = "rgba(255,255,255,0.12)" if is_dark else "#E2E8F0"
+    grid_col = "rgba(255,255,255,0.08)" if is_dark else "#F1F5F9"
+    axis_col = "#94A3B8" if is_dark else "#64748B"
+    base_col = "#475569" if is_dark else "#CBD5E1"
+    text_primary = "#F8FAFC" if is_dark else "#0F172A"
+    text_muted = "#94A3B8" if is_dark else "#64748B"
+
+    w_svg = 680
+    h_svg = 245
+    pad_left = 46
+    pad_right = 16
+    top_y = 30
+    base_y = 188
+    chart_h = base_y - top_y
+
+    n = 12
+    col_w = (w_svg - pad_left - pad_right) / n
+    bar_w = 26
+
+    # Grid & Y-Axis ticks
+    grid_svg = []
+    ticks = [25, 50, 75, 100]
+    for tick in ticks:
+        ty = base_y - (tick / 100.0) * chart_h
+        if tick == 50:
+            grid_svg.append(f'<line x1="{pad_left}" y1="{ty:.1f}" x2="{w_svg - pad_right}" y2="{ty:.1f}" stroke="#F59E0B" stroke-dasharray="4,4" stroke-width="1.5" opacity="0.95"/>')
+            grid_svg.append(f'<text x="{pad_left - 8}" y="{ty + 3.5:.1f}" font-size="9.5" font-weight="bold" fill="#F59E0B" font-family="sans-serif" text-anchor="end">50%</text>')
+            grid_svg.append(f'<text x="{w_svg - pad_right - 4}" y="{ty - 4:.1f}" font-size="8.5" font-weight="700" fill="#F59E0B" font-family="sans-serif" text-anchor="end">स्वाधीनता सीमा (Agency Baseline)</text>')
+        else:
+            grid_svg.append(f'<line x1="{pad_left}" y1="{ty:.1f}" x2="{w_svg - pad_right}" y2="{ty:.1f}" stroke="{grid_col}" stroke-dasharray="3,3" stroke-width="1"/>')
+            grid_svg.append(f'<text x="{pad_left - 8}" y="{ty + 3.5:.1f}" font-size="9" fill="{axis_col}" font-family="sans-serif" text-anchor="end">{tick}%</text>')
+
+    grid_svg.append(f'<line x1="{pad_left}" y1="{base_y}" x2="{w_svg - pad_right}" y2="{base_y}" stroke="{base_col}" stroke-width="1.5"/>')
+    grid_svg.append(f'<text x="{pad_left - 8}" y="{base_y + 3.5:.1f}" font-size="9" fill="{axis_col}" font-family="sans-serif" text-anchor="end">0%</text>')
+
+    bars_svg = []
+    for i in range(12):
+        item = sorted_hp[i] if i < len(sorted_hp) else {}
+        h_num = i + 1
+        fw = _parse_val(item.get("freeWill", 0))
+        fw_clamped = max(0.0, min(100.0, fw))
+
+        bar_h = max(3.0, (fw_clamped / 100.0) * chart_h) if fw_clamped > 0 else 2.0
+        bar_x = pad_left + i * col_w + (col_w - bar_w) / 2
+        bar_y = base_y - bar_h
+
+        if fw_clamped >= 50.0:
+            grad_id = "fw_grad_emerald"
+            val_col = "#10B981" if is_dark else "#047857"
+        elif fw_clamped >= 35.0:
+            grad_id = "fw_grad_amber"
+            val_col = "#F59E0B" if is_dark else "#B45309"
+        else:
+            grad_id = "fw_grad_ruby"
+            val_col = "#EF4444" if is_dark else "#B91C1C"
+
+        bars_svg.append(f'<rect x="{bar_x:.1f}" y="{bar_y:.1f}" width="{bar_w:.1f}" height="{bar_h:.1f}" rx="5" ry="5" fill="url(#{grad_id})" filter="url(#fw_glow)"/>')
+
+        val_str = f"{fw:.0f}%" if fw % 1 == 0 else f"{fw:.1f}%"
+        val_y = max(top_y - 2, bar_y - 6)
+        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{val_y:.1f}" font-size="10.5" font-weight="800" fill="{val_col}" font-family="sans-serif" text-anchor="middle">{val_str}</text>')
+        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{base_y + 16:.1f}" font-size="11" font-weight="800" fill="{text_primary}" font-family="sans-serif" text-anchor="middle">H{h_num}</text>')
+        hi_name = house_hi.get(h_num, "")
+        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{base_y + 29:.1f}" font-size="9.5" font-weight="600" fill="{text_muted}" font-family="sans-serif" text-anchor="middle">{hi_name}</text>')
+
+    defs = '''
+    <defs>
+      <linearGradient id="fw_grad_emerald" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#34D399"/>
+        <stop offset="100%" stop-color="#059669"/>
+      </linearGradient>
+      <linearGradient id="fw_grad_amber" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#FBBF24"/>
+        <stop offset="100%" stop-color="#D97706"/>
+      </linearGradient>
+      <linearGradient id="fw_grad_ruby" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#F87171"/>
+        <stop offset="100%" stop-color="#DC2626"/>
+      </linearGradient>
+      <filter id="fw_glow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-opacity="0.18"/>
+      </filter>
+    </defs>
+    '''
+
+    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w_svg} {h_svg}" style="width:100%; height:auto; display:block;">
+      {defs}
+      {"".join(grid_svg)}
+      {"".join(bars_svg)}
+    </svg>'''
+
+    header_html = f'''
+    <div style="background:{card_bg}; border:1.5px solid {card_bdr}; border-radius:12px; padding:14px 16px; box-shadow:0 4px 14px rgba(0,0,0,0.06); margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+        <div>
+          <div style="font-size:13px; font-weight:800; color:{text_primary}; display:flex; align-items:center; gap:6px;">
+            <span>📊 १२ भावों का फ्री-विल प्रतिशत वितरण</span>
+            <span style="font-size:10px; background:rgba(37,99,235,0.12); color:#2563EB; padding:1px 6px; border-radius:4px; font-weight:700;">H1 – H12 प्राकृतिक क्रम</span>
+          </div>
+          <div style="font-size:10.5px; color:{text_muted}; margin-top:2px;">कर्म स्वाधीनता (Purushartha) बनाम प्रारब्ध (Destiny) अनुपातिक शक्ति</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-size:10px; font-weight:700;">
+          <span style="display:inline-flex; align-items:center; gap:4px; color:#059669; background:rgba(16,185,129,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(16,185,129,0.25);">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10B981;"></span> ≥50% पुरुषार्थ
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:4px; color:#D97706; background:rgba(245,158,11,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(245,158,11,0.25);">
+            <span style="width:7px; height:7px; border-radius:50%; background:#F59E0B;"></span> 35-49% मध्यम
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:4px; color:#DC2626; background:rgba(239,68,68,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(239,68,68,0.25);">
+            <span style="width:7px; height:7px; border-radius:50%; background:#EF4444;"></span> &lt;35% प्रारब्ध
+          </span>
+        </div>
+      </div>
+      {svg_content}
+    </div>
+    '''
+    return header_html
+
+
+def render_soumya_krura_balance_svg(hp_list, is_dark: bool = False) -> str:
+    """Renders an executive dual-bar comparison SVG dashboard for Soumya vs Krura points with Net Balance."""
+    def _house_num(item):
+        h_raw = str(item.get("house", "1"))
+        digits = "".join(c for c in h_raw if c.isdigit())
+        return int(digits) if digits else 1
+
+    def _parse_pts(v):
+        if isinstance(v, (int, float)):
+            return float(v)
+        s = str(v).strip()
+        if not s or s == "0":
+            return 0.0
+        if any(c.isalpha() for c in s):
+            parts = [p.strip() for p in s.split(",") if p.strip() and p.strip() != "0"]
+            return float(len(parts))
+        try:
+            return float(s.replace('%', ''))
+        except Exception:
+            return 0.0
+
+    sorted_hp = sorted(hp_list, key=_house_num)
+
+    house_hi = {
+        1: "तनु", 2: "धन", 3: "सहज", 4: "सुख", 5: "सुत", 6: "रिपु",
+        7: "जाया", 8: "आयु", 9: "धर्म", 10: "कर्म", 11: "लाभ", 12: "व्यय"
+    }
+
+    card_bg = "#111827" if is_dark else "#FFFFFF"
+    card_bdr = "rgba(255,255,255,0.12)" if is_dark else "#E2E8F0"
+    grid_col = "rgba(255,255,255,0.08)" if is_dark else "#F1F5F9"
+    axis_col = "#94A3B8" if is_dark else "#64748B"
+    base_col = "#475569" if is_dark else "#CBD5E1"
+    text_primary = "#F8FAFC" if is_dark else "#0F172A"
+    text_muted = "#94A3B8" if is_dark else "#64748B"
+
+    # Compute maximum scale
+    max_pts = 0.0
+    for r in sorted_hp:
+        s_val = _parse_pts(r.get("soumya", 0))
+        k_val = _parse_pts(r.get("krura", 0))
+        max_pts = max(max_pts, s_val, k_val)
+    max_scale = max(4.0, float(int(max_pts + 0.99)))
+
+    w_svg = 680
+    h_svg = 245
+    pad_left = 46
+    pad_right = 16
+    top_y = 30
+    base_y = 188
+    chart_h = base_y - top_y
+
+    n = 12
+    col_w = (w_svg - pad_left - pad_right) / n
+    bar_w = 11.5
+
+    # Grid ticks (integers)
+    grid_svg = []
+    tick_step = 1 if max_scale <= 5 else 2
+    ticks = list(range(tick_step, int(max_scale) + 1, tick_step))
+    for tick in ticks:
+        ty = base_y - (tick / max_scale) * chart_h
+        grid_svg.append(f'<line x1="{pad_left}" y1="{ty:.1f}" x2="{w_svg - pad_right}" y2="{ty:.1f}" stroke="{grid_col}" stroke-dasharray="3,3" stroke-width="1"/>')
+        grid_svg.append(f'<text x="{pad_left - 8}" y="{ty + 3.5:.1f}" font-size="9" fill="{axis_col}" font-family="sans-serif" text-anchor="end">{tick}</text>')
+
+    grid_svg.append(f'<line x1="{pad_left}" y1="{base_y}" x2="{w_svg - pad_right}" y2="{base_y}" stroke="{base_col}" stroke-width="1.5"/>')
+    grid_svg.append(f'<text x="{pad_left - 8}" y="{base_y + 3.5:.1f}" font-size="9" fill="{axis_col}" font-family="sans-serif" text-anchor="end">0</text>')
+
+    bars_svg = []
+    for i in range(12):
+        item = sorted_hp[i] if i < len(sorted_hp) else {}
+        h_num = i + 1
+        s_val = _parse_pts(item.get("soumya", 0))
+        k_val = _parse_pts(item.get("krura", 0))
+        net = s_val - k_val
+
+        col_cx = pad_left + i * col_w + col_w / 2
+
+        # Soumya (Benefic) bar on left
+        s_h = max(2.0, (s_val / max_scale) * chart_h) if s_val > 0 else 0.0
+        s_x = col_cx - bar_w - 1.5
+        s_y = base_y - s_h
+
+        # Krura (Malefic) bar on right
+        k_h = max(2.0, (k_val / max_scale) * chart_h) if k_val > 0 else 0.0
+        k_x = col_cx + 1.5
+        k_y = base_y - k_h
+
+        if s_val > 0:
+            bars_svg.append(f'<rect x="{s_x:.1f}" y="{s_y:.1f}" width="{bar_w:.1f}" height="{s_h:.1f}" rx="3.5" ry="3.5" fill="url(#pts_grad_soumya)"/>')
+            s_str = f"{s_val:g}"
+            bars_svg.append(f'<text x="{s_x + bar_w/2:.1f}" y="{s_y - 4:.1f}" font-size="9" font-weight="700" fill="#10B981" font-family="sans-serif" text-anchor="middle">{s_str}</text>')
+
+        if k_val > 0:
+            bars_svg.append(f'<rect x="{k_x:.1f}" y="{k_y:.1f}" width="{bar_w:.1f}" height="{k_h:.1f}" rx="3.5" ry="3.5" fill="url(#pts_grad_krura)"/>')
+            k_str = f"{k_val:g}"
+            bars_svg.append(f'<text x="{k_x + bar_w/2:.1f}" y="{k_y - 4:.1f}" font-size="9" font-weight="700" fill="#EF4444" font-family="sans-serif" text-anchor="middle">{k_str}</text>')
+
+        # House Code (H1..H12)
+        bars_svg.append(f'<text x="{col_cx:.1f}" y="{base_y + 15:.1f}" font-size="11" font-weight="800" fill="{text_primary}" font-family="sans-serif" text-anchor="middle">H{h_num}</text>')
+
+        # Sanskrit House Name
+        hi_name = house_hi.get(h_num, "")
+        bars_svg.append(f'<text x="{col_cx:.1f}" y="{base_y + 27:.1f}" font-size="9" font-weight="600" fill="{text_muted}" font-family="sans-serif" text-anchor="middle">{hi_name}</text>')
+
+        # Net Score Badge at Bottom
+        if net > 0:
+            badge_bg = "rgba(16,185,129,0.18)"
+            badge_fg = "#059669" if not is_dark else "#34D399"
+            net_txt = f"+{net:g}"
+        elif net < 0:
+            badge_bg = "rgba(239,68,68,0.18)"
+            badge_fg = "#DC2626" if not is_dark else "#F87171"
+            net_txt = f"{net:g}"
+        else:
+            badge_bg = "rgba(100,116,139,0.12)"
+            badge_fg = "#64748B"
+            net_txt = "0"
+
+        badge_w = 26
+        badge_h = 13
+        badge_rx = col_cx - badge_w / 2
+        badge_ry = base_y + 32
+        bars_svg.append(f'<rect x="{badge_rx:.1f}" y="{badge_ry:.1f}" width="{badge_w}" height="{badge_h}" rx="3" fill="{badge_bg}"/>')
+        bars_svg.append(f'<text x="{col_cx:.1f}" y="{badge_ry + 10:.1f}" font-size="8.5" font-weight="800" fill="{badge_fg}" font-family="sans-serif" text-anchor="middle">{net_txt}</text>')
+
+    defs = '''
+    <defs>
+      <linearGradient id="pts_grad_soumya" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#34D399"/>
+        <stop offset="100%" stop-color="#059669"/>
+      </linearGradient>
+      <linearGradient id="pts_grad_krura" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#F87171"/>
+        <stop offset="100%" stop-color="#DC2626"/>
+      </linearGradient>
+    </defs>
+    '''
+
+    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w_svg} {h_svg + 8}" style="width:100%; height:auto; display:block;">
+      {defs}
+      {"".join(grid_svg)}
+      {"".join(bars_svg)}
+    </svg>'''
+
+    header_html = f'''
+    <div style="background:{card_bg}; border:1.5px solid {card_bdr}; border-radius:12px; padding:14px 16px; box-shadow:0 4px 14px rgba(0,0,0,0.06); margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+        <div>
+          <div style="font-size:13px; font-weight:800; color:{text_primary}; display:flex; align-items:center; gap:6px;">
+            <span>⚖️ भाव सौम्य (शुभ) बनाम क्रूर (पाप) प्रभाव अंक</span>
+            <span style="font-size:10px; background:rgba(16,185,129,0.12); color:#059669; padding:1px 6px; border-radius:4px; font-weight:700;">द्वि-चर तुलना</span>
+          </div>
+          <div style="font-size:10.5px; color:{text_muted}; margin-top:2px;">शुभ ग्रह (सौम्य) बनाम पाप ग्रह (क्रूर) प्रभाव व नीचे नेट संतुलन अंक (+/-)</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-size:10px; font-weight:700;">
+          <span style="display:inline-flex; align-items:center; gap:4px; color:#059669; background:rgba(16,185,129,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(16,185,129,0.25);">
+            <span style="width:7px; height:7px; border-radius:50%; background:#10B981;"></span> सौम्य (Benefic)
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:4px; color:#DC2626; background:rgba(239,68,68,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(239,68,68,0.25);">
+            <span style="width:7px; height:7px; border-radius:50%; background:#EF4444;"></span> क्रूर (Malefic)
+          </span>
+          <span style="display:inline-flex; align-items:center; gap:4px; color:#2563EB; background:rgba(37,99,235,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(37,99,235,0.25);">
+            ⚖️ नेट संतुलन
+          </span>
+        </div>
+      </div>
+      {svg_content}
+    </div>
+    '''
+    return header_html
+
+
 if "active_module_idx" not in st.session_state:
     st.session_state.active_module_idx = 0
 st.session_state.active_module_idx = max(0, min(int(st.session_state.active_module_idx), len(MODULE_OPTIONS) - 1))
@@ -7511,24 +7824,14 @@ elif selected_idx == 2:
         </div>
         """, unsafe_allow_html=True)
 
-        # Visual Charts Row
+        # Visual Charts Row (Executive SVG Dashboards)
+        _is_dark = is_astrallis_mode or is_night_mode
         col_ch1, col_ch2 = st.columns(2, gap="medium")
         with col_ch1:
-            st.markdown("##### 📊 १२ भावों का फ्री-विल प्रतिशत वितरण (Free Will % Distribution)")
-            fw_df_chart = pd.DataFrame({
-                "भाव (House)": [f"H{r.get('house')}" for r in hp_list],
-                "फ्री-विल %": [_to_float(r.get("freeWill")) for r in hp_list]
-            }).set_index("भाव (House)")
-            st.bar_chart(fw_df_chart, color="#2563EB", height=230)
+            st.markdown(render_house_freewill_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
 
         with col_ch2:
-            st.markdown("##### ⚖️ भाव सौम्य (शुभ) बनाम क्रूर (पाप) प्रभाव अंक")
-            pts_df_chart = pd.DataFrame({
-                "भाव": [f"H{r.get('house')}" for r in hp_list],
-                "सौम्य (Benefic)": [_to_float(r.get("soumya")) for r in hp_list],
-                "क्रूर (Malefic)": [_to_float(r.get("krura")) for r in hp_list]
-            }).set_index("भाव")
-            st.line_chart(pts_df_chart, height=230)
+            st.markdown(render_soumya_krura_balance_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
 
         st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 
