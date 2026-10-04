@@ -79,7 +79,13 @@ except ImportError:
         from src.jyotish.services.transit_calendar import default_transit_calendar_service
     except Exception:
         default_transit_calendar_service = None
-from src.jyotish.ui.sudarshan import default_sudarshan_engine
+from src.jyotish.ui.sudarshan import (
+    default_sudarshan_engine,
+    SIGN_NAMES_HI,
+    PLANET_NAMES_HI,
+    PLANET_SHORT_HI,
+    SIGN_LORDS,
+)
 from src.jyotish.core.affliction import AfflictionEngine, LIFE_AREAS
 from src.jyotish.dasha.vimshottari import default_dasha_engine
 default_vimshottari_engine = default_dasha_engine
@@ -14493,6 +14499,20 @@ elif selected_idx == 12:
     if not hasattr(default_sudarshan_engine, "calculate_triad_dominance") or not hasattr(default_sudarshan_engine, "calculate_dasha"):
         importlib.reload(sudarshan)
     engine_sd = getattr(sudarshan, "default_sudarshan_engine", default_sudarshan_engine)
+
+    # Shastric naming dictionaries & fallbacks
+    SIGN_NAMES_HI = getattr(sudarshan, "SIGN_NAMES_HI", [
+        "मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या",
+        "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"
+    ])
+    PLANET_NAMES_HI = getattr(sudarshan, "PLANET_NAMES_HI", {
+        "Sun": "सूर्य", "Moon": "चन्द्र", "Mars": "मंगल", "Mercury": "बुध",
+        "Jupiter": "गुरु", "Venus": "शुक्र", "Saturn": "शनि", "Rahu": "राहु", "Ketu": "केतु"
+    })
+    SIGN_LORDS = getattr(sudarshan, "SIGN_LORDS", {
+        1: "Mars", 2: "Venus", 3: "Mercury", 4: "Moon", 5: "Sun", 6: "Mercury",
+        7: "Venus", 8: "Mars", 9: "Jupiter", 10: "Saturn", 11: "Saturn", 12: "Jupiter"
+    })
 
     native_birth_year = birth_profile.birth_date.year
     curr_year = datetime.now().year
