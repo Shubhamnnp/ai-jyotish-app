@@ -14488,13 +14488,19 @@ elif selected_idx == 12:
 
     # Native basic info for age calculation
     from datetime import datetime, date
+    import importlib
+    from src.jyotish.ui import sudarshan
+    if not hasattr(default_sudarshan_engine, "calculate_triad_dominance") or not hasattr(default_sudarshan_engine, "calculate_dasha"):
+        importlib.reload(sudarshan)
+    engine_sd = getattr(sudarshan, "default_sudarshan_engine", default_sudarshan_engine)
+
     native_birth_year = birth_profile.birth_date.year
     curr_year = datetime.now().year
     default_calc_age = max(1, curr_year - native_birth_year)
 
     # Master calculation from engine
-    sd_full_res = default_sudarshan_engine.calculate(chart)
-    sd_triad_dom = default_sudarshan_engine.calculate_triad_dominance(chart)
+    sd_full_res = engine_sd.calculate(chart)
+    sd_triad_dom = engine_sd.calculate_triad_dominance(chart)
     sd_counts = sd_full_res.get("summary_counts", {})
 
     # Top Hero KPI Banner
@@ -14558,7 +14564,7 @@ elif selected_idx == 12:
 
         col_svg1, col_svg2 = st.columns([1.3, 1.7])
         with col_svg1:
-            svg_code = default_sudarshan_engine.render_sudarshan_svg(chart, active_house=sel_vis_house)
+            svg_code = engine_sd.render_sudarshan_svg(chart, active_house=sel_vis_house)
             st.markdown(svg_code, unsafe_allow_html=True)
 
         with col_svg2:
@@ -14699,7 +14705,7 @@ elif selected_idx == 12:
             st.write("")
             st.caption(f"📍 जन्म वर्ष: **{native_birth_year}** | लक्षित आयु: **{sel_dasha_age} वर्ष** (वर्ष: **{native_birth_year + sel_dasha_age}**)")
 
-        dasha_info = default_sudarshan_engine.calculate_dasha(chart, int(sel_dasha_age))
+        dasha_info = engine_sd.calculate_dasha(chart, int(sel_dasha_age))
 
         st.markdown(f"""
 <div style="background:#F0FDF4; border:1.5px solid #22C55E; border-radius:10px; padding:16px; margin:14px 0; box-shadow:0 2px 8px rgba(34,197,94,0.1);">
@@ -14773,7 +14779,7 @@ elif selected_idx == 12:
         st.markdown("### 🪐 नवग्रह त्रि-लग्न संरेखण व सुदर्शन महायोग (Yogas & Planetary Alignments)")
         st.write("बृहत्पाराशर होराशास्त्रानुसार जब कोई ग्रह अथवा शुभ-योग तीनों संकेंद्री चक्रों (लग्न, चन्द्र, सूर्य) में एक साथ निर्मित होता है, तो उसका प्रभाव अखंड एवं अकाट्य होता है:")
 
-        yogas_list = default_sudarshan_engine.calculate_yogas(chart)
+        yogas_list = engine_sd.calculate_yogas(chart)
         for yg in yogas_list:
             bg_c = "#EFF6FF" if "राजयोग" in yg["category"] else ("#ECFDF5" if "आयु" in yg["category"] else ("#FEF3C7" if "शत्रु" in yg["category"] else "#FFF1F2"))
             bd_c = "#3B82F6" if "राजयोग" in yg["category"] else ("#10B981" if "आयु" in yg["category"] else ("#F59E0B" if "शत्रु" in yg["category"] else "#F43F5E"))
@@ -14818,7 +14824,7 @@ elif selected_idx == 12:
         st.markdown("### 🔍 प्रमुख जीवन क्षेत्र त्रि-आयामी फलित (7 Core Life Domains Synthesis)")
         st.write("जीवन के ७ प्रमुख आयामों का लग्न (देह), चन्द्र (मन) एवं सूर्य (आत्मा) तीनों दृष्टिकोणों से समन्वित विश्लेषण:")
 
-        domains_list = default_sudarshan_engine.calculate_life_domains(chart)
+        domains_list = engine_sd.calculate_life_domains(chart)
         c_dom1, c_dom2 = st.columns(2)
         for idx, d in enumerate(domains_list):
             target_col = c_dom1 if (idx % 2 == 0) else c_dom2
@@ -14848,7 +14854,7 @@ elif selected_idx == 12:
         st.markdown("### 📈 सुदर्शन-अष्टकवर्ग बिन्दु समन्वय (Sudarshan + Ashtakavarga Synthesis)")
         st.write("सर्वाष्टकवर्ग (SAV) के बिन्दुओं का लग्न, चन्द्र और सूर्य तीनों चक्रों में सामंजस्य:")
 
-        av_res = default_sudarshan_engine.calculate_ashtakavarga_synthesis(chart)
+        av_res = engine_sd.calculate_ashtakavarga_synthesis(chart)
 
         c_av1, c_av2, c_av3 = st.columns(3)
         c_av1.metric("लग्न राशि SAV बिन्दु", f"{av_res['lagna_sign_bindus']} बिन्दु", "देह सामर्थ्य")
@@ -14905,7 +14911,7 @@ elif selected_idx == 12:
         st.markdown("### 📜 बृहत्पाराशर होराशास्त्र अध्याय ७४ शास्त्रीय प्रमाण (BPHS Shlokas)")
         st.write("महर्षि पाराशर द्वारा सुदर्शन चक्राध्याय (अध्याय ७४) में वर्णित प्रामाणिक श्लोक, अन्वय एवं भावार्थ:")
 
-        shlokas_data = default_sudarshan_engine.get_classical_shlokas()
+        shlokas_data = engine_sd.get_classical_shlokas()
         for item in shlokas_data:
             st.markdown(f"""
 <div style="background:#FFFDF7; border:1.5px solid #F59E0B; border-radius:10px; padding:16px; margin-bottom:14px; box-shadow:0 2px 6px rgba(245,158,11,0.06);">
@@ -14926,7 +14932,7 @@ elif selected_idx == 12:
         st.markdown("### 🪔 श्री सुदर्शन कवच, महामंत्र एवं वैदिक शांति (Sudarshan Remedies)")
         st.write("सुदर्शन चक्र के तीनों चक्रों में विद्यमान दोषों के निवारण हेतु शास्त्रोक्त दिव्य मंत्र, कवच एवं अनुष्ठान:")
 
-        rem_data = default_sudarshan_engine.get_remedies_catalog()
+        rem_data = engine_sd.get_remedies_catalog()
 
         st.markdown(f"""
 <div style="background:linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border:2px solid #F59E0B; border-radius:12px; padding:18px; margin-bottom:16px;">
