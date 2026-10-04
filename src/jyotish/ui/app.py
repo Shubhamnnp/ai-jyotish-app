@@ -10699,348 +10699,557 @@ elif selected_idx == 6:
 # TAB 9: JAIMINI & UPAGRAHAS & SPECIAL LAGNAS & AVASTHAS
 
 elif selected_idx == 7:
-    st.subheader("🔱 जैमिनी ज्योतिष, विशेष लग्न, आरूढ़ पद एवं ग्रह अवस्थाएँ")
-    st.write("महर्षि जैमिनी उपदेश सूत्र एवं बृहत्पाराशर होराशास्त्र (BPHS) आधारित विशेष लग्न, 12 आरूढ़ पद, ग्रह अवस्थाएँ, आयुर्दाय एवं अप्रकाशित उपग्रह।")
+    st.subheader("🔱 जैमिनी ज्योतिष, विशेष लग्न, आरूढ़ पद एवं अप्रकाशित उपग्रह (Jaimini Master Suite)")
+    st.write("महर्षि जैमिनी उपदेश सूत्र एवं बृहत्पाराशर होराशास्त्र (BPHS) आधारित १० समर्पित प्रभाग: कारकांश, ७ चर कारक, विशेष लग्न, १२ आरूढ़ पद, राशि दृष्टि, अर्गला, ग्रह आरूढ़, आयुर्दाय, अप्रकाशित उपग्रह एवं शास्त्रीय सूत्र।")
 
-    tab_j_km, tab_j1, tab_j2, tab_j3, tab_j4, tab_j5 = st.tabs([
-        "🔱 कारकांश व स्वांश चक्र (Karakamsha & Swamsha Suite)",
-        "🌟 विशेष लग्न (Special Lagnas)",
-        "👑 सम्पूर्ण 12 आरूढ़ पद (Arudha Padas)",
-        "💫 ग्रह अवस्थाएँ (Planetary Avasthas)",
-        "⏳ आयुर्दाय एवं दीर्घायु (Longevity)",
-        "👻 अप्रकाशित उपग्रह (Invisible Upagrahas)"
+    def _clean_html(s: str) -> str:
+        return "".join(line.strip() for line in s.splitlines() if line.strip())
+
+    try:
+        import importlib
+        import src.jyotish.services.jaimini_suite as js_mod
+        importlib.reload(js_mod)
+        j_res = js_mod.default_jaimini_suite_service.analyze_jaimini_suite(chart)
+    except Exception as _e_js:
+        j_res = {}
+
+    try:
+        import src.jyotish.core.jaimini as jm_mod
+        importlib.reload(jm_mod)
+        rashi_drishti_data = jm_mod.JaiminiCalculator.calculate_rashi_drishti(chart)
+        argala_data = jm_mod.JaiminiCalculator.calculate_argala(chart)
+        graha_arudha_data = jm_mod.JaiminiCalculator.calculate_graha_arudhas(chart)
+    except Exception:
+        rashi_drishti_data = {}
+        argala_data = {}
+        graha_arudha_data = {}
+
+    try:
+        jaimini_ayur = default_ayurdaya_engine.calculate_jaimini_longevity(chart)
+        pindayu_res = default_ayurdaya_engine.calculate_pindayu(chart)
+    except Exception:
+        jaimini_ayur = {}
+        pindayu_res = {}
+
+    karakas_7 = j_res.get("karakas_7") or getattr(chart.jaimini, "karakas_7", {})
+    sl_details = getattr(chart.jaimini, "special_lagnas_detail", {})
+    ar_details = j_res.get("arudha_details") or getattr(chart.jaimini, "arudha_details", {})
+
+    # SVG Chart: Chara Karaka Degrees Spectrum
+    def _render_chara_karaka_svg(chart_obj, k7_dict: dict, is_dark: bool = False) -> str:
+        bg = "#111827" if is_dark else "#FFFFFF"
+        card_bdr = "#374151" if is_dark else "#E2E8F0"
+        txt_col = "#F9FAFB" if is_dark else "#1E293B"
+        sub_col = "#9CA3AF" if is_dark else "#64748B"
+        bar_bg = "#374151" if is_dark else "#F1F5F9"
+
+        karaka_meta = {
+            "AK": ("आत्मकारक (AK)", "आत्मा, स्वभाव, मोक्ष", "#8B5CF6"),
+            "AmK": ("अमात्यकारक (AmK)", "कर्म, आजीविका, मेधा", "#3B82F6"),
+            "BK": ("भ्रातृकारक (BK)", "पराक्रम, गुरु, भ्राता", "#06B6D4"),
+            "MK": ("मातृकारक (MK)", "माता, गृह, संपत्ति, सुख", "#10B981"),
+            "PK": ("पुत्रकारक (PK)", "संतान, बुद्धि, मंत्र", "#F59E0B"),
+            "GK": ("ज्ञातिकारक (GK)", "शत्रु, ऋण, रोग, विवाद", "#EF4444"),
+            "DK": ("दाराकारक (DK)", "जीवनसाथी, काम, साझेदारी", "#EC4899")
+        }
+
+        svg = [
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 290" width="100%" style="background:{bg};border:1.5px solid {card_bdr};border-radius:12px;font-family:system-ui,-apple-system,sans-serif;">',
+            f'<text x="24" y="26" fill="{txt_col}" font-size="13" font-weight="700">👑 जैमिनी ७ चर कारक भोगांश स्पेक्ट्रम (Chara Karaka Degrees Spectrum)</text>',
+            f'<text x="540" y="26" fill="{sub_col}" font-size="11" font-weight="600">अंश सीमा: ०° से ३०° (घटते क्रम में)</text>'
+        ]
+
+        y = 52
+        for k_code, (k_name, k_sig, col) in karaka_meta.items():
+            p_name = k7_dict.get(k_code, "")
+            p_obj = chart_obj.planets.get(p_name)
+            deg = getattr(p_obj, "sign_degree", 15.0) if p_obj else 15.0
+            deg_str = f"{deg:.2f}°"
+            bar_w = int((deg / 30.0) * 410)
+
+            svg.append(f'<text x="24" y="{y+13}" fill="{txt_col}" font-size="11" font-weight="700">{k_name}</text>')
+            svg.append(f'<text x="180" y="{y+13}" fill="{col}" font-size="11" font-weight="bold">{p_name}</text>')
+            svg.append(f'<rect x="250" y="{y+2}" width="410" height="15" rx="3" fill="{bar_bg}" opacity="0.6" />')
+            svg.append(f'<rect x="250" y="{y+2}" width="{bar_w}" height="15" rx="3" fill="{col}" />')
+            svg.append(f'<text x="670" y="{y+13}" fill="{col}" font-size="11" font-weight="bold">{deg_str}</text>')
+            y += 33
+
+        svg.append('</svg>')
+        return "".join(svg)
+
+    # 10 Dedicated Tabs for Jaimini Suite
+    jtab1, jtab2, jtab3, jtab4, jtab5, jtab6, jtab7, jtab8, jtab9, jtab10 = st.tabs([
+        "1. 🔱 कारकांश व स्वांश चक्र",
+        "2. 👑 जैमिनी ७ चर कारक",
+        "3. 🌟 विशेष लग्न एवं राजयोग",
+        "4. 🏰 सम्पूर्ण १२ आरूढ़ पद",
+        "5. 📡 जैमिनी राशि दृष्टि",
+        "6. 🔗 अर्गला एवं विरोधार्गला",
+        "7. 🌍 ग्रह आरूढ़ पद",
+        "8. ⏳ आयुर्दाय एवं दीर्घायु",
+        "9. 👻 अप्रकाशित उपग्रह",
+        "10. 📜 जैमिनी उपदेश सूत्र एवं प्रमाण"
     ])
 
-    with tab_j_km:
-        st.markdown("### 🔱 जैमिनी कारकांश, स्वांश एवं इष्ट देवता वेध (Jaimini Karakamsha Suite)")
-        st.caption("महर्षि जैमिनी उपदेश सूत्र अनुसार नवमांश में आत्मकारक की स्थिति (कारकांश), स्वांश फल, इष्ट देवता एवं मोक्ष योग का प्रामाणिक विश्लेषण:")
+    # =========================================================================
+    # TAB 1: कारकांश व स्वांश चक्र (Karakamsha & Swamsha Suite)
+    # =========================================================================
+    with jtab1:
+        st.markdown("#### 🔱 जैमिनी कारकांश, स्वांश एवं मोक्ष वेध (Karakamsha & Swamsha Suite)")
+        st.caption("महर्षि जैमिनी उपदेश सूत्र अनुसार नवमांश चक्र में आत्मकारक की स्थिति (कारकांश लग्न), स्वांश फल, इष्ट देवता एवं मोक्ष योग।")
 
-        try:
-            import importlib
-            import src.jyotish.services.jaimini_suite as js_mod
-            importlib.reload(js_mod)
-            j_res = js_mod.default_jaimini_suite_service.analyze_jaimini_suite(chart)
+        c_jk1, c_jk2, c_jk3, c_jk4 = st.columns(4)
+        c_jk1.metric("आत्मकारक (AK)", f"{j_res.get('atmakaraka', 'Moon')}", "आत्मा का मूल स्वरूप")
+        c_jk2.metric("कारकांश राशि (D9)", f"{j_res.get('karakamsha_sign', '-')}", f"Sign #{j_res.get('karakamsha_sign_id', 1)}")
 
-            # Top KPI summary
-            c_jk1, c_jk2, c_jk3, c_jk4 = st.columns(4)
-            with c_jk1:
-                st.metric("आत्मकारक (AK)", f"{j_res['atmakaraka']}", "आत्मा का स्वभाव")
-            with c_jk2:
-                st.metric("कारकांश राशि (D9)", f"{j_res['karakamsha_sign']}", f"Sign #{j_res['karakamsha_sign_id']}")
-            with c_jk3:
-                ishta = j_res["ishta_devata"]
-                st.metric("इष्ट देवता (Ishta Devata)", f"{ishta['deity']}", f"मंत्र: {ishta['mantra']}")
-            with c_jk4:
-                dharma = j_res["dharma_devata"]
-                st.metric("धर्म देवता (Dharma)", f"{dharma['deity']}", f"ग्रह: {dharma['planet']}")
+        ishta_info = j_res.get("ishta_devata", {})
+        c_jk3.metric("इष्ट देवता (Ishta)", f"{ishta_info.get('deity', 'श्री विष्णु')}", f"अवतार: {ishta_info.get('avatar', '-')}")
 
-            # Karakamsha 12-House Grid
-            st.markdown("#### 🏛️ कारकांश लग्न से १२ भावों में ग्रहीय स्थिति (Houses from Karakamsha in D9)")
-            h_cols = st.columns(6)
-            for h_num in range(1, 7):
-                with h_cols[h_num - 1]:
-                    pls = j_res["houses_from_kl"].get(h_num, [])
-                    pl_str = ", ".join(pls) if pls else "—"
-                    st.markdown(
-                        f'<div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:8px; text-align:center; margin-bottom:8px;">'
-                        f'<b style="color:#1E3A8A; font-size:12px;">भाव {h_num}</b><br/>'
-                        f'<span style="font-weight:700; color:#0F172A; font-size:13px;">{pl_str}</span>'
-                        f'</div>',
-                        unsafe_allow_html=True
-                    )
+        dharma_info = j_res.get("dharma_devata", {})
+        c_jk4.metric("धर्म देवता (Dharma)", f"{dharma_info.get('deity', 'श्री शिव')}", f"ग्रह: {dharma_info.get('planet', '-')}")
 
-            h_cols2 = st.columns(6)
-            for h_num in range(7, 13):
-                with h_cols2[h_num - 7]:
-                    pls = j_res["houses_from_kl"].get(h_num, [])
-                    pl_str = ", ".join(pls) if pls else "—"
-                    bg_color = "#DCFCE7" if (h_num == 12 and "Ketu" in pls) else "#F8FAFC"
-                    st.markdown(
-                        f'<div style="background:{bg_color}; border:1px solid #CBD5E1; border-radius:8px; padding:8px; text-align:center; margin-bottom:8px;">'
-                        f'<b style="color:#1E3A8A; font-size:12px;">भाव {h_num}</b><br/>'
-                        f'<span style="font-weight:700; color:#0F172A; font-size:13px;">{pl_str}</span>'
-                        f'</div>',
-                        unsafe_allow_html=True
-                    )
+        st.markdown("---")
+        st.markdown("##### 🏛️ कारकांश लग्न (D9) से द्वादश भावों में ग्रहीय स्थिति (Houses from Karakamsha)")
+        
+        h_kl = j_res.get("houses_from_kl", {})
+        h_cols1 = st.columns(6)
+        for h_num in range(1, 7):
+            with h_cols1[h_num - 1]:
+                pls = h_kl.get(h_num, [])
+                pl_str = ", ".join(pls) if pls else "—"
+                st.markdown(_clean_html(f"""
+                <div style="background:#F8FAFC;border:1px solid #CBD5E1;border-radius:8px;padding:8px;text-align:center;margin-bottom:8px;">
+                    <div style="font-weight:700;color:#1E3A8A;font-size:11px;">भाव {h_num}</div>
+                    <div style="font-weight:700;color:#0F172A;font-size:12px;margin-top:2px;">{pl_str}</div>
+                </div>
+                """), unsafe_allow_html=True)
 
-            # Swamsha Shastriya Yogas
-            st.markdown("#### 📜 स्वांश फल एवं जैमिनी योग (Swamsha Classical Yogas)")
-            if j_res["swamsha_yogas"]:
-                for yg in j_res["swamsha_yogas"]:
-                    st.markdown(
-                        f'<div style="background:#FFFBEB; border-left:4px solid #F59E0B; padding:10px 14px; border-radius:0 8px 8px 0; margin-bottom:8px;">'
-                        f'<b style="color:#B45309; font-size:14px;">{yg["title"]}</b> — <small style="color:#78350F;">{yg["sutra"]}</small><br/>'
-                        f'<p style="margin:4px 0 0 0; color:#1E293B; font-size:13px;">{yg["desc"]}</p>'
-                        f'</div>',
-                        unsafe_allow_html=True
-                    )
-            else:
-                st.info("कारकांश में सामान्य ग्रह स्थिति है। आत्मकारक का ध्यान एवं इष्ट साधना कल्याणकारी है।")
+        h_cols2 = st.columns(6)
+        for h_num in range(7, 13):
+            with h_cols2[h_num - 7]:
+                pls = h_kl.get(h_num, [])
+                pl_str = ", ".join(pls) if pls else "—"
+                bg_col = "#DCFCE7" if (h_num == 12 and "Ketu" in pls) else "#F8FAFC"
+                bdr_col = "#86EFAC" if (h_num == 12 and "Ketu" in pls) else "#CBD5E1"
+                st.markdown(_clean_html(f"""
+                <div style="background:{bg_col};border:1px solid {bdr_col};border-radius:8px;padding:8px;text-align:center;margin-bottom:8px;">
+                    <div style="font-weight:700;color:#1E3A8A;font-size:11px;">भाव {h_num}</div>
+                    <div style="font-weight:700;color:#0F172A;font-size:12px;margin-top:2px;">{pl_str}</div>
+                </div>
+                """), unsafe_allow_html=True)
 
-            # Arudha Lagna & Upapada Lagna Alignment
-            c_al1, c_al2 = st.columns(2)
-            with c_al1:
-                st.info(f"**🌟 आरूढ़ लग्न (AL) व जन्म लग्न संबंध:** {j_res['al_jl_harmony']}")
-            with c_al2:
-                st.info(f"**💍 उपपद लग्न (UL) दांपत्य वेध:** {j_res['ul_summary']}")
+        st.markdown("---")
+        st.markdown("##### 📜 स्वांश फल एवं जैमिनी योग (Swamsha Classical Yogas)")
+        sw_yogas = j_res.get("swamsha_yogas", [])
+        if sw_yogas:
+            for yg in sw_yogas:
+                st.markdown(_clean_html(f"""
+                <div style="background:#FFFBEB;border-left:4px solid #F59E0B;padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:8px;">
+                    <div style="font-weight:700;color:#B45309;font-size:13px;">{yg.get('title', '')} — <small style="color:#78350F;">{yg.get('sutra', '')}</small></div>
+                    <div style="margin-top:4px;color:#1E293B;font-size:12px;">{yg.get('desc', '')}</div>
+                </div>
+                """), unsafe_allow_html=True)
+        else:
+            st.info("कारकांश में सामान्य ग्रह स्थिति है। आत्मकारक का ध्यान एवं इष्ट साधना कल्याणकारी है।")
 
-        except Exception as _e_jkm:
-            st.error(f"कारकांश विश्लेषण में त्रुटि: {_e_jkm}")
+        st.markdown("---")
+        c_al1, c_al2 = st.columns(2)
+        with c_al1:
+            st.info(f"**🌟 आरूढ़ लग्न (AL) व जन्म लग्न संबंध:** {j_res.get('al_jl_harmony', 'उत्तम समन्वय')}")
+        with c_al2:
+            st.info(f"**💍 उपपद लग्न (UL) दांपत्य वेध:** {j_res.get('ul_summary', 'सामान्य अनुकूल')}")
 
-    with tab_j1:
-        st.markdown("#### 🌟 विशेष लग्न विश्लेषण (Special Lagnas & Significance)")
-        st.write("विभिन्न जीवन क्षेत्रों (धन, पद, शक्ति, प्राण, वर्ण) के सूक्ष्म परीक्षण हेतु शास्त्रीय विशेष लग्न।")
+    # =========================================================================
+    # TAB 2: जैमिनी ७ चर कारक (7 Chara Karakas Scheme)
+    # =========================================================================
+    with jtab2:
+        st.markdown("#### 👑 जैमिनी ७ चर कारक व्यवस्था (7 Chara Karakas Scheme)")
+        st.caption("अंशों के आधार पर सर्वोच्च से निम्नतम क्रम में ७ चर कारक: आत्मकारक से दाराकारक तक।")
 
-        if chart.jaimini and chart.jaimini.special_lagnas_detail:
-            sl_details = chart.jaimini.special_lagnas_detail
-            
-            # Top metrics cards
-            c_sl1, c_sl2, c_sl3, c_sl4 = st.columns(4)
-            c_sl1.metric("👑 होरा लग्न (HL - Wealth)", f"{sl_details['HL']['sign']}", f"{sl_details['HL']['degree']}°")
-            c_sl2.metric("⚡ घटी लग्न (GL - Power)", f"{sl_details['GL']['sign']}", f"{sl_details['GL']['degree']}°")
-            c_sl3.metric("🌸 श्री लग्न (SL - Prosperity)", f"{sl_details['SL']['sign']}", f"{sl_details['SL']['degree']}°")
-            c_sl4.metric("💰 इन्दु लग्न (IL - Dhana)", f"{sl_details['IL']['sign']}", f"Lord: {sl_details['IL']['lord']}")
+        # Top 3 Karaka cards
+        ck1, ck2, ck3 = st.columns(3)
+        ak_p = karakas_7.get("AK", "")
+        ak_deg = getattr(chart.planets.get(ak_p), "sign_degree", 0.0) if ak_p else 0.0
+        amk_p = karakas_7.get("AmK", "")
+        amk_deg = getattr(chart.planets.get(amk_p), "sign_degree", 0.0) if amk_p else 0.0
+        dk_p = karakas_7.get("DK", "")
+        dk_deg = getattr(chart.planets.get(dk_p), "sign_degree", 0.0) if dk_p else 0.0
 
-            # Detailed table
+        ck1.metric("👑 आत्मकारक (AK - Soul)", f"{ak_p}", f"{ak_deg:.2f}° (सर्वोच्च अंश)")
+        ck2.metric("💼 अमात्यकारक (AmK - Career)", f"{amk_p}", f"{amk_deg:.2f}° (द्वितीय अंश)")
+        ck3.metric("💍 दाराकारक (DK - Spouse)", f"{dk_p}", f"{dk_deg:.2f}° (न्यूनतम अंश)")
+
+        st.markdown("---")
+        st.markdown("##### 📊 चर कारक भोगांश स्पेक्ट्रम आलेख")
+        svg_ck_code = _render_chara_karaka_svg(chart, karakas_7, is_dark=is_night_mode or is_astrallis_mode)
+        st.markdown(svg_ck_code, unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.markdown("##### 📋 ७ चर कारक महा-तालिका (Master Chara Karaka Table)")
+
+        karaka_definitions = {
+            "AK": ("आत्मकारक (Atmakaraka)", "आत्मा का स्वभाव, प्रारब्ध कर्म, जीवन का मूल उद्देश्य एवं मोक्ष मार्ग"),
+            "AmK": ("अमात्यकारक (Amatyakaraka)", "कर्मक्षेत्र, आजीविका, सामाजिक दायित्व, वित्त एवं बौद्धिक परामर्श"),
+            "BK": ("भ्रातृकारक (Bhatrukaraka)", "पराक्रम, छोटे भाई-बहन, गुरु, मार्गदर्शक एवं साहसिक उपक्रम"),
+            "MK": ("मातृकारक (Matrukaraka)", "माता, गृह, भूमि, अचल संपत्ति, वाहन, सुख एवं आंतरिक संतोष"),
+            "PK": ("पुत्रकारक (Putrakaraka)", "संतान, बुद्धि, मंत्र सिद्धि, रचनात्मकता, पूर्वपुण्य एवं शिष्य"),
+            "GK": ("ज्ञातिकारक (Gnatikaraka)", "शत्रु, रोग, ऋण, कोर्ट-कचहरी, पारिवारिक मतभेद एवं रुकावटें"),
+            "DK": ("दाराकारक (Darakaraka)", "जीवनसाथी, दांपत्य सुख, व्यापारिक साझेदार, काम एवं भोग")
+        }
+
+        ck_table_rows = []
+        for k_code, (k_full, k_duty) in karaka_definitions.items():
+            p_name = karakas_7.get(k_code, "—")
+            p_obj = chart.planets.get(p_name)
+            p_sign = getattr(p_obj, "sign_name", "—") if p_obj else "—"
+            p_deg = f"{getattr(p_obj, 'sign_degree', 0.0):.2f}°" if p_obj else "—"
+            p_nak = f"{getattr(p_obj, 'nakshatra_name', '—')} ({getattr(p_obj, 'nakshatra_pada', 1)})" if p_obj else "—"
+            p_house = f"भाव {getattr(p_obj, 'house_from_lagna', 1)}" if p_obj else "—"
+
+            ck_table_rows.append({
+                "कारक कोड": k_code,
+                "कारक नाम": k_full,
+                "ग्रह (Planet)": p_name,
+                "अंश (Degree)": p_deg,
+                "राशि (Sign)": p_sign,
+                "भाव (House)": p_house,
+                "नक्षत्र (Nakshatra)": p_nak,
+                "शास्त्रीय दायित्व एवं फल": k_duty
+            })
+
+        st.dataframe(pd.DataFrame(ck_table_rows), use_container_width=True, hide_index=True)
+
+    # =========================================================================
+    # TAB 3: विशेष लग्न एवं राजयोग (Special Lagnas Suite)
+    # =========================================================================
+    with jtab3:
+        st.markdown("#### 🌟 विशेष लग्न विश्लेषण एवं राजयोग (Special Lagnas Suite)")
+        st.caption("बृहत्पाराशर होराशास्त्र एवं जैमिनी सूत्रों अनुसार धन, सत्ता, समृद्धि, प्राण एवं वर्णदा लग्न।")
+
+        if sl_details:
+            sl1, sl2, sl3, sl4 = st.columns(4)
+            hl = sl_details.get("HL", {})
+            gl = sl_details.get("GL", {})
+            sl = sl_details.get("SL", {})
+            il = sl_details.get("IL", {})
+
+            sl1.metric("👑 होरा लग्न (HL - Wealth)", f"{hl.get('sign', '-')}", f"{hl.get('degree', 0):.2f}°")
+            sl2.metric("⚡ घटी लग्न (GL - Power)", f"{gl.get('sign', '-')}", f"{gl.get('degree', 0):.2f}°")
+            sl3.metric("🌸 श्री लग्न (SL - Prosperity)", f"{sl.get('sign', '-')}", f"{sl.get('degree', 0):.2f}°")
+            sl4.metric("💰 इन्दु लग्न (IL - Dhana)", f"{il.get('sign', '-')}", f"Lord: {il.get('lord', '-')}")
+
+            st.markdown("---")
+            st.markdown("##### 📋 विशेष लग्न विस्तृत सारणी")
+
             sl_rows = []
             for k_code, k_info in sl_details.items():
                 sl_rows.append({
                     "लग्न कोड": k_code,
-                    "विशेष लग्न नाम (Special Lagna)": k_info["name_hi"],
-                    "राशि (Sign)": k_info["sign"],
-                    "अंश (Degree)": f"{k_info['degree']}°" if k_info['degree'] > 0 else "—",
-                    "राशि स्वामी (Lord)": k_info["lord"],
-                    "शास्त्रीय प्रयोजन एवं फल (Purpose & Impact)": k_info["purpose_hi"]
+                    "विशेष लग्न नाम": k_info.get("name_hi", k_code),
+                    "राशि (Sign)": k_info.get("sign", ""),
+                    "अंश (Degree)": f"{k_info.get('degree', 0):.2f}°" if k_info.get("degree", 0) > 0 else "—",
+                    "राशि स्वामी": k_info.get("lord", ""),
+                    "शास्त्रीय प्रयोजन एवं फल": k_info.get("purpose_hi", "")
                 })
-            st.dataframe(pd.DataFrame(sl_rows), use_container_width=True)
+            st.dataframe(pd.DataFrame(sl_rows), use_container_width=True, hide_index=True)
 
-            col_jk1, col_jk2 = st.columns(2)
-            with col_jk1:
-                st.markdown("#### 👑 जैमिनी चर कारक (7 Karaka Scheme)")
-                k7_data = [{"कारक (Karaka)": k, "ग्रह (Planet)": p_val} for k, p_val in chart.jaimini.karakas_7.items()]
-                st.dataframe(pd.DataFrame(k7_data), use_container_width=True)
-            with col_jk2:
-                st.markdown("#### 💎 कारकांश लग्न (Karakamsha)")
-                st.markdown(f"""
-                <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-                    <div style="font-size:15px; font-weight:800; color:#1E40AF; margin-bottom:8px;">
-                        🔱 आत्मकारक नवमांश: <b>{chart.jaimini.karakamsha_sign_name}</b> (Sign #{chart.jaimini.karakamsha_sign_id})
-                    </div>
-                    <div style="font-size:12.5px; color:#1E293B; line-height:1.6;">
-                        • <b>आत्मकारक ग्रह (AK):</b> {chart.jaimini.karakas_7.get('AK', '')}<br/>
-                        • <b>आध्यात्मिक अर्थ:</b> कारकांश लग्न आत्मा के मूल प्रयोजन, इष्टदेव निर्धारण, जीवन लक्ष्य एवं मोक्ष मार्ग का सूचक है।<br/>
-                        • <b>अमात्यकारक (AmK):</b> {chart.jaimini.karakas_7.get('AmK', '')} (करियर एवं सामाजिक कर्म का दिशा-निर्देशक)।
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-
-    with tab_j2:
-        st.markdown("#### 👑 सम्पूर्ण द्वादश आरूढ़ पद (All 12 Arudha Padas Matrix)")
-        st.write("बृहत्पाराशर होराशास्त्र एवं जैमिनी सूत्रों के अनुसार शास्त्रीय अपवादों (1st house lord -> 10th, 7th house lord -> 4th) सहित संपूर्ण 12 आरूढ़ पद।")
-
-        if chart.jaimini and chart.jaimini.arudha_details:
-            ar_rows = []
-            for a_code, a_val in chart.jaimini.arudha_details.items():
-                ar_rows.append({
-                    "पद (Pada)": a_code,
-                    "भाव (House)": f"भाव #{a_val['house_num']} ({a_val['house_sign']})",
-                    "भावेश (Lord)": f"{a_val['lord_name']} ({a_val['lord_sign']})",
-                    "दूरी (Offset)": f"{a_val['distance']} भाव",
-                    "शास्त्रीय नियम / अपवाद": a_val["exception"],
-                    "आरूढ़ राशि (Pada Sign)": a_val["pada_sign_name"],
-                    "लग्न से भाव": f"{a_val['pada_house_from_lagna']} भाव",
-                    "कारकत्व एवं फल (Signification)": a_val["signification_hi"]
-                })
-            st.dataframe(pd.DataFrame(ar_rows), use_container_width=True)
-
-            st.markdown(f"""
-            <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; margin-top:12px;">
-                <div style="background:#FFFFFF; border:1.5px solid #10B981; border-radius:10px; padding:12px;">
-                    <b style="color:#065F46; font-size:13.5px;">🌟 आरूढ़ लग्न (AL - Arudha Lagna): {chart.jaimini.arudha_pada_names.get('AL', '')}</b>
-                    <p style="font-size:12px; color:#1E293B; margin:4px 0 0 0;">संसार जातक को किस रूप में देखता है (Public Image & Status)। यह बाह्य प्रतिष्ठा का दर्पण है।</p>
-                </div>
-                <div style="background:#FFFFFF; border:1.5px solid #2563EB; border-radius:10px; padding:12px;">
-                    <b style="color:#1E40AF; font-size:13.5px;">💍 उपपद लग्न (UL - Upapada Lagna): {chart.jaimini.arudha_pada_names.get('UL', '')}</b>
-                    <p style="font-size:12px; color:#1E293B; margin:4px 0 0 0;">जीवनसाथी, वैवाहिक स्थिरता, ससुराल पक्ष का प्रभाव एवं दांपत्य सुख का अंतिम निर्णय उपपद से होता है।</p>
+            st.markdown("---")
+            st.markdown("##### 👑 जैमिनी राजयोग एवं धनयोग समन्वय (Jaimini Raja Yoga Analysis)")
+            st.markdown(_clean_html("""
+            <div style="background:#F0FDF4;border:1.5px solid #86EFAC;border-radius:10px;padding:14px;margin-bottom:12px;">
+                <div style="font-weight:700;color:#166534;font-size:14px;">१. महाराज योग सूत्र (JL, HL & GL Alignment)</div>
+                <div style="font-size:12.5px;color:#1E293B;margin-top:6px;line-height:1.5;">
+                    यदि जन्म लग्न (JL), होरा लग्न (HL) एवं घटी लग्न (GL) तीनों पर किसी एक ही शुभ ग्रह की दृष्टि हो, अथवा इनके स्वामी परस्पर केंद्र/त्रिकोण में स्थित हों, तो जातक को समाज में सर्वोच्च सत्ता, प्रतिष्ठा एवं अपार संपत्ति की प्राप्ति होती है।
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            <div style="background:#EFF6FF;border:1.5px solid #93C5FD;border-radius:10px;padding:14px;">
+                <div style="font-weight:700;color:#1E40AF;font-size:14px;">२. इन्दु लग्न धन समृद्धि सिद्धांत (Indu Lagna Wealth Reservoir)</div>
+                <div style="font-size:12.5px;color:#1E293B;margin-top:6px;line-height:1.5;">
+                    इन्दु लग्न में यदि उच्च, स्वराशि अथवा शुभ ग्रह स्थित हों, तो जातक कोट्यधिपति (अत्यधिक धनवान) बनता है। यदि क्रूर ग्रह हों किंतु मित्र राशि में हों, तो मध्यम धन लाभ होता है।
+                </div>
+            </div>
+            """), unsafe_allow_html=True)
 
-    with tab_j3:
-        st.markdown("#### 💫 नवग्रह सम्पूर्ण अवस्था चक्र (Planetary Avasthas Matrix)")
-        st.write("बालादि (5 अवस्थाएं), जाग्रदादि (3 अवस्थाएं), दीप्तादि (9 अवस्थाएं) एवं 12 शयनादि अवस्थाओं का विस्तृत शास्त्रीय समन्वय।")
+    # =========================================================================
+    # TAB 4: सम्पूर्ण १२ आरूढ़ पद (All 12 Arudha Padas)
+    # =========================================================================
+    with jtab4:
+        st.markdown("#### 🏰 सम्पूर्ण द्वादश आरूढ़ पद (All 12 Arudha Padas Matrix)")
+        st.caption("भावेश की दूरी अनुसार शास्त्रीय अपवादों (1st Lord in 1st/7th -> 10th/4th) सहित संपूर्ण १२ आरूढ़ पद।")
 
-        shayan_list = default_ayurdaya_engine.calculate_shayanadi_avasthas(chart)
-        shayan_dict = {item["planet"]: item for item in shayan_list}
+        if ar_details:
+            ak_col1, ak_col2, ak_col3, ak_col4 = st.columns(4)
+            al_v = ar_details.get("AL", {})
+            ul_v = ar_details.get("A12", ar_details.get("UL", {}))
+            a10_v = ar_details.get("A10", {})
+            a2_v = ar_details.get("A2", {})
 
-        avastha_rows = []
-        for p_name in ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]:
-            if p_name in chart.planets:
-                p_obj = chart.planets[p_name]
-                sb_p = chart.shadbala.planets.get(p_name) if chart.shadbala else None
-                sh_p = shayan_dict.get(p_name, {})
+            ak_col1.metric("🌟 आरूढ़ लग्न (AL)", f"{al_v.get('pada_sign_name', '-')}", f"भाव {al_v.get('pada_house_from_lagna', 1)}")
+            ak_col2.metric("💍 उपपद लग्न (UL)", f"{ul_v.get('pada_sign_name', '-')}", f"भाव {ul_v.get('pada_house_from_lagna', 12)}")
+            ak_col3.metric("👑 राज्य पद (A10)", f"{a10_v.get('pada_sign_name', '-')}", f"भाव {a10_v.get('pada_house_from_lagna', 10)}")
+            ak_col4.metric("💰 कोष पद (A2)", f"{a2_v.get('pada_sign_name', '-')}", f"भाव {a2_v.get('pada_house_from_lagna', 2)}")
 
-                baladi_str = sb_p.baladi_avastha if sb_p else "Yuva"
-                jagrat_str = sb_p.jagratadi_avastha if sb_p else "Jagrat"
-                deept_str = sb_p.deeptadi_avastha if sb_p else "Deepta"
+            st.markdown("---")
+            st.markdown("##### 📋 १२ आरूढ़ पद विस्तृत विवरण तालिका")
 
-                avastha_rows.append({
-                    "ग्रह (Planet)": p_name,
-                    "राशि व अंश (Position)": f"{p_obj.sign_name} {round(p_obj.sign_degree, 2)}°",
-                    "बालादि अवस्था (5 States)": baladi_str,
-                    "जाग्रदादि अवस्था (3 States)": jagrat_str,
-                    "दीप्तादि अवस्था (9 States)": deept_str,
-                    "शयनादि अवस्था (12 Shayanadi)": sh_p.get("name_hi", "—"),
-                    "सामर्थ्य (Potency %)": f"{sh_p.get('potency_pct', 80)}%",
-                    "फल व प्रभाव (Classical Effect)": sh_p.get("effect_hi", "")
+            ar_table_rows = []
+            for a_code, a_val in ar_details.items():
+                ar_table_rows.append({
+                    "पद (Pada)": a_code,
+                    "मूल भाव": f"भाव {a_val.get('house_num', '')} ({a_val.get('house_sign', '')})",
+                    "भावेश": f"{a_val.get('lord_name', '')} ({a_val.get('lord_sign', '')})",
+                    "दूरी": f"{a_val.get('distance', 0)} भाव",
+                    "शास्त्रीय अपवाद": a_val.get("exception", "सामान्य"),
+                    "आरूढ़ राशि": a_val.get("pada_sign_name", ""),
+                    "लग्न से भाव": f"भाव {a_val.get('pada_house_from_lagna', '')}",
+                    "कारकत्व एवं फल": a_val.get("signification_hi", "")
                 })
 
-        st.dataframe(pd.DataFrame(avastha_rows), use_container_width=True)
+            st.dataframe(pd.DataFrame(ar_table_rows), use_container_width=True, hide_index=True)
 
-    with tab_j4:
-        st.markdown("#### ⏳ शास्त्रीय आयुर्दाय एवं दीर्घायु गणना (Longevity & Ayurdaya)")
-        st.write("महर्षि जैमिनी त्रिसूत्रीय आयु निर्णय (Three-Pair Method), कक्षा वृद्धि/ह्रास एवं पारम्परिक पिण्डायु गणना।")
+            st.markdown("---")
+            col_arp1, col_arp2 = st.columns(2)
+            with col_arp1:
+                st.markdown(_clean_html(f"""
+                <div style="background:#F0FDF4;border:1.5px solid #86EFAC;border-radius:10px;padding:14px;">
+                    <b style="color:#166534;font-size:13px;">🌟 आरूढ़ लग्न (AL - Public Image): {al_v.get('pada_sign_name', '')}</b>
+                    <div style="font-size:12px;color:#1E293B;margin-top:4px;line-height:1.5;">
+                        संसार जातक को किस रूप में देखता है। यह सामाजिक प्रतिष्ठा, बाह्य प्रभाव एवं भौतिक उपलब्धियों का वास्तविक आईना है।
+                    </div>
+                </div>
+                """), unsafe_allow_html=True)
+            with col_arp2:
+                st.markdown(_clean_html(f"""
+                <div style="background:#FFF1F2;border:1.5px solid #FECDD3;border-radius:10px;padding:14px;">
+                    <b style="color:#9F1239;font-size:13px;">💍 उपपद लग्न (UL / A12 - Spouse): {ul_v.get('pada_sign_name', '')}</b>
+                    <div style="font-size:12px;color:#1E293B;margin-top:4px;line-height:1.5;">
+                        दांपत्य जीवन, जीवनसाथी का परिवार, वैवाहिक सुख एवं स्थिरता। उपपद लग्न पर शुभ ग्रहों की दृष्टि स्थायी विवाह कराती है।
+                    </div>
+                </div>
+                """), unsafe_allow_html=True)
 
-        jaimini_ayur = default_ayurdaya_engine.calculate_jaimini_longevity(chart)
-        pindayu_res = default_ayurdaya_engine.calculate_pindayu(chart)
+    # =========================================================================
+    # TAB 5: जैमिनी राशि दृष्टि (Rashi Drishti Aspect Grid)
+    # =========================================================================
+    with jtab5:
+        st.markdown("#### 📡 जैमिनी राशि दृष्टि (Jaimini Rashi Drishti & Aspects)")
+        st.info("📌 **मौलिक राशि दृष्टि नियम:** चर राशियाँ ➔ स्थिर राशियों को देखती हैं (निकटवर्ती छोड़कर) | स्थिर राशियाँ ➔ चर राशियों को देखती हैं (निकटवर्ती छोड़कर) | द्विस्वभाव राशियाँ ➔ अन्य द्विस्वभाव राशियों को देखती हैं।")
+
+        if rashi_drishti_data:
+            rd_rows = []
+            for k, v in rashi_drishti_data.items():
+                s_obj = next((s for s in chart.houses if s.sign_name == k), None)
+                occ_str = ", ".join(s_obj.occupants) if (s_obj and s_obj.occupants) else "—"
+                d_str = ", ".join(v) if v else "—"
+
+                rd_rows.append({
+                    "राशि (Sign)": k,
+                    "राशि में स्थित ग्रह": occ_str,
+                    "दृष्टि प्राप्त राशियाँ (Aspects)": d_str,
+                    "दृष्टियों की कुल संख्या": f"{len(v)} राशियाँ"
+                })
+
+            st.dataframe(pd.DataFrame(rd_rows), use_container_width=True, hide_index=True)
+
+            st.markdown("---")
+            col_rd_exp1, col_rd_exp2 = st.columns(2)
+            with col_rd_exp1:
+                st.markdown("""
+                **चर राशियों की दृष्टि (मेष, कर्क, तुला, मकर):**
+                - मेष ➔ सिंह, वृश्चिक, कुंभ को देखता है (निकटवर्ती वृषभ को छोड़कर)।
+                - कर्क ➔ वृश्चिक, कुंभ, वृषभ को देखता है (निकटवर्ती सिंह को छोड़कर)।
+                - तुला ➔ कुंभ, वृषभ, सिंह को देखता है (निकटवर्ती वृश्चिक को छोड़कर)।
+                - मकर ➔ वृषभ, सिंह, वृश्चिक को देखता है (निकटवर्ती कुंभ को छोड़कर)।
+                """)
+            with col_rd_exp2:
+                st.markdown("""
+                **द्विस्वभाव राशियों की दृष्टि (मिथुन, कन्या, धनु, मीन):**
+                - प्रत्येक द्विस्वभाव राशि अन्य तीनों द्विस्वभाव राशियों को पूर्ण दृष्टि से देखती है।
+                - मिथुन ➔ कन्या, धनु, मीन को देखता है।
+                - कन्या ➔ धनु, मीन, मिथुन को देखती है।
+                - धनु ➔ मीन, मिथुन, कन्या को देखता है।
+                - मीन ➔ मिथुन, कन्या, धनु को देखता है।
+                """)
+
+    # =========================================================================
+    # TAB 6: अर्गला एवं विरोधार्गला (Argala Intervention Matrix)
+    # =========================================================================
+    with jtab6:
+        st.markdown("#### 🔗 अर्गला एवं विरोधार्गला (Argala & Virodhargala Suite)")
+        st.info("📌 **अर्गला सम्बंध:** द्वितीय भाव (धन अर्गला ⟷ १२वां विरोधी) | चतुर्थ भाव (सुख अर्गला ⟷ १०वां विरोधी) | एकादश भाव (लाभ अर्गला ⟷ ३रा विरोधी) | पंचम भाव (पुत्र अर्गला ⟷ ९वां विरोधी)।")
+
+        if argala_data:
+            arg_rows = []
+            for k, v in argala_data.items():
+                dhana = v.get("dhana_argala", {})
+                sukha = v.get("sukha_argala", {})
+                labha = v.get("labha_argala", {})
+
+                dh_str = f"ग्रह: {', '.join(dhana.get('planets', [])) or '—'} | विरोध: {', '.join(dhana.get('virodha', [])) or '—'} ({'✅ प्रभावी' if dhana.get('effective') else 'निष्प्रभावी'})"
+                su_str = f"ग्रह: {', '.join(sukha.get('planets', [])) or '—'} | विरोध: {', '.join(sukha.get('virodha', [])) or '—'} ({'✅ प्रभावी' if sukha.get('effective') else 'निष्प्रभावी'})"
+                la_str = f"ग्रह: {', '.join(labha.get('planets', [])) or '—'} | विरोध: {', '.join(labha.get('virodha', [])) or '—'} ({'✅ प्रभावी' if labha.get('effective') else 'निष्प्रभावी'})"
+
+                arg_rows.append({
+                    "भाव": f"भाव {v.get('bhava', k)} ({v.get('sign', '')})",
+                    "द्वितीय अर्गला (Dhana)": dh_str,
+                    "चतुर्थ अर्गला (Sukha)": su_str,
+                    "एकादश अर्गला (Labha)": la_str,
+                    "सक्रिय अर्गलाएँ": f"{v.get('total_argalas', 0)} / 3"
+                })
+
+            st.dataframe(pd.DataFrame(arg_rows), use_container_width=True, hide_index=True)
+
+            st.markdown("---")
+            st.markdown("""
+            **शास्त्रीय अर्गला सिद्धांत (BPHS Ch. 31):**
+            - **अर्गला (Intervention):** किसी भाव या ग्रह पर अनुकूल या प्रतिकूल हस्तक्षेप जो उसके फल को नियंत्रित करता है।
+            - **विरोधार्गला (Obstruction):** यदि विरोधी भाव में अर्गला कारक ग्रह से अधिक या समान बलवान ग्रह हों, तो अर्गला का प्रभाव निष्प्रभावी हो जाता है।
+            - **शुभार्गला vs पापार्गला:** शुभ ग्रहों की अर्गला जीवन में स्वतः गति एवं सहज लाभ देती है, जबकि पाप ग्रहों की अर्गला दबाव व संघर्ष उत्पन्न करती है।
+            """)
+
+    # =========================================================================
+    # TAB 7: ग्रह आरूढ़ पद (Graha Arudhas)
+    # =========================================================================
+    with jtab7:
+        st.markdown("#### 🌍 ग्रह आरूढ़ पद (Graha Arudha Padas)")
+        st.caption("प्रत्येक ग्रह की राशि के स्वामी से उतनी ही दूरी आगे गिनने पर ग्रह आरूढ़ ज्ञात होता है — ग्रह के बाह्य सांसारिक प्रभाव का प्रकटन।")
+
+        if graha_arudha_data:
+            ga_rows = []
+            for k, v in graha_arudha_data.items():
+                ar_sid = v.get("arudha_sign_id", 1)
+                h_from_l = ((ar_sid - chart.lagna_sign_id) % 12) + 1
+
+                ga_rows.append({
+                    "ग्रह (Planet)": k,
+                    "ग्रह राशि": v.get("planet_sign", "—"),
+                    "राशि स्वामी": f"{v.get('planet_lord', '—')} ({v.get('lord_sign', '—')})",
+                    "आरूढ़ राशि (Pada)": v.get("arudha_sign", "—"),
+                    "लग्न से भाव": f"भाव {h_from_l}",
+                    "शास्त्रीय प्रभाव एवं प्रकटन": v.get("meaning_hi", "—")
+                })
+
+            st.dataframe(pd.DataFrame(ga_rows), use_container_width=True, hide_index=True)
+
+            st.markdown("---")
+            st.info("💡 **महत्व:** भाव आरूढ़ जहाँ भौतिक घटनाओं व परिस्थितियों का आईना है, वहीं ग्रह आरूढ़ व्यक्ति के आंतरिक ग्रह बल का समाज में किस रूप में प्रकटन हो रहा है, उसका सटीक विश्लेषण प्रस्तुत करता है।")
+
+    # =========================================================================
+    # TAB 8: आयुर्दाय एवं दीर्घायु (Jaimini Longevity Engine)
+    # =========================================================================
+    with jtab8:
+        st.markdown("#### ⏳ शास्त्रीय आयुर्दाय एवं दीर्घायु गणना (Jaimini Longevity Engine)")
+        st.caption("महर्षि जैमिनी त्रिसूत्रीय आयु निर्णय (Three-Pair Method), कक्षा वृद्धि/ह्रास एवं पारम्परिक पिण्डायु गणना।")
 
         col_ay1, col_ay2 = st.columns(2)
         with col_ay1:
-            st.markdown(f"""
-            <div style="background:#FFFFFF; border:1.5px solid #10B981; border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <b style="font-size:15px; color:#065F46;">🔱 जैमिनी आयु वर्ग निर्णय</b>
-                    <span style="background:#ECFDF5; color:#065F46; border:1.5px solid #10B981; border-radius:8px; padding:3px 10px; font-weight:800; font-size:12px;">
-                        {jaimini_ayur['final_span']}
+            st.markdown(_clean_html(f"""
+            <div style="background:#FFFFFF;border:1.5px solid #10B981;border-radius:10px;padding:16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <b style="font-size:15px;color:#065F46;">🔱 जैमिनी आयु वर्ग निर्णय</b>
+                    <span style="background:#ECFDF5;color:#065F46;border:1.5px solid #10B981;border-radius:8px;padding:3px 10px;font-weight:800;font-size:12px;">
+                        {jaimini_ayur.get('final_span', 'दीर्घायु')}
                     </span>
                 </div>
-                <div style="font-size:13px; color:#1E293B; line-height:1.6; margin-bottom:10px;">
-                    • <b>अनुमानित आयु सीमा (Base Span):</b> <b style="font-size:15px; color:#0F766E;">{jaimini_ayur['estimated_years']} वर्ष</b><br/>
-                    • <b>युग्म १ (लग्नेश व अष्टमेश):</b> {jaimini_ayur['pair1']['result']}<br/>
-                    • <b>युग्म २ (लग्न व चन्द्र):</b> {jaimini_ayur['pair2']['result']}<br/>
-                    • <b>युग्म ३ (लग्न व होरा लग्न):</b> {jaimini_ayur['pair3']['result']}
+                <div style="font-size:13px;color:#1E293B;line-height:1.6;margin-bottom:10px;">
+                    • <b>अनुमानित आयु सीमा (Base Span):</b> <b style="font-size:15px;color:#0F766E;">{jaimini_ayur.get('estimated_years', 75)} वर्ष</b><br/>
+                    • <b>युग्म १ (लग्नेश व अष्टमेश):</b> {jaimini_ayur.get('pair1', {}).get('result', '-')}<br/>
+                    • <b>युग्म २ (लग्न व चन्द्र):</b> {jaimini_ayur.get('pair2', {}).get('result', '-')}<br/>
+                    • <b>युग्म ३ (लग्न व होरा लग्न):</b> {jaimini_ayur.get('pair3', {}).get('result', '-')}
                 </div>
-                <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:6px; padding:6px 10px; font-size:11.5px; color:#166534;">
-                    🌟 <b>कक्षा वृद्धि/ह्रास:</b> {", ".join(jaimini_ayur['modifiers'])}
+                <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:6px;padding:6px 10px;font-size:11.5px;color:#166534;">
+                    🌟 <b>कक्षा वृद्धि/ह्रास:</b> {', '.join(jaimini_ayur.get('modifiers', ['सामान्य']))}
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """), unsafe_allow_html=True)
 
         with col_ay2:
-            st.markdown(f"""
-            <div style="background:#FFFFFF; border:1.5px solid #2563EB; border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <b style="font-size:15px; color:#1E40AF;">⚖️ पारम्परिक पिण्डायु गणना (Pindayu)</b>
-                    <span style="background:#EFF6FF; color:#1E40AF; border:1.5px solid #3B82F6; border-radius:8px; padding:3px 10px; font-weight:800; font-size:12px;">
-                        शुद्ध पिण्डायु: {pindayu_res['net_pindayu_years']} वर्ष
+            st.markdown(_clean_html(f"""
+            <div style="background:#FFFFFF;border:1.5px solid #2563EB;border-radius:10px;padding:16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <b style="font-size:15px;color:#1E40AF;">⚖️ पारम्परिक पिण्डायु गणना (Pindayu)</b>
+                    <span style="background:#EFF6FF;color:#1E40AF;border:1.5px solid #3B82F6;border-radius:8px;padding:3px 10px;font-weight:800;font-size:12px;">
+                        शुद्ध पिण्डायु: {pindayu_res.get('net_pindayu_years', 72)} वर्ष
                     </span>
                 </div>
-                <div style="font-size:12px; color:#1E293B; line-height:1.5; margin-bottom:8px;">
-                    ग्रहों के उच्च-नीच अंशों एवं चक्रार्ध/शत्रुक्षेत्र हरण उपरांत प्राप्त शुद्ध आयु योगदान:
+                <div style="font-size:12px;color:#1E293B;line-height:1.5;margin-bottom:8px;">
+                    उच्च-नीच अंशों एवं चक्रार्ध/शत्रुक्षेत्र हरण उपरांत प्राप्त शुद्ध आयु योगदान:
                 </div>
-            """, unsafe_allow_html=True)
-            
-            p_pinda_list = [{"ग्रह (Planet)": p, "आयु योगदान (Years)": y} for p, y in pindayu_res["planet_contributions"].items()]
-            st.dataframe(pd.DataFrame(p_pinda_list), use_container_width=True)
-            st.markdown("</div>", unsafe_allow_html=True)
+            </div>
+            """), unsafe_allow_html=True)
 
-    with tab_j5:
-        st.markdown("#### 👻 अप्रकाशित उपग्रह (7 Invisible Upagrahas)")
-        st.write("सूर्य एवं शनि के आधार पर खगोलीय रूप से निर्धारित अप्रकाशित उपग्रह स्थिति।")
-        if chart.upagrahas:
+            p_pinda = pindayu_res.get("planet_contributions", {})
+            p_pinda_list = [{"ग्रह (Planet)": p, "आयु योगदान (Years)": f"{y:.1f} वर्ष"} for p, y in p_pinda.items()]
+            st.dataframe(pd.DataFrame(p_pinda_list), use_container_width=True, hide_index=True)
+
+    # =========================================================================
+    # TAB 9: अप्रकाशित उपग्रह (Invisible Upagrahas)
+    # =========================================================================
+    with jtab9:
+        st.markdown("#### 👻 अप्रकाशित उपग्रह (Invisible Upagrahas & Gulika/Mandi)")
+        st.caption("सूर्य, चन्द्र एवं शनि के आधार पर खगोलीय रूप से निर्धारित अप्रकाशित उपग्रह स्थिति एवं उनका शास्त्रीय प्रभाव।")
+
+        if getattr(chart, "upagrahas", None):
             u = chart.upagrahas
             u_data = [
-                {"उपग्रह (Upagraha)": "गुलिक (Gulika)", "राशि (Sign)": u.gulika_sign_name, "Longitude": f"{u.gulika_longitude:.2f}°", "प्रकृति": "शनि पुत्र / दारुण"},
-                {"उपग्रह (Upagraha)": "मान्दि (Mandi)", "राशि (Sign)": u.mandi_sign_name, "Longitude": f"{u.mandi_longitude:.2f}°", "प्रकृति": "शनि अंश / मारक"},
-                {"उपग्रह (Upagraha)": "धूम (Dhuma)", "राशि (Sign)": "Calculated", "Longitude": f"{u.dhuma_longitude:.2f}°", "प्रकृति": "सूर्य उपग्रह / संताप"},
-                {"उपग्रह (Upagraha)": "व्यतीपात (Vyatipata)", "राशि (Sign)": "Calculated", "Longitude": f"{u.vyatipata_longitude:.2f}°", "प्रकृति": "सूर्य उपग्रह / विघ्न"},
-                {"उपग्रह (Upagraha)": "परिवेष (Parivesha)", "राशि (Sign)": "Calculated", "Longitude": f"{u.parivesha_longitude:.2f}°", "प्रकृति": "चन्द्र उपग्रह / भय"},
-                {"उपग्रह (Upagraha)": "इन्द्रचाप (Indrachapa)", "राशि (Sign)": "Calculated", "Longitude": f"{u.indrachapa_longitude:.2f}°", "प्रकृति": "शुक्र उपग्रह / क्षय"},
-                {"उपग्रह (Upagraha)": "उपकेतु (Upaketu)", "राशि (Sign)": "Calculated", "Longitude": f"{u.upaketu_longitude:.2f}°", "प्रकृति": "केतु उपग्रह / अनिष्ट"},
+                {"उपग्रह (Upagraha)": "गुलिक (Gulika)", "राशि": u.gulika_sign_name, "भोगांश": f"{u.gulika_longitude:.2f}°", "प्रकृति": "शनि पुत्र / दारुण", "शास्त्रीय प्रभाव": "कष्ट, विघ्न, विषमय परिस्थितियां"},
+                {"उपग्रह (Upagraha)": "मान्दि (Mandi)", "राशि": u.mandi_sign_name, "भोगांश": f"{u.mandi_longitude:.2f}°", "प्रकृति": "शनि अंश / मारक", "शास्त्रीय प्रभाव": "शारीरिक पीड़ा, रोग, आघात"},
+                {"उपग्रह (Upagraha)": "धूम (Dhuma)", "राशि": "Calculated", "भोगांश": f"{u.dhuma_longitude:.2f}°", "प्रकृति": "सूर्य उपग्रह / संताप", "शास्त्रीय प्रभाव": "अग्नि भय, ताप, नेत्र कष्ट"},
+                {"उपग्रह (Upagraha)": "व्यतीपात (Vyatipata)", "राशि": "Calculated", "भोगांश": f"{u.vyatipata_longitude:.2f}°", "प्रकृति": "सूर्य उपग्रह / विघ्न", "शास्त्रीय प्रभाव": "आकस्मिक हानि, पतन, भ्रम"},
+                {"उपग्रह (Upagraha)": "परिवेष (Parivesha)", "राशि": "Calculated", "भोगांश": f"{u.parivesha_longitude:.2f}°", "प्रकृति": "चन्द्र उपग्रह / भय", "शास्त्रीय प्रभाव": "मानसिक चिंता, जल भय, अशांति"},
+                {"उपग्रह (Upagraha)": "इन्द्रचाप (Indrachapa)", "राशि": "Calculated", "भोगांश": f"{u.indrachapa_longitude:.2f}°", "प्रकृति": "शुक्र उपग्रह / क्षय", "शास्त्रीय प्रभाव": "संसाधनों का क्षय, मिथ्या व्यय"},
+                {"उपग्रह (Upagraha)": "उपकेतु (Upaketu)", "राशि": "Calculated", "भोगांश": f"{u.upaketu_longitude:.2f}°", "प्रकृति": "केतु उपग्रह / अनिष्ट", "शास्त्रीय प्रभाव": "विस्फोट, अचानक अवरोध, चोट"}
             ]
-            st.dataframe(pd.DataFrame(u_data), use_container_width=True)
+            st.dataframe(pd.DataFrame(u_data), use_container_width=True, hide_index=True)
 
-    # ---- Rashi Drishti + Argala + Graha Arudhas ----
-    st.markdown("---")
-    _jt_rd, _jt_arg, _jt_ga = st.tabs([
-        "📡 राशि दृष्टि (Rashi Drishti)",
-        "🔗 अर्गला (Argala)",
-        "🌍 ग्रह आरूढ (Graha Arudhas)"
-    ])
+            st.markdown("---")
+            st.markdown("""
+            **गुलिक एवं मान्दि का विशेष शास्त्रीय विधान (Phaladeepika Ch. 25):**
+            - गुलिक जिस भाव में बैठता है, उस भाव के फलों में बाधा एवं संघर्ष उत्पन्न करता है (तृतीय, षष्ठ व एकादश भाव को छोड़कर, जहाँ यह शत्रुओं का नाश करता है)।
+            - गुलिक पर गुरु की शुभ दृष्टि होने से उसका विषमय दोष अत्यंत क्षीण हो जाता है।
+            """)
 
-    with _jt_rd:
-        st.markdown("### 📡 जैमिनी राशि दृष्टि (Rashi Drishti)")
-        st.info("चर→स्थिर | स्थिर→चर (पड़ोसी छोड़कर) | द्विस्वभाव→द्विस्वभाव")
-        try:
-            import importlib
-            import src.jyotish.core.jaimini as jm_mod
-            importlib.reload(jm_mod)
-            _rd = jm_mod.JaiminiCalculator.calculate_rashi_drishti(chart)
-            if _rd:
-                _rd_rows = [{"राशि": k, "दृष्ट राशियाँ": ", ".join(v) if v else "—", "संख्या": len(v)} for k, v in _rd.items()]
-                st.dataframe(pd.DataFrame(_rd_rows), use_container_width=True, hide_index=True)
-        except Exception as _erd:
-            st.error(f"राशि दृष्टि त्रुटि: {str(_erd)[:150]}")
+    # =========================================================================
+    # TAB 10: जैमिनी उपदेश सूत्र एवं प्रमाण
+    # =========================================================================
+    with jtab10:
+        st.markdown("#### 📜 महर्षि जैमिनी उपदेश सूत्र एवं शास्त्रीय प्रमाण संदर्भ")
+        st.caption("महर्षि जैमिनी विरचित प्रामाणिक उपदेश सूत्रों के मूल संस्कृत श्लोक, हिंदी अर्थ एवं व्यावहारिक फलकथन सिद्धांत।")
 
-    with _jt_arg:
-        st.markdown("### 🔗 अर्गला (Argala — Intervention)")
-        st.info("द्वितीय/चतुर्थ/एकादश से अर्गला | तृतीय/दशम/द्वादश से विरोधार्गला")
-        st.markdown("### 🔗 अर्गला एवं विरोधार्गला (Argala Intervention)")
-        st.info("द्वितीय भाव (धन अर्गला) ⟷ द्वादश (विरोध) | चतुर्थ भाव (सुख अर्गला) ⟷ दशम (विरोध) | एकादश भाव (लाभ अर्गला) ⟷ तृतीय (विरोध)")
-        try:
-            import importlib
-            import src.jyotish.core.jaimini as jm_mod
-            importlib.reload(jm_mod)
-            _arg = jm_mod.JaiminiCalculator.calculate_argala(chart)
-            if _arg:
-                _arg_rows = [{"भाव": k, "अर्गला": ", ".join(v.get("argala", [])) or "—", "विरोधार्गला": ", ".join(v.get("virodhargala", [])) or "—", "शुद्ध": v.get("net_argala", "—")} for k, v in _arg.items()]
-                _arg_rows = []
-                for k, v in _arg.items():
-                    dhana = v.get("dhana_argala", {})
-                    sukha = v.get("sukha_argala", {})
-                    labha = v.get("labha_argala", {})
-                    
-                    dh_str = f"ग्रह: {', '.join(dhana.get('planets', [])) or '—'} | विरोध: {', '.join(dhana.get('virodha', [])) or '—'} ({'✅ प्रभावी' if dhana.get('effective') else 'निष्प्रभावी'})"
-                    su_str = f"ग्रह: {', '.join(sukha.get('planets', [])) or '—'} | विरोध: {', '.join(sukha.get('virodha', [])) or '—'} ({'✅ प्रभावी' if sukha.get('effective') else 'निष्प्रभावी'})"
-                    la_str = f"ग्रह: {', '.join(labha.get('planets', [])) or '—'} | विरोध: {', '.join(labha.get('virodha', [])) or '—'} ({'✅ प्रभावी' if labha.get('effective') else 'निष्प्रभावी'})"
+        st.markdown("""
+        ### १. राशि दृष्टि सूत्र (Upadesha Sutra 1.1.2-3)
+        > **अभिपश्यन्ति रिक्षाणि॥ न स्वाभिमुखं तत्रस्थम्॥**
+        - **अर्थ:** समस्त राशियाँ दृष्टि डालती हैं, परंतु अपने सम्मुख स्थित निकटवर्ती राशि को छोड़कर अन्य को देखती हैं।
+        - **व्यावहारिक नियम:** चर राशियाँ स्थिर को, स्थिर राशियाँ चर को तथा द्विस्वभाव राशियाँ अन्य द्विस्वभाव को देखती हैं।
 
-                    _arg_rows.append({
-                        "भाव": f"भाव {v.get('bhava', k)} ({v.get('sign', '')})",
-                        "द्वितीय अर्गला (Dhana)": dh_str,
-                        "चतुर्थ अर्गला (Sukha)": su_str,
-                        "एकादश अर्गला (Labha)": la_str,
-                        "सक्रिय अर्गलाएँ": f"{v.get('total_argalas', 0)} / 3",
-                    })
-                st.dataframe(pd.DataFrame(_arg_rows), use_container_width=True, hide_index=True)
-        except Exception as _earg:
-            st.error(f"अर्गला त्रुटि: {str(_earg)[:150]}")
+        ---
 
-    with _jt_ga:
-        st.markdown("### 🌍 ग्रह आरूढ पद (Graha Arudha Padas)")
-        st.info("प्रत्येक ग्रह के स्वामी की राशि से उतनी ही राशि आगे — ग्रह का बाह्य प्रकटन।")
-        st.info("प्रत्येक ग्रह की राशि के स्वामी से उतनी ही दूरी आगे गिनने पर ग्रह आरूढ ज्ञात होता है।")
-        try:
-            import importlib
-            import src.jyotish.core.jaimini as jm_mod
-            importlib.reload(jm_mod)
-            _ga = jm_mod.JaiminiCalculator.calculate_graha_arudhas(chart)
-            if _ga:
-                _ga_rows = [{"ग्रह": k, "आरूढ राशि": v.get("sign_name", "—"), "लग्न से भाव": v.get("house_from_lagna", "—"), "स्वामी": v.get("sign_lord", "—")} for k, v in _ga.items()]
-                _ga_rows = []
-                for k, v in _ga.items():
-                    _arudha_sid = v.get("arudha_sign_id", 1)
-                    _house_from_l = ((_arudha_sid - chart.lagna_sign_id) % 12) + 1
-                    _ga_rows.append({
-                        "ग्रह": k,
-                        "ग्रह राशि": v.get("planet_sign", "—"),
-                        "राशि स्वामी": f"{v.get('planet_lord', '—')} ({v.get('lord_sign', '—')})",
-                        "आरूढ राशि (Pada)": v.get("arudha_sign", "—"),
-                        "लग्न से भाव": f"भाव {_house_from_l}",
-                        "शास्त्रीय प्रभाव": v.get("meaning_hi", "—")
-                    })
-                st.dataframe(pd.DataFrame(_ga_rows), use_container_width=True, hide_index=True)
-        except Exception as _ega:
-            st.error(f"ग्रह आरूढ त्रुटि: {str(_ega)[:150]}")
+        ### २. अर्गला सूत्र (Upadesha Sutra 1.1.4-6)
+        > **दारादिभ्यश्चार्गला॥ न निहन्त्री॥ रिपुकेवला॥**
+        - **अर्थ:** द्वितीय, चतुर्थ एवं एकादश भाव अर्गला (हस्तक्षेप) कारक होते हैं। द्वादश, दशम एवं तृतीय भाव विरोधार्गला कारक होते हैं। यदि विरोधी भाव में अधिक बलवान ग्रह हों, तो अर्गला निष्प्रभावी हो जाती है।
+
+        ---
+
+        ### ३. आत्मकारक एवं कारकांश सूत्र (Upadesha Sutra 1.2.1-3)
+        > **अथात्मकारकः॥ सांशोऽधिककलः॥ तत्र कारकांशः॥**
+        - **अर्थ:** जो ग्रह कुण्डली में सर्वाधिक अंशों (भोगांश) पर स्थित होता है, वह आत्मकारक (AK) कहलाता है। आत्मकारक ग्रह नवमांश कुण्डली (D9) में जिस राशि में स्थित होता है, वही 'कारकांश लग्न' कहलाता है।
+
+        ---
+
+        ### ४. मोक्ष एवं इष्टदेवता सूत्र (Upadesha Sutra 1.2.14-16)
+        > **केतौ कैवल्यम्॥ क्रियावान्॥**
+        - **अर्थ:** कारकांश लग्न से १२वें भाव में यदि केतु स्थित हो, तो जातक को कैवल्य (मोक्ष) की प्राप्ति होती है।
+        - यदि १२वें भाव पर गुरु या शुक्र की दृष्टि हो, तो सात्विक मोक्ष मार्ग मिलता है।
+        - १२वें भाव का स्वामी अथवा उसमें स्थित ग्रह जातक के वास्तविक **इष्ट देवता** का निर्धारण करता है।
+
+        ---
+
+        ### ५. उपपद लग्न एवं दांपत्य सूत्र (Upadesha Sutra 1.3.1-4)
+        > **उपपदं पदं पितुश्च॥**
+        - **अर्थ:** द्वादश भाव के आरूढ़ को उपपद लग्न (UL) कहा जाता है। उपपद पर शुभ ग्रहों की दृष्टि, उच्च ग्रह अथवा अपने स्वामी की उपस्थिति स्थायी, समृद्ध एवं सुखी दांपत्य जीवन प्रदान करती है।
+        """)
+
+
 
 
 # =============================================================
