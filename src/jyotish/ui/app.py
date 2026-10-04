@@ -15009,7 +15009,13 @@ elif selected_idx == 12:
 
 elif selected_idx == 13:
     st.subheader("📅 वर्षफल / ताजिक वार्षिक चक्र (Tajika Annual Solar Return)")
-    st.write("ताजिक नीलकण्ठी अनुसार वार्षिक सौर वापसी कुण्डली, मुन्था विचार, पंचाधिकारी वर्षेश निर्णय, १६ ताजिक सहम एवं १-वर्षीय मुद्धा दशा चक्र।")
+    st.write("ताजिक नीलकण्ठी एवं हायन रत्न अनुसार वार्षिक सौर वापसी कुण्डली, मुन्था विचार, पंचाधिकारी वर्षेश निर्णय, पंचवर्गीय व हर्ष बल, १६ ताजिक योग, २८ सहम एवं १-वर्षीय मुद्धा दशा चक्र।")
+
+    import importlib
+    from src.jyotish.services import varshaphal
+    if not hasattr(default_varshaphal_service, "_calculate_panchavargiya_bala"):
+        importlib.reload(varshaphal)
+    service_vp = getattr(varshaphal, "default_varshaphal_service", default_varshaphal_service)
 
     col_vy1, col_vy2 = st.columns([1.5, 2.5])
     with col_vy1:
@@ -15018,101 +15024,352 @@ elif selected_idx == 13:
         st.write("")
         st.caption(f"📍 जातक: **{birth_profile.name}** | जन्म वर्ष: **{birth_profile.birth_date.year}** (पूर्ण वर्ष आयु: **{max(0, int(v_year) - birth_profile.birth_date.year)}** वर्ष)")
 
-    vp_res = default_varshaphal_service.calculate_varshaphal(chart, int(v_year))
+    vp_res = service_vp.calculate_varshaphal(chart, int(v_year))
 
-    # Top Metrics Banner
+    # Top Hero KPI Banner
     st.markdown(f"""
-    <div style="background:#FFFFFF; border:1.5px solid #2563EB; border-radius:10px; padding:14px; margin-bottom:14px; box-shadow:0 2px 8px rgba(37,99,235,0.06);">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-            <div>
-                <span style="font-size:15px; font-weight:800; color:#1E40AF;">☀️ सौर वापसी क्षण (Solar Return): <b>{vp_res['solar_return_datetime']}</b></span>
+<div style="background:linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #0D9488 100%); border-radius:12px; padding:18px 24px; color:#FFFFFF; margin-bottom:16px; box-shadow:0 4px 14px rgba(37,99,235,0.18);">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+            <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; opacity:0.85;">ताजिक नीलकण्ठी वार्षिक चक्र • सौर क्रांति वेला</div>
+            <div style="font-size:22px; font-weight:900; margin-top:4px;">☀️ सौर वापसी: {vp_res['solar_return_datetime']}</div>
+            <div style="font-size:13px; opacity:0.92; margin-top:4px;">वर्ष लग्न: {vp_res['varsha_lagna_hi']} ({vp_res['varsha_lagna_degree']}°) | वर्षेश: {vp_res['varshesha_hi']} ({vp_res['varshesha']})</div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:8px; padding:6px 14px; text-align:center;">
+                <div style="font-size:16px; font-weight:900;">{vp_res['muntha_sign_hi']}</div>
+                <div style="font-size:11px; font-weight:700;">🎯 मुन्था ({vp_res['muntha_house']} भाव)</div>
             </div>
-            <div>
-                <span style="font-size:14px; font-weight:800; background:#EFF6FF; color:#1E40AF; border:1.5px solid #3B82F6; border-radius:8px; padding:4px 10px;">
-                    {vp_res['annual_verdict']}
-                </span>
+            <div style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:8px; padding:6px 14px; text-align:center;">
+                <div style="font-size:16px; font-weight:900;">👑 {vp_res['varshesha_hi']}</div>
+                <div style="font-size:11px; font-weight:700;">वर्षेश अधिपति</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:8px; padding:6px 14px; text-align:center;">
+                <div style="font-size:16px; font-weight:900;">{vp_res['annual_score']}/100</div>
+                <div style="font-size:11px; font-weight:700;">समग्र वार्षिक स्कोर</div>
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+</div>
+""", unsafe_allow_html=True)
 
-    c_v1, c_v2, c_v3, c_v4 = st.columns(4)
-    c_v1.metric("मुन्था राशि व भाव", f"{vp_res['muntha_sign']}", f"{vp_res['muntha_house']} भाव में स्थित")
-    c_v2.metric("वर्षेश (Lord of Year)", f"👑 {vp_res['varshesha']}", "पंचाधिकारी विजेता")
-    c_v3.metric("वर्ष लग्न", f"{vp_res['varsha_lagna']}", f"{vp_res['varsha_lagna_degree']}°")
-    c_v4.metric("मुन्था-लग्नेश इत्थशाल", "✅ सक्रिय (Active)" if vp_res['ithasala_with_muntha'] else "❌ निष्क्रिय", "ताजिक दृष्टि")
-
-    tab_vp1, tab_vp2, tab_vp3, tab_vp4, tab_vp5 = st.tabs([
-        "🌟 वार्षिक कुण्डली चक्र (Varsha D1 Chart)",
-        "👑 पंचाधिकारी वर्षेश चयन (5 Candidates)",
-        "💫 १६ ताजिक सहम (16 Tajika Sahams)",
-        "⏳ १-वर्षीय मुद्धा दशा (Mudda Dasha)",
-        "⚡ ताजिक दृष्टि व वार्षिक फलित (Synthesis)"
+    tab_vp1, tab_vp2, tab_vp3, tab_vp4, tab_vp5, tab_vp6, tab_vp7, tab_vp8, tab_vp9, tab_vp10 = st.tabs([
+        "🌟 वार्षिक कुण्डली (Varsha D1)",
+        "🎯 मुन्था विचार व फलदीपिका",
+        "👑 पंचाधिकारी वर्षेश चयन",
+        "⚖️ पंचवर्गीय व हर्ष बल",
+        "⚡ १६ ताजिक योग व इत्थशाल",
+        "💫 ३६ ताजिक सहम मण्डल",
+        "⏳ वार्षिक दशाएं (मुद्धा व योगिनी)",
+        "📊 द्वादश भाव वार्षिक फलित",
+        "🗓️ १२ मास प्रवेश (मासफल)",
+        "🪔 वर्षेश शांति व ताजिक उपाय"
     ])
 
+    # -------------------------------------------------------------------------
+    # TAB 1: VARSHA D1 CHART
+    # -------------------------------------------------------------------------
     with tab_vp1:
         col_vch1, col_vch2 = st.columns([1.2, 1.8])
         with col_vch1:
             st.markdown("#### 🌟 वार्षिक कुण्डली (Varsha D1 Chart)")
             varsha_svg = render_chart_svg(vp_res["varsha_chart"], f"वर्ष कुण्डली {v_year} (D1)")
-            st.markdown(varsha_svg, unsafe_allow_html=True)
+            clean_varsha_svg = "\n".join(l.strip() for l in varsha_svg.splitlines() if l.strip() and not (l.strip().startswith("<!--") and l.strip().endswith("-->")))
+            st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin:0 auto;">{clean_varsha_svg}</div>', unsafe_allow_html=True)
+            st.caption(f"☀️ सौर क्रांति वेला: **{vp_res['solar_return_datetime']}** | **{'दिवा सौर वापसी (Day Return)' if vp_res['is_day_return'] else 'रात्रि सौर वापसी (Night Return)'}**")
 
         with col_vch2:
-            st.markdown("#### 🎯 मुन्था स्थिति एवं वार्षिक प्रभाव")
-            st.markdown(f"""
-            <div style="background:#FFFFFF; border:1.5px solid #10B981; border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04); margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <b style="font-size:15px; color:#065F46;">{vp_res['muntha_fruit_title']} ({vp_res['muntha_sign']} राशि)</b>
-                    <span style="background:#D1FAE5; color:#065F46; border:1px solid #10B981; border-radius:6px; padding:3px 8px; font-weight:800; font-size:12px;">
-                        {vp_res['muntha_verdict']}
-                    </span>
-                </div>
-                <div style="font-size:13px; color:#1E293B; line-height:1.6;">
-                    📜 <b>ताजिक फलदीपिका विमर्श:</b> {vp_res['muntha_fruit_desc']}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-            st.markdown("#### 🪐 वर्ष कुण्डली ग्रह स्पष्ट स्थिति")
+            st.markdown("#### 🪐 वर्ष कुण्डली ग्रह स्पष्ट स्थिति (Planetary Positions)")
             v_planets_data = []
             for p_k, p_pos in vp_res["varsha_chart"].planets.items():
+                p_hi = PLANET_NAMES_HI.get(p_k, p_k)
+                r_hi = SIGN_NAMES_HI[p_pos.sign_id - 1]
                 v_planets_data.append({
-                    "ग्रह (Planet)": p_k,
-                    "राशि (Sign)": p_pos.sign_name,
+                    "ग्रह (Graha)": p_hi,
+                    "राशि (Sign)": f"{r_hi} ({p_pos.sign_name})",
                     "अंश (Degree)": f"{p_pos.sign_degree:.2f}°",
                     "भाव (House)": f"{p_pos.house_from_lagna} भाव",
                     "गरिमा (Dignity)": p_pos.dignity.capitalize(),
                     "गति (Motion)": "⚡ वक्री (R)" if p_pos.is_retrograde else "मार्गी"
                 })
-            st.dataframe(pd.DataFrame(v_planets_data), use_container_width=True)
+            st.dataframe(pd.DataFrame(v_planets_data), use_container_width=True, hide_index=True)
 
+            st.markdown(f"""
+<div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:10px; padding:14px; margin-top:12px;">
+    <div style="font-size:14px; font-weight:800; color:#0F172A;">⚖️ जन्म लग्न बनाम वर्ष लग्न संबंध</div>
+    <div style="font-size:12px; color:#334155; margin-top:6px; line-height:1.5;">
+        • <b>जन्म लग्न:</b> {SIGN_NAMES_HI[chart.lagna_sign_id - 1]} ({chart.lagna_sign_name}) | <b>वर्ष लग्न:</b> {vp_res['varsha_lagna_hi']} ({vp_res['varsha_lagna']})<br/>
+        • <b>वर्ष लग्नेश:</b> {vp_res['varsha_lagna_lord_hi']} ({vp_res['varsha_lagna_lord']})<br/>
+        • <b>वार्षिक काल-अधिपति:</b> {'दिवा बलि सूर्य' if vp_res['is_day_return'] else 'रात्रि बलि चन्द्रमा'}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+    # -------------------------------------------------------------------------
+    # TAB 2: MUNTHA PROGRESSION
+    # -------------------------------------------------------------------------
     with tab_vp2:
-        st.markdown("#### 👑 पंचाधिकारी वर्षेश चयन सारणी (5 Panchadhikari Candidates)")
-        st.write("ताजिक नीलकण्ठी अनुसार वर्षेश का चुनाव इन ५ दावेदार ग्रहों के बल, स्थिति और दृष्टि के आधार पर किया जाता है:")
-        st.dataframe(pd.DataFrame(vp_res["varshesha_candidates_scored"]), use_container_width=True)
-        st.info(f"🏆 **वर्षेश निर्णय:** सर्वाधिक बल और स्थिति के आधार पर **{vp_res['varshesha']}** इस वर्ष के वर्षेश (Lord of the Year) घोषित किए गए हैं।")
+        st.markdown("### 🎯 मुन्था विचार एवं वार्षिक प्रभाव (Muntha Progression)")
+        st.write("ताजिक ज्योतिष में मुन्था को 'वार्षिक लग्न' की भांति सर्वाधिक प्रभावी माना गया है। मुन्था प्रति वर्ष १ राशि (३० अंश) आगे बढ़ती है।")
 
-    with tab_vp3:
-        st.markdown("#### 💫 १६ ताजिक सहम (16 Tajika Sahams)")
-        st.write("सहम विशिष्ट फलित के लिए वर्ष कुण्डली में लग्न, सूर्य, चन्द्र और अन्य ग्रहों के देशांतरों से निर्मित संवेदनशील बिंदु होते हैं:")
-        st.dataframe(pd.DataFrame(vp_res["sahams"]), use_container_width=True)
+        c_m1, c_m2, c_m3 = st.columns(3)
+        c_m1.metric("मुन्था राशि", f"{vp_res['muntha_sign_hi']}", f"वर्ष कुण्डली में {vp_res['muntha_house']} भाव")
+        c_m2.metric("मुन्था पति (Lord)", f"👑 {vp_res['muntha_lord_hi']}", "मुन्था राशि अधिपति")
+        c_m3.metric("जन्म कुण्डली में भाव", f"{vp_res['muntha_house_natal']} भाव", "मूल जन्म लग्न से स्थिति")
 
-    with tab_vp4:
-        st.markdown("#### ⏳ १-वर्षीय मुद्धा दशा चक्र (1-Year Mudda Dasha Timeline)")
-        st.write("१२० वर्षीय विंशोत्तरी चक्र को ३६५.२५ दिनों के १ वर्ष में विभाजित कर सूक्ष्म वार्षिक दशा का निर्माण किया जाता है:")
-        st.dataframe(pd.DataFrame(vp_res["mudda_dasha_full"]), use_container_width=True)
-
-    with tab_vp5:
-        st.markdown("#### ⚡ ताजिक दृष्टि, इत्थशाल योग एवं समग्र वार्षिक फलित")
+        m_bg = "#ECFDF5" if vp_res['muntha_house'] in (1, 2, 3, 5, 9, 10, 11) else ("#FFFBEB" if vp_res['muntha_house'] in (4, 6, 7) else "#FFF1F2")
+        m_bd = "#10B981" if vp_res['muntha_house'] in (1, 2, 3, 5, 9, 10, 11) else ("#F59E0B" if vp_res['muntha_house'] in (4, 6, 7) else "#F43F5E")
         st.markdown(f"""
-        <div style="background:#FFFFFF; border:1.5px solid #2563EB; border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-            <h4 style="color:#1E40AF; margin-top:0;">📊 वर्ष {v_year} का शास्त्रीय सारांश</h4>
-            <p>• <b>वर्ष लग्नेश व मुन्था संबंध:</b> {'वर्ष लग्नेश और मुन्था पति के मध्य शुभ इत्थशाल योग बन रहा है, जो इच्छित कार्यों में सफलता का संकेत है।' if vp_res['ithasala_with_muntha'] else 'वर्ष लग्नेश और मुन्था के मध्य कोई प्रत्यक्ष इत्थशाल नहीं है, जिससे प्रयासों में सतत परिश्रम की आवश्यकता होगी।'}</p>
-            <p>• <b>दशम भाव (कर्म) योग:</b> {'वर्ष लग्नेश का दशमेश से इत्थशाल योग सक्रिय है (करियर में पदोन्नति एवं मान-सम्मान के योग)।' if vp_res['ithasala_with_10th'] else 'दशम भाव सामान्य स्थिति में है।'}</p>
-            <p>• <b>समग्र वार्षिक स्कोर:</b> <b>{vp_res['annual_score']} / 100</b> ({vp_res['annual_verdict']})</p>
-        </div>
-        """, unsafe_allow_html=True)
+<div style="background:{m_bg}; border:1.5px solid {m_bd}; border-radius:10px; padding:18px; margin:14px 0;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:16px; font-weight:900; color:#0F172A;">{vp_res['muntha_fruit_title']} ({vp_res['muntha_sign_hi']} राशि)</span>
+        <span style="font-size:13px; font-weight:800; background:#FFFFFF; border:1px solid {m_bd}; padding:3px 10px; border-radius:6px;">{vp_res['muntha_verdict']}</span>
+    </div>
+    <div style="font-size:13px; color:#1E293B; margin-top:10px; line-height:1.6;">
+        📜 <b>ताजिक नीलकण्ठी प्रमाण:</b> {vp_res['muntha_fruit_desc']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
+        st.markdown("""
+#### 📜 मुन्था फलित के शास्त्रीय नियम:
+* **शुभ भाव (१, २, ३, ५, ९, १०, ११):** मुन्था इन भावों में स्थित होने पर वर्ष भर राज्य कृपा, धन लाभ, आरोग्यता, पदोन्नति एवं सुख-समृद्धि प्रदान करती है।
+* **मध्यम भाव (४, ७):** चतुर्थ भाव में गृह-चिंता एवं माता के स्वास्थ्य पर ध्यान देना होता है; सप्तम में दांपत्य व साझेदारी में सतर्कता अपेक्षित है।
+* **अनिष्ट भाव (६, ८, १२):** इन भावों में मुन्था 'रोग, शत्रु, ऋण, मानसिक उद्वेग या व्यय' की वृद्धि करती है। इसके लिए ताजिक शांति विधान अनिवार्य है।
+""")
+
+    # -------------------------------------------------------------------------
+    # TAB 3: PANCHADHIKARI VARSHESHA
+    # -------------------------------------------------------------------------
+    with tab_vp3:
+        st.markdown("### 👑 पंचाधिकारी वर्षेश चयन सारणी (5 Panchadhikari Candidates)")
+        st.write("ताजिक नीलकण्ठी अनुसार वर्ष के 'राजा' (वर्षेश) का चुनाव इन ५ दावेदार ग्रहों के बल, स्थिति और वर्ष लग्न पर दृष्टि के आधार पर किया जाता है:")
+
+        st.dataframe(pd.DataFrame(vp_res["varshesha_candidates_scored"]), use_container_width=True, hide_index=True)
+
+        st.markdown(f"""
+<div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:16px; margin-top:14px;">
+    <div style="font-size:17px; font-weight:900; color:#1E40AF;">🏆 वर्ष {v_year} के वर्षेश: {vp_res['varshesha_hi']} ({vp_res['varshesha']})</div>
+    <div style="font-size:13px; color:#1E293B; margin-top:6px; line-height:1.5;">
+        पंचाधिकारी नियमों के अनुसार सर्वाधिक गरिमा, भाव स्थिति एवं वर्ष लग्न पर शुभ प्रभाव के कारण <b>{vp_res['varshesha_hi']}</b> इस वर्ष के सर्वोच्च शासक (Lord of the Year) घोषित किए गए हैं। वर्ष के मुख्य परिणाम इस ग्रह की स्थिति से नियंत्रित होंगे।
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+    # -------------------------------------------------------------------------
+    # TAB 4: PANCHAVARGIYA & HARSHA BALA
+    # -------------------------------------------------------------------------
+    with tab_vp4:
+        st.markdown("### ⚖️ पंचवर्गीय बल एवं हर्ष बल (Panchavargiya & Harsha Bala)")
+        st.write("ताजिक ज्योतिष में ग्रहों के सामर्थ्य और शुभ फल देने की क्षमता का आकलन पंचवर्गीय बल (०-२० विश्वा) एवं हर्ष बल (०-२० बिंदु) से किया जाता है:")
+
+        col_b1, col_b2 = st.columns(2)
+        with col_b1:
+            st.markdown("#### 📊 पंचवर्गीय बल (Panchavargiya Bala - 20 Vishopakas)")
+            pv_tbl = []
+            for r in vp_res.get("panchavargiya_bala", []):
+                pv_tbl.append({
+                    "ग्रह": r["planet_hi"],
+                    "क्षेत्र (30)": r["kshetra"],
+                    "उच्च (20)": r["uccha"],
+                    "हद्द (15)": r["hadda"],
+                    "द्रेष्काण (10)": r["drekkana"],
+                    "नवांश (5)": r["navamsha"],
+                    "विश्वा (20)": f"{r['vishopaka']} / 20",
+                    "स्थिति": r["status"]
+                })
+            st.dataframe(pd.DataFrame(pv_tbl), use_container_width=True, hide_index=True)
+
+        with col_b2:
+            st.markdown("#### 🌸 हर्ष बल (Harsha Bala - 20 Points of Joy)")
+            hb_tbl = []
+            for r in vp_res.get("harsha_bala", []):
+                hb_tbl.append({
+                    "ग्रह": r["planet_hi"],
+                    "स्थान (5)": r["sthana"],
+                    "स्वक्षेत्र (5)": r["swakshetra"],
+                    "राशि (5)": r["rashi"],
+                    "काल (5)": r["kala"],
+                    "कुल बिंदु": f"{r['total']} / 20",
+                    "हर्ष स्तर": r["status"]
+                })
+            st.dataframe(pd.DataFrame(hb_tbl), use_container_width=True, hide_index=True)
+
+        st.caption("💡 **हर्ष बल नियम:** स्थान (निर्धारित भाव), स्वक्षेत्र/उच्च, स्त्री/पुरुष राशि एवं दिन/रात्रि काल में बलिष्ठता। २० में से १५+ अंक पूर्ण हर्ष को दर्शाते हैं।")
+
+    # -------------------------------------------------------------------------
+    # TAB 5: 16 TAJIKA YOGAS
+    # -------------------------------------------------------------------------
+    with tab_vp5:
+        st.markdown("### ⚡ १६ ताजिक योग एवं दृष्टि चक्र (16 Tajika Yogas)")
+        st.write("ताजिक ज्योतिष में ग्रहों के दीप्तांश (Orbs) एवं गति के आधार पर निर्मित होने वाले १६ शास्त्रीय योग:")
+
+        yogas_tbl = []
+        for yg in vp_res.get("all_tajika_yogas", []):
+            yogas_tbl.append({
+                "योग नाम": yg["name"],
+                "संबद्ध ग्रह": yg["pair"],
+                "विषय": yg["label"],
+                "प्रकृति": yg["nature"],
+                "दीप्तांश": yg["orb"],
+                "फलित विवरण": yg["effect"]
+            })
+        st.dataframe(pd.DataFrame(yogas_tbl), use_container_width=True, hide_index=True)
+
+        st.markdown("""
+<div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:10px; padding:14px; margin-top:14px;">
+    <div style="font-size:14px; font-weight:800; color:#0F172A;">👁️ ताजिक दृष्टि नियम (Aspect Rules):</div>
+    <div style="font-size:12px; color:#334155; margin-top:6px; line-height:1.6;">
+        • <b>प्रत्यक्ष मित्र दृष्टि (५, ९ भाव):</b> पूर्ण सहयोग, सौहार्द एवं निर्बाध कार्य सिद्धि।<br/>
+        • <b>गुप्त मित्र दृष्टि (३, ११ भाव):</b> परोक्ष सहयोग, अप्रत्यक्ष लाभ एवं सामंजस्य।<br/>
+        • <b>प्रत्यक्ष शत्रु दृष्टि (१, ४, ७, १० भाव):</b> खुला संघर्ष, प्रतिस्पर्धा व कड़े प्रयास।<br/>
+        • <b>तटस्थ / उदासीन (२, ६, ८, १२ भाव):</b> कोई प्रत्यक्ष ताजिक दृष्टि संबंध नहीं।
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+    # -------------------------------------------------------------------------
+    # TAB 6: 36 TAJIKA SAHAMS
+    # -------------------------------------------------------------------------
+    with tab_vp6:
+        st.markdown("### 💫 ताजिक सहम मण्डल (Canonical Tajika Sahams)")
+        st.write("सहम वर्ष कुण्डली में विभिन्न जीवन क्षेत्रों (धन, कर्म, विवाह, विद्या, यश) के अत्यंत संवेदनशील गणितीय बिंदु हैं:")
+
+        c_sh1, c_sh2 = st.columns([1.5, 2.5])
+        with c_sh1:
+            sel_saham_cat = st.selectbox(
+                "सहम श्रेणी फ़िल्टर करें:",
+                options=["सभी सहम (All Sahams)", "शुभ व ऐश्वर्य", "धन व लाभ", "कर्म व व्यवसाय", "विद्या व बुद्धि", "संबंध व दांपत्य", "स्वास्थ्य व आयु", "सावधानी / बाधा"]
+            )
+        with c_sh2:
+            st.write("")
+            st.caption("📍 दिन की सौर वापसी में सूर्य-चन्द्र एवं रात्रि में चन्द्र-सूर्य सूत्रों का स्वतः संशोधन किया गया है।")
+
+        all_sahams = vp_res.get("sahams", [])
+        if sel_saham_cat != "सभी सहम (All Sahams)":
+            filtered_sahams = [s for s in all_sahams if s.get("category") == sel_saham_cat]
+        else:
+            filtered_sahams = all_sahams
+
+        st.dataframe(pd.DataFrame(filtered_sahams), use_container_width=True, hide_index=True)
+
+    # -------------------------------------------------------------------------
+    # TAB 7: ANNUAL DASHAS (MUDDA & YOGINI)
+    # -------------------------------------------------------------------------
+    with tab_vp7:
+        st.markdown("### ⏳ वार्षिक दशा प्रणालियाँ (Mudda Vimshottari & Yogini Dashas)")
+        st.write("सौर वर्ष (३६५.२५ दिन) के सूक्ष्म काल-विभाजन हेतु मुद्धा विंशोत्तरी एवं मुद्धा योगिनी दशा चक्र:")
+
+        c_md1, c_md2 = st.columns(2)
+        with c_md1:
+            st.markdown("#### 🗓️ १-वर्षीय मुद्धा विंशोत्तरी दशा (Mudda Vimshottari)")
+            m_v_tbl = []
+            for r in vp_res.get("mudda_dasha_full", []):
+                m_v_tbl.append({
+                    "दशेश ग्रह": r.get("lord_hi", r["lord"]),
+                    "आरंभ": r["start_date"],
+                    "समाप्ति": r["end_date"],
+                    "अवधि (दिन)": f"{r['duration_days']} दिन",
+                    "स्थिति": r.get("status", "—")
+                })
+            st.dataframe(pd.DataFrame(m_v_tbl), use_container_width=True, hide_index=True)
+
+        with c_md2:
+            st.markdown("#### 🌸 १-वर्षीय मुद्धा योगिनी दशा (Mudda Yogini)")
+            m_y_tbl = []
+            for r in vp_res.get("mudda_yogini_dasha", []):
+                m_y_tbl.append({
+                    "योगिनी": r["yogini"],
+                    "आरंभ": r["start_date"],
+                    "समाप्ति": r["end_date"],
+                    "अवधि (दिन)": f"{r['duration_days']} दिन",
+                    "स्थिति": r["status"]
+                })
+            st.dataframe(pd.DataFrame(m_y_tbl), use_container_width=True, hide_index=True)
+
+    # -------------------------------------------------------------------------
+    # TAB 8: 12 BHAVAS ANNUAL FORECAST
+    # -------------------------------------------------------------------------
+    with tab_vp8:
+        st.markdown("### 📊 द्वादश भाव वार्षिक फलित (12 Bhavas Annual Forecast)")
+        st.write("वर्ष कुण्डली के द्वादश भावों का भावेश, स्थित ग्रह, मुन्था एवं वर्षेश की दृष्टि से समन्वित वार्षिक फल:")
+
+        bh_tbl = []
+        for b in vp_res.get("bhavas_forecast", []):
+            bh_tbl.append({
+                "भाव": b["house_num"],
+                "भाव विवरण": b["house_name"].split("(")[0].strip(),
+                "राशि": f"{b['sign_hi']} ({b['lord_hi']})",
+                "स्थित ग्रह": b["occupants_str"],
+                "मुन्था स्थिति": "🎯 मुन्था स्थित" if b["is_muntha"] else "—",
+                "वर्षेश स्थिति": "👑 वर्षेश स्थित" if b["is_varshesha_here"] else "—",
+                "स्कोर": f"{b['score']}/100",
+                "कोटि": b["status"]
+            })
+        st.dataframe(pd.DataFrame(bh_tbl), use_container_width=True, hide_index=True)
+
+        st.markdown("#### 🔍 भाव-वार वार्षिक परामर्श:")
+        for b in vp_res.get("bhavas_forecast", []):
+            with st.expander(f"{b['house_name']} — {b['status']} ({b['score']}/100)"):
+                st.write(f"• **राशि व भावेश:** {b['sign_hi']} (स्वामी: {b['lord_hi']})")
+                st.write(f"• **स्थित ग्रह:** {b['occupants_str']}")
+                if b["is_muntha"]:
+                    st.info(f"🎯 **मुन्था इस भाव में स्थित है:** {vp_res['muntha_fruit_desc']}")
+                if b["is_varshesha_here"]:
+                    st.success(f"👑 **वर्षेश {vp_res['varshesha_hi']} इस भाव में स्थित हैं:** इस भाव से संबंधित कार्यों में अभूतपूर्व प्रगति होगी।")
+
+    # -------------------------------------------------------------------------
+    # TAB 9: 12 MONTHLY SOLAR PROGRESSIONS (MAASAPHALA)
+    # -------------------------------------------------------------------------
+    with tab_vp9:
+        st.markdown("### 🗓️ १२ मास प्रवेश व मासिक कालचक्र (Maasa Pravesha)")
+        st.write("सौर वर्ष के १२ महीनों में सूर्य की ३०-अंश क्रांति पर आधारित मासिक कालचक्र एवं मुन्था की मासिक गति (२.५° प्रति माह):")
+
+        st.dataframe(pd.DataFrame(vp_res.get("maasa_pravesha_timeline", [])), use_container_width=True, hide_index=True)
+
+    # -------------------------------------------------------------------------
+    # TAB 10: REMEDIES & SHANTI
+    # -------------------------------------------------------------------------
+    with tab_vp10:
+        st.markdown("### 🪔 वर्षेश शांति, मुन्था दोष परिहार व ताजिक उपाय (Annual Remedies)")
+        st.write("वर्ष भर अनिष्ट ग्रहों के शमन, वर्षेश की कृपा प्राप्ति एवं मुन्था दोष निवारण हेतु शास्त्रोक्त उपाय:")
+
+        rem = vp_res.get("remedies", {})
+
+        st.markdown(f"""
+<div style="background:linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border:2px solid #F59E0B; border-radius:12px; padding:18px; margin-bottom:16px;">
+    <div style="font-size:17px; font-weight:900; color:#92400E;">👑 वर्षेश {rem.get('varshesha_hi', '')} की कृपा हेतु महामंत्र</div>
+    <div style="background:#FFFFFF; border:1px solid #FCD34D; border-radius:8px; padding:12px; margin:10px 0; font-size:16px; font-weight:800; color:#B45309; text-align:center;">
+        {rem.get('varshesha_mantra', '')}
+    </div>
+    <div style="font-size:12px; color:#92400E; line-height:1.5;">
+        • <b>यंत्र / रत्न:</b> {rem.get('varshesha_ratna', '')}<br/>
+        • <b>वार्षिक दान सामग्री:</b> {rem.get('varshesha_dana', '')}<br/>
+        • <b>जप निर्देश:</b> प्रतिदिन प्रातः अथवा वर्षेश के वार को १०८ बार जप करें।
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+        col_vr1, col_vr2 = st.columns(2)
+        with col_vr1:
+            st.markdown(f"""
+<div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:14px; height:100%;">
+    <div style="font-size:15px; font-weight:900; color:#1E40AF;">🎯 मुन्था दोष शांति विधान</div>
+    <div style="font-size:13px; color:#1E3A8A; margin-top:8px; line-height:1.5;">
+        {rem.get('muntha_parihara', '')}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+        with col_vr2:
+            st.markdown(f"""
+<div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:10px; padding:14px; height:100%;">
+    <div style="font-size:15px; font-weight:900; color:#065F46;">☀️ आदित्य हृदय स्तोत्र पाठ</div>
+    <div style="font-size:13px; color:#065F46; margin-top:8px; line-height:1.5;">
+        {rem.get('aditya_hridaya', '')}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # =============================================================
