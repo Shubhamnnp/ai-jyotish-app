@@ -824,7 +824,9 @@ class SudarshanChakraEngine:
             svg += f'<text x="{rx_lbl:.1f}" y="{ry_lbl:.1f}" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="{lbl_weight}" fill="{lbl_color}">भाव {sec["h"]}</text>\n'
 
         svg += "</svg>"
-        return svg
+        # Ensure zero leading whitespace and remove comments to prevent Streamlit markdown codeblock rendering
+        clean_lines = [l.strip() for l in svg.splitlines() if l.strip() and not (l.strip().startswith("<!--") and l.strip().endswith("-->"))]
+        return "\n".join(clean_lines)
 
     @classmethod
     def get_classical_shlokas(cls) -> List[Dict[str, str]]:

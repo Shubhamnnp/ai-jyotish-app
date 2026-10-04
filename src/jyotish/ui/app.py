@@ -14585,7 +14585,8 @@ elif selected_idx == 12:
         col_svg1, col_svg2 = st.columns([1.3, 1.7])
         with col_svg1:
             svg_code = engine_sd.render_sudarshan_svg(chart, active_house=sel_vis_house)
-            st.markdown(svg_code, unsafe_allow_html=True)
+            clean_svg = "\n".join(l.strip() for l in svg_code.splitlines() if l.strip() and not (l.strip().startswith("<!--") and l.strip().endswith("-->")))
+            st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin:0 auto;">{clean_svg}</div>', unsafe_allow_html=True)
 
         with col_svg2:
             st.markdown("#### 🌟 त्रि-लग्न आधार स्तम्भ (Tripod of Life)")
