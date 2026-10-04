@@ -4461,7 +4461,6 @@ if "English" in st.session_state.app_lang:
         "📊 Dasvarga Table",
         "🏛️ Vastu-Jyotish",
         "❓ Prashna Kundali (Horary)",
-        "☁️ Server Sync",
         "⚖️ Shadbala & Bhavabala",
         "🔱 Jaimini & Upagrahas",
         "⏱️ Dasha Systems",
@@ -4494,7 +4493,6 @@ elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_sta
         "📊 தசவர்க்க அட்டவணை (Dasvarga Table)",
         "🏛️ வாஸ்து ஜோதிடம் (Vastu-Jyotish)",
         "❓ பிரசன்ன ஜோதிடம் (Horary / Prashna)",
-        "☁️ சர்வர் ஒத்திசைவு (Server Sync)",
         "⚖️ ஷட்பலம் & பாவபலம் (Shadbala)",
         "🔱 ஜெயமினி ஜோதிடம் (Jaimini)",
         "⏱️ தசா அமைப்புகள் (Dasha)",
@@ -4527,7 +4525,6 @@ elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session
         "📊 దశవర్గ పట్టిక (Dasvarga Table)",
         "🏛️ వాస్తు జ్యోతిష్యం (Vastu-Jyotish)",
         "❓ ప్రశ్న జాతకం (Horary / Prashna)",
-        "☁️ సర్వర్ సమకాలీకరణ (Server Sync)",
         "⚖️ షడ్బలం & భావబలం (Shadbala)",
         "🔱 జైమిని జ్యోతిష్యం (Jaimini)",
         "⏱️ దశా పద్ధతులు (Dasha)",
@@ -4560,7 +4557,6 @@ elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.se
         "📊 દશવર્ગ કોષ્ટક (Dasvarga Table)",
         "🏛️ વાસ્તુ-જ્યોતિષ (Vastu-Jyotish)",
         "❓ પ્રશ્ન કુંડળી (Horary / Prashna)",
-        "☁️ સર્વર સિંક (Server Sync)",
         "⚖️ ષડ્બળ અને ભાવબળ (Shadbala)",
         "🔱 જૈમિની અને ઉપગ્રહો (Jaimini)",
         "⏱️ દશા પ્રણાલી (Dasha)",
@@ -4593,7 +4589,6 @@ elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_s
         "📊 दशवर्ग तक्ता (Dasvarga Table)",
         "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
         "❓ प्रश्न पत्रिका (Horary / Prashna)",
-        "☁️ सर्व्हर सिंक (Server Sync)",
         "⚖️ षड्बल व भावबल (Shadbala)",
         "🔱 जैमिनी व उपग्रह (Jaimini)",
         "⏱️ दशा प्रणाली (Dasha)",
@@ -4626,7 +4621,6 @@ elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_s
         "📊 দশবর্গ তালিকা (Dasvarga Table)",
         "🏛️ বাস্তু-জ্যোতিষ (Vastu-Jyotish)",
         "❓ প্রশ্ন কুণ্ডলী (Horary / Prashna)",
-        "☁️ সার্ভার সিঙ্ক (Server Sync)",
         "⚖️ ষড়্বল ও ভাববল (Shadbala)",
         "🔱 জৈমিনী ও উপগ্রহ (Jaimini)",
         "⏱️ দশা পদ্ধতি (Dasha)",
@@ -4659,7 +4653,6 @@ else:
         "📊 दशवर्ग तालिका (Dasvarga Table)",
         "🏛️ वास्तु-ज्योतिष (Vastu-Jyotish)",
         "❓ प्रश्न कुण्डली (Horary / Prashna)",
-        "☁️ सर्वर सिंक (Server Sync)",
         "⚖️ षड्बल एवं भावबल (Shadbala)",
         "🔱 जैमिनी एवं उपग्रह (Jaimini)",
         "⏱️ दशा प्रणालियाँ (Dasha)",
@@ -5418,7 +5411,7 @@ with st.container(key="top_frozen_header_container", border=False):
 
     # 7 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered - Frozen Sticky at Top)
     with st.container(key="frozen_toolbelt_container", border=False):
-        tb_cols = st.columns(8, gap="small")
+        tb_cols = st.columns(9, gap="small")
 
         # Helper function for rendering clickable tile (Streamlit Native Button - In-Session Instant Trigger)
         def render_tool_tile(col, emoji_icon, label_text, tool_key):
@@ -5448,14 +5441,17 @@ with st.container(key="top_frozen_header_container", border=False):
         # 5. Time Stepper (Time Travel)
         render_tool_tile(tb_cols[4], "⏱️", "BTR & Rule", "clock")
 
+        # 6. Server Sync (Placed between BTR & Rule and Theme)
+        render_tool_tile(tb_cols[5], "☁️", "Server", "server")
+
         # 6. Theme Mode
-        render_tool_tile(tb_cols[5], "🌓", "Theme", "theme")
+        render_tool_tile(tb_cols[6], "🌓", "Theme", "theme")
 
         # 7. Settings (Placed between Theme and Logout)
-        render_tool_tile(tb_cols[6], "⚙️", "Settings", "settings")
+        render_tool_tile(tb_cols[7], "⚙️", "Settings", "settings")
 
         # 8. Logout
-        render_tool_tile(tb_cols[7], "🚪", "Logout", "logout")
+        render_tool_tile(tb_cols[8], "🚪", "Logout", "logout")
 
     if st.session_state.get("sidebar_toggle_requested"):
         st.session_state.sidebar_toggle_requested = False
@@ -6087,13 +6083,13 @@ with st.container(key="top_frozen_header_container", border=False):
                     """, unsafe_allow_html=True)
                 with col_gr_btn:
                     def _go_rules():
-                        st.session_state.active_module_idx = 19
+                        st.session_state.active_module_idx = 18
                         st.session_state.gla_active_tool = None
                         if "sb_cat_filter_select" in st.session_state:
-                            st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
+                            st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
                         if "sb_search_filter_input" in st.session_state:
                             st.session_state.sb_search_filter_input = ""
-                    st.button("🔍 नियम बैंक खोलें ❯", key="modal_open_rules_bank_btn", use_container_width=True, help="१२,५००+ महा-शास्त्रीय नियम बैंक (मॉड्यूल १९) खोलें", on_click=_go_rules)
+                    st.button("🔍 नियम बैंक खोलें ❯", key="modal_open_rules_bank_btn", use_container_width=True, help="१२,५००+ महा-शास्त्रीय नियम बैंक (मॉड्यूल १८) खोलें", on_click=_go_rules)
 
                 st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 
@@ -6172,6 +6168,104 @@ with st.container(key="top_frozen_header_container", border=False):
                         st.rerun()
 
         # 9. TOOL: THEME MODE (थीम मोड)
+        # 6. TOOL: SERVER SYNC (सर्वर सिंक एवं डेटा सत्यापन)
+        elif st.session_state.gla_active_tool == "server":
+            with st.container(border=True):
+                col_sh_t, col_sh_c = st.columns([5, 1])
+                with col_sh_t:
+                    st.markdown("### ☁️ लाइव सर्वर सिंक एवं डेटा सत्यापन (Server Cloud Sync & Validation)")
+                    st.caption("अधिकृत सर्वर खाते से लाइव सम्बंध स्थापित कर कुण्डलियों को सिंक करें, क्लाउड चार्ट्स लोड करें और पंचांग से सटीकता का मिलान करें।")
+                with col_sh_c:
+                    if st.button("❌ बंद करें", use_container_width=True, key="gla_close_server_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+                c_auth1, c_auth2, c_auth3 = st.columns([2, 2, 1])
+                g_user = c_auth1.text_input("Username / Email", value=st.session_state.get("gla_user", ""), placeholder="उपयोगकर्ता नाम या ईमेल दर्ज करें", key="hdr_sync_user_input")
+                g_pass = c_auth2.text_input("Password", value=st.session_state.get("gla_pass", ""), type="password", placeholder="पासवर्ड दर्ज करें", key="hdr_sync_pass_input")
+                c_auth3.write("")
+                c_auth3.write("")
+                test_conn_btn = c_auth3.button("🔗 कनेक्ट करें", type="primary", use_container_width=True, key="hdr_test_conn_btn")
+
+                if test_conn_btn:
+                    if not g_user.strip() or not g_pass.strip():
+                        st.session_state.gla_authenticated = False
+                        st.warning("⚠️ कृपया सर्वर सिंक हेतु Username / Email और Password दोनों दर्ज करें।")
+                    else:
+                        with st.spinner("सर्वर से कनेक्ट किया जा रहा है..."):
+                            client = GrahalakshanamClient(GrahalakshanamConfig(username=g_user.strip(), password=g_pass.strip()))
+                            if client.authenticate():
+                                st.session_state.gla_authenticated = True
+                                st.session_state.gla_user = g_user.strip()
+                                st.session_state.gla_pass = g_pass.strip()
+                                st.success("✅ सर्वर खाते से सफलतापूर्वक कनेक्टेड!")
+                            else:
+                                st.session_state.gla_authenticated = False
+                                st.error("❌ लॉगिन असफल। कृपया उपयोगकर्ता नाम एवं पासवर्ड जांचें।")
+
+                if st.session_state.get("gla_authenticated", False):
+                    active_u = st.session_state.get("gla_user", g_user)
+                    active_p = st.session_state.get("gla_pass", g_pass)
+                    client = GrahalakshanamClient(GrahalakshanamConfig(username=active_u, password=active_p))
+                    if client.authenticate():
+                        col_acc1, col_acc2 = st.columns([4, 1])
+                        col_acc1.info(f"🌐 सक्रिय सर्वर खाता: **{active_u}** (लाइव प्रमाणीकृत)")
+                        with col_acc2:
+                            if st.button("🔌 डिस्कनेक्ट", key="hdr_disconnect_btn", use_container_width=True):
+                                st.session_state.gla_authenticated = False
+                                st.toast("सत्र डिस्कनेक्ट किया गया")
+                                st.rerun()
+
+                        col_sync1, col_sync2 = st.columns(2)
+                        with col_sync1:
+                            st.markdown("#### 📁 सहेजी गई क्लाउड कुण्डलियाँ (Saved Cloud Charts)")
+                            ff_data = client.get_folders_with_files()
+                            files = ff_data.get("files", [])
+                            st.session_state.gla_charts = files
+                            st.write(f"क्लाउड में उपलब्ध कुण्डलियाँ: **{len(files)}**")
+                            
+                            for f_chart in files:
+                                with st.container():
+                                    st.markdown(f"""
+                                    <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:8px; padding:10px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                                        <div>
+                                            <b style="color:#000000; font-size:14px;">👤 {f_chart['name']}</b> 
+                                            <span style="color:#64748B; font-size:12px;">(ID: {f_chart['id']})</span><br/>
+                                            <small style="color:#334155;">📍 {f_chart.get('address', 'Nanpara / Bahraich')}</small>
+                                        </div>
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                                    if st.button(f"📥 {f_chart['name']} लोड करें", key=f"hdr_btn_load_{f_chart['id']}"):
+                                        c_data = client.open_chart(f_chart['id'])
+                                        disp = c_data.get("DisplayInfo", {})
+                                        if disp:
+                                            st.session_state.birth_name = disp.get("Name", f_chart['name'])
+                                            st.session_state.birth_lat = float(disp.get("Latitude", 27.8646))
+                                            st.session_state.birth_lon = float(disp.get("Longitude", 81.5004))
+                                            st.session_state.birth_city = disp.get("Address", "Nanpara")
+                                            try:
+                                                d_str = disp.get("Date", "")
+                                                t_str = disp.get("Time", "")
+                                                dt = datetime.strptime(f"{d_str} {t_str}", "%B %d, %Y %I:%M:%S %p")
+                                                st.session_state.birth_date = dt.date()
+                                                st.session_state.birth_time = dt.time()
+                                            except Exception:
+                                                pass
+                                            st.toast(f"✅ {f_chart['name']} का विवरण लोड किया गया!", icon="🔮")
+                                            st.rerun()
+
+                        with col_sync2:
+                            st.markdown("#### ⚖️ पंचांग तुलना एवं खगोलीय सत्यापन")
+                            panchang_gla = client.get_panchang_details()
+                            if panchang_gla:
+                                st.markdown(f"- **Tithi:** {panchang_gla.get('Tithi', '').splitlines()[0]}")
+                                st.markdown(f"- **Nakshatra:** {panchang_gla.get('Nakshatra', '')}")
+                                st.markdown(f"- **Yoga:** {panchang_gla.get('Yoga', '')}")
+                                st.markdown(f"- **Sunrise:** {panchang_gla.get('Sunrise', '')}")
+                                st.markdown(f"- **Sunset:** {panchang_gla.get('Sunset', '')}")
+                                st.markdown(f"- **Janma Ghati:** {panchang_gla.get('JanmaGhati', '')}")
+                            st.info("🌟 अयनांश: **Chitrapaksha / Lahiri** पूर्णतः संरेखित है।")
+
         elif st.session_state.gla_active_tool == "theme":
             with st.container(border=True):
                 st.markdown("### 🔬🌙☀️ वैज्ञानिक एवं वैदिक थीम मोड (Astrallis & Vedic Themes)")
@@ -6227,7 +6321,7 @@ with st.container(key="top_frozen_header_container", border=False):
         new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
         st.session_state.active_module_idx = new_idx
         if "sb_cat_filter_select" in st.session_state:
-            st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
+            st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
         if "sb_search_filter_input" in st.session_state:
             st.session_state.sb_search_filter_input = ""
 
@@ -6235,14 +6329,14 @@ with st.container(key="top_frozen_header_container", border=False):
         new_idx = (st.session_state.active_module_idx + 1) % len(MODULE_OPTIONS)
         st.session_state.active_module_idx = new_idx
         if "sb_cat_filter_select" in st.session_state:
-            st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
+            st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
         if "sb_search_filter_input" in st.session_state:
             st.session_state.sb_search_filter_input = ""
 
     def _nav_to_rules_bank():
-        st.session_state.active_module_idx = 19
+        st.session_state.active_module_idx = 18
         if "sb_cat_filter_select" in st.session_state:
-            st.session_state.sb_cat_filter_select = "📁 समस्त ३० मॉड्यूल (All Modules)"
+            st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
         if "sb_search_filter_input" in st.session_state:
             st.session_state.sb_search_filter_input = ""
 
@@ -6357,7 +6451,7 @@ with st.container(key="top_frozen_header_container", border=False):
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown("### 📚 समस्त ३० वैदिक मॉड्यूल")
+        st.markdown("### 📚 समस्त २९ वैदिक मॉड्यूल")
         
         sb_query = st.text_input("🔍 मॉड्यूल खोजें (Search):", placeholder="दशा, गोचर, केपी, मिलान...", key="sb_search_filter_input").strip().lower()
         
@@ -6376,7 +6470,7 @@ with st.container(key="top_frozen_header_container", border=False):
         radio_idx = filtered_mods.index(curr_mod_name) if curr_mod_name in filtered_mods else 0
         
         selected_module = st.radio(
-            "वैदिक मॉड्यूल्स (३० मॉड्यूल)",
+            "वैदिक मॉड्यूल्स (२९ मॉड्यूल)",
             filtered_mods,
             index=radio_idx,
             label_visibility="collapsed"
@@ -9990,99 +10084,7 @@ elif selected_idx == 5:
             st.dataframe(pd.DataFrame(filtered_100), use_container_width=True, hide_index=True)
 
 
-
-
-# =============================================================
-# TAB 7: GRAHALAKSHANAM CLOUD SYNC & BENCHMARK
-
 elif selected_idx == 6:
-    st.subheader("☁️ लाइव सर्वर सिंक एवं डेटा सत्यापन (Server Cloud Sync & Validation)")
-    st.write("अधिकृत खाते से लाइव सम्बंध स्थापित कर कुण्डलियों को सिंक करें और पंचांग से सटीकता का मिलान करें।")
-
-    c_auth1, c_auth2, c_auth3 = st.columns([2, 2, 1])
-    g_user = c_auth1.text_input("Username / Email", value=st.session_state.get("gla_user", ""), placeholder="उपयोगकर्ता नाम या ईमेल दर्ज करें", key="sync_user_input")
-    g_pass = c_auth2.text_input("Password", value=st.session_state.get("gla_pass", ""), type="password", placeholder="पासवर्ड दर्ज करें", key="sync_pass_input")
-    c_auth3.write("")
-    c_auth3.write("")
-    test_conn_btn = c_auth3.button("🔗 कनेक्ट करें", type="primary", use_container_width=True)
-
-    if test_conn_btn:
-        if not g_user.strip() or not g_pass.strip():
-            st.session_state.gla_authenticated = False
-            st.warning("⚠️ कृपया सर्वर सिंक हेतु Username / Email और Password दोनों दर्ज करें।")
-        else:
-            with st.spinner("सर्वर से कनेक्ट किया जा रहा है..."):
-                client = GrahalakshanamClient(GrahalakshanamConfig(username=g_user.strip(), password=g_pass.strip()))
-                if client.authenticate():
-                    st.session_state.gla_authenticated = True
-                    st.session_state.gla_user = g_user.strip()
-                    st.session_state.gla_pass = g_pass.strip()
-                    st.success("✅ सर्वर खाते से सफलतापूर्वक कनेक्टेड!")
-                else:
-                    st.session_state.gla_authenticated = False
-                    st.error("❌ लॉगिन असफल। कृपया उपयोगकर्ता नाम एवं पासवर्ड जांचें।")
-
-    if st.session_state.get("gla_authenticated", False):
-        active_u = st.session_state.get("gla_user", g_user)
-        active_p = st.session_state.get("gla_pass", g_pass)
-        client = GrahalakshanamClient(GrahalakshanamConfig(username=active_u, password=active_p))
-        if client.authenticate():
-            st.info(f"🌐 सक्रिय सर्वर खाता: **{active_u}**")
-
-            col_sync1, col_sync2 = st.columns(2)
-            with col_sync1:
-                st.markdown("#### 📁 सहेजी गई क्लाउड कुण्डलियाँ (Home Saved Charts)")
-                ff_data = client.get_folders_with_files()
-                files = ff_data.get("files", [])
-                st.session_state.gla_charts = files
-                st.write(f"क्लाउड में उपलब्ध कुण्डलियाँ: **{len(files)}**")
-                
-                for f_chart in files:
-                    with st.container():
-                        st.markdown(f'''
-                        <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:8px; padding:10px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-                            <div>
-                                <b style="color:#000000; font-size:14px;">👤 {f_chart['name']}</b> 
-                                <span style="color:#64748B; font-size:12px;">(ID: {f_chart['id']})</span><br/>
-                                <small style="color:#334155;">📍 {f_chart.get('address', 'Nanpara / Bahraich')}</small>
-                            </div>
-                        </div>
-                        ''', unsafe_allow_html=True)
-                        if st.button(f"📥 {f_chart['name']} लोड करें", key=f"btn_load_{f_chart['id']}"):
-                            c_data = client.open_chart(f_chart['id'])
-                            disp = c_data.get("DisplayInfo", {})
-                            if disp:
-                                st.session_state.birth_name = disp.get("Name", f_chart['name'])
-                                st.session_state.birth_lat = float(disp.get("Latitude", 27.8646))
-                                st.session_state.birth_lon = float(disp.get("Longitude", 81.5004))
-                                st.session_state.birth_city = disp.get("Address", "Nanpara")
-                                try:
-                                    d_str = disp.get("Date", "")
-                                    t_str = disp.get("Time", "")
-                                    dt = datetime.strptime(f"{d_str} {t_str}", "%B %d, %Y %I:%M:%S %p")
-                                    st.session_state.birth_date = dt.date()
-                                    st.session_state.birth_time = dt.time()
-                                except Exception:
-                                    pass
-                                st.toast(f"✅ {f_chart['name']} का विवरण लोड किया गया!", icon="🔮")
-                                st.rerun()
-
-            with col_sync2:
-                st.markdown("#### ⚖️ पंचांग तुलना एवं खगोलीय सत्यापन")
-                panchang_gla = client.get_panchang_details()
-                if panchang_gla:
-                    st.markdown(f"- **Tithi:** {panchang_gla.get('Tithi', '').splitlines()[0]}")
-                    st.markdown(f"- **Nakshatra:** {panchang_gla.get('Nakshatra', '')}")
-                    st.markdown(f"- **Yoga:** {panchang_gla.get('Yoga', '')}")
-                    st.markdown(f"- **Sunrise:** {panchang_gla.get('Sunrise', '')}")
-                    st.markdown(f"- **Sunset:** {panchang_gla.get('Sunset', '')}")
-                    st.markdown(f"- **Janma Ghati:** {panchang_gla.get('JanmaGhati', '')}")
-                st.info("🌟 अयनांश: **Chitrapaksha / Lahiri** पूर्णतः संरेखित है।")
-        else:
-            st.error("❌ लॉगिन असफल। कृपया क्रेडेंशियल्स जांचें।")
-
-
-elif selected_idx == 7:
     st.subheader("⚖️ षड्बल, भावबल एवं दृष्टि वेध चक्र (Shadbala & Aspectarium)")
     tab_sb_shadbala, tab_sb_aspectarium = st.tabs([
         "⚖️ षड्बल एवं भावबल (Shadbala & Bhava Bala)",
@@ -10192,7 +10194,7 @@ elif selected_idx == 7:
 # =============================================================
 # TAB 9: JAIMINI & UPAGRAHAS & SPECIAL LAGNAS & AVASTHAS
 
-elif selected_idx == 8:
+elif selected_idx == 7:
     st.subheader("🔱 जैमिनी ज्योतिष, विशेष लग्न, आरूढ़ पद एवं ग्रह अवस्थाएँ")
     st.write("महर्षि जैमिनी उपदेश सूत्र एवं बृहत्पाराशर होराशास्त्र (BPHS) आधारित विशेष लग्न, 12 आरूढ़ पद, ग्रह अवस्थाएँ, आयुर्दाय एवं अप्रकाशित उपग्रह।")
 
@@ -10540,7 +10542,7 @@ elif selected_idx == 8:
 # =============================================================
 # TAB 10: DASHA SYSTEMS
 
-elif selected_idx == 9:
+elif selected_idx == 8:
     st.subheader("⏱️ दशा प्रणालियाँ एवं एकीकृत जीवन टाइमलाइन (Dasha & Predictive Life Timeline)")
     st.write("विंशोत्तरी, जैमिनी चर, योगिनी, कालचक्र, शूल व दृग दशाओं का ०-१०० वर्ष एकीकृत जीवन टाइमलाइन एवं बहु-स्तरीय विश्लेषण।")
 
@@ -11534,7 +11536,7 @@ elif selected_idx == 9:
     # =============================================================
 # TAB 11: GOCHAR & ASHTAKAVARGA & CHAKRAS
 
-elif selected_idx == 10:
+elif selected_idx == 9:
     st.subheader("🪐 गोचर, अष्टकवर्ग, सर्वतोभद्र चक्र एवं कोटा चक्र")
     st.write("तात्कालिक ग्रह गोचर स्थिति, साढ़ेसाती व ढैया ट्रैकर, 8x12 भिन्नाष्टकवर्ग, 9x9 सर्वतोभद्र वेध चक्र एवं 4-क्षेत्रीय कोटा दुर्ग चक्र।")
 
@@ -12452,7 +12454,7 @@ elif selected_idx == 10:
             })
             st.dataframe(ing_df, use_container_width=True, hide_index=True)
 
-elif selected_idx == 11:
+elif selected_idx == 10:
     st.subheader("📐 के.पी. ज्योतिष प्रणाली (Krishnamurti Paddhati - KP System & Future Prediction)")
     st.write("कृष्णमूर्ति पद्धति आधारित 4-स्तरीय कार्यकत्व (4-Fold Significators), कस्पल सब-लॉर्ड (Sub-Lords), उप-उप स्वामी (Sub-Sub Lords), रूलिंग प्लैनेट्स (RP), 1-249 होरारी व भविष्य फलित निर्णय।")
 
@@ -12861,7 +12863,7 @@ elif selected_idx == 11:
 # =============================================================
 # TAB 13: MUHURTA & CHOGHADIYA & KAAL-VELA
 
-elif selected_idx == 12:
+elif selected_idx == 11:
     st.subheader("⏳ शुभ मुहूर्त, दैनिक चौघड़िया एवं काल-वेला (Vedic Muhurta)")
     st.write("सूर्य सिद्धांत एवं मुहूर्त चिंतामणि आधारित दिन व रात्रि के ८-८ चौघड़िया, राहुकाल, अभिजित मुहूर्त एवं विशिष्ट कार्य सिद्धि मुहूर्त।")
 
@@ -13010,7 +13012,7 @@ elif selected_idx == 12:
 # =============================================================
 # TAB 14: SUDARSHAN CHAKRA
 
-elif selected_idx == 13:
+elif selected_idx == 12:
     st.subheader("☸️ सुदर्शन चक्र (Sudarshan Chakra - 3-Ring Concentric Mandala)")
     st.write("बृहत्पाराशर होराशास्त्र (BPHS) के अनुसार लग्न (शरीर), चन्द्र (मन) एवं सूर्य (आत्मा) तीनों दृष्टिकोणों का एक साथ संकेंद्री चक्र में त्रि-स्तरीय फलित।")
 
@@ -13031,7 +13033,7 @@ elif selected_idx == 13:
 # =============================================================
 # TAB 15: VARSHAPHAL (TAJIKA ANNUAL SOLAR RETURN)
 
-elif selected_idx == 14:
+elif selected_idx == 13:
     st.subheader("📅 वर्षफल / ताजिक वार्षिक चक्र (Tajika Annual Solar Return)")
     st.write("ताजिक नीलकण्ठी अनुसार वार्षिक सौर वापसी कुण्डली, मुन्था विचार, पंचाधिकारी वर्षेश निर्णय, १६ ताजिक सहम एवं १-वर्षीय मुद्धा दशा चक्र।")
 
@@ -13142,7 +13144,7 @@ elif selected_idx == 14:
 # =============================================================
 # TAB 13: BIRTH TIME RECTIFICATION (BTR)
 
-elif selected_idx == 15:
+elif selected_idx == 14:
     st.subheader("⏳ जन्म समय शोधन (Birth Time Rectification - BTR)")
     st.write("अपने जीवन की प्रमाणित ऐतिहासिक घटनाओं (नौकरी, विवाह, संतान आदि) के आधार पर सटीक जन्म समय की गणना करें।")
 
@@ -13169,7 +13171,7 @@ elif selected_idx == 15:
 # =============================================================
 # TAB 14: KUNDALI MILAN
 
-elif selected_idx == 16:
+elif selected_idx == 15:
     st.subheader("💍 कुण्डली मिलान एवं सिनैस्ट्री (Kundali Milan & Synastry)")
     tab_milan_vivah, tab_milan_biz = st.tabs([
         "💍 दांपत्य एवं विवाह मिलान (36-Guna & Manglik)",
@@ -13596,7 +13598,7 @@ elif selected_idx == 16:
 # =============================================================
 # TAB 15: AI SAHAYAK (CHAT CONSULTATION)
 
-elif selected_idx == 17:
+elif selected_idx == 16:
     st.subheader("💬 ज्योतिष AI सहायक (Interactive Shastriya Sahayak)")
     st.write("आपकी खुली हुई कुण्डली (ग्रह, भाव, दशा, गोचर, षड्बल एवं अष्टकवर्ग) के आधार पर व्यक्तिगत एवं सटीक शास्त्रीय परामर्श।")
 
@@ -13724,7 +13726,7 @@ elif selected_idx == 17:
 # =============================================================
 # TAB 19: COMPREHENSIVE REPORT & PRINTABLE KUNDALI BOOK
 
-elif selected_idx == 18:
+elif selected_idx == 17:
     st.subheader("📄 सम्पूर्ण जीवन कुण्डली पत्रिका एवं १-पेज परामर्श पर्ची (Printable Dossier & Prescription)")
 
     with st.expander("👑 ज्योतिषी कस्टम ब्रांडिंग एवं रिपोर्ट विन्यास (White-Label Branding Settings)", expanded=False):
@@ -13868,7 +13870,7 @@ elif selected_idx == 18:
 # =============================================================
 # TAB 17: 100 SHASTRIYA RULES LIBRARY
 
-elif selected_idx == 19:
+elif selected_idx == 18:
     st.subheader("📚 १२,५००+ महा-शास्त्रीय नियम बैंक, ग्रन्थ एक्सप्लोरर एवं अनुसंधान इंजन (Vedic Rules & Research Engine)")
     tab_rules_bank, tab_grantha_explorer, tab_research_engine = st.tabs([
         "📚 १२,५००+ महा-शास्त्रीय नियम बैंक (Grand Rules Library)",
@@ -14133,7 +14135,7 @@ elif selected_idx == 19:
             st.warning("दिए गए मापदंडों से मेल खाती कोई कुण्डली नहीं मिली। कृपया फ़िल्टर शिथिल करके पुनः प्रयास करें।")
 
 
-elif selected_idx == 20:
+elif selected_idx == 19:
     st.subheader("🔍 वैदिक ऋषि API सत्यापन एवं बेंचमार्क (Vedic Rishi Cross-Validation)")
     st.write("JyotishOS स्विस एफिमेरिस गणनाओं का वैदिक ऋषि एस्ट्रो मानक से ग्रह-दर-ग्रह मिलान और सटीकता सत्यापन।")
 
@@ -14180,7 +14182,7 @@ elif selected_idx == 20:
 # MODULE 21: सम्पूर्ण दोष एवं योग विश्लेषण (Comprehensive Dosh & Yog Analysis)
 # =============================================================
 
-elif selected_idx == 21:
+elif selected_idx == 20:
     st.subheader("⚡ सम्पूर्ण दोष एवं योग विश्लेषण एवं कुण्डली आधारित उपाय")
     st.write("बृहत्पाराशर होराशास्त्र, फलदीपिका, सारावली एवं जातक पारिजात अनुसार कुण्डली के समस्त सक्रिय/निष्क्रिय दोषों, राजयोगों, धनयोगों तथा कुण्डली-आधारित अचूक उपायों का पूर्ण विश्लेषण।")
 
@@ -14449,7 +14451,7 @@ elif selected_idx == 21:
 # MODULE 22: अंकशास्त्र एवं लो-शू ग्रिड (NUMEROLOGY & LO-SHU GRID)
 # =============================================================
 
-elif selected_idx == 22:
+elif selected_idx == 21:
     st.subheader("🔢 अंकशास्त्र एवं लो-शू ग्रिड (Vedic & Lo-Shu Numerology)")
     st.write("कील्डियन नामांक, मूलांक, भाग्यांक, कुआ नंबर, ३×३ लो-शू ग्रिड (८ तल), मिसिंग नंबर एवं क्रिस्टल/धातु आधारित शास्त्रीय उपाय।")
 
@@ -14594,7 +14596,7 @@ elif selected_idx == 22:
 # MODULE 23: लाल किताब 1952 तेवा एवं उपाय (LAL KITAB 1952)
 # =============================================================
 
-elif selected_idx == 23:
+elif selected_idx == 22:
     st.subheader("📕 लाल किताब 1952 तेवा एवं शास्त्रीय उपाय (Lal Kitab Engine)")
     st.write("कालपुरुष पक्के घर (खाना नं. १ से १२), ७ प्रकार के ऋण (ऋण पितृ, मातृ, स्व आदि), सोया हुआ घर/ग्रह, धर्मी तेवा एवं लाल किताब के अनुभूत टोटके।")
 
@@ -14689,7 +14691,7 @@ elif selected_idx == 23:
         5. मांस, मदिरा एवं पराई स्त्री के संग से सदा दूर रहें।
         """)
 
-elif selected_idx == 24:
+elif selected_idx == 23:
     st.subheader("🍽️ खानपान एवं त्रिदोष आहार परामर्श (Diet & Ayurvedic Nutrition)")
     st.write("बृहत्पाराशर होराशास्त्र एवं चरक संहिता अनुसार त्रिदोष (वात, पित्त, कफ), द्वितीय भाव (भोजन-संस्कार), अनुकूल-प्रतिकूल खाद्य एवं उपवास निर्णय।")
 
@@ -14775,7 +14777,7 @@ elif selected_idx == 24:
         5. **सूर्यास्त के बाद हल्का भोजन:** रात्रि का भोजन सदैव सोने से कम से कम २.५ से ३ घंटे पूर्व कर लें।
         """)
 
-elif selected_idx == 25:
+elif selected_idx == 24:
     st.subheader("🤝 संबंध एवं स्वजन-मित्र-शत्रु विश्लेषण (Relationship & Compatibility Matrix)")
     st.write("बृहत्पाराशर होराशास्त्र एवं फलदीपिका अनुसार दांपत्य, माता-पिता, संतान, मित्र, सहायक पक्ष एवं कष्ट देने वाले विरोधी पक्षों का समग्र विश्लेषण।")
 
@@ -14900,7 +14902,7 @@ elif selected_idx == 25:
 
         st.warning("⚠️ **सावधानी परामर्श:** बिना लिखा-पढ़ी के किसी को ऋण या जमानत न दें। गुप्त योजनाओं को समय से पूर्व साझा न करें।")
 
-elif selected_idx == 26:
+elif selected_idx == 25:
     st.subheader("🏥 स्वास्थ्य एवं रोग-निदान विश्लेषण (Medical Astrology & Disease Forecast)")
     st.write("बृहत्पाराशर होराशास्त्र, सर्वार्थ चिंतामणि एवं फलदीपिका अनुसार समग्र आरोग्य बल, संवेदनशील शारीरिक अंग, संभावित रोग एवं भावी सावधानियां।")
 
@@ -15030,7 +15032,7 @@ elif selected_idx == 26:
         5. **रक्तदान / सेवा:** मंगल की शांति हेतु वर्ष में एक बार रक्तदान करें या नेत्रहीनों/असहायों की सेवा करें।
         """)
 
-elif selected_idx == 27:
+elif selected_idx == 26:
     st.subheader("🧬 शारीरिक गठन एवं अंग-दोष विश्लेषण (Body Anatomy & Physical Traits)")
     st.write("बृहत्संहिता एवं बृहत्पाराशर होराशास्त्र अनुसार लग्न-आधारित कद-काठी, रंग-रूप, कालपुरुष के १२ अंगों का स्वास्थ्य एवं जन्मजात शारीरिक चिन्ह।")
 
@@ -15130,7 +15132,7 @@ elif selected_idx == 27:
         3. **अंग-विशेष व्यायाम:** यदि किसी अंग में पापग्रह की स्थिति है (जैसे घुटनों या कमर में), तो भारी वजन उठाने से बचें और सूक्ष्म व्यायाम करें।
         """)
 
-elif selected_idx == 28:
+elif selected_idx == 27:
     st.subheader("🕉️ इष्टदेवता, धर्मदेवता, नित्य पूजा विधान एवं व्रत निर्णय")
     st.write("महर्षि जैमिनी उपदेश सूत्र एवं बृहत्पाराशर होराशास्त्र अनुसार आत्मकारक (AK), कारकांश (D9) के १२वें भाव (मोक्ष भाव), ५वें भाव (मंत्र सिद्धि), धर्मदेवता, कुलदेवी/कुलदेवता, नित्य पूजा विधि, जप माला एवं पावन व्रत निर्णय।")
 
@@ -15381,7 +15383,7 @@ elif selected_idx == 28:
             """, unsafe_allow_html=True)
 
 
-elif selected_idx == 29:
+elif selected_idx == 28:
     st.subheader("🧘 व्यक्तित्व एवं कर्मफल विश्लेषण (Personality, Vices, Destiny & Karmic Ledger)")
     st.write("शास्त्रीय वैदिक ज्योतिष (पाराशर, जैमिनी, फलदीपिका एवं सारावली) के नियमों के आधार पर व्यापार बनाम नौकरी, शिक्षा-मेधा, नैतिक आचरण, व्यसन/लत जोखिम, पैतृक संपत्ति, आंतरिक सुख एवं पूर्वजन्म प्रारब्ध का निष्पक्ष व प्रामाणिक विश्लेषण।")
 
