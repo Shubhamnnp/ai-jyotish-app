@@ -15389,7 +15389,9 @@ elif selected_idx == 14:
     )
 
     # Native Profile Metrics
-    calc_chart = current_chart
+    calc_chart = chart if ('chart' in locals() and chart is not None) else default_chart_calculator.calculate_chart(birth_profile)
+    if not hasattr(calc_chart, 'vargas') or not calc_chart.vargas:
+        calc_chart.vargas = VargaCalculator.calculate_all_vargas(calc_chart)
     b_nat_d = birth_profile.birth_date
     b_nat_t = birth_profile.birth_time
     nat_dt = datetime.combine(b_nat_d, b_nat_t)
