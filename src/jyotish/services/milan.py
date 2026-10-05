@@ -1013,8 +1013,78 @@ class MilanService:
                 "wife_role_desc": wife_role_desc
             },
             "remedies": remedies,
-            "overall_rating": overall_rating
+            "overall_rating": overall_rating,
+            "synastry_aspects": self.calculate_synastry_aspects(g_chart, b_chart)
         }
+
+    def calculate_synastry_aspects(self, g_chart: KundaliChart, b_chart: KundaliChart) -> List[Dict[str, Any]]:
+        """
+        Calculates cross-planetary synastry aspects between Groom and Bride.
+        """
+        pairs = [
+            ("Sun", "Moon", "सूर्य-चन्द्र आत्मिक संबंध", "आत्मा व मन का एकात्म भाव, स्वाभाविक समझ व आत्मीय स्नेह"),
+            ("Moon", "Sun", "चन्द्र-सूर्य भावात्मक संबंध", "मन व आत्मा का गहरा आकर्षण, समर्पण व संबल"),
+            ("Mars", "Venus", "मंगल-शुक्र जैविक आकर्षण", "रोमांटिक ऊर्जा, आकर्षण एवं वैवाहिक सुख की प्रबलता"),
+            ("Venus", "Mars", "शुक्र-मंगल अनुराग योग", "सौंदर्य, रति-सुख व पारस्परिक जैविक सामंजस्य"),
+            ("Jupiter", "Moon", "गुरु-चन्द्र गजकेसरी प्रभाव", "मानसिक शांति, सद्भाव, सामाजिक मर्यादा व सुख-समृद्धि"),
+            ("Moon", "Jupiter", "चन्द्र-गुरु दैवीय आशीर्वाद", "पारस्परिक क्षमाशीलता, धार्मिक अभिरुचि व संतोष"),
+            ("Jupiter", "Sun", "गुरु-सूर्य प्रतिष्ठा संवर्धन", "कुटुंब में यश, आदर व जीवन मूल्यों की समानता"),
+            ("Saturn", "Venus", "शनि-शुक्र कार्मिक स्थायित्व", "विवाह में कर्तव्य निष्ठा, दीर्घायु एवं उत्तरदायित्व"),
+            ("Mercury", "Moon", "बुध-चन्द्र वैचारिक संवाद", "खुला व मधुर संवाद, हास्य-विनोद व मित्रवत संबंध")
+        ]
+        results = []
+        for p1, p2, title, meaning in pairs:
+            if p1 in g_chart.planets and p2 in b_chart.planets:
+                lon1 = g_chart.planets[p1].longitude
+                lon2 = b_chart.planets[p2].longitude
+                diff = abs(lon1 - lon2) % 360.0
+                if diff > 180.0:
+                    diff = 360.0 - diff
+
+                aspect_type = None
+                aspect_badge = ""
+                aspect_nature = ""
+                orb_diff = 0.0
+
+                if diff <= 8.0:
+                    aspect_type = "युति (Conjunction 0°)"
+                    aspect_nature = "शुभ / प्रबल आकर्षण"
+                    aspect_badge = "🔥 युति"
+                    orb_diff = diff
+                elif 172.0 <= diff <= 188.0:
+                    aspect_type = "समसप्तक (Opposition 180°)"
+                    aspect_nature = "पूरक आकर्षण / प्रत्यक्ष संबंध"
+                    aspect_badge = "⚖️ समसप्तक"
+                    orb_diff = abs(180.0 - diff)
+                elif 113.0 <= diff <= 127.0:
+                    aspect_type = "त्रिकोण (Trine 120°)"
+                    aspect_nature = "परम शुभ / निर्बाध तालमेल"
+                    aspect_badge = "🌟 त्रिकोण"
+                    orb_diff = abs(120.0 - diff)
+                elif 54.0 <= diff <= 66.0:
+                    aspect_type = "लाभ / तृतीयांश (Sextile 60°)"
+                    aspect_nature = "मित्रवत सहयोग"
+                    aspect_badge = "🤝 षडांश"
+                    orb_diff = abs(60.0 - diff)
+                elif 84.0 <= diff <= 96.0:
+                    aspect_type = "केन्द्र दृष्टि (Square 90°)"
+                    aspect_nature = "चुनौतीपूर्ण / प्रयास अपेक्षित"
+                    aspect_badge = "⚡ केन्द्र"
+                    orb_diff = abs(90.0 - diff)
+
+                if aspect_type:
+                    results.append({
+                        "groom_planet": p1,
+                        "bride_planet": p2,
+                        "title": title,
+                        "aspect_type": aspect_type,
+                        "aspect_nature": aspect_nature,
+                        "badge": aspect_badge,
+                        "meaning": meaning,
+                        "orb": f"{round(orb_diff, 1)}° दीप्तांश",
+                        "status": "सक्रिय (Active)"
+                    })
+        return results
 
     def render_milan_report_html(self, groom_data: BirthData, bride_data: BirthData, score: AshtakootaScore) -> str:
         """
