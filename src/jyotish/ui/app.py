@@ -14043,7 +14043,7 @@ elif selected_idx == 11:
     import importlib
     import src.jyotish.services.muhurta as muh_svc_mod
     import src.jyotish.services.milan as milan_mod
-    if not hasattr(muh_svc_mod.default_muhurta_engine, "calculate_daily_muhurta"):
+    if not hasattr(muh_svc_mod.default_muhurta_engine, "get_daily_panchang_and_doshas"):
         importlib.reload(muh_svc_mod)
     m_engine = muh_svc_mod.default_muhurta_engine
     m_scanner = muh_svc_mod.default_muhurta_scanner or muh_svc_mod.MuhurtaRangeScanner()
@@ -14056,6 +14056,63 @@ elif selected_idx == 11:
         st.caption(f"📍 स्थान: **{default_city_name}** | वार: **{muhurta_date.strftime('%A')}** | सक्रिय जातक: **{chart.birth_data.name}**")
 
     m_data = m_engine.calculate_daily_muhurta(muhurta_date)
+    p_doshas = m_engine.get_daily_panchang_and_doshas(muhurta_date)
+
+    # =========================================================================
+    # HIGH-VISIBILITY PANCHANGA MAHA-DOSHA & KAAL SHUDDHI ALERT BANNER
+    # =========================================================================
+    if p_doshas.get("is_pitru_paksha"):
+        st.markdown("""<div style="background:#FEF2F2; border:2px solid #DC2626; border-radius:10px; padding:14px 18px; margin: 10px 0 14px 0; box-shadow:0 4px 12px rgba(220,38,38,0.08);">
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+<span style="font-size:16px; font-weight:900; color:#991B1B;">🚨 महा-निषेध अलर्ट: पितृपक्ष (श्राद्ध / महालय पक्ष) सक्रिय है!</span>
+<span style="background:#DC2626; color:#FFFFFF; font-size:12px; font-weight:800; padding:4px 12px; border-radius:12px;">मांगलिक संस्कार सर्वथा वर्जित</span>
+</div>
+<div style="font-size:13.5px; color:#7F1D1D; margin-top:6px; line-height:1.6;">
+वर्तमान में सूर्य कन्या राशि में तथा चन्द्रमा कृष्ण पक्ष में होने से <b>पितृपक्ष (महालय काल)</b> चल रहा है। शास्त्रों (<i>निर्णय सिन्धु</i>, <i>मुहूर्त चिन्तामणि</i>) अनुसार यह काल केवल पितरों के श्राद्ध, तर्पण एवं पिंडदान हेतु आरक्षित है। इस अवधि में <b>नवीन गृह प्रवेश, विवाह, मुंडन, उपनयन (जनेऊ), भूमि पूजन एवं नवीन प्रतिष्ठान उद्घाटन सर्वथा वर्जित</b> हैं।
+</div>
+<div style="font-size:12px; color:#991B1B; font-weight:700; margin-top:6px;">
+📜 शास्त्रीय प्रमाण: <i>"आश्विने कृष्णपक्षे तु पितृपक्षः प्रकीर्तितः। विवाहादि शुभं कर्म गृहप्रवेशं च वर्जयेत्॥"</i>
+</div>
+</div>""", unsafe_allow_html=True)
+    elif p_doshas.get("is_kharmas"):
+        st.markdown("""<div style="background:#FEF2F2; border:2px solid #DC2626; border-radius:10px; padding:14px 18px; margin: 10px 0 14px 0;">
+<div style="font-size:16px; font-weight:900; color:#991B1B;">🚨 महा-निषेध अलर्ट: खरमास / मलमास (सूर्य धनु/मीन संक्रान्ति) सक्रिय है!</div>
+<div style="font-size:13px; color:#7F1D1D; margin-top:4px;">सूर्य देवगुरु बृहस्पति की राशि में होने से समस्त मांगलिक संस्कार (विवाह, गृह प्रवेश, मुंडन) वर्जित हैं। मकर संक्रान्ति अथवा मेष संक्रान्ति उपरांत ही शुभ मुहूर्त संभव होगा।</div>
+</div>""", unsafe_allow_html=True)
+
+    if p_doshas.get("is_bhadra"):
+        b_bg = "#FEF2F2" if p_doshas.get("bhadra_is_fatal") else "#FFFBEB"
+        b_bd = "#DC2626" if p_doshas.get("bhadra_is_fatal") else "#F59E0B"
+        b_txt = "#991B1B" if p_doshas.get("bhadra_is_fatal") else "#B45309"
+        st.markdown(f"""<div style="background:{b_bg}; border:1.5px solid {b_bd}; border-radius:8px; padding:10px 14px; margin-bottom:12px; font-size:13px;">
+<b style="color:{b_txt};">⚠️ भद्रा (विष्टि करण #{p_doshas['karana_idx']}) प्रभाव — निवास: {p_doshas['bhadra_loka']}:</b>
+<span style="color:#1E293B;"> {p_doshas['bhadra_impact']}</span>
+</div>""", unsafe_allow_html=True)
+
+    # Quick 5 Panchang Limbs Badges for Selected Date
+    q_col1, q_col2, q_col3, q_col4, q_col5 = st.columns(5)
+    with q_col1:
+        st.markdown(f"""<div style="background:#F1F5F9; border-radius:6px; padding:6px 10px; text-align:center; font-size:12px;">
+<span style="color:#64748B;">तिथि:</span> <b>{p_doshas['tithi_name'].split(' ')[0]}</b> ({p_doshas['paksha']})
+</div>""", unsafe_allow_html=True)
+    with q_col2:
+        st.markdown(f"""<div style="background:#F1F5F9; border-radius:6px; padding:6px 10px; text-align:center; font-size:12px;">
+<span style="color:#64748B;">वार:</span> <b>{p_doshas['weekday_name']}</b>
+</div>""", unsafe_allow_html=True)
+    with q_col3:
+        st.markdown(f"""<div style="background:#F1F5F9; border-radius:6px; padding:6px 10px; text-align:center; font-size:12px;">
+<span style="color:#64748B;">नक्षत्र:</span> <b>{p_doshas['nakshatra_name']}</b>
+</div>""", unsafe_allow_html=True)
+    with q_col4:
+        st.markdown(f"""<div style="background:#F1F5F9; border-radius:6px; padding:6px 10px; text-align:center; font-size:12px;">
+<span style="color:#64748B;">योग:</span> <b>{p_doshas['yoga_name']}</b>
+</div>""", unsafe_allow_html=True)
+    with q_col5:
+        st.markdown(f"""<div style="background:#F1F5F9; border-radius:6px; padding:6px 10px; text-align:center; font-size:12px;">
+<span style="color:#64748B;">करण:</span> <b>{p_doshas['karana_name']}</b>
+</div>""", unsafe_allow_html=True)
+
+    st.write("")
 
     # =========================================================================
     # 8 DEDICATED TABS
@@ -14248,7 +14305,6 @@ elif selected_idx == 11:
         st.markdown(f"#### 🌕 जातक ताराबल एवं चन्द्रबल चक्र ({chart.birth_data.name})")
         st.caption("जातक के जन्म नक्षत्र व जन्म चन्द्र राशि से तात्कालिक गोचर नक्षत्र व चन्द्रमा का शुभ/अशुभ संबंध:")
 
-        # Calculate Tara Balam
         nak_names_list = [
             "अश्विनी", "भरणी", "कृत्तिका", "रोहिणी", "मृगशिरा", "आर्द्रा", "पुनर्वसु", "पुष्य", "आश्लेषा",
             "मघा", "पूर्वाफाल्गुनी", "उत्तराफाल्गुनी", "हस्त", "चित्रा", "स्वाती", "विशाखा", "अनुराधा", "ज्येष्ठा",
@@ -14266,10 +14322,30 @@ elif selected_idx == 11:
             ("परम मित्र तारा (Parama Mitra)", "सर्वोच्च सिद्धि व मंगल", "🟢 परम शुभ", "#059669")
         ]
 
-        t_diff = (moon_nak_idx) % 27
-        # Today's Moon Tara for Native
-        today_tara_num = ((moon_nak_idx) % 9) + 1
+        # Calculate Real Transit Tara Balam for Muhurta Date
+        transit_nak = p_doshas.get("nakshatra_idx", 1)
+        transit_sign = p_doshas.get("moon_sign_id", 1)
+        natal_m_nak = moon_nak_idx + 1
+        natal_m_sign = m_planet.sign_id if m_planet else 1
+
+        today_tara_diff = (transit_nak - natal_m_nak) % 27
+        today_tara_num = (today_tara_diff % 9) + 1
         t_name, t_desc, t_verdict, t_col = tara_names_9[today_tara_num - 1]
+
+        # Calculate Real Transit Chandra Balam for Muhurta Date
+        c_diff = ((transit_sign - natal_m_sign) % 12) + 1
+        if c_diff in [1, 3, 6, 7, 10, 11]:
+            chandra_bal_status = f"🟢 शुभ चन्द्रबल ({c_diff}वां चन्द्रमा)"
+            c_badge_col = "#16A34A"
+            c_desc = f"गोचर चन्द्रमा जन्म राशि से {c_diff}वें भाव में भ्रमण कर रहा है, जो मनोबल व कार्य सिद्धि प्रदान करता है।"
+        elif c_diff in [4, 8, 12]:
+            chandra_bal_status = f"🔴 घात चन्द्र / अष्टम चन्द्र ({c_diff}वां चन्द्रमा)"
+            c_badge_col = "#DC2626"
+            c_desc = f"गोचर चन्द्रमा जन्म राशि से {c_diff}वें भाव में है (घात चन्द्र)। शुभ कार्य में मानसिक अशांति व हानि का भय रहता है।"
+        else:
+            chandra_bal_status = f"🟡 मध्यम चन्द्रबल ({c_diff}वां चन्द्रमा)"
+            c_badge_col = "#D97706"
+            c_desc = f"गोचर चन्द्रमा {c_diff}वें भाव में मध्यम फलदायी है। गुरु/शुक्र की दृष्टि से शुभ फल मिलता है।"
 
         c_tb1, c_tb2 = st.columns(2)
         with c_tb1:
@@ -14277,20 +14353,15 @@ elif selected_idx == 11:
 <div style="font-size:12px; color:#64748B; font-weight:700;">⭐ जातक का तात्कालिक ताराबल (Today's Tara Balam):</div>
 <div style="font-size:18px; font-weight:900; color:{t_col}; margin:4px 0;">{t_name} — {t_verdict}</div>
 <div style="font-size:13px; color:#1E293B;"><b>प्रभाव:</b> {t_desc}</div>
-<div style="font-size:12px; color:#475569; margin-top:6px;">जन्म नक्षत्र: <b>{p_info.nakshatra_name}</b> (क्रमांक #{moon_nak_idx + 1})</div>
+<div style="font-size:12px; color:#475569; margin-top:6px;">जन्म नक्षत्र: <b>{p_info.nakshatra_name}</b> (#{natal_m_nak}) ➔ गोचर नक्षत्र: <b>{p_doshas['nakshatra_name']}</b> (#{transit_nak})</div>
 </div>""", unsafe_allow_html=True)
 
         with c_tb2:
-            # Chandra Balam
-            natal_m_sign = m_planet.sign_id if m_planet else 1
-            # For simplicity, calculate Moon sign diff
-            c_diff = 1  # 1st house from Moon
-            chandra_bal_status = "🟢 शुभ चन्द्रबल (Favorable Moon)"
-            st.markdown(f"""<div style="background:#FFFFFF; border:2px solid #3B82F6; border-radius:10px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+            st.markdown(f"""<div style="background:#FFFFFF; border:2px solid {c_badge_col}; border-radius:10px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
 <div style="font-size:12px; color:#64748B; font-weight:700;">🌕 जातक का चन्द्रबल (Chandra Balam):</div>
-<div style="font-size:18px; font-weight:900; color:#1D4ED8; margin:4px 0;">{chandra_bal_status}</div>
-<div style="font-size:13px; color:#1E293B;"><b>नियम:</b> जन्म चन्द्र से १, ३, ६, ७, १०, ११वां चन्द्रमा परम शुभ व कार्य सिद्धिकारक होता है।</div>
-<div style="font-size:12px; color:#475569; margin-top:6px;">४, ८, १२वां चन्द्रमा 'घात चन्द्र' कहलाता है जिसमें शुभ कार्य वर्जित होते हैं।</div>
+<div style="font-size:18px; font-weight:900; color:{c_badge_col}; margin:4px 0;">{chandra_bal_status}</div>
+<div style="font-size:13px; color:#1E293B;"><b>शास्त्रीय स्थिति:</b> {c_desc}</div>
+<div style="font-size:12px; color:#475569; margin-top:6px;">जन्म चन्द्र राशि: <b>{natal_m_sign}</b> ➔ गोचर चन्द्र राशि: <b>{transit_sign} ({p_doshas['moon_sign_name']})</b></div>
 </div>""", unsafe_allow_html=True)
 
         st.markdown("---")
@@ -14300,8 +14371,9 @@ elif selected_idx == 11:
             d_val = (n_i - moon_nak_idx) % 27
             t_idx = d_val % 9
             tn, td, tv, tc = tara_names_9[t_idx]
+            is_active = (n_i + 1 == transit_nak)
             tara_table.append({
-                "नक्षत्र क्रमांक": f"#{n_i + 1}",
+                "नक्षत्र क्रमांक": f"#{n_i + 1}" + (" 📍 (आज)" if is_active else ""),
                 "नक्षत्र नाम": nak_names_list[n_i],
                 "तारा (Tara)": tn,
                 "प्रकृति व फल": td,
@@ -14314,11 +14386,11 @@ elif selected_idx == 11:
     # -------------------------------------------------------------
     with tab_m5:
         st.markdown("#### 🏛️ १६ प्रमुख संस्कार एवं कार्य मुहूर्त अनुकूलता विश्लेषक")
-        st.caption("विवाह, गृह प्रवेश, व्यापार आरंभ, वाहन क्रय, नामकरण, मुंडन, विद्यारंभ व यात्रा आदि कार्यों की शास्त्रीय अनुकूलता:")
+        st.caption("विवाह, गृह प्रवेश, व्यापार आरंभ, वाहन क्रय, नामकरण, मुंडन, विद्यारंभ व यात्रा आदि कार्यों की प्रामाणिक शास्त्रीय अनुकूलता:")
 
         act_options_16 = [
-            ("vivaha", "💍 विवाह संस्कार (Marriage Ceremony)"),
             ("griha_pravesh", "🏛️ गृह प्रवेश (House Warming / Griha Pravesh)"),
+            ("vivaha", "💍 विवाह संस्कार (Marriage Ceremony)"),
             ("vyapar", "💼 व्यापार / दुकान / प्रतिष्ठान उद्घाटन (Business Launch)"),
             ("vahan_kray", "🚗 नवीन वाहन क्रय व पूजन (Vehicle Purchase)"),
             ("property_kray", "🏠 भूमि, भवन व अचल संपत्ति क्रय (Property Purchase)"),
@@ -14336,40 +14408,105 @@ elif selected_idx == 11:
             act_choice = st.selectbox("कार्य का चयन करें (Select Activity):", act_options_16, format_func=lambda x: x[1], key="muh_act_16_sel")
         with c_act2:
             st.write("")
-            st.caption(f"🗓️ दिनांक **{muhurta_date.strftime('%d-%b-%Y')}** के लिए शास्त्रीय पञ्चाङ्ग व मुहूर्त शुद्धि का परीक्षण किया जा रहा है।")
+            st.caption(f"🗓️ दिनांक **{muhurta_date.strftime('%d-%b-%Y')}** के लिए शास्त्रीय पञ्चाङ्ग व मुहूर्त शुद्धि का परीक्षण:")
 
-        act_res = m_engine.evaluate_activity_suitability(muhurta_date, act_choice[0])
-        score_val = act_res.get('suitability_score', 75)
-        verdict_val = act_res.get('verdict', 'शुभ')
-        theme_col = "#10B981" if score_val >= 75 else ("#F59E0B" if score_val >= 50 else "#EF4444")
+        act_res = m_engine.evaluate_activity_suitability(muhurta_date, act_choice[0], natal_chart=chart)
+        score_val = act_res.get('suitability_score', 0)
+        verdict_val = act_res.get('verdict', 'त्याज्य')
+        theme_col = act_res.get('badge_color', '#DC2626')
+        has_fatal = bool(act_res.get('fatal_violations'))
 
-        st.markdown(f"""<div style="background:#FFFFFF; border:2px solid {theme_col}; border-radius:10px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,0.04); margin-bottom:16px;">
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-<b style="font-size:18px; color:#0F172A;">{act_res['activity']}</b>
-<span style="background:{theme_col}15; color:{theme_col}; border:1.5px solid {theme_col}; border-radius:8px; padding:4px 14px; font-weight:800; font-size:14px;">
-अनुकूलता स्कोर: {score_val}/100 ({verdict_val})
+        # Display Result Card
+        st.markdown(f"""<div style="background:#FFFFFF; border:2.5px solid {theme_col}; border-radius:12px; padding:20px; box-shadow:0 4px 14px rgba(0,0,0,0.06); margin-bottom:16px;">
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+<div>
+<b style="font-size:20px; color:#0F172A;">{act_res['activity']}</b>
+<div style="font-size:12px; color:#64748B; margin-top:2px;">दिनांक: {muhurta_date.strftime('%d %B %Y')} ({muhurta_date.strftime('%A')})</div>
+</div>
+<div>
+<span style="background:{theme_col}18; color:{theme_col}; border:2px solid {theme_col}; border-radius:10px; padding:6px 16px; font-weight:900; font-size:16px;">
+शुभता स्कोर: {score_val}/100 — {verdict_val}
 </span>
 </div>
-<div style="font-size:13.5px; color:#1E293B; line-height:1.6;">
-📜 <b>शास्त्रीय मार्गदर्शन:</b> {act_res['guidance']}
+</div>
+<div style="font-size:14px; color:#1E293B; line-height:1.7; background:{'#FEF2F2' if has_fatal else '#F8FAFC'}; padding:12px 16px; border-radius:8px; border:1px solid {'#FCA5A5' if has_fatal else '#E2E8F0'};">
+<b>📜 शास्त्रीय मार्गदर्शन:</b> {act_res['guidance']}
 </div>
 </div>""", unsafe_allow_html=True)
+
         st.progress(score_val / 100.0)
+
+        # Show Fatal Violations Alerts if any
+        if act_res.get("fatal_violations"):
+            st.error("🚨 **महा-निषेध उल्लंघन (Fatal Prohibitions Triggered):**")
+            for f_v in act_res["fatal_violations"]:
+                st.markdown(f"""<div style="background:#FFF1F2; border-left:4px solid #E11D48; border-radius:4px; padding:8px 14px; margin-bottom:6px; font-size:13px; color:#9F1239;">
+{f_v}
+</div>""", unsafe_allow_html=True)
+
+        # Show Sanskrit Sutras
+        if act_res.get("shastriya_sutras"):
+            with st.expander("📖 संबंधित शास्त्रीय सूत्र एवं संदर्भ (Classical Sanskrit Sutras)", expanded=True):
+                for sutra in act_res["shastriya_sutras"]:
+                    st.markdown(f"> *{sutra}*")
+
+        # Itemized Factors Breakdown
+        st.write("")
+        st.markdown("##### 🔍 मुहूर्त घटकों का विस्तृत शास्त्रीय मूल्यांकन (Detailed Evaluation Audit):")
+        audit_cols = st.columns(3)
+        with audit_cols[0]:
+            pitru_col = '#DC2626' if p_doshas['is_pitru_paksha'] else '#16A34A'
+            pitru_txt = 'सक्रिय (वर्जित)' if p_doshas['is_pitru_paksha'] else 'दोष मुक्त'
+            chatur_col = '#EA580C' if p_doshas['is_chaturmas'] else '#16A34A'
+            chatur_txt = 'सक्रिय (देवशयन)' if p_doshas['is_chaturmas'] else 'दोष मुक्त'
+            khar_col = '#DC2626' if p_doshas['is_kharmas'] else '#16A34A'
+            khar_txt = 'सक्रिय (वर्जित)' if p_doshas['is_kharmas'] else 'दोष मुक्त'
+            bhadra_col = '#DC2626' if p_doshas['is_bhadra'] else '#16A34A'
+            bhadra_txt = ('सक्रिय (' + str(p_doshas['bhadra_loka']).split(' ')[0] + ')') if p_doshas['is_bhadra'] else 'दोष मुक्त'
+
+            st.markdown(f"""<div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:12px; font-size:13px;">
+<b style="color:#0F172A;">1. काल व संवत्सर शुद्धि</b><br/>
+• पितृपक्ष: <span style="color:{pitru_col}; font-weight:800;">{pitru_txt}</span><br/>
+• चातुर्मास: <span style="color:{chatur_col}; font-weight:800;">{chatur_txt}</span><br/>
+• खरमास: <span style="color:{khar_col}; font-weight:800;">{khar_txt}</span><br/>
+• भद्रा (विष्टि): <span style="color:{bhadra_col}; font-weight:800;">{bhadra_txt}</span>
+</div>""", unsafe_allow_html=True)
+        with audit_cols[1]:
+            st.markdown(f"""<div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:12px; font-size:13px;">
+<b style="color:#0F172A;">2. पञ्चाङ्ग घटक शुद्धि</b><br/>
+• तिथि: <b>{p_doshas['tithi_name'].split(' ')[0]}</b> ({p_doshas['tithi_category'].split(' ')[0]})<br/>
+• वार: <b>{p_doshas['weekday_name']}</b><br/>
+• नक्षत्र: <b>{p_doshas['nakshatra_name']}</b> ({getattr(p_doshas, 'nakshatra_lord', '—')})<br/>
+• योग: <b>{p_doshas['yoga_name']}</b><br/>
+• करण: <b>{p_doshas['karana_name']}</b>
+</div>""", unsafe_allow_html=True)
+        with audit_cols[2]:
+            tara_str = act_res.get('tara_balam', {}).get('tara_name', '—') if act_res.get('tara_balam') else '—'
+            chan_str = act_res.get('chandra_balam', {}).get('status', '—') if act_res.get('chandra_balam') else '—'
+            st.markdown(f"""<div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:12px; font-size:13px;">
+<b style="color:#0F172A;">3. जातक वैयक्तिक शुद्धि</b><br/>
+• ताराबल: <b>{tara_str}</b><br/>
+• चन्द्रबल: <b>{chan_str}</b><br/>
+• गोचर चन्द्र राशि: <b>{p_doshas['moon_sign_name']}</b><br/>
+• जन्म राशि: <b>{chart.birth_data.name}</b>
+</div>""", unsafe_allow_html=True)
 
     # -------------------------------------------------------------
     # TAB 6: AUTOMATED MUHURTA RANGE SCANNER
     # -------------------------------------------------------------
     with tab_m6:
         st.markdown("#### 🔍 स्वचालित बहु-दिवसीय मुहूर्त खोजक (Automated Muhurta Scanner)")
-        st.caption("३० से ९० दिनों की समय सीमा में विवाह, गृह प्रवेश, व्यापार व वाहन क्रय के सर्वश्रेष्ठ शुभ मुहूर्तों की स्वतः खोज व जन्म चंद्र शुद्धि / चंद्र बल रैंकिंग:")
+        st.caption("३० से ९० दिनों की समय सीमा में विवाह, गृह प्रवेश, व्यापार व वाहन क्रय के श्रेष्ठ मुहूर्तों की स्वतः खोज (महा-निषेध, पितृपक्ष, चातुर्मास व चन्द्रबल की पूर्ण शुद्धि सहित):")
+
+        st.info("💡 **सटीक शास्त्रीय शुद्धि प्रणाली:** यह खोजक स्वतः ही उन समस्त तिथियों को निरस्त (Filter Out) कर देता है जिनमें पितृपक्ष, चातुर्मास महा-निषेध, खरमास, मृत्युलोक भद्रा अथवा जातक का अष्टम/घात चन्द्रमा सक्रिय हो।")
 
         col_sc1, col_sc2, col_sc3 = st.columns([1.5, 1, 1])
         with col_sc1:
             scan_activity = st.selectbox(
                 "शुभ कार्य का चयन करें",
                 [
-                    ("vivaha", "💍 विवाह संस्कार (Vivaha)"),
                     ("griha_pravesh", "🏛️ गृह प्रवेश (Griha Pravesh)"),
+                    ("vivaha", "💍 विवाह संस्कार (Vivaha)"),
                     ("vyapar", "💼 व्यापार / दुकान / अनुबंध (Business)"),
                     ("vahan_kray", "🚗 वाहन क्रय व पूजन (Vehicle Purchase)")
                 ],
@@ -14384,7 +14521,7 @@ elif selected_idx == 11:
         if st.button("🚀 सर्वश्रेष्ठ मुहूर्त खोजें (Scan Best Muhurtas)", type="primary", key="btn_scan_muhurta_14tab"):
             import datetime
             scan_end = scan_start + datetime.timedelta(days=scan_days)
-            with st.spinner(f"{scan_days} दिनों में श्रेष्ठ मुहूर्त खोजे जा रहे हैं..."):
+            with st.spinner(f"{scan_days} दिनों में शास्त्रीय रूप से निर्दोष श्रेष्ठ मुहूर्त खोजे जा रहे हैं..."):
                 top_muhurtas = m_scanner.scan_range(
                     activity_type=scan_activity[0],
                     start_date=scan_start,
@@ -14430,34 +14567,34 @@ elif selected_idx == 11:
     # TAB 7: MUHURTA CHINTAMANI 21 MAHA DOSHAS
     # -------------------------------------------------------------
     with tab_m7:
-        st.markdown("#### 📜 मुहूर्त चिन्तामणि के २१ महादोष (21 Maha Doshas in Vedic Muhurta)")
-        st.caption("मुहूर्त चिन्तामणि एवं कालप्रकाशिका अनुसार शुभ कार्यों में त्याज्य २१ प्रमुख महादोष एवं उनके लक्षण:")
+        st.markdown(f"#### 📜 मुहूर्त चिन्तामणि के २१ महादोष (21 Maha Doshas Live Audit on {muhurta_date.strftime('%d-%b-%Y')})")
+        st.caption("मुहूर्त चिन्तामणि एवं कालप्रकाशिका अनुसार शुभ कार्यों में त्याज्य २१ प्रमुख महादोष एवं उनकी आज की स्थिति:")
 
         maha_doshas = [
-            ("१. भद्रा (विष्टि करण)", "भद्रा काल में किया गया शुभ कार्य नष्ट हो जाता है (स्वर्ग व पाताल भद्रा अपवाद)।"),
-            ("२. कुलिक काल", "प्रत्येक दिन का एक निश्चित समय कुलिक कहलाता है जो कार्य में विफलता लाता है।"),
-            ("३. राहुकाल", "दिन का १/८ भाग राहु के आधिपत्य में रहता है, जिसमें यात्रा व क्रय-विक्रय सर्वथा वर्जित है।"),
-            ("४. यमगण्ड काल", "यम के प्रभाव वाला समय, जिसमें नवीन कार्य मृत्युतुल्य कष्ट या असफलता देते हैं।"),
-            ("५. दुर्मुहूर्त काल", "प्रतिदिन के दो मुहूर्त दुर्मुहूर्त कहलाते हैं जो कार्य सिद्धि में बाधक हैं।"),
-            ("६. कालवेला व वारवेला", "सूर्य व यम से संबंधित अनिष्टकारी वेलाएं।"),
-            ("७. रिक्ता तिथि दोष", "चतुर्थी, नवमी एवं चतुर्दशी तिथियां 'रिक्ता' कहलाती हैं (सिद्ध योग को छोड़कर वर्जित)।"),
-            ("८. त्रिपुष्कर योग", "भद्रा, विशिष्ट वार व नक्षत्र के संयोग से हानि की तीन बार पुनरावृत्ति होती है।"),
-            ("९. द्विपुष्कर योग", "हानि या घटना की दो बार पुनरावृत्ति कराने वाला योग।"),
-            ("१०. पंचक दोष", "धनिष्ठा के उत्तरार्ध से रेवती पर्यन्त ५ नक्षत्रों में दक्षिण यात्रा, गृह-छत व तृण-संग्रह वर्जित।"),
-            ("११. होलाष्टक दोष", "फाल्गुन शुक्ल अष्टमी से पूर्णिमा पर्यन्त ८ दिन समस्त १६ संस्कार निषिद्ध हैं।"),
-            ("१२. मलमास / अधिकमास", "सूर्य संक्रांति रहित चन्द्र मास, जिसमें समस्त नित्य व नैमित्तिक शुभ संस्कार वर्जित हैं।"),
-            ("१३. क्षयमास दोष", "दो सूर्य संक्रांति वाला मास, अत्यंत दुर्लभ एवं अशुभ माना जाता है।"),
-            ("१४. गुरु तारा अस्त", "देवगुरु बृहस्पति का सूर्य सान्निध्य से अस्त होना (वार्धक्य व बाल्य दोष सहित विवाह वर्जित)।"),
-            ("१५. शुक्र तारा अस्त", "दैत्यगुरु शुक्र का अस्त होना (विवाह, मुंडन, गृह प्रवेश सर्वथा वर्जित)।"),
-            ("१६. सूर्य व चन्द्र ग्रहण वेध", "ग्रहण काल एवं उसके सूतक काल में समस्त मांगलिक कार्य निषिद्ध हैं।"),
-            ("१७. नक्षत्र गंडान्त", "अश्विनी-रेवती, मघा-आश्लेषा, मूल-ज्येष्ठा की संधियां गंडान्त कहलाती हैं।"),
-            ("१८. तिथि गंडान्त", "पूर्णा व नंदा तिथियों की संधियां (पूर्णिमा-प्रतिपदा, आदि)।"),
-            ("१९. लग्न गंडान्त", "कर्क-सिंह, वृश्चिक-धनु, मीन-मेष लग्न संधियां।"),
-            ("२०. विष घटी दोष", "प्रत्येक नक्षत्र की निश्चित विष घटियां समस्त शुभ कार्यों में त्याज्य हैं।"),
-            ("२१. पापकत्र्तरी लग्न", "मुहूर्त लग्न के दोनों ओर (१२वें व २रे भाव में) पाप ग्रहों की उपस्थिति।")
+            ("१. भद्रा (विष्टि करण)", "भद्रा काल में किया गया शुभ कार्य नष्ट हो जाता है।", "🔴 आज सक्रिय" if p_doshas['is_bhadra'] else "🟢 आज दोष मुक्त"),
+            ("२. कुलिक काल", "प्रत्येक दिन का एक निश्चित समय कुलिक कहलाता है जो कार्य में विफलता लाता है।", "⚠️ दिन अनुसार वेला"),
+            ("३. राहुकाल", "दिन का १/८ भाग राहु के आधिपत्य में रहता है, जिसमें यात्रा व मांगलिक कार्य वर्जित हैं।", "🔴 प्रतिदिन १.५ घण्टे सक्रिय"),
+            ("४. यमगण्ड काल", "यम के प्रभाव वाला समय, जिसमें नवीन कार्य कष्ट या असफलता देते हैं।", "⚠️ प्रतिदिन १.५ घण्टे सक्रिय"),
+            ("५. दुर्मुहूर्त काल", "प्रतिदिन के दो मुहूर्त दुर्मुहूर्त कहलाते हैं जो कार्य सिद्धि में बाधक हैं।", "⚠️ वेला आधारित"),
+            ("६. कालवेला व वारवेला", "सूर्य व यम से संबंधित अनिष्टकारी वेलाएं।", "⚠️ वेला आधारित"),
+            ("७. रिक्ता तिथि दोष", "चतुर्थी, नवमी एवं चतुर्दशी तिथियां 'रिक्ता' कहलाती हैं।", "🔴 आज सक्रिय" if p_doshas['is_rikta'] else "🟢 आज दोष मुक्त"),
+            ("८. त्रिपुष्कर योग", "विशिष्ट वार, तिथि व नक्षत्र के संयोग से हानि की तीन बार पुनरावृत्ति।", "🟢 आज दोष मुक्त"),
+            ("९. द्विपुष्कर योग", "हानि या घटना की दो बार पुनरावृत्ति कराने वाला योग।", "🟢 आज दोष मुक्त"),
+            ("१०. पंचक दोष", "धनिष्ठा के उत्तरार्ध से रेवती पर्यन्त ५ नक्षत्रों में दक्षिण यात्रा व गृह-छत वर्जित।", "🔴 आज सक्रिय" if p_doshas['nakshatra_idx'] in [23, 24, 25, 26, 27] else "🟢 आज दोष मुक्त"),
+            ("११. होलाष्टक दोष", "फाल्गुन शुक्ल अष्टमी से पूर्णिमा पर्यन्त समस्त १६ संस्कार निषिद्ध।", "🟢 आज दोष मुक्त"),
+            ("१२. मलमास / पितृपक्ष", "सूर्य संक्रांति रहित मास अथवा पितृपक्ष में मांगलिक संस्कार वर्जित।", "🔴 आज सक्रिय" if (p_doshas['is_pitru_paksha'] or p_doshas['is_kharmas']) else "🟢 आज दोष मुक्त"),
+            ("१३. क्षयमास दोष", "दो सूर्य संक्रांति वाला मास, अत्यंत दुर्लभ एवं अशुभ माना जाता है।", "🟢 आज दोष मुक्त"),
+            ("१४. गुरु तारा अस्त", "देवगुरु बृहस्पति का सूर्य सान्निध्य से अस्त होना (विवाह व गृह प्रवेश वर्जित)।", "🔴 आज सक्रिय" if p_doshas['is_guru_asta'] else "🟢 आज दोष मुक्त"),
+            ("१५. शुक्र तारा अस्त", "दैत्यगुरु शुक्र का अस्त होना (विवाह, मुंडन, गृह प्रवेश सर्वथा वर्जित)।", "🔴 आज सक्रिय" if p_doshas['is_shukra_asta'] else "🟢 आज दोष मुक्त"),
+            ("१६. सूर्य व चन्द्र ग्रहण वेध", "ग्रहण काल एवं उसके सूतक काल में समस्त मांगलिक कार्य निषिद्ध हैं।", "🟢 आज दोष मुक्त"),
+            ("१७. नक्षत्र गंडान्त", "अश्विनी-रेवती, मघा-आश्लेषा, मूल-ज्येष्ठा की संधियां गंडान्त कहलाती हैं।", "⚠️ संवेदनशील संधि"),
+            ("१८. तिथि गंडान्त", "पूर्णा व नंदा तिथियों की संधियां (पूर्णिमा-प्रतिपदा, आदि)।", "⚠️ संधि वेला"),
+            ("१९. लग्न गंडान्त", "कर्क-सिंह, वृश्चिक-धनु, मीन-मेष लग्न संधियां।", "⚠️ लग्न संधि"),
+            ("२०. विष घटी दोष", "प्रत्येक नक्षत्र की निश्चित विष घटियां समस्त शुभ कार्यों में त्याज्य हैं।", "⚠️ घटी अनुसार"),
+            ("२१. पापकत्र्तरी लग्न", "मुहूर्त लग्न के दोनों ओर पाप ग्रहों की उपस्थिति।", "⚠️ लग्न परीक्षण")
         ]
 
-        dosha_df = pd.DataFrame(maha_doshas, columns=["महादोष नाम", "शास्त्रीय लक्षण व निषेध"])
+        dosha_df = pd.DataFrame(maha_doshas, columns=["महादोष नाम", "शास्त्रीय लक्षण व निषेध", "आज की स्थिति"])
         st.dataframe(dosha_df, use_container_width=True, hide_index=True)
 
     # -------------------------------------------------------------
@@ -14487,6 +14624,7 @@ elif selected_idx == 11:
 - 🛕 **विष्णु सहस्रनाम / गणेश अथर्वशीर्ष:** श्री गणेश जी को २१ दूर्वा दल अर्पित करें एवं विष्णु सहस्रनाम का पाठ करें।
 - 🎁 **दोष-निवारक दान:** उड़द, तिल, गुड़ अथवा ताम्र पात्र का दान किसी सुपात्र विप्र को संकल्प पूर्वक दें।
 - 🪔 **दीपदान:** घर के ईशान कोण में गाय के शुद्ध घृत का दीपक प्रज्वलित कर कार्य हेतु प्रस्थान करें।""")
+
 
 elif selected_idx == 12:
     st.subheader("☸️ सुदर्शन चक्र (Sudarshan Chakra - 3-Ring Concentric Mandala)")
