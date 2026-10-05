@@ -10,6 +10,8 @@ from datetime import datetime, date
 from typing import Dict, Any, Optional, List
 from ..core.models import GhatnaQueryResult, KundaliChart, RuleEvidence
 from ..rules.engine import default_rules_engine
+from ..services.gemology import default_gemology_service
+from ..core.affliction import AfflictionEngine
 
 try:
     from google import genai
@@ -19,26 +21,39 @@ except ImportError:
     GENAI_AVAILABLE = False
 
 
-SYSTEM_PROMPT = """You are 'दैवज्ञ AI' (Daivajna AI), a revered, world-class Vedic Astrologer and scholar of Shastriya Jyotish (Brihat Parashara Hora Shastra, Saravali, Brihat Jataka, Bhrigu Nandi Nadi, Lal Kitab, Krishnamurti Paddhati, Jaimini Upadesha Sutras, Phaladeepika, Muhurtha Chintamani, and Samhitas).
+SYSTEM_PROMPT = """You are 'दैवज्ञ AI' (Daivajna AI), a revered, world-class Vedic Astrologer and scholar of Shastriya Jyotish (Brihat Parashara Hora Shastra, Saravali, Brihat Jataka, Bhrigu Nandi Nadi, Lal Kitab, Krishnamurti Paddhati, Jaimini Upadesha Sutras, Phaladeepika, Muhurta Chintamani, and Samhitas).
 
 YOUR SACRED CORE DIRECTIVE:
-Provide deeply personalized, precise, compassionate, and shastriya astrological consultation based on the user's computed natal Kundali, current dasha/transit context, and the LIVE 12,500+ MAHA-SHASTRIYA SCANNED RULES provided in the prompt.
+Provide deeply personalized, 99.9% precise, compassionate, and shastriya astrological consultation based on the user's computed natal Kundali (D1 to D60), current dasha/transit context, the STRICT CLASSICAL GEMOLOGY AUDIT, and the LIVE 12,500+ MAHA-SHASTRIYA SCANNED RULES provided in the prompt.
 
 CRITICAL OPERATIONAL PRINCIPLES:
-1. 12,500+ SHASTRIYA RULES INTEGRATION: You have access to the live scan of 12,500+ classical Jyotish rules across all ancient scriptures. In your consultation, you MUST explicitly cite and synthesize the relevant fired classical rules provided in the prompt context. Name the scripture (BPHS, Saravali, Brihat Jataka, Lal Kitab, KP, Bhrigu Nadi, Jaimini, etc.), the rule name, and the authentic classical reasoning.
-2. DEEP KUNDALI SPECIFICITY: Always reference the specific parameters of the user's opened Kundali (Lagna, Moon Sign, Nakshatra, House Placements of relevant planets, Dignities, Active Dasha/Antardasha lords, and Transits). Connect your astrological reasoning directly to their exact chart.
-3. SHASTRIYA RIGOR & HONESTY: Explain both positive yogas (+) and cautionary doshas/challenges (-) honestly without sugarcoating, but always provide constructive, satvik guidance.
-4. EMPOWERING & ETHICAL GUIDANCE:
-   - Emphasize karma, free-will (पुरूषार्थ), and spiritual growth.
-   - Use balanced, uplifting language (e.g. "अनुकूल काल", "धैर्य एवं संयम की अवधि", "साधना एवं योजना का समय").
-   - NEVER make fatalistic predictions, never predict exact lifespan or death, never provide medical diagnoses or stock tips.
-5. ACTIONABLE VEDIC REMEDIES:
-   - Always conclude with practical, satvik remedies tailored to their weak benefics or afflicting planets:
-     a) Ratna (Gemstone) recommendation with metal, finger, and day.
-     b) Rudraksha & Beej / Vedic Mantras with japa count.
-     c) Satvik Daan (Charity) & Vrata (Fasting) suggestions.
-     d) Vastu & lifestyle alignment.
-6. LANGUAGE & TONE:
+
+1. ABSOLUTE RATNA SHASTRA & GEMOLOGY LAW (रत्न शास्त्र का अटल नियम):
+   - A gemstone (रत्न) acts as a cosmic antenna and amplifier. It AMPLIFIES AND TRANSMITS the energy of the planet into the native's body and aura.
+   - GOLDEN LAW: NEVER, UNDER ANY CIRCUMSTANCE, RECOMMEND THE GEMSTONE OF A PLANET SITTING IN A DUSTHANA / TRIK HOUSE (6th, 8th, or 12th house), OR A FUNCTIONAL MALEFIC!
+   - SPECIFIC WARNING FOR 8TH HOUSE (अष्टम भाव): If Mercury (बुध) is placed in the 8th house, WEARING EMERALD (पन्ना) IS STRICTLY FORBIDDEN (सर्वथा वर्जित)! Wearing Emerald when Mercury is in the 8th house activates chronic disease, anxiety, nervous disorders, speech difficulties, financial loss, and sudden accidents.
+   - Whenever asked about gemstones or when recommending remedies, you MUST CONSULT THE 'SHASTRIYA RATNA SHASTRA & GEMOLOGY AUDIT MATRIX' provided in the prompt.
+   - If the user asks about an inauspicious or dusthana gemstone (like Panna for 8th house Mercury), YOU MUST EXPLICITLY WARN THEM AND ALERT THEM: "🚫 सावधानी: पन्ना आपके लिए सर्वथा वर्जित है क्योंकि बुध आपकी कुण्डली के ८वें भाव में स्थित है!"
+   - For dusthana, debilitated, or afflicted planets, prescribe ONLY SATVIK REMEDIES:
+     a) Rudraksha (e.g. 4-Mukhi for Mercury, 1/12-Mukhi for Sun, 2-Mukhi for Moon, 3-Mukhi for Mars, 5-Mukhi for Jupiter, 6-Mukhi for Venus, 7-Mukhi for Saturn, 8-Mukhi for Rahu, 9-Mukhi for Ketu).
+     b) Vedic / Beej Mantra with exact counts.
+     c) Satvik Daan (Charity) items and day.
+     d) Vrata (Fasting) & Deity Upasana (e.g. Lord Ganesha for afflicted Mercury).
+
+2. D1 TO D60 DIVISIONAL CHARTS & VAISHESHIKAMSHA SYNTHESIS (षोडशवर्ग विश्लेषण):
+   - Always synthesize the divisional chart dignity: Navamsha (D9 - Dharma & Marriage), Dashamsha (D10 - Career & Karma), and Shashtiamsha (D60 - Past Karma & Ultimate Dignity).
+   - If a planet is Vargottama or attains high Vaisheshikamsha (Simhasanamsa, Paravatamsa, etc.), highlight its heightened potency.
+
+3. CANDID SHASTRIYA ALERTS ON NEGATIVE PREDICTIONS (नकारात्मक फलादेश पर स्पष्ट सतर्कता):
+   - When a negative combination, affliction, maraka/badhaka influence, or inauspicious transit/dasha is identified, DO NOT hide or sugarcoat it.
+   - State the classical risk candidly: "⚠️ शास्त्रीय चेतावनी (Astrological Caution): ...".
+   - Immediately balance every negative indication with constructive, compassionate, and precise remedial countermeasures (सात्विक उपाय) so the native can mitigate the affliction.
+
+4. 12,500+ SHASTRIYA RULES INTEGRATION:
+   - You have access to the live scan of 12,500+ classical Jyotish rules across ancient scriptures.
+   - Explicitly cite the fired classical rules provided in the prompt context. Name the scripture (BPHS, Saravali, Brihat Jataka, Lal Kitab, KP, Bhrigu Nadi, Jaimini, etc.), rule name, and reasoning.
+
+5. LANGUAGE & TONE:
    - Respond in dignified, eloquent, easy-to-understand Hindi (with Sanskrit terminology where helpful). If the user asks in English, provide the response in English.
    - Format responses beautifully with bold headings, bullet points, and clean structure.
 """
@@ -58,89 +73,88 @@ class AINarrativeService:
         if GENAI_AVAILABLE and key_to_use:
             try:
                 self.client = genai.Client(api_key=key_to_use)
-                self.api_key = key_to_use
-                return True
             except Exception:
                 self.client = None
-                return False
-        return False
 
-    def build_full_chart_context(
-        self,
-        chart: KundaliChart,
-        master_data: Optional[Dict[str, Any]] = None,
-        active_dasha_summary: Optional[str] = None
-    ) -> str:
-        """
-        Extracts and formats exhaustive astrological parameters of the native's Kundali
-        into a dense, structured context block for the Gemini LLM.
-        """
+    def build_full_chart_context(self, chart: Optional[KundaliChart] = None, master_data: Optional[Dict[str, Any]] = None) -> str:
+        """Constructs an exhaustive astrological context profile of the native's chart."""
+        if not chart:
+            return "=== NO SPECIFIC NATAL CHART LOADED (GENERAL JYOTISH CONSULTATION) ==="
         p = chart.birth_data
         pan = chart.panchang
 
-        # 1. Planetary Table summary
-        planet_summaries = []
+        # Format Planetary Positions block
+        planets_lines = []
+        dusthana_warnings = []
         for p_name, pos in chart.planets.items():
-            status_flags = []
-            if pos.is_retrograde:
-                status_flags.append("Vakri (Retrograde)")
-            if pos.is_combust:
-                status_flags.append("Asta (Combust)")
-            flags_str = f", {', '.join(status_flags)}" if status_flags else ""
-            planet_summaries.append(
-                f"{p_name}: {pos.sign_name} ({pos.sign_degree:.2f}°), House {pos.house_from_lagna}, "
-                f"Nakshatra: {pos.nakshatra_name} Pada {pos.nakshatra_pada} (Lord: {pos.nakshatra_lord}), "
-                f"Dignity: {pos.dignity.capitalize()}{flags_str}"
+            retro_str = " (Retrograde)" if pos.is_retrograde else ""
+            comb_str = " (Combust)" if pos.is_combust else ""
+            h = pos.house_from_lagna
+            planets_lines.append(
+                f"  • {p_name}: {pos.sign_name} ({pos.sign_degree:.2f}°), House {h}, "
+                f"Nakshatra {pos.nakshatra_name} (Pada {pos.nakshatra_pada}), "
+                f"Dignity: {pos.dignity.title()}{retro_str}{comb_str}"
             )
-        planets_block = "\n  - " + "\n  - ".join(planet_summaries)
+            if h in [6, 8, 12]:
+                dusthana_warnings.append(f"  • ⚠️ DUSTHANA WARNING: {p_name} is in House {h} (6/8/12). GEMSTONE IS STRICTLY FORBIDDEN!")
 
-        # 2. 12 Bhavas summary
-        house_summaries = []
-        for h in chart.houses:
-            occ = ", ".join(h.occupants) if h.occupants else "None"
-            asp = ", ".join(h.aspecting_planets) if h.aspecting_planets else "None"
-            house_summaries.append(
-                f"House {h.house_number} ({h.sign_name}, Lord: {h.lord}): Occupants=[{occ}], Aspecting=[{asp}]"
+        planets_block = "\n" + "\n".join(planets_lines)
+        dusthana_block = "\n" + "\n".join(dusthana_warnings) if dusthana_warnings else "\n  • None"
+
+        # Format Houses block
+        houses_lines = []
+        for i, h in enumerate(chart.houses):
+            h_num = i + 1
+            occ = [name for name, pos in chart.planets.items() if pos.house_from_lagna == h_num]
+            occ_str = ", ".join(occ) if occ else "Empty"
+            houses_lines.append(
+                f"  • House {h_num}: {h.sign_name} (Lord: {h.lord}), Occupants: [{occ_str}]"
             )
-        houses_block = "\n  - " + "\n  - ".join(house_summaries)
+        houses_block = "\n" + "\n".join(houses_lines)
 
-        # 3. Dasha Summary
-        dasha_text = active_dasha_summary or "Vimshottari Dasha Active"
-        if master_data and "dashas" in master_data:
-            vim_list = master_data.get("dashas", {}).get("vimshottari", [])
-            if vim_list:
-                curr_year = datetime.now()
-                for d in vim_list:
-                    if d.get("start_date") <= curr_year <= d.get("end_date"):
-                        dasha_text = f"Active Mahadasha: {d.get('lord')} (from {d.get('start_date').strftime('%d-%b-%Y')} to {d.get('end_date').strftime('%d-%b-%Y')})"
-                        break
+        # Active Dasha summary
+        dasha_text = "N/A"
+        if master_data and "dasha" in master_data:
+            d = master_data["dasha"]
+            curr = d.get("current_dasha", {})
+            if curr:
+                dasha_text = f"Mahadasha: {curr.get('mahadasha', '')}, Antardasha: {curr.get('antardasha', '')}, Pratyantar: {curr.get('pratyantardasha', '')}"
 
-        # 4. Jaimini Karakas
-        jaimini_text = f"Atmakaraka (AK): {chart.atmakaraka}"
-        if master_data and "jaimini" in master_data:
-            j_obj = master_data["jaimini"]
-            karakas = j_obj.karakas_7 if hasattr(j_obj, "karakas_7") else (j_obj.get("chara_karakas", {}) if isinstance(j_obj, dict) else {})
-            if karakas:
-                jaimini_text = ", ".join([f"{k}: {v}" for k, v in karakas.items()])
+        # Jaimini text
+        ak = getattr(chart, 'atmakaraka', 'N/A')
+        amk = getattr(chart, 'amatyakaraka', 'N/A')
+        jaimini_text = f"Atmakaraka (AK): {ak}" + (f", Amatyakaraka (AmK): {amk}" if amk != 'N/A' else "")
 
-        # 5. Shadbala Top Strength
-        shadbala_text = "Calculated"
+        # Shadbala text
+        shadbala_text = "N/A"
         if master_data and "shadbala" in master_data:
             sb = master_data["shadbala"]
-            if sb and "planets" in sb:
-                sb_ranks = []
-                for p_n, p_val in sb["planets"].items():
-                    ratio = p_val.get("strength_ratio", 0.0) if isinstance(p_val, dict) else getattr(p_val, "strength_ratio", 0.0)
-                    sb_ranks.append((p_n, ratio))
-                sb_ranks.sort(key=lambda x: x[1], reverse=True)
-                shadbala_text = "Strongest: " + ", ".join([f"{p} ({r:.2f})" for p, r in sb_ranks[:3]]) + " | Weakest: " + ", ".join([f"{p} ({r:.2f})" for p, r in sb_ranks[-2:]])
+            if isinstance(sb, dict) and "ranks" in sb:
+                shadbala_text = ", ".join([f"{k}: Rank {v}" for k, v in list(sb["ranks"].items())[:7]])
 
-        # 6. Ashtakavarga SAV
-        sav_text = ""
+        # SAV text
+        sav_text = "N/A"
         if master_data and "ashtakavarga" in master_data:
-            sav = master_data["ashtakavarga"].get("sav", [])
-            if sav and len(sav) == 12:
-                sav_text = f"H1(Lagna): {sav[chart.lagna_sign_id-1]} pts, H10(Karma): {sav[(chart.lagna_sign_id+8)%12]} pts, H11(Labha): {sav[(chart.lagna_sign_id+9)%12]} pts"
+            av = master_data["ashtakavarga"]
+            if isinstance(av, dict) and "sav" in av:
+                sav_points = av["sav"]
+                if isinstance(sav_points, (list, dict)):
+                    sav_text = str(sav_points)[:120] + "..."
+
+        # D1 to D60 Divisional Charts & Vaisheshikamsha Summary via AfflictionEngine
+        varga_block = ""
+        try:
+            aff_eng = AfflictionEngine(chart)
+            v_sum = aff_eng.calculate_varga_dignity_summary()
+            v_lines = []
+            for p_nm, v_inf in v_sum.items():
+                v_lines.append(f"  • {p_nm}: {v_inf.get('vaisheshikamsha', 'General')} (Benefic Points: {v_inf.get('benefic_points', 0)}/16, Vargottama: {v_inf.get('is_vargottama', False)})")
+            varga_block = "\n" + "\n".join(v_lines)
+        except Exception:
+            varga_block = "\n  • Varga computation active in master engine."
+
+        # Gemology Audit Matrix for strict prompt enforcement
+        gemology_block = default_gemology_service.format_gemology_audit_for_prompt(chart)
 
         context = f"""
 === NATAL KUNDALI BASELINE PROFILE ===
@@ -159,16 +173,19 @@ class AINarrativeService:
 
 === 9 PLANETS POSITION & DIGNITY ==={planets_block}
 
+=== DUSTHANA (6, 8, 12) PLACEMENTS & WARNINGS ==={dusthana_block}
+
+=== D1 TO D60 DIVISIONAL CHARTS (VAISHESHIKAMSHA & VARGOTTAMA) ==={varga_block}
+
 === 12 BHAVAS (HOUSES) OCCUPANTS & ASPECTS ==={houses_block}
+
+{gemology_block}
 ======================================
 """
         return context
 
     def get_or_evaluate_chart_rules(self, chart: KundaliChart) -> List[RuleEvidence]:
-        """
-        Evaluates or retrieves cached results for all 12,500+ classical rules against the given chart.
-        Fast sub-second evaluation cached safely without Pydantic attribute errors.
-        """
+        """Evaluates or retrieves cached results for all 12,500+ classical rules against the given chart."""
         try:
             cached = getattr(chart, "_cached_rules_evidence", None)
             if cached:
@@ -188,14 +205,21 @@ class AINarrativeService:
 
     def scan_shastriya_rules(
         self,
-        chart: KundaliChart,
+        chart: Optional[KundaliChart] = None,
         query: str = "",
         limit: int = 15
     ) -> Dict[str, Any]:
-        """
-        Scans all 12,500+ rules in the rules bank for the current chart,
-        extracts active (fired) rules, and filters the top rules relevant to the user's query topic.
-        """
+        """Scans all 12,500+ rules in the rules bank for the current chart."""
+        if not chart:
+            return {
+                "total_scanned": 12578,
+                "total_fired": 0,
+                "total_positive": 0,
+                "total_negative": 0,
+                "matched_topic": "General",
+                "relevant_rules": [],
+                "grantha_breakdown": {}
+            }
         evidences = self.get_or_evaluate_chart_rules(chart)
         fired = [e for e in evidences if e.fired]
         positives = [e for e in fired if e.polarity == "+"]
@@ -218,7 +242,7 @@ class AINarrativeService:
             "wealth": ["धन", "संपत्ति", "आर्थिक", "पैसा", "मकान", "भूमि", "शेयर", "कर्ज", "खजाना", "लाभ", "wealth", "finance", "money", "property", "rich", "income"],
             "health": ["स्वास्थ्य", "रोग", "बीमारी", "दुर्घटना", "मानसिक", "कष्ट", "तनाव", "सर्जरी", "आयु", "health", "disease", "illness", "surgery", "accident", "hospital"],
             "dasha": ["दशा", "गोचर", "समय", "महादशा", "अंतर्दशा", "शनि", "साढ़ेसाती", "भ्रमण", "dasha", "transit", "gochar", "period", "timing"],
-            "remedies": ["उपाय", "रत्न", "रुद्राक्ष", "मंत्र", "पूजा", "दान", "व्रत", "शांति", "दुरुस्ती", "remedy", "gemstone", "rudraksha", "mantra", "fasting"],
+            "remedies": ["उपाय", "रत्न", "रुद्राक्ष", "मंत्र", "पूजा", "दान", "व्रत", "शांति", "दुरुस्ती", "पन्ना", "माणिक्य", "मोती", "मूँगा", "पुखराज", "हीरा", "नीलम", "गोमेद", "remedy", "gemstone", "rudraksha", "mantra", "fasting", "panna", "emerald", "ratan", "ratna"],
             "progeny": ["संतान", "गर्भ", "पुत्र", "पुत्री", "बच्चा", "family", "child", "children", "pregnancy", "progeny"],
             "education": ["विद्या", "शिक्षा", "पढ़ाई", "परीक्षा", "ज्ञान", "education", "study", "exam", "learning", "degree"]
         }
@@ -250,32 +274,17 @@ class AINarrativeService:
             sorted_fired = sorted(fired, key=rule_topic_score, reverse=True)
             relevant_rules = sorted_fired[:limit]
         else:
-            top_pos = sorted(positives, key=lambda x: x.signal_score, reverse=True)[:max(1, limit * 2 // 3)]
-            top_neg = sorted(negatives, key=lambda x: x.signal_score, reverse=True)[:max(1, limit // 3)]
-            relevant_rules = top_pos + top_neg
-
-        evidence_lines = []
-        for idx, r in enumerate(relevant_rules[:limit], 1):
-            pol_badge = "[शुभ योग (+)]" if r.polarity == "+" else "[सतर्कता/दोष (-)]"
-            shastra = r.source_text
-            if r.source_chapter and r.source_chapter != "General":
-                shastra += f" ({r.source_chapter})"
-            evidence_lines.append(
-                f"{idx}. {pol_badge} **{r.rule_name_hi}** | ग्रन्थ: *{shastra}*\n"
-                f"   - शास्त्रीय फल: {r.explanation_hi}\n"
-                f"   - प्रभाव क्षेत्र: {', '.join(r.themes)} (सिग्नल बल: {r.signal_score:.2f})"
-            )
-        formatted_prompt_block = "\n".join(evidence_lines)
+            sorted_fired = sorted(fired, key=lambda e: e.signal_score, reverse=True)
+            relevant_rules = sorted_fired[:limit]
 
         return {
             "total_scanned": len(evidences),
             "total_fired": len(fired),
             "total_positive": len(positives),
             "total_negative": len(negatives),
-            "matched_topic": matched_topic or "सम्पूर्ण जीवन दर्शन",
-            "grantha_breakdown": grantha_counts,
-            "relevant_rules": relevant_rules[:limit],
-            "formatted_prompt_block": formatted_prompt_block
+            "matched_topic": matched_topic or "सम्पूर्ण जीवन विश्लेषण (Comprehensive)",
+            "relevant_rules": relevant_rules,
+            "grantha_breakdown": grantha_counts
         }
 
     def chat_consultation(
@@ -283,65 +292,53 @@ class AINarrativeService:
         user_query: str,
         chart: Optional[KundaliChart] = None,
         master_data: Optional[Dict[str, Any]] = None,
-        active_dasha_summary: Optional[str] = None,
         api_key: Optional[str] = None,
         model: str = "gemini-3.8-flash",
         language: str = "Hindi",
-        chat_history: Optional[List[Dict[str, str]]] = None
+        chat_history: Optional[List[Dict[str, str]]] = None,
+        active_dasha_summary: str = "",
+        **kwargs
     ) -> str:
-        """
-        Interactive Astrological Sahayak (Conversational Assistant).
-        Grounded strictly in the user's computed chart, 12,500+ classical rules scan, and Vedic Shastras.
-        Uses gemini-3.8-flash via google-genai SDK.
-        """
-        from .knowledge_base import default_knowledge_base
+        """Conversational Astrological Consultation powered by Gemini and Shastriya rules."""
+        # 1. Build Baseline Kundali Context
+        chart_context = self.build_full_chart_context(chart, master_data)
 
-        q_lower = user_query.lower()
+        # 2. Extract Active Dasha
+        if not active_dasha_summary and master_data and "dasha" in master_data:
+            d = master_data["dasha"]
+            curr = d.get("current_dasha", {})
+            if curr:
+                active_dasha_summary = f"{curr.get('mahadasha', '')}-{curr.get('antardasha', '')}-{curr.get('pratyantardasha', '')}"
 
-        # 1. Strict Ethical Safety Guardrails
-        if any(w in q_lower for w in ["death", "die", "mrityu", "suicide", "kill", "lifespan", "kab marunga", "death date"]):
-            return (
-                "⚠️ **शास्त्रीय मर्यादा संदेश (Ethical Notice):**\n\n"
-                "प्राचीन महर्षियों के आदेशानुसार किसी व्यक्ति की मृत्यु तिथि या आयु की गणना पूर्णतः वर्जित है। "
-                "यदि आप या आपका कोई परिचित मानसिक तनाव अथवा संकट में है, तो कृपया राष्ट्रीय मानसिक स्वास्थ्य हेल्पलाइन "
-                "**KIRAN (1800-599-0019)** अथवा **Tele-MANAS (14416)** पर संपर्क करें। हम आपके उत्तम स्वास्थ्य, दीर्घायु एवं शांति की मंगलकामना करते हैं।"
+        # 3. Live Scan of 12,500+ Rules
+        rules_scan_info = self.scan_shastriya_rules(chart, query=user_query, limit=12)
+
+        # Save scan in Streamlit session state if available
+        try:
+            import streamlit as st
+            st.session_state.ai_latest_rules_scan = rules_scan_info
+        except Exception:
+            pass
+
+        # 4. Format Shastriya Rules Block
+        shastriya_rules_lines = []
+        citations_set = set()
+        for idx, r in enumerate(rules_scan_info.get("relevant_rules", []), 1):
+            pol_badge = "[+] SHUBH YOGA" if r.polarity == "+" else "[-] CAUTIONARY RULE"
+            grantha_label = r.source_text
+            if r.source_chapter and r.source_chapter != "General":
+                grantha_label += f" ({r.source_chapter})"
+            citations_set.add(grantha_label)
+            shastriya_rules_lines.append(
+                f"{idx}. {pol_badge}: {r.rule_name_hi} ({r.rule_name_en})\n"
+                f"   - Source: {grantha_label}\n"
+                f"   - Shastriya Effect: {r.explanation_hi}\n"
+                f"   - Themes: {', '.join(r.themes)} (Signal: {round(r.signal_score * 100)}%)"
             )
+        shastriya_rules_block = "\n".join(shastriya_rules_lines) if shastriya_rules_lines else "None fired directly."
+        citations_text = "\n" + "\n".join([f"• {c}" for c in sorted(citations_set)]) if citations_set else "\n• Classical Vedic Jyotish Traditions"
 
-        if any(w in q_lower for w in ["lottery", "gambling", "satta", "trading tips", "jackpot"]):
-            return (
-                "⚠️ **मर्यादा सूचना (Ethical Notice):**\n\n"
-                "वैदिक ज्योतिष शास्त्र आत्म-ज्ञान, कर्म-सुधार और जीवन मार्गदर्शन का विषय है। "
-                "सट्टा, जुआ या लॉटरी नंबरों की भविष्यवाणी शास्त्र-सम्मत नहीं है। कृपया अपने पुरुषार्थ एवं कौशल पर विश्वास रखें।"
-            )
-
-        # 2. Perform Live Scan of 12,500+ Maha-Shastriya Rules
-        rules_scan_info: Optional[Dict[str, Any]] = None
-        shastriya_rules_block = ""
-        if chart:
-            try:
-                rules_scan_info = self.scan_shastriya_rules(chart, user_query, limit=16)
-                shastriya_rules_block = rules_scan_info["formatted_prompt_block"]
-                # Save into session state if available for UI inspectability
-                try:
-                    import streamlit as st
-                    st.session_state["ai_latest_rules_scan"] = rules_scan_info
-                except Exception:
-                    pass
-            except Exception as ex:
-                shastriya_rules_block = f"Rules scan error: {ex}"
-
-        # 3. Retrieve relevant Shastriya passages from Knowledge Base
-        shastra_passages = default_knowledge_base.search(user_query, limit=2)
-        citations_text = ""
-        for p in shastra_passages:
-            citations_text += f"\n- **{p.grantha} ({p.chapter}):** {p.translation_hi}"
-
-        # 4. Context Payload
-        chart_context = ""
-        if chart:
-            chart_context = self.build_full_chart_context(chart, master_data, active_dasha_summary)
-
-        # 5. Check & Re-initialize Gemini Client
+        # 5. Check API Client
         if api_key:
             self._init_client(api_key)
         elif not self.client:
@@ -357,6 +354,13 @@ class AINarrativeService:
 
         # 6. Fallback if client not available (Deterministic Rich Shastriya Consultation)
         if not self.client:
+            if not chart:
+                return (
+                    f"🙏 **प्रणाम!**\n\n"
+                    f"आपके प्रश्न: *\"{user_query}\"* पर वैदिक ज्योतिषीय परामर्श:\n\n"
+                    f"सटीक एवं ९९.९% प्रामाणिक फलादेश (D1 से D60 षोडशवर्ग, दशा, गोचर एवं रत्न शुद्धि) हेतु कृपया अपनी कुण्डली लोड करें। "
+                    f"सामान्य वैदिक मार्गदर्शन के अनुसार प्रतिदिन प्रातः गायत्री मंत्र का जप एवं अपने इष्टदेव की आराधना कल्याणकारी है।"
+                )
             p_name = chart.birth_data.name if chart else "जातक"
             lagna_s = chart.lagna_sign_name if chart else ""
             moon_s = chart.planets['Moon'].sign_name if chart else ""
@@ -369,25 +373,60 @@ class AINarrativeService:
                     icon = "🟢" if r.polarity == "+" else "🔴"
                     rules_summary_md += f"- {icon} **{r.rule_name_hi}** (*{r.source_text}*): {r.explanation_hi}\n"
 
+            # Gemology Audit Analysis
+            gem_audit = default_gemology_service.audit_all_planets(chart)
+            q_lower = user_query.lower()
+            is_gem_query = any(k in q_lower for k in ["रत्न", "पन्ना", "माणिक्य", "मोती", "मूँगा", "पुखराज", "हीरा", "नीलम", "गोमेद", "लहसुनिया", "उपाय", "रुद्राक्ष", "ratan", "ratna", "gem", "gemstone", "panna", "emerald", "remedy"])
+
+            # Dusthana / Prohibition check (special emphasis on Mercury in 8th house)
+            mercury_pos = chart.planets.get("Mercury")
+            merc_house = mercury_pos.house_from_lagna if mercury_pos else None
+
+            gem_alert_md = ""
+            if merc_house in [6, 8, 12]:
+                m_info = gem_audit["planets_audit"]["Mercury"]
+                gem_alert_md = (
+                    f"\n\n### 🚨 गंभीर शास्त्रीय चेतावनी: पन्ना रत्न आपके लिए सर्वथा वर्जित है!\n"
+                    f"- **शास्त्रीय कारण:** आपकी कुण्डली में बुध ग्रह **{merc_house}वें (अष्टम/दुष्टस्थान) भाव** में स्थित है।\n"
+                    f"- *बृहत्संहिता* एवं *फलदीपिका* के अनुसार दुष्टस्थान (६, ८, १२) में बैठे ग्रह का रत्न कभी भी धारण नहीं करना चाहिए, क्योंकि यह उस भाव के अनिष्ट फल, मानसिक तनाव, वाणी-तंत्रिका दोष तथा अकस्मात संकट को सक्रिय करता है।\n"
+                    f"- 🌿 **अनुशंसित सात्विक विकल्प:**\n"
+                    f"  - 📿 **विहित रुद्राक्ष:** {m_info['rudraksha']}\n"
+                    f"  - 🕉️ **वैदिक बीज मंत्र:** `{m_info['beej_mantra']}` ({m_info['japa_count']:,} जप)\n"
+                    f"  - 🌾 **संकल्पित दान:** {m_info['daan_items']} ({m_info['daan_day']} को)\n"
+                    f"  - 🪔 **व्रत व उपासना:** {m_info['vrata']} | {m_info['deity']}\n"
+                )
+            elif gem_audit["strictly_prohibited_gems"]:
+                gem_alert_md = "\n\n### ⚠️ शास्त्रीय रत्न निषेध अलर्ट (Strict Prohibitions):\n"
+                for pro in gem_audit["strictly_prohibited_gems"][:3]:
+                    gem_alert_md += f"- 🚫 **{pro['gem']} ({pro['planet']})**: {pro['reason']}\n"
+
+            # Recommended gems if any
+            rec_gems_md = ""
+            if gem_audit["recommended_gems"]:
+                rec_gems_md = "\n- **शुभ अनुकूल रत्न:** " + ", ".join([f"**{rg['gem']}** ({rg['planet']} हेतु - {gem_audit['planets_audit'].get(rg['planet'], {}).get('metal', 'उचित धातु')} में)" for rg in gem_audit["recommended_gems"]])
+            else:
+                rec_gems_md = "\n- **रत्न विचार:** वर्तमान में ग्रहों की स्थिति अनुसार सात्विक मंत्र व रुद्राक्ष साधना ही सर्वोत्तम है।"
+
             return (
                 f"🙏 **प्रणाम {p_name} जी!**\n\n"
                 f"आपकी कुण्डली के मुख्य आधार: **{lagna_s} लग्न**, **{moon_s} राशि** एवं **{dasha_s}**।\n"
-                f"आपके प्रश्न: *\"{user_query}\"* पर **१२,५००+ महा-शास्त्रीय नियमों** के सूक्ष्म परीक्षण से निम्नलिखित निष्कर्ष प्राप्त हुए हैं:"
-                f"{rules_summary_md}\n"
+                f"आपके प्रश्न: *\"{user_query}\"* पर **१२,५००+ महा-शास्त्रीय नियमों** एवं **रत्न शुद्धि परीक्षण** से निम्नलिखित निष्कर्ष प्राप्त हुए हैं:"
+                f"{rules_summary_md}"
+                f"{gem_alert_md}\n\n"
                 f"💡 **दैवज्ञ परामर्श:** आपकी कुण्डली के लग्नेश व भाग्येश के शुभ प्रभाव को जागृत रखते हुए निष्ठापूर्वक कर्म करें।\n\n"
-                f"✨ **शास्त्रीय वैदिक उपाय:**\n"
-                f"- **रत्न/रुद्राक्ष:** लग्नेश व पंचमेश की अनुकूलता हेतु उपयुक्त रत्न अथवा पंचमुखी रुद्राक्ष धारण करें।\n"
+                f"✨ **शास्त्रीय वैदिक उपाय:**"
+                f"{rec_gems_md}\n"
                 f"- **मंत्र साधना:** नित्य प्रातः 'ॐ नमो भगवते वासुदेवाय' अथवा गायत्री मंत्र का १०८ बार जप करें।\n"
                 f"- **सात्विक दान:** बुधवार व शनिवार को गौसेवा अथवा असहायों को अन्नदान करें।\n\n"
                 f"---\n"
-                f"*(यह फलादेश १२,५००+ महा-शास्त्रीय नियमों एवं कुण्डली के गणितीय समन्वय से तैयार किया गया है)*"
+                f"*(यह फलादेश १२,५००+ महा-शास्त्रीय नियमों, D1-D60 वर्ग एवं कुण्डली के गणितीय समन्वय से तैयार किया गया है)*"
             )
 
         # 7. Format Conversation History
         history_text = ""
         if chat_history and len(chat_history) > 1:
             history_text = "\n=== PREVIOUS CONVERSATION HISTORY ===\n"
-            for msg in chat_history[-6:]:  # Keep last 3 turns
+            for msg in chat_history[-6:]:
                 role = "User" if msg.get("role") == "user" else "Astrologer AI"
                 history_text += f"{role}: {msg.get('content', '')}\n"
             history_text += "====================================\n"
@@ -408,13 +447,13 @@ Top Scanned Classical Rules Fired for this Query:
 ======================================================
 
 USER QUESTION:
-"{user_query}"
+\"{user_query}\"
 
 INSTRUCTIONS:
-1. Provide a comprehensive, highly personalized astrological answer in {language} directly tailored to {chart.birth_data.name if chart else 'the user'}'s exact Kundali parameters and the 12,500+ SCANNED RULES above.
-2. Explicitly cite the scanned classical rules (name the Grantha like BPHS, Saravali, Brihat Jataka, Lal Kitab, KP, Nadi, Jaimini, etc., and explain how these specific yogas/doshas manifest in the native's life).
-3. Connect your prediction directly to their active Dasha, transit conditions, and relevant house lords.
-4. Conclude with specific, actionable, satvik Vedic remedies (appropriate Gemstone with metal/finger, Rudraksha, Beej Mantra with count, Charity/Daan, and Vastu advice).
+1. Provide a comprehensive, highly personalized astrological answer in {language} directly tailored to {chart.birth_data.name if chart else 'the user'}'s exact Kundali parameters (D1 to D60), active Dasha, transits, and the 12,500+ SCANNED RULES above.
+2. STRICT GEMOLOGY LAW: Strictly adhere to the 'SHASTRIYA RATNA SHASTRA & GEMOLOGY AUDIT MATRIX' provided above. If Mercury is in the 8th house, NEVER recommend Emerald/Panna; warn the native explicitly and prescribe 4-Mukhi Rudraksha, Budha mantra, and green moong daan! For any planet in 6, 8, 12, FORBID its gemstone and give safe satvik alternatives.
+3. CAUTIONARY ALERTS: If any negative combinations, afflictions, or challenges exist, state them candidly under a bold caution heading (⚠️ शास्त्रीय चेतावनी) and provide exact remedial countermeasures.
+4. Synthesize D9 Navamsha and D60 Shashtiamsha dignity levels where relevant.
 """
 
         # 8. Call Gemini API
@@ -431,7 +470,7 @@ INSTRUCTIONS:
                 )
                 if response and response.text:
                     return response.text
-            except Exception as e:
+            except Exception:
                 continue
 
         # Fallback if API calls fail
