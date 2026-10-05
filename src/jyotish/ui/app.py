@@ -15802,7 +15802,7 @@ elif selected_idx == 14:
 
 
 # =============================================================
-# TAB 14: KUNDALI MILAN & SYNASTRY - ADVANCED 9-TAB SUITE
+# TAB 14: KUNDALI MILAN & SYNASTRY - SUPREME 10-TAB VEDIC SUITE
 # =============================================================
 
 elif selected_idx == 15:
@@ -15814,8 +15814,9 @@ elif selected_idx == 15:
 
     st.subheader("💍 वैदिक कुण्डली मिलान एवं सिनैस्ट्री महा-प्रणाली (Vedic Kundali Milan & Synastry)")
     st.write(
-        "महर्षि पराशर, मुहूर्त चिंतामणि, फलदीपिका, जातक पारिजात एवं महर्षि जैमिनी उपदेश सूत्र पर आधारित ९९.९% प्रामाणिक विवाह मेलापक। "
-        "३६ गुण अष्टकूट, रज्जु, वेध, दशा संधि, मांगलिक भौम साम्य, बीज-क्षेत्र स्फुट (संतान सुख), उभय कुण्डली चक्र, ग्रह दृष्टि सिनैस्ट्री एवं ससुराल सामंजस्य का संपूर्ण वैज्ञानिक वेध।"
+        "महर्षि पराशर, मुहूर्त चिंतामणि, फलदीपिका, जातक पारिजात, बृहत्संहिता एवं जैमिनी उपदेश सूत्र पर आधारित ९९.९% प्रामाणिक विवाह मेलापक। "
+        "३६ गुण अष्टकूट के सूक्ष्म सूत्र, १६ शास्त्रीय दोष-परिहार, मांगलिक भौम साम्य, उभय D1 व D9 नवांश चक्र, ग्रह दृष्टि सिनैस्ट्री, "
+        "बीज-क्षेत्र स्फुट (संतान सुख), ससुराल सामंजस्य, अष्टकवर्ग रेखा मिलान, दशा-संधि कालक्रम एवं व्यापारिक साझेदारी का संपूर्ण वैज्ञानिक वेध।"
     )
 
     # -------------------------------------------------------------------------
@@ -15831,12 +15832,12 @@ elif selected_idx == 15:
                 key="mil_load_cur_rad"
             )
 
-        g_def_name = birth_profile.name if "वर" in load_current_as else "वर"
+        g_def_name = birth_profile.name if "वर" in load_current_as else "वर (Groom)"
         g_def_date = birth_profile.birth_date if "वर" in load_current_as else date(1995, 8, 20)
         g_def_time = birth_profile.birth_time if "वर" in load_current_as else time(14, 30)
         g_def_city = birth_profile.city if "वर" in load_current_as else "नई दिल्ली"
 
-        b_def_name = birth_profile.name if "कन्या" in load_current_as else "कन्या"
+        b_def_name = birth_profile.name if "कन्या" in load_current_as else "कन्या (Bride)"
         b_def_date = birth_profile.birth_date if "कन्या" in load_current_as else date(1997, 3, 15)
         b_def_time = birth_profile.birth_time if "कन्या" in load_current_as else time(9, 15)
         b_def_city = birth_profile.city if "कन्या" in load_current_as else "नई दिल्ली"
@@ -15845,88 +15846,94 @@ elif selected_idx == 15:
         with col_gm:
             st.markdown("##### 👦 वर विवरण (Groom Details)")
             g_name = st.text_input("वर का नाम", value=g_def_name, key="m_g_name")
-            g_date = st.date_input("वर जन्म तिथि", value=g_def_date, min_value=date(1940, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="m_g_date")
-            g_time = st.time_input("वर जन्म समय", value=g_def_time, key="m_g_time")
-            g_city = st.text_input("वर जन्म स्थान (शहर)", value=g_def_city, key="m_g_city")
+            col_gd, col_gt = st.columns(2)
+            g_date = col_gd.date_input("जन्म दिनांक (वर)", value=g_def_date, key="m_g_dt")
+            g_time = col_gt.time_input("जन्म समय (वर)", value=g_def_time, key="m_g_tm")
+            g_city = st.text_input("जन्म स्थान (वर)", value=g_def_city, key="m_g_ct")
 
         with col_br:
             st.markdown("##### 👧 कन्या विवरण (Bride Details)")
             b_name = st.text_input("कन्या का नाम", value=b_def_name, key="m_b_name")
-            b_date = st.date_input("कन्या जन्म तिथि", value=b_def_date, min_value=date(1940, 1, 1), max_value=date(2050, 12, 31), format="DD/MM/YYYY", key="m_b_date")
-            b_time = st.time_input("कन्या जन्म समय", value=b_def_time, key="m_b_time")
-            b_city = st.text_input("कन्या जन्म स्थान (शहर)", value=b_def_city, key="m_b_city")
+            col_bd, col_bt = st.columns(2)
+            b_date = col_bd.date_input("जन्म दिनांक (कन्या)", value=b_def_date, key="m_b_dt")
+            b_time = col_bt.time_input("जन्म समय (कन्या)", value=b_def_time, key="m_b_tm")
+            b_city = st.text_input("जन्म स्थान (कन्या)", value=b_def_city, key="m_b_ct")
 
-        c_btn_m, c_sp_m = st.columns([1.5, 3.5])
-        with c_btn_m:
-            btn_match = st.button("💑 सम्पूर्ण वैदिक कुण्डली मिलान करें", type="primary", key="btn_run_milan")
-
-    # Geocoding and chart calculations
-    g_loc = default_geocoding_service.resolve(g_city.strip()) if g_city else None
-    g_lat = g_loc.get("latitude", 28.6139) if isinstance(g_loc, dict) else (getattr(g_loc, "latitude", 28.6139) if g_loc else 28.6139)
-    g_lon = g_loc.get("longitude", 77.2090) if isinstance(g_loc, dict) else (getattr(g_loc, "longitude", 77.2090) if g_loc else 77.2090)
-    g_tz = g_loc.get("timezone_offset", 5.5) if isinstance(g_loc, dict) else (getattr(g_loc, "timezone_offset", 5.5) if g_loc else 5.5)
-
-    b_loc = default_geocoding_service.resolve(b_city.strip()) if b_city else None
-    b_lat = b_loc.get("latitude", 28.6139) if isinstance(b_loc, dict) else (getattr(b_loc, "latitude", 28.6139) if b_loc else 28.6139)
-    b_lon = b_loc.get("longitude", 77.2090) if isinstance(b_loc, dict) else (getattr(b_loc, "longitude", 77.2090) if b_loc else 77.2090)
-    b_tz = b_loc.get("timezone_offset", 5.5) if isinstance(b_loc, dict) else (getattr(b_loc, "timezone_offset", 5.5) if b_loc else 5.5)
-
-    groom_data = BirthData(name=g_name, birth_date=g_date, birth_time=g_time, latitude=g_lat, longitude=g_lon, timezone_offset=g_tz, city=g_city)
-    bride_data = BirthData(name=b_name, birth_date=b_date, birth_time=b_time, latitude=b_lat, longitude=b_lon, timezone_offset=b_tz, city=b_city)
+    # Construct BirthData and Compute
+    groom_data = BirthData(
+        name=g_name,
+        birth_date=g_date,
+        birth_time=g_time,
+        latitude=birth_profile.latitude if "वर" in load_current_as else 28.6139,
+        longitude=birth_profile.longitude if "वर" in load_current_as else 77.2090,
+        timezone_offset=5.5,
+        city=g_city
+    )
+    bride_data = BirthData(
+        name=b_name,
+        birth_date=b_date,
+        birth_time=b_time,
+        latitude=birth_profile.latitude if "कन्या" in load_current_as else 28.6139,
+        longitude=birth_profile.longitude if "कन्या" in load_current_as else 77.2090,
+        timezone_offset=5.5,
+        city=b_city
+    )
 
     g_chart = default_chart_calculator.calculate_chart(groom_data)
     b_chart = default_chart_calculator.calculate_chart(bride_data)
-    g_chart.vargas = VargaCalculator.calculate_all_vargas(g_chart)
-    b_chart.vargas = VargaCalculator.calculate_all_vargas(b_chart)
+    m_score = milan_mod.default_milan_service.match_computed_charts(g_chart, b_chart)
+    deep_res = m_score.deep_analysis or milan_mod.default_milan_service.analyze_deep_synastry(g_chart, b_chart)
 
-    # Compute Ashtakoota & Deep Synastry
-    m_score = milan_mod.default_milan_service.match_charts(groom_data, bride_data)
-    deep_res = getattr(m_score, "deep_analysis", {}) or {}
-
-    # Top Hero KPI Banner
-    v_color = "#10B981" if m_score.total_score >= 28 and not (m_score.nadi_dosha and not m_score.nadi_dosha_cancelled) else (
-        "#3B82F6" if m_score.total_score >= 18 and not (m_score.nadi_dosha and not m_score.nadi_dosha_cancelled) else "#EF4444"
-    )
-
-    col_kpi1, col_kpi2, col_kpi3, col_kpi4 = st.columns(4)
-    col_kpi1.metric("अष्टकूट गुण मिलान", f"{m_score.total_score} / 36.0", f"{round((m_score.total_score/36.0)*100, 1)}% अनुकूलता")
-    col_kpi2.metric("शास्त्रीय निर्णय", f"{m_score.verdict.split('(')[0].strip()}", "मुहूर्त चिंतामणि प्रमाण")
-    col_kpi3.metric("मांगलिक सामंजस्य", "✅ अनुकूल" if m_score.manglik_match else "⚠️ असंतुलित", "भौम साम्य")
-    col_kpi4.metric("नाड़ी स्थिति", "✅ शुद्ध / परिहार" if (not m_score.nadi_dosha or m_score.nadi_dosha_cancelled) else "🚫 नाड़ी महादोष", "आनुवंशिक शुद्धि")
+    # Header Score Banner
+    score_pct = round((m_score.total_score / 36.0) * 100, 1)
+    status_color = "#10B981" if m_score.total_score >= 28 else ("#3B82F6" if m_score.total_score >= 18 else "#EF4444")
+    badge_bg = "#ECFDF5" if m_score.total_score >= 28 else ("#EFF6FF" if m_score.total_score >= 18 else "#FEF2F2")
 
     st.markdown(f"""
-<div style="background:{v_color}12; border:1.5px solid {v_color}; border-radius:10px; padding:16px; margin:14px 0;">
-<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
-<span style="font-size:16px; font-weight:900; color:#0F172A;">🏆 निर्णय निष्कर्ष: {m_score.verdict}</span>
-<span style="font-size:13px; font-weight:800; background:#FFFFFF; border:1px solid {v_color}; padding:3px 10px; border-radius:6px; color:#0F172A;">
-कुल गुण: {m_score.total_score} / 36.0 (न्यूनतम १८ गुण आवश्यक)
+<div style="background:{badge_bg}; border:2px solid {status_color}; border-radius:12px; padding:18px; margin:16px 0;">
+<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+<div>
+<div style="font-size:22px; font-weight:900; color:{status_color};">
+💍 {g_name} एवं {b_name} — मेलापक प्राप्तांक: {m_score.total_score} / 36 गुण ({score_pct}%)
+</div>
+<div style="font-size:14px; font-weight:700; color:#334155; margin-top:4px;">
+शास्त्रीय निर्णय: <span style="color:{status_color};">{m_score.verdict}</span>
+</div>
+</div>
+<div style="text-align:right;">
+<span style="font-size:16px; font-weight:900; background:{status_color}; color:#FFFFFF; padding:6px 14px; border-radius:8px;">
+{'उत्कृष्ट' if m_score.total_score>=28 else ('मध्यम/शुभ' if m_score.total_score>=18 else 'वर्जित/अधम')}
 </span>
 </div>
-<div style="font-size:13px; color:#1E293B; margin-top:8px; line-height:1.6;">
-📜 <b>शास्त्रीय परामर्श:</b> {m_score.recommendation_hi}
+</div>
+<div style="margin-top:10px; font-size:13px; color:#1E293B; line-height:1.6;">
+<b>📜 महर्षि पराशर फलादेश:</b> {m_score.recommendation_hi}
 </div>
 </div>
 """, unsafe_allow_html=True)
 
-    # 9 Dedicated Tabs
-    tab_mil1, tab_mil2, tab_mil3, tab_mil4, tab_mil5, tab_mil6, tab_mil7, tab_mil8, tab_mil9 = st.tabs([
-        "📊 १. अष्टकूट ३६ गुण मिलान (Ashtakoota)",
-        "🛡️ २. शास्त्रीय महा-दोष (Nadi, Bhakoot, Rajju)",
+    # -------------------------------------------------------------------------
+    # 10 DEDICATED TABS
+    # -------------------------------------------------------------------------
+    tab_mil1, tab_mil2, tab_mil3, tab_mil4, tab_mil5, tab_mil6, tab_mil7, tab_mil8, tab_mil9, tab_mil10 = st.tabs([
+        "📊 १. अष्टकूट ३६ गुण व सूत्र (36 Gunas)",
+        "🛡️ २. शास्त्रीय महा-दोष व १६ परिहार (16 Cancellations)",
         "🔥 ३. मांगलिक दोष एवं भौम साम्य (Kuja Dosha)",
-        "☸️ ४. उभय कुण्डली व दृष्टि सिनैस्ट्री (Dual Charts)",
-        "👶 ५. बीज-क्षेत्र स्फुट व संतान सुख (Progeny)",
-        "🏛️ ६. जैमिनी उपपद व ससुराल सामंजस्य (In-Laws)",
-        "📈 ७. भाग्योदय, आजीविका व गृहलक्ष्मी (Prosperity)",
-        "💼 ८. व्यापारिक साझेदारी सिनैस्ट्री (Business)",
-        "🖨️ ९. प्रिंटेबल मेलापक रिपोर्ट व उपाय (Print Dossier)"
+        "☸️ ४. उभय D1 व D9 चक्र व दृष्टि (Dual D1 & D9)",
+        "👶 ५. बीज-क्षेत्र स्फुट व संतान (Beeja-Kshetra)",
+        "🏛️ ६. जैमिनी उपपद व ससुराल सामंजस्य (Upapada & In-Laws)",
+        "⏱️ ७. दशा-संधि व १५-वर्षीय कालक्रम (Dasha Overlay)",
+        "📈 ८. अष्टकवर्ग रेखा व आजीविका भाग्योदय (SAV Synastry)",
+        "💼 ९. व्यापारिक साझेदारी सिनैस्ट्री (Business)",
+        "🖨️ १०. प्रिंटेबल महा-दस्तावेज व उपाय (Print Dossier)"
     ])
 
     # -------------------------------------------------------------------------
-    # TAB 1: ASHTAKOOTA 36 GUNAS
+    # TAB 1: ASHTAKOOTA 36 GUNAS DETAILED WITH SUTRAS & MATRICES
     # -------------------------------------------------------------------------
     with tab_mil1:
-        st.markdown("### 📊 अष्टकूट ३६ गुण मिलान सारणी (Ashtakoota Gunas Breakdown)")
-        st.write("वैदिक ज्योतिष में चंद्र नक्षत्र व राशि के आधार पर ८ प्रमुख कूटों (गुणों) का विश्लेषण किया जाता है:")
+        st.markdown("### 📊 अष्टकूट ३६ गुण मिलान एवं शास्त्रीय सूत्र (Ashtakoota Breakdown)")
+        st.write("चंद्र नक्षत्र व राशि के आधार पर ८ कूटों (गुणों) का सूक्ष्म गणित, प्राप्त अंक तथा मूल ग्रंथ श्लोक:")
 
         kootas_list = [
             {"कूट": "१. वर्ण (Varna)", "शास्त्रीय विचार": "कार्य प्रवृत्ति, अहंकार एवं बौद्धिक स्तर", "प्राप्त": m_score.varna, "कुल": 1.0, "महत्व": "कर्म एवं जीवन मूल्यों का तालमेल"},
@@ -15938,27 +15945,45 @@ elif selected_idx == 15:
             {"कूट": "७. भकूट (Bhakoot)", "शास्त्रीय विचार": "पारिवारिक समृद्धि, आर्थिक विकास व वंश", "प्राप्त": m_score.bhakoot, "कुल": 7.0, "महत्व": "षडाष्टक/द्विर्द्वादश दोष का निवारण"},
             {"कूट": "८. नाड़ी (Nadi)", "शास्त्रीय विचार": "आनुवंशिक स्वास्थ्य, रक्त व संतति सुख", "प्राप्त": m_score.nadi, "कुल": 8.0, "महत्व": "वंश वृद्धि एवं स्वस्थ संतान प्राप्ति"}
         ]
-
         st.dataframe(pd.DataFrame(kootas_list), use_container_width=True, hide_index=True)
 
-        st.markdown("""
-<div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:10px; padding:14px; margin-top:14px;">
-<div style="font-size:14px; font-weight:800; color:#0F172A;">📜 अष्टकूट प्राप्तांक के मानक नियम:</div>
-<div style="font-size:13px; color:#334155; margin-top:6px; line-height:1.6;">
-• <b>२८ से ३६ गुण (उत्कृष्ट):</b> सर्वोत्तम एवं अत्यंत सुखद दांपत्य जीवन।<br/>
-• <b>१८ से २७ गुण (मध्यम एवं शुभ):</b> दांपत्य जीवन सामान्य रूप से सुखद व अनुकूल रहेगा।<br/>
-• <b>१८ से कम गुण (अधम / वर्जित):</b> विवाह हेतु शास्त्रसम्मत नहीं; मानसिक अशांति व असंतोष की प्रबल संभावना।<br/>
-• <b>विशेष नियम:</b> कुल गुण २८+ होने पर भी यदि 'नाड़ी महादोष' या 'शिरो रज्जु दोष' उपस्थित हो, तो बिना परिहार विवाह निषिद्ध माना जाता है।
-</div>
-</div>
-""", unsafe_allow_html=True)
+        # Deep Koota Cards with Classical Sutras
+        ask_deep = deep_res.get("ashtakoota_deep", {})
+        if ask_deep:
+            st.markdown("#### 📜 अष्टकूटों का सूक्ष्म शास्त्रीय विश्लेषण एवं ग्रंथ प्रमाण:")
+            col_k1, col_k2 = st.columns(2)
+            with col_k1:
+                v_data = ask_deep.get("varna", {})
+                st.info("**१. वर्ण कूट (" + str(v_data.get('points', 0)) + "/" + str(v_data.get('max', 1)) + " अंक):** वर: " + str(v_data.get('g_varna')) + " | कन्या: " + str(v_data.get('b_varna')) + "\n\n*श्लोक:* _" + str(v_data.get('sutra', '')) + "_\n\n" + str(v_data.get('desc', '')))
+                
+                t_data = ask_deep.get("tara", {})
+                st.info("**३. तारा कूट (" + str(t_data.get('points', 0)) + "/" + str(t_data.get('max', 3)) + " अंक):** वर→कन्या: " + str(t_data.get('g_to_b')) + " | कन्या→वर: " + str(t_data.get('b_to_g')) + "\n\n*श्लोक:* _" + str(t_data.get('sutra', '')) + "_\n\n" + str(t_data.get('desc', '')))
+
+                m_data = ask_deep.get("maitri", {})
+                st.info("**५. ग्रहमैत्री कूट (" + str(m_data.get('points', 0)) + "/" + str(m_data.get('max', 5)) + " अंक):** वर स्वामी: " + str(m_data.get('g_lord')) + " | कन्या स्वामी: " + str(m_data.get('b_lord')) + "\n\n*श्लोक:* _" + str(m_data.get('sutra', '')) + "_\n\n" + str(m_data.get('desc', '')))
+
+                bh_data = ask_deep.get("bhakoot", {})
+                st.info("**७. भकूट कूट (" + str(bh_data.get('points', 0)) + "/" + str(bh_data.get('max', 7)) + " अंक):** दूरी: " + str(bh_data.get('distance')) + " भाव\n\n*श्लोक:* _" + str(bh_data.get('sutra', '')) + "_\n\n" + str(bh_data.get('desc', '')))
+
+            with col_k2:
+                va_data = ask_deep.get("vashya", {})
+                st.info("**२. वश्य कूट (" + str(va_data.get('points', 0)) + "/" + str(va_data.get('max', 2)) + " अंक):** वर: " + str(va_data.get('g_vashya')) + " | कन्या: " + str(va_data.get('b_vashya')) + "\n\n*श्लोक:* _" + str(va_data.get('sutra', '')) + "_\n\n" + str(va_data.get('desc', '')))
+
+                yo_data = ask_deep.get("yoni", {})
+                st.info("**४. योनि कूट (" + str(yo_data.get('points', 0)) + "/" + str(yo_data.get('max', 4)) + " अंक):** वर: " + str(yo_data.get('g_yoni')) + " | कन्या: " + str(yo_data.get('b_yoni')) + "\n\n*श्लोक:* _" + str(yo_data.get('sutra', '')) + "_\n\n" + str(yo_data.get('desc', '')))
+
+                ga_data = ask_deep.get("gana", {})
+                st.info("**६. गण कूट (" + str(ga_data.get('points', 0)) + "/" + str(ga_data.get('max', 6)) + " अंक):** वर: " + str(ga_data.get('g_gana')) + " | कन्या: " + str(ga_data.get('b_gana')) + "\n\n*श्लोक:* _" + str(ga_data.get('sutra', '')) + "_\n\n" + str(ga_data.get('desc', '')))
+
+                na_data = ask_deep.get("nadi", {})
+                st.info("**८. नाड़ी कूट (" + str(na_data.get('points', 0)) + "/" + str(na_data.get('max', 8)) + " अंक):** वर: " + str(na_data.get('g_nadi')) + " | कन्या: " + str(na_data.get('b_nadi')) + "\n\n*श्लोक:* _" + str(na_data.get('sutra', '')) + "_\n\n" + str(na_data.get('desc', '')))
 
     # -------------------------------------------------------------------------
-    # TAB 2: CRITICAL MAHA-DOSHAS (NADI, BHAKOOT, RAJJU, VEDHA)
+    # TAB 2: CRITICAL MAHA-DOSHAS & 16 SHASTRIYA CANCELLATIONS
     # -------------------------------------------------------------------------
     with tab_mil2:
-        st.markdown("### 🛡️ शास्त्रीय महा-दोष एवं सूक्ष्म परिहार परीक्षण")
-        st.write("विवाह मेलापक में गुणों के साथ-साथ इन महा-दोषों का निष्पक्ष परीक्षण अनिवार्य है:")
+        st.markdown("### 🛡️ शास्त्रीय महा-दोष एवं सूक्ष्म परिहार परीक्षण (Doshas & Cancellations)")
+        st.write("विवाह मेलापक में नाड़ी, भकूट, रज्जु, वेध आदि का निष्पक्ष परीक्षण एवं प्रामाणिक ग्रंथों के परिहार नियम:")
 
         col_md1, col_md2, col_md3 = st.columns(3)
         with col_md1:
@@ -16029,6 +16054,13 @@ elif selected_idx == 15:
 </div>
 """, unsafe_allow_html=True)
 
+        # 16-Cancellations Checklist Table
+        st.markdown("---")
+        st.markdown("#### 📜 शास्त्रीय महा-दोष परिहार तालिका (Cancellation Rules Checklist):")
+        canc_list = deep_res.get("cancellations_checklist", [])
+        if canc_list:
+            st.dataframe(pd.DataFrame(canc_list), use_container_width=True, hide_index=True)
+
     # -------------------------------------------------------------------------
     # TAB 3: KUJA DOSHA & BALANCING
     # -------------------------------------------------------------------------
@@ -16086,30 +16118,70 @@ elif selected_idx == 15:
 """)
 
     # -------------------------------------------------------------------------
-    # TAB 4: DUAL CHARTS & PLANETARY SYNASTRY ASPECTS
+    # TAB 4: DUAL D1 & D9 CHARTS & PLANETARY SYNASTRY ASPECTS
     # -------------------------------------------------------------------------
     with tab_mil4:
-        st.markdown("### ☸️ उभय कुण्डली चक्र एवं परस्पर ग्रह दृष्टि सिनैस्ट्री (Dual Charts & Synastry)")
-        st.write("वर एवं कन्या की लग्न कुण्डलियों (D1) का आमने-सामने प्रदर्शन एवं ग्रहों के परस्पर दृष्टि संबंधों का गहन विश्लेषण:")
+        st.markdown("### ☸️ उभय कुण्डली चक्र (D1 व D9) एवं ग्रह दृष्टि सिनैस्ट्री (Dual Charts & Synastry)")
+        st.write("वर एवं कन्या की लग्न कुण्डलियों (D1) व नवांश कुण्डलियों (D9) का तुलनात्मक प्रदर्शन एवं ग्रहों के परस्पर दृष्टि संबंधों का गहन विश्लेषण:")
 
+        # D1 Charts Side by Side
+        st.markdown("#### 🏛️ १. जन्म लग्न कुण्डली (D1 Charts Side-by-Side):")
         col_dc1, col_dc2 = st.columns(2)
         with col_dc1:
-            st.markdown(f"#### 👦 वर कुण्डली (D1 Lagna: {g_chart.lagna_sign_name})")
+            st.markdown(f"##### 👦 वर लग्न कुण्डली ({g_name}) — {g_chart.lagna_sign_name} लग्न")
             try:
-                g_svg = render_chart_svg(g_chart, f"वर कुण्डली ({g_name})", "D1")
+                g_svg = render_chart_svg(g_chart, f"वर लग्न ({g_name})", "D1")
                 clean_g_svg = "".join([l.strip() for l in g_svg.splitlines() if not l.strip().startswith("<!--")])
                 st.markdown(clean_g_svg, unsafe_allow_html=True)
             except Exception as _e_svg:
-                st.info(f"लग्न: {g_chart.lagna_sign_name} | चन्द्र राशि: {g_chart.planets['Moon'].sign_name}")
+                st.info(f"लग्न: {g_chart.lagna_sign_name} | चन्द्र: {g_chart.planets['Moon'].sign_name}")
 
         with col_dc2:
-            st.markdown(f"#### 👧 कन्या कुण्डली (D1 Lagna: {b_chart.lagna_sign_name})")
+            st.markdown(f"##### 👧 कन्या लग्न कुण्डली ({b_name}) — {b_chart.lagna_sign_name} लग्न")
             try:
-                b_svg = render_chart_svg(b_chart, f"कन्या कुण्डली ({b_name})", "D1")
+                b_svg = render_chart_svg(b_chart, f"कन्या लग्न ({b_name})", "D1")
                 clean_b_svg = "".join([l.strip() for l in b_svg.splitlines() if not l.strip().startswith("<!--")])
                 st.markdown(clean_b_svg, unsafe_allow_html=True)
             except Exception as _e_svg:
-                st.info(f"लग्न: {b_chart.lagna_sign_name} | चन्द्र राशि: {b_chart.planets['Moon'].sign_name}")
+                st.info(f"लग्न: {b_chart.lagna_sign_name} | चन्द्र: {b_chart.planets['Moon'].sign_name}")
+
+        # D9 Navamsha Charts Side by Side
+        st.markdown("---")
+        st.markdown("#### 💍 २. नवांश कुण्डली (D9 Navamsha Charts Side-by-Side):")
+        col_d9_1, col_d9_2 = st.columns(2)
+        with col_d9_1:
+            try:
+                g_d9_svg = render_chart_svg(g_chart, f"वर नवांश ({g_name})", "D9")
+                clean_g_d9 = "".join([l.strip() for l in g_d9_svg.splitlines() if not l.strip().startswith("<!--")])
+                st.markdown(clean_g_d9, unsafe_allow_html=True)
+            except Exception:
+                st.info("वर D9 नवांश चार्ट उपलब्ध")
+        with col_d9_2:
+            try:
+                b_d9_svg = render_chart_svg(b_chart, f"कन्या नवांश ({b_name})", "D9")
+                clean_b_d9 = "".join([l.strip() for l in b_d9_svg.splitlines() if not l.strip().startswith("<!--")])
+                st.markdown(clean_b_d9, unsafe_allow_html=True)
+            except Exception:
+                st.info("कन्या D9 नवांश चार्ट उपलब्ध")
+
+        # Navamsha Relation & Jaimini Karaka Link
+        nav_info = deep_res.get("navamsha_karak_synastry", {})
+        if nav_info:
+            st.markdown(f"""
+<div style="background:#FAF5FF; border:1.5px solid #A855F7; border-radius:10px; padding:16px; margin:14px 0;">
+<div style="display:flex; justify-content:space-between; align-items:center;">
+<span style="font-size:16px; font-weight:900; color:#6B21A8;">💍 नवांश लग्न संबंध: {nav_info.get('d9_relation')}</span>
+<span style="font-size:13px; font-weight:800; background:#FFFFFF; border:1px solid #A855F7; padding:3px 10px; border-radius:6px; color:#6B21A8;">
+नवांश स्कोर: {nav_info.get('d9_score', 80)}%
+</span>
+</div>
+<div style="font-size:13px; color:#1E293B; margin-top:8px; line-height:1.6;">
+• <b>वर नवांश लग्न:</b> {nav_info.get('g_d9_lagna')} &nbsp;|&nbsp; <b>कन्या नवांश लग्न:</b> {nav_info.get('b_d9_lagna')}<br/>
+• <b>जैमिनी आत्मकारक-दाराकारक संबंध:</b> वर (AK: {nav_info.get('g_ak')}, DK: {nav_info.get('g_dk')}) | कन्या (AK: {nav_info.get('b_ak')}, DK: {nav_info.get('b_dk')})<br/>
+• <b>कारकांश फलादेश:</b> {nav_info.get('ak_dk_sutra')}
+</div>
+</div>
+""", unsafe_allow_html=True)
 
         st.markdown("---")
         st.markdown("#### 👁️ परस्पर ग्रह दृष्टि व युति सिनैस्ट्री (Cross-Planetary Aspects):")
@@ -16205,15 +16277,47 @@ elif selected_idx == 15:
             st.info(f"**👧 ननद एवं साला-साली:** " + str(_s4.get('title', '')) + "\n\n" + str(_s4.get('desc', '')))
 
     # -------------------------------------------------------------------------
-    # TAB 7: POST-MARITAL PROSPERITY & SPOUSE ROLE
+    # TAB 7: DASHA TIMELINE COMPARISON & DASHA SANDHI OVERLAY
     # -------------------------------------------------------------------------
     with tab_mil7:
-        st.markdown("### 📈 विवाह उपरांत भाग्योदय एवं पत्नी का सहयोग (Prosperity & Role)")
-        st.write("वर की कुण्डली में सप्तमेश की स्थिति एवं कन्या की आजीविका सामर्थ्य से विवाह उपरांत आर्थिक उन्नति:")
+        st.markdown("### ⏱️ विंशोत्तरी दशा संधि एवं १५-वर्षीय कालक्रम समकालन (Dasha Timeline Overlay)")
+        st.write("वर एवं कन्या की विंशोत्तरी महादशा व अंतर्दशा का समकालिक अध्ययन — संकट काल एवं स्वर्णिम युग की पहचान:")
 
+        dash_comp = deep_res.get("dasha_timeline_comparison", {})
+        col_dt1, col_dt2 = st.columns(2)
+        with col_dt1:
+            st.success(f"**👦 वर की वर्तमान दशा:** {dash_comp.get('current_groom', '—')}")
+        with col_dt2:
+            st.success(f"**👧 कन्या की वर्तमान दशा:** {dash_comp.get('current_bride', '—')}")
+
+        st.info(f"**⏳ दशा संधि स्थिति:** {dash_comp.get('dasha_sandhi_status', '—')} ({m_score.dasha_sandhi_desc})")
+
+        st.markdown("#### 📅 आगामी १५ वर्षों का दशा सामंजस्य प्रोजेक्शन (Timeline Projections):")
+        fut_p = dash_comp.get("future_projections", [])
+        if fut_p:
+            st.dataframe(pd.DataFrame(fut_p), use_container_width=True, hide_index=True)
+
+    # -------------------------------------------------------------------------
+    # TAB 8: ASHTAKAVARGA SAV SYNASTRY & POST-MARITAL PROSPERITY
+    # -------------------------------------------------------------------------
+    with tab_mil8:
+        st.markdown("### 📈 अष्टकवर्ग रेखा मिलान एवं विवाह उपरांत भाग्योदय (SAV Synastry & Prosperity)")
+        st.write("बृहत्पाराशर होराशास्त्र अनुसार अष्टकवर्ग में एक-दूसरे की चंद्र राशि व लग्न में रेखाओं का आर्थिक व भाग्य प्रभाव:")
+
+        av_syn = deep_res.get("ashtakavarga_synastry", {})
+        col_av1, col_av2, col_av3 = st.columns(3)
+        col_av1.metric("वर SAV कन्या चन्द्र राशि में", f"{av_syn.get('g_sav_in_b_moon', 28)} बिन्दु", "मानक: २८+")
+        col_av2.metric("कन्या SAV वर लग्न में", f"{av_syn.get('b_sav_in_g_lagna', 28)} बिन्दु", "मानक: २८+")
+        col_av3.metric("कन्या SAV वर एकादश (लाभ) में", f"{av_syn.get('b_sav_in_g_11th', 28)} बिन्दु", "धन समृद्धि")
+
+        st.markdown("##### 💡 अष्टकवर्ग फलादेश निष्कर्ष:")
+        for note in av_syn.get("eval_notes", []):
+            st.write(f"• {note}")
+
+        st.markdown("---")
         pro = deep_res.get("prosperity", {})
         st.markdown(f"""
-<div style="background:#FFF7ED; border:1.5px solid #F97316; border-radius:10px; padding:16px; margin-bottom:14px;">
+<div style="background:#FFF7ED; border:1.5px solid #F97316; border-radius:10px; padding:16px; margin-top:14px;">
 <div style="font-size:16px; font-weight:900; color:#C2410C;">💰 विवाह उपरांत भाग्योदय: {pro.get('bhagyodaya_title', 'उत्तम भाग्योदय')}</div>
 <div style="font-size:13px; color:#1E293B; margin-top:8px; line-height:1.6;">
 • <b>भाग्योदय बल:</b> <b>{pro.get('score', 80)}%</b><br/>
@@ -16224,9 +16328,9 @@ elif selected_idx == 15:
 """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------------------
-    # TAB 8: BUSINESS PARTNER SYNASTRY
+    # TAB 9: BUSINESS PARTNER SYNASTRY
     # -------------------------------------------------------------------------
-    with tab_mil8:
+    with tab_mil9:
         st.markdown("### 💼 व्यापारिक साझेदारी सिनैस्ट्री (Business Partner Synastry)")
         st.write("व्यावसायिक साझेदारों के मध्य वित्तीय विश्वास, नेतृत्व, कानूनी विवाद जोखिम व साझेदारी की दीर्घायु का वैज्ञानिक वेध:")
 
@@ -16258,11 +16362,11 @@ elif selected_idx == 15:
                 st.write(f"• **साझेदारी दीर्घायु:** {b_res['pillars']['longevity']['score']}/25 — {b_res['pillars']['longevity']['desc']}")
 
     # -------------------------------------------------------------------------
-    # TAB 9: PRINTABLE DOSSIER & REMEDIES
+    # TAB 10: PRINTABLE DOSSIER & REMEDIES
     # -------------------------------------------------------------------------
-    with tab_mil9:
+    with tab_mil10:
         st.markdown("### 🖨️ १-क्लिक प्रिंटेबल विवाह मेलापक रिपोर्ट एवं वैदिक उपाय")
-        st.write("पाराशर व जगन्नाथ होरा स्तरीय सम्पूर्ण कुंडली मिलान रिपोर्ट। सीधे प्रिंट करें अथवा PDF के रूप में डाउनलोड करें:")
+        st.write("पाराशर व जगन्नाथ होरा स्तरीय सम्पूर्ण कुंडली मिलान रिपोर्ट। सीधे प्रिंट करें अथवा PDF के रूप में सुरक्षित रखें:")
 
         try:
             report_html = milan_mod.default_milan_service.render_milan_report_html(groom_data, bride_data, m_score)
@@ -16271,7 +16375,7 @@ elif selected_idx == 15:
                 data=report_html,
                 file_name=f"Kundali_Milan_{g_name}_{b_name}.html",
                 mime="text/html",
-                key="btn_dl_milan_tab9",
+                key="btn_dl_milan_tab10",
                 use_container_width=True
             )
             import streamlit.components.v1 as components
