@@ -93,3 +93,30 @@ def test_ai_sahayak_panna_prohibition_when_mercury_in_8th():
     assert ("वर्जित" in response or "निषेध" in response or "चेतावनी" in response)
     assert ("८वें" in response or "8" in response or "अष्टम" in response)
     assert "रुद्राक्ष" in response
+
+
+def test_ai_sahayak_marriage_query_dual_kundali():
+    """Verify that when queried about marriage, AI Sahayak synthesizes Natal + Prashna and answers precisely."""
+    bd = BirthData(
+        name="Shri Test",
+        birth_date=datetime.date(1995, 8, 15),
+        birth_time=datetime.time(10, 30),
+        latitude=28.6139,
+        longitude=77.2090,
+        timezone_offset=5.5
+    )
+    chart = default_chart_calculator.calculate_full_chart(bd)
+    master_bundle = default_master_calculator.calculate_all(chart)
+
+    response = default_narrative_service.chat_consultation(
+        user_query="meri shadi kb tak hogi?",
+        chart=chart,
+        master_data=master_bundle,
+        api_key=None,
+        language="Hindi"
+    )
+
+    assert ("विवाह" in response or "शादी" in response)
+    assert ("प्रश्न" in response or "ताजिक" in response)
+    assert ("सप्तम" in response or "भाव" in response)
+    assert ("उपाय" in response or "मंत्र" in response)

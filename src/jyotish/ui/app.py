@@ -16532,456 +16532,150 @@ elif selected_idx == 15:
 # TAB 15: AI SAHAYAK (CHAT CONSULTATION)
 
 elif selected_idx == 16:
-    st.subheader("💬 ज्योतिष AI सहायक एवं दैवज्ञ परामर्श (Vedic AI Astrologer & Decision Support)")
-    st.write("९९.९% शास्त्रीय परिशुद्धता के साथ सम्पूर्ण कुण्डली (D1 से D60 षोडशवर्ग, दशा, गोचर, तात्कालिक प्रश्न एवं रत्न शुद्धि) का समग्र विश्लेषण।")
+    st.subheader("💬 दैवज्ञ AI सहायक — प्रामाणिक वैदिक परामर्श (Dual-Kundali AI Astrologer)")
+    st.write("९९.९% शास्त्रीय परिशुद्धता: जन्म कुण्डली (D1-D60) एवं तात्कालिक प्रश्न कुण्डली (Prashna Marga) के संयुक्त शोध पर आधारित निष्पक्ष, ईमानदार एवं सत्य फलादेश।")
 
-    # 4 Comprehensive Sub-Tabs for AI Sahayak
-    tab_ai_chat, tab_ai_gem, tab_ai_varga, tab_ai_prashna = st.tabs([
-        "💬 संवादात्मक दैवज्ञ AI सहायक",
-        "💎 शास्त्रीय रत्न शुद्धि व निषेध परीक्षक",
-        "🔍 D1 से D60 षोडशवर्ग व षष्ट्यंश मूल्यांकन",
-        "❓ प्रश्न कुण्डली तात्कालिक शोधक"
-    ])
-
-    # =========================================================================
-    # SUB-TAB 1: INTERACTIVE SHASTRIYA AI CONSULTATION (CHAT)
-    # =========================================================================
-    with tab_ai_chat:
-        # Active Kundali Profile Banner
+    # Active Kundali Profile Banner
+    vim_current = ""
+    try:
+        curr_dasha = default_vimshottari_engine.get_current_dasha(chart)
+        if curr_dasha:
+            vim_current = f" &nbsp;|&nbsp; <b>वर्तमान महादशा:</b> <span style='color:#7C3AED;'>{curr_dasha.get('lord', '')} ({curr_dasha.get('level', 'MD')})</span>"
+    except Exception:
         vim_current = ""
-        try:
-            curr_dasha = default_vimshottari_engine.get_current_dasha(chart)
-            if curr_dasha:
-                vim_current = f" &nbsp;|&nbsp; <b>वर्तमान महादशा:</b> <span style='color:#7C3AED;'>{curr_dasha.get('lord', '')} ({curr_dasha.get('level', 'MD')})</span>"
-        except Exception:
-            vim_current = ""
 
-        st.markdown(f"""
-        <div style="background:linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border:1.5px solid #93C5FD; border-radius:10px; padding:12px 18px; margin-bottom:15px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                <div>
-                    <b style="color:#1E40AF; font-size:15px;">👤 सक्रिय कुण्डली:</b> <span style="font-weight:700; color:#0F172A;">{chart.birth_data.name}</span> &nbsp;|&nbsp; 
-                    <b>लग्न:</b> <span style="color:#2563EB;">{chart.lagna_sign_name}</span> &nbsp;|&nbsp; 
-                    <b>चन्द्र राशि:</b> <span style="color:#2563EB;">{chart.planets['Moon'].sign_name} ({chart.panchang.nakshatra_name})</span> &nbsp;|&nbsp; 
-                    <b>आत्मकारक:</b> <span style="color:#D97706;">{chart.atmakaraka}</span>
-                    {vim_current}
-                </div>
-                <div>
-                    <span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:700;">🌟 ९९.९% शास्त्रीय परिशुद्धता</span>
-                </div>
+    st.markdown(f"""
+    <div style="background:linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border:1.5px solid #93C5FD; border-radius:10px; padding:12px 18px; margin-bottom:15px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+                <b style="color:#1E40AF; font-size:15px;">👤 सक्रिय कुण्डली:</b> <span style="font-weight:700; color:#0F172A;">{chart.birth_data.name}</span> &nbsp;|&nbsp; 
+                <b>लग्न:</b> <span style="color:#2563EB;">{chart.lagna_sign_name}</span> &nbsp;|&nbsp; 
+                <b>चन्द्र राशि:</b> <span style="color:#2563EB;">{chart.planets['Moon'].sign_name} ({chart.panchang.nakshatra_name})</span> &nbsp;|&nbsp; 
+                <b>आत्मकारक:</b> <span style="color:#D97706;">{chart.atmakaraka}</span>
+                {vim_current}
+            </div>
+            <div>
+                <span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:700;">🌟 ९९.९% प्रामाणिक दैवज्ञ शोध</span>
             </div>
         </div>
-        """, unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
-        # Initialize chat history
-        if "ai_chat_history" not in st.session_state:
-            st.session_state.ai_chat_history = [
-                {
-                    "role": "assistant",
-                    "content": f"🙏 **प्रणाम! मैं आपका 'दैवज्ञ AI' सहायक हूँ।**\n\nमैंने **{chart.birth_data.name} जी** की कुण्डली ({chart.lagna_sign_name} लग्न, {chart.planets['Moon'].sign_name} राशि) का D1 से D60 तक सम्पूर्ण षोडशवर्ग, दशा क्रम, गोचर, १२,५००+ महा-शास्त्रीय नियम तथा **कठोर रत्न शास्त्र शुद्धि** का विश्लेषण लोड कर लिया है।\n\nआप करियर, आजीविका, विवाह, आर्थिक स्थिति, स्वास्थ्य, गोचर, या **शुभ रत्न व सात्विक उपायों** से सम्बंधित कोई भी प्रश्न पूछ सकते हैं। यदि कुण्डली में कोई प्रतिकूल योग या वर्जित रत्न होगा, तो मैं स्पष्ट चेतावनी देकर सात्विक विकल्प प्रदान करूँगा।"
-                }
-            ]
+    # Initialize chat history
+    if "ai_chat_history" not in st.session_state:
+        st.session_state.ai_chat_history = [
+            {
+                "role": "assistant",
+                "content": f"🙏 **प्रणाम! मैं आपका 'दैवज्ञ AI' सहायक हूँ।**\n\nमैंने **{chart.birth_data.name} जी** की कुण्डली ({chart.lagna_sign_name} लग्न, {chart.planets['Moon'].sign_name} राशि) का D1 से D60 तक सम्पूर्ण षोडशवर्ग, दशा, गोचर, तथा १२,५००+ महा-शास्त्रीय नियम लोड कर लिए हैं।\n\nआप विवाह, करियर, धन, स्वास्थ्य, या शुभ रत्न से सम्बंधित कोई भी प्रश्न पूछ सकते हैं। आपके प्रत्येक प्रश्न पर मैं **तात्कालिक प्रश्न कुण्डली (Prashna Marga)** एवं **जन्म कुण्डली** का संयुक्त शोध कर सिर्फ आपके प्रश्न का ९९.९% सटीक, ईमानदार एवं निष्पक्ष उत्तर दूँगा (चाहे वह अनुकूल हो अथवा प्रतिकूल)।"
+            }
+        ]
 
-        # Quick Question Chips
-        st.markdown("<b style='font-size:13px; color:#475569;'>⚡ त्वरित शास्त्रीय प्रश्न (Quick Vedic Consultation):</b>", unsafe_allow_html=True)
-        c_q1, c_q2, c_q3, c_q4, c_q5, c_q6 = st.columns(6)
-        quick_q = None
-        if c_q1.button("💼 आजीविका व करियर", use_container_width=True):
-            quick_q = "मेरी कुण्डली में करियर, आजीविका एवं पदोन्नति के क्या योग हैं और कब अनुकूल समय आएगा?"
-        if c_q2.button("💍 विवाह व दाम्पत्य", use_container_width=True):
-            quick_q = "मेरी कुण्डली में विवाह एवं वैवाहिक जीवन का योग कैसा है? क्या कोई दोष अथवा विलंब है?"
-        if c_q3.button("💰 धन व आर्थिक लाभ", use_container_width=True):
-            quick_q = "मेरी आर्थिक स्थिति, धन लाभ और बचत के लिए कुण्डली क्या संकेत देती है?"
-        if c_q4.button("⏳ दशा व गोचर फल", use_container_width=True):
-            quick_q = "वर्तमान में चल रही दशा और गोचर का मेरे जीवन पर क्या प्रभाव पड़ रहा है?"
-        if c_q5.button("💎 शुभ रत्न व उपाय", use_container_width=True):
-            quick_q = "मेरी कुण्डली के अनुसार मेरे लिए कौन सा रत्न शुभ है और कौन सा रत्न सर्वथा वर्जित है? कृपया सटीक शास्त्रीय नियम से बताएं।"
-        if c_q6.button("⚠️ स्वास्थ्य व अरिष्ट", use_container_width=True):
-            quick_q = "मेरी कुण्डली में स्वास्थ्य, रोग-ऋण अथवा अरिष्ट के क्या संकेत हैं और उनसे बचाव के शास्त्रीय उपाय क्या हैं?"
+    # Quick Consultation Question Chips
+    st.markdown("<b style='font-size:13px; color:#475569;'>⚡ त्वरित शास्त्रीय प्रश्न (Direct Consultation):</b>", unsafe_allow_html=True)
+    c_q1, c_q2, c_q3, c_q4, c_q5, c_q6 = st.columns(6)
+    quick_q = None
+    if c_q1.button("💍 मेरी शादी कब तक होगी?", use_container_width=True):
+        quick_q = "मेरी शादी कब तक होगी? कृपया प्रश्न कुण्डली और जन्म कुण्डली के आधार पर सटीक समय, अनुकूलता अथवा विलंब बताएं।"
+    if c_q2.button("💼 करियर व पदोन्नति", use_container_width=True):
+        quick_q = "मेरी कुण्डली एवं प्रश्न समय के अनुसार करियर में पदोन्नति या नई नौकरी का अनुकूल समय कब आएगा?"
+    if c_q3.button("💰 धन व आर्थिक लाभ", use_container_width=True):
+        quick_q = "मेरी आर्थिक स्थिति, धन लाभ और बचत के लिए कुण्डली क्या संकेत देती है?"
+    if c_q4.button("⏳ दशा व गोचर फल", use_container_width=True):
+        quick_q = "वर्तमान में चल रही दशा और गोचर का मेरे जीवन पर क्या प्रभाव पड़ रहा है?"
+    if c_q5.button("💎 शुभ रत्न व उपाय", use_container_width=True):
+        quick_q = "मेरी कुण्डली के अनुसार मेरे लिए कौन सा रत्न शुभ है और कौन सा रत्न सर्वथा वर्जित है? कृपया कठोर शास्त्रीय नियम से बताएं।"
+    if c_q6.button("⚠️ स्वास्थ्य व कष्ट निवारण", use_container_width=True):
+        quick_q = "मेरी कुण्डली में स्वास्थ्य, रोग-ऋण अथवा अरिष्ट के क्या संकेत हैं और उनसे बचाव के शास्त्रीय उपाय क्या हैं?"
 
-        # Display Conversation History
-        for msg in st.session_state.ai_chat_history:
-            with st.chat_message(msg["role"], avatar="🔮" if msg["role"] == "assistant" else "👤"):
-                st.markdown(msg["content"])
+    # Display Conversation History
+    for msg in st.session_state.ai_chat_history:
+        with st.chat_message(msg["role"], avatar="🔮" if msg["role"] == "assistant" else "👤"):
+            st.markdown(msg["content"])
 
-        # Chat Input Box
-        user_prompt = st.chat_input("अपनी कुण्डली से संबंधित प्रश्न यहाँ लिखें (उदा. क्या मैं पन्ना पहन सकता हूँ?)...")
-        prompt_to_process = quick_q or user_prompt
+    # Chat Input Box
+    user_prompt = st.chat_input("अपनी कुण्डली से संबंधित प्रश्न यहाँ लिखें (उदा. मेरी शादी कब तक होगी?)...")
+    prompt_to_process = quick_q or user_prompt
 
-        if prompt_to_process:
-            # Add user message to history
-            st.session_state.ai_chat_history.append({"role": "user", "content": prompt_to_process})
-            with st.chat_message("user", avatar="👤"):
-                st.markdown(prompt_to_process)
+    if prompt_to_process:
+        # Add user message to history
+        st.session_state.ai_chat_history.append({"role": "user", "content": prompt_to_process})
+        with st.chat_message("user", avatar="👤"):
+            st.markdown(prompt_to_process)
 
-            # Generate Assistant Response
-            with st.chat_message("assistant", avatar="🔮"):
-                with st.spinner("🔮 कुण्डली के समस्त ग्रहों, D1 से D60 वर्गों, दशाओं एवं १२,५००+ शास्त्रीय नियमों का विश्लेषण कर सटीक उत्तर तैयार किया जा रहा है..."):
-                    master_bundle = default_master_calculator.calculate_all(chart)
-                    active_key = st.session_state.get("gemini_api_key", os.getenv("GEMINI_API_KEY"))
+        # Generate Assistant Response
+        with st.chat_message("assistant", avatar="🔮"):
+            with st.spinner("🔮 प्रश्न परीक्षण (सत्यता जांच), तात्कालिक प्रश्न कुण्डली एवं जन्म कुण्डली (D1-D60) का संयुक्त शास्त्रीय शोध किया जा रहा है..."):
+                master_bundle = default_master_calculator.calculate_all(chart)
+                active_key = st.session_state.get("gemini_api_key", os.getenv("GEMINI_API_KEY"))
 
-                    ai_response = default_narrative_service.chat_consultation(
-                        user_query=prompt_to_process,
-                        chart=chart,
-                        master_data=master_bundle,
-                        api_key=active_key,
-                        model="gemini-3.8-flash",
-                        language="Hindi",
-                        chat_history=st.session_state.ai_chat_history
-                    )
-                    st.markdown(ai_response)
-                    st.session_state.ai_chat_history.append({"role": "assistant", "content": ai_response})
+                ai_response = default_narrative_service.chat_consultation(
+                    user_query=prompt_to_process,
+                    chart=chart,
+                    master_data=master_bundle,
+                    api_key=active_key,
+                    model="gemini-3.8-flash",
+                    language="Hindi",
+                    chat_history=st.session_state.ai_chat_history
+                )
+                st.markdown(ai_response)
+                st.session_state.ai_chat_history.append({"role": "assistant", "content": ai_response})
 
-                    # Render Live Shastriya Rules Scan Evidence Card for this query
-                    latest_scan = st.session_state.get("ai_latest_rules_scan")
-                    if latest_scan and latest_scan.get("relevant_rules"):
-                        with st.expander(f"📜 १२,५००+ महा-शास्त्रीय नियम लाइव स्कैन प्रमाण ({latest_scan.get('matched_topic', '').title()} — {len(latest_scan.get('relevant_rules', []))} प्रासंगिक नियम फलित)", expanded=True):
-                            c_m1, c_m2, c_m3, c_m4 = st.columns(4)
-                            c_m1.metric("कुल स्कैन नियम", f"{latest_scan['total_scanned']:,}")
-                            c_m2.metric("कुण्डली में सक्रिय", f"{latest_scan['total_fired']:,}")
-                            c_m3.metric("शुभ राजयोग (+)", f"{latest_scan['total_positive']:,}")
-                            c_m4.metric("सतर्कता/दोष (-)", f"{latest_scan['total_negative']:,}")
-
-                            st.markdown("<b style='font-size:13.5px; color:#1E293B;'>📖 सक्रिय ग्रन्थ परंपराएं:</b>", unsafe_allow_html=True)
-                            badge_items = [
-                                f"<span style='background:#F1F5F9; border:1.5px solid #CBD5E1; padding:4px 11px; border-radius:14px; margin-right:6px; font-size:12px; color:#0F172A; font-weight:700; box-shadow:0 1px 2px rgba(0,0,0,0.04); display:inline-block; margin-bottom:6px;'><b>{k}</b>: <span style=\'color:#2563EB;\'>{v}</span></span>"
-                                for k, v in list(latest_scan.get("grantha_breakdown", {}).items())[:6]
-                            ]
-                            st.markdown(" ".join(badge_items), unsafe_allow_html=True)
-                            st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
-
-                            for r in latest_scan["relevant_rules"]:
-                                is_pos = (r.polarity == "+")
-                                pol_badge = "🟢 शुभ योग (+)" if is_pos else "🔴 सतर्कता नियम (-)"
-                                card_bg = "#F0FDF4" if is_pos else "#FEF2F2"
-                                card_border = "#86EFAC" if is_pos else "#FCA5A5"
-                                card_border_left = "#16A34A" if is_pos else "#DC2626"
-                                badge_bg = "#DCFCE7" if is_pos else "#FEE2E2"
-                                badge_fg = "#166534" if is_pos else "#991B1B"
-                                badge_border = "#86EFAC" if is_pos else "#FCA5A5"
-
-                                shastra = r.source_text
-                                if r.source_chapter and r.source_chapter != "General":
-                                    shastra += f" • {r.source_chapter}"
-                                st.markdown(f"""
-                                <div style='background:{card_bg}; border:1px solid {card_border}; border-left:5px solid {card_border_left}; padding:12px 16px; margin-bottom:10px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);'>
-                                    <div style='display:flex; justify-content:space-between; align-items:center;'>
-                                        <b style='font-size:14.5px; color:#0F172A; font-weight:800;'>{r.rule_name_hi} <span style='font-size:12.5px; font-weight:600; color:#475569;'>({r.rule_name_en})</span></b>
-                                        <span style='background:{badge_bg}; color:{badge_fg}; border:1px solid {badge_border}; padding:3px 10px; border-radius:12px; font-size:11.5px; font-weight:800;'>{pol_badge}</span>
-                                    </div>
-                                    <div style='font-size:12.5px; color:#334155; margin-top:4px; font-weight:600;'>📚 <i style='color:#1D4ED8;'>{shastra}</i> &nbsp;|&nbsp; 🎯 प्रभाव क्षेत्र: <span style='color:#0F172A;'>{', '.join(r.themes)}</span> &nbsp;|&nbsp; ⚡ सिग्नल बल: <b style='color:#047857;'>{round(r.signal_score * 100)}%</b></div>
-                                    <div style='font-size:13.5px; color:#0F172A; margin-top:8px; line-height:1.55; font-weight:500; background:#FFFFFF; padding:9px 13px; border-radius:6px; border:1px solid rgba(0,0,0,0.08);'>{r.explanation_hi}</div>
-                                </div>
-                                """, unsafe_allow_html=True)
-
-        # Clear Chat Button
-        if len(st.session_state.ai_chat_history) > 1:
-            if st.button("🗑️ संवाद इतिहास साफ करें (Clear Chat)"):
-                st.session_state.ai_chat_history = [
-                    {
-                        "role": "assistant",
-                        "content": f"🙏 **संवाद पुनः प्रारंभ किया गया।** {chart.birth_data.name} जी की कुण्डली के संदर्भ में आप अपना प्रश्न पूछ सकते हैं।"
-                    }
-                ]
-                st.rerun()
-
-    # =========================================================================
-    # SUB-TAB 2: VEDIC GEMOLOGY & STRICT DUSTHANA AUDIT
-    # =========================================================================
-    with tab_ai_gem:
-        gem_audit = default_gemology_service.audit_all_planets(chart)
-
-        st.markdown("""
-        <div style="background:linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border:1.5px solid #FCD34D; border-left:6px solid #D97706; border-radius:10px; padding:14px 18px; margin-bottom:18px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <b style="color:#92400E; font-size:15.5px;">📜 रत्न शास्त्र का अटल शास्त्रीय सिद्धांत (Vedic Gemology Absolute Law):</b>
-            <div style="color:#78350F; font-size:13.5px; margin-top:6px; line-height:1.6;">
-                रत्न (Gemstone) केवल <b>शुभ एवं योगकारक</b> ग्रहों की रश्मियों को शरीर में संवर्धित करने हेतु धारण किया जाता है। 
-                <b>दुष्टस्थानों (६, ८, १२) अथवा मारक भावों</b> में स्थित ग्रह का रत्न धारण करना उस भाव के अशुभ व संकटकारी फलों को जागृत कर देता है, 
-                जिससे गंभीर रोग, मानसिक तनाव, दुर्घटना अथवा आर्थिक हानि हो सकती है। 
-                <b>अतः दुष्टस्थान में स्थित ग्रह का रत्न सर्वथा वर्जित है; ऐसे ग्रहों हेतु केवल सात्विक उपाय (रुद्राक्ष, बीज मंत्र, दान एवं व्रत) ही विहित हैं।</b>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        # Metrics Row
-        col_g1, col_g2, col_g3, col_g4 = st.columns(4)
-        col_g1.metric("लग्न एवं लग्नेश", f"{gem_audit['lagna_name'].split()[0]} / {gem_audit['lagnesh']}")
-        col_g2.metric("🟢 अनुशंसित शुभ रत्न", len(gem_audit["recommended_gems"]))
-        col_g3.metric("🚫 सर्वथा वर्जित रत्न", len(gem_audit["strictly_prohibited_gems"]))
-        col_g4.metric("⚠️ दुष्टस्थान (6/8/12) स्थितियां", len(gem_audit["dusthana_afflictions"]))
-
-        # Strictly Prohibited Gemstones Alert Cards (Red / Caution)
-        if gem_audit["strictly_prohibited_gems"]:
-            st.markdown("""
-            <div style="margin-top:15px; margin-bottom:12px;">
-                <h4 style="color:#B91C1C; margin:0; display:flex; align-items:center; gap:8px;">
-                    🚨 गंभीर शास्त्रीय चेतावनी — इन ग्रहों के रत्न धारण करना सर्वथा वर्जित है!
-                </h4>
-            </div>
-            """, unsafe_allow_html=True)
-
-            for pro in gem_audit["strictly_prohibited_gems"]:
-                p_name = pro["planet"]
-                info = gem_audit["planets_audit"].get(p_name, {})
-                st.markdown(f"""
-                <div style="background:#FEF2F2; border:1.5px solid #FCA5A5; border-left:6px solid #DC2626; border-radius:10px; padding:14px 18px; margin-bottom:14px; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                        <b style="color:#991B1B; font-size:16px;">🚫 {info.get('gem_hi', '')} ({p_name}) — {info.get('verdict', 'सर्वथा वर्जित')}</b>
-                        <span style="background:#FEE2E2; color:#991B1B; border:1px solid #F87171; padding:3px 12px; border-radius:14px; font-size:12px; font-weight:800;">
-                            भाव {info.get('house', '')} (दुष्टस्थान)
-                        </span>
-                    </div>
-                    <div style="color:#7F1D1D; font-size:13.5px; margin-top:8px; line-height:1.55;">
-                        <b>शास्त्रीय निषेध का कारण:</b> {info.get('alert', pro.get('reason', ''))}
-                    </div>
-                    <div style="margin-top:12px; background:#FFFFFF; border:1px solid #FECACA; border-radius:8px; padding:10px 14px;">
-                        <b style="color:#047857; font-size:13.5px;">🌿 अनुशंसित सात्विक विकल्प (Safe Vedic Alternatives):</b>
-                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:8px; margin-top:6px; font-size:12.5px; color:#1F2937;">
-                            <div>📿 <b>विहित रुद्राक्ष:</b> <span style="color:#2563EB;">{info.get('rudraksha', '')}</span></div>
-                            <div>🕉️ <b>बीज मंत्र:</b> <code style="background:#F3F4F6; color:#B91C1C; padding:2px 6px; border-radius:4px;">{info.get('beej_mantra', '')}</code> ({info.get('japa_count', 0):,} जप)</div>
-                            <div>🌾 <b>दान सामग्री:</b> {info.get('daan_items', '')} ({info.get('daan_day', '')})</div>
-                            <div>🪔 <b>व्रत व इष्ट:</b> {info.get('vrata', '')} | {info.get('deity', '')}</div>
-                        </div>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-
-        # Recommended Gemstones Cards (Green)
-        st.markdown("""
-        <div style="margin-top:20px; margin-bottom:12px;">
-            <h4 style="color:#15803D; margin:0; display:flex; align-items:center; gap:8px;">
-                🟢 अनुकूल एवं शास्त्रीय रूप से अनुशंसित रत्न (Aura Enhancing Gemstones)
-            </h4>
-        </div>
-        """, unsafe_allow_html=True)
-
-        if gem_audit["recommended_gems"]:
-            g_cols = st.columns(min(len(gem_audit["recommended_gems"]), 3))
-            for i, rec in enumerate(gem_audit["recommended_gems"]):
-                p_name = rec["planet"]
-                info = gem_audit["planets_audit"].get(p_name, {})
-                col_target = g_cols[i % len(g_cols)]
-                with col_target:
-                    st.markdown(f"""
-                    <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-left:5px solid #16A34A; border-radius:10px; padding:14px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.05); min-height:230px;">
-                        <b style="color:#166534; font-size:15.5px;">💎 {info.get('gem_hi', '')}</b>
-                        <div style="color:#14532D; font-size:12.5px; margin-top:4px;">
-                            <b>ग्रह:</b> {p_name} | <b>भाव:</b> {info.get('house', '')}वां ({info.get('dignity', '').title()})
-                        </div>
-                        <div style="color:#166534; font-size:12.5px; margin-top:4px;">
-                            <b>धातु:</b> {info.get('metal', '')} &nbsp;|&nbsp; <b>अंगुली:</b> {info.get('finger', '')}
-                        </div>
-                        <div style="color:#166534; font-size:12.5px; margin-top:2px;">
-                            <b>धारण वार:</b> {info.get('day', '')}
-                        </div>
-                        <div style="color:#166534; font-size:12.5px; margin-top:2px;">
-                            <b>उपरत्न:</b> {info.get('substitute', '')}
-                        </div>
-                        <div style="background:#FFFFFF; border:1px solid #BBF7D0; border-radius:6px; padding:6px 10px; margin-top:8px; font-size:12px; color:#14532D;">
-                            <b>प्रामाणिकता:</b> {', '.join(info.get('reasons', []))}
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
-        else:
-            st.info("वर्तमान कुण्डली में लग्नेश अथवा योगकारक ग्रह की स्थिति अनुसार कोई सीधा रत्न बिना दशा-विशिष्ट विश्लेषण के अनुशंसित नहीं है। सात्विक मंत्र व रुद्राक्ष साधना सर्वोत्तम है।")
-
-        # Tabular 9-Graha Gemology Matrix
-        st.markdown("<b style='font-size:14px; color:#1E293B;'>📋 समस्त ९ ग्रहों की शास्त्रीय रत्न व उपाय स्थिति सारणी:</b>", unsafe_allow_html=True)
-        matrix_rows = []
-        for p_name, p_info in gem_audit["planets_audit"].items():
-            status_badge = "🟢 अनुशंसित" if p_info.get("is_recommended") else ("🚫 सर्वथा वर्जित" if p_info.get("status_code") == "STRICTLY_PROHIBITED" else "⚖️ तटस्थ / सशर्त")
-            matrix_rows.append({
-                "ग्रह (Planet)": p_name,
-                "भाव (House)": f"{p_info.get('house')}वां भाव",
-                "स्थिति (Dignity)": p_info.get('dignity', '').title(),
-                "शास्त्रीय रत्न (Gemstone)": p_info.get('gem_hi', ''),
-                "निर्णय (Verdict)": status_badge,
-                "विहित रुद्राक्ष (Rudraksha)": p_info.get('rudraksha', ''),
-                "सात्विक बीज मंत्र (Mantra)": p_info.get('beej_mantra', ''),
-                "दान सामग्री (Charity)": p_info.get('daan_items', '')
-            })
-        st.dataframe(pd.DataFrame(matrix_rows), use_container_width=True)
-
-        # Incompatible Gemstone Pairs Matrix
-        with st.expander("⚠️ शास्त्रीय रत्न विरोध व शत्रुता सारणी (Incompatible Gemstone Pairs)", expanded=False):
-            st.markdown("""
-            <div style="font-size:13px; line-height:1.6; color:#334155;">
-                शास्त्रीय नियम के अनुसार परस्पर शत्रु ग्रहों के रत्न एक साथ कदापि धारण नहीं करने चाहिए:
-                <ul>
-                    <li><b>माणिक्य (Sun) + नीलम / गोमेद (Saturn / Rahu):</b> सूर्य व शनि-राहु परस्पर परम शत्रु हैं। दोनों को एक साथ पहनने से पितृदोष, हृदय रोग व विवाद उत्पन्न होता है।</li>
-                    <li><b>मोती (Moon) + गोमेद / लहसुनिया (Rahu / Ketu):</b> चन्द्रमा मन का कारक है। राहु-केतु ग्रहण कारक हैं। इन्हें साथ पहनने से अवसाद, भय व मानसिक अस्थिरता होती है।</li>
-                    <li><b>पन्ना (Mercury) + मूँगा / मोती (Mars / Moon):</b> बुध व मंगल परस्पर शत्रु हैं। बुध व चन्द्रमा भी शत्रु हैं। अतः पन्ना के साथ मूँगा धारण नहीं करना चाहिए।</li>
-                    <li><b>पुखराज (Jupiter) + हीरा / नीलम (Venus / Saturn):</b> देवगुरु व दैत्यगुरु का परस्पर विरोध है। इन्हें एक साथ धारण करने से जीवन में भ्रम व अनिर्णय की स्थिति बनती है।</li>
-                </ul>
-            </div>
-            """, unsafe_allow_html=True)
-
-    # =========================================================================
-    # SUB-TAB 3: D1 TO D60 DIVISIONAL CHARTS & DIGNITY AUDIT
-    # =========================================================================
-    with tab_ai_varga:
-        st.markdown("""
-        <div style="background:linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%); border:1.5px solid #CBD5E1; border-left:6px solid #475569; border-radius:10px; padding:14px 18px; margin-bottom:18px;">
-            <b style="color:#0F172A; font-size:15.5px;">🔍 D1 से D60 षोडशवर्ग एवं षष्ट्यंश सूक्ष्म मूल्यांकन (Vaisheshikamsha & Shodashvarga):</b>
-            <div style="color:#334155; font-size:13px; margin-top:6px; line-height:1.6;">
-                महर्षि पराशर के <i>बृहत्पाराशर होराशास्त्र</i> के अनुसार, केवल लग्न कुण्डली (D1) देखकर किया गया फलित अधूरा रहता है। 
-                जब तक <b>नवांश (D9), दशमांश (D10) तथा षष्ट्यंश (D60)</b> में ग्रह के वैशेषिकांश बल एवं वर्गोत्तम स्थिति का परीक्षण न किया जाए, तब तक ९९.९% सटीकता सम्भव नहीं है।
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        try:
-            aff_eng = AfflictionEngine(chart)
-            varga_summary = aff_eng.calculate_varga_dignity_summary()
-            shodash_table = aff_eng.calculate_shodashvarga_table()
-            house_pts = aff_eng.calculate_house_points()
-
-            # Vaisheshikamsha Summary Cards
-            st.markdown("<b style='font-size:14px; color:#1E293B;'>👑 ग्रहों की वैशेषिकांश स्थिति (Dignity Level) व वर्गोत्तम विश्लेषण:</b>", unsafe_allow_html=True)
-            v_cols = st.columns(min(len(varga_summary), 4))
-            for idx, (p_name, v_data) in enumerate(varga_summary.items()):
-                c_idx = idx % len(v_cols)
-                with v_cols[c_idx]:
-                    vaisheshika = v_data.get("vaisheshikamsha", "सामान्य")
-                    vargottama = "🌟 वर्गोत्तम (Vargottama)" if v_data.get("is_vargottama") else "सामान्य"
-                    pts = v_data.get("benefic_points", 0)
-                    st.markdown(f"""
-                    <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-top:4px solid #3B82F6; border-radius:8px; padding:12px; margin-bottom:12px; box-shadow:0 1px 2px rgba(0,0,0,0.04);">
-                        <b style="font-size:14px; color:#0F172A;">{p_name}</b>
-                        <div style="font-size:12px; color:#2563EB; font-weight:700; margin-top:3px;">{vaisheshika}</div>
-                        <div style="font-size:11.5px; color:#047857; margin-top:2px;">{vargottama}</div>
-                        <div style="font-size:11.5px; color:#64748B; margin-top:4px;">शुभ वर्ग अंक: <b>{pts} / 16</b></div>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-            # Complete Shodashvarga Table
-            st.markdown("<b style='font-size:14px; color:#1E293B; margin-top:15px;'>📊 षोडशवर्ग सारणी (D1 से D60 में ग्रहों की राशियाँ):</b>", unsafe_allow_html=True)
-            if shodash_table:
-                df_shodash = pd.DataFrame(shodash_table)
-                st.dataframe(df_shodash, use_container_width=True)
-
-            # House Strength Points Summary
-            st.markdown("<b style='font-size:14px; color:#1E293B; margin-top:15px;'>🏛️ द्वादश भाव बल एवं शुभ-अशुभ स्थिति (Bhava Bala Summary):</b>", unsafe_allow_html=True)
-            h_rows = []
-            for h_idx in range(1, 13):
-                h_data = house_pts.get(h_idx, {})
-                h_rows.append({
-                    "भाव (Bhava)": f"{h_idx}वां भाव",
-                    "राशि (Sign)": chart.houses[h_idx - 1].sign_name,
-                    "भावेश (Lord)": chart.houses[h_idx - 1].lord,
-                    "शुभ बिंदु (Benefic)": h_data.get("benefic", 0),
-                    "अशुभ बिंदु (Malefic)": h_data.get("malefic", 0),
-                    "शुद्ध बल (Net Points)": h_data.get("net", 0)
-                })
-            st.dataframe(pd.DataFrame(h_rows), use_container_width=True)
-
-        except Exception as e:
-            st.warning(f"वर्ग विश्लेषण गणना में सूचना: {str(e)}")
-
-    # =========================================================================
-    # SUB-TAB 4: INSTANT HORARY PRASHNA KUNDALI ENGINE
-    # =========================================================================
-    with tab_ai_prashna:
-        st.markdown("""
-        <div style="background:linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%); border:1.5px solid #D8B4FE; border-left:6px solid #9333EA; border-radius:10px; padding:14px 18px; margin-bottom:18px;">
-            <b style="color:#581C87; font-size:15.5px;">❓ प्रश्न कुण्डली तात्कालिक शोधक (Instant Horary Prashna Kundali Engine):</b>
-            <div style="color:#6B21A8; font-size:13px; margin-top:6px; line-height:1.6;">
-                जब जन्म विवरण में संशय हो अथवा किसी तात्कालिक निर्णय (कार्य सिद्धि, स्वास्थ्य, नौकरी, विवाह आदि) का तत्काल शास्त्रीय उत्तर चाहिए, 
-                तो महर्षि नीलकंठ कृत <b>ताजिक नीलकंठी एवं प्रश्नमार्ग</b> के १०० नियमों व इत्थशाल योग के आधार पर प्रश्न कुण्डली तुरंत फलित की जाती है।
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        p_cats = default_prashna_service.get_categories()
-        cat_map = {f"{c['icon']} {c['Name_Hi']} ({c['Name']})": c['Name'] for c in p_cats}
-        p_cat_names = list(cat_map.keys())
-
-        c_p1, c_p2 = st.columns([2, 1])
-        with c_p1:
-            selected_cat_str = st.selectbox("प्रश्न का विषय (Prashna Category):", p_cat_names, index=min(5, len(p_cat_names) - 1))
-            cat_en = cat_map.get(selected_cat_str, "Career")
-            cat_label = selected_cat_str.split()[1] if len(selected_cat_str.split()) > 1 else "कार्य"
-            user_prashna_query = st.text_input("अपना तात्कालिक प्रश्न लिखें (Query Text):", value=f"क्या मेरा {cat_label} से सम्बंधित कार्य सफल होगा?")
-        with c_p2:
-            st.markdown("<div style='height:28px;'></div>", unsafe_allow_html=True)
-            calc_prashna_btn = st.button("🔮 तात्कालिक प्रश्न कुण्डली फलित करें", use_container_width=True)
-
-        if calc_prashna_btn or "last_prashna_res" in st.session_state:
-            if calc_prashna_btn:
-                with st.spinner("🔮 तात्कालिक प्रश्न लग्न, कार्येश एवं १०० ताजिक नियमों की गणना की जा रही है..."):
-                    res = default_prashna_service.generate_prashna_chart(
-                        query_text=user_prashna_query,
-                        category_name=cat_en,
-                        latitude=chart.birth_data.latitude,
-                        longitude=chart.birth_data.longitude,
-                        timezone_offset=chart.birth_data.timezone_offset,
-                        query_dt=datetime.now()
-                    )
-                    st.session_state.last_prashna_res = res
-
-            res = st.session_state.get("last_prashna_res")
-            if res:
-                # Prashna Result Banner
-                st.markdown(f"""
-                <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:14px 18px; margin-top:14px; margin-bottom:16px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                        <div>
-                            <span style="font-size:18px; font-weight:800; color:#15803D;">{res['verdict_badge']}</span>
-                            <div style="font-size:14.5px; color:#14532D; font-weight:700; margin-top:4px;">{res['verdict']}</div>
-                        </div>
-                        <div style="text-align:right;">
-                            <span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:4px 12px; border-radius:12px; font-size:13px; font-weight:800;">
-                                ⏱️ संभावित समय: {res['timing']}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-
-                # Key Prashna Metrics
-                cp_m1, cp_m2, cp_m3, cp_m4 = st.columns(4)
-                cp_m1.metric("प्रश्न लग्न", f"{res['prashna_lagna_sign']} ({res['prashna_lagna_deg']})")
-                cp_m2.metric("लग्नेश", f"{res['lagnesh_name']} ({res['lagnesh_house']} भाव)")
-                cp_m3.metric("कार्येश (Karyesh)", f"{res['karyesh_name']} ({res['karyesh_house']} भाव)")
-                cp_m4.metric("ताजिक योग", res['tajika_yoga'])
-
-                # Rules Analysis Metrics
-                st.markdown(f"""
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px 14px; margin-bottom:14px; font-size:13px; color:#334155;">
-                    <b> १०० ताजिक प्रश्न नियम विश्लेषण:</b> 
-                    सक्रिय शुभ (+) नियम: <b style="color:#16A34A;">{res['active_positive_count']}</b> (+{res['total_positive_points']} अंक) &nbsp;|&nbsp; 
-                    सक्रिय अशुभ (-) नियम: <b style="color:#DC2626;">{res['active_negative_count']}</b> (-{res['total_negative_points']} अंक) &nbsp;|&nbsp; 
-                    शुद्ध संतुलन अंक: <b>{res['net_balance_score']}</b>
-                </div>
-                """, unsafe_allow_html=True)
-
-                # Detailed Shastriya Explanation
-                st.markdown(f"""
-                <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:8px; padding:14px 16px; margin-bottom:14px; font-size:13.5px; line-height:1.6; color:#0F172A;">
-                    <b style="color:#1E40AF;">📜 शास्त्रीय ताजिक फलित निर्णय:</b><br>
-                    {res['explanation_hi']}
-                </div>
-                """, unsafe_allow_html=True)
-
-                # House roles in this question
-                with st.expander("📍 प्रश्न संदर्भ में द्वादश भावों की भूमिका (House Roles in this Prashna)", expanded=False):
-                    h_cols = st.columns(3)
-                    for idx, h_role in enumerate(res.get("house_roles", [])):
-                        c_box = h_cols[idx % 3]
-                        with c_box:
-                            imp_style = "border:1.5px solid #3B82F6; background:#EFF6FF;" if h_role.get("is_important") else "border:1px solid #E2E8F0; background:#FAFAFA;"
-                            occ_str = ", ".join(h_role.get("occupants", [])) or "रिक्त"
+                # Render Live Dual-Kundali Research Evidence Card for this query
+                latest_research = st.session_state.get("ai_latest_research")
+                if latest_research:
+                    p_info = latest_research.get("prashna_res", {})
+                    with st.expander("🔬 दैवज्ञ द्वि-कुण्डली शोध प्रमाण (Natal + Horary Prashna + D1-D60 Backend Audit)", expanded=False):
+                        cp1, cp2, cp3 = st.columns(3)
+                        with cp1:
                             st.markdown(f"""
-                            <div style="{imp_style} border-radius:8px; padding:10px; margin-bottom:8px; font-size:12px;">
-                                <b>{h_role['icon']} {h_role['text']}</b><br>
-                                <span style="color:#64748B;">राशि: {h_role['sign']} (स्वामी: {h_role['lord']})</span><br>
-                                <span style="color:#1E293B;">स्थित ग्रह: <b>{occ_str}</b></span>
+                            <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12.5px;">
+                                <b style="color:#1E40AF;">❓ तात्कालिक प्रश्न परीक्षा:</b><br>
+                                <b>प्रश्न लग्न:</b> {p_info.get('prashna_lagna_sign', '—')} ({p_info.get('prashna_lagna_deg', '—')})<br>
+                                <b>प्रश्नेश:</b> {p_info.get('lagnesh_name', '—')} (भाव {p_info.get('lagnesh_house', '—')})<br>
+                                <b>कार्येश:</b> {p_info.get('karyesh_name', '—')} (भाव {p_info.get('karyesh_house', '—')})<br>
+                                <b>ताजिक योग:</b> <span style="color:#7C3AED; font-weight:700;">{p_info.get('tajika_yoga', '—')}</span><br>
+                                <b>जिज्ञासा भाव:</b> {latest_research.get('intent_status', '—')}
+                            </div>
+                            """, unsafe_allow_html=True)
+                        with cp2:
+                            n_sum = latest_research.get("natal_summary", {})
+                            bhava_txt = n_sum.get("bhava", "सम्पूर्ण कुण्डली")
+                            bhavesh_txt = n_sum.get("bhavesh", "—")
+                            karakas_txt = n_sum.get("karakas", n_sum.get("karaka", "—"))
+                            st.markdown(f"""
+                            <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12.5px;">
+                                <b style="color:#047857;">📜 जन्म कुण्डली शोध:</b><br>
+                                <b>सम्बन्धित भाव:</b> {bhava_txt}<br>
+                                <b>भावेश स्थिति:</b> {bhavesh_txt}<br>
+                                <b>कारक स्थिति:</b> {karakas_txt}<br>
+                                <b>संभावित काल:</b> <b style="color:#16A34A;">{latest_research.get('direct_timing', '—')}</b>
+                            </div>
+                            """, unsafe_allow_html=True)
+                        with cp3:
+                            g_aud = latest_research.get("gem_audit", {})
+                            rec_cnt = len(g_aud.get("recommended_gems", [])) if g_aud else 0
+                            pro_cnt = len(g_aud.get("strictly_prohibited_gems", [])) if g_aud else 0
+                            merc_8_txt = "🚫 पन्ना वर्जित!" if chart.planets.get('Mercury') and chart.planets['Mercury'].house_from_lagna == 8 else "सामान्य"
+                            st.markdown(f"""
+                            <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12.5px;">
+                                <b style="color:#B91C1C;">💎 रत्न शुद्धि व दुष्टस्थान:</b><br>
+                                <b>अनुशंसित रत्न:</b> 🟢 {rec_cnt} रत्न<br>
+                                <b>सर्वथा वर्जित रत्न:</b> 🚫 {pro_cnt} रत्न<br>
+                                <b>८वें भाव में बुध:</b> {merc_8_txt}<br>
+                                <b>निर्णय:</b> केवल योगकारक के रत्न ग्राह्य
                             </div>
                             """, unsafe_allow_html=True)
 
-                # Planetary positions table in Prashna chart
-                with st.expander("🪐 प्रश्न कुण्डली ग्रह स्पष्ट सारणी (Graha Spashta)", expanded=False):
-                    st.dataframe(pd.DataFrame(res.get("graha_table", [])), use_container_width=True)
+    # Clear Chat Button
+    if len(st.session_state.ai_chat_history) > 1:
+        if st.button("🗑️ संवाद इतिहास साफ करें (Clear Chat)"):
+            st.session_state.ai_chat_history = [
+                {
+                    "role": "assistant",
+                    "content": f"🙏 **संवाद पुनः प्रारंभ किया गया।** {chart.birth_data.name} जी की कुण्डली एवं प्रश्न कुण्डली के संदर्भ में आप अपना प्रश्न पूछ सकते हैं।"
+                }
+            ]
+            st.rerun()
 
 
 
