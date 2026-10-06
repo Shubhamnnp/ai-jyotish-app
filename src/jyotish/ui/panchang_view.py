@@ -469,10 +469,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     </div>
                 </div>
                 <div style="font-size:12.5px; color:{'#D1D5DB' if is_dark else '#475569'}; line-height:1.6; margin-top:10px;">
-                    • <b>अधिष्ठाता देवता:</b> {t['deity']}<br/>
-                    • <b>तिथि संज्ञा:</b> {t['category']} ({'रिक्ता तिथि - शुभ कार्य वर्जित' if 'रिक्ता' in t['category'] else 'शुभ फलप्रद'})<br/>
-                    • <b>चन्द्र-सूर्य अन्तर:</b> {t['diff_deg']}°<br/>
-                    • <b>आगामी तिथि:</b> {t['next_name']} ({t['next_end_str']})
+                    • <b>अधिष्ठाता देवता:</b> {t.get('deity', '—')}<br/>
+                    • <b>तिथि संज्ञा:</b> {t.get('category', '—')} ({'रिक्ता तिथि - शुभ कार्य वर्जित' if 'रिक्ता' in t.get('category', '') else 'शुभ फलप्रद'})<br/>
+                    • <b>चन्द्र-सूर्य अन्तर:</b> {t.get('degree', 0.0):.2f}°<br/>
+                    • <b>आगामी तिथि:</b> {t.get('next_name', '—')} ({t.get('next_paksha', '')})
                 </div>
             </div>
             """, unsafe_allow_html=True)
