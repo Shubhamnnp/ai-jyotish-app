@@ -54,7 +54,8 @@ def is_greeting_query(query: str) -> bool:
         "kya", "haal", "hai", "kaise", "ho", "hain", "good", "morning", "evening",
         "afternoon", "shubh", "prabhat", "sandhya", "radhe", "shyam", "jai", "shree", "shri",
         "krishna", "ram", "har", "mahadev", "din", "there", "aap", "bhai",
-        "नमस्ते", "प्रणाम", "नमस्कार", "राधे", "कृष्ण", "जय", "जी", "सुप्रभात"
+        "dhanyawad", "dhanyavad", "shukriya", "thanks", "thank", "you", "theek", "accha", "achha", "ok", "okay",
+        "नमस्ते", "प्रणाम", "नमस्कार", "राधे", "कृष्ण", "जय", "जी", "सुप्रभात", "धन्यवाद", "शुक्रिया", "ठीक"
     }
 
     if len(words) <= 5 and all(w in greeting_tokens for w in words):
@@ -524,8 +525,18 @@ class AINarrativeService:
             moon_s = chart.planets["Moon"].sign_name if chart else ""
             nak_s = chart.panchang.nakshatra_name if chart else ""
 
+            is_gratitude = any(w in user_query.lower() for w in ["धन्यवाद", "शुक्रिया", "thanks", "thank", "dhanyawad", "dhanyavad", "shukriya", "theek hai", "accha"])
+
             if self.client:
-                greeting_prompt = f"""You are 'दैवज्ञ AI' (Daivajna AI), a revered Vedic Astrologer endowed with high General Intelligence.
+                if is_gratitude:
+                    greeting_prompt = f"""You are 'दैवज्ञ AI' (Daivajna AI), a revered Vedic Astrologer endowed with high General Intelligence.
+The native ({p_name}) has expressed gratitude/acknowledgment: "{user_query}".
+CRITICAL GENERAL INTELLIGENCE INSTRUCTION:
+1. Respond with a warm, dignified Vedic blessing ('कल्याणमस्तु', 'शुभम् भवतु') in 1 to 2 sentences in {language}.
+2. Wish them peace and auspiciousness, and politely offer further guidance if they have any remaining questions.
+3. DO NOT output any horoscope analysis, cautions, or gemstones."""
+                else:
+                    greeting_prompt = f"""You are 'दैवज्ञ AI' (Daivajna AI), a revered Vedic Astrologer endowed with high General Intelligence.
 The native ({p_name}) has greeted you with: "{user_query}".
 The native's active chart profile:
 - Name: {p_name}
@@ -538,6 +549,7 @@ CRITICAL GENERAL INTELLIGENCE INSTRUCTION:
 3. DO NOT output dosha warnings or gemstone bans.
 4. Respond in exactly 2 to 3 courteous, dignified, and natural sentences in {language}.
 5. Respectfully greet {p_name} ji by name, mention that their birth chart ({lagna_s} लग्न, {moon_s} राशि) is active and loaded, and warmly ask what specific life query (e.g. marriage, career, finance, health, or gemstones) they would like to explore today."""
+
                 models_to_try = [model, "gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"]
                 for m_name in models_to_try:
                     try:
@@ -553,6 +565,12 @@ CRITICAL GENERAL INTELLIGENCE INSTRUCTION:
                             return response.text.strip()
                     except Exception:
                         continue
+
+            if is_gratitude:
+                return (
+                    f"🙏 **कल्याणमस्तु {p_name} जी!**\n\n"
+                    f"ईश्वर आपके मार्ग को प्रशस्त करें और जीवन में सुख-समृद्धि प्रदान करें। यदि आपकी कुण्डली या भविष्य के किसी भी विषय में कोई और जिज्ञासा हो, तो आप निःसंकोच पूछ सकते हैं।"
+                )
 
             chart_info = f" आपकी जन्म कुण्डली (**{lagna_s} लग्न**, **{moon_s} राशि** - {nak_s}) का सम्पूर्ण शास्त्रीय अध्ययन सक्रिय है।" if chart else ""
             return (

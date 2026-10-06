@@ -152,3 +152,29 @@ def test_ai_sahayak_greeting_general_intelligence():
     assert "अष्टम भाव का दोष" not in response
     assert "पन्ना (Mercury) और माणिक्य (Sun) पहनना आपके लिए सर्वथा वर्जित" not in response
     assert len(response.splitlines()) < 10  # Must be short and proportional!
+
+
+def test_ai_sahayak_gratitude_response():
+    """Verify that when the user expresses gratitude like 'dhanyavad guruji', AI Sahayak responds with a blessing and courtesy."""
+    bd = BirthData(
+        name="Shubham Tiwari",
+        birth_date=datetime.date(1996, 6, 20),
+        birth_time=datetime.time(11, 45),
+        latitude=28.6139,
+        longitude=77.2090,
+        timezone_offset=5.5
+    )
+    chart = default_chart_calculator.calculate_full_chart(bd)
+    master_bundle = default_master_calculator.calculate_all(chart)
+
+    response = default_narrative_service.chat_consultation(
+        user_query="dhanyavad guruji",
+        chart=chart,
+        master_data=master_bundle,
+        api_key=None,
+        language="Hindi"
+    )
+
+    assert ("कल्याणमस्तु" in response or "शुभम्" in response)
+    assert "Shubham Tiwari" in response
+    assert len(response.splitlines()) < 8
