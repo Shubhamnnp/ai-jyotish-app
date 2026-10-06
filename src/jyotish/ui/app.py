@@ -20,6 +20,7 @@ Unites:
 
 import sys
 import os
+import re
 from typing import Any, Dict, List, Optional, Tuple
 from datetime import date, time, datetime, timedelta
 import pandas as pd
@@ -16892,15 +16893,15 @@ elif selected_idx == 16:
         """, unsafe_allow_html=True)
 
         p_cats = default_prashna_service.get_categories()
-        p_cat_names = [f"{c['icon']} {c['Name_Hi']} ({c['Name']})" for c in p_cats]
+        cat_map = {f"{c['icon']} {c['Name_Hi']} ({c['Name']})": c['Name'] for c in p_cats}
+        p_cat_names = list(cat_map.keys())
 
         c_p1, c_p2 = st.columns([2, 1])
         with c_p1:
-            selected_cat_str = st.selectbox("प्रश्न का विषय (Prashna Category):", p_cat_names, index=5)
-            # Extract english name
-            m_en = re.search(r'\((.*?)\)', selected_cat_str)
-            cat_en = m_en.group(1) if m_en else "Career"
-            user_prashna_query = st.text_input("अपना तात्कालिक प्रश्न लिखें (Query Text):", value=f"क्या मेरा {selected_cat_str.split()[1]} से सम्बंधित कार्य सफल होगा?")
+            selected_cat_str = st.selectbox("प्रश्न का विषय (Prashna Category):", p_cat_names, index=min(5, len(p_cat_names) - 1))
+            cat_en = cat_map.get(selected_cat_str, "Career")
+            cat_label = selected_cat_str.split()[1] if len(selected_cat_str.split()) > 1 else "कार्य"
+            user_prashna_query = st.text_input("अपना तात्कालिक प्रश्न लिखें (Query Text):", value=f"क्या मेरा {cat_label} से सम्बंधित कार्य सफल होगा?")
         with c_p2:
             st.markdown("<div style='height:28px;'></div>", unsafe_allow_html=True)
             calc_prashna_btn = st.button("🔮 तात्कालिक प्रश्न कुण्डली फलित करें", use_container_width=True)
