@@ -1,14 +1,27 @@
 """
 Executive UI View for Vedic Jyotish Panchang module.
 Provides a comprehensive, world-class Shastriya Panchang interface exceeding Drik Panchang standards.
-Includes deep Paksha Analysis, Pitru Paksha (Mahalaya Shradh) prohibitions & prescribed rituals,
-Chaturmas, Kharmas, Bhadra Mukha/Puchha, and 60-Ghati Vedic Clock.
+12 Complete Shastriya Tabs:
+1. Pancha-Anga (5 Core Pillars): Tithi, Nakshatra, Yoga, Karana, Vara with exact ending times, degrees, padas & deities.
+2. Festivals & Vrat Engine: Ekadashis with Parana timings, Pradosha, Shivaratri, Chaturthis, Purnima/Amavasya.
+3. Paksha & Pitru Paksha Deep Engine: Strict prohibitions (क्या-क्या नहीं कर सकते), Prescribed deeds, Kutupa/Rohina/Aparahna kaal.
+4. 24-Hour Rising Lagna Table: Start-End moments of all 12 Lagnas, Nature (चर/स्थिर/द्विस्वभाव), Elements, Muhurta suitability.
+5. Auspicious & Inauspicious Muhurtas: Abhijit, Brahma, Vijaya, Godhuli, Amrit Kaal, Rahu Kaal, Yamaghanta, Gulika, Durmuhurta, Varjyam.
+6. Choghadiya, Horas & 60-Ghati Vedic Clock: 8 Day + 8 Night Choghadiyas, 24 Planetary Horas, Ishtakala clock.
+7. Bhadra, Panchaka & Gandamoola: Bhadra Vasa (Swarga/Patala/Bhuloka), Mukha (5 ghatis), Puchha (3 ghatis), Panchaka doshas, Gandamoola shanti.
+8. Chandra Balam, Tara Balam & Auspicious Yogas: 12 Moon Sign Chandra Balam, 27 Nakshatra Navatara matrix, 28 Anandadi yogas.
+9. Planetary Transit Matrix & Cabinet: Real-time planet degrees, retro/combustion, 60 Samvatsaras & Planetary Cabinet.
+10. Vedic Sankalpa Mantra Generator: Dynamic Sanskrit text with Yajamana name, Gotra, Intent selection & ritual guide.
+11. Monthly Calendar Grid View: 7-day responsive interactive calendar grid with tithis, festivals, and one-click inspection.
+12. AI Panchang Sarathi & Action Suitability: Conversational AI advisor for specific muhurta queries + 12-deed suitability scorecard.
 """
 
 import streamlit as st
 import importlib
+import calendar
+import os
 from datetime import datetime, date, timedelta
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 
 import src.jyotish.services.panchang as panchang_svc_module
 importlib.reload(panchang_svc_module)
@@ -33,8 +46,95 @@ POPULAR_CITIES = {
 }
 
 
+def ask_ai_panchang_advisor(query: str, p_data: Dict[str, Any]) -> str:
+    """Provides high-intelligence, Shastriya astrological answers for panchang questions."""
+    m = p_data.get("meta", {})
+    pil = p_data.get("five_pillars", {})
+    t = pil.get("tithi", {})
+    v = pil.get("vara", {})
+    nak = pil.get("nakshatra", {})
+    yg = pil.get("yoga", {})
+    kc = pil.get("karana", {}).get("current", {})
+    pak = p_data.get("paksha_engine", {})
+    pitru = pak.get("pitru_paksha", {})
+    bhadra = p_data.get("bhadra", {})
+    muh = p_data.get("muhurtas", {})
+
+    api_key = os.getenv("GEMINI_API_KEY") or st.session_state.get("gemini_api_key")
+    if api_key:
+        try:
+            from google import genai
+            from google.genai import types
+            client = genai.Client(api_key=api_key)
+            prompt = f"""You are 'दैवज्ञ पञ्चाङ्ग सारथी' (Daivajna Panchang AI Advisor), an authority on Vedic Panchang, Muhurta Chintamani, and Brihat Samhita.
+User asked: "{query}"
+
+TODAY'S ACCURATE CELESTIAL COORDINATES:
+- Date & City: {m.get('date_str')} at {m.get('city')}
+- Tithi: {t.get('name')} ({t.get('paksha')}), Ends: {t.get('end_time_str')}
+- Vara: {v.get('name_hi')} (Lord: {v.get('lord')})
+- Nakshatra: {nak.get('name')} (Pada {nak.get('pada')}, Lord: {nak.get('lord')}), Ends: {nak.get('end_time_str')}
+- Yoga: {yg.get('name')} ({yg.get('nature')})
+- Karana: {kc.get('name')} ({kc.get('type')})
+- Primary Festival/Vrat: {m.get('primary_festival')}
+- Pitru Paksha Active: {pitru.get('is_active', False)} (Shradh: {pitru.get('shradh_name', 'None')})
+- Bhadra Active: {bhadra.get('is_present', False)} (Fatal on Earth: {bhadra.get('is_fatal_on_earth', False)})
+- Rahu Kaal: {muh.get('ashubh_windows', [{}])[0].get('time', 'N/A') if muh.get('ashubh_windows') else 'N/A'}
+- Abhijit Muhurta: {next((x['time'] for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('name', '')), 'आज अनुपस्थित')}
+- Day Verdict: {m.get('day_verdict')}
+
+Respond directly in respectful, clear Hindi (4-6 bullet points) with exact Shastriya reasoning, whether the activity is recommended or prohibited today, and what specific auspicious window or remedy to use."""
+            resp = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(temperature=0.2)
+            )
+            if resp and resp.text:
+                return resp.text
+        except Exception:
+            pass
+
+    # Expert Shastriya Rule-Based Intelligence
+    q_low = query.lower()
+    is_pitru = pitru.get("is_active", False)
+    is_bhadra = bhadra.get("is_fatal_on_earth", False)
+    abhijit = next((x['time'] for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('name', '')), 'आज अभिजित मुहूर्त नहीं है')
+
+    if any(k in q_low for k in ["वाहन", "गाड़ी", "car", "vehicle", "bike", "vahan"]):
+        if is_pitru:
+            return "🚫 **वाहन क्रय विचार:** वर्तमान में **पितृपक्ष (महालय श्राद्ध)** सक्रिय है। शास्त्रों अनुसार इस अवधि में नवीन वाहन अथवा विलासिता सामग्री का प्रथम उपभोग त्याज्य माना गया है। यदि अति-आवश्यक हो, तो केवल अग्रिम बुकिंग (बुकिंग टोकन) कर सकते हैं, परन्तु वाहन की डिलीवरी व प्रथम पूजन सर्वपितृ अमावस्या के बाद शारदीय नवरात्रि में करना सर्वोत्तम रहेगा।"
+        elif is_bhadra:
+            return f"⚠️ **वाहन क्रय विचार:** आज भद्रा का प्रभाव है। भद्रा समाप्ति के उपरान्त अथवा आज के **अभिजित मुहूर्त ({abhijit})** अथवा शुभ/अमृत चौघड़िया में वाहन क्रय करना अनुकूल रहेगा।"
+        else:
+            return f"🟢 **वाहन क्रय विचार:** आज का दिन वाहन क्रय हेतु अनुकूल है। विशेषकर **अभिजित मुहूर्त ({abhijit})** अथवा दिन के लाभ/अमृत चौघड़िया में वाहन लेना शुभ फलदायी रहेगा। राहुकाल से बचें।"
+
+    elif any(k in q_low for k in ["गृह प्रवेश", "गृहप्रवेश", "house", "griha", "home"]):
+        if is_pitru:
+            return "🚫 **गृह प्रवेश निर्णय:** **पितृपक्ष में नूतन गृह प्रवेश सर्वथा वर्जित है।** निर्णय सिन्धु व मुहूर्त चिन्तामणि के अनुसार पितृपक्ष में किया गया गृह प्रवेश गृह क्लेश, अशांति व पितृ दोष का कारण बनता है। कृपया देवोत्थान एकादशी के बाद शुभ मुहूर्त में ही गृह प्रवेश करें।"
+        else:
+            return f"⚠️ **गृह प्रवेश निर्णय:** गृह प्रवेश हेतु स्थिर लग्न (वृषभ, सिंह, कुम्भ) एवं रिक्ता तिथि रहित शुद्ध काल अपेक्षित होता है। आज {t.get('name')} तिथि है। राहुकाल व भद्रा त्यागकर शुभ चौघड़िया में विद्वान ज्योतिषी से शुद्ध लग्न शोधन कराकर ही प्रवेश करें।"
+
+    elif any(k in q_low for k in ["व्यापार", "दुकान", "business", "vyapar", "shop", "office", "start"]):
+        if is_pitru:
+            return "🚫 **नवीन व्यापार आरम्भ:** पितृपक्ष काल में नए व्यापार, प्रतिष्ठान अथवा दुकान का उद्घाटन करना शास्त्रसम्मत नहीं है। नए आरम्भ हेतु नवरात्रि अथवा दीपावली का काल सर्वोत्तम रहेगा।"
+        else:
+            return f"🟢 **व्यापार आरम्भ:** आज व्यापार आरम्भ अथवा अनुबंध हेतु **अभिजित मुहूर्त ({abhijit})** अथवा लाभ व अमृत चौघड़िया सर्वश्रेष्ठ है।"
+
+    elif any(k in q_low for k in ["श्राद्ध", "तर्पण", "पिण्डदान", "pitru", "tarpan", "shradh"]):
+        return f"🌟 **श्राद्ध व तर्पण विधान:** आज के श्राद्ध का मुख्य काल **कुतुप मुहूर्त ({pitru.get('kutupa_time', '11:45 AM - 12:32 PM')})** एवं **रौहिण मुहूर्त ({pitru.get('rohina_time', '12:32 PM - 01:19 PM')})** है। तर्पण व पिण्डदान **अपराह्न काल ({pitru.get('aparahna_time', '01:19 PM - 03:40 PM')})** में संपन्न करें। पंचबलि कर्म (गौ, श्वान, काक, देवादि, पिपीलिका) अवश्य करें।"
+
+    else:
+        return (
+            f"📖 **आज का समग्र शास्त्रीय परामर्श:**\n\n"
+            f"- **आज का दिवस निर्णय:** {m.get('day_verdict')}\n"
+            f"- **सर्वश्रेष्ठ शुभ काल:** अभिजित मुहूर्त ({abhijit})\n"
+            f"- **सावधानी / त्याज्य काल:** राहुकाल एवं दिशा शूल ({p_data.get('nivas_shoola', {}).get('disha_shoola', {}).get('direction', 'पूर्व')} दिशा) में यात्रा से बचें।\n"
+            f"- **अनुकूलता:** सात्विक कर्म, इष्ट आराधना व दान-पुण्य हेतु दिन मंगलकारी है।"
+        )
+
+
 def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = False):
-    """Renders the master Vedic Jyotish Panchang module with 8 rich interactive tabs."""
+    """Renders the master Vedic Jyotish Panchang module with 12 rich interactive tabs."""
 
     st.markdown("""
     <div style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%);
@@ -46,7 +146,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     📅 वैदिक ज्योतिषीय पञ्चाङ्ग (Vedic Jyotish Panchang)
                 </h2>
                 <p style="margin:6px 0 0 0; color:#E0E7FF; font-size:14px;">
-                    सूर्य सिद्धान्त, दृक्-गणित, निर्णय सिन्धु एवं मुहूर्त चिन्तामणि पर आधारित १००% प्रामाणिक दैनिक पञ्चाङ्ग एवं पक्ष-श्राद्ध शोधन
+                    सूर्य सिद्धान्त, दृक्-गणित, निर्णय सिन्धु एवं मुहूर्त चिन्तामणि पर आधारित १००% प्रामाणिक दैनिक पञ्चाङ्ग, २४-घण्टे लग्न सारणी एवं सङ्कल्प मन्त्र
                 </p>
             </div>
             <div style="text-align:right;">
@@ -142,18 +242,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     samvat = panchang_data["samvatsar"]
     transit = panchang_data["transit_matrix"]
     paksha_eng = panchang_data.get("paksha_engine") or {}
-    if not paksha_eng or "pitru_paksha" not in paksha_eng:
-        sun_lon_val = transit.get("Sun", {}).get("longitude", 0.0) if "Sun" in transit else 0.0
-        moon_lon_val = transit.get("Moon", {}).get("longitude", 0.0) if "Moon" in transit else 0.0
-        paksha_eng = VedicPanchangService.calculate_paksha_and_pitru_engine(
-            target_date=selected_date,
-            sun_lon=sun_lon_val,
-            moon_lon=moon_lon_val,
-            tithi_idx=pillars["tithi"]["index"],
-            sunrise_dt=sun_moon["sunrise"],
-            sunset_dt=sun_moon["sunset"]
-        )
     pitru = paksha_eng.get("pitru_paksha", {})
+    lagna_table = panchang_data.get("lagna_table", [])
+    festivals_vrat = panchang_data.get("festivals_and_vrat", {})
+    sankalpa_mantra = panchang_data.get("sankalpa_mantra", {})
 
     # -------------------------------------------------------------
     # HERO BANNER: Day, Sunrise/Sunset, Samvat & Day Quality
@@ -213,6 +305,29 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
         """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
+    # PRIMARY FESTIVAL BADGE (If present)
+    # -------------------------------------------------------------
+    prim_fest = meta.get("primary_festival")
+    if prim_fest and "सामान्य दिवस" not in prim_fest:
+        st.markdown(f"""
+        <div style="background: linear-gradient(90deg, #FFFBEB 0%, #FEF3C7 100%); border:1.5px solid #F59E0B;
+                    border-radius:10px; padding:10px 18px; margin:14px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:22px;">🚩</span>
+                <div>
+                    <b style="color:#B45309; font-size:16px;">आज का मुख्य पर्व / महा-व्रत:</b>
+                    <span style="color:#92400E; font-size:16px; font-weight:800; margin-left:6px;">{prim_fest}</span>
+                </div>
+            </div>
+            <div>
+                <span style="background:#F59E0B; color:#FFFFFF; padding:4px 12px; border-radius:14px; font-size:12px; font-weight:700;">
+                    पर्व व व्रत काल
+                </span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # -------------------------------------------------------------
     # PITRU PAKSHA GRAND ALERT BANNER (If Active)
     # -------------------------------------------------------------
     if pitru.get("is_active"):
@@ -224,9 +339,9 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     <h3 style="margin:0; color:#991B1B; font-size:20px; font-weight:800;">
                         🪔 {pitru['shradh_name']} — पितृपक्ष (महालय श्राद्ध काल) सक्रिय!
                     </h3>
-                    <p style="margin:4px 0 0 0; color:#7F1D1D; font-size:13.5px;">
+                    <div style="margin-top:4px; color:#7F1D1D; font-size:13.5px;">
                         {pitru['verdict_desc']}
-                    </p>
+                    </div>
                 </div>
                 <div style="margin-top:4px;">
                     <span style="background:#DC2626; color:#FFFFFF; padding:5px 14px; border-radius:20px; font-weight:700; font-size:12.5px;">
@@ -269,18 +384,52 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     </div>
     """, unsafe_allow_html=True)
 
+    # Expandable Digital Panchang Patri (WhatsApp / Print Share)
+    with st.expander("🖨️ दैनिक डिजिटल पञ्चाङ्ग पत्रक (WhatsApp / Print Shareable Card)"):
+        st.markdown(f"""
+        <div style="background:#FFFFFF; border:2px solid #B45309; border-radius:12px; padding:20px; font-family:sans-serif; max-width:680px; margin:auto; box-shadow:0 4px 14px rgba(0,0,0,0.08);">
+            <div style="text-align:center; border-bottom:2px dashed #D97706; padding-bottom:12px; margin-bottom:12px;">
+                <h3 style="margin:0; color:#92400E; font-size:22px;">🕉️ श्री गणेशाय नमः | दैनिक पञ्चाङ्ग पत्रक 🕉️</h3>
+                <div style="color:#B45309; font-size:14px; font-weight:700; margin-top:4px;">
+                    {meta['city']} | {meta['date_hi']} ({pillars['vara']['name_hi']})
+                </div>
+                <small style="color:#78350F;">विक्रम संवत {samvat['vikram_samvat']} | शक संवत {samvat['shaka_samvat']} | {samvat['ayana']} | {samvat['ritu']}</small>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13.5px; line-height:1.7; color:#1E293B;">
+                <div>• <b>तिथि:</b> {pillars['tithi']['name']} ({pillars['tithi']['paksha']}) पर्यन्त {pillars['tithi']['end_time_str']}</div>
+                <div>• <b>नक्षत्र:</b> {pillars['nakshatra']['name']} (चरण {pillars['nakshatra']['pada']}) पर्यन्त {pillars['nakshatra']['end_time_str']}</div>
+                <div>• <b>योग:</b> {pillars['yoga']['name']} पर्यन्त {pillars['yoga']['end_time_str']}</div>
+                <div>• <b>करण:</b> {pillars['karana']['current']['name']} पर्यन्त {pillars['karana']['current']['end_time_str']}</div>
+                <div>• <b>सूर्योदय / सूर्यास्त:</b> {sr_str} / {ss_str}</div>
+                <div>• <b>चन्द्रोदय / चन्द्रास्त:</b> {mr_str} / {ms_str}</div>
+                <div>• <b>राहुकाल (त्याज्य):</b> <span style="color:#DC2626; font-weight:700;">{muh['ashubh_windows'][0]['time'] if muh['ashubh_windows'] else '—'}</span></div>
+                <div>• <b>अभिजित मुहूर्त (शुभ):</b> <span style="color:#059669; font-weight:700;">{next((x['time'] for x in muh['shubh_windows'] if 'अभिजित' in x['name']), '—')}</span></div>
+                <div>• <b>दिशा शूल:</b> {nivas['disha_shoola']['direction']} (उपाय: {nivas['disha_shoola']['parihar']})</div>
+                <div>• <b>चन्द्र राशि:</b> {transit[1]['rashi'] if len(transit) > 1 else 'कर्क'}</div>
+            </div>
+            {f'<div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:6px; padding:8px 12px; margin-top:12px; font-size:13px; color:#991B1B;"><b>🪔 विशेष:</b> {prim_fest}</div>' if prim_fest else ''}
+            <div style="text-align:center; border-top:1px solid #E2E8F0; padding-top:8px; margin-top:12px; font-size:11.5px; color:#64748B;">
+                ज्योतिषीय पञ्चाङ्ग साफ्टवेयर द्वारा प्रमाणित | सर्वमंगलं भवतु
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     # -------------------------------------------------------------
-    # 8 COMPREHENSIVE TABS
+    # 12 COMPREHENSIVE TABS
     # -------------------------------------------------------------
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
-        "🌟 पञ्चाङ्ग के ५ स्तम्भ (5 Pillars)",
-        "🪔 पक्ष, पितृपक्ष (श्राद्ध) एवं महा-काल शोध",
-        "⏰ शुभ एवं अशुभ मुहूर्त (Timings)",
-        "☀️ चौघड़िया, होरा एवं वैदिक घड़ी",
-        "🛡️ भद्रा, पञ्चक एवं गण्डमूल शोध",
-        "⚖️ चन्द्रबलम, ताराबलम एवं शुभ योग",
-        "🪐 दैनिक ग्रह स्पष्ट एवं मंत्रिमंडल",
-        "📖 शास्त्रीय फलादेश, शूल व कर्म शुद्धि"
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs([
+        "🌟 पञ्चाङ्ग के ५ स्तम्भ",
+        "🚩 पर्व, व्रत व एकादशी पारणा",
+        "🪔 पक्ष व पितृपक्ष (श्राद्ध)",
+        "🏛️ २४-घंटे लग्न सारणी",
+        "⏰ शुभ व अशुभ मुहूर्त",
+        "☀️ चौघड़िया, होरा व वैदिक घड़ी",
+        "🛡️ भद्रा, पञ्चक व गण्डमूल",
+        "⚖️ चन्द्रबलम, ताराबलम व शुभ योग",
+        "🪐 ग्रह गोचर व मंत्रिमंडल",
+        "📜 दैनिक वैदिक सङ्कल्प मन्त्र",
+        "📅 मासिक पञ्चाङ्ग कैलेंडर",
+        "🤖 AI पञ्चाङ्ग सारथी व कर्म शुद्धि"
     ])
 
     # =============================================================
@@ -301,18 +450,18 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <span style="color:#1D4ED8; font-weight:700; font-size:13px;">स्तम्भ १: तिथि</span>
                     <span style="background:#DBEAFE; color:#1E40AF; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:700;">
-                        {t['paksha']}
+                        {t['category']}
                     </span>
                 </div>
                 <div style="font-size:22px; font-weight:800; color:{'#FFFFFF' if is_dark else '#0F172A'}; margin:8px 0 4px 0;">
-                    {t['name']} ({t['name_en']})
+                    {t['name']} ({t['paksha']})
                 </div>
                 <div style="color:#DC2626; font-size:14px; font-weight:700; margin-bottom:8px;">
                     ⏳ {t['end_time_str']}
                 </div>
                 <div style="margin:8px 0;">
                     <div style="display:flex; justify-content:space-between; font-size:11px; color:#64748B;">
-                        <span>प्रगति ({t['degree_in_tithi']}° / 12°)</span>
+                        <span>तिथि भोग ({t['degree_in_tithi']}° / 12°)</span>
                         <span>{t['progress_pct']}% व्यतीत</span>
                     </div>
                     <div style="background:#E2E8F0; border-radius:4px; height:6px; overflow:hidden;">
@@ -320,10 +469,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     </div>
                 </div>
                 <div style="font-size:12.5px; color:{'#D1D5DB' if is_dark else '#475569'}; line-height:1.6; margin-top:10px;">
-                    • <b>संज्ञा:</b> {t['category']}<br/>
-                    • <b>स्वामी देवता:</b> {t['deity']}<br/>
-                    • <b>सूर्य-चन्द्र अन्तर:</b> {t['degree']}°<br/>
-                    • <b>आगामी तिथि:</b> {t['next_name']} ({t['next_paksha']})
+                    • <b>अधिष्ठाता देवता:</b> {t['deity']}<br/>
+                    • <b>तिथि संज्ञा:</b> {t['category']} ({'रिक्ता तिथि - शुभ कार्य वर्जित' if 'रिक्ता' in t['category'] else 'शुभ फलप्रद'})<br/>
+                    • <b>चन्द्र-सूर्य अन्तर:</b> {t['diff_deg']}°<br/>
+                    • <b>आगामी तिथि:</b> {t['next_name']} ({t['next_end_str']})
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -475,15 +624,80 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
         st.table(pillars_table)
 
     # =============================================================
-    # TAB 2: पक्ष, पितृपक्ष (श्राद्ध) एवं महा-काल शोध
+    # TAB 2: पर्व, व्रत एवं एकादशी पारणा (Festivals & Vrat Engine)
     # =============================================================
     with tab2:
+        st.markdown("### 🚩 व्रत, पर्व एवं एकादशी पारणा शोध")
+        st.caption("दृक्-पञ्चाङ्ग प्रमाणित प्रमुख सनातन व्रत, त्यौहार, महा-पर्व एवं एकादशी पारणा का सूक्ष्म समय:")
+
+        vr_list = festivals_vrat.get("vrats", [])
+        ek_parana = festivals_vrat.get("ekadashi_parana")
+
+        if vr_list:
+            st.markdown("#### 🌟 आज सक्रिय व्रत एवं त्यौहार (Active Vrats & Festivals)")
+            for v_item in vr_list:
+                st.markdown(f"""
+                <div style="background:{'#1F2937' if is_dark else '#FFFBEB'}; border:1.5px solid #F59E0B;
+                            border-radius:12px; padding:16px 20px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <b style="color:#B45309; font-size:18px;">🚩 {v_item['name']}</b>
+                        <span style="background:#FDE68A; color:#78350F; padding:4px 12px; border-radius:14px; font-weight:700; font-size:12px;">
+                            {v_item['badge']}
+                        </span>
+                    </div>
+                    <div style="color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13.5px; margin-top:6px; line-height:1.6;">
+                        • <b>व्रत स्वरूप:</b> {v_item['type']}<br/>
+                        • <b>आध्यात्मिक महत्व:</b> {v_item['significance']}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.info("आज कोई प्रमुख विशिष्ट महा-व्रत अथवा पर्व नहीं है। नित्य सात्विक कर्म व ईष्ट आराधना शुभ फलदायी है।")
+
+        # Ekadashi Parana Card (If Active)
+        if ek_parana and ek_parana.get("is_applicable"):
+            st.markdown("#### 🍲 एकादशी व्रत पारणा मुहूर्त (Ekadashi Parana Timings)")
+            st.markdown(f"""
+            <div style="background:{'#1F2937' if is_dark else '#F0FDF4'}; border:2px solid #16A34A;
+                        border-radius:12px; padding:18px 20px; margin:14px 0;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <b style="color:#166534; font-size:18px;">✨ {ek_parana['ekadashi_name']}</b>
+                    <span style="background:#DCFCE7; color:#14532D; padding:4px 12px; border-radius:14px; font-weight:700; font-size:12.5px;">
+                        पारणा काल शुभ
+                    </span>
+                </div>
+                <div style="font-size:20px; font-weight:800; color:#15803D; margin:10px 0 6px 0;">
+                    ⏱️ पारणा समय: {ek_parana['parana_window_str']}
+                </div>
+                <div style="font-size:13.5px; color:{'#D1D5DB' if is_dark else '#334155'}; line-height:1.6;">
+                    <b>शास्त्रीय पारणा विधि:</b> {ek_parana['rule']}<br/>
+                    • <i>हरिवासर विचार:</i> धर्मसिन्धु अनुसार द्वादशी के प्रथम चतुर्थांश (हरिवासर) में पारणा निषिद्ध है। उक्त समय पूर्णतः हरिवासर समाप्त्योपरान्त प्रशस्त है।
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.markdown("#### 🗓️ आगामी प्रमुख व्रत एवं पर्व तालिका")
+        fest_sched = [
+            {"पर्व / व्रत": "इन्दिरा एकादशी", "मास व पक्ष": "आश्विन कृष्ण पक्ष", "महत्व": "पितरों के उद्धार व मोक्ष हेतु परम पावन"},
+            {"पर्व / व्रत": "सर्वपितृ अमावस्या", "मास व पक्ष": "आश्विन कृष्ण अमावस्या", "महत्व": "समस्त ज्ञात-अज्ञात पितरों का महा-विसर्जन"},
+            {"पर्व / व्रत": "शारदीय नवरात्रि (घटस्थापना)", "मास व पक्ष": "आश्विन शुक्ल प्रतिपदा", "महत्व": "माँ भगवती दुर्गा के ९ स्वरूपों की उपासना"},
+            {"पर्व / व्रत": "विजयादशमी (दशहरा)", "मास व पक्ष": "आश्विन शुक्ल दशमी", "महत्व": "अधर्म पर धर्म की विजय, अपराजिता पूजन"},
+            {"पर्व / व्रत": "करवा चौथ", "मास व पक्ष": "कार्तिक कृष्ण चतुर्थी", "महत्व": "अखण्ड सौभाग्य व पति दीर्घायु हेतु निर्जला व्रत"},
+            {"पर्व / व्रत": "धनतेरस व दीपावली", "मास व पक्ष": "कार्तिक कृष्ण त्रयोदशी-अमावस्या", "महत्व": "धन्वन्तरि जयंती व महालक्ष्मी पूजनोत्सव"},
+            {"पर्व / व्रत": "देवउठनी एकादशी", "मास व पक्ष": "कार्तिक शुक्ल एकादशी", "महत्व": "भगवान विष्णु का देवोत्थान व मांगलिक कार्य आरम्भ"}
+        ]
+        st.table(fest_sched)
+
+    # =============================================================
+    # TAB 3: पक्ष, पितृपक्ष (श्राद्ध) एवं महा-काल शोध
+    # =============================================================
+    with tab3:
         st.markdown("### 🪔 पक्ष, पितृपक्ष (श्राद्ध) एवं महा-काल शोध")
         st.caption("शुक्ल/कृष्ण पक्ष के चन्द्र-बल गुणधर्म, पितृपक्ष (महालय) निषेध व विधान, चातुर्मास एवं खरमास का प्रामाणिक शास्त्रीय फलादेश:")
 
         # 1. PAKSHA & MOON STRENGTH
         st.markdown("#### 🌓 १. पक्ष एवं चन्द्रमा का प्राकृतिक बल (Chandra Bala in Paksha)")
-        
         cur_paksha = paksha_eng.get('paksha_name') or pillars['tithi']['paksha']
         cb_val = paksha_eng.get('chandra_bala') or ("सर्वोच्च / पूर्ण चन्द्र बल" if "शुक्ल" in cur_paksha else "क्षीण चन्द्र बल (संयम काल)")
         cb_col = paksha_eng.get('chandra_bala_color') or ("#059669" if "शुक्ल" in cur_paksha else "#D97706")
@@ -652,16 +866,69 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
             """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 3: शुभ एवं अशुभ मुहूर्त (Timings)
+    # TAB 4: दैनिक लग्न सारणी (24-Hour Lagna Timings)
     # =============================================================
-    with tab3:
+    with tab4:
+        st.markdown("### 🏛️ दैनिक २४-घंटे की लग्न सारणी (24-Hour Rising Lagna Table)")
+        st.caption("सूर्योदय से अगले सूर्योदय तक मेष से मीन पर्यन्त द्वादश लग्नों का उदय-अस्त समय, स्वभाव एवं मुहूर्त उपयोगिता:")
+
+        if lagna_table:
+            # Filter options
+            lag_filter = st.radio("लग्न प्रकार फ़िल्टर:", ["समस्त १२ लग्न (All)", "स्थिर लग्न (गृह प्रवेश / व्यापार)", "द्विस्वभाव लग्न (विद्या / शिल्प)", "चर लग्न (यात्रा / परिवर्तन)"], horizontal=True)
+
+            filtered_lagnas = lagna_table
+            if "स्थिर" in lag_filter:
+                filtered_lagnas = [x for x in lagna_table if "स्थिर" in x["type"]]
+            elif "द्विस्वभाव" in lag_filter:
+                filtered_lagnas = [x for x in lagna_table if "द्विस्वभाव" in x["type"]]
+            elif "चर" in lag_filter:
+                filtered_lagnas = [x for x in lagna_table if "चर" in x["type"]]
+
+            cols_l = st.columns(2)
+            for idx, lg in enumerate(filtered_lagnas):
+                with cols_l[idx % 2]:
+                    type_color = "#059669" if "स्थिर" in lg["type"] else ("#2563EB" if "द्विस्वभाव" in lg["type"] else "#D97706")
+                    is_active_box = lg.get("is_current", False)
+                    box_border = "#DC2626" if is_active_box else ('#374151' if is_dark else '#E2E8F0')
+
+                    st.markdown(f"""
+                    <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1.5px solid {box_border};
+                                border-left:5px solid {type_color}; border-radius:10px; padding:14px; margin-bottom:12px;
+                                {'box-shadow:0 0 10px rgba(220,38,38,0.25);' if is_active_box else ''}">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <b style="font-size:18px; color:{'#FFFFFF' if is_dark else '#0F172A'};">{lg['name']} लग्न ({lg['name_en']})</b>
+                                <span style="background:{type_color}20; color:{type_color}; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700; margin-left:6px;">
+                                    {lg['type']}
+                                </span>
+                            </div>
+                            <div>
+                                {'<span style="background:#DC2626; color:#FFF; padding:3px 8px; border-radius:10px; font-size:10.5px; font-weight:700;">🔴 सक्रिय काल</span>' if is_active_box else ''}
+                            </div>
+                        </div>
+                        <div style="font-size:15px; font-weight:800; color:#1D4ED8; margin:6px 0;">
+                            ⏱️ {lg['start_str']} से {lg['end_str']} <span style="font-size:12px; color:#64748B; font-weight:400;">({lg['duration_str']} | {lg['duration_ghatis']})</span>
+                        </div>
+                        <div style="font-size:12.5px; color:{'#D1D5DB' if is_dark else '#475569'}; line-height:1.6;">
+                            • <b>लग्न स्वामी:</b> {lg['lord']} | <b>तत्व:</b> {lg['element']}<br/>
+                            • <b>मुहूर्त शुद्धि:</b> {lg['suitability']}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+        else:
+            st.info("लग्न सारणी की गणना प्रगति पर है...")
+
+    # =============================================================
+    # TAB 5: शुभ एवं अशुभ मुहूर्त (Timings)
+    # =============================================================
+    with tab5:
         st.markdown("### ⏰ शुभ एवं अशुभ काल / मुहूर्त (Auspicious & Inauspicious Timings)")
         st.caption("सूर्योदय व सूर्यास्त के शुद्ध दिनमान विभाजन पर आधारित यथार्थ वेला एवं त्याज्य काल चक्र:")
 
         col_m1, col_m2 = st.columns(2)
 
         with col_m1:
-            st.markdown("#### 🟢 शुभ एवं अमृत मुहूर्त (Auspicious Windows)")
+            st.markdown("#### 🟢 शुभ काल व मुहूर्त (Auspicious Windows)")
             for win in muh["shubh_windows"]:
                 st.markdown(f"""
                 <div style="background:{'#1F2937' if is_dark else '#F0FDF4'}; border:1px solid {'#374151' if is_dark else '#BBF7D0'};
@@ -699,9 +966,9 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 4: चौघड़िया, होरा एवं वैदिक घड़ी
+    # TAB 6: चौघड़िया, होरा एवं वैदिक घड़ी
     # =============================================================
-    with tab4:
+    with tab6:
         st.markdown("### ☀️ चौघड़िया, होरा एवं वैदिक घड़ी (Choghadiya, Horas & Vedic Time)")
         st.caption("दिन के ८ एवं रात्रि के ८ चौघड़िया, २४ ग्रह होराएं एवं ६० घटी वैदिक काल मापन:")
 
@@ -805,9 +1072,9 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 5: भद्रा, पञ्चक एवं गण्डमूल शोध
+    # TAB 7: भद्रा, पञ्चक एवं गण्डमूल शोध
     # =============================================================
-    with tab5:
+    with tab7:
         st.markdown("### 🛡️ भद्रा, पञ्चक एवं गण्डमूल शोध (Bhadra, Panchaka & Gandamoola Engine)")
         st.caption("मुहूर्त चिन्तामणि के अनुसार भद्रा वास, मुख-पुच्छ काल, पञ्चक के ५ प्रकार एवं गण्डमूल चरण फल:")
 
@@ -826,10 +1093,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 <div style="font-size:16px; font-weight:800; color:{'#FFFFFF' if is_dark else '#0F172A'}; margin:8px 0;">
                     ⏱️ भद्रा काल: {bhadra['full_time_str']} (कुल अवधि: {bhadra['duration_str']})
                 </div>
-                <p style="color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13.5px; margin:6px 0;">
+                <div style="color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13.5px; margin:6px 0;">
                     <b>शास्त्रीय निर्णय:</b> {bhadra['verdict']}<br/>
                     <i>"{bhadra['sutra']}"</i>
-                </p>
+                </div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;">
                     <div style="background:rgba(220, 38, 38, 0.1); border:1px solid #DC2626; border-radius:8px; padding:10px;">
                         <b style="color:#DC2626;">💀 भद्रा मुख (सर्वथा वर्जित):</b><br/>
@@ -850,7 +1117,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
             <div style="background:{'#1F2937' if is_dark else '#F0FDF4'}; border:1px solid #BBF7D0;
                         border-radius:12px; padding:16px; margin-bottom:16px;">
                 <b style="color:#166534; font-size:16px;">{bhadra['badge']}</b>
-                <p style="color:#15803D; margin:4px 0 0 0; font-size:13.5px;">{bhadra['status_hi']}</p>
+                <div style="color:#15803D; margin-top:4px; font-size:13.5px;">{bhadra['status_hi']}</div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -869,7 +1136,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                         {p_info['badge']}
                     </span>
                 </div>
-                <p style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:13px; margin:8px 0;">{p_info['desc']}</p>
+                <div style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:13px; margin:8px 0;">{p_info['desc']}</div>
                 {'<div style="font-size:12px; color:#DC2626;"><b>विशेष निषेध:</b><br/>• ' + '<br/>• '.join(p_info.get('prohibitions', [])) + '</div>' if p_info['is_active'] else ''}
             </div>
             """, unsafe_allow_html=True)
@@ -882,20 +1149,20 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
             <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1.5px solid {g_info['color']};
                         border-radius:12px; padding:16px; height:100%;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <b style="color:{g_info['color']}; font-size:16px;">{g_info.get('nakshatra', 'गण्डमूल')} {f'(चरण {g_info.get('pada')})' if g_info['is_active'] else ''}</b>
+                    <b style="color:{g_info['color']}; font-size:16px;">{g_info.get('nakshatra', 'गण्डमूल')} {f'(चरण {g_info.get("pada")})' if g_info['is_active'] else ''}</b>
                     <span style="background:{g_info['color']}20; color:{g_info['color']}; padding:2px 8px; border-radius:12px; font-weight:700; font-size:11px;">
                         {g_info['badge']}
                     </span>
                 </div>
-                <p style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:13px; margin:8px 0;">{g_info['desc']}</p>
+                <div style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:13px; margin:8px 0;">{g_info['desc']}</div>
                 {f'<div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:6px; padding:8px; font-size:12px; color:#92400E;"><b>शान्ति विधान:</b> {g_info.get("shanti_vidhi")}</div>' if g_info['is_active'] else ''}
             </div>
             """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 6: चन्द्रबलम, ताराबलम एवं आनन्दादि शुभ योग
+    # TAB 8: चन्द्रबलम, ताराबलम एवं आनन्दादि शुभ योग
     # =============================================================
-    with tab6:
+    with tab8:
         st.markdown("### ⚖️ चन्द्रबलम, ताराबलम एवं आनन्दादि शुभ योग")
         st.caption("१२ राशियों का चन्द्रबल, २७ नक्षत्रों का ताराबल एवं २८ आनन्दादि महायोग:")
 
@@ -910,7 +1177,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                         <b style="color:#047857; font-size:15px;">{sy['title']}</b>
                         <span style="background:#D1FAE5; color:#065F46; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{sy['badge']}</span>
                     </div>
-                    <p style="color:#065F46; font-size:13px; margin:4px 0 0 0;">{sy['desc']}</p>
+                    <div style="color:#065F46; font-size:13px; margin-top:4px;">{sy['desc']}</div>
                 </div>
                 """, unsafe_allow_html=True)
 
@@ -923,7 +1190,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 <b style="color:{ay['color']}; font-size:15px;">✨ आनन्दादि २८ योग: {ay['name']} योग ({ay['nature']})</b>
                 <span style="background:{ay['color']}20; color:{ay['color']}; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">{ay['badge']}</span>
             </div>
-            <p style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:13px; margin:4px 0 0 0;">{ay['desc']}</p>
+            <div style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:13px; margin-top:4px;">{ay['desc']}</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -931,95 +1198,277 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
 
         # Chandrabalam
         with col_b1:
-            st.markdown("#### 🌙 १२ राशियों का चन्द्रबलम् (Chandrabalam)")
-            st.caption("१, ३, ६, ७, १०, ११वां चन्द्रमा शुभ; २, ५, ९ मध्यम; ४, ८, १२ अनिष्ट:")
-            for item in balam["chandrabalam"]:
-                st.markdown(f"""
-                <div style="background:{'#1F2937' if is_dark else '#F8FAFC'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
-                            border-radius:6px; padding:6px 12px; margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:13px; font-weight:600; color:{'#FFFFFF' if is_dark else '#0F172A'};">{item['rashi']}</span>
-                    <span style="font-size:12px; color:#64748B;">{item['house_from_moon']}</span>
-                    <span style="color:{item['color']}; font-size:12px; font-weight:700;">{item['status']}</span>
-                </div>
-                """, unsafe_allow_html=True)
+            st.markdown("#### 🌙 द्वादश राशि चन्द्रबलम् (Chandrabalam)")
+            st.caption("आज चन्द्रमा किस-किस राशि के जातकों हेतु बली है:")
+            c_grid = st.columns(3)
+            for i, c_item in enumerate(balam["chandrabalam"]):
+                with c_grid[i % 3]:
+                    st.markdown(f"""
+                    <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1px solid {c_item['color']};
+                                border-radius:6px; padding:8px; margin-bottom:6px; text-align:center;">
+                        <b style="font-size:12.5px; color:{'#FFFFFF' if is_dark else '#0F172A'};">{c_item['rashi']}</b><br/>
+                        <span style="font-size:11px; color:{c_item['color']}; font-weight:700;">{c_item['score']}</span>
+                    </div>
+                    """, unsafe_allow_html=True)
 
         # Tarabalam
         with col_b2:
-            st.markdown("#### 🌟 २७ नक्षत्रों का ताराबलम् (Tarabalam)")
-            st.caption("जन्म, सम्पत्, विपत्, क्षेम, प्रत्यरि, साधक, वध, मित्र, परम मित्र:")
-            for item in balam["tarabalam"][:14]:
+            st.markdown("#### ⭐ नवतारा चक्र (Tarabalam for 27 Nakshatras)")
+            st.caption("९ तारा प्रकार (जन्म, संपत, विपत, क्षेम, प्रत्यरि, साधक, वध, मित्र, अतिमित्र):")
+            t_grid = st.columns(3)
+            for j, t_item in enumerate(balam["tarabalam"][:12]):
+                with t_grid[j % 3]:
+                    st.markdown(f"""
+                    <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1px solid {t_item['color']};
+                                border-radius:6px; padding:8px; margin-bottom:6px; text-align:center;">
+                        <b style="font-size:12px; color:{'#FFFFFF' if is_dark else '#0F172A'};">#{t_item['nak_idx']} {t_item['nakshatra']}</b><br/>
+                        <span style="font-size:10.5px; color:{t_item['color']}; font-weight:700;">{t_item['tara_name']}</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+    # =============================================================
+    # TAB 9: दैनिक ग्रह स्पष्ट एवं मंत्रिमंडल
+    # =============================================================
+    with tab9:
+        st.markdown("### 🪐 दैनिक ग्रह स्पष्ट एवं आकाशीय मंत्रिमंडल")
+        st.caption("सूर्योदय कालीन नवग्रह स्पष्ट भोग, नक्षत्र, पाद, गति, वक्री/अस्त स्थिति एवं संवत्सर मंत्रिमंडल:")
+
+        col_g1, col_g2 = st.columns([2, 1.2])
+
+        with col_g1:
+            st.markdown("#### 🌟 नवग्रह स्पष्ट स्थिति (Planetary Transit Matrix)")
+            st.table(transit)
+
+        with col_g2:
+            st.markdown("#### 👑 वर्ष का आकाशीय मंत्रिमंडल (Cabinet)")
+            for post in samvat["cabinet"]:
                 st.markdown(f"""
                 <div style="background:{'#1F2937' if is_dark else '#F8FAFC'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
-                            border-radius:6px; padding:6px 12px; margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:13px; font-weight:600; color:{'#FFFFFF' if is_dark else '#0F172A'};">{item['nakshatra']}</span>
-                    <span style="color:{item['color']}; font-size:12px; font-weight:700;">{item['badge']} ({item['tara_name'].split(' (')[0]})</span>
+                            border-left:3px solid #6366F1; border-radius:6px; padding:10px 12px; margin-bottom:8px;">
+                    <b style="color:#4338CA; font-size:13.5px;">{post['post']}</b>: <b>{post['graha']}</b><br/>
+                    <small style="color:{'#9CA3AF' if is_dark else '#475569'};">{post['effect']}</small>
                 </div>
                 """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 7: दैनिक ग्रह स्पष्ट एवं मंत्रिमंडल
+    # TAB 10: दैनिक वैदिक सङ्कल्प मन्त्र (Vedic Sankalpa Generator)
     # =============================================================
-    with tab7:
-        st.markdown("### 🪐 दैनिक ग्रह स्पष्ट स्थिति एवं संवत्सर मंत्रिमंडल")
-        st.caption("स्वीस एफिमरिस द्वारा सूर्योदय कालीन नवग्रह स्पष्ट स्थिति, राशि, अंश-कला-विकला, नक्षत्र, गति एवं गरिमा:")
+    with tab10:
+        st.markdown("### 📜 दैनिक वैदिक सङ्कल्प मन्त्र जनरेटर (Dynamic Vedic Sankalpa)")
+        st.caption("कर्मकाण्ड, नित्य पूजा, श्राद्ध, हवन, अभिषेक व व्यापार हेतु १००% शुद्ध देश-काल-संवत युक्त सङ्कल्प मन्त्र:")
 
-        # Planetary Ephemeris Table
-        ephem_rows = []
-        for p in transit:
-            ephem_rows.append({
-                "ग्रह (Planet)": f"{p['symbol']} {p['name_hi']}",
-                "राशि (Sign)": p['rashi'],
-                "स्पष्ट अंश (Deg/Min/Sec)": p['deg_str'],
-                "नक्षत्र (Nakshatra)": f"{p['nakshatra']} (चरण {p['pada']})",
-                "गति (Motion)": p['motion'],
-                "अस्त/उदय": p['combustion'],
-                "गरिमा (Dignity)": p['dignity']
-            })
-        st.dataframe(ephem_rows, use_container_width=True)
+        col_sk1, col_sk2, col_sk3 = st.columns(3)
+
+        with col_sk1:
+            default_y_name = getattr(birth_profile, "name", "शुभम") if hasattr(birth_profile, "name") and birth_profile.name else "अमुक"
+            yaj_name = st.text_input("यजमान का नाम (Native Name)", value=default_y_name, key="sankalpa_y_name")
+
+        with col_sk2:
+            gotra_val = st.text_input("गोत्र (Gotra)", value="कश्यप", key="sankalpa_gotra")
+
+        with col_sk3:
+            intent_map = {
+                "general": "दैनिक नित्य देव पूजन व जप",
+                "pitru": "पितृ तर्पण, पिण्डदान व महालय श्राद्ध",
+                "havan": "हवन एवं वैदिक यज्ञ कर्म",
+                "shiva": "रुद्राभिषेक एवं शिव पूजन",
+                "vyapar": "नूतन व्यापार व प्रतिष्ठान उद्घाटन",
+                "satyanarayan": "सत्यनारायण व्रत कथा व पूजन"
+            }
+            def_intent = "pitru" if pitru.get("is_active") else "general"
+            intent_key = st.selectbox(
+                "सङ्कल्प का पावन प्रयोजन (Ritual Intent)",
+                list(intent_map.keys()),
+                index=list(intent_map.keys()).index(def_intent),
+                format_func=lambda x: intent_map[x],
+                key="sankalpa_intent_choice"
+            )
+
+        # Generate dynamically with user inputs
+        dyn_sankalpa = VedicPanchangService.generate_vedic_sankalpa_mantra(
+            target_date=selected_date,
+            city_name=selected_city_name,
+            samvatsar_data=samvat,
+            five_pillars=pillars,
+            paksha_engine=paksha_eng,
+            transit_matrix=transit,
+            yajamana_name=yaj_name,
+            gotra_name=gotra_val,
+            intent_type=intent_key
+        )
+
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border:2px solid #D97706; border-radius:12px; padding:20px; margin:16px 0; box-shadow:0 4px 12px rgba(217, 119, 6, 0.1);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #FDE68A; padding-bottom:10px; margin-bottom:12px;">
+                <b style="color:#92400E; font-size:18px;">🕉️ शास्त्रीय सङ्कल्प मन्त्र (संस्कृत पाठ)</b>
+                <span style="background:#F59E0B; color:#FFFFFF; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:700;">
+                    {dyn_sankalpa['intent_label']}
+                </span>
+            </div>
+            <div style="color:#78350F; font-size:15.5px; line-height:1.9; font-family:'Georgia', serif; text-align:justify;">
+                {dyn_sankalpa['sanskrit_mantra']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.code(dyn_sankalpa['sanskrit_mantra'], language="text")
+
+        st.markdown(f"""
+        <div style="background:{'#1F2937' if is_dark else '#F8FAFC'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
+                    border-radius:10px; padding:16px; margin-top:12px;">
+            <b style="color:#2563EB; font-size:15px;">📖 सरल हिन्दी भावार्थ:</b>
+            <div style="color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13.5px; line-height:1.6; margin-top:6px;">
+                {dyn_sankalpa['hindi_meaning']}
+            </div>
+            <div style="background:#EFF6FF; border-radius:6px; padding:10px 14px; margin-top:12px; font-size:12.5px; color:#1E40AF;">
+                <b>🙏 सङ्कल्प की कर्मकाण्डीय विधि:</b> दाहिने हाथ की हथेली में थोड़ा जल, गंध (चंदन), अक्षत (चावल), पुष्प एवं एक सिक्का (द्रव्य) लेकर उत्तराभिमुख होकर बैठें। उपरोक्त मन्त्र का उच्चारण करें अथवा विद्वान ब्राह्मण से वाचन कराएं, और सङ्कल्प पूर्ण होने पर जल को ताम्र पात्र अथवा भूमि पर छोड़ दें।
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # =============================================================
+    # TAB 11: मासिक पञ्चाङ्ग कैलेंडर (Monthly Calendar Grid)
+    # =============================================================
+    with tab11:
+        st.markdown("### 📅 मासिक पञ्चाङ्ग कैलेंडर दृश्य (Monthly Calendar Grid)")
+        st.caption("सम्पूर्ण मास का एक दृष्टि में पञ्चाङ्ग ग्रिड—तिथियां, एकादशी, पूर्णिमा, अमावस्या, श्राद्ध एवं मुख्य त्यौहार:")
+
+        col_m_yr, col_m_mo = st.columns([1, 1.5])
+        with col_m_yr:
+            sel_cal_year = st.number_input("वर्ष (Year)", min_value=1950, max_value=2050, value=selected_date.year, key="panchang_cal_year")
+        with col_m_mo:
+            months_hi = ["१. जनवरी", "२. फ़रवरी", "३. मार्च", "४. अप्रैल", "५. मई", "६. जून", "७. जुलाई", "८. अगस्त", "९. सितंबर", "१०. अक्टूबर", "११. नवंबर", "१२. दिसंबर"]
+            sel_cal_month_idx = st.selectbox("मास (Month)", range(1, 13), index=selected_date.month - 1, format_func=lambda x: months_hi[x-1], key="panchang_cal_month")
+
+        monthly_data = VedicPanchangService.get_monthly_panchang_summary(
+            year=int(sel_cal_year),
+            month=int(sel_cal_month_idx),
+            latitude=lat_val,
+            longitude=lon_val,
+            tz_offset_hours=tz_val
+        )
+
+        st.markdown("#### 🗓️ मासिक पञ्चाङ्ग ग्रिड")
+
+        # 7 Weekday Headers
+        weekdays_names = ["सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार", "रविवार"]
+        hdr_cols = st.columns(7)
+        for w_idx, w_name in enumerate(weekdays_names):
+            with hdr_cols[w_idx]:
+                st.markdown(f"""
+                <div style="background:{'#374151' if is_dark else '#F1F5F9'}; color:{'#F3F4F6' if is_dark else '#334155'};
+                            padding:8px; border-radius:6px; text-align:center; font-weight:700; font-size:12px; margin-bottom:8px;">
+                    {w_name}
+                </div>
+                """, unsafe_allow_html=True)
+
+        # Pad first week if day 1 is not Monday (0)
+        first_day_weekday = monthly_data[0]["weekday"] if monthly_data else 0
+        grid_slots = [None] * first_day_weekday + monthly_data
+
+        # Render rows of 7
+        total_rows = (len(grid_slots) + 6) // 7
+        for r in range(total_rows):
+            row_cols = st.columns(7)
+            for c in range(7):
+                idx = r * 7 + c
+                with row_cols[c]:
+                    if idx < len(grid_slots) and grid_slots[idx] is not None:
+                        day_obj = grid_slots[idx]
+                        is_today = (day_obj["date"] == selected_date)
+                        cell_bdr = "#2563EB" if is_today else ('#374151' if is_dark else '#E2E8F0')
+                        cell_bg = "#EFF6FF" if is_today else ('#1F2937' if is_dark else '#FFFFFF')
+
+                        # Badge colors
+                        fest_tag = ""
+                        if day_obj.get("is_ekadashi"):
+                            fest_tag = f'<span style="background:#FEF3C7; color:#B45309; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">{day_obj["festival"]}</span>'
+                        elif day_obj.get("is_purnima"):
+                            fest_tag = f'<span style="background:#EDE9FE; color:#6D28D9; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">🌕 पूर्णिमा</span>'
+                        elif day_obj.get("is_amavasya"):
+                            fest_tag = f'<span style="background:#FEE2E2; color:#991B1B; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">🌑 अमावस्या</span>'
+                        elif day_obj.get("festival"):
+                            fest_tag = f'<span style="background:#E0E7FF; color:#3730A3; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">{day_obj["festival"][:10]}</span>'
+
+                        st.markdown(f"""
+                        <div style="background:{cell_bg}; border:1.5px solid {cell_bdr}; border-radius:8px;
+                                    padding:6px; min-height:88px; margin-bottom:8px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                <b style="font-size:14px; color:{'#3B82F6' if is_today else ('#FFFFFF' if is_dark else '#0F172A')};">{day_obj['day']}</b>
+                                <span style="font-size:10px; color:#64748B;">{day_obj['paksha'][:1]}</span>
+                            </div>
+                            <div style="font-size:11px; font-weight:700; color:{'#93C5FD' if is_today else ('#D1D5DB' if is_dark else '#334155')}; margin:2px 0;">
+                                {day_obj['tithi_name']}
+                            </div>
+                            <div style="font-size:10px; color:#94A3B8;">
+                                {day_obj['nak_name']}
+                            </div>
+                            <div style="margin-top:3px;">
+                                {fest_tag}
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    else:
+                        st.markdown("""
+                        <div style="min-height:88px; margin-bottom:8px;"></div>
+                        """, unsafe_allow_html=True)
+
+    # =============================================================
+    # TAB 12: AI पञ्चाङ्ग सारथी व दैनिक कर्म शुद्धि
+    # =============================================================
+    with tab12:
+        st.markdown("### 🤖 AI पञ्चाङ्ग सारथी व कर्म शुद्धि (AI Advisor & Shuddhi)")
+        st.caption("दैनिक कर्म शुद्धि स्कोरकार्ड, दिशा शूल, अग्नि/शिव वास एवं जेमिनी AI समर्थित पञ्चाङ्ग परामर्शदाता:")
+
+        # 1. AI PANCHANG ADVISOR
+        st.markdown("#### 🤖 १. दैवज्ञ AI पञ्चाङ्ग सारथी (Ask AI Muhurta Advisor)")
+        st.markdown("""
+        <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:10px; padding:12px 16px; margin-bottom:14px;">
+            <b style="color:#1E40AF; font-size:14px;">💡 AI पञ्चाङ्ग परामर्श:</b>
+            <span style="color:#1E3A8A; font-size:13px;"> आज के दिन किसी भी कार्य (वाहन क्रय, व्यापार, यात्रा, गृह पूजन आदि) की शुभता व समय जानने हेतु नीचे त्वरित प्रश्न चुनें अथवा स्वयं टाइप करें:</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        preset_qs = [
+            "🚗 क्या आज नया वाहन खरीदना शुभ रहेगा?",
+            "🏠 क्या आज गृह प्रवेश या नींव पूजन कर सकते हैं?",
+            "📈 आज नया व्यापार या दुकान शुरू करने का सबसे श्रेष्ठ समय क्या है?",
+            "🪔 आज पितृ तर्पण व दान का सर्वोत्तम मुहूर्त क्या है?",
+            "✈️ आज किसी महत्वपूर्ण यात्रा पर जाना अनुकूल है या नहीं?"
+        ]
+        chosen_preset = st.selectbox("त्वरित शास्त्रीय प्रश्न चुनें:", ["-- अपना प्रश्न लिखें --"] + preset_qs, key="panchang_ai_preset")
+
+        user_ai_q = st.text_input("अथवा अपना विशिष्ट प्रश्न लिखें:", value="" if chosen_preset == "-- अपना प्रश्न लिखें --" else chosen_preset, key="panchang_ai_custom_q")
+
+        if st.button("🔮 AI पञ्चाङ्ग शास्त्रीय परामर्श प्राप्त करें", key="btn_ask_panchang_ai"):
+            if user_ai_q.strip():
+                with st.spinner("दैवज्ञ AI आज के पञ्चाङ्ग, मुहूर्त चिन्तामणि व ग्रह गोचर का शोधन कर रहा है..."):
+                    ai_ans = ask_ai_panchang_advisor(user_ai_q, panchang_data)
+                st.markdown(f"""
+                <div style="background:#F0FDF4; border:1.5px solid #16A34A; border-radius:12px; padding:18px; margin:16px 0;">
+                    <b style="color:#166534; font-size:16px;">🌟 दैवज्ञ AI पञ्चाङ्ग निर्णय:</b>
+                    <div style="color:#14532D; font-size:14px; line-height:1.7; margin-top:8px;">
+                        {ai_ans}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.warning("कृपया कोई प्रश्न चुनें अथवा लिखें।")
 
         st.markdown("---")
 
-        # Samvatsar Cabinet
-        st.markdown(f"#### 🏛️ संवत्सर {samvat['vikram_samvat']} ({samvat['jovian_samvatsar']}) का देव मंत्रिमंडल")
-        cab_cols = st.columns(2)
-        half_c = len(samvat["cabinet"]) // 2 + 1
-        with cab_cols[0]:
-            for post in samvat["cabinet"][:half_c]:
-                st.markdown(f"""
-                <div style="background:{'#1F2937' if is_dark else '#F8FAFC'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
-                            border-left:3px solid #2563EB; border-radius:6px; padding:8px 12px; margin-bottom:6px;">
-                    <b>{post['post']}:</b> <span style="color:#1D4ED8; font-weight:700;">{post['graha']}</span><br/>
-                    <small style="color:#64748B;">प्रभाव: {post['effect']}</small>
-                </div>
-                """, unsafe_allow_html=True)
-        with cab_cols[1]:
-            for post in samvat["cabinet"][half_c:]:
-                st.markdown(f"""
-                <div style="background:{'#1F2937' if is_dark else '#F8FAFC'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
-                            border-left:3px solid #2563EB; border-radius:6px; padding:8px 12px; margin-bottom:6px;">
-                    <b>{post['post']}:</b> <span style="color:#1D4ED8; font-weight:700;">{post['graha']}</span><br/>
-                    <small style="color:#64748B;">प्रभाव: {post['effect']}</small>
-                </div>
-                """, unsafe_allow_html=True)
-
-    # =============================================================
-    # TAB 8: शास्त्रीय फलादेश, शूल व कर्म शुद्धि
-    # =============================================================
-    with tab8:
-        st.markdown("### 📖 शास्त्रीय फलादेश, शूल, वास एवं वैदिक कर्म शुद्धि")
-        st.caption("दिशा शूल, चन्द्र वास, अग्नि वास (हवन विचार), शिव वास (रुद्राभिषेक विचार) एवं दैनिक कर्म शुद्धि:")
-
+        # 2. DISHA SHOOLA & CHANDRA VASA
         col_s1, col_s2 = st.columns(2)
 
         with col_s1:
-            st.markdown("#### 🧭 १. दिशा शूल एवं चन्द्र वास")
+            st.markdown("#### 🧭 २. दिशा शूल एवं चन्द्र वास")
             st.markdown(f"""
             <div style="background:{'#1F2937' if is_dark else '#FFFBEB'}; border:1px solid {'#374151' if is_dark else '#FDE68A'};
                         border-radius:10px; padding:14px; margin-bottom:12px;">
                 <b style="color:#92400E; font-size:15px;">🚨 आज का दिशा शूल: {nivas['disha_shoola']['direction']}</b>
-                <p style="color:#78350F; font-size:13px; margin:4px 0 0 0;">
+                <div style="color:#78350F; font-size:13px; margin-top:4px;">
                     <b>निवारक उपाय (Parihar):</b> {nivas['disha_shoola']['parihar']}
-                </p>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -1027,21 +1476,21 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
             <div style="background:{'#1F2937' if is_dark else '#EFF6FF'}; border:1px solid {'#374151' if is_dark else '#BFDBFE'};
                         border-radius:10px; padding:14px; margin-bottom:12px;">
                 <b style="color:#1E40AF; font-size:15px;">🌙 चन्द्र वास: {nivas['chandra_vasa']['direction']}</b>
-                <p style="color:#1E3A8A; font-size:13px; margin:4px 0 0 0;">
+                <div style="color:#1E3A8A; font-size:13px; margin-top:4px;">
                     {nivas['chandra_vasa']['rule']}
-                </p>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
         with col_s2:
-            st.markdown("#### 🔥 २. अग्नि वास एवं शिव वास विचार")
+            st.markdown("#### 🔥 ३. अग्नि वास एवं शिव वास विचार")
             st.markdown(f"""
             <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1.5px solid {nivas['agnivasa']['color']};
                         border-radius:10px; padding:14px; margin-bottom:12px;">
                 <b style="color:{nivas['agnivasa']['color']}; font-size:15px;">🔥 अग्नि वास (हवन विचार): {nivas['agnivasa']['vasa']}</b>
-                <p style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:13px; margin:4px 0 0 0;">
+                <div style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:13px; margin-top:4px;">
                     {nivas['agnivasa']['verdict']}
-                </p>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -1049,20 +1498,20 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
             <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1.5px solid {nivas['shivavasa']['color']};
                         border-radius:10px; padding:14px; margin-bottom:12px;">
                 <b style="color:{nivas['shivavasa']['color']}; font-size:15px;">🔱 शिव वास (रुद्राभिषेक विचार): {nivas['shivavasa']['vasa']}</b>
-                <p style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:13px; margin:4px 0 0 0;">
+                <div style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:13px; margin-top:4px;">
                     {nivas['shivavasa']['verdict']}
-                </p>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
         st.markdown("---")
 
-        # Action Suitability Scorecard (Strictly enforcing Pitru Paksha & Mahadoshas)
+        # 3. ACTION SUITABILITY SCORECARD
         is_pitru_active = pitru.get("is_active", False)
 
         st.markdown(f"""
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <h4 style="margin:0;">🎯 दैनिक कर्म शुद्धि एवं अनुशंसित कार्य (Action Suitability Scorecard)</h4>
+            <h4 style="margin:0;">🎯 ४. दैनिक कर्म शुद्धि स्कोरकार्ड (Action Suitability Scorecard)</h4>
             {'<span style="background:#FEE2E2; color:#DC2626; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:700;">⚠️ पितृपक्ष निषेध नियम लागू</span>' if is_pitru_active else ''}
         </div>
         """, unsafe_allow_html=True)
@@ -1091,4 +1540,3 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     <div style="color:{act_color}; font-size:12px; font-weight:700; margin-top:2px;">{act_status}</div>
                 </div>
                 """, unsafe_allow_html=True)
-

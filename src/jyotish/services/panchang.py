@@ -1817,6 +1817,474 @@ class VedicPanchangService:
         }
 
     @classmethod
+    def calculate_daily_lagna_table(
+        cls,
+        target_date: date,
+        sunrise_dt: datetime,
+        latitude: float,
+        longitude: float,
+        tz_offset_hours: float = 5.5
+    ) -> List[Dict[str, Any]]:
+        """
+        Calculates 24-hour Sidereal Lagna (Ascendant) Rising Table from Sunrise to Next Sunrise.
+        Identifies exact start and end moments of all 12 Rashi Lagnas, their nature (चर/स्थिर/द्विस्वभाव),
+        elements, lords, and classical muhurta recommendations according to Muhurta Chintamani.
+        """
+        provider = cls.get_provider()
+
+        def _get_lagna_info(dt_loc):
+            utc = dt_loc - timedelta(hours=tz_offset_hours)
+            jd = provider.datetime_to_jd(utc)
+            ay = provider.calculate_ayanamsa(jd)
+            asc = provider.calculate_ascendant(utc, latitude, longitude, ay)
+            s_idx = int(asc // 30.0) + 1
+            return s_idx, asc
+
+        curr = sunrise_dt
+        end_limit = sunrise_dt + timedelta(hours=24)
+        periods = []
+        curr_sign, _ = _get_lagna_info(curr)
+        curr_start = curr
+
+        while curr < end_limit:
+            nxt = curr + timedelta(minutes=4)
+            s, _ = _get_lagna_info(nxt)
+            if s != curr_sign:
+                l = curr
+                r = nxt
+                for _ in range(12):
+                    m = l + (r - l) / 2
+                    sm, _ = _get_lagna_info(m)
+                    if sm == curr_sign:
+                        l = m
+                    else:
+                        r = m
+                periods.append((curr_sign, curr_start, r))
+                curr_sign = s
+                curr_start = r
+                curr = r
+            else:
+                curr = nxt
+        periods.append((curr_sign, curr_start, end_limit))
+
+        LAGNA_METADATA = {
+            1: {"name": "मेष", "name_en": "Aries", "lord": "मंगल (Mars)", "type": "चर (Movable)", "element": "अग्नि (Fire)", "suitability": "मध्यम — साहसिक कर्म, यात्रा, वाहन क्रय, परिवर्तनकारी कार्य"},
+            2: {"name": "वृषभ", "name_en": "Taurus", "lord": "शुक्र (Venus)", "type": "स्थिर (Fixed)", "element": "पृथ्वी (Earth)", "suitability": "सर्वोत्तम — गृह प्रवेश, नवीन व्यापार आरम्भ, नींव पूजन, स्थाई सम्पति क्रय"},
+            3: {"name": "मिथुन", "name_en": "Gemini", "lord": "बुध (Mercury)", "type": "द्विस्वभाव (Dual)", "element": "वायु (Air)", "suitability": "शुभ — विद्या आरम्भ, व्यापार वार्ता, शिल्प, लेखन, यात्रा"},
+            4: {"name": "कर्क", "name_en": "Cancer", "lord": "चन्द्र (Moon)", "type": "चर (Movable)", "element": "जल (Water)", "suitability": "मध्यम — जल कर्म, कृषि, औषधि, चलायमान कार्य"},
+            5: {"name": "सिंह", "name_en": "Leo", "lord": "सूर्य (Sun)", "type": "स्थिर (Fixed)", "element": "अग्नि (Fire)", "suitability": "उत्कृष्ट — राज सेवा, अधिकार ग्रहण, नवीन प्रतिष्ठान, प्रतिष्ठा"},
+            6: {"name": "कन्या", "name_en": "Virgo", "lord": "बुध (Mercury)", "type": "द्विस्वभाव (Dual)", "element": "पृथ्वी (Earth)", "suitability": "शुभ — व्यापार, अध्ययन, मन्त्र दीक्षा, वित्तीय निवेश"},
+            7: {"name": "तुला", "name_en": "Libra", "lord": "शुक्र (Venus)", "type": "चर (Movable)", "element": "वायु (Air)", "suitability": "शुभ — व्यापारिक साझेदारी, वस्त्र, आभूषण, यात्रा"},
+            8: {"name": "वृश्चिक", "name_en": "Scorpio", "lord": "मंगल (Mars)", "type": "स्थिर (Fixed)", "element": "जल (Water)", "suitability": "स्थिर लग्न (परन्तु कीट लग्न होने से सावधानी) — गुप्त विद्या, शोध, तन्त्र"},
+            9: {"name": "धनु", "name_en": "Sagittarius", "lord": "गुरु (Jupiter)", "type": "द्विस्वभाव (Dual)", "element": "अग्नि (Fire)", "suitability": "उत्कृष्ट — धार्मिक अनुष्ठान, यज्ञ, विवाह, विद्या, दान"},
+            10: {"name": "मकर", "name_en": "Capricorn", "lord": "शनि (Saturn)", "type": "चर (Movable)", "element": "पृथ्वी (Earth)", "suitability": "मध्यम — उद्योग, निर्माण, कृषि, श्रम कार्य"},
+            11: {"name": "कुम्भ", "name_en": "Aquarius", "lord": "शनि (Saturn)", "type": "स्थिर (Fixed)", "element": "वायु (Air)", "suitability": "उत्कृष्ट — स्थाई प्रतिष्ठान, दीर्घकालीन योजनाएं, निवेश"},
+            12: {"name": "मीन", "name_en": "Pisces", "lord": "गुरु (Jupiter)", "type": "द्विस्वभाव (Dual)", "element": "जल (Water)", "suitability": "शुभ — आध्यात्मिक कार्य, तीर्थ यात्रा, दान-पुण्य, साधना"}
+        }
+
+        now_local = datetime.now()
+        table = []
+        for s_idx, st_dt, en_dt in periods:
+            meta = LAGNA_METADATA.get(s_idx, {})
+            duration_mins = int((en_dt - st_dt).total_seconds() / 60.0)
+            hours = duration_mins // 60
+            mins = duration_mins % 60
+            ghatis = round(duration_mins / 24.0, 2)
+            is_active = (st_dt <= now_local <= en_dt) if target_date == date.today() else False
+
+            table.append({
+                "sign_index": s_idx,
+                "name": meta.get("name", f"लग्न {s_idx}"),
+                "name_en": meta.get("name_en", ""),
+                "lord": meta.get("lord", ""),
+                "type": meta.get("type", ""),
+                "element": meta.get("element", ""),
+                "suitability": meta.get("suitability", ""),
+                "start_time": st_dt,
+                "end_time": en_dt,
+                "start_str": st_dt.strftime("%I:%M %p"),
+                "end_str": en_dt.strftime("%I:%M %p"),
+                "duration_str": f"{hours}h {mins}m" if hours > 0 else f"{mins}m",
+                "duration_ghatis": f"{ghatis} घटी",
+                "is_current": is_active
+            })
+
+        return table
+
+    @classmethod
+    def generate_vedic_sankalpa_mantra(
+        cls,
+        target_date: date,
+        city_name: str,
+        samvatsar_data: Dict[str, Any],
+        five_pillars: Dict[str, Any],
+        paksha_engine: Dict[str, Any],
+        transit_matrix: List[Dict[str, Any]],
+        yajamana_name: str = "अमुक",
+        gotra_name: str = "कश्यप",
+        intent_type: str = "general"
+    ) -> Dict[str, Any]:
+        """
+        Dynamically generates the complete, authentic Vedic Sanskrit Sankalpa Mantra
+        according to standard Shastriya Karmakanda (Dharma Sindhu & Nirnaya Sindhu).
+        """
+        sun_e = next((p for p in transit_matrix if p["key"] == "Sun"), {"rashi": "कन्या"})
+        moon_e = next((p for p in transit_matrix if p["key"] == "Moon"), {"rashi": "कर्क"})
+        guru_e = next((p for p in transit_matrix if p["key"] == "Jupiter"), {"rashi": "मिथुन"})
+
+        intents = {
+            "general": ("मम आत्मनः श्रुतिस्मृतिपुराणोक्त-पुण्यफलप्राप्त्यर्थं, मम सपरिवारस्य कायिक-वाचिक-मानसिक-सकलपापक्षयपूर्वकं श्रीपरमेश्वर-प्रीत्यर्थं नित्य-पूजाकर्म सम्पादयिष्ये।", "दैनिक सामान्य देव पूजन व नित्य कर्म"),
+            "pitru": ("अमुक-गोत्रस्य मम पितॄणां अक्षय-तृप्ति-प्राप्त्यर्थं, वैकुण्ठ-लोक-प्राप्तये च कुतुप-मुहूर्ते तिल-तर्पण-पिण्डदान-महालय-श्राद्धकर्म करिष्ये।", "पितृ तर्पण, पिण्डदान एवं महालय श्राद्ध"),
+            "havan": ("अग्निदेवता-प्रीत्यर्थं, सर्वदोष-शान्त्यर्थं, आयु-आरोग्य-ऐश्वर्य-पुत्र-पौत्रादि-सम्पत्-वृद्ध्यर्थं विहित-द्रव्यैः हवन-यज्ञकर्म सम्पादयिष्ये।", "हवन एवं वैदिक यज्ञ कर्म"),
+            "shiva": ("श्रीसाम्बसदाशिव-प्रीत्यर्थं, महारुद्र-प्रसाद-सिद्धये, सर्वारिष्ट-विनाशार्थं दुग्धादि-पञ्चामृतेन श्रीरुद्राभिषेक-पूजनं करिष्ये।", "रुद्राभिषेक एवं शिव पूजन"),
+            "vyapar": ("श्रीगणेश-महालक्ष्मी-प्रीत्यर्थं, व्यापार-वृद्धि-प्राप्त्यर्थं, स्थैर्य-लाभ-सिद्धये नूतन-व्यापार-प्रतिष्ठान-सङ्कल्पं करिष्ये।", "नूतन व्यापार व प्रतिष्ठान उद्घाटन"),
+            "satyanarayan": ("श्रीमन्नारायण-प्रीत्यर्थं, सङ्कट-निवारणार्थं, सर्व-मनोरथ-सिद्ध्यर्थं श्रीसत्यनारायण-व्रतकथा-पूजनं सङ्कल्पं करिष्ये।", "सत्यनारायण व्रत कथा व पूजन")
+        }
+
+        intent_text, intent_label = intents.get(intent_type, intents["general"])
+        city = city_name.split("(")[0].strip()
+
+        t_hi = five_pillars["tithi"]["name"]
+        t_sans = t_hi + "यां" if not t_hi.endswith("ी") else t_hi[:-1] + "्याम्"
+        if "एकादशी" in t_hi:
+            t_sans = "एकादश्यां"
+        elif "अमावस्या" in t_hi:
+            t_sans = "अमावास्यायाम्"
+        elif "पूर्णिमा" in t_hi:
+            t_sans = "पूर्णिमायाम्"
+
+        sankalpa_sanskrit = (
+            f"ॐ विष्णुर्विष्णुर्विष्णुः, ॐ तत्सत्। अद्य ब्रह्मणो द्वितीयपरार्धे श्रीश्वेतवाराहकल्पे वैवस्वतमन्वन्तरे "
+            f"अष्टाविंशतितमे कलियुगे कलिप्रथमचरणे जम्बूद्वीपे भरतखण्डे भारतवर्षे आर्यावर्तैकदेशान्तर्गते {city} क्षेत्रे/नगरे, "
+            f"श्रीविक्रमादित्य नृपतेः संवत्सरे {samvatsar_data.get('vikram_samvat', 2083)}, शालिवाहन शाके {samvatsar_data.get('shaka_samvat', 1948)}, "
+            f"{samvatsar_data.get('jovian_samvatsar', 'सिद्धार्थी')} नाम संवत्सरे, {samvatsar_data.get('ayana', 'दक्षिणायन').split()[0]} अयने, "
+            f"{samvatsar_data.get('ritu', 'शरद्').split()[0]} ऋतौ, {samvatsar_data.get('solar_month', 'कन्या').split()[0]} मासे, "
+            f"{paksha_engine.get('paksha_name', 'कृष्ण')} पक्षे, {t_sans} तिथौ, {five_pillars['vara']['name_hi']} वासरे, "
+            f"{five_pillars['nakshatra']['name']} नक्षत्रे, {five_pillars['yoga']['name']} योगे, {five_pillars['karana']['current']['name']} करणे, "
+            f"{sun_e['rashi'].split()[0]} राशिस्थिते सूर्ये, {moon_e['rashi'].split()[0]} राशिस्थिते चन्द्रे, {guru_e['rashi'].split()[0]} राशिस्थिते देवगुरौ, "
+            f"शेषेषु ग्रहेषु यथायथा राशि-स्थान-स्थितेषु सत्सु, एवं ग्रह-गुण-विशेषण-विशिष्टायां शुभ-पुण्य-तिथौ, "
+            f"{gotra_name} गोत्रोत्पन्नः {yajamana_name} नामाऽहं (सपरिवारः) {intent_text} ॐ तत्सत् नमो ब्रह्मणे।"
+        )
+
+        hindi_meaning = (
+            f"हे सर्वव्यापक परमेश्वर! आज ब्रह्मा जी के द्वितीय परार्ध, श्वेतवाराह कल्प, वैवस्वत मन्वन्तर, २८वें कलियुग के प्रथम चरण में, "
+            f"जम्बूद्वीप, भारतवर्ष के अन्तर्गत {city} क्षेत्र में, विक्रम संवत {samvatsar_data.get('vikram_samvat')}, "
+            f"{samvatsar_data.get('jovian_samvatsar')} संवत्सर, {samvatsar_data.get('ayana').split()[0]}, {samvatsar_data.get('ritu').split()[0]}, "
+            f"{samvatsar_data.get('solar_month')}, {paksha_engine.get('paksha_name')}, {t_hi} तिथि, {five_pillars['vara']['name_hi']} के दिन, "
+            f"{five_pillars['nakshatra']['name']} नक्षत्र, {five_pillars['yoga']['name']} योग तथा {five_pillars['karana']['current']['name']} करण में; "
+            f"सूर्य के {sun_e['rashi'].split()[0]} में, चन्द्र के {moon_e['rashi'].split()[0]} में व गुरु के {guru_e['rashi'].split()[0]} राशि में स्थिति के समय—"
+            f"मैं {gotra_name} गोत्र में उत्पन्न {yajamana_name} सपरिवार अपने धर्म, अर्थ, काम व मोक्ष की सिद्धि तथा {intent_label} हेतु यह पावन सङ्कल्प करता हूँ।"
+        )
+
+        return {
+            "sanskrit_mantra": sankalpa_sanskrit,
+            "hindi_meaning": hindi_meaning,
+            "yajamana": yajamana_name,
+            "gotra": gotra_name,
+            "intent_type": intent_type,
+            "intent_label": intent_label
+        }
+
+    @classmethod
+    def calculate_festivals_and_vrat(
+        cls,
+        target_date: date,
+        sun_lon: float,
+        moon_lon: float,
+        tithi_idx: int,
+        nak_idx: int,
+        vara_idx: int,
+        sunrise_dt: datetime,
+        sunset_dt: datetime,
+        next_sunrise_dt: datetime,
+        tz_offset_hours: float = 5.5
+    ) -> Dict[str, Any]:
+        """
+        Deep Hindu Festivals & Vrat Engine. Identifies Ekadashis with Parana timings,
+        Pradosha Vrats, Shivaratri, Chaturthis, Purnima/Amavasya, and Annual Holy Celebrations.
+        """
+        sun_sign = int(sun_lon // 30.0) + 1
+        is_shukla = tithi_idx <= 15
+
+        EKADASHI_NAMES = {
+            (1, True): "कामदा एकादशी", (1, False): "वरूथिनी एकादशी",
+            (2, True): "मोहिनी एकादशी", (2, False): "अपरा एकादशी",
+            (3, True): "निर्जला एकादशी (भीमसेनी)", (3, False): "योगिनी एकादशी",
+            (4, True): "देवशयनी एकादशी (हरिशयनी)", (4, False): "कामिका एकादशी",
+            (5, True): "पवित्रा एकादशी", (5, False): "अजा एकादशी",
+            (6, True): "परिवर्तिनी / पद्मा एकादशी", (6, False): "इन्दिरा एकादशी (पितृपक्ष एकादशी)",
+            (7, True): "पापांकुशा एकादशी", (7, False): "रमा एकादशी",
+            (8, True): "प्रबोधिनी / देवउठनी एकादशी", (8, False): "उत्पन्ना एकादशी",
+            (9, True): "मोक्षदा एकादशी (गीता जयंती)", (9, False): "सफला एकादशी",
+            (10, True): "पुत्रदा एकादशी", (10, False): "षट्तिला एकादशी",
+            (11, True): "जया एकादशी", (11, False): "विजया एकादशी",
+            (12, True): "आमलकी एकादशी", (12, False): "पापमोचिनी एकादशी",
+        }
+
+        VARA_PRADOSH = {
+            0: "सोम प्रदोष व्रत (शिव कृपा)",
+            1: "भौम प्रदोष व्रत (कर्ज मुक्ति व मंगल कृपा)",
+            2: "बुध प्रदोष व्रत (बुद्धि व विद्या)",
+            3: "गुरु प्रदोष व्रत (ज्ञान व सुख)",
+            4: "भृगु प्रदोष व्रत (सौभाग्य व समृद्धि)",
+            5: "शनि प्रदोष व्रत (संतान प्राप्ति व शनि पीड़ा शमन)",
+            6: "रवि प्रदोष व्रत (आरोग्य व दीर्घायु)"
+        }
+
+        active_festivals = []
+        vrats = []
+        ekadashi_parana = None
+
+        # Ekadashi Check
+        if tithi_idx in [11, 26]:
+            ek_name = EKADASHI_NAMES.get((sun_sign, is_shukla), "एकादशी व्रत")
+            vrats.append({
+                "name": ek_name,
+                "type": "एकादशी महा-व्रत",
+                "significance": "समस्त पापों का नाश कर मोक्ष प्रदायक श्रीहरि विष्णु का परम प्रिय व्रत।",
+                "badge": "🌟 एकादशी व्रत सक्रिय"
+            })
+            active_festivals.append(ek_name)
+
+            parana_st = next_sunrise_dt
+            parana_en = next_sunrise_dt + timedelta(hours=2, minutes=30)
+            ekadashi_parana = {
+                "is_applicable": True,
+                "ekadashi_name": ek_name,
+                "parana_date": target_date + timedelta(days=1),
+                "parana_window_str": f"{parana_st.strftime('%I:%M %p')} से {parana_en.strftime('%I:%M %p')} तक",
+                "rule": "द्वादशी समाप्त होने से पूर्व एवं प्रातः काल में सात्विक पारणा करें। हरिवासर समाप्त्योपरान्त पारणा का शास्त्रीय विधान है।"
+            }
+        elif tithi_idx in [12, 27]:
+            prev_ek_idx = 11 if tithi_idx == 12 else 26
+            ek_name = EKADASHI_NAMES.get((sun_sign, prev_ek_idx == 11), "एकादशी")
+            parana_st = sunrise_dt
+            parana_en = sunrise_dt + timedelta(hours=2, minutes=45)
+            ekadashi_parana = {
+                "is_applicable": True,
+                "ekadashi_name": f"{ek_name} (पारणा दिवस)",
+                "parana_date": target_date,
+                "parana_window_str": f"आज प्रातः {parana_st.strftime('%I:%M %p')} से {parana_en.strftime('%I:%M %p')} तक",
+                "rule": "आज एकादशी व्रत का पारणा काल है। ब्राह्मण भोजन, गो-ग्रास व दान के उपरान्त व्रत खोलें।"
+            }
+            vrats.append({
+                "name": f"एकादशी पारणा ({ek_name})",
+                "type": "व्रत पारणा",
+                "significance": "एकादशी व्रत का पारणा काल",
+                "badge": "🍲 पारणा दिवस"
+            })
+
+        # Pradosh Check
+        if tithi_idx in [13, 28]:
+            pr_name = VARA_PRADOSH.get(vara_idx, "प्रदोष व्रत")
+            vrats.append({
+                "name": pr_name,
+                "type": "प्रदोष व्रत",
+                "significance": "संध्याकाल (गोधूलि वेला) में भगवान शिव व माता पार्वती की पूजा से सर्व मनोरथ सिद्धि।",
+                "badge": "🔱 प्रदोष व्रत सक्रिय"
+            })
+            active_festivals.append(pr_name)
+
+        # Masik Shivratri
+        if tithi_idx == 29:
+            s_title = "महाशिवरात्रि" if sun_sign in [11, 12] else "मासिक शिवरात्रि"
+            vrats.append({
+                "name": s_title,
+                "type": "शिव व्रत",
+                "significance": "निशीथ काल में भगवान शिव की आराधना व रुद्राभिषेक से अकाल मृत्यु व संकट निवारण।",
+                "badge": "🔱 " + s_title
+            })
+            active_festivals.append(s_title)
+
+        # Chaturthi Check
+        if tithi_idx == 19:
+            vrats.append({
+                "name": "संकष्टी चतुर्थी (गणेश व्रत)",
+                "type": "गणेश व्रत",
+                "significance": "चन्द्रोदय के समय अर्घ्य देकर विघ्नहर्ता भगवान गणेश का पूजन, विघ्न निवारण।",
+                "badge": "🐘 संकष्टी चतुर्थी"
+            })
+            active_festivals.append("संकष्टी चतुर्थी")
+        elif tithi_idx == 4:
+            c_title = "गणेश जन्मोत्सव (गणेश चतुर्थी)" if sun_sign == 5 else "विनायक चतुर्थी"
+            vrats.append({
+                "name": c_title,
+                "type": "गणेश व्रत",
+                "significance": "दोपहर (मध्याह्न) में भगवान श्री गणेश का षोडशोपचार पूजन।",
+                "badge": "🐘 " + c_title
+            })
+            active_festivals.append(c_title)
+
+        # Purnima Check
+        if tithi_idx == 15:
+            p_names = {
+                1: "चैत्र पूर्णिमा (हनुमान जयंती)",
+                2: "वैशाख पूर्णिमा (बुद्ध पूर्णिमा)",
+                3: "ज्येष्ठ पूर्णिमा (वट पूर्णिमा)",
+                4: "आषाढ़ पूर्णिमा (गुरु पूर्णिमा / व्यास पूजा)",
+                5: "श्रावण पूर्णिमा (रक्षाबंधन)",
+                6: "भाद्रपद पूर्णिमा (श्राद्ध आरम्भ)",
+                7: "आश्विन पूर्णिमा (शरद पूर्णिमा / कोजागरी)",
+                8: "कार्तिक पूर्णिमा (देव दीपावली / त्रिपुरारी पूर्णिमा)",
+                9: "मार्गशीर्ष पूर्णिमा (दत्तात्रेय जयंती)",
+                10: "पौष पूर्णिमा (शाकम्भरी जयंती)",
+                11: "माघ पूर्णिमा (माघी स्नान)",
+                12: "फाल्गुन पूर्णिमा (होलिका दहन)"
+            }
+            p_fest = p_names.get(sun_sign, "सत्यनारायण पूर्णिमा व्रत")
+            vrats.append({
+                "name": p_fest,
+                "type": "पूर्णिमा महा-पर्व",
+                "significance": "सत्यनारायण कथा, चन्द्र पूजन, पवित्र नदी स्नान व महादान का पुण्य फल।",
+                "badge": "🌕 " + p_fest
+            })
+            active_festivals.append(p_fest)
+
+        # Amavasya Check
+        if tithi_idx == 30:
+            a_title = "अमावस्या"
+            if sun_sign == 6:
+                a_title = "सर्वपितृ अमावस्या (महालया श्राद्ध विसर्जन)"
+            elif sun_sign == 7:
+                a_title = "दीपावली (महालक्ष्मी पूजन)"
+            elif sun_sign == 10:
+                a_title = "मौनी अमावस्या (माघ अमावस्या)"
+            elif vara_idx == 0:
+                a_title = "सोमवती अमावस्या (अश्वत्थ प्रदक्षिणा)"
+            elif vara_idx == 1:
+                a_title = "भौमवती अमावस्या"
+            elif vara_idx == 5:
+                a_title = "शनिश्चरी अमावस्या (शनि साढ़ेसाती शमन)"
+            else:
+                a_title = "दर्श अमावस्या (पितृ तर्पण)"
+
+            vrats.append({
+                "name": a_title,
+                "type": "अमावस्या पर्व",
+                "significance": "पितृ तृप्ति, तर्पण, दान व जप-तप हेतु सर्वश्रेष्ठ काल।",
+                "badge": "🌑 " + a_title
+            })
+            active_festivals.append(a_title)
+
+        # Pitru Paksha & Major Annual Celebrations
+        if sun_sign == 6 and (16 <= tithi_idx <= 30 or tithi_idx == 15):
+            active_festivals.append("पितृपक्ष (महालय श्राद्ध काल)")
+
+        if sun_sign == 7 and is_shukla:
+            if tithi_idx <= 9:
+                active_festivals.append(f"शारदीय नवरात्रि (दिवस #{tithi_idx})")
+            elif tithi_idx == 10:
+                active_festivals.append("विजयादशमी (दशहरा)")
+
+        if sun_sign == 7 and not is_shukla:
+            if tithi_idx == 19:
+                active_festivals.append("करवा चौथ (करक चतुर्थी)")
+            elif tithi_idx == 28:
+                active_festivals.append("धनतेरस (धन्वन्तरि त्रयोदशी)")
+            elif tithi_idx == 29:
+                active_festivals.append("नरक चतुर्दशी (रूप चौदस)")
+
+        return {
+            "active_festivals": active_festivals,
+            "vrats": vrats,
+            "ekadashi_parana": ekadashi_parana,
+            "primary_festival": active_festivals[0] if active_festivals else "सामान्य दिवस (दैनिक नित्य कर्म)"
+        }
+
+    @classmethod
+    def get_monthly_panchang_summary(
+        cls,
+        year: int,
+        month: int,
+        latitude: float = 28.6139,
+        longitude: float = 77.2090,
+        tz_offset_hours: float = 5.5
+    ) -> List[Dict[str, Any]]:
+        """
+        Generates rapid 30/31-day Monthly Panchang Grid dataset for interactive calendar view.
+        """
+        import calendar
+        num_days = calendar.monthrange(year, month)[1]
+        provider = cls.get_provider()
+        days = []
+
+        TITHI_SIMPLE = [
+            "प्रतिपदा", "द्वितीया", "तृतीया", "चतुर्थी", "पञ्चमी", "षष्ठी", "सप्तमी", "अष्टमी", "नवमी", "दशमी", "एकादशी", "द्वादशी", "त्रयोदशी", "चतुर्दशी", "पूर्णिमा",
+            "प्रतिपदा", "द्वितीया", "तृतीया", "चतुर्थी", "पञ्चमी", "षष्ठी", "सप्तमी", "अष्टमी", "नवमी", "दशमी", "एकादशी", "द्वादशी", "त्रयोदशी", "चतुर्दशी", "अमावस्या"
+        ]
+        NAK_SIMPLE = [
+            "अश्विनी", "भरणी", "कृत्तिका", "रोहिणी", "मृगशिरा", "आर्द्रा", "पुनर्वसु", "पुष्य", "आश्लेषा",
+            "मघा", "पूर्वाफाल्गुनी", "उत्तराफाल्गुनी", "हस्त", "चित्रा", "स्वाती", "विशाखा", "अनुराधा", "ज्येष्ठा",
+            "मूल", "पूर्वाषाढ़ा", "उत्तराषाढ़ा", "श्रवण", "धनिष्ठा", "शतभिषा", "पूर्वाभाद्रपद", "उत्तराभाद्रपद", "रेवती"
+        ]
+
+        EKADASHI_M = {
+            (1, True): "कामदा", (1, False): "वरूथिनी",
+            (2, True): "मोहिनी", (2, False): "अपरा",
+            (3, True): "निर्जला", (3, False): "योगिनी",
+            (4, True): "देवशयनी", (4, False): "कामिका",
+            (5, True): "पवित्रा", (5, False): "अजा",
+            (6, True): "परिवर्तिनी", (6, False): "इन्दिरा",
+            (7, True): "पापांकुशा", (7, False): "रमा",
+            (8, True): "देवउठनी", (8, False): "उत्पन्ना",
+            (9, True): "मोक्षदा", (9, False): "सफला",
+            (10, True): "पुत्रदा", (10, False): "षट्तिला",
+            (11, True): "जया", (11, False): "विजया",
+            (12, True): "आमलकी", (12, False): "पापमोचिनी",
+        }
+
+        for d in range(1, num_days + 1):
+            dt = date(year, month, d)
+            dt_utc = datetime(year, month, d, 0, 30)
+            pos, _ = provider.get_planet_positions(dt_utc)
+            sun_lon = pos["Sun"]["longitude"] % 360.0
+            moon_lon = pos["Moon"]["longitude"] % 360.0
+            diff = (moon_lon - sun_lon) % 360.0
+            t_idx = int(diff // 12.0) + 1
+            nak_idx = int(moon_lon // (360.0 / 27.0)) + 1
+            sun_sign = int(sun_lon // 30.0) + 1
+            is_shukla = t_idx <= 15
+            paksha = "शुक्ल" if is_shukla else "कृष्ण"
+            is_pitru = (sun_sign == 6 and (16 <= t_idx <= 30 or t_idx == 15))
+
+            fest_name = ""
+            if t_idx in [11, 26]:
+                fest_name = f"{EKADASHI_M.get((sun_sign, is_shukla), 'एकादशी')} एकादशी"
+            elif t_idx in [13, 28]:
+                fest_name = "प्रदोष व्रत"
+            elif t_idx == 15:
+                fest_name = "पूर्णिमा व्रत"
+            elif t_idx == 30:
+                fest_name = "सर्वपितृ अमावस्या" if sun_sign == 6 else ("दीपावली" if sun_sign == 7 else "अमावस्या")
+            elif t_idx == 29:
+                fest_name = "मासिक शिवरात्रि"
+            elif t_idx == 19:
+                fest_name = "संकष्टी चतुर्थी"
+            elif t_idx == 4 and sun_sign == 5:
+                fest_name = "गणेश चतुर्थी"
+            elif is_pitru:
+                fest_name = "श्राद्ध पक्ष"
+
+            days.append({
+                "day": d,
+                "date": dt,
+                "weekday": dt.weekday(),
+                "weekday_hi": ["सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि", "रवि"][dt.weekday()],
+                "tithi_idx": t_idx,
+                "tithi_name": TITHI_SIMPLE[t_idx - 1],
+                "paksha": paksha,
+                "nak_idx": nak_idx,
+                "nak_name": NAK_SIMPLE[nak_idx - 1],
+                "festival": fest_name,
+                "is_pitru": is_pitru,
+                "is_ekadashi": t_idx in [11, 26],
+                "is_purnima": t_idx == 15,
+                "is_amavasya": t_idx == 30
+            })
+
+        return days
+
+    @classmethod
     def get_full_panchang(
         cls,
         target_date: date,
@@ -1836,6 +2304,7 @@ class VedicPanchangService:
         five_pillars = cls.calculate_panchanga_5_pillars(target_date, sr_dt, tz_offset_hours)
         nak_idx = five_pillars["nakshatra"]["index"]
         tithi_idx = five_pillars["tithi"]["index"]
+        vara_idx = five_pillars["vara"]["weekday_idx"]
 
         bhadra = cls.calculate_bhadra_deep_engine(target_date, sr_dt, ss_dt, tz_offset_hours)
         panchak_ganda = cls.calculate_panchaka_and_gandamoola(target_date, sr_dt, tz_offset_hours)
@@ -1867,6 +2336,39 @@ class VedicPanchangService:
             sunset_dt=ss_dt
         )
 
+        # 24-Hour Rising Lagna Table
+        lagna_table = cls.calculate_daily_lagna_table(
+            target_date=target_date,
+            sunrise_dt=sr_dt,
+            latitude=latitude,
+            longitude=longitude,
+            tz_offset_hours=tz_offset_hours
+        )
+
+        # Festivals, Vrat & Ekadashi Parana Engine
+        festivals_vrat = cls.calculate_festivals_and_vrat(
+            target_date=target_date,
+            sun_lon=sun_lon,
+            moon_lon=moon_lon,
+            tithi_idx=tithi_idx,
+            nak_idx=nak_idx,
+            vara_idx=vara_idx,
+            sunrise_dt=sr_dt,
+            sunset_dt=ss_dt,
+            next_sunrise_dt=next_sr_dt,
+            tz_offset_hours=tz_offset_hours
+        )
+
+        # Vedic Sankalpa Mantra Generator
+        sankalpa_mantra = cls.generate_vedic_sankalpa_mantra(
+            target_date=target_date,
+            city_name=city_name,
+            samvatsar_data=samvatsar,
+            five_pillars=five_pillars,
+            paksha_engine=paksha_engine,
+            transit_matrix=transit_matrix
+        )
+
         # Overall Day Verdict
         day_quality = "🟢 शुभ व मांगलिक (Auspicious)"
         quality_color = "#059669"
@@ -1889,7 +2391,8 @@ class VedicPanchangService:
                 "latitude": latitude,
                 "longitude": longitude,
                 "day_verdict": day_quality,
-                "day_verdict_color": quality_color
+                "day_verdict_color": quality_color,
+                "primary_festival": festivals_vrat.get("primary_festival", "")
             },
             "sun_moon": sun_moon,
             "five_pillars": five_pillars,
@@ -1902,5 +2405,8 @@ class VedicPanchangService:
             "balam": balam,
             "samvatsar": samvatsar,
             "transit_matrix": transit_matrix,
-            "paksha_engine": paksha_engine
+            "paksha_engine": paksha_engine,
+            "lagna_table": lagna_table,
+            "festivals_and_vrat": festivals_vrat,
+            "sankalpa_mantra": sankalpa_mantra
         }
