@@ -137,22 +137,23 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     """Renders the master Vedic Jyotish Panchang module with 12 rich interactive tabs."""
 
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%);
-                padding: 24px; border-radius: 14px; color: #FFFFFF; margin-bottom: 20px;
-                box-shadow: 0 4px 14px rgba(0,0,0,0.15);">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
-            <div>
-                <h2 style="margin:0; font-size:26px; color:#FDE047; font-weight:800; letter-spacing:0.5px;">
+    <div style="background: linear-gradient(135deg, #FFFDF5 0%, #FEF3C7 50%, #FFFBEB 100%);
+                border: 2px solid #F59E0B; padding: 22px 26px; border-radius: 14px;
+                margin-bottom: 20px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.12);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div style="flex: 1; min-width: 280px;">
+                <h2 style="margin:0; font-size:26px; color:#78350F !important; font-weight:800; letter-spacing:0.5px; line-height:1.3;">
                     📅 वैदिक ज्योतिषीय पञ्चाङ्ग (Vedic Jyotish Panchang)
                 </h2>
-                <p style="margin:6px 0 0 0; color:#E0E7FF; font-size:14px;">
+                <p style="margin:6px 0 0 0; color:#92400E !important; font-size:14px; font-weight:500; line-height:1.5;">
                     सूर्य सिद्धान्त, दृक्-गणित, निर्णय सिन्धु एवं मुहूर्त चिन्तामणि पर आधारित १००% प्रामाणिक दैनिक पञ्चाङ्ग, २४-घण्टे लग्न सारणी एवं सङ्कल्प मन्त्र
                 </p>
             </div>
             <div style="text-align:right;">
-                <span style="background:rgba(253, 224, 71, 0.2); border:1px solid #FDE047; color:#FEF08A;
-                             padding:6px 14px; border-radius:20px; font-size:13px; font-weight:700;">
-                    ⭐ Drik-Panchang Certified Engine
+                <span style="background:#FEF2F2; border:1.5px solid #DC2626; color:#991B1B !important;
+                             padding:7px 18px; border-radius:24px; font-size:15px; font-weight:800; letter-spacing:0.5px;
+                             display:inline-block; box-shadow:0 2px 6px rgba(220, 38, 38, 0.12);">
+                    🕉️ ॥ श्री गणेशाय नमः ॥
                 </span>
             </div>
         </div>
