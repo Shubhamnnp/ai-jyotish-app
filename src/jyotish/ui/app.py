@@ -7105,9 +7105,11 @@ if selected_idx == 0:
         # ═══════════════════════════════════════════════════════════════════════
         # 🏛️ द्वादश भाव सम्पूर्ण शास्त्रीय तालिका (12 Houses Master Analysis Table)
         # ═══════════════════════════════════════════════════════════════════════
-        _bhava_title = f"### 🏛️ {varga_choice} ({v_name}) चक्र — द्वादश भाव सम्पूर्ण शास्त्रीय स्थिति, दृष्टि, चलित व गुणधर्म तालिका" if varga_choice == "D1" else "### 🏛️ जन्म कुण्डली (D1) एवं भाव चलित — द्वादश भाव सम्पूर्ण शास्त्रीय स्थिति, दृष्टि, चलित व गुणधर्म तालिका"
-        st.markdown(_bhava_title)
-        st.caption("महर्षि पराशर (BPHS), श्रीपति एवं फलदीपिका अनुसार द्वादश भावों की स्थिति, स्थित ग्रह, ग्रह दृष्टियां, चलित स्थानांतरण, भाव मध्य, नक्षत्र-चरण, अष्टकवर्ग बल एवं प्रमुख कारकत्व:")
+        st.markdown(f"### 🏛️ {varga_choice} ({v_name}) चक्र — द्वादश भाव सम्पूर्ण शास्त्रीय स्थिति, दृष्टि, गरिमा व गुणधर्म तालिका")
+        if varga_choice == "D1":
+            st.caption("महर्षि पराशर (BPHS), श्रीपति एवं फलदीपिका अनुसार जन्म लग्न (D1) व भाव चलित चक्र के द्वादश भावों की सूक्ष्म स्थिति, स्थित ग्रह, दृष्टियां, भाव मध्य, नक्षत्र-पद व गुणधर्म:")
+        else:
+            st.caption(f"महर्षि पराशर (BPHS) अनुसार **{varga_choice} ({v_name})** चक्र के द्वादश भावों ({v_lagna_sign} लग्न से), वर्ग में स्थित ग्रह, दृष्टि संबंध, मूल D1 संदर्भ, वर्ग गरिमा व गुणधर्म:")
 
         try:
             _BHAVA_META = {
@@ -7148,16 +7150,22 @@ if selected_idx == 0:
                 'Jupiter': '#D97706', 'Venus': '#DB2777', 'Saturn': '#475569', 'Rahu': '#7C3AED', 'Ketu': '#B45309'
             }
 
-            # Bhava chalit calculation
+            # Active varga reference
+            _cur_v = target_varga if target_varga else chart.vargas.get("D1")
+            _cur_v_planets = _cur_v.planets if _cur_v else {}
+            _active_lagna_id = _cur_v.lagna_sign_id if _cur_v else chart.lagna_sign_id
+            _active_lagna_name = _cur_v.lagna_sign_name if _cur_v else chart.lagna_sign_name
+
+            # D1 Bhava chalit calculation (for D1 specific comparison)
             _bc_res = default_chart_calculator.calculate_bhava_chalit(chart)
             _bc_items = _bc_res.get('planet_positions', []) if isinstance(_bc_res, dict) else []
             _cusps_list = _bc_res.get('bhava_cusps', []) if isinstance(_bc_res, dict) else []
 
-            # Parashari Drishtis helper
-            def _get_bhava_drishtis(target_h):
+            # Parashari Drishtis helper for the ACTIVE varga
+            def _get_active_varga_drishtis(target_h):
                 asp_list = []
-                for p_name, _p_item in chart.planets.items():
-                    src_h = _p_item.house_from_lagna
+                for p_name, vp in _cur_v_planets.items():
+                    src_h = vp.house_number
                     dist = ((target_h - src_h + 12) % 12) + 1
                     is_asp = False
                     asp_lbl = ""
@@ -7175,87 +7183,119 @@ if selected_idx == 0:
                         asp_lbl = f"{dist}री दृष्टि"
                     
                     if is_asp:
-                        is_benefic = p_name in ("Jupiter", "Venus") or (p_name == "Mercury" and not _p_item.is_combust) or (p_name == "Moon" and _p_item.sign_degree > 10)
+                        d1_ref = chart.planets.get(p_name)
+                        is_combust = d1_ref.is_combust if d1_ref else False
+                        is_benefic = p_name in ("Jupiter", "Venus") or (p_name == "Mercury" and not is_combust) or (p_name == "Moon" and vp.degree_in_varga > 10)
                         asp_list.append((p_name, asp_lbl, is_benefic))
                 return asp_list
 
-            # Summary metrics counts
-            _total_shifted = sum(1 for it in _bc_items if it.get("rashi_house") != it.get("chalit_house"))
-            _occupied_houses = len(set(_pl.house_from_lagna for _pl in chart.planets.values()))
-            _vacant_houses = 12 - _occupied_houses
+            # Summary metrics counts for this active varga
+            _occ_h_count = len(set(vp.house_number for vp in _cur_v_planets.values()))
+            _vac_h_count = 12 - _occ_h_count
+            _kendra_occ = sum(1 for vp in _cur_v_planets.values() if vp.house_number in (1, 4, 7, 10))
+            _trik_occ = sum(1 for vp in _cur_v_planets.values() if vp.house_number in (1, 5, 9))
+            _upachaya_occ = sum(1 for vp in _cur_v_planets.values() if vp.house_number in (3, 6, 10, 11))
 
-            # ─── Top Bhava Vital Summary Cards ───
+            # ─── Top Bhava Vital Summary Cards for Active Varga ───
             bc_col_m1, bc_col_m2, bc_col_m3, bc_col_m4 = st.columns(4)
             with bc_col_m1:
-                st.metric("🏛️ केंद्र भाव (1, 4, 7, 10)", "विष्णु स्थान", "जीवन का मुख्य आधार")
+                st.metric("🏛️ केंद्र भाव (1, 4, 7, 10)", f"{_kendra_occ} ग्रह स्थित", "विष्णु स्थान • जीवन आधार")
             with bc_col_m2:
-                st.metric("👑 त्रिकोण भाव (1, 5, 9)", "लक्ष्मी स्थान", "धर्म, बुद्धि व पूर्वपुण्य")
+                st.metric("👑 त्रिकोण भाव (1, 5, 9)", f"{_trik_occ} ग्रह स्थित", "लक्ष्मी स्थान • धर्म व पुण्य")
             with bc_col_m3:
-                st.metric("📈 उपचय भाव (3, 6, 10, 11)", "प्रगति व पुरुषार्थ", "कालान्तर में सतत वृद्धि")
+                st.metric("📈 उपचय भाव (3, 6, 10, 11)", f"{_upachaya_occ} ग्रह स्थित", "पुरुषार्थ व सतत प्रगति")
             with bc_col_m4:
-                shift_badge_txt = f"{_total_shifted} ग्रह स्थानांतरित" if _total_shifted > 0 else "पूर्ण समरूप (0 शिफ्ट)"
-                st.metric("🔄 चलित चक्र स्थिति", shift_badge_txt, f"{_occupied_houses} ग्रह-युक्त / {_vacant_houses} रिक्त")
+                if varga_choice == "D1":
+                    _tot_shift = sum(1 for it in _bc_items if it.get("rashi_house") != it.get("chalit_house"))
+                    shift_badge_txt = f"{_tot_shift} ग्रह चलित शिफ्ट" if _tot_shift > 0 else "पूर्ण समरूप (0 शिफ्ट)"
+                    st.metric("🔄 चलित चक्र स्थिति", shift_badge_txt, f"{_occ_h_count} भाव सक्रिय / {_vac_h_count} रिक्त")
+                else:
+                    st.metric(f"🎯 {varga_choice} वर्ग लग्न", f"{_active_lagna_name} ({_active_lagna_id})", f"{_occ_h_count} भाव सक्रिय / {_vac_h_count} रिक्त")
 
             b_rows = []
             for b in range(1, 13):
                 meta = _BHAVA_META[b]
-                cusp = next((c for c in _cusps_list if c.get('bhava') == b), None)
-                s_id = cusp['sign_id'] if cusp else (((chart.lagna_sign_id - 1 + b - 1) % 12) + 1)
+                # Sign on this house in the active varga
+                s_id = ((_active_lagna_id - 1 + b - 1) % 12) + 1
                 s_name = SIGN_NAMES[s_id - 1]
                 s_name_hi = _SIGN_HI.get(s_name, s_name)
                 s_nat = _SIGN_NATURE.get(s_name, "स्थिर")
                 s_lord = SIGN_LORDS.get(s_name, "-")
 
-                # Lord details
-                lord_p = chart.planets.get(s_lord)
-                if lord_p:
-                    lord_dignity = getattr(lord_p, 'dignity', None) or "सम"
-                    lord_txt = f"<b style='color:{_GRAHA_COLS.get(s_lord, '#1E40AF')};'>{_GRAHA_SYMS.get(s_lord, s_lord)}</b><br><span style='font-size:11px;color:{_t_txt};'>{lord_p.house_from_lagna}वें भाव ({_SIGN_HI.get(lord_p.sign_name, lord_p.sign_name)} {lord_p.sign_degree:.1f}°)<br><span style='font-size:10.5px;color:#0284C7;font-weight:700;'>[{lord_dignity}]</span></span>"
+                # Lord in the active varga
+                vp_lord = _cur_v_planets.get(s_lord)
+                if vp_lord:
+                    d_lbl, _, _ = get_varga_dignity_info(s_lord, vp_lord.sign_name, affliction_engine)
+                    lord_txt = f"<b style='color:{_GRAHA_COLS.get(s_lord, '#1E40AF')};'>{_GRAHA_SYMS.get(s_lord, s_lord)}</b><br><span style='font-size:11px;color:{_t_txt};'>{vp_lord.house_number}वें भाव ({_SIGN_HI.get(vp_lord.sign_name, vp_lord.sign_name)} {vp_lord.degree_in_varga:.1f}°)<br><span style='font-size:10.5px;color:#0284C7;font-weight:700;'>[{d_lbl}]</span></span>"
                 else:
                     lord_txt = s_lord
 
-                # Cusp details (Madhya, Sandhi, Nakshatra, Pada)
-                c_deg = cusp.get('cusp_degree', 0.0) if cusp else 0.0
-                c_lon = cusp.get('cusp_longitude', 0.0) if cusp else 0.0
-                arambha_deg = (c_deg - 15.0 + 30.0) % 30.0
-                anta_deg = (c_deg + 15.0) % 30.0
-                nak_idx = int((c_lon % 360.0) / (360.0 / 27.0))
-                nak = NAKSHATRAS[nak_idx]
-                deg_in_nak = (c_lon % 360.0) - (nak_idx * (360.0 / 27.0))
-                pada = int(deg_in_nak / (360.0 / 108.0)) + 1
-                cusp_html = f"<b style='font-family:monospace;color:{_t_th if is_night_mode or is_astrallis_mode else '#0070C0'};font-size:12px;'>{c_deg:.2f}°</b><br><span style='font-size:11px;color:{_t_txt};'>विस्तार: {arambha_deg:.1f}°–{anta_deg:.1f}°<br>🌟 <b>{nak['name']}</b> ({nak['lord']}) पद-{pada}</span>"
+                # Cusp or Varga span column
+                if varga_choice == "D1":
+                    cusp = next((c for c in _cusps_list if c.get('bhava') == b), None)
+                    c_deg = cusp.get('cusp_degree', 0.0) if cusp else 0.0
+                    c_lon = cusp.get('cusp_longitude', 0.0) if cusp else 0.0
+                    arambha_deg = (c_deg - 15.0 + 30.0) % 30.0
+                    anta_deg = (c_deg + 15.0) % 30.0
+                    nak_idx = int((c_lon % 360.0) / (360.0 / 27.0))
+                    nak = NAKSHATRAS[nak_idx]
+                    deg_in_nak = (c_lon % 360.0) - (nak_idx * (360.0 / 27.0))
+                    pada = int(deg_in_nak / (360.0 / 108.0)) + 1
+                    cusp_html = f"<b style='font-family:monospace;color:{_t_th if is_night_mode or is_astrallis_mode else '#0070C0'};font-size:12px;'>{c_deg:.2f}°</b><br><span style='font-size:11px;color:{_t_txt};'>विस्तार: {arambha_deg:.1f}°–{anta_deg:.1f}°<br>🌟 <b>{nak['name']}</b> ({nak['lord']}) पद-{pada}</span>"
+                else:
+                    _v_div = getattr(_cur_v, 'division', 1) or 1
+                    _v_span = 30.0 / _v_div
+                    cusp_html = f"<b style='font-family:monospace;color:{_t_th if is_night_mode or is_astrallis_mode else '#0070C0'};font-size:12px;'>{varga_choice} वर्ग</b><br><span style='font-size:11px;color:{_t_txt};'>विभाजन: {_v_span:.2f}° प्रति भाग<br>लग्न: {_active_lagna_name} ({_active_lagna_id})</span>"
 
-                # Occupying planets in D1
-                occ = [_pl for _pl in chart.planets.values() if _pl.house_from_lagna == b]
+                # Occupying planets in this varga house
+                occ = [vp for vp in _cur_v_planets.values() if vp.house_number == b]
                 if occ:
                     occ_parts = []
-                    for _occ_p in occ:
-                        pc = _GRAHA_COLS.get(_occ_p.name, "#1E40AF")
-                        ret_txt = " <span style='color:#DC2626;font-weight:800;'>(R)</span>" if _occ_p.is_retrograde else ""
-                        comb_txt = " <span style='color:#EA580C;font-weight:800;'>(अस्त)</span>" if _occ_p.is_combust else ""
-                        occ_parts.append(f"<div style='margin-bottom:3px;font-size:11.5px;'><b style='color:{pc};'>{_GRAHA_SYMS.get(_occ_p.name, _occ_p.name)}</b> {_occ_p.sign_degree:.1f}°{ret_txt}{comb_txt}<br><span style='font-size:10.5px;color:#64748B;'>{_occ_p.nakshatra_name}-{_occ_p.nakshatra_pada}</span></div>")
+                    for vp in occ:
+                        pc = _GRAHA_COLS.get(vp.name, "#1E40AF")
+                        d1_ref = chart.planets.get(vp.name)
+                        ret_txt = " <span style='color:#DC2626;font-weight:800;'>(R)</span>" if (d1_ref and d1_ref.is_retrograde) else ""
+                        comb_txt = " <span style='color:#EA580C;font-weight:800;'>(अस्त)</span>" if (d1_ref and d1_ref.is_combust) else ""
+                        d_lbl, _, _ = get_varga_dignity_info(vp.name, vp.sign_name, affliction_engine)
+                        d1_h_txt = f"<span style='color:#64748B;font-size:10px;'>(D1: {d1_ref.house_from_lagna} भाव)</span>" if d1_ref else ""
+                        occ_parts.append(f"<div style='margin-bottom:4px;font-size:11.5px;'><b style='color:{pc};'>{_GRAHA_SYMS.get(vp.name, vp.name)}</b> {vp.degree_in_varga:.1f}°{ret_txt}{comb_txt}<br><span style='font-size:10.5px;color:#0284C7;font-weight:700;'>[{d_lbl}]</span> {d1_h_txt}</div>")
                     occ_html = "".join(occ_parts)
                 else:
                     occ_html = "<span style='color:#94A3B8;font-size:11.5px;font-style:italic;'>— रिक्त भाव —</span>"
 
-                # Bhava Chalit shifts
-                shifts = []
-                for it in _bc_items:
-                    pn = it.get('planet')
-                    rh = it.get('rashi_house')
-                    ch = it.get('chalit_house')
-                    sym = _GRAHA_SYMS.get(pn, pn)
-                    if rh == b and ch != b:
-                        shifts.append(f"<span style='background:#FEE2E2;color:#DC2626;border:1px solid #FCA5A5;padding:1px 6px;border-radius:4px;font-size:10.5px;font-weight:700;display:inline-block;margin:1px;'>⚠️ {sym} ({b}➔{ch} भाव)</span>")
-                    elif rh != b and ch == b:
-                        shifts.append(f"<span style='background:#FEF3C7;color:#D97706;border:1px solid #FCD34D;padding:1px 6px;border-radius:4px;font-size:10.5px;font-weight:700;display:inline-block;margin:1px;'>🔄 {sym} ({rh}➔{b} भाव)</span>")
-                if shifts:
-                    chalit_html = "".join(shifts)
+                # 5th Column: Chalit Shift (for D1) or D1 vs Varga Correlation (for D2..D60)
+                if varga_choice == "D1":
+                    shifts = []
+                    for it in _bc_items:
+                        pn = it.get('planet')
+                        rh = it.get('rashi_house')
+                        ch = it.get('chalit_house')
+                        sym = _GRAHA_SYMS.get(pn, pn)
+                        if rh == b and ch != b:
+                            shifts.append(f"<span style='background:#FEE2E2;color:#DC2626;border:1px solid #FCA5A5;padding:1px 6px;border-radius:4px;font-size:10.5px;font-weight:700;display:inline-block;margin:1px;'>⚠️ {sym} ({b}➔{ch} भाव)</span>")
+                        elif rh != b and ch == b:
+                            shifts.append(f"<span style='background:#FEF3C7;color:#D97706;border:1px solid #FCD34D;padding:1px 6px;border-radius:4px;font-size:10.5px;font-weight:700;display:inline-block;margin:1px;'>🔄 {sym} ({rh}➔{b} भाव)</span>")
+                    if shifts:
+                        chalit_html = "".join(shifts)
+                    else:
+                        chalit_html = "<span style='background:#ECFDF5;color:#059669;border:1px solid #A7F3D0;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:700;'>✅ स्थिर (समान)</span>"
                 else:
-                    chalit_html = "<span style='background:#ECFDF5;color:#059669;border:1px solid #A7F3D0;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:700;'>✅ स्थिर (समान)</span>"
+                    if occ:
+                        v_rel_parts = []
+                        for vp in occ:
+                            d1_ref = chart.planets.get(vp.name)
+                            sym = _GRAHA_SYMS.get(vp.name, vp.name)
+                            if d1_ref:
+                                if d1_ref.house_from_lagna == b:
+                                    v_rel_parts.append(f"<span style='background:#DCFCE7;color:#15803D;border:1px solid #86EFAC;padding:1px 5px;border-radius:4px;font-size:10.5px;font-weight:800;display:inline-block;margin:1px;'>🎯 {sym} समान भाव ({b}H)</span>")
+                                else:
+                                    v_rel_parts.append(f"<span style='background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE;padding:1px 5px;border-radius:4px;font-size:10.5px;font-weight:700;display:inline-block;margin:1px;'>{sym} (D1: {d1_ref.house_from_lagna}H ➔ {varga_choice}: {b}H)</span>")
+                        chalit_html = "".join(v_rel_parts)
+                    else:
+                        chalit_html = "<span style='color:#94A3B8;font-size:11px;'>— रिक्त —</span>"
 
-                # Drishti on this house
-                drishtis = _get_bhava_drishtis(b)
+                # Drishtis on this house in the active varga
+                drishtis = _get_active_varga_drishtis(b)
                 if drishtis:
                     d_parts = []
                     for pn, asp_lbl, is_b in drishtis:
@@ -7268,7 +7308,7 @@ if selected_idx == 0:
                 else:
                     drishti_html = "<span style='color:#94A3B8;font-size:11px;'>— दृष्टि रहित —</span>"
 
-                # Ashtakavarga SAV points
+                # Ashtakavarga SAV points for the sign occupying this house
                 sav_pts = chart.ashtakavarga.sav[s_id - 1] if hasattr(chart, 'ashtakavarga') and chart.ashtakavarga and chart.ashtakavarga.sav else 28
                 if sav_pts >= 30:
                     sav_badge = f"<span style='background:#DCFCE7;color:#15803D;border:1px solid #86EFAC;padding:2px 6px;border-radius:4px;font-weight:900;font-size:11px;'>🟢 {sav_pts} (अति बलिष्ठ)</span>"
@@ -7298,6 +7338,8 @@ if selected_idx == 0:
                     f'</tr>'
                 )
 
+            _col5_hdr = "भाव चलित स्थानांतरण" if varga_choice == "D1" else f"D1 ➔ {varga_choice} भाव सम्बंध"
+            _col3_hdr = "भाव मध्य, संधि व नक्षत्र" if varga_choice == "D1" else f"{varga_choice} वर्ग विस्तार व स्थिति"
             bhav_table_html = f"""
     <div style="width:100%;overflow-x:auto;background:{_t_bg};border:1.5px solid {_t_bdr};border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.04);margin-top:10px;margin-bottom:14px;">
       <table style="width:100%;border-collapse:collapse;text-align:left;font-family:inherit;">
@@ -7305,9 +7347,9 @@ if selected_idx == 0:
           <tr style="background:{_t_th_bg};border-bottom:2px solid {_t_bdr};">
             <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">भाव व संज्ञा (House)</th>
             <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">राशि एवं भावेश (Sign & Lord)</th>
-            <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">भाव मध्य, संधि व नक्षत्र</th>
+            <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">{_col3_hdr}</th>
             <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">भाव में स्थित ग्रह (Occupants)</th>
-            <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">भाव चलित स्थानांतरण</th>
+            <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">{_col5_hdr}</th>
             <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">भाव पर दृष्टियां (Parashari Drishti)</th>
             <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;">प्राकृतिक कारक (Karaka)</th>
             <th style="padding:9px 10px;color:{_t_th};font-weight:900;font-size:12px;letter-spacing:0.3px;text-align:center;">अष्टकवर्ग रेखाएं</th>
@@ -7322,13 +7364,20 @@ if selected_idx == 0:
             st.markdown(bhav_table_html, unsafe_allow_html=True)
 
             # Shastriya Rules Explanatory Expander
-            with st.expander("📖 भाव फलादेश के मूलभूत शास्त्रीय नियम एवं सिद्धांत (Parashari & Shripati Bhava Rules)"):
-                st.markdown("""
-                - **१. भाव, भावेश व कारक सिद्धांत:** किसी भी भाव का शुभ फल तब मिलता है जब — (क) भाव पर शुभ ग्रहों (गुरु, शुक्र, बुध) की दृष्टि हो, (ख) भावेश केंद्र/त्रिकोण में स्वराशि या उच्च का हो, और (ग) उस भाव का प्राकृतिक कारक ग्रह कुंडली में बलवान हो।
-                - **२. चलित चक्र एवं संधि रहस्य:** यदि कोई ग्रह राशि में किसी भाव में बैठा है किंतु भाव मध्य सीमा पार करके संधि में चला जाता है, तो फलदीपिका के अनुसार वह भौतिक रूप से अगले/पिछले भाव का ही कार्य सिद्धि फल प्रदान करता है।
-                - **३. उपचय भावों में पाप ग्रह:** ३, ६, १० एवं ११वें भावों में पाप ग्रह (सूर्य, मंगल, शनि, राहु) अत्यंत बलवान होकर जातक को शत्रुओं पर विजय, रोग मुक्ति और असीम पुरुषार्थ प्रदान करते हैं।
-                - **४. अष्टकवर्ग समन्वय:** जिस भाव की राशि में २८ से अधिक बिंदु हों, वह भाव गोचर एवं दशा में अत्यंत अनुकूल और फलदायक सिद्ध होता है।
-                """)
+            with st.expander(f"📖 {varga_choice} ({v_name}) भाव फलादेश के मूलभूत शास्त्रीय नियम एवं सिद्धांत"):
+                if varga_choice == "D1":
+                    st.markdown("""
+                    - **१. भाव, भावेश व कारक सिद्धांत:** किसी भी भाव का शुभ फल तब मिलता है जब — (क) भाव पर शुभ ग्रहों (गुरु, शुक्र, बुध) की दृष्टि हो, (ख) भावेश केंद्र/त्रिकोण में स्वराशि या उच्च का हो, और (ग) उस भाव का प्राकृतिक कारक ग्रह कुंडली में बलवान हो।
+                    - **२. चलित चक्र एवं संधि रहस्य:** यदि कोई ग्रह राशि में किसी भाव में बैठा है किंतु भाव मध्य सीमा पार करके संधि में चला जाता है, तो फलदीपिका के अनुसार वह भौतिक रूप से अगले/पिछले भाव का ही कार्य सिद्धि फल प्रदान करता है।
+                    - **३. उपचय भावों में पाप ग्रह:** ३, ६, १० एवं ११वें भावों में पाप ग्रह (सूर्य, मंगल, शनि, राहु) अत्यंत बलवान होकर जातक को शत्रुओं पर विजय, रोग मुक्ति और असीम पुरुषार्थ प्रदान करते हैं।
+                    - **४. अष्टकवर्ग समन्वय:** जिस भाव की राशि में २८ से अधिक बिंदु हों, वह भाव गोचर एवं दशा में अत्यंत अनुकूल और फलदायक सिद्ध होता है।
+                    """)
+                else:
+                    st.markdown(f"""
+                    - **१. वर्ग भाव सिद्धांत (Varga Bhava Rule):** किसी भी वर्ग चक्र (जैसे {varga_choice}) के भाव उस वर्ग के विशिष्ट कार्यक्षेत्र (उदा. D9: विवाह/धर्म, D10: कर्म/पद, D7: संतान) को सूक्ष्म रूप से दर्शाते हैं।
+                    - **२. वर्ग भावेश की गरिमा:** वर्ग चक्र में जिस भाव का स्वामी उसी वर्ग में केंद्र/त्रिकोण अथवा स्वराशि/उच्च राशि में हो, वह कार्यक्षेत्र जातक के जीवन में अत्यंत फलदायी और प्रतिष्ठित होता है।
+                    - **३. D1 बनाम {varga_choice} सम्बंध:** यदि कोई ग्रह मूल जन्मकुंडली (D1) और इस वर्ग ({varga_choice}) दोनों में समान भाव या समान राशि (वर्गोत्तम) में हो, तो उसका फल अकाट्य और स्थाई होता है।
+                    """)
         except Exception as _ebh:
             st.error(f"द्वादश भाव तालिका निर्माण त्रुटि: {_ebh}")
         p = chart.panchang
