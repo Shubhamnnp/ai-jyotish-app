@@ -407,7 +407,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 <div>• <b>दिशा शूल:</b> {nivas.get('disha_shoola', {}).get('direction', '—')} (उपाय: {nivas.get('disha_shoola', {}).get('parihar', '—')})</div>
                 <div>• <b>चन्द्र राशि:</b> {transit[1].get('rashi', 'कर्क') if len(transit) > 1 else 'कर्क'}</div>
             </div>
-            {f'<div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:6px; padding:8px 12px; margin-top:12px; font-size:13px; color:#991B1B;"><b>🪔 विशेष:</b> {prim_fest}</div>' if prim_fest else ''}
+            {f'<div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:6px; padding:8px 12px; margin-top:12px; font-size:13px; color:#991B1B;"><b>🪔 विशेष:</b> {prim_fest}</div>' if prim_fest else '<div style="margin-top:4px;"></div>'}
             <div style="text-align:center; border-top:1px solid #E2E8F0; padding-top:8px; margin-top:12px; font-size:11.5px; color:#64748B;">
                 ज्योतिषीय पञ्चाङ्ग साफ्टवेयर द्वारा प्रमाणित | सर्वमंगलं भवतु
             </div>
@@ -1474,30 +1474,26 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                             if day_obj.get("is_panchak"):
                                 tags.append('<span style="background:#F3E8FF; color:#7E22CE; padding:1px 3px; border-radius:3px; font-size:8.5px;">⚡पञ्चक</span>')
 
-                            tags_html = " ".join(tags)
+                            tags_block = f'<div style="margin-top:3px; display:flex; flex-direction:column; gap:2px;">{" ".join(tags)}</div>' if tags else '<div style="min-height:16px;"></div>'
 
-                            st.markdown(f"""
-                            <div style="background:{cell_bg}; border:1.5px solid {cell_bdr}; border-radius:8px;
-                                        padding:6px; min-height:102px; margin-bottom:8px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-                                <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                    <b style="font-size:14px; color:{'#3B82F6' if is_today else ('#FFFFFF' if is_dark else '#0F172A')};">{day_obj['day']}</b>
-                                    <span style="font-size:9.5px; color:#64748B;">{day_obj['paksha'][:1]} | {day_obj.get('moon_sign', '')[:2]}</span>
-                                </div>
-                                <div style="font-size:11px; font-weight:700; color:{'#93C5FD' if is_today else ('#D1D5DB' if is_dark else '#334155')}; margin:2px 0;">
-                                    {day_obj['tithi_name']}
-                                </div>
-                                <div style="font-size:10px; color:#94A3B8;">
-                                    {day_obj['nak_name']}
-                                </div>
-                                <div style="margin-top:3px; display:flex; flex-direction:column; gap:2px;">
-                                    {tags_html}
-                                </div>
-                            </div>
-                            """, unsafe_allow_html=True)
+                            cell_title_col = '#3B82F6' if is_today else ('#FFFFFF' if is_dark else '#0F172A')
+                            cell_sub_col = '#93C5FD' if is_today else ('#D1D5DB' if is_dark else '#334155')
+
+                            card_html = (
+                                f'<div style="background:{cell_bg}; border:1.5px solid {cell_bdr}; border-radius:8px; '
+                                f'padding:6px; min-height:102px; margin-bottom:8px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">'
+                                f'<div style="display:flex; justify-content:space-between; align-items:baseline;">'
+                                f'<b style="font-size:14px; color:{cell_title_col};">{day_obj["day"]}</b>'
+                                f'<span style="font-size:9.5px; color:#64748B;">{day_obj["paksha"][:1]} | {day_obj.get("moon_sign", "")[:2]}</span>'
+                                f'</div>'
+                                f'<div style="font-size:11px; font-weight:700; color:{cell_sub_col}; margin:2px 0;">{day_obj["tithi_name"]}</div>'
+                                f'<div style="font-size:10px; color:#94A3B8;">{day_obj["nak_name"]}</div>'
+                                f'{tags_block}'
+                                f'</div>'
+                            )
+                            st.markdown(card_html, unsafe_allow_html=True)
                         else:
-                            st.markdown("""
-                            <div style="min-height:102px; margin-bottom:8px;"></div>
-                            """, unsafe_allow_html=True)
+                            st.markdown('<div style="min-height:102px; margin-bottom:8px;"></div>', unsafe_allow_html=True)
 
         # ---------------------------------------------------------
         # SUB-TAB 2: सम्पूर्ण मासिक तालिका (Master Table)
