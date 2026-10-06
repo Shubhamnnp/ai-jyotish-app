@@ -121,7 +121,8 @@ def test_monthly_panchang_summary():
         year=2026,
         month=10,
         latitude=28.6139,
-        longitude=77.2090
+        longitude=77.2090,
+        calendar_type="purnimanta"
     )
     assert len(monthly) == 31
     oct6 = monthly[5]  # Index 5 is 6th October
@@ -129,6 +130,23 @@ def test_monthly_panchang_summary():
     assert "कृष्ण" in oct6["paksha"]
     assert "मंगल" in oct6["weekday_hi"]
     assert oct6["weekday"] == 1
+    assert "moon_sign" in oct6
+    assert "masa_name" in oct6
+    assert "special_yoga" in oct6
+
+    # Test Amanta calendar
+    monthly_am = VedicPanchangService.get_monthly_panchang_summary(
+        year=2026,
+        month=10,
+        calendar_type="amanta"
+    )
+    assert len(monthly_am) == 31
+    assert "आश्विन" in monthly_am[5]["masa_name"]
+
+    # Test monthly transits
+    transits = VedicPanchangService.get_monthly_transits(2026, 10)
+    assert len(transits) >= 1
+    assert transits[0]["planet"] == "Sun"
 
 
 def test_panchang_arbitrary_date():

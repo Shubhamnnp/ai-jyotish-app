@@ -80,7 +80,7 @@ TODAY'S ACCURATE CELESTIAL COORDINATES:
 - Pitru Paksha Active: {pitru.get('is_active', False)} (Shradh: {pitru.get('shradh_name', 'None')})
 - Bhadra Active: {bhadra.get('is_present', False)} (Fatal on Earth: {bhadra.get('is_fatal_on_earth', False)})
 - Rahu Kaal: {muh.get('ashubh_windows', [{}])[0].get('time', 'N/A') if muh.get('ashubh_windows') else 'N/A'}
-- Abhijit Muhurta: {next((x.get('time', 'N/A') for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('title', '') or 'अभिजित' in x.get('name', '')), 'आज अनुपस्थित')}
+- Abhijit Muhurta: {next((x['time'] for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('name', '')), 'आज अनुपस्थित')}
 - Day Verdict: {m.get('day_verdict')}
 
 Respond directly in respectful, clear Hindi (4-6 bullet points) with exact Shastriya reasoning, whether the activity is recommended or prohibited today, and what specific auspicious window or remedy to use."""
@@ -98,7 +98,7 @@ Respond directly in respectful, clear Hindi (4-6 bullet points) with exact Shast
     q_low = query.lower()
     is_pitru = pitru.get("is_active", False)
     is_bhadra = bhadra.get("is_fatal_on_earth", False)
-    abhijit = next((x.get('time', 'N/A') for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('title', '') or 'अभिजित' in x.get('name', '')), 'आज अभिजित मुहूर्त नहीं है')
+    abhijit = next((x['time'] for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('name', '')), 'आज अभिजित मुहूर्त नहीं है')
 
     if any(k in q_low for k in ["वाहन", "गाड़ी", "car", "vehicle", "bike", "vahan"]):
         if is_pitru:
@@ -402,10 +402,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 <div>• <b>करण:</b> {pillars['karana']['current']['name']} पर्यन्त {pillars['karana']['current']['end_time_str']}</div>
                 <div>• <b>सूर्योदय / सूर्यास्त:</b> {sr_str} / {ss_str}</div>
                 <div>• <b>चन्द्रोदय / चन्द्रास्त:</b> {mr_str} / {ms_str}</div>
-                <div>• <b>राहुकाल (त्याज्य):</b> <span style="color:#DC2626; font-weight:700;">{muh.get('ashubh_windows', [{}])[0].get('time', '—') if muh.get('ashubh_windows') else '—'}</span></div>
-                <div>• <b>अभिजित मुहूर्त (शुभ):</b> <span style="color:#059669; font-weight:700;">{next((x.get('time', '—') for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('title', '') or 'अभिजित' in x.get('name', '')), '—')}</span></div>
-                <div>• <b>दिशा शूल:</b> {nivas.get('disha_shoola', {}).get('direction', '—')} (उपाय: {nivas.get('disha_shoola', {}).get('parihar', '—')})</div>
-                <div>• <b>चन्द्र राशि:</b> {transit[1].get('rashi', 'कर्क') if len(transit) > 1 else 'कर्क'}</div>
+                <div>• <b>राहुकाल (त्याज्य):</b> <span style="color:#DC2626; font-weight:700;">{muh['ashubh_windows'][0]['time'] if muh['ashubh_windows'] else '—'}</span></div>
+                <div>• <b>अभिजित मुहूर्त (शुभ):</b> <span style="color:#059669; font-weight:700;">{next((x['time'] for x in muh['shubh_windows'] if 'अभिजित' in x['name']), '—')}</span></div>
+                <div>• <b>दिशा शूल:</b> {nivas['disha_shoola']['direction']} (उपाय: {nivas['disha_shoola']['parihar']})</div>
+                <div>• <b>चन्द्र राशि:</b> {transit[1]['rashi'] if len(transit) > 1 else 'कर्क'}</div>
             </div>
             {f'<div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:6px; padding:8px 12px; margin-top:12px; font-size:13px; color:#991B1B;"><b>🪔 विशेष:</b> {prim_fest}</div>' if prim_fest else ''}
             <div style="text-align:center; border-top:1px solid #E2E8F0; padding-top:8px; margin-top:12px; font-size:11.5px; color:#64748B;">
@@ -469,10 +469,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     </div>
                 </div>
                 <div style="font-size:12.5px; color:{'#D1D5DB' if is_dark else '#475569'}; line-height:1.6; margin-top:10px;">
-                    • <b>अधिष्ठाता देवता:</b> {t.get('deity', '—')}<br/>
-                    • <b>तिथि संज्ञा:</b> {t.get('category', '—')} ({'रिक्ता तिथि - शुभ कार्य वर्जित' if 'रिक्ता' in t.get('category', '') else 'शुभ फलप्रद'})<br/>
-                    • <b>चन्द्र-सूर्य अन्तर:</b> {t.get('degree', 0.0):.2f}°<br/>
-                    • <b>आगामी तिथि:</b> {t.get('next_name', '—')} ({t.get('next_paksha', '')})
+                    • <b>अधिष्ठाता देवता:</b> {t['deity']}<br/>
+                    • <b>तिथि संज्ञा:</b> {t['category']} ({'रिक्ता तिथि - शुभ कार्य वर्जित' if 'रिक्ता' in t['category'] else 'शुभ फलप्रद'})<br/>
+                    • <b>चन्द्र-सूर्य अन्तर:</b> {t['diff_deg']}°<br/>
+                    • <b>आगामी तिथि:</b> {t['next_name']} ({t['next_end_str']})
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -1221,8 +1221,8 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     st.markdown(f"""
                     <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1px solid {t_item['color']};
                                 border-radius:6px; padding:8px; margin-bottom:6px; text-align:center;">
-                        <b style="font-size:12px; color:{'#FFFFFF' if is_dark else '#0F172A'};">#{t_item.get('nak_idx', j + 1)} {t_item.get('nakshatra', '')}</b><br/>
-                        <span style="font-size:10.5px; color:{t_item.get('color', '#3B82F6')}; font-weight:700;">{t_item.get('tara_name', '')}</span>
+                        <b style="font-size:12px; color:{'#FFFFFF' if is_dark else '#0F172A'};">#{t_item['nak_idx']} {t_item['nakshatra']}</b><br/>
+                        <span style="font-size:10.5px; color:{t_item['color']}; font-weight:700;">{t_item['tara_name']}</span>
                     </div>
                     """, unsafe_allow_html=True)
 
@@ -1327,91 +1327,327 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
         """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 11: मासिक पञ्चाङ्ग कैलेंडर (Monthly Calendar Grid)
+    # TAB 11: मासिक पञ्चाङ्ग (Month Calendar & Vedic Monthly Patri)
     # =============================================================
     with tab11:
-        st.markdown("### 📅 मासिक पञ्चाङ्ग कैलेंडर दृश्य (Monthly Calendar Grid)")
-        st.caption("सम्पूर्ण मास का एक दृष्टि में पञ्चाङ्ग ग्रिड—तिथियां, एकादशी, पूर्णिमा, अमावस्या, श्राद्ध एवं मुख्य त्यौहार:")
+        st.markdown("### 📅 मासिक पञ्चाङ्ग (Vedic Monthly Calendar & Panchang Patri)")
+        st.caption("सम्पूर्ण मास का दृक्-पञ्चाङ्ग प्रमाणित खगोलीय एवं शास्त्रीय विवरण — वर्ष सूची, मास सूची व पञ्चाङ्ग प्रकार के साथ:")
 
-        col_m_yr, col_m_mo = st.columns([1, 1.5])
+        # 1. Top Controls: Year list, Month list, Type of Calendar
+        col_m_yr, col_m_mo, col_m_type = st.columns([1.1, 1.4, 1.9])
         with col_m_yr:
-            sel_cal_year = st.number_input("वर्ष (Year)", min_value=1950, max_value=2050, value=selected_date.year, key="panchang_cal_year")
-        with col_m_mo:
-            months_hi = ["१. जनवरी", "२. फ़रवरी", "३. मार्च", "४. अप्रैल", "५. मई", "६. जून", "७. जुलाई", "८. अगस्त", "९. सितंबर", "१०. अक्टूबर", "११. नवंबर", "१२. दिसंबर"]
-            sel_cal_month_idx = st.selectbox("मास (Month)", range(1, 13), index=selected_date.month - 1, format_func=lambda x: months_hi[x-1], key="panchang_cal_month")
+            year_list = list(range(1950, 2051))
+            cur_y_idx = year_list.index(selected_date.year) if selected_date.year in year_list else year_list.index(2026)
+            sel_cal_year = st.selectbox("📅 वर्ष चयन (Year List):", year_list, index=cur_y_idx, key="panchang_cal_year")
 
+        with col_m_mo:
+            months_hi = [
+                "१. जनवरी (पौष / माघ)",
+                "२. फ़रवरी (माघ / फाल्गुन)",
+                "३. मार्च (फाल्गुन / चैत्र)",
+                "४. अप्रैल (चैत्र / वैशाख)",
+                "५. मई (वैशाख / ज्येष्ठ)",
+                "६. जून (ज्येष्ठ / आषाढ़)",
+                "७. जुलाई (आषाढ़ / श्रावण)",
+                "८. अगस्त (श्रावण / भाद्रपद)",
+                "९. सितंबर (भाद्रपद / आश्विन)",
+                "१०. अक्टूबर (आश्विन / कार्तिक)",
+                "११. नवंबर (कार्तिक / मार्गशीर्ष)",
+                "१२. दिसंबर (मार्गशीर्ष / पौष)"
+            ]
+            sel_cal_month_idx = st.selectbox("🗓️ मास चयन (Month List):", range(1, 13), index=selected_date.month - 1, format_func=lambda x: months_hi[x-1], key="panchang_cal_month")
+
+        with col_m_type:
+            cal_type_dict = {
+                "purnimanta": "पूर्णिमान्त पञ्चाङ्ग (North India — UP, बिहार, राजस्थान, MP)",
+                "amanta": "अमान्त पञ्चाङ्ग (South & West — गुजरात, महाराष्ट्र, दक्षिण भारत)",
+                "solar": "सौर संवत्सर (संक्रान्ति मास — बंगाली, तमिल, ओड़िया)",
+                "standard": "मानक दृक्-पञ्चाङ्ग (Astronomical Drik System)"
+            }
+            sel_cal_type = st.selectbox(
+                "🕉️ पञ्चाङ्ग प्रणाली (Type of Calendar):",
+                list(cal_type_dict.keys()),
+                format_func=lambda x: cal_type_dict[x],
+                key="panchang_cal_type"
+            )
+
+        # 2. Retrieve Monthly Data & Transits
         monthly_data = VedicPanchangService.get_monthly_panchang_summary(
             year=int(sel_cal_year),
             month=int(sel_cal_month_idx),
             latitude=lat_val,
             longitude=lon_val,
-            tz_offset_hours=tz_val
+            tz_offset_hours=tz_val,
+            calendar_type=sel_cal_type
+        )
+        monthly_transits = VedicPanchangService.get_monthly_transits(
+            year=int(sel_cal_year),
+            month=int(sel_cal_month_idx)
         )
 
-        st.markdown("#### 🗓️ मासिक पञ्चाङ्ग ग्रिड")
+        # Monthly Overview Info Banner
+        sample_first = monthly_data[0] if monthly_data else {}
+        sample_mid = monthly_data[len(monthly_data)//2] if monthly_data else {}
+        m_name_disp = sample_mid.get("masa_name", sample_first.get("masa_name", "मास"))
+        sun_r_disp = sample_mid.get("sun_sign", "सूर्य")
 
-        # 7 Weekday Headers
-        weekdays_names = ["सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार", "रविवार"]
-        hdr_cols = st.columns(7)
-        for w_idx, w_name in enumerate(weekdays_names):
-            with hdr_cols[w_idx]:
-                st.markdown(f"""
-                <div style="background:{'#374151' if is_dark else '#F1F5F9'}; color:{'#F3F4F6' if is_dark else '#334155'};
-                            padding:8px; border-radius:6px; text-align:center; font-weight:700; font-size:12px; margin-bottom:8px;">
-                    {w_name}
+        type_desc = {
+            "purnimanta": "उत्तर भारतीय पूर्णिमान्त नियम: माह का अन्त पूर्णिमा पर होता है, कृष्ण पक्ष नवीन मास का प्रथम पक्ष होता है।",
+            "amanta": "दक्षिण व पश्चिम भारतीय अमान्त नियम: माह का अन्त अमावस्या पर होता है, शुक्ल पक्ष से नया मास आरम्भ होता है।",
+            "solar": "सौर पञ्चाङ्ग नियम: सूर्य की निरयण राशि संक्रान्ति के दिन से मास का शुभारम्भ होता है।",
+            "standard": "मानक दृक्-पञ्चाङ्ग नियम: दृक्-गणित सिद्ध निरयण खगोलीय गणना पर आधारित।"
+        }.get(sel_cal_type, "")
+
+        st.markdown(f"""
+        <div style="background:{'#1F2937' if is_dark else '#FFFBEB'}; border:1.5px solid #F59E0B;
+                    border-radius:10px; padding:12px 18px; margin:12px 0 16px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+            <div>
+                <b style="color:#B45309; font-size:16px;">📖 {months_hi[sel_cal_month_idx-1]} {sel_cal_year} — {m_name_disp} ({cal_type_dict[sel_cal_type].split('(')[0].strip()})</b>
+                <div style="color:{'#D1D5DB' if is_dark else '#78350F'}; font-size:12.5px; margin-top:2px;">
+                    {type_desc} | सूर्य स्थिति: <b>{sun_r_disp} राशि</b> | कुल दिन: <b>{len(monthly_data)}</b>
                 </div>
-                """, unsafe_allow_html=True)
+            </div>
+            <div>
+                <span style="background:#FDE68A; color:#78350F; padding:4px 10px; border-radius:12px; font-weight:700; font-size:12px;">
+                    🪐 ग्रह गोचर: {len(monthly_transits)} | पर्व/व्रत: {len([x for x in monthly_data if x.get('festival')])}
+                </span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
-        # Pad first week if day 1 is not Monday (0)
-        first_day_weekday = monthly_data[0]["weekday"] if monthly_data else 0
-        grid_slots = [None] * first_day_weekday + monthly_data
+        # 3. Five Researched Sub-Tabs
+        sub_c1, sub_c2, sub_c3, sub_c4, sub_c5 = st.tabs([
+            "🗓️ मासिक कैलेंडर ग्रिड (Visual Grid)",
+            "📋 सम्पूर्ण ३०-दिवसीय तालिका (Master Table)",
+            "🚩 प्रमुख व्रत, पर्व एवं त्यौहार संकलन",
+            "🪐 मासिक ग्रह गोचर व संक्रान्ति",
+            "⚡ पञ्चक, भद्रा एवं शुभाशुभ काल चक्र"
+        ])
 
-        # Render rows of 7
-        total_rows = (len(grid_slots) + 6) // 7
-        for r in range(total_rows):
-            row_cols = st.columns(7)
-            for c in range(7):
-                idx = r * 7 + c
-                with row_cols[c]:
-                    if idx < len(grid_slots) and grid_slots[idx] is not None:
-                        day_obj = grid_slots[idx]
-                        is_today = (day_obj["date"] == selected_date)
-                        cell_bdr = "#2563EB" if is_today else ('#374151' if is_dark else '#E2E8F0')
-                        cell_bg = "#EFF6FF" if is_today else ('#1F2937' if is_dark else '#FFFFFF')
+        # ---------------------------------------------------------
+        # SUB-TAB 1: मासिक विजुअल ग्रिड
+        # ---------------------------------------------------------
+        with sub_c1:
+            st.markdown("#### 🗓️ मासिक पञ्चाङ्ग ग्रिड (Monthly Visual Grid)")
+            weekdays_names = ["सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार", "रविवार"]
+            hdr_cols = st.columns(7)
+            for w_idx, w_name in enumerate(weekdays_names):
+                with hdr_cols[w_idx]:
+                    st.markdown(f"""
+                    <div style="background:{'#374151' if is_dark else '#F1F5F9'}; color:{'#F3F4F6' if is_dark else '#334155'};
+                                padding:8px; border-radius:6px; text-align:center; font-weight:700; font-size:12px; margin-bottom:8px;">
+                        {w_name}
+                    </div>
+                    """, unsafe_allow_html=True)
 
-                        # Badge colors
-                        fest_tag = ""
-                        if day_obj.get("is_ekadashi"):
-                            fest_tag = f'<span style="background:#FEF3C7; color:#B45309; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">{day_obj["festival"]}</span>'
-                        elif day_obj.get("is_purnima"):
-                            fest_tag = f'<span style="background:#EDE9FE; color:#6D28D9; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">🌕 पूर्णिमा</span>'
-                        elif day_obj.get("is_amavasya"):
-                            fest_tag = f'<span style="background:#FEE2E2; color:#991B1B; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">🌑 अमावस्या</span>'
-                        elif day_obj.get("festival"):
-                            fest_tag = f'<span style="background:#E0E7FF; color:#3730A3; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">{day_obj["festival"][:10]}</span>'
+            first_day_weekday = monthly_data[0]["weekday"] if monthly_data else 0
+            grid_slots = [None] * first_day_weekday + monthly_data
 
+            total_rows = (len(grid_slots) + 6) // 7
+            for r in range(total_rows):
+                row_cols = st.columns(7)
+                for c in range(7):
+                    idx = r * 7 + c
+                    with row_cols[c]:
+                        if idx < len(grid_slots) and grid_slots[idx] is not None:
+                            day_obj = grid_slots[idx]
+                            is_today = (day_obj["date"] == selected_date)
+                            cell_bdr = "#2563EB" if is_today else ('#374151' if is_dark else '#E2E8F0')
+                            cell_bg = "#EFF6FF" if is_today else ('#1F2937' if is_dark else '#FFFFFF')
+
+                            # Badge tags
+                            tags = []
+                            if day_obj.get("is_ekadashi"):
+                                tags.append(f'<span style="background:#FEF3C7; color:#B45309; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">{day_obj["festival"]}</span>')
+                            elif day_obj.get("is_purnima"):
+                                tags.append('<span style="background:#EDE9FE; color:#6D28D9; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">🌕 पूर्णिमा</span>')
+                            elif day_obj.get("is_amavasya"):
+                                tags.append('<span style="background:#FEE2E2; color:#991B1B; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">🌑 अमावस्या</span>')
+                            elif day_obj.get("is_sankranti"):
+                                tags.append(f'<span style="background:#FFEDD5; color:#C2410C; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">☀️ {day_obj["festival"]}</span>')
+                            elif day_obj.get("festival"):
+                                tags.append(f'<span style="background:#E0E7FF; color:#3730A3; padding:1px 4px; border-radius:4px; font-size:9.5px; font-weight:700;">{day_obj["festival"][:10]}</span>')
+
+                            if day_obj.get("special_yoga") and day_obj.get("special_yoga") != "—":
+                                tags.append(f'<span style="background:#DCFCE7; color:#15803D; padding:1px 4px; border-radius:4px; font-size:9px; font-weight:700;">✨ {day_obj["special_yoga"].split("/")[0].strip()}</span>')
+
+                            if day_obj.get("is_panchak"):
+                                tags.append('<span style="background:#F3E8FF; color:#7E22CE; padding:1px 3px; border-radius:3px; font-size:8.5px;">⚡पञ्चक</span>')
+
+                            tags_html = " ".join(tags)
+
+                            st.markdown(f"""
+                            <div style="background:{cell_bg}; border:1.5px solid {cell_bdr}; border-radius:8px;
+                                        padding:6px; min-height:102px; margin-bottom:8px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+                                <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                    <b style="font-size:14px; color:{'#3B82F6' if is_today else ('#FFFFFF' if is_dark else '#0F172A')};">{day_obj['day']}</b>
+                                    <span style="font-size:9.5px; color:#64748B;">{day_obj['paksha'][:1]} | {day_obj.get('moon_sign', '')[:2]}</span>
+                                </div>
+                                <div style="font-size:11px; font-weight:700; color:{'#93C5FD' if is_today else ('#D1D5DB' if is_dark else '#334155')}; margin:2px 0;">
+                                    {day_obj['tithi_name']}
+                                </div>
+                                <div style="font-size:10px; color:#94A3B8;">
+                                    {day_obj['nak_name']}
+                                </div>
+                                <div style="margin-top:3px; display:flex; flex-direction:column; gap:2px;">
+                                    {tags_html}
+                                </div>
+                            </div>
+                            """, unsafe_allow_html=True)
+                        else:
+                            st.markdown("""
+                            <div style="min-height:102px; margin-bottom:8px;"></div>
+                            """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------
+        # SUB-TAB 2: सम्पूर्ण मासिक तालिका (Master Table)
+        # ---------------------------------------------------------
+        with sub_c2:
+            st.markdown("#### 📋 सम्पूर्ण मासिक पञ्चाङ्ग तालिका (30-Day Master Table)")
+            table_rows = []
+            for d in monthly_data:
+                table_rows.append({
+                    "तारीख": f"{d['day']:02d}-{sel_cal_month_idx:02d}-{sel_cal_year}",
+                    "वार": d.get("weekday_full_hi", d.get("weekday_hi")),
+                    "मास व पक्ष": f"{d.get('masa_name', '')} {d.get('paksha', '')}",
+                    "तिथि": d.get("tithi_name"),
+                    "नक्षत्र": d.get("nak_name"),
+                    "चन्द्र राशि": d.get("moon_sign"),
+                    "सूर्य राशि": d.get("sun_sign"),
+                    "पर्व / त्यौहार": d.get("festival") or "—",
+                    "विशेष योग": d.get("special_yoga") or "—",
+                    "पञ्चक / भद्रा": ("⚡ पञ्चक" if d.get("is_panchak") else "") + (" 🛡️ भद्रा" if d.get("is_bhadra") else "") or "सामान्य"
+                })
+            st.table(table_rows)
+
+        # ---------------------------------------------------------
+        # SUB-TAB 3: प्रमुख व्रत, पर्व एवं त्यौहार संकलन
+        # ---------------------------------------------------------
+        with sub_c3:
+            st.markdown("#### 🚩 इस माह के प्रमुख व्रत, पर्व एवं महा-त्यौहार (Festival Agenda)")
+            fest_days = [d for d in monthly_data if d.get("festival") or d.get("is_ekadashi") or d.get("is_purnima") or d.get("is_amavasya") or d.get("is_pradosh")]
+            if fest_days:
+                cols_f = st.columns(2)
+                for f_idx, fd in enumerate(fest_days):
+                    with cols_f[f_idx % 2]:
+                        badge_color = "#B45309" if fd.get("is_ekadashi") else ("#6D28D9" if fd.get("is_purnima") else ("#991B1B" if fd.get("is_amavasya") else "#2563EB"))
+                        f_title = fd.get("festival") or (
+                            "एकादशी व्रत" if fd.get("is_ekadashi") else (
+                                "पूर्णिमा व्रत" if fd.get("is_purnima") else (
+                                    "अमावस्या" if fd.get("is_amavasya") else (
+                                        "प्रदोष व्रत" if fd.get("is_pradosh") else "पावन पर्व"
+                                    )
+                                )
+                            )
+                        )
                         st.markdown(f"""
-                        <div style="background:{cell_bg}; border:1.5px solid {cell_bdr}; border-radius:8px;
-                                    padding:6px; min-height:88px; margin-bottom:8px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-                            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                <b style="font-size:14px; color:{'#3B82F6' if is_today else ('#FFFFFF' if is_dark else '#0F172A')};">{day_obj['day']}</b>
-                                <span style="font-size:10px; color:#64748B;">{day_obj['paksha'][:1]}</span>
+                        <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
+                                    border-left:4px solid {badge_color}; border-radius:8px; padding:12px 14px; margin-bottom:10px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <b style="color:{badge_color}; font-size:15px;">🚩 {f_title}</b>
+                                <span style="background:{badge_color}20; color:{badge_color}; padding:2px 8px; border-radius:10px; font-weight:700; font-size:11px;">
+                                    {fd['day']} {months_hi[sel_cal_month_idx-1].split('.')[1].split('(')[0].strip()}
+                                </span>
                             </div>
-                            <div style="font-size:11px; font-weight:700; color:{'#93C5FD' if is_today else ('#D1D5DB' if is_dark else '#334155')}; margin:2px 0;">
-                                {day_obj['tithi_name']}
-                            </div>
-                            <div style="font-size:10px; color:#94A3B8;">
-                                {day_obj['nak_name']}
-                            </div>
-                            <div style="margin-top:3px;">
-                                {fest_tag}
+                            <div style="color:{'#D1D5DB' if is_dark else '#475569'}; font-size:12.5px; margin-top:4px;">
+                                • <b>वार:</b> {fd['weekday_full_hi']} | <b>तिथि:</b> {fd['tithi_name']} ({fd['paksha']})<br/>
+                                • <b>नक्षत्र:</b> {fd['nak_name']} | <b>चन्द्र राशि:</b> {fd['moon_sign']}
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
-                    else:
-                        st.markdown("""
-                        <div style="min-height:88px; margin-bottom:8px;"></div>
-                        """, unsafe_allow_html=True)
+            else:
+                st.info("इस माह में कोई विशिष्ट प्रमुख महापर्व नहीं है।")
+
+        # ---------------------------------------------------------
+        # SUB-TAB 4: मासिक ग्रह गोचर व संक्रान्ति
+        # ---------------------------------------------------------
+        with sub_c4:
+            st.markdown("#### 🪐 इस माह के प्रमुख ग्रह गोचर व संक्रान्ति (Planetary Transits)")
+            if monthly_transits:
+                for tr in monthly_transits:
+                    t_col = "#C2410C" if tr["planet"] == "Sun" else "#4338CA"
+                    st.markdown(f"""
+                    <div style="background:{'#1F2937' if is_dark else '#FFF7ED' if tr['planet'] == 'Sun' else '#EEF2FF'};
+                                border:1.5px solid {t_col}; border-radius:10px; padding:14px 18px; margin-bottom:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <b style="color:{t_col}; font-size:16px;">{tr['badge']}: {tr['title']}</b>
+                            <span style="background:{t_col}20; color:{t_col}; padding:3px 10px; border-radius:12px; font-weight:700; font-size:12px;">
+                                दिनांक: {tr['day']} {months_hi[sel_cal_month_idx-1].split('.')[1].split('(')[0].strip()} {sel_cal_year}
+                            </span>
+                        </div>
+                        <div style="color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13px; margin-top:6px;">
+                            {tr['description']}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+            else:
+                st.info(f"{months_hi[sel_cal_month_idx-1].split('.')[1].split('(')[0].strip()} {sel_cal_year} में मुख्य ग्रहों का कोई बड़ा राशि परिवर्तन निर्धारित नहीं है।")
+
+        # ---------------------------------------------------------
+        # SUB-TAB 5: पञ्चक, भद्रा एवं शुभाशुभ काल
+        # ---------------------------------------------------------
+        with sub_c5:
+            st.markdown("#### ⚡ मासिक पञ्चक, भद्रा एवं शुभ योग काल चक्र (Inauspicious & Super Yoga Dates)")
+            col_u1, col_u2 = st.columns(2)
+
+            with col_u1:
+                panchak_days = [d["day"] for d in monthly_data if d.get("is_panchak")]
+                bhadra_days = [d["day"] for d in monthly_data if d.get("is_bhadra")]
+                st.markdown(f"""
+                <div style="background:{'#1F2937' if is_dark else '#FEF2F2'}; border:1px solid #FECACA; border-radius:10px; padding:16px;">
+                    <b style="color:#991B1B; font-size:15px;">⚡ पञ्चक एवं भद्रा दिवस (सावधानी काल):</b>
+                    <div style="font-size:13px; color:{'#D1D5DB' if is_dark else '#334155'}; margin-top:6px; line-height:1.7;">
+                        • <b>पञ्चक तिथियां (चन्द्रमा कुम्भ/मीन):</b> {', '.join(str(x) for x in panchak_days) if panchak_days else 'इस माह पञ्चक नहीं'}<br/>
+                        <small style="color:#DC2626;">(पञ्चक में दक्षिण दिशा यात्रा, तृण/काष्ठ संग्रह व छत डालना वर्जित)</small><br/>
+                        • <b>भद्रा तिथियां (विष्टि करण):</b> {', '.join(str(x) for x in bhadra_days) if bhadra_days else 'इस माह भद्रा नहीं'}<br/>
+                        <small style="color:#DC2626;">(भद्रा काल में मांगलिक उत्सव त्याज्य)</small>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with col_u2:
+                shubh_yoga_days = [f"{d['day']} तारीख ({d.get('special_yoga')})" for d in monthly_data if d.get("special_yoga") and d.get("special_yoga") != "—"]
+                st.markdown(f"""
+                <div style="background:{'#1F2937' if is_dark else '#F0FDF4'}; border:1px solid #BBF7D0; border-radius:10px; padding:16px;">
+                    <b style="color:#166534; font-size:15px;">✨ सर्वार्थ सिद्धि व अमृत सिद्धि योग (महा-शुभ काल):</b>
+                    <div style="font-size:13px; color:{'#D1D5DB' if is_dark else '#334155'}; margin-top:6px; line-height:1.7;">
+                        • <b>सर्वश्रेष्ठ कार्य-सिद्धि दिवस:</b><br/>
+                        {'<br/>• '.join(shubh_yoga_days) if shubh_yoga_days else 'इस माह कोई विशेष संयोग नहीं'}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+        # ---------------------------------------------------------
+        # Quick Day Inspector (त्वरित दिन सूक्ष्म पञ्चाङ्ग)
+        # ---------------------------------------------------------
+        st.markdown("---")
+        st.markdown("#### 🔍 किसी भी तारीख का त्वरित सूक्ष्म पञ्चाङ्ग परीक्षण (Day Inspector)")
+        ins_col1, ins_col2 = st.columns([1.5, 3.5])
+        with ins_col1:
+            default_insp_day = min(selected_date.day, len(monthly_data)) if (selected_date.year == sel_cal_year and selected_date.month == sel_cal_month_idx) else 1
+            insp_day = st.selectbox(
+                "तारीख चुनें (Select Day):",
+                range(1, len(monthly_data) + 1),
+                index=default_insp_day - 1,
+                format_func=lambda x: f"{x:02d} {months_hi[sel_cal_month_idx-1].split('.')[1].split('(')[0].strip()} ({monthly_data[x-1]['weekday_full_hi']})",
+                key="panchang_inspect_day_choice"
+            )
+        with ins_col2:
+            target_obj = monthly_data[insp_day - 1]
+            st.markdown(f"""
+            <div style="background:{'#1F2937' if is_dark else '#F8FAFC'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
+                        border-left:4px solid #2563EB; border-radius:8px; padding:12px 16px;">
+                <b style="color:#1D4ED8; font-size:15px;">📌 {target_obj['day']} {months_hi[sel_cal_month_idx-1].split('.')[1].split('(')[0].strip()} {sel_cal_year} ({target_obj['weekday_full_hi']})</b>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:13px; color:{'#D1D5DB' if is_dark else '#334155'}; margin-top:6px;">
+                    <div>• <b>तिथि:</b> {target_obj['tithi_name']} ({target_obj['paksha']})</div>
+                    <div>• <b>नक्षत्र:</b> {target_obj['nak_name']}</div>
+                    <div>• <b>मास:</b> {target_obj.get('masa_name', '—')}</div>
+                    <div>• <b>चन्द्र राशि:</b> {target_obj.get('moon_sign', '—')}</div>
+                    <div>• <b>विशेष योग:</b> {target_obj.get('special_yoga', '—')}</div>
+                    <div>• <b>पर्व/त्यौहार:</b> {target_obj.get('festival') or 'सामान्य नित्य कर्म'}</div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
     # =============================================================
     # TAB 12: AI पञ्चाङ्ग सारथी व दैनिक कर्म शुद्धि

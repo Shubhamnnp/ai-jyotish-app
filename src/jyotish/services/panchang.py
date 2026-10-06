@@ -2192,16 +2192,66 @@ class VedicPanchangService:
         }
 
     @classmethod
+    def get_monthly_transits(
+        cls,
+        year: int,
+        month: int
+    ) -> List[Dict[str, Any]]:
+        """
+        Detects all major planetary transits (Sankranti / Ingress) occurring during the specified month.
+        """
+        import calendar
+        provider = cls.get_provider()
+        num_days = calendar.monthrange(year, month)[1]
+
+        RASHI_NAMES_HI = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"]
+        PLANET_NAMES_HI = {
+            "Sun": "सूर्य", "Mercury": "बुध", "Venus": "शुक्र", "Mars": "मंगल",
+            "Jupiter": "गुरु (बृहस्पति)", "Saturn": "शनि"
+        }
+
+        transits = []
+        prev_signs = {}
+        planets = ["Sun", "Mercury", "Venus", "Mars", "Jupiter", "Saturn"]
+
+        for d in range(1, num_days + 1):
+            dt_utc = datetime(year, month, d, 6, 0)
+            pos, _ = provider.get_planet_positions(dt_utc)
+            for p in planets:
+                s_idx = int(pos[p]["longitude"] // 30.0) + 1
+                if p in prev_signs and prev_signs[p] != s_idx:
+                    p_name = PLANET_NAMES_HI.get(p, p)
+                    from_r = RASHI_NAMES_HI[prev_signs[p] - 1]
+                    to_r = RASHI_NAMES_HI[s_idx - 1]
+                    title = f"{p_name} संक्रान्ति ({to_r} राशि)" if p == "Sun" else f"{p_name} गोचर ({to_r} राशि)"
+                    desc = f"{p_name} देव {from_r} राशि से निकलकर {to_r} राशि में प्रवेश करेंगे।"
+                    transits.append({
+                        "day": d,
+                        "date": date(year, month, d),
+                        "planet": p,
+                        "planet_hi": p_name,
+                        "title": title,
+                        "from_rashi": from_r,
+                        "to_rashi": to_r,
+                        "description": desc,
+                        "badge": "☀️ संक्रान्ति" if p == "Sun" else "🪐 ग्रह गोचर"
+                    })
+                prev_signs[p] = s_idx
+
+        return transits
+
+    @classmethod
     def get_monthly_panchang_summary(
         cls,
         year: int,
         month: int,
         latitude: float = 28.6139,
         longitude: float = 77.2090,
-        tz_offset_hours: float = 5.5
+        tz_offset_hours: float = 5.5,
+        calendar_type: str = "purnimanta"
     ) -> List[Dict[str, Any]]:
         """
-        Generates rapid 30/31-day Monthly Panchang Grid dataset for interactive calendar view.
+        Generates comprehensive 30/31-day Monthly Panchang dataset supporting Purnimanta, Amanta, and Solar calendars.
         """
         import calendar
         num_days = calendar.monthrange(year, month)[1]
@@ -2217,6 +2267,8 @@ class VedicPanchangService:
             "मघा", "पूर्वाफाल्गुनी", "उत्तराफाल्गुनी", "हस्त", "चित्रा", "स्वाती", "विशाखा", "अनुराधा", "ज्येष्ठा",
             "मूल", "पूर्वाषाढ़ा", "उत्तराषाढ़ा", "श्रवण", "धनिष्ठा", "शतभिषा", "पूर्वाभाद्रपद", "उत्तराभाद्रपद", "रेवती"
         ]
+        RASHI_NAMES_HI = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"]
+        LUNAR_MASA_NAMES = ["चैत्र", "वैशाख", "ज्येष्ठ", "आषाढ़", "श्रावण", "भाद्रपद", "आश्विन", "कार्तिक", "मार्गशीर्ष", "पौष", "माघ", "फाल्गुन"]
 
         EKADASHI_M = {
             (1, True): "कामदा", (1, False): "वरूथिनी",
@@ -2233,6 +2285,20 @@ class VedicPanchangService:
             (12, True): "आमलकी", (12, False): "पापमोचिनी",
         }
 
+        # Sarvartha Siddhi rules
+        SS_RULES = {
+            6: [13, 8, 1, 12, 21, 26, 19],
+            0: [4, 5, 7, 8, 22],
+            1: [1, 3, 9, 26],
+            2: [4, 3, 5, 13, 17],
+            3: [1, 7, 8, 17, 27],
+            4: [1, 2, 4, 7, 12, 14, 17, 27],
+            5: [4, 15, 21]
+        }
+        AMRITA_RULES = {6: 13, 0: 5, 1: 1, 2: 17, 3: 8, 4: 27, 5: 4}
+
+        prev_sun_sign = None
+
         for d in range(1, num_days + 1):
             dt = date(year, month, d)
             dt_utc = datetime(year, month, d, 0, 30)
@@ -2243,12 +2309,33 @@ class VedicPanchangService:
             t_idx = int(diff // 12.0) + 1
             nak_idx = int(moon_lon // (360.0 / 27.0)) + 1
             sun_sign = int(sun_lon // 30.0) + 1
+            moon_sign = int(moon_lon // 30.0) + 1
             is_shukla = t_idx <= 15
             paksha = "शुक्ल" if is_shukla else "कृष्ण"
             is_pitru = (sun_sign == 6 and (16 <= t_idx <= 30 or t_idx == 15))
 
+            # Masa Name according to selected calendar system
+            base_masa_idx = (sun_sign % 12) + 1
+            cal_type_lower = calendar_type.lower()
+            if "purnimanta" in cal_type_lower or "पूर्णिमान्त" in calendar_type:
+                masa_idx = (base_masa_idx % 12) + 1 if t_idx > 15 else base_masa_idx
+                masa_name = LUNAR_MASA_NAMES[masa_idx - 1]
+            elif "amanta" in cal_type_lower or "अमान्त" in calendar_type:
+                masa_name = LUNAR_MASA_NAMES[base_masa_idx - 1]
+            elif "solar" in cal_type_lower or "सौर" in calendar_type:
+                masa_name = f"{RASHI_NAMES_HI[sun_sign - 1]} मास"
+            else:
+                masa_name = LUNAR_MASA_NAMES[base_masa_idx - 1]
+
+            # Sankranti Check
+            is_sankranti = (prev_sun_sign is not None and prev_sun_sign != sun_sign)
+            prev_sun_sign = sun_sign
+
+            # Festivals
             fest_name = ""
-            if t_idx in [11, 26]:
+            if is_sankranti:
+                fest_name = f"{RASHI_NAMES_HI[sun_sign - 1]} संक्रान्ति"
+            elif t_idx in [11, 26]:
                 fest_name = f"{EKADASHI_M.get((sun_sign, is_shukla), 'एकादशी')} एकादशी"
             elif t_idx in [13, 28]:
                 fest_name = "प्रदोष व्रत"
@@ -2260,26 +2347,54 @@ class VedicPanchangService:
                 fest_name = "मासिक शिवरात्रि"
             elif t_idx == 19:
                 fest_name = "संकष्टी चतुर्थी"
-            elif t_idx == 4 and sun_sign == 5:
-                fest_name = "गणेश चतुर्थी"
+            elif t_idx == 4:
+                fest_name = "गणेश चतुर्थी" if sun_sign == 5 else "विनायक चतुर्थी"
             elif is_pitru:
                 fest_name = "श्राद्ध पक्ष"
+
+            # Special Yogas
+            w_idx = dt.weekday()
+            is_ss = nak_idx in SS_RULES.get(w_idx, [])
+            is_as = (nak_idx == AMRITA_RULES.get(w_idx))
+            yoga_tags = []
+            if is_as:
+                yoga_tags.append("अमृत सिद्धि योग" if w_idx != 3 else "गुरु-पुष्य अमृत योग")
+            elif is_ss:
+                yoga_tags.append("सर्वार्थ सिद्धि योग")
+            if nak_idx == 8 and w_idx == 6:
+                yoga_tags.append("रवि-पुष्य योग")
+            elif nak_idx == 8 and w_idx not in [3, 6]:
+                yoga_tags.append("पुष्य नक्षत्र")
+
+            # Panchak & Bhadra
+            is_panchak = (moon_sign in [11, 12] or (moon_sign == 10 and moon_lon >= 293.3333))
+            is_bhadra = t_idx in [4, 8, 11, 15, 18, 22, 25, 29]
 
             days.append({
                 "day": d,
                 "date": dt,
                 "weekday": dt.weekday(),
                 "weekday_hi": ["सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि", "रवि"][dt.weekday()],
+                "weekday_full_hi": ["सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार", "रविवार"][dt.weekday()],
                 "tithi_idx": t_idx,
                 "tithi_name": TITHI_SIMPLE[t_idx - 1],
                 "paksha": paksha,
+                "masa_name": masa_name,
                 "nak_idx": nak_idx,
                 "nak_name": NAK_SIMPLE[nak_idx - 1],
+                "moon_sign": RASHI_NAMES_HI[moon_sign - 1],
+                "sun_sign": RASHI_NAMES_HI[sun_sign - 1],
                 "festival": fest_name,
+                "special_yoga": " / ".join(yoga_tags) if yoga_tags else "—",
                 "is_pitru": is_pitru,
                 "is_ekadashi": t_idx in [11, 26],
                 "is_purnima": t_idx == 15,
-                "is_amavasya": t_idx == 30
+                "is_amavasya": t_idx == 30,
+                "is_pradosh": t_idx in [13, 28],
+                "is_chaturthi": t_idx in [4, 19],
+                "is_bhadra": is_bhadra,
+                "is_panchak": is_panchak,
+                "is_sankranti": is_sankranti
             })
 
         return days
