@@ -6861,11 +6861,11 @@ if selected_idx == 0:
         <div style="background:{_dc_bg};border:1px solid {_dc_bdr};border-radius:8px;padding:8px 10px;margin-bottom:8px;">
           <div style="color:{_dc_hdr};font-weight:900;font-size:12px;margin-bottom:6px;">🌙 PANCHANG CONSOLE</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;">
-            <div style="color:{_dc_txt};">Tithi: <span style="color:{_dc_val};font-weight:800;">{p.tithi_name}</span></div>
-            <div style="color:{_dc_txt};">Vara: <span style="color:{_dc_val};font-weight:800;">{p.vara_name}</span></div>
-            <div style="color:{_dc_txt};">Nakshatra: <span style="color:{_dc_val};font-weight:800;">{p.nakshatra_name}</span></div>
-            <div style="color:{_dc_txt};">Yoga: <span style="color:{_dc_val};font-weight:800;">{p.yoga_name}</span></div>
-            <div style="color:{_dc_txt};">Karana: <span style="color:{_dc_val};font-weight:800;">{p.karana_name}</span></div>
+            <div style="color:{_dc_txt};">Tithi: <span style="color:{_dc_val};font-weight:800;">{chart.panchang.tithi_name}</span></div>
+            <div style="color:{_dc_txt};">Vara: <span style="color:{_dc_val};font-weight:800;">{chart.panchang.vara_name}</span></div>
+            <div style="color:{_dc_txt};">Nakshatra: <span style="color:{_dc_val};font-weight:800;">{chart.panchang.nakshatra_name}</span></div>
+            <div style="color:{_dc_txt};">Yoga: <span style="color:{_dc_val};font-weight:800;">{chart.panchang.yoga_name}</span></div>
+            <div style="color:{_dc_txt};">Karana: <span style="color:{_dc_val};font-weight:800;">{chart.panchang.karana_name}</span></div>
             <div style="color:{_dc_txt};">Atmakaraka: <span style="color:{_pts_mid};font-weight:900;">{chart.atmakaraka}</span></div>
           </div>
         </div>""", unsafe_allow_html=True)
@@ -6882,9 +6882,9 @@ if selected_idx == 0:
                     p_col1.markdown(f"- **वर्ग लग्न:** {v_lagna_sign} ({v_lagna_id})")
                     p_col1.markdown(f"- **जन्म लग्न (D1):** {chart.lagna_sign_name} ({chart.lagna_sign_id})")
                     p_col1.markdown(f"- **आत्मकारक (AK):** {chart.atmakaraka}")
-                    p_col2.markdown(f"- **तिथि:** {p.tithi_name}")
-                    p_col2.markdown(f"- **नक्षत्र:** {p.nakshatra_name}")
-                    p_col2.markdown(f"- **वार:** {p.vara_name}")
+                    p_col2.markdown(f"- **तिथि:** {chart.panchang.tithi_name}")
+                    p_col2.markdown(f"- **नक्षत्र:** {chart.panchang.nakshatra_name}")
+                    p_col2.markdown(f"- **वार:** {chart.panchang.vara_name}")
 
                     # Dynamic Planetary Dignity & Strength Chart with Toggle Switch (Meters vs Columns)
                     c_gh1, c_gh2 = st.columns([1.5, 1.2])
@@ -7156,8 +7156,8 @@ if selected_idx == 0:
             # Parashari Drishtis helper
             def _get_bhava_drishtis(target_h):
                 asp_list = []
-                for p_name, p in chart.planets.items():
-                    src_h = p.house_from_lagna
+                for p_name, _p_item in chart.planets.items():
+                    src_h = _p_item.house_from_lagna
                     dist = ((target_h - src_h + 12) % 12) + 1
                     is_asp = False
                     asp_lbl = ""
@@ -7175,13 +7175,13 @@ if selected_idx == 0:
                         asp_lbl = f"{dist}री दृष्टि"
                     
                     if is_asp:
-                        is_benefic = p_name in ("Jupiter", "Venus") or (p_name == "Mercury" and not p.is_combust) or (p_name == "Moon" and p.sign_degree > 10)
+                        is_benefic = p_name in ("Jupiter", "Venus") or (p_name == "Mercury" and not _p_item.is_combust) or (p_name == "Moon" and _p_item.sign_degree > 10)
                         asp_list.append((p_name, asp_lbl, is_benefic))
                 return asp_list
 
             # Summary metrics counts
             _total_shifted = sum(1 for it in _bc_items if it.get("rashi_house") != it.get("chalit_house"))
-            _occupied_houses = len(set(p.house_from_lagna for p in chart.planets.values()))
+            _occupied_houses = len(set(_pl.house_from_lagna for _pl in chart.planets.values()))
             _vacant_houses = 12 - _occupied_houses
 
             # ─── Top Bhava Vital Summary Cards ───
@@ -7226,14 +7226,14 @@ if selected_idx == 0:
                 cusp_html = f"<b style='font-family:monospace;color:{_t_th if is_night_mode or is_astrallis_mode else '#0070C0'};font-size:12px;'>{c_deg:.2f}°</b><br><span style='font-size:11px;color:{_t_txt};'>विस्तार: {arambha_deg:.1f}°–{anta_deg:.1f}°<br>🌟 <b>{nak['name']}</b> ({nak['lord']}) पद-{pada}</span>"
 
                 # Occupying planets in D1
-                occ = [p for p in chart.planets.values() if p.house_from_lagna == b]
+                occ = [_pl for _pl in chart.planets.values() if _pl.house_from_lagna == b]
                 if occ:
                     occ_parts = []
-                    for p in occ:
-                        pc = _GRAHA_COLS.get(p.name, "#1E40AF")
-                        ret_txt = " <span style='color:#DC2626;font-weight:800;'>(R)</span>" if p.is_retrograde else ""
-                        comb_txt = " <span style='color:#EA580C;font-weight:800;'>(अस्त)</span>" if p.is_combust else ""
-                        occ_parts.append(f"<div style='margin-bottom:3px;font-size:11.5px;'><b style='color:{pc};'>{_GRAHA_SYMS.get(p.name, p.name)}</b> {p.sign_degree:.1f}°{ret_txt}{comb_txt}<br><span style='font-size:10.5px;color:#64748B;'>{p.nakshatra_name}-{p.nakshatra_pada}</span></div>")
+                    for _occ_p in occ:
+                        pc = _GRAHA_COLS.get(_occ_p.name, "#1E40AF")
+                        ret_txt = " <span style='color:#DC2626;font-weight:800;'>(R)</span>" if _occ_p.is_retrograde else ""
+                        comb_txt = " <span style='color:#EA580C;font-weight:800;'>(अस्त)</span>" if _occ_p.is_combust else ""
+                        occ_parts.append(f"<div style='margin-bottom:3px;font-size:11.5px;'><b style='color:{pc};'>{_GRAHA_SYMS.get(_occ_p.name, _occ_p.name)}</b> {_occ_p.sign_degree:.1f}°{ret_txt}{comb_txt}<br><span style='font-size:10.5px;color:#64748B;'>{_occ_p.nakshatra_name}-{_occ_p.nakshatra_pada}</span></div>")
                     occ_html = "".join(occ_parts)
                 else:
                     occ_html = "<span style='color:#94A3B8;font-size:11.5px;font-style:italic;'>— रिक्त भाव —</span>"
@@ -7331,6 +7331,7 @@ if selected_idx == 0:
                 """)
         except Exception as _ebh:
             st.error(f"द्वादश भाव तालिका निर्माण त्रुटि: {_ebh}")
+        p = chart.panchang
 
 
 
@@ -7617,8 +7618,8 @@ if selected_idx == 0:
                     <b>🌕 चन्द्रमा का स्पष्ट परिचय:</b><br/>
                     • <b>राशि:</b> {_moon.sign_name} ({_moon.sign_degree:.2f}°)<br/>
                     • <b>नक्षत्र:</b> {_moon.nakshatra_name} (पाद {_moon.nakshatra_pada}) — स्वामी: {_moon.nakshatra_lord}<br/>
-                    • <b>तिथि:</b> {p.tithi_name} ({p.tithi_type})<br/>
-                    • <b>चन्द्र बल:</b> {'शुक्ल पक्ष बलिष्ठ' if 'Shukla' in p.tithi_type else 'कृष्ण पक्ष सौम्य'}
+                    • <b>तिथि:</b> {chart.panchang.tithi_name} ({chart.panchang.tithi_type})<br/>
+                    • <b>चन्द्र बल:</b> {'शुक्ल पक्ष बलिष्ठ' if 'Shukla' in (chart.panchang.tithi_type or '') else 'कृष्ण पक्ष सौम्य'}
                 </div>
                 """, unsafe_allow_html=True)
 
