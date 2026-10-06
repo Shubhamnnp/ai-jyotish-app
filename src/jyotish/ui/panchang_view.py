@@ -80,7 +80,7 @@ TODAY'S ACCURATE CELESTIAL COORDINATES:
 - Pitru Paksha Active: {pitru.get('is_active', False)} (Shradh: {pitru.get('shradh_name', 'None')})
 - Bhadra Active: {bhadra.get('is_present', False)} (Fatal on Earth: {bhadra.get('is_fatal_on_earth', False)})
 - Rahu Kaal: {muh.get('ashubh_windows', [{}])[0].get('time', 'N/A') if muh.get('ashubh_windows') else 'N/A'}
-- Abhijit Muhurta: {next((x['time'] for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('name', '')), 'आज अनुपस्थित')}
+- Abhijit Muhurta: {next((x.get('time', 'N/A') for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('title', '') or 'अभिजित' in x.get('name', '')), 'आज अनुपस्थित')}
 - Day Verdict: {m.get('day_verdict')}
 
 Respond directly in respectful, clear Hindi (4-6 bullet points) with exact Shastriya reasoning, whether the activity is recommended or prohibited today, and what specific auspicious window or remedy to use."""
@@ -98,7 +98,7 @@ Respond directly in respectful, clear Hindi (4-6 bullet points) with exact Shast
     q_low = query.lower()
     is_pitru = pitru.get("is_active", False)
     is_bhadra = bhadra.get("is_fatal_on_earth", False)
-    abhijit = next((x['time'] for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('name', '')), 'आज अभिजित मुहूर्त नहीं है')
+    abhijit = next((x.get('time', 'N/A') for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('title', '') or 'अभिजित' in x.get('name', '')), 'आज अभिजित मुहूर्त नहीं है')
 
     if any(k in q_low for k in ["वाहन", "गाड़ी", "car", "vehicle", "bike", "vahan"]):
         if is_pitru:
@@ -402,10 +402,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 <div>• <b>करण:</b> {pillars['karana']['current']['name']} पर्यन्त {pillars['karana']['current']['end_time_str']}</div>
                 <div>• <b>सूर्योदय / सूर्यास्त:</b> {sr_str} / {ss_str}</div>
                 <div>• <b>चन्द्रोदय / चन्द्रास्त:</b> {mr_str} / {ms_str}</div>
-                <div>• <b>राहुकाल (त्याज्य):</b> <span style="color:#DC2626; font-weight:700;">{muh['ashubh_windows'][0]['time'] if muh['ashubh_windows'] else '—'}</span></div>
-                <div>• <b>अभिजित मुहूर्त (शुभ):</b> <span style="color:#059669; font-weight:700;">{next((x['time'] for x in muh['shubh_windows'] if 'अभिजित' in x['name']), '—')}</span></div>
-                <div>• <b>दिशा शूल:</b> {nivas['disha_shoola']['direction']} (उपाय: {nivas['disha_shoola']['parihar']})</div>
-                <div>• <b>चन्द्र राशि:</b> {transit[1]['rashi'] if len(transit) > 1 else 'कर्क'}</div>
+                <div>• <b>राहुकाल (त्याज्य):</b> <span style="color:#DC2626; font-weight:700;">{muh.get('ashubh_windows', [{}])[0].get('time', '—') if muh.get('ashubh_windows') else '—'}</span></div>
+                <div>• <b>अभिजित मुहूर्त (शुभ):</b> <span style="color:#059669; font-weight:700;">{next((x.get('time', '—') for x in muh.get('shubh_windows', []) if 'अभिजित' in x.get('title', '') or 'अभिजित' in x.get('name', '')), '—')}</span></div>
+                <div>• <b>दिशा शूल:</b> {nivas.get('disha_shoola', {}).get('direction', '—')} (उपाय: {nivas.get('disha_shoola', {}).get('parihar', '—')})</div>
+                <div>• <b>चन्द्र राशि:</b> {transit[1].get('rashi', 'कर्क') if len(transit) > 1 else 'कर्क'}</div>
             </div>
             {f'<div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:6px; padding:8px 12px; margin-top:12px; font-size:13px; color:#991B1B;"><b>🪔 विशेष:</b> {prim_fest}</div>' if prim_fest else ''}
             <div style="text-align:center; border-top:1px solid #E2E8F0; padding-top:8px; margin-top:12px; font-size:11.5px; color:#64748B;">
@@ -469,10 +469,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     </div>
                 </div>
                 <div style="font-size:12.5px; color:{'#D1D5DB' if is_dark else '#475569'}; line-height:1.6; margin-top:10px;">
-                    • <b>अधिष्ठाता देवता:</b> {t['deity']}<br/>
-                    • <b>तिथि संज्ञा:</b> {t['category']} ({'रिक्ता तिथि - शुभ कार्य वर्जित' if 'रिक्ता' in t['category'] else 'शुभ फलप्रद'})<br/>
-                    • <b>चन्द्र-सूर्य अन्तर:</b> {t['diff_deg']}°<br/>
-                    • <b>आगामी तिथि:</b> {t['next_name']} ({t['next_end_str']})
+                    • <b>अधिष्ठाता देवता:</b> {t.get('deity', '—')}<br/>
+                    • <b>तिथि संज्ञा:</b> {t.get('category', '—')} ({'रिक्ता तिथि - शुभ कार्य वर्जित' if 'रिक्ता' in t.get('category', '') else 'शुभ फलप्रद'})<br/>
+                    • <b>चन्द्र-सूर्य अन्तर:</b> {t.get('degree', 0.0):.2f}°<br/>
+                    • <b>आगामी तिथि:</b> {t.get('next_name', '—')} ({t.get('next_paksha', '')})
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -1221,8 +1221,8 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     st.markdown(f"""
                     <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1px solid {t_item['color']};
                                 border-radius:6px; padding:8px; margin-bottom:6px; text-align:center;">
-                        <b style="font-size:12px; color:{'#FFFFFF' if is_dark else '#0F172A'};">#{t_item['nak_idx']} {t_item['nakshatra']}</b><br/>
-                        <span style="font-size:10.5px; color:{t_item['color']}; font-weight:700;">{t_item['tara_name']}</span>
+                        <b style="font-size:12px; color:{'#FFFFFF' if is_dark else '#0F172A'};">#{t_item.get('nak_idx', j + 1)} {t_item.get('nakshatra', '')}</b><br/>
+                        <span style="font-size:10.5px; color:{t_item.get('color', '#3B82F6')}; font-weight:700;">{t_item.get('tara_name', '')}</span>
                     </div>
                     """, unsafe_allow_html=True)
 

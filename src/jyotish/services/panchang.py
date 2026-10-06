@@ -500,11 +500,13 @@ class VedicPanchangService:
                 "category": t_meta[3],
                 "deity": t_meta[2],
                 "degree": round(diff_sr, 2),
+                "diff_deg": round(diff_sr, 2),
                 "degree_in_tithi": round(tithi_deg_in, 2),
                 "progress_pct": round(tithi_pct, 1),
                 "end_time": tithi_end_local,
                 "end_time_str": _format_end(tithi_end_local),
                 "next_name": next_t_meta[0],
+                "next_end_str": "आगामी",
                 "next_paksha": "शुक्ल" if next_tithi_idx <= 15 else "कृष्ण"
             },
             "nakshatra": {
@@ -1096,6 +1098,7 @@ class VedicPanchangService:
             "shubh_windows": [
                 {
                     "title": "🌟 अभिजित मुहूर्त (Abhijit Muhurta)",
+                    "name": "🌟 अभिजित मुहूर्त (Abhijit Muhurta)",
                     "time": f"{abhijit_st.strftime('%I:%M %p')} - {abhijit_en.strftime('%I:%M %p')}",
                     "status": "सर्वोत्तम शुभ (सर्व दोष नाशक)" if is_abhijit_allowed else "बुधवार होने से त्याज्य",
                     "badge": "🟢 अति शुभ" if is_abhijit_allowed else "⚠️ त्याज्य",
@@ -1103,6 +1106,7 @@ class VedicPanchangService:
                 },
                 {
                     "title": "🕉️ ब्रह्म मुहूर्त (Brahma Muhurta)",
+                    "name": "🕉️ ब्रह्म मुहूर्त (Brahma Muhurta)",
                     "time": f"{brahma_st.strftime('%I:%M %p')} - {brahma_en.strftime('%I:%M %p')}",
                     "status": "ईश्वर आराधना, योग, ध्यान व अध्ययन हेतु परम पावन",
                     "badge": "🟢 पावन काल",
@@ -1110,6 +1114,7 @@ class VedicPanchangService:
                 },
                 {
                     "title": "🏹 विजय मुहूर्त (Vijaya Muhurta)",
+                    "name": "🏹 विजय मुहूर्त (Vijaya Muhurta)",
                     "time": f"{vijaya_st.strftime('%I:%M %p')} - {vijaya_en.strftime('%I:%M %p')}",
                     "status": "मुकदमा, विवाद विजय, कार्य सफलता व नवीन आरम्भ",
                     "badge": "🟢 शुभ",
@@ -1117,6 +1122,7 @@ class VedicPanchangService:
                 },
                 {
                     "title": "🌅 गोधूलि मुहूर्त (Godhuli Muhurta)",
+                    "name": "🌅 गोधूलि मुहूर्त (Godhuli Muhurta)",
                     "time": f"{godhuli_st.strftime('%I:%M %p')} - {godhuli_en.strftime('%I:%M %p')}",
                     "status": "संध्या वन्दन, गृह प्रवेश व शांति कर्म",
                     "badge": "🟢 शुभ",
@@ -1124,6 +1130,7 @@ class VedicPanchangService:
                 },
                 {
                     "title": "🍯 अमृत काल (Amrita Kaalam)",
+                    "name": "🍯 अमृत काल (Amrita Kaalam)",
                     "time": f"{amrit_st.strftime('%I:%M %p')} - {amrit_en.strftime('%I:%M %p')}",
                     "status": "दीर्घकालिक कार्य, वाणिज्य एवं मांगलिक कर्म",
                     "badge": "🟢 परम शुभ",
@@ -1131,6 +1138,7 @@ class VedicPanchangService:
                 },
                 {
                     "title": "🌙 निशिता मुहूर्त (Nishita Kaal)",
+                    "name": "🌙 निशिता मुहूर्त (Nishita Kaal)",
                     "time": f"{nishita_st.strftime('%I:%M %p')} - {nishita_en.strftime('%I:%M %p')}",
                     "status": "मध्यरात्रि तंत्र साधना, शिव आराधना व मंत्र सिद्धि",
                     "badge": "🟣 तंत्र-साधना",
@@ -1140,6 +1148,7 @@ class VedicPanchangService:
             "ashubh_windows": [
                 {
                     "title": "🚨 राहुकाल (Rahu Kaal)",
+                    "name": "🚨 राहुकाल (Rahu Kaal)",
                     "time": f"{rahu_st.strftime('%I:%M %p')} - {rahu_en.strftime('%I:%M %p')}",
                     "status": "शुभ कार्य सर्वथा वर्जित; धनहानि व बाधा की आशंका",
                     "badge": "🔴 महा-अशुभ",
@@ -1147,6 +1156,7 @@ class VedicPanchangService:
                 },
                 {
                     "title": "⚠️ यमघण्ट काल (Yamaghanta)",
+                    "name": "⚠️ यमघण्ट काल (Yamaghanta)",
                     "time": f"{yama_st.strftime('%I:%M %p')} - {yama_en.strftime('%I:%M %p')}",
                     "status": "यात्रा व नवीन कार्य आरम्भ सर्वथा वर्जित",
                     "badge": "🔴 अशुभ",
@@ -1154,6 +1164,7 @@ class VedicPanchangService:
                 },
                 {
                     "title": "⏳ गुलिक काल (Gulika Kaal)",
+                    "name": "⏳ गुलिक काल (Gulika Kaal)",
                     "time": f"{gulika_st.strftime('%I:%M %p')} - {gulika_en.strftime('%I:%M %p')}",
                     "status": "शनि पुत्र गुलिक का प्रभाव; मांगलिक कार्य वर्जित, स्थिर कर्म सामान्य",
                     "badge": "🟡 मध्यम",
@@ -1161,6 +1172,7 @@ class VedicPanchangService:
                 },
                 {
                     "title": "🚫 दुर्मुहूर्त (Durmuhurta)",
+                    "name": "🚫 दुर्मुहूर्त (Durmuhurta)",
                     "time": ", ".join(durmuhurtas),
                     "status": "विवाद व असफलता कारक समय; नया कार्य न करें",
                     "badge": "🔴 त्याज्य",
@@ -1168,6 +1180,7 @@ class VedicPanchangService:
                 },
                 {
                     "title": "⚡ वर्ज्यम् (Varjyam / Tyajya)",
+                    "name": "⚡ वर्ज्यम् (Varjyam / Tyajya)",
                     "time": f"{varjyam_st.strftime('%I:%M %p')} - {varjyam_en.strftime('%I:%M %p')}",
                     "status": "नक्षत्र का विष भाग; समस्त शुभ कर्मों में वर्जित",
                     "badge": "🔴 विष काल",
@@ -1461,6 +1474,7 @@ class VedicPanchangService:
             diff = ((today_nak_idx - n_idx) % 9) + 1
             t_name, t_badge, t_color, t_desc = tara_definitions[diff]
             tarabalam_list.append({
+                "nak_idx": n_idx,
                 "nakshatra": n_name,
                 "tara_name": t_name,
                 "badge": t_badge,
