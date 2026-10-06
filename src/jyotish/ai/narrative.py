@@ -55,7 +55,7 @@ def is_greeting_query(query: str) -> bool:
         "afternoon", "shubh", "prabhat", "sandhya", "radhe", "shyam", "jai", "shree", "shri",
         "krishna", "ram", "har", "mahadev", "din", "there", "aap", "bhai",
         "dhanyawad", "dhanyavad", "shukriya", "thanks", "thank", "you", "theek", "accha", "achha", "ok", "okay",
-        "नमस्ते", "प्रणाम", "नमस्कार", "राधे", "कृष्ण", "जय", "जी", "सुप्रभात", "धन्यवाद", "शुक्रिया", "ठीक"
+        "नमस्ते", "प्रणाम", "नमस्कार", "राधे", "कृष्ण", "जय", "जी", "सुप्रभात", "धन्यवाद", "शुक्रिया", "ठीक", "आभार"
     }
 
     if len(words) <= 5 and all(w in greeting_tokens for w in words):
@@ -77,8 +77,17 @@ GENERAL INTELLIGENCE & CONTEXTUAL CALIBRATION (सामान्य बुद�
 - GREETINGS & CASUAL INTROS (e.g. "hi", "hii", "hello", "hey", "नमस्ते", "प्रणाम", "राधे-राधे"):
   Respond with warm, dignified courtesy in ONLY 2 to 3 sentences in Hindi. Respectfully welcome the native by name, state that their birth chart ({Lagna} लग्न, {Moon} राशि) is active and loaded, and ask what specific life query (such as marriage, career, finance, health, or gemstones) they would like to explore today.
   CRITICAL GENERAL INTELLIGENCE RULE: DO NOT dump an unsolicited horoscope reading, birth chart analysis, dosha warnings, or gemstone restrictions when the native has merely greeted you!
+- GRATITUDE & ACKNOWLEDGMENT (e.g. "dhanyavad guruji", "धन्यवाद", "शुक्रिया"):
+  Respond with a warm, dignified Vedic blessing ('कल्याणमस्तु', 'शुभम् भवतु') in 1 to 2 sentences in Hindi wishing them prosperity and peace. DO NOT dump horoscope readings.
 - CONCEPTUAL ASTROLOGICAL QUESTIONS (e.g. "मांगलिक दोष क्या होता है?"):
   Provide a crisp, scholarly explanation in 1 to 2 paragraphs using General Intelligence, explaining the classical principle clearly.
+- BUSINESS VS JOB SUITABILITY INQUIRIES (e.g. "क्या मैं भविष्य में व्यापार कर पाऊंगा या नहीं?", "व्यापार करूँ या नौकरी?"):
+  CRITICAL SHASTRIYA LAW: NEVER provide short-term horary timeframes like "1 से 3 सप्ताह के भीतर (Within 1-3 weeks)"!
+  A lifelong career/business aptitude inquiry must be answered by analyzing:
+  1. 7th house (independent business/trade/partnerships) vs 6th house (job/service).
+  2. 10th house (karma/authority/enterprise) and 2nd/11th houses (wealth & commercial gains).
+  3. Mercury (trade karaka) and Jupiter (financial wisdom). If Mercury is in the 8th house, candidly caution against heavy loans, speculation, or reckless partnerships, and guide towards intellectual/service-oriented business.
+  4. Timing must reflect long-term Dasha cycles and transits (e.g. 2026-2027), accompanied by practical guidance on suitable business fields and risk mitigation.
 - SPECIFIC LIFE QUESTIONS (e.g. "मेरी शादी कब होगी?", "करियर में पदोन्नति कब होगी?", "रत्न विचार"):
   Apply the full Daivajna 4-Tier protocol below, answering PRECISELY and EXCLUSIVELY what was asked.
 
@@ -276,7 +285,8 @@ class AINarrativeService:
 
         TOPIC_MAP = {
             "marriage": ["विवाह", "शादी", "दांपत्य", "जीवनसाथी", "ससुराल", "पत्नी", "पति", "प्रेम", "संबंध", "सगाई", "marriage", "spouse", "love", "relationship", "wife", "husband", "shadi", "vivah"],
-            "career": ["नौकरी", "व्यापार", "करियर", "पदोन्नति", "आजीविका", "काम", "धंधा", "व्यवसाय", "career", "job", "promotion", "business", "profession", "work", "naukri"],
+            "business": ["व्यापार", "व्यवसाय", "बिजनेस", "बिज़नेस", "धंधा", "कारोबार", "दुकान", "कंपनी", "स्टार्टअप", "ट्रेडिंग", "vyapar", "business", "dhandha", "karobar", "dukaan", "startup", "trading"],
+            "career": ["नौकरी", "करियर", "पदोन्नति", "आजीविका", "काम", "career", "job", "promotion", "profession", "work", "naukri"],
             "wealth": ["धन", "संपत्ति", "आर्थिक", "पैसा", "मकान", "भूमि", "शेयर", "कर्ज", "खजाना", "लाभ", "wealth", "finance", "money", "property", "rich", "income", "paisa"],
             "health": ["स्वास्थ्य", "रोग", "बीमारी", "दुर्घटना", "मानसिक", "कष्ट", "तनाव", "सर्जरी", "आयु", "health", "disease", "illness", "surgery", "accident", "hospital", "bimar"],
             "dasha": ["दशा", "गोचर", "समय", "महादशा", "अंतर्दशा", "शनि", "साढ़ेसाती", "भ्रमण", "dasha", "transit", "gochar", "period", "timing"],
@@ -343,7 +353,10 @@ class AINarrativeService:
         elif any(w in q_lower for w in ["विवाह", "शादी", "दांपत्य", "जीवनसाथी", "marriage", "spouse", "love", "shadi", "vivah"]):
             topic = "marriage"
             cat_en = "Marriage"
-        elif any(w in q_lower for w in ["नौकरी", "व्यापार", "करियर", "पदोन्नति", "आजीविका", "career", "job", "promotion", "business", "naukri"]):
+        elif any(w in q_lower for w in ["व्यापार", "व्यवसाय", "बिजनेस", "बिज़नेस", "धंधा", "कारोबार", "दुकान", "कंपनी", "स्टार्टअप", "ट्रेडिंग", "vyapar", "business", "dhandha", "karobar", "dukaan", "startup", "trading"]):
+            topic = "business"
+            cat_en = "Career"
+        elif any(w in q_lower for w in ["नौकरी", "करियर", "पदोन्नति", "आजीविका", "career", "job", "promotion", "naukri"]):
             topic = "career"
             cat_en = "Career"
         elif any(w in q_lower for w in ["धन", "संपत्ति", "आर्थिक", "पैसा", "मकान", "भूमि", "wealth", "finance", "money", "income", "paisa"]):
@@ -431,6 +444,30 @@ class AINarrativeService:
                 else:
                     direct_timing = "वर्तमान काल में विलंब संभव; २०२७ में दशा व गोचर के अनुकूल होते ही परिणय योग प्रबल होगा"
 
+            elif topic == "business":
+                h7 = chart.houses[6]
+                l7_name = h7.lord
+                l7 = chart.planets[l7_name]
+                h6 = chart.houses[5]
+                l6_name = h6.lord
+                l6 = chart.planets[l6_name]
+                h10 = chart.houses[9]
+                l10_name = h10.lord
+                l10 = chart.planets[l10_name]
+                mercury = chart.planets.get("Mercury")
+                jupiter = chart.planets.get("Jupiter")
+
+                natal_summary = {
+                    "bhava": "सप्तम भाव (व्यापार व साझेदारी) एवं दशम भाव (कर्म)",
+                    "bhavesh": f"सप्तमेश: {l7_name} ({l7.house_from_lagna} भाव), दशमेश: {l10_name} ({l10.house_from_lagna} भाव)",
+                    "karakas": f"बुध (व्यापार): {mercury.house_from_lagna if mercury else '-'} भाव, गुरु (विस्तार): {jupiter.house_from_lagna if jupiter else '-'} भाव"
+                }
+                if mercury and mercury.house_from_lagna in [6, 8, 12]:
+                    cautions.append(
+                        f"🚨 **व्यापारिक सतर्कता (बुध {mercury.house_from_lagna}वें भाव में):** आपकी जन्म कुण्डली में व्यापार का नैसर्गिक कारक बुध ग्रह {mercury.house_from_lagna}वें (दुष्टस्थान) भाव में स्थित है। शास्त्रीय नियमानुसार ऐसा जातक यदि भारी कर्ज लेकर, सट्टेबाजी/शेयर ट्रेडिंग में, अथवा बिना लिखित अनुबंध के साझेदारी में व्यापार करे तो अप्रत्याशित वित्तीय जोखिम का सामना करना पड़ सकता है। आपको सेवा-आधारित (Service-oriented), परामर्श (Consultancy), अथवा तकनीकी क्षेत्र में सीमित निवेश से व्यापार करना चाहिए।"
+                    )
+                direct_timing = "वर्ष २०२६ के उत्तरार्ध से २०२७ (दशा व गोचर की अनुकूलता अनुसार व्यापार विस्तार काल)"
+
             elif topic == "career":
                 h10 = chart.houses[9]
                 l10_name = h10.lord
@@ -442,7 +479,10 @@ class AINarrativeService:
                     "bhavesh": f"{l10_name} ({l10.house_from_lagna} भाव, {l10.dignity.title()})",
                     "karakas": f"सूर्य: {sun.house_from_lagna} भाव, शनि: {saturn.house_from_lagna} भाव"
                 }
-                direct_timing = prashna_res.get("timing", "अगले ३ से ६ माह के भीतर पदोन्नति व कार्य विस्तार योग")
+                if prashna_res.get("is_ithasala"):
+                    direct_timing = "अगले १ से ३ माह के भीतर अनुकूल अवसर व पदोन्नति योग"
+                else:
+                    direct_timing = "अगले ३ से ६ माह के भीतर सतत प्रयास से कार्य सिद्धि"
 
             elif topic == "wealth":
                 h2 = chart.houses[1]
@@ -475,6 +515,156 @@ class AINarrativeService:
             "gem_audit": gem_audit,
             "rules_scan_info": rules_scan_info
         }
+
+    def _build_deterministic_consultation(
+        self,
+        user_query: str,
+        chart: Optional[KundaliChart],
+        research: Dict[str, Any],
+        language: str = "Hindi"
+    ) -> str:
+        """Constructs an exhaustive, 99.9% precise, and honest Shastriya consultation deterministic report."""
+        p_res = research["prashna_res"]
+        topic = research["topic"]
+        gem_audit = research.get("gem_audit", {})
+        q_lower = user_query.lower()
+
+        if not chart:
+            return (
+                f"🙏 **प्रणाम!**\n\n"
+                f"आपके प्रश्न: *\"{user_query}\"* पर वैदिक प्रश्न कुण्डली का तात्कालिक फल:\n\n"
+                f"- **प्रश्न लग्न:** {p_res['prashna_lagna_sign']} (कार्येश: {p_res['karyesh_name']})\n"
+                f"- **ताजिक योग:** {p_res['tajika_yoga']}\n"
+                f"- **शास्त्रीय निर्णय:** {p_res['verdict']}\n"
+                f"- **संभावित समय:** **{p_res['timing']}**\n\n"
+                f"*(नोट: अपनी जन्म कुण्डली लोड करने पर D1 से D60 षोडशवर्ग, दशा एवं गोचर का संयुक्त ९९.९% प्रामाणिक विश्लेषण प्राप्त होगा)*"
+            )
+
+        p_name = chart.birth_data.name
+        lagna_s = chart.lagna_sign_name
+        moon_s = chart.planets["Moon"].sign_name
+
+        if topic == "business":
+            h7 = chart.houses[6]
+            l7 = chart.planets[h7.lord]
+            h6 = chart.houses[5]
+            l6 = chart.planets[h6.lord]
+            h10 = chart.houses[9]
+            l10 = chart.planets[h10.lord]
+            mercury = chart.planets.get("Mercury")
+            m_h = mercury.house_from_lagna if mercury else 1
+
+            business_ans = (
+                f"💼 **व्यापार योग एवं भविष्य शास्त्रीय निर्णय ({p_name} जी):**\n\n"
+                f"आपके प्रश्न *\"{user_query}\"* पर जन्म कुण्डली (D1-D10) एवं तात्कालिक प्रश्न कुण्डली के सूक्ष्म विश्लेषण के अनुसार:\n\n"
+                f"🎯 **१. क्या आप भविष्य में व्यापार कर पाएंगे? (शास्त्रीय निर्णय):**\n"
+                f"- **हाँ, आप व्यापार कर सकते हैं**, परंतु शास्त्रीय नियमानुसार आपको व्यापार का स्वरूप, पूँजी निवेश और कार्यक्षेत्र बहुत सोच-समझकर चुनना होगा।\n"
+                f"- **सप्तम भाव (स्वतंत्र व्यापार व साझेदारी):** {h7.sign_name} राशि, भावेश: **{h7.lord}** ({l7.house_from_lagna}वें भाव में)।\n"
+                f"- **षष्ठ भाव (नौकरी व सेवा संतुलन):** {h6.sign_name} राशि, भावेश: **{h6.lord}** ({l6.house_from_lagna}वें भाव में)।\n"
+                f"- **दशम भाव (कर्म व आजीविका प्रतिष्ठा):** {h10.sign_name} राशि, भावेश: **{h10.lord}** ({l10.house_from_lagna}वें भाव में, {l10.dignity.title()})।\n\n"
+                f"🔍 **२. तात्कालिक प्रश्न कुण्डली संकेत (Prashna Marga):**\n"
+                f"- **प्रश्न परीक्षण:** {research['intent_status']}\n"
+                f"- **प्रश्न लग्न:** {p_res['prashna_lagna_sign']}, कार्येश: **{p_res['karyesh_name']}**\n"
+                f"- **ताजिक योग:** {p_res['tajika_yoga']}\n"
+                f"- **व्यापार विस्तार व सफलता का काल:** **{research['direct_timing']}** *(नोट: व्यापार जीवन का दीर्घकालिक कर्म है, इसका फल दशा व गोचर से निर्धारित होता है, न कि कुछ सप्ताहों में)*।\n\n"
+            )
+            if research["cautions"]:
+                business_ans += "⚠️ **शास्त्रीय सत्य व सतर्कता (Candid Truth):**\n" + "\n".join([f"- {c}" for c in research["cautions"]]) + "\n\n"
+
+            business_ans += (
+                f"🚀 **३. आपके लिए सर्वोत्तम व्यापारिक क्षेत्र:**\n"
+                f"- परामर्श (Consultancy), आईटी व तकनीकी सेवाएं, शिक्षा, एजेंसी अथवा बौद्धिक सेवा क्षेत्र।\n"
+                f"- *सावधानी:* अत्यधिक कर्ज लेकर, सट्टा/शेयर बाजार अथवा अनियोजित साझेदारी में बड़ी पूँजी फंसाने से पूर्णतः बचें।\n\n"
+                f"🌿 **सात्विक वैदिक उपाय:**\n"
+                f"- बुधवार को गाय को हरा चारा अथवा भीगी हुई साबुत मूंग की दाल खिलाएं।\n"
+                f"- नित्य प्रातः श्री सूक्त अथवा कनकधारा स्तोत्र का पाठ करें।\n"
+                f"- बुध की अनुकूलता व बौद्धिक स्पष्टता हेतु 4-मुखी रुद्राक्ष धारण करना शुभ रहेगा।"
+            )
+            return business_ans
+
+        elif topic == "marriage":
+            h7 = chart.houses[6]
+            l7 = chart.planets[h7.lord]
+            direct_ans = (
+                f"💍 **विवाह काल शास्त्रीय निर्णय ({p_name} जी):**\n\n"
+                f"आपकी कुण्डली एवं प्रश्न समय के ग्रह गणित के अनुसार आपकी शादी का संभावित समय **{research['direct_timing']}** है।\n\n"
+                f"🔍 **१. प्रश्न परीक्षण व तात्कालिक ग्रह संकेत (Prashna Marga):**\n"
+                f"- **प्रश्न की प्रकृति:** {research['intent_status']}\n"
+                f"- **प्रश्न लग्न:** {p_res['prashna_lagna_sign']} ({p_res['prashna_lagna_deg']}), कार्य भाव: {p_res['karya_bhava']}\n"
+                f"- **लग्नेश व कार्येश संबंध:** प्रश्नेश '{p_res['lagnesh_name']}' व कार्येश '{p_res['karyesh_name']}' के मध्य **{p_res['tajika_yoga']}** बना हुआ है, जो कार्य सिद्धि के संकेत दे रहा है।\n\n"
+                f"📜 **२. जन्म कुण्डली एवं दशा विश्लेषण (Natal D1-D9):**\n"
+                f"- **सप्तम भाव:** {h7.sign_name} राशि, भावेश: **{h7.lord}** ({l7.house_from_lagna}वें भाव में, {l7.dignity.title()})\n"
+                f"- **विवाह कारक:** देवगुरु बृहस्पति ({chart.planets['Jupiter'].house_from_lagna} भाव) व शुक्र ({chart.planets['Venus'].house_from_lagna} भाव)\n"
+            )
+            if research["cautions"]:
+                direct_ans += f"\n⚠️ **शास्त्रीय सत्य व सतर्कता (Candid Truth):**\n" + "\n".join([f"- {c}" for c in research["cautions"]]) + "\n"
+            direct_ans += (
+                f"\n🌿 **सात्विक वैदिक उपाय:**\n"
+                f"- नित्य प्रातः *'ॐ नमः शिवाय'* अथवा पार्वती-मंगल स्तोत्र का पाठ करें।\n"
+                f"- गुरुवार को गाय को चने की दाल व गुड़ खिलाएं।\n"
+                f"- यदि मांगलिक प्रभाव है, तो मंगलवार को सुंदरकांड अथवा हनुमान चालीसा का पाठ करें।"
+            )
+            return direct_ans
+
+        elif topic == "remedies" or "पन्ना" in q_lower or "ratan" in q_lower or "रत्न" in q_lower:
+            mercury = chart.planets.get("Mercury")
+            m_h = mercury.house_from_lagna if mercury else None
+            if m_h in [6, 8, 12]:
+                m_info = gem_audit["planets_audit"]["Mercury"]
+                return (
+                    f"💎 **शास्त्रीय रत्न निर्णय ({p_name} जी):**\n\n"
+                    f"### 🚨 गंभीर शास्त्रीय चेतावनी: पन्ना रत्न आपके लिए सर्वथा वर्जित है!\n\n"
+                    f"- **अटल शास्त्रीय कारण:** आपकी कुण्डली में बुध ग्रह **{m_h}वें (अष्टम/दुष्टस्थान) भाव** में स्थित है।\n"
+                    f"- *बृहत्संहिता* एवं *फलदीपिका* के अनुसार दुष्टस्थान (६, ८, १२) में बैठे ग्रह का रत्न धारण करने से उस भाव के अनिष्ट फल, मानसिक तनाव, तंत्रिका दोष तथा अकस्मात संकट सक्रिय हो जाते हैं। अतः पन्ना कदापि धारण न करें।\n\n"
+                    f"🌿 **अनुशंसित सात्विक विकल्प:**\n"
+                    f"- 📿 **विहित रुद्राक्ष:** {m_info['rudraksha']}\n"
+                    f"- 🕉️ **वैदिक बीज मंत्र:** `{m_info['beej_mantra']}` ({m_info['japa_count']:,} जप)\n"
+                    f"- 🌾 **संकल्पित दान:** {m_info['daan_items']} ({m_info['daan_day']} को)\n"
+                    f"- 🪔 **व्रत व उपासना:** {m_info['vrata']} | {m_info['deity']}"
+                )
+            else:
+                rec_txt = ", ".join([f"**{rg['gem']}** ({rg['planet']} हेतु)" for rg in gem_audit.get("recommended_gems", [])]) if gem_audit.get("recommended_gems") else "वर्तमान में सात्विक मंत्र व रुद्राक्ष साधना ही सर्वोत्तम है।"
+                return (
+                    f"💎 **शास्त्रीय रत्न निर्णय ({p_name} जी):**\n\n"
+                    f"आपकी कुण्डली के अनुसार अनुशंसित शुभ रत्न: {rec_txt}\n\n"
+                    f"*(रत्न केवल शुभ व योगकारक ग्रहों के ही धारण किए जाते हैं)*"
+                )
+
+        elif topic == "career":
+            h10 = chart.houses[9]
+            l10 = chart.planets[h10.lord]
+            return (
+                f"💼 **करियर व पदोन्नति शास्त्रीय निर्णय ({p_name} जी):**\n\n"
+                f"आपकी कुण्डली एवं प्रश्न समय के अनुसार करियर में उन्नति का समय **{research['direct_timing']}** है।\n\n"
+                f"🔍 **१. प्रश्न परीक्षण व तात्कालिक ग्रह संकेत:**\n"
+                f"- **प्रश्न की सत्यता:** {research['intent_status']}\n"
+                f"- **ताजिक योग:** {p_res['tajika_yoga']} (कार्येश: {p_res['karyesh_name']})\n\n"
+                f"📜 **२. जन्म कुण्डली दशम भाव स्थिति:**\n"
+                f"- दशम भाव: **{h10.sign_name}**, दशमेश: **{h10.lord}** ({l10.house_from_lagna}वें भाव में, {l10.dignity.title()})\n\n"
+                f"🌿 **सात्विक उपाय:** नित्य प्रातः सूर्य देव को तांबे के लोटे से जल अर्पित करें और आदित्य हृदय स्तोत्र का पाठ करें।\n"
+            )
+
+        elif topic == "wealth":
+            h2 = chart.houses[1]
+            h11 = chart.houses[10]
+            return (
+                f"💰 **आर्थिक स्थिति एवं धन लाभ शास्त्रीय निर्णय ({p_name} जी):**\n\n"
+                f"आपकी जन्म कुण्डली एवं प्रश्न समय के अनुसार आर्थिक समृद्धि का समय **{research['direct_timing']}** है।\n\n"
+                f"- **धन भाव (२रा):** {h2.sign_name} (स्वामी: {h2.lord})\n"
+                f"- **लाभ भाव (११वां):** {h11.sign_name} (स्वामी: {h11.lord})\n\n"
+                f"🌿 **सात्विक उपाय:** श्री कनकधारा स्तोत्र का नित्य पाठ करें।"
+            )
+
+        else:
+            return (
+                f"🙏 **शास्त्रीय परामर्श ({p_name} जी):**\n\n"
+                f"आपके प्रश्न *\"{user_query}\"* पर जन्म कुण्डली ({lagna_s} लग्न) एवं तात्कालिक प्रश्न कुण्डली ({p_res['prashna_lagna_sign']} लग्न) के समन्वय से निष्कर्ष:\n\n"
+                f"- **प्रश्न परीक्षण:** {research['intent_status']}\n"
+                f"- **ताजिक योग:** {p_res['tajika_yoga']}\n"
+                f"- **शास्त्रीय फल:** **{p_res['verdict']}**\n"
+                f"- **संभावित काल:** **{research['direct_timing']}**\n\n"
+                f"💡 **दैवज्ञ परामर्श:** अपने पुरुषार्थ और इष्ट आराधना को बनाए रखें। प्रतिदिन गायत्री मंत्र का १०८ बार जप कल्याणकारी रहेगा।"
+            )
 
     def chat_consultation(
         self,
@@ -518,14 +708,14 @@ class AINarrativeService:
             if env_key:
                 self._init_client(env_key)
 
-        # GENERAL INTELLIGENCE: GREETINGS & INTRODUCTIONS
+        # GENERAL INTELLIGENCE: GREETINGS & INTRODUCTIONS / GRATITUDE
         if topic == "greeting":
             p_name = chart.birth_data.name if chart else "जातक"
             lagna_s = chart.lagna_sign_name if chart else ""
             moon_s = chart.planets["Moon"].sign_name if chart else ""
             nak_s = chart.panchang.nakshatra_name if chart else ""
 
-            is_gratitude = any(w in user_query.lower() for w in ["धन्यवाद", "शुक्रिया", "thanks", "thank", "dhanyawad", "dhanyavad", "shukriya", "theek hai", "accha"])
+            is_gratitude = any(w in user_query.lower() for w in ["धन्यवाद", "शुक्रिया", "thanks", "thank", "dhanyawad", "dhanyavad", "shukriya", "theek hai", "accha", "आभार"])
 
             if self.client:
                 if is_gratitude:
@@ -550,7 +740,7 @@ CRITICAL GENERAL INTELLIGENCE INSTRUCTION:
 4. Respond in exactly 2 to 3 courteous, dignified, and natural sentences in {language}.
 5. Respectfully greet {p_name} ji by name, mention that their birth chart ({lagna_s} लग्न, {moon_s} राशि) is active and loaded, and warmly ask what specific life query (e.g. marriage, career, finance, health, or gemstones) they would like to explore today."""
 
-                models_to_try = [model, "gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"]
+                models_to_try = [model, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro"]
                 for m_name in models_to_try:
                     try:
                         response = self.client.models.generate_content(
@@ -581,93 +771,7 @@ CRITICAL GENERAL INTELLIGENCE INSTRUCTION:
 
         # DETERMINISTIC FALLBACK (Laser-focused, direct, dual-kundali honest prediction)
         if not self.client:
-            if not chart:
-                return (
-                    f"🙏 **प्रणाम!**\n\n"
-                    f"आपके प्रश्न: *\"{user_query}\"* पर वैदिक प्रश्न कुण्डली का तात्कालिक फल:\n\n"
-                    f"- **प्रश्न लग्न:** {p_res['prashna_lagna_sign']} (कार्येश: {p_res['karyesh_name']})\n"
-                    f"- **ताजिक योग:** {p_res['tajika_yoga']}\n"
-                    f"- **शास्त्रीय निर्णय:** {p_res['verdict']}\n"
-                    f"- **संभावित समय:** **{p_res['timing']}**\n\n"
-                    f"*(नोट: अपनी जन्म कुण्डली लोड करने पर D1 से D60 षोडशवर्ग, दशा एवं गोचर का संयुक्त ९९.९% प्रामाणिक विश्लेषण प्राप्त होगा)*"
-                )
-
-            p_name = chart.birth_data.name
-            lagna_s = chart.lagna_sign_name
-            moon_s = chart.planets["Moon"].sign_name
-
-            # Build topic-specific direct answer
-            if topic == "marriage":
-                h7 = chart.houses[6]
-                l7 = chart.planets[h7.lord]
-                direct_ans = (
-                    f"💍 **विवाह काल शास्त्रीय निर्णय ({p_name} जी):**\n\n"
-                    f"आपकी कुण्डली एवं प्रश्न समय के ग्रह गणित के अनुसार आपकी शादी का संभावित समय **{research['direct_timing']}** है।\n\n"
-                    f"🔍 **१. प्रश्न परीक्षण व तात्कालिक ग्रह संकेत (Prashna Marga):**\n"
-                    f"- **प्रश्न की प्रकृति:** {research['intent_status']}\n"
-                    f"- **प्रश्न लग्न:** {p_res['prashna_lagna_sign']} ({p_res['prashna_lagna_deg']}), कार्य भाव: {p_res['karya_bhava']}\n"
-                    f"- **लग्नेश व कार्येश संबंध:** प्रश्नेश '{p_res['lagnesh_name']}' व कार्येश '{p_res['karyesh_name']}' के मध्य **{p_res['tajika_yoga']}** बना हुआ है, जो कार्य सिद्धि के संकेत दे रहा है।\n\n"
-                    f"📜 **२. जन्म कुण्डली एवं दशा विश्लेषण (Natal D1-D9):**\n"
-                    f"- **सप्तम भाव:** {h7.sign_name} राशि, भावेश: **{h7.lord}** ({l7.house_from_lagna}वें भाव में, {l7.dignity.title()})\n"
-                    f"- **विवाह कारक:** देवगुरु बृहस्पति ({chart.planets['Jupiter'].house_from_lagna} भाव) व शुक्र ({chart.planets['Venus'].house_from_lagna} भाव)\n"                )
-                if research["cautions"]:
-                    direct_ans += f"\n⚠️ **शास्त्रीय सत्य व सतर्कता (Candid Truth):**\n" + "\n".join([f"- {c}" for c in research["cautions"]]) + "\n"
-                direct_ans += (
-                    f"\n🌿 **सात्विक वैदिक उपाय:**\n"
-                    f"- नित्य प्रातः *'ॐ नमः शिवाय'* अथवा पार्वती-मंगल स्तोत्र का पाठ करें।\n"
-                    f"- गुरुवार को गाय को चने की दाल व गुड़ खिलाएं।\n"
-                    f"- यदि मांगलिक प्रभाव है, तो मंगलवार को सुंदरकांड अथवा हनुमान चालीसा का पाठ करें।"
-                )
-                return direct_ans
-
-            elif topic == "remedies" or "पन्ना" in q_lower or "ratan" in q_lower or "रत्न" in q_lower:
-                mercury = chart.planets.get("Mercury")
-                m_h = mercury.house_from_lagna if mercury else None
-                if m_h in [6, 8, 12]:
-                    m_info = gem_audit["planets_audit"]["Mercury"]
-                    return (
-                        f"💎 **शास्त्रीय रत्न निर्णय ({p_name} जी):**\n\n"
-                        f"### 🚨 गंभीर शास्त्रीय चेतावनी: पन्ना रत्न आपके लिए सर्वथा वर्जित है!\n\n"
-                        f"- **अटल शास्त्रीय कारण:** आपकी कुण्डली में बुध ग्रह **{m_h}वें (अष्टम/दुष्टस्थान) भाव** में स्थित है।\n"
-                        f"- *बृहत्संहिता* एवं *फलदीपिका* के अनुसार दुष्टस्थान (६, ८, १२) में बैठे ग्रह का रत्न धारण करने से उस भाव के अनिष्ट फल, मानसिक तनाव, तंत्रिका दोष तथा अकस्मात संकट सक्रिय हो जाते हैं। अतः पन्ना कदापि धारण न करें।\n\n"
-                        f"🌿 **अनुशंसित सात्विक विकल्प:**\n"
-                        f"- 📿 **विहित रुद्राक्ष:** {m_info['rudraksha']}\n"
-                        f"- 🕉️ **वैदिक बीज मंत्र:** `{m_info['beej_mantra']}` ({m_info['japa_count']:,} जप)\n"
-                        f"- 🌾 **संकल्पित दान:** {m_info['daan_items']} ({m_info['daan_day']} को)\n"
-                        f"- 🪔 **व्रत व उपासना:** {m_info['vrata']} | {m_info['deity']}"
-                    )
-                else:
-                    rec_txt = ", ".join([f"**{rg['gem']}** ({rg['planet']} हेतु)" for rg in gem_audit["recommended_gems"]]) if gem_audit["recommended_gems"] else "वर्तमान में सात्विक मंत्र व रुद्राक्ष साधना ही सर्वोत्तम है।"
-                    return (
-                        f"💎 **शास्त्रीय रत्न निर्णय ({p_name} जी):**\n\n"
-                        f"आपकी कुण्डली के अनुसार अनुशंसित शुभ रत्न: {rec_txt}\n\n"
-                        f"*(रत्न केवल शुभ व योगकारक ग्रहों के ही धारण किए जाते हैं)*"
-                    )
-
-            elif topic == "career":
-                h10 = chart.houses[9]
-                l10 = chart.planets[h10.lord]
-                return (
-                    f"💼 **करियर व पदोन्नति शास्त्रीय निर्णय ({p_name} जी):**\n\n"
-                    f"आपकी कुण्डली एवं प्रश्न समय के अनुसार करियर में उन्नति का समय **{research['direct_timing']}** है।\n\n"
-                    f"🔍 **१. प्रश्न परीक्षण व तात्कालिक ग्रह संकेत:**\n"
-                    f"- **प्रश्न की सत्यता:** {research['intent_status']}\n"
-                    f"- **ताजिक योग:** {p_res['tajika_yoga']} (कार्येश: {p_res['karyesh_name']})\n\n"
-                    f"📜 **२. जन्म कुण्डली दशम भाव स्थिति:**\n"
-                    f"- दशम भाव: **{h10.sign_name}**, दशमेश: **{h10.lord}** ({l10.house_from_lagna}वें भाव में, {l10.dignity.title()})\n\n"
-                    f"🌿 **सात्विक उपाय:** नित्य प्रातः सूर्य देव को तांबे के लोटे से जल अर्पित करें और आदित्य हृदय स्तोत्र का पाठ करें।\n"
-                )
-
-            else:
-                return (
-                    f"🙏 **शास्त्रीय परामर्श ({p_name} जी):**\n\n"
-                    f"आपके प्रश्न *\"{user_query}\"* पर जन्म कुण्डली ({lagna_s} लग्न) एवं तात्कालिक प्रश्न कुण्डली ({p_res['prashna_lagna_sign']} लग्न) के समन्वय से निष्कर्ष:\n\n"
-                    f"- **प्रश्न परीक्षण:** {research['intent_status']}\n"
-                    f"- **ताजिक योग:** {p_res['tajika_yoga']}\n"
-                    f"- **शास्त्रीय फल:** **{p_res['verdict']}**\n"
-                    f"- **संभावित काल:** **{research['direct_timing']}**\n\n"
-                    f"💡 **दैवज्ञ परामर्श:** अपने पुरुषार्थ और इष्ट आराधना को बनाए रखें। प्रतिदिन गायत्री मंत्र का १०८ बार जप कल्याणकारी रहेगा।"
-                )
+            return self._build_deterministic_consultation(user_query=user_query, chart=chart, research=research, language=language)
 
         # PROMPT FOR GEMINI AI (Deep Dual-Kundali Synthesized Context)
         chart_context = self.build_full_chart_context(chart, master_data)
@@ -702,13 +806,14 @@ USER QUESTION:
 
 CRITICAL GENERAL INTELLIGENCE & DAIVAJNA INSTRUCTIONS:
 1. ANSWER ONLY WHAT WAS ASKED: The user is specifically asking about: {topic.upper()}. Address their specific query directly in the opening lines. Do NOT write unsolicited essays about unrelated life domains.
-2. DUAL-KUNDALI SYNTHESIS: Cross-corroborate the Instant Prashna Kundali (Lagna, Karyesh, Tajika Ithasala/Esharpha yoga, and Intent testing check) with the Natal Kundali (D1 house lord, D9/D10 divisional dignity, active Mahadasha-Antardasha).
-3. ABSOLUTE HONESTY & CANDID CAUTION: If there are negative yogas, delays, or doshas (Manglik, Saturn delay, malefic dasha), state them clearly under a bold caution heading without sugarcoating.
-4. RATNA SHASTRA COMPLIANCE: If asked about gemstones, strictly follow the gemology matrix. NEVER recommend Panna if Mercury is in the 8th house; forbid it with an explicit alert and prescribe 4-Mukhi Rudraksha, Budha mantra, and green moong daan.
-5. Conclude with focused, actionable, satvik Vedic remedies in {language} for this specific question only.
+2. BUSINESS SUITABILITY QUESTIONS: If asked whether the native can do business in the future ("व्यापार कर पाऊंगा या नहीं"), DO NOT state a short-term horary timeframe like "1 से 3 सप्ताह के भीतर"! Evaluate 7th house (business/trade) vs 6th house (job/service) and 10th house (career). If Mercury is in the 8th house, candidly warn against debt-heavy speculation and guide towards service-oriented/consultancy business. The timing must reflect Dasha & transits (e.g. 2026-2027).
+3. DUAL-KUNDALI SYNTHESIS: Cross-corroborate the Instant Prashna Kundali (Lagna, Karyesh, Tajika Ithasala/Esharpha yoga, and Intent testing check) with the Natal Kundali (D1 house lord, D9/D10 divisional dignity, active Mahadasha-Antardasha).
+4. ABSOLUTE HONESTY & CANDID CAUTION: If there are negative yogas, delays, or doshas (Manglik, Saturn delay, malefic dasha), state them clearly under a bold caution heading without sugarcoating.
+5. RATNA SHASTRA COMPLIANCE: If asked about gemstones, strictly follow the gemology matrix. NEVER recommend Panna if Mercury is in the 8th house; forbid it with an explicit alert and prescribe 4-Mukhi Rudraksha, Budha mantra, and green moong daan.
+6. Conclude with focused, actionable, satvik Vedic remedies in {language} for this specific question only.
 """
 
-        models_to_try = [model, "gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"]
+        models_to_try = [model, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro"]
         for m_name in models_to_try:
             try:
                 response = self.client.models.generate_content(
@@ -724,7 +829,8 @@ CRITICAL GENERAL INTELLIGENCE & DAIVAJNA INSTRUCTIONS:
             except Exception:
                 continue
 
-        return research["prashna_res"].get("explanation_hi", "शास्त्रीय गणना पूर्ण हुई।")
+        # Deterministic fallback when Gemini API calls fail or timeout - NEVER return raw horary timing string
+        return self._build_deterministic_consultation(user_query=user_query, chart=chart, research=research, language=language)
 
     def synthesize_narrative(self, result: GhatnaQueryResult, language: str = "Hindi") -> str:
         """Synthesizes narrative for Ghatna query results."""

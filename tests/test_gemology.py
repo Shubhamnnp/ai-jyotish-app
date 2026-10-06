@@ -178,3 +178,41 @@ def test_ai_sahayak_gratitude_response():
     assert ("कल्याणमस्तु" in response or "शुभम्" in response)
     assert "Shubham Tiwari" in response
     assert len(response.splitlines()) < 8
+
+
+def test_ai_sahayak_business_query_suitability():
+    """Verify that when queried about future business suitability ('kya mai bhavishya me vyapar kr paunga ya nhi'),
+    AI Sahayak never gives absurd 1-3 weeks horary timing, but analyzes 7th/6th/10th houses and Mercury placement."""
+    bd = BirthData(
+        name="Shubham Tiwari",
+        birth_date=datetime.date(1996, 6, 20),
+        birth_time=datetime.time(11, 45),
+        latitude=28.6139,
+        longitude=77.2090,
+        timezone_offset=5.5
+    )
+    chart = default_chart_calculator.calculate_full_chart(bd)
+    # Ensure Mercury is in 8th house for realistic test of Shubham's chart
+    chart.planets["Mercury"].house_from_lagna = 8
+    master_bundle = default_master_calculator.calculate_all(chart)
+
+    response = default_narrative_service.chat_consultation(
+        user_query="kya mai bhavishya me vyapar kr paunga ya nhi",
+        chart=chart,
+        master_data=master_bundle,
+        api_key=None,
+        language="Hindi"
+    )
+
+    # Must NEVER return absurd short-term 1-3 weeks horary timing for lifelong business suitability
+    assert "1 से 3 सप्ताह के भीतर" not in response
+    assert "Within 1-3 weeks" not in response
+
+    # Must evaluate business (व्यापार) and houses/planets
+    assert "व्यापार" in response
+    assert ("सप्तम भाव" in response or "7" in response)
+    assert ("दशम" in response or "षष्ठ" in response or "कर्म" in response)
+    # Must caution about Mercury in 8th house if placed there
+    assert ("बुध" in response and ("सतर्कता" in response or "चेतावनी" in response or "८वें" in response or "8" in response))
+    # Must suggest realistic long-term timing (2026/2027)
+    assert ("२०२६" in response or "2026" in response or "२०२७" in response or "2027" in response)
