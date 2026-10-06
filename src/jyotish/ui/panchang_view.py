@@ -6,10 +6,13 @@ Chaturmas, Kharmas, Bhadra Mukha/Puchha, and 60-Ghati Vedic Clock.
 """
 
 import streamlit as st
+import importlib
 from datetime import datetime, date, timedelta
 from typing import Dict, Any, Optional
 
-from ..services.panchang import VedicPanchangService
+import src.jyotish.services.panchang as panchang_svc_module
+importlib.reload(panchang_svc_module)
+from src.jyotish.services.panchang import VedicPanchangService
 
 
 POPULAR_CITIES = {
@@ -138,7 +141,18 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     balam = panchang_data["balam"]
     samvat = panchang_data["samvatsar"]
     transit = panchang_data["transit_matrix"]
-    paksha_eng = panchang_data.get("paksha_engine", {})
+    paksha_eng = panchang_data.get("paksha_engine") or {}
+    if not paksha_eng or "pitru_paksha" not in paksha_eng:
+        sun_lon_val = transit.get("Sun", {}).get("longitude", 0.0) if "Sun" in transit else 0.0
+        moon_lon_val = transit.get("Moon", {}).get("longitude", 0.0) if "Moon" in transit else 0.0
+        paksha_eng = VedicPanchangService.calculate_paksha_and_pitru_engine(
+            target_date=selected_date,
+            sun_lon=sun_lon_val,
+            moon_lon=moon_lon_val,
+            tithi_idx=pillars["tithi"]["index"],
+            sunrise_dt=sun_moon["sunrise"],
+            sunset_dt=sun_moon["sunset"]
+        )
     pitru = paksha_eng.get("pitru_paksha", {})
 
     # -------------------------------------------------------------
@@ -469,6 +483,15 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
 
         # 1. PAKSHA & MOON STRENGTH
         st.markdown("#### 🌓 १. पक्ष एवं चन्द्रमा का प्राकृतिक बल (Chandra Bala in Paksha)")
+        
+        cur_paksha = paksha_eng.get('paksha_name') or pillars['tithi']['paksha']
+        cb_val = paksha_eng.get('chandra_bala') or ("सर्वोच्च / पूर्ण चन्द्र बल" if "शुक्ल" in cur_paksha else "क्षीण चन्द्र बल (संयम काल)")
+        cb_col = paksha_eng.get('chandra_bala_color') or ("#059669" if "शुक्ल" in cur_paksha else "#D97706")
+        cb_desc = paksha_eng.get('chandra_bala_desc') or (
+            "शुक्ल प्रतिपदा से पूर्णिमा तक चन्द्रमा वृद्धिशील व शुभ बली होता है। इस काल में किए गए नूतन आरम्भ व मांगलिक कार्य समृद्धिकारक सिद्ध होते हैं।"
+            if "शुक्ल" in cur_paksha else
+            "कृष्ण षष्ठी से अमावस्या पर्यन्त चन्द्रमा क्षीण व हीन बली माना जाता है। यह काल आत्म-चिन्तन, साधना, पितृ-तर्पण एवं संयम हेतु श्रेष्ठ है।"
+        )
         col_pk1, col_pk2 = st.columns([1.5, 2.5])
         with col_pk1:
             st.markdown(f"""
@@ -476,11 +499,11 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                         border-radius:12px; padding:18px; text-align:center;">
                 <span style="font-size:13px; color:#1E40AF; font-weight:600;">वर्तमान सक्रिय पक्ष</span>
                 <div style="font-size:26px; font-weight:800; color:#1D4ED8; margin:6px 0;">
-                    {paksha_eng.get('paksha_name', 'पक्ष')}
+                    {cur_paksha}
                 </div>
-                <span style="background:{paksha_eng.get('chandra_bala_color', '#059669')}20; color:{paksha_eng.get('chandra_bala_color', '#059669')};
+                <span style="background:{cb_col}20; color:{cb_col};
                              padding:3px 10px; border-radius:12px; font-size:12px; font-weight:700;">
-                    {paksha_eng.get('chandra_bala', 'मध्यम')}
+                    {cb_val}
                 </span>
             </div>
             """, unsafe_allow_html=True)
@@ -489,9 +512,9 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
             <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
                         border-left:4px solid #3B82F6; border-radius:10px; padding:16px;">
                 <b style="color:#1E3A8A; font-size:15px;">📖 शास्त्रीय पक्ष-बल नियम:</b>
-                <p style="margin:6px 0 0 0; color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13.5px; line-height:1.6;">
-                    {paksha_eng.get('chandra_bala_desc', '')}
-                </p>
+                <div style="margin-top:6px; color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13.5px; line-height:1.6;">
+                    {cb_desc}
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -508,10 +531,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                         {pitru['badge']}
                     </span>
                 </div>
-                <p style="color:#7F1D1D; font-size:13.5px; margin:8px 0; line-height:1.6;">
+                <div style="color:#7F1D1D; font-size:13.5px; margin:8px 0; line-height:1.6;">
                     <b>शास्त्रीय प्रमाण:</b> <i>"{pitru['sutra']}"</i><br/>
                     {pitru['verdict_desc']}
-                </p>
+                </div>
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-top:10px;">
                     <div style="background:#FFFFFF; border:1px solid #FECACA; border-radius:8px; padding:10px;">
                         <b style="color:#991B1B;">☀️ कुतुप मुहूर्त (श्राद्ध का मुख्य काल):</b><br/>
@@ -535,7 +558,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 st.markdown("""
                 <div style="background:#FEF2F2; border:1.5px solid #DC2626; border-radius:10px; padding:16px; height:100%;">
                     <b style="color:#991B1B; font-size:16px;">🚫 क्या-क्या सर्वथा वर्जित है (Strict Prohibitions):</b>
-                    <p style="color:#7F1D1D; font-size:12.5px; margin:4px 0 10px 0;">शास्त्रों अनुसार इस अवधि में भौतिक मांगलिक उत्सव अनिष्टकारी होते हैं:</p>
+                    <div style="color:#7F1D1D; font-size:12.5px; margin:4px 0 10px 0;">शास्त्रों अनुसार इस अवधि में भौतिक मांगलिक उत्सव अनिष्टकारी होते हैं:</div>
                     <ul style="color:#991B1B; font-size:13px; line-height:1.7; padding-left:18px; margin:0;">
                         <li><b>नूतन गृह प्रवेश व भूमि पूजन:</b> नया घर खरीदना, गृह प्रवेश या नींव पूजन पूर्णतः निषिद्ध।</li>
                         <li><b>विवाह, सगाई व रोका:</b> पाणिग्रहण संस्कार व वैवाहिक उत्सव महा-वर्जित।</li>
@@ -552,7 +575,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 st.markdown("""
                 <div style="background:#F0FDF4; border:1.5px solid #16A34A; border-radius:10px; padding:16px; height:100%;">
                     <b style="color:#166534; font-size:16px;">🟢 क्या-क्या करने का विधान है (Prescribed Rituals):</b>
-                    <p style="color:#15803D; font-size:12.5px; margin:4px 0 10px 0;">इस पावन काल में पितृ सेवा से वंश वृद्धि, आरोग्य व शांति प्राप्त होती है:</p>
+                    <div style="color:#15803D; font-size:12.5px; margin:4px 0 10px 0;">इस पावन काल में पितृ सेवा से वंश वृद्धि, आरोग्य व शांति प्राप्त होती है:</div>
                     <ul style="color:#14532D; font-size:13px; line-height:1.7; padding-left:18px; margin:0;">
                         <li><b>पितृ तर्पण:</b> काले तिल, जौ, कुशा व गंगाजल से पितरों को जलांजलि अर्पण।</li>
                         <li><b>पिण्डदान एवं श्राद्ध कर्म:</b> कुतुप व रौहिण मुहूर्त में विधिपूर्वक श्राद्ध कर्म।</li>
@@ -564,11 +587,13 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 </div>
                 """, unsafe_allow_html=True)
         else:
+            pitru_badge = pitru.get('badge') or '🟢 पितृपक्ष निष्क्रिय (Normal Period)'
+            pitru_desc = pitru.get('desc') or 'वर्तमान में पितृपक्ष सक्रिय नहीं है। सामान्य मांगलिक कार्यों पर पितृपक्ष का कोई प्रतिबंध नहीं है।'
             st.markdown(f"""
             <div style="background:{'#1F2937' if is_dark else '#F0FDF4'}; border:1px solid #BBF7D0;
                         border-radius:10px; padding:16px;">
-                <b style="color:#166534; font-size:15px;">{pitru.get('badge', 'पितृपक्ष निष्क्रिय')}</b>
-                <p style="margin:4px 0 0 0; color:#15803D; font-size:13.5px;">{pitru.get('desc', 'वर्तमान में पितृपक्ष सक्रिय नहीं है।')}</p>
+                <b style="color:#166534; font-size:15px;">{pitru_badge}</b>
+                <div style="margin-top:6px; color:#15803D; font-size:13.5px; line-height:1.5;">{pitru_desc}</div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -583,6 +608,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
             ch_bg = "#FFF7ED" if is_ch else "#F8FAFC"
             ch_bdr = "#F97316" if is_ch else "#E2E8F0"
             ch_col = "#C2410C" if is_ch else "#475569"
+            ch_desc = paksha_eng.get('chaturmas_desc') or (
+                "आषाढ़ शुक्ल एकादशी से कार्तिक शुक्ल एकादशी तक श्रीहरि विष्णु क्षीरसागर में योगनिद्रा में रहते हैं। अपूर्व गृह प्रवेश व विवाह संस्कार निषिद्ध माने गए हैं।"
+                if is_ch else "वर्तमान में चातुर्मास सक्रिय नहीं है।"
+            )
             st.markdown(f"""
             <div style="background:{ch_bg if not is_dark else '#1F2937'}; border:1.5px solid {ch_bdr};
                         border-radius:10px; padding:16px;">
@@ -592,9 +621,9 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                         {'⚠️ सक्रिय' if is_ch else '🟢 निष्क्रिय'}
                     </span>
                 </div>
-                <p style="margin:6px 0 0 0; color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13px; line-height:1.5;">
-                    {paksha_eng.get('chaturmas_desc', '')}
-                </p>
+                <div style="margin-top:6px; color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13px; line-height:1.5;">
+                    {ch_desc}
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -603,6 +632,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
             kh_bg = "#FEF2F2" if is_kh else "#F8FAFC"
             kh_bdr = "#DC2626" if is_kh else "#E2E8F0"
             kh_col = "#991B1B" if is_kh else "#475569"
+            kh_desc = paksha_eng.get('kharmas_desc') or (
+                "सूर्य जब देवगुरु बृहस्पति की राशि (धनु या मीन) में होते हैं, तब समस्त मांगलिक संस्कार वर्जित रहते हैं।"
+                if is_kh else "वर्तमान में खरमास सक्रिय नहीं है।"
+            )
             st.markdown(f"""
             <div style="background:{kh_bg if not is_dark else '#1F2937'}; border:1.5px solid {kh_bdr};
                         border-radius:10px; padding:16px;">
@@ -612,9 +645,9 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                         {'🚫 सक्रिय' if is_kh else '🟢 निष्क्रिय'}
                     </span>
                 </div>
-                <p style="margin:6px 0 0 0; color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13px; line-height:1.5;">
-                    {paksha_eng.get('kharmas_desc', '')}
-                </p>
+                <div style="margin-top:6px; color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13px; line-height:1.5;">
+                    {kh_desc}
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -1058,3 +1091,4 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     <div style="color:{act_color}; font-size:12px; font-weight:700; margin-top:2px;">{act_status}</div>
                 </div>
                 """, unsafe_allow_html=True)
+

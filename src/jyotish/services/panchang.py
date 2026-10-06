@@ -1842,7 +1842,7 @@ class VedicPanchangService:
         choghadiya_horas = cls.calculate_choghadiya_and_horas(target_date, sr_dt, ss_dt, next_sr_dt)
         muhurtas = cls.calculate_shubh_ashubh_muhurtas(target_date, sr_dt, ss_dt, next_sr_dt, nak_idx)
 
-        # Sun & Moon longitudes
+        # Sun Nakshatra for Anandadi
         provider = cls.get_provider()
         utc_sr = sr_dt - timedelta(hours=tz_offset_hours)
         pos_sr, _ = provider.get_planet_positions(utc_sr)
@@ -1850,6 +1850,12 @@ class VedicPanchangService:
         moon_lon = pos_sr["Moon"]["longitude"] % 360.0
         sun_nak_idx = int(sun_lon // (360.0 / 27.0)) + 1
         moon_sign = int(moon_lon // 30.0) + 1
+
+        yogas = cls.calculate_anandadi_and_special_yogas(target_date, sun_nak_idx, nak_idx, tithi_idx)
+        nivas_shoola = cls.calculate_nivas_shoola_and_vedic_clock(target_date, sr_dt, moon_sign, tithi_idx)
+        balam = cls.calculate_chandrabalam_and_tarabalam(moon_sign, nak_idx)
+        samvatsar = cls.calculate_samvatsara_and_cabinet(target_date, sun_lon)
+        transit_matrix = cls.calculate_planetary_transit_matrix(utc_sr)
 
         # Paksha & Pitru Paksha Engine
         paksha_engine = cls.calculate_paksha_and_pitru_engine(
@@ -1861,12 +1867,6 @@ class VedicPanchangService:
             sunset_dt=ss_dt
         )
 
-        yogas = cls.calculate_anandadi_and_special_yogas(target_date, sun_nak_idx, nak_idx, tithi_idx)
-        nivas_shoola = cls.calculate_nivas_shoola_and_vedic_clock(target_date, sr_dt, moon_sign, tithi_idx)
-        balam = cls.calculate_chandrabalam_and_tarabalam(moon_sign, nak_idx)
-        samvatsar = cls.calculate_samvatsara_and_cabinet(target_date, sun_lon)
-        transit_matrix = cls.calculate_planetary_transit_matrix(utc_sr)
-
         # Overall Day Verdict
         day_quality = "🟢 शुभ व मांगलिक (Auspicious)"
         quality_color = "#059669"
@@ -1876,9 +1876,6 @@ class VedicPanchangService:
         elif bhadra.get("is_fatal_on_earth") or panchak_ganda["panchaka"].get("color") == "#991B1B":
             day_quality = "🔴 सतर्कता व सावधानी (Inauspicious Windows Active)"
             quality_color = "#DC2626"
-        elif not five_pillars["yoga"]["is_good"]:
-            day_quality = "🟡 मध्यम (Neutral / Use Auspicious Windows)"
-            quality_color = "#D97706"
         elif not five_pillars["yoga"]["is_good"]:
             day_quality = "🟡 मध्यम (Neutral / Use Auspicious Windows)"
             quality_color = "#D97706"

@@ -19040,6 +19040,8 @@ elif selected_idx == 28:
 
 elif selected_idx == 29:
     import importlib
+    import src.jyotish.services.panchang as panchang_svc_mod
+    importlib.reload(panchang_svc_mod)
     import src.jyotish.ui.panchang_view as panchang_view_mod
     importlib.reload(panchang_view_mod)
 
