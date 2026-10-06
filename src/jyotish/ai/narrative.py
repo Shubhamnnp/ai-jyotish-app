@@ -655,6 +655,168 @@ class AINarrativeService:
                 f"🌿 **सात्विक उपाय:** श्री कनकधारा स्तोत्र का नित्य पाठ करें।"
             )
 
+        # 1. PLANETARY ANALYSIS (ग्रह स्थिति, वक्री, अस्त व दृष्टि विचार)
+        planet_tokens_map = {
+            "Jupiter": ["गुरु", "बृहस्पति", "guru", "jupiter", "brihaspati"],
+            "Saturn": ["शनि", "shani", "saturn"],
+            "Mars": ["मंगल", "mangal", "mars", "kuja", "bhauma"],
+            "Rahu": ["राहु", "rahu"],
+            "Ketu": ["केतु", "ketu"],
+            "Mercury": ["बुध", "budh", "mercury"],
+            "Venus": ["शुक्र", "shukra", "venus"],
+            "Sun": ["सूर्य", "surya", "sun", "ravi"],
+            "Moon": ["चन्द्र", "चंद्र", "chandra", "moon", "soma"]
+        }
+
+        matched_planet = None
+        for p_key, tokens in planet_tokens_map.items():
+            if any(t in q_lower for t in tokens):
+                matched_planet = p_key
+                break
+
+        is_vakri_inquiry = any(w in q_lower for w in ["वक्री", "vakri", "retrograde", "vakra"])
+        is_asta_inquiry = any(w in q_lower for w in ["अस्त", "asta", "combust"])
+        is_drishti_inquiry = any(w in q_lower for w in ["दृष्टि", "drishti", "aspect"])
+
+        if not matched_planet and is_vakri_inquiry:
+            retro_planets = [p_name for p_name, pl in chart.planets.items() if pl.is_retrograde]
+            if retro_planets:
+                matched_planet = retro_planets[0]
+
+        if matched_planet:
+            p = chart.planets.get(matched_planet)
+            if p:
+                p_hi_names = {
+                    "Jupiter": "देवगुरु बृहस्पति (Guru)",
+                    "Saturn": "शनि देव (Shani)",
+                    "Mars": "मंगल देव (Mangal)",
+                    "Sun": "सूर्य देव (Sun)",
+                    "Moon": "चंद्र देव (Moon)",
+                    "Mercury": "बुध देव (Budha)",
+                    "Venus": "शुक्र देव (Shukra)",
+                    "Rahu": "राहु (Rahu)",
+                    "Ketu": "केतु (Ketu)"
+                }
+                p_hi = p_hi_names.get(matched_planet, matched_planet)
+                h_num = p.house_from_lagna
+                sign_s = p.sign_name
+                deg_s = f"{p.sign_degree:.2f}°"
+                nak_s = f"{p.nakshatra_name} (पाद {p.nakshatra_pada})"
+                ruled_houses = [i + 1 for i, h in enumerate(chart.houses) if h.lord == matched_planet]
+                ruled_str = ", ".join([f"{h}वें" for h in ruled_houses]) + " भाव" if ruled_houses else "नैसर्गिक कारक"
+
+                # Calculate aspects (दृष्टियां)
+                aspect_houses = []
+                if matched_planet == "Jupiter":
+                    aspect_houses = [(h_num + 4) % 12 or 12, (h_num + 6) % 12 or 12, (h_num + 8) % 12 or 12]
+                elif matched_planet == "Saturn":
+                    aspect_houses = [(h_num + 2) % 12 or 12, (h_num + 6) % 12 or 12, (h_num + 9) % 12 or 12]
+                elif matched_planet == "Mars":
+                    aspect_houses = [(h_num + 3) % 12 or 12, (h_num + 6) % 12 or 12, (h_num + 7) % 12 or 12]
+                elif matched_planet in ["Rahu", "Ketu"]:
+                    aspect_houses = [(h_num + 4) % 12 or 12, (h_num + 6) % 12 or 12, (h_num + 8) % 12 or 12]
+                else:
+                    aspect_houses = [(h_num + 6) % 12 or 12]
+                aspect_str = ", ".join([f"{ah}वें भाव" for ah in aspect_houses])
+
+                ans = (
+                    f"🪐 **{p_hi} शास्त्रीय स्थिति व प्रभाव निर्णय ({p_name} जी):**\n\n"
+                    f"आपके प्रश्न *\"{user_query}\"* पर आपकी जन्म कुण्डली (**{lagna_s} लग्न**) के अनुसार सूक्ष्म शास्त्रीय विश्लेषण:\n\n"
+                    f"📍 **१. कुण्डली में वास्तविक ग्रह स्थिति व गरिमा (Natal Placement):**\n"
+                    f"- **भाव स्थिति:** कुण्डली के **{h_num}वें भाव** ({sign_s} राशि, {deg_s}) में स्थित हैं।\n"
+                    f"- **नक्षत्र:** {nak_s}\n"
+                    f"- **भावेश (Lordship):** आपकी कुण्डली में यह {ruled_str} के अधिपति हैं।\n"
+                    f"- **अवस्था:** {'🔄 **वक्री (Retrograde)**' if p.is_retrograde else 'मार्गी (Direct)'} | {'🔥 **अस्त (Combust)**' if p.is_combust else 'उदित'} | गरिमा: **{p.dignity.title()}**\n\n"
+                )
+
+                if is_vakri_inquiry or p.is_retrograde:
+                    ans += f"🌀 **२. वक्री (Retrograde) होने का शास्त्रीय प्रभाव (*सारावली* एवं *फलदीपिका*):**\n"
+                    if p.is_retrograde:
+                        ans += (
+                            f"- **अत्यधिक चेष्टा बल:** शास्त्रीय ग्रंथ *सारावली (अध्याय ५, श्लोक ३८)* के अनुसार — *'वक्रे हि बलयुक्ताः स्युः शुभाः राज्यप्रदा नृणाम्'*। वक्री ग्रह पृथ्वी के सर्वाधिक निकट होता है, इसलिए यह कुण्डली में **सर्वाधिक चेष्टा बली (Maximum Chesta Bala)** हो जाता है।\n"
+                            f"- **मौलिक चिंतन व गहन विश्लेषण:** वक्री {p_hi} जातक को पारंपरिक लीक से हटकर सोचने वाला, गहन शोधक और आंतरिक विवेक (Intuitive & Analytical Mind) से युक्त बनाता है।\n"
+                            f"- **पुनरावृत्ति/संशोधन से विजय:** किसी भी कार्य, योजना, अध्ययन अथवा परीक्षा में जब आप दोबारा (2nd attempt / revision) प्रयास करते हैं, तो आपको असाधारण सफलता प्राप्त होती है।\n"
+                            f"- **गहन अंतर्दृष्टि व सलाहकारी क्षमता:** जातक के पास स्वाभाविक दूरदर्शिता और आंतरिक ज्ञान होता है, जिससे वह दूसरों को अत्यंत सटीक मार्गदर्शन व परामर्श देने में सक्षम होता है।\n\n"
+                        )
+                    else:
+                        ans += f"- आपकी जन्म कुण्डली में यह ग्रह **मार्गी (Direct)** हैं, वक्री नहीं हैं। अतः यह सामान्य गति से अपने शुभ फल प्रदान कर रहे हैं।\n\n"
+
+                ans += (
+                    f"👁️ **३. दृष्टि प्रभाव (Planetary Aspects):**\n"
+                    f"- {p_hi} की पूर्ण दृष्टि कुण्डली के **{aspect_str}** पर पड़ रही है। इन भावों से संबंधित विषयों पर ग्रह का सक्रिय और गहरा प्रभाव रहेगा।\n\n"
+                    f"⚠️ **४. शास्त्रीय सतर्कता (Candid Truth):**\n"
+                )
+                if matched_planet == "Jupiter":
+                    if 6 in ruled_houses or 8 in ruled_houses:
+                        ans += f"- चूंकि गुरु कुण्डली में {ruled_str} का दायित्व भी संभालते हैं, अतः खानपान में अधिक मीठे व वसायुक्त भोजन से बचें तथा यकृत (Liver), उदर व वजन को संतुलित रखें।\n"
+                    else:
+                        ans += f"- महत्वपूर्ण निर्णयों में जल्दबाजी से बचें; अपने अंतर्मन और ज्ञान पर भरोसा रखें।\n"
+                elif matched_planet == "Saturn":
+                    ans += f"- आलस्य व विलंब से बचें; नियमित अनुशासन और कर्मनिष्ठा ही आपकी सबसे बड़ी शक्ति है।\n"
+                elif matched_planet == "Mars":
+                    ans += f"- क्रोध व जल्दबाजी से बचें; ऊर्जा को रचनात्मक और अनुशासित कार्यों में लगाएं।\n"
+                elif matched_planet in ["Rahu", "Ketu"]:
+                    ans += f"- भ्रम, अति-उत्साह या अनिर्णय की स्थिति से बचें; अनुभवी लोगों की सलाह लेकर निर्णय लें।\n"
+                else:
+                    ans += f"- ग्रह के नैसर्गिक स्वभाव के अनुरूप संयम और विवेक का पालन करें।\n"
+
+                ans += f"\n🌿 **५. सात्विक वैदिक उपाय:**\n"
+                if matched_planet == "Jupiter":
+                    ans += (
+                        f"- नित्य प्रातः *'ॐ बृं बृहस्पतये नमः'* अथवा *'ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः'* का जप करें।\n"
+                        f"- गुरुवार को गाय को चने की दाल व थोड़ा गुड़ खिलाएं।\n"
+                        f"- गुरुजनों, संतों एवं पिता का सम्मान करें; ५-मुखी रुद्राक्ष धारण करना कल्याणकारी रहेगा।"
+                    )
+                elif matched_planet == "Saturn":
+                    ans += (
+                        f"- शनिवार को पीपल के वृक्ष के नीचे सरसों के तेल का दीपक प्रज्वलित करें।\n"
+                        f"- *'ॐ शं शनैश्चराय नमः'* का जप करें और हनुमान चालीसा का पाठ करें।"
+                    )
+                elif matched_planet == "Mars":
+                    ans += (
+                        f"- मंगलवार को हनुमान जी को सिंदूर व चमेली का तेल अर्पित करें।\n"
+                        f"- नित्य सुंदरकांड अथवा हनुमान चालीसा का पाठ करें।"
+                    )
+                elif matched_planet == "Mercury":
+                    ans += (
+                        f"- बुधवार को गाय को हरा चारा अथवा भीगी हुई साबुत मूंग की दाल खिलाएं।\n"
+                        f"- *'ॐ बुं बुधाय नमः'* का जप करें।"
+                    )
+                else:
+                    ans += f"- नित्य गायत्री मंत्र का १०८ बार जप करें और इष्ट देव की नियमित आराधना करें।"
+
+                return ans
+
+        # 2. DOSHA INQUIRY (मांगलिक, साढ़ेसाती, कालसर्प)
+        is_manglik_inquiry = any(w in q_lower for w in ["मांगलिक", "manglik", "kuja"])
+        is_sadesati_inquiry = any(w in q_lower for w in ["साढ़ेसाती", "साढेसाती", "sade sati", "sadesati", "ढैय्या", "dhayya"])
+        is_kaalsarp_inquiry = any(w in q_lower for w in ["कालसर्प", "kaal sarp", "kalsarp"])
+
+        if is_manglik_inquiry:
+            mars = chart.planets.get("Mars")
+            m_h = mars.house_from_lagna if mars else 1
+            is_m = m_h in [1, 4, 7, 8, 12]
+            return (
+                f"🔥 **मांगलिक विचार शास्त्रीय निर्णय ({p_name} जी):**\n\n"
+                f"आपकी जन्म कुण्डली (**{lagna_s} लग्न**) में मंगल ग्रह की स्थिति:\n\n"
+                f"- **मंगल की भाव स्थिति:** {m_h}वां भाव ({mars.sign_name} राशि, {mars.sign_degree:.2f}°)\n"
+                f"- **मांगलिक निर्णय:** **{'हाँ, आपकी कुण्डली में मांगलिक प्रभाव उपस्थित है' if is_m else 'आपकी कुण्डली मांगलिक दोष से पूर्णतः मुक्त है'}**।\n"
+                f"- **शास्त्रीय स्थिति:** *बृहत्पाराशर होराशास्त्र* के अनुसार १, ४, ७, ८, १२ भावों में मंगल की स्थिति मांगलिक मानी जाती है।\n\n"
+                f"🌿 **सात्विक उपाय:** मंगलवार को हनुमान चालीसा अथवा सुंदरकांड का पाठ करें और मंगल गायत्री का जप करें।"
+            )
+
+        if is_sadesati_inquiry:
+            saturn = chart.planets.get("Saturn")
+            moon = chart.planets.get("Moon")
+            return (
+                f"🪐 **शनि साढ़ेसाती व ढैय्या विचार ({p_name} जी):**\n\n"
+                f"आपकी जन्म कुण्डली में चंद्र राशि **{moon.sign_name}** है।\n\n"
+                f"- **शनि की जन्मकालीन स्थिति:** कुण्डली के {saturn.house_from_lagna}वें भाव ({saturn.sign_name} राशि) में।\n"
+                f"- **शास्त्रीय सिद्धांत:** शनि जब गोचर में जन्म चंद्र से १२वें, जन्म राशि पर अथवा द्वितीय भाव में भ्रमण करते हैं, तब साढ़ेसाती का प्रभाव होता है।\n"
+                f"- **परामर्श:** शनि न्याय व कर्मफल के अधिपति हैं। सत्य, निष्ठा और अनुशासन से कर्म करें, भयभीत होने की आवश्यकता नहीं है।\n\n"
+                f"🌿 **सात्विक उपाय:** शनिवार को पीपल वृक्ष के नीचे सरसों के तेल का दीपक जलाएं और हनुमान चालीसा का पाठ करें।"
+            )
+
         else:
             return (
                 f"🙏 **शास्त्रीय परामर्श ({p_name} जी):**\n\n"
@@ -664,6 +826,16 @@ class AINarrativeService:
                 f"- **शास्त्रीय फल:** **{p_res['verdict']}**\n"
                 f"- **संभावित काल:** **{research['direct_timing']}**\n\n"
                 f"💡 **दैवज्ञ परामर्श:** अपने पुरुषार्थ और इष्ट आराधना को बनाए रखें। प्रतिदिन गायत्री मंत्र का १०८ बार जप कल्याणकारी रहेगा।"
+                f"आपके प्रश्न *\"{user_query}\"* पर जन्म कुण्डली (**{lagna_s} लग्न**, **{moon_s} राशि**) एवं ग्रह स्थितियों का शास्त्रीय निष्कर्ष:\n\n"
+                f"🔍 **१. प्रश्न परीक्षण व तात्कालिक ग्रह संकेत (Prashna Marga):**\n"
+                f"- **जिज्ञासा परीक्षण:** {research['intent_status']}\n"
+                f"- **प्रश्न कालीन संबंध:** {p_res['tajika_yoga']} (प्रश्नेश: {p_res['lagnesh_name']}, कार्येश: {p_res['karyesh_name']})\n"
+                f"- **तात्कालिक संकेत:** {p_res['verdict']}\n\n"
+                f"📜 **२. जन्म कुण्डली का आधारभूत शास्त्रीय विश्लेषण:**\n"
+                f"- **लग्न विचार:** {lagna_s} लग्न होने से आपके व्यक्तित्व में संतुलन, न्यायप्रियता एवं स्वाभिमान की प्रधानता है।\n"
+                f"- **चंद्र राशि:** {moon_s} राशि अनुसार मन एवं मानसिक प्रवृत्तियों का संचालन होता है।\n"
+                f"- **कर्म व भाग्य दिशा:** दशम भाव व नवम भाव के ग्रह आपके पुरुषार्थ को सही दिशा में लगाने पर अनुकूल फल प्रदान करते हैं।\n\n"
+                f"💡 **दैवज्ञ परामर्श:** अपने पुरुषार्थ और इष्ट आराधना को बनाए रखें। प्रतिदिन गायत्री मंत्र का १०८ बार जप अथवा सूर्य को तांबे के पात्र से जल अर्पित करना कल्याणकारी रहेगा।"
             )
 
     def chat_consultation(
@@ -672,7 +844,7 @@ class AINarrativeService:
         chart: Optional[KundaliChart] = None,
         master_data: Optional[Dict[str, Any]] = None,
         api_key: Optional[str] = None,
-        model: str = "gemini-3.8-flash",
+        model: str = "gemini-2.5-flash",
         language: str = "Hindi",
         chat_history: Optional[List[Dict[str, str]]] = None,
         active_dasha_summary: str = "",

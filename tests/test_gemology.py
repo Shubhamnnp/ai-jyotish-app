@@ -216,3 +216,39 @@ def test_ai_sahayak_business_query_suitability():
     assert ("बुध" in response and ("सतर्कता" in response or "चेतावनी" in response or "८वें" in response or "8" in response))
     # Must suggest realistic long-term timing (2026/2027)
     assert ("२०२६" in response or "2026" in response or "२०२७" in response or "2027" in response)
+
+
+def test_ai_sahayak_guru_vakri_query_analysis():
+    """Verify that when queried about retrograde Jupiter ('meri kundli me guru vakri ka kya prabhav h'),
+    AI Sahayak analyzes Jupiter's house, lordship, Chesta Bala from classical Saravali/Phaladeepika,
+    and NEVER returns horary '1 से 3 सप्ताह' or 'सकारात्मक / शीघ्र कार्य सिद्धि'."""
+    bd = BirthData(
+        name="Shubham Tiwari",
+        birth_date=datetime.date(1996, 6, 20),
+        birth_time=datetime.time(11, 45),
+        latitude=28.6139,
+        longitude=77.2090,
+        timezone_offset=5.5
+    )
+    chart = default_chart_calculator.calculate_full_chart(bd)
+    master_bundle = default_master_calculator.calculate_all(chart)
+
+    response = default_narrative_service.chat_consultation(
+        user_query="meri kundli me guru vakri ka kya prabhav h",
+        chart=chart,
+        master_data=master_bundle,
+        api_key=None,
+        language="Hindi"
+    )
+
+    # Must NEVER output the broken horary countdown
+    assert "1 से 3 सप्ताह के भीतर" not in response
+    assert "Within 1-3 weeks" not in response
+    assert "शीघ्र कार्य सिद्धि" not in response
+
+    # Must specifically analyze Guru (Jupiter) and Vakri (Retrograde)
+    assert ("गुरु" in response or "बृहस्पति" in response)
+    assert "वक्री" in response
+    assert ("चेष्टा बल" in response or "सारावली" in response or "फलदीपिका" in response)
+    assert ("भाव" in response)
+    assert ("उपाय" in response or "मंत्र" in response)
