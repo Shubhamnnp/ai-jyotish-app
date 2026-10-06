@@ -1,5 +1,5 @@
 """
-Ashtakavarga Kakshya Transit Scanner for JyotishOS (Jagannatha Hora Standard).
+Ashtakavarga Kakshya Transit Scanner for JyotishOS (Classical Shastriya Standard).
 Calculates 8-Kakshya transit division (3°45' each) across Saturn, Jupiter, Mars,
 Sun, Venus, Mercury, Moon, and Lagna for all transiting planets.
 Evaluates native's BAV bindu (1=Subha vs 0=Asubha), generating a live Kakshya meter

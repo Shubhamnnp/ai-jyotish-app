@@ -1401,7 +1401,7 @@ class MilanService:
 
     def render_milan_report_html(self, groom_data: BirthData, bride_data: BirthData, score: AshtakootaScore) -> str:
         """
-        Renders a Parashara's Light / Jagannatha Hora grade printable HTML dossier
+        Renders a comprehensive classical printable HTML dossier
         for Kundali Milan with full Guna breakdown, Mahadoshas, Dasha Sandhi, and Remedies.
         """
         g_name = groom_data.name or "वर (Groom)"

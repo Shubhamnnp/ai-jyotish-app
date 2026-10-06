@@ -9,7 +9,7 @@ Implements:
 References:
 - Tajika Neelakanthi (Neelakantha Daivajna)
 - Brihat Parashara Hora Shastra (Varshaphala Adhyaya)
-- Parashara's Light & JHora Varshaphala Architecture
+- Classical Vedic Varshaphala Architecture
 """
 
 from datetime import date, datetime, timedelta

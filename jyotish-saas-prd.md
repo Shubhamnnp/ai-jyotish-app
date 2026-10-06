@@ -24,7 +24,7 @@
 
 | Problem | Aaj ki sthiti |
 |---|---|
-| Tools alag-alag hain | J. Hora, Kundli Pro, KP software sab alag; user ko khud jodna padta hai |
+| Tools alag-alag hain | Legacy software, Kundli Pro, KP software sab alag; user ko khud jodna padta hai |
 | Analysis expert-only hai | Software chart deta hai, fal-kathan nahi; astrologer ke bina samajhna mushkil |
 | Generic AI predictions | ChatGPT-type chatbots kundali galat calculate karte hain (hallucination) |
 | Date-specific query ka koi tool nahi | "12 April 2027 ko kya hoga?" ka structured, multi-technique uttar nahi milta |
@@ -408,7 +408,7 @@ Response (UI)
 
 Yeh product ki sabse badi khaas zarurat hai.
 
-1. **Calculation accuracy:** Output ko J. Hora, Kundli Professional, Astro-Seek/AstroSage jaise established tools ke saath cross-check karna (golden test set: 500+ charts, alag-alag ayanamsa/location/era).
+1. **Calculation accuracy:** Output ko Kundli Professional, Astro-Seek/AstroSage jaise established tools ke saath cross-check karna (golden test set: 500+ charts, alag-alag ayanamsa/location/era).
 2. **Rule correctness:** Har rule ko 2 alag acharya reviewers se sign-off.
 3. **Backtesting dataset:** Known famous people ki *Rodden Rating AA* kundalis + user-consented life events. Dekhna ki engine ki "windows" random se behtar hain ya nahi (baseline comparison).
 4. **User feedback loop:** "Ghatna hui / nahi hui" feedback, event category ke saath. Isse weights calibrate hote hain.
@@ -580,7 +580,7 @@ Add-ons: AI credits (extra queries), premium languages.
 ### Suggested Next Steps
 1. 3-5 acharyaon ke saath discovery workshop (rule scope + school decide).
 2. Swiss Ephemeris commercial license aur legal review.
-3. 2-3 hafte ka **technical spike:** kundali + Vimshottari + gochar + 30 rules ka prototype, J. Hora ke saath cross-verify.
+3. 2-3 hafte ka **technical spike:** kundali + Vimshottari + gochar + 30 rules ka prototype, shastriya pramano ke saath cross-verify.
 4. MVP scope freeze: pehle sirf **Parashari + Vimshottari + Gochar + Ashtakavarga** par Ghatna Query, baaki paddhatiyan phase-wise.
 5. Kam se kam 200 beta users se feedback + ghatna-outcome data collection shuru karna.
 

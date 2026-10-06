@@ -1,5 +1,5 @@
 """
-Comprehensive Jaimini Astrological Suite for JyotishOS (Jagannatha Hora Grade).
+Comprehensive Jaimini Astrological Suite for JyotishOS (Classical Shastriya Grade).
 Computes:
 1. Karakamsha Chart (D9 Navamsha & D1 Rashi views with Karakamsha as Lagna).
 2. Ishta Devata, Dharma Devata, and Palana Devata according to Jaimini Upadesha Sutras.

@@ -4318,24 +4318,27 @@ if "is_logged_in" not in st.session_state:
 if "saved_charts" not in st.session_state:
     st.session_state.saved_charts = default_folder_manager.list_recent_charts()
 
+if "gla_authenticated" not in st.session_state:
+    st.session_state.gla_authenticated = False
+
 def get_live_local_now(tz_offset_hours: float = 5.5) -> datetime:
-    """Returns exact current live datetime converted from UTC to target timezone offset (defaults to IST +5.5)."""
-    from datetime import timezone as dt_timezone
+    """Returns the true current datetime in user's local timezone (defaults to IST, UTC+5:30)."""
     utc_now = datetime.now(dt_timezone.utc)
     return (utc_now + timedelta(hours=tz_offset_hours)).replace(tzinfo=None)
 
-# Live GPS query parameter processor
-if "gps_lat" in st.query_params and "gps_lon" in st.query_params:
+# Process GPS coordinates from URL query parameters if passed by JS bridge
+_qp = st.query_params
+if "gps_lat" in _qp and "gps_lon" in _qp:
     try:
-        _q_lat = float(st.query_params["gps_lat"])
-        _q_lon = float(st.query_params["gps_lon"])
-        st.session_state.birth_lat = _q_lat
-        st.session_state.birth_lon = _q_lon
-        _rev_loc = default_geocoding_service.reverse_geocode(_q_lat, _q_lon)
-        if _rev_loc:
-            st.session_state.birth_city = _rev_loc.formatted_name or _rev_loc.city
-            st.session_state.birth_tz = _rev_loc.timezone_offset
-        st.toast(f"📍 GPS स्थान प्राप्त: {st.session_state.birth_city}", icon="🛰️")
+        _g_lat = float(_qp.get("gps_lat"))
+        _g_lon = float(_qp.get("gps_lon"))
+        st.session_state.birth_lat = _g_lat
+        st.session_state.birth_lon = _g_lon
+        _g_loc = default_geocoding_service.reverse_geocode(_g_lat, _g_lon)
+        if _g_loc:
+            st.session_state.birth_city = f"{_g_loc.city}, {_g_loc.state}"
+            st.session_state.birth_tz = _g_loc.timezone_offset
+        st.toast(f"📍 GPS स्थान प्राप्त: {st.session_state.get('birth_city', '')}", icon="🛰️")
         del st.query_params["gps_lat"]
         del st.query_params["gps_lon"]
     except Exception:
@@ -6147,7 +6150,7 @@ with st.container(key="top_frozen_header_container", border=False):
                     def _step_time_modal_action(delta_minutes=0, delta_hours=0, delta_days=0, reset_to_now=False):
                         from datetime import datetime as dt_cls, timedelta as td_cls
                         if reset_to_now:
-                            now_curr = get_live_local_now(st.session_state.get("birth_tz", 5.5))
+                            now_curr = dt_cls.now()
                             st.session_state.birth_date = now_curr.date()
                             st.session_state.birth_time = now_curr.time().replace(microsecond=0)
                         else:
@@ -6176,35 +6179,6 @@ with st.container(key="top_frozen_header_container", border=False):
                 st.markdown("### 📍 वर्तमान स्थान एवं GPS निर्देशांक (Current Location)")
                 col_loc1, col_loc2, col_loc3 = st.columns([2, 1.5, 1])
                 with col_loc1:
-                    col_gps_a, col_gps_b = st.columns(2)
-                    with col_gps_a:
-                        if st.button("🛰️ डिवाइस GPS प्राप्त करें", type="primary", use_container_width=True, key="btn_modal_get_gps"):
-                            components.html("""
-                            <script>
-                            if (navigator.geolocation) {
-                                navigator.geolocation.getCurrentPosition(function(pos) {
-                                    const u = new URL(window.parent.location);
-                                    u.searchParams.set("gps_lat", pos.coords.latitude.toFixed(4));
-                                    u.searchParams.set("gps_lon", pos.coords.longitude.toFixed(4));
-                                    window.parent.location.href = u.toString();
-                                }, function(err) {
-                                    alert("GPS अनुमति आवश्यक है। कृपया लोकेशन परमिशन Allow करें।");
-                                }, {timeout: 6000, enableHighAccuracy: true});
-                            }
-                            </script>
-                            """, height=0, width=0)
-                    with col_gps_b:
-                        if st.button("🌐 नेटवर्क/IP से स्वतः डिटेक्ट", use_container_width=True, key="btn_modal_get_ip_loc"):
-                            with st.spinner("IP नेटवर्क से स्थान खोजा जा रहा है..."):
-                                ip_loc = default_geocoding_service.get_ip_location()
-                                if ip_loc:
-                                    st.session_state.birth_lat = ip_loc.latitude
-                                    st.session_state.birth_lon = ip_loc.longitude
-                                    st.session_state.birth_city = f"{ip_loc.city}, {ip_loc.state}"
-                                    st.session_state.birth_tz = ip_loc.timezone_offset
-                                    st.toast(f"✅ स्थान डिटेक्ट: {st.session_state.birth_city}", icon="📍")
-                                    st.rerun()
-
                     loc_search = st.text_input("स्थान खोजें (Search City)", value=st.session_state.birth_city, key="gla_loc_modal_input")
                     loc_results = default_geocoding_service.search(loc_search, limit=3)
                     if loc_results:
@@ -6601,7 +6575,7 @@ if selected_idx == 0:
 
     tab_d1, tab_jm_hud, tab_bhav, tab_chandra, tab_surya, tab_yuddha, tab_vishesh, tab_kota = st.tabs([
         "📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (D1 to D60)",
-        "👑 विशेष जैमिनी लग्न (Special Lagnas - J.Hora Standard)",
+        "👑 विशेष जैमिनी लग्न (Special Lagnas - Shastriya Standard)",
         "🏠 भाव चलित चक्र",
         "🌙 चन्द्र कुण्डली",
         "☀️ सूर्य कुण्डली",
@@ -6633,7 +6607,7 @@ if selected_idx == 0:
 
         if chart_view_mode == "Quad":
             st.markdown("#### 🖥️ ४-कुण्डली एकीकृत्त वर्कबेंच (D1 लग्न + D9 नवांश + D10 दशमांश + D7 सप्तांश)")
-            st.caption("विश्वस्तरीय सॉफ्टवेयर (Parashara's Light / JHora) समान एक ही स्क्रीन पर प्रमुख वर्ग चक्रों का एक साथ अध्ययन:")
+            st.caption("विश्वस्तरीय वैदिक ज्योतिष वर्कबेंच समान एक ही स्क्रीन पर प्रमुख वर्ग चक्रों का एक साथ अध्ययन:")
 
             q_col1, q_col2 = st.columns(2, gap="medium")
             with q_col1:
@@ -7442,7 +7416,7 @@ if selected_idx == 0:
 
 
     with tab_jm_hud:
-        st.markdown("### 👑 विशेष जैमिनी लग्न (Special Lagnas - J.Hora Standard)")
+        st.markdown("### 👑 विशेष जैमिनी लग्न (Special Lagnas - Shastriya Standard)")
         st.info("महर्षि पराशर (BPHS) एवं जैमिनी उपदेश सूत्रों के अनुसार जीवन के विशिष्ट क्षेत्रों (धन, पद, सत्ता, आयुष्य एवं भाग्य) के सूक्ष्म आकलन हेतु विशेष लग्नों की गणितीय स्पष्ट स्थिति:")
 
         if chart.jaimini:
@@ -7509,7 +7483,7 @@ if selected_idx == 0:
             """, unsafe_allow_html=True)
 
             # ─── Detailed Comparative Table ───
-            st.markdown("#### 📊 विशेष लग्न स्पष्ट गणितीय तालिका (J.Hora Standard Mathematical Details)")
+            st.markdown("#### 📊 विशेष लग्न स्पष्ट गणितीय तालिका (Shastriya Standard Mathematical Details)")
             sl_rows = []
             order_keys = ["HL", "GL", "SL", "IL", "BL", "PP", "VL"]
             for k in order_keys:
@@ -9816,7 +9790,7 @@ elif selected_idx == 5:
             nat_default_q = sample_queries.get(nat_cat_name, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
             nat_query_text = st.text_input("अपना प्रश्न दर्ज करें (Enter Native Query)", value=nat_default_q, key="nat_prashna_query_text")
 
-        # ⏱️ Live Vartaman Date, Time & GPS Controls for Tab 1
+        # Live Vartaman Date, Time & GPS Controls for Tab 1
         live_now_nat = get_live_local_now(tz_offset)
         if "nat_prashna_date_val" not in st.session_state:
             st.session_state.nat_prashna_date_val = live_now_nat.date()
@@ -9878,7 +9852,7 @@ elif selected_idx == 5:
                 )
                 st.session_state.active_prashna_res = st.session_state.prashna_native_res
                 if calc_nat_btn:
-                    st.toast("✅ सक्रिय जातक प्रश्न कुण्डली एवं समन्वय सफलतापूर्वक परिकलित!")
+                    st.toast("✅ सक्रिय जातक प्रश्न कुण्डली एवं समन्वय सफलतापूर्वक परिकलित!", icon="🔮")
             except Exception as e:
                 st.error(f"प्रश्न परिकलन में त्रुटि: {e}")
 
@@ -13627,7 +13601,7 @@ elif selected_idx == 9:
 
         with sub_spd:
             st.markdown("### 📊 डायनेमिक गोचर गति व वक्रता वक्र (Dynamic Planetary Speed & Retrograde Curves)")
-            st.caption("Shri Jyoti Star एवं Jagannatha Hora के समान ग्रहों की दैनिक कोणीय गति (°/दिन), वक्र-मार्गी मोड़ बिंदु (Stationary Points), अतिचार व मन्द गति का दृश्य वक्र:")
+            st.caption("ग्रहों की दैनिक कोणीय गति (°/दिन), वक्र-मार्गी मोड़ बिंदु (Stationary Points), अतिचार व मन्द गति का शास्त्रीय दृश्य वक्र:")
 
             from src.jyotish.services.transit_graph import default_transit_graph_service, PLANET_NAMES_HI, PLANET_COLORS
             col_sp1, col_sp2, col_sp3 = st.columns([1.5, 1.5, 3])
@@ -13679,7 +13653,7 @@ elif selected_idx == 9:
 
         with sub_wave:
             st.markdown("### 📈 ५-वर्षीय बहु-ग्रहीय वेव आरेख व राशि संक्रमण (5-Year Ephemeris Waves)")
-            st.caption("Shri Jyoti Star एवं Jagannatha Hora ग्रेड ५-वर्षीय दीर्घकालिक गोचर वेव आरेख — शनि, गुरु, राहु एवं मंगल के राशि संचरण, वक्र-मार्गी दोलन (Retrograde Loops) एवं राशि संक्रमण (Ingress):")
+            st.caption("शास्त्रीय ५-वर्षीय दीर्घकालिक गोचर वेव आरेख — शनि, गुरु, राहु एवं मंगल के राशि संचरण, वक्र-मार्गी दोलन (Retrograde Loops) एवं राशि संक्रमण (Ingress):")
 
             try:
                 import importlib
@@ -17458,7 +17432,7 @@ elif selected_idx == 18:
 
     with tab_research_engine:
         st.markdown("### 🔍 शास्त्रीय योग एवं कुण्डली अनुसंधान इंजन (Astrological Research & Query Engine)")
-        st.write("Jagannatha Hora एवं Shri Jyoti Star के शोध इंजन के समान अपने सहेजे गए जातकों एवं ऐतिहासिक बेंचमार्क कुण्डलियों में विशिष्ट शास्त्रीय योगों, ग्रह स्थितियों व उच्च-नीच अवस्थाओं की खोज।")
+        st.write("शास्त्रीय शोध इंजन के समान अपने सहेजे गए जातकों एवं ऐतिहासिक बेंचमार्क कुण्डलियों में विशिष्ट शास्त्रीय योगों, ग्रह स्थितियों व उच्च-नीच अवस्थाओं की खोज।")
 
         from src.jyotish.services.research_engine import default_research_engine, AVAILABLE_RESEARCH_YOGAS
 

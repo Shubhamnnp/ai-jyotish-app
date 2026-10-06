@@ -1,7 +1,7 @@
 """
 Dynamic Planetary Speed and Transit Wave Service for JyotishOS.
 Calculates daily planetary velocities, stationary points (retrograde/direct transitions),
-Atichara (accelerated motion), and Manda (retarded motion) curves matching Shri Jyoti Star & Jagannatha Hora.
+Atichara (accelerated motion), and Manda (retarded motion) curves matching classical planetary speed algorithms.
 """
 
 from typing import Dict, List, Any, Optional
