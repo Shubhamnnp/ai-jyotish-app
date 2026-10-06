@@ -2497,6 +2497,7 @@ client_bridge_code = """
             "समय शोधन": "Birth Time Rectification",
             "कुण्डली मिलान": "Kundali Matching",
             "ज्योतिष AI सहायक": "Jyotish AI Assistant",
+            "ज्योतिषीय पञ्चाङ्ग": "Vedic Jyotish Panchang",
             "सम्पूर्ण रिपोर्ट": "Comprehensive Report",
             "100 शास्त्रीय नियम": "100 Classical Rules",
             "वैदिक ऋषि सत्यापन": "Vedic Sage Validation",
@@ -4491,7 +4492,8 @@ if "English" in st.session_state.app_lang:
         "🏥 Health & Disease Forecast",
         "🧬 Body & Physical Traits",
         "🕉️ Ishta Devata & Pooja Vidhan",
-        "🧘 Personality & Karmaphala (Karma)"
+        "🧘 Personality & Karmaphala (Karma)",
+        "📅 Vedic Jyotish Panchang"
     ]
 elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -4523,7 +4525,8 @@ elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_sta
         "🏥 உடல்நலம் & நோய் கணிப்பு (Health)",
         "🧬 உடலமைப்பு & அங்கங்கள் (Physique)",
         "🕉️ இஷ்ட தெய்வம் & பூஜை முறை (Ishta Devata)",
-        "🧘 ஆளுமை & கர்ம பலன்கள் (Karma)"
+        "🧘 ஆளுமை & கர்ம பலன்கள் (Karma)",
+        "📅 ஜோதிட பஞ்சாங்கம் (Vedic Panchang)"
     ]
 elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -4555,7 +4558,8 @@ elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session
         "🏥 ఆరోగ్యం & వ్యాధి విశ్లేషణ (Health)",
         "🧬 శరీర నిర్మాణం & అవయవాలు (Physique)",
         "🕉️ ఇష్ట దైవం & పూజా విధానం (Ishta Devata)",
-        "🧘 వ్యక్తిత్వం & కర్మఫలం (Karma)"
+        "🧘 వ్యక్తిత్వం & కర్మఫలం (Karma)",
+        "📅 వైదిక పంచాంగం (Vedic Panchang)"
     ]
 elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -4587,7 +4591,8 @@ elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.se
         "🏥 સ્વાસ્થ્ય અને રોગ નિદાન (Health)",
         "🧬 શારીરિક ગઠન અને અંગો (Physique)",
         "🕉️ ઇષ્ટદેવ અને પૂજા વિધાન (Ishta Devata)",
-        "🧘 વ્યક્તિત્વ અને કર્મફળ (Karma)"
+        "🧘 વ્યક્તિત્વ અને કર્મફળ (Karma)",
+        "📅 વૈદિક પંચાંગ (Vedic Panchang)"
     ]
 elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -4619,7 +4624,8 @@ elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_s
         "🏥 आरोग्य व रोग निदान (Health)",
         "🧬 शारीरिक गठन व अवयव (Physique)",
         "🕉️ इष्टदेवता व नित्य पूजा विधी (Ishta Devata)",
-        "🧘 व्यक्तिमत्त्व व कर्मफळ (Karma)"
+        "🧘 व्यक्तिमत्त्व व कर्मफळ (Karma)",
+        "📅 वैदिक पंचांग (Vedic Panchang)"
     ]
 elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -4651,7 +4657,8 @@ elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_s
         "🏥 স্বাস্থ্য ও রোগ নির্ণয় (Health)",
         "🧬 শারীরিক গঠন ও অঙ্গপ্রত্যঙ্গ (Physique)",
         "🕉️ ইষ্টদেবতা ও পূজা বিধান (Ishta Devata)",
-        "🧘 ব্যক্তিত্ব ও কর্মফল (Karma)"
+        "🧘 ব্যক্তিত্ব ও কর্মফল (Karma)",
+        "📅 বৈদিক পঞ্জিকা (Vedic Panchang)"
     ]
 else:
     MODULE_OPTIONS = [
@@ -4683,7 +4690,8 @@ else:
         "🏥 स्वास्थ्य एवं रोग-निदान (Health)",
         "🧬 शारीरिक गठन एवं अंग-दोष (Body & Limbs)",
         "🕉️ इष्टदेवता, नित्य पूजा एवं व्रत (Ishta Devata)",
-        "🧘 व्यक्तित्व एवं कर्मफल (Personality & Karma)"
+        "🧘 व्यक्तित्व एवं कर्मफल (Personality & Karma)",
+        "📅 ज्योतिषीय पञ्चाङ्ग (Vedic Panchang)"
     ]
 
 
@@ -6478,7 +6486,7 @@ with st.container(key="top_frozen_header_container", border=False):
         radio_idx = filtered_mods.index(curr_mod_name) if curr_mod_name in filtered_mods else 0
         
         selected_module = st.radio(
-            "वैदिक मॉड्यूल्स (२९ मॉड्यूल)",
+            f"वैदिक मॉड्यूल्स ({len(MODULE_OPTIONS)} मॉड्यूल)",
             filtered_mods,
             index=radio_idx,
             label_visibility="collapsed"
@@ -19029,6 +19037,18 @@ elif selected_idx == 28:
             <small style="color:#64748B;"><b>शास्त्रीय संदर्भ:</b> {krm['shastriya_basis']}</small>
         </div>
         """, unsafe_allow_html=True)
+
+elif selected_idx == 29:
+    import importlib
+    import src.jyotish.ui.panchang_view as panchang_view_mod
+    importlib.reload(panchang_view_mod)
+
+    panchang_view_mod.render_vedic_panchang_view(
+        chart=chart,
+        birth_profile=birth_profile,
+        is_dark=st.session_state.get("dark_mode", False)
+    )
+
 
 
 
