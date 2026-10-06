@@ -22,7 +22,7 @@ import sys
 import os
 import re
 from typing import Any, Dict, List, Optional, Tuple
-from datetime import date, time, datetime, timedelta
+from datetime import date, time, datetime, timedelta, timezone
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
@@ -4323,7 +4323,7 @@ if "gla_authenticated" not in st.session_state:
 
 def get_live_local_now(tz_offset_hours: float = 5.5) -> datetime:
     """Returns the true current datetime in user's local timezone (defaults to IST, UTC+5:30)."""
-    utc_now = datetime.now(dt_timezone.utc)
+    utc_now = datetime.now(timezone.utc)
     return (utc_now + timedelta(hours=tz_offset_hours)).replace(tzinfo=None)
 
 # Process GPS coordinates from URL query parameters if passed by JS bridge
