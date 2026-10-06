@@ -1221,8 +1221,8 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     st.markdown(f"""
                     <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1px solid {t_item['color']};
                                 border-radius:6px; padding:8px; margin-bottom:6px; text-align:center;">
-                        <b style="font-size:12px; color:{'#FFFFFF' if is_dark else '#0F172A'};">#{t_item['nak_idx']} {t_item['nakshatra']}</b><br/>
-                        <span style="font-size:10.5px; color:{t_item['color']}; font-weight:700;">{t_item['tara_name']}</span>
+                        <b style="font-size:12px; color:{'#FFFFFF' if is_dark else '#0F172A'};">#{t_item.get('nak_idx', j + 1)} {t_item.get('nakshatra', '')}</b><br/>
+                        <span style="font-size:10.5px; color:{t_item.get('color', '#3B82F6')}; font-weight:700;">{t_item.get('tara_name', '')}</span>
                     </div>
                     """, unsafe_allow_html=True)
 
