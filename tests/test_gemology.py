@@ -120,3 +120,35 @@ def test_ai_sahayak_marriage_query_dual_kundali():
     assert ("प्रश्न" in response or "ताजिक" in response)
     assert ("सप्तम" in response or "भाव" in response)
     assert ("उपाय" in response or "मंत्र" in response)
+
+
+def test_ai_sahayak_greeting_general_intelligence():
+    """Verify that when the user simply says 'hii', AI Sahayak responds with a concise, respectful greeting without dumping full horoscope or cautions."""
+    bd = BirthData(
+        name="Shubham Tiwari",
+        birth_date=datetime.date(1996, 6, 20),
+        birth_time=datetime.time(11, 45),
+        latitude=28.6139,
+        longitude=77.2090,
+        timezone_offset=5.5
+    )
+    chart = default_chart_calculator.calculate_full_chart(bd)
+    master_bundle = default_master_calculator.calculate_all(chart)
+
+    # User says just "hii"
+    response = default_narrative_service.chat_consultation(
+        user_query="hii",
+        chart=chart,
+        master_data=master_bundle,
+        api_key=None,
+        language="Hindi"
+    )
+
+    # Must be a warm, concise greeting
+    assert "नमस्ते" in response
+    assert "Shubham Tiwari" in response
+    assert ("मार्गदर्शन" in response or "प्रश्न" in response)
+    # Must NOT vomit unsolicited dosha warnings or gemstone bans for a greeting
+    assert "अष्टम भाव का दोष" not in response
+    assert "पन्ना (Mercury) और माणिक्य (Sun) पहनना आपके लिए सर्वथा वर्जित" not in response
+    assert len(response.splitlines()) < 10  # Must be short and proportional!

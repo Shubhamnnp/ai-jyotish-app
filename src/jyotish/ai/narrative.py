@@ -22,12 +22,66 @@ except ImportError:
     GENAI_AVAILABLE = False
 
 
+def is_greeting_query(query: str) -> bool:
+    """Detects pure greetings, salutations, or pleasantries that do not ask a specific astrological question."""
+    if not query:
+        return False
+    clean = query.strip().lower()
+    for p in [".", "!", "?", ",", "-", "_", "'", '"', ":", ";", "/", "\\", "@", "#", "$", "*", "(", ")", "[", "]"]:
+        clean = clean.replace(p, " ")
+    words = [w for w in clean.split() if w]
+    if not words:
+        return False
+
+    astro_inquiry_tokens = {
+        "shadi", "vivah", "shaadi", "marriage", "spouse", "patni", "pati", "wife", "husband",
+        "naukri", "job", "career", "business", "vyapar", "promotion",
+        "dhan", "paisa", "paise", "money", "wealth", "property", "income",
+        "swasthya", "health", "rog", "bimar", "bimari", "disease",
+        "ratan", "ratna", "gem", "gemstone", "panna", "manikya", "moti", "munga", "pukhraj", "heera", "neelam", "gomed", "lahsuniya",
+        "kundali", "dasha", "gochar", "grah", "graha", "lagna", "rashi", "bhav", "bhava",
+        "kab", "kaisa", "kaisi", "hogi", "hoga", "milegi", "milega", "bhavishya", "future",
+        "when", "what", "which", "where", "why", "will",
+        "batao", "bataiye", "jaanna", "bataen",
+        "शादी", "विवाह", "नौकरी", "व्यापार", "करियर", "पदोन्नति", "धन", "संपत्ति", "पैसा", "स्वास्थ्य", "रोग", "रत्न", "पन्ना", "कब", "कैसा"
+    }
+    if any(w in astro_inquiry_tokens for w in words):
+        return False
+
+    greeting_tokens = {
+        "hi", "hii", "hiii", "hello", "helo", "hey", "namaste", "namaskar",
+        "pranam", "pranaam", "pranamji", "namasteji", "namaskarji", "guruji", "panditji", "sir", "ji",
+        "kya", "haal", "hai", "kaise", "ho", "hain", "good", "morning", "evening",
+        "afternoon", "shubh", "prabhat", "sandhya", "radhe", "shyam", "jai", "shree", "shri",
+        "krishna", "ram", "har", "mahadev", "din", "there", "aap", "bhai",
+        "नमस्ते", "प्रणाम", "नमस्कार", "राधे", "कृष्ण", "जय", "जी", "सुप्रभात"
+    }
+
+    if len(words) <= 5 and all(w in greeting_tokens for w in words):
+        return True
+
+    if len(words) == 1 and words[0] in greeting_tokens:
+        return True
+
+    return False
+
+
 SYSTEM_PROMPT = """You are 'दैवज्ञ AI' (Daivajna AI), a revered, world-class Vedic Astrologer and scholar of Shastriya Jyotish (Brihat Parashara Hora Shastra, Saravali, Brihat Jataka, Bhrigu Nandi Nadi, Lal Kitab, Krishnamurti Paddhati, Jaimini Upadesha Sutras, Phaladeepika, Muhurta Chintamani, Prashna Marga, and Shatpanchasika).
 
 YOUR SACRED CORE DIRECTIVE:
 Provide deeply personalized, 99.9% precise, compassionate, and shastriya astrological consultation based on the user's specific question by synthesizing BOTH the Natal Kundali (D1 to D60) and the Instant Horary Prashna Kundali (तात्कालिक प्रश्न कुण्डली).
 
-CRITICAL DAIVAJNA 4-TIER PROTOCOL:
+GENERAL INTELLIGENCE & CONTEXTUAL CALIBRATION (सामान्य बुद्धि व यथोचित उत्तर का विवेक):
+- You possess superior General Intelligence. Always understand the user's conversational intent and match the exact length, depth, and nature of your response to what was asked.
+- GREETINGS & CASUAL INTROS (e.g. "hi", "hii", "hello", "hey", "नमस्ते", "प्रणाम", "राधे-राधे"):
+  Respond with warm, dignified courtesy in ONLY 2 to 3 sentences in Hindi. Respectfully welcome the native by name, state that their birth chart ({Lagna} लग्न, {Moon} राशि) is active and loaded, and ask what specific life query (such as marriage, career, finance, health, or gemstones) they would like to explore today.
+  CRITICAL GENERAL INTELLIGENCE RULE: DO NOT dump an unsolicited horoscope reading, birth chart analysis, dosha warnings, or gemstone restrictions when the native has merely greeted you!
+- CONCEPTUAL ASTROLOGICAL QUESTIONS (e.g. "मांगलिक दोष क्या होता है?"):
+  Provide a crisp, scholarly explanation in 1 to 2 paragraphs using General Intelligence, explaining the classical principle clearly.
+- SPECIFIC LIFE QUESTIONS (e.g. "मेरी शादी कब होगी?", "करियर में पदोन्नति कब होगी?", "रत्न विचार"):
+  Apply the full Daivajna 4-Tier protocol below, answering PRECISELY and EXCLUSIVELY what was asked.
+
+CRITICAL DAIVAJNA 4-TIER PROTOCOL (For Specific Astrological Inquiries):
 
 1. LASER-FOCUSED DIRECT ANSWER FIRST (सिर्फ पूछे गए प्रश्न का सीधा उत्तर):
    - Do NOT write generic, irrelevant life essays. Answer PRECISELY what the user asked (e.g. if asked "मेरी शादी कब तक होगी?", provide the direct timing window, favorable months, and immediate reality first).
@@ -279,9 +333,13 @@ class AINarrativeService:
         q_lower = user_query.lower()
 
         # 1. Identify Topic & Map to Prashna Category
+        is_greeting = is_greeting_query(user_query)
         cat_en = "General"
         topic = "general"
-        if any(w in q_lower for w in ["विवाह", "शादी", "दांपत्य", "जीवनसाथी", "marriage", "spouse", "love", "shadi", "vivah"]):
+        if is_greeting:
+            topic = "greeting"
+            cat_en = "General"
+        elif any(w in q_lower for w in ["विवाह", "शादी", "दांपत्य", "जीवनसाथी", "marriage", "spouse", "love", "shadi", "vivah"]):
             topic = "marriage"
             cat_en = "Marriage"
         elif any(w in q_lower for w in ["नौकरी", "व्यापार", "करियर", "पदोन्नति", "आजीविका", "career", "job", "promotion", "business", "naukri"]):
@@ -324,7 +382,10 @@ class AINarrativeService:
         # 3. Intent Testing / Sincerity Parikshan (Prashna Marga Adhyaya 2)
         p_lagna_lord = prashna_res.get("lagnesh_name", "")
         is_malefic_in_lagna = any(r.get("house") == 1 for r in prashna_res.get("house_roles", []) if any(m in r.get("occupants", []) for m in ["Saturn", "Rahu", "Mars", "Ketu"]))
-        if is_malefic_in_lagna:
+        if is_greeting:
+            intent_status = "🌸 सादर अभिवादन (Respectful Greeting)"
+            intent_detail = "जातक ने परामर्श का शुभारम्भ करते हुए आदरपूर्वक अभिवादन किया है।"
+        elif is_malefic_in_lagna:
             intent_status = "⚠️ परीक्षा / संशय भाव (Testing/Skepticism check detected at query moment)"
             intent_detail = "प्रश्न समय के लग्न पर पाप प्रभाव होने से जातक के मन में परीक्षा अथवा संशय का भाव दर्शित होता है।"
         elif p_lagna_lord in ["Jupiter", "Venus", "Mercury"] or prashna_res.get("is_ithasala"):
@@ -456,6 +517,50 @@ class AINarrativeService:
             if env_key:
                 self._init_client(env_key)
 
+        # GENERAL INTELLIGENCE: GREETINGS & INTRODUCTIONS
+        if topic == "greeting":
+            p_name = chart.birth_data.name if chart else "जातक"
+            lagna_s = chart.lagna_sign_name if chart else ""
+            moon_s = chart.planets["Moon"].sign_name if chart else ""
+            nak_s = chart.panchang.nakshatra_name if chart else ""
+
+            if self.client:
+                greeting_prompt = f"""You are 'दैवज्ञ AI' (Daivajna AI), a revered Vedic Astrologer endowed with high General Intelligence.
+The native ({p_name}) has greeted you with: "{user_query}".
+The native's active chart profile:
+- Name: {p_name}
+- Lagna: {lagna_s}
+- Moon Sign: {moon_s} ({nak_s})
+
+CRITICAL GENERAL INTELLIGENCE INSTRUCTION:
+1. The user has ONLY sent a greeting ("{user_query}"). They have NOT asked an astrological question yet.
+2. DO NOT output a horoscope reading, birth chart analysis, or predictions.
+3. DO NOT output dosha warnings or gemstone bans.
+4. Respond in exactly 2 to 3 courteous, dignified, and natural sentences in {language}.
+5. Respectfully greet {p_name} ji by name, mention that their birth chart ({lagna_s} लग्न, {moon_s} राशि) is active and loaded, and warmly ask what specific life query (e.g. marriage, career, finance, health, or gemstones) they would like to explore today."""
+                models_to_try = [model, "gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"]
+                for m_name in models_to_try:
+                    try:
+                        response = self.client.models.generate_content(
+                            model=m_name,
+                            contents=greeting_prompt,
+                            config=types.GenerateContentConfig(
+                                system_instruction=SYSTEM_PROMPT,
+                                temperature=0.3,
+                            )
+                        )
+                        if response and response.text:
+                            return response.text.strip()
+                    except Exception:
+                        continue
+
+            chart_info = f" आपकी जन्म कुण्डली (**{lagna_s} लग्न**, **{moon_s} राशि** - {nak_s}) का सम्पूर्ण शास्त्रीय अध्ययन सक्रिय है।" if chart else ""
+            return (
+                f"🙏 **नमस्ते {p_name} जी!**\n\n"
+                f"दैवज्ञ AI सहायक में आपका स्वागत है।{chart_info}\n\n"
+                f"आप अपनी कुण्डली से सम्बंधित किस विषय पर मार्गदर्शन प्राप्त करना चाहते हैं? (जैसे: **विवाह**, **करियर व पदोन्नति**, **आर्थिक स्थिति**, **स्वास्थ्य**, अथवा **शुभ रत्न व उपाय**)। आप जो भी प्रश्न पूछेंगे, मैं ठीक उसी का ९९.९% सटीक, निष्पक्ष एवं प्रामाणिक उत्तर दूँगा।"
+            )
+
         # DETERMINISTIC FALLBACK (Laser-focused, direct, dual-kundali honest prediction)
         if not self.client:
             if not chart:
@@ -577,12 +682,12 @@ Prashna Verdict & Timing: {p_res['verdict']} | Probable Timing: {research['direc
 USER QUESTION:
 \"{user_query}\"
 
-MANDATORY DAIVAJNA INSTRUCTIONS:
-1. ANSWER ONLY WHAT WAS ASKED: Address the user's exact question directly first (e.g. if asking about marriage timing, provide the exact predicted window and whether delay/success is indicated).
+CRITICAL GENERAL INTELLIGENCE & DAIVAJNA INSTRUCTIONS:
+1. ANSWER ONLY WHAT WAS ASKED: The user is specifically asking about: {topic.upper()}. Address their specific query directly in the opening lines. Do NOT write unsolicited essays about unrelated life domains.
 2. DUAL-KUNDALI SYNTHESIS: Cross-corroborate the Instant Prashna Kundali (Lagna, Karyesh, Tajika Ithasala/Esharpha yoga, and Intent testing check) with the Natal Kundali (D1 house lord, D9/D10 divisional dignity, active Mahadasha-Antardasha).
 3. ABSOLUTE HONESTY & CANDID CAUTION: If there are negative yogas, delays, or doshas (Manglik, Saturn delay, malefic dasha), state them clearly under a bold caution heading without sugarcoating.
 4. RATNA SHASTRA COMPLIANCE: If asked about gemstones, strictly follow the gemology matrix. NEVER recommend Panna if Mercury is in the 8th house; forbid it with an explicit alert and prescribe 4-Mukhi Rudraksha, Budha mantra, and green moong daan.
-5. Conclude with focused, actionable, satvik Vedic remedies in {language}.
+5. Conclude with focused, actionable, satvik Vedic remedies in {language} for this specific question only.
 """
 
         models_to_try = [model, "gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"]

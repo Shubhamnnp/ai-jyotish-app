@@ -16618,7 +16618,7 @@ elif selected_idx == 16:
 
                 # Render Live Dual-Kundali Research Evidence Card for this query
                 latest_research = st.session_state.get("ai_latest_research")
-                if latest_research:
+                if latest_research and latest_research.get("topic") != "greeting":
                     p_info = latest_research.get("prashna_res", {})
                     with st.expander("🔬 दैवज्ञ द्वि-कुण्डली शोध प्रमाण (Natal + Horary Prashna + D1-D60 Backend Audit)", expanded=False):
                         cp1, cp2, cp3 = st.columns(3)
