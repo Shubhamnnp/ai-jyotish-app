@@ -233,6 +233,95 @@ class GeocodingService:
         except Exception:
             return []
 
+    def reverse_geocode(self, lat: float, lon: float) -> LocationResult:
+        """Resolves GPS latitude and longitude into city, state, country, and timezone."""
+        import math
+        # 1. Try online Nominatim reverse geocode first
+        try:
+            url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&addressdetails=1"
+            req = urllib.request.Request(
+                url,
+                headers={"User-Agent": "JyotishOS-SaaS/1.0 (Astrological Location Resolver)"}
+            )
+            with urllib.request.urlopen(req, timeout=2.5) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                addr = data.get("address", {})
+                city = addr.get("city") or addr.get("town") or addr.get("suburb") or addr.get("village") or addr.get("county") or "स्थान"
+                state = addr.get("state", "")
+                country = addr.get("country", "India")
+                display_name = data.get("display_name", f"{city}, {state}, {country}")
+                tz = 5.5 if country.lower() == "india" else round((lon / 15.0) * 2) / 2
+                return LocationResult(
+                    city=city,
+                    state=state,
+                    country=country,
+                    latitude=float(lat),
+                    longitude=float(lon),
+                    timezone_offset=float(tz),
+                    formatted_name=display_name,
+                    source="nominatim_reverse"
+                )
+        except Exception:
+            pass
+
+        # 2. Offline nearest distance search across 80+ sacred and major cities
+        best_item = OFFLINE_GAZETTEER[0]
+        min_dist = float("inf")
+        for item in OFFLINE_GAZETTEER:
+            d_lat = item["lat"] - lat
+            d_lon = item["lon"] - lon
+            dist = d_lat * d_lat + d_lon * d_lon
+            if dist < min_dist:
+                min_dist = dist
+                best_item = item
+
+        approx_km = math.sqrt(min_dist) * 111.0
+        return LocationResult(
+            city=best_item["city"],
+            state=best_item.get("state", ""),
+            country=best_item.get("country", "India"),
+            latitude=float(lat),
+            longitude=float(lon),
+            timezone_offset=float(best_item.get("tz", 5.5)),
+            formatted_name=f"{best_item['city']} (निकटतम ~{int(approx_km)} km)",
+            source="offline_nearest"
+        )
+
+    def get_ip_location(self) -> Optional[LocationResult]:
+        """Auto-detects device / network location via fast IP Geolocation API."""
+        try:
+            req = urllib.request.Request(
+                "https://ipapi.co/json/",
+                headers={"User-Agent": "JyotishOS-SaaS/1.0"}
+            )
+            with urllib.request.urlopen(req, timeout=3.0) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                lat = float(data.get("latitude", 28.6139))
+                lon = float(data.get("longitude", 77.2090))
+                city = data.get("city", "Delhi")
+                region = data.get("region", "Delhi")
+                country = data.get("country_name", "India")
+                raw_offset = str(data.get("utc_offset", "+0530"))
+                try:
+                    hrs = float(raw_offset[:3])
+                    mins = 0.5 if "30" in raw_offset else 0.0
+                    tz = hrs + mins
+                except Exception:
+                    tz = 5.5
+
+                return LocationResult(
+                    city=city,
+                    state=region,
+                    country=country,
+                    latitude=lat,
+                    longitude=lon,
+                    timezone_offset=tz,
+                    formatted_name=f"{city}, {region}, {country}",
+                    source="ip_geolocation"
+                )
+        except Exception:
+            return None
+
     def resolve(self, query: str) -> Optional[Dict[str, Any]]:
         """Resolves a city/place string into latitude, longitude, and timezone offset."""
         if not query or not query.strip():

@@ -192,7 +192,12 @@ class PrashnaService:
         Evaluates Lagna, Lagnesha, Karyesha, Moon, Tajika Ithasala/Esharpha, and house roles.
         """
         cat_str = query_category or category_name
-        now = query_dt or datetime.now()
+        if query_dt is not None:
+            now = query_dt
+        else:
+            from datetime import timezone as dt_timezone
+            utc_now = datetime.now(dt_timezone.utc)
+            now = (utc_now + timedelta(hours=timezone_offset)).replace(tzinfo=None)
         
         # Build BirthData representing the exact query moment
         birth_data = BirthData(

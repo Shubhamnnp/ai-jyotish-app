@@ -4318,10 +4318,30 @@ if "is_logged_in" not in st.session_state:
 if "saved_charts" not in st.session_state:
     st.session_state.saved_charts = default_folder_manager.list_recent_charts()
 
-if "gla_authenticated" not in st.session_state:
-    st.session_state.gla_authenticated = False
+def get_live_local_now(tz_offset_hours: float = 5.5) -> datetime:
+    """Returns exact current live datetime converted from UTC to target timezone offset (defaults to IST +5.5)."""
+    from datetime import timezone as dt_timezone
+    utc_now = datetime.now(dt_timezone.utc)
+    return (utc_now + timedelta(hours=tz_offset_hours)).replace(tzinfo=None)
 
-_init_now = datetime.now()
+# Live GPS query parameter processor
+if "gps_lat" in st.query_params and "gps_lon" in st.query_params:
+    try:
+        _q_lat = float(st.query_params["gps_lat"])
+        _q_lon = float(st.query_params["gps_lon"])
+        st.session_state.birth_lat = _q_lat
+        st.session_state.birth_lon = _q_lon
+        _rev_loc = default_geocoding_service.reverse_geocode(_q_lat, _q_lon)
+        if _rev_loc:
+            st.session_state.birth_city = _rev_loc.formatted_name or _rev_loc.city
+            st.session_state.birth_tz = _rev_loc.timezone_offset
+        st.toast(f"📍 GPS स्थान प्राप्त: {st.session_state.birth_city}", icon="🛰️")
+        del st.query_params["gps_lat"]
+        del st.query_params["gps_lon"]
+    except Exception:
+        pass
+
+_init_now = get_live_local_now(st.session_state.get("birth_tz", 5.5))
 
 # Pre-populate with live charts
 if "gla_charts" not in st.session_state or not st.session_state.gla_charts:
@@ -4456,7 +4476,7 @@ def get_varga_dignity_info(planet: str, sign_name: str, aff_eng: Optional[Afflic
         return "⚠️ नीच (Debilitated)", 0, "कमजोर / उपाय आवश्यक"
     return "⚖️ सामान्य", 7, "सामान्य"
 
-now_dt = datetime.now()
+now_dt = get_live_local_now(st.session_state.get('birth_tz', 5.5))
 current_time_str = now_dt.strftime("%d %b %Y, %I:%M %p")
 
 # -------------------------------------------------------------
@@ -6127,7 +6147,7 @@ with st.container(key="top_frozen_header_container", border=False):
                     def _step_time_modal_action(delta_minutes=0, delta_hours=0, delta_days=0, reset_to_now=False):
                         from datetime import datetime as dt_cls, timedelta as td_cls
                         if reset_to_now:
-                            now_curr = dt_cls.now()
+                            now_curr = get_live_local_now(st.session_state.get("birth_tz", 5.5))
                             st.session_state.birth_date = now_curr.date()
                             st.session_state.birth_time = now_curr.time().replace(microsecond=0)
                         else:
@@ -6156,6 +6176,35 @@ with st.container(key="top_frozen_header_container", border=False):
                 st.markdown("### 📍 वर्तमान स्थान एवं GPS निर्देशांक (Current Location)")
                 col_loc1, col_loc2, col_loc3 = st.columns([2, 1.5, 1])
                 with col_loc1:
+                    col_gps_a, col_gps_b = st.columns(2)
+                    with col_gps_a:
+                        if st.button("🛰️ डिवाइस GPS प्राप्त करें", type="primary", use_container_width=True, key="btn_modal_get_gps"):
+                            components.html("""
+                            <script>
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(function(pos) {
+                                    const u = new URL(window.parent.location);
+                                    u.searchParams.set("gps_lat", pos.coords.latitude.toFixed(4));
+                                    u.searchParams.set("gps_lon", pos.coords.longitude.toFixed(4));
+                                    window.parent.location.href = u.toString();
+                                }, function(err) {
+                                    alert("GPS अनुमति आवश्यक है। कृपया लोकेशन परमिशन Allow करें।");
+                                }, {timeout: 6000, enableHighAccuracy: true});
+                            }
+                            </script>
+                            """, height=0, width=0)
+                    with col_gps_b:
+                        if st.button("🌐 नेटवर्क/IP से स्वतः डिटेक्ट", use_container_width=True, key="btn_modal_get_ip_loc"):
+                            with st.spinner("IP नेटवर्क से स्थान खोजा जा रहा है..."):
+                                ip_loc = default_geocoding_service.get_ip_location()
+                                if ip_loc:
+                                    st.session_state.birth_lat = ip_loc.latitude
+                                    st.session_state.birth_lon = ip_loc.longitude
+                                    st.session_state.birth_city = f"{ip_loc.city}, {ip_loc.state}"
+                                    st.session_state.birth_tz = ip_loc.timezone_offset
+                                    st.toast(f"✅ स्थान डिटेक्ट: {st.session_state.birth_city}", icon="📍")
+                                    st.rerun()
+
                     loc_search = st.text_input("स्थान खोजें (Search City)", value=st.session_state.birth_city, key="gla_loc_modal_input")
                     loc_results = default_geocoding_service.search(loc_search, limit=3)
                     if loc_results:
@@ -6620,7 +6669,7 @@ if selected_idx == 0:
                 try:
                     _b_dt = datetime.combine(birth_d, birth_t)
                     _m_lon = chart.planets["Moon"].longitude if "Moon" in chart.planets else 0.0
-                    _h5 = default_dasha_engine.get_5level_hierarchy(_b_dt, _m_lon, datetime.now())
+                    _h5 = default_dasha_engine.get_5level_hierarchy(_b_dt, _m_lon, get_live_local_now(tz_offset))
                     _m_lord = _h5["mahadasha"]["lord"]
                     _a_lord = _h5["antardasha"]["lord"]
                     _pr_lord = _h5["pratyantardasha"]["lord"]
@@ -9726,7 +9775,7 @@ elif selected_idx == 5:
                 latitude=latitude,
                 longitude=longitude,
                 timezone_offset=tz_offset,
-                query_dt=datetime.now(),
+                query_dt=get_live_local_now(tz_offset),
                 questioner_name=name
             )
         except Exception:
@@ -9767,7 +9816,47 @@ elif selected_idx == 5:
             nat_default_q = sample_queries.get(nat_cat_name, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
             nat_query_text = st.text_input("अपना प्रश्न दर्ज करें (Enter Native Query)", value=nat_default_q, key="nat_prashna_query_text")
 
-        calc_nat_btn = st.button("🔮 सक्रिय जातक प्रश्न विश्लेषण प्राप्त करें (Analyze Native Horary Query)", type="primary", key="btn_calc_nat_prashna")
+        # ⏱️ Live Vartaman Date, Time & GPS Controls for Tab 1
+        live_now_nat = get_live_local_now(tz_offset)
+        if "nat_prashna_date_val" not in st.session_state:
+            st.session_state.nat_prashna_date_val = live_now_nat.date()
+        if "nat_prashna_time_val" not in st.session_state:
+            st.session_state.nat_prashna_time_val = live_now_nat.time().replace(microsecond=0)
+
+        col_nt1, col_nt2, col_nt3, col_nt4 = st.columns([1.4, 1.4, 1.2, 1.2])
+        with col_nt1:
+            nat_q_date = st.date_input("📅 प्रश्न तिथि (Query Date)", value=st.session_state.nat_prashna_date_val, format="DD/MM/YYYY", key="nat_prashna_d_picker")
+            st.session_state.nat_prashna_date_val = nat_q_date
+        with col_nt2:
+            nat_q_time = st.time_input("⏱️ प्रश्न समय (Time - सेकंड सहित)", value=st.session_state.nat_prashna_time_val, step=1, key="nat_prashna_t_picker")
+            st.session_state.nat_prashna_time_val = nat_q_time
+        with col_nt3:
+            st.write("")
+            st.write("")
+            if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_nat_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें"):
+                upd_now = get_live_local_now(tz_offset)
+                st.session_state.nat_prashna_date_val = upd_now.date()
+                st.session_state.nat_prashna_time_val = upd_now.time().replace(microsecond=0)
+                st.session_state.nat_prashna_d_picker = upd_now.date()
+                st.session_state.nat_prashna_t_picker = upd_now.time().replace(microsecond=0)
+                st.toast(f"✅ वर्तमान समय सेट: {upd_now.strftime('%I:%M:%S %p')}", icon="⏱️")
+                st.rerun()
+        with col_nt4:
+            st.write("")
+            st.write("")
+            if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_nat_set_gps", help="डिवाइस / नेटवर्क GPS से तात्कालिक स्थान लें"):
+                ip_loc = default_geocoding_service.get_ip_location()
+                if ip_loc:
+                    st.session_state.birth_lat = ip_loc.latitude
+                    st.session_state.birth_lon = ip_loc.longitude
+                    st.session_state.birth_city = f"{ip_loc.city}, {ip_loc.state}"
+                    st.session_state.birth_tz = ip_loc.timezone_offset
+                    st.toast(f"📍 GPS स्थान: {st.session_state.birth_city}", icon="🛰️")
+                    st.rerun()
+
+        calc_nat_btn = st.button("🔮 सक्रिय जातक प्रश्न विश्लेषण प्राप्त करें (Analyze Native Horary Query)", type="primary", use_container_width=True, key="btn_calc_nat_prashna")
+
+        nat_target_dt = datetime.combine(st.session_state.nat_prashna_date_val, st.session_state.nat_prashna_time_val)
 
         need_nat_recalc = (
             calc_nat_btn
@@ -9784,7 +9873,7 @@ elif selected_idx == 5:
                     latitude=latitude,
                     longitude=longitude,
                     timezone_offset=tz_offset,
-                    query_dt=datetime.now(),
+                    query_dt=nat_target_dt,
                     questioner_name=name
                 )
                 st.session_state.active_prashna_res = st.session_state.prashna_native_res
@@ -9794,7 +9883,7 @@ elif selected_idx == 5:
                 st.error(f"प्रश्न परिकलन में त्रुटि: {e}")
 
         p_nat_res = st.session_state.get("prashna_native_res") or default_prashna_service.generate_prashna_chart(
-            query_text=nat_query_text, category_name=nat_cat_name, latitude=latitude, longitude=longitude, timezone_offset=tz_offset, query_dt=datetime.now(), questioner_name=name
+            query_text=nat_query_text, category_name=nat_cat_name, latitude=latitude, longitude=longitude, timezone_offset=tz_offset, query_dt=nat_target_dt, questioner_name=name
         )
         p_nat_chart: KundaliChart = p_nat_res.get("chart", chart)
 
@@ -9916,70 +10005,129 @@ elif selected_idx == 5:
         st.markdown("#### ✍️ नवीन प्रश्नकर्ता एवं तात्कालिक प्रश्न (New / Custom Querent Horary)")
         st.caption("किसी भी नए अथवा आगंतुक प्रश्नकर्ता के लिए तात्कालिक होरारी कुण्डली का स्वतंत्र निर्माण, शास्त्रीय गणना एवं निष्पक्ष निर्णय।")
 
-        with st.form("new_querent_form"):
-            col_nq1, col_nq2, col_nq3 = st.columns([2, 1, 1])
-            new_q_name = col_nq1.text_input("प्रश्नकर्ता का नाम (Questioner Name)", value="नवीन प्रश्नकर्ता")
-            new_q_date = col_nq2.date_input("प्रश्न तिथि (Query Date)", value=date.today(), format="DD/MM/YYYY")
-            new_q_time = col_nq3.time_input("प्रश्न समय (Query Time)", value=datetime.now().time())
+        # Initialize custom querent session state if not already set
+        live_now_new = get_live_local_now(tz_offset)
+        if "new_prashna_date_val" not in st.session_state:
+            st.session_state.new_prashna_date_val = live_now_new.date()
+        if "new_prashna_time_val" not in st.session_state:
+            st.session_state.new_prashna_time_val = live_now_new.time().replace(microsecond=0)
+        if "new_prashna_city" not in st.session_state:
+            st.session_state.new_prashna_city = default_city_name
+        if "new_prashna_lat" not in st.session_state:
+            st.session_state.new_prashna_lat = float(latitude)
+        if "new_prashna_lon" not in st.session_state:
+            st.session_state.new_prashna_lon = float(longitude)
+        if "new_prashna_tz" not in st.session_state:
+            st.session_state.new_prashna_tz = float(tz_offset)
 
-            col_loc1, col_loc2, col_loc3 = st.columns([2, 1, 1])
-            new_city_input = col_loc1.text_input("स्थान / नगर (City / Place)", value=default_city_name)
-            
-            # Geocoding check
-            res_lat = latitude
-            res_lon = longitude
-            res_tz = tz_offset
-            if new_city_input and new_city_input.strip() != default_city_name:
+        # Row 1: Name and Place lookup
+        col_nq1, col_nq2 = st.columns([1.5, 2.5])
+        with col_nq1:
+            new_q_name = st.text_input("प्रश्नकर्ता का नाम (Questioner Name)", value="नवीन प्रश्नकर्ता", key="new_prashna_name_input")
+        with col_nq2:
+            new_city_input = st.text_input("स्थान / नगर (City / Place)", value=st.session_state.new_prashna_city, key="new_prashna_city_input")
+            if new_city_input and new_city_input.strip() != st.session_state.new_prashna_city:
                 try:
                     geo_lookup = default_geocoding_service.resolve(new_city_input.strip())
                     if geo_lookup:
-                        res_lat = geo_lookup.get("latitude", res_lat)
-                        res_lon = geo_lookup.get("longitude", res_lon)
-                        res_tz = geo_lookup.get("timezone_offset", res_tz)
+                        st.session_state.new_prashna_city = new_city_input.strip()
+                        st.session_state.new_prashna_lat = float(geo_lookup.get("latitude", st.session_state.new_prashna_lat))
+                        st.session_state.new_prashna_lon = float(geo_lookup.get("longitude", st.session_state.new_prashna_lon))
+                        st.session_state.new_prashna_tz = float(geo_lookup.get("timezone_offset", st.session_state.new_prashna_tz))
                 except Exception:
                     pass
 
-            new_lat = col_loc2.number_input("अक्षांश (Latitude)", value=float(res_lat), format="%.4f")
-            new_lon = col_loc3.number_input("देशांतर (Longitude)", value=float(res_lon), format="%.4f")
+        # Row 2: Vartaman Date, Time (with seconds), Live Now Button, GPS Button
+        col_nt1, col_nt2, col_nt3, col_nt4 = st.columns([1.4, 1.4, 1.2, 1.2])
+        with col_nt1:
+            new_q_date = st.date_input("📅 प्रश्न तिथि (Query Date)", value=st.session_state.new_prashna_date_val, format="DD/MM/YYYY", key="new_prashna_d_picker")
+            st.session_state.new_prashna_date_val = new_q_date
+        with col_nt2:
+            new_q_time = st.time_input("⏱️ प्रश्न समय (Time - सेकंड सहित)", value=st.session_state.new_prashna_time_val, step=1, key="new_prashna_t_picker")
+            st.session_state.new_prashna_time_val = new_q_time
+        with col_nt3:
+            st.write("")
+            st.write("")
+            if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_new_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें"):
+                upd_now = get_live_local_now(st.session_state.new_prashna_tz)
+                st.session_state.new_prashna_date_val = upd_now.date()
+                st.session_state.new_prashna_time_val = upd_now.time().replace(microsecond=0)
+                st.session_state.new_prashna_d_picker = upd_now.date()
+                st.session_state.new_prashna_t_picker = upd_now.time().replace(microsecond=0)
+                st.toast(f"✅ वर्तमान समय सेट: {upd_now.strftime('%I:%M:%S %p')}", icon="⏱️")
+                st.rerun()
+        with col_nt4:
+            st.write("")
+            st.write("")
+            if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_new_set_gps", help="डिवाइस / नेटवर्क GPS से तात्कालिक स्थान लें"):
+                ip_loc = default_geocoding_service.get_ip_location()
+                if ip_loc:
+                    st.session_state.new_prashna_lat = ip_loc.latitude
+                    st.session_state.new_prashna_lon = ip_loc.longitude
+                    st.session_state.new_prashna_city = f"{ip_loc.city}, {ip_loc.state}"
+                    st.session_state.new_prashna_tz = ip_loc.timezone_offset
+                    st.toast(f"📍 GPS स्थान: {st.session_state.new_prashna_city}", icon="🛰️")
+                    st.rerun()
 
-            col_nqc1, col_nqc2 = st.columns([1, 2])
-            with col_nqc1:
-                cat_choice_new = st.selectbox(
-                    "प्रश्न श्रेणी (Question Category)",
-                    range(len(cat_options)),
-                    format_func=lambda i: cat_options[i] if i < len(cat_options) else "",
-                    index=min(6, max(0, len(cat_options) - 1)),
-                    key="new_prashna_cat_idx"
-                )
-                new_cat_meta = PRASHNA_CATEGORIES[cat_choice_new] if cat_choice_new < len(PRASHNA_CATEGORIES) else PRASHNA_CATEGORIES[0]
-                new_cat_name = new_cat_meta.get("Name", "Job")
-            with col_nqc2:
-                new_default_q = sample_queries.get(new_cat_name, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
-                new_query_text = st.text_input("प्रश्न विवरण दर्ज करें (Enter Question)", value=new_default_q, key="new_prashna_query_text")
+        # Row 3: Coordinate fine-tuning
+        col_c1, col_c2, col_c3 = st.columns(3)
+        with col_c1:
+            new_lat = st.number_input("अक्षांश (Latitude)", value=float(st.session_state.new_prashna_lat), format="%.4f", key="new_prashna_lat_num")
+            st.session_state.new_prashna_lat = new_lat
+        with col_c2:
+            new_lon = st.number_input("देशांतर (Longitude)", value=float(st.session_state.new_prashna_lon), format="%.4f", key="new_prashna_lon_num")
+            st.session_state.new_prashna_lon = new_lon
+        with col_c3:
+            new_tz = st.number_input("समय क्षेत्र (Timezone Offset)", value=float(st.session_state.new_prashna_tz), format="%.2f", key="new_prashna_tz_num")
+            st.session_state.new_prashna_tz = new_tz
 
-            col_kp1, col_kp2 = st.columns([1, 2])
-            with col_kp1:
-                new_kp_seed = st.number_input("केपी होरारी संख्या (KP Seed 1-249, ऐच्छिक)", min_value=0, max_value=249, value=0, help="0 = समय आधारित लग्न; 1 से 249 = केपी सूक्ष्म उप-स्वामी बीज")
-            with col_kp2:
-                st.caption("ℹ️ यदि प्रश्नकर्ता ने 1 से 249 के बीच कोई संख्या चुनी है तो उसे दर्ज करें, अन्यथा सामान्य समय आधारित लग्न लिया जाएगा।")
+        # Row 4: Category and Query Text
+        col_nqc1, col_nqc2 = st.columns([1, 2])
+        with col_nqc1:
+            cat_choice_new = st.selectbox(
+                "प्रश्न श्रेणी (Question Category)",
+                range(len(cat_options)),
+                format_func=lambda i: cat_options[i] if i < len(cat_options) else "",
+                index=min(6, max(0, len(cat_options) - 1)),
+                key="new_prashna_cat_idx"
+            )
+            new_cat_meta = PRASHNA_CATEGORIES[cat_choice_new] if cat_choice_new < len(PRASHNA_CATEGORIES) else PRASHNA_CATEGORIES[0]
+            new_cat_name = new_cat_meta.get("Name", "Job")
+        with col_nqc2:
+            new_default_q = sample_queries.get(new_cat_name, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
+            new_query_text = st.text_input("प्रश्न विवरण दर्ज करें (Enter Question)", value=new_default_q, key="new_prashna_query_text")
 
-            calc_new_btn = st.form_submit_button("🔮 नवीन प्रश्न कुण्डली परिकलन एवं निर्णय (Calculate Horary Chart)", type="primary")
+        col_kp1, col_kp2 = st.columns([1, 2])
+        with col_kp1:
+            new_kp_seed = st.number_input("केपी होरारी संख्या (KP Seed 1-249, ऐच्छिक)", min_value=0, max_value=249, value=0, help="0 = समय आधारित लग्न; 1 से 249 = केपी सूक्ष्म उप-स्वामी बीज", key="new_prashna_kp_seed")
+        with col_kp2:
+            st.caption("ℹ️ यदि प्रश्नकर्ता ने 1 से 249 के बीच कोई संख्या चुनी है तो उसे दर्ज करें, अन्यथा सामान्य समय आधारित लग्न लिया जाएगा।")
 
-        if calc_new_btn or "prashna_new_res" not in st.session_state:
-            new_query_dt = datetime.combine(new_q_date, new_q_time)
+        calc_new_btn = st.button("🔮 नवीन प्रश्न कुण्डली परिकलन एवं निर्णय (Calculate Horary Chart)", type="primary", use_container_width=True, key="btn_calc_new_prashna")
+
+        new_query_dt = datetime.combine(st.session_state.new_prashna_date_val, st.session_state.new_prashna_time_val)
+
+        need_new_recalc = (
+            calc_new_btn
+            or "prashna_new_res" not in st.session_state
+            or not st.session_state.prashna_new_res
+            or st.session_state.prashna_new_res.get("category") != new_cat_name
+        )
+
+        if need_new_recalc:
             try:
                 st.session_state.prashna_new_res = default_prashna_service.generate_prashna_chart(
                     query_text=new_query_text,
                     category_name=new_cat_name,
                     latitude=new_lat,
                     longitude=new_lon,
-                    timezone_offset=res_tz,
+                    timezone_offset=new_tz,
                     query_dt=new_query_dt,
                     questioner_name=new_q_name
                 )
                 st.session_state.active_prashna_res = st.session_state.prashna_new_res
                 if calc_new_btn:
-                    st.toast("✅ नवीन प्रश्न कुण्डली एवं शास्त्रीय निर्णय सफलतापूर्वक परिकलित!")
+                    st.toast("✅ नवीन प्रश्न कुण्डली एवं शास्त्रीय निर्णय सफलतापूर्वक परिकलित!", icon="🔮")
             except Exception as e:
                 st.error(f"नवीन प्रश्न परिकलन में त्रुटि: {e}")
 
@@ -10035,7 +10183,7 @@ elif selected_idx == 5:
     cur_p_res = st.session_state.get("active_prashna_res") or st.session_state.get("prashna_native_res") or st.session_state.get("prashna_new_res")
     if not cur_p_res or not cur_p_res.get("all_rules"):
         cur_p_res = default_prashna_service.generate_prashna_chart(
-            query_text="क्या मेरा अभीष्ट कार्य सिद्ध होगा?", category_name="Job", latitude=latitude, longitude=longitude, timezone_offset=tz_offset, query_dt=datetime.now(), questioner_name=name
+            query_text="क्या मेरा अभीष्ट कार्य सिद्ध होगा?", category_name="Job", latitude=latitude, longitude=longitude, timezone_offset=tz_offset, query_dt=get_live_local_now(tz_offset), questioner_name=name
         )
         st.session_state.active_prashna_res = cur_p_res
     cur_p_chart: KundaliChart = cur_p_res.get("chart", chart)
@@ -11558,9 +11706,10 @@ elif selected_idx == 8:
 
     c_dt1, c_dt2 = st.columns([2, 4])
     with c_dt1:
+        live_dasha_now = get_live_local_now(tz_offset)
         dasha_target_date = st.date_input(
             "🎯 लक्षित दिनांक पर दशा देखें (Target Date for All Dashas):",
-            value=date.today(),
+            value=live_dasha_now.date(),
             min_value=date(1900, 1, 1),
             max_value=date(2100, 12, 31),
             format="DD/MM/YYYY",
@@ -11571,7 +11720,7 @@ elif selected_idx == 8:
 
     birth_dt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
     moon_lon = chart.planets["Moon"].longitude
-    target_dt = datetime.combine(dasha_target_date, datetime.now().time())
+    target_dt = datetime.combine(dasha_target_date, live_dasha_now.time().replace(microsecond=0))
 
     import importlib
     import src.jyotish.services.dasha_timeline as dt_mod
@@ -12735,15 +12884,16 @@ elif selected_idx == 9:
                 step=1
             )
         with col_tm2:
-            target_calc_date = datetime.now().date() + timedelta(days=time_offset_days)
+            live_transit_now = get_live_local_now(tz_offset)
+            target_calc_date = live_transit_now.date() + timedelta(days=time_offset_days)
             st.metric("सक्रिय गोचर दिनांक", target_calc_date.strftime("%d-%b-%Y"), f"{'+' if time_offset_days>=0 else ''}{time_offset_days} दिन")
 
     # Date-time picker for live transit
     col_gt1, col_gt2, col_gt3 = st.columns([1.5, 1.5, 2])
     with col_gt1:
-        t_date = st.date_input("📅 गोचर दिनांक (Transit Date)", value=target_calc_date if 'target_calc_date' in locals() else datetime.now().date(), format="DD/MM/YYYY")
+        t_date = st.date_input("📅 गोचर दिनांक (Transit Date)", value=target_calc_date if 'target_calc_date' in locals() else live_transit_now.date(), format="DD/MM/YYYY")
     with col_gt2:
-        t_time = st.time_input("🕒 गोचर समय (Transit Time)", value=datetime.now().time())
+        t_time = st.time_input("🕒 गोचर समय (Transit Time)", value=live_transit_now.time().replace(microsecond=0), step=1)
     with col_gt3:
         st.write("")
         st.caption("📍 स्थान: **" + str(default_city_name) + "** (Lat: " + f"{latitude:.2f}" + ", Lon: " + f"{longitude:.2f}" + ")")
@@ -13600,7 +13750,7 @@ elif selected_idx == 9:
             cal_month = st.selectbox(
                 "माह चुनें (Select Month)",
                 list(range(1, 13)),
-                index=datetime.now().month - 1,
+                index=get_live_local_now(tz_offset).month - 1,
                 format_func=lambda x: datetime(2026, x, 1).strftime("%B"),
                 key="cal_m_sel_14tab"
             )
@@ -13693,7 +13843,8 @@ elif selected_idx == 10:
 
     active_kp_chart = chart
     chosen_horary_num = None
-    target_query_dt = datetime.now()
+    live_kp_now = get_live_local_now(tz_offset)
+    target_query_dt = live_kp_now
 
     if "१. सक्रिय जातक" in kp_user_mode:
         with col_m_sel2:
@@ -13717,9 +13868,9 @@ elif selected_idx == 10:
             with c_hq1:
                 chosen_horary_num = st.number_input("🔢 होरारी संख्या (1 - 249)", min_value=1, max_value=249, value=108, step=1, key="kp_horary_input_num_14tab")
             with c_hq2:
-                q_date = st.date_input("📅 प्रश्न दिनांक (Date)", value=datetime.now().date(), format="DD/MM/YYYY", key="kp_q_date_14tab")
+                q_date = st.date_input("📅 प्रश्न दिनांक (Date)", value=live_kp_now.date(), format="DD/MM/YYYY", key="kp_q_date_14tab")
             with c_hq3:
-                q_time = st.time_input("⏰ प्रश्न समय (Time)", value=datetime.now().time(), key="kp_q_time_14tab")
+                q_time = st.time_input("⏰ प्रश्न समय (Time)", value=live_kp_now.time().replace(microsecond=0), step=1, key="kp_q_time_14tab")
             with c_hq4:
                 q_city = st.text_input("📍 प्रश्न स्थान (City)", value=default_city_name, key="kp_q_city_14tab")
 
@@ -14341,7 +14492,7 @@ elif selected_idx == 11:
 
     col_m1, col_m2 = st.columns([1.5, 2.5])
     with col_m1:
-        muhurta_date = st.date_input("📅 मुहूर्त अवलोकन दिनांक चयन करें (Select Date):", value=datetime.now().date(), format="DD/MM/YYYY", key="muhurta_main_date_picker")
+        muhurta_date = st.date_input("📅 मुहूर्त अवलोकन दिनांक चयन करें (Select Date):", value=get_live_local_now(tz_offset).date(), format="DD/MM/YYYY", key="muhurta_main_date_picker")
     with col_m2:
         st.write("")
         st.caption(f"📍 स्थान: **{default_city_name}** | वार: **{muhurta_date.strftime('%A')}** | सक्रिय जातक: **{chart.birth_data.name}**")
@@ -14944,7 +15095,7 @@ elif selected_idx == 12:
     })
 
     native_birth_year = birth_profile.birth_date.year
-    curr_year = datetime.now().year
+    curr_year = get_live_local_now(tz_offset).year
     default_calc_age = max(1, curr_year - native_birth_year)
 
     # Master calculation from engine
@@ -15448,7 +15599,7 @@ elif selected_idx == 13:
 
     col_vy1, col_vy2 = st.columns([1.5, 2.5])
     with col_vy1:
-        v_year = st.number_input("वर्ष चयन करें (Target Year)", value=datetime.now().year, min_value=1900, max_value=2100, step=1)
+        v_year = st.number_input("वर्ष चयन करें (Target Year)", value=get_live_local_now(tz_offset).year, min_value=1900, max_value=2100, step=1)
     with col_vy2:
         st.write("")
         st.caption(f"📍 जातक: **{birth_profile.name}** | जन्म वर्ष: **{birth_profile.birth_date.year}** (पूर्ण वर्ष आयु: **{max(0, int(v_year) - birth_profile.birth_date.year)}** वर्ष)")
