@@ -1,6 +1,8 @@
 """
 Executive UI View for Vedic Jyotish Panchang module.
 Provides a comprehensive, world-class Shastriya Panchang interface exceeding Drik Panchang standards.
+Includes deep Paksha Analysis, Pitru Paksha (Mahalaya Shradh) prohibitions & prescribed rituals,
+Chaturmas, Kharmas, Bhadra Mukha/Puchha, and 60-Ghati Vedic Clock.
 """
 
 import streamlit as st
@@ -29,7 +31,7 @@ POPULAR_CITIES = {
 
 
 def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = False):
-    """Renders the master Vedic Jyotish Panchang module with 7 rich interactive tabs."""
+    """Renders the master Vedic Jyotish Panchang module with 8 rich interactive tabs."""
 
     st.markdown("""
     <div style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%);
@@ -41,7 +43,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     📅 वैदिक ज्योतिषीय पञ्चाङ्ग (Vedic Jyotish Panchang)
                 </h2>
                 <p style="margin:6px 0 0 0; color:#E0E7FF; font-size:14px;">
-                    सूर्य सिद्धान्त, दृक्-गणित एवं मुहूर्त चिन्तामणि पर आधारित १००% प्रामाणिक दैनिक पञ्चाङ्ग एवं महा-मुहूर्त शोधन
+                    सूर्य सिद्धान्त, दृक्-गणित, निर्णय सिन्धु एवं मुहूर्त चिन्तामणि पर आधारित १००% प्रामाणिक दैनिक पञ्चाङ्ग एवं पक्ष-श्राद्ध शोधन
                 </p>
             </div>
             <div style="text-align:right;">
@@ -59,7 +61,6 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     # -------------------------------------------------------------
     col_c1, col_c2, col_c3, col_c4 = st.columns([1.5, 1.8, 1.2, 1.5])
 
-    # Default to today
     today_dt = date.today()
 
     with col_c1:
@@ -72,7 +73,6 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     with col_c2:
         city_names = list(POPULAR_CITIES.keys())
         default_city_idx = 0
-        # If birth_profile city matches, preselect
         if hasattr(birth_profile, "city") and birth_profile.city:
             for idx, c_name in enumerate(city_names):
                 if birth_profile.city.lower() in c_name.lower():
@@ -138,6 +138,8 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     balam = panchang_data["balam"]
     samvat = panchang_data["samvatsar"]
     transit = panchang_data["transit_matrix"]
+    paksha_eng = panchang_data.get("paksha_engine", {})
+    pitru = paksha_eng.get("pitru_paksha", {})
 
     # -------------------------------------------------------------
     # HERO BANNER: Day, Sunrise/Sunset, Samvat & Day Quality
@@ -196,16 +198,55 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
         </div>
         """, unsafe_allow_html=True)
 
-    # Status Alert Bar
+    # -------------------------------------------------------------
+    # PITRU PAKSHA GRAND ALERT BANNER (If Active)
+    # -------------------------------------------------------------
+    if pitru.get("is_active"):
+        st.markdown(f"""
+        <div style="background:#FEF2F2; border:2px solid #DC2626; border-radius:12px; padding:16px 20px; margin:16px 0;
+                    box-shadow:0 4px 12px rgba(220, 38, 38, 0.1);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                <div>
+                    <h3 style="margin:0; color:#991B1B; font-size:20px; font-weight:800;">
+                        🪔 {pitru['shradh_name']} — पितृपक्ष (महालय श्राद्ध काल) सक्रिय!
+                    </h3>
+                    <p style="margin:4px 0 0 0; color:#7F1D1D; font-size:13.5px;">
+                        {pitru['verdict_desc']}
+                    </p>
+                </div>
+                <div style="margin-top:4px;">
+                    <span style="background:#DC2626; color:#FFFFFF; padding:5px 14px; border-radius:20px; font-weight:700; font-size:12.5px;">
+                        🚫 समस्त मांगलिक कार्य सर्वथा वर्जित
+                    </span>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:10px; margin-top:12px;">
+                <div style="background:#FFFFFF; border:1px solid #FECACA; border-radius:8px; padding:10px;">
+                    <b style="color:#991B1B; font-size:13px;">☀️ कुतुप मुहूर्त (श्राद्ध का मुख्य काल):</b>
+                    <div style="color:#0F172A; font-weight:700; font-size:14px;">{pitru['kutupa_time']}</div>
+                </div>
+                <div style="background:#FFFFFF; border:1px solid #FECACA; border-radius:8px; padding:10px;">
+                    <b style="color:#991B1B; font-size:13px;">☀️ रौहिण मुहूर्त:</b>
+                    <div style="color:#0F172A; font-weight:700; font-size:14px;">{pitru['rohina_time']}</div>
+                </div>
+                <div style="background:#FFFFFF; border:1px solid #FECACA; border-radius:8px; padding:10px;">
+                    <b style="color:#991B1B; font-size:13px;">🌊 अपराह्न काल (पिण्डदान व तर्पण):</b>
+                    <div style="color:#0F172A; font-weight:700; font-size:14px;">{pitru['aparahna_time']}</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # General Status Alert Bar
     verdict_badge = meta["day_verdict"]
     verdict_col = meta["day_verdict_color"]
     st.markdown(f"""
     <div style="background:{verdict_col}15; border-left:5px solid {verdict_col}; border-radius:8px;
-                padding:12px 18px; margin:16px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                padding:12px 18px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
         <div>
             <b style="color:{verdict_col}; font-size:15px;">🌟 आज का समग्र शास्त्रीय निर्णय: {verdict_badge}</b>
             <span style="color:{'#E5E7EB' if is_dark else '#374151'}; font-size:13.5px; margin-left:10px;">
-                | भद्रा स्थिति: <b>{bhadra['badge']}</b> | पञ्चक: <b>{pg['panchaka']['name']}</b> | गण्डमूल: <b>{pg['gandamoola']['badge']}</b>
+                | भद्रा: <b>{bhadra['badge']}</b> | पञ्चक: <b>{pg['panchaka']['name']}</b> | गण्डमूल: <b>{pg['gandamoola']['badge']}</b>
             </span>
         </div>
         <div>
@@ -215,16 +256,17 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------
-    # 7 COMPREHENSIVE TABS
+    # 8 COMPREHENSIVE TABS
     # -------------------------------------------------------------
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
         "🌟 पञ्चाङ्ग के ५ स्तम्भ (5 Pillars)",
+        "🪔 पक्ष, पितृपक्ष (श्राद्ध) एवं महा-काल शोध",
         "⏰ शुभ एवं अशुभ मुहूर्त (Timings)",
         "☀️ चौघड़िया, होरा एवं वैदिक घड़ी",
         "🛡️ भद्रा, पञ्चक एवं गण्डमूल शोध",
         "⚖️ चन्द्रबलम, ताराबलम एवं शुभ योग",
         "🪐 दैनिक ग्रह स्पष्ट एवं मंत्रिमंडल",
-        "📖 शास्त्रीय फलादेश, शूल व नियम"
+        "📖 शास्त्रीय फलादेश, शूल व कर्म शुद्धि"
     ])
 
     # =============================================================
@@ -407,7 +449,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
 
         st.markdown("---")
 
-        # Five Pillars Grand Classical Summary Table
+        # Five Pillars Summary Table
         st.markdown("#### 📋 पञ्चाङ्ग के पाँचों अंगों का सम्पूर्ण शास्त्रीय विवरण")
         pillars_table = [
             {"अंग": "१. तिथि", "मान": f"{t['name']} ({t['paksha']})", "समाप्ति काल": t['end_time_str'], "संज्ञा / स्वामी": f"{t['category']} / {t['deity']}", "शुभता": "मांगलिक" if "रिक्ता" not in t['category'] else "रिक्ता (सावधानी)"},
@@ -419,9 +461,167 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
         st.table(pillars_table)
 
     # =============================================================
-    # TAB 2: शुभ एवं अशुभ मुहूर्त (Timings)
+    # TAB 2: पक्ष, पितृपक्ष (श्राद्ध) एवं महा-काल शोध
     # =============================================================
     with tab2:
+        st.markdown("### 🪔 पक्ष, पितृपक्ष (श्राद्ध) एवं महा-काल शोध")
+        st.caption("शुक्ल/कृष्ण पक्ष के चन्द्र-बल गुणधर्म, पितृपक्ष (महालय) निषेध व विधान, चातुर्मास एवं खरमास का प्रामाणिक शास्त्रीय फलादेश:")
+
+        # 1. PAKSHA & MOON STRENGTH
+        st.markdown("#### 🌓 १. पक्ष एवं चन्द्रमा का प्राकृतिक बल (Chandra Bala in Paksha)")
+        col_pk1, col_pk2 = st.columns([1.5, 2.5])
+        with col_pk1:
+            st.markdown(f"""
+            <div style="background:{'#1F2937' if is_dark else '#EFF6FF'}; border:1.5px solid #3B82F6;
+                        border-radius:12px; padding:18px; text-align:center;">
+                <span style="font-size:13px; color:#1E40AF; font-weight:600;">वर्तमान सक्रिय पक्ष</span>
+                <div style="font-size:26px; font-weight:800; color:#1D4ED8; margin:6px 0;">
+                    {paksha_eng.get('paksha_name', 'पक्ष')}
+                </div>
+                <span style="background:{paksha_eng.get('chandra_bala_color', '#059669')}20; color:{paksha_eng.get('chandra_bala_color', '#059669')};
+                             padding:3px 10px; border-radius:12px; font-size:12px; font-weight:700;">
+                    {paksha_eng.get('chandra_bala', 'मध्यम')}
+                </span>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_pk2:
+            st.markdown(f"""
+            <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
+                        border-left:4px solid #3B82F6; border-radius:10px; padding:16px;">
+                <b style="color:#1E3A8A; font-size:15px;">📖 शास्त्रीय पक्ष-बल नियम:</b>
+                <p style="margin:6px 0 0 0; color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13.5px; line-height:1.6;">
+                    {paksha_eng.get('chandra_bala_desc', '')}
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # 2. PITRU PAKSHA DEEP ENGINE
+        st.markdown("#### 🪔 २. पितृपक्ष (महालय श्राद्ध काल) गहन शास्त्रीय अनुसंधान")
+        if pitru.get("is_active"):
+            st.markdown(f"""
+            <div style="background:#FFF5F5; border:2px solid #DC2626; border-radius:12px; padding:20px; margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+                    <b style="color:#991B1B; font-size:18px;">🚫 {pitru['shradh_name']} सक्रिय</b>
+                    <span style="background:#DC2626; color:#FFFFFF; padding:4px 12px; border-radius:14px; font-weight:700; font-size:12px;">
+                        {pitru['badge']}
+                    </span>
+                </div>
+                <p style="color:#7F1D1D; font-size:13.5px; margin:8px 0; line-height:1.6;">
+                    <b>शास्त्रीय प्रमाण:</b> <i>"{pitru['sutra']}"</i><br/>
+                    {pitru['verdict_desc']}
+                </p>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-top:10px;">
+                    <div style="background:#FFFFFF; border:1px solid #FECACA; border-radius:8px; padding:10px;">
+                        <b style="color:#991B1B;">☀️ कुतुप मुहूर्त (श्राद्ध का मुख्य काल):</b><br/>
+                        <span style="font-size:15px; font-weight:700; color:#0F172A;">{pitru['kutupa_time']}</span>
+                    </div>
+                    <div style="background:#FFFFFF; border:1px solid #FECACA; border-radius:8px; padding:10px;">
+                        <b style="color:#991B1B;">☀️ रौहिण मुहूर्त:</b><br/>
+                        <span style="font-size:15px; font-weight:700; color:#0F172A;">{pitru['rohina_time']}</span>
+                    </div>
+                    <div style="background:#FFFFFF; border:1px solid #FECACA; border-radius:8px; padding:10px;">
+                        <b style="color:#991B1B;">🌊 अपराह्न काल (तर्पण/पिण्डदान):</b><br/>
+                        <span style="font-size:15px; font-weight:700; color:#0F172A;">{pitru['aparahna_time']}</span>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            col_pt1, col_pt2 = st.columns(2)
+
+            with col_pt1:
+                st.markdown("""
+                <div style="background:#FEF2F2; border:1.5px solid #DC2626; border-radius:10px; padding:16px; height:100%;">
+                    <b style="color:#991B1B; font-size:16px;">🚫 क्या-क्या सर्वथा वर्जित है (Strict Prohibitions):</b>
+                    <p style="color:#7F1D1D; font-size:12.5px; margin:4px 0 10px 0;">शास्त्रों अनुसार इस अवधि में भौतिक मांगलिक उत्सव अनिष्टकारी होते हैं:</p>
+                    <ul style="color:#991B1B; font-size:13px; line-height:1.7; padding-left:18px; margin:0;">
+                        <li><b>नूतन गृह प्रवेश व भूमि पूजन:</b> नया घर खरीदना, गृह प्रवेश या नींव पूजन पूर्णतः निषिद्ध।</li>
+                        <li><b>विवाह, सगाई व रोका:</b> पाणिग्रहण संस्कार व वैवाहिक उत्सव महा-वर्जित।</li>
+                        <li><b>मुंडन व उपनयन संस्कार:</b> कोई भी मांगलिक संस्कार सम्पन्न नहीं किया जाता।</li>
+                        <li><b>नया व्यापार/प्रतिष्ठान उद्घाटन:</b> नए व्यवसाय या दुकान का आरम्भ न करें।</li>
+                        <li><b>नवीन वाहन एवं स्वर्ण क्रय:</b> विलासिता सामग्री व नवीन आभूषणों का प्रथम उपयोग वर्जित।</li>
+                        <li><b>तामसिक भोजन व व्यसन:</b> प्याज, लहसुन, मांस, मदिरा महा-पाप माना गया है।</li>
+                        <li><b>बाल, दाढ़ी व नाखून काटना:</b> श्राद्ध कर्ता हेतु क्षौर कर्म निषिद्ध है।</li>
+                    </ul>
+                </div>
+                """, unsafe_allow_html=True)
+
+            with col_pt2:
+                st.markdown("""
+                <div style="background:#F0FDF4; border:1.5px solid #16A34A; border-radius:10px; padding:16px; height:100%;">
+                    <b style="color:#166534; font-size:16px;">🟢 क्या-क्या करने का विधान है (Prescribed Rituals):</b>
+                    <p style="color:#15803D; font-size:12.5px; margin:4px 0 10px 0;">इस पावन काल में पितृ सेवा से वंश वृद्धि, आरोग्य व शांति प्राप्त होती है:</p>
+                    <ul style="color:#14532D; font-size:13px; line-height:1.7; padding-left:18px; margin:0;">
+                        <li><b>पितृ तर्पण:</b> काले तिल, जौ, कुशा व गंगाजल से पितरों को जलांजलि अर्पण।</li>
+                        <li><b>पिण्डदान एवं श्राद्ध कर्म:</b> कुतुप व रौहिण मुहूर्त में विधिपूर्वक श्राद्ध कर्म।</li>
+                        <li><b>पंचबलि कर्म:</b> गौ (गाय), श्वान (कुत्ता), काक (कौआ), देवादि एवं चींटियों को ग्रास देना।</li>
+                        <li><b>ब्राह्मण भोजन व दक्षिणा:</b> सात्विक खीर-पूरी से योग्य ब्राह्मणों को तृप्त करना।</li>
+                        <li><b>श्रीमद्भगवद्गीता पाठ:</b> विशेषकर अध्याय ७, ११ एवं गरुड़ पुराण का श्रवण।</li>
+                        <li><b>अन्न व वस्त्र दान:</b> जरूरतमंदों को अन्न, छाता, पादुका (जूते) एवं दीपदान।</li>
+                    </ul>
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+            <div style="background:{'#1F2937' if is_dark else '#F0FDF4'}; border:1px solid #BBF7D0;
+                        border-radius:10px; padding:16px;">
+                <b style="color:#166534; font-size:15px;">{pitru.get('badge', 'पितृपक्ष निष्क्रिय')}</b>
+                <p style="margin:4px 0 0 0; color:#15803D; font-size:13.5px;">{pitru.get('desc', 'वर्तमान में पितृपक्ष सक्रिय नहीं है।')}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # 3. CHATURMAS & KHARMAS
+        st.markdown("#### 🕉️ ३. चातुर्मास (देवशयन) एवं खरमास (मलमास) स्थिति")
+        col_ct1, col_ct2 = st.columns(2)
+
+        with col_ct1:
+            is_ch = paksha_eng.get("is_chaturmas", False)
+            ch_bg = "#FFF7ED" if is_ch else "#F8FAFC"
+            ch_bdr = "#F97316" if is_ch else "#E2E8F0"
+            ch_col = "#C2410C" if is_ch else "#475569"
+            st.markdown(f"""
+            <div style="background:{ch_bg if not is_dark else '#1F2937'}; border:1.5px solid {ch_bdr};
+                        border-radius:10px; padding:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <b style="color:{ch_col}; font-size:15px;">चातुर्मास (देवशयन काल)</b>
+                    <span style="background:{ch_col}20; color:{ch_col}; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">
+                        {'⚠️ सक्रिय' if is_ch else '🟢 निष्क्रिय'}
+                    </span>
+                </div>
+                <p style="margin:6px 0 0 0; color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13px; line-height:1.5;">
+                    {paksha_eng.get('chaturmas_desc', '')}
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_ct2:
+            is_kh = paksha_eng.get("is_kharmas", False)
+            kh_bg = "#FEF2F2" if is_kh else "#F8FAFC"
+            kh_bdr = "#DC2626" if is_kh else "#E2E8F0"
+            kh_col = "#991B1B" if is_kh else "#475569"
+            st.markdown(f"""
+            <div style="background:{kh_bg if not is_dark else '#1F2937'}; border:1.5px solid {kh_bdr};
+                        border-radius:10px; padding:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <b style="color:{kh_col}; font-size:15px;">खरमास / मलमास (धनु-मीन सूर्य)</b>
+                    <span style="background:{kh_col}20; color:{kh_col}; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700;">
+                        {'🚫 सक्रिय' if is_kh else '🟢 निष्क्रिय'}
+                    </span>
+                </div>
+                <p style="margin:6px 0 0 0; color:{'#D1D5DB' if is_dark else '#334155'}; font-size:13px; line-height:1.5;">
+                    {paksha_eng.get('kharmas_desc', '')}
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # =============================================================
+    # TAB 3: शुभ एवं अशुभ मुहूर्त (Timings)
+    # =============================================================
+    with tab3:
         st.markdown("### ⏰ शुभ एवं अशुभ काल / मुहूर्त (Auspicious & Inauspicious Timings)")
         st.caption("सूर्योदय व सूर्यास्त के शुद्ध दिनमान विभाजन पर आधारित यथार्थ वेला एवं त्याज्य काल चक्र:")
 
@@ -466,9 +666,9 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 3: चौघड़िया, होरा एवं वैदिक घड़ी
+    # TAB 4: चौघड़िया, होरा एवं वैदिक घड़ी
     # =============================================================
-    with tab3:
+    with tab4:
         st.markdown("### ☀️ चौघड़िया, होरा एवं वैदिक घड़ी (Choghadiya, Horas & Vedic Time)")
         st.caption("दिन के ८ एवं रात्रि के ८ चौघड़िया, २४ ग्रह होराएं एवं ६० घटी वैदिक काल मापन:")
 
@@ -572,9 +772,9 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 4: भद्रा, पञ्चक एवं गण्डमूल शोध
+    # TAB 5: भद्रा, पञ्चक एवं गण्डमूल शोध
     # =============================================================
-    with tab4:
+    with tab5:
         st.markdown("### 🛡️ भद्रा, पञ्चक एवं गण्डमूल शोध (Bhadra, Panchaka & Gandamoola Engine)")
         st.caption("मुहूर्त चिन्तामणि के अनुसार भद्रा वास, मुख-पुच्छ काल, पञ्चक के ५ प्रकार एवं गण्डमूल चरण फल:")
 
@@ -660,9 +860,9 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
             """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 5: चन्द्रबलम, ताराबलम एवं आनन्दादि शुभ योग
+    # TAB 6: चन्द्रबलम, ताराबलम एवं आनन्दादि शुभ योग
     # =============================================================
-    with tab5:
+    with tab6:
         st.markdown("### ⚖️ चन्द्रबलम, ताराबलम एवं आनन्दादि शुभ योग")
         st.caption("१२ राशियों का चन्द्रबल, २७ नक्षत्रों का ताराबल एवं २८ आनन्दादि महायोग:")
 
@@ -714,7 +914,6 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
         with col_b2:
             st.markdown("#### 🌟 २७ नक्षत्रों का ताराबलम् (Tarabalam)")
             st.caption("जन्म, सम्पत्, विपत्, क्षेम, प्रत्यरि, साधक, वध, मित्र, परम मित्र:")
-            # Display first 14 in left sub-col, rest in right
             for item in balam["tarabalam"][:14]:
                 st.markdown(f"""
                 <div style="background:{'#1F2937' if is_dark else '#F8FAFC'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
@@ -725,9 +924,9 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 6: दैनिक ग्रह स्पष्ट एवं मंत्रिमंडल
+    # TAB 7: दैनिक ग्रह स्पष्ट एवं मंत्रिमंडल
     # =============================================================
-    with tab6:
+    with tab7:
         st.markdown("### 🪐 दैनिक ग्रह स्पष्ट स्थिति एवं संवत्सर मंत्रिमंडल")
         st.caption("स्वीस एफिमरिस द्वारा सूर्योदय कालीन नवग्रह स्पष्ट स्थिति, राशि, अंश-कला-विकला, नक्षत्र, गति एवं गरिमा:")
 
@@ -771,10 +970,10 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 """, unsafe_allow_html=True)
 
     # =============================================================
-    # TAB 7: शास्त्रीय फलादेश, शूल व नियम
+    # TAB 8: शास्त्रीय फलादेश, शूल व कर्म शुद्धि
     # =============================================================
-    with tab7:
-        st.markdown("### 📖 शास्त्रीय फलादेश, शूल, वास एवं वैदिक नियम")
+    with tab8:
+        st.markdown("### 📖 शास्त्रीय फलादेश, शूल, वास एवं वैदिक कर्म शुद्धि")
         st.caption("दिशा शूल, चन्द्र वास, अग्नि वास (हवन विचार), शिव वास (रुद्राभिषेक विचार) एवं दैनिक कर्म शुद्धि:")
 
         col_s1, col_s2 = st.columns(2)
@@ -825,25 +1024,37 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
 
         st.markdown("---")
 
-        # Action Suitability Scorecard
-        st.markdown("#### 🎯 दैनिक कर्म शुद्धि एवं अनुशंसित कार्य (Action Suitability)")
+        # Action Suitability Scorecard (Strictly enforcing Pitru Paksha & Mahadoshas)
+        is_pitru_active = pitru.get("is_active", False)
+
+        st.markdown(f"""
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h4 style="margin:0;">🎯 दैनिक कर्म शुद्धि एवं अनुशंसित कार्य (Action Suitability Scorecard)</h4>
+            {'<span style="background:#FEE2E2; color:#DC2626; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:700;">⚠️ पितृपक्ष निषेध नियम लागू</span>' if is_pitru_active else ''}
+        </div>
+        """, unsafe_allow_html=True)
+
         acts_cols = st.columns(4)
         acts_list = [
-            ("🏠 गृह प्रवेश", "वर्जित" if bhadra.get("is_fatal_on_earth") or "रिक्ता" in pillars["tithi"]["category"] else "शुभ", "#DC2626" if bhadra.get("is_fatal_on_earth") else "#059669"),
-            ("💍 विवाह संस्कार", "वर्जित" if bhadra.get("is_fatal_on_earth") or not pillars["yoga"]["is_good"] else "शुभ", "#DC2626" if bhadra.get("is_fatal_on_earth") else "#059669"),
-            ("🚗 वाहन क्रय", "चर/लाभ चौघड़िया में शुभ", "#059669"),
-            ("📈 नवीन व्यापार", "लाभ/अमृत चौघड़िया में उत्तम", "#059669"),
-            ("🌾 भूमि पूजन / नींव", "वर्जित" if pg["panchaka"]["is_active"] else "शुभ", "#DC2626" if pg["panchaka"]["is_active"] else "#059669"),
+            ("🏠 गृह प्रवेश", "🚫 सर्वथा वर्जित (पितृपक्ष)" if is_pitru_active else ("वर्जित" if bhadra.get("is_fatal_on_earth") or "रिक्ता" in pillars["tithi"]["category"] else "शुभ"), "#DC2626" if (is_pitru_active or bhadra.get("is_fatal_on_earth")) else "#059669"),
+            ("💍 विवाह संस्कार", "🚫 महा-निषेध (पितृपक्ष)" if is_pitru_active else ("वर्जित" if bhadra.get("is_fatal_on_earth") or not pillars["yoga"]["is_good"] else "शुभ"), "#DC2626" if (is_pitru_active or bhadra.get("is_fatal_on_earth")) else "#059669"),
+            ("🚗 वाहन क्रय", "⚠️ त्याज्य (विलासिता वर्जित)" if is_pitru_active else "चर/लाभ चौघड़िया में शुभ", "#DC2626" if is_pitru_active else "#059669"),
+            ("📈 नवीन व्यापार आरम्भ", "🚫 वर्जित (नवीन आरम्भ निषिद्ध)" if is_pitru_active else "लाभ/अमृत चौघड़िया में उत्तम", "#DC2626" if is_pitru_active else "#059669"),
+            ("🌾 भूमि पूजन / नींव", "🚫 वर्जित (पितृपक्ष/पञ्चक)" if (is_pitru_active or pg["panchaka"]["is_active"]) else "शुभ", "#DC2626" if (is_pitru_active or pg["panchaka"]["is_active"]) else "#059669"),
             ("✈️ यात्रा आरम्भ", "दिशा शूल परिहार आवश्यक", "#D97706"),
-            ("💰 स्वर्ण व आभूषण", "गुरु/रवि पुष्य या शुभ चौघड़िया", "#059669"),
-            ("🌿 औषधि सेवन", "शुभ", "#059669")
+            ("💰 स्वर्ण व आभूषण", "⚠️ नवीन उपभोग त्याज्य" if is_pitru_active else "शुभ चौघड़िया में क्रय", "#D97706" if is_pitru_active else "#059669"),
+            ("🪔 तर्पण व पिण्डदान", "🌟 सर्वोत्तम (परम पितृ-तृप्ति)" if is_pitru_active else "अमावस्या/संक्रान्ति पर शुभ", "#059669"),
+            ("🍲 पंचबलि व ब्राह्मण भोज", "🟢 परम कल्याणकारी (अक्षय पुण्य)" if is_pitru_active else "शुभ कर्म", "#059669"),
+            ("📖 गीता पाठ (अध्याय ७ व ११)", "सर्वदोष नाशक व पितृ उद्धारक", "#059669"),
+            ("🌿 दान-पुण्य व गौ सेवा", "अति उत्तम (अक्षय फल)", "#059669"),
+            ("💊 औषधि सेवन", "शुभ", "#059669")
         ]
         for idx, (act_name, act_status, act_color) in enumerate(acts_list):
             with acts_cols[idx % 4]:
                 st.markdown(f"""
                 <div style="background:{'#1F2937' if is_dark else '#F8FAFC'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
                             border-left:3px solid {act_color}; border-radius:6px; padding:10px; margin-bottom:8px; text-align:center;">
-                    <b style="font-size:13.5px; color:{'#FFFFFF' if is_dark else '#0F172A'};">{act_name}</b>
-                    <div style="color:{act_color}; font-size:12.5px; font-weight:700; margin-top:2px;">{act_status}</div>
+                    <b style="font-size:13px; color:{'#FFFFFF' if is_dark else '#0F172A'};">{act_name}</b>
+                    <div style="color:{act_color}; font-size:12px; font-weight:700; margin-top:2px;">{act_status}</div>
                 </div>
                 """, unsafe_allow_html=True)

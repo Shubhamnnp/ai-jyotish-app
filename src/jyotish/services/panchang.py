@@ -1687,6 +1687,136 @@ class VedicPanchangService:
         return matrix
 
     @classmethod
+    def calculate_paksha_and_pitru_engine(
+        cls,
+        target_date: date,
+        sun_lon: float,
+        moon_lon: float,
+        tithi_idx: int,
+        sunrise_dt: datetime,
+        sunset_dt: datetime
+    ) -> Dict[str, Any]:
+        """
+        Calculates Paksha attributes, Pitru Paksha (Mahalaya Shradh), Chaturmas,
+        Kharmas, and classical prohibitions (क्या-क्या नहीं कर सकते) & prescribed deeds.
+        """
+        sun_sign = int(sun_lon // 30.0) + 1  # 1 to 12
+        is_shukla = tithi_idx <= 15
+        paksha_name = "शुक्ल पक्ष" if is_shukla else "कृष्ण पक्ष"
+
+        # Chandra Bala based on Paksha & Tithi
+        if 1 <= tithi_idx <= 10:
+            chandra_bala = "मध्यम से शुभ (Waxing Moon - वृद्धिशील)"
+            chandra_bala_desc = "शुक्ल प्रतिपदा से दशमी — चन्द्रमा का बल क्रमशः बढ़ रहा है। देव कार्य, नूतन आरम्भ व विद्या कर्म हेतु शुभ।"
+            chandra_bala_color = "#059669"
+        elif 11 <= tithi_idx <= 20:
+            chandra_bala = "सर्वोच्च / पूर्ण चन्द्र बल (Full Moon Strength)"
+            chandra_bala_desc = "शुक्ल एकादशी से कृष्ण पंचमी — पूर्ण चन्द्र बल (सुधाकर किरणें)। समस्त मांगलिक, आध्यात्मिक व भौतिक कर्मों हेतु सर्वश्रेष्ठ।"
+            chandra_bala_color = "#059669"
+        else:
+            chandra_bala = "क्षीण चन्द्र बल (Waning Moon - संयम काल)"
+            chandra_bala_desc = "कृष्ण षष्ठी से अमावस्या — चन्द्रमा क्षीण व हीन बली है। बाह्य भौतिक उत्सवों के स्थान पर आत्म-साधना, पितृ तर्पण एवं संयम हेतु उत्तम।"
+            chandra_bala_color = "#D97706"
+
+        # -------------------------------------------------------------
+        # 1. PITRU PAKSHA (पितृपक्ष / महालय श्राद्ध पक्ष / कनागत)
+        # Classical Rule: Sun in Virgo (कन्या राशि - sign 6) and Moon in Krishna Paksha (16..30)
+        # Also includes Bhadrapada Purnima (Tithi 15) when Sun in early Virgo or late Leo.
+        # -------------------------------------------------------------
+        is_pitru_paksha = (sun_sign == 6 and (16 <= tithi_idx <= 30 or tithi_idx == 15))
+
+        shradh_names = {
+            15: "पूर्णिमा श्राद्ध (ऋषि श्राद्ध)",
+            16: "प्रतिपदा श्राद्ध (नाना-नानी व दौहित्र श्राद्ध)",
+            17: "द्वितीया श्राद्ध",
+            18: "तृतीया श्राद्ध",
+            19: "चतुर्थी श्राद्ध / भरणी श्राद्ध (अकाल मृत्यु)",
+            20: "पञ्चमी श्राद्ध (अविवाहित जनों का श्राद्ध)",
+            21: "षष्ठी श्राद्ध",
+            22: "सप्तमी श्राद्ध",
+            23: "अष्टमी श्राद्ध",
+            24: "नवमी श्राद्ध (अविधवा नवमी — माताओं व सौभाग्यवती स्त्रियों का श्राद्ध)",
+            25: "दशमी श्राद्ध",
+            26: "एकादशी श्राद्ध (इन्दिरा एकादशी — संन्यासियों व वैष्णव जनों का श्राद्ध)",
+            27: "द्वादशी श्राद्ध (सन्यासियों, यतियों का श्राद्ध / मघा त्रयोदशी)",
+            28: "त्रयोदशी श्राद्ध (मघा श्राद्ध / मृत बालकों का श्राद्ध)",
+            29: "चतुर्दशी श्राद्ध (घात चतुर्दशी — शस्त्र, विष, अग्नि व दुर्घटना से मृत जनों का श्राद्ध)",
+            30: "सर्वपितृ अमावस्या (महालया अमावस्या — समस्त ज्ञात-अज्ञात पितरों का महा-श्राद्ध)"
+        }
+        today_shradh = shradh_names.get(tithi_idx, f"तिथि {tithi_idx} श्राद्ध")
+
+        # Shradh Specific Timings (Kutupa & Rohina Kaal)
+        day_span = (sunset_dt - sunrise_dt).total_seconds()
+        muh_sec = day_span / 15.0
+        kutupa_st = sunrise_dt + timedelta(seconds=7 * muh_sec)
+        kutupa_en = sunrise_dt + timedelta(seconds=8 * muh_sec)
+        rohina_st = sunrise_dt + timedelta(seconds=8 * muh_sec)
+        rohina_en = sunrise_dt + timedelta(seconds=9 * muh_sec)
+        aparahna_st = sunrise_dt + timedelta(seconds=9 * muh_sec)
+        aparahna_en = sunrise_dt + timedelta(seconds=12 * muh_sec)
+
+        pitru_data = {}
+        if is_pitru_paksha:
+            pitru_data = {
+                "is_active": True,
+                "badge": "🚫 पितृपक्ष सक्रिय (Mahalaya Shradh Active)",
+                "color": "#DC2626",
+                "shradh_name": today_shradh,
+                "kutupa_time": f"{kutupa_st.strftime('%I:%M %p')} - {kutupa_en.strftime('%I:%M %p')}",
+                "rohina_time": f"{rohina_st.strftime('%I:%M %p')} - {rohina_en.strftime('%I:%M %p')}",
+                "aparahna_time": f"{aparahna_st.strftime('%I:%M %p')} - {aparahna_en.strftime('%I:%M %p')}",
+                "sutra": "कन्यागते सवितरि यो न मज्जति गोमतीम्। न ददाति पितृभ्योऽन्नं स भवेत् पितृघातकः॥ (निर्णय सिन्धु)",
+                "prohibitions": [
+                    "नूतन गृह प्रवेश एवं भूमि पूजन (सर्वथा वर्जित - गृह क्लेश व अनिष्ट भय)",
+                    "विवाह, सगाई, रोका एवं पाणिग्रहण संस्कार (महा-निषेध - वंश वृद्धि में अवरोध)",
+                    "उपनयन, मुंडन एवं कर्णवेध संस्कार (मांगलिक संस्कार निषिद्ध)",
+                    "नूतन व्यापार, दुकान या प्रतिष्ठान का आरम्भ / उद्घाटन (आकस्मिक हानि का भय)",
+                    "नवीन वाहन क्रय एवं स्वर्ण-आभूषणों का प्रथम क्रय/उपयोग (विलासिता उत्सव वर्जित)",
+                    "मांसाहार, मदिरा, प्याज-लहसुन एवं तामसिक आचरण (महा-दोष)",
+                    "बाल, दाढ़ी व नाखून कटवाना (श्राद्ध कर्ता हेतु निषिद्ध)"
+                ],
+                "prescribed_deeds": [
+                    "पितरों के निमित्त काले तिल, जौ व कुशा से जलांजलि व तर्पण",
+                    "पिण्डदान एवं कुतुप/रौहिण मुहूर्त में श्राद्ध कर्म सम्पादन",
+                    "पंचबलि कर्म (गौ, श्वान, काग, देवादि, पिपीलिका को ग्रास अर्पण)",
+                    "योग्य वेदपाठी ब्राह्मण को सात्विक भोजन (खीर, पूरी आदि) व दक्षिणा",
+                    "श्रीमद्भगवद्गीता के ७वें व ११वें अध्याय तथा गरुड़ पुराण का पाठ",
+                    "अन्नदान, वस्त्रदान, पादुका (जूते), छाता एवं दीपदान"
+                ],
+                "verdict_desc": "वर्तमान में सूर्य कन्या राशि में तथा चन्द्रमा कृष्ण पक्ष में स्थित है। यह पितरों के प्रति कृतज्ञता ज्ञापन, तर्पण एवं श्राद्ध का परम पवित्र काल है। शास्त्रों अनुसार इस अवधि में भौतिक मांगलिक उत्सव वर्जित होते हैं परंतु पितृ सेवा व दान-पुण्य से असीम पितृ-आशीर्वाद प्राप्त होता है।"
+            }
+        else:
+            pitru_data = {
+                "is_active": False,
+                "badge": "🟢 पितृपक्ष निष्क्रिय (Normal Period)",
+                "color": "#059669",
+                "desc": "वर्तमान में पितृपक्ष सक्रिय नहीं है। सामान्य मांगलिक कार्यों पर पितृपक्ष का कोई प्रतिबंध नहीं है।"
+            }
+
+        # -------------------------------------------------------------
+        # 2. CHATURMAS (चातुर्मास / देवशयन काल)
+        # -------------------------------------------------------------
+        is_chaturmas = (sun_sign in [4, 5, 6]) or (sun_sign == 7 and (tithi_idx < 11 or not is_shukla))
+
+        # -------------------------------------------------------------
+        # 3. KHARMAS / MALMAAS (खरमास)
+        # -------------------------------------------------------------
+        is_kharmas = (sun_sign in [9, 12])
+
+        return {
+            "paksha_name": paksha_name,
+            "is_shukla": is_shukla,
+            "chandra_bala": chandra_bala,
+            "chandra_bala_desc": chandra_bala_desc,
+            "chandra_bala_color": chandra_bala_color,
+            "pitru_paksha": pitru_data,
+            "is_chaturmas": is_chaturmas,
+            "chaturmas_desc": "आषाढ़ शुक्ल एकादशी से कार्तिक शुक्ल एकादशी तक श्रीहरि विष्णु क्षीरसागर में योगनिद्रा में रहते हैं। अपूर्व गृह प्रवेश व विवाह संस्कार निषिद्ध माने गए हैं।" if is_chaturmas else "चातुर्मास सक्रिय नहीं है।",
+            "is_kharmas": is_kharmas,
+            "kharmas_desc": "सूर्य जब देवगुरु बृहस्पति की राशि (धनु या मीन) में होते हैं, तब समस्त मांगलिक संस्कार वर्जित रहते हैं।" if is_kharmas else "खरमास सक्रिय नहीं है।"
+        }
+
+    @classmethod
     def get_full_panchang(
         cls,
         target_date: date,
@@ -1712,7 +1842,7 @@ class VedicPanchangService:
         choghadiya_horas = cls.calculate_choghadiya_and_horas(target_date, sr_dt, ss_dt, next_sr_dt)
         muhurtas = cls.calculate_shubh_ashubh_muhurtas(target_date, sr_dt, ss_dt, next_sr_dt, nak_idx)
 
-        # Sun Nakshatra for Anandadi
+        # Sun & Moon longitudes
         provider = cls.get_provider()
         utc_sr = sr_dt - timedelta(hours=tz_offset_hours)
         pos_sr, _ = provider.get_planet_positions(utc_sr)
@@ -1720,6 +1850,16 @@ class VedicPanchangService:
         moon_lon = pos_sr["Moon"]["longitude"] % 360.0
         sun_nak_idx = int(sun_lon // (360.0 / 27.0)) + 1
         moon_sign = int(moon_lon // 30.0) + 1
+
+        # Paksha & Pitru Paksha Engine
+        paksha_engine = cls.calculate_paksha_and_pitru_engine(
+            target_date=target_date,
+            sun_lon=sun_lon,
+            moon_lon=moon_lon,
+            tithi_idx=tithi_idx,
+            sunrise_dt=sr_dt,
+            sunset_dt=ss_dt
+        )
 
         yogas = cls.calculate_anandadi_and_special_yogas(target_date, sun_nak_idx, nak_idx, tithi_idx)
         nivas_shoola = cls.calculate_nivas_shoola_and_vedic_clock(target_date, sr_dt, moon_sign, tithi_idx)
@@ -1730,9 +1870,15 @@ class VedicPanchangService:
         # Overall Day Verdict
         day_quality = "🟢 शुभ व मांगलिक (Auspicious)"
         quality_color = "#059669"
-        if bhadra.get("is_fatal_on_earth") or panchak_ganda["panchaka"].get("color") == "#991B1B":
+        if paksha_engine["pitru_paksha"].get("is_active"):
+            day_quality = f"🔴 पितृपक्ष सक्रिय — {paksha_engine['pitru_paksha']['shradh_name']} (मांगलिक कार्य वर्जित | तर्पण-श्राद्ध हेतु परम पावन)"
+            quality_color = "#DC2626"
+        elif bhadra.get("is_fatal_on_earth") or panchak_ganda["panchaka"].get("color") == "#991B1B":
             day_quality = "🔴 सतर्कता व सावधानी (Inauspicious Windows Active)"
             quality_color = "#DC2626"
+        elif not five_pillars["yoga"]["is_good"]:
+            day_quality = "🟡 मध्यम (Neutral / Use Auspicious Windows)"
+            quality_color = "#D97706"
         elif not five_pillars["yoga"]["is_good"]:
             day_quality = "🟡 मध्यम (Neutral / Use Auspicious Windows)"
             quality_color = "#D97706"
@@ -1758,5 +1904,6 @@ class VedicPanchangService:
             "nivas_shoola": nivas_shoola,
             "balam": balam,
             "samvatsar": samvatsar,
-            "transit_matrix": transit_matrix
+            "transit_matrix": transit_matrix,
+            "paksha_engine": paksha_engine
         }

@@ -72,6 +72,16 @@ def test_panchang_delhi_oct_2026():
     assert sun["rashi"] == "कन्या (Virgo)"
     assert moon["rashi"] == "कर्क (Cancer)"
 
+    # 8. Paksha & Pitru Paksha Engine
+    assert "paksha_engine" in res
+    pe = res["paksha_engine"]
+    assert pe["paksha_name"] == "कृष्ण पक्ष"
+    assert pe["pitru_paksha"]["is_active"] is True
+    assert "एकादशी" in pe["pitru_paksha"]["shradh_name"]
+    assert len(pe["pitru_paksha"]["prohibitions"]) >= 5
+    assert len(pe["pitru_paksha"]["prescribed_deeds"]) >= 5
+    assert "कुतुप" in pe["pitru_paksha"]["kutupa_time"] or pe["pitru_paksha"]["kutupa_time"] != ""
+
 
 def test_panchang_arbitrary_date():
     # Test another date (e.g. Diwali / New Moon)
@@ -80,3 +90,6 @@ def test_panchang_arbitrary_date():
     assert res["meta"]["date"] == target_d
     assert res["five_pillars"]["tithi"]["index"] in range(1, 31)
     assert res["five_pillars"]["nakshatra"]["index"] in range(1, 28)
+    assert "paksha_engine" in res
+    # On Nov 1, 2025 Sun is in Libra, so Pitru Paksha must be inactive
+    assert res["paksha_engine"]["pitru_paksha"]["is_active"] is False
