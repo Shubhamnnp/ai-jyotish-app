@@ -16544,22 +16544,18 @@ elif selected_idx == 16:
     except Exception:
         vim_current = ""
 
-    st.markdown(f"""
-    <div style="background:linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border:1.5px solid #93C5FD; border-radius:10px; padding:12px 18px; margin-bottom:15px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-            <div>
-                <b style="color:#1E40AF; font-size:15px;">👤 सक्रिय कुण्डली:</b> <span style="font-weight:700; color:#0F172A;">{chart.birth_data.name}</span> &nbsp;|&nbsp; 
-                <b>लग्न:</b> <span style="color:#2563EB;">{chart.lagna_sign_name}</span> &nbsp;|&nbsp; 
-                <b>चन्द्र राशि:</b> <span style="color:#2563EB;">{chart.planets['Moon'].sign_name} ({chart.panchang.nakshatra_name})</span> &nbsp;|&nbsp; 
-                <b>आत्मकारक:</b> <span style="color:#D97706;">{chart.atmakaraka}</span>
-                {vim_current}
-            </div>
-            <div>
-                <span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:700;">🌟 ९९.९% प्रामाणिक दैवज्ञ शोध</span>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div style="background:linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border:1.5px solid #93C5FD; border-radius:10px; padding:12px 18px; margin-bottom:15px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">'
+        f'<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">'
+        f'<div><b style="color:#1E40AF; font-size:15px;">👤 सक्रिय कुण्डली:</b> <span style="font-weight:700; color:#0F172A;">{chart.birth_data.name}</span> &nbsp;|&nbsp; '
+        f'<b>लग्न:</b> <span style="color:#2563EB;">{chart.lagna_sign_name}</span> &nbsp;|&nbsp; '
+        f'<b>चन्द्र राशि:</b> <span style="color:#2563EB;">{chart.planets["Moon"].sign_name} ({chart.panchang.nakshatra_name})</span> &nbsp;|&nbsp; '
+        f'<b>आत्मकारक:</b> <span style="color:#D97706;">{chart.atmakaraka}</span>'
+        f'{vim_current}</div>'
+        f'<div><span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:700;">🌟 ९९.९% प्रामाणिक दैवज्ञ शोध</span></div>'
+        f'</div></div>',
+        unsafe_allow_html=True
+    )
 
     # Initialize chat history
     if "ai_chat_history" not in st.session_state:
@@ -16627,44 +16623,47 @@ elif selected_idx == 16:
                     with st.expander("🔬 दैवज्ञ द्वि-कुण्डली शोध प्रमाण (Natal + Horary Prashna + D1-D60 Backend Audit)", expanded=False):
                         cp1, cp2, cp3 = st.columns(3)
                         with cp1:
-                            st.markdown(f"""
-                            <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12.5px;">
-                                <b style="color:#1E40AF;">❓ तात्कालिक प्रश्न परीक्षा:</b><br>
-                                <b>प्रश्न लग्न:</b> {p_info.get('prashna_lagna_sign', '—')} ({p_info.get('prashna_lagna_deg', '—')})<br>
-                                <b>प्रश्नेश:</b> {p_info.get('lagnesh_name', '—')} (भाव {p_info.get('lagnesh_house', '—')})<br>
-                                <b>कार्येश:</b> {p_info.get('karyesh_name', '—')} (भाव {p_info.get('karyesh_house', '—')})<br>
-                                <b>ताजिक योग:</b> <span style="color:#7C3AED; font-weight:700;">{p_info.get('tajika_yoga', '—')}</span><br>
-                                <b>जिज्ञासा भाव:</b> {latest_research.get('intent_status', '—')}
-                            </div>
-                            """, unsafe_allow_html=True)
+                            st.markdown(
+                                f'<div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12.5px;">'
+                                f'<b style="color:#1E40AF;">❓ तात्कालिक प्रश्न परीक्षा:</b><br>'
+                                f'<b>प्रश्न लग्न:</b> {p_info.get("prashna_lagna_sign", "—")} ({p_info.get("prashna_lagna_deg", "—")})<br>'
+                                f'<b>प्रश्नेश:</b> {p_info.get("lagnesh_name", "—")} (भाव {p_info.get("lagnesh_house", "—")})<br>'
+                                f'<b>कार्येश:</b> {p_info.get("karyesh_name", "—")} (भाव {p_info.get("karyesh_house", "—")})<br>'
+                                f'<b>ताजिक योग:</b> <span style="color:#7C3AED; font-weight:700;">{p_info.get("tajika_yoga", "—")}</span><br>'
+                                f'<b>जिज्ञासा भाव:</b> {latest_research.get("intent_status", "—")}'
+                                f'</div>',
+                                unsafe_allow_html=True
+                            )
                         with cp2:
                             n_sum = latest_research.get("natal_summary", {})
                             bhava_txt = n_sum.get("bhava", "सम्पूर्ण कुण्डली")
                             bhavesh_txt = n_sum.get("bhavesh", "—")
                             karakas_txt = n_sum.get("karakas", n_sum.get("karaka", "—"))
-                            st.markdown(f"""
-                            <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12.5px;">
-                                <b style="color:#047857;">📜 जन्म कुण्डली शोध:</b><br>
-                                <b>सम्बन्धित भाव:</b> {bhava_txt}<br>
-                                <b>भावेश स्थिति:</b> {bhavesh_txt}<br>
-                                <b>कारक स्थिति:</b> {karakas_txt}<br>
-                                <b>संभावित काल:</b> <b style="color:#16A34A;">{latest_research.get('direct_timing', '—')}</b>
-                            </div>
-                            """, unsafe_allow_html=True)
+                            st.markdown(
+                                f'<div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12.5px;">'
+                                f'<b style="color:#047857;">📜 जन्म कुण्डली शोध:</b><br>'
+                                f'<b>सम्बन्धित भाव:</b> {bhava_txt}<br>'
+                                f'<b>भावेश स्थिति:</b> {bhavesh_txt}<br>'
+                                f'<b>कारक स्थिति:</b> {karakas_txt}<br>'
+                                f'<b>संभावित काल:</b> <b style="color:#16A34A;">{latest_research.get("direct_timing", "—")}</b>'
+                                f'</div>',
+                                unsafe_allow_html=True
+                            )
                         with cp3:
                             g_aud = latest_research.get("gem_audit", {})
                             rec_cnt = len(g_aud.get("recommended_gems", [])) if g_aud else 0
                             pro_cnt = len(g_aud.get("strictly_prohibited_gems", [])) if g_aud else 0
                             merc_8_txt = "🚫 पन्ना वर्जित!" if chart.planets.get('Mercury') and chart.planets['Mercury'].house_from_lagna == 8 else "सामान्य"
-                            st.markdown(f"""
-                            <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12.5px;">
-                                <b style="color:#B91C1C;">💎 रत्न शुद्धि व दुष्टस्थान:</b><br>
-                                <b>अनुशंसित रत्न:</b> 🟢 {rec_cnt} रत्न<br>
-                                <b>सर्वथा वर्जित रत्न:</b> 🚫 {pro_cnt} रत्न<br>
-                                <b>८वें भाव में बुध:</b> {merc_8_txt}<br>
-                                <b>निर्णय:</b> केवल योगकारक के रत्न ग्राह्य
-                            </div>
-                            """, unsafe_allow_html=True)
+                            st.markdown(
+                                f'<div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12.5px;">'
+                                f'<b style="color:#B91C1C;">💎 रत्न शुद्धि व दुष्टस्थान:</b><br>'
+                                f'<b>अनुशंसित रत्न:</b> 🟢 {rec_cnt} रत्न<br>'
+                                f'<b>सर्वथा वर्जित रत्न:</b> 🚫 {pro_cnt} रत्न<br>'
+                                f'<b>८वें भाव में बुध:</b> {merc_8_txt}<br>'
+                                f'<b>निर्णय:</b> केवल योगकारक के रत्न ग्राह्य'
+                                f'</div>',
+                                unsafe_allow_html=True
+                            )
 
     # Clear Chat Button
     if len(st.session_state.ai_chat_history) > 1:
