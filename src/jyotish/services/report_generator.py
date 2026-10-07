@@ -38,6 +38,10 @@ from ..ui.chart_renderer import ChartRenderer
 from .master_calculator import default_master_calculator
 from ..core.affliction import AfflictionEngine
 from ..services.vastu import VastuJyotishEngine, VASTU_DIRECTIONS
+from ..core.gochar import TransitEngine
+from ..core.lalkitab import LalKitabEngine, LAL_KITAB_108_TOTKAS
+from .event_query import EventQueryService
+from .muhurta import MuhurtaEngine
 
 
 class NatalReportGenerator:
@@ -473,6 +477,157 @@ class NatalReportGenerator:
         bhagya_gem = gemstones_map.get(chart.houses[8].lord, gemstones_map["Jupiter"])
 
         # -------------------------------------------------------------
+        # 15. LIVE TRANSITS (GOCHAR) & TRANSIT PAYA (शनि व गुरु पाया)
+        # -------------------------------------------------------------
+        transit_engine = TransitEngine()
+        t_data, t_sum = transit_engine.compute_transit_snapshot(chart, date.today())
+        
+        saturn_paya_detail = t_sum.transit_paya_detail.get('saturn_paya', {})
+        jupiter_paya_detail = t_sum.transit_paya_detail.get('jupiter_paya', {})
+        saturn_paya_title = t_sum.saturn_paya or saturn_paya_detail.get('name_hi', 'ताम्र पाया (Copper Paya)')
+        saturn_paya_desc = saturn_paya_detail.get('desc_hi', 'साहस, पराक्रम, व्यापार विस्तार एवं यात्राओं से लाभ।')
+        saturn_paya_fav = saturn_paya_detail.get('rating_pct', 50) >= 50
+        
+        jupiter_paya_title = t_sum.jupiter_paya or jupiter_paya_detail.get('name_hi', 'स्वर्ण पाया (Gold Paya)')
+        jupiter_paya_desc = jupiter_paya_detail.get('desc_hi', 'ज्ञान, विद्या व धर्म कर्म से लाभ।')
+        jupiter_paya_fav = jupiter_paya_detail.get('rating_pct', 50) >= 50
+        
+        sade_sati_status = f"{t_sum.sade_sati_phase} सक्रिय" if t_sum.is_sade_sati else 'साढ़ेसाती प्रभाव नहीं'
+        sade_sati_phase = t_sum.sade_sati_phase or 'सामान्य'
+        is_dhayya = t_sum.is_dhaiya
+        
+        gochar_rows_html = ""
+        for p_name, p_info in t_data.items():
+            if p_name in ["Uranus", "Neptune", "Pluto"]:
+                continue
+            deg_val = p_info.get("sign_degree", 0.0)
+            deg_s = f"{int(deg_val)}° {int((deg_val % 1) * 60):02d}'"
+            motion_str = "⚡ वक्री" if p_info.get("is_retrograde") else "मार्गी"
+            h_from_lagna = p_info.get("house_from_lagna", "-")
+            h_from_moon = p_info.get("house_from_moon", "-")
+            sav_b = p_info.get("ashtakavarga_bindu", "-")
+            gochar_rows_html += f"""
+            <tr>
+                <td><b>{p_name}</b></td>
+                <td>{p_info.get('sign_name', '')}</td>
+                <td>{deg_s}</td>
+                <td><b>{h_from_lagna} भाव</b></td>
+                <td><b>{h_from_moon} भाव</b></td>
+                <td><span class="badge {'exalted' if isinstance(sav_b, int) and sav_b >= 28 else 'neutral'}">{sav_b} बिंदु</span></td>
+                <td>{motion_str}</td>
+            </tr>
+            """
+
+        # -------------------------------------------------------------
+        # 16. LAL KITAB 1952: 9 KARMIC DEBTS, TEVA & 108 TOTKAS
+        # -------------------------------------------------------------
+        lk_res = LalKitabEngine.calculate(chart)
+        lk_active_debts = lk_res.active_debts
+        lk_debts_html = ""
+        if lk_active_debts:
+            for debt in lk_active_debts:
+                d_name_hi = debt.get("name_hi") if isinstance(debt, dict) else getattr(debt, "name_hi", "")
+                d_name_en = debt.get("name_en") if isinstance(debt, dict) else getattr(debt, "name_en", "")
+                d_cause = debt.get("cause_hi") if isinstance(debt, dict) else getattr(debt, "cause_hi", "")
+                d_effects = debt.get("effects_hi") if isinstance(debt, dict) else getattr(debt, "effects_hi", "")
+                d_remedy = debt.get("remedy_hi") if isinstance(debt, dict) else getattr(debt, "remedy_hi", "")
+                lk_debts_html += f"""
+                <div style="background:#FFF1F2; border-left:4px solid #E11D48; padding:10px 14px; margin-bottom:10px; border-radius:6px;">
+                    <b style="color:#BE123C; font-size:15px;">⚠️ {d_name_hi} ({d_name_en}):</b>
+                    <div style="font-size:13px; color:#4C0519; margin-top:4px;"><b>शास्त्रीय कारण:</b> {d_cause}</div>
+                    <div style="font-size:13px; color:#4C0519; margin-top:2px;"><b>जीवन पर प्रभाव:</b> {d_effects}</div>
+                    <div style="font-size:13px; color:#15803D; margin-top:3px; background:#F0FDF4; padding:6px 10px; border-radius:4px; border:1px solid #BBF7D0;"><b>🌿 शास्त्रीय लाल किताब उपाय:</b> {d_remedy}</div>
+                </div>
+                """
+        else:
+            lk_debts_html = "<div style='background:#F0FDF4; border:1px solid #86EFAC; padding:12px; border-radius:8px; color:#166534;'><b>✅ कोई सक्रिय कर्मिक ऋण नहीं:</b> जातक की कुण्डली लाल किताब के समस्त ९ प्रमुख ऋणानुबंधों (पितृ, मातृ, स्त्री, स्व, भाई आदि) से मुक्त है।</div>"
+
+        teva_types = []
+        if lk_res.dharmi_teva:
+            teva_types.append("🌟 धर्मी तेवा (ईश्वर-कृपा युक्त कुण्डली)")
+        if lk_res.andha_teva:
+            teva_types.append("⚠️ अंधा तेवा (दशम भाव में शत्रु ग्रह)")
+        if lk_res.ratandh_teva:
+            teva_types.append("🌙 रतौंधी तेवा (रात का अंधा तेवा)")
+        if not teva_types:
+            teva_types.append("सामान्य तेवा")
+        teva_status_str = " &bull; ".join(teva_types)
+
+        # Relevant native totkas from 108 catalog
+        lk_totkas_html = ""
+        matched_totkas = []
+        for p_name, pos in chart.planets.items():
+            kh = pos.house_from_lagna
+            t_item = LAL_KITAB_108_TOTKAS.get((p_name, kh))
+            if t_item:
+                matched_totkas.append({
+                    "planet": p_name,
+                    "khana": kh,
+                    **t_item
+                })
+        if matched_totkas:
+            for mt in matched_totkas[:6]:
+                lk_totkas_html += f"""
+                <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:6px; padding:10px 14px; margin-bottom:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <b style="color:#1E3A8A;">📍 {mt['planet']} खाना नं. {mt['khana']}</b>
+                        <span style="font-size:12px; color:#64748B;">Lal Kitab 1952</span>
+                    </div>
+                    <div style="font-size:13px; color:#1E293B; margin-top:4px;"><b>✅ प्रामाणिक सात्विक टोटका:</b> {mt['totka_hi']}</div>
+                    <div style="font-size:12px; color:#DC2626; margin-top:3px;"><b>🚫 सख्त मनाही / सावधानी:</b> {mt.get('precaution_hi', '')}</div>
+                    <div style="font-size:12px; color:#047857; margin-top:2px;"><b>🌟 शास्त्रीय प्रभाव:</b> {mt.get('shastra_effect_hi', '')}</div>
+                </div>
+                """
+        else:
+            lk_totkas_html = "<p style='color:#475569;'>सामान्य सात्विक दान व सदाचार का पालन करें।</p>"
+
+        # -------------------------------------------------------------
+        # 17. 3-TIER EVENT TRIGGER TIMING (दशा + दोहरा गोचर + अष्टकवर्ग)
+        # -------------------------------------------------------------
+        eq_srv = EventQueryService()
+        trigger_domains = [
+            ("career", "💼 आजीविका एवं पदोन्नति (Career & Promotion)"),
+            ("marriage", "💍 विवाह एवं दांपत्य (Marriage & Partnership)"),
+            ("wealth", "💰 धन वृद्धि एवं लाभ (Wealth & Finance)"),
+            ("property", "🏠 भूमि, भवन व वाहन (Property & Assets)")
+        ]
+        tier_cards_html = ""
+        for dom_key, dom_title in trigger_domains:
+            try:
+                t_eval = eq_srv.evaluate_3tier_triggers(chart, dom_key, date.today())
+                comp_score = t_eval.get("composite_probability", 0)
+                tier_cards_html += f"""
+                <div class="card" style="margin-bottom:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <b style="color:#1E40AF; font-size:15px;">{dom_title}</b>
+                        <span style="background:{t_eval.get('status_color', '#2563EB')}; color:#FFFFFF; padding:3px 10px; border-radius:12px; font-weight:800; font-size:12px;">
+                            {t_eval.get('status_hi', 'सामान्य')} ({comp_score}%)
+                        </span>
+                    </div>
+                    <div style="font-size:13px; color:#1E293B; line-height:1.6;">
+                        • <b>टियर १ (विंशोत्तरी दशा):</b> {t_eval.get('tier1', {}).get('status', 'सक्रिय')} ({t_eval.get('tier1', {}).get('score', 0)}/40)<br/>
+                        • <b>टियर २ (गुरु-शनि दोहरा गोचर):</b> {t_eval.get('tier2', {}).get('details', 'गोचर सक्रिय')} ({t_eval.get('tier2', {}).get('score', 0)}/35)<br/>
+                        • <b>टियर ३ (अष्टकवर्ग सामर्थ्य):</b> {t_eval.get('tier3', {}).get('details', 'बिंदु विश्लेषण')} ({t_eval.get('tier3', {}).get('score', 0)}/25)<br/>
+                        • <b>शास्त्रीय निर्णय:</b> <i>{t_eval.get('guidance_hi', '')}</i>
+                    </div>
+                </div>
+                """
+            except Exception:
+                pass
+
+        # -------------------------------------------------------------
+        # 18. VEDIC MUHURTA & PANCHAK GUIDANCE
+        # -------------------------------------------------------------
+        m_eng = MuhurtaEngine()
+        m_today = m_eng.calculate_daily_muhurta(date.today())
+        panchak_info = m_today.get("panchak", {})
+        panchak_name = panchak_info.get("type", "पञ्चक रहित")
+        panchak_desc = panchak_info.get("description", "शुभ व निर्दोष")
+        
+        choghadiya_day = m_today.get("choghadiya_day", [])
+        chogh_day_html = " ".join([f"<span class='badge {'exalted' if c.get('is_good') else 'debilitated'}' style='margin:2px;'>{c.get('name')}</span>" for c in choghadiya_day[:8]])
+
+        # -------------------------------------------------------------
         # HTML COMPLETE TEMPLATE WITH PRINT MEDIA PAGE-BREAKS
         # -------------------------------------------------------------
         html = f"""<!DOCTYPE html>
@@ -693,6 +848,37 @@ class NatalReportGenerator:
         </div>
         <div class="astro-badge">
             👑 परामर्शक: {astro_name} &nbsp;|&nbsp; 📞 {astro_phone} &nbsp;|&nbsp; 🏛️ {astro_org}
+        </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS (अनुक्रमणिका) -->
+    <div class="card" style="margin-bottom: 24px; background: #F8FAFC; border: 1.5px solid #CBD5E1;">
+        <h3 style="color:#1E40AF; margin-top:0; font-size:16px; border-bottom:1px solid #E2E8F0; padding-bottom:6px;">
+            📑 सम्पूर्ण २२ अध्याय विस्तृत विषय-सूची (Comprehensive Table of Contents)
+        </h3>
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:8px 16px; font-size:13px; color:#334155;">
+            <div><b>१.</b> जातक परिचय एवं पञ्चाङ्ग ५ स्तम्भ</div>
+            <div><b>१२.</b> कृष्णमूर्ति पद्धति (KP CSL Table)</div>
+            <div><b>२.</b> लग्न कुण्डली (D1) एवं ग्रह स्थिति</div>
+            <div><b>१३.</b> वास्तु-ज्योतिष ८ दिशा चक्र व मंडल</div>
+            <div><b>३.</b> षोडशवर्ग १६ कुण्डलियां (D1 से D60)</div>
+            <div><b>१४.</b> ताजिक वर्षफल एवं १६ सहम विचार</div>
+            <div><b>४.</b> दशवर्ग तालिका एवं वर्ग-बल</div>
+            <div><b>१५.</b> त्रिदोष आहार, स्वास्थ्य व संबंध</div>
+            <div><b>५.</b> द्वादश भाव विस्तृत फलादेश</div>
+            <div><b>१६.</b> गोचर (Live Transits) एवं शनि-गुरु पाया</div>
+            <div><b>६.</b> ग्रह दृष्टि महा-मैट्रिक्स</div>
+            <div><b>१७.</b> लाल किताब 1952 — ९ ऋण व १०८ टोटके</div>
+            <div><b>७.</b> षड्बल एवं भाव बल विश्लेषण</div>
+            <div><b>१८.</b> घटना काल निर्धारण (३-Tier Triggers)</div>
+            <div><b>८.</b> अष्टकवर्ग चक्र (SAV 337 Grid)</div>
+            <div><b>१९.</b> वैदिक मुहूर्त, पञ्चक व चौघड़िया</div>
+            <div><b>९.</b> जैमिनी चर कारक व आरूढ़ पद</div>
+            <div><b>२०.</b> विवाह मिलान एवं १६ शास्त्रीय परिहार</div>
+            <div><b>१०.</b> उपग्रह एवं अप्रकाशित छाया ग्रह</div>
+            <div><b>२१.</b> सर्वांगीण शास्त्रीय उपाय, रत्न व रुद्राक्ष</div>
+            <div><b>११.</b> विंशोत्तरी महादशा (१२० वर्ष)</div>
+            <div><b>२२.</b> ज्योतिषाचार्य प्रमाणीकरण मुद्रा</div>
         </div>
     </div>
 
@@ -1002,8 +1188,130 @@ class NatalReportGenerator:
 
     <div class="page-break"></div>
 
-    <!-- CHAPTER 16: COMPREHENSIVE VEDIC & VASTU REMEDIES -->
-    <h2 class="section-title">१६. सर्वांगीण शास्त्रीय उपाय, रत्न, रुद्राक्ष, मन्त्र, वास्तु व दान विधान</h2>
+    <!-- CHAPTER 16: GOCHAR & TRANSIT PAYA -->
+    <h2 class="section-title">१६. गोचर (Live Transits), शनि साढ़े साती/ढैय्या एवं गुरु-शनि 'पाया' विचार</h2>
+    <div class="grid-2">
+        <div class="card">
+            <h3 style="color:#1E40AF; margin-top:0; font-size:16px;">🪐 शनि एवं गुरु 'पाया' विचार (Transit Paya Analysis)</h3>
+            <p>• <b>शनि पाया:</b> <span style="color:#2563EB; font-weight:800;">{saturn_paya_title}</span> ({'🟢 शुभ फलदायी' if saturn_paya_fav else '🟡 मध्यम / सावधानी'})<br/>
+            <small style="color:#475569;">{saturn_paya_desc}</small></p>
+            <p>• <b>गुरु पाया:</b> <span style="color:#2563EB; font-weight:800;">{jupiter_paya_title}</span> ({'🟢 शुभ फलदायी' if jupiter_paya_fav else '🟡 मध्यम'})<br/>
+            <small style="color:#475569;">{jupiter_paya_desc}</small></p>
+        </div>
+        <div class="card">
+            <h3 style="color:#1E40AF; margin-top:0; font-size:16px;">⏳ शनि साढ़े साती व ढैय्या स्थिति</h3>
+            <p>• <b>साढ़े साती स्थिति:</b> <span style="color:{'#DC2626' if 'सक्रिय' in sade_sati_status else '#15803D'}; font-weight:800;">{sade_sati_status}</span></p>
+            <p>• <b>सक्रिय चरण:</b> {sade_sati_phase}</p>
+            <p>• <b>शनि ढैय्या:</b> {'⚠️ चतुर्थ/अष्टम शनि ढैय्या सक्रिय' if is_dhayya else '✅ शनि ढैय्या प्रभाव मुक्त'}</p>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ग्रह (Planet)</th>
+                <th>गोचर राशि</th>
+                <th>स्पष्टांश</th>
+                <th>लग्न से भाव</th>
+                <th>चंद्र से भाव</th>
+                <th>अष्टकवर्ग बिंदु</th>
+                <th>गति स्थिति</th>
+            </tr>
+        </thead>
+        <tbody>
+            {gochar_rows_html}
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- CHAPTER 17: LAL KITAB 1952 -->
+    <h2 class="section-title">१७. लाल किताब 1952 — ९ कर्मिक ऋण, तेवा प्रकार एवं प्रामाणिक सात्विक टोटके</h2>
+    <div class="card" style="margin-bottom:14px;">
+        <h4 style="color:#1E40AF; margin-top:0;">📜 तेवा प्रकृति एवं विशेष योग</h4>
+        <p>• <b>तेवा श्रेणी:</b> <span style="font-weight:700; color:#1E40AF;">{teva_status_str}</span></p>
+        <p style="font-size:13px; color:#475569;">लाल किताब 1952 के अनुसार कुण्डली में ग्रहों की खाना स्थिति एवं कर्मिक संस्कारों का सूक्ष्म वर्गीकरण।</p>
+    </div>
+
+    <h3 style="color:#BE123C; font-size:16px; margin-top:15px; margin-bottom:8px;">⚠️ सक्रिय कर्मिक ऋणानुबंध (Active Karmic Debts Analysis):</h3>
+    {lk_debts_html}
+
+    <h3 style="color:#1E40AF; font-size:16px; margin-top:20px; margin-bottom:8px;">📕 जातक के ग्रह अनुसार प्रामाणिक लाल किताब टोटके (Customized Authentic Totkas):</h3>
+    {lk_totkas_html}
+
+    <div class="page-break"></div>
+
+    <!-- CHAPTER 18: EVENT 3-TIER TRIGGERS -->
+    <h2 class="section-title">१८. घटना काल निर्धारण — ३-स्तरीय ट्रिगर (३-Tier Triggers: दशा + गोचर + अष्टकवर्ग)</h2>
+    <p style="color:#475569; font-size:14px; margin-bottom:15px;">
+        जीवन की प्रमुख घटनाओं के घटित होने की संभावना का ३-स्तरीय वैज्ञानिक व शास्त्रीय परीक्षण:
+        <b>टियर १: विंशोत्तरी दशा (४० अंक)</b> + <b>टियर २: गुरु-शनि दोहरा गोचर (३५ अंक)</b> + <b>टियर ३: अष्टकवर्ग सामर्थ्य (२५ अंक)</b>।
+    </p>
+    {tier_cards_html}
+
+    <div class="page-break"></div>
+
+    <!-- CHAPTER 19: VEDIC MUHURTA & PANCHAK -->
+    <h2 class="section-title">१९. वैदिक मुहूर्त, पञ्चक विचार एवं शुभाशुभ काल-वेला</h2>
+    <div class="grid-2">
+        <div class="card">
+            <h3 style="color:#1E40AF; margin-top:0; font-size:16px;">✨ दैनिक पञ्चक स्थिति विचार</h3>
+            <p>• <b>पञ्चक स्वरूप:</b> <span style="color:#2563EB; font-weight:800;">{panchak_name}</span></p>
+            <p>• <b>प्रभाव एवं फलादेश:</b> {panchak_desc}</p>
+            <p style="font-size:12.5px; color:#64748B;">शास्त्रानुसार रोग, अग्नि, राज, चोर व मृत्यु पञ्चक में विशिष्ट कार्यों का निषेध रहता है।</p>
+        </div>
+        <div class="card">
+            <h3 style="color:#1E40AF; margin-top:0; font-size:16px;">⏱️ दैनिक चौघड़िया मुहूर्त</h3>
+            <div style="line-height:2.0;">
+                {chogh_day_html}
+            </div>
+            <p style="font-size:12.5px; color:#64748B; margin-top:8px;">शुभ, अमृत, लाभ, चर चौघड़िया नए व मांगलिक कार्यों हेतु प्रशस्त माने जाते हैं।</p>
+        </div>
+    </div>
+
+    <!-- CHAPTER 20: KUNDALI MILAN & 16 PARIHARAS -->
+    <h2 class="section-title">२०. विवाह कुण्डली मिलान एवं १६ शास्त्रीय परिहार संहिता (Kundali Milan 16 Pariharas)</h2>
+    <div class="card">
+        <p style="font-size:14px; color:#1E293B; line-height:1.7;">
+            विवाह में अष्टकूट (वर्ण १, वश्य २, तारा ३, योनि ४, ग्रहमैत्री ५, गण ६, भकूट ७, नाड़ी ८ — कुल ३६ गुण) मिलान के साथ <b>१६ शास्त्रीय परिहार</b> अत्यंत निर्णायक होते हैं:
+        </p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:10px;">
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px; border-radius:6px;">
+                <b style="color:#1E40AF; font-size:14px;">१. नाड़ी दोष परिहार (५ प्रमुख नियम):</b>
+                <ul style="margin:6px 0 0 16px; padding:0; font-size:13px; line-height:1.6;">
+                    <li>एक नक्षत्र भिन्न चरण होने पर नाड़ी दोष शून्य हो जाता है।</li>
+                    <li>रोहिणी, आर्द्रा, मघा, विशाखा, श्रवण, हस्त, उत्तराभाद्रपद में नाड़ी दोष नहीं लगता।</li>
+                    <li>दोनों का राशि स्वामी एक होने अथवा परस्पर मित्र होने पर नाड़ी दोष परिहार्य है।</li>
+                </ul>
+            </div>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px; border-radius:6px;">
+                <b style="color:#1E40AF; font-size:14px;">२. भकूट दोष परिहार (४ प्रमुख नियम):</b>
+                <ul style="margin:6px 0 0 16px; padding:0; font-size:13px; line-height:1.6;">
+                    <li>राशि स्वामियों में परस्पर मित्रता होने पर षडाष्टक/नवपंचम भकूट दोष शांत हो जाता है।</li>
+                    <li>एक ही राशि स्वामी होने पर भकूट दोष पूर्णतः निष्प्रभावी होता है।</li>
+                    <li>मेष-वृश्चिक व वृषभ-तुला में राशि स्वामी एक होने से प्रीति षडाष्टक शुभ रहता है।</li>
+                </ul>
+            </div>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px; border-radius:6px;">
+                <b style="color:#1E40AF; font-size:14px;">३. गण दोष परिहार (३ नियम):</b>
+                <ul style="margin:6px 0 0 16px; padding:0; font-size:13px; line-height:1.6;">
+                    <li>राशि मैत्री अथवा नाड़ी शुद्धि होने पर गण दोष का निवारण स्वतः हो जाता है।</li>
+                    <li>तारा बल शुभ होने पर देव-राक्षस गण का अशुभ प्रभाव समाप्त होता है।</li>
+                </ul>
+            </div>
+            <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px; border-radius:6px;">
+                <b style="color:#1E40AF; font-size:14px;">४. मंगल दोष परिहार (४ नियम):</b>
+                <ul style="margin:6px 0 0 16px; padding:0; font-size:13px; line-height:1.6;">
+                    <li>मेष का मंगल प्रथम में, धनु का अष्टम में, मकर का सप्तम में होने पर भौम दोष शून्य होता है।</li>
+                    <li>गुरु की दृष्टि मंगल पर होने से भौम दोष परिहार सिद्ध होता है।</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- CHAPTER 21: COMPREHENSIVE VEDIC & VASTU REMEDIES -->
+    <h2 class="section-title">२१. सर्वांगीण शास्त्रीय उपाय, रत्न, रुद्राक्ष, मन्त्र, वास्तु व दान विधान</h2>
     <div class="remedy-box">
         <h4 style="color:#78350F; margin-top:0; font-size:16px;">💎 १. रत्न विचार एवं प्राण-प्रतिष्ठा विधान (Gemstone Recommendation)</h4>
         <p>
@@ -1037,13 +1345,13 @@ class NatalReportGenerator:
         <small><i>नोट: शास्त्रीय उपाय केवल आत्म-शांति, सकारात्मक ऊर्जा एवं ग्रह-कृपा संवर्धन हेतु हैं।</i></small>
     </div>
 
-    <!-- DISCLAIMER & ASTROLOGER CERTIFICATION -->
+    <!-- CHAPTER 22: DISCLAIMER & ASTROLOGER CERTIFICATION -->
     <div class="disclaimer">
         <div style="font-size:16px; font-weight:900; color:#1E40AF; margin-bottom:6px;">
             📜 शास्त्रीय एवं खगोलीय प्रमाणीकरण मुद्रा (Astrological Certification Seal)
         </div>
         <div style="font-size:14px; color:#1E293B; margin-bottom:8px;">
-            यह सम्पूर्ण जन्म पत्रिका <b>{astro_name}</b> के मार्गदर्शन में शुद्ध वैदिक ज्योतिषीय एवं खगोलीय सिद्धान्तों के आधार पर सूक्ष्म गणितीय परिशुद्धता के साथ संकलित की गई है।
+            यह सम्पूर्ण ५०+ पृष्ठीय जीवन जन्म पत्रिका <b>{astro_name}</b> के मार्गदर्शन में शुद्ध वैदिक ज्योतिषीय एवं खगोलीय सिद्धान्तों के आधार पर सूक्ष्म गणितीय परिशुद्धता के साथ संकलित की गई है।
         </div>
         <div style="font-size:13px; color:#475569;">
             <b>परामर्शक:</b> {astro_name} &nbsp;|&nbsp; <b>मो. नं.:</b> {astro_phone} &nbsp;|&nbsp; <b>संस्थान:</b> {astro_org}

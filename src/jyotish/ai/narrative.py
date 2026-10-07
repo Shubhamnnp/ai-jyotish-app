@@ -13,6 +13,9 @@ from ..rules.engine import default_rules_engine
 from ..services.gemology import default_gemology_service
 from ..services.prashna import default_prashna_service, PRASHNA_CATEGORIES
 from ..core.affliction import AfflictionEngine
+from ..core.gochar import TransitEngine
+from ..core.lalkitab import LalKitabEngine, LAL_KITAB_108_TOTKAS
+from ..services.event_query import EventQueryService
 
 try:
     from google import genai
@@ -204,6 +207,60 @@ class AINarrativeService:
         except Exception:
             varga_block = "\n  • Varga computation active in master engine."
 
+        # Gochar & Transit Paya
+        gochar_block = ""
+        try:
+            te = TransitEngine()
+            td, ts = te.compute_transit_snapshot(chart, date.today())
+            sat_paya = ts.saturn_paya or "ताम्र पाया"
+            jup_paya = ts.jupiter_paya or "स्वर्ण पाया"
+            sade_sati = f"{ts.sade_sati_phase} सक्रिय" if ts.is_sade_sati else "मुक्त"
+            sat_pos = td.get("Saturn", {})
+            jup_pos = td.get("Jupiter", {})
+            gochar_block = (
+                f"\n=== LIVE GOCHAR (TRANSIT) & PAYA SNAPSHOT ===\n"
+                f"• Saturn Transit: House {sat_pos.get('house_from_lagna', '-')} from Lagna, House {sat_pos.get('house_from_moon', '-')} from Moon, Sade Sati: {sade_sati}\n"
+                f"• Saturn Paya (शनि पाया): {sat_paya}\n"
+                f"• Jupiter Transit: House {jup_pos.get('house_from_lagna', '-')} from Lagna, House {jup_pos.get('house_from_moon', '-')} from Moon\n"
+                f"• Jupiter Paya (गुरु पाया): {jup_paya}\n"
+                f"• Rahu Transit: House {td.get('Rahu', {}).get('house_from_lagna', '-')} from Lagna\n"
+            )
+        except Exception:
+            gochar_block = ""
+
+        # Lal Kitab 1952 Karmic Debts
+        lk_block = ""
+        try:
+            lk_res = LalKitabEngine.calculate(chart)
+            active_d_names = [d.get("name_hi") if isinstance(d, dict) else getattr(d, "name_hi", "") for d in lk_res.active_debts]
+            d_str = ", ".join(active_d_names) if active_d_names else "कोई सक्रिय ऋण नहीं (ऋण मुक्त)"
+            t_types = []
+            if lk_res.dharmi_teva: t_types.append("धर्मी तेवा")
+            if lk_res.andha_teva: t_types.append("अंधा तेवा")
+            if lk_res.ratandh_teva: t_types.append("रतौंधी तेवा")
+            teva_str = ", ".join(t_types) if t_types else "सामान्य तेवा"
+            lk_block = (
+                f"\n=== LAL KITAB 1952 (ऋणानुबंध व तेवा) ===\n"
+                f"• Teva Category: {teva_str}\n"
+                f"• Active Karmic Debts (९ ऋण): {d_str}\n"
+            )
+        except Exception:
+            lk_block = ""
+
+        # 3-Tier Trigger Status
+        trigger_block = ""
+        try:
+            eq = EventQueryService()
+            tr_m = eq.evaluate_3tier_triggers(chart, "marriage", date.today())
+            tr_c = eq.evaluate_3tier_triggers(chart, "career", date.today())
+            trigger_block = (
+                f"\n=== 3-TIER EVENT TRIGGERS (DASHA + DOUBLE TRANSIT + ASHTAKAVARGA) ===\n"
+                f"• Marriage Probability: {tr_m.get('composite_probability', 0)}% ({tr_m.get('status_hi', '')})\n"
+                f"• Career Probability: {tr_c.get('composite_probability', 0)}% ({tr_c.get('status_hi', '')})\n"
+            )
+        except Exception:
+            trigger_block = ""
+
         gemology_block = default_gemology_service.format_gemology_audit_for_prompt(chart)
 
         context = f"""
@@ -228,7 +285,9 @@ class AINarrativeService:
 === D1 TO D60 DIVISIONAL CHARTS (VAISHESHIKAMSHA & VARGOTTAMA) ==={varga_block}
 
 === 12 BHAVAS (HOUSES) OCCUPANTS & ASPECTS ==={houses_block}
-
+{gochar_block}
+{lk_block}
+{trigger_block}
 {gemology_block}
 ======================================
 """
@@ -653,6 +712,94 @@ class AINarrativeService:
                 f"- **धन भाव (२रा):** {h2.sign_name} (स्वामी: {h2.lord})\n"
                 f"- **लाभ भाव (११वां):** {h11.sign_name} (स्वामी: {h11.lord})\n\n"
                 f"🌿 **सात्विक उपाय:** श्री कनकधारा स्तोत्र का नित्य पाठ करें।"
+            )
+
+        elif any(w in q_lower for w in ["दशा", "गोचर", "dasha", "gochar", "transit", "पाया", "paya"]):
+            te = TransitEngine()
+            td, ts = te.compute_transit_snapshot(chart, date.today())
+            sat_p = ts.saturn_paya or "ताम्र पाया"
+            sat_det = ts.transit_paya_detail.get("saturn_paya", {})
+            jup_p = ts.jupiter_paya or "स्वर्ण पाया"
+            jup_det = ts.transit_paya_detail.get("jupiter_paya", {})
+            sade_s = f"{ts.sade_sati_phase} सक्रिय" if ts.is_sade_sati else "साढ़े साती प्रभाव मुक्त"
+            sat_pos = td.get("Saturn", {})
+            jup_pos = td.get("Jupiter", {})
+            
+            curr_d = ""
+            if "dasha" in research and "current_dasha" in research.get("dasha", {}):
+                cd = research["dasha"]["current_dasha"]
+                curr_d = f"**{cd.get('mahadasha', '')}** महादशा में **{cd.get('antardasha', '')}** अंतर्दशा"
+            else:
+                curr_d = "वर्तमान विंशोत्तरी दशा चक्र सक्रिय"
+
+            return (
+                f"🪐 **वर्तमान दशा एवं गोचर शास्त्रीय फलकथन ({p_name} जी):**\n\n"
+                f"आपकी जन्म कुण्डली (**{lagna_s} लग्न**, **{moon_s} राशि**) के अनुसार तात्कालिक दशा-गोचर का संयुक्त शास्त्रीय निर्णय:\n\n"
+                f"⏳ **१. सक्रिय विंशोत्तरी दशा प्रभाव:**\n"
+                f"- **दशा चक्र:** {curr_d}।\n"
+                f"- *फलदीपिका* के अनुसार महादशाधिपति जीवन के वर्तमान आधारभूत प्रवाह का संचालक है और अंतर्दशाधिपति तात्कालिक घटनाओं का परिणाम निर्धारित करता है।\n\n"
+                f"🪐 **२. वर्तमान गोचर एवं पाया विचार (Transit Paya Vigyan):**\n"
+                f"- **शनि देव गोचर:** जन्म राशि से **{sat_pos.get('house_from_moon', '-')}वें भाव** ({sat_pos.get('sign_name', '')} राशि) में भ्रमणशील।\n"
+                f"- **शनि पाया:** **{sat_p}** — {sat_det.get('desc_hi', 'कार्य-सिद्धि व संतुलन।')}\n"
+                f"- **साढ़े साती स्थिति:** **{sade_s}**।\n"
+                f"- **देवगुरु बृहस्पति गोचर:** जन्म राशि से **{jup_pos.get('house_from_moon', '-')}वें भाव** ({jup_pos.get('sign_name', '')} राशि) में।\n"
+                f"- **गुरु पाया:** **{jup_p}** — {jup_det.get('desc_hi', 'विद्या, ज्ञान व धर्म कर्म में अनुकूलता।')}\n\n"
+                f"💡 **दैवज्ञ परामर्श:** वर्तमान समय में गुरु का गोचर आपके ज्ञान और विवेक को प्रबल कर रहा है, जबकि शनि का गोचर कर्म में निष्ठा और धैर्य की मांग करता है।\n\n"
+                f"🌿 **सात्विक उपाय:** शनिवार को पीपल पर सरसों तेल का दीप प्रज्वलित करें और गुरुवार को चने की दाल व गुड़ का दान करें।"
+            )
+
+        elif any(w in q_lower for w in ["लाल किताब", "ऋण", "टोटके", "lal kitab", "debt", "totke"]):
+            lk_res = LalKitabEngine.calculate(chart)
+            active_debts = lk_res.active_debts
+            dharmi_s = "🌟 धर्मी तेवा (दैवीय सुरक्षा युक्त)" if lk_res.dharmi_teva else ("⚠️ अंधा तेवा" if lk_res.andha_teva else "सामान्य तेवा")
+            
+            debts_text = ""
+            if active_debts:
+                debt_lines = []
+                for d in active_debts:
+                    dn = d.get("name_hi") if isinstance(d, dict) else getattr(d, "name_hi", "")
+                    dc = d.get("cause_hi") if isinstance(d, dict) else getattr(d, "cause_hi", "")
+                    dr = d.get("remedy_hi") if isinstance(d, dict) else getattr(d, "remedy_hi", "")
+                    debt_lines.append(f"- **{dn}:** {dc} — *उपाय:* {dr}")
+                debts_text = "\n".join(debt_lines)
+            else:
+                debts_text = "✅ आपकी कुण्डली पर कोई सक्रिय लाल किताब कर्मिक ऋण (पितृ, मातृ, स्त्री, स्व आदि) नहीं है। आप ऋण-मुक्त हैं।"
+
+            matched_totkas_text = ""
+            for p_name_lk, pos_lk in list(chart.planets.items())[:3]:
+                kh_lk = pos_lk.house_from_lagna
+                item_lk = LAL_KITAB_108_TOTKAS.get((p_name_lk, kh_lk))
+                if item_lk:
+                    matched_totkas_text += f"- **{p_name_lk} (खाना {kh_lk}):** {item_lk['totka_hi']} *(सावधानी: {item_lk.get('precaution_hi', '')})*\n"
+
+            return (
+                f"📕 **लाल किताब 1952 शास्त्रीय समीक्षा ({p_name} जी):**\n\n"
+                f"आपकी जन्म कुण्डली के खाना फ्रेमवर्क (कालपुरुष मेष लग्न) के अनुसार लाल किताब का प्रामाणिक मूल्यांकन:\n\n"
+                f"🏛️ **१. तेवा प्रकार:** **{dharmi_s}**।\n\n"
+                f"⚠️ **२. सक्रिय कर्मिक ऋणानुबंध (९ ऋण विचार):**\n"
+                f"{debts_text}\n\n"
+                f"🌿 **३. आपके ग्रहों के अनुसार प्रामाणिक सात्विक टोटके:**\n"
+                f"{matched_totkas_text}\n"
+                f"*(नोट: लाल किताब टोटके दिन के समय, बिना किसी को नुकसान पहुंचाए, पूरी सात्विकता से ही करने चाहिए)*"
+            )
+
+        elif any(w in q_lower for w in ["कब होगा", "कब होगी", "timing", "मुहूर्त", "3-tier", "ट्रिगर"]):
+            eq = EventQueryService()
+            theme_key = "marriage" if any(w in q_lower for w in ["शादी", "विवाह", "marriage"]) else "career"
+            theme_name = "विवाह काल" if theme_key == "marriage" else "करियर व पदोन्नति"
+            tr_eval = eq.evaluate_3tier_triggers(chart, theme_key, date.today())
+            
+            return (
+                f"🎯 **३-स्तरीय ट्रिगर घटना काल निर्णय — {theme_name} ({p_name} जी):**\n\n"
+                f"वैदिक ज्योतिष के ३-स्तरीय वैज्ञानिक ट्रिगर मॉडल (विंशोत्तरी दशा + गुरु-शनि दोहरा गोचर + अष्टकवर्ग) के अनुसार:\n\n"
+                f"📊 **१. समग्र सम्भावना सूचकांक (Composite Probability):** **{tr_eval.get('composite_probability', 0)}%** ({tr_eval.get('status_hi', '')})\n\n"
+                f"🔍 **२. ३-स्तरीय ट्रिगर स्थिति:**\n"
+                f"- **टियर १ (विंशोत्तरी दशा):** {tr_eval.get('tier1', {}).get('status', 'सक्रिय')} ({tr_eval.get('tier1', {}).get('score', 0)}/40 अंक)\n"
+                f"- **टियर २ (दोहरा गोचर):** {tr_eval.get('tier2', {}).get('details', 'गोचर सक्रिय')} ({tr_eval.get('tier2', {}).get('score', 0)}/35 अंक)\n"
+                f"- **टियर ३ (अष्टकवर्ग सामर्थ्य):** {tr_eval.get('tier3', {}).get('details', 'बिंदु अनुकूल')} ({tr_eval.get('tier3', {}).get('score', 0)}/25 अंक)\n\n"
+                f"📜 **३. शास्त्रीय निर्णय:**\n"
+                f"*{tr_eval.get('guidance_hi', '')}*\n\n"
+                f"💡 **अनुशंसित कार्य:** {tr_eval.get('shastra_quote', 'प्रयास जारी रखें, समय अनुकूलता की ओर अग्रसर है।')}"
             )
 
         # 1. PLANETARY ANALYSIS (ग्रह स्थिति, वक्री, अस्त व दृष्टि विचार)

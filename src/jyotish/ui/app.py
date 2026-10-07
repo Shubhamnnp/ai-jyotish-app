@@ -17171,20 +17171,26 @@ elif selected_idx == 16:
 
     # Quick Consultation Question Chips
     st.markdown("<b style='font-size:13px; color:#475569;'>⚡ त्वरित शास्त्रीय प्रश्न (Direct Consultation):</b>", unsafe_allow_html=True)
-    c_q1, c_q2, c_q3, c_q4, c_q5, c_q6 = st.columns(6)
+    c_q1, c_q2, c_q3, c_q4 = st.columns(4)
     quick_q = None
-    if c_q1.button("💍 मेरी शादी कब तक होगी?", use_container_width=True):
-        quick_q = "मेरी शादी कब तक होगी? कृपया प्रश्न कुण्डली और जन्म कुण्डली के आधार पर सटीक समय, अनुकूलता अथवा विलंब बताएं।"
-    if c_q2.button("💼 करियर व पदोन्नति", use_container_width=True):
+    if c_q1.button("💍 विवाह काल व 3-Tier ट्रिगर", use_container_width=True):
+        quick_q = "मेरी शादी कब तक होगी? कृपया प्रश्न कुण्डली, ३-स्तरीय ट्रिगर (दशा + गोचर + अष्टकवर्ग) और जन्म कुण्डली के आधार पर सटीक समय बताएं।"
+    if c_q2.button("💼 करियर, आजीविका व पदोन्नति", use_container_width=True):
         quick_q = "मेरी कुण्डली एवं प्रश्न समय के अनुसार करियर में पदोन्नति या नई नौकरी का अनुकूल समय कब आएगा?"
-    if c_q3.button("💰 धन व आर्थिक लाभ", use_container_width=True):
+    if c_q3.button("💰 धन लाभ व आर्थिक स्थिति", use_container_width=True):
         quick_q = "मेरी आर्थिक स्थिति, धन लाभ और बचत के लिए कुण्डली क्या संकेत देती है?"
-    if c_q4.button("⏳ दशा व गोचर फल", use_container_width=True):
-        quick_q = "वर्तमान में चल रही दशा और गोचर का मेरे जीवन पर क्या प्रभाव पड़ रहा है?"
-    if c_q5.button("💎 शुभ रत्न व उपाय", use_container_width=True):
+    if c_q4.button("🪐 दशा एवं गोचर पाया फल", use_container_width=True):
+        quick_q = "वर्तमान में चल रही दशा और गोचर (शनि व गुरु के पाए सहित) का मेरे जीवन पर क्या प्रभाव पड़ रहा है?"
+
+    c_q5, c_q6, c_q7, c_q8 = st.columns(4)
+    if c_q5.button("📕 लाल किताब ऋण व टोटके", use_container_width=True):
+        quick_q = "मेरी कुण्डली में लाल किताब 1952 के अनुसार क्या कोई सक्रिय कर्मिक ऋण है और क्या सात्विक टोटके व सावधानियां विहित हैं?"
+    if c_q6.button("🎯 3-Tier घटना सम्भावना काल", use_container_width=True):
+        quick_q = "मेरी कुण्डली में आने वाले १२ से २४ महीनों में प्रमुख जीवन घटना (करियर/विवाह) के ३-स्तरीय ट्रिगर स्कोर क्या हैं?"
+    if c_q7.button("💎 शुभ रत्न, रुद्राक्ष व मन्त्र", use_container_width=True):
         quick_q = "मेरी कुण्डली के अनुसार मेरे लिए कौन सा रत्न शुभ है और कौन सा रत्न सर्वथा वर्जित है? कृपया कठोर शास्त्रीय नियम से बताएं।"
-    if c_q6.button("⚠️ स्वास्थ्य व कष्ट निवारण", use_container_width=True):
-        quick_q = "मेरी कुण्डली में स्वास्थ्य, रोग-ऋण अथवा अरिष्ट के क्या संकेत हैं और उनसे बचाव के शास्त्रीय उपाय क्या हैं?"
+    if c_q8.button("⚠️ स्वास्थ्य व त्रिदोष निवारण", use_container_width=True):
+        quick_q = "मेरी कुण्डली में स्वास्थ्य, त्रिदोष संतुलन अथवा अरिष्ट के क्या संकेत हैं और उनसे बचाव के शास्त्रीय उपाय क्या हैं?"
 
     # Display Conversation History
     for msg in st.session_state.ai_chat_history:
@@ -17293,12 +17299,12 @@ elif selected_idx == 17:
         astro_phone = c_br3.text_input("संपर्क सूत्र / WhatsApp (Contact)", value="+91-9452155742", key="rep_astro_phone")
 
     tab_rep_master, tab_rep_slip = st.tabs([
-        "📚 २०+ पृष्ठीय सम्पूर्ण महा-पत्रिका (Full 20+ Page Kundali Dossier)",
+        "📚 ५०+ पृष्ठीय सम्पूर्ण महा-पत्रिका (Full 50+ Page Kundali Dossier — 22 Chapters)",
         "📋 १-पेज ज्योतिषी परामर्श पर्ची (1-Page Astrologer Prescription Slip)"
     ])
 
     with tab_rep_master:
-        st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, कोटा चक्र, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु-दोष, वर्षफल एवं सात्विक उपायों सहित शास्त्रीय गणनाओं की पूर्ण रंगीन प्रिंटेबल पत्रिका।")
+        st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, गोचर एवं पाया, लाल किताब ९ ऋण व १०८ टोटके, ३-स्तरीय ट्रिगर, वैदिक मुहूर्त एवं पञ्चक, कुण्डली मिलान १६ परिहार, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु एवं सात्विक उपायों सहित २२ अध्यायों की पूर्ण रंगीन मुद्रण-योग्य पत्रिका।")
 
         import importlib
         import src.jyotish.services.report_generator as rep_mod
