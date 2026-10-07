@@ -1,3 +1,6 @@
+
+
+
 """
 JyotishOS Interactive Streamlit SaaS Platform.
 Unites:
@@ -1339,60 +1342,79 @@ unified_css = f"""
         pointer-events: auto !important;
     }}
 
-    /* Unified Sovereign Header Bar - Compact 32px Buttons */
-    .st-key-brahma_hora_top_brand_bar,
-    div.st-key-brahma_hora_top_brand_bar {{
-        padding: 4px 6px !important;
+    /* Frozen Locked Toolbelt (Pins the 8 Top Action Buttons Permanently to the Top of the Viewport) */
+    .st-key-frozen_toolbelt_container,
+    div.st-key-frozen_toolbelt_container {{
+        position: fixed !important;
+        top: 0px !important;
+        z-index: 9990 !important;
+        background: #0074cb !important;
+        background-color: #0074cb !important;
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
+        padding-left: 52px !important;
+        padding-right: 14px !important;
         margin-top: 0px !important;
-        margin-bottom: 4px !important;
-        background: #FFFFFF !important;
-        border-bottom: 1.5px solid #E2E8F0 !important;
-        border-radius: 8px !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+        margin-bottom: 0px !important;
+        border-bottom: 2.5px solid #005fa8 !important;
+        box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
+        box-sizing: border-box !important;
+        transition: left 0.15s ease, width 0.15s ease !important;
     }}
-    .st-key-brahma_hora_top_brand_bar div[data-testid="column"] {{
+    .st-key-frozen_toolbelt_container div[data-testid="column"] {{
         min-width: 0 !important;
-        padding-left: 1.5px !important;
-        padding-right: 1.5px !important;
+        padding-left: 2px !important;
+        padding-right: 2px !important;
     }}
-    .st-key-brahma_hora_top_brand_bar button {{
+    .st-key-frozen_toolbelt_container button {{
         padding: 2px 4px !important;
-        font-size: 11px !important;
+        font-size: 12px !important;
         font-weight: 700 !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
-        min-height: 31px !important;
-        height: 31px !important;
+        min-height: 32px !important;
+        height: 32px !important;
         background: #FFFFFF !important;
-        color: #0F172A !important;
-        border: 1.2px solid #CBD5E1 !important;
+        color: #000000 !important;
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 6px !important;
-        line-height: 1.1 !important;
     }}
-    .st-key-brahma_hora_top_brand_bar button * {{
-        font-size: 11px !important;
+    .st-key-frozen_toolbelt_container button * {{
+        color: #000000 !important;
         font-weight: 700 !important;
-        color: #0F172A !important;
     }}
-    .st-key-brahma_hora_top_brand_bar button:hover {{
-        background: #F1F5F9 !important;
-        border-color: #0284C7 !important;
-        color: #0284C7 !important;
+    .st-key-frozen_toolbelt_container button:hover {{
+        background: #F0F7FF !important;
+        border-color: #005fa8 !important;
+        color: #000000 !important;
     }}
-    .st-key-brahma_hora_top_brand_bar button[kind="primary"],
-    .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] {{
+    .st-key-frozen_toolbelt_container button[kind="primary"],
+    .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] {{
         background: #E0F2FE !important;
-        border: 1.8px solid #0284C7 !important;
-        color: #0369A1 !important;
+        border: 2px solid #005fa8 !important;
+        color: #000000 !important;
     }}
-    .st-key-brahma_hora_top_brand_bar button[kind="primary"] *,
-    .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] * {{
-        color: #0369A1 !important;
+    .st-key-frozen_toolbelt_container button[kind="primary"] *,
+    .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] * {{
+        color: #000000 !important;
+    }}
+    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] {{
+        margin: 0px !important;
+        padding: 0px !important;
+    }}
+    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
+        min-height: 32px !important;
+        height: 32px !important;
+        border-radius: 6px !important;
+        border: 1.5px solid #CBD5E1 !important;
+        background: #FFFFFF !important;
         font-weight: 800 !important;
+        font-size: 12.5px !important;
+        color: #0F172A !important;
     }}
     .block-container {{
-        padding-top: 58px !important;
+        padding-top: 130px !important;
     }}
     @media (min-width: 769px) {{
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .st-key-frozen_toolbelt_container,
@@ -3449,59 +3471,76 @@ client_bridge_code = """
                             z-index: 10000005 !important;
                             pointer-events: auto !important;
                         }
-                        .st-key-brahma_hora_top_brand_bar,
-                        div.st-key-brahma_hora_top_brand_bar {
-                            padding: 4px 6px !important;
-                            margin-top: 0px !important;
-                            margin-bottom: 4px !important;
-                            background: #0F172A !important;
-                            border-bottom: 1.5px solid #1E293B !important;
-                            border-radius: 8px !important;
-                            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+                        .st-key-frozen_toolbelt_container,
+                        div.st-key-frozen_toolbelt_container {
+                            position: fixed !important;
+                            top: 0px !important;
+                            z-index: 9990 !important;
+                            background: #0074cb !important;
+                            background-color: #0074cb !important;
+                            border-bottom: 2.5px solid #005fa8 !important;
+                            box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
+                            padding-top: 6px !important;
+                            padding-bottom: 6px !important;
+                            padding-left: 52px !important;
+                            padding-right: 14px !important;
+                            box-sizing: border-box !important;
+                            transition: left 0.15s ease, width 0.15s ease !important;
                         }
-                        .st-key-brahma_hora_top_brand_bar div[data-testid="column"] {
+                        .st-key-frozen_toolbelt_container div[data-testid="column"] {
                             min-width: 0 !important;
-                            padding-left: 1.5px !important;
-                            padding-right: 1.5px !important;
+                            padding-left: 2px !important;
+                            padding-right: 2px !important;
                         }
-                        .st-key-brahma_hora_top_brand_bar button {
+                        .st-key-frozen_toolbelt_container button {
                             padding: 2px 4px !important;
-                            font-size: 11px !important;
+                            font-size: 12px !important;
                             font-weight: 700 !important;
                             white-space: nowrap !important;
                             overflow: hidden !important;
                             text-overflow: ellipsis !important;
-                            min-height: 31px !important;
-                            height: 31px !important;
-                            background: #1E293B !important;
-                            color: #F8FAFC !important;
-                            border: 1.2px solid #334155 !important;
+                            min-height: 32px !important;
+                            height: 32px !important;
+                            background: #FFFFFF !important;
+                            color: #000000 !important;
+                            border: 1.5px solid #CBD5E1 !important;
                             border-radius: 6px !important;
-                            line-height: 1.1 !important;
                         }
-                        .st-key-brahma_hora_top_brand_bar button * {
-                            font-size: 11px !important;
+                        .st-key-frozen_toolbelt_container button * {
+                            color: #000000 !important;
                             font-weight: 700 !important;
-                            color: #F8FAFC !important;
                         }
-                        .st-key-brahma_hora_top_brand_bar button:hover {
-                            background: #334155 !important;
-                            border-color: #38BDF8 !important;
-                            color: #38BDF8 !important;
+                        .st-key-frozen_toolbelt_container button:hover {
+                            background: #F0F7FF !important;
+                            border-color: #005fa8 !important;
+                            color: #000000 !important;
                         }
-                        .st-key-brahma_hora_top_brand_bar button[kind="primary"],
-                        .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] {
-                            background: #0369A1 !important;
-                            border: 1.8px solid #38BDF8 !important;
-                            color: #FFFFFF !important;
+                        .st-key-frozen_toolbelt_container button[kind="primary"],
+                        .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] {
+                            background: #E0F2FE !important;
+                            border: 2px solid #005fa8 !important;
+                            color: #000000 !important;
                         }
-                        .st-key-brahma_hora_top_brand_bar button[kind="primary"] *,
-                        .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] * {
-                            color: #FFFFFF !important;
+                        .st-key-frozen_toolbelt_container button[kind="primary"] *,
+                        .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] * {
+                            color: #000000 !important;
+                        }
+                        .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] {
+                            margin: 0px !important;
+                            padding: 0px !important;
+                        }
+                        .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+                            min-height: 32px !important;
+                            height: 32px !important;
+                            border-radius: 6px !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                            background: #FFFFFF !important;
                             font-weight: 800 !important;
+                            font-size: 12.5px !important;
+                            color: #0F172A !important;
                         }
                         .block-container {
-                            padding-top: 58px !important;
+                            padding-top: 130px !important;
                         }
                         .st-key-top_frozen_header_container {
                             border: none !important;
@@ -4004,7 +4043,8 @@ client_bridge_code = """
 
             const blockContainer = parentDoc.querySelector('.block-container');
             if (blockContainer) {
-                blockContainer.style.setProperty('padding-top', '58px', 'important');
+                const tbH = (frozenTb && frozenTb.offsetHeight) ? frozenTb.offsetHeight : 124;
+                blockContainer.style.setProperty('padding-top', (tbH + 8) + 'px', 'important');
                 blockContainer.style.setProperty('padding-left', '8px', 'important');
                 blockContainer.style.setProperty('padding-right', '8px', 'important');
                 blockContainer.style.setProperty('max-width', '100%', 'important');
@@ -5418,6 +5458,29 @@ if ("top_bar_module_selector" not in st.session_state or
     st.session_state.top_bar_module_selector not in MODULE_OPTIONS):
     st.session_state.top_bar_module_selector = MODULE_OPTIONS[st.session_state.active_module_idx]
 
+def _nav_prev_module():
+    new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
+    st.session_state.active_module_idx = new_idx
+    if "sb_cat_filter_select" in st.session_state:
+        st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
+    if "sb_search_filter_input" in st.session_state:
+        st.session_state.sb_search_filter_input = ""
+
+def _nav_next_module():
+    new_idx = (st.session_state.active_module_idx + 1) % len(MODULE_OPTIONS)
+    st.session_state.active_module_idx = new_idx
+    if "sb_cat_filter_select" in st.session_state:
+        st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
+    if "sb_search_filter_input" in st.session_state:
+        st.session_state.sb_search_filter_input = ""
+
+def _nav_to_rules_bank():
+    st.session_state.active_module_idx = 18
+    if "sb_cat_filter_select" in st.session_state:
+        st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
+    if "sb_search_filter_input" in st.session_state:
+        st.session_state.sb_search_filter_input = ""
+
 # -------------------------------------------------------------
 # 🌟 FROZEN STICKY TOP HEADER SECTION (Pinned at Top)
 # -------------------------------------------------------------
@@ -5456,77 +5519,114 @@ with st.container(key="top_frozen_header_container", border=False):
             })
             st.session_state.recent_charts_history = st.session_state.recent_charts_history[:5]
 
-    # ─── Brand & Quick Utility Controls Bar (ब्रह्महोरा Sovereign Workstation Header) ───
-    # ─── 🕉️ ब्रह्महोरा (BrahmaHora Pro) Sovereign Unified Single-Row Header Workstation ───
-    with st.container(key="brahma_hora_top_brand_bar", border=False):
-        c_brand_col, c_tools_col, c_util_col = st.columns([1.5, 6.5, 2.0], gap="small", vertical_alignment="center")
-
-        # 1. BRAND (Left)
-        with c_brand_col:
+    # ═════════════════════════════════════════════════════════════════════
+    # 🌟 UNIFIED 3-ROW BLUE WORKSTATION HEADER (नीली पट्टी - FROZEN STICKY)
+    # ═════════════════════════════════════════════════════════════════════
+    with st.container(key="frozen_toolbelt_container", border=False):
+        # ─── लाइन १ (Line 1): Logo, ब्रह्महोरा Title, लोकल मोड, पंचांग, AI Co-Pilot, निकास ───
+        col_l1_b, col_l1_srv, col_l1_pan, col_l1_ai, col_l1_ex = st.columns([3.6, 1.6, 1.6, 1.6, 1.4], gap="small", vertical_alignment="center")
+        with col_l1_b:
             st.markdown("""
-            <div style="display:flex; align-items:center; gap:6px; white-space:nowrap; padding:1px 0;">
-                <span style="font-size:21px; line-height:1; filter:drop-shadow(0 1px 2px rgba(217,119,6,0.3));">🕉️</span>
-                <div style="display:flex; flex-direction:column; justify-content:center;">
-                    <b style="font-size:15px; font-weight:900; line-height:1.1; letter-spacing:0.3px; background:linear-gradient(90deg, #F59E0B, #D97706, #92400E); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">ब्रह्महोरा Pro</b>
-                    <span style="font-size:8px; font-weight:800; color:#64748B; letter-spacing:0.4px; text-transform:uppercase; line-height:1;">Vedic Workstation</span>
+            <div style="display:flex; align-items:center; gap:7px; height:32px; padding-left:2px; overflow:hidden;">
+                <span style="font-size:19px; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); flex-shrink:0;">🕉️</span>
+                <div style="line-height:1.1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    <b style="font-size:15px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.3px;">ब्रह्महोरा (BrahmaHora Pro)</b>
+                    <span style="font-size:9.5px; font-weight:800; color:#BAE6FD; margin-left:6px; letter-spacing:0.3px; text-transform:uppercase;">Workstation</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-        # 2. CENTRAL TOOLBELT (Middle - 9 Core Astrological Tools)
-        with c_tools_col:
-            tb_cols = st.columns(9, gap="small", vertical_alignment="center")
+        with col_l1_srv:
+            is_srv_conn = st.session_state.get("gla_authenticated", False)
+            srv_lbl = "🟢 सर्वर: लाइव" if is_srv_conn else "⚪ लोकल मोड"
+            is_srv_act = (st.session_state.gla_active_tool == "server")
+            if st.button(srv_lbl, key="hdr_l1_srv_btn", use_container_width=True, type="primary" if is_srv_act else "secondary", help="सर्वर क्लाउड सिंक स्थिति"):
+                st.session_state.gla_active_tool = "server" if not is_srv_act else None
+                st.rerun()
 
-            def render_tool_tile(col, emoji_icon, label_text, tool_key):
-                with col:
-                    is_active = (st.session_state.gla_active_tool == tool_key)
-                    btn_type = "primary" if is_active else "secondary"
-                    btn_label = f"{emoji_icon} {label_text}"
-                    if st.button(btn_label, key=f"gla_tile_btn_{tool_key}", use_container_width=True, type=btn_type, help=f"{label_text} मेन्यू खोलें"):
-                        if st.session_state.gla_active_tool == tool_key:
-                            st.session_state.gla_active_tool = None
-                        else:
-                            st.session_state.gla_active_tool = tool_key
-                        st.rerun()
+        with col_l1_pan:
+            is_pan_act = (st.session_state.gla_active_tool == "panchang")
+            if st.button("⚡ पंचांग", key="hdr_l1_panchang_btn", use_container_width=True, type="primary" if is_pan_act else "secondary", help="दैनिक पंचांग व काल निर्णय"):
+                st.session_state.gla_active_tool = "panchang" if not is_pan_act else None
+                st.rerun()
 
-            render_tool_tile(tb_cols[0], "✨", "New", "new")
-            render_tool_tile(tb_cols[1], "📅", "Birth", "birth")
-            render_tool_tile(tb_cols[2], "📂", "Vault", "open")
-            render_tool_tile(tb_cols[3], "💾", "Save", "save")
-            render_tool_tile(tb_cols[4], "⏱️", "BTR", "clock")
-            render_tool_tile(tb_cols[5], "🔮", "Prashna", "prashna")
-            render_tool_tile(tb_cols[6], "📄", "PDF", "pdf")
-            render_tool_tile(tb_cols[7], "💬", "AI", "ai_copilot")
-            render_tool_tile(tb_cols[8], "⚙️", "Setup", "settings")
+        with col_l1_ai:
+            is_ai_act = (st.session_state.gla_active_tool == "ai_copilot")
+            if st.button("💬 AI Co-Pilot", key="hdr_l1_ai_btn", use_container_width=True, type="primary" if is_ai_act else "secondary", help="ब्रह्महोरा AI ज्योतिष सह-पायलट"):
+                st.session_state.gla_active_tool = "ai_copilot" if not is_ai_act else None
+                st.rerun()
 
-        # 3. QUICK UTILITIES (Right - Server, Lang, Theme, Logout)
-        with c_util_col:
-            cu1, cu2, cu3, cu4 = st.columns([1.1, 0.9, 0.9, 0.8], gap="small", vertical_alignment="center")
-            with cu1:
-                is_srv_conn = st.session_state.get("gla_authenticated", False)
-                srv_label = "🟢 लाइव" if is_srv_conn else "⚪ लोकल"
-                if st.button(srv_label, key="hdr_quick_server_status_btn", help="सर्वर क्लाउड सिंक स्थिति", use_container_width=True):
-                    st.session_state.gla_active_tool = "server" if st.session_state.gla_active_tool != "server" else None
+        with col_l1_ex:
+            is_ex_act = (st.session_state.gla_active_tool == "logout")
+            if st.button("🚪 निकास", key="hdr_l1_logout_btn", use_container_width=True, type="primary" if is_ex_act else "secondary", help="सत्र से सुरक्षित निकास"):
+                st.session_state.gla_active_tool = "logout" if not is_ex_act else None
+                st.rerun()
+
+        # ─── लाइन २ (Line 2): New, Birth, Vault, Save, BTR, Prashna, PDF, Setup, Language, Day/Night ───
+        st.markdown("<div style='height: 3px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
+        l2_cols = st.columns(10, gap="small", vertical_alignment="center")
+
+        def render_l2_tool(col, icon, label, tool_key):
+            with col:
+                is_act = (st.session_state.gla_active_tool == tool_key)
+                if st.button(f"{icon} {label}", key=f"gla_tile_btn_{tool_key}", use_container_width=True, type="primary" if is_act else "secondary", help=f"{label} मेन्यू"):
+                    st.session_state.gla_active_tool = None if is_act else tool_key
                     st.rerun()
-            with cu2:
-                cur_lang = st.session_state.get("app_lang", "General (जनरल)")
-                is_hindi = ("जनरल" in cur_lang or "Hindi" in cur_lang)
-                lang_label = "🌐 EN" if is_hindi else "🌐 HI"
-                if st.button(lang_label, key="hdr_quick_lang_toggle_btn", help="१-क्लिक में भाषा बदलें (Toggle Language)", use_container_width=True):
-                    st.session_state.app_lang = "English (अंग्रेजी)" if is_hindi else "General (जनरल)"
-                    st.toast(f"✅ भाषा परिवर्तित: {st.session_state.app_lang}", icon="🌐")
-                    st.rerun()
-            with cu3:
-                cur_th = st.session_state.get("app_theme_mode", "day")
-                th_label = "☀️ डे" if cur_th in ["astrallis", "night"] else "🌙 नाइट"
-                if st.button(th_label, key="hdr_quick_theme_toggle_btn", help="१-क्लिक में डे/नाइट थीम बदलें (Toggle Theme)", use_container_width=True):
-                    st.session_state.app_theme_mode = "day" if cur_th in ["astrallis", "night"] else "astrallis"
-                    st.toast(f"✅ थीम मोड: {st.session_state.app_theme_mode.upper()}", icon="🌓")
-                    st.rerun()
-            with cu4:
-                if st.button("🚪 निकास", key="hdr_quick_logout_btn", help="सत्र से लॉगआउट करें", use_container_width=True):
-                    st.session_state.gla_active_tool = "logout" if st.session_state.gla_active_tool != "logout" else None
-                    st.rerun()
+
+        render_l2_tool(l2_cols[0], "✨", "New", "new")
+        render_l2_tool(l2_cols[1], "📅", "Birth", "birth")
+        render_l2_tool(l2_cols[2], "📂", "Vault", "open")
+        render_l2_tool(l2_cols[3], "💾", "Save", "save")
+        render_l2_tool(l2_cols[4], "⏱️", "BTR", "clock")
+        render_l2_tool(l2_cols[5], "🔮", "Prashna", "prashna")
+        render_l2_tool(l2_cols[6], "📄", "PDF", "pdf")
+        render_l2_tool(l2_cols[7], "⚙️", "Setup", "settings")
+
+        with l2_cols[8]:
+            cur_lang = st.session_state.get("app_lang", "General (जनरल)")
+            is_hindi = ("जनरल" in cur_lang or "Hindi" in cur_lang)
+            lang_label = "🌐 EN" if is_hindi else "🌐 हिंदी"
+            if st.button(lang_label, key="hdr_quick_lang_toggle_btn", help="१-क्लिक में भाषा बदलें (Toggle Language)", use_container_width=True):
+                st.session_state.app_lang = "English (अंग्रेजी)" if is_hindi else "General (जनरल)"
+                st.toast(f"✅ भाषा परिवर्तित: {st.session_state.app_lang}", icon="🌐")
+                st.rerun()
+
+        with l2_cols[9]:
+            cur_th = st.session_state.get("app_theme_mode", "day")
+            th_label = "☀️ डे" if cur_th in ["astrallis", "night"] else "🌙 नाइट"
+            if st.button(th_label, key="hdr_quick_theme_toggle_btn", help="१-क्लिक में डे/नाइट थीम बदलें (Toggle Theme)", use_container_width=True):
+                st.session_state.app_theme_mode = "day" if cur_th in ["astrallis", "night"] else "astrallis"
+                st.toast(f"✅ थीम मोड: {st.session_state.app_theme_mode.upper()}", icon="🌓")
+                st.rerun()
+
+        # ─── लाइन ३ (Line 3): >> (Sidebar Toggle), पिछला (Prev), Module List (Selectbox), अगला (Next) ───
+        st.markdown("<div style='height: 3px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
+        l3_cols = st.columns([0.8, 1.2, 6.8, 1.2], gap="small", vertical_alignment="center")
+
+        with l3_cols[0]:
+            if st.button("⮂ >>", key="top_sidebar_toggle_btn", help="साइडबार अंदर / बाहर करें (Toggle Sidebar)", use_container_width=True):
+                st.session_state.sidebar_toggle_requested = True
+                st.rerun()
+
+        with l3_cols[1]:
+            st.button("❮ पिछला", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="hdr_top_prev_mod_btn", on_click=_nav_prev_module)
+
+        with l3_cols[2]:
+            _cur_m_name = MODULE_OPTIONS[st.session_state.active_module_idx] if 0 <= st.session_state.active_module_idx < len(MODULE_OPTIONS) else MODULE_OPTIONS[0]
+            chosen_module = st.selectbox(
+                "सक्रिय मॉड्यूल (Active Module)",
+                MODULE_OPTIONS,
+                index=MODULE_OPTIONS.index(_cur_m_name),
+                label_visibility="collapsed",
+                key="top_bar_module_selector",
+                help="किसी भी मॉड्यूल पर तुरंत जाने के लिए यहाँ से चुनें"
+            )
+            if chosen_module != _cur_m_name:
+                st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen_module)
+                st.rerun()
+
+        with l3_cols[3]:
+            st.button("अगला ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="hdr_top_next_mod_btn", on_click=_nav_next_module)
 
     if st.session_state.get("sidebar_toggle_requested"):
         st.session_state.sidebar_toggle_requested = False
@@ -5564,6 +5664,12 @@ with st.container(key="top_frozen_header_container", border=False):
             } else if (colBtn) {
                 colBtn.click();
             }
+            try {
+                if (window.parent && window.parent.setupStickyTopHeader) {
+                    setTimeout(window.parent.setupStickyTopHeader, 80);
+                    setTimeout(window.parent.setupStickyTopHeader, 250);
+                }
+            } catch(e_sync) {}
         } catch(e) {}
         </script>
         """, height=0, width=0)
@@ -6743,30 +6849,40 @@ with st.container(key="top_frozen_header_container", border=False):
                     </div>
                     """, unsafe_allow_html=True)
 
+        # 14. TOOL: DIGITAL PANCHANG HUD (पंचांग एवं काल विचार)
+        elif st.session_state.gla_active_tool == "panchang":
+            with st.container(border=True):
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #00b0f0; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#0284C7;">
+                        ⚡ प्रामाणिक डिजिटल पंचांग एवं काल निर्णय (Digital Panchang HUD)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                p_obj = getattr(chart, "panchang", None)
+                p_col1, p_col2, p_col3, p_col4, p_col5 = st.columns(5)
+                with p_col1:
+                    st.metric("📅 तिथि (Tithi)", getattr(p_obj, "tithi_name", "N/A") if p_obj else "N/A")
+                with p_col2:
+                    st.metric("🪐 वार (Vara)", getattr(p_obj, "vara_name", "N/A") if p_obj else "N/A")
+                with p_col3:
+                    st.metric("✨ नक्षत्र (Nakshatra)", getattr(p_obj, "nakshatra_name", "N/A") if p_obj else "N/A")
+                with p_col4:
+                    st.metric("🧘 योग (Yoga)", getattr(p_obj, "yoga_name", "N/A") if p_obj else "N/A")
+                with p_col5:
+                    st.metric("🦁 करण (Karana)", getattr(p_obj, "karana_name", "N/A") if p_obj else "N/A")
 
-
-    def _nav_prev_module():
-        new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
-        st.session_state.active_module_idx = new_idx
-        if "sb_cat_filter_select" in st.session_state:
-            st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
-        if "sb_search_filter_input" in st.session_state:
-            st.session_state.sb_search_filter_input = ""
-
-    def _nav_next_module():
-        new_idx = (st.session_state.active_module_idx + 1) % len(MODULE_OPTIONS)
-        st.session_state.active_module_idx = new_idx
-        if "sb_cat_filter_select" in st.session_state:
-            st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
-        if "sb_search_filter_input" in st.session_state:
-            st.session_state.sb_search_filter_input = ""
-
-    def _nav_to_rules_bank():
-        st.session_state.active_module_idx = 18
-        if "sb_cat_filter_select" in st.session_state:
-            st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
-        if "sb_search_filter_input" in st.session_state:
-            st.session_state.sb_search_filter_input = ""
+                st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+                p_act1, p_act2 = st.columns([3, 1])
+                with p_act1:
+                    if st.button("🚀 विस्तृत पंचांग एवं मुहूर्त मॉड्यूल (Module 1) खोलें", type="primary", use_container_width=True, key="panchang_modal_open_mod1"):
+                        st.session_state.active_module_idx = 1
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+                with p_act2:
+                    if st.button("❌ बंद करें", use_container_width=True, key="panchang_modal_close_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
 
     # ---------------------------------------------------------
     # 🎨 THEME STYLING TOKENS FOR SIDEBAR & HEADER BREADCRUMB (Grahalakshanam Palette)
@@ -6909,29 +7025,8 @@ with st.container(key="top_frozen_header_container", border=False):
             st.rerun()
 
     # ---------------------------------------------------------
-    # 3. TOP HEADER CONTAINER: QUICK CONTROLS & BREADCRUMB
+    # 3. ACTIVE MODULE BREADCRUMB INDICATOR
     # ---------------------------------------------------------
-    st.markdown("<div style='height: 10px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
-    col_btn_prev, col_active_info, col_btn_next = st.columns([1.2, 5.6, 1.2])
-    with col_btn_prev:
-        st.button("❮ पिछला (Prev)", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="top_prev_mod_btn", on_click=_nav_prev_module)
-
-    with col_active_info:
-        # Instant direct 30-module switcher (accessible always, even if sidebar is closed)
-        _cur_m_name = MODULE_OPTIONS[st.session_state.active_module_idx] if 0 <= st.session_state.active_module_idx < len(MODULE_OPTIONS) else MODULE_OPTIONS[0]
-        chosen_module = st.selectbox(
-            "सक्रिय मॉड्यूल (Active Module)",
-            MODULE_OPTIONS,
-            index=MODULE_OPTIONS.index(_cur_m_name),
-            label_visibility="collapsed",
-            help="किसी भी मॉड्यूल पर तुरंत जाने के लिए यहाँ से चुनें"
-        )
-        if chosen_module != _cur_m_name:
-            st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen_module)
-            st.rerun()
-
-    with col_btn_next:
-        st.button("अगला (Next) ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="top_next_mod_btn", on_click=_nav_next_module)
 
 
 p = chart.panchang
