@@ -310,9 +310,14 @@ class MedicalAstrologyService:
             "high_risk_organs": high_risk_organs,
             "tridosha": {
                 "vata_pct": vata_pct,
+                "vata_percent": vata_pct,
                 "pitta_pct": pitta_pct,
+                "pitta_percent": pitta_pct,
                 "kapha_pct": kapha_pct,
-                "dominant": dominant_dosha
+                "kapha_percent": kapha_pct,
+                "dominant": dominant_dosha,
+                "dominant_dosha": dominant_dosha,
+                "recommendation": herbal_remedies[0] if herbal_remedies else "सात्विक आहार व नियमित दिनचर्या रखें।"
             },
             "ayurvedic_remedies": herbal_remedies,
             "panchakarma": panchakarma,
