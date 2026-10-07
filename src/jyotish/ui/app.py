@@ -5956,7 +5956,7 @@ with st.container(key="top_frozen_header_container", border=False):
                     index=d3_idx,
                     format_func=lambda x: {
                         "parashari": "महर्षि पाराशर (१-५-९ त्रिकोण)",
-                        "jagannatha": "जगन्नाथ द्रेष्काण (PVR / Rath)",
+                        "jagannatha": "उन्नत द्रेष्काण (चर-स्थिर-द्विस्वभाव मत)",
                         "somanatha": "सोमनाथ द्रेष्काण (अनुलोम/विलोम)",
                         "parivritti_traya": "परिवृत्ति त्रय (३६ चक्रीय)"
                     }[x],
@@ -8141,68 +8141,186 @@ elif selected_idx == 1:
     ])
 
     with tab_future_event:
-        st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का बहु-पद्धति शास्त्रीय विश्लेषण प्राप्त करें।")
+        st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का ३-स्तरीय शास्त्रीय ट्रिगर (दशा, गुरु-शनि दोहरा गोचर, अष्टकवर्ग) एवं ३२-शास्त्रीय नियमों द्वारा वैज्ञानिक विश्लेषण प्राप्त करें।")
+
+        scan_mode = st.radio(
+            "विश्लेषण प्रारूप चयन करें (Analysis Mode):",
+            ["📈 १२-२४ माह सम्भावना क्षितिज (12-24 Month Horizon Scanner)", "🎯 एकल तिथि गहन वेध (Single Date Deep Dive)"],
+            horizontal=True,
+            key="ghatna_scan_mode_rad"
+        )
 
         col_q1, col_q2, col_q3 = st.columns([2, 2, 2])
-        target_event_date = col_q1.date_input("लक्षित तिथि (Target Date)", value=date(2027, 4, 12), format="DD/MM/YYYY")
-        theme = col_q2.selectbox(
-            "विश्लेषण विषय (Theme)",
-            ["career", "marriage", "wealth", "health", "travel", "spirituality", "all"],
+        theme = col_q1.selectbox(
+            "विश्लेषण विषय (Event Theme)",
+            ["career", "marriage", "wealth", "children", "property", "travel", "health", "spirituality", "all"],
             format_func=lambda x: {
-                "career": "💼 आजीविका / करियर (Career)",
+                "career": "💼 आजीविका / नौकरी / पदोन्नति (Career)",
                 "marriage": "💍 विवाह / संबंध (Marriage)",
-                "wealth": "💰 धन / संपत्ति (Wealth)",
-                "health": "🌿 स्वास्थ्य (Health)",
-                "travel": "✈️ विदेश / यात्रा (Travel)",
-                "spirituality": "🕉️ आध्यात्म (Spirituality)",
-                "all": "🌐 समग्र विश्लेषण (All Themes)"
-            }.get(x, x)
+                "wealth": "💰 धन / संचित वैभव (Wealth)",
+                "children": "👶 संतान प्राप्ति / विद्या (Children)",
+                "property": "🏠 भूमि / भवन / वाहन क्रय (Property)",
+                "travel": "✈️ विदेश गमन / दूरस्थ यात्रा (Travel)",
+                "health": "🌿 स्वास्थ्य एवं जीवनी शक्ति (Health)",
+                "spirituality": "🕉️ आध्यात्म एवं साधना (Spirituality)",
+                "all": "🌐 समग्र जीवन चक्र (All Themes)"
+            }.get(x, x),
+            key="ghatna_theme_sel"
         )
-        scan_range = col_q3.checkbox("30-दिवसीय विंडो स्कैन करें (30-Day Window)")
 
-        query_input = GhatnaQueryInput(
-            birth_data=birth_profile,
-            target_date=target_event_date,
-            theme=theme
-        )
-        result = default_event_query_service.execute_query(query_input, precomputed_chart=chart)
+        if "12-24" in scan_mode:
+            with col_q2:
+                start_range_date = st.date_input("प्रारंभ तिथि (Start Date)", value=get_live_local_now(tz_offset).date(), format="DD/MM/YYYY", key="ghatna_start_d")
+            with col_q3:
+                months_horizon = st.selectbox("अवधि क्षितिज (Horizon)", [12, 18, 24], index=0, format_func=lambda x: f"{x} माह ({x//12} वर्ष)", key="ghatna_horizon_m")
 
-        st.markdown("---")
-        m_col1, m_col2, m_col3, m_col4 = st.columns(4)
-        m_col1.metric("लक्षित तिथि", result.target_date.strftime("%d-%b-%Y"))
-        m_col2.metric("संभावना सूचकांक", f"{result.composite_score:.2f}")
-        m_col3.metric("विश्वास स्तर", result.confidence_band.split(" ")[0])
-        m_col4.metric("सक्रिय विंशोत्तरी दशा", result.active_dasha.formatted_summary)
+            scan_res = default_event_query_service.scan_event_range(chart, theme, start_range_date, months_horizon)
 
-        st.info(f"📊 **पद्धति सहमति अनुपात (Consensus):** {result.consensus_ratio}")
+            # Top Hero Peak Banner
+            p_rec = scan_res["peak_record"]
+            p_month = scan_res["peak_month"]
+            p_score = scan_res["peak_score"]
+            st.markdown(f"""
+<div style="background:linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #0D9488 100%); border-radius:12px; padding:18px 24px; color:#FFFFFF; margin:16px 0; box-shadow:0 4px 14px rgba(37,99,235,0.2);">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+            <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; opacity:0.85;">३-स्तरीय शास्त्रीय ट्रिगर क्षितिज • {scan_res['theme_name_hi']}</div>
+            <div style="font-size:22px; font-weight:900; margin-top:4px;">🌟 सर्वोच्च सम्भावना काल: {p_month} ({p_score}% सम्भावना)</div>
+            <div style="font-size:13px; opacity:0.92; margin-top:4px; font-style:italic;">"{scan_res['shastra_quote']}"</div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:8px; padding:6px 14px; text-align:center;">
+                <div style="font-size:18px; font-weight:900;">{p_score}%</div>
+                <div style="font-size:11px; font-weight:700;">शिखर स्कोर</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:8px; padding:6px 14px; text-align:center;">
+                <div style="font-size:18px; font-weight:900;">{len(scan_res['golden_months'])} माह</div>
+                <div style="font-size:11px; font-weight:700;">स्वर्ण अवसर</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:8px; padding:6px 14px; text-align:center;">
+                <div style="font-size:18px; font-weight:900;">{scan_res['average_score']}%</div>
+                <div style="font-size:11px; font-weight:700;">औसत सम्भावना</div>
+            </div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-        col_res1, col_res2 = st.columns([3, 2])
-        with col_res1:
-            st.markdown("### 📖 शास्त्रीय साक्ष्य सार (Classical Narrative)")
-            st.markdown(result.narrative_hi)
-            with st.expander("English Summary"):
-                st.markdown(result.narrative_en)
+            st.markdown("#### 📊 माह-दर-माह सम्भावना एवं ३-स्तरीय शास्त्रीय ट्रिगर्स:")
+            st.caption("प्रत्येक माह की सम्भावना (०-१००%) = दशा संरेखण (४०) + शनि-गुरु दोहरा गोचर (३५) + अष्टकवर्ग बल (२५):")
 
-        with col_res2:
-            st.markdown("### 🪐 गोचर स्थिति (Transit Snapshot)")
-            t = result.transit_summary
-            st.markdown(f"- **शनि गोचर:** चंद्र से {t.saturn_house_from_moon}वां | लग्न से {t.saturn_house_from_lagna}वां भाव")
-            st.markdown(f"- **गुरु गोचर:** चंद्र से {t.jupiter_house_from_moon}वां | लग्न से {t.jupiter_house_from_lagna}वां भाव")
-            st.markdown(f"- **साढ़े साती:** {'✅ सक्रिय - ' + (t.sade_sati_phase or '') if t.is_sade_sati else '❌ निष्क्रिय'}")
-            st.markdown(f"- **ढैय्या:** {'✅ सक्रिय - ' + (t.dhaiya_type or '') if t.is_dhaiya else '❌ निष्क्रिय'}")
+            # Grid of Monthly Records
+            m_cols = st.columns(3)
+            for idx, r in enumerate(scan_res["monthly_records"]):
+                c_idx = idx % 3
+                with m_cols[c_idx]:
+                    card_bg = "#ECFDF5" if r["score"] >= 75 else ("#EFF6FF" if r["score"] >= 60 else ("#FFFBEB" if r["score"] >= 45 else "#FEF2F2"))
+                    border_c = "#10B981" if r["score"] >= 75 else ("#3B82F6" if r["score"] >= 60 else ("#F59E0B" if r["score"] >= 45 else "#EF4444"))
+                    st.markdown(f"""
+<div style="background:{card_bg}; border:1.5px solid {border_c}; border-radius:10px; padding:14px; margin-bottom:12px;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:16px; font-weight:900; color:#0F172A;">📅 {r['month_label']}</span>
+        <span style="font-size:14px; font-weight:900; color:{border_c}; background:#FFFFFF; border:1px solid {border_c}; padding:2px 8px; border-radius:6px;">{r['score']}%</span>
+    </div>
+    <div style="font-size:12px; font-weight:700; color:#334155; margin-top:6px;">{r['status_hi']}</div>
+    <div style="font-size:11px; color:#475569; margin-top:4px;">
+        • <b>दशा:</b> {r['active_dasha']}<br/>
+        • <b>दोहरा गोचर:</b> {'✅ सक्रिय' if r['double_transit'] else '⚪ आंशिक/तटस्थ'}<br/>
+        • <b>ट्रिगर अंक:</b> दशा {r['tier1_score']}/40 | गोचर {r['tier2_score']}/35 | अष्टक {r['tier3_score']}/25
+    </div>
+    <div style="font-size:11px; color:#065F46; margin-top:6px; font-style:italic; line-height:1.4;">
+        💡 {r['guidance_hi']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-        st.markdown("### 🔍 सक्रिय शास्त्रीय नियम एवं साक्ष्य (Fired Rules Evidence)")
-        if result.top_positive_signals:
-            st.markdown("##### 🟢 अनुकूल शास्त्रीय योग:")
-            for r in result.top_positive_signals:
+        else:
+            # Single Date Deep Dive
+            with col_q2:
+                target_event_date = st.date_input("लक्षित तिथि (Target Date)", value=date(2027, 4, 12), format="DD/MM/YYYY", key="ghatna_single_d")
+            with col_q3:
+                st.write("")
+                st.caption(f"📍 लक्षित तिथि का ३२-शास्त्रीय नियमों व ३-स्तरीय ट्रिगर द्वारा वेध")
+
+            query_input = GhatnaQueryInput(
+                birth_data=birth_profile,
+                target_date=target_event_date,
+                theme=theme
+            )
+            result = default_event_query_service.execute_query(query_input, precomputed_chart=chart)
+            tier_res = default_event_query_service.evaluate_3tier_triggers(chart, theme, target_event_date)
+
+            st.markdown("---")
+            m_col1, m_col2, m_col3, m_col4 = st.columns(4)
+            m_col1.metric("लक्षित तिथि", result.target_date.strftime("%d-%b-%Y"))
+            m_col2.metric("३-स्तरीय सम्भावना", f"{tier_res['composite_probability']}%", tier_res['status_hi'].split(' ')[1])
+            m_col3.metric("विश्वास स्तर", result.confidence_band.split(" ")[0])
+            m_col4.metric("सक्रिय विंशोत्तरी दशा", result.active_dasha.formatted_summary)
+
+            st.info(f"📊 **पद्धति सहमति अनुपात (Consensus):** {result.consensus_ratio} | 👑 **प्रधान भाव:** {tier_res['prime_house']}वां भाव (स्वामी: {tier_res['prime_lord']})")
+
+            # 3-Tier Trigger Detailed Cards
+            st.markdown("#### ⚡ ३-स्तरीय शास्त्रीय ट्रिगर विस्तृत विश्लेषण (3-Tier Trigger Details)")
+            t_col1, t_col2, t_col3 = st.columns(3)
+            with t_col1:
                 st.markdown(f"""
-                <div class="rule-card">
-                    <b>{r.rule_name_hi}</b> ({r.rule_name_en})<br/>
-                    <small style="color:#F59E0B;">स्रोत: {r.source_text} | अध्याय: {r.source_chapter} | पद्धति: {r.school}</small><br/>
-                    <span>{r.explanation_hi}</span><br/>
-                    <small style="color:#6EE7B7;">सिग्नल शक्ति: {r.signal_score:.2f} | पुष्टि: {'हाँ' if r.varga_confirmed else 'सामान्य'}</small>
-                </div>
-                """, unsafe_allow_html=True)
+<div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:14px; min-height:170px;">
+    <div style="font-size:14px; font-weight:800; color:#1E40AF;">१. दशा संरेखण ({tier_res['tier1']['score']}/{tier_res['tier1']['max']} अंक)</div>
+    <div style="font-size:12px; color:#1E3A8A; margin-top:6px;">
+        • <b>दशा:</b> {tier_res['tier1']['active_dasha']}<br/>
+        {'<br/>• '.join(tier_res['tier1']['reasons'])}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+            with t_col2:
+                st.markdown(f"""
+<div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:10px; padding:14px; min-height:170px;">
+    <div style="font-size:14px; font-weight:800; color:#065F46;">२. गुरु-शनि दोहरा गोचर ({tier_res['tier2']['score']}/{tier_res['tier2']['max']} अंक)</div>
+    <div style="font-size:12px; color:#064E3B; margin-top:6px;">
+        • <b>शनि भाव:</b> {tier_res['tier2']['saturn_house']}वां | <b>गुरु भाव:</b> {tier_res['tier2']['jupiter_house']}वां<br/>
+        {'<br/>• '.join(tier_res['tier2']['reasons'])}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+            with t_col3:
+                st.markdown(f"""
+<div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px; min-height:170px;">
+    <div style="font-size:14px; font-weight:800; color:#92400E;">३. अष्टकवर्ग संपुष्टि ({tier_res['tier3']['score']}/{tier_res['tier3']['max']} अंक)</div>
+    <div style="font-size:12px; color:#78350F; margin-top:6px;">
+        • <b>गुरु BAV:</b> {tier_res['tier3']['jupiter_bav']} | <b>शनि BAV:</b> {tier_res['tier3']['saturn_bav']}<br/>
+        • <b>प्रधान भाव SAV:</b> {tier_res['tier3']['prime_sav']} बिन्दु<br/>
+        {'<br/>• '.join(tier_res['tier3']['reasons'])}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+            col_res1, col_res2 = st.columns([3, 2])
+            with col_res1:
+                st.markdown("### 📖 शास्त्रीय साक्ष्य सार (Classical Narrative)")
+                st.markdown(result.narrative_hi)
+                with st.expander("English Summary"):
+                    st.markdown(result.narrative_en)
+
+            with col_res2:
+                st.markdown("### 🪐 गोचर स्थिति (Transit Snapshot)")
+                t = result.transit_summary
+                st.markdown(f"- **शनि गोचर:** चंद्र से {t.saturn_house_from_moon}वां | लग्न से {t.saturn_house_from_lagna}वां भाव")
+                st.markdown(f"- **गुरु गोचर:** चंद्र से {t.jupiter_house_from_moon}वां | लग्न से {t.jupiter_house_from_lagna}वां भाव")
+                st.markdown(f"- **साढ़े साती:** {'✅ सक्रिय - ' + (t.sade_sati_phase or '') if t.is_sade_sati else '❌ निष्क्रिय'}")
+                st.markdown(f"- **ढैय्या:** {'✅ सक्रिय - ' + (t.dhaiya_type or '') if t.is_dhaiya else '❌ निष्क्रिय'}")
+
+            st.markdown("### 🔍 सक्रिय शास्त्रीय नियम एवं साक्ष्य (Fired Rules Evidence)")
+            if result.top_positive_signals:
+                st.markdown("##### 🟢 अनुकूल शास्त्रीय योग:")
+                for r in result.top_positive_signals:
+                    st.markdown(f"""
+                    <div class="rule-card">
+                        <b>{r.rule_name_hi}</b> ({r.rule_name_en})<br/>
+                        <small style="color:#F59E0B;">स्रोत: {r.source_text} | अध्याय: {r.source_chapter} | पद्धति: {r.school}</small><br/>
+                        <span>{r.explanation_hi}</span><br/>
+                        <small style="color:#6EE7B7;">सिग्नल शक्ति: {r.signal_score:.2f} | पुष्टि: {'हाँ' if r.varga_confirmed else 'सामान्य'}</small>
+                    </div>
+                    """, unsafe_allow_html=True)
 
     with tab_past_event:
         st.write("विगत जीवन की किसी भी ऐतिहासिक घटना (उदा: विवाह, प्रथम नौकरी, पदोन्नति, मकान क्रय, संतान जन्म, विदेश यात्रा आदि) का **६ शास्त्रीय स्तंभों** द्वारा वैज्ञानिक एवं शास्त्र-सम्मत सत्यापन प्राप्त करें।")
@@ -13063,6 +13181,50 @@ elif selected_idx == 9:
         ]
         st.dataframe(pd.DataFrame(sade_table), use_container_width=True, hide_index=True)
 
+        st.markdown("---")
+        st.markdown("##### 🪙 शनि व गुरु का शास्त्रीय पाया विचार (Transit Paya / Footing)")
+        st.caption("गोचर में चन्द्रमा के जन्म चन्द्र से स्थान के आधार पर पाया निर्णय (१,६,११: स्वर्ण | २,५,९: रजत | ३,७,१०: ताम्र | ४,८,१२: लौह):")
+
+        t_moon_id = t_chart.planets["Moon"].sign_id if "Moon" in t_chart.planets else 1
+        moon_diff = ((t_moon_id - natal_moon_id) % 12) + 1
+
+        def _calc_paya(m_h: int):
+            if m_h in (1, 6, 11):
+                return "स्वर्ण पाया (Gold)", "#F59E0B", "#FEF3C7", "50% (मध्यम)", "प्रारंभिक संघर्षोपरांत लाभ"
+            elif m_h in (2, 5, 9):
+                return "रजत पाया (Silver)", "#10B981", "#D1FAE5", "100% (सर्वोत्तम)", "धन वृद्धि, यश व सर्वतोमुखी सिद्धि"
+            elif m_h in (3, 7, 10):
+                return "ताम्र पाया (Copper)", "#3B82F6", "#DBEAFE", "75% (उत्तम)", "साहस, पराक्रम व व्यापार विस्तार"
+            else:
+                return "लौह पाया (Iron)", "#EF4444", "#FEE2E2", "25% (कष्टप्रद)", "मानसिक तनाव, शारीरिक श्रम व सतर्कता"
+
+        p_name, p_bd, p_bg, p_rating, p_desc = _calc_paya(moon_diff)
+
+        c_py1, c_py2 = st.columns(2)
+        with c_py1:
+            st.markdown(f"""
+<div style="background:{p_bg}; border:1.5px solid {p_bd}; border-radius:10px; padding:14px;">
+    <div style="font-size:15px; font-weight:900; color:{p_bd};">🪐 शनि पाया: {p_name}</div>
+    <div style="font-size:12px; color:#1E293B; margin-top:6px;">
+        • <b>गोचर चन्द्र भाव:</b> जन्म चन्द्र से {moon_diff}वां भाव<br/>
+        • <b>शुभता सामर्थ्य:</b> <b>{p_rating}</b><br/>
+        • <b>शास्त्रीय फल:</b> {p_desc}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+        with c_py2:
+            st.markdown(f"""
+<div style="background:{p_bg}; border:1.5px solid {p_bd}; border-radius:10px; padding:14px;">
+    <div style="font-size:15px; font-weight:900; color:{p_bd};">🪐 गुरु पाया: {p_name}</div>
+    <div style="font-size:12px; color:#1E293B; margin-top:6px;">
+        • <b>गोचर चन्द्र भाव:</b> जन्म चन्द्र से {moon_diff}वां भाव<br/>
+        • <b>शुभता सामर्थ्य:</b> <b>{p_rating}</b><br/>
+        • <b>शास्त्रीय फल:</b> {p_desc}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
     # =========================================================================
     # TAB 4: JUPITER-SATURN DOUBLE TRANSIT
     # =========================================================================
@@ -16076,7 +16238,7 @@ elif selected_idx == 14:
                 card_bg = "#ECFDF5" if cand.fit_score >= 80 else ("#FFFBEB" if cand.fit_score >= 65 else "#F8FAFC")
                 card_bd = "#10B981" if cand.fit_score >= 80 else ("#F59E0B" if cand.fit_score >= 65 else "#94A3B8")
                 st.markdown(f"""
-<div style="background:{card_bg}; border:1.5px solid {card_bd}; border-radius:10px; padding:16px; margin:12px 0;">
+<div style="background:{card_bg}; border:1.5px solid {card_bd}; border-radius:10px; padding:16px; margin:12px 0 6px 0;">
 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
 <span style="font-size:16px; font-weight:900; color:#0F172A;">#{idx} संभावित समय: {cand.candidate_time} (विचलन: {cand.offset_minutes:+} मिनट)</span>
 <span style="font-size:13px; font-weight:800; background:#FFFFFF; border:1px solid {card_bd}; padding:3px 10px; border-radius:6px; color:#0F172A;">
@@ -16084,13 +16246,23 @@ elif selected_idx == 14:
 </span>
 </div>
 <div style="font-size:13px; color:#334155; margin-top:8px;">
-• <b>D1 लग्न:</b> {cand.lagna_sign} &nbsp;|&nbsp; <b>D9 नवांश:</b> {cand.navamsha_lagna_sign} &nbsp;|&nbsp; <b>D10 दशमांश:</b> {cand.dashamsha_lagna_sign} &nbsp;|&nbsp; <b>D60 देवता:</b> {cand.d60_deity}
+• <b>D1 लग्न:</b> {cand.lagna_sign} &nbsp;|&nbsp; <b>D9 नवांश:</b> {cand.navamsha_lagna_sign} &nbsp;|&nbsp; <b>D10 Dashamsha:</b> {cand.dashamsha_lagna_sign} &nbsp;|&nbsp; <b>D60 देवता:</b> {cand.d60_deity}
 </div>
 <div style="font-size:12px; color:#065F46; margin-top:6px; line-height:1.5;">
 📜 <b>शास्त्रीय प्रमाण:</b> {' • '.join(cand.evidence_breakdown)}
 </div>
 </div>
 """, unsafe_allow_html=True)
+                col_btn_apply, col_btn_spc = st.columns([2, 3])
+                with col_btn_apply:
+                    if st.button(f"✅ यह शोधित समय ({cand.candidate_time}) मुख्य कुण्डली में लागू करें", key=f"apply_btr_cand_{idx}", type="primary"):
+                        from datetime import datetime as dt_cls
+                        parsed_t = dt_cls.strptime(cand.candidate_time, "%H:%M:%S").time()
+                        st.session_state["birth_time"] = parsed_t
+                        if "birth_profile" in locals() and birth_profile:
+                            birth_profile.birth_time = parsed_t
+                        st.success(f"🎉 बधाई! जन्म समय को सफलतापूर्वक {cand.candidate_time} पर शोधित कर संपूर्ण सॉफ्टवेयर में लागू कर दिया गया है।")
+                        st.rerun()
 
     # -------------------------------------------------------------------------
     # TAB 2: TATTWA SHODHANA
@@ -16319,6 +16491,14 @@ elif selected_idx == 14:
 </div>
 </div>
 """, unsafe_allow_html=True)
+
+        if sec_offset != 0:
+            if st.button(f"✅ इस सूक्ष्म सेकंड्स समय ({cand_sec_dt.strftime('%H:%M:%S')}) को मुख्य कुण्डली में लागू करें", key="btr_apply_micro_sec", type="primary"):
+                st.session_state["birth_time"] = cand_sec_dt.time()
+                if "birth_profile" in locals() and birth_profile:
+                    birth_profile.birth_time = cand_sec_dt.time()
+                st.success(f"🎉 बधाई! जन्म समय को सूक्ष्मता से {cand_sec_dt.strftime('%H:%M:%S')} पर संशोधित कर दिया गया है।")
+                st.rerun()
 
     # -------------------------------------------------------------------------
     # TAB 8: CLASSICAL SUTRAS & RULES
@@ -17974,8 +18154,8 @@ elif selected_idx == 21:
 # =============================================================
 
 elif selected_idx == 22:
-    st.subheader("📕 लाल किताब 1952 तेवा एवं शास्त्रीय उपाय (Lal Kitab Engine)")
-    st.write("कालपुरुष पक्के घर (खाना नं. १ से १२), ७ प्रकार के ऋण (ऋण पितृ, मातृ, स्व आदि), सोया हुआ घर/ग्रह, धर्मी तेवा एवं लाल किताब के अनुभूत टोटके।")
+    st.subheader("📕 लाल किताब 1952 तेवा एवं शास्त्रीय उपाय (Lal Kitab 1952 Engine)")
+    st.write("कालपुरुष पक्के घर (खाना नं. १ से १२), ९ प्रकार के कर्मिक ऋण (Pitra, Matra, Swa, Stri, Rishtedari, Nirdayi, Kudrati, Kanya, Jal Rina), सोया हुआ घर/ग्रह, धर्मी व अंधा तेवा एवं १०८ प्रामाणिक अचूक टोटके।")
 
     import importlib
     import src.jyotish.core.lalkitab as lk_mod
@@ -17986,15 +18166,15 @@ elif selected_idx == 22:
     # Top Status Banner
     c_lk1, c_lk2, c_lk3, c_lk4 = st.columns(4)
     c_lk1.metric("कुण्डली प्रकार", "धर्मी तेवा (Blessed) 🛡️" if lk_res.dharmi_teva else "सामान्य तेवा", "ईश्वरीय सुरक्षा")
-    c_lk2.metric("अंधा तेवा (Blind Chart)", "⚠️ हाँ (सतर्क रहें)" if lk_res.andha_teva else "✅ नहीं (नेत्रवान)", "खाना १० स्थिति")
-    c_lk3.metric("सक्रिय ऋण (Karmic Debts)", f"{len(lk_res.active_debts)} ऋण", "पूर्वजन्म संस्कार")
-    c_lk4.metric("सोए हुए घर (Sleeping Houses)", f"{len(lk_res.sleeping_houses)} / 12", "जाग्रत करने योग्य")
+    c_lk2.metric("अंधा तेवा (Eye Status)", "⚠️ अंधा तेवा" if lk_res.andha_teva else ("🌙 रात का अंधा (Ratandh)" if getattr(lk_res, "ratandh_teva", False) else "✅ नेत्रवान (सक्रिय)"), "दृष्टि सामर्थ्य")
+    c_lk3.metric("सक्रिय कर्मिक ऋण", f"{len(lk_res.active_debts)} / 9 ऋण", "पूर्वजन्म संस्कार")
+    c_lk4.metric("सोए हुए घर (Sleeping)", f"{len(lk_res.sleeping_houses)} / 12", "जाग्रत करने योग्य")
 
     tab_lk1, tab_lk2, tab_lk3, tab_lk4 = st.tabs([
         "🏠 १२ पक्के खाने एवं ग्रह स्थिति (12 Khanas)",
-        "⚠️ ७ प्रकार के ऋण एवं पितृ दोष विश्लेषण",
+        "⚠️ ९ प्रकार के कर्मिक ऋण एवं पितृ दोष (9 Debts)",
         "💤 सोए हुए घर एवं ग्रह (Sleeping Houses)",
-        "🌿 लाल किताब के अनुभूत अचूक टोटके"
+        "🌿 १०८ प्रामाणिक लाल किताब टोटके पुस्तकालय"
     ])
 
     with tab_lk1:
@@ -18015,8 +18195,8 @@ elif selected_idx == 22:
         st.dataframe(pd.DataFrame(khana_table), use_container_width=True, hide_index=True)
 
     with tab_lk2:
-        st.markdown("### ⚠️ लाल किताब के ७ कर्मिक ऋण (Karmic Debts)")
-        st.caption("पूर्वजन्म अथवा पूर्वजों द्वारा किए गए कृत्यों के कारण उत्पन्न ऋण:")
+        st.markdown("### ⚠️ लाल किताब के ९ शास्त्रीय कर्मिक ऋण (9 Karmic Debts)")
+        st.caption("पूर्वजन्म अथवा पूर्वजों द्वारा किए गए कृत्यों के कारण उत्पन्न ९ शास्त्रीय ऋण:")
 
         if lk_res.active_debts:
             for d in lk_res.active_debts:
@@ -18031,7 +18211,16 @@ elif selected_idx == 22:
                 </div>
                 """, unsafe_allow_html=True)
         else:
-            st.success("🎉 आपकी कुण्डली लाल किताब के सातों मुख्य कर्मिक ऋणों (पितृ, मातृ, स्व आदि) से मुक्त है!")
+            st.success("🎉 अत्यंत शुभ! आपकी कुण्डली लाल किताब के समस्त ९ कर्मिक ऋणों (पितृ, मातृ, स्व, स्त्री, रिश्तेदारी, निर्दयी, कुदरती, कन्या व जल ऋण) से पूर्णतः मुक्त है!")
+
+        with st.expander("📖 लाल किताब के सभी ९ कर्मिक ऋणों की प्रामाणिक सूची एवं लक्षण", expanded=False):
+            for all_d in lk_mod.DEBT_DEFINITIONS:
+                st.markdown(f"""
+                <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px; margin-bottom:8px;">
+                    <b>{all_d['name_hi']}</b>: {all_d['condition_desc_hi']}<br/>
+                    <small style="color:#059669;"><b>उपाय:</b> {all_d['remedy_hi']}</small>
+                </div>
+                """, unsafe_allow_html=True)
 
     with tab_lk3:
         st.markdown("### 💤 सोए हुए घर एवं ग्रह विचार")
@@ -18048,16 +18237,73 @@ elif selected_idx == 22:
 
     with tab_lk4:
         st.markdown("### 🌿 लाल किताब के अनुभूत अचूक टोटके एवं सावधानियां")
-        st.caption("आपकी ग्रह स्थिति के आधार पर विशेष टोटके:")
 
-        if lk_res.specific_remedies:
-            for r in lk_res.specific_remedies:
-                st.markdown(f"""
-                <div style="background:#FFFBEB; border:1px solid #F59E0B; border-radius:8px; padding:12px; margin-bottom:8px;">
-                    <b style="color:#B45309;">📍 {r['placement']}</b><br/>
-                    <span style="color:#1E293B;">{r['totka_hi']}</span>
-                </div>
-                """, unsafe_allow_html=True)
+        # 1. Native Chart 9 Planets Specific Totkas
+        st.markdown("#### 🎯 आपकी कुण्डली के ९ ग्रहों के अचूक टोटके:")
+        st.caption("आपके जन्म लग्न के अनुसार प्रत्येक ग्रह के वर्तमान खाने के प्रामाणिक उपाय व सावधानियां:")
+
+        if lk_res.chart_108_totkas:
+            t_grid_cols = st.columns(3)
+            for idx, c_t in enumerate(lk_res.chart_108_totkas):
+                col_i = idx % 3
+                with t_grid_cols[col_i]:
+                    st.markdown(f"""
+<div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px; margin-bottom:12px; min-height:220px;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:15px; font-weight:900; color:#B45309;">{c_t['planet_hi']} (खाना नं. {c_t['khana']})</span>
+        <span style="font-size:11px; background:#FEF3C7; color:#92400E; padding:2px 6px; border-radius:4px; font-weight:700;">लाल किताब 1952</span>
+    </div>
+    <div style="font-size:12px; color:#1E293B; margin-top:8px; line-height:1.5;">
+        <b>🌿 अचूक टोटका:</b> {c_t['totka_hi']}
+    </div>
+    <div style="font-size:11px; color:#991B1B; margin-top:6px; line-height:1.4;">
+        <b>⚠️ विशेष सावधानी:</b> {c_t['precaution_hi']}
+    </div>
+    <div style="font-size:11px; color:#065F46; margin-top:6px; font-style:italic;">
+        ✨ {c_t['shastra_effect_hi']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+        st.markdown("---")
+        # 2. Comprehensive 108 Totkas Explorer
+        st.markdown("#### 📚 सम्पूर्ण १०८ लाल किताब टोटके पुस्तकालय (108 Totkas Explorer)")
+        st.caption("लाल किताब (१९५२ संस्करण) के सभी ९ ग्रहों एवं १२ खानों के १०८ प्रामाणिक उपाय खोजें:")
+
+        col_ex_p, col_ex_kh = st.columns([1.5, 1.5])
+        with col_ex_p:
+            sel_pl = st.selectbox(
+                "ग्रह चुनें (Select Planet):",
+                ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"],
+                format_func=lambda x: {"Sun": "☀️ सूर्य (Sun)", "Moon": "🌙 चन्द्र (Moon)", "Mars": "⚔️ मंगल (Mars)", "Mercury": "☿️ बुध (Mercury)", "Jupiter": "🪐 गुरु (Jupiter)", "Venus": "💎 शुक्र (Venus)", "Saturn": "⚖️ शनि (Saturn)", "Rahu": "🌪️ राहु (Rahu)", "Ketu": "🚩 केतु (Ketu)"}.get(x, x),
+                key="lk_explorer_planet"
+            )
+        with col_ex_kh:
+            sel_kh = st.selectbox(
+                "खाना चुनें (Select Khana 1-12):",
+                list(range(1, 13)),
+                format_func=lambda x: f"खाना नं. {x} ({lk_mod.LAL_KITAB_KHANA_DATA[x]['pakka_sign']})",
+                key="lk_explorer_khana"
+            )
+
+        exp_data = lk_mod.LAL_KITAB_108_TOTKAS.get((sel_pl, sel_kh), None)
+        if exp_data:
+            st.markdown(f"""
+<div style="background:#F0FDF4; border:1.5px solid #10B981; border-radius:10px; padding:16px; margin:10px 0;">
+    <div style="font-size:16px; font-weight:900; color:#065F46;">
+        📜 {sel_pl} खाना नं. {sel_kh} का प्रामाणिक लाल किताब उपाय
+    </div>
+    <div style="font-size:14px; color:#0F172A; margin-top:10px; line-height:1.6;">
+        <b>🌿 अचूक टोटका:</b> {exp_data['totka_hi']}
+    </div>
+    <div style="font-size:13px; color:#991B1B; margin-top:8px;">
+        <b>⚠️ जीवन रक्षा सावधानी:</b> {exp_data['precaution_hi']}
+    </div>
+    <div style="font-size:12px; color:#047857; margin-top:8px; font-style:italic;">
+        <b>फल प्रभाव:</b> {exp_data['shastra_effect_hi']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
         st.markdown("""
         #### 📜 लाल किताब के १० शाश्वत नियम:

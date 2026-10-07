@@ -116,6 +116,49 @@ class TransitEngine:
             jup_rahu_diff = 360.0 - jup_rahu_diff
         is_guru_chandal = (jup_rahu_diff <= 8.0)
 
+        # --- 5. Transit Paya (पाया: स्वर्ण, रजत, ताम्र, लौह) ---
+        moon_h_from_natal_moon = transit_data["Moon"]["house_from_moon"]
+        def _get_paya_info(moon_h: int) -> Dict[str, Any]:
+            if moon_h in (1, 6, 11):
+                return {
+                    "type": "gold",
+                    "name_hi": "स्वर्ण पाया (Gold Paya)",
+                    "rating_pct": 50,
+                    "quality_hi": "मध्यम / संघर्षोपरांत लाभ",
+                    "desc_hi": "अहंकार व मानसिक व्यग्रता से बचें। प्रयास उपरांत कार्यसिद्धि।"
+                }
+            elif moon_h in (2, 5, 9):
+                return {
+                    "type": "silver",
+                    "name_hi": "रजत पाया (Silver Paya)",
+                    "rating_pct": 100,
+                    "quality_hi": "अत्यंत शुभ / सर्वोत्तम",
+                    "desc_hi": "धन लाभ, पारिवारिक सुख, यश एवं सर्वतोमुखी अभीष्ट सिद्धि।"
+                }
+            elif moon_h in (3, 7, 10):
+                return {
+                    "type": "copper",
+                    "name_hi": "ताम्र पाया (Copper Paya)",
+                    "rating_pct": 75,
+                    "quality_hi": "उत्तम / अनुकूल",
+                    "desc_hi": "साहस, पराक्रम, व्यापार विस्तार एवं यात्राओं से लाभ।"
+                }
+            else:
+                return {
+                    "type": "iron",
+                    "name_hi": "लौह पाया (Iron Paya)",
+                    "rating_pct": 25,
+                    "quality_hi": "कष्टप्रद / कठोर परिश्रम",
+                    "desc_hi": "शारीरिक थकान, रुकावटें व अधिक संघर्ष। शांति उपाय हितकर।"
+                }
+
+        paya_info = _get_paya_info(moon_h_from_natal_moon)
+        transit_paya_detail = {
+            "moon_house_from_natal_moon": moon_h_from_natal_moon,
+            "saturn_paya": paya_info,
+            "jupiter_paya": paya_info
+        }
+
         summary = TransitSummary(
             saturn_house_from_moon=saturn_h_moon,
             saturn_house_from_lagna=sat_h_lagna,
@@ -129,6 +172,9 @@ class TransitEngine:
             is_guru_chandal_transit=is_guru_chandal,
             saturn_retrograde=transit_data["Saturn"]["is_retrograde"],
             jupiter_retrograde=transit_data["Jupiter"]["is_retrograde"],
+            saturn_paya=paya_info["name_hi"],
+            jupiter_paya=paya_info["name_hi"],
+            transit_paya_detail=transit_paya_detail,
             ashtakavarga_transit_bindus=transit_bindus,
         )
 

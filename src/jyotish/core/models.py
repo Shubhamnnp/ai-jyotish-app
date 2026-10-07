@@ -240,6 +240,9 @@ class TransitSummary(BaseModel):
     is_guru_chandal_transit: bool = False
     saturn_retrograde: bool = False
     jupiter_retrograde: bool = False
+    saturn_paya: Optional[str] = None
+    jupiter_paya: Optional[str] = None
+    transit_paya_detail: Dict[str, Any] = {}
     ashtakavarga_transit_bindus: Dict[str, int] = {}
 
 

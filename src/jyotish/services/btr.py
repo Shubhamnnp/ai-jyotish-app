@@ -522,6 +522,7 @@ class BTRService:
         events: List[LifeEvent],
         window_minutes: int = 30,
         step_minutes: int = 2,
+        step_seconds: Optional[int] = None,
         gender: str = "male"
     ) -> List[BTRCandidate]:
         """
@@ -534,10 +535,17 @@ class BTRService:
 
         base_dt = datetime.combine(base_birth_data.birth_date, base_birth_data.birth_time)
         candidates: List[BTRCandidate] = []
-        offsets = list(range(-window_minutes, window_minutes + 1, step_minutes))
+        if step_seconds and step_seconds > 0:
+            total_sec = window_minutes * 60
+            offsets_sec = list(range(-total_sec, total_sec + 1, step_seconds))
+            offsets_td = [(sec / 60.0, timedelta(seconds=sec)) for sec in offsets_sec]
+        else:
+            step_m = max(1, step_minutes)
+            offsets = list(range(-window_minutes, window_minutes + 1, step_m))
+            offsets_td = [(float(m), timedelta(minutes=m)) for m in offsets]
 
-        for offset in offsets:
-            cand_dt = base_dt + timedelta(minutes=offset)
+        for offset_min, td in offsets_td:
+            cand_dt = base_dt + td
             cand_data = BirthData(
                 name=base_birth_data.name,
                 birth_date=cand_dt.date(),
@@ -568,7 +576,7 @@ class BTRService:
 
             candidates.append(BTRCandidate(
                 candidate_time=cand_dt.strftime("%H:%M:%S"),
-                offset_minutes=offset,
+                offset_minutes=round(offset_min, 2),
                 fit_score=round(score, 1),
                 confidence=confidence,
                 lagna_sign=chart.lagna_sign_name,
@@ -657,6 +665,31 @@ class BTRService:
                     ev_score += 5.0
             except Exception:
                 ev_score += 10.0
+
+            # 5. Classical Double Transit (Saturn & Jupiter) at Historical Event Date
+            try:
+                transits, _ = default_transit_engine.compute_transit_snapshot(chart, ev.event_date, chart.ayanamsa_name)
+                sat_h = transits["Saturn"]["house_from_lagna"]
+                jup_h = transits["Jupiter"]["house_from_lagna"]
+                sat_aspects = {
+                    sat_h,
+                    ((sat_h - 1 + 2) % 12) + 1,
+                    ((sat_h - 1 + 6) % 12) + 1,
+                    ((sat_h - 1 + 9) % 12) + 1,
+                }
+                jup_aspects = {
+                    jup_h,
+                    ((jup_h - 1 + 4) % 12) + 1,
+                    ((jup_h - 1 + 6) % 12) + 1,
+                    ((jup_h - 1 + 8) % 12) + 1,
+                }
+                if any(h in sat_aspects for h in target_houses) and any(h in jup_aspects for h in target_houses):
+                    ev_score += 20.0
+                    ev_evidence.append(f"घटना तिथि पर शनि व गुरु का दोहरा गोचर (भाव {sat_h}/{jup_h}) संपुष्ट हुआ।")
+                elif any(h in jup_aspects for h in target_houses) or any(h in sat_aspects for h in target_houses):
+                    ev_score += 10.0
+            except Exception:
+                pass
 
             final_ev_score = min(100.0, ev_score)
             total_score += final_ev_score
