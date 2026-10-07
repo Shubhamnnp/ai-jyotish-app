@@ -892,30 +892,32 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     is_active_box = lg.get("is_current", False)
                     box_border = "#DC2626" if is_active_box else ('#374151' if is_dark else '#E2E8F0')
 
-                    st.markdown(f"""
-                    <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1.5px solid {box_border};
-                                border-left:5px solid {type_color}; border-radius:10px; padding:14px; margin-bottom:12px;
-                                {'box-shadow:0 0 10px rgba(220,38,38,0.25);' if is_active_box else ''}">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <div>
-                                <b style="font-size:18px; color:{'#FFFFFF' if is_dark else '#0F172A'};">{lg['name']} लग्न ({lg['name_en']})</b>
-                                <span style="background:{type_color}20; color:{type_color}; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700; margin-left:6px;">
-                                    {lg['type']}
-                                </span>
-                            </div>
-                            <div>
-                                {'<span style="background:#DC2626; color:#FFF; padding:3px 8px; border-radius:10px; font-size:10.5px; font-weight:700;">🔴 सक्रिय काल</span>' if is_active_box else ''}
-                            </div>
-                        </div>
-                        <div style="font-size:15px; font-weight:800; color:#1D4ED8; margin:6px 0;">
-                            ⏱️ {lg['start_str']} से {lg['end_str']} <span style="font-size:12px; color:#64748B; font-weight:400;">({lg['duration_str']} | {lg['duration_ghatis']})</span>
-                        </div>
-                        <div style="font-size:12.5px; color:{'#D1D5DB' if is_dark else '#475569'}; line-height:1.6;">
-                            • <b>लग्न स्वामी:</b> {lg['lord']} | <b>तत्व:</b> {lg['element']}<br/>
-                            • <b>मुहूर्त शुद्धि:</b> {lg['suitability']}
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    active_badge = '<span style="background:#DC2626; color:#FFF; padding:3px 8px; border-radius:10px; font-size:10.5px; font-weight:700;">🔴 सक्रिय काल</span>' if is_active_box else ''
+                    active_shadow = 'box-shadow:0 0 10px rgba(220,38,38,0.25);' if is_active_box else ''
+                    bg_color = '#1F2937' if is_dark else '#FFFFFF'
+                    text_title_color = '#FFFFFF' if is_dark else '#0F172A'
+                    text_body_color = '#D1D5DB' if is_dark else '#475569'
+
+                    card_html = (
+                        f'<div style="background:{bg_color}; border:1.5px solid {box_border}; '
+                        f'border-left:5px solid {type_color}; border-radius:10px; padding:14px; margin-bottom:12px; {active_shadow}">'
+                        f'<div style="display:flex; justify-content:space-between; align-items:center;">'
+                        f'<div>'
+                        f'<b style="font-size:18px; color:{text_title_color};">{lg["name"]} लग्न ({lg["name_en"]})</b>'
+                        f'<span style="background:{type_color}20; color:{type_color}; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700; margin-left:6px;">{lg["type"]}</span>'
+                        f'</div>'
+                        f'<div>{active_badge}</div>'
+                        f'</div>'
+                        f'<div style="font-size:15px; font-weight:800; color:#1D4ED8; margin:6px 0;">'
+                        f'⏱️ {lg["start_str"]} से {lg["end_str"]} <span style="font-size:12px; color:#64748B; font-weight:400;">({lg["duration_str"]} | {lg["duration_ghatis"]})</span>'
+                        f'</div>'
+                        f'<div style="font-size:12.5px; color:{text_body_color}; line-height:1.6;">'
+                        f'• <b>लग्न स्वामी:</b> {lg["lord"]} | <b>तत्व:</b> {lg["element"]}<br/>'
+                        f'• <b>मुहूर्त शुद्धि:</b> {lg["suitability"]}'
+                        f'</div>'
+                        f'</div>'
+                    )
+                    st.markdown(card_html, unsafe_allow_html=True)
         else:
             st.info("लग्न सारणी की गणना प्रगति पर है...")
 
