@@ -1341,7 +1341,7 @@ unified_css = f"""
 
     /* Unified Sovereign Header Bar - Compact 32px Buttons */
     .st-key-brahma_hora_top_brand_bar,
-    div.st-key-brahma_hora_top_brand_bar {
+    div.st-key-brahma_hora_top_brand_bar {{
         padding: 4px 6px !important;
         margin-top: 0px !important;
         margin-bottom: 4px !important;
@@ -1349,13 +1349,13 @@ unified_css = f"""
         border-bottom: 1.5px solid #E2E8F0 !important;
         border-radius: 8px !important;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-    }
-    .st-key-brahma_hora_top_brand_bar div[data-testid="column"] {
+    }}
+    .st-key-brahma_hora_top_brand_bar div[data-testid="column"] {{
         min-width: 0 !important;
         padding-left: 1.5px !important;
         padding-right: 1.5px !important;
-    }
-    .st-key-brahma_hora_top_brand_bar button {
+    }}
+    .st-key-brahma_hora_top_brand_bar button {{
         padding: 2px 4px !important;
         font-size: 11px !important;
         font-weight: 700 !important;
@@ -1369,28 +1369,28 @@ unified_css = f"""
         border: 1.2px solid #CBD5E1 !important;
         border-radius: 6px !important;
         line-height: 1.1 !important;
-    }
-    .st-key-brahma_hora_top_brand_bar button * {
+    }}
+    .st-key-brahma_hora_top_brand_bar button * {{
         font-size: 11px !important;
         font-weight: 700 !important;
         color: #0F172A !important;
-    }
-    .st-key-brahma_hora_top_brand_bar button:hover {
+    }}
+    .st-key-brahma_hora_top_brand_bar button:hover {{
         background: #F1F5F9 !important;
         border-color: #0284C7 !important;
         color: #0284C7 !important;
-    }
+    }}
     .st-key-brahma_hora_top_brand_bar button[kind="primary"],
-    .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] {
+    .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] {{
         background: #E0F2FE !important;
         border: 1.8px solid #0284C7 !important;
         color: #0369A1 !important;
-    }
+    }}
     .st-key-brahma_hora_top_brand_bar button[kind="primary"] *,
-    .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] * {
+    .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] * {{
         color: #0369A1 !important;
         font-weight: 800 !important;
-    }
+    }}
     .block-container {{
         padding-top: 58px !important;
     }}
