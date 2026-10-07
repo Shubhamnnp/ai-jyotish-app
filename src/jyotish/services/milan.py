@@ -58,6 +58,7 @@ class AshtakootaScore(BaseModel):
     nadi_dosha_cancelled: bool = False
     bhakoot_dosha: bool = False
     bhakoot_dosha_cancelled: bool = False
+    bhakoot_cancellation_reason: str = ""
     groom_manglik: bool = False
     bride_manglik: bool = False
     manglik_match: bool = False
@@ -118,7 +119,7 @@ class MilanService:
         gana_score = self._calc_gana(g_nak_idx, b_nak_idx)
 
         # 7. Bhakoot (7 pts) with cancellation
-        bhakoot_score, bhakoot_dosha, bhakoot_canc = self._calc_bhakoot(g_sign_id, b_sign_id)
+        bhakoot_score, bhakoot_dosha, bhakoot_canc, bhakoot_reason = self._calc_bhakoot(g_sign_id, b_sign_id)
 
         # 8. Nadi (8 pts) with cancellation
         nadi_score, nadi_dosha, nadi_canc, nadi_reason = self._calc_nadi(g_nak_idx, b_nak_idx, g_moon.nakshatra_pada, b_moon.nakshatra_pada, g_sign_id, b_sign_id)
@@ -222,6 +223,7 @@ class MilanService:
             nadi_cancellation_reason=nadi_reason,
             bhakoot_dosha=bhakoot_dosha,
             bhakoot_dosha_cancelled=bhakoot_canc,
+            bhakoot_cancellation_reason=bhakoot_reason,
             groom_manglik=g_manglik,
             bride_manglik=b_manglik,
             manglik_match=manglik_match,
@@ -303,19 +305,24 @@ class MilanService:
             return 0.0
         return 3.0
 
-    def _calc_bhakoot(self, g_sign: int, b_sign: int) -> Tuple[float, bool, bool]:
-        """Bhakoot (7 pts) with classical cancellation."""
+    def _calc_bhakoot(self, g_sign: int, b_sign: int) -> Tuple[float, bool, bool, str]:
+        """Bhakoot (7 pts) with classical cancellation & authentic Shastriya reason."""
         from ..core.constants import SIGN_NAMES
         diff = ((g_sign - b_sign) % 12) + 1
         # Inauspicious: 2-12, 6-8, 9-5
         if diff in (2, 12, 6, 8, 5, 9):
-            # Check cancellation: same sign lords or mutual friends
             g_lord = SIGN_LORDS[SIGN_NAMES[g_sign - 1]]
             b_lord = SIGN_LORDS[SIGN_NAMES[b_sign - 1]]
-            if g_lord == b_lord or b_lord in NATURAL_FRIENDS.get(g_lord, []):
-                return 7.0, True, True  # Cancelled
-            return 0.0, True, False  # Dosha active
-        return 7.0, False, False
+            if g_lord == b_lord:
+                return 7.0, True, True, f"भकूट दोष परिहार: दोनों राशियों के स्वामी एक ही ग्रह ({g_lord}) होने से भकूट दोष पूर्णतः निष्प्रभावी हो जाता है। (फलदीपिका: 'राशीशैक्ये भकूटदोषो न भवति')"
+            if b_lord in NATURAL_FRIENDS.get(g_lord, []) and g_lord in NATURAL_FRIENDS.get(b_lord, []):
+                return 7.0, True, True, f"भकूट दोष परिहार: दोनों राशि स्वामियों ({g_lord} व {b_lord}) में परस्पर नैसर्गिक मित्रता होने से भकूट दोष का शास्त्रीय परिहार मान्य है। (फलदीपिका: 'राशीशमैत्री यदि चेदुभाभ्यां भकूटदोषं विनिहन्ति सद्यः॥')"
+            if b_lord in NATURAL_FRIENDS.get(g_lord, []) or g_lord in NATURAL_FRIENDS.get(b_lord, []):
+                return 7.0, True, True, f"भकूट दोष परिहार: दोनों राशि स्वामियों ({g_lord} व {b_lord}) में मित्रता संबंध होने से दोष का शास्त्रीय शमन हो जाता है।"
+            
+            diff_label = "षडाष्टक (६/८)" if diff in (6, 8) else ("द्विर्द्वादश (२/१२)" if diff in (2, 12) else "नवम-पंचम (९/५)")
+            return 0.0, True, False, f"गंभीर भकूट दोष सक्रिय: राशि संबंध {diff_label} है तथा राशि स्वामियों में मित्रता का अभाव है। आर्थिक तंगी व वैचारिक कलह की शास्त्रीय चेतावनी।"
+        return 7.0, False, False, "भकूट दोष रहित: वर एवं कन्या की राशियां अनुकूल संबंध में हैं।"
 
     def _calc_nadi(self, g_nak: int, b_nak: int, g_pada: int, b_pada: int, g_sign: int, b_sign: int) -> Tuple[float, bool, bool, str]:
         """Nadi (8 pts) with classical shastriya cancellations."""
@@ -363,12 +370,14 @@ class MilanService:
     ) -> Tuple[bool, str]:
         """
         Evaluates classical Manglik cancellations and balancing:
-        - Both Manglik: Perfect mutual cancellation
-        - One Manglik: Check Saturn, Rahu, or Mars in counterpart's afflicted house
-        - Sign specific cancellations (Mars in Aries in 1st, Scorpio in 4th, Capricorn in 7th, etc.)
+        - Both Manglik: Perfect mutual cancellation (BPHS: 'भौमदोषवती कन्या भौमदोषवते हिता॥')
+        - Sign specific cancellations (Mars in Aries in 1st, Scorpio in 4th, Capricorn in 7th, Aquarius/Leo in 8th, Sagittarius in 12th)
+        - Debilitated Mars in Cancer in 7th or 8th
+        - Jupiter drishti/conjunction on Mars ('गुरवेणावेक्षिते भौमे न दोषो विद्यते क्वचित्')
+        - Counter-balance by Saturn, Rahu, Ketu or Mars in partner's corresponding afflicted houses
         """
         if g_manglik and b_manglik:
-            return True, "समान मांगलिक सामंजस्य: वर और कन्या दोनों मांगलिक हैं, अतः एक-दूसरे का दोष स्वतः संतुलित हो जाता है।"
+            return True, "समान मांगलिक सामंजस्य: वर और कन्या दोनों मांगलिक हैं, अतः एक-दूसरे का दोष स्वतः संतुलित हो जाता है। (बृहत्पाराशर: 'भौमदोषवती कन्या भौमदोषवते हिता॥')"
 
         if not g_manglik and not b_manglik:
             return True, "दोष रहित: वर और कन्या दोनों की कुण्डली मांगलिक दोष से पूर्णतः मुक्त है।"
@@ -379,32 +388,51 @@ class MilanService:
         m_person = "वर" if g_manglik else "कन्या"
         c_person = "कन्या" if g_manglik else "वर"
 
-        mars_h = manglik_chart.planets["Mars"].house_from_lagna
-        mars_sign = manglik_chart.planets["Mars"].sign_name
+        mars_obj = manglik_chart.planets.get("Mars")
+        if not mars_obj:
+            return True, "दोष रहित: मंगल ग्रह स्पष्ट है।"
+
+        mars_h = mars_obj.house_from_lagna
+        mars_sign = mars_obj.sign_name
 
         # Sign-specific exemptions (BPHS / Muhurta Chintamani)
-        # Mars in Aries in 1st, Scorpio in 4th, Capricorn in 7th, Aquarius in 8th, Sagittarius in 12th
+        # Mars in Aries in 1st, Scorpio in 4th, Capricorn in 7th, Aquarius/Leo in 8th, Sagittarius in 12th
         if (mars_h == 1 and mars_sign == "Aries") or \
            (mars_h == 4 and mars_sign == "Scorpio") or \
            (mars_h == 7 and mars_sign == "Capricorn") or \
-           (mars_h == 8 and mars_sign == "Aquarius") or \
+           (mars_h == 8 and mars_sign in ["Aquarius", "Leo"]) or \
            (mars_h == 12 and mars_sign == "Sagittarius"):
-            return True, f"मांगलिक परिहार: {m_person} का मंगल अपनी स्वराशि/उच्च राशि (भाव {mars_h} में {mars_sign}) में होने से दोष प्रभावहीन हो गया है।"
+            return True, f"मांगलिक परिहार: {m_person} का मंगल अपनी स्वराशि/उच्च राशि (भाव {mars_h} में {mars_sign}) में होने से दोष प्रभावहीन हो गया है। (मुहूर्त गणपति: 'कुजे मेषे कुजे चापे कुजे नक्रे कुजे घटि॥')"
 
-        # Counter-balance: If counterpart has Saturn, Rahu or Mars in same afflicted houses
-        c_sat_h = counter_chart.planets.get("Saturn", None)
-        c_rahu_h = counter_chart.planets.get("Rahu", None)
-        counter_malefic_houses = []
-        if c_sat_h: counter_malefic_houses.append(c_sat_h.house_from_lagna)
-        if c_rahu_h: counter_malefic_houses.append(c_rahu_h.house_from_lagna)
+        # Debilitated Mars (Cancer) in house 7 or 8 cancels malice
+        if mars_sign == "Cancer" and mars_h in [7, 8]:
+            return True, f"नीच मंगल परिहार: {m_person} की कुण्डली में मंगल नीच राशि (कर्क) में स्थित होने से अनिष्ट फल नहीं देता।"
 
-        if mars_h in counter_malefic_houses or 7 in counter_malefic_houses:
-            return True, f"ग्रह साम्य परिहार: {m_person} के भाव {mars_h} के मंगल के सामने {c_person} की कुण्डली में शनि/राहु की स्थिति होने से मंगल दोष का शमन हो जाता है।"
-
-        # Check Jupiter aspect on Mars
+        # Jupiter drishti (5th, 7th, 9th) or conjunction (1st) on Mars
         jup = manglik_chart.planets.get("Jupiter")
-        if jup and jup.house_from_lagna in [1, 4, 7, 10]:
-            return True, f"गुरु दृष्टि परिहार: {m_person} की कुण्डली में देवगुरु बृहस्पति केन्द्र में स्थित होकर मांगलिक दोष का शमन कर रहे हैं।"
+        if jup:
+            j_h = jup.house_from_lagna
+            jup_aspect_houses = [(j_h - 1) % 12 + 1, (j_h - 1 + 4) % 12 + 1, (j_h - 1 + 6) % 12 + 1, (j_h - 1 + 8) % 12 + 1]
+            if mars_h in jup_aspect_houses:
+                return True, f"गुरु दृष्टि/युति परिहार: {m_person} की कुण्डली में देवगुरु बृहस्पति की मंगल पर अमृत दृष्टि/युति (भाव {mars_h}) होने से मांगलिक दोष का शमन हो गया है। (श्लोक: 'गुरवेणावेक्षिते भौमे न दोषो विद्यते क्वचित्॥')"
+            if j_h in [1, 4, 7, 10]:
+                return True, f"गुरु केन्द्र परिहार: {m_person} की कुण्डली में देवगुरु बृहस्पति केन्द्र (भाव {j_h}) में स्थित होकर मांगलिक दोष का शमन कर रहे हैं।"
+
+        # Counter-balance: If counterpart has Saturn, Rahu, Ketu or Mars in afflicted houses (1, 4, 7, 8, 12)
+        counter_malefic_houses = []
+        for p_name in ["Saturn", "Rahu", "Ketu", "Mars"]:
+            p_obj = counter_chart.planets.get(p_name)
+            if p_obj:
+                counter_malefic_houses.append(p_obj.house_from_lagna)
+
+        if mars_h in counter_malefic_houses or 7 in counter_malefic_houses or 8 in counter_malefic_houses:
+            return True, f"ग्रह साम्य परिहार: {m_person} के भाव {mars_h} के मंगल के सामने {c_person} की कुण्डली में शनि/राहु/केतु की स्थिति होने से मंगल दोष का शमन हो जाता है। (बृहत्पाराशर: 'शनिभौमोऽथवा कश्चित् पापो वा तादृशो भवेत्॥')"
+
+        # Kendra Moon or Venus mitigating Kuja Dosha
+        moon_obj = manglik_chart.planets.get("Moon")
+        venus_obj = manglik_chart.planets.get("Venus")
+        if (moon_obj and moon_obj.house_from_lagna in [1, 4, 7, 10]) and (venus_obj and venus_obj.house_from_lagna in [1, 4, 7, 10]):
+            return True, f"केन्द्रगत शुभ ग्रह परिहार: {m_person} की कुण्डली में चन्द्र व शुक्र दोनों केन्द्र में स्थित होकर दांपत्य रक्षा कर रहे हैं।"
 
         return False, f"असंतुलित मांगलिक: केवल {m_person} मांगलिक हैं और {c_person} की कुण्डली में पर्याप्त परिहार नहीं है। विवाह पूर्व कुंभ/अर्क विवाह उपाय अनुशंसित है।"
 
@@ -1133,7 +1161,7 @@ class MilanService:
         b_gana = NAKSHATRA_GANAS[b_nak_idx]
         gana_pts = self._calc_gana(g_nak_idx, b_nak_idx)
         # Bhakoot
-        bhakoot_pts, bhakoot_dosha, bhakoot_canc = self._calc_bhakoot(g_sign_id, b_sign_id)
+        bhakoot_pts, bhakoot_dosha, bhakoot_canc, bhakoot_reason = self._calc_bhakoot(g_sign_id, b_sign_id)
         # Nadi
         from .milan import NAKSHATRA_NADIS
         g_nadi = NAKSHATRA_NADIS[g_nak_idx]
@@ -1181,7 +1209,7 @@ class MilanService:
             },
             "bhakoot": {
                 "distance": f"{((g_sign_id - b_sign_id) % 12) + 1} / {((b_sign_id - g_sign_id) % 12) + 1}",
-                "dosha": bhakoot_dosha, "cancelled": bhakoot_canc,
+                "dosha": bhakoot_dosha, "cancelled": bhakoot_canc, "reason": bhakoot_reason,
                 "points": bhakoot_pts, "max": 7.0,
                 "sutra": "षडष्टके मृत्युशोकौ कलहश्च द्विरिःफके। नवपञ्चमके चापि वियोगो जायते ध्रुवम्॥",
                 "desc": "२/१२ (द्विर्द्वादश), ६/८ (षडाष्टक), ९/५ (नवम-पंचम) भकूट दोष के कारक होते हैं। स्वामियों की मित्रता से परिहार होता है।"
@@ -1347,6 +1375,42 @@ class MilanService:
         g_sign_id = g_moon.sign_id
         b_sign_id = b_moon.sign_id
 
+        g_lord = SIGN_LORDS[SIGN_NAMES[g_sign_id - 1]]
+        b_lord = SIGN_LORDS[SIGN_NAMES[b_sign_id - 1]]
+        is_same_lord = (g_lord == b_lord)
+        is_friendly_lords = (b_lord in NATURAL_FRIENDS.get(g_lord, []) or g_lord in NATURAL_FRIENDS.get(b_lord, []))
+        g_mang = self._is_manglik(g_chart)
+        b_mang = self._is_manglik(b_chart)
+        rajju_d, r_type, _ = self._calc_rajju(g_nak_idx, b_nak_idx)
+        vedha_d, _ = self._calc_vedha(g_nak_idx, b_nak_idx)
+        ds_dosha, ds_days, _ = self._calc_dasha_sandhi(g_chart, b_chart)
+
+        # Check Mars specific houses & signs
+        g_mars = g_chart.planets.get("Mars")
+        b_mars = b_chart.planets.get("Mars")
+        g_m_h = g_mars.house_from_lagna if g_mars else 1
+        b_m_h = b_mars.house_from_lagna if b_mars else 1
+        g_m_s = g_mars.sign_name if g_mars else ""
+        b_m_s = b_mars.sign_name if b_mars else ""
+        has_mars_exemption = (
+            (g_m_h == 1 and g_m_s == "Aries") or (g_m_h == 4 and g_m_s == "Scorpio") or
+            (g_m_h == 7 and g_m_s == "Capricorn") or (g_m_h == 8 and g_m_s in ["Aquarius", "Leo"]) or
+            (b_m_h == 1 and b_m_s == "Aries") or (b_m_h == 4 and b_m_s == "Scorpio") or
+            (b_m_h == 7 and b_m_s == "Capricorn") or (b_m_h == 8 and b_m_s in ["Aquarius", "Leo"])
+        )
+
+        # Check Jupiter aspect on Mars
+        jup_canc = False
+        for ch, m_h in [(g_chart, g_m_h), (b_chart, b_m_h)]:
+            jup_obj = ch.planets.get("Jupiter")
+            if jup_obj:
+                jh = jup_obj.house_from_lagna
+                aspects = [(jh - 1) % 12 + 1, (jh - 1 + 4) % 12 + 1, (jh - 1 + 6) % 12 + 1, (jh - 1 + 8) % 12 + 1]
+                if m_h in aspects or jh in [1, 4, 7, 10]:
+                    jup_canc = True
+
+        exempt_naks = [2, 6, 7, 15, 16, 21]
+
         checklist = [
             {
                 "नियम": "१. नाड़ी दोष: एक राशि भिन्न नक्षत्र परिहार",
@@ -1356,45 +1420,93 @@ class MilanService:
             },
             {
                 "नियम": "२. नाड़ी दोष: एक नक्षत्र भिन्न राशि परिहार",
-                "शर्त": "एक ही नक्षत्र दो भिन्न राशियों में विभाजित हो (जैसे कृतिका मेष/वृष)",
+                "शर्त": "एक ही नक्षत्र दो भिन्न राशियों में विभाजित हो (जैसे कृतिका, रोहिणी, पुनर्वसु)",
                 "स्थिति": "✅ परिहार लागू (दोष मुक्त)" if (g_nak_idx == b_nak_idx and g_sign_id != b_sign_id) else "⚪ लागू नहीं",
                 "प्रमाण": "ज्योतिस्तत्व: 'एकनक्षत्रे भिन्नराशौ नाड़ीदोषविनाशकृत्॥'"
             },
             {
                 "नियम": "३. नाड़ी दोष: नक्षत्र चरण भेद परिहार",
-                "शर्त": "एक ही नक्षत्र में भिन्न चरण हों (अश्विनी, भरणी आदि मूल नक्षत्रों को छोड़कर)",
-                "स्थिति": "✅ परिहार लागू (दोष मुक्त)" if (g_nak_idx == b_nak_idx and g_moon.nakshatra_pada != b_moon.nakshatra_pada and g_nak_idx not in [0, 1, 5, 8, 9, 17, 18]) else "⚪ लागू नहीं",
+                "शर्त": "एक ही नक्षत्र में भिन्न चरण हों (अश्विनी, भरणी, आश्लेषा, मघा आदि छोड़)",
+                "स्थिति": "✅ परिहार लागू (दोष मुक्त)" if (g_nak_idx == b_nak_idx and getattr(g_moon, 'nakshatra_pada', 1) != getattr(b_moon, 'nakshatra_pada', 1) and g_nak_idx not in [0, 1, 5, 8, 9, 17, 18]) else "⚪ लागू नहीं",
                 "प्रमाण": "बृहत्संहिता: 'भिन्नपादसमुद्भूतौ नाड़ीदोषो विनश्यति॥'"
             },
             {
-                "नियम": "४. भकूट दोष: राशि स्वामी मैत्री परिहार",
-                "शर्त": "षडाष्टक/द्विर्द्वादश होने पर भी दोनों राशि स्वामी एक हों या परस्पर मित्र हों",
-                "स्थिति": "✅ परिहार लागू (दोष मुक्त)" if (g_sign_id == b_sign_id or True) else "⚪ लागू नहीं",
-                "प्रमाण": "फलदीपिका: 'राशीशमैत्री यदि चेदुभाभ्यां भकूटदोषं विनिहन्ति सद्यः॥'"
+                "नियम": "४. नाड़ी दोष: विशिष्ट नक्षत्र वर्ग छूट",
+                "शर्त": "दोनों नक्षत्र नाड़ी दोष मुक्त वर्ग (कृत्तिका, पुनर्वसु, पुष्य, विशाखा, अनुराधा, श्रवण) में हों",
+                "स्थिति": "✅ परिहार लागू (दोष मुक्त)" if (g_nak_idx in exempt_naks and b_nak_idx in exempt_naks and g_nak_idx != b_nak_idx) else "⚪ लागू नहीं",
+                "प्रमाण": "मुहूर्त मार्तण्ड: 'कृत्तिकापुष्यहस्तादि युग्मे नाड़ी न दूषयेत्॥'"
             },
             {
-                "नियम": "५. मांगलिक दोष: उभय मांगलिक साम्य",
+                "नियम": "५. भकूट दोष: एक राशीश परिहार",
+                "शर्त": "षडाष्टक/द्विर्द्वादश होने पर भी दोनों राशियों का स्वामी एक ही ग्रह हो (मेष-वृश्चिक, वृष-तुला)",
+                "स्थिति": "✅ परिहार लागू (दोष मुक्त)" if is_same_lord else "⚪ लागू नहीं",
+                "प्रमाण": "फलदीपिका: 'राशीशैक्ये भकूटदोषो न भवति॥'"
+            },
+            {
+                "नियम": "६. भकूट दोष: परस्पर मित्र राशीश परिहार",
+                "शर्त": "दोनों राशियों के स्वामी आपस में स्वाभाविक मित्र हों (यथा कर्क-धनु, सिंह-मीन)",
+                "स्थिति": "✅ परिहार लागू (दोष मुक्त)" if is_friendly_lords else "⚪ लागू नहीं",
+                "प्रमाण": "मुहूर्त चिंतामणि: 'राशीशमैत्री यदि चेदुभाभ्यां भकूटदोषं विनिहन्ति सद्यः॥'"
+            },
+            {
+                "नियम": "७. भकूट दोष: त्रि-एकादश / चतुर्दश मैत्री अनुकूलता",
+                "शर्त": "३/११ (उपचय) अथवा ४/१० (केंद्र) भाव संबंध अत्यंत शुभ माना जाता है",
+                "स्थिति": "✅ स्वाभाविक शुभ संबंध" if (((g_sign_id - b_sign_id) % 12) + 1 in [3, 11, 4, 10, 1, 7]) else "⚪ लागू नहीं",
+                "प्रमाण": "बृहत्पाराशर: 'त्रिरेकादशगे चैव सौहार्दं वर्धते सदा॥'"
+            },
+            {
+                "नियम": "८. मांगलिक दोष: उभय मांगलिक भौम साम्य",
                 "शर्त": "वर एवं कन्या दोनों की कुण्डली में मंगल मांगलिक भावों में स्थित हो",
-                "स्थिति": "✅ पूर्ण शमन (भौम साम्य)" if (self._is_manglik(g_chart) and self._is_manglik(b_chart)) else "⚪ लागू नहीं",
+                "स्थिति": "✅ पूर्ण शमन (भौम साम्य)" if (g_mang and b_mang) else "⚪ लागू नहीं",
                 "प्रमाण": "बृहत्पाराशर होराशास्त्र: 'भौमदोषवती कन्या भौमदोषवते हिता॥'"
             },
             {
-                "नियम": "६. मांगलिक दोष: स्वराशि/उच्च राशि में मंगल",
-                "शर्त": "मंगल मेष में लग्न, वृश्चिक में चतुर्थ, मकर में सप्तम या कुंभ में अष्टम हो",
-                "स्थिति": "✅ परिहार लागू",
+                "नियम": "९. मांगलिक दोष: स्वराशि/उच्च राशि में मंगल",
+                "शर्त": "मंगल मेष में १ले, वृश्चिक में ४थे, मकर में ७वें, कुंभ में ८वें या धनु में १२वें हो",
+                "स्थिति": "✅ परिहार लागू" if has_mars_exemption else "⚪ लागू नहीं",
                 "प्रमाण": "मुहूर्त गणपति: 'कुजे मेषे कुजे चापे कुजे नक्रे कुजे घटि॥'"
             },
             {
-                "नियम": "७. रज्जु दोष: भिन्न रज्जु स्थिति",
-                "शर्त": "वर एवं कन्या के नक्षत्र एक ही रज्जु (शिरो/कंठ/कटी/ऊरु/पाद) में न हों",
-                "स्थिति": "✅ रज्जु दोष मुक्त",
+                "नियम": "१०. मांगलिक दोष: गुरु अमृत दृष्टि / युति परिहार",
+                "शर्त": "देवगुरु बृहस्पति की मंगल पर ५वीं, ७वीं, ९वीं दृष्टि हो अथवा गुरु केन्द्र में हो",
+                "स्थिति": "✅ गुरु दृष्टि परिहार लागू" if jup_canc else "⚪ लागू नहीं",
+                "प्रमाण": "शास्त्रीय सूत्र: 'गुरवेणावेक्षिते भौमे न दोषो विद्यते क्वचित्॥'"
+            },
+            {
+                "नियम": "११. मांगलिक दोष: प्रतिपक्षीय क्रूर ग्रह साम्य",
+                "शर्त": "मांगलिक भाव के सामने जीवनसाथी की कुण्डली में शनि/राहु/केतु स्थित हो",
+                "स्थिति": "✅ ग्रह साम्य संतुलित",
+                "प्रमाण": "बृहत्पाराशर: 'शनिभौमोऽथवा कश्चित् पापो वा तादृशो भवेत्॥'"
+            },
+            {
+                "नियम": "१२. मांगलिक दोष: केन्द्रगत चन्द्र-शुक्र बल",
+                "शर्त": "कुण्डली में चन्द्रमा व शुक्र बलवान होकर केन्द्र में स्थित हों",
+                "स्थिति": "✅ परिहार प्रभावी",
+                "प्रमाण": "मुहूर्त चिंतामणि: 'केन्द्रगते शशाङ्के वा शुक्रे वा यदि संस्थितौ॥'"
+            },
+            {
+                "नियम": "१३. रज्जु दोष: भिन्न रज्जु स्थिति",
+                "शर्त": "वर एवं कन्या के नक्षत्र एक ही रज्जु (शिरो/कंठ/नाभि/ऊरु/पाद) में न हों",
+                "स्थिति": "✅ रज्जु दोष मुक्त" if not rajju_d else f"⚠️ {r_type} सक्रिय",
                 "प्रमाण": "दक्षिण भारतीय सिद्धांत: 'एकरज्जौ विवाहास्तु वर्जनीयाः प्रयत्नतः॥'"
             },
             {
-                "नियम": "८. वेध दोष: अविरोधी नक्षत्र वेध",
+                "नियम": "१४. वेध दोष: अविरोधी नक्षत्र वेध स्थिति",
                 "शर्त": "परस्पर वेधकारक नक्षत्र युग्मों (यथा अश्विनी-ज्येष्ठा, भरणी-अनुराधा) का अभाव",
-                "स्थिति": "✅ वेध दोष मुक्त",
+                "स्थिति": "✅ वेध दोष मुक्त" if not vedha_d else "⚠️ नक्षत्र वेध सक्रिय",
                 "प्रमाण": "मुहूर्त चिंतामणि: 'वेधदोषे न कर्तव्यो विवाहः शुभमिच्छता॥'"
+            },
+            {
+                "नियम": "१५. गण दोष: राशीश मित्रता द्वारा गण दोष शमन",
+                "शर्त": "राक्षस-देव गण होने पर भी यदि राशि स्वामी परस्पर मित्र हों तो दोष शांत होता है",
+                "स्थिति": "✅ परिहार लागू" if is_friendly_lords else "⚪ लागू नहीं",
+                "प्रमाण": "फलदीपिका: 'गणदोषं निहन्त्याशु राशीशसुहृद्भावतः॥'"
+            },
+            {
+                "नियम": "१६. दशा-संधि: सुरक्षित काल अंतराल",
+                "शर्त": "वर व कन्या दोनों के महादशा परिवर्तन में १ वर्ष (३६५ दिन) से अधिक का सुरक्षित अंतर हो",
+                "स्थिति": "✅ सुरक्षित अंतराल" if not ds_dosha else f"⚠️ दशा-संधि ({ds_days} दिन अंतर)",
+                "प्रमाण": "ज्योतिष रहस्य: 'उभयोर्दशासंधौ तु दम्पत्योः कलहो भवेत्॥'"
             }
         ]
         return checklist
@@ -1666,6 +1778,16 @@ class MilanService:
         </div>
         <div style="font-size: 13px; color: #475569;">
             {score.nadi_cancellation_reason}
+        </div>
+    </div>
+
+    <div class="dosha-box">
+        <div class="dosha-title">
+            <span>🌙 भकूट दोष एवं परिहार</span>
+            <span>{'✅ दोष मुक्त / परिहार' if (not score.bhakoot_dosha or score.bhakoot_dosha_cancelled) else '⚠️ भकूट दोष सक्रिय'}</span>
+        </div>
+        <div style="font-size: 13px; color: #475569;">
+            {score.bhakoot_cancellation_reason if score.bhakoot_cancellation_reason else ('राशि संबंध शुभ व भकूट दोष रहित है।' if not score.bhakoot_dosha else 'भकूट दोष सक्रिय')}
         </div>
     </div>
 

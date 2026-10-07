@@ -345,10 +345,11 @@ class MuhurtaEngine:
         is_shukra_asta = v_sun_diff < 8.0
 
         # =====================================================================
-        # 5. RIKTA TITHI & AMAVASYA
+        # 5. RIKTA TITHI & AMAVASYA & PANCHAK
         # =====================================================================
         is_rikta = (t_mod15 in [4, 9, 14])
         is_amavasya = (tithi_idx == 30)
+        is_panchak = (nak_idx in [23, 24, 25, 26, 27]) or (moon_sign in [11, 12])
 
         # Build Active Mahadoshas List
         active_mahadoshas = []
@@ -454,6 +455,17 @@ class MuhurtaEngine:
                 "desc": f"वर्तमान नित्य योग '{yoga_name}' अशुभ श्रेणी में आता है जो कार्य में मानसिक उद्वेग या विघ्न उत्पन्न कर सकता है।"
             })
 
+        if is_panchak:
+            active_mahadoshas.append({
+                "key": "panchak",
+                "severity": "MEDIUM",
+                "badge": "⚠️ पंचक नक्षत्र",
+                "color": "#D97706",
+                "title": f"पंचक नक्षत्र ({nak_name} - #{nak_idx})",
+                "sutra": "धनिष्ठापञ्चकं त्याज्यं तृणकाष्ठसङ्ग्रहे। दक्षिणस्यां दिशि यात्रा गृहाच्छादनमेव च॥ (मुहूर्त चिन्तामणि)",
+                "desc": "धनिष्ठा के उत्तरार्ध से रेवती पर्यन्त ५ नक्षत्र 'पंचक' कहलाते हैं। इनमें दक्षिण दिशा की यात्रा, घर की छत डालना, लकड़ी संग्रह व चारपाई बुनना वर्जित है।"
+            })
+
         return {
             "date": target_date.strftime("%d-%b-%Y"),
             "weekday_idx": weekday,
@@ -489,6 +501,7 @@ class MuhurtaEngine:
             "is_shukra_asta": is_shukra_asta,
             "is_rikta": is_rikta,
             "is_amavasya": is_amavasya,
+            "is_panchak": is_panchak,
             "active_mahadoshas": active_mahadoshas
         }
 
@@ -648,15 +661,66 @@ class MuhurtaEngine:
                 score += 15
                 reasons.append(f"✅ गतिमान / चर नक्षत्र ({nak_name}): वाहन दीर्घायु व सुरक्षा हेतु उत्तम।")
 
-        elif activity_type in ["namakarana", "mundan", "upanayana"]:
+        elif activity_type == "namakarana":
+            shastriya_sutras.append("दशमे द्वादशे वापि शते वापि समापयेत्। नामधेयं प्रकुर्वीत नक्षत्रैः शुभसंज्ञकैः॥ (मुहूर्त चिन्तामणि)")
             if is_pitru:
-                fatal_violations.append("🚫 **पितृपक्ष महा-निषेध:** पितृपक्ष में समस्त संस्कार (नामकरण, मुंडन, उपनयन) वर्जित हैं।")
-            if is_chatur and activity_type in ["mundan", "upanayana"]:
-                fatal_violations.append("🚫 **चातुर्मास:** देवशयन में मुंडन व उपनयन संस्कार निषिद्ध हैं।")
+                fatal_violations.append("🚫 **पितृपक्ष महा-निषेध:** पितृपक्ष में नामकरण संस्कार वर्जित है।")
+            if is_bhadra and is_bhadra_fatal:
+                fatal_violations.append("🚫 **मृत्युलोक भद्रा:** नामकरण संस्कार में भद्रा त्याज्य है।")
+            if is_amav or is_rikta:
+                reasons.append("⚠️ रिक्ता अथवा अमावस्या तिथि नामकरण हेतु त्याज्य मानी जाती है।")
+                score -= 20
+
+            # Favorable nakshatras: Rohini 4, Mrig 5, Pushya 8, U.Phal 12, Hast 13, Chitra 14, Anuradha 17, U.Ashadha 21, Shravan 22, Dhanishta 23, Shatabhisha 24, U.Bhadra 26, Revati 27
+            fav_nam_naks = [4, 5, 8, 12, 13, 14, 17, 21, 22, 23, 24, 26, 27]
+            if nak_idx in fav_nam_naks:
+                score += 18
+                reasons.append(f"✅ नामकरण अनुकूल स्थिर/सौम्य नक्षत्र: {nak_name}")
+            else:
+                score -= 10
+            if weekday in [0, 2, 3, 4]:  # Mon, Wed, Thu, Fri
+                score += 10
+                reasons.append("✅ सौम्य वार (सोम/बुध/गुरु/शुक्र): शिशु के आरोग्य व दीर्घायु हेतु उत्तम।")
+
+        elif activity_type == "mundan":
+            shastriya_sutras.append("चूड़ाकर्मणि मासे च तृतीये पञ्चमेऽपि वा। वत्सरान्ते शुभे काले कुर्यात् चूडां विचक्षणः॥ (मुहूर्त गणपति)")
+            if is_pitru:
+                fatal_violations.append("🚫 **पितृपक्ष महा-निषेध:** पितृपक्ष में चूड़ाकर्म (मुंडन) संस्कार सर्वथा निषिद्ध है।")
+            if is_chatur:
+                fatal_violations.append("🚫 **चातुर्मास (देवशयन):** देवशयन काल में मुंडन संस्कार निषिद्ध है।")
             if is_khar:
-                fatal_violations.append("🚫 **खरमास:** उपनयन व चूड़ाकर्म वर्जित हैं।")
+                fatal_violations.append("🚫 **खरमास:** सूर्य धनु/मीन में होने पर चूड़ाकर्म वर्जित है।")
             if is_g_asta or is_s_asta:
-                fatal_violations.append("🚫 **तारा अस्त:** गुरु/शुक्र अस्त में संस्कार निषिद्ध हैं।")
+                fatal_violations.append("🚫 **तारा अस्त:** गुरु या शुक्र के अस्त काल में मुंडन संस्कार वर्जित है।")
+            if is_bhadra and is_bhadra_fatal:
+                fatal_violations.append("🚫 **मृत्युलोक भद्रा:** मुंडन संस्कार में भद्रा त्याज्य है।")
+            if is_amav or is_rikta:
+                fatal_violations.append("🚫 **रिक्ता / अमावस्या तिथि:** मुंडन संस्कार हेतु त्याज्य है।")
+
+            # Favorable nakshatras: Ashwini 1, Rohini 4, Mrig 5, Punarvasu 7, Pushya 8, Hast 13, Chitra 14, Swati 15, Anuradha 17, Shravan 22, Dhanishta 23, Shatabhisha 24, Revati 27
+            fav_mun_naks = [1, 4, 5, 7, 8, 13, 14, 15, 17, 22, 23, 24, 27]
+            if nak_idx in fav_mun_naks:
+                score += 18
+                reasons.append(f"✅ मुंडन अनुकूल नक्षत्र: {nak_name}")
+            else:
+                score -= 12
+            if weekday in [1, 5, 6]:  # Tue, Sat, Sun avoided for Mundan
+                score -= 15
+                reasons.append("⚠️ मंगल/शनि/रवि वार: मुंडन हेतु त्याज्य हैं।")
+            elif weekday in [0, 2, 3, 4]:
+                score += 10
+                reasons.append("✅ सौम्य वार: शिशु संस्कार हेतु उत्तम।")
+
+        elif activity_type == "upanayana":
+            shastriya_sutras.append("उपनयनं वदन्त्यार्याः प्राप्ते षोडशवार्षिके।")
+            if is_pitru:
+                fatal_violations.append("🚫 **पितृपक्ष महा-निषेध:** पितृपक्ष में उपनयन संस्कार वर्जित है।")
+            if is_chatur:
+                fatal_violations.append("🚫 **चातुर्मास:** देवशयन में उपनयन संस्कार निषिद्ध है।")
+            if is_khar:
+                fatal_violations.append("🚫 **खरमास:** उपनयन संस्कार वर्जित है।")
+            if is_g_asta or is_s_asta:
+                fatal_violations.append("🚫 **तारा अस्त:** गुरु/शुक्र अस्त में उपनयन निषिद्ध है।")
 
         else:
             # Generic checks for other activities
@@ -784,6 +848,10 @@ class MuhurtaRangeScanner:
         "griha_pravesh": [4, 5, 12, 13, 14, 17, 21, 26, 27],  # Rohini, Mrig, U.Phal, Hast, Chitra, Anuradha, U.Ashadha, U.Bhadra, Revati
         "vyapar": [1, 4, 8, 13, 14, 15, 17, 22, 23, 27],      # Ashwini, Rohini, Pushya, Hast, Chitra, Swati, Anuradha, Shravan, Dhanishta, Revati
         "vahan_kray": [1, 4, 7, 8, 13, 15, 22, 23, 24, 27],   # Ashwini, Rohini, Punarvasu, Pushya, Hast, Swati, Shravan, Dhanishta, Shatabhisha, Revati
+        "namakarana": [4, 5, 8, 12, 13, 14, 17, 21, 22, 23, 24, 26, 27], # Rohini, Mrig, Pushya, U.Phal, Hast, Chitra, Anuradha, U.Ashadha, Shravan, Dhanishta, Shatabhisha, U.Bhadra, Revati
+        "mundan": [1, 4, 5, 7, 8, 13, 14, 15, 17, 22, 23, 24, 27],     # Ashwini, Rohini, Mrig, Punarvasu, Pushya, Hast, Chitra, Swati, Anuradha, Shravan, Dhanishta, Shatabhisha, Revati
+        "property_kray": [4, 5, 8, 12, 13, 14, 17, 21, 22, 23, 26, 27],
+        "upanayana": [1, 4, 5, 7, 8, 12, 13, 14, 15, 17, 21, 22, 23, 26, 27]
     }
 
     def __init__(self, provider: Optional[Any] = None):
@@ -801,7 +869,7 @@ class MuhurtaRangeScanner:
         start_date: date,
         end_date: date,
         natal_chart: Optional[Any] = None,
-        top_n: int = 7
+        top_n: int = 10
     ) -> List[Dict[str, Any]]:
         """
         Scans all dates between start_date and end_date.
@@ -809,7 +877,7 @@ class MuhurtaRangeScanner:
         - Completely penalizes Pitru Paksha for Griha Pravesh & Vivaha.
         - Penalizes Chaturmas, Kharmas, Guru/Shukra Asta, and Martya Bhadra.
         - Calculates Native's personal Chandra and Tara Balam.
-        - Returns authentic top-ranked auspicious dates.
+        - Computes ⭐ 1-5 Star Ratings and Returns authentic top-ranked auspicious dates.
         """
         results = []
         cur_d = start_date
@@ -825,10 +893,25 @@ class MuhurtaRangeScanner:
             score = eval_res["suitability_score"]
             p_inf = eval_res["panchang_summary"]
 
-            # Filter out dates with fatal prohibitions from top suggestions
+            # Star Rating Calculation
             if eval_res["fatal_violations"]:
-                # Still store if range is very small, but with severely low score
-                pass
+                stars = "⭐"
+                star_count = 1
+            elif score >= 85:
+                stars = "⭐⭐⭐⭐⭐"
+                star_count = 5
+            elif score >= 75:
+                stars = "⭐⭐⭐⭐"
+                star_count = 4
+            elif score >= 60:
+                stars = "⭐⭐⭐"
+                star_count = 3
+            elif score >= 45:
+                stars = "⭐⭐"
+                star_count = 2
+            else:
+                stars = "⭐"
+                star_count = 1
 
             d_info = MuhurtaEngine.calculate_daily_muhurta(cur_d)
             best_chog = [c for c in d_info["day_choghadiyas"] if c["is_good"]]
@@ -849,6 +932,8 @@ class MuhurtaRangeScanner:
                 "weekday": cur_d.strftime("%A"),
                 "day_name": cur_d.strftime("%A"),
                 "score": score,
+                "stars": stars,
+                "star_count": star_count,
                 "verdict": eval_res["verdict"],
                 "badge_color": eval_res["badge_color"],
                 "tithi": f"{p_inf['tithi_name']} ({p_inf['paksha']})",
@@ -858,6 +943,9 @@ class MuhurtaRangeScanner:
                 "moon_sign": p_inf["moon_sign_name"],
                 "chandra_bal": eval_res.get("chandra_balam", {}).get("status", "—") if eval_res.get("chandra_balam") else "—",
                 "chandra_balam": eval_res.get("chandra_balam", {}).get("status", "—") if eval_res.get("chandra_balam") else "—",
+                "tara_bal": eval_res.get("tara_balam", {}).get("tara_name", "—") if eval_res.get("tara_balam") else "—",
+                "is_panchak": p_inf.get("is_panchak", False),
+                "is_rikta": p_inf.get("is_rikta", False),
                 "best_window": f"अभिजित: {abhijit_w} | चौघड़िया: {chog_str}",
                 "reasons": reasons_display,
                 "fatal_count": len(eval_res["fatal_violations"])

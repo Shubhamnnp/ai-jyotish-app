@@ -13257,7 +13257,7 @@ elif selected_idx == 9:
     # =========================================================================
     with tab_g7:
         st.markdown("### 🔬 अष्टकवर्ग कक्षी गोचर स्कैनर (Kakshya 3°45' Transit Scanner)")
-        st.caption("जगन्नाथ होरा स्तरीय ३°४५' (3.75°) अष्ट-कक्षी सूक्ष्म गोचर वेध — शनि, गुरु, मंगल, सूर्य, शुक्र, बुध, चन्द्र एवं लग्न कक्षी में बिन्दु (१=शुभ / ०=रिक्ता) परीक्षण:")
+        st.caption("शास्त्रीय शोध स्तरीय ३°४५' (3.75°) अष्ट-कक्षी सूक्ष्म गोचर वेध — शनि, गुरु, मंगल, सूर्य, शुक्र, बुध, चन्द्र एवं लग्न कक्षी में बिन्दु (१=शुभ / ०=रिक्ता) परीक्षण:")
 
         try:
             import importlib
@@ -14924,7 +14924,9 @@ elif selected_idx == 11:
                     ("griha_pravesh", "🏛️ गृह प्रवेश (Griha Pravesh)"),
                     ("vivaha", "💍 विवाह संस्कार (Vivaha)"),
                     ("vyapar", "💼 व्यापार / दुकान / अनुबंध (Business)"),
-                    ("vahan_kray", "🚗 वाहन क्रय व पूजन (Vehicle Purchase)")
+                    ("vahan_kray", "🚗 वाहन क्रय व पूजन (Vehicle Purchase)"),
+                    ("namakarana", "👶 नामकरण संस्कार (Namakarana)"),
+                    ("mundan", "✂️ मुंडन / चूड़ाकर्म संस्कार (Mundan)")
                 ],
                 format_func=lambda x: x[1],
                 key="muh_scan_act_14tab"
@@ -14943,13 +14945,13 @@ elif selected_idx == 11:
                     start_date=scan_start,
                     end_date=scan_end,
                     natal_chart=chart,
-                    top_n=7
+                    top_n=10
                 )
             st.session_state["top_muhurtas_res"] = top_muhurtas
 
         if "top_muhurtas_res" in st.session_state and st.session_state["top_muhurtas_res"]:
             top_muhurtas = st.session_state["top_muhurtas_res"]
-            st.markdown(f"### 🏆 शीर्ष {len(top_muhurtas)} अनुशंसित मुहूर्त (Top Ranked Auspicious Dates)")
+            st.markdown(f"### 🏆 शीर्ष {len(top_muhurtas)} अनुशंसित श्रेष्ठ मुहूर्त (Top Ranked Auspicious Dates)")
             for rank, m in enumerate(top_muhurtas, 1):
                 badge_bg = "#DCFCE7" if m.get("score", 0) >= 80 else ("#FEF3C7" if m.get("score", 0) >= 65 else "#FEE2E2")
                 badge_c = "#15803D" if m.get("score", 0) >= 80 else ("#B45309" if m.get("score", 0) >= 65 else "#B91C1C")
@@ -14959,12 +14961,19 @@ elif selected_idx == 11:
                 nak_lord_str = f" ({m['nakshatra_lord']})" if m.get("nakshatra_lord") and m.get("nakshatra_lord") != "—" else ""
                 yoga_str = f" | 🕉️ {m['yoga']} योग" if m.get("yoga") else ""
                 chandra_bal_str = m.get("chandra_balam") or m.get("chandra_bal", "—")
+                tara_bal_str = m.get("tara_bal", "—")
+                stars_display = m.get("stars", "⭐⭐⭐⭐")
+
+                panchak_tag = " <span style='background:#FEF3C7; color:#92400E; font-size:11px; padding:2px 8px; border-radius:6px; font-weight:700;'>⚠️ पंचक</span>" if m.get("is_panchak") else ""
+                rikta_tag = " <span style='background:#FEE2E2; color:#991B1B; font-size:11px; padding:2px 8px; border-radius:6px; font-weight:700;'>रिक्ता</span>" if m.get("is_rikta") else ""
 
                 st.markdown(f"""<div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-left:6px solid {badge_c}; border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
 <div>
 <span style="font-size:18px; font-weight:800; color:#0F172A;">#{rank} 📅 {date_display} ({day_val})</span>
-<span style="margin-left:12px; font-size:13px; color:#475569;">🌙 {m.get('tithi', '—')} | ✨ {m.get('nakshatra', '—')}{nak_lord_str}{yoga_str}</span>
+<span style="margin-left:10px; font-size:15px; letter-spacing:1px;">{stars_display}</span>
+{panchak_tag}{rikta_tag}
+<div style="font-size:13px; color:#475569; margin-top:2px;">🌙 {m.get('tithi', '—')} | ✨ {m.get('nakshatra', '—')}{nak_lord_str}{yoga_str}</div>
 </div>
 <div>
 <span style="background:{badge_bg}; color:{badge_c}; font-size:14px; font-weight:800; padding:4px 12px; border-radius:16px;">
@@ -14974,7 +14983,7 @@ elif selected_idx == 11:
 </div>
 <div style="margin-top:10px; font-size:13px; color:#1E293B; line-height:1.6; background:#F8FAFC; padding:8px 12px; border-radius:6px; border:1px solid #E2E8F0;">
 <b>🎯 सर्वोत्तम समय खिड़की (Best Window):</b> {m.get('best_window', '—')}<br/>
-<b>🌕 चन्द्र स्थिति व बल:</b> {chandra_bal_str} ({m.get('moon_sign', '—')} राशि)<br/>
+<b>🌕 चन्द्र व तारा बल:</b> चन्द्रबल: {chandra_bal_str} ({m.get('moon_sign', '—')} राशि) | ताराबल: <b>{tara_bal_str}</b><br/>
 <b>📜 शास्त्रीय अवलोकन:</b> {'; '.join(m.get('reasons', []))}
 </div>
 </div>""", unsafe_allow_html=True)
@@ -16561,7 +16570,7 @@ elif selected_idx == 15:
 <div style="font-size:15px; font-weight:900; color:#0F172A;">🌙 भकूट दोष (Bhakoot Dosha - 7 अंक)</div>
 <div style="font-size:12.5px; font-weight:800; color:{b_bd}; margin:6px 0;">{b_status}</div>
 <div style="font-size:12px; color:#334155; line-height:1.5;">
-{'राशि स्वामी एक अथवा परस्पर मित्र होने से भकूट दोष का पूर्ण परिहार हो जाता है।' if m_score.bhakoot_dosha_cancelled else ('षडाष्टक (६/८) या द्विर्द्वादश (२/१२) संबंध से कलह व आर्थिक संकट का भय।' if m_score.bhakoot_dosha else 'भकूट दोष रहित अत्यंत अनुकूल स्थिति।')}
+{getattr(m_score, 'bhakoot_cancellation_reason', '') or ('राशि स्वामी एक अथवा परस्पर मित्र होने से भकूट दोष का पूर्ण परिहार हो जाता है।' if m_score.bhakoot_dosha_cancelled else ('षडाष्टक (६/८) या द्विर्द्वादश (२/१२) संबंध से कलह व आर्थिक संकट का भय।' if m_score.bhakoot_dosha else 'भकूट दोष रहित अत्यंत अनुकूल स्थिति।'))}
 </div>
 </div>
 """, unsafe_allow_html=True)
@@ -16920,7 +16929,7 @@ elif selected_idx == 15:
     # -------------------------------------------------------------------------
     with tab_mil10:
         st.markdown("### 🖨️ १-क्लिक प्रिंटेबल विवाह मेलापक रिपोर्ट एवं वैदिक उपाय")
-        st.write("पाराशर व जगन्नाथ होरा स्तरीय सम्पूर्ण कुंडली मिलान रिपोर्ट। सीधे प्रिंट करें अथवा PDF के रूप में सुरक्षित रखें:")
+        st.write("महर्षि पराशर व प्रामाणिक शास्त्रीय शोध स्तरीय सम्पूर्ण कुंडली मिलान रिपोर्ट। सीधे प्रिंट करें अथवा PDF के रूप में सुरक्षित रखें:")
 
         try:
             report_html = milan_mod.default_milan_service.render_milan_report_html(groom_data, bride_data, m_score)
