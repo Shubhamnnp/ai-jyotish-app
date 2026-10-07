@@ -10399,6 +10399,13 @@ elif selected_idx == 5:
         if "nat_prashna_time_val" not in st.session_state:
             st.session_state.nat_prashna_time_val = live_now_nat.time().replace(microsecond=0)
 
+        def _cb_nat_set_live_now():
+            upd_now = get_live_local_now(tz_offset)
+            st.session_state.nat_prashna_date_val = upd_now.date()
+            st.session_state.nat_prashna_time_val = upd_now.time().replace(microsecond=0)
+            st.session_state.nat_prashna_d_picker = upd_now.date()
+            st.session_state.nat_prashna_t_picker = upd_now.time().replace(microsecond=0)
+
         col_nt1, col_nt2, col_nt3, col_nt4 = st.columns([1.4, 1.4, 1.2, 1.2])
         with col_nt1:
             nat_q_date = st.date_input("📅 प्रश्न तिथि (Query Date)", value=st.session_state.nat_prashna_date_val, format="DD/MM/YYYY", key="nat_prashna_d_picker")
@@ -10409,14 +10416,8 @@ elif selected_idx == 5:
         with col_nt3:
             st.write("")
             st.write("")
-            if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_nat_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें"):
-                upd_now = get_live_local_now(tz_offset)
-                st.session_state.nat_prashna_date_val = upd_now.date()
-                st.session_state.nat_prashna_time_val = upd_now.time().replace(microsecond=0)
-                st.session_state.nat_prashna_d_picker = upd_now.date()
-                st.session_state.nat_prashna_t_picker = upd_now.time().replace(microsecond=0)
-                st.toast(f"✅ वर्तमान समय सेट: {upd_now.strftime('%I:%M:%S %p')}", icon="⏱️")
-                st.rerun()
+            if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_nat_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें", on_click=_cb_nat_set_live_now):
+                st.toast("✅ वर्तमान समय सेट किया गया!", icon="⏱️")
         with col_nt4:
             st.write("")
             st.write("")
@@ -10613,6 +10614,13 @@ elif selected_idx == 5:
                 except Exception:
                     pass
 
+        def _cb_new_set_live_now():
+            upd_now = get_live_local_now(st.session_state.new_prashna_tz)
+            st.session_state.new_prashna_date_val = upd_now.date()
+            st.session_state.new_prashna_time_val = upd_now.time().replace(microsecond=0)
+            st.session_state.new_prashna_d_picker = upd_now.date()
+            st.session_state.new_prashna_t_picker = upd_now.time().replace(microsecond=0)
+
         # Row 2: Vartaman Date, Time (with seconds), Live Now Button, GPS Button
         col_nt1, col_nt2, col_nt3, col_nt4 = st.columns([1.4, 1.4, 1.2, 1.2])
         with col_nt1:
@@ -10624,14 +10632,8 @@ elif selected_idx == 5:
         with col_nt3:
             st.write("")
             st.write("")
-            if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_new_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें"):
-                upd_now = get_live_local_now(st.session_state.new_prashna_tz)
-                st.session_state.new_prashna_date_val = upd_now.date()
-                st.session_state.new_prashna_time_val = upd_now.time().replace(microsecond=0)
-                st.session_state.new_prashna_d_picker = upd_now.date()
-                st.session_state.new_prashna_t_picker = upd_now.time().replace(microsecond=0)
-                st.toast(f"✅ वर्तमान समय सेट: {upd_now.strftime('%I:%M:%S %p')}", icon="⏱️")
-                st.rerun()
+            if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_new_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें", on_click=_cb_new_set_live_now):
+                st.toast("✅ वर्तमान समय सेट किया गया!", icon="⏱️")
         with col_nt4:
             st.write("")
             st.write("")
