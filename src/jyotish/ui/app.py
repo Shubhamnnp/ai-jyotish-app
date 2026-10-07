@@ -2950,37 +2950,75 @@ client_bridge_code = """
         } catch(e) {}
     }
 
-    function switchAppTab(targetIdx) {
+    function switchAppTab(target) {
         try {
             const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
             if (!pDoc) return false;
-            const mainSec = pDoc.querySelector('[data-testid="stMain"], section.main');
-            if (!mainSec) return false;
-            const tabLists = mainSec.querySelectorAll('[data-baseweb="tab-list"]');
-            if (!tabLists || tabLists.length === 0) return false;
 
-            let tabList = tabLists[0];
-            for (let i = 0; i < tabLists.length; i++) {
-                const tl = tabLists[i];
-                if (!tl.closest('[role="dialog"]') && !tl.closest('[data-testid="stModal"]') && !tl.closest('.st-key-frozen_toolbelt_container')) {
-                    tabList = tl;
-                    break;
+            const mainSec = pDoc.querySelector('[data-testid="stMain"], section.main') || pDoc;
+            const allTabs = Array.from(mainSec.querySelectorAll('.stTabs [role="tab"], [data-baseweb="tab-list"] button[role="tab"]'))
+                .filter(b => !b.closest('[role="dialog"]') && !b.closest('[data-testid="stModal"]') && !b.closest('.st-key-frozen_toolbelt_container'));
+
+            if (!allTabs || allTabs.length === 0) return false;
+
+            let targetBtn = null;
+            if (typeof target === 'string' && target.trim()) {
+                const q = target.trim();
+                targetBtn = allTabs.find(b => {
+                    const txt = (b.textContent || "").trim();
+                    return txt === q || txt.includes(q) || q.includes(txt);
+                });
+            }
+            if (!targetBtn) {
+                const idx = (typeof target === 'number') ? target : parseInt(target);
+                if (!isNaN(idx) && idx >= 0 && idx < allTabs.length) {
+                    targetBtn = allTabs[idx];
                 }
             }
-            const tabs = tabList.querySelectorAll('button[role="tab"]');
-            if (tabs && tabs.length > targetIdx) {
-                if (tabs[targetIdx].getAttribute('aria-selected') !== 'true') {
-                    tabs[targetIdx].click();
+
+            if (targetBtn) {
+                if (targetBtn.getAttribute('aria-selected') === 'true') {
+                    return true;
                 }
+                targetBtn.focus();
+                targetBtn.click();
                 return true;
             }
         } catch(e) {
-            console.error("Tab switch error:", e);
+            console.warn("Tab switch error:", e);
         }
         return false;
     }
     parentWin.switchAppTab = switchAppTab;
     window.switchAppTab = switchAppTab;
+
+    function setupTabSwitcher() {
+        try {
+            const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            if (!pDoc || pDoc.__tabDropdownObserverBound) return;
+            pDoc.__tabDropdownObserverBound = true;
+
+            pDoc.addEventListener('click', function(e) {
+                const opt = e.target ? e.target.closest('li[role="option"], div[role="option"], [data-baseweb="menu-item"]') : null;
+                if (!opt) return;
+                const optText = (opt.innerText || opt.textContent || "").trim();
+                if (!optText) return;
+
+                const pWin = (window.parent || window);
+                const tabsList = pWin.__CURRENT_MODULE_TABS || window.__CURRENT_MODULE_TABS || [];
+                const matchedTab = tabsList.find(t => {
+                    const st = t.trim();
+                    return optText === st || optText.includes(st) || st.includes(optText);
+                });
+
+                if (matchedTab) {
+                    switchAppTab(matchedTab);
+                    setTimeout(function() { switchAppTab(matchedTab); }, 60);
+                    setTimeout(function() { switchAppTab(matchedTab); }, 180);
+                }
+            }, true);
+        } catch(e) {}
+    }
 
     function resolveClientGPS() {
         try {
@@ -4302,6 +4340,7 @@ client_bridge_code = """
     setupStickyTopHeader();
     bindGpsButtons();
     resolveClientGPS();
+    setupTabSwitcher();
     setInterval(function() {
         setupPWAandMobile();
         setupSidebarToggle();
@@ -4309,6 +4348,7 @@ client_bridge_code = """
         setupThemeMode();
         setupStickyTopHeader();
         bindGpsButtons();
+        setupTabSwitcher();
         const cached = localStorage.getItem("jyotish_user_gps_loc") || sessionStorage.getItem("jyotish_user_gps_loc");
         if (cached) {
             updateLocationUI(cached);
@@ -4357,32 +4397,7 @@ if st.session_state.get("trigger_browser_gps"):
     </script>
     """, height=0, width=0)
 
-if st.session_state.get("tab_switch_requested") is not None:
-    _ts_idx = int(st.session_state.pop("tab_switch_requested"))
-    components.html(f"""
-    <script>
-    (function() {{
-        try {{
-            const targetIdx = {_ts_idx};
-            const pWin = (window.parent && window.parent.location) ? window.parent : window;
-            if (pWin.switchAppTab) {{
-                pWin.switchAppTab(targetIdx);
-            }} else if (window.switchAppTab) {{
-                window.switchAppTab(targetIdx);
-            }} else {{
-                const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
-                const tabList = pDoc.querySelector('[data-baseweb="tab-list"]');
-                if (tabList) {{
-                    const tabs = tabList.querySelectorAll('button[role="tab"]');
-                    if (tabs && tabs[targetIdx]) {{
-                        tabs[targetIdx].click();
-                    }}
-                }}
-            }}
-        }} catch(e) {{}}
-    }})();
-    </script>
-    """, height=0, width=0)
+
 
 
 
@@ -5741,34 +5756,40 @@ def render_vastu_compass_wheel_svg(zones: list, is_dark: bool = False) -> str:
 
 MODULE_TABS_REGISTRY = {
     0: [
-        "1. 📜 D1 लग्न कुण्डली",
-        "2. 🔱 जैमिनी & कारक",
-        "3. 🏠 भाव स्पष्ट & मध्य",
-        "4. 🌙 चन्द्र कुण्डली",
-        "5. ☀️ सूर्य कुण्डली",
-        "6. ⚔️ ग्रह युद्ध",
-        "7. 🌟 विशेष लग्न & आरूढ़",
-        "8. 🏰 कोटा चक्र"
+        "📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (D1 to D60)",
+        "👑 विशेष जैमिनी लग्न (Special Lagnas - Shastriya Standard)",
+        "🏠 भाव चलित चक्र",
+        "🌙 चन्द्र कुण्डली",
+        "☀️ सूर्य कुण्डली",
+        "⚔️ ग्रह युद्ध",
+        "🌟 विशेष लग्न",
+        "🏰 कोटा चक्र (Kota Chakra)"
     ],
     1: [
-        "1. 🔮 भविष्य काल निर्णय",
-        "2. 🔍 भूतकाल घटना सत्यापन"
+        "🔮 भविष्य घटना पूर्वानुमान (Future Event Prediction)",
+        "🔍 6-Pillar भूतकाल घटना सत्यापन (6-Pillar Past Event Verification)"
     ],
     2: [
-        "1. 🛡️ पीड़ा विश्लेषण एवं समग्र दृष्टि",
-        "2. 🔍 १२ भाव जीवन क्षेत्र गहन विवेचन",
-        "3. 💎 समग्र वैदिक उपाय संदूक"
+        "🛡️ दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)",
+        "🎯 27 जीवन आयाम विश्लेषण (27 Life Areas Deep Breakdown)",
+        "🌿 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Server Remedy Suite)"
     ],
     3: [
-        "1. 📊 १० मुख्य वर्ग (दशवर्ग चक्र)",
-        "2. 📈 षोडशवर्ग (१६ वर्ग चक्र)",
-        "3. 📋 वर्ग सारांश व श्रेष्ठता"
+        "📊 1. दशवर्ग (Dasvarga - 10 Principal Divisions)",
+        "🏛️ 2. षोडशवर्ग (Shodashvarga - 16 Full Divisions)",
+        "📜 3. दशवर्ग सारांश, विस्तृत विश्लेषण एवं शास्त्रीय प्रमाण (Dossier & Pramana)"
     ],
     4: [
-        "1. 🧭 वास्तु कंपास चक्र",
-        "2. 🏠 १६ दिशा गृह विन्यास",
-        "3. 📐 मर्म स्थान व ऊर्जा",
-        "4. ✨ वास्तु उपाय"
+        "🧭 समग्र वास्तु मण्डल",
+        "🌅 पूर्व (East)",
+        "⚡ आग्नेय (SE)",
+        "🔴 दक्षिण (South)",
+        "⛰️ नैऋत्य (SW)",
+        "🌊 पश्चिम (West)",
+        "💨 वायव्य (NW)",
+        "💰 उत्तर (North)",
+        "🕉️ ईशान (NE)",
+        "🌌 ब्रह्मस्थान (Center)"
     ],
     5: [
         "1. 👤 सक्रिय जातक प्रश्न विश्लेषण",
@@ -5776,207 +5797,201 @@ MODULE_TABS_REGISTRY = {
         "3. 🪐 प्रश्नकालीन नवग्रह स्थिति तालिका",
         "4. 🎭 द्वादश भाव भूमिका एवं प्रभाव",
         "5. 📖 ताजिक एवं प्रश्न मार्ग सिद्धांत",
-        "6. 📜 १०० शास्त्रीय प्रश्न नियम एवं प्रमाण"
+        "6. 📜 100 शास्त्रीय प्रश्न नियम एवं प्रमाण"
     ],
     6: [
-        "1. 📊 षड्बल सारांश (Summary)",
-        "2. ☀️ स्थान बल (Sthana)",
-        "3. ⚔️ दिग् व काल बल (Dig & Kala)",
-        "4. ⚡ चेष्टा व नैसर्गिक (Chesta)",
-        "5. 👁️ दृग् बल (Drik Bala)",
-        "6. 🏠 भाव बल (Bhava Bala)"
+        "1. ⚖️ समग्र षड्बल सारणी एवं ग्रह सामर्थ्य",
+        "2. 🔬 षड्विध बल गहन विश्लेषण",
+        "3. 🏰 द्वादश भाव बल तुलना",
+        "4. 🎭 ग्रह अवस्थाएं एवं इष्ट-कष्ट फल",
+        "5. 📐 दृष्टि वेध एवं कोणीय संबंध (Aspectarium)",
+        "6. 📜 षड्बल शास्त्रीय नियम एवं प्रमाण"
     ],
     7: [
-        "1. 🔱 सप्त/अष्ट चरकारक",
-        "2. 🏛️ १२ आरूढ़ पद चक्र",
-        "3. 🌟 कारकांश कुण्डली",
-        "4. 📜 जैमिनी पद लग्न",
-        "5. ⚖️ चर दशा क्रम",
-        "6. ⚡ उपग्रह स्थिति",
-        "7. 🔮 जैमिनी राजयोग",
-        "8. 🧘 आत्मकारक धर्म",
-        "9. 🛡️ अर्गला & विरोधा",
-        "10. 📖 जैमिनी सूत्र प्रमाण"
+        "1. 🔱 कारकांश व स्वांश चक्र",
+        "2. 👑 जैमिनी ७ चर कारक",
+        "3. 🌟 विशेष लग्न एवं राजयोग",
+        "4. 🏰 सम्पूर्ण १२ आरूढ़ पद",
+        "5. 📡 जैमिनी राशि दृष्टि",
+        "6. 🔗 अर्गला एवं विरोधार्गला",
+        "7. 🌍 ग्रह आरूढ़ पद",
+        "8. ⏳ आयुर्दाय एवं दीर्घायु",
+        "9. 👻 अप्रकाशित उपग्रह",
+        "10. 📜 जैमिनी उपदेश सूत्र एवं प्रमाण"
     ],
     8: [
-        "1. विंशोत्तरी दशा",
-        "2. योगिनी दशा",
-        "3. चर दशा",
-        "4. अष्टोत्तरी दशा",
-        "5. कालचक्र दशा",
-        "6. त्रिभागी दशा",
-        "7. मूल दशा",
-        "8. शोडशोन्तरी दशा",
-        "9. द्वादशोत्तरी दशा",
-        "10. पंचोत्तरी दशा",
-        "11. शताब्दिका दशा",
-        "12. चतुरशीति दशा",
-        "13. द्विसप्तति दशा",
-        "14. षष्ठि-हयानी दशा"
+        "📊 १२०-वर्षीय दृश्य गेंट",
+        "⏳ ०-१०० वर्ष समग्र जीवन टाइमलाइन",
+        "🌟 विंशोत्तरी ५-स्तरीय सूक्ष्म पदानुक्रम",
+        "🌸 योगिनी दशा (३६ वर्ष)",
+        "🔱 जैमिनी चर दशा",
+        "🔄 कालचक्र दशा (देह व जीव)",
+        "⚔️ शूल दशा (आयुर्दाय व मारक)",
+        "🕉️ अष्टोत्तरी दशा (१०८ वर्ष)",
+        "🪐 नारायण राशि दशा",
+        "⏳ द्विसप्ततिसम दशा (७२ वर्ष)",
+        "🔷 स्थिर दशा (आयुर्दाय)",
+        "👁️ दृग दशा (आध्यात्मिक दृष्टि)",
+        "🎯 बहु-दशा सहमति एवं घटना संगम",
+        "📜 शास्त्रीय नियम, प्रमाण एवं उपाय"
     ],
     9: [
-        "1. गोचर स्थिति",
-        "2. अष्टकवर्ग चक्र",
-        "3. भिन्नाष्टकवर्ग",
-        "4. प्रस्ताराष्टकवर्ग",
-        "5. शोध्य पिण्ड",
-        "6. साढ़ेसाती चक्र",
-        "7. गुरु गोचर",
-        "8. राहु-केतु गोचर",
-        "9. कक्षक गोचर",
-        "10. वेद व विपरीता",
-        "11. तारा गोचर",
-        "12. अष्टकवर्ग रेखा",
-        "13. सर्वतोभद्र गोचर",
-        "14. गोचर फलकथन"
+        "🎯 जन्म-गोचर ओवरले",
+        "🪐 दैनिक ग्रह गोचर",
+        "⌛ साढ़ेसाती व ढैया ट्रैकर",
+        "⚡ गुरु-शनि दोहरा गोचर",
+        "📊 सर्व व भिन्नाष्टकवर्ग (SAV/BAV)",
+        "⚖️ त्रिकोण व एकाधिपत्य शोधन",
+        "🔬 अष्टकवर्ग कक्षी गोचर",
+        "📋 प्रस्तार अष्टकवर्ग ग्रिड",
+        "🔵 भृगु बिन्दु वेध",
+        "🛡️ सर्वतोभद्र चक्र (९x९)",
+        "🏰 कोटा चक्र दुर्ग",
+        "📈 वित्तीय ज्योतिष व बाज़ार वेध",
+        "📊 ग्रह गति व ५-वर्षीय वेव",
+        "📅 मासिक पंचांग, नियम व उपाय"
     ],
     10: [
-        "1. केपी ग्रह व भाव कस्प",
-        "2. उप-स्वामी (Sub-Lords)",
-        "3. भाव कारकत्व",
-        "4. 1-249 उप-विभाजन",
-        "5. 4-स्टेप थ्योरी",
-        "6. रूलिंग प्लैनेट्स (RP)",
-        "7. केपी प्रश्न कुण्डली",
-        "8. घटना समय निर्धारण",
-        "9. केपी नियम प्रमाण"
+        "🔮 के.पी. प्रश्न फलित व कार्य सिद्धि",
+        "🪐 ग्रह स्पष्ट एवं ४-स्तरीय कार्यकत्व",
+        "🏰 द्वादश भाव कस्पल सब-लॉर्ड",
+        "👑 तात्कालिक रूलिंग प्लैनेट्स (RP)",
+        "🔢 १-२४९ होरारी मास्टर तालिका",
+        "📐 के.पी. पाश्चात्य दृष्टि एवं भाव वेध",
+        "⏱️ के.पी. विंशोत्तरी दशा-भुक्ति-अन्तर",
+        "📊 २२ जीवन घटना सूत्र व कस्पल मैट्रिक्स",
+        "📜 के.पी. स्वर्णिम नियम, रीडर १-६ व उपाय"
     ],
     11: [
-        "1. चौघड़िया मुहूर्त",
-        "2. होरा चक्र",
-        "3. राहुकाल व यमघंट",
-        "4. अभिजित व ब्रह्म मुहूर्त",
-        "5. सर्वार्थ सिद्धि व योग",
-        "6. संस्कार मुहूर्त",
-        "7. यात्रा व गृह प्रवेश",
-        "8. पंचक विचार"
+        "📜 जातक जन्म पञ्चाङ्ग व तत्व",
+        "☀️ दिन व रात्रि अहोरात्र चौघड़िया",
+        "⏳ काल-वेला, राहुकाल व अभिजित",
+        "🌕 जातक ताराबल एवं चन्द्रबल चक्र",
+        "🏛️ १६ प्रमुख कार्य मुहूर्त अनुकूलता",
+        "🔍 स्वचालित बहु-दिवसीय मुहूर्त खोजक",
+        "📜 मुहूर्त चिन्तामणि २१ महादोष",
+        "🪔 दोष परिहार एवं वैदिक शांति उपाय"
     ],
     12: [
-        "1. सुदर्शन चक्र",
-        "2. लग्न-केन्द्रित फल",
-        "3. चन्द्र-केन्द्रित फल",
-        "4. सूर्य-केन्द्रित फल",
-        "5. त्रिकोणीय समन्वय",
-        "6. वर्ष प्रवेश चक्र",
-        "7. त्रि-बिन्दु सामर्थ्य",
-        "8. शुभाशुभ योग",
-        "9. शास्त्रीय निर्देश"
+        "☸️ त्रि-चक्रीय मण्डल (Visual SVG)",
+        "📊 द्वादश भाव त्रिविध समग्र मूल्यांकन",
+        "⏳ सुदर्शन चक्र दशा प्रणाली",
+        "🪐 नवग्रह त्रि-लग्न संरेखण व महायोग",
+        "🔍 प्रमुख जीवन क्षेत्र त्रि-आयामी फलित",
+        "📈 सुदर्शन-अष्टकवर्ग बिन्दु समन्वय",
+        "⚖️ त्रि-लग्न प्राधान्यता व त्रि-शरीर मीमांसा",
+        "📜 बृहत्पाराशर होराशास्त्र अध्याय ७४ प्रमाण",
+        "🪔 श्री सुदर्शन कवच, महामंत्र एवं शांति उपाय"
     ],
     13: [
-        "1. वर्षफल कुण्डली",
-        "2. मुन्था विचार",
-        "3. वर्षेश निर्णय",
-        "4. ताजिक योग (१६ योग)",
-        "5. सहम साधन (५० सहम)",
-        "6. पात्यायिनी दशा",
-        "7. मुद्धा दशा",
-        "8. हर्ष बल (Harsha)",
-        "9. पंचवर्गी बल",
-        "10. मासिक/दैनिक फल"
+        "🌟 वार्षिक कुण्डली (Varsha D1)",
+        "🎯 मुन्था विचार व फलदीपिका",
+        "👑 पंचाधिकारी वर्षेश चयन",
+        "⚖️ पंचवर्गीय व हर्ष बल",
+        "⚡ १६ ताजिक योग व इत्थशाल",
+        "💫 ३६ ताजिक सहम मण्डल",
+        "⏳ वार्षिक दशाएं (मुद्धा व योगिनी)",
+        "📊 द्वादश भाव वार्षिक फलित",
+        "🗓️ १२ मास प्रवेश (मासफल)",
+        "🪔 वर्षेश शांति व ताजिक उपाय"
     ],
     14: [
-        "1. कुण्डली तत्त्व मिलान",
-        "2. उप-स्वामी सत्यापन",
-        "3. नवांश व षष्ट्यंश शोध",
-        "4. प्राणपद लग्न",
-        "5. कुण्ड कुण्डली",
-        "6. जीवन घटना मिलान",
-        "7. स्वचालित BTR इंजन",
-        "8. शास्त्रीय प्रमाण"
+        "🏆 १. बहु-घटना काल शोधन (Multi-Event Scan)",
+        "🌿 २. तत्व शोधन एवं लिंग निर्णय (Tattwa Shodhana)",
+        "☸️ ३. कुण्ड शोधन एवं प्राणपद लग्न (Kunda & Pranapada)",
+        "📐 ४. षोडशवर्ग D9 व D60 सीमा (D9 & D60 Boundary)",
+        "👑 ५. के.पी. रूलिंग प्लैनेट्स (KP Ruling Planets)",
+        "⚖️ ६. मूल बनाम शोधित समय तुलना (Before vs After)",
+        "🎯 ७. त्वरित सेकंड्स स्लाइडर (Micro-Tuning Slider)",
+        "📜 ८. शास्त्रीय सिद्धांत व प्रमाण (Classical Sutras)"
     ],
     15: [
-        "1. अष्टकूट मिलान (36 गुण)",
-        "2. दशकूट मिलान (दक्षिण)",
-        "3. मांगलिक दोष विचार",
-        "4. नाड़ी दोष परिहार",
-        "5. ग्रह मैत्री विश्लेषण",
-        "6. गण व भकूट दोष",
-        "7. दीर्घायु समन्वय",
-        "8. संतति योग मिलान",
-        "9. चित्त व मानसिक मेल",
-        "10. अंतिम निर्णय एवं उपाय"
+        "📊 १. अष्टकूट ३६ गुण व सूत्र (36 Gunas)",
+        "🛡️ २. शास्त्रीय महा-दोष व १६ परिहार (16 Cancellations)",
+        "🔥 ३. मांगलिक दोष एवं भौम साम्य (Kuja Dosha)",
+        "☸️ ४. उभय D1 व D9 चक्र व दृष्टि (Dual D1 & D9)",
+        "👶 ५. बीज-क्षेत्र स्फुट व संतान (Beeja-Kshetra)",
+        "🏛️ ६. जैमिनी उपपद व ससुराल सामंजस्य (Upapada & In-Laws)",
+        "⏱️ ७. दशा-संधि व १५-वर्षीय कालक्रम (Dasha Overlay)",
+        "📈 ८. अष्टकवर्ग रेखा व आजीविका भाग्योदय (SAV Synastry)",
+        "💼 ९. व्यापारिक साझेदारी सिनैस्ट्री (Business)",
+        "🖨️ १०. प्रिंटेबल महा-दस्तावेज व उपाय (Print Dossier)"
     ],
     16: [
-        "1. 💬 AI ज्योतिष वार्ता",
-        "2. 🔮 त्वरित फलकथन",
-        "3. 📜 शास्त्रीय संदर्भ"
+        "💬 दैवज्ञ AI सहायक — प्रामाणिक वैदिक परामर्श"
     ],
     17: [
-        "1. 📑 संपूर्ण जीवन महा-रिपोर्ट",
-        "2. 📜 त्वरित कुण्डली पर्ची"
+        "📚 ५०+ पृष्ठीय सम्पूर्ण महा-पत्रिका (Full 50+ Page Kundali Dossier — 22 Chapters)",
+        "📋 १-पेज ज्योतिषी परामर्श पर्ची (1-Page Astrologer Prescription Slip)"
     ],
     18: [
-        "1. 📚 १२,५००+ शास्त्रीय नियम भंडार",
-        "2. 📜 प्रामाणिक ग्रंथ अन्वेषक",
-        "3. 🔬 AI शोध व नियम परीक्षण"
+        "📚 १२,५००+ महा-शास्त्रीय नियम बैंक (Grand Rules Library)",
+        "🔍 शास्त्रीय ग्रन्थ नियम एक्सप्लोरर (Classical Grantha Rules Explorer)",
+        "🔬 शास्त्रीय योग एवं कुण्डली अनुसंधान इंजन (Astrological Research & Query Engine)"
     ],
     19: [
-        "1. 🔍 ऋषि मत तुलना",
-        "2. 📜 शास्त्रीय प्रमाण"
+        "🔍 वैदिक ऋषि API सत्यापन एवं बेंचमार्क (Vedic Rishi Cross-Validation)"
     ],
     20: [
-        "1. मुख्य दोष",
-        "2. शुभ राजयोग",
-        "3. धन व दरिद्र योग",
-        "4. शास्त्रीय उपाय"
+        "🔴 सक्रिय एवं संभावित दोष",
+        "🟢 शुभ राजयोग एवं धनयोग",
+        "📋 सम्पूर्ण १२,५००+ महा-शास्त्रीय नियम",
+        "💊 कुण्डली अनुसार विशेष उपाय"
     ],
     21: [
-        "1. मूलांक व भाग्यांक",
-        "2. लो-शू ग्रिड चक्र",
-        "3. नामांक व स्पंदन",
-        "4. अंक ज्योतिष उपाय"
+        "📊 ३×३ लो-शू ग्रिड एवं ८ तल (Lo-Shu Grid)",
+        "🪐 मूलांक व भाग्यांक विस्तृत विश्लेषण",
+        "🧩 मिसिंग नंबर एवं शास्त्रीय उपाय",
+        "💎 लकी फैक्टर्स एवं नेम करेक्शन"
     ],
     22: [
-        "1. लाल किताब कुण्डली",
-        "2. सोया हुआ ग्रह/घर",
-        "3. लाल किताब वर्षफल",
-        "4. अचूक लाल किताब उपाय"
+        "🏠 १२ पक्के खाने एवं ग्रह स्थिति (12 Khanas)",
+        "⚠️ ९ प्रकार के कर्मिक ऋण एवं पितृ दोष (9 Debts)",
+        "💤 सोए हुए घर एवं ग्रह (Sleeping Houses)",
+        "🌿 १०८ प्रामाणिक लाल किताब टोटके पुस्तकालय"
     ],
     23: [
-        "1. त्रिदोष (वात/पित्त/कफ)",
-        "2. षडरस आहार तालिका",
-        "3. पथ्य एवं अपथ्य",
-        "4. ऋतुचर्या व दिनचर्या"
+        "🌿 त्रिदोष एवं खानपान स्वभाव (Dosha Profile)",
+        "✅ क्या खाएं (अनुकूल आहार सूची)",
+        "❌ क्या न खाएं (वर्जित एवं त्याज्य)",
+        "⏰ भोजन नियम एवं उपवास परामर्श (Rules & Fasting)"
     ],
     24: [
-        "1. पारिवारिक सम्बंध",
-        "2. मित्र व शत्रु निर्णय",
-        "3. संरक्षक व मार्गदर्शक",
-        "4. सामाजिक प्रतिष्ठा"
+        "👫 दांपत्य एवं जीवनसाथी (Spouse & Partners)",
+        "👨‍👩‍👦 परिवार एवं स्वजन (Family & Siblings)",
+        "🌟 मित्र, उच्चाधिकारी एवं सहायक (Friends & Benefactors)",
+        "⚔️ विरोधी, शत्रु एवं प्रतिस्पर्धा (Opponents & Caution)"
     ],
     25: [
-        "1. स्वास्थ्य विहंगावलोकन",
-        "2. संभावित व्याधि पूर्वानुमान",
-        "3. चक्र एवं नाड़ी संतुलन",
-        "4. ग्रह जनित रोग",
-        "5. आरोग्य एवं औषधि उपाय"
+        "🩺 कालपुरुष देह वेध आरेख (12-Organ Anatomy Map & Tridosha)",
+        "💪 आरोग्य बल एवं वर्तमान संवेदनशीलता",
+        "⚠️ भविष्य में संभावित रोग (Disease Risks)",
+        "📋 नवग्रह एवं अंग-विशेष चिकित्सा सारणी",
+        "🌿 शास्त्रीय निवारक उपाय एवं दिनचर्या"
     ],
     26: [
-        "1. शारीरिक कद-काठी",
-        "2. मुखाकृति व वर्ण",
-        "3. नैसर्गिक स्वभाव",
-        "4. पंचमहाभूत गठन"
+        "🏃 देहयष्टि, कद-काठी एवं रंग-रूप",
+        "🦴 १२ कालपुरुष अंग स्थिति (12 Limbs Status)",
+        "🎯 जन्मजात चिन्ह, तिल व मस्से (Birthmarks)",
+        "🔮 शारीरिक सुरक्षा एवं आसन परामर्श"
     ],
     27: [
-        "1. इष्ट देव निर्णय",
-        "2. कुलदेवता व ग्रामदेवता",
-        "3. वैदिक मंत्र साधना",
-        "4. पूजा एवं अनुष्ठान विधान",
-        "5. स्तोत्र एवं कवच"
+        "🕉️ इष्टदेवता एवं आत्म-मोक्ष निर्णय",
+        "📿 कुलदेवता, धर्मदेवता एवं मंत्र-साधना",
+        "🪔 नित्य पूजा-उपासना एवं सामग्री विधान",
+        "📅 सामान्य व्रत, उपवास एवं पारण नियम",
+        "🚩 नवरात्रि विशेष: ९ दिवसीय पूजा, व्रत व विधान"
     ],
     28: [
-        "1. पूर्वजन्म कर्म संकेत",
-        "2. ऋण व प्रारब्ध विपाक",
-        "3. स्वभाव व व्यक्तित्व",
-        "4. जीवन उद्देश्य (Dharma)",
-        "5. कर्म शुद्धि उपाय",
-        "6. मोक्ष व आध्यात्मिक उत्थान"
+        "💼 आजीविका: व्यापार बनाम नौकरी",
+        "🎓 शिक्षा, मेधा एवं बौद्धिक क्षमता",
+        "⚖️ नैतिक आचरण एवं गुण-प्रवृत्तियां",
+        "🚫 गलत लत, व्यसन एवं प्रलोभन",
+        "🏛️ पैतृक संपत्ति, सुख एवं शांति",
+        "🕉️ पूर्वजन्म कर्म, ऋणानुबंध एवं प्रारब्ध"
     ],
     29: [
-        "1. दैनिक पंचांग",
-        "2. मासिक पंचांग",
-        "3. ग्रह गोचर तालिका",
-        "4. काल होरा चक्र"
+        "📅 दैनिक पंचांग, गोचर एवं होरा चक्र"
     ]
 }
 
@@ -6225,6 +6240,20 @@ with st.container(key="top_frozen_header_container", border=False):
 
         with l3_cols[5]:
             st.button("❯❯", use_container_width=True, help="अगला टैब खोलें (Next Tab)", key="hdr_top_next_tab_btn", on_click=_nav_next_tab)
+
+        _cur_tabs_json = json.dumps(cur_mod_tabs)
+        components.html(f"""
+        <script>
+        (function() {{
+            try {{
+                const tabs = {_cur_tabs_json};
+                const pWin = (window.parent || window);
+                pWin.__CURRENT_MODULE_TABS = tabs;
+                window.__CURRENT_MODULE_TABS = tabs;
+            }} catch(e) {{}}
+        }})();
+        </script>
+        """, height=0, width=0)
 
     if st.session_state.get("sidebar_toggle_requested"):
         st.session_state.sidebar_toggle_requested = False
@@ -20711,41 +20740,56 @@ elif selected_idx == 29:
 # 🎯 GUARANTEED ACTIVE TAB SWITCHER (Post-Render DOM Execution)
 # -------------------------------------------------------------
 _active_tab_to_activate = int(st.session_state.get("active_tab_idx", 0))
+_cur_target_tab_title = cur_mod_tabs[_active_tab_to_activate] if _active_tab_to_activate < len(cur_mod_tabs) else ""
+_target_title_json = json.dumps(_cur_target_tab_title)
+
 components.html(f"""
 <script>
 (function() {{
     const targetIdx = {_active_tab_to_activate};
+    const targetTitle = {_target_title_json};
     let done = false;
 
     function activateTab() {{
         if (done) return true;
         try {{
-            const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
-            if (!pDoc) return false;
-            const mainSec = pDoc.querySelector('[data-testid="stMain"], section.main');
-            if (!mainSec) return false;
-
-            const tabLists = mainSec.querySelectorAll('[data-baseweb="tab-list"]');
-            if (!tabLists || tabLists.length === 0) return false;
-
-            let tabList = tabLists[0];
-            for (let i = 0; i < tabLists.length; i++) {{
-                const tl = tabLists[i];
-                if (!tl.closest('[role="dialog"]') && !tl.closest('[data-testid="stModal"]') && !tl.closest('.st-key-frozen_toolbelt_container')) {{
-                    tabList = tl;
-                    break;
+            const pWin = (window.parent || window);
+            if (pWin.switchAppTab) {{
+                if (targetTitle && pWin.switchAppTab(targetTitle)) {{
+                    done = true;
+                    return true;
+                }}
+                if (pWin.switchAppTab(targetIdx)) {{
+                    done = true;
+                    return true;
                 }}
             }}
 
-            const tabs = tabList.querySelectorAll('button[role="tab"]');
-            if (!tabs || tabs.length <= targetIdx) return false;
+            const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            if (!pDoc) return false;
+            const mainSec = pDoc.querySelector('[data-testid="stMain"], section.main') || pDoc;
+            const allTabs = Array.from(mainSec.querySelectorAll('.stTabs [role="tab"], [data-baseweb="tab-list"] button[role="tab"]'))
+                .filter(b => !b.closest('[role="dialog"]') && !b.closest('[data-testid="stModal"]') && !b.closest('.st-key-frozen_toolbelt_container'));
+            if (!allTabs || allTabs.length === 0) return false;
 
-            const targetBtn = tabs[targetIdx];
+            let targetBtn = null;
+            if (targetTitle) {{
+                targetBtn = allTabs.find(b => {{
+                    const txt = (b.textContent || "").trim();
+                    return txt === targetTitle || txt.includes(targetTitle) || targetTitle.includes(txt);
+                }});
+            }}
+            if (!targetBtn && targetIdx >= 0 && targetIdx < allTabs.length) {{
+                targetBtn = allTabs[targetIdx];
+            }}
+
             if (targetBtn) {{
-                if (targetBtn.getAttribute('aria-selected') !== 'true') {{
-                    targetBtn.click();
-                    targetBtn.focus();
+                if (targetBtn.getAttribute('aria-selected') === 'true') {{
+                    done = true;
+                    return true;
                 }}
+                targetBtn.focus();
+                targetBtn.click();
                 done = true;
                 return true;
             }}
@@ -20753,15 +20797,15 @@ components.html(f"""
         return false;
     }}
 
-    // Try immediately, and poll to catch Streamlit React mounting
+    // Try immediately, and retry if tabs are still hydrating
     if (!activateTab()) {{
         let count = 0;
         const timer = setInterval(function() {{
             count++;
-            if (activateTab() || count >= 25) {{
+            if (activateTab() || count >= 15) {{
                 clearInterval(timer);
             }}
-        }}, 60);
+        }}, 80);
     }}
 }})();
 </script>
