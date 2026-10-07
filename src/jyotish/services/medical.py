@@ -281,6 +281,27 @@ class MedicalAstrologyService:
         else:
             herbal_remedies.append("🌿 **कफ संतुलन:** त्रिकटु (सोंठ, पिप्पली, कालीमिर्च), त्रिफला, तुलसी क्वाथ, शहद, हल्का व सुपाच्य भोजन, नित्य प्राणायाम।")
 
+        # Classical Panchakarma Recommendations based on Dominant Dosha
+        panchakarma = []
+        if sorted_doshas[0][0].startswith("वात"):
+            panchakarma = [
+                "बस्ति कर्म (Basti Karma - Medicated Enema) — वात का परम उपचार",
+                "स्नेहन एवं स्वेदन (Snehana & Swedana - Warm Herbal Oil Massage & Steam)",
+                "शिरोधारा (Shirodhara) — मानसिक शांति एवं तंत्रिका तंत्र का विश्राम"
+            ]
+        elif sorted_doshas[0][0].startswith("पित्त"):
+            panchakarma = [
+                "विरेचन कर्म (Virechana Karma - Therapeutic Purgation) — पित्त एवं रक्त शोधन",
+                "तिक्त घृत पान (Medicated Bitter Ghee) — पित्त व यकृत विषहरण",
+                "शीतल क्षीरधारा / तक्रधारा — शरीर एवं मस्तिष्क का शीतलीकरण"
+            ]
+        else:
+            panchakarma = [
+                "वमन कर्म (Vamana Karma - Therapeutic Emesis) — कफ एवं आमाशय शोधन",
+                "नस्य कर्म (Nasya Karma) — ऊर्ध्व जत्रुगत (कंठ, सिर व श्वास) शुद्धि",
+                "उद्वर्तन (Udvartana - Herbal Powder Scrub) — मेद व कफ निवारण"
+            ]
+
         # Determine suitable Rudrakshas
         rudraksha_remedies = cls.get_rudraksha_recommendations(chart, high_risk_organs)
 
