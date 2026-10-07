@@ -18173,17 +18173,90 @@ elif selected_idx == 21:
             st.success("🎉 अद्भुत! आपके लो-शू ग्रिड में लगभग सभी महत्वपूर्ण अंक संतुलित हैं।")
 
     with tab_num4:
-        st.markdown("### 💎 लकी फैक्टर्स एवं नाम संतुलन (Name Correction)")
+        st.markdown("### 💎 लकी फैक्टर्स, नेम ट्यूनिंग एवं वाहन/मोबाइल नंबर अनुकूलता")
+        st.caption("कील्डियन अंकशास्त्र, मूलांक-भाग्यांक मैत्री एवं ध्वनि तरंगों के आधार पर जीवन में सर्वतोमुखी सफलता के सूत्र:")
+
         ls = num_res.lucky_summary
         col_lf1, col_lf2 = st.columns(2)
         with col_lf1:
-            st.markdown(f"• **शुभ दिन:** {', '.join(ls['lucky_days'])}")
-            st.markdown(f"• **अनुकूल रंग:** {', '.join(ls['lucky_colors'])}")
-            st.markdown(f"• **शुभ अंक:** {', '.join(str(n) for n in ls['lucky_numbers'])}")
+            st.markdown(f"""
+            <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:12px; margin-bottom:10px;">
+                <b style="color:#0F172A;">✨ अनुकूल लकी फैक्टर्स:</b>
+                <p style="margin:4px 0;">• <b>शुभ दिन:</b> {', '.join(ls['lucky_days'])}</p>
+                <p style="margin:4px 0;">• <b>अनुकूल रंग:</b> {', '.join(ls['lucky_colors'])}</p>
+                <p style="margin:4px 0;">• <b>शुभ अंक (Friendly):</b> <span style="color:#16A34A; font-weight:800;">{', '.join(str(n) for n in ls['lucky_numbers'])}</span></p>
+            </div>
+            """, unsafe_allow_html=True)
         with col_lf2:
-            st.markdown(f"• **शत्रु / प्रतिकूल अंक:** {', '.join(str(n) for n in ls['unfavorable_numbers']) or 'कोई नहीं'}")
-            st.markdown(f"• **शुभ रत्न:** {', '.join(ls['lucky_gemstones'])}")
-            st.markdown(f"• **नाम स्पेलिंग कंपैटिबिलिटी:** कील्डियन योग **{num_res.chaldean_namank}** (मूलांक {num_res.mulank} के साथ {'अनुकूल ✅' if num_res.chaldean_namank in ls['lucky_numbers'] else 'सामान्य ⚖️'})")
+            st.markdown(f"""
+            <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:12px; margin-bottom:10px;">
+                <b style="color:#0F172A;">⚠️ वर्जित एवं रत्न:</b>
+                <p style="margin:4px 0;">• <b>शत्रु / प्रतिकूल अंक:</b> <span style="color:#DC2626; font-weight:800;">{', '.join(str(n) for n in ls['unfavorable_numbers']) or 'कोई नहीं'}</span></p>
+                <p style="margin:4px 0;">• <b>शुभ रत्न:</b> {', '.join(ls['lucky_gemstones'])}</p>
+                <p style="margin:4px 0;">• <b>मूलांक स्वामी:</b> {ls['mulank_lord']} | <b>भाग्यांक:</b> {ls['bhagyank_lord']}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("---")
+        # 1. Name Spelling Tuning Engine
+        st.markdown("#### ✍️ कील्डियन नेम ट्यूनिंग एवं स्पेलिंग सुधार इंजन (Chaldean Name Correction):")
+        tuning_res = num_mod.default_numerology_engine.suggest_name_tuning(
+            full_name=birth_profile.name,
+            mulank=num_res.mulank,
+            bhagyank=num_res.bhagyank
+        )
+
+        c_tun1, c_tun2 = st.columns([1.2, 2.8])
+        with c_tun1:
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px; text-align:center;">
+                <span style="font-size:13px; color:#B45309; font-weight:600;">वर्तमान नाम कंपन (Current Vibration)</span>
+                <div style="font-size:26px; font-weight:900; color:#78350F; margin:6px 0;">{tuning_res['original_compound']} ➔ {tuning_res['original_single']}</div>
+                <div style="font-size:12px; font-weight:700; color:#1E40AF;">{tuning_res['harmony_status']}</div>
+                <hr style="margin:8px 0; border:0; border-top:1px dashed #FCD34D;"/>
+                <small style="color:#475569;"><b>अर्थ:</b> {tuning_res['original_meaning']}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with c_tun2:
+            st.markdown("**🌟 अनुशंसित वैकल्पिक स्पेलिंग (Optimized Royal Spelling Options):**")
+            if tuning_res["suggestions"]:
+                sugg_rows = []
+                for s in tuning_res["suggestions"]:
+                    sugg_rows.append({
+                        "प्रस्तावित नाम": s["suggested_name"],
+                        "संयुक्त अंक": s["compound_number"],
+                        "एकल अंक": f"{s['single_number']} ({'👑 राजयोग' if s['is_royal'] else 'शुभ'})",
+                        "ग्रह स्वामी": s["planetary_lord"].split()[0],
+                        "शास्त्रीय प्रभाव": s["significance"]
+                    })
+                st.dataframe(pd.DataFrame(sugg_rows), use_container_width=True, hide_index=True)
+                st.caption("💡 हस्ताक्षर अथवा सोशल मीडिया/बिजनेस कार्ड में इस स्पेलिंग का प्रयोग करने से अनुकूल कंपन आकर्षित होते हैं।")
+            else:
+                st.success("✨ आपके वर्तमान नाम की स्पेलिंग पहले से ही मूलांक व भाग्यांक के अनुकूलतम शुभ कंपन पर स्थित है। किसी बदलाव की आवश्यकता नहीं है।")
+
+        st.markdown("---")
+        # 2. Vehicle & Mobile Number Compatibility Tester
+        st.markdown("#### 🚗 📱 मोबाइल नंबर एवं वाहन नंबर अनुकूलता परीक्षक (Vehicle & Mobile Harmonizer):")
+        test_num_input = st.text_input("परीक्षण हेतु मोबाइल नंबर या वाहन प्लेट अंक दर्ज करें:", value="9810123456", key="num_compat_input")
+        if test_num_input:
+            compat_eval = num_mod.default_numerology_engine.check_vehicle_mobile_compatibility(
+                number_str=test_num_input,
+                mulank=num_res.mulank,
+                bhagyank=num_res.bhagyank
+            )
+            col_cmp1, col_cmp2 = st.columns([1.2, 2.8])
+            with col_cmp1:
+                st.markdown(f"""
+                <div style="background:#F0FDF4 if compat_eval['is_lucky'] else #FEF2F2; border:1.5px solid #86EFAC if compat_eval['is_lucky'] else #FCA5A5; border-radius:10px; padding:14px; text-align:center;">
+                    <span style="font-size:13px; color:#475569;">कुल योग (Compound ➔ Single)</span>
+                    <div style="font-size:26px; font-weight:900; color:#1E293B; margin:4px 0;">{compat_eval['compound_sum']} ➔ {compat_eval['single_digit']}</div>
+                    <small style="color:#2563EB;">स्वामी: {compat_eval['lord']}</small>
+                </div>
+                """, unsafe_allow_html=True)
+            with col_cmp2:
+                st.markdown(f"**रेटिंग:** {compat_eval['rating']}")
+                st.info(compat_eval["advice"])
 
 
 # =============================================================
@@ -18648,8 +18721,8 @@ elif selected_idx == 25:
             """, unsafe_allow_html=True)
 
     with tab_h2:
-        st.markdown("### ⚠️ भविष्य में संभावित रोग एवं भावी सावधानियां")
-        st.caption("६ठे एवं ८वें भाव के स्वामियों तथा दशाओं के आधार पर संभावित दीर्घकालिक प्रभाव:")
+        st.markdown("### ⚠️ भविष्य में संभावित रोग एवं रोग-संवेदनशीलता कालखंड (Timing Forecast)")
+        st.caption("षष्ठेश (रोगेश), अष्टमेश (रन्ध्रेश), द्वादशेश (व्ययेश) एवं मारक दशाओं के आधार पर संभावित दीर्घकालिक प्रभाव:")
 
         for risk in hlth_res["future_risks"]:
             st.markdown(f"""
@@ -18657,6 +18730,20 @@ elif selected_idx == 25:
                 <b style="color:#991B1B;">⚠️ शास्त्रीय संकेत:</b> <span style="color:#1E293B;">{risk}</span>
             </div>
             """, unsafe_allow_html=True)
+
+        st.markdown("#### ⏱️ रोग संवेदनशीलता कालखंड एवं निवारक प्रोटोकॉल (Disease Susceptibility Periods):")
+        disease_timings = MedicalAstrologyService.forecast_disease_susceptibility_periods(chart)
+        timing_rows = []
+        for dt in disease_timings:
+            timing_rows.append({
+                "दशा / कालखंड": dt["period_type"],
+                "शास्त्रीय भूमिका": dt["shastriya_role"],
+                "संवेदनशीलता स्तर": dt["vulnerability_level"],
+                "संवेदनशील अंग": dt["vulnerable_organs"],
+                "दोष ट्रिगर": dt["ayurvedic_dosha"],
+                "निवारक प्रोटोकॉल": dt["preventive_protocol"]
+            })
+        st.dataframe(pd.DataFrame(timing_rows), use_container_width=True, hide_index=True)
 
         st.info("💡 **महत्वपूर्ण सिद्धांत:** कुण्डली केवल रोग की 'संवेदनशीलता' (Tendency) दर्शाती है। यदि जातक अनुशासित दिनचर्या, समय पर जांच और सात्विक आहार रखे, तो ग्रह जनित रोगों को पहले ही निष्प्रभावी किया जा सकता है।")
 
@@ -18675,7 +18762,7 @@ elif selected_idx == 25:
         st.dataframe(pd.DataFrame(med_table), use_container_width=True, hide_index=True)
 
     with tab_h4:
-        st.markdown("### 🌿 शास्त्रीय निवारक उपाय एवं आरोग्य दिनचर्या")
+        st.markdown("### 🌿 शास्त्रीय निवारक उपाय, दिनचर्या एवं रुद्राक्ष चिकित्सा (Rudraksha Therapy)")
         st.markdown(f"""
         <div style="background:#F0FDF4; border:1.5px solid #10B981; border-radius:10px; padding:16px; margin-bottom:14px;">
             <b style="color:#047857; font-size:16px;">✨ आरोग्य रक्षा का मूल मंत्र:</b>
@@ -18683,6 +18770,26 @@ elif selected_idx == 25:
         </div>
         """, unsafe_allow_html=True)
 
+        # Rudraksha Therapy
+        st.markdown("#### 📿 कुण्डली-अनुकूल आयुर्वेदिक रुद्राक्ष चिकित्सा (Prescribed Rudrakshas):")
+        rudraksha_list = med_profile.get("rudraksha_therapy", [])
+        if rudraksha_list:
+            rud_cols = st.columns(min(3, len(rudraksha_list)))
+            for idx, r_item in enumerate(rudraksha_list[:3]):
+                with rud_cols[idx]:
+                    st.markdown(f"""
+                    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:12px; height:100%;">
+                        <b style="color:#B45309; font-size:15px;">📿 {r_item['title']}</b><br/>
+                        <small style="color:#64748B;">ग्रह: {r_item['lord']} | देवता: {r_item['deity']}</small>
+                        <p style="margin:6px 0; font-size:13px; color:#1E293B;"><b>अंग प्रभाव:</b> {r_item['organs']}</p>
+                        <p style="margin:0 0 6px 0; font-size:12.5px; color:#047857;"><b>दोष:</b> {r_item['dosha']}</p>
+                        <small style="color:#334155;"><b>चिकित्सीय लाभ:</b> {r_item['benefits'][:75]}...</small>
+                    </div>
+                    """, unsafe_allow_html=True)
+        else:
+            st.info("सामान्य आरोग्य संरक्षण हेतु ५-मुखी रुद्राक्ष धारण करना सर्वोत्तम है।")
+
+        st.markdown("---")
         st.markdown("""
         #### 🧘 ५ प्रमुख स्वास्थ्य रक्षा नियम:
         1. **सूर्योदय दर्शन एवं जल अर्पण:** प्रतिदिन सूर्योदय के समय तांबे के लोटे से सूर्य को जल दें (हृदय, नेत्र व अस्थि बल बढ़ेगा)।
@@ -18842,11 +18949,21 @@ elif selected_idx == 27:
         st.caption(f"**बीज मंत्र:** `{ishta_res['ishta_beej']}` | नित्य १०८ बार जप करने से आत्मिक शांति व रक्षा प्राप्त होती है।")
 
     with tab_i2:
-        st.markdown("### 📿 कुलदेवता, धर्मदेवता एवं पूर्वपुण्य मंत्र-साधना")
-        st.caption("सनातन परंपरा में इष्टदेव के साथ धर्मदेवता व कुलदेवता की आराधना से सर्वतोमुखी सुरक्षा मिलती है:")
+        st.markdown("### 📿 कुलदेवता, पालनकर्ता देवता, धर्मदेवता एवं मंत्र-साधना")
+        st.caption("सनातन जैमिनी उपदेश सूत्र एवं पाराशरी परंपरा में इष्टदेव के साथ पालनकर्ता, धर्मदेवता व कुलदेवता की चतुर्दिक आराधना का विधान:")
 
-        col_d1, col_d2, col_d3 = st.columns(3)
+        col_d1, col_d2, col_d3, col_d4 = st.columns(4)
         with col_d1:
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border:1.5px solid #22C55E; border-radius:10px; padding:14px; height:100%;">
+                <b style="color:#15803D; font-size:15px;">🌾 पालनकर्ता देवता (Palana Karta):</b><br/>
+                <small style="color:#64748B;">(कारकांश से ६ठा भाव — {ishta_res.get('palana_sign', '')})</small>
+                <p style="margin:8px 0; font-weight:800; color:#0F172A;">{ishta_res.get('palana_deity', 'भगवान विष्णु')}</p>
+                <small style="color:#334155;">जैमिनी सूत्र अनुसार यह देव जीवन में आजीविका, भरण-पोषण, स्वास्थ्य-रक्षा एवं विपत्ति में सम्पोषण करते हैं।</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_d2:
             st.markdown(f"""
             <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:14px; height:100%;">
                 <b style="color:#1E40AF; font-size:15px;">🛡️ धर्मदेवता (Dharma Devata):</b><br/>
@@ -18856,7 +18973,7 @@ elif selected_idx == 27:
             </div>
             """, unsafe_allow_html=True)
 
-        with col_d2:
+        with col_d3:
             st.markdown(f"""
             <div style="background:#FAF5FF; border:1.5px solid #A855F7; border-radius:10px; padding:14px; height:100%;">
                 <b style="color:#7E22CE; font-size:15px;">⚡ मंत्र देवता (Mantra Devata):</b><br/>
@@ -18866,7 +18983,7 @@ elif selected_idx == 27:
             </div>
             """, unsafe_allow_html=True)
 
-        with col_d3:
+        with col_d4:
             st.markdown(f"""
             <div style="background:#FDF2F8; border:1.5px solid #EC4899; border-radius:10px; padding:14px; height:100%;">
                 <b style="color:#BE185D; font-size:15px;">🏛️ कुलदेवता / कुलदेवी (Kula Devata):</b><br/>
@@ -18875,6 +18992,10 @@ elif selected_idx == 27:
                 <small style="color:#334155;">वंश परंपरा, कुल की रक्षा एवं संतान वृद्धि हेतु नित्य कुलदेवी/देवता का स्मरण अनिवार्य है।</small>
             </div>
             """, unsafe_allow_html=True)
+
+        st.markdown("#### 🌾 पालनकर्ता देवता सम्पोषण मंत्र:")
+        st.code(ishta_res.get("palana_mantra", "ॐ नमो भगवते वासुदेवाय"), language="text")
+        st.caption("दैनिक आजीविका, रोजगार में स्थिरता एवं आर्थिक पोषण हेतु इस मंत्र का नित्य ११ बार स्मरण करें।")
 
     with tab_i3:
         st.markdown("### 🪔 नित्य पूजा-उपासना, दीपक एवं पूजन सामग्री विधान")
@@ -19406,6 +19527,37 @@ elif selected_idx == 28:
             </div>
             """, unsafe_allow_html=True)
 
+        st.markdown("---")
+        st.markdown("#### ⚖️ कर्म त्रय संतुलन चक्र (Sanchita, Prarabdha & Kriyamana Balance):")
+        c_tr1, c_tr2, c_tr3 = st.columns(3)
+        with c_tr1:
+            st.markdown(f"""
+            <div style="background:#FDF4FF; border:1.5px solid #F0ABFC; border-radius:10px; padding:12px; height:100%;">
+                <b style="color:#A21CAF; font-size:14px;">🏺 संचित कर्म (Sanchita): {krm.get('sanchita_pct', 33)}%</b>
+                <p style="margin:6px 0; font-size:13px; color:#1E293B;">पूर्वजन्मों के अव्यक्त कर्म-बीज का विशाल भंडार (१२वां व ८वां भाव)। यह आत्मा के अवचेतन में सुरक्षित रहता है।</p>
+            </div>
+            """, unsafe_allow_html=True)
+            st.progress(krm.get('sanchita_pct', 33) / 100.0)
+
+        with c_tr2:
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:10px; padding:12px; height:100%;">
+                <b style="color:#B45309; font-size:14px;">🏹 प्रारब्ध कर्म (Prarabdha): {krm.get('prarabdha_pct', 34)}%</b>
+                <p style="margin:6px 0; font-size:13px; color:#1E293B;">इस जन्म में देह धारण कर अनिवार्य रूप से भोगने हेतु आवंटित कर्म (१ला व ६ठा भाव)। यह पूर्व-निर्धारित प्रारब्ध है।</p>
+            </div>
+            """, unsafe_allow_html=True)
+            st.progress(krm.get('prarabdha_pct', 34) / 100.0)
+
+        with c_tr3:
+            st.markdown(f"""
+            <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px; height:100%;">
+                <b style="color:#15803D; font-size:14px;">⚡ क्रियमाण कर्म (Kriyamana): {krm.get('kriyamana_pct', 33)}%</b>
+                <p style="margin:6px 0; font-size:13px; color:#1E293B;">वर्तमान जीवन में स्वतंत्र इच्छाशक्ति, पुरुषार्थ व विवेक (३रा व ९वां भाव)। इसके द्वारा जातक नए भाग्य का निर्माण करता है।</p>
+            </div>
+            """, unsafe_allow_html=True)
+            st.progress(krm.get('kriyamana_pct', 33) / 100.0)
+
+        st.caption(f"📜 **शास्त्रीय सिद्धांत:** 'प्रारब्धं भुज्यमानं तु क्रियमाणेण शाम्यति' — अर्थात वर्तमान के सद्विचार, गुरु-कृपा व तीव्र पुरुषार्थ ({krm.get('kriyamana_pct', 33)}% क्रियमाण) से कठिन से कठिन प्रारब्ध के ताप को भी शांत किया जा सकता है।")
         st.markdown("---")
 
         # Rahu & Ketu Karmic Axis

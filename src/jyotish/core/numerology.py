@@ -287,6 +287,13 @@ def calculate_name_number(name: str, method: str = "chaldean") -> int:
     return reduce_to_single_digit(total)
 
 
+def calculate_compound_name_number(name: str, method: str = "chaldean") -> int:
+    """Calculates the unreduced compound Name Number (Raw Sum) using Chaldean or Pythagorean."""
+    clean_name = "".join([c.upper() for c in name if c.isalpha()])
+    mapping = CHALDEAN_MAP if method.lower() == "chaldean" else PYTHAGOREAN_MAP
+    return sum(mapping.get(c, 0) for c in clean_name)
+
+
 def calculate_kua_number(birth_year: int, gender: str = "male") -> int:
     """
     Calculates the Feng Shui / Directional Kua number:
@@ -455,6 +462,180 @@ class NumerologyEngine:
             remedies_for_missing=remedies,
             lucky_summary=lucky_summary
         )
+
+    CHALDEAN_COMPOUND_MEANINGS = {
+        10: "Wheel of Fortune (भाग्य चक्र) — सम्मान, आत्मविश्वास और उत्थान।",
+        11: "Clashing Forces (द्वंद्व) — अंतर्ज्ञान व संघर्ष; परीक्षणोपरांत सिद्धि।",
+        12: "The Sacrifice (त्याग) — दूसरों के कल्याण हेतु अपनी ऊर्जा लगाना।",
+        13: "Regeneration (रूपांतरण) — अचानक परिवर्तन, पुरानी मान्यताओं का अंत।",
+        14: "Movement & Challenge (गतिशीलता) — व्यापारिक सतर्कता व यात्रा लाभ।",
+        15: "Occult Attraction (आकर्षण) — वाक्-चातुर्य, कला, संगीत व सम्मोहन।",
+        16: "The Shattered Citadel (अहंकार पतन) — आकस्मिक उतार-चढ़ाव से सतर्कता।",
+        17: "The Star of the Magi (अमृत तारा) — उच्च आध्यात्मिक प्रतिभा, अमर यश।",
+        18: "Spiritual Conflict (आंतरिक द्वंद्व) — भ्रांति व षड्यंत्र से सुरक्षा आवश्यक।",
+        19: "The Prince of Heaven (स्वर्ग का राजकुमार) — परम विजय, सौभाग्य और अखंड मान-सम्मान।",
+        20: "The Awakening (चेतना जागरण) — उच्च आदर्श, न्याय और नव-आरंभ।",
+        21: "The Crown of the Magi (मुकुट योग) — दीर्घ संघर्ष के बाद शीर्ष सफलता।",
+        22: "The Master Builder (महान निर्माता) — उच्च सृजनशीलता व व्यावहारिक शक्ति।",
+        23: "The Royal Star of the Lion (सिंह का राज-नक्षत्र) — व्यापार, राजकीय सहयोग व सर्वतोमुखी विजय।",
+        24: "Venus Grace (शुक्र कृपा) — प्रेम, उच्च मित्रों का सहयोग, ऐश्वर्य व सुख।",
+        25: "Experience & Wisdom (अनुभव ज्ञान) — जीवन के अनुभवों से उत्कृष्ट परिपक्वता।",
+        26: "Partnership & Warning (साझेदारी) — आर्थिक लेन-देन में सतर्कता।",
+        27: "The Sceptre (राजदंड) — अधिकार, वाक्-प्रभुत्व, बौद्धिक श्रेष्ठता।",
+        28: "The Trusting Lamb (विश्वास घात का भय) — कानूनी मामलों में सतर्कता।",
+        32: "Communication & Trade (वाणिज्य व संवाद) — विशाल नेटवर्क, प्रकाशन व व्यापार वृद्धि।",
+        33: "Master Teacher (महागुरु) — सर्व-कल्याण, परोपकार, कला में अमर कीर्ति।",
+        37: "Good Fortune & Love (शुभ भाग्य) — मित्रता, आर्थिक संपन्नता और पारिवारिक शांति।",
+        41: "Leadership & Enterprise (उद्यमशीलता) — स्वतंत्र व्यापार व नवोन्मेष।",
+        42: "Material & Domestic Peace (स्थिर सुख) — अचल संपत्ति व पारिवारिक सौहार्द।",
+        45: "Wisdom & Commerce (व्यापारिक सूझबूझ) — वित्तीय स्थिरता व तीव्र बुद्धि।",
+        46: "Prosperity & High Standing (राजकीय प्रतिष्ठा) — नेतृत्व, जन-समर्थन व वैभव।"
+    }
+
+    @classmethod
+    def suggest_name_tuning(
+        cls,
+        full_name: str,
+        mulank: int,
+        bhagyank: int,
+        method: str = "chaldean"
+    ) -> Dict[str, Any]:
+        """Analyzes current Chaldean compound and single-digit name vibration,
+
+        evaluates harmony with Mulank and Bhagyank, and computes optimized
+        phonetic spelling adjustments targeting royal/auspicious compound numbers (19, 23, 24, 32, 37, 41, 42, 45, 46).
+        """
+        orig_compound = calculate_compound_name_number(full_name, method=method)
+        orig_single = reduce_to_single_digit(orig_compound)
+
+        driver_data = NUMBER_DATA[mulank]
+        conductor_data = NUMBER_DATA[bhagyank]
+
+        friendly = set(driver_data["friendly_numbers"] + conductor_data["friendly_numbers"])
+        enemy = set(driver_data["enemy_numbers"] + conductor_data["enemy_numbers"])
+
+        # Target single numbers: preferably 1, 3, 5, 6 that are in friendly
+        auspicious_singles = [n for n in [1, 5, 6, 3, 2, 7] if n in friendly and n not in enemy]
+        if not auspicious_singles:
+            auspicious_singles = [5, 1, 6]
+
+        royal_compounds = [19, 23, 24, 32, 33, 37, 41, 42, 45, 46, 50, 51]
+
+        if orig_single in friendly and orig_compound in royal_compounds:
+            harmony_status = "अत्यंत शुभ एवं राजयोगकारी (Perfect Royal Harmony ✅)"
+            status_code = "perfect"
+        elif orig_single in friendly and orig_single not in enemy:
+            harmony_status = "अनुकूल एवं संतुलित (Compatible & Balanced 🟢)"
+            status_code = "good"
+        elif orig_single in enemy:
+            harmony_status = "प्रतिकूल / स्पेलिंग सुधार आवश्यक (Conflicting / Needs Tuning ⚠️)"
+            status_code = "conflict"
+        else:
+            harmony_status = "सामान्य (Neutral ⚖️)"
+            status_code = "neutral"
+
+        suggestions = []
+        name_parts = full_name.strip().split()
+        first_name = name_parts[0] if name_parts else full_name
+        last_name = " ".join(name_parts[1:]) if len(name_parts) > 1 else ""
+
+        letters_to_try = ['A', 'E', 'I', 'H', 'S', 'N', 'R', 'K']
+        tested_names = set()
+
+        for letter in letters_to_try:
+            cand1 = f"{first_name}{letter}" + (f" {last_name}" if last_name else "")
+            cand2 = None
+            for vowel in ['A', 'E', 'I', 'O', 'U']:
+                if vowel in first_name.upper():
+                    idx = first_name.upper().find(vowel)
+                    cand2 = first_name[:idx+1] + first_name[idx] + first_name[idx+1:] + (f" {last_name}" if last_name else "")
+                    break
+
+            for cand in [cand1, cand2]:
+                if not cand or cand.upper() in tested_names or cand.upper() == full_name.upper():
+                    continue
+                tested_names.add(cand.upper())
+                c_comp = calculate_compound_name_number(cand, method=method)
+                c_sing = reduce_to_single_digit(c_comp)
+
+                if c_sing in auspicious_singles and c_sing not in enemy:
+                    meaning = cls.CHALDEAN_COMPOUND_MEANINGS.get(c_comp, f"शुभ योग {c_sing} (ग्रह: {NUMBER_DATA[c_sing]['planet'].split()[0]})")
+                    is_royal = c_comp in royal_compounds
+                    suggestions.append({
+                        "suggested_name": cand,
+                        "compound_number": c_comp,
+                        "single_number": c_sing,
+                        "is_royal": is_royal,
+                        "planetary_lord": NUMBER_DATA[c_sing]["planet"],
+                        "significance": meaning
+                    })
+
+        suggestions.sort(key=lambda x: (not x["is_royal"], x["compound_number"]))
+
+        return {
+            "original_name": full_name,
+            "original_compound": orig_compound,
+            "original_single": orig_single,
+            "original_meaning": cls.CHALDEAN_COMPOUND_MEANINGS.get(orig_compound, "सामान्य ऊर्जा प्रभाव।"),
+            "harmony_status": harmony_status,
+            "status_code": status_code,
+            "target_singles": auspicious_singles,
+            "suggestions": suggestions[:5]
+        }
+
+    @classmethod
+    def check_vehicle_mobile_compatibility(
+        cls,
+        number_str: str,
+        mulank: int,
+        bhagyank: int
+    ) -> Dict[str, Any]:
+        """Evaluates mobile phone or vehicle registration number compatibility
+
+        with native's Mulank (Driver) and Bhagyank (Conductor).
+        """
+        digits = [int(c) for c in number_str if c.isdigit()]
+        if not digits:
+            return {
+                "input_number": number_str,
+                "compound_sum": 0,
+                "single_digit": 0,
+                "rating": "अमान्य इनपुट",
+                "is_lucky": False,
+                "advice": "कृपया केवल अंक दर्ज करें।"
+            }
+
+        compound_sum = sum(digits)
+        single_digit = reduce_to_single_digit(compound_sum)
+
+        driver_info = NUMBER_DATA[mulank]
+        conductor_info = NUMBER_DATA[bhagyank]
+
+        friendly = set(driver_info["friendly_numbers"] + conductor_info["friendly_numbers"])
+        enemy = set(driver_info["enemy_numbers"] + conductor_info["enemy_numbers"])
+
+        if single_digit in friendly and single_digit not in enemy:
+            rating = "⭐⭐⭐⭐⭐ अति-अनुकूल एवं शुभ (Highly Auspicious & Lucky)"
+            is_lucky = True
+            advice = f"यह संख्या आपके मूलांक {mulank} व भाग्यांक {bhagyank} के अत्यंत मित्र ग्रह ({NUMBER_DATA[single_digit]['planet'].split()[0]}) की ऊर्जा लिए हुए है। यह आर्थिक व सामाजिक प्रगति हेतु श्रेष्ठ है।"
+        elif single_digit in enemy:
+            rating = "⭐ प्रतिकूल / संघर्षकारी (Unfavorable / Conflicting Vibration)"
+            is_lucky = False
+            advice = f"इस संख्या का योग {single_digit} ({NUMBER_DATA[single_digit]['planet'].split()[0]}) आपके मूलांक/भाग्यांक का शत्रु अंक है। यह मानसिक तनाव, विलंब या विवाद दे सकता है। इसे मुख्य व्यावसायिक कार्यों हेतु न रखें।"
+        else:
+            rating = "⭐⭐⭐ सामान्य एवं सम (Neutral Vibration)"
+            is_lucky = True
+            advice = f"इस संख्या का योग {single_digit} सम प्रभाव देने वाला है। दैनिक उपयोग हेतु सामान्य रूप से उपयुक्त है।"
+
+        return {
+            "input_number": number_str,
+            "compound_sum": compound_sum,
+            "single_digit": single_digit,
+            "lord": NUMBER_DATA[single_digit]["planet"],
+            "rating": rating,
+            "is_lucky": is_lucky,
+            "advice": advice
+        }
 
 
 default_numerology_engine = NumerologyEngine()

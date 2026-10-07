@@ -245,6 +245,18 @@ class IshtaDevataEngine:
                     d9_h9_occupants.append(p_name)
         dharma_planet = d9_h9_occupants[0] if d9_h9_occupants else h9_from_kk_lord
 
+        # 3b. 6th House from Karakamsha in D9 (Palana Karta Devata - Livelihood & Sustenance Protector)
+        # As per Maharishi Jaimini Upadesha Sutras 1.2.72-85, the 6th from Karakamsha rules Palana Devata.
+        h6_from_kk_id = ((karakamsha_s_id - 1 + 5) % 12) + 1
+        h6_from_kk_name = SIGN_NAMES[h6_from_kk_id - 1]
+        h6_from_kk_lord = SIGN_LORDS[h6_from_kk_name]
+        d9_h6_occupants = []
+        if d9_chart:
+            for p_name, vp in d9_chart.planets.items():
+                if vp.sign_id == h6_from_kk_id:
+                    d9_h6_occupants.append(p_name)
+        palana_planet = d9_h6_occupants[0] if d9_h6_occupants else h6_from_kk_lord
+
         # 4. 5th House from Lagna (Mantra Devata / Purva Punya)
         lagna_s_id = chart.lagna_sign_id
         h5_lagna_id = ((lagna_s_id - 1 + 4) % 12) + 1
@@ -262,6 +274,7 @@ class IshtaDevataEngine:
         # Retrieve Deity Profiles
         ishta_info = cls.DEITY_ATTRIBUTES.get(ishta_planet, cls.DEITY_ATTRIBUTES["Jupiter"])
         dharma_info = cls.DEITY_ATTRIBUTES.get(dharma_planet, cls.DEITY_ATTRIBUTES["Sun"])
+        palana_info = cls.DEITY_ATTRIBUTES.get(palana_planet, cls.DEITY_ATTRIBUTES["Moon"])
         mantra_info = cls.DEITY_ATTRIBUTES.get(mantra_planet, cls.DEITY_ATTRIBUTES["Mercury"])
         kula_info = cls.DEITY_ATTRIBUTES.get(kula_planet, cls.DEITY_ATTRIBUTES["Venus"])
 
@@ -297,6 +310,12 @@ class IshtaDevataEngine:
             "ishta_fruit": ishta_info["spiritual_fruit_hi"],
             "dharma_planet": dharma_planet,
             "dharma_deity": dharma_info["ishta_hi"],
+            "palana_planet": palana_planet,
+            "palana_deity": palana_info["ishta_hi"],
+            "palana_form": palana_info["form_desc_hi"],
+            "palana_mantra": palana_info["primary_mantra"],
+            "palana_sign": h6_from_kk_name,
+            "palana_lord": h6_from_kk_lord,
             "mantra_planet": mantra_planet,
             "mantra_deity": mantra_info["ishta_hi"],
             "mantra_sadhana": mantra_info["primary_mantra"],

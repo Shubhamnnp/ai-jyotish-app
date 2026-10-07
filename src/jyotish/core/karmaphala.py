@@ -872,10 +872,27 @@ class KarmaphalaEngine:
                 "redemption": "दैनिक पंच महायज्ञ (देव, ऋषि, पितृ, मनुष्य, भूत यज्ञ - पक्षियों/चींटियों को दाना) का पालन करें।"
             })
 
+        # Calculate Tripartite Karmic Balance (Sanchita, Prarabdha, Kriyamana)
+        # Sanchita (12th & 8th houses - accumulated seeds)
+        sanchita_weight = max(20.0, (h12_score * 0.6) + (cls._house_strength_score(chart, 8) * 0.4))
+        # Prarabdha (1st & 6th houses - current physical allotted destiny)
+        prarabdha_weight = max(20.0, (cls._house_strength_score(chart, 1) * 0.5) + (cls._house_strength_score(chart, 6) * 0.5))
+        # Kriyamana (3rd & 9th houses - free will, self-effort & current dharma)
+        kriyamana_weight = max(20.0, (cls._house_strength_score(chart, 3) * 0.5) + (h9_score * 0.5))
+
+        total_karma_weights = sanchita_weight + prarabdha_weight + kriyamana_weight
+        sanchita_pct = round((sanchita_weight / total_karma_weights) * 100)
+        prarabdha_pct = round((prarabdha_weight / total_karma_weights) * 100)
+        kriyamana_pct = 100 - sanchita_pct - prarabdha_pct
+
         return {
             "purva_punya_score": purva_punya_score,
             "karmic_burden": karmic_burden,
             "burden_desc": burden_desc,
+            "sanchita_pct": sanchita_pct,
+            "prarabdha_pct": prarabdha_pct,
+            "kriyamana_pct": kriyamana_pct,
+            "karma_balance_summary": f"संचित ({sanchita_pct}%) | प्रारब्ध भोग ({prarabdha_pct}%) | क्रियमाण पुरुषार्थ ({kriyamana_pct}%)",
             "rahu_desire": rahu_desire,
             "ketu_mastery": ketu_mastery,
             "atmakaraka": ak_name,
