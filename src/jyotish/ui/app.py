@@ -2865,6 +2865,70 @@ client_bridge_code = """
         } catch (e) {}
     }
 
+    function requestDeviceGPS(target) {
+        target = target || "nat_prashna";
+        const pWin = (window.parent && window.parent.location) ? window.parent : window;
+        const nav = (pWin.navigator && pWin.navigator.geolocation) 
+                    ? pWin.navigator 
+                    : ((window.navigator && window.navigator.geolocation) ? window.navigator : null);
+
+        if (!nav || !nav.geolocation) {
+            alert("⚠️ आपके डिवाइस या ब्राउज़र में GPS जियोलोकेशन समर्थित नहीं है। (Geolocation not supported)");
+            return;
+        }
+
+        nav.geolocation.getCurrentPosition(
+            function(pos) {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                try {
+                    localStorage.setItem("jyotish_user_gps_lat", lat.toFixed(5));
+                    localStorage.setItem("jyotish_user_gps_lon", lon.toFixed(5));
+                    const u = new URL(pWin.location.href);
+                    u.searchParams.set("gps_lat", lat.toFixed(5));
+                    u.searchParams.set("gps_lon", lon.toFixed(5));
+                    u.searchParams.set("gps_target", target);
+                    pWin.location.href = u.toString();
+                } catch(e) {
+                    pWin.location.search = "?gps_lat=" + encodeURIComponent(lat.toFixed(5)) + "&gps_lon=" + encodeURIComponent(lon.toFixed(5)) + "&gps_target=" + encodeURIComponent(target);
+                }
+            },
+            function(err) {
+                let msg = "GPS अनुमति त्रुटि: " + err.message;
+                if (err.code === 1) {
+                    msg = "📍 डिवाइस GPS अनुमति अस्वीकृत (Location Permission Denied)।\\n\\nकृपया अपने ब्राउज़र के एड्रेस बार में लॉक (🔒) आइकन अथवा साइट सेटिंग्स पर क्लिक करके 'Location' को 'Allow' (अनुमति दें) करें, फिर पुनः GPS बटन दबाएं।";
+                } else if (err.code === 2) {
+                    msg = "📍 डिवाइस GPS सिग्नल प्राप्त नहीं हो सका। कृपया सुनिश्चित करें कि मोबाइल/कंप्यूटर में Location/GPS सेवा चालू है।";
+                } else if (err.code === 3) {
+                    msg = "⏱️ GPS अनुरोध समय समाप्त (Timeout) हो गया। कृपया दोबारा प्रयास करें।";
+                }
+                alert(msg);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+        );
+    }
+
+    parentWin.requestDeviceGPS = requestDeviceGPS;
+    window.requestDeviceGPS = requestDeviceGPS;
+
+    function bindGpsButtons() {
+        try {
+            const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            if (!pDoc) return;
+            const buttons = pDoc.querySelectorAll('button');
+            buttons.forEach(function(btn) {
+                const txt = btn.innerText || "";
+                if (txt.includes("वर्तमान GPS स्थान") && !btn.dataset.gpsBound) {
+                    btn.dataset.gpsBound = "true";
+                    btn.addEventListener('click', function() {
+                        const isNew = txt.includes("नवीन") || !!(btn.closest && btn.closest('.stTabs [data-baseweb="tab-panel"]:nth-child(2)'));
+                        requestDeviceGPS(isNew ? "new_prashna" : "nat_prashna");
+                    }, true);
+                }
+            });
+        } catch(e) {}
+    }
+
     function resolveClientGPS() {
         try {
             const cached = localStorage.getItem("jyotish_user_gps_loc") || sessionStorage.getItem("jyotish_user_gps_loc");
@@ -2877,6 +2941,8 @@ client_bridge_code = """
                 navigator.geolocation.getCurrentPosition(function(pos) {
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
+                    localStorage.setItem("jyotish_user_gps_lat", lat.toFixed(5));
+                    localStorage.setItem("jyotish_user_gps_lon", lon.toFixed(5));
                     fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + lat + "&longitude=" + lon + "&localityLanguage=en")
                         .then(function(r) { return r.json(); })
                         .then(function(data) {
@@ -4119,6 +4185,7 @@ client_bridge_code = """
     setupLanguageBridge();
     setupThemeMode();
     setupStickyTopHeader();
+    bindGpsButtons();
     resolveClientGPS();
     setInterval(function() {
         setupPWAandMobile();
@@ -4126,6 +4193,7 @@ client_bridge_code = """
         setupLanguageBridge();
         setupThemeMode();
         setupStickyTopHeader();
+        bindGpsButtons();
         const cached = localStorage.getItem("jyotish_user_gps_loc") || sessionStorage.getItem("jyotish_user_gps_loc");
         if (cached) {
             updateLocationUI(cached);
@@ -4135,6 +4203,45 @@ client_bridge_code = """
 </script>
 """
 components.html(client_bridge_code.replace("__ACTIVE_THEME_MODE__", cur_active_theme), height=0, width=0)
+
+if st.session_state.get("trigger_browser_gps"):
+    _t_target = st.session_state.pop("trigger_browser_gps", "nat_prashna")
+    components.html(f"""
+    <script>
+    (function() {{
+        try {{
+            const pWin = (window.parent && window.parent.location) ? window.parent : window;
+            if (pWin.requestDeviceGPS) {{
+                pWin.requestDeviceGPS("{_t_target}");
+            }} else if (window.requestDeviceGPS) {{
+                window.requestDeviceGPS("{_t_target}");
+            }} else {{
+                const nav = (pWin.navigator && pWin.navigator.geolocation) ? pWin.navigator : navigator;
+                if (nav && nav.geolocation) {{
+                    nav.geolocation.getCurrentPosition(function(pos) {{
+                        const lat = pos.coords.latitude;
+                        const lon = pos.coords.longitude;
+                        const u = new URL(pWin.location.href);
+                        u.searchParams.set("gps_lat", lat.toFixed(5));
+                        u.searchParams.set("gps_lon", lon.toFixed(5));
+                        u.searchParams.set("gps_target", "{_t_target}");
+                        pWin.location.href = u.toString();
+                    }}, function(err) {{
+                        let msg = "GPS अनुमति त्रुटि: " + err.message;
+                        if (err.code === 1) {{
+                            msg = "📍 डिवाइस GPS अनुमति अस्वीकृत (Location Permission Denied)। कृपया ब्राउज़र एड्रेस बार में लॉक (🔒) आइकन पर क्लिक करके लोकेशन को 'Allow' करें।";
+                        }}
+                        alert(msg);
+                    }}, {{ enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }});
+                }}
+            }}
+        }} catch(e) {{
+            console.error("GPS trigger error:", e);
+        }}
+    }})();
+    </script>
+    """, height=0, width=0)
+
 
 
 # -------------------------------------------------------------
@@ -4362,15 +4469,50 @@ if "gps_lat" in _qp and "gps_lon" in _qp:
     try:
         _g_lat = float(_qp.get("gps_lat"))
         _g_lon = float(_qp.get("gps_lon"))
-        st.session_state.birth_lat = _g_lat
-        st.session_state.birth_lon = _g_lon
+        _g_target = str(_qp.get("gps_target", "nat_prashna"))
         _g_loc = default_geocoding_service.reverse_geocode(_g_lat, _g_lon)
-        if _g_loc:
-            st.session_state.birth_city = f"{_g_loc.city}, {_g_loc.state}"
-            st.session_state.birth_tz = _g_loc.timezone_offset
-        st.toast(f"📍 GPS स्थान प्राप्त: {st.session_state.get('birth_city', '')}", icon="🛰️")
+        _city_name = f"{_g_loc.city}, {_g_loc.state}" if _g_loc else f"{_g_lat:.4f}, {_g_lon:.4f}"
+        _tz_offset = _g_loc.timezone_offset if _g_loc else 5.5
+
+        if _g_target == "new_prashna":
+            st.session_state.new_prashna_lat = _g_lat
+            st.session_state.new_prashna_lon = _g_lon
+            st.session_state.new_prashna_city = _city_name
+            st.session_state.new_prashna_tz = _tz_offset
+            if "new_prashna_city_input" in st.session_state:
+                st.session_state.new_prashna_city_input = _city_name
+            if "new_prashna_lat_num" in st.session_state:
+                st.session_state.new_prashna_lat_num = _g_lat
+            if "new_prashna_lon_num" in st.session_state:
+                st.session_state.new_prashna_lon_num = _g_lon
+            if "new_prashna_tz_num" in st.session_state:
+                st.session_state.new_prashna_tz_num = _tz_offset
+            if "prashna_new_res" in st.session_state:
+                st.session_state.prashna_new_res = None
+            st.toast(f"📍 नवीन प्रश्न GPS स्थान: {_city_name} ({_g_lat:.4f}, {_g_lon:.4f})", icon="🛰️")
+        else:
+            st.session_state.birth_lat = _g_lat
+            st.session_state.birth_lon = _g_lon
+            st.session_state.birth_city = _city_name
+            st.session_state.birth_tz = _tz_offset
+            if "gla_city_query_input" in st.session_state:
+                st.session_state.gla_city_query_input = _city_name
+            if "gla_lat_input" in st.session_state:
+                st.session_state.gla_lat_input = _g_lat
+            if "gla_lon_input" in st.session_state:
+                st.session_state.gla_lon_input = _g_lon
+            if "gla_tz_input" in st.session_state:
+                st.session_state.gla_tz_input = _tz_offset
+            if "prashna_native_res" in st.session_state:
+                st.session_state.prashna_native_res = None
+            if "active_prashna_res" in st.session_state:
+                st.session_state.active_prashna_res = None
+            st.toast(f"📍 GPS स्थान प्राप्त: {_city_name} ({_g_lat:.4f}, {_g_lon:.4f})", icon="🛰️")
+
         del st.query_params["gps_lat"]
         del st.query_params["gps_lon"]
+        if "gps_target" in st.query_params:
+            del st.query_params["gps_target"]
     except Exception:
         pass
 
@@ -5858,6 +6000,12 @@ with st.container(key="top_frozen_header_container", border=False):
                             st.session_state.birth_lon = _c_ln
                             st.session_state.birth_tz = _c_tzo
                             st.rerun()
+
+                col_gps_b1, col_gps_b2 = st.columns([1.8, 3.2])
+                with col_gps_b1:
+                    if st.button("🛰️ वर्तमान GPS स्थान", key="btn_birth_get_gps", use_container_width=True, help="ब्राउज़र/डिवाइस GPS से वास्तविक अक्षांश-देशांतर प्राप्त करें"):
+                        st.session_state.trigger_browser_gps = "birth"
+                        st.rerun()
 
                 # Row 3: City Geocoding & Coordinates
                 col_geo1, col_geo2, col_geo3 = st.columns([1.6, 1.4, 1.3])
@@ -10421,15 +10569,9 @@ elif selected_idx == 5:
         with col_nt4:
             st.write("")
             st.write("")
-            if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_nat_set_gps", help="डिवाइस / नेटवर्क GPS से तात्कालिक स्थान लें"):
-                ip_loc = default_geocoding_service.get_ip_location()
-                if ip_loc:
-                    st.session_state.birth_lat = ip_loc.latitude
-                    st.session_state.birth_lon = ip_loc.longitude
-                    st.session_state.birth_city = f"{ip_loc.city}, {ip_loc.state}"
-                    st.session_state.birth_tz = ip_loc.timezone_offset
-                    st.toast(f"📍 GPS स्थान: {st.session_state.birth_city}", icon="🛰️")
-                    st.rerun()
+            if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_nat_set_gps", help="डिवाइस GPS अनुमति मांगकर सटीक वर्तमान स्थान लें"):
+                st.session_state.trigger_browser_gps = "nat_prashna"
+                st.rerun()
 
         calc_nat_btn = st.button("🔮 सक्रिय जातक प्रश्न विश्लेषण प्राप्त करें (Analyze Native Horary Query)", type="primary", use_container_width=True, key="btn_calc_nat_prashna")
 
@@ -10637,15 +10779,9 @@ elif selected_idx == 5:
         with col_nt4:
             st.write("")
             st.write("")
-            if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_new_set_gps", help="डिवाइस / नेटवर्क GPS से तात्कालिक स्थान लें"):
-                ip_loc = default_geocoding_service.get_ip_location()
-                if ip_loc:
-                    st.session_state.new_prashna_lat = ip_loc.latitude
-                    st.session_state.new_prashna_lon = ip_loc.longitude
-                    st.session_state.new_prashna_city = f"{ip_loc.city}, {ip_loc.state}"
-                    st.session_state.new_prashna_tz = ip_loc.timezone_offset
-                    st.toast(f"📍 GPS स्थान: {st.session_state.new_prashna_city}", icon="🛰️")
-                    st.rerun()
+            if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_new_set_gps", help="डिवाइस GPS अनुमति मांगकर सटीक वर्तमान स्थान लें"):
+                st.session_state.trigger_browser_gps = "new_prashna"
+                st.rerun()
 
         # Row 3: Coordinate fine-tuning
         col_c1, col_c2, col_c3 = st.columns(3)

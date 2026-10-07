@@ -309,6 +309,19 @@ class GeocodingService:
                 except Exception:
                     tz = 5.5
 
+                # Guard against cloud hosting datacenters (e.g. Google Cloud / AWS in Oregon / US)
+                if country in ["United States", "US"] or city in ["The Dalles", "Boardman", "Council Bluffs", "Ashburn", "North Bergen"]:
+                    return LocationResult(
+                        city="New Delhi",
+                        state="Delhi",
+                        country="India",
+                        latitude=28.6139,
+                        longitude=77.2090,
+                        timezone_offset=5.5,
+                        formatted_name="New Delhi, Delhi, India (डिफ़ॉल्ट)",
+                        source="default_fallback"
+                    )
+
                 return LocationResult(
                     city=city,
                     state=region,
