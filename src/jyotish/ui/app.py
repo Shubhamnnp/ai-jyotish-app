@@ -2865,6 +2865,17 @@ client_bridge_code = """
         } catch (e) {}
     }
 
+    // Clean any stale cloud datacenter (The Dalles, Oregon) cache immediately
+    try {
+        const cachedLoc = localStorage.getItem("jyotish_user_gps_loc") || "";
+        if (cachedLoc.includes("The Dalles") || cachedLoc.includes("Oregon") || cachedLoc.includes("United States")) {
+            localStorage.removeItem("jyotish_user_gps_loc");
+            localStorage.removeItem("jyotish_user_gps_lat");
+            localStorage.removeItem("jyotish_user_gps_lon");
+            sessionStorage.removeItem("jyotish_user_gps_loc");
+        }
+    } catch(e) {}
+
     function requestDeviceGPS(target) {
         target = target || "nat_prashna";
         const pWin = (window.parent && window.parent.location) ? window.parent : window;
@@ -2881,6 +2892,11 @@ client_bridge_code = """
             function(pos) {
                 const lat = pos.coords.latitude;
                 const lon = pos.coords.longitude;
+                // Guard against datacenter coordinates (The Dalles, Oregon: lat ~45.5 to 45.7, lon ~ -121.3 to -121.0)
+                if (Math.abs(lat - 45.5946) < 0.8 && Math.abs(lon - (-121.1787)) < 0.8) {
+                    alert("📍 डिवाइस ने क्लाउड सर्वर का स्थान (The Dalles, Oregon) लौटाया है।\\n\\nकृपया सुनिश्चित करें कि आपके डिवाइस (लैपटॉप/मोबाइल) में GPS/लोकेशन सेवा चालू है, और ब्राउज़र में GPS अनुमति दी गई है।");
+                    return;
+                }
                 try {
                     localStorage.setItem("jyotish_user_gps_lat", lat.toFixed(5));
                     localStorage.setItem("jyotish_user_gps_lon", lon.toFixed(5));
@@ -2904,7 +2920,7 @@ client_bridge_code = """
                 }
                 alert(msg);
             },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
         );
     }
 
@@ -2921,8 +2937,13 @@ client_bridge_code = """
                 if (txt.includes("वर्तमान GPS स्थान") && !btn.dataset.gpsBound) {
                     btn.dataset.gpsBound = "true";
                     btn.addEventListener('click', function() {
-                        const isNew = txt.includes("नवीन") || !!(btn.closest && btn.closest('.stTabs [data-baseweb="tab-panel"]:nth-child(2)'));
-                        requestDeviceGPS(isNew ? "new_prashna" : "nat_prashna");
+                        let target = "nat_prashna";
+                        if (txt.includes("नवीन") || (btn.closest && btn.closest('.stTabs [data-baseweb="tab-panel"]:nth-child(2)'))) {
+                            target = "new_prashna";
+                        } else if (btn.closest && (btn.closest('.st-key-btn_birth_get_gps') || btn.closest('[data-testid="stExpander"]'))) {
+                            target = "birth";
+                        }
+                        requestDeviceGPS(target);
                     }, true);
                 }
             });
@@ -2950,15 +2971,23 @@ client_bridge_code = """
     function resolveClientGPS() {
         try {
             const cached = localStorage.getItem("jyotish_user_gps_loc") || sessionStorage.getItem("jyotish_user_gps_loc");
-            if (cached) {
+            if (cached && !cached.includes("The Dalles") && !cached.includes("Oregon")) {
                 updateLocationUI(cached);
             }
 
-            if (navigator.geolocation && !window.__gps_queried) {
+            const pWin = (window.parent && window.parent.location) ? window.parent : window;
+            const nav = (pWin.navigator && pWin.navigator.geolocation) 
+                        ? pWin.navigator 
+                        : ((window.navigator && window.navigator.geolocation) ? window.navigator : null);
+
+            if (nav && nav.geolocation && !window.__gps_queried) {
                 window.__gps_queried = true;
-                navigator.geolocation.getCurrentPosition(function(pos) {
+                nav.geolocation.getCurrentPosition(function(pos) {
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
+                    if (Math.abs(lat - 45.5946) < 0.8 && Math.abs(lon - (-121.1787)) < 0.8) {
+                        return; // Ignore datacenter coords
+                    }
                     localStorage.setItem("jyotish_user_gps_lat", lat.toFixed(5));
                     localStorage.setItem("jyotish_user_gps_lon", lon.toFixed(5));
                     fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + lat + "&longitude=" + lon + "&localityLanguage=en")
@@ -2967,6 +2996,7 @@ client_bridge_code = """
                             const city = data.locality || data.city || data.principalSubdivision || "स्थानीय";
                             const state = data.principalSubdivision || "";
                             const country = data.countryName || "India";
+                            if (country === "United States" || city === "The Dalles") return;
                             const loc = city + (state && state !== city ? (", " + state) : "") + " (" + country + ")";
                             localStorage.setItem("jyotish_user_gps_loc", loc);
                             sessionStorage.setItem("jyotish_user_gps_loc", loc);
@@ -2980,6 +3010,7 @@ client_bridge_code = """
                                     const city = a.city || a.town || a.village || a.county || "स्थानीय";
                                     const state = a.state || "";
                                     const country = a.country || "India";
+                                    if (country === "United States" || city === "The Dalles") return;
                                     const loc = city + (state ? (", " + state) : "") + " (" + country + ")";
                                     localStorage.setItem("jyotish_user_gps_loc", loc);
                                     sessionStorage.setItem("jyotish_user_gps_loc", loc);
@@ -2988,19 +3019,23 @@ client_bridge_code = """
                         });
                 }, function(err) {
                     // Fallback to client-side IP lookup in user browser (not server)
-                    if (!cached) {
+                    if (!cached || cached.includes("The Dalles") || cached.includes("Oregon")) {
                         fetch("https://ipapi.co/json/")
                             .then(function(r) { return r.json(); })
                             .then(function(d) {
-                                const loc = (d.city || "Bahraich") + ", " + (d.region || "Uttar Pradesh") + " (" + (d.country_name || "India") + ")";
+                                if (d.country_code === "US" || d.region === "Oregon" || d.city === "The Dalles") {
+                                    updateLocationUI("नई दिल्ली, भारत (डिफ़ॉल्ट)");
+                                    return;
+                                }
+                                const loc = (d.city || "नई दिल्ली") + ", " + (d.region || "दिल्ली") + " (" + (d.country_name || "India") + ")";
                                 localStorage.setItem("jyotish_user_gps_loc", loc);
                                 updateLocationUI(loc);
                             })
                             .catch(function() {
-                                updateLocationUI("Nanpara, Bahraich (India)");
+                                updateLocationUI("नई दिल्ली, भारत (डिफ़ॉल्ट)");
                             });
                     }
-                }, { timeout: 10000, enableHighAccuracy: true, maximumAge: 30000 });
+                }, { timeout: 15000, enableHighAccuracy: true, maximumAge: 30000 });
             }
         } catch (e) {
             console.error('GPS resolver error:', e);
@@ -4564,44 +4599,49 @@ if "gps_lat" in _qp and "gps_lon" in _qp:
         _g_lat = float(_qp.get("gps_lat"))
         _g_lon = float(_qp.get("gps_lon"))
         _g_target = str(_qp.get("gps_target", "nat_prashna"))
-        _g_loc = default_geocoding_service.reverse_geocode(_g_lat, _g_lon)
-        _city_name = f"{_g_loc.city}, {_g_loc.state}" if _g_loc else f"{_g_lat:.4f}, {_g_lon:.4f}"
-        _tz_offset = _g_loc.timezone_offset if _g_loc else 5.5
 
-        if _g_target == "new_prashna":
-            st.session_state.new_prashna_lat = _g_lat
-            st.session_state.new_prashna_lon = _g_lon
-            st.session_state.new_prashna_city = _city_name
-            st.session_state.new_prashna_tz = _tz_offset
-            if "new_prashna_city_input" in st.session_state:
-                st.session_state.new_prashna_city_input = _city_name
-            if "new_prashna_lat_num" in st.session_state:
-                st.session_state.new_prashna_lat_num = _g_lat
-            if "new_prashna_lon_num" in st.session_state:
-                st.session_state.new_prashna_lon_num = _g_lon
-            if "new_prashna_tz_num" in st.session_state:
-                st.session_state.new_prashna_tz_num = _tz_offset
-            if "prashna_new_res" in st.session_state:
-                st.session_state.prashna_new_res = None
-            st.toast(f"📍 नवीन प्रश्न GPS स्थान: {_city_name} ({_g_lat:.4f}, {_g_lon:.4f})", icon="🛰️")
+        # Guard against cloud hosting datacenter coordinates (The Dalles, Oregon: ~45.5946, -121.1787)
+        if (abs(_g_lat - 45.5946) < 0.8 and abs(_g_lon - (-121.1787)) < 0.8) or (_g_lat == 0.0 and _g_lon == 0.0):
+            st.warning("⚠️ डिवाइस से वास्तविक GPS सिग्नल नहीं मिला (क्लाउड सर्वर का स्थान The Dalles, Oregon प्राप्त हुआ था)। कृपया डिवाइस पर GPS ऑन करें या शहर खोजें।")
         else:
-            st.session_state.birth_lat = _g_lat
-            st.session_state.birth_lon = _g_lon
-            st.session_state.birth_city = _city_name
-            st.session_state.birth_tz = _tz_offset
-            if "gla_city_query_input" in st.session_state:
-                st.session_state.gla_city_query_input = _city_name
-            if "gla_lat_input" in st.session_state:
-                st.session_state.gla_lat_input = _g_lat
-            if "gla_lon_input" in st.session_state:
-                st.session_state.gla_lon_input = _g_lon
-            if "gla_tz_input" in st.session_state:
-                st.session_state.gla_tz_input = _tz_offset
-            if "prashna_native_res" in st.session_state:
-                st.session_state.prashna_native_res = None
-            if "active_prashna_res" in st.session_state:
-                st.session_state.active_prashna_res = None
-            st.toast(f"📍 GPS स्थान प्राप्त: {_city_name} ({_g_lat:.4f}, {_g_lon:.4f})", icon="🛰️")
+            _g_loc = default_geocoding_service.reverse_geocode(_g_lat, _g_lon)
+            _city_name = f"{_g_loc.city}, {_g_loc.state}" if _g_loc else f"{_g_lat:.4f}, {_g_lon:.4f}"
+            _tz_offset = _g_loc.timezone_offset if _g_loc else 5.5
+
+            if _g_target == "new_prashna":
+                st.session_state.new_prashna_lat = _g_lat
+                st.session_state.new_prashna_lon = _g_lon
+                st.session_state.new_prashna_city = _city_name
+                st.session_state.new_prashna_tz = _tz_offset
+                if "new_prashna_city_input" in st.session_state:
+                    st.session_state.new_prashna_city_input = _city_name
+                if "new_prashna_lat_num" in st.session_state:
+                    st.session_state.new_prashna_lat_num = _g_lat
+                if "new_prashna_lon_num" in st.session_state:
+                    st.session_state.new_prashna_lon_num = _g_lon
+                if "new_prashna_tz_num" in st.session_state:
+                    st.session_state.new_prashna_tz_num = _tz_offset
+                if "prashna_new_res" in st.session_state:
+                    st.session_state.prashna_new_res = None
+                st.toast(f"📍 नवीन प्रश्न GPS स्थान: {_city_name} ({_g_lat:.4f}, {_g_lon:.4f})", icon="🛰️")
+            else:
+                st.session_state.birth_lat = _g_lat
+                st.session_state.birth_lon = _g_lon
+                st.session_state.birth_city = _city_name
+                st.session_state.birth_tz = _tz_offset
+                if "gla_city_query_input" in st.session_state:
+                    st.session_state.gla_city_query_input = _city_name
+                if "gla_lat_input" in st.session_state:
+                    st.session_state.gla_lat_input = _g_lat
+                if "gla_lon_input" in st.session_state:
+                    st.session_state.gla_lon_input = _g_lon
+                if "gla_tz_input" in st.session_state:
+                    st.session_state.gla_tz_input = _tz_offset
+                if "prashna_native_res" in st.session_state:
+                    st.session_state.prashna_native_res = None
+                if "active_prashna_res" in st.session_state:
+                    st.session_state.active_prashna_res = None
+                st.toast(f"📍 GPS स्थान प्राप्त: {_city_name} ({_g_lat:.4f}, {_g_lon:.4f})", icon="🛰️")
 
         del st.query_params["gps_lat"]
         del st.query_params["gps_lon"]

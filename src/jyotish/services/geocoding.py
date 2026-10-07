@@ -251,6 +251,19 @@ class GeocodingService:
                 country = addr.get("country", "India")
                 display_name = data.get("display_name", f"{city}, {state}, {country}")
                 tz = 5.5 if country.lower() == "india" else round((lon / 15.0) * 2) / 2
+                # Guard against cloud hosting datacenters (e.g. Google Cloud / AWS in Oregon / US)
+                if country in ["United States", "US"] or city in ["The Dalles", "Boardman", "Council Bluffs", "Ashburn", "North Bergen"] or (abs(lat - 45.5946) < 0.5 and abs(lon - (-121.1787)) < 0.5):
+                    return LocationResult(
+                        city="New Delhi",
+                        state="Delhi",
+                        country="India",
+                        latitude=28.6139,
+                        longitude=77.2090,
+                        timezone_offset=5.5,
+                        formatted_name="New Delhi, Delhi, India (डिफ़ॉल्ट)",
+                        source="default_fallback"
+                    )
+
                 return LocationResult(
                     city=city,
                     state=state,
