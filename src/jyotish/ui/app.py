@@ -12867,6 +12867,15 @@ elif selected_idx == 8:
             h_score = min(90, max(15, health_alert))
             s_score = min(95, max(30, spirit_support))
 
+            # 4-Lane Parallel Multi-Dasha Gantt Timeline (Vimshottari, Yogini, Chara, KCD)
+            try:
+                parallel_html = dt_mod.default_dasha_timeline_service.render_multi_dasha_parallel_timeline_html(
+                    chart, target_date=dasha_target_date, theme_mode=cur_th
+                )
+                components.html(parallel_html, height=450, scrolling=True)
+            except Exception as _e_par:
+                st.caption(f"समानांतर टाइमलाइन निर्माण: {_e_par}")
+
             # HUD Matrix Table
             matrix_data = [
                 {"दशा प्रणाली": "🌟 विंशोत्तरी (५-स्तर)", "सक्रिय काल": v_act_str, "मुख्य स्वामी": act_m['lord'], "प्रभाव क्षेत्र": "जीवन की आधारभूत दिशा व कार्यकलाप"},
@@ -13430,7 +13439,7 @@ elif selected_idx == 9:
             kak_res = kak_svc.scan_all_transits(chart, target_date=t_date)
             planets_data = kak_res["planets"]
 
-            ck_kpi1, ck_kpi2, ck_kpi3, ck_kpi4 = st.columns(4)
+            ck_kpi1, ck_kpi2, ck_kpi3, ck_kpi4, ck_kpi5 = st.columns(5)
             with ck_kpi1:
                 st.metric("कुल शुभ कक्षी (Subha)", f"{kak_res['subha_count']} / {kak_res['total_count']} ग्रह", f"{kak_res['overall_kakshya_pct']}% अनुकूलता")
             with ck_kpi2:
@@ -13441,6 +13450,9 @@ elif selected_idx == 9:
             with ck_kpi4:
                 jup_info = planets_data.get("Jupiter", {})
                 st.metric("♃ गुरु कक्षी गोचर", f"कक्षी {jup_info.get('kakshya_num', '-')}: {jup_info.get('kakshya_lord_hi', '-')}", "🟢 १ बिन्दु (शुभ)" if jup_info.get('bindu_val') == 1 else "🔴 ० बिन्दु (अशुभ)")
+            with ck_kpi5:
+                rahu_info = planets_data.get("Rahu", {})
+                st.metric("🐉 राहु कक्षी गोचर", f"कक्षी {rahu_info.get('kakshya_num', '-')}: {rahu_info.get('kakshya_lord_hi', '-')}", "🟢 १ बिन्दु (शुभ)" if rahu_info.get('bindu_val') == 1 else "🔴 ० बिन्दु (अशुभ)")
 
             st.markdown("#### ⚡ तात्कालिक कक्षी स्थिति एवं ८-खंडीय अष्टकवर्ग पट्टी")
             for p_name, p_d in planets_data.items():
@@ -14332,6 +14344,25 @@ elif selected_idx == 10:
                 "समस्त कार्यक ग्रह": ", ".join(h_info["all_significators"])
             })
         st.dataframe(pd.DataFrame(h_table_rows), use_container_width=True, hide_index=True)
+
+        st.markdown("##### 🎯 द्वादश भाव कस्पल सब-लॉर्ड (CSL 1-12) एवं शास्त्रीय कार्य सिद्धि मैट्रिक्स (KP Readers I-VI)")
+        st.caption("प्रो. के.एस. कृष्णमूर्ति के अनुसार प्रत्येक भाव का अभीष्ट फल उस भाव के कस्पल सब-लॉर्ड (CSL) एवं उसके नक्षत्र स्वामी के कार्यकत्वों द्वारा निर्धारित होता है:")
+        csl_matrix_data = kp_chart_data.get("csl_matrix", [])
+        if csl_matrix_data:
+            csl_display_rows = []
+            for item in csl_matrix_data:
+                csl_display_rows.append({
+                    "भाव (Cusp)": f"#{item['cusp_num']} {item['sign']} ({item['cusp_degree']})",
+                    "जीवन आयाम (Domain)": item["bhava_name"],
+                    "CSL (उप-स्वामी)": item["csl"],
+                    "नक्षत्र स्वामी": item["star_lord"],
+                    "कार्यक भाव": ", ".join([f"#{h}" for h in item["signified_houses"]]),
+                    "अनुकूल भाव": ", ".join([f"#{h}" for h in item["fav_hits"]]) or "—",
+                    "बाधक भाव": ", ".join([f"#{h}" for h in item["unfav_hits"]]) or "—",
+                    "कार्य सिद्धि निर्णय": item["promise_badge"],
+                    "सहमति": f"{item['score']}%"
+                })
+            st.dataframe(pd.DataFrame(csl_display_rows), use_container_width=True, hide_index=True)
 
     # -------------------------------------------------------------
     # TAB 4: RULING PLANETS (RP)

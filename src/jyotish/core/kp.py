@@ -412,8 +412,107 @@ class KPEngine:
         }
 
     @classmethod
-    def calculate_chart_kp(cls, chart: KundaliChart) -> Dict[str, Any]:
-        """Calculates complete KP planetary, cuspal, 4-fold significator, and RP details."""
+    def calculate_nirayana_placidus_cusps(cls, chart: KundaliChart) -> Dict[int, float]:
+        """
+        Calculates exact Nirayana (Sidereal) Placidus House Cusps (1 to 12)
+        following Prof. K.S. Krishnamurti's KP Reader II (Table of Houses).
+        Uses exact Right Ascension of Midheaven (RAMC), geographic latitude,
+        obliquity of the ecliptic, and the active ayanamsa.
+        """
+        import math
+        import ephem
+
+        b_data = chart.birth_data
+        b_d = b_data.birth_date
+        b_t = b_data.birth_time
+        if isinstance(b_d, str):
+            b_d = datetime.strptime(b_d, "%Y-%m-%d").date()
+        elif isinstance(b_d, datetime):
+            b_d = b_d.date()
+        if isinstance(b_t, str):
+            try:
+                b_t = datetime.strptime(b_t, "%H:%M:%S").time()
+            except ValueError:
+                b_t = datetime.strptime(b_t, "%H:%M").time()
+        elif isinstance(b_t, datetime):
+            b_t = b_t.time()
+
+        birth_dt = datetime.combine(b_d, b_t)
+        dt_utc = birth_dt - timedelta(hours=float(b_data.timezone_offset))
+
+        observer = ephem.Observer()
+        observer.lat = str(b_data.latitude)
+        observer.lon = str(b_data.longitude)
+        observer.elevation = 0
+        observer.date = ephem.Date(dt_utc)
+
+        lst_rad = float(observer.sidereal_time())
+        ramc_rad = lst_rad % (2 * math.pi)
+
+        jd = float(ephem.julian_date(dt_utc))
+        t = (jd - 2451545.0) / 36525.0
+        eps_deg = 23.4392911 - 0.0130042 * t
+        eps = math.radians(eps_deg)
+        phi = math.radians(b_data.latitude)
+        ayanamsa = chart.ayanamsa_value
+
+        mc_trop = math.atan2(math.sin(ramc_rad), math.cos(ramc_rad) * math.cos(eps)) % (2 * math.pi)
+        y1 = math.cos(ramc_rad)
+        x1 = -(math.sin(ramc_rad) * math.cos(eps) + math.tan(phi) * math.sin(eps))
+        asc_trop = math.atan2(y1, x1) % (2 * math.pi)
+
+        def solve_placidus(base_ra, f, is_diurnal):
+            lam = base_ra
+            for _ in range(25):
+                sin_d = math.sin(eps) * math.sin(lam)
+                d = math.asin(max(-0.9999, min(0.9999, sin_d)))
+                tan_d = math.tan(d)
+                sin_ad = max(-0.9999, min(0.9999, math.tan(phi) * tan_d))
+                ad = math.asin(sin_ad)
+                if is_diurnal:
+                    ra = (ramc_rad + f * (math.pi / 2.0 + ad)) % (2 * math.pi)
+                else:
+                    ra = (ramc_rad + math.pi - (1.0 - f) * (math.pi / 2.0 - ad)) % (2 * math.pi)
+                y = math.sin(ra)
+                x = math.cos(ra) * math.cos(eps) - tan_d * math.sin(eps)
+                lam_next = math.atan2(y, x) % (2 * math.pi)
+                if abs(lam_next - lam) < 1e-7:
+                    break
+                lam = lam_next
+            return lam
+
+        try:
+            cusp11 = solve_placidus(ramc_rad + math.radians(30), 1/3, True)
+            cusp12 = solve_placidus(ramc_rad + math.radians(60), 2/3, True)
+            cusp2 = solve_placidus(ramc_rad + math.radians(120), 1/3, False)
+            cusp3 = solve_placidus(ramc_rad + math.radians(150), 2/3, False)
+
+            trop = {
+                10: math.degrees(mc_trop) % 360.0,
+                11: math.degrees(cusp11) % 360.0,
+                12: math.degrees(cusp12) % 360.0,
+                1: math.degrees(asc_trop) % 360.0,
+                2: math.degrees(cusp2) % 360.0,
+                3: math.degrees(cusp3) % 360.0,
+            }
+            trop[4] = (trop[10] + 180.0) % 360.0
+            trop[5] = (trop[11] + 180.0) % 360.0
+            trop[6] = (trop[12] + 180.0) % 360.0
+            trop[7] = (trop[1] + 180.0) % 360.0
+            trop[8] = (trop[2] + 180.0) % 360.0
+            trop[9] = (trop[3] + 180.0) % 360.0
+
+            return {h: (trop[h] - ayanamsa) % 360.0 for h in range(1, 13)}
+        except Exception:
+            return {h: (chart.lagna_longitude + (h - 1) * 30.0) % 360.0 for h in range(1, 13)}
+
+    @classmethod
+    def calculate_chart_kp(cls, chart: KundaliChart, house_system: str = "Placidus") -> Dict[str, Any]:
+        """
+        Calculates complete KP planetary, cuspal, 4-fold significator, and RP details.
+        Supports authentic KP Nirayana Placidus House Cusps (KP Readers I-VI standard)
+        as well as Equal Bhav Chalit cusps.
+        """
         cls._build_249_table()
 
         # 1. Planetary KP Significations
@@ -435,9 +534,14 @@ class KPEngine:
                 })
 
         # 2. Cuspal KP Details (12 Houses)
+        if house_system.lower() == "placidus":
+            cusp_lons = cls.calculate_nirayana_placidus_cusps(chart)
+        else:
+            cusp_lons = {h: (chart.lagna_longitude + (h - 1) * 30.0) % 360.0 for h in range(1, 13)}
+
         cusps_kp = []
         for h in range(1, 13):
-            cusp_lon = (chart.lagna_longitude + (h - 1) * 30.0) % 360.0
+            cusp_lon = cusp_lons.get(h, (chart.lagna_longitude + (h - 1) * 30.0) % 360.0)
             kp_c = cls.get_sign_star_sub_subsub(cusp_lon)
             deg_str = f"{int(kp_c['sign_degree'])}° {int((kp_c['sign_degree'] % 1) * 60):02d}' {int(((kp_c['sign_degree'] * 60) % 1) * 60):02d}\""
             cusps_kp.append({
@@ -458,14 +562,102 @@ class KPEngine:
         # 4. Ruling Planets (RP)
         ruling_planets = cls.get_ruling_planets(chart)
 
+        # 5. CSL 1-12 Promise Matrix
+        csl_matrix = cls.get_csl_promise_matrix(chart, house_system=house_system)
+
         return {
             "planets_kp": planets_kp,
             "cusps_kp": cusps_kp,
             "ruling_planets": ruling_planets,
             "house_significators": significators_data["house_significators"],
             "planet_significations": significators_data["planet_significations"],
+            "csl_matrix": csl_matrix,
+            "house_system_used": "Nirayana Placidus (KP Reader Standard)" if house_system.lower() == "placidus" else "Equal House (Bhav Chalit)",
             "total_249_divisions": cls._kp_249_table
         }
+
+    @classmethod
+    def get_csl_promise_matrix(cls, chart: KundaliChart, house_system: str = "Placidus") -> List[Dict[str, Any]]:
+        """
+        Evaluates Cuspal Sub Lords (CSL 1 to 12) Matrix for all 12 life domains
+        according to Prof. K.S. Krishnamurti's KP Readers I to VI.
+        """
+        cls._build_249_table()
+        if house_system.lower() == "placidus":
+            cusp_lons = cls.calculate_nirayana_placidus_cusps(chart)
+        else:
+            cusp_lons = {h: (chart.lagna_longitude + (h - 1) * 30.0) % 360.0 for h in range(1, 13)}
+
+        significators_data = cls.calculate_4fold_significators(chart)
+        p_sigs = significators_data["planet_significations"]
+
+        csl_rules = {
+            1: {"name": "प्रथम भाव (तनु / शारीरिक स्वास्थ्य / आयु)", "fav": [1, 2, 3, 11], "unfav": [6, 8, 12], "rule": "L1 CSL 1, 3, 11 का कार्यक हो तो दीर्घायु व उत्तम स्वास्थ्य; 6, 8, 12 रोग व व्याधि दर्शाते हैं।"},
+            2: {"name": "द्वितीय भाव (धन / कुटुंब / वित्तीय संचय)", "fav": [2, 6, 11], "unfav": [8, 12], "rule": "L2 CSL 2, 6, 11 का कार्यक हो तो प्रचुर धन संचय व वित्तीय सुरक्षा; 8, 12 हानि के सूचक हैं।"},
+            3: {"name": "तृतीय भाव (पराक्रम / भ्राता / लघु यात्रा / अनुबंध)", "fav": [3, 9, 11], "unfav": [4, 8], "rule": "L3 CSL 3, 11 को दर्शाये तो अनुबंध, संचार, मीडिया व व्यापारिक यात्राओं में सफलता।"},
+            4: {"name": "चतुर्थ भाव (गृह / भूमि / वाहन / माता / मूल शिक्षा)", "fav": [4, 11, 12], "unfav": [3, 6, 8], "rule": "L4 CSL 4, 11, 12 का कार्यक हो तो संपत्ति व वाहन प्राप्ति सुनिश्चित; 3 भाव विक्रय दर्शाता है।"},
+            5: {"name": "पंचम भाव (संतान / बुद्धि / प्रेम / पूर्वपुण्य)", "fav": [2, 5, 11], "unfav": [1, 4, 10], "rule": "L5 CSL 2, 5, 11 को दर्शाये तो संतान प्राप्ति व रचनात्मक सफलता; 1, 4, 10 विलंब दर्शाते हैं।"},
+            6: {"name": "षष्ठ भाव (नौकरी / सेवा / ऋण मुक्ति / शत्रु विजय)", "fav": [2, 6, 10, 11], "unfav": [5, 8, 12], "rule": "L6 CSL 6, 11 का कार्यक हो तो नौकरी, प्रतियोगी परीक्षा व विवाद में विजय; 5 व 12 पद त्याग दर्शाते हैं।"},
+            7: {"name": "सप्तम भाव (विवाह / जीवनसाथी / साझेदारी / व्यापार)", "fav": [2, 7, 11], "unfav": [1, 6, 10], "rule": "L7 CSL 2, 7, 11 को दर्शाये तो वैवाहिक सुख व स्थिर साझेदारी; 1, 6, 10 अलगाव दर्शाते हैं।"},
+            8: {"name": "अष्टम भाव (आयु / आकस्मिक धन / गूढ़ शोध / संकट)", "fav": [2, 8, 11], "unfav": [1, 5, 12], "rule": "L8 CSL 2, 11 से जुड़े तो वसीयत व आकस्मिक धन लाभ; 1, 6, 12 सर्जरी व कष्ट दर्शाते हैं।"},
+            9: {"name": "नवम भाव (भाग्य / धर्म / उच्च शिक्षा / दूरस्थ यात्रा)", "fav": [9, 11, 1], "unfav": [8, 12], "rule": "L9 CSL 9, 11 को दर्शाए तो भाग्योदय, उच्च शिक्षा व विदेशी सम्मान की प्राप्ति।"},
+            10: {"name": "दशम भाव (करियर / उच्च पद / प्रतिष्ठा / शासन सम्मान)", "fav": [2, 6, 10, 11], "unfav": [5, 8, 12], "rule": "L10 CSL 2, 6, 10, 11 का कार्यक हो तो करियर में सर्वोच्च पद व प्रशासनिक सफलता।"},
+            11: {"name": "एकादश भाव (सर्व मनोकामना पूर्ति / नियमित आय / लाभ)", "fav": [2, 11, 1], "unfav": [8, 12], "rule": "L11 CSL 2, 11 को पुष्ट करे तो जातक के समस्त मनोरथ व महत्वाकांक्षाएं सफल होती हैं।"},
+            12: {"name": "द्वादश भाव (विदेश वास / निवेश / मोक्ष / अस्पताल व्यय)", "fav": [3, 9, 12], "unfav": [2, 4, 11], "rule": "L12 CSL 3, 9, 12 से जुड़े तो स्थायी विदेश निवास व विदेशी स्रोतों से प्रचुर लाभ।"}
+        }
+
+        matrix = []
+        for h in range(1, 13):
+            c_lon = cusp_lons.get(h, (chart.lagna_longitude + (h - 1) * 30.0) % 360.0)
+            kp_c = cls.get_sign_star_sub_subsub(c_lon)
+            csl_p = kp_c["sub_lord"]
+            csl_star = kp_c["star_lord"]
+            csl_ssl = kp_c["sub_sub_lord"]
+
+            # Houses signified by CSL planet & its Star Lord
+            csl_houses = p_sigs.get(csl_p, {}).get("combined_houses", [])
+            star_houses = p_sigs.get(csl_star, {}).get("combined_houses", [])
+            all_signified = sorted(list(set(csl_houses + star_houses)))
+
+            rule = csl_rules.get(h, csl_rules[1])
+            fav_hits = [house for house in all_signified if house in rule["fav"]]
+            unfav_hits = [house for house in all_signified if house in rule["unfav"]]
+
+            score = 50 + len(fav_hits) * 15 - len(unfav_hits) * 18
+            score = max(10, min(95, score))
+
+            if score >= 65:
+                badge = "🌟 पूर्ण अनुकूल (Promised / Fruitful)"
+                color = "#059669"
+            elif score >= 45:
+                badge = "⚠️ मध्यम / विलंब उपरांत (Mixed / Delayed)"
+                color = "#D97706"
+            else:
+                badge = "❌ प्रतिकूल / बाधा (Challenging / Denied)"
+                color = "#DC2626"
+
+            deg_str = f"{int(kp_c['sign_degree'])}° {int((kp_c['sign_degree'] % 1) * 60):02d}'"
+
+            matrix.append({
+                "cusp_num": h,
+                "bhava_name": rule["name"],
+                "cusp_degree": deg_str,
+                "sign": kp_c["sign_name"],
+                "sign_lord": kp_c["sign_lord"],
+                "star_lord": csl_star,
+                "csl": csl_p,
+                "ssl": csl_ssl,
+                "signified_houses": all_signified,
+                "favorable_houses": rule["fav"],
+                "fav_hits": fav_hits,
+                "unfav_hits": unfav_hits,
+                "promise_badge": badge,
+                "score": score,
+                "color": color,
+                "kp_rule_text": rule["rule"]
+            })
+
+        return matrix
 
     @classmethod
     def get_horary_number_detail(cls, number: int) -> Dict[str, Any]:

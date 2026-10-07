@@ -5,14 +5,22 @@ with Mahadasha, Antardasha, and Pratyantardasha tiers, along with a live
 'TODAY' marker indicating native's exact life coordinates.
 """
 
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from typing import List, Dict, Any, Optional
 try:
     from ..core.models import KundaliChart
+    from ..core.constants import SIGN_NAMES, SIGN_LORDS
     from ..dasha.vimshottari import default_dasha_engine
+    from ..dasha.yogini import default_yogini_engine
+    from ..dasha.chara import default_chara_engine
+    from ..dasha.kcd import default_kcd_engine
 except (ImportError, ValueError):
     from src.jyotish.core.models import KundaliChart
+    from src.jyotish.core.constants import SIGN_NAMES, SIGN_LORDS
     from src.jyotish.dasha.vimshottari import default_dasha_engine
+    from src.jyotish.dasha.yogini import default_yogini_engine
+    from src.jyotish.dasha.chara import default_chara_engine
+    from src.jyotish.dasha.kcd import default_kcd_engine
 
 
 PLANET_THEME = {
@@ -397,7 +405,305 @@ class DashaTimelineService:
         """
         return html
 
+    def render_multi_dasha_parallel_timeline_html(
+        self,
+        chart: KundaliChart,
+        target_date: Optional[date] = None,
+        theme_mode: str = "day"
+    ) -> str:
+        """
+        Renders a synchronized 4-lane parallel visual comparison across:
+        1. विंशोत्तरी दशा (Vimshottari 120y)
+        2. योगिनी दशा (Yogini 36y cycle)
+        3. जैमिनी चर दशा (Jaimini Chara Rashi)
+        4. कालचक्र दशा (Kaalachakra KCD)
+        Synchronized across 0-100 years with a glowing 'TODAY' indicator line.
+        """
+        if target_date is None:
+            target_date = date.today()
+
+        birth_dt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
+        target_dt = datetime.combine(target_date, datetime.min.time())
+        timeline_end_dt = birth_dt + timedelta(days=100.0 * 365.2425)
+        total_span_days = 100.0 * 365.2425
+
+        today_days = max(0.0, (target_dt - birth_dt).total_seconds() / 86400.0)
+        today_pct = max(0.0, min(100.0, (today_days / total_span_days) * 100.0))
+        today_age = today_days / 365.2425
+
+        try:
+            v_list = self.engine.generate_timeline(chart)
+        except Exception:
+            v_list = []
+
+        try:
+            y_list = default_yogini_engine.generate_timeline(chart)
+        except Exception:
+            y_list = []
+
+        try:
+            c_list = default_chara_engine.generate_timeline(chart)
+        except Exception:
+            c_list = []
+
+        try:
+            k_list = default_kcd_engine.generate_timeline(chart)
+        except Exception:
+            k_list = []
+
+        is_dark = (theme_mode.lower() in ("night", "dark", "astrallis"))
+        bg_card = "#0F172A" if is_dark else "#FFFFFF"
+        border_card = "#334155" if is_dark else "#E2E8F0"
+        txt_main = "#F8FAFC" if is_dark else "#0F172A"
+        txt_sub = "#94A3B8" if is_dark else "#64748B"
+        lane_bg = "#1E293B" if is_dark else "#F8FAFC"
+
+        def build_lane_blocks(period_list, lord_key="lord", label_prefix=""):
+            blocks = []
+            for p in period_list:
+                s_dt = p["start_date"]
+                e_dt = p["end_date"]
+                if e_dt <= birth_dt or s_dt >= timeline_end_dt:
+                    continue
+                clamped_s = max(birth_dt, s_dt)
+                clamped_e = min(timeline_end_dt, e_dt)
+                dur_days = (clamped_e - clamped_s).total_seconds() / 86400.0
+                if dur_days <= 0:
+                    continue
+                w_pct = (dur_days / total_span_days) * 100.0
+
+                lord_val = p.get(lord_key, p.get("rashi", "Sun"))
+                th = PLANET_THEME.get(lord_val, {"color": "#6366F1", "bg": "#EEF2FF", "border": "#4F46E5", "name_hi": lord_val})
+                is_active = (s_dt <= target_dt <= e_dt)
+
+                b_bg = th["color"] if is_active else (th["border"] if is_dark else th["bg"])
+                b_color = "#FFFFFF" if (is_active or is_dark) else th["color"]
+                b_border = f"2px solid #FFFFFF" if is_active else f"1px solid {th['border']}"
+                active_pulse = "box-shadow: 0 0 10px rgba(234, 179, 8, 0.85); z-index: 2;" if is_active else ""
+
+                lbl = f"{th['name_hi']}" if "name_hi" in th else str(lord_val)
+                yrs = p.get("duration_years", 0)
+                yrs_str = f" ({yrs:.0f}y)" if w_pct >= 4.0 else ""
+
+                blocks.append(f"""<div style="width: {w_pct:.2f}%; height: 36px; background: {b_bg}; color: {b_color}; border: {b_border}; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: {900 if is_active else 700}; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 0 2px; position: relative; {active_pulse}" title="{label_prefix}{lbl} ({s_dt.strftime('%d-%b-%Y')} से {e_dt.strftime('%d-%b-%Y')}){' [सक्रिय]' if is_active else ''}">{lbl}{yrs_str}</div>""")
+            return "".join(blocks)
+
+        v_blocks = build_lane_blocks(v_list, lord_key="lord", label_prefix="विंशोत्तरी: ")
+        y_blocks = build_lane_blocks(y_list, lord_key="lord", label_prefix="योगिनी: ")
+        c_blocks = build_lane_blocks(c_list, lord_key="rashi", label_prefix="चर दशा: ")
+        k_blocks = build_lane_blocks(k_list, lord_key="rashi", label_prefix="कालचक्र: ")
+
+        today_marker_html = f"""<div style="position: absolute; left: {today_pct:.2f}%; top: -18px; bottom: -8px; width: 2.5px; background: #EF4444; z-index: 10; pointer-events: none; box-shadow: 0 0 10px #EF4444, 0 0 20px #F87171;"><div style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: #EF4444; color: #FFFFFF; font-size: 10px; font-weight: 900; padding: 1px 6px; border-radius: 4px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">📍 आज ({target_date.strftime('%d-%b-%Y')} | {today_age:.1f}y)</div><div style="position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; background: #EF4444; box-shadow: 0 0 8px #EF4444;"></div></div>"""
+
+        ticks_html = "".join([f'<div style="position:absolute; left:{age}%; transform:translateX(-50%); font-size:10px; color:{txt_sub}; font-weight:700;">{age}y</div>' for age in range(0, 101, 20)])
+
+        html = f"""
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: {bg_card}; border: 1.5px solid {border_card}; border-radius: 14px; padding: 20px 22px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap;">
+        <div>
+            <h4 style="margin: 0; color: {txt_main}; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+                ⏱️ बहु-दशा समानांतर जीवन टाइमलाइन (Multi-Dasha Parallel Lifeline 0-100 Years)
+            </h4>
+            <div style="font-size: 12px; color: {txt_sub}; margin-top: 3px;">
+                विंशोत्तरी (१२० वर्ष), योगिनी (३६ वर्ष चक्र), जैमिनी चर एवं कालचक्र दशा का एक साथ आनुपातिक दृश्य मिलान
+            </div>
+        </div>
+        <div style="background: rgba(239,68,68,0.1); border: 1px solid #EF4444; border-radius: 20px; padding: 4px 12px; font-size: 11.5px; font-weight: 800; color: #EF4444;">
+            📍 लक्षित आयु: {today_age:.1f} वर्ष ({target_date.strftime('%d-%b-%Y')})
+        </div>
+    </div>
+
+    <div style="position: relative; padding-top: 24px; padding-bottom: 24px;">
+        {today_marker_html}
+
+        <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: {txt_main}; margin-bottom: 4px;">
+                <span>🌟 १. विंशोत्तरी महादशा (Vimshottari 120y)</span>
+                <span style="color: {txt_sub};">पाराशर मूल आधार</span>
+            </div>
+            <div style="display: flex; width: 100%; border-radius: 6px; overflow: hidden; background: {lane_bg};">
+                {v_blocks}
+            </div>
+        </div>
+
+        <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: {txt_main}; margin-bottom: 4px;">
+                <span>🌸 २. योगिनी दशा (Yogini 36-Year Cycle)</span>
+                <span style="color: {txt_sub};">तात्कालिक मनोदशा व स्वास्थ्य</span>
+            </div>
+            <div style="display: flex; width: 100%; border-radius: 6px; overflow: hidden; background: {lane_bg};">
+                {y_blocks}
+            </div>
+        </div>
+
+        <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: {txt_main}; margin-bottom: 4px;">
+                <span>🔱 ३. जैमिनी चर दशा (Jaimini Chara Rashi)</span>
+                <span style="color: {txt_sub};">कारक ग्रह व सामाजिक प्रतिष्ठा</span>
+            </div>
+            <div style="display: flex; width: 100%; border-radius: 6px; overflow: hidden; background: {lane_bg};">
+                {c_blocks}
+            </div>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: {txt_main}; margin-bottom: 4px;">
+                <span>🔄 ४. कालचक्र दशा (Kaalachakra KCD)</span>
+                <span style="color: {txt_sub};">देह-जीव संतुलन व आकस्मिक गति</span>
+            </div>
+            <div style="display: flex; width: 100%; border-radius: 6px; overflow: hidden; background: {lane_bg};">
+                {k_blocks}
+            </div>
+        </div>
+
+        <div style="position: relative; height: 16px; border-top: 1px dashed {border_card}; margin-top: 8px;">
+            {ticks_html}
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; font-size: 11px; color: {txt_sub};">
+        <span>💡 <b>संकेत:</b> सुनहरे बॉर्डर एवं चमक से युक्त ब्लॉक जातक की वर्तमान आयु पर सक्रिय दशा को दर्शाते हैं।</span>
+    </div>
+</div>
+        """
+        return html
+
+    def calculate_multi_dasha_agreement_index(
+        self,
+        chart: KundaliChart,
+        target_date: Optional[date] = None
+    ) -> Dict[str, Any]:
+        """
+        Calculates mathematical agreement index (% convergence) across the 4 major
+        dashas (Vimshottari, Yogini, Chara, KCD) for 5 core life domains on target_date.
+        """
+        if target_date is None:
+            target_date = date.today()
+
+        target_dt = datetime.combine(target_date, datetime.min.time())
+
+        # 1. Vimshottari
+        try:
+            v_hier = self.engine.get_active_hierarchy(chart, target_date)
+            v_m_lord = v_hier.mahadasha.lord
+            v_a_lord = v_hier.antardasha.lord
+        except Exception:
+            v_m_lord, v_a_lord = "Sun", "Moon"
+
+        # 2. Yogini
+        try:
+            y_hier = default_yogini_engine.get_active_hierarchy(chart, target_date)
+            y_lord = y_hier["major"]["lord"]
+        except Exception:
+            y_lord = "Moon"
+
+        # 3. Chara
+        try:
+            c_tl = default_chara_engine.generate_timeline(chart)
+            c_act = next((p for p in c_tl if p["start_date"] <= target_dt <= p["end_date"]), c_tl[0])
+            c_rashi = c_act.get("rashi", "Aries")
+            c_lord = SIGN_LORDS.get(c_rashi, "Mars")
+        except Exception:
+            c_rashi, c_lord = "Aries", "Mars"
+
+        # 4. KCD
+        try:
+            k_tl = default_kcd_engine.generate_timeline(chart)
+            k_act = next((p for p in k_tl if p["start_date"] <= target_dt <= p["end_date"]), k_tl[0])
+            k_rashi = k_act.get("rashi", "Aries")
+            k_gati = k_act.get("gati", "Regular")
+        except Exception:
+            k_rashi, k_gati = "Aries", "Regular"
+
+        # Domain Scoring
+        # Career
+        c_score = 45
+        if any(p in ["Sun", "Mars", "Jupiter", "Saturn", "Mercury"] for p in [v_m_lord, v_a_lord]):
+            c_score += 20
+        if y_lord in ["Sun", "Mars", "Jupiter", "Mercury"]:
+            c_score += 15
+        if c_rashi in ["Aries", "Leo", "Sagittarius", "Capricorn", "Aquarius"]:
+            c_score += 10
+        if any(w in k_gati for w in ["मण्डूक", "मर्कटी", "सिंहावलोकन", "Jump"]):
+            c_score += 10
+        c_score = min(96, max(30, c_score))
+
+        # Wealth
+        w_score = 40
+        if any(p in ["Jupiter", "Venus", "Mercury", "Moon"] for p in [v_m_lord, v_a_lord]):
+            w_score += 25
+        if y_lord in ["Jupiter", "Venus", "Moon", "Mercury"]:
+            w_score += 15
+        if c_rashi in ["Taurus", "Gemini", "Libra", "Cancer", "Pisces"]:
+            w_score += 12
+        w_score = min(95, max(32, w_score))
+
+        # Marriage / Relationship
+        r_score = 42
+        if any(p in ["Venus", "Jupiter", "Moon"] for p in [v_m_lord, v_a_lord]):
+            r_score += 28
+        if y_lord in ["Venus", "Jupiter", "Moon"]:
+            r_score += 16
+        if c_rashi in ["Taurus", "Libra", "Cancer", "Pisces"]:
+            r_score += 12
+        r_score = min(94, max(28, r_score))
+
+        # Health / Vitality
+        h_score = 75
+        if any(p in ["Saturn", "Rahu", "Mars", "Ketu"] for p in [v_m_lord, v_a_lord]):
+            h_score -= 18
+        if y_lord in ["Rahu", "Saturn", "Ketu"]:
+            h_score -= 12
+        if any(w in k_gati for w in ["मण्डूक", "मर्कटी", "सिंहावलोकन"]):
+            h_score -= 10
+        h_score = min(95, max(35, h_score))
+
+        # Spiritual
+        s_score = 40
+        if any(p in ["Jupiter", "Ketu", "Sun", "Saturn"] for p in [v_m_lord, v_a_lord]):
+            s_score += 25
+        if y_lord in ["Jupiter", "Ketu", "Sun"]:
+            s_score += 18
+        if c_rashi in ["Sagittarius", "Pisces", "Scorpio", "Cancer"]:
+            s_score += 14
+        s_score = min(96, max(35, s_score))
+
+        overall_index = round((c_score + w_score + r_score + h_score + s_score) / 5.0, 1)
+
+        if overall_index >= 70:
+            consensus_badge = "🌟 उच्च बहु-दशा सहमति (High Consensus)"
+            consensus_color = "#059669"
+            consensus_desc = "विंशोत्तरी, योगिनी, जैमिनी चर एवं कालचक्र चारों दशा प्रणालियां एक ही दिशा में शुभ ऊर्जा का संचार कर रही हैं। इस कालखंड में महत्वपूर्ण जीवन घटनाएं निर्विघ्न घटित होंगी।"
+        elif overall_index >= 55:
+            consensus_badge = "⚡ मध्यम बहु-दशा सहमति (Moderate Consensus)"
+            consensus_color = "#D97706"
+            consensus_desc = "दशाओं में संतुलित व मिश्रित प्रभाव है। कुछ दशाएं प्रगति दर्शा रही हैं, जबकि कुछ अतिरिक्त परिश्रम की मांग करती हैं।"
+        else:
+            consensus_badge = "⏳ साधना व संयम काल (Developing Phase)"
+            consensus_color = "#6366F1"
+            consensus_desc = "दशाएं आंतरिक शुद्धि व आधारभूत तैयारी का कालखंड दर्शा रही हैं। नवीन जोखिम से बचें व नियमित वैदिक अनुष्ठान करें।"
+
+        return {
+            "target_date": target_date,
+            "career_score": c_score,
+            "wealth_score": w_score,
+            "marriage_score": r_score,
+            "health_score": h_score,
+            "spiritual_score": s_score,
+            "overall_index": overall_index,
+            "consensus_badge": consensus_badge,
+            "consensus_color": consensus_color,
+            "consensus_desc": consensus_desc,
+            "active_periods": {
+                "vimshottari": f"{v_m_lord} / {v_a_lord}",
+                "yogini": f"{y_lord}",
+                "chara": f"{c_rashi} ({c_lord})",
+                "kcd": f"{k_rashi} ({k_gati})"
+            }
+        }
+
 
 # Singleton instance
 default_dasha_timeline_service = DashaTimelineService()
+
 

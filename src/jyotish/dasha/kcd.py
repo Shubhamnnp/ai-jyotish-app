@@ -141,6 +141,24 @@ class KaalachakraDashaEngine:
             "timeline": timeline[:12]  # First 12 periods covering native's lifetime
         }
 
+    def generate_timeline(self, chart: KundaliChart) -> List[Dict[str, Any]]:
+        """Returns KCD timeline periods with datetime objects for start_date and end_date."""
+        res = self.calculate(chart)
+        tl = []
+        for p in res["timeline"]:
+            s_dt = datetime.strptime(p["start_date"], "%d-%b-%Y") if isinstance(p["start_date"], str) else p["start_date"]
+            e_dt = datetime.strptime(p["end_date"], "%d-%b-%Y") if isinstance(p["end_date"], str) else p["end_date"]
+            tl.append({
+                "rashi": p["rashi"],
+                "lord": p["rashi"],
+                "duration_years": p["duration_years"],
+                "start_date": s_dt,
+                "end_date": e_dt,
+                "gati": p.get("gati", ""),
+                "role": p.get("role", "")
+            })
+        return tl
+
 
 default_kcd_engine = KaalachakraDashaEngine()
 

@@ -147,7 +147,7 @@ class KakshyaTransitService:
         dt_noon = datetime.combine(target_date, time(12, 0)).replace(tzinfo=timezone.utc)
         pos, _ = self.provider.get_planet_positions(dt_noon)
 
-        planets_to_scan = ["Saturn", "Jupiter", "Mars", "Sun", "Venus", "Mercury", "Moon"]
+        planets_to_scan = ["Saturn", "Jupiter", "Rahu", "Mars", "Sun", "Venus", "Mercury", "Moon"]
         results = {}
         for p in planets_to_scan:
             if p in pos:
@@ -174,7 +174,7 @@ class KakshyaTransitService:
         days: int = 30
     ) -> List[Dict[str, Any]]:
         """
-        Generates day-by-day Kakshya transit timeline for major planets (Saturn, Jupiter, Mars)
+        Generates day-by-day Kakshya transit timeline for major planets (Saturn, Jupiter, Rahu, Mars)
         highlighting transition dates when a planet moves from Subha to Asubha or vice-versa.
         """
         if start_date is None:
@@ -183,6 +183,7 @@ class KakshyaTransitService:
         timeline = []
         prev_sat_k = None
         prev_jup_k = None
+        prev_rahu_k = None
 
         for d_offset in range(days):
             cur_d = start_date + timedelta(days=d_offset)
@@ -191,6 +192,7 @@ class KakshyaTransitService:
 
             sat_k = self.get_kakshya_details("Saturn", pos["Saturn"]["longitude"], chart) if "Saturn" in pos else None
             jup_k = self.get_kakshya_details("Jupiter", pos["Jupiter"]["longitude"], chart) if "Jupiter" in pos else None
+            rahu_k = self.get_kakshya_details("Rahu", pos["Rahu"]["longitude"], chart) if "Rahu" in pos else None
             mars_k = self.get_kakshya_details("Mars", pos["Mars"]["longitude"], chart) if "Mars" in pos else None
 
             # Detect transition events
@@ -203,17 +205,23 @@ class KakshyaTransitService:
                 status = "शुभ (Bindu 1)" if jup_k["bindu_val"] == 1 else "अशुभ (Bindu 0)"
                 events.append(f"♃ गुरु कक्षी परिवर्तन: {jup_k['kakshya_lord_hi']} कक्षी में प्रवेश ({status})")
 
+            if rahu_k and prev_rahu_k and rahu_k["kakshya_num"] != prev_rahu_k["kakshya_num"]:
+                status = "शुभ (Bindu 1)" if rahu_k["bindu_val"] == 1 else "अशुभ (Bindu 0)"
+                events.append(f"🐉 राहु कक्षी परिवर्तन: {rahu_k['kakshya_lord_hi']} कक्षी में प्रवेश ({status})")
+
             timeline.append({
                 "date": cur_d,
                 "date_str": cur_d.strftime("%d-%b-%Y"),
                 "saturn": sat_k,
                 "jupiter": jup_k,
+                "rahu": rahu_k,
                 "mars": mars_k,
                 "events": events
             })
 
             prev_sat_k = sat_k
             prev_jup_k = jup_k
+            prev_rahu_k = rahu_k
 
         return timeline
 
