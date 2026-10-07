@@ -2929,6 +2929,24 @@ client_bridge_code = """
         } catch(e) {}
     }
 
+    function switchAppTab(targetIdx) {
+        try {
+            const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            if (!pDoc) return;
+            const tabList = pDoc.querySelector('[data-baseweb="tab-list"]');
+            if (tabList) {
+                const tabs = tabList.querySelectorAll('button[role="tab"]');
+                if (tabs && tabs[targetIdx]) {
+                    tabs[targetIdx].click();
+                }
+            }
+        } catch(e) {
+            console.error("Tab switch error:", e);
+        }
+    }
+    parentWin.switchAppTab = switchAppTab;
+    window.switchAppTab = switchAppTab;
+
     function resolveClientGPS() {
         try {
             const cached = localStorage.getItem("jyotish_user_gps_loc") || sessionStorage.getItem("jyotish_user_gps_loc");
@@ -3565,16 +3583,37 @@ client_bridge_code = """
                             white-space: nowrap !important;
                             overflow: hidden !important;
                             text-overflow: ellipsis !important;
-                            min-height: 32px !important;
-                            height: 32px !important;
+                            min-height: 33px !important;
+                            height: 33px !important;
                             background: #FFFFFF !important;
                             color: #000000 !important;
                             border: 1.5px solid #CBD5E1 !important;
                             border-radius: 6px !important;
+                            box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
                         }
                         .st-key-frozen_toolbelt_container button * {
                             color: #000000 !important;
                             font-weight: 700 !important;
+                        }
+                        .st-key-hdr_top_prev_mod_btn button,
+                        .st-key-hdr_top_next_mod_btn button,
+                        .st-key-hdr_top_prev_tab_btn button,
+                        .st-key-hdr_top_next_tab_btn button {
+                            font-size: 14px !important;
+                            font-weight: 900 !important;
+                            color: #0284C7 !important;
+                            padding: 0px 2px !important;
+                            display: flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            background: #FFFFFF !important;
+                        }
+                        .st-key-hdr_top_prev_mod_btn button *,
+                        .st-key-hdr_top_next_mod_btn button *,
+                        .st-key-hdr_top_prev_tab_btn button *,
+                        .st-key-hdr_top_next_tab_btn button * {
+                            color: #0284C7 !important;
+                            font-weight: 900 !important;
                         }
                         .st-key-frozen_toolbelt_container button:hover {
                             background: #F0F7FF !important;
@@ -3596,17 +3635,20 @@ client_bridge_code = """
                             padding: 0px !important;
                         }
                         .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-                            min-height: 32px !important;
-                            height: 32px !important;
+                            min-height: 33px !important;
+                            height: 33px !important;
                             border-radius: 6px !important;
                             border: 1.5px solid #CBD5E1 !important;
                             background: #FFFFFF !important;
                             font-weight: 800 !important;
-                            font-size: 12.5px !important;
+                            font-size: 12px !important;
                             color: #0F172A !important;
+                            box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+                            display: flex !important;
+                            align-items: center !important;
                         }
                         .block-container {
-                            padding-top: 130px !important;
+                            padding-top: 135px !important;
                         }
                         .st-key-top_frozen_header_container {
                             border: none !important;
@@ -4068,9 +4110,9 @@ client_bridge_code = """
             }
 
             const frozenTb = parentDoc.querySelector('.st-key-frozen_toolbelt_container');
-            if (frozenTb && mainSec) {
+            if (frozenTb) {
                 const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
-                if (!mainSec.dataset.roBound && window.ResizeObserver) {
+                if (mainSec && !mainSec.dataset.roBound && window.ResizeObserver) {
                     mainSec.dataset.roBound = "true";
                     const ro = new ResizeObserver(function() {
                         setupStickyTopHeader();
@@ -4079,25 +4121,49 @@ client_bridge_code = """
                     if (sb) ro.observe(sb);
                 }
 
-                const rect = mainSec.getBoundingClientRect();
-                const isSidebarVisible = (rect.left > 60);
+                const clientW = parentDoc.documentElement.clientWidth || window.innerWidth;
+                let isSidebarVisible = false;
+                let leftPos = 0;
+                let headerW = clientW;
+
+                if (sb) {
+                    const sbRect = sb.getBoundingClientRect();
+                    if (sbRect.width > 60 && sbRect.right > 60) {
+                        isSidebarVisible = true;
+                        leftPos = Math.round(sbRect.right);
+                        headerW = Math.max(0, clientW - leftPos);
+                    }
+                }
+
+                if (!isSidebarVisible && mainSec) {
+                    const mRect = mainSec.getBoundingClientRect();
+                    if (mRect.left > 60) {
+                        isSidebarVisible = true;
+                        leftPos = Math.round(mRect.left);
+                        headerW = Math.max(0, clientW - leftPos);
+                    } else {
+                        leftPos = 0;
+                        headerW = clientW;
+                    }
+                }
 
                 frozenTb.style.setProperty('position', 'fixed', 'important');
                 frozenTb.style.setProperty('top', '0px', 'important');
                 frozenTb.style.setProperty('z-index', '9990', 'important');
-                frozenTb.style.setProperty('left', Math.max(0, Math.round(rect.left)) + 'px', 'important');
-                frozenTb.style.setProperty('width', Math.round(rect.width) + 'px', 'important');
-                frozenTb.style.setProperty('padding-top', '6px', 'important');
-                frozenTb.style.setProperty('padding-bottom', '6px', 'important');
+                frozenTb.style.setProperty('left', leftPos + 'px', 'important');
+                frozenTb.style.setProperty('width', headerW + 'px', 'important');
+                frozenTb.style.setProperty('padding-top', '5px', 'important');
+                frozenTb.style.setProperty('padding-bottom', '5px', 'important');
+                frozenTb.style.setProperty('margin', '0px', 'important');
                 frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
                 frozenTb.style.setProperty('transition', 'none', 'important');
 
                 if (isSidebarVisible) {
-                    frozenTb.style.setProperty('padding-left', '14px', 'important');
-                    frozenTb.style.setProperty('padding-right', '14px', 'important');
+                    frozenTb.style.setProperty('padding-left', '8px', 'important');
+                    frozenTb.style.setProperty('padding-right', '8px', 'important');
                 } else {
-                    frozenTb.style.setProperty('padding-left', '52px', 'important');
-                    frozenTb.style.setProperty('padding-right', '14px', 'important');
+                    frozenTb.style.setProperty('padding-left', '50px', 'important');
+                    frozenTb.style.setProperty('padding-right', '8px', 'important');
                 }
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
@@ -4241,6 +4307,34 @@ if st.session_state.get("trigger_browser_gps"):
     }})();
     </script>
     """, height=0, width=0)
+
+if st.session_state.get("tab_switch_requested") is not None:
+    _ts_idx = int(st.session_state.pop("tab_switch_requested"))
+    components.html(f"""
+    <script>
+    (function() {{
+        try {{
+            const targetIdx = {_ts_idx};
+            const pWin = (window.parent && window.parent.location) ? window.parent : window;
+            if (pWin.switchAppTab) {{
+                pWin.switchAppTab(targetIdx);
+            }} else if (window.switchAppTab) {{
+                window.switchAppTab(targetIdx);
+            }} else {{
+                const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+                const tabList = pDoc.querySelector('[data-baseweb="tab-list"]');
+                if (tabList) {{
+                    const tabs = tabList.querySelectorAll('button[role="tab"]');
+                    if (tabs && tabs[targetIdx]) {{
+                        tabs[targetIdx].click();
+                    }}
+                }}
+            }}
+        }} catch(e) {{}}
+    }})();
+    </script>
+    """, height=0, width=0)
+
 
 
 
@@ -5591,18 +5685,282 @@ def render_vastu_compass_wheel_svg(zones: list, is_dark: bool = False) -> str:
     return "".join(svg_parts)
 
 
+MODULE_TABS_REGISTRY = {
+    0: [
+        "1. 📜 D1 लग्न कुण्डली",
+        "2. 🔱 जैमिनी & कारक",
+        "3. 🏠 भाव स्पष्ट & मध्य",
+        "4. 🌙 चन्द्र कुण्डली",
+        "5. ☀️ सूर्य कुण्डली",
+        "6. ⚔️ ग्रह युद्ध",
+        "7. 🌟 विशेष लग्न & आरूढ़",
+        "8. 🏰 कोटा चक्र"
+    ],
+    1: [
+        "1. 🔮 भविष्य काल निर्णय",
+        "2. 🔍 भूतकाल घटना सत्यापन"
+    ],
+    2: [
+        "1. 🛡️ पीड़ा विश्लेषण एवं समग्र दृष्टि",
+        "2. 🔍 १२ भाव जीवन क्षेत्र गहन विवेचन",
+        "3. 💎 समग्र वैदिक उपाय संदूक"
+    ],
+    3: [
+        "1. 📊 १० मुख्य वर्ग (दशवर्ग चक्र)",
+        "2. 📈 षोडशवर्ग (१६ वर्ग चक्र)",
+        "3. 📋 वर्ग सारांश व श्रेष्ठता"
+    ],
+    4: [
+        "1. 🧭 वास्तु कंपास चक्र",
+        "2. 🏠 १६ दिशा गृह विन्यास",
+        "3. 📐 मर्म स्थान व ऊर्जा",
+        "4. ✨ वास्तु उपाय"
+    ],
+    5: [
+        "1. 👤 सक्रिय जातक प्रश्न विश्लेषण",
+        "2. ✍️ नवीन प्रश्नकर्ता एवं तात्कालिक प्रश्न",
+        "3. 🪐 प्रश्नकालीन नवग्रह स्थिति तालिका",
+        "4. 🎭 द्वादश भाव भूमिका एवं प्रभाव",
+        "5. 📖 ताजिक एवं प्रश्न मार्ग सिद्धांत",
+        "6. 📜 १०० शास्त्रीय प्रश्न नियम एवं प्रमाण"
+    ],
+    6: [
+        "1. 📊 षड्बल सारांश (Summary)",
+        "2. ☀️ स्थान बल (Sthana)",
+        "3. ⚔️ दिग् व काल बल (Dig & Kala)",
+        "4. ⚡ चेष्टा व नैसर्गिक (Chesta)",
+        "5. 👁️ दृग् बल (Drik Bala)",
+        "6. 🏠 भाव बल (Bhava Bala)"
+    ],
+    7: [
+        "1. 🔱 सप्त/अष्ट चरकारक",
+        "2. 🏛️ १२ आरूढ़ पद चक्र",
+        "3. 🌟 कारकांश कुण्डली",
+        "4. 📜 जैमिनी पद लग्न",
+        "5. ⚖️ चर दशा क्रम",
+        "6. ⚡ उपग्रह स्थिति",
+        "7. 🔮 जैमिनी राजयोग",
+        "8. 🧘 आत्मकारक धर्म",
+        "9. 🛡️ अर्गला & विरोधा",
+        "10. 📖 जैमिनी सूत्र प्रमाण"
+    ],
+    8: [
+        "1. विंशोत्तरी दशा",
+        "2. योगिनी दशा",
+        "3. चर दशा",
+        "4. अष्टोत्तरी दशा",
+        "5. कालचक्र दशा",
+        "6. त्रिभागी दशा",
+        "7. मूल दशा",
+        "8. शोडशोन्तरी दशा",
+        "9. द्वादशोत्तरी दशा",
+        "10. पंचोत्तरी दशा",
+        "11. शताब्दिका दशा",
+        "12. चतुरशीति दशा",
+        "13. द्विसप्तति दशा",
+        "14. षष्ठि-हयानी दशा"
+    ],
+    9: [
+        "1. गोचर स्थिति",
+        "2. अष्टकवर्ग चक्र",
+        "3. भिन्नाष्टकवर्ग",
+        "4. प्रस्ताराष्टकवर्ग",
+        "5. शोध्य पिण्ड",
+        "6. साढ़ेसाती चक्र",
+        "7. गुरु गोचर",
+        "8. राहु-केतु गोचर",
+        "9. कक्षक गोचर",
+        "10. वेद व विपरीता",
+        "11. तारा गोचर",
+        "12. अष्टकवर्ग रेखा",
+        "13. सर्वतोभद्र गोचर",
+        "14. गोचर फलकथन"
+    ],
+    10: [
+        "1. केपी ग्रह व भाव कस्प",
+        "2. उप-स्वामी (Sub-Lords)",
+        "3. भाव कारकत्व",
+        "4. 1-249 उप-विभाजन",
+        "5. 4-स्टेप थ्योरी",
+        "6. रूलिंग प्लैनेट्स (RP)",
+        "7. केपी प्रश्न कुण्डली",
+        "8. घटना समय निर्धारण",
+        "9. केपी नियम प्रमाण"
+    ],
+    11: [
+        "1. चौघड़िया मुहूर्त",
+        "2. होरा चक्र",
+        "3. राहुकाल व यमघंट",
+        "4. अभिजित व ब्रह्म मुहूर्त",
+        "5. सर्वार्थ सिद्धि व योग",
+        "6. संस्कार मुहूर्त",
+        "7. यात्रा व गृह प्रवेश",
+        "8. पंचक विचार"
+    ],
+    12: [
+        "1. सुदर्शन चक्र",
+        "2. लग्न-केन्द्रित फल",
+        "3. चन्द्र-केन्द्रित फल",
+        "4. सूर्य-केन्द्रित फल",
+        "5. त्रिकोणीय समन्वय",
+        "6. वर्ष प्रवेश चक्र",
+        "7. त्रि-बिन्दु सामर्थ्य",
+        "8. शुभाशुभ योग",
+        "9. शास्त्रीय निर्देश"
+    ],
+    13: [
+        "1. वर्षफल कुण्डली",
+        "2. मुन्था विचार",
+        "3. वर्षेश निर्णय",
+        "4. ताजिक योग (१६ योग)",
+        "5. सहम साधन (५० सहम)",
+        "6. पात्यायिनी दशा",
+        "7. मुद्धा दशा",
+        "8. हर्ष बल (Harsha)",
+        "9. पंचवर्गी बल",
+        "10. मासिक/दैनिक फल"
+    ],
+    14: [
+        "1. कुण्डली तत्त्व मिलान",
+        "2. उप-स्वामी सत्यापन",
+        "3. नवांश व षष्ट्यंश शोध",
+        "4. प्राणपद लग्न",
+        "5. कुण्ड कुण्डली",
+        "6. जीवन घटना मिलान",
+        "7. स्वचालित BTR इंजन",
+        "8. शास्त्रीय प्रमाण"
+    ],
+    15: [
+        "1. अष्टकूट मिलान (36 गुण)",
+        "2. दशकूट मिलान (दक्षिण)",
+        "3. मांगलिक दोष विचार",
+        "4. नाड़ी दोष परिहार",
+        "5. ग्रह मैत्री विश्लेषण",
+        "6. गण व भकूट दोष",
+        "7. दीर्घायु समन्वय",
+        "8. संतति योग मिलान",
+        "9. चित्त व मानसिक मेल",
+        "10. अंतिम निर्णय एवं उपाय"
+    ],
+    16: [
+        "1. 💬 AI ज्योतिष वार्ता",
+        "2. 🔮 त्वरित फलकथन",
+        "3. 📜 शास्त्रीय संदर्भ"
+    ],
+    17: [
+        "1. 📑 संपूर्ण जीवन महा-रिपोर्ट",
+        "2. 📜 त्वरित कुण्डली पर्ची"
+    ],
+    18: [
+        "1. 📚 १२,५००+ शास्त्रीय नियम भंडार",
+        "2. 📜 प्रामाणिक ग्रंथ अन्वेषक",
+        "3. 🔬 AI शोध व नियम परीक्षण"
+    ],
+    19: [
+        "1. 🔍 ऋषि मत तुलना",
+        "2. 📜 शास्त्रीय प्रमाण"
+    ],
+    20: [
+        "1. मुख्य दोष",
+        "2. शुभ राजयोग",
+        "3. धन व दरिद्र योग",
+        "4. शास्त्रीय उपाय"
+    ],
+    21: [
+        "1. मूलांक व भाग्यांक",
+        "2. लो-शू ग्रिड चक्र",
+        "3. नामांक व स्पंदन",
+        "4. अंक ज्योतिष उपाय"
+    ],
+    22: [
+        "1. लाल किताब कुण्डली",
+        "2. सोया हुआ ग्रह/घर",
+        "3. लाल किताब वर्षफल",
+        "4. अचूक लाल किताब उपाय"
+    ],
+    23: [
+        "1. त्रिदोष (वात/पित्त/कफ)",
+        "2. षडरस आहार तालिका",
+        "3. पथ्य एवं अपथ्य",
+        "4. ऋतुचर्या व दिनचर्या"
+    ],
+    24: [
+        "1. पारिवारिक सम्बंध",
+        "2. मित्र व शत्रु निर्णय",
+        "3. संरक्षक व मार्गदर्शक",
+        "4. सामाजिक प्रतिष्ठा"
+    ],
+    25: [
+        "1. स्वास्थ्य विहंगावलोकन",
+        "2. संभावित व्याधि पूर्वानुमान",
+        "3. चक्र एवं नाड़ी संतुलन",
+        "4. ग्रह जनित रोग",
+        "5. आरोग्य एवं औषधि उपाय"
+    ],
+    26: [
+        "1. शारीरिक कद-काठी",
+        "2. मुखाकृति व वर्ण",
+        "3. नैसर्गिक स्वभाव",
+        "4. पंचमहाभूत गठन"
+    ],
+    27: [
+        "1. इष्ट देव निर्णय",
+        "2. कुलदेवता व ग्रामदेवता",
+        "3. वैदिक मंत्र साधना",
+        "4. पूजा एवं अनुष्ठान विधान",
+        "5. स्तोत्र एवं कवच"
+    ],
+    28: [
+        "1. पूर्वजन्म कर्म संकेत",
+        "2. ऋण व प्रारब्ध विपाक",
+        "3. स्वभाव व व्यक्तित्व",
+        "4. जीवन उद्देश्य (Dharma)",
+        "5. कर्म शुद्धि उपाय",
+        "6. मोक्ष व आध्यात्मिक उत्थान"
+    ],
+    29: [
+        "1. दैनिक पंचांग",
+        "2. मासिक पंचांग",
+        "3. ग्रह गोचर तालिका",
+        "4. काल होरा चक्र"
+    ]
+}
+
 if "active_module_idx" not in st.session_state:
     st.session_state.active_module_idx = 0
 st.session_state.active_module_idx = max(0, min(int(st.session_state.active_module_idx), len(MODULE_OPTIONS) - 1))
+
+if "active_tab_idx" not in st.session_state:
+    st.session_state.active_tab_idx = 0
+
+if "_last_module_sync_idx" not in st.session_state:
+    st.session_state._last_module_sync_idx = st.session_state.active_module_idx
+elif st.session_state._last_module_sync_idx != st.session_state.active_module_idx:
+    st.session_state._last_module_sync_idx = st.session_state.active_module_idx
+    st.session_state.active_tab_idx = 0
+    st.session_state.tab_switch_requested = 0
+
+cur_mod_tabs = MODULE_TABS_REGISTRY.get(st.session_state.active_module_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
+st.session_state.active_tab_idx = max(0, min(int(st.session_state.active_tab_idx), len(cur_mod_tabs) - 1))
 
 # Keep top_bar_module_selector in sync with active_module_idx and current language
 if ("top_bar_module_selector" not in st.session_state or 
     st.session_state.top_bar_module_selector not in MODULE_OPTIONS):
     st.session_state.top_bar_module_selector = MODULE_OPTIONS[st.session_state.active_module_idx]
 
+# Keep top_bar_tab_selector in sync
+if ("top_bar_tab_selector" not in st.session_state or 
+    st.session_state.top_bar_tab_selector not in cur_mod_tabs):
+    st.session_state.top_bar_tab_selector = cur_mod_tabs[st.session_state.active_tab_idx]
+
 def _nav_prev_module():
     new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
     st.session_state.active_module_idx = new_idx
+    st.session_state.active_tab_idx = 0
+    st.session_state.tab_switch_requested = 0
+    st.session_state.top_bar_module_selector = MODULE_OPTIONS[new_idx]
+    new_tabs = MODULE_TABS_REGISTRY.get(new_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
+    st.session_state.top_bar_tab_selector = new_tabs[0]
     if "sb_cat_filter_select" in st.session_state:
         st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
     if "sb_search_filter_input" in st.session_state:
@@ -5611,13 +5969,34 @@ def _nav_prev_module():
 def _nav_next_module():
     new_idx = (st.session_state.active_module_idx + 1) % len(MODULE_OPTIONS)
     st.session_state.active_module_idx = new_idx
+    st.session_state.active_tab_idx = 0
+    st.session_state.tab_switch_requested = 0
+    st.session_state.top_bar_module_selector = MODULE_OPTIONS[new_idx]
+    new_tabs = MODULE_TABS_REGISTRY.get(new_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
+    st.session_state.top_bar_tab_selector = new_tabs[0]
     if "sb_cat_filter_select" in st.session_state:
         st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
     if "sb_search_filter_input" in st.session_state:
         st.session_state.sb_search_filter_input = ""
 
+def _nav_prev_tab():
+    cur_tabs = MODULE_TABS_REGISTRY.get(st.session_state.active_module_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
+    new_tab = (st.session_state.active_tab_idx - 1) % len(cur_tabs)
+    st.session_state.active_tab_idx = new_tab
+    st.session_state.tab_switch_requested = new_tab
+    st.session_state.top_bar_tab_selector = cur_tabs[new_tab]
+
+def _nav_next_tab():
+    cur_tabs = MODULE_TABS_REGISTRY.get(st.session_state.active_module_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
+    new_tab = (st.session_state.active_tab_idx + 1) % len(cur_tabs)
+    st.session_state.active_tab_idx = new_tab
+    st.session_state.tab_switch_requested = new_tab
+    st.session_state.top_bar_tab_selector = cur_tabs[new_tab]
+
 def _nav_to_rules_bank():
     st.session_state.active_module_idx = 18
+    st.session_state.active_tab_idx = 0
+    st.session_state.tab_switch_requested = 0
     if "sb_cat_filter_select" in st.session_state:
         st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
     if "sb_search_filter_input" in st.session_state:
@@ -5741,22 +6120,17 @@ with st.container(key="top_frozen_header_container", border=False):
                 st.toast(f"✅ थीम मोड: {st.session_state.app_theme_mode.upper()}", icon="🌓")
                 st.rerun()
 
-        # ─── लाइन ३ (Line 3): >> (Sidebar Toggle), पिछला (Prev), Module List (Selectbox), अगला (Next) ───
+        # ─── लाइन ३ (Line 3): <<, समस्त मॉड्यूल सूची, >>  |  <<, सक्रिय मॉड्यूल के सभी टैब, >> ───
         st.markdown("<div style='height: 3px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
-        l3_cols = st.columns([0.8, 1.2, 6.8, 1.2], gap="small", vertical_alignment="center")
+        l3_cols = st.columns([0.55, 4.45, 0.55, 0.55, 4.45, 0.55], gap="small", vertical_alignment="center")
 
         with l3_cols[0]:
-            if st.button("⮂ >>", key="top_sidebar_toggle_btn", help="साइडबार अंदर / बाहर करें (Toggle Sidebar)", use_container_width=True):
-                st.session_state.sidebar_toggle_requested = True
-                st.rerun()
+            st.button("❮❮", use_container_width=True, help="पिछला मॉड्यूल खोलें (Previous Module)", key="hdr_top_prev_mod_btn", on_click=_nav_prev_module)
 
         with l3_cols[1]:
-            st.button("❮ पिछला", use_container_width=True, help="पिछला मॉड्यूल खोलें", key="hdr_top_prev_mod_btn", on_click=_nav_prev_module)
-
-        with l3_cols[2]:
             _cur_m_name = MODULE_OPTIONS[st.session_state.active_module_idx] if 0 <= st.session_state.active_module_idx < len(MODULE_OPTIONS) else MODULE_OPTIONS[0]
             chosen_module = st.selectbox(
-                "सक्रिय मॉड्यूल (Active Module)",
+                "समस्त मॉड्यूल सूची (All Modules)",
                 MODULE_OPTIONS,
                 index=MODULE_OPTIONS.index(_cur_m_name),
                 label_visibility="collapsed",
@@ -5765,10 +6139,35 @@ with st.container(key="top_frozen_header_container", border=False):
             )
             if chosen_module != _cur_m_name:
                 st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen_module)
+                st.session_state.active_tab_idx = 0
+                st.session_state.tab_switch_requested = 0
+                new_tabs = MODULE_TABS_REGISTRY.get(st.session_state.active_module_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
+                st.session_state.top_bar_tab_selector = new_tabs[0]
                 st.rerun()
 
+        with l3_cols[2]:
+            st.button("❯❯", use_container_width=True, help="अगला मॉड्यूल खोलें (Next Module)", key="hdr_top_next_mod_btn", on_click=_nav_next_module)
+
         with l3_cols[3]:
-            st.button("अगला ❯", use_container_width=True, help="अगला मॉड्यूल खोलें", key="hdr_top_next_mod_btn", on_click=_nav_next_module)
+            st.button("❮❮", use_container_width=True, help="पिछला टैब खोलें (Previous Tab)", key="hdr_top_prev_tab_btn", on_click=_nav_prev_tab)
+
+        with l3_cols[4]:
+            _cur_t_idx = min(st.session_state.active_tab_idx, len(cur_mod_tabs) - 1)
+            chosen_tab = st.selectbox(
+                "सक्रिय मॉड्यूल के सभी टैब (Active Module Tabs)",
+                cur_mod_tabs,
+                index=_cur_t_idx,
+                label_visibility="collapsed",
+                key="top_bar_tab_selector",
+                help="वर्तमान मॉड्यूल के किसी भी टैब पर तुरंत जाने के लिए यहाँ से चुनें"
+            )
+            if cur_mod_tabs.index(chosen_tab) != st.session_state.active_tab_idx:
+                st.session_state.active_tab_idx = cur_mod_tabs.index(chosen_tab)
+                st.session_state.tab_switch_requested = st.session_state.active_tab_idx
+                st.rerun()
+
+        with l3_cols[5]:
+            st.button("❯❯", use_container_width=True, help="अगला टैब खोलें (Next Tab)", key="hdr_top_next_tab_btn", on_click=_nav_next_tab)
 
     if st.session_state.get("sidebar_toggle_requested"):
         st.session_state.sidebar_toggle_requested = False
