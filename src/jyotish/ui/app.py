@@ -2953,17 +2953,31 @@ client_bridge_code = """
     function switchAppTab(targetIdx) {
         try {
             const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
-            if (!pDoc) return;
-            const tabList = pDoc.querySelector('[data-baseweb="tab-list"]');
-            if (tabList) {
-                const tabs = tabList.querySelectorAll('button[role="tab"]');
-                if (tabs && tabs[targetIdx]) {
+            if (!pDoc) return false;
+            const mainSec = pDoc.querySelector('[data-testid="stMain"], section.main');
+            if (!mainSec) return false;
+            const tabLists = mainSec.querySelectorAll('[data-baseweb="tab-list"]');
+            if (!tabLists || tabLists.length === 0) return false;
+
+            let tabList = tabLists[0];
+            for (let i = 0; i < tabLists.length; i++) {
+                const tl = tabLists[i];
+                if (!tl.closest('[role="dialog"]') && !tl.closest('[data-testid="stModal"]') && !tl.closest('.st-key-frozen_toolbelt_container')) {
+                    tabList = tl;
+                    break;
+                }
+            }
+            const tabs = tabList.querySelectorAll('button[role="tab"]');
+            if (tabs && tabs.length > targetIdx) {
+                if (tabs[targetIdx].getAttribute('aria-selected') !== 'true') {
                     tabs[targetIdx].click();
                 }
+                return true;
             }
         } catch(e) {
             console.error("Tab switch error:", e);
         }
+        return false;
     }
     parentWin.switchAppTab = switchAppTab;
     window.switchAppTab = switchAppTab;
@@ -5981,6 +5995,11 @@ elif st.session_state._last_module_sync_idx != st.session_state.active_module_id
     st.session_state.tab_switch_requested = 0
 
 cur_mod_tabs = MODULE_TABS_REGISTRY.get(st.session_state.active_module_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
+
+# If user selected a tab from top_bar_tab_selector, sync active_tab_idx immediately
+if "top_bar_tab_selector" in st.session_state and st.session_state.top_bar_tab_selector in cur_mod_tabs:
+    st.session_state.active_tab_idx = cur_mod_tabs.index(st.session_state.top_bar_tab_selector)
+
 st.session_state.active_tab_idx = max(0, min(int(st.session_state.active_tab_idx), len(cur_mod_tabs) - 1))
 
 # Keep top_bar_module_selector in sync with active_module_idx and current language
@@ -5989,9 +6008,7 @@ if ("top_bar_module_selector" not in st.session_state or
     st.session_state.top_bar_module_selector = MODULE_OPTIONS[st.session_state.active_module_idx]
 
 # Keep top_bar_tab_selector in sync
-if ("top_bar_tab_selector" not in st.session_state or 
-    st.session_state.top_bar_tab_selector not in cur_mod_tabs):
-    st.session_state.top_bar_tab_selector = cur_mod_tabs[st.session_state.active_tab_idx]
+st.session_state.top_bar_tab_selector = cur_mod_tabs[st.session_state.active_tab_idx]
 
 def _nav_prev_module():
     new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
@@ -20690,9 +20707,63 @@ elif selected_idx == 29:
         is_dark=st.session_state.get("dark_mode", False)
     )
 
+# -------------------------------------------------------------
+# 🎯 GUARANTEED ACTIVE TAB SWITCHER (Post-Render DOM Execution)
+# -------------------------------------------------------------
+_active_tab_to_activate = int(st.session_state.get("active_tab_idx", 0))
+components.html(f"""
+<script>
+(function() {{
+    const targetIdx = {_active_tab_to_activate};
+    let done = false;
 
+    function activateTab() {{
+        if (done) return true;
+        try {{
+            const pDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            if (!pDoc) return false;
+            const mainSec = pDoc.querySelector('[data-testid="stMain"], section.main');
+            if (!mainSec) return false;
 
+            const tabLists = mainSec.querySelectorAll('[data-baseweb="tab-list"]');
+            if (!tabLists || tabLists.length === 0) return false;
 
+            let tabList = tabLists[0];
+            for (let i = 0; i < tabLists.length; i++) {{
+                const tl = tabLists[i];
+                if (!tl.closest('[role="dialog"]') && !tl.closest('[data-testid="stModal"]') && !tl.closest('.st-key-frozen_toolbelt_container')) {{
+                    tabList = tl;
+                    break;
+                }}
+            }}
 
+            const tabs = tabList.querySelectorAll('button[role="tab"]');
+            if (!tabs || tabs.length <= targetIdx) return false;
 
+            const targetBtn = tabs[targetIdx];
+            if (targetBtn) {{
+                if (targetBtn.getAttribute('aria-selected') !== 'true') {{
+                    targetBtn.click();
+                    targetBtn.focus();
+                }}
+                done = true;
+                return true;
+            }}
+        }} catch(e) {{}}
+        return false;
+    }}
+
+    // Try immediately, and poll to catch Streamlit React mounting
+    if (!activateTab()) {{
+        let count = 0;
+        const timer = setInterval(function() {{
+            count++;
+            if (activateTab() || count >= 25) {{
+                clearInterval(timer);
+            }}
+        }}, 60);
+    }}
+}})();
+</script>
+""", height=0, width=0)
 
