@@ -8554,8 +8554,17 @@ if selected_idx == 0:
                     else:
                         _w_type = "अपसव्यम (Apasavyam — वक्र गति युक्त युद्ध)"
 
-                    _w_lord = [f"{h}वें" for h, s in chart.houses.items() if s.lord == _win] if hasattr(chart, 'houses') else []
-                    _l_lord = [f"{h}वें" for h, s in chart.houses.items() if s.lord == _los] if hasattr(chart, 'houses') else []
+                    _w_lord, _l_lord = [], []
+                    if hasattr(chart, 'houses') and chart.houses:
+                        if isinstance(chart.houses, dict):
+                            _w_lord = [f"{h}वें" for h, s in chart.houses.items() if getattr(s, 'lord', '') == _win]
+                            _l_lord = [f"{h}वें" for h, s in chart.houses.items() if getattr(s, 'lord', '') == _los]
+                        elif isinstance(chart.houses, (list, tuple)):
+                            _w_lord = [f"{getattr(s, 'house_number', idx+1)}वें" for idx, s in enumerate(chart.houses) if getattr(s, 'lord', '') == _win]
+                            _l_lord = [f"{getattr(s, 'house_number', idx+1)}वें" for idx, s in enumerate(chart.houses) if getattr(s, 'lord', '') == _los]
+
+                    _w_lord_str = f" ({', '.join(_w_lord)} भाव का स्वामी)" if _w_lord else ""
+                    _l_lord_str = f" ({', '.join(_l_lord)} भाव का स्वामी)" if _l_lord else ""
 
                     st.markdown(f"""
                     <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:10px; padding:14px; margin-bottom:12px;">
@@ -8565,8 +8574,8 @@ if selected_idx == 0:
                         </div>
                         <div style="font-size:12.5px; color:#1E293B; line-height:1.6;">
                             • <b>युद्ध प्रकार:</b> {_w_type}<br/>
-                            • 🏆 <b>विजेता ग्रह:</b> <b style="color:#047857;">{_GRAHA_HINDI.get(_win, _win)}</b> (उत्तर अक्षांश की प्रधानता के कारण विजयी)<br/>
-                            • ⚠️ <b>पराजित ग्रह:</b> <b style="color:#DC2626;">{_GRAHA_HINDI.get(_los, _los)}</b> (षड्बल हरण के कारण निर्बल)<br/>
+                            • 🏆 <b>विजेता ग्रह:</b> <b style="color:#047857;">{_GRAHA_HINDI.get(_win, _win)}</b>{_w_lord_str} (उत्तर अक्षांश की प्रधानता के कारण विजयी)<br/>
+                            • ⚠️ <b>पराजित ग्रह:</b> <b style="color:#DC2626;">{_GRAHA_HINDI.get(_los, _los)}</b>{_l_lord_str} (षड्बल हरण के कारण निर्बल)<br/>
                             • <b>फल प्रभाव:</b> विजयी ग्रह के स्वामित्व वाले भावों के शुभ फल में वृद्धि होगी; पराजित ग्रह के स्वामित्व वाले भावों से संबंधित विषयों में संघर्ष अथवा विलम्ब का सामना करना पड़ सकता है।
                         </div>
                     </div>
