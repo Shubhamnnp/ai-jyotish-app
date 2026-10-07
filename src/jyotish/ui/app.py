@@ -1339,64 +1339,58 @@ unified_css = f"""
         pointer-events: auto !important;
     }}
 
-    /* Frozen Locked Toolbelt (Pins the 8 Top Action Buttons Permanently to the Top of the Viewport) */
-    .st-key-frozen_toolbelt_container,
-    div.st-key-frozen_toolbelt_container {{
-        position: fixed !important;
-        top: 0px !important;
-        z-index: 9990 !important;
-        background: #0074cb !important;
-        background-color: #0074cb !important;
-        padding-top: 6px !important;
-        padding-bottom: 6px !important;
-        padding-left: 52px !important;
-        padding-right: 14px !important;
+    /* Unified Sovereign Header Bar - Compact 32px Buttons */
+    .st-key-brahma_hora_top_brand_bar,
+    div.st-key-brahma_hora_top_brand_bar {
+        padding: 4px 6px !important;
         margin-top: 0px !important;
-        margin-bottom: 0px !important;
-        border-bottom: 2.5px solid #005fa8 !important;
-        box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
-        box-sizing: border-box !important;
-        transition: left 0.15s ease, width 0.15s ease !important;
-    }}
-    .st-key-frozen_toolbelt_container div[data-testid="column"] {{
+        margin-bottom: 4px !important;
+        background: #FFFFFF !important;
+        border-bottom: 1.5px solid #E2E8F0 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    }
+    .st-key-brahma_hora_top_brand_bar div[data-testid="column"] {
         min-width: 0 !important;
-        padding-left: 2px !important;
-        padding-right: 2px !important;
-        flex: 1 1 0px !important;
-    }}
-    .st-key-frozen_toolbelt_container button {{
-        padding: 4px 4px !important;
-        font-size: 12.5px !important;
+        padding-left: 1.5px !important;
+        padding-right: 1.5px !important;
+    }
+    .st-key-brahma_hora_top_brand_bar button {
+        padding: 2px 4px !important;
+        font-size: 11px !important;
         font-weight: 700 !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
-        min-height: 36px !important;
-        height: 36px !important;
+        min-height: 31px !important;
+        height: 31px !important;
         background: #FFFFFF !important;
-        color: #000000 !important;
-        border: 1.5px solid #CBD5E1 !important;
-        border-radius: 8px !important;
-    }}
-    .st-key-frozen_toolbelt_container button * {{
-        color: #000000 !important;
+        color: #0F172A !important;
+        border: 1.2px solid #CBD5E1 !important;
+        border-radius: 6px !important;
+        line-height: 1.1 !important;
+    }
+    .st-key-brahma_hora_top_brand_bar button * {
+        font-size: 11px !important;
         font-weight: 700 !important;
-    }}
-    .st-key-frozen_toolbelt_container button:hover {{
-        background: #F0F7FF !important;
-        border-color: #005fa8 !important;
-        color: #000000 !important;
-    }}
-    .st-key-frozen_toolbelt_container button[kind="primary"],
-    .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] {{
+        color: #0F172A !important;
+    }
+    .st-key-brahma_hora_top_brand_bar button:hover {
+        background: #F1F5F9 !important;
+        border-color: #0284C7 !important;
+        color: #0284C7 !important;
+    }
+    .st-key-brahma_hora_top_brand_bar button[kind="primary"],
+    .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] {
         background: #E0F2FE !important;
-        border: 2px solid #005fa8 !important;
-        color: #000000 !important;
-    }}
-    .st-key-frozen_toolbelt_container button[kind="primary"] *,
-    .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] * {{
-        color: #000000 !important;
-    }}
+        border: 1.8px solid #0284C7 !important;
+        color: #0369A1 !important;
+    }
+    .st-key-brahma_hora_top_brand_bar button[kind="primary"] *,
+    .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] * {
+        color: #0369A1 !important;
+        font-weight: 800 !important;
+    }
     .block-container {{
         padding-top: 58px !important;
     }}
@@ -3455,60 +3449,56 @@ client_bridge_code = """
                             z-index: 10000005 !important;
                             pointer-events: auto !important;
                         }
-                        .st-key-frozen_toolbelt_container,
-                        div.st-key-frozen_toolbelt_container {
-                            position: fixed !important;
-                            top: 0px !important;
-                            z-index: 9990 !important;
-                            background: #0074cb !important;
-                            background-color: #0074cb !important;
-                            border-bottom: 2.5px solid #005fa8 !important;
-                            box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
-                            padding-top: 6px !important;
-                            padding-bottom: 6px !important;
-                            padding-left: 52px !important;
-                            padding-right: 14px !important;
-                            box-sizing: border-box !important;
-                            transition: left 0.15s ease, width 0.15s ease !important;
+                        .st-key-brahma_hora_top_brand_bar,
+                        div.st-key-brahma_hora_top_brand_bar {
+                            padding: 4px 6px !important;
+                            margin-top: 0px !important;
+                            margin-bottom: 4px !important;
+                            background: #0F172A !important;
+                            border-bottom: 1.5px solid #1E293B !important;
+                            border-radius: 8px !important;
+                            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
                         }
-                        .st-key-frozen_toolbelt_container div[data-testid="column"] {
+                        .st-key-brahma_hora_top_brand_bar div[data-testid="column"] {
                             min-width: 0 !important;
-                            padding-left: 2px !important;
-                            padding-right: 2px !important;
-                            flex: 1 1 0px !important;
+                            padding-left: 1.5px !important;
+                            padding-right: 1.5px !important;
                         }
-                        .st-key-frozen_toolbelt_container button {
-                            padding: 4px 4px !important;
-                            font-size: 12.5px !important;
+                        .st-key-brahma_hora_top_brand_bar button {
+                            padding: 2px 4px !important;
+                            font-size: 11px !important;
                             font-weight: 700 !important;
                             white-space: nowrap !important;
                             overflow: hidden !important;
                             text-overflow: ellipsis !important;
-                            min-height: 36px !important;
-                            height: 36px !important;
-                            background: #FFFFFF !important;
-                            color: #000000 !important;
-                            border: 1.5px solid #CBD5E1 !important;
-                            border-radius: 8px !important;
+                            min-height: 31px !important;
+                            height: 31px !important;
+                            background: #1E293B !important;
+                            color: #F8FAFC !important;
+                            border: 1.2px solid #334155 !important;
+                            border-radius: 6px !important;
+                            line-height: 1.1 !important;
                         }
-                        .st-key-frozen_toolbelt_container button * {
-                            color: #000000 !important;
+                        .st-key-brahma_hora_top_brand_bar button * {
+                            font-size: 11px !important;
                             font-weight: 700 !important;
+                            color: #F8FAFC !important;
                         }
-                        .st-key-frozen_toolbelt_container button:hover {
-                            background: #F0F7FF !important;
-                            border-color: #005fa8 !important;
-                            color: #000000 !important;
+                        .st-key-brahma_hora_top_brand_bar button:hover {
+                            background: #334155 !important;
+                            border-color: #38BDF8 !important;
+                            color: #38BDF8 !important;
                         }
-                        .st-key-frozen_toolbelt_container button[kind="primary"],
-                        .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] {
-                            background: #E0F2FE !important;
-                            border: 2px solid #005fa8 !important;
-                            color: #000000 !important;
+                        .st-key-brahma_hora_top_brand_bar button[kind="primary"],
+                        .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] {
+                            background: #0369A1 !important;
+                            border: 1.8px solid #38BDF8 !important;
+                            color: #FFFFFF !important;
                         }
-                        .st-key-frozen_toolbelt_container button[kind="primary"] *,
-                        .st-key-frozen_toolbelt_container button[data-testid="baseButton-primary"] * {
-                            color: #000000 !important;
+                        .st-key-brahma_hora_top_brand_bar button[kind="primary"] *,
+                        .st-key-brahma_hora_top_brand_bar button[data-testid="baseButton-primary"] * {
+                            color: #FFFFFF !important;
+                            font-weight: 800 !important;
                         }
                         .block-container {
                             padding-top: 58px !important;
@@ -5467,31 +5457,61 @@ with st.container(key="top_frozen_header_container", border=False):
             st.session_state.recent_charts_history = st.session_state.recent_charts_history[:5]
 
     # ─── Brand & Quick Utility Controls Bar (ब्रह्महोरा Sovereign Workstation Header) ───
+    # ─── 🕉️ ब्रह्महोरा (BrahmaHora Pro) Sovereign Unified Single-Row Header Workstation ───
     with st.container(key="brahma_hora_top_brand_bar", border=False):
-        c_brand_col, c_util_col = st.columns([5.2, 4.8], gap="small", vertical_alignment="center")
+        c_brand_col, c_tools_col, c_util_col = st.columns([1.5, 6.5, 2.0], gap="small", vertical_alignment="center")
+
+        # 1. BRAND (Left)
         with c_brand_col:
             st.markdown("""
-            <div style="display:flex; align-items:center; gap:8px; padding:3px 2px;">
-                <span style="font-size:22px; filter:drop-shadow(0 1px 3px rgba(217,119,6,0.35));">🕉️</span>
-                <div>
-                    <b style="font-size:18px; font-weight:900; letter-spacing:0.5px; background:linear-gradient(90deg, #F59E0B, #D97706, #92400E); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">ब्रह्महोरा (BrahmaHora Pro)</b>
-                    <span style="font-size:10px; font-weight:800; color:#64748B; margin-left:8px; letter-spacing:0.4px; text-transform:uppercase;">Sovereign Vedic Astrology Workstation</span>
+            <div style="display:flex; align-items:center; gap:6px; white-space:nowrap; padding:1px 0;">
+                <span style="font-size:21px; line-height:1; filter:drop-shadow(0 1px 2px rgba(217,119,6,0.3));">🕉️</span>
+                <div style="display:flex; flex-direction:column; justify-content:center;">
+                    <b style="font-size:15px; font-weight:900; line-height:1.1; letter-spacing:0.3px; background:linear-gradient(90deg, #F59E0B, #D97706, #92400E); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">ब्रह्महोरा Pro</b>
+                    <span style="font-size:8px; font-weight:800; color:#64748B; letter-spacing:0.4px; text-transform:uppercase; line-height:1;">Vedic Workstation</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
+        # 2. CENTRAL TOOLBELT (Middle - 9 Core Astrological Tools)
+        with c_tools_col:
+            tb_cols = st.columns(9, gap="small", vertical_alignment="center")
+
+            def render_tool_tile(col, emoji_icon, label_text, tool_key):
+                with col:
+                    is_active = (st.session_state.gla_active_tool == tool_key)
+                    btn_type = "primary" if is_active else "secondary"
+                    btn_label = f"{emoji_icon} {label_text}"
+                    if st.button(btn_label, key=f"gla_tile_btn_{tool_key}", use_container_width=True, type=btn_type, help=f"{label_text} मेन्यू खोलें"):
+                        if st.session_state.gla_active_tool == tool_key:
+                            st.session_state.gla_active_tool = None
+                        else:
+                            st.session_state.gla_active_tool = tool_key
+                        st.rerun()
+
+            render_tool_tile(tb_cols[0], "✨", "New", "new")
+            render_tool_tile(tb_cols[1], "📅", "Birth", "birth")
+            render_tool_tile(tb_cols[2], "📂", "Vault", "open")
+            render_tool_tile(tb_cols[3], "💾", "Save", "save")
+            render_tool_tile(tb_cols[4], "⏱️", "BTR", "clock")
+            render_tool_tile(tb_cols[5], "🔮", "Prashna", "prashna")
+            render_tool_tile(tb_cols[6], "📄", "PDF", "pdf")
+            render_tool_tile(tb_cols[7], "💬", "AI", "ai_copilot")
+            render_tool_tile(tb_cols[8], "⚙️", "Setup", "settings")
+
+        # 3. QUICK UTILITIES (Right - Server, Lang, Theme, Logout)
         with c_util_col:
-            cu1, cu2, cu3, cu4 = st.columns([1.6, 1.1, 1.1, 1.0], gap="small", vertical_alignment="center")
+            cu1, cu2, cu3, cu4 = st.columns([1.1, 0.9, 0.9, 0.8], gap="small", vertical_alignment="center")
             with cu1:
                 is_srv_conn = st.session_state.get("gla_authenticated", False)
-                if is_srv_conn:
-                    st.markdown("<div style='text-align:center;'><span style='background:#DCFCE7; color:#166534; border:1px solid #86EFAC; border-radius:12px; padding:3px 8px; font-size:10.5px; font-weight:800;'>🟢 सर्वर: लाइव</span></div>", unsafe_allow_html=True)
-                else:
-                    st.markdown("<div style='text-align:center;'><span style='background:#F1F5F9; color:#475569; border:1px solid #CBD5E1; border-radius:12px; padding:3px 8px; font-size:10.5px; font-weight:800;'>⚪ लोकल मोड</span></div>", unsafe_allow_html=True)
+                srv_label = "🟢 लाइव" if is_srv_conn else "⚪ लोकल"
+                if st.button(srv_label, key="hdr_quick_server_status_btn", help="सर्वर क्लाउड सिंक स्थिति", use_container_width=True):
+                    st.session_state.gla_active_tool = "server" if st.session_state.gla_active_tool != "server" else None
+                    st.rerun()
             with cu2:
                 cur_lang = st.session_state.get("app_lang", "General (जनरल)")
                 is_hindi = ("जनरल" in cur_lang or "Hindi" in cur_lang)
-                lang_label = "🌐 EN" if is_hindi else "🌐 हिंदी"
+                lang_label = "🌐 EN" if is_hindi else "🌐 HI"
                 if st.button(lang_label, key="hdr_quick_lang_toggle_btn", help="१-क्लिक में भाषा बदलें (Toggle Language)", use_container_width=True):
                     st.session_state.app_lang = "English (अंग्रेजी)" if is_hindi else "General (जनरल)"
                     st.toast(f"✅ भाषा परिवर्तित: {st.session_state.app_lang}", icon="🌐")
@@ -5507,50 +5527,6 @@ with st.container(key="top_frozen_header_container", border=False):
                 if st.button("🚪 निकास", key="hdr_quick_logout_btn", help="सत्र से लॉगआउट करें", use_container_width=True):
                     st.session_state.gla_active_tool = "logout" if st.session_state.gla_active_tool != "logout" else None
                     st.rerun()
-
-    # 9 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered - Frozen Sticky at Top)
-    with st.container(key="frozen_toolbelt_container", border=False):
-        tb_cols = st.columns(9, gap="small")
-
-        # Helper function for rendering clickable tile (Streamlit Native Button - In-Session Instant Trigger)
-        def render_tool_tile(col, emoji_icon, label_text, tool_key):
-            with col:
-                is_active = (st.session_state.gla_active_tool == tool_key)
-                btn_type = "primary" if is_active else "secondary"
-                btn_label = f"{emoji_icon} {label_text}"
-                if st.button(btn_label, key=f"gla_tile_btn_{tool_key}", use_container_width=True, type=btn_type, help=f"{label_text} मेन्यू खोलें"):
-                    if st.session_state.gla_active_tool == tool_key:
-                        st.session_state.gla_active_tool = None
-                    else:
-                        st.session_state.gla_active_tool = tool_key
-                    st.rerun()
-
-        # 1. New Chart & Presets
-        render_tool_tile(tb_cols[0], "✨", "New", "new")
-
-        # 2. Birth Data
-        render_tool_tile(tb_cols[1], "📅", "Birth Data", "birth")
-
-        # 3. Open Folder & Recent Vault
-        render_tool_tile(tb_cols[2], "📂", "Vault", "open")
-
-        # 4. Save Chart
-        render_tool_tile(tb_cols[3], "💾", "Save", "save")
-
-        # 5. Time Stepper & BTR Seconds
-        render_tool_tile(tb_cols[4], "⏱️", "BTR ±Sec", "clock")
-
-        # 6. Prashna / Horary Now
-        render_tool_tile(tb_cols[5], "🔮", "Prashna", "prashna")
-
-        # 7. Quick PDF Dossier
-        render_tool_tile(tb_cols[6], "📄", "Quick PDF", "pdf")
-
-        # 8. AI Co-Pilot
-        render_tool_tile(tb_cols[7], "💬", "AI Co-Pilot", "ai_copilot")
-
-        # 9. Settings
-        render_tool_tile(tb_cols[8], "⚙️", "Settings", "settings")
 
     if st.session_state.get("sidebar_toggle_requested"):
         st.session_state.sidebar_toggle_requested = False
