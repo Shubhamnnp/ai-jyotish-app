@@ -156,8 +156,8 @@ except (ImportError, ModuleNotFoundError):
         )
 
 st.set_page_config(
-    page_title="JyotishOS - Enterprise Vedic Astrology Platform",
-    page_icon="🔮",
+    page_title="ब्रह्महोरा (BrahmaHora Pro) - Sovereign Vedic Astrology Workstation",
+    page_icon="🕉️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -5448,7 +5448,67 @@ with st.container(key="top_frozen_header_container", border=False):
     # Invisible anchor for sticky top header calculations
     st.markdown('<div class="fixed-header-anchor" style="display:none; height:0px; margin:0; padding:0;"></div>', unsafe_allow_html=True)
 
-    # 7 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered - Frozen Sticky at Top)
+    # Track recent charts history in session
+    if "recent_charts_history" not in st.session_state:
+        st.session_state.recent_charts_history = []
+    if "birth_name" in st.session_state and st.session_state.birth_name:
+        _c_name = st.session_state.birth_name
+        _c_date = st.session_state.birth_date.strftime("%Y-%m-%d") if hasattr(st.session_state.birth_date, "strftime") else str(st.session_state.birth_date)
+        _c_time = st.session_state.birth_time.strftime("%H:%M:%S") if hasattr(st.session_state.birth_time, "strftime") else str(st.session_state.birth_time)
+        _c_city = st.session_state.get("birth_city", "New Delhi")
+        _c_lat = float(st.session_state.get("birth_lat", 28.6139))
+        _c_lon = float(st.session_state.get("birth_lon", 77.2090))
+        _c_tz = float(st.session_state.get("birth_tz", 5.5))
+        if not any(r.get("name") == _c_name and r.get("date") == _c_date for r in st.session_state.recent_charts_history):
+            st.session_state.recent_charts_history.insert(0, {
+                "name": _c_name, "date": _c_date, "time": _c_time,
+                "city": _c_city, "lat": _c_lat, "lon": _c_lon, "tz": _c_tz
+            })
+            st.session_state.recent_charts_history = st.session_state.recent_charts_history[:5]
+
+    # ─── Brand & Quick Utility Controls Bar (ब्रह्महोरा Sovereign Workstation Header) ───
+    with st.container(key="brahma_hora_top_brand_bar", border=False):
+        c_brand_col, c_util_col = st.columns([5.2, 4.8], gap="small", vertical_alignment="center")
+        with c_brand_col:
+            st.markdown("""
+            <div style="display:flex; align-items:center; gap:8px; padding:3px 2px;">
+                <span style="font-size:22px; filter:drop-shadow(0 1px 3px rgba(217,119,6,0.35));">🕉️</span>
+                <div>
+                    <b style="font-size:18px; font-weight:900; letter-spacing:0.5px; background:linear-gradient(90deg, #F59E0B, #D97706, #92400E); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">ब्रह्महोरा (BrahmaHora Pro)</b>
+                    <span style="font-size:10px; font-weight:800; color:#64748B; margin-left:8px; letter-spacing:0.4px; text-transform:uppercase;">Sovereign Vedic Astrology Workstation</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with c_util_col:
+            cu1, cu2, cu3, cu4 = st.columns([1.6, 1.1, 1.1, 1.0], gap="small", vertical_alignment="center")
+            with cu1:
+                is_srv_conn = st.session_state.get("gla_authenticated", False)
+                if is_srv_conn:
+                    st.markdown("<div style='text-align:center;'><span style='background:#DCFCE7; color:#166534; border:1px solid #86EFAC; border-radius:12px; padding:3px 8px; font-size:10.5px; font-weight:800;'>🟢 सर्वर: लाइव</span></div>", unsafe_allow_html=True)
+                else:
+                    st.markdown("<div style='text-align:center;'><span style='background:#F1F5F9; color:#475569; border:1px solid #CBD5E1; border-radius:12px; padding:3px 8px; font-size:10.5px; font-weight:800;'>⚪ लोकल मोड</span></div>", unsafe_allow_html=True)
+            with cu2:
+                cur_lang = st.session_state.get("app_lang", "General (जनरल)")
+                is_hindi = ("जनरल" in cur_lang or "Hindi" in cur_lang)
+                lang_label = "🌐 EN" if is_hindi else "🌐 हिंदी"
+                if st.button(lang_label, key="hdr_quick_lang_toggle_btn", help="१-क्लिक में भाषा बदलें (Toggle Language)", use_container_width=True):
+                    st.session_state.app_lang = "English (अंग्रेजी)" if is_hindi else "General (जनरल)"
+                    st.toast(f"✅ भाषा परिवर्तित: {st.session_state.app_lang}", icon="🌐")
+                    st.rerun()
+            with cu3:
+                cur_th = st.session_state.get("app_theme_mode", "day")
+                th_label = "☀️ डे" if cur_th in ["astrallis", "night"] else "🌙 नाइट"
+                if st.button(th_label, key="hdr_quick_theme_toggle_btn", help="१-क्लिक में डे/नाइट थीम बदलें (Toggle Theme)", use_container_width=True):
+                    st.session_state.app_theme_mode = "day" if cur_th in ["astrallis", "night"] else "astrallis"
+                    st.toast(f"✅ थीम मोड: {st.session_state.app_theme_mode.upper()}", icon="🌓")
+                    st.rerun()
+            with cu4:
+                if st.button("🚪 निकास", key="hdr_quick_logout_btn", help="सत्र से लॉगआउट करें", use_container_width=True):
+                    st.session_state.gla_active_tool = "logout" if st.session_state.gla_active_tool != "logout" else None
+                    st.rerun()
+
+    # 9 Essential Clean Toolbelt Actions (Spacious, Minimal & Uncluttered - Frozen Sticky at Top)
     with st.container(key="frozen_toolbelt_container", border=False):
         tb_cols = st.columns(9, gap="small")
 
@@ -5465,32 +5525,32 @@ with st.container(key="top_frozen_header_container", border=False):
                         st.session_state.gla_active_tool = tool_key
                     st.rerun()
 
-        # 1. New Chart
+        # 1. New Chart & Presets
         render_tool_tile(tb_cols[0], "✨", "New", "new")
 
         # 2. Birth Data
         render_tool_tile(tb_cols[1], "📅", "Birth Data", "birth")
 
-        # 3. Open Folder (Client Kundali Vault)
-        render_tool_tile(tb_cols[2], "📂", "Open Vault", "open")
+        # 3. Open Folder & Recent Vault
+        render_tool_tile(tb_cols[2], "📂", "Vault", "open")
 
         # 4. Save Chart
         render_tool_tile(tb_cols[3], "💾", "Save", "save")
 
-        # 5. Time Stepper (Time Travel)
-        render_tool_tile(tb_cols[4], "⏱️", "BTR & Rule", "clock")
+        # 5. Time Stepper & BTR Seconds
+        render_tool_tile(tb_cols[4], "⏱️", "BTR ±Sec", "clock")
 
-        # 6. Server Sync (Placed between BTR & Rule and Theme)
-        render_tool_tile(tb_cols[5], "☁️", "Server", "server")
+        # 6. Prashna / Horary Now
+        render_tool_tile(tb_cols[5], "🔮", "Prashna", "prashna")
 
-        # 6. Theme Mode
-        render_tool_tile(tb_cols[6], "🌓", "Theme", "theme")
+        # 7. Quick PDF Dossier
+        render_tool_tile(tb_cols[6], "📄", "Quick PDF", "pdf")
 
-        # 7. Settings (Placed between Theme and Logout)
-        render_tool_tile(tb_cols[7], "⚙️", "Settings", "settings")
+        # 8. AI Co-Pilot
+        render_tool_tile(tb_cols[7], "💬", "AI Co-Pilot", "ai_copilot")
 
-        # 8. Logout
-        render_tool_tile(tb_cols[8], "🚪", "Logout", "logout")
+        # 9. Settings
+        render_tool_tile(tb_cols[8], "⚙️", "Settings", "settings")
 
     if st.session_state.get("sidebar_toggle_requested"):
         st.session_state.sidebar_toggle_requested = False
@@ -5533,45 +5593,79 @@ with st.container(key="top_frozen_header_container", border=False):
         """, height=0, width=0)
 
     # Physical spacer between toolbelt and module selector/dialogs
-    st.markdown("<div style='height: 10px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
-
-
+    st.markdown("<div style='height: 8px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
 
     # Active tool dialog/form container
     if st.session_state.gla_active_tool:
         st.markdown("<div style='height: 6px;'></div>", unsafe_allow_html=True)
 
-        # 1. TOOL: NEW / RESET
+        # 1. TOOL: NEW / RESET & QUICK PRESETS
         if st.session_state.gla_active_tool == "new":
             with st.container(border=True):
-                st.markdown("### 📄 नया चार्ट तैयार करें (New Chart / Reset)")
-                st.write("क्या आप वर्तमान विवरण रीसेट करके नया ब्लैंक या डिफ़ॉल्ट प्रोफाइल शुरू करना चाहते हैं?")
-                col_n1, col_n2, col_n3 = st.columns([1.5, 1.5, 3])
-                if col_n1.button("✨ नया ब्लैंक प्रोफाइल (New Blank)", type="primary", use_container_width=True):
-                    st.session_state.birth_name = "New Client"
-                    st.session_state.birth_gender = "Male"
-                    st.session_state.birth_date = date.today()
-                    st.session_state.birth_time = time(12, 0, 0)
-                    st.session_state.birth_city = "New Delhi, Delhi, India"
-                    st.session_state.birth_lat = 28.6139
-                    st.session_state.birth_lon = 77.2090
-                    st.session_state.birth_tz = 5.5
-                    st.session_state.gla_active_tool = "birth"
-                    st.toast("✅ नया प्रोफाइल तैयार! कृपया जन्म विवरण भरें।", icon="👶")
-                    st.rerun()
-                if col_n2.button("🔄 डिफ़ॉल्ट रीसेट (Default Profile)", use_container_width=True):
-                    st.session_state.birth_name = "डेमो जातक (Demo Profile)"
-                    st.session_state.birth_gender = "Male"
-                    st.session_state.birth_date = date(1995, 1, 1)
-                    st.session_state.birth_time = time(12, 0, 0)
-                    st.session_state.birth_city = "New Delhi, Delhi, India"
-                    st.session_state.birth_lat = 28.6139
-                    st.session_state.birth_lon = 77.2090
-                    st.session_state.birth_tz = 5.5
-                    st.session_state.gla_active_tool = None
-                    st.toast("✅ डिफ़ॉल्ट डेमो प्रोफाइल लोड की गई!", icon="🔄")
-                    st.rerun()
-                if col_n3.button("❌ बंद करें (Close)", use_container_width=True):
+                st.markdown("### ✨ नया प्रोफाइल, तात्कालिक प्रश्न एवं प्रीसेट्स (New Chart & Quick Presets)")
+                st.write("कृपया अपनी आवश्यकतानुसार उपयुक्त विकल्प चुनें:")
+
+                col_n1, col_n2, col_n3, col_n4, col_n5 = st.columns([1.5, 1.8, 1.6, 1.6, 1])
+                with col_n1:
+                    if st.button("📄 नया ब्लैंक (New Blank)", type="primary", use_container_width=True, help="नया खाली प्रोफाइल तैयार करें"):
+                        st.session_state.birth_name = "New Client"
+                        st.session_state.birth_gender = "Male"
+                        st.session_state.birth_date = date.today()
+                        st.session_state.birth_time = time(12, 0, 0)
+                        st.session_state.birth_city = "New Delhi, Delhi, India"
+                        st.session_state.birth_lat = 28.6139
+                        st.session_state.birth_lon = 77.2090
+                        st.session_state.birth_tz = 5.5
+                        st.session_state.gla_active_tool = "birth"
+                        st.toast("✅ नया प्रोफाइल तैयार! कृपया जन्म विवरण भरें।", icon="👶")
+                        st.rerun()
+
+                with col_n2:
+                    if st.button("🔮 तात्कालिक प्रश्न कुण्डली (Horary)", use_container_width=True, help="वर्तमान समय व स्थान की प्रश्न कुण्डली बनाएं"):
+                        now_dt = datetime.now()
+                        st.session_state.birth_name = f"प्रश्न कुण्डली ({now_dt.strftime('%H:%M:%S')})"
+                        st.session_state.birth_gender = "Male"
+                        st.session_state.birth_date = now_dt.date()
+                        st.session_state.birth_time = now_dt.time().replace(microsecond=0)
+                        st.session_state.calculated_at = now_dt
+                        st.session_state.gla_active_tool = None
+                        st.toast(f"✅ तात्कालिक प्रश्न कुण्डली ({now_dt.strftime('%I:%M:%S %p')}) तैयार!", icon="🔮")
+                        st.rerun()
+
+                with col_n3:
+                    if st.button("👶 नवजात शिशु (Newborn)", use_container_width=True, help="आज की तिथि व वर्तमान समय से शिशु कुण्डली बनाएं"):
+                        now_dt = datetime.now()
+                        st.session_state.birth_name = "नवजात शिशु (Newborn Baby)"
+                        st.session_state.birth_gender = "Male"
+                        st.session_state.birth_date = now_dt.date()
+                        st.session_state.birth_time = now_dt.time().replace(microsecond=0)
+                        st.session_state.gla_active_tool = "birth"
+                        st.toast("👶 शिशु का जन्म समय सेट किया गया! विवरण जांचें।", icon="👶")
+                        st.rerun()
+
+                with col_n4:
+                    if st.button("💍 वर-वधू मिलान (Match Pair)", use_container_width=True, help="कुण्डली मिलान मॉड्यूल (Module 19) खोलें"):
+                        st.session_state.active_module_idx = 19
+                        st.session_state.gla_active_tool = None
+                        st.toast("💍 कुण्डली मिलान मॉड्यूल खोला गया!", icon="💍")
+                        st.rerun()
+
+                with col_n5:
+                    if st.button("🔄 डेमो (Demo)", use_container_width=True, help="डिफ़ॉल्ट डेमो प्रोफाइल लोड करें"):
+                        st.session_state.birth_name = "डेमो जातक (Demo Profile)"
+                        st.session_state.birth_gender = "Male"
+                        st.session_state.birth_date = date(1995, 1, 1)
+                        st.session_state.birth_time = time(12, 0, 0)
+                        st.session_state.birth_city = "New Delhi, Delhi, India"
+                        st.session_state.birth_lat = 28.6139
+                        st.session_state.birth_lon = 77.2090
+                        st.session_state.birth_tz = 5.5
+                        st.session_state.gla_active_tool = None
+                        st.toast("✅ डिफ़ॉल्ट डेमो प्रोफाइल लोड की गई!", icon="🔄")
+                        st.rerun()
+
+                st.markdown("<div style='height:4px;'></div>", unsafe_allow_html=True)
+                if st.button("❌ बंद करें (Close)", use_container_width=True, key="btn_close_new_dialog"):
                     st.session_state.gla_active_tool = None
                     st.rerun()
 
@@ -5655,8 +5749,36 @@ with st.container(key="top_frozen_header_container", border=False):
                         in_birth_t = st.time_input("जन्म समय", value=st.session_state.birth_time, step=60, key="gla_time_24_val")
                         st.session_state.birth_time = in_birth_t
 
+                # Quick City Presets & GPS Auto-Fill
+                st.markdown("""
+                <div style="font-size:12px; font-weight:800; color:#0369A1; margin-top:4px; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
+                    <span>📍 त्वरित प्रमुख नगर (Quick City Presets):</span>
+                </div>
+                """, unsafe_allow_html=True)
+                city_presets = [
+                    ("दिल्ली (Delhi)", 28.6139, 77.2090, 5.5),
+                    ("वाराणसी (Kashi)", 25.3176, 82.9739, 5.5),
+                    ("उज्जैन (Ujjain)", 23.1765, 75.7885, 5.5),
+                    ("अयोध्या (Ayodhya)", 26.7922, 82.1998, 5.5),
+                    ("हरिद्वार (Haridwar)", 29.9457, 78.1642, 5.5),
+                    ("मुंबई (Mumbai)", 19.0760, 72.8777, 5.5),
+                    ("जयपुर (Jaipur)", 26.9124, 75.7873, 5.5),
+                    ("लखनऊ (Lucknow)", 26.8467, 80.9462, 5.5),
+                    ("कोलकाता (Kolkata)", 22.5726, 88.3639, 5.5),
+                    ("बेंगलुरु (Bengaluru)", 12.9716, 77.5946, 5.5),
+                ]
+                cp_cols = st.columns(10)
+                for _idx, (_c_lbl, _c_lt, _c_ln, _c_tzo) in enumerate(city_presets):
+                    with cp_cols[_idx]:
+                        if st.button(_c_lbl.split()[0], key=f"btn_city_pr_{_idx}", use_container_width=True, help=f"{_c_lbl} सेट करें"):
+                            st.session_state.birth_city = _c_lbl
+                            st.session_state.birth_lat = _c_lt
+                            st.session_state.birth_lon = _c_ln
+                            st.session_state.birth_tz = _c_tzo
+                            st.rerun()
+
                 # Row 3: City Geocoding & Coordinates
-                col_geo1, col_geo2, col_geo3 = st.columns([1.6, 1.4, 1.2])
+                col_geo1, col_geo2, col_geo3 = st.columns([1.6, 1.4, 1.3])
                 with col_geo1:
                     in_city_query = st.text_input("स्थान खोज (Search City)", value=st.session_state.birth_city, key="gla_city_query_input")
                     geo_results = default_geocoding_service.search(in_city_query, limit=3)
@@ -5685,6 +5807,14 @@ with st.container(key="top_frozen_header_container", border=False):
                     in_conf = col_conf_a.selectbox("Confidence", ["Exact", "Approx (±15 min)", "Unknown"], key="gla_conf_select")
                     st.session_state.birth_tz = in_tz
                     st.session_state.birth_conf = in_conf
+                    in_dst = st.checkbox("🌐 विदेशी DST (+1 घंटा)", value=st.session_state.get("birth_dst_active", False), key="gla_foreign_dst_cb", help="डेलाइट सेविंग टाइम (Daylight Saving Time) सक्रिय करें")
+                    if in_dst != st.session_state.get("birth_dst_active", False):
+                        st.session_state.birth_dst_active = in_dst
+                        if in_dst:
+                            st.session_state.birth_tz = float(st.session_state.birth_tz) + 1.0
+                        else:
+                            st.session_state.birth_tz = float(st.session_state.birth_tz) - 1.0
+                        st.rerun()
 
                 # Form Buttons: Calculate & Close
                 st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
@@ -5733,6 +5863,34 @@ with st.container(key="top_frozen_header_container", border=False):
                     ])
 
                     with tab_v_browse:
+                        # 🕒 हालिया ५ कुण्डलियाँ (Recent 5 Charts History Quick-Load)
+                        recent_charts = st.session_state.get("recent_charts_history", [])
+                        if recent_charts:
+                            st.markdown("""
+                            <div style="font-size:12px; font-weight:800; color:#475569; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
+                                <span>🕒 हालिया ५ कुण्डलियाँ (Recent 5 Charts Quick-Switch):</span>
+                            </div>
+                            """, unsafe_allow_html=True)
+                            r_cols = st.columns(min(len(recent_charts), 5))
+                            for idx, r_item in enumerate(recent_charts[:5]):
+                                with r_cols[idx]:
+                                    r_label = f"👤 {r_item['name'][:10]}"
+                                    if st.button(r_label, key=f"btn_recent_chart_{idx}", use_container_width=True, help=f"{r_item['name']} - {r_item.get('city', '')} ({r_item.get('date', '')})"):
+                                        st.session_state.birth_name = r_item["name"]
+                                        st.session_state.birth_city = r_item.get("city", "Delhi")
+                                        st.session_state.birth_lat = float(r_item.get("lat", 28.6139))
+                                        st.session_state.birth_lon = float(r_item.get("lon", 77.2090))
+                                        st.session_state.birth_tz = float(r_item.get("tz", 5.5))
+                                        try:
+                                            st.session_state.birth_date = datetime.strptime(r_item["date"], "%Y-%m-%d").date()
+                                            st.session_state.birth_time = datetime.strptime(r_item["time"][:8], "%H:%M:%S").time()
+                                        except Exception:
+                                            pass
+                                        st.session_state.gla_active_tool = None
+                                        st.toast(f"✅ {r_item['name']} की कुण्डली लोड की गई!", icon="⚡")
+                                        st.rerun()
+                            st.markdown("<div style='height:4px;'></div>", unsafe_allow_html=True)
+
                         col_vs1, col_vs2 = st.columns([3, 1.5])
                         with col_vs1:
                             v_search = st.text_input("🔍 नाम, शहर अथवा नोट्स द्वारा खोजें (Search Clients):", placeholder="जैसे: Vivek, Delhi, विवाह, VIP...", key="v_search_in")
@@ -5868,11 +6026,21 @@ with st.container(key="top_frozen_header_container", border=False):
                         sel_fid = st.selectbox("📁 फ़ोल्डर चुनें (Select Folder)", list(f_options.keys()), format_func=lambda x: f_options[x], key="gla_save_folder_sel")
                         save_notes_input = st.text_area("📝 परामर्श नोट्स (Consultant Notes):", placeholder="जैसे: करियर व विवाह विचार, नीलम व पन्ना रत्न संस्तुति...", key="gla_save_notes_ta", height=85)
 
+                    save_mode_choice = st.radio(
+                        "सहेजने का प्रकार (Save Mode)",
+                        ["🔄 मौजूदा कुण्डली अपडेट करें (Update Existing)", "➕ नई प्रतिलिपि सहेजें (Save As New Copy)"],
+                        horizontal=True,
+                        key="gla_save_mode_radio"
+                    )
+
                     col_sv_act1, col_sv_act2 = st.columns([2, 1])
                     with col_sv_act1:
                         if st.button("💾 सुरक्षित करें (Confirm Save)", type="primary", use_container_width=True, key="gla_confirm_save_btn"):
+                            final_name = save_name_input
+                            if "प्रतिलिपि" in save_mode_choice and not final_name.endswith("(Copy)"):
+                                final_name = f"{final_name} (Copy)"
                             save_payload = {
-                                "name": save_name_input,
+                                "name": final_name,
                                 "gender": st.session_state.get("birth_gender", "Male"),
                                 "birth_date": st.session_state.birth_date.strftime("%Y-%m-%d"),
                                 "birth_time": st.session_state.birth_time.strftime("%H:%M:%S"),
@@ -5883,15 +6051,15 @@ with st.container(key="top_frozen_header_container", border=False):
                                 "confidence": st.session_state.get("birth_conf", "Exact")
                             }
                             v_service.save_client(
-                                name=save_name_input,
+                                name=final_name,
                                 birth_data=save_payload,
                                 tags=sel_tags,
                                 notes=save_notes_input,
                                 folder_id=sel_fid
                             )
-                            st.session_state.birth_name = save_name_input
+                            st.session_state.birth_name = final_name
                             st.session_state.gla_active_tool = None
-                            st.toast(f"✅ कुण्डली '{save_name_input}' टैग्स एवं नोट्स सहित सुरक्षित कर ली गई!", icon="💾")
+                            st.toast(f"✅ कुण्डली '{final_name}' ({'अपडेटेड' if 'मौजूदा' in save_mode_choice else 'नई प्रतिलिपि'}) सुरक्षित कर ली गई!", icon="💾")
                             st.rerun()
 
                     with col_sv_act2:
@@ -6147,31 +6315,65 @@ with st.container(key="top_frozen_header_container", border=False):
                     """, unsafe_allow_html=True)
 
                 with c_ts_ctrl:
-                    def _step_time_modal_action(delta_minutes=0, delta_hours=0, delta_days=0, reset_to_now=False):
+                    def _step_time_modal_action(delta_seconds=0, delta_minutes=0, delta_hours=0, delta_days=0, reset_to_now=False, reset_sec_zero=False):
                         from datetime import datetime as dt_cls, timedelta as td_cls
                         if reset_to_now:
                             now_curr = dt_cls.now()
                             st.session_state.birth_date = now_curr.date()
                             st.session_state.birth_time = now_curr.time().replace(microsecond=0)
+                        elif reset_sec_zero:
+                            cur_t = st.session_state.get("birth_time", _init_now.time())
+                            st.session_state.birth_time = cur_t.replace(second=0, microsecond=0)
                         else:
                             curr_b_d = st.session_state.get("birth_date", _init_now.date())
                             curr_b_t = st.session_state.get("birth_time", _init_now.time())
                             c_combo = dt_cls.combine(curr_b_d, curr_b_t)
-                            n_combo = c_combo + td_cls(days=delta_days, hours=delta_hours, minutes=delta_minutes)
+                            n_combo = c_combo + td_cls(days=delta_days, hours=delta_hours, minutes=delta_minutes, seconds=delta_seconds)
                             st.session_state.birth_date = n_combo.date()
                             st.session_state.birth_time = n_combo.time().replace(microsecond=0)
                         st.rerun()
 
+                    st.caption("🕒 दिन / घंटा / मिनट नियंत्रक (Days / Hours / Minutes):")
                     ts_b_cols = st.columns(9, gap="small", vertical_alignment="center")
                     if ts_b_cols[0].button("⏪ -1द", key="ts_m_btn_m1d", help="-1 दिन पीछे जाएं"): _step_time_modal_action(delta_days=-1)
                     if ts_b_cols[1].button("◀ -1घं", key="ts_m_btn_m1h", help="-1 घंटा पीछे जाएं"): _step_time_modal_action(delta_hours=-1)
                     if ts_b_cols[2].button("‹ -15म", key="ts_m_btn_m15m", help="-15 मिनट पीछे जाएं"): _step_time_modal_action(delta_minutes=-15)
-                    if ts_b_cols[3].button("‹ -1म", key="ts_m_btn_m1m", help="-1 मिनट (BTR सूक्ष्म शोधन)"): _step_time_modal_action(delta_minutes=-1)
-                    if ts_b_cols[4].button("🔄 अब", key="ts_m_btn_now", type="primary", help="वर्तमान समय (Current Time) पर सेट करें"): _step_time_modal_action(reset_to_now=True)
-                    if ts_b_cols[5].button("+1म ›", key="ts_m_btn_p1m", help="+1 मिनट (BTR सूक्ष्म शोधन)"): _step_time_modal_action(delta_minutes=1)
+                    if ts_b_cols[3].button("‹ -1म", key="ts_m_btn_m1m", help="-1 मिनट"): _step_time_modal_action(delta_minutes=-1)
+                    if ts_b_cols[4].button("🔄 अब", key="ts_m_btn_now", type="primary", help="वर्तमान समय पर सेट करें"): _step_time_modal_action(reset_to_now=True)
+                    if ts_b_cols[5].button("+1म ›", key="ts_m_btn_p1m", help="+1 मिनट"): _step_time_modal_action(delta_minutes=1)
                     if ts_b_cols[6].button("+15म ›", key="ts_m_btn_p15m", help="+15 मिनट आगे जाएं"): _step_time_modal_action(delta_minutes=15)
                     if ts_b_cols[7].button("+1घं ▶", key="ts_m_btn_p1h", help="+1 घंटा आगे जाएं"): _step_time_modal_action(delta_hours=1)
                     if ts_b_cols[8].button("+1द ⏩", key="ts_m_btn_p1d", help="+1 दिन आगे जाएं"): _step_time_modal_action(delta_days=1)
+
+                    st.caption("⚡ BTR सूक्ष्म सेकंड शोधन (Sub-Minute Seconds Stepper):")
+                    ts_s_cols = st.columns(7, gap="small", vertical_alignment="center")
+                    if ts_s_cols[0].button("⏪ -30s", key="ts_s_btn_m30s", help="-30 सेकंड"): _step_time_modal_action(delta_seconds=-30)
+                    if ts_s_cols[1].button("◀ -15s", key="ts_s_btn_m15s", help="-15 सेकंड"): _step_time_modal_action(delta_seconds=-15)
+                    if ts_s_cols[2].button("‹ -5s", key="ts_s_btn_m5s", help="-5 सेकंड"): _step_time_modal_action(delta_seconds=-5)
+                    if ts_s_cols[3].button("⏱️ 00s Reset", key="ts_s_btn_rst00s", help="सेकंड शून्य (:00) करें"): _step_time_modal_action(reset_sec_zero=True)
+                    if ts_s_cols[4].button("+5s ›", key="ts_s_btn_p5s", help="+5 सेकंड"): _step_time_modal_action(delta_seconds=5)
+                    if ts_s_cols[5].button("+15s ▶", key="ts_s_btn_p15s", help="+15 सेकंड"): _step_time_modal_action(delta_seconds=15)
+                    if ts_s_cols[6].button("+30s ⏩", key="ts_s_btn_p30s", help="+30 सेकंड"): _step_time_modal_action(delta_seconds=30)
+
+                # ─── Part 3: D9 & D60 Divisional Lagna Live Tracker ───
+                if chart:
+                    _d1_lg_sign = getattr(chart, "lagna_sign_name", "Aries")
+                    _d1_lg_deg_val = getattr(chart, "lagna_longitude", 0.0) % 30.0
+                    _d1_lg_deg_str = f"{int(_d1_lg_deg_val)}° {int((_d1_lg_deg_val % 1) * 60):02d}'"
+                    _vargas = getattr(chart, "varga_charts", {})
+                    _d9_lg = _vargas.get("D9").lagna_sign_name if (_vargas and "D9" in _vargas) else "N/A"
+                    _d60_lg = _vargas.get("D60").lagna_sign_name if (_vargas and "D60" in _vargas) else "N/A"
+
+                    st.markdown(f"""
+                    <div style="background:rgba(99, 102, 241, 0.08); border:1px dashed #6366F1; border-radius:8px; padding:6px 12px; margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:12px; font-weight:800; color:#4338CA;">🎯 BTR वर्ग लग्न लाइव ट्रैकर:</span>
+                        <div style="font-size:12px; font-weight:700; color:#1E293B; display:flex; gap:14px;">
+                            <span><b>D1 लग्न:</b> {_d1_lg_sign} ({_d1_lg_deg_str})</span>
+                            <span style="color:#0284C7;"><b>D9 नवांश लग्न:</b> {_d9_lg}</span>
+                            <span style="color:#7C3AED;"><b>D60 षष्ट्यंश लग्न:</b> {_d60_lg}</span>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
         # 8. TOOL: CURRENT LOCATION (वर्तमान स्थान)
         elif st.session_state.gla_active_tool == "location":
@@ -6353,6 +6555,217 @@ with st.container(key="top_frozen_header_container", border=False):
                     if st.button("❌ नहीं, रद्द करें", use_container_width=True, key="gla_cancel_logout_btn"):
                         st.session_state.gla_active_tool = None
                         st.rerun()
+
+        # 11. TOOL: PRASHNA / HORARY ENGINE (तात्कालिक प्रश्न कुण्डली)
+        elif st.session_state.gla_active_tool == "prashna":
+            with st.container(border=True):
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8B5CF6; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#7C3AED;">
+                        🔮 तात्कालिक प्रश्न कुण्डली एवं दैवज्ञ प्रश्न विचार (Horary Prashna Engine)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                col_pr1, col_pr2, col_pr3 = st.columns([2, 1.5, 1.2])
+                with col_pr1:
+                    pr_topic = st.selectbox(
+                        "प्रश्न विषय (Prashna Category)",
+                        [
+                            "💼 कार्य-व्यवसाय / पदोन्नति / स्थानांतरण (Career & Job)",
+                            "💍 विवाह / संबंध / दांपत्य (Marriage & Relationship)",
+                            "🩺 स्वास्थ्य / रोग मुक्ति (Health & Recovery)",
+                            "💰 धन लाभ / निवेश / कर्ज मुक्ति (Wealth & Finance)",
+                            "✈️ यात्रा / विदेश गमन (Travel & Foreign)",
+                            "📦 खोई वस्तु / विस्मृत लाभ (Lost Object & Recovery)",
+                            "⚖️ मुकदमा / वाद-विवाद विजय (Litigation & Success)",
+                            "❓ सामान्य प्रश्न (General Query)"
+                        ],
+                        key="prashna_modal_topic_sel"
+                    )
+                    pr_custom_q = st.text_input("विशिष्ट प्रश्न (Specific Question):", placeholder="जैसे: क्या इस माह साक्षात्कार में चयन होगा?", key="prashna_modal_q_input")
+
+                with col_pr2:
+                    pr_mode = st.radio("प्रश्न गणना विधि", ["⏱️ तात्कालिक वर्तमान काल (Instant Moment)", "🔢 केपी प्रश्न संख्या (1-249 KP Number)"], horizontal=True, key="prashna_modal_mode_radio")
+                    kp_num = 1
+                    if "केपी" in pr_mode:
+                        kp_num = st.number_input("केपी प्रश्न संख्या (1-249)", min_value=1, max_value=249, value=108, key="prashna_modal_kp_num")
+
+                with col_pr3:
+                    st.markdown(f"""
+                    <div style="background:#F5F3FF; border:1px solid #DDD6FE; border-radius:8px; padding:8px 10px; font-size:12px; color:#5B21B6;">
+                        <b>स्थान:</b> {st.session_state.birth_city}<br/>
+                        <b>अक्षांश:</b> {st.session_state.birth_lat:.2f}° N<br/>
+                        <b>रेखांश:</b> {st.session_state.birth_lon:.2f}° E
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                col_pr_act1, col_pr_act2, col_pr_act3 = st.columns([2, 1.2, 1])
+                with col_pr_act1:
+                    if st.button("🚀 प्रश्न कुण्डली बनाएं एवं फलादेश देखें", type="primary", use_container_width=True, key="prashna_modal_submit_btn"):
+                        now_dt = datetime.now()
+                        st.session_state.birth_name = f"प्रश्न: {pr_topic.split()[1]} ({now_dt.strftime('%H:%M')})"
+                        st.session_state.birth_date = now_dt.date()
+                        st.session_state.birth_time = now_dt.time().replace(microsecond=0)
+                        st.session_state.calculated_at = now_dt
+                        st.session_state.active_module_idx = 21
+                        st.session_state.gla_active_tool = None
+                        st.toast("🔮 तात्कालिक प्रश्न कुण्डली तैयार एवं प्रश्न शास्त्र मॉड्यूल सक्रिय!", icon="🔮")
+                        st.rerun()
+                with col_pr_act2:
+                    if st.button("🌐 प्रश्न शास्त्र मॉड्यूल खोलें", use_container_width=True, key="prashna_modal_open_mod_btn"):
+                        st.session_state.active_module_idx = 21
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+                with col_pr_act3:
+                    if st.button("❌ बंद करें", use_container_width=True, key="prashna_modal_close_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+        # 12. TOOL: QUICK PDF DOSSIER & MASTER EXPORT
+        elif st.session_state.gla_active_tool == "pdf":
+            with st.container(border=True):
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #EF4444; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#DC2626;">
+                        📄 त्वरित पीडीएफ एवं महा-दस्तावेज़ निर्यात (Quick PDF & Kundali Export)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                col_pdf_type, col_pdf_branding = st.columns([2.2, 1.8])
+                with col_pdf_type:
+                    pdf_choice = st.radio(
+                        "निर्यात प्रारूप चुनें (Report Format)",
+                        [
+                            "📑 संपूर्ण २२-अध्यायीय महा-दस्तावेज़ (Comprehensive Vedic Dossier PDF)",
+                            "📄 संक्षिप्त १-पृष्ठीय कुण्डली पत्रक (1-Page Summary Card)",
+                            "🏛️ ५-पृष्ठीय प्रामाणिक षोडशवर्ग पत्रिका (5-Page Standard Kundali)"
+                        ],
+                        key="pdf_modal_format_radio"
+                    )
+                    st.caption("✨ उच्च गुणवत्ता युक्त, प्रिंट-रेडी ए४ (A4) लेआउट, वैदिक रंग योजना एवं देवनागरी फॉन्ट समर्थित।")
+
+                with col_pdf_branding:
+                    pdf_astroname = st.text_input("ज्योतिषाचार्य नाम (Astrologer Name):", value="ज्योतिषाचार्य पं. शुभम तिवारी", key="pdf_modal_astro_name")
+                    pdf_phone = st.text_input("सम्पर्क सूत्र (Phone):", value="+91-9452155742", key="pdf_modal_astro_phone")
+                    pdf_org = st.text_input("अनुसंधान संस्थान (Organization):", value="ब्रह्महोरा वैदिक ज्योतिष शोध पीठ", key="pdf_modal_astro_org")
+
+                col_pact1, col_pact2 = st.columns([2.5, 1])
+                with col_pact1:
+                    if st.button("⚡ 1-Click PDF तैयार करें (Generate Native PDF)", type="primary", use_container_width=True, key="pdf_modal_generate_btn"):
+                        with st.spinner("उच्च-सटीक पीडीएफ संकलित किया जा रहा है... कृपया प्रतीक्षा करें..."):
+                            try:
+                                from src.jyotish.services.pdf_generator import default_pdf_service
+                                pdf_bytes = default_pdf_service.generate_kundali_pdf(
+                                    chart,
+                                    astro_name=pdf_astroname,
+                                    astro_phone=pdf_phone,
+                                    astro_org=pdf_org
+                                )
+                                if pdf_bytes:
+                                    st.session_state["cached_pdf_bytes"] = pdf_bytes
+                                    st.session_state["cached_pdf_name"] = f"BrahmaHora_{st.session_state.birth_name}_{datetime.now().strftime('%Y%m%d')}.pdf"
+                                    st.success("✅ पीडीएफ सफलतापूर्वक तैयार हो गया! नीचे दिए बटन से डाउनलोड करें:")
+                                else:
+                                    st.error("❌ पीडीएफ निर्माण में असमर्थ। ब्राउज़र इंजन अनुपलब्ध या टाइमआउट।")
+                            except Exception as _pdf_err:
+                                st.error(f"❌ पीडीएफ जनरेशन त्रुटि: {_pdf_err}")
+
+                    if "cached_pdf_bytes" in st.session_state and st.session_state["cached_pdf_bytes"]:
+                        st.download_button(
+                            label="📥 अभी पीडीएफ डाउनलोड करें (Download PDF)",
+                            data=st.session_state["cached_pdf_bytes"],
+                            file_name=st.session_state.get("cached_pdf_name", "BrahmaHora_Kundali.pdf"),
+                            mime="application/pdf",
+                            type="primary",
+                            use_container_width=True,
+                            key="pdf_modal_download_btn"
+                        )
+
+                with col_pact2:
+                    if st.button("❌ बंद करें (Close)", use_container_width=True, key="pdf_modal_close_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+        # 13. TOOL: JYOTISH AI CO-PILOT CONSULTATION DRAWER
+        elif st.session_state.gla_active_tool == "ai_copilot":
+            with st.container(border=True):
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #2563EB; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#1D4ED8;">
+                        💬 ब्रह्महोरा AI सह-पायलट (Vedic AI Astrological Co-Pilot)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                st.caption("💡 कुण्डली के समस्त ग्रहों, भावों, योगों एवं १२,५००+ शास्त्रीय सूत्रों पर आधारित तत्काल वैदिक मार्गदर्शन:")
+
+                # 4 Quick Prompt Chips
+                c_ai_p1, c_ai_p2, c_ai_p3, c_ai_p4 = st.columns(4)
+                with c_ai_p1:
+                    if st.button("💼 करियर एवं पदोन्नति", key="btn_ai_chip_career", use_container_width=True):
+                        st.session_state.ai_copilot_prompt_val = "कृपया जातक की कुण्डली के दशमेश, नवमेश, अमात्यकारक एवं वर्तमान दशा के आधार पर आजीविका, करियर में उन्नति, पदोन्नति एवं स्थानांतरण के अवसरों का शास्त्रीय विश्लेषण करें।"
+                        st.rerun()
+                with c_ai_p2:
+                    if st.button("💍 विवाह व दांपत्य सुख", key="btn_ai_chip_marriage", use_container_width=True):
+                        st.session_state.ai_copilot_prompt_val = "जातक के सप्तम भाव, सप्तमेश, शुक्र, गुरु एवं नवांश कुण्डली के आधार पर विवाह योग, विवाह का समय एवं दांपत्य सुख का शास्त्रीय विचार प्रस्तुत करें।"
+                        st.rerun()
+                with c_ai_p3:
+                    if st.button("🩺 स्वास्थ्य व अरिष्ट", key="btn_ai_chip_health", use_container_width=True):
+                        st.session_state.ai_copilot_prompt_val = "षष्ठ, अष्टम एवं द्वादश भाव तथा मारक-बाधक दशाओं के संदर्भ में स्वास्थ्य, अरिष्ट योग एवं आवश्यक शारीरिक सावधानियों का विवरण दें।"
+                        st.rerun()
+                with c_ai_p4:
+                    if st.button("💎 रत्न व शास्त्रीय उपाय", key="btn_ai_chip_remedies", use_container_width=True):
+                        st.session_state.ai_copilot_prompt_val = "जातक के लग्नेश, पंचमेश, भाग्येश की शक्ति के आधार पर अनुकूल रत्न, रुद्राक्ष, मंत्र जप एवं शास्त्रीय दान-उपायों की संस्तुति करें।"
+                        st.rerun()
+
+                cur_ai_p = st.text_area(
+                    "ज्योतिषीय परामर्श प्रश्न (Consultation Question):",
+                    value=st.session_state.get("ai_copilot_prompt_val", "कृपया जातक की कुण्डली के दशमेश, नवमेश, अमात्यकारक एवं वर्तमान दशा के आधार पर आजीविका, करियर में उन्नति, पदोन्नति एवं स्थानांतरण के अवसरों का शास्त्रीय विश्लेषण करें।"),
+                    height=90,
+                    key="ai_copilot_text_input"
+                )
+
+                col_aic_act1, col_aic_act2, col_aic_act3 = st.columns([2.5, 1.2, 1])
+                with col_aic_act1:
+                    if st.button("🔮 AI परामर्श प्राप्त करें (Ask AI Co-Pilot)", type="primary", use_container_width=True, key="ai_copilot_submit_btn"):
+                        with st.spinner("१२,५००+ शास्त्रीय नियमों एवं कुण्डली संरेखण का विश्लेषण किया जा रहा है..."):
+                            try:
+                                import importlib
+                                import src.jyotish.ai.narrative as _nm
+                                importlib.reload(_nm)
+                                _ai_res = _nm.default_narrative_service.synthesize_comprehensive_narrative(
+                                    chart,
+                                    topic="career" if "करियर" in cur_ai_p else ("marriage" if "विवाह" in cur_ai_p else "general"),
+                                    language="hi"
+                                )
+                                st.session_state["cached_ai_copilot_reply"] = _ai_res
+                                st.toast("✅ AI सह-पायलट परामर्श तैयार!", icon="🔮")
+                            except Exception as _ai_e:
+                                st.error(f"AI परामर्श त्रुटि: {_ai_e}")
+
+                with col_aic_act2:
+                    if st.button("🧠 AI भविष्यकथन मॉड्यूल (Mod 16)", use_container_width=True, key="ai_copilot_open_mod16_btn"):
+                        st.session_state.active_module_idx = 16
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+                with col_aic_act3:
+                    if st.button("❌ बंद करें", use_container_width=True, key="ai_copilot_close_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+                if "cached_ai_copilot_reply" in st.session_state and st.session_state["cached_ai_copilot_reply"]:
+                    st.markdown("---")
+                    st.markdown(f"""
+                    <div style="background:#F0FDF4; border:1.5px solid #22C55E; border-radius:10px; padding:16px; margin-top:8px;">
+                        <b style="color:#15803D; font-size:15px;">📜 शास्त्रीय AI सह-पायलट फलादेश विश्लेषण:</b>
+                        <div style="color:#1E293B; font-size:13.5px; line-height:1.6; margin-top:10px; white-space:pre-wrap;">
+{st.session_state['cached_ai_copilot_reply']}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
 
 
