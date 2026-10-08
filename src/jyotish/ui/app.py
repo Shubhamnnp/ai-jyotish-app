@@ -7457,10 +7457,14 @@ with st.container(key="top_frozen_header_container", border=False):
                     st.markdown("##### 🔗 क्लाइंट वेबलिंक एवं व्हाट्सएप शेयरिंग (Grahalakshanam Parity)")
                     st.caption("जातक को सीधे उनके मोबाइल या व्हाट्सएप पर भेजने हेतु 1-क्लिक सुरक्षित डिजिटल लिंक:")
 
-                    birth_name_enc = urllib.parse.quote(chart.birth_data.name or "Jataka")
-                    dob_enc = chart.birth_data.date_of_birth.strftime("%Y-%m-%d")
-                    tob_enc = chart.birth_data.time_of_birth.strftime("%H:%M")
-                    client_summary_text = f"नमस्कार {chart.birth_data.name} जी, ब्रह्महोरा वैदिक ज्योतिष शोध संस्थान द्वारा आपकी जन्मपत्रिका तैयार है। लग्न: {chart.lagna_sign_id}, नक्षत्र: {chart.birth_data.name}। विस्तृत फलादेश एवं मार्गदर्शन हेतु संपर्क करें।"
+                    b_name = getattr(chart.birth_data, "name", "Jataka") or "Jataka"
+                    b_date = getattr(chart.birth_data, "birth_date", None) or getattr(chart.birth_data, "date_of_birth", None)
+                    b_time = getattr(chart.birth_data, "birth_time", None) or getattr(chart.birth_data, "time_of_birth", None)
+
+                    birth_name_enc = urllib.parse.quote(str(b_name))
+                    dob_enc = b_date.strftime("%Y-%m-%d") if hasattr(b_date, "strftime") else str(b_date or "")
+                    tob_enc = b_time.strftime("%H:%M") if hasattr(b_time, "strftime") else str(b_time or "")
+                    client_summary_text = f"नमस्कार {b_name} जी, ब्रह्महोरा वैदिक ज्योतिष शोध संस्थान द्वारा आपकी जन्मपत्रिका तैयार है। लग्न: {chart.lagna_sign_id}। विस्तृत फलादेश एवं मार्गदर्शन हेतु संपर्क करें।"
                     wa_encoded_msg = urllib.parse.quote(client_summary_text)
 
                     col_sh1, col_sh2 = st.columns([1.5, 1])
