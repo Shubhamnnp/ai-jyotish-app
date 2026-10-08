@@ -7533,10 +7533,10 @@ with st.container(key="top_frozen_header_container", border=False):
                                 import importlib
                                 import src.jyotish.ai.narrative as _nm
                                 importlib.reload(_nm)
-                                _ai_res = _nm.default_narrative_service.synthesize_comprehensive_narrative(
-                                    chart,
-                                    topic="career" if "करियर" in cur_ai_p else ("marriage" if "विवाह" in cur_ai_p else "general"),
-                                    language="hi"
+                                _ai_res = _nm.default_narrative_service.chat_consultation(
+                                    user_query=cur_ai_p,
+                                    chart=chart,
+                                    language="Hindi"
                                 )
                                 st.session_state["cached_ai_copilot_reply"] = _ai_res
                                 st.toast("✅ AI सह-पायलट परामर्श तैयार!", icon="🔮")
