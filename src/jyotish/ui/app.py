@@ -1222,32 +1222,40 @@ unified_css = f"""
         z-index: 10000000 !important;
     }}
 
-    /* Hide Native Streamlit Sidebar Expand Control (>>) - Replaced by Workstation Header Toggle Button */
+    /* Keep Sidebar Open/Close Expand Button (>>) Always Visible, High-Contrast & Clickable */
     [data-testid="stExpandSidebarButton"],
     [data-testid="stExpandSidebarButton"] button,
     button[data-testid="stExpandSidebarButton"],
+    [data-testid="stSidebarCollapseButton"],
+    [data-testid="stSidebarCollapseButton"] button,
+    button[data-testid="stSidebarCollapseButton"],
     [data-testid="collapsedControl"],
     [data-testid="collapsedControl"] button,
     [data-testid="stSidebarCollapsedControl"],
     [data-testid="stSidebarCollapsedControl"] button,
     button[data-testid="stSidebarCollapsedControl"] {{
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-        width: 0px !important;
-        height: 0px !important;
-        margin: 0px !important;
-        padding: 0px !important;
-    }}
-    [data-testid="stSidebarCollapseButton"],
-    [data-testid="stSidebarCollapseButton"] button,
-    button[data-testid="stSidebarCollapseButton"] {{
+        pointer-events: auto !important;
         display: inline-flex !important;
         visibility: visible !important;
         opacity: 1 !important;
         z-index: 10000005 !important;
         cursor: pointer !important;
+        color: #FFFFFF !important;
+        background: transparent !important;
+        border: none !important;
+    }}
+    [data-testid="stSidebarCollapsedControl"] svg,
+    [data-testid="stExpandSidebarButton"] svg,
+    [data-testid="collapsedControl"] svg {{
+        fill: #FFFFFF !important;
+        stroke: #FFFFFF !important;
+        color: #FFFFFF !important;
+    }}
+    [data-testid="stExpandSidebarButton"]:hover,
+    button[data-testid="stExpandSidebarButton"]:hover,
+    [data-testid="stSidebarCollapseButton"]:hover,
+    button[data-testid="stSidebarCollapseButton"]:hover {{
+        transform: scale(1.05) !important;
     }}
 
     .sidebar-toggle-btn {{
@@ -1360,10 +1368,10 @@ unified_css = f"""
         z-index: 9990 !important;
         background: #0074cb !important;
         background-color: #0074cb !important;
-        padding-top: 6px !important;
-        padding-bottom: 6px !important;
-        padding-left: 68px !important;
-        padding-right: 14px !important;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        padding-left: 48px !important;
+        padding-right: 48px !important;
         margin: 0px !important;
         border-bottom: 2.5px solid #005fa8 !important;
         box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
@@ -1372,8 +1380,8 @@ unified_css = f"""
     }}
     .st-key-frozen_toolbelt_container div[data-testid="column"] {{
         min-width: 0 !important;
-        padding-left: 2px !important;
-        padding-right: 2px !important;
+        padding-left: 3px !important;
+        padding-right: 3px !important;
     }}
     .st-key-frozen_toolbelt_container button {{
         padding: 2px 4px !important;
@@ -1423,13 +1431,14 @@ unified_css = f"""
         color: #0F172A !important;
     }}
     .block-container {{
-        padding-top: 130px !important;
+        padding-top: 60px !important;
     }}
     @media (min-width: 769px) {{
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .st-key-frozen_toolbelt_container,
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container,
         div.stApp:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container {{
-            padding-left: 10px !important;
+            padding-left: 14px !important;
+            padding-right: 14px !important;
         }}
     }}
 
@@ -4294,16 +4303,15 @@ client_bridge_code = """
                 frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
                 frozenTb.style.setProperty('transition', 'none', 'important');
 
-                frozenTb.style.setProperty('padding-left', '10px', 'important');
-                frozenTb.style.setProperty('padding-right', '10px', 'important');
-
-                // Hide native Streamlit expand control (>>) so duplicate toggle icons never show
-                const nativeExp = parentDoc.querySelectorAll('[data-testid="stExpandSidebarButton"], [data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"]');
-                nativeExp.forEach(function(el) {
-                    el.style.setProperty('display', 'none', 'important');
-                    el.style.setProperty('visibility', 'hidden', 'important');
-                    el.style.setProperty('opacity', '0', 'important');
-                });
+                if (isSidebarVisible) {
+                    frozenTb.style.setProperty('padding-left', '14px', 'important');
+                    frozenTb.style.setProperty('padding-right', '14px', 'important');
+                } else {
+                    // When sidebar is collapsed, equal margins on both sides (48px each)
+                    // The left 48px neatly holds the native >> button without overlapping the ॐ logo
+                    frozenTb.style.setProperty('padding-left', '48px', 'important');
+                    frozenTb.style.setProperty('padding-right', '48px', 'important');
+                }
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
                 const isAstrallis = parentDoc.body.classList.contains('astrallis-mode') || localStorage.getItem('jyotish_theme_mode') === 'astrallis';
@@ -6187,24 +6195,19 @@ with st.container(key="top_frozen_header_container", border=False):
     # 🌟 UNIFIED SINGLE-LINE BLUE WORKSTATION HEADER (नीली पट्टी - 1ST LINE ONLY)
     # ═════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # ─── 1st line - <<, Logo, BrahmaHora, all module list, active module ke tab ki list, menu list ───
-        hdr_c_toggle, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.45, 2.1, 3.4, 3.4, 2.65],
+        # ─── 1st line - Logo, BrahmaHora, all module list, active module ke tab ki list, menu list ───
+        hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
+            [1.7, 3.1, 3.1, 3.1],
             gap="small",
             vertical_alignment="center"
         )
 
-        with hdr_c_toggle:
-            if st.button("❮❮", key="hdr_top_sidebar_toggle_btn", help="साइडबार खोलें / छुपाएं (Toggle Sidebar)", use_container_width=True):
-                st.session_state.sidebar_toggle_requested = True
-                st.rerun()
-
         with hdr_c_brand:
             st.markdown("""
-            <div style="display:flex; align-items:center; gap:6px; height:32px; overflow:hidden; white-space:nowrap;">
+            <div style="display:flex; align-items:center; gap:6px; height:34px; overflow:hidden; white-space:nowrap;">
                 <span style="font-size:18px; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); flex-shrink:0;">🕉️</span>
                 <div style="line-height:1.1; overflow:hidden; text-overflow:ellipsis;">
-                    <b style="font-size:14.5px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.3px;">ब्रह्महोरा (BrahmaHora)</b>
+                    <b style="font-size:14px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.3px;">ब्रह्महोरा (BrahmaHora)</b>
                 </div>
             </div>
             """, unsafe_allow_html=True)
