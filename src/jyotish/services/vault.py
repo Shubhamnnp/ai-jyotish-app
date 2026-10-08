@@ -39,14 +39,21 @@ class KundaliVaultService:
     def list_all_clients(
         self,
         search_query: Optional[str] = None,
-        tag_filter: Optional[str] = None
+        tag_filter: Optional[str] = None,
+        owner_email: Optional[str] = None,
+        user_role: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """
-        Lists all saved clients across all folders with optional search query and tag filter.
+        Lists all saved clients across all folders with optional search query, tag filter,
+        and strict multi-tenant data isolation based on owner_email and user_role.
+        - Researcher: Full access to all clients
+        - Jyotishi & Jatak: Only their own saved clients + 10 benchmark demo charts
         """
         folders = self.manager.list_folders()
         all_clients = []
         seen_ids = set()
+        clean_owner = owner_email.strip().lower() if owner_email else None
+        clean_role = str(user_role).lower().strip() if user_role else "jyotishi"
 
         for folder in folders:
             folder_name = folder.get("name", "General")
@@ -59,11 +66,20 @@ class KundaliVaultService:
                 c_copy = dict(chart)
                 c_copy["folder_id"] = folder.get("id", 0)
                 c_copy["folder_name"] = folder_name
-                # Ensure tags & notes exist
+                # Ensure tags, notes & owner_email exist
                 if "tags" not in c_copy:
                     c_copy["tags"] = ["🌟 VIP"] if "VIP" in folder_name else [" सामान्य"]
                 if "notes" not in c_copy:
                     c_copy["notes"] = ""
+                chart_owner = str(c_copy.get("owner_email", "")).strip().lower()
+
+                # Multi-tenant data privacy isolation:
+                # If not researcher, only allow self-saved charts OR the 10 benchmark demo charts
+                is_demo = isinstance(cid, int) and 1000 <= cid <= 1015
+                if clean_role != "researcher":
+                    if clean_owner and not is_demo:
+                        if chart_owner != clean_owner:
+                            continue
 
                 # Filter by tag
                 if tag_filter and tag_filter != "सभी (All)":
@@ -90,15 +106,18 @@ class KundaliVaultService:
         birth_data: Dict[str, Any],
         tags: Optional[List[str]] = None,
         notes: str = "",
-        folder_id: int = 0
+        folder_id: int = 0,
+        owner_email: Optional[str] = None
     ) -> Dict[str, Any]:
         """
-        Saves a new client or updates an existing client in the vault.
+        Saves a new client or updates an existing client in the vault with owner_email tracking.
         """
         tags = tags or [" सामान्य"]
         chart_entry = self.manager.save_chart(folder_id, name, birth_data)
         chart_entry["tags"] = tags
         chart_entry["notes"] = notes
+        clean_owner = owner_email.strip().lower() if owner_email else "public"
+        chart_entry["owner_email"] = clean_owner
 
         # Update inside the folder
         for folder in self.manager.data.get("folders", []):
@@ -106,6 +125,7 @@ class KundaliVaultService:
                 if ch.get("id") == chart_entry["id"]:
                     ch["tags"] = tags
                     ch["notes"] = notes
+                    ch["owner_email"] = clean_owner
                     break
 
         self.manager._save()

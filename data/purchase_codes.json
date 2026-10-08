@@ -1,0 +1,32 @@
+[
+  {
+    "code": "BH-PRO-1483-11B3",
+    "created_by": "shubham8jyotish@gmail.com",
+    "tier": "pro_annual",
+    "created_at": "2026-10-08T13:22:50.816721",
+    "is_redeemed": false,
+    "redeemed_by": null,
+    "redeemed_at": null,
+    "notes": "Test License"
+  },
+  {
+    "code": "BH-PRO-2026-MASTER",
+    "created_by": "researcher@jyotishos.com",
+    "tier": "pro_annual",
+    "created_at": "2026-01-01T00:00:00",
+    "is_redeemed": false,
+    "redeemed_by": null,
+    "redeemed_at": null,
+    "notes": "मास्टर प्रो एक्टिवेशन कोड (1 वर्ष)"
+  },
+  {
+    "code": "BH-PRO-VIP-VAIDIK",
+    "created_by": "researcher@jyotishos.com",
+    "tier": "pro_lifetime",
+    "created_at": "2026-01-01T00:00:00",
+    "is_redeemed": false,
+    "redeemed_by": null,
+    "redeemed_at": null,
+    "notes": "आजीवन प्रो एक्टिवेशन कोड (Lifetime VIP)"
+  }
+]

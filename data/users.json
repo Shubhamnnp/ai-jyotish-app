@@ -2,25 +2,71 @@
   "shubham8jyotish@gmail.com": {
     "email": "shubham8jyotish@gmail.com",
     "name": "Shubham Tiwari",
-    "role": "🔮 मुख्य ज्योतिषी (Chief Astrologer)",
+    "role": "researcher",
     "salt": "0669a986e8ba90f540f2a1b191590394",
     "password_hash": "df28f2ee0e76ad0c44785a1ee318771635dae3b92a225ee478b0ba415fe3570a",
-    "created_at": "2026-01-01T00:00:00"
+    "created_at": "2026-01-01T00:00:00",
+    "role_display": "🔬 वैदिक शोधकर्ता (Researcher / Admin)",
+    "is_active": true,
+    "is_paid": true,
+    "last_login": "2026-10-08T13:22:50.803484"
   },
   "admin@jyotishos.com": {
     "email": "admin@jyotishos.com",
     "name": "JyotishOS Admin",
-    "role": "🔮 मुख्य ज्योतिषी (Chief Astrologer)",
+    "role": "researcher",
     "salt": "26f1d11ca4abf07affc9d344298a1dbe",
     "password_hash": "b133d2e51960dcb6ec614c7a1b17f179a2b9e98cef675bb39a7390aa04bedb24",
-    "created_at": "2026-01-01T00:00:00"
+    "created_at": "2026-01-01T00:00:00",
+    "role_display": "🔬 वैदिक शोधकर्ता (Researcher / Admin)",
+    "is_active": true,
+    "is_paid": true
   },
   "researcher@jyotishos.com": {
     "email": "researcher@jyotishos.com",
     "name": "Vedic Researcher",
-    "role": "🔬 वैदिक शोधकर्ता (Researcher)",
+    "role": "researcher",
     "salt": "b9ef8953bcb453b6cbcb49561fc74cd5",
     "password_hash": "65bc4d088f74a54fdacec29e23dc9bf24f4241a8d233a3df5a0f0a124b39b647",
+    "created_at": "2026-01-01T00:00:00",
+    "role_display": "🔬 वैदिक शोधकर्ता (Researcher / Admin)",
+    "is_active": true,
+    "is_paid": true
+  },
+  "astrologer@jyotishos.com": {
+    "email": "astrologer@jyotishos.com",
+    "name": "आचार्य देवेन्द्र शास्त्री",
+    "role": "jyotishi",
+    "role_display": "🔮 ज्योतिषी (Professional Astrologer)",
+    "salt": "04b0e550bf4a8c57b444fceb60b3d4e7",
+    "password_hash": "3229d8c4c7f6b98db82e26d0662063d6b75a7b50b0f679a48139db5308fcffc4",
+    "is_active": true,
+    "is_paid": true,
+    "purchase_code_used": "SEED_INITIAL",
     "created_at": "2026-01-01T00:00:00"
+  },
+  "jatak@jyotishos.com": {
+    "email": "jatak@jyotishos.com",
+    "name": "आनंद कुमार",
+    "role": "jatak",
+    "role_display": "👤 जातक (General User)",
+    "salt": "23cfdfd6005c71884f1f0b6885be6c6b",
+    "password_hash": "634aa184ac1dba2332af6cdfca6de36f7fbcb9e08a5c3dbc3f0d7d481cef219d",
+    "is_active": true,
+    "is_paid": false,
+    "purchase_code_used": "SEED_INITIAL",
+    "created_at": "2026-01-01T00:00:00"
+  },
+  "testjatak@example.com": {
+    "email": "testjatak@example.com",
+    "name": "Test Jatak",
+    "role": "jatak",
+    "role_display": "👤 जातक (General User)",
+    "salt": "529f8a919b868f60551e03beec8ced4c",
+    "password_hash": "543939723fca7fd3b7352620736e4642e14ff74cbe1135b733079af6881cf645",
+    "is_active": true,
+    "is_paid": false,
+    "purchase_code_used": null,
+    "created_at": "2026-10-08T13:22:50.995070"
   }
 }

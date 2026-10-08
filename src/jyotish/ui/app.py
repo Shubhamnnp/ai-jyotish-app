@@ -4552,15 +4552,15 @@ def render_login_page():
         login_tab, register_tab, forgot_tab = st.tabs([
             "🔐 लॉगिन (Sign In)",
             "📝 नया खाता (Sign Up)",
-            "🔑 पासवर्ड भूल गए (Reset)"
+            "🔑 पासवर्ड रीसेट (Reset OTP)"
         ])
 
         with login_tab:
-            st.markdown("""<div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 6px;">
-सुरक्षित प्रवेश (Registered User Login)
+            st.markdown("""<div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 4px;">
+ब्रह्महोरा सुरक्षित प्रवेश (Registered User Login)
 </div>
 <div style="font-size: 0.85rem; color: #64748B; margin-bottom: 12px;">
-केवल पंजीकृत उपयोगकर्ता ही एन्क्रिप्टेड क्रेडेंशियल्स द्वारा प्रवेश कर सकते हैं।
+PBKDF2-HMAC-SHA256 क्रिप्टोग्राफिक हैशिंग द्वारा सुरक्षित बहु-उपयोगकर्ता प्रणाली।
 </div>""", unsafe_allow_html=True)
 
             login_email = st.text_input("पंजीकृत ईमेल (Registered Email)", value="shubham8jyotish@gmail.com", key="auth_login_email")
@@ -4571,112 +4571,164 @@ def render_login_page():
             login_submit = col_l1.button("🚀 सुरक्षित लॉगिन (Sign In)", type="primary", use_container_width=True)
             sync_login = col_l2.button("☁️ 1-क्लिक क्लाउड सिंक", use_container_width=True)
 
+            # Quick role switcher demo helper
+            st.markdown("<div style='height: 6px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='font-size: 11px; font-weight: 700; color: #64748B;'>⚡ त्वरित परीक्षण डेमो लॉगिन:</div>", unsafe_allow_html=True)
+            d_c1, d_c2, d_c3 = st.columns(3)
+            if d_c1.button("🔬 शोधकर्ता (Admin)", use_container_width=True, key="demo_btn_researcher"):
+                st.session_state.auth_login_email = "researcher@jyotishos.com"
+                st.session_state.auth_login_pwd = "Research@2026"
+                st.rerun()
+            if d_c2.button("🔮 ज्योतिषी (Pro)", use_container_width=True, key="demo_btn_jyotishi"):
+                st.session_state.auth_login_email = "astrologer@jyotishos.com"
+                st.session_state.auth_login_pwd = "Astro@2026"
+                st.rerun()
+            if d_c3.button("👤 जातक (Free)", use_container_width=True, key="demo_btn_jatak"):
+                st.session_state.auth_login_email = "jatak@jyotishos.com"
+                st.session_state.auth_login_pwd = "Jatak@2026"
+                st.rerun()
+
             if login_submit:
                 user_info = default_auth_service.authenticate(login_email, login_password)
                 if user_info:
                     st.session_state.is_logged_in = True
                     st.query_params["session_auth"] = "active"
-                    st.session_state.user_role = user_info.get("role", "🔮 मुख्य ज्योतिषी (Chief Astrologer)")
+                    st.session_state.user_role = user_info.get("role", "jatak")
+                    st.session_state.user_role_display = user_info.get("role_display", "जातक")
                     st.session_state.user_email = user_info.get("email", login_email)
-                    st.session_state.birth_name = user_info.get("name", "Shubham Tiwari")
-                    st.toast(f"✅ स्वागत है, {user_info.get('name')}!", icon="🔮")
+                    st.session_state.user_is_paid = user_info.get("is_paid", False)
+                    st.session_state.birth_name = user_info.get("name", "User")
+                    st.toast(f"✅ स्वागत है, {user_info.get('name')} ({user_info.get('role_display')})!", icon="🔮")
                     st.rerun()
                 else:
-                    st.error("❌ अमान्य ईमेल अथवा पासवर्ड! केवल पंजीकृत यूज़र्स ही एन्क्रिप्टेड पासवर्ड से प्रवेश कर सकते हैं।")
+                    st.error("❌ अमान्य ईमेल अथवा पासवर्ड! कृपया सही क्रेडेंशियल्स दर्ज करें।")
 
             if sync_login:
                 user_info = default_auth_service.authenticate(login_email, login_password)
                 if user_info:
+                    st.session_state.is_logged_in = True
+                    st.query_params["session_auth"] = "active"
+                    st.session_state.user_role = user_info.get("role", "jatak")
+                    st.session_state.user_role_display = user_info.get("role_display", "जातक")
+                    st.session_state.user_email = user_info.get("email", login_email)
+                    st.session_state.user_is_paid = user_info.get("is_paid", False)
+                    st.session_state.birth_name = user_info.get("name", "User")
                     with st.spinner(f"Connecting to Cloud API ({login_email})..."):
-                        client = GrahalakshanamClient()
-                        if client.authenticate(login_email, login_password):
-                            st.session_state.is_logged_in = True
-                            st.query_params["session_auth"] = "active"
-                            st.session_state.gla_authenticated = True
-                            ff = client.get_folders_with_files()
-                            st.session_state.gla_charts = ff.get("files", [])
-                            default_folder_manager.sync_from_grahalakshanam(ff)
-                            st.session_state.user_role = user_info.get("role")
-                            st.session_state.user_email = user_info.get("email")
-                            st.toast(f"✅ क्लाउड से {len(st.session_state.gla_charts)} चार्ट्स सफलतापूर्वक सिंक हुए!", icon="☁️")
-                            st.rerun()
-                        else:
-                            st.session_state.is_logged_in = True
-                            st.query_params["session_auth"] = "active"
-                            st.session_state.user_role = user_info.get("role")
-                            st.session_state.user_email = user_info.get("email")
-                            st.toast("✅ ऑफलाइन सुरक्षित मोड में प्रवेश किया गया!", icon="🔮")
-                            st.rerun()
+                        try:
+                            client = GrahalakshanamClient()
+                            if client.authenticate(login_email, login_password):
+                                st.session_state.gla_authenticated = True
+                                ff = client.get_folders_with_files()
+                                st.session_state.gla_charts = ff.get("files", [])
+                                default_folder_manager.sync_from_grahalakshanam(ff)
+                                st.toast(f"✅ क्लाउड से {len(st.session_state.gla_charts)} चार्ट्स सफलतापूर्वक सिंक हुए!", icon="☁️")
+                            else:
+                                st.toast("✅ ऑफलाइन सुरक्षित मोड में प्रवेश किया गया!", icon="🔮")
+                        except Exception:
+                            st.toast("✅ स्थानीय सुरक्षित मोड में प्रवेश किया गया!", icon="🔮")
+                    st.rerun()
                 else:
                     st.error("❌ क्लाउड सिंक हेतु वैध पंजीकृत क्रेडेंशियल्स दर्ज करें।")
 
         with register_tab:
-            st.markdown("""<div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 6px;">
+            st.markdown("""<div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 4px;">
 नया खाता पंजीकरण (New User Sign Up)
 </div>
 <div style="font-size: 0.85rem; color: #64748B; margin-bottom: 12px;">
-पासवर्ड PBKDF2-SHA256 क्रिप्टोग्राफिक हैशिंग द्वारा सुरक्षित किया जाएगा।
+पासवर्ड PBKDF2-SHA256 (100,000 पुनरावृत्तियां) क्रिप्टोग्राफिक हैशिंग द्वारा सुरक्षित होगा।
 </div>""", unsafe_allow_html=True)
 
             reg_name = st.text_input("पूरा नाम (Full Name)", placeholder="उदा: पं. शुभम तिवारी", key="auth_reg_name")
             reg_email = st.text_input("ईमेल आईडी (Email ID)", placeholder="astrologer@example.com", key="auth_reg_email")
             reg_pass = st.text_input("पासवर्ड बनाएं (Password - min 6 chars)", type="password", key="auth_reg_pwd")
-            reg_role = st.selectbox(
-                "उपयोगकर्ता भूमिका (Role)",
-                ["🔮 मुख्य ज्योतिषी (Chief Astrologer)", "🔬 वैदिक शोधकर्ता (Researcher)", "👤 जातक / क्लाइंट (Client)"],
-                key="auth_reg_role"
+
+            reg_role_choice = st.selectbox(
+                "उपयोगकर्ता भूमिका (Account Role)",
+                [
+                    "👤 जातक (General User - निःशुल्क: कुण्डली, AI, पंचांग)",
+                    "🔮 ज्योतिषी (Professional Astrologer - समस्त ३० मॉड्यूल, परचेज कोड सक्रियण)"
+                ],
+                key="auth_reg_role_choice"
             )
 
+            is_astro_reg = "ज्योतिषी" in reg_role_choice
+            reg_code = None
+            if is_astro_reg:
+                reg_code = st.text_input(
+                    "🎟️ परचेज कोड (Purchase Code - यदि उपलब्ध हो)",
+                    placeholder="उदा: BH-PRO-2026-MASTER (वैकल्पिक, बाद में भी सक्रिय कर सकते हैं)",
+                    key="auth_reg_purchase_code"
+                )
+
             if st.button("✨ नया खाता बनाएं (Create Account)", type="primary", use_container_width=True):
-                success, msg = default_auth_service.register(reg_email, reg_pass, reg_name, reg_role)
+                target_role = "jyotishi" if is_astro_reg else "jatak"
+                success, msg, uinfo = default_auth_service.register(
+                    email=reg_email,
+                    password=reg_pass,
+                    name=reg_name,
+                    role=target_role,
+                    purchase_code=reg_code if (reg_code and reg_code.strip()) else None
+                )
                 if success:
                     st.success(f"✅ {msg}")
-                    st.info("💡 अब आप 'लॉगिन' टैब में जाकर अपने नए क्रेडेंशियल्स से प्रवेश कर सकते हैं।")
+                    st.info("💡 अब आप 'लॉगिन' टैब में जाकर अपने नए ईमेल व पासवर्ड से प्रवेश कर सकते हैं।")
                 else:
                     st.error(f"❌ {msg}")
 
         with forgot_tab:
-            st.markdown("""<div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 6px;">
-पासवर्ड रीसेट एवं सुरक्षा (Forgot Password)
+            st.markdown("""<div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 4px;">
+पासवर्ड रीसेट एवं ईमेल OTP सत्यापन (Forgot Password)
 </div>
 <div style="font-size: 0.85rem; color: #64748B; margin-bottom: 12px;">
-पंजीकृत ईमेल पर 6-अंकीय OTP सत्यापन कोड प्राप्त करें और नया पासवर्ड एन्क्रिप्ट करें।
+पंजीकृत ईमेल पर 6-अंकीय OTP सत्यापन कोड प्राप्त करें और OTP मान्य होने पर ही नया पासवर्ड रीसेट करें।
 </div>""", unsafe_allow_html=True)
 
-            f_email = st.text_input("पंजीकृत ईमेल दर्ज करें (Registered Email)", value="admin@jyotishos.com", key="auth_forgot_email")
+            f_email = st.text_input("पंजीकृत ईमेल दर्ज करें (Registered Email)", value="shubham8jyotish@gmail.com", key="auth_forgot_email")
 
             if st.button("📩 OTP सत्यापन कोड प्राप्त करें (Request OTP)", use_container_width=True):
-                ok, msg, otp = default_auth_service.request_reset_code(f_email)
+                ok, msg, dev_otp = default_auth_service.request_reset_code(f_email)
                 if ok:
-                    st.session_state["active_reset_email"] = f_email
+                    st.session_state["active_reset_email"] = f_email.strip().lower()
                     st.success(f"✅ {msg}")
-                    st.info(f"🔑 आपका सुरक्षा सत्यापन कोड: **{otp}** (इसे नीचे दर्ज करें)")
+                    if dev_otp:
+                        st.info(f"🔑 सुरक्षा सत्यापन कोड (OTP Code): **{dev_otp}** (इसे नीचे दर्ज करें)")
                 else:
                     st.error(f"❌ {msg}")
 
             st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-            f_otp = st.text_input("6-अंकीय OTP कोड दर्ज करें (Enter 6-digit OTP)", key="auth_forgot_otp")
-            f_new_pass = st.text_input("नया एन्क्रिप्टेड पासवर्ड (New Password)", type="password", key="auth_forgot_newpwd")
+            f_otp = st.text_input("6-अंकीय OTP कोड दर्ज करें (Enter 6-digit OTP)", placeholder="उदा: 582194", key="auth_forgot_otp")
+            f_new_pass = st.text_input("नया एन्क्रिप्टेड पासवर्ड (New Password - min 6 chars)", type="password", key="auth_forgot_newpwd")
 
-            if st.button("🔒 नया पासवर्ड सुरक्षित करें (Reset & Save Password)", type="primary", use_container_width=True):
-                target_email = st.session_state.get("active_reset_email", f_email)
-                ok, msg = default_auth_service.reset_password(target_email, f_otp, f_new_pass)
-                if ok:
-                    st.success(f"✅ {msg}")
-                    st.balloons()
+            if st.button("🔒 सत्यापन करें और पासवर्ड रीसेट करें (Validate OTP & Reset)", type="primary", use_container_width=True):
+                target_email = st.session_state.get("active_reset_email", f_email.strip().lower())
+                if not f_otp.strip():
+                    st.error("❌ कृपया प्राप्त 6-अंकीय OTP कोड दर्ज करें।")
+                elif not f_new_pass.strip():
+                    st.error("❌ कृपया नया पासवर्ड दर्ज करें।")
                 else:
-                    st.error(f"❌ {msg}")
+                    ok, msg = default_auth_service.reset_password(target_email, f_otp, f_new_pass)
+                    if ok:
+                        st.success(f"✅ {msg}")
+                        st.balloons()
+                    else:
+                        st.error(f"❌ {msg}")
 
 
 # Initialize Session State
 if "is_logged_in" not in st.session_state:
     if st.query_params.get("session_auth") == "active":
         st.session_state.is_logged_in = True
-        st.session_state.user_role = "🔮 मुख्य ज्योतिषी (Chief Astrologer)"
+        st.session_state.user_role = "researcher"
+        st.session_state.user_role_display = "🔬 वैदिक शोधकर्ता (Researcher / Admin)"
         st.session_state.user_email = "shubham8jyotish@gmail.com"
-        st.session_state.birth_name = "Shubham Tiwari"
+        st.session_state.user_is_paid = True
+        st.session_state.birth_name = "पं. शुभम तिवारी"
     else:
         st.session_state.is_logged_in = False
+        st.session_state.user_role = "jatak"
+        st.session_state.user_role_display = "👤 जातक (General User)"
+        st.session_state.user_email = ""
+        st.session_state.user_is_paid = False
 
 if "saved_charts" not in st.session_state:
     st.session_state.saved_charts = default_folder_manager.list_recent_charts()
@@ -6254,6 +6306,7 @@ with st.container(key="top_frozen_header_container", border=False):
             lang_lbl = "English (अंग्रेजी)" if is_hindi else "हिंदी (Hindi)"
             srv_lbl = "सर्वर: लाइव" if is_srv_conn else "लोकल मोड"
 
+            u_role = st.session_state.get("user_role", "jatak")
             MENU_ACTION_ITEMS = [
                 "⚡ मेन्यू चुनें (Menu List)...",
                 "✨ New (नया प्रोफाइल)",
@@ -6270,9 +6323,13 @@ with st.container(key="top_frozen_header_container", border=False):
                 f"🌐 Language ({lang_lbl})",
                 f"🌓 Mode ({th_lbl})",
                 f"💻 {srv_lbl}",
-                "🔍 वैदिक ऋषि सत्यापन (Validation)",
-                "🚪 Logout (निकास)"
+                "🔍 वैदिक ऋषि सत्यापन (Validation)"
             ]
+            if u_role == "researcher":
+                MENU_ACTION_ITEMS.append("👑 Admin (शोधकर्ता नियंत्रण व कोड जनरेटर)")
+            else:
+                MENU_ACTION_ITEMS.append("🎟️ License (प्रो परचेज कोड सक्रियण)")
+            MENU_ACTION_ITEMS.append("🚪 Logout (निकास)")
 
             selected_action = st.selectbox(
                 "मेन्यू सूची (Menu List)",
@@ -6322,6 +6379,10 @@ with st.container(key="top_frozen_header_container", border=False):
                     new_tabs = MODULE_TABS_REGISTRY.get(19, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
                     st.session_state.top_bar_tab_selector = new_tabs[0]
                     st.toast("🔍 वैदिक ऋषि सत्यापन (Validation) मॉड्यूल खोला गया!", icon="🔍")
+                elif selected_action.startswith("👑 Admin"):
+                    st.session_state.gla_active_tool = "admin"
+                elif selected_action.startswith("🎟️ License"):
+                    st.session_state.gla_active_tool = "license"
                 elif selected_action.startswith("🚪 Logout"):
                     st.session_state.gla_active_tool = "logout"
 
@@ -6700,7 +6761,12 @@ with st.container(key="top_frozen_header_container", border=False):
                             tag_options = ["सभी (All)"] + vault_mod.AVAILABLE_TAGS
                             v_tag = st.selectbox("🏷️ श्रेणी / टैग फ़िल्टर (Tag Filter):", tag_options, index=0, key="v_tag_sel")
 
-                        clients_list = v_service.list_all_clients(search_query=v_search, tag_filter=v_tag)
+                        clients_list = v_service.list_all_clients(
+                            search_query=v_search,
+                            tag_filter=v_tag,
+                            owner_email=st.session_state.get("user_email"),
+                            user_role=st.session_state.get("user_role")
+                        )
 
                         st.caption(f"कुल {len(clients_list)} कुण्डलियाँ उपलब्ध:")
 
@@ -6857,7 +6923,8 @@ with st.container(key="top_frozen_header_container", border=False):
                                 birth_data=save_payload,
                                 tags=sel_tags,
                                 notes=save_notes_input,
-                                folder_id=sel_fid
+                                folder_id=sel_fid,
+                                owner_email=st.session_state.get("user_email")
                             )
                             st.session_state.birth_name = final_name
                             st.session_state.gla_active_tool = None
@@ -6887,11 +6954,13 @@ with st.container(key="top_frozen_header_container", border=False):
                     st.session_state.client_consultation_notes = {}
                 
                 _c_key = st.session_state.get("birth_name", "Default Client")
-                _curr_n = st.session_state.client_consultation_notes.get(_c_key, "")
+                _u_email = st.session_state.get("user_email", "public").strip().lower()
+                _c_store_key = f"{_u_email}:{_c_key}"
+                _curr_n = st.session_state.client_consultation_notes.get(_c_store_key, "")
                 
                 col_n_l, col_n_r = st.columns([3, 1])
                 with col_n_l:
-                    st.caption(f"सक्रिय जातक: **{_c_key}** (जन्म: {st.session_state.birth_date} | {st.session_state.birth_time})")
+                    st.caption(f"सक्रिय जातक: **{_c_key}** (स्वामी: {_u_email} | जन्म: {st.session_state.birth_date} | {st.session_state.birth_time})")
                     user_note = st.text_area(
                         "परामर्श टिप्पणियां एवं उपाय (Enter Consultation Notes & Remedies):",
                         value=_curr_n,
@@ -6913,7 +6982,7 @@ with st.container(key="top_frozen_header_container", border=False):
                 col_n_act1, col_n_act2 = st.columns([2, 1])
                 with col_n_act1:
                     if st.button("💾 नोट्स सहेजें (Save Notes)", type="primary", use_container_width=True, key="save_client_notes_btn"):
-                        st.session_state.client_consultation_notes[_c_key] = user_note
+                        st.session_state.client_consultation_notes[_c_store_key] = user_note
                         st.session_state.gla_active_tool = None
                         st.toast(f"✅ '{_c_key}' के परामर्श नोट्स सुरक्षित किए गए!", icon="📝")
                         st.rerun()
@@ -7683,6 +7752,159 @@ with st.container(key="top_frozen_header_container", border=False):
                         st.session_state.gla_active_tool = None
                         st.rerun()
 
+        # 15. TOOL: RESEARCHER ADMIN & LICENSE GENERATOR (शोधकर्ता व्यवस्थापक नियंत्रण)
+        elif st.session_state.gla_active_tool == "admin":
+            with st.container(border=True):
+                cur_user_role = st.session_state.get("user_role", "")
+                if cur_user_role != "researcher":
+                    st.error("⛔ अनधिकृत प्रवेश: यह एडमिन कंसोल केवल 'वैदिक शोधकर्ता (Researcher Admin)' के लिए सुरक्षित है।")
+                    if st.button("❌ बंद करें", key="admin_unauth_close"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+                else:
+                    st.markdown("""
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #D97706; padding-bottom:6px; margin-bottom:12px;">
+                        <div style="font-size:1.2rem; font-weight:900; color:#B45309;">
+                            👑 शोधकर्ता एडमिन कंसोल (Researcher Super Admin & License Control)
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                    adm_tab_users, adm_tab_codes = st.tabs([
+                        "👥 समस्त उपयोगकर्ता व पासवर्ड नियंत्रण (Users & Password Control)",
+                        "🎟️ परचेज कोड जनरेटर व प्रबंधन (Purchase Code Generator)"
+                    ])
+
+                    with adm_tab_users:
+                        st.markdown("##### 👥 पंजीकृत उपयोगकर्ता सूची एवं क्रेडेंशियल्स नियंत्रण")
+                        all_users = default_auth_service.list_all_users()
+                        
+                        u_rows = []
+                        for u in all_users:
+                            u_rows.append({
+                                "नाम (Name)": u["name"],
+                                "ईमेल (Email)": u["email"],
+                                "भूमिका (Role)": u["role_display"],
+                                "स्थिति": "🟢 सक्रिय" if u["is_active"] else "🔴 निष्क्रिय",
+                                "प्रो एक्टिव": "✅ हाँ" if u["is_paid"] else "⚪ सामान्य",
+                                "लाइसेंस कोड": u.get("purchase_code_used", "-"),
+                                "पंजीकरण तिथि": str(u.get("created_at", "-"))[:10]
+                            })
+                        import pandas as pd
+                        st.dataframe(pd.DataFrame(u_rows), use_container_width=True)
+
+                        st.markdown("---")
+                        col_adm_pw1, col_adm_pw2 = st.columns(2)
+                        with col_adm_pw1:
+                            st.markdown("##### 🔑 किसी भी उपयोगकर्ता का पासवर्ड बदलें (Reset Password)")
+                            user_emails = [u["email"] for u in all_users]
+                            adm_target_user = st.selectbox("उपयोगकर्ता चुनें (Select User):", user_emails, key="adm_pwd_target_user")
+                            adm_new_pwd = st.text_input("नया पासवर्ड (New Password - min 6 chars):", type="password", key="adm_pwd_new_val")
+                            if st.button("🔒 पासवर्ड सुरक्षित करें (Update Password)", type="primary", key="adm_pwd_btn"):
+                                admin_em = st.session_state.get("user_email", "researcher@jyotishos.com")
+                                ok, msg = default_auth_service.admin_reset_user_password(admin_em, adm_target_user, adm_new_pwd)
+                                if ok:
+                                    st.success(f"✅ {msg}")
+                                else:
+                                    st.error(f"❌ {msg}")
+
+                        with col_adm_pw2:
+                            st.markdown("##### ⚙️ उपयोगकर्ता भूमिका व प्रो स्थिति बदलें (Update Role)")
+                            adm_role_target = st.selectbox("उपयोगकर्ता चुनें (Target User):", user_emails, key="adm_role_target_user")
+                            adm_new_role = st.selectbox("नई भूमिका (New Role):", ["researcher", "jyotishi", "jatak"], key="adm_role_new_val")
+                            adm_is_paid = st.checkbox("प्रो लाइसेंस सक्रिय (Paid Pro Access)", value=True, key="adm_role_is_paid")
+                            if st.button("💾 भूमिका अपडेट करें (Save Role)", key="adm_role_save_btn"):
+                                admin_em = st.session_state.get("user_email", "researcher@jyotishos.com")
+                                ok, msg = default_auth_service.admin_update_user_role(admin_em, adm_role_target, adm_new_role, is_active=True, is_paid=adm_is_paid)
+                                if ok:
+                                    st.success(f"✅ {msg}")
+                                    st.rerun()
+                                else:
+                                    st.error(f"❌ {msg}")
+
+                    with adm_tab_codes:
+                        st.markdown("##### 🎟️ नया परचेज कोड उत्पन्न करें (Generate Purchase Code)")
+                        col_cg1, col_cg2 = st.columns([2, 1])
+                        with col_cg1:
+                            cg_tier = st.selectbox("लाइसेंस प्रकार (License Tier):", [
+                                ("pro_annual", "📅 वार्षिक प्रो लाइसेंस (Annual Pro - 1 Year)"),
+                                ("pro_lifetime", "🌟 आजीवन वीआईपी प्रो (Lifetime VIP Access)")
+                            ], format_func=lambda x: x[1], key="cg_tier_sel")[0]
+                            cg_notes = st.text_input("लाइसेंस विवरण / नोट्स (Notes):", placeholder="उदा: पं. शर्मा जी हेतु", key="cg_notes_in")
+                        with col_cg2:
+                            st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+                            if st.button("✨ कोड जनरेट करें (Generate Code)", type="primary", use_container_width=True, key="cg_gen_btn"):
+                                admin_em = st.session_state.get("user_email", "researcher@jyotishos.com")
+                                new_code = default_auth_service.generate_purchase_code(admin_em, tier=cg_tier, notes=cg_notes)
+                                st.session_state["last_generated_code"] = new_code
+                                st.success(f"🎉 नया कोड उत्पन्न हुआ: `{new_code}`")
+
+                        if "last_generated_code" in st.session_state:
+                            st.info(f"📋 हालिया उत्पन्न कोड: **{st.session_state['last_generated_code']}** (इसे ग्राहक को प्रदान करें)")
+
+                        st.markdown("##### 📜 समस्त जारी किए गए परचेज कोड (All Purchase Codes):")
+                        all_codes = default_auth_service.list_purchase_codes()
+                        c_rows = []
+                        for c in all_codes:
+                            c_rows.append({
+                                "परचेज कोड": c["code"],
+                                "प्रकार (Tier)": c["tier"].upper(),
+                                "स्थिति": "🔴 उपयोगित (Redeemed)" if c.get("is_redeemed") else "🟢 सक्रिय (Available)",
+                                "उपयोगकर्ता": c.get("redeemed_by") or "-",
+                                "उपयोग तिथि": str(c.get("redeemed_at") or "-")[:10],
+                                "नोट्स": c.get("notes", "-")
+                            })
+                        st.dataframe(pd.DataFrame(c_rows), use_container_width=True)
+
+                    st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+                    if st.button("❌ एडमिन कंसोल बंद करें", use_container_width=True, key="admin_close_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+        # 16. TOOL: PURCHASE CODE ACTIVATION (प्रो परचेज कोड सक्रियण)
+        elif st.session_state.gla_active_tool == "license":
+            with st.container(border=True):
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #10B981; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#047857;">
+                        🎟️ प्रो परचेज कोड सक्रियण (Redeem Purchase Code & Upgrade to Pro)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                st.markdown("""
+                <div style="font-size:13.5px; color:#334155; margin-bottom:12px; line-height:1.6;">
+                    यदि आपके पास शोधकर्ता या व्यवस्थापक द्वारा जारी किया गया वैध परचेज कोड है, तो उसे यहाँ दर्ज करके अपने खाते को तुरंत <b>'🔮 प्रो ज्योतिषी (Professional Astrologer)'</b> में सक्रिय करें। प्रो मोड में सभी ३० मॉड्यूल एवं उन्नत वर्ग चक्र अनलॉक हो जाते हैं।
+                </div>
+                """, unsafe_allow_html=True)
+
+                col_lic1, col_lic2 = st.columns([2.5, 1])
+                with col_lic1:
+                    user_curr_email = st.session_state.get("user_email", "")
+                    lic_code_in = st.text_input("परचेज कोड दर्ज करें (Enter Purchase Code):", placeholder="उदा: BH-PRO-2026-MASTER", key="user_lic_code_input")
+                with col_lic2:
+                    st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+                    if st.button("🚀 अभी सक्रिय करें (Activate)", type="primary", use_container_width=True, key="user_lic_activate_btn"):
+                        if not lic_code_in.strip():
+                            st.error("❌ कृपया परचेज कोड दर्ज करें।")
+                        else:
+                            ok, msg = default_auth_service.redeem_purchase_code(user_curr_email, lic_code_in.strip())
+                            if ok:
+                                st.session_state.user_role = "jyotishi"
+                                st.session_state.user_role_display = "🔮 ज्योतिषी (Professional Astrologer)"
+                                st.session_state.user_is_paid = True
+                                st.session_state.gla_active_tool = None
+                                st.toast(msg, icon="🎉")
+                                st.balloons()
+                                st.rerun()
+                            else:
+                                st.error(f"❌ {msg}")
+
+                st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+                if st.button("❌ बंद करें", use_container_width=True, key="lic_modal_close_btn"):
+                    st.session_state.gla_active_tool = None
+                    st.rerun()
+
     # ---------------------------------------------------------
     # 🎨 THEME STYLING TOKENS FOR SIDEBAR & HEADER BREADCRUMB (Grahalakshanam Palette)
     # ---------------------------------------------------------
@@ -7849,6 +8071,72 @@ st.markdown(f"""
 # 🏛️ FULL-VIEWPORT RESPONSIVE WORKSTATION
 # -------------------------------------------------------------
 is_parashara_layout = False
+
+# -------------------------------------------------------------
+# Module Access Control & RBAC Guard for Free Jatak Tier
+# -------------------------------------------------------------
+cur_user_role = st.session_state.get("user_role", "jatak")
+jatak_allowed_modules = [0, 1, 16, 17]
+
+if cur_user_role == "jatak" and selected_idx not in jatak_allowed_modules:
+    st.markdown(f"""
+    <div style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); border: 2px solid #6366F1; border-radius: 14px; padding: 26px; color: #FFFFFF; box-shadow: 0 10px 25px rgba(0,0,0,0.2); margin: 15px 0;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+            <span style="font-size: 32px;">🔒</span>
+            <div>
+                <h3 style="margin: 0; color: #F59E0B; font-size: 1.35rem; font-weight: 800;">उन्नत प्रो मॉड्यूल (Professional Astrologer Only)</h3>
+                <p style="margin: 3px 0 0 0; color: #E0E7FF; font-size: 0.95rem;">
+                    यह मॉड्यूल (<b>{selected_module}</b>) केवल प्रो ज्योतिषी एवं शोधकर्ताओं के लिए उपलब्ध है।
+                </p>
+            </div>
+        </div>
+        <div style="background: rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; margin: 14px 0; font-size: 0.92rem; line-height: 1.6;">
+            <b>✨ प्रो ज्योतिषी (Professional Astrologer) सदस्यता में क्या शामिल है:</b>
+            <ul style="margin: 6px 0 0 0; padding-left: 20px;">
+                <li>समस्त ३० वैदिक मॉड्यूल (विंशोत्तरी/जैमिनी/योगिनी दशाएं, अष्टकवर्ग, गोचर, वर्षफल ताजिक, केपी, भाव स्पष्ट)</li>
+                <li>षोडशवर्ग चक्र (D1 से D60 षष्ट्यंश तक सूक्ष्म विवेचन)</li>
+                <li>जन्म समय शोधन (BTR - Classical Epoch Rectification)</li>
+                <li>असीमित जातक कुण्डली वॉल्ट एवं परामर्श नोट्स सुरक्षित करने की सुविधा</li>
+            </ul>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    with st.container(border=True):
+        st.markdown("#### 🎟️ परचेज कोड द्वारा तुरंत प्रो सक्रिय करें (Activate Pro Access)")
+        col_up_code, col_up_btn = st.columns([2.5, 1.2])
+        with col_up_code:
+            user_input_code = st.text_input(
+                "परचेज कोड (Enter Purchase Code):",
+                placeholder="उदा: BH-PRO-2026-MASTER",
+                key="module_guard_purchase_code"
+            )
+        with col_up_btn:
+            st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+            if st.button("🚀 अभी सक्रिय करें (Activate)", type="primary", use_container_width=True, key="guard_activate_code_btn"):
+                if not user_input_code.strip():
+                    st.error("❌ कृपया अपना परचेज कोड दर्ज करें।")
+                else:
+                    curr_user_em = st.session_state.get("user_email", "")
+                    ok, msg = default_auth_service.redeem_purchase_code(curr_user_em, user_input_code.strip())
+                    if ok:
+                        st.session_state.user_role = "jyotishi"
+                        st.session_state.user_role_display = "🔮 ज्योतिषी (Professional Astrologer)"
+                        st.session_state.user_is_paid = True
+                        st.toast(msg, icon="🎉")
+                        st.balloons()
+                        st.rerun()
+                    else:
+                        st.error(f"❌ {msg}")
+
+        st.markdown("<div style='height: 6px;'></div>", unsafe_allow_html=True)
+        col_bk1, col_bk2 = st.columns([1.5, 3])
+        with col_bk1:
+            if st.button("🔙 निःशुल्क जन्म कुण्डली (D1) पर जाएं", use_container_width=True, key="guard_return_to_d1_btn"):
+                st.session_state.active_module_idx = 0
+                st.session_state.active_tab_idx = 0
+                st.rerun()
+    st.stop()
 
 # -------------------------------------------------------------
 # Module Routing
