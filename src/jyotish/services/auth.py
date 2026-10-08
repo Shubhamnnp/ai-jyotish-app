@@ -256,9 +256,11 @@ class AuthService:
         self,
         email: str,
         password: str,
-        name: str,
+        name: str = "",
         role: str = ROLE_JATAK,
-        purchase_code: Optional[str] = None
+        purchase_code: Optional[str] = None,
+        *args,
+        **kwargs
     ) -> Tuple[bool, str, Optional[Dict[str, Any]]]:
         """Register a new user with PBKDF2-HMAC-SHA256 encrypted password."""
         email_lower = email.strip().lower()

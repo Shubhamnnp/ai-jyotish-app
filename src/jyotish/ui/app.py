@@ -112,10 +112,12 @@ from src.jyotish.services.master_calculator import default_master_calculator
 from src.jyotish.services.vastu import VastuJyotishEngine, VASTU_DIRECTIONS
 from src.jyotish.services.grahalakshanam import GrahalakshanamClient, GrahalakshanamConfig
 from src.jyotish.services.folder_manager import default_folder_manager
-from src.jyotish.services.auth import default_auth_service
+import importlib
+import src.jyotish.services.auth as auth_mod
+importlib.reload(auth_mod)
+default_auth_service = auth_mod.default_auth_service
 from src.jyotish.rules.engine import default_rules_engine
 from src.jyotish.ui.chart_renderer import ChartRenderer
-import importlib
 import src.jyotish.ai.narrative as narr_mod
 importlib.reload(narr_mod)
 default_narrative_service = narr_mod.default_narrative_service
@@ -4692,13 +4694,27 @@ PBKDF2-HMAC-SHA256 क्रिप्टोग्राफिक हैशिं
 
             if st.button("✨ नया खाता बनाएं (Create Account)", type="primary", use_container_width=True):
                 target_role = "jyotishi" if is_astro_reg else "jatak"
-                success, msg, uinfo = default_auth_service.register(
-                    email=reg_email,
-                    password=reg_pass,
-                    name=reg_name,
-                    role=target_role,
-                    purchase_code=reg_code if (reg_code and reg_code.strip()) else None
-                )
+                try:
+                    reg_res = default_auth_service.register(
+                        email=reg_email,
+                        password=reg_pass,
+                        name=reg_name,
+                        role=target_role,
+                        purchase_code=reg_code if (reg_code and reg_code.strip()) else None
+                    )
+                except TypeError:
+                    reg_res = default_auth_service.register(
+                        reg_email,
+                        reg_pass,
+                        reg_name,
+                        target_role
+                    )
+
+                if isinstance(reg_res, tuple) and len(reg_res) >= 2:
+                    success, msg = reg_res[0], reg_res[1]
+                else:
+                    success, msg = False, "पंजीकरण में त्रुटि।"
+
                 if success:
                     st.success(f"✅ {msg}")
                     st.info("💡 अब आप 'लॉगिन' टैब में जाकर अपने नए ईमेल व पासवर्ड से प्रवेश कर सकते हैं।")
