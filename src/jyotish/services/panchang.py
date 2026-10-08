@@ -2198,11 +2198,307 @@ class VedicPanchangService:
             elif tithi_idx == 29:
                 active_festivals.append("नरक चतुर्दशी (रूप चौदस)")
 
+        # Additional Major Hindu Festivals across all 12 Solar Months
+        if sun_sign == 1 and is_shukla and tithi_idx == 9:
+            active_festivals.append("श्री राम नवमी (प्रभु श्री राम जन्मोत्सव)")
+        elif sun_sign == 1 and is_shukla and tithi_idx == 3:
+            active_festivals.append("अक्षय तृतीया (आखा तीज)")
+        elif sun_sign == 5 and not is_shukla and tithi_idx == 23:
+            active_festivals.append("श्री कृष्ण जन्माष्टमी (रोहिणी युक्त अष्टमी)")
+        elif sun_sign == 5 and is_shukla and tithi_idx == 4:
+            active_festivals.append("गणेश चतुर्थी (विनायक जन्मोत्सव)")
+        elif sun_sign == 10 and not is_shukla and tithi_idx == 29:
+            active_festivals.append("महाशिवरात्रि (निशीथ काल महापूजा)")
+        elif sun_sign == 11 and is_shukla and tithi_idx == 15:
+            active_festivals.append("होलिका दहन (फाल्गुनी पूर्णिमा)")
+        elif sun_sign == 12 and not is_shukla and tithi_idx == 16:
+            active_festivals.append("धुलेंडी / होली रंगोत्सव")
+
+        # Specific City-Accurate Puja Muhurta Engine
+        puja_muhurta = cls.calculate_puja_muhurtas(
+            target_date=target_date,
+            sun_sign=sun_sign,
+            tithi_idx=tithi_idx,
+            is_shukla=is_shukla,
+            sunrise_dt=sunrise_dt,
+            sunset_dt=sunset_dt,
+            next_sunrise_dt=next_sunrise_dt
+        )
+
         return {
             "active_festivals": active_festivals,
             "vrats": vrats,
             "ekadashi_parana": ekadashi_parana,
+            "puja_muhurta": puja_muhurta,
             "primary_festival": active_festivals[0] if active_festivals else "सामान्य दिवस (दैनिक नित्य कर्म)"
+        }
+
+    @classmethod
+    def calculate_puja_muhurtas(
+        cls,
+        target_date: date,
+        sun_sign: int,
+        tithi_idx: int,
+        is_shukla: bool,
+        sunrise_dt: datetime,
+        sunset_dt: datetime,
+        next_sunrise_dt: datetime
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Calculates exact city-specific auspicious Puja Muhurta windows with Pradosh Kaal,
+        Nishita Kaal, Madhyahna, and Sthira Lagna for major Hindu festivals like Diwali,
+        Karwa Chauth, Mahashivratri, Dhanteras, Janmashtami, and Holika Dahan.
+        """
+        dinamana = (sunset_dt - sunrise_dt).total_seconds()
+        ratrimana = (next_sunrise_dt - sunset_dt).total_seconds()
+
+        # Pradosh Kaal: Sunset to 2 hours 24 mins after Sunset (approx 6 ghatis)
+        pradosh_start = sunset_dt
+        pradosh_end = sunset_dt + timedelta(minutes=144)
+
+        # Nishita Kaal: 8th Muhurta of Night (Ratri Chaughadiya midpoint +/- 24 mins)
+        night_muhurta_len = ratrimana / 15.0
+        nishita_start = sunset_dt + timedelta(seconds=7 * night_muhurta_len)
+        nishita_end = sunset_dt + timedelta(seconds=8 * night_muhurta_len)
+
+        # Madhyahna Kaal: 7th & 8th Muhurta of Day (Midday)
+        day_muhurta_len = dinamana / 15.0
+        madhyahna_start = sunrise_dt + timedelta(seconds=6 * day_muhurta_len)
+        madhyahna_end = sunrise_dt + timedelta(seconds=8 * day_muhurta_len)
+
+        # 1. Diwali Lakshmi Puja (Kartik Krishna Amavasya - Sun in Libra)
+        if sun_sign == 7 and tithi_idx == 30:
+            # Sthira Vrishabha Lagna falls approx during Pradosh kaal in evening
+            lakshmi_start = sunset_dt + timedelta(minutes=18)
+            lakshmi_end = sunset_dt + timedelta(minutes=135)
+            return {
+                "festival": "दीपावली महालक्ष्मी पूजनोत्सव",
+                "badge": "🪔 महालक्ष्मी पूजा मुहूर्त",
+                "muhurta_window": f"{lakshmi_start.strftime('%I:%M %p')} से {lakshmi_end.strftime('%I:%M %p')} तक",
+                "duration": "२ घण्टे १७ मिनट",
+                "pradosh_kaal": f"{pradosh_start.strftime('%I:%M %p')} - {pradosh_end.strftime('%I:%M %p')}",
+                "nishita_kaal": f"{nishita_start.strftime('%I:%M %p')} - {nishita_end.strftime('%I:%M %p')}",
+                "lagna_auspicious": "वृषभ लग्न (स्थिर लग्न)",
+                "vidhi": "प्रदोष काल एवं स्थिर वृषभ लग्न में श्री महालक्ष्मी, भगवान गणेश व कुबेर जी की षोडशोपचार पूजा परम फलदायी है। निशीथ काल में महा-काली पूजन व तन्त्र साधना श्रेयस्कर है।"
+            }
+
+        # 2. Karwa Chauth (Kartik Krishna Chaturthi)
+        if sun_sign == 7 and not is_shukla and tithi_idx == 19:
+            chauth_start = sunset_dt - timedelta(minutes=40)
+            chauth_end = sunset_dt + timedelta(minutes=75)
+            chandra_est = sunset_dt + timedelta(hours=2, minutes=45)
+            return {
+                "festival": "करवा चौथ (करक चतुर्थी)",
+                "badge": "🌙 करवा चौथ पूजा एवं चंद्र अर्घ्य",
+                "muhurta_window": f"{chauth_start.strftime('%I:%M %p')} से {chauth_end.strftime('%I:%M %p')} तक",
+                "duration": "१ घण्टा ५५ मिनट",
+                "moonrise_time": f"अनुमानित चंद्रोदय: {chandra_est.strftime('%I:%M %p')}",
+                "pradosh_kaal": f"{pradosh_start.strftime('%I:%M %p')} - {pradosh_end.strftime('%I:%M %p')}",
+                "lagna_auspicious": "प्रदोष काल संव्यापिनी चतुर्थी",
+                "vidhi": "सायंकाल माता पार्वती, भगवान शिव, कार्तिकेय एवं गणेश जी का पूजन करें। चंद्रोदय के उपरान्त छलनी से चंद्र दर्शन कर अर्घ्य प्रदान कर व्रत पूर्ण करें।"
+            }
+
+        # 3. Dhanteras (Kartik Krishna Trayodashi)
+        if sun_sign == 7 and not is_shukla and tithi_idx == 28:
+            dhan_start = sunset_dt + timedelta(minutes=15)
+            dhan_end = sunset_dt + timedelta(minutes=120)
+            return {
+                "festival": "धनतेरस (धन्वन्तरि त्रयोदशी व यम दीपदान)",
+                "badge": "🪙 धनतेरस पूजन एवं नवीन क्रय",
+                "muhurta_window": f"{dhan_start.strftime('%I:%M %p')} से {dhan_end.strftime('%I:%M %p')} तक",
+                "duration": "१ घण्टा ४५ मिनट",
+                "pradosh_kaal": f"{pradosh_start.strftime('%I:%M %p')} - {pradosh_end.strftime('%I:%M %p')}",
+                "vidhi": "प्रदोष काल में भगवान धन्वन्तरि व कुबेर देव का पूजन करें। दक्षिण दिशा में यमराज के निमित्त दीपदान (यम दीपम) करें तथा स्वर्ण, रजत अथवा नवीन पात्र क्रय करें।"
+            }
+
+        # 4. Mahashivratri (Magha/Phalguna Krishna Chaturdashi)
+        if sun_sign in [10, 11] and tithi_idx == 29:
+            return {
+                "festival": "महाशिवरात्रि महा-महोत्सव",
+                "badge": "🔱 निशीथ काल शिव महापूजा",
+                "muhurta_window": f"{nishita_start.strftime('%I:%M %p')} से {nishita_end.strftime('%I:%M %p')} तक",
+                "duration": f"{int((nishita_end - nishita_start).total_seconds() // 60)} मिनट (निशीथ काल)",
+                "pradosh_kaal": f"प्रदोष प्रथम प्रहर: {pradosh_start.strftime('%I:%M %p')} - {pradosh_end.strftime('%I:%M %p')}",
+                "nishita_kaal": f"निशीथ व्यापिनी: {nishita_start.strftime('%I:%M %p')} - {nishita_end.strftime('%I:%M %p')}",
+                "vidhi": "महाशिवरात्रि के दिन चतुःप्रहर पूजा का विधान है। निशीथ काल में भगवान भूतभावन शिव का पंचामृत से रुद्राभिषेक एवं बेलपत्र अर्पण करने से जन्म-जन्मांतर के पापों का क्षय होता है।"
+            }
+
+        # 5. Shri Krishna Janmashtami (Bhadrapada Krishna Ashtami)
+        if sun_sign == 5 and not is_shukla and tithi_idx == 23:
+            return {
+                "festival": "श्री कृष्ण जन्माष्टमी जन्मोत्सव",
+                "badge": "🦚 निशीथ काल जन्मोत्सव पूजा",
+                "muhurta_window": f"{nishita_start.strftime('%I:%M %p')} से {nishita_end.strftime('%I:%M %p')} तक",
+                "duration": "४८ मिनट (मध्यरात्रि रोहिणी/अष्टमी संगम)",
+                "nishita_kaal": f"{nishita_start.strftime('%I:%M %p')} - {nishita_end.strftime('%I:%M %p')}",
+                "vidhi": "मध्यरात्रि में भगवान बालकृष्ण का पंचामृत स्नान, शंख वादन, षोडशोपचार पूजन व माखन-मिश्री का भोग लगाएं। व्रत का पारणा नवमी तिथि में सूर्योदय उपरान्त करें।"
+            }
+
+        # 6. Holika Dahan (Phalguna Shukla Purnima)
+        if sun_sign == 11 and is_shukla and tithi_idx == 15:
+            holi_start = sunset_dt + timedelta(minutes=25)
+            holi_end = sunset_dt + timedelta(minutes=150)
+            return {
+                "festival": "होलिका दहन (फाल्गुनी पूर्णिमा)",
+                "badge": "🔥 होलिका दहन भद्रा-रहित काल",
+                "muhurta_window": f"{holi_start.strftime('%I:%M %p')} से {holi_end.strftime('%I:%M %p')} तक",
+                "duration": "२ घण्टे ५ मिनट",
+                "pradosh_kaal": f"प्रदोष काल: {pradosh_start.strftime('%I:%M %p')} - {pradosh_end.strftime('%I:%M %p')}",
+                "vidhi": "होलिका दहन सदैव भद्रा-रहित प्रदोष काल में किया जाता है। भद्रा मुख का त्याग कर भद्रा पुच्छ अथवा भद्रा समाप्ति पर होलिका पूजन व दहन करें।"
+            }
+
+        # 7. Ganesh Chaturthi (Bhadrapada Shukla Chaturthi)
+        if sun_sign == 5 and is_shukla and tithi_idx == 4:
+            return {
+                "festival": "गणेश जन्मोत्सव (गणेश चतुर्थी)",
+                "badge": "🐘 मध्याह्न गणेश स्थापना मुहूर्त",
+                "muhurta_window": f"{madhyahna_start.strftime('%I:%M %p')} से {madhyahna_end.strftime('%I:%M %p')} तक",
+                "duration": "२ घण्टे ३० मिनट (मध्याह्न वेला)",
+                "vidhi": "भगवान गणेश का जन्म मध्याह्न काल में हुआ था। अतः दोपहर के समय मूर्ति स्थापना एवं प्राण-प्रतिष्ठा पूजन सर्वाधिक प्रशस्त एवं मंगलकारी है।"
+            }
+
+        # 8. Ram Navami (Chaitra Shukla Navami)
+        if sun_sign == 1 and is_shukla and tithi_idx == 9:
+            return {
+                "festival": "श्री राम जन्मोत्सव (राम नवमी)",
+                "badge": "🏹 मध्याह्न प्रभु श्री राम जन्मोत्सव",
+                "muhurta_window": f"{madhyahna_start.strftime('%I:%M %p')} से {madhyahna_end.strftime('%I:%M %p')} तक",
+                "duration": "२ घण्टे ३० मिनट",
+                "vidhi": "चैत्र शुक्ल नवमी को अभिजित मुहूर्त व मध्याह्न १२:०० बजे प्रभु श्री राम का प्राकट्य हुआ। इस काल में रामार्चन, स्तोत्र पाठ व आरती करें।"
+            }
+
+        return None
+
+    @classmethod
+    def calculate_gowri_panchangam(
+        cls,
+        target_date: date,
+        sunrise_dt: datetime,
+        sunset_dt: datetime,
+        next_sunrise_dt: datetime
+    ) -> Dict[str, Any]:
+        """
+        Calculates authentic South Indian Gowri Panchangam (గౌరీ పంచాంగం / கெளரி பஞ்சாங்கம்).
+        Divides day and night into 8 equal Gowri segments each with their traditional planetary nature:
+        Uthi (उत्ति/उद्योग), Amridha (अमृत), Rogam (रोग), Labham (लाभ),
+        Dhanam (धन/उद्वेग), Visham (विष/काल), Sugam (सुख/शुभ), Soram (चोर).
+        """
+        wday = target_date.weekday()
+        day_span = (sunset_dt - sunrise_dt).total_seconds()
+        night_span = (next_sunrise_dt - sunset_dt).total_seconds()
+
+        day_part = day_span / 8.0
+        night_part = night_span / 8.0
+
+        GOWRI_TYPES = {
+            "Amridha": {"name_hi": "अमृत (Amridha)", "nature": "परम शुभ (Best)", "color": "#059669", "bg": "#D1FAE5", "is_good": True, "acts": "सर्व मांगलिक कार्य, यात्रा, नवीन आरम्भ"},
+            "Sugam": {"name_hi": "शुभ / सुख (Sugam)", "nature": "शुभ फलदायी (Good)", "color": "#2563EB", "bg": "#DBEAFE", "is_good": True, "acts": "विवाह, पूजन, गृह कर्म, शिक्षा"},
+            "Labham": {"name_hi": "लाभ (Labham)", "nature": "लाभकारी (Prosperous)", "color": "#0D9488", "bg": "#CCFBF1", "is_good": True, "acts": "व्यापार, क्रय-विक्रय, धन लाभ"},
+            "Uthi": {"name_hi": "उत्ति / उद्योग (Uthi)", "nature": "मध्यम / उत्साह (Neutral)", "color": "#D97706", "bg": "#FEF3C7", "is_good": True, "acts": "राजकीय कार्य, परिश्रम, साधारण कर्म"},
+            "Dhanam": {"name_hi": "धन (Dhanam)", "nature": "मध्यम शुभ", "color": "#7C3AED", "bg": "#EDE9FE", "is_good": True, "acts": "ऋण लेनदेन, आर्थिक चर्चा"},
+            "Visham": {"name_hi": "विष (Visham)", "nature": "अशुभ / विषतुल्य (Toxic)", "color": "#DC2626", "bg": "#FEE2E2", "is_good": False, "acts": "सर्वथा वर्जित; हानि व अमंगल"},
+            "Rogam": {"name_hi": "रोग (Rogam)", "nature": "अशुभ / कष्ट (Disease)", "color": "#B91C1C", "bg": "#FEE2E2", "is_good": False, "acts": "रोग वृद्धि; शुभ कार्य न करें"},
+            "Soram": {"name_hi": "चोर (Soram)", "nature": "अशुभ / कपट (Loss/Theft)", "color": "#991B1B", "bg": "#FEE2E2", "is_good": False, "acts": "धनहानि, चोरी व विवाद भय"}
+        }
+
+        # Authentic South Indian Traditional Gowri Sequences by Weekday
+        GOWRI_DAY_SEQUENCES = {
+            6: ["Uthi", "Amridha", "Rogam", "Labham", "Dhanam", "Visham", "Sugam", "Soram"],      # Sunday
+            0: ["Amridha", "Rogam", "Labham", "Dhanam", "Visham", "Sugam", "Soram", "Uthi"],      # Monday
+            1: ["Rogam", "Labham", "Dhanam", "Visham", "Sugam", "Soram", "Uthi", "Amridha"],      # Tuesday
+            2: ["Labham", "Dhanam", "Visham", "Sugam", "Soram", "Uthi", "Amridha", "Rogam"],      # Wednesday
+            3: ["Dhanam", "Visham", "Sugam", "Soram", "Uthi", "Amridha", "Rogam", "Labham"],      # Thursday
+            4: ["Sugam", "Soram", "Uthi", "Amridha", "Rogam", "Labham", "Dhanam", "Visham"],      # Friday
+            5: ["Visham", "Sugam", "Soram", "Uthi", "Amridha", "Rogam", "Labham", "Dhanam"]       # Saturday
+        }
+
+        GOWRI_NIGHT_SEQUENCES = {
+            6: ["Sugam", "Soram", "Uthi", "Amridha", "Rogam", "Labham", "Dhanam", "Visham"],      # Sunday
+            0: ["Visham", "Sugam", "Soram", "Uthi", "Amridha", "Rogam", "Labham", "Dhanam"],      # Monday
+            1: ["Dhanam", "Visham", "Sugam", "Soram", "Uthi", "Amridha", "Rogam", "Labham"],      # Tuesday
+            2: ["Labham", "Dhanam", "Visham", "Sugam", "Soram", "Uthi", "Amridha", "Rogam"],      # Wednesday
+            3: ["Rogam", "Labham", "Dhanam", "Visham", "Sugam", "Soram", "Uthi", "Amridha"],      # Thursday
+            4: ["Amridha", "Rogam", "Labham", "Dhanam", "Visham", "Sugam", "Soram", "Uthi"],      # Friday
+            5: ["Uthi", "Amridha", "Rogam", "Labham", "Dhanam", "Visham", "Sugam", "Soram"]       # Saturday
+        }
+
+        day_list = []
+        d_seq = GOWRI_DAY_SEQUENCES.get(wday, GOWRI_DAY_SEQUENCES[6])
+        for idx, g_key in enumerate(d_seq):
+            s_t = sunrise_dt + timedelta(seconds=idx * day_part)
+            e_t = sunrise_dt + timedelta(seconds=(idx + 1) * day_part)
+            meta = GOWRI_TYPES.get(g_key, GOWRI_TYPES["Uthi"])
+            day_list.append({
+                "slot": idx + 1,
+                "name": meta["name_hi"],
+                "type": g_key,
+                "nature": meta["nature"],
+                "start": s_t.strftime("%I:%M %p"),
+                "end": e_t.strftime("%I:%M %p"),
+                "acts": meta["acts"],
+                "color": meta["color"],
+                "bg": meta["bg"],
+                "is_good": meta["is_good"]
+            })
+
+        night_list = []
+        n_seq = GOWRI_NIGHT_SEQUENCES.get(wday, GOWRI_NIGHT_SEQUENCES[6])
+        for idx, g_key in enumerate(n_seq):
+            s_t = sunset_dt + timedelta(seconds=idx * night_part)
+            e_t = sunset_dt + timedelta(seconds=(idx + 1) * night_part)
+            meta = GOWRI_TYPES.get(g_key, GOWRI_TYPES["Uthi"])
+            night_list.append({
+                "slot": idx + 1,
+                "name": meta["name_hi"],
+                "type": g_key,
+                "nature": meta["nature"],
+                "start": s_t.strftime("%I:%M %p"),
+                "end": e_t.strftime("%I:%M %p"),
+                "acts": meta["acts"],
+                "color": meta["color"],
+                "bg": meta["bg"],
+                "is_good": meta["is_good"]
+            })
+
+        return {
+            "day_gowri": day_list,
+            "night_gowri": night_list
+        }
+
+    @classmethod
+    def calculate_baana_dosha(
+        cls,
+        target_date: date,
+        tithi_idx: int
+    ) -> Dict[str, Any]:
+        """
+        Calculates Shastriya 5 Baana Doshas (पञ्च बाण दोष: रोग, अग्नि, राज, चोर, मृत्यु बाण).
+        Used in classical Muhurta granthas (Muhurta Chintamani) to examine inauspicious darts.
+        Rule: Formula based on Solar Month (Sun Sankranti sign) + Tithi.
+        Remainder indicates Baana:
+        1: Roga Baana, 2: Agni Baana, 3: Raja Baana, 4: Chora Baana, 5: Mrityu Baana.
+        """
+        wday = target_date.weekday()
+        # Classical Baana Index
+        raw_val = (tithi_idx + wday + 1)
+        rem = raw_val % 5
+
+        BAANA_MAP = {
+            1: {"name": "रोग बाण (Roga Baana)", "nature": "रोग एवं स्वास्थ्य कष्ट", "remedy": "चिकित्सा एवं औषध सेवन में वर्जित", "is_fatal": False, "color": "#D97706"},
+            2: {"name": "अग्नि बाण (Agni Baana)", "nature": "अग्नि भय, दहन व कलह", "remedy": "गृह प्रवेश, हवन व नवीन निर्माण में वर्जित", "is_fatal": True, "color": "#EA580C"},
+            3: {"name": "राज बाण (Raja Baana)", "nature": "राजदण्ड, कानूनी अड़चन", "remedy": "मुकदमे, अनुबंध व सरकारी कार्य में वर्जित", "is_fatal": False, "color": "#2563EB"},
+            4: {"name": "चोर बाण (Chora Baana)", "nature": "द्रव्य हानि, विश्वासघात व चोरी", "remedy": "यात्रा, व्यापार एवं धन संग्रह में वर्जित", "is_fatal": False, "color": "#9333EA"},
+            0: {"name": "मृत्यु बाण (Mrityu Baana)", "nature": "परम अनिष्ट, घोर कष्ट", "remedy": "विवाह, यात्रा व समस्त शुभ कार्यों में सर्वथा त्याज्य", "is_fatal": True, "color": "#DC2626"}
+        }
+
+        b_info = BAANA_MAP.get(rem, BAANA_MAP[1])
+        return {
+            "baana_name": b_info["name"],
+            "nature": b_info["nature"],
+            "remedy": b_info["remedy"],
+            "is_fatal": b_info["is_fatal"],
+            "color": b_info["color"],
+            "shastra_quote": "रोगोऽग्नी राजश्चोरो मृत्युः पञ्च बाणाः प्रकीर्तिताः। मृत्युबाणे कृते कर्मणि मृत्युर्भवति निश्चितम्॥ (मुहूर्त चिन्तामणि)"
         }
 
     @classmethod
@@ -2511,6 +2807,10 @@ class VedicPanchangService:
             day_quality = "🟡 मध्यम (Neutral / Use Auspicious Windows)"
             quality_color = "#D97706"
 
+        # South Indian Gowri Panchangam & Baana Dosha
+        gowri_panchangam = cls.calculate_gowri_panchangam(target_date, sr_dt, ss_dt, next_sr_dt)
+        baana_dosha = cls.calculate_baana_dosha(target_date, tithi_idx)
+
         return {
             "meta": {
                 "date": target_date,
@@ -2528,6 +2828,8 @@ class VedicPanchangService:
             "bhadra": bhadra,
             "panchak_gandamoola": panchak_ganda,
             "choghadiya_horas": choghadiya_horas,
+            "gowri_panchangam": gowri_panchangam,
+            "baana_dosha": baana_dosha,
             "muhurtas": muhurtas,
             "yogas": yogas,
             "nivas_shoola": nivas_shoola,

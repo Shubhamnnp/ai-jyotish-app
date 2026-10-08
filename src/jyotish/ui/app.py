@@ -25,6 +25,7 @@ import sys
 import os
 import re
 import json
+import urllib.parse
 from typing import Any, Dict, List, Optional, Tuple
 from datetime import date, time, datetime, timedelta, timezone
 import pandas as pd
@@ -7450,6 +7451,31 @@ with st.container(key="top_frozen_header_container", border=False):
                             use_container_width=True,
                             key="pdf_modal_download_btn"
                         )
+
+                    # 1-Click Client Web Link & WhatsApp Sharing
+                    st.markdown("---")
+                    st.markdown("##### 🔗 क्लाइंट वेबलिंक एवं व्हाट्सएप शेयरिंग (Grahalakshanam Parity)")
+                    st.caption("जातक को सीधे उनके मोबाइल या व्हाट्सएप पर भेजने हेतु 1-क्लिक सुरक्षित डिजिटल लिंक:")
+
+                    birth_name_enc = urllib.parse.quote(chart.birth_data.name or "Jataka")
+                    dob_enc = chart.birth_data.date_of_birth.strftime("%Y-%m-%d")
+                    tob_enc = chart.birth_data.time_of_birth.strftime("%H:%M")
+                    client_summary_text = f"नमस्कार {chart.birth_data.name} जी, ब्रह्महोरा वैदिक ज्योतिष शोध संस्थान द्वारा आपकी जन्मपत्रिका तैयार है। लग्न: {chart.lagna_sign_id}, नक्षत्र: {chart.birth_data.name}। विस्तृत फलादेश एवं मार्गदर्शन हेतु संपर्क करें।"
+                    wa_encoded_msg = urllib.parse.quote(client_summary_text)
+
+                    col_sh1, col_sh2 = st.columns([1.5, 1])
+                    with col_sh1:
+                        client_share_url = f"https://brahmahora.astro/view?name={birth_name_enc}&dob={dob_enc}&tob={tob_enc}"
+                        st.text_input("सुरक्षित क्लाइंट लिंक (Copy Link):", value=client_share_url, key="txt_client_share_url_box")
+                    with col_sh2:
+                        wa_url = f"https://api.whatsapp.com/send?text={wa_encoded_msg}%20{urllib.parse.quote(client_share_url)}"
+                        st.markdown(f"""
+                        <a href="{wa_url}" target="_blank" style="text-decoration:none;">
+                            <div style="background:#25D366; color:#FFFFFF; text-align:center; padding:9px 14px; border-radius:8px; font-weight:800; font-size:14px; margin-top:24px; box-shadow:0 2px 6px rgba(37,211,102,0.3);">
+                                📲 व्हाट्सएप पर भेजें (WhatsApp Share)
+                            </div>
+                        </a>
+                        """, unsafe_allow_html=True)
 
                 with col_pact2:
                     if st.button("❌ बंद करें (Close)", use_container_width=True, key="pdf_modal_close_btn"):
@@ -16349,6 +16375,58 @@ elif selected_idx == 11:
 <b>📜 शास्त्रीय अवलोकन:</b> {'; '.join(m.get('reasons', []))}
 </div>
 </div>""", unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.markdown("### 📅 संपूर्ण वार्षिक रेडीमेड शुभ मुहूर्त कैलेंडर (Drik Panchang Master Style)")
+        st.caption("वर्ष भर के समस्त शास्त्रीय रूप से शुद्ध व मान्य विवाह, गृह प्रवेश एवं व्यापार मुहूर्तों की 1-क्लिक रेडीमेड तालिका:")
+
+        col_yr1, col_yr2 = st.columns([1.5, 1.5])
+        with col_yr1:
+            annual_act = st.selectbox(
+                "संस्कार / कार्य चयन करें:",
+                [
+                    ("vivaha", "💍 विवाह शुभ मुहूर्त (Vivaha Muhurta)"),
+                    ("griha_pravesh", "🏛️ गृह प्रवेश मुहूर्त (Griha Pravesh)"),
+                    ("mundan", "✂️ मुंडन संस्कार (Mundan Muhurta)"),
+                    ("vyapar", "💼 व्यापार / दुकान उद्घाटन (Business Launch)")
+                ],
+                format_func=lambda x: x[1],
+                key="annual_muhurta_act_sel"
+            )
+        with col_yr2:
+            target_yr = st.selectbox("वर्ष (Year):", [2026, 2027], index=0, key="annual_muhurta_yr_sel")
+
+        if st.button("📋 संपूर्ण वार्षिक मुहूर्त तालिका लोड करें", type="secondary", key="btn_annual_muhurta_load"):
+            with st.spinner(f"वर्ष {target_yr} के समस्त शुभ मुहूर्तों की गणना एवं शास्त्रीय शोधन किया जा रहा है..."):
+                annual_data = m_scanner.get_annual_muhurta_calendar(
+                    year=target_yr,
+                    activity_type=annual_act[0],
+                    min_star_rating=3
+                )
+                st.session_state["annual_muhurta_cache"] = {
+                    "data": annual_data,
+                    "title": annual_act[1],
+                    "year": target_yr
+                }
+
+        if "annual_muhurta_cache" in st.session_state:
+            cached = st.session_state["annual_muhurta_cache"]
+            a_list = cached["data"]
+            st.markdown(f"#### 🌟 {cached['title']} — वर्ष {cached['year']} (कुल {len(a_list)} शास्त्रसम्मत शुभ दिन)")
+            if a_list:
+                table_rows = []
+                for item in a_list:
+                    table_rows.append({
+                        "दिनांक (Date)": f"{item['date_str']} ({item['day_name'][:3]})",
+                        "शुभता रेटिंग": item['stars'],
+                        "शुभ स्कोर": f"{item['score']}%",
+                        "तिथि (Tithi)": item['tithi'],
+                        "नक्षत्र (Nakshatra)": item['nakshatra'],
+                        "सर्वोत्तम मुहूर्त वेला": item['best_window'].split('|')[0].strip()
+                    })
+                st.dataframe(pd.DataFrame(table_rows), use_container_width=True, hide_index=True)
+            else:
+                st.info("इस वर्ष में चुने गए न्यूनतम मानक के अनुसार कोई निर्दोष मुहूर्त नहीं पाया गया।")
 
     # -------------------------------------------------------------
     # TAB 7: MUHURTA CHINTAMANI 21 MAHA DOSHAS

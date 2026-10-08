@@ -957,5 +957,33 @@ class MuhurtaRangeScanner:
         results.sort(key=lambda x: (x["score"], -x["fatal_count"]), reverse=True)
         return results[:top_n]
 
+    def get_annual_muhurta_calendar(
+        self,
+        year: int,
+        activity_type: str = "vivaha",
+        min_star_rating: int = 3
+    ) -> List[Dict[str, Any]]:
+        """
+        Generates ready-made annual Shastriya Muhurta Table (like Drik Panchang) for an entire year.
+        Specifically optimized for Vivaha, Griha Pravesh, Mundan, and Vyapar.
+        Filters out days with fatal Shastriya doshas (Pitru Paksha, Chaturmas, Kharmas, Guru/Shukra Asta).
+        Returns chronologically sorted dates with auspicious windows, nakshatras, and tithis.
+        """
+        start_date = date(year, 1, 1)
+        end_date = date(year, 12, 31)
+        
+        raw_list = self.scan_range(
+            activity_type=activity_type,
+            start_date=start_date,
+            end_date=end_date,
+            top_n=366
+        )
+
+        # Filter strictly for auspicious days without fatal violations and with star rating >= min_star_rating
+        curated = [r for r in raw_list if r["fatal_count"] == 0 and r["star_count"] >= min_star_rating]
+        # Sort chronologically by raw_date
+        curated.sort(key=lambda x: x["raw_date"])
+        return curated
+
 
 default_muhurta_scanner = MuhurtaRangeScanner()

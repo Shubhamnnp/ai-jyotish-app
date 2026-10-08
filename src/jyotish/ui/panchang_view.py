@@ -247,6 +247,8 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     lagna_table = panchang_data.get("lagna_table", [])
     festivals_vrat = panchang_data.get("festivals_and_vrat", {})
     sankalpa_mantra = panchang_data.get("sankalpa_mantra", {})
+    gowri = panchang_data.get("gowri_panchangam", {})
+    baana = panchang_data.get("baana_dosha", {})
 
     # -------------------------------------------------------------
     # HERO BANNER: Day, Sunrise/Sunset, Samvat & Day Quality
@@ -677,6 +679,33 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
             </div>
             """, unsafe_allow_html=True)
 
+        # City-Specific Puja Muhurta Card (If Active for Diwali, Karwa Chauth, Shivratri, etc.)
+        puja_muh = festivals_vrat.get("puja_muhurta")
+        if puja_muh:
+            st.markdown(f"#### 🪔 {puja_muh['festival']} — सूक्ष्म पूजन मुहूर्त")
+            prad_txt = f"<br/>• <b>प्रदोष काल:</b> {puja_muh['pradosh_kaal']}" if puja_muh.get('pradosh_kaal') else ""
+            nish_txt = f"<br/>• <b>निशीथ काल:</b> {puja_muh['nishita_kaal']}" if puja_muh.get('nishita_kaal') else ""
+            moon_txt = f"<br/>• <b>{puja_muh['moonrise_time']}</b>" if puja_muh.get('moonrise_time') else ""
+            lagna_txt = f"<br/>• <b>शुभ लग्न:</b> {puja_muh['lagna_auspicious']}" if puja_muh.get('lagna_auspicious') else ""
+            st.markdown(f"""
+            <div style="background:{'#1F2937' if is_dark else '#FFF7ED'}; border:2px solid #F97316;
+                        border-radius:12px; padding:20px; margin:14px 0; box-shadow:0 4px 14px rgba(249,115,22,0.15);">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <b style="color:#C2410C; font-size:19px;">{puja_muh['badge']}</b>
+                    <span style="background:#FFEDD5; color:#9A3412; padding:5px 14px; border-radius:16px; font-weight:800; font-size:13px;">
+                        अवधि: {puja_muh.get('duration', 'प्रशस्त')}
+                    </span>
+                </div>
+                <div style="font-size:22px; font-weight:800; color:#EA580C; margin:12px 0 8px 0;">
+                    ⏱️ श्रेष्ठ पूजा समय: {puja_muh['muhurta_window']}
+                </div>
+                <div style="font-size:14px; color:{'#E5E7EB' if is_dark else '#334155'}; line-height:1.7;">
+                    {prad_txt}{nish_txt}{moon_txt}{lagna_txt}<br/>
+                    • <b>शास्त्रीय विधान व पूजा विधि:</b> {puja_muh['vidhi']}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
         st.markdown("---")
         st.markdown("#### 🗓️ आगामी प्रमुख व्रत एवं पर्व तालिका")
         fest_sched = [
@@ -975,7 +1004,11 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
         st.markdown("### ☀️ चौघड़िया, होरा एवं वैदिक घड़ी (Choghadiya, Horas & Vedic Time)")
         st.caption("दिन के ८ एवं रात्रि के ८ चौघड़िया, २४ ग्रह होराएं एवं ६० घटी वैदिक काल मापन:")
 
-        c_tab1, c_tab2, c_tab3 = st.tabs(["☀️ दिन का चौघड़िया", "🌙 रात्रि का चौघड़िया", "🪐 २४ ग्रह होरा चक्र"])
+        c_tab1, c_tab2, c_tab3, c_tab4, c_tab5 = st.tabs([
+            "☀️ दिन का चौघड़िया", "🌙 रात्रि का चौघड़िया",
+            "🦚 दिन का गौरी पञ्चाङ्गम", "🌙 रात्रि का गौरी पञ्चाङ्गम",
+            "🪐 २४ ग्रह होरा चक्र"
+        ])
 
         with c_tab1:
             st.markdown("#### ☀️ दिन का चौघड़िया (Day Choghadiya: सूर्योदय से सूर्यास्त)")
@@ -1051,6 +1084,82 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                     """, unsafe_allow_html=True)
 
         with c_tab3:
+            st.markdown("#### 🦚 दिन का गौरी पञ्चाङ्गम (Day Gowri Panchangam)")
+            st.caption("पारम्परिक दक्षिण भारतीय ८ गौरी मुहूर्त (उत्ति, अमृत, रोग, लाभ, धन, विष, सुख, चोर):")
+            col_gd1, col_gd2 = st.columns(2)
+            d_gowri_list = gowri.get("day_gowri", [])
+            g_half = len(d_gowri_list) // 2
+            with col_gd1:
+                for item in d_gowri_list[:g_half]:
+                    bdr_c = item["color"]
+                    st.markdown(f"""
+                    <div style="background:{item['bg'] if not is_dark else '#1F2937'}; border:1px solid {bdr_c};
+                                border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <b style="color:{item['color']}; font-size:15px;">#{item['slot']} {item['name']}</b>
+                            <span style="font-size:11.5px; color:{item['color']}; font-weight:700;">{item['nature']}</span>
+                        </div>
+                        <div style="font-size:14.5px; font-weight:700; color:{'#FFFFFF' if is_dark else '#0F172A'}; margin:3px 0;">
+                            ⏱️ {item['start']} - {item['end']}
+                        </div>
+                        <small style="color:{'#9CA3AF' if is_dark else '#475569'};">{item['acts']}</small>
+                    </div>
+                    """, unsafe_allow_html=True)
+            with col_gd2:
+                for item in d_gowri_list[g_half:]:
+                    bdr_c = item["color"]
+                    st.markdown(f"""
+                    <div style="background:{item['bg'] if not is_dark else '#1F2937'}; border:1px solid {bdr_c};
+                                border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <b style="color:{item['color']}; font-size:15px;">#{item['slot']} {item['name']}</b>
+                            <span style="font-size:11.5px; color:{item['color']}; font-weight:700;">{item['nature']}</span>
+                        </div>
+                        <div style="font-size:14.5px; font-weight:700; color:{'#FFFFFF' if is_dark else '#0F172A'}; margin:3px 0;">
+                            ⏱️ {item['start']} - {item['end']}
+                        </div>
+                        <small style="color:{'#9CA3AF' if is_dark else '#475569'};">{item['acts']}</small>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+        with c_tab4:
+            st.markdown("#### 🌙 रात्रि का गौरी पञ्चाङ्गम (Night Gowri Panchangam)")
+            col_gn1, col_gn2 = st.columns(2)
+            n_gowri_list = gowri.get("night_gowri", [])
+            with col_gn1:
+                for item in n_gowri_list[:g_half]:
+                    bdr_c = item["color"]
+                    st.markdown(f"""
+                    <div style="background:{item['bg'] if not is_dark else '#1F2937'}; border:1px solid {bdr_c};
+                                border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <b style="color:{item['color']}; font-size:15px;">#{item['slot']} {item['name']}</b>
+                            <span style="font-size:11.5px; color:{item['color']}; font-weight:700;">{item['nature']}</span>
+                        </div>
+                        <div style="font-size:14.5px; font-weight:700; color:{'#FFFFFF' if is_dark else '#0F172A'}; margin:3px 0;">
+                            ⏱️ {item['start']} - {item['end']}
+                        </div>
+                        <small style="color:{'#9CA3AF' if is_dark else '#475569'};">{item['acts']}</small>
+                    </div>
+                    """, unsafe_allow_html=True)
+            with col_gn2:
+                for item in n_gowri_list[g_half:]:
+                    bdr_c = item["color"]
+                    st.markdown(f"""
+                    <div style="background:{item['bg'] if not is_dark else '#1F2937'}; border:1px solid {bdr_c};
+                                border-radius:8px; padding:10px 14px; margin-bottom:8px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <b style="color:{item['color']}; font-size:15px;">#{item['slot']} {item['name']}</b>
+                            <span style="font-size:11.5px; color:{item['color']}; font-weight:700;">{item['nature']}</span>
+                        </div>
+                        <div style="font-size:14.5px; font-weight:700; color:{'#FFFFFF' if is_dark else '#0F172A'}; margin:3px 0;">
+                            ⏱️ {item['start']} - {item['end']}
+                        </div>
+                        <small style="color:{'#9CA3AF' if is_dark else '#475569'};">{item['acts']}</small>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+        with c_tab5:
             st.markdown("#### 🪐 २४ ग्रह होरा चक्र (24 Planetary Horas)")
             hora_cols = st.columns(2)
             with hora_cols[0]:
@@ -1228,6 +1337,27 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                         <span style="font-size:10.5px; color:{t_item.get('color', '#3B82F6')}; font-weight:700;">{t_item.get('tara_name', '')}</span>
                     </div>
                     """, unsafe_allow_html=True)
+
+        # 5 Baana Dosha Analysis Card
+        if baana:
+            st.markdown("---")
+            b_col = baana.get("color", "#DC2626")
+            st.markdown(f"""
+            <div style="background:{'#1F2937' if is_dark else '#FFFBEB'}; border:1.5px solid {b_col};
+                        border-left:5px solid {b_col}; border-radius:10px; padding:14px 18px; margin-top:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <b style="color:{b_col}; font-size:16px;">🏹 पञ्च बाण विचार: {baana['baana_name']}</b>
+                    <span style="background:{b_col}20; color:{b_col}; padding:3px 10px; border-radius:12px; font-weight:700; font-size:12px;">
+                        {'🚫 सर्वथा वर्जित' if baana['is_fatal'] else '⚠️ सावधानी आवश्यक'}
+                    </span>
+                </div>
+                <div style="font-size:13.5px; color:{'#E5E7EB' if is_dark else '#334155'}; margin-top:6px; line-height:1.6;">
+                    • <b>बाण प्रभाव:</b> {baana['nature']}<br/>
+                    • <b>शास्त्रीय निषेध:</b> {baana['remedy']}<br/>
+                    • <i>शास्त्र प्रमाण:</i> {baana['shastra_quote']}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
     # =============================================================
     # TAB 9: दैनिक ग्रह स्पष्ट एवं मंत्रिमंडल
