@@ -323,12 +323,38 @@ class AuthService:
         self,
         created_by_email: str,
         tier: str = "pro_annual",
-        notes: str = ""
+        notes: str = "",
+        assigned_username: Optional[str] = None,
+        assigned_password: Optional[str] = None,
+        assigned_name: Optional[str] = None
     ) -> str:
-        """Generate a cryptographically unique Purchase Code: BH-PRO-XXXX-YYYY."""
+        """Generate a cryptographically unique Purchase Code: BH-PRO-XXXX-YYYY, optionally pre-provisioning username & password."""
         part1 = secrets.token_hex(2).upper()
         part2 = secrets.token_hex(2).upper()
         code = f"BH-PRO-{part1}-{part2}"
+
+        assigned_u = assigned_username.strip().lower() if assigned_username and assigned_username.strip() else None
+        assigned_p = assigned_password.strip() if assigned_password and assigned_password.strip() else None
+        assigned_n = assigned_name.strip() if assigned_name and assigned_name.strip() else None
+
+        # Pre-provision user account if username and password provided
+        if assigned_u and assigned_p:
+            users = self._load_users()
+            salt, pwd_hash = self._hash_password(assigned_p)
+            users[assigned_u] = {
+                "email": assigned_u,
+                "name": assigned_n or assigned_u.split("@")[0].title(),
+                "role": ROLE_JYOTISHI,
+                "role_display": ROLE_DISPLAY_NAMES[ROLE_JYOTISHI],
+                "salt": salt,
+                "password_hash": pwd_hash,
+                "is_active": True,
+                "is_paid": True,
+                "purchase_code_used": code,
+                "assigned_password": assigned_p,
+                "created_at": datetime.now().isoformat()
+            }
+            self._save_users(users)
 
         codes = self._load_codes()
         codes.insert(0, {
@@ -336,17 +362,36 @@ class AuthService:
             "created_by": created_by_email,
             "tier": tier,
             "created_at": datetime.now().isoformat(),
-            "is_redeemed": False,
-            "redeemed_by": None,
-            "redeemed_at": None,
+            "is_redeemed": bool(assigned_u),
+            "redeemed_by": assigned_u,
+            "redeemed_at": datetime.now().isoformat() if assigned_u else None,
+            "assigned_username": assigned_u,
+            "assigned_password": assigned_p,
+            "assigned_name": assigned_n,
             "notes": notes or f"{tier.upper()} सक्रियण लाइसेंस"
         })
         self._save_codes(codes)
         return code
 
     def list_purchase_codes(self) -> List[Dict[str, Any]]:
-        """List all generated purchase codes."""
-        return self._load_codes()
+        """List all generated purchase codes with associated username, user name and password details for Researcher."""
+        codes = self._load_codes()
+        users = self._load_users()
+        enriched = []
+        for c in codes:
+            entry = dict(c)
+            user_key = (entry.get("redeemed_by") or entry.get("assigned_username") or "").strip().lower()
+            user_obj = users.get(user_key) if user_key else None
+
+            entry["username"] = user_key if user_key else "-"
+            entry["user_name"] = user_obj.get("name", entry.get("assigned_name", "-")) if user_obj else entry.get("assigned_name", "-")
+
+            assigned_pwd = entry.get("assigned_password") or (user_obj.get("assigned_password") if user_obj else None)
+            entry["password"] = assigned_pwd if assigned_pwd else ("🔒 क्रेडेंशियल सुरक्षित" if user_obj else "-")
+            entry["user_role"] = user_obj.get("role_display", "-") if user_obj else "-"
+            entry["user_active"] = user_obj.get("is_active", True) if user_obj else None
+            enriched.append(entry)
+        return enriched
 
     def redeem_purchase_code(self, email: str, code_str: str) -> Tuple[bool, str]:
         """Validate and redeem a purchase code, activating Jyotishi Pro tier."""
@@ -362,19 +407,19 @@ class AuthService:
             return False, f"यह कोड पहले ही उपयोग किया जा चुका है ({redeemed_to})।"
 
         # Mark code as redeemed
+        email_clean = email.strip().lower()
         code_entry["is_redeemed"] = True
-        code_entry["redeemed_by"] = email.strip().lower()
+        code_entry["redeemed_by"] = email_clean
         code_entry["redeemed_at"] = datetime.now().isoformat()
         self._save_codes(codes)
 
         # Update user status in users.json
         users = self._load_users()
-        email_lower = email.strip().lower()
-        if email_lower in users:
-            users[email_lower]["role"] = ROLE_JYOTISHI
-            users[email_lower]["role_display"] = ROLE_DISPLAY_NAMES[ROLE_JYOTISHI]
-            users[email_lower]["is_paid"] = True
-            users[email_lower]["purchase_code_used"] = clean_code
+        if email_clean in users:
+            users[email_clean]["role"] = ROLE_JYOTISHI
+            users[email_clean]["role_display"] = ROLE_DISPLAY_NAMES[ROLE_JYOTISHI]
+            users[email_clean]["is_paid"] = True
+            users[email_clean]["purchase_code_used"] = clean_code
             self._save_users(users)
 
         return True, f"🎉 परचेज कोड '{clean_code}' सफलतापूर्वक सक्रिय हुआ! आपका खाता '🔮 प्रो ज्योतिषी' में अपग्रेड हो गया है।"
@@ -395,6 +440,7 @@ class AuthService:
                 "is_active": u.get("is_active", True),
                 "is_paid": u.get("is_paid", False),
                 "purchase_code_used": u.get("purchase_code_used", "-"),
+                "assigned_password": u.get("assigned_password", "-"),
                 "created_at": u.get("created_at", "-"),
                 "last_login": u.get("last_login", "-")
             })
@@ -422,7 +468,19 @@ class AuthService:
         salt, pwd_hash = self._hash_password(new_password)
         users[target_lower]["salt"] = salt
         users[target_lower]["password_hash"] = pwd_hash
+        users[target_lower]["assigned_password"] = new_password
         self._save_users(users)
+
+        # Also update linked purchase code entries
+        codes = self._load_codes()
+        code_mod = False
+        for c in codes:
+            if (c.get("redeemed_by") or "").strip().lower() == target_lower or (c.get("assigned_username") or "").strip().lower() == target_lower:
+                c["assigned_password"] = new_password
+                code_mod = True
+        if code_mod:
+            self._save_codes(codes)
+
         return True, f"उपयोगकर्ता '{target_email}' का पासवर्ड सफलतापूर्वक अपडेट कर दिया गया!"
 
     def admin_update_user_role(

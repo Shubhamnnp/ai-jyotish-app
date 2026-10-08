@@ -4509,6 +4509,10 @@ def render_login_page():
     </div>
     """, unsafe_allow_html=True)
 
+    if st.session_state.get("session_timed_out_banner", False):
+        st.warning("⚠️ **सुरक्षा सत्र समाप्त (Session Timeout):** ३० मिनट तक कोई गतिविधि न होने के कारण आपकी सुरक्षा हेतु सॉफ्टवेयर स्वतः लॉगआउट (Auto-Logout) कर दिया गया है। कृपया पुनः प्रवेश करें।")
+        st.session_state["session_timed_out_banner"] = False
+
     col_hero, col_login = st.columns([1.1, 1], gap="large")
 
     with col_hero:
@@ -4821,10 +4825,70 @@ if "birth_gender" not in st.session_state:
     st.session_state.birth_gender = "Male"
 
 
+# -------------------------------------------------------------
+# ⏳ 30-Minute Inactivity Auto-Logout Security Guard
+# -------------------------------------------------------------
+import time as _tmod
+
+SESSION_INACTIVITY_LIMIT = 30 * 60  # 30 minutes in seconds = 1800s
+_curr_ts = _tmod.time()
+
+if st.session_state.get("is_logged_in", False):
+    _is_client_timeout = (st.query_params.get("session_timeout") == "1")
+    _last_active = st.session_state.get("last_activity_ts", _curr_ts)
+    _elapsed = _curr_ts - _last_active
+
+    if _is_client_timeout or (_elapsed > SESSION_INACTIVITY_LIMIT):
+        st.session_state.is_logged_in = False
+        st.session_state.gla_authenticated = False
+        st.session_state.pop("auth_user", None)
+        st.session_state["session_timed_out_banner"] = True
+        if "session_auth" in st.query_params:
+            del st.query_params["session_auth"]
+        if "session_timeout" in st.query_params:
+            del st.query_params["session_timeout"]
+        st.rerun()
+    else:
+        st.session_state["last_activity_ts"] = _curr_ts
+
 # Gateway Check: If not logged in, render login screen
 if not st.session_state.get("is_logged_in", False):
     render_login_page()
     st.stop()
+
+# 🕒 Client-Side Inactivity Monitor (30 Minutes = 1800000ms)
+components.html("""
+<script>
+(function() {
+    const IDLE_LIMIT = 30 * 60 * 1000;
+    let timer = null;
+
+    function resetTimer() {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(function() {
+            try {
+                const p = (window.parent && window.parent !== window) ? window.parent : window;
+                const url = new URL(p.location.href);
+                url.searchParams.set("session_timeout", "1");
+                url.searchParams.delete("session_auth");
+                p.location.href = url.href;
+            } catch(e) {}
+        }, IDLE_LIMIT);
+    }
+
+    const events = ['mousemove', 'keydown', 'mousedown', 'touchstart', 'scroll'];
+    events.forEach(evt => {
+        window.addEventListener(evt, resetTimer, {passive: true});
+        try {
+            if (window.parent && window.parent !== window) {
+                window.parent.addEventListener(evt, resetTimer, {passive: true});
+            }
+        } catch(e) {}
+    });
+    resetTimer();
+})();
+</script>
+""", height=0, width=0)
 
 
 # -------------------------------------------------------------
@@ -7823,38 +7887,93 @@ with st.container(key="top_frozen_header_container", border=False):
                                     st.error(f"❌ {msg}")
 
                     with adm_tab_codes:
-                        st.markdown("##### 🎟️ नया परचेज कोड उत्पन्न करें (Generate Purchase Code)")
-                        col_cg1, col_cg2 = st.columns([2, 1])
+                        st.markdown("##### 🎟️ नया परचेज कोड एवं यूजरनेम-पासवर्ड जनरेटर")
+                        st.caption("यहाँ से नया परचेज कोड जनरेट करें। आप चाहें तो सीधे ग्राहक का ईमेल व पासवर्ड भी साथ में जोड़कर नया खाता तुरंत सक्रिय कर सकते हैं:")
+
+                        col_cg1, col_cg2 = st.columns([1.5, 1.5])
                         with col_cg1:
                             cg_tier = st.selectbox("लाइसेंस प्रकार (License Tier):", [
                                 ("pro_annual", "📅 वार्षिक प्रो लाइसेंस (Annual Pro - 1 Year)"),
                                 ("pro_lifetime", "🌟 आजीवन वीआईपी प्रो (Lifetime VIP Access)")
                             ], format_func=lambda x: x[1], key="cg_tier_sel")[0]
-                            cg_notes = st.text_input("लाइसेंस विवरण / नोट्स (Notes):", placeholder="उदा: पं. शर्मा जी हेतु", key="cg_notes_in")
+                            cg_u_email = st.text_input("ग्राहक ईमेल / यूजरनेम (Username / Email - वैकल्पिक):", placeholder="उदा: client1@example.com", key="cg_u_email_in")
+                            cg_u_pwd = st.text_input("ग्राहक प्रारंभिक पासवर्ड (Initial Password - वैकल्पिक):", placeholder="उदा: Astro@2026", type="password", key="cg_u_pwd_in")
+
                         with col_cg2:
-                            st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
-                            if st.button("✨ कोड जनरेट करें (Generate Code)", type="primary", use_container_width=True, key="cg_gen_btn"):
+                            cg_u_name = st.text_input("ग्राहक का पूरा नाम (Full Name - वैकल्पिक):", placeholder="उदा: पं. रमेश शर्मा", key="cg_u_name_in")
+                            cg_notes = st.text_input("लाइसेंस विवरण / नोट्स (Notes):", placeholder="उदा: वार्षिक प्रीमियम ग्राहक", key="cg_notes_in")
+                            st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
+                            if st.button("✨ नया परचेज कोड व क्रेडेंशियल्स जनरेट करें", type="primary", use_container_width=True, key="cg_gen_btn"):
                                 admin_em = st.session_state.get("user_email", "researcher@jyotishos.com")
-                                new_code = default_auth_service.generate_purchase_code(admin_em, tier=cg_tier, notes=cg_notes)
-                                st.session_state["last_generated_code"] = new_code
-                                st.success(f"🎉 नया कोड उत्पन्न हुआ: `{new_code}`")
+                                new_code = default_auth_service.generate_purchase_code(
+                                    created_by_email=admin_em,
+                                    tier=cg_tier,
+                                    notes=cg_notes,
+                                    assigned_username=cg_u_email if cg_u_email.strip() else None,
+                                    assigned_password=cg_u_pwd if cg_u_pwd.strip() else None,
+                                    assigned_name=cg_u_name if cg_u_name.strip() else None
+                                )
+                                st.session_state["last_generated_code_info"] = {
+                                    "code": new_code,
+                                    "email": cg_u_email if cg_u_email.strip() else "वैकल्पिक (Unassigned)",
+                                    "pwd": cg_u_pwd if cg_u_pwd.strip() else "वैकल्पिक (Unassigned)",
+                                    "name": cg_u_name if cg_u_name.strip() else "-"
+                                }
+                                st.success(f"🎉 नया कोड सफलतापूर्वक उत्पन्न हुआ: `{new_code}`")
+                                st.rerun()
 
-                        if "last_generated_code" in st.session_state:
-                            st.info(f"📋 हालिया उत्पन्न कोड: **{st.session_state['last_generated_code']}** (इसे ग्राहक को प्रदान करें)")
+                        if "last_generated_code_info" in st.session_state:
+                            _cinfo = st.session_state["last_generated_code_info"]
+                            st.markdown(f"""
+                            <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px; margin:10px 0;">
+                                <b style="color:#1D4ED8; font-size:14px;">📋 हालिया उत्पन्न कोड व क्रेडेंशियल्स विवरण (ग्राहक को सौंपने हेतु):</b><br/>
+                                • <b>परचेज कोड:</b> <code style="font-size:14px; font-weight:800; color:#1E40AF;">{_cinfo['code']}</code><br/>
+                                • <b>यूजरनेम/ईमेल:</b> <b>{_cinfo['email']}</b><br/>
+                                • <b>प्रारंभिक पासवर्ड:</b> <b>{_cinfo['pwd']}</b>
+                            </div>
+                            """, unsafe_allow_html=True)
 
-                        st.markdown("##### 📜 समस्त जारी किए गए परचेज कोड (All Purchase Codes):")
+                        st.markdown("---")
+                        st.markdown("##### 📜 समस्त परचेज कोड, यूजरनेम एवं पासवर्ड सूची (Codes & Credentials List)")
                         all_codes = default_auth_service.list_purchase_codes()
                         c_rows = []
                         for c in all_codes:
                             c_rows.append({
                                 "परचेज कोड": c["code"],
-                                "प्रकार (Tier)": c["tier"].upper(),
+                                "यूजरनेम / ईमेल": c.get("username", "-"),
+                                "पासवर्ड": c.get("password", "-"),
+                                "यूजर का नाम": c.get("user_name", "-"),
+                                "प्रकार (Tier)": str(c.get("tier", "")).upper(),
                                 "स्थिति": "🔴 उपयोगित (Redeemed)" if c.get("is_redeemed") else "🟢 सक्रिय (Available)",
-                                "उपयोगकर्ता": c.get("redeemed_by") or "-",
-                                "उपयोग तिथि": str(c.get("redeemed_at") or "-")[:10],
+                                "जारी तिथि": str(c.get("created_at", "-"))[:10],
                                 "नोट्स": c.get("notes", "-")
                             })
+                        import pandas as pd
                         st.dataframe(pd.DataFrame(c_rows), use_container_width=True)
+
+                        # Quick Password Reset for any code's user
+                        st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
+                        with st.expander("🔑 किसी भी कोड के यूजर का पासवर्ड तुरंत बदलें"):
+                            col_qp1, col_qp2, col_qp3 = st.columns([2, 2, 1.2])
+                            active_emails = [c.get("username") for c in all_codes if c.get("username") and c.get("username") != "-"]
+                            unique_emails = sorted(list(set(active_emails)))
+                            if unique_emails:
+                                with col_qp1:
+                                    sel_u_target = st.selectbox("यूजर ईमेल चुनें:", unique_emails, key="quick_pwd_user_sel")
+                                with col_qp2:
+                                    sel_u_new_pwd = st.text_input("नया पासवर्ड दर्ज करें:", type="password", key="quick_pwd_val_in")
+                                with col_qp3:
+                                    st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+                                    if st.button("🔒 अपडेट करें", type="primary", use_container_width=True, key="quick_pwd_submit_btn"):
+                                        admin_em = st.session_state.get("user_email", "researcher@jyotishos.com")
+                                        ok, msg = default_auth_service.admin_reset_user_password(admin_em, sel_u_target, sel_u_new_pwd)
+                                        if ok:
+                                            st.success(f"✅ {msg}")
+                                            st.rerun()
+                                        else:
+                                            st.error(f"❌ {msg}")
+                            else:
+                                st.info("अभी कोई लिंक्ड यूजरनेम उपलब्ध नहीं है।")
 
                     st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
                     if st.button("❌ एडमिन कंसोल बंद करें", use_container_width=True, key="admin_close_btn"):
