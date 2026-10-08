@@ -1448,40 +1448,53 @@ unified_css = f"""
         box-shadow: none !important;
     }}
 
-    /* Top Module Navigation Bar (Slim 34px Height) */
+    /* Top Single-Line Navigation Header Bar (Ultra-Crisp 34px Uniform Height) */
     .st-key-top_frozen_header_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
-    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
+    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
         min-height: 34px !important;
         height: 34px !important;
+        max-height: 34px !important;
         border-radius: 6px !important;
-        border: 1.5px solid #2563EB !important;
+        border: 1.5px solid #CBD5E1 !important;
+        background: #FFFFFF !important;
+        font-weight: 700 !important;
+        font-size: 12.5px !important;
+        display: flex !important;
+        align-items: center !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+        transition: all 0.15s ease !important;
+    }}
+    .st-key-top_frozen_header_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div:hover,
+    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div:hover {{
+        border-color: #2563EB !important;
+        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.18) !important;
+    }}
+    .st-key-top_frozen_header_container button,
+    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button,
+    .st-key-frozen_toolbelt_container button {{
+        min-height: 34px !important;
+        height: 34px !important;
+        max-height: 34px !important;
+        border-radius: 6px !important;
+        border: 1.5px solid #CBD5E1 !important;
         background: #FFFFFF !important;
         font-weight: 800 !important;
         font-size: 13px !important;
-        display: flex !important;
-        align-items: center !important;
-    }}
-    .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"],
-    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"] {{
-        min-height: 34px !important;
-        height: 34px !important;
-        border-radius: 6px !important;
-        border: 1.5px solid #94A3B8 !important;
-        background: #FFFFFF !important;
-        font-weight: 800 !important;
-        font-size: 12.5px !important;
         color: #1E293B !important;
-        padding: 0px 10px !important;
+        padding: 0px 8px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
         transition: all 0.15s ease !important;
     }}
-    .st-key-top_frozen_header_container button[data-testid="baseButton-secondary"]:hover,
-    div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) button[data-testid="baseButton-secondary"]:hover {{
+    .st-key-top_frozen_header_container button:hover,
+    .st-key-frozen_toolbelt_container button:hover {{
         background: #EFF6FF !important;
         border-color: #2563EB !important;
         color: #1D4ED8 !important;
+        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.18) !important;
     }}
     .st-key-top_frozen_header_container [data-testid="stExpander"],
     div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] {{
@@ -4305,7 +4318,7 @@ client_bridge_code = """
 
             const blockContainer = parentDoc.querySelector('.block-container');
             if (blockContainer) {
-                const tbH = (frozenTb && frozenTb.offsetHeight) ? frozenTb.offsetHeight : 124;
+                const tbH = (frozenTb && frozenTb.offsetHeight) ? frozenTb.offsetHeight : 48;
                 blockContainer.style.setProperty('padding-top', (tbH + 8) + 'px', 'important');
                 blockContainer.style.setProperty('padding-left', '8px', 'important');
                 blockContainer.style.setProperty('padding-right', '8px', 'important');
@@ -6167,93 +6180,32 @@ with st.container(key="top_frozen_header_container", border=False):
             st.session_state.recent_charts_history = st.session_state.recent_charts_history[:5]
 
     # ═════════════════════════════════════════════════════════════════════
-    # 🌟 UNIFIED 3-ROW BLUE WORKSTATION HEADER (नीली पट्टी - FROZEN STICKY)
+    # 🌟 UNIFIED SINGLE-LINE BLUE WORKSTATION HEADER (नीली पट्टी - 1ST LINE ONLY)
     # ═════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # ─── लाइन १ (Line 1): Logo, ब्रह्महोरा Title, लोकल मोड, पंचांग, AI Co-Pilot, निकास ───
-        col_l1_b, col_l1_srv, col_l1_pan, col_l1_ai, col_l1_ex = st.columns([3.6, 1.6, 1.6, 1.6, 1.4], gap="small", vertical_alignment="center")
-        with col_l1_b:
+        # ─── 1st line - <<, Logo, BrahmaHora, all module list, active module ke tab ki list, menu list ───
+        hdr_c_toggle, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
+            [0.45, 2.1, 3.4, 3.4, 2.65],
+            gap="small",
+            vertical_alignment="center"
+        )
+
+        with hdr_c_toggle:
+            if st.button("❮❮", key="hdr_top_sidebar_toggle_btn", help="साइडबार खोलें / छुपाएं (Toggle Sidebar)", use_container_width=True):
+                st.session_state.sidebar_toggle_requested = True
+                st.rerun()
+
+        with hdr_c_brand:
             st.markdown("""
-            <div style="display:flex; align-items:center; gap:7px; height:32px; padding-left:2px; overflow:hidden;">
-                <span style="font-size:19px; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); flex-shrink:0;">🕉️</span>
-                <div style="line-height:1.1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                    <b style="font-size:15px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.3px;">ब्रह्महोरा (BrahmaHora Pro)</b>
-                    <span style="font-size:9.5px; font-weight:800; color:#BAE6FD; margin-left:6px; letter-spacing:0.3px; text-transform:uppercase;">Workstation</span>
+            <div style="display:flex; align-items:center; gap:6px; height:32px; overflow:hidden; white-space:nowrap;">
+                <span style="font-size:18px; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); flex-shrink:0;">🕉️</span>
+                <div style="line-height:1.1; overflow:hidden; text-overflow:ellipsis;">
+                    <b style="font-size:14.5px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.3px;">ब्रह्महोरा (BrahmaHora)</b>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-        with col_l1_srv:
-            is_srv_conn = st.session_state.get("gla_authenticated", False)
-            srv_lbl = "🟢 सर्वर: लाइव" if is_srv_conn else "⚪ लोकल मोड"
-            is_srv_act = (st.session_state.gla_active_tool == "server")
-            if st.button(srv_lbl, key="hdr_l1_srv_btn", use_container_width=True, type="primary" if is_srv_act else "secondary", help="सर्वर क्लाउड सिंक स्थिति"):
-                st.session_state.gla_active_tool = "server" if not is_srv_act else None
-                st.rerun()
-
-        with col_l1_pan:
-            is_pan_act = (st.session_state.gla_active_tool == "panchang")
-            if st.button("⚡ पंचांग", key="hdr_l1_panchang_btn", use_container_width=True, type="primary" if is_pan_act else "secondary", help="दैनिक पंचांग व काल निर्णय"):
-                st.session_state.gla_active_tool = "panchang" if not is_pan_act else None
-                st.rerun()
-
-        with col_l1_ai:
-            is_ai_act = (st.session_state.gla_active_tool == "ai_copilot")
-            if st.button("💬 AI Co-Pilot", key="hdr_l1_ai_btn", use_container_width=True, type="primary" if is_ai_act else "secondary", help="ब्रह्महोरा AI ज्योतिष सह-पायलट"):
-                st.session_state.gla_active_tool = "ai_copilot" if not is_ai_act else None
-                st.rerun()
-
-        with col_l1_ex:
-            is_ex_act = (st.session_state.gla_active_tool == "logout")
-            if st.button("🚪 निकास", key="hdr_l1_logout_btn", use_container_width=True, type="primary" if is_ex_act else "secondary", help="सत्र से सुरक्षित निकास"):
-                st.session_state.gla_active_tool = "logout" if not is_ex_act else None
-                st.rerun()
-
-        # ─── लाइन २ (Line 2): New, Birth, Vault, Save, BTR, Prashna, PDF, Setup, Language, Day/Night ───
-        st.markdown("<div style='height: 3px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
-        l2_cols = st.columns(10, gap="small", vertical_alignment="center")
-
-        def render_l2_tool(col, icon, label, tool_key):
-            with col:
-                is_act = (st.session_state.gla_active_tool == tool_key)
-                if st.button(f"{icon} {label}", key=f"gla_tile_btn_{tool_key}", use_container_width=True, type="primary" if is_act else "secondary", help=f"{label} मेन्यू"):
-                    st.session_state.gla_active_tool = None if is_act else tool_key
-                    st.rerun()
-
-        render_l2_tool(l2_cols[0], "✨", "New", "new")
-        render_l2_tool(l2_cols[1], "📅", "Birth", "birth")
-        render_l2_tool(l2_cols[2], "📂", "Vault", "open")
-        render_l2_tool(l2_cols[3], "💾", "Save", "save")
-        render_l2_tool(l2_cols[4], "⏱️", "BTR", "clock")
-        render_l2_tool(l2_cols[5], "🔮", "Prashna", "prashna")
-        render_l2_tool(l2_cols[6], "📄", "PDF", "pdf")
-        render_l2_tool(l2_cols[7], "⚙️", "Setup", "settings")
-
-        with l2_cols[8]:
-            cur_lang = st.session_state.get("app_lang", "General (जनरल)")
-            is_hindi = ("जनरल" in cur_lang or "Hindi" in cur_lang)
-            lang_label = "🌐 EN" if is_hindi else "🌐 हिंदी"
-            if st.button(lang_label, key="hdr_quick_lang_toggle_btn", help="१-क्लिक में भाषा बदलें (Toggle Language)", use_container_width=True):
-                st.session_state.app_lang = "English (अंग्रेजी)" if is_hindi else "General (जनरल)"
-                st.toast(f"✅ भाषा परिवर्तित: {st.session_state.app_lang}", icon="🌐")
-                st.rerun()
-
-        with l2_cols[9]:
-            cur_th = st.session_state.get("app_theme_mode", "day")
-            th_label = "☀️ डे" if cur_th in ["astrallis", "night"] else "🌙 नाइट"
-            if st.button(th_label, key="hdr_quick_theme_toggle_btn", help="१-क्लिक में डे/नाइट थीम बदलें (Toggle Theme)", use_container_width=True):
-                st.session_state.app_theme_mode = "day" if cur_th in ["astrallis", "night"] else "astrallis"
-                st.toast(f"✅ थीम मोड: {st.session_state.app_theme_mode.upper()}", icon="🌓")
-                st.rerun()
-
-        # ─── लाइन ३ (Line 3): <<, समस्त मॉड्यूल सूची, >>  |  <<, सक्रिय मॉड्यूल के सभी टैब, >> ───
-        st.markdown("<div style='height: 3px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
-        l3_cols = st.columns([0.55, 4.45, 0.55, 0.55, 4.45, 0.55], gap="small", vertical_alignment="center")
-
-        with l3_cols[0]:
-            st.button("❮❮", use_container_width=True, help="पिछला मॉड्यूल खोलें (Previous Module)", key="hdr_top_prev_mod_btn", on_click=_nav_prev_module)
-
-        with l3_cols[1]:
+        with hdr_c_mod:
             _cur_m_name = MODULE_OPTIONS[st.session_state.active_module_idx] if 0 <= st.session_state.active_module_idx < len(MODULE_OPTIONS) else MODULE_OPTIONS[0]
             chosen_module = st.selectbox(
                 "समस्त मॉड्यूल सूची (All Modules)",
@@ -6261,7 +6213,7 @@ with st.container(key="top_frozen_header_container", border=False):
                 index=MODULE_OPTIONS.index(_cur_m_name),
                 label_visibility="collapsed",
                 key="top_bar_module_selector",
-                help="किसी भी मॉड्यूल पर तुरंत जाने के लिए यहाँ से चुनें"
+                help="समस्त मॉड्यूल सूची (All Modules)"
             )
             if chosen_module != _cur_m_name:
                 st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen_module)
@@ -6271,13 +6223,7 @@ with st.container(key="top_frozen_header_container", border=False):
                 st.session_state.top_bar_tab_selector = new_tabs[0]
                 st.rerun()
 
-        with l3_cols[2]:
-            st.button("❯❯", use_container_width=True, help="अगला मॉड्यूल खोलें (Next Module)", key="hdr_top_next_mod_btn", on_click=_nav_next_module)
-
-        with l3_cols[3]:
-            st.button("❮❮", use_container_width=True, help="पिछला टैब खोलें (Previous Tab)", key="hdr_top_prev_tab_btn", on_click=_nav_prev_tab)
-
-        with l3_cols[4]:
+        with hdr_c_tab:
             _cur_t_idx = min(st.session_state.active_tab_idx, len(cur_mod_tabs) - 1)
             chosen_tab = st.selectbox(
                 "सक्रिय मॉड्यूल के सभी टैब (Active Module Tabs)",
@@ -6285,15 +6231,95 @@ with st.container(key="top_frozen_header_container", border=False):
                 index=_cur_t_idx,
                 label_visibility="collapsed",
                 key="top_bar_tab_selector",
-                help="वर्तमान मॉड्यूल के किसी भी टैब पर तुरंत जाने के लिए यहाँ से चुनें"
+                help="सक्रिय मॉड्यूल के सभी टैब की सूची (Active Module Tabs)"
             )
             if cur_mod_tabs.index(chosen_tab) != st.session_state.active_tab_idx:
                 st.session_state.active_tab_idx = cur_mod_tabs.index(chosen_tab)
                 st.session_state.tab_switch_requested = st.session_state.active_tab_idx
                 st.rerun()
 
-        with l3_cols[5]:
-            st.button("❯❯", use_container_width=True, help="अगला टैब खोलें (Next Tab)", key="hdr_top_next_tab_btn", on_click=_nav_next_tab)
+        with hdr_c_menu:
+            is_srv_conn = st.session_state.get("gla_authenticated", False)
+            cur_th = st.session_state.get("app_theme_mode", "day")
+            th_lbl = "डे मोड" if cur_th in ["astrallis", "night"] else "नाइट मोड"
+            cur_lang = st.session_state.get("app_lang", "General (जनरल)")
+            is_hindi = ("जनरल" in cur_lang or "Hindi" in cur_lang)
+            lang_lbl = "English (अंग्रेजी)" if is_hindi else "हिंदी (Hindi)"
+            srv_lbl = "सर्वर: लाइव" if is_srv_conn else "लोकल मोड"
+
+            MENU_ACTION_ITEMS = [
+                "⚡ मेन्यू चुनें (Menu List)...",
+                "✨ New (नया प्रोफाइल)",
+                "📅 Birth (जन्म विवरण)",
+                "📝 Notes (परामर्श नोट्स)",
+                "📂 Vault (क्लाइंट वॉल्ट)",
+                "💾 Save (कुण्डली सहेजें)",
+                "⚡ Panchang (पंचांग HUD)",
+                "💬 AI (सह-पायलट)",
+                "⏱️ BTR (समय शोधन)",
+                "🔮 Prashna (तात्कालिक प्रश्न)",
+                "📄 PDF (त्वरित रिपोर्ट)",
+                "⚙️ Setup (सेटिंग्स)",
+                f"🌐 Language ({lang_lbl})",
+                f"🌓 Mode ({th_lbl})",
+                f"💻 {srv_lbl}",
+                "🔍 वैदिक ऋषि सत्यापन (Validation)",
+                "🚪 Logout (निकास)"
+            ]
+
+            selected_action = st.selectbox(
+                "मेन्यू सूची (Menu List)",
+                MENU_ACTION_ITEMS,
+                index=0,
+                label_visibility="collapsed",
+                key="top_bar_menu_action_selector",
+                help="मेन्यू सूची (New, Birth, Notes, Vault, Save, Panchang, AI, BTR, Prashna, PDF, Setup, Language, Mode, Local, Validation, Logout)"
+            )
+
+            if selected_action != MENU_ACTION_ITEMS[0]:
+                if selected_action.startswith("✨ New"):
+                    st.session_state.gla_active_tool = "new"
+                elif selected_action.startswith("📅 Birth"):
+                    st.session_state.gla_active_tool = "birth"
+                elif selected_action.startswith("📝 Notes"):
+                    st.session_state.gla_active_tool = "notes"
+                elif selected_action.startswith("📂 Vault"):
+                    st.session_state.gla_active_tool = "open"
+                elif selected_action.startswith("💾 Save"):
+                    st.session_state.gla_active_tool = "save"
+                elif selected_action.startswith("⚡ Panchang"):
+                    st.session_state.gla_active_tool = "panchang"
+                elif selected_action.startswith("💬 AI"):
+                    st.session_state.gla_active_tool = "ai_copilot"
+                elif selected_action.startswith("⏱️ BTR"):
+                    st.session_state.gla_active_tool = "clock"
+                elif selected_action.startswith("🔮 Prashna"):
+                    st.session_state.gla_active_tool = "prashna"
+                elif selected_action.startswith("📄 PDF"):
+                    st.session_state.gla_active_tool = "pdf"
+                elif selected_action.startswith("⚙️ Setup"):
+                    st.session_state.gla_active_tool = "settings"
+                elif selected_action.startswith("🌐 Language"):
+                    st.session_state.app_lang = "English (अंग्रेजी)" if is_hindi else "General (जनरल)"
+                    st.toast(f"✅ भाषा परिवर्तित: {st.session_state.app_lang}", icon="🌐")
+                elif selected_action.startswith("🌓 Mode"):
+                    st.session_state.app_theme_mode = "day" if cur_th in ["astrallis", "night"] else "astrallis"
+                    st.toast(f"✅ थीम मोड: {st.session_state.app_theme_mode.upper()}", icon="🌓")
+                elif selected_action.startswith("💻"):
+                    st.session_state.gla_active_tool = "server"
+                elif "वैदिक ऋषि सत्यापन" in selected_action or "Validation" in selected_action:
+                    st.session_state.active_module_idx = 19
+                    st.session_state.active_tab_idx = 0
+                    st.session_state.tab_switch_requested = 0
+                    st.session_state.gla_active_tool = None
+                    new_tabs = MODULE_TABS_REGISTRY.get(19, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
+                    st.session_state.top_bar_tab_selector = new_tabs[0]
+                    st.toast("🔍 वैदिक ऋषि सत्यापन (Validation) मॉड्यूल खोला गया!", icon="🔍")
+                elif selected_action.startswith("🚪 Logout"):
+                    st.session_state.gla_active_tool = "logout"
+
+                st.session_state.top_bar_menu_action_selector = MENU_ACTION_ITEMS[0]
+                st.rerun()
 
         _cur_tabs_json = json.dumps(cur_mod_tabs)
         components.html(f"""
@@ -6838,6 +6864,56 @@ with st.container(key="top_frozen_header_container", border=False):
 
                 except Exception as _e_save_v:
                     st.error(f"सहेजने में त्रुटि: {_e_save_v}")
+
+        # 4B. TOOL: CONSULTATION NOTES (परामर्श नोट्स)
+        elif st.session_state.gla_active_tool == "notes":
+            with st.container(border=True):
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8B5CF6; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#6D28D9;">
+                        📝 जातक परामर्श एवं फलादेश नोट्स (Client Consultation Notes)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                if "client_consultation_notes" not in st.session_state:
+                    st.session_state.client_consultation_notes = {}
+                
+                _c_key = st.session_state.get("birth_name", "Default Client")
+                _curr_n = st.session_state.client_consultation_notes.get(_c_key, "")
+                
+                col_n_l, col_n_r = st.columns([3, 1])
+                with col_n_l:
+                    st.caption(f"सक्रिय जातक: **{_c_key}** (जन्म: {st.session_state.birth_date} | {st.session_state.birth_time})")
+                    user_note = st.text_area(
+                        "परामर्श टिप्पणियां एवं उपाय (Enter Consultation Notes & Remedies):",
+                        value=_curr_n,
+                        height=160,
+                        key="active_client_note_textarea",
+                        placeholder="यहाँ जातक की कुण्डली पर की गई चर्चा, जीवन की मुख्य घटनाएं, सुझाए गए रत्न व रुद्राक्ष, या पूजा-अनुष्ठान के निर्देश लिखें..."
+                    )
+                with col_n_r:
+                    st.markdown("""
+                    <div style="background:#F5F3FF; border:1px solid #DDD6FE; border-radius:8px; padding:10px; font-size:12px; color:#4C1D95; line-height:1.5;">
+                        <b>💡 त्वरित सुझाव:</b><br/>
+                        • दशा फल निर्णय<br/>
+                        • रत्न / रुद्राक्ष धारण<br/>
+                        • आगामी शुभ गोचर काल<br/>
+                        • निवारण व शांति उपाय
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                col_n_act1, col_n_act2 = st.columns([2, 1])
+                with col_n_act1:
+                    if st.button("💾 नोट्स सहेजें (Save Notes)", type="primary", use_container_width=True, key="save_client_notes_btn"):
+                        st.session_state.client_consultation_notes[_c_key] = user_note
+                        st.session_state.gla_active_tool = None
+                        st.toast(f"✅ '{_c_key}' के परामर्श नोट्स सुरक्षित किए गए!", icon="📝")
+                        st.rerun()
+                with col_n_act2:
+                    if st.button("❌ बंद करें (Close)", use_container_width=True, key="close_client_notes_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
 
         # 5. TOOL: SETTINGS (Chart Style, View Mode, Classical Sampradaya, Ayanamsa & Engines)
         elif st.session_state.gla_active_tool == "settings":
