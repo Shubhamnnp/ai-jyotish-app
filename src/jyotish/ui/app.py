@@ -1316,7 +1316,10 @@ unified_css = f"""
     section[data-testid="stSidebar"],
     [data-testid="stSidebar"],
     [data-testid="stSidebarContent"],
-    [data-testid="stSidebarUserContent"] {{
+    [data-testid="stSidebarUserContent"],
+    [data-testid="stSidebarResizer"],
+    [data-testid="stSidebar"] div[class*="eelgd2m"],
+    [data-testid="stSidebar"] div[style*="col-resize"] {{
         z-index: 10000000 !important;
         background-color: #0074cb !important;
         background: #0074cb !important;
@@ -1353,10 +1356,9 @@ unified_css = f"""
         background-color: #0074cb !important;
         padding-top: 6px !important;
         padding-bottom: 6px !important;
-        padding-left: 52px !important;
+        padding-left: 8px !important;
         padding-right: 14px !important;
-        margin-top: 0px !important;
-        margin-bottom: 0px !important;
+        margin: 0px !important;
         border-bottom: 2.5px solid #005fa8 !important;
         box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
         box-sizing: border-box !important;
@@ -1421,7 +1423,7 @@ unified_css = f"""
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .st-key-frozen_toolbelt_container,
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container,
         div.stApp:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container {{
-            padding-left: 14px !important;
+            padding-left: 8px !important;
         }}
     }}
 
@@ -3654,8 +3656,9 @@ client_bridge_code = """
                             box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
                             padding-top: 6px !important;
                             padding-bottom: 6px !important;
-                            padding-left: 52px !important;
+                            padding-left: 8px !important;
                             padding-right: 14px !important;
+                            margin: 0px !important;
                             box-sizing: border-box !important;
                             transition: left 0.15s ease, width 0.15s ease !important;
                         }
@@ -3746,7 +3749,10 @@ client_bridge_code = """
                             background: transparent !important;
                         }
                         [data-testid="stSidebar"], section[data-testid="stSidebar"],
-                        [data-testid="stSidebarContent"], [data-testid="stSidebarUserContent"] {
+                        [data-testid="stSidebarContent"], [data-testid="stSidebarUserContent"],
+                        [data-testid="stSidebarResizer"],
+                        [data-testid="stSidebar"] div[class*="eelgd2m"],
+                        [data-testid="stSidebar"] div[style*="col-resize"] {
                             background-color: #0074cb !important;
                             background: #0074cb !important;
                             border-right: 2px solid #005fa8 !important;
@@ -4200,6 +4206,16 @@ client_bridge_code = """
             const frozenTb = parentDoc.querySelector('.st-key-frozen_toolbelt_container');
             if (frozenTb) {
                 const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
+                const sbContent = sb ? sb.querySelector('[data-testid="stSidebarContent"]') : null;
+
+                if (!window._jyotishResizeBound) {
+                    window._jyotishResizeBound = true;
+                    window.addEventListener('resize', setupStickyTopHeader);
+                    if (window.parent && window.parent !== window) {
+                        try { window.parent.addEventListener('resize', setupStickyTopHeader); } catch(e){}
+                    }
+                }
+
                 if (mainSec && !mainSec.dataset.roBound && window.ResizeObserver) {
                     mainSec.dataset.roBound = "true";
                     const ro = new ResizeObserver(function() {
@@ -4207,6 +4223,7 @@ client_bridge_code = """
                     });
                     ro.observe(mainSec);
                     if (sb) ro.observe(sb);
+                    if (sbContent) ro.observe(sbContent);
                 }
 
                 const clientW = parentDoc.documentElement.clientWidth || window.innerWidth;
@@ -4216,9 +4233,25 @@ client_bridge_code = """
 
                 if (sb) {
                     const sbRect = sb.getBoundingClientRect();
-                    if (sbRect.width > 60 && sbRect.right > 60) {
+                    const isExpanded = sb.getAttribute('aria-expanded') !== 'false' && (sbRect.width > 60 && sbRect.right > 60);
+                    if (isExpanded) {
                         isSidebarVisible = true;
-                        leftPos = Math.round(sbRect.right);
+                        let edge = sbRect.right;
+                        if (sbContent) {
+                            const scRect = sbContent.getBoundingClientRect();
+                            if (scRect.right > 60) {
+                                edge = Math.min(edge, scRect.right);
+                            }
+                        }
+                        const collapseBtn = sb.querySelector('[data-testid="stSidebarCollapseButton"]');
+                        if (collapseBtn) {
+                            const cbRect = collapseBtn.getBoundingClientRect();
+                            if (cbRect.right > 60) {
+                                edge = Math.min(edge, cbRect.right + 4);
+                            }
+                        }
+                        // Seamless 0px contact with 1px overlap to eliminate sub-pixel gaps
+                        leftPos = Math.max(0, Math.floor(edge) - 1);
                         headerW = Math.max(0, clientW - leftPos);
                     }
                 }
@@ -4227,7 +4260,7 @@ client_bridge_code = """
                     const mRect = mainSec.getBoundingClientRect();
                     if (mRect.left > 60) {
                         isSidebarVisible = true;
-                        leftPos = Math.round(mRect.left);
+                        leftPos = Math.max(0, Math.floor(mRect.left) - 1);
                         headerW = Math.max(0, clientW - leftPos);
                     } else {
                         leftPos = 0;
@@ -4256,9 +4289,17 @@ client_bridge_code = """
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
                 const isAstrallis = parentDoc.body.classList.contains('astrallis-mode') || localStorage.getItem('jyotish_theme_mode') === 'astrallis';
-                frozenTb.style.setProperty('background', isAstrallis ? '#070A12' : (isNight ? '#111827' : '#0074cb'), 'important');
+                const themeBg = isAstrallis ? '#070A12' : (isNight ? '#111827' : '#0074cb');
+                frozenTb.style.setProperty('background', themeBg, 'important');
                 frozenTb.style.setProperty('border-bottom', isAstrallis ? '2.5px solid #00E5FF' : (isNight ? '2.5px solid #374151' : '2.5px solid #00B0F0'), 'important');
                 frozenTb.style.setProperty('box-shadow', '0 4px 14px rgba(0, 115, 207, 0.15)', 'important');
+
+                // Colorize resizer handle to match theme and prevent white gap
+                const resizers = parentDoc.querySelectorAll('[data-testid="stSidebarResizer"], [data-testid="stSidebar"] div[style*="col-resize"], [data-testid="stSidebar"] div[class*="eelgd2m3"]');
+                resizers.forEach(function(rz) {
+                    rz.style.setProperty('background', themeBg, 'important');
+                    rz.style.setProperty('background-color', themeBg, 'important');
+                });
             }
 
             const blockContainer = parentDoc.querySelector('.block-container');
