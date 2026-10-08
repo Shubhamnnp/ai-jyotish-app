@@ -4242,14 +4242,6 @@ client_bridge_code = """
                             if (scRect.right > 60) {
                                 edge = Math.min(edge, scRect.right);
                             }
-                        }
-                        const collapseBtn = sb.querySelector('[data-testid="stSidebarCollapseButton"]');
-                        if (collapseBtn) {
-                            const cbRect = collapseBtn.getBoundingClientRect();
-                            if (cbRect.right > 60) {
-                                edge = Math.min(edge, cbRect.right + 4);
-                            }
-                        }
                         // Seamless 0px contact with 1px overlap to eliminate sub-pixel gaps
                         leftPos = Math.max(0, Math.floor(edge) - 1);
                         headerW = Math.max(0, clientW - leftPos);
