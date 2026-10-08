@@ -1222,30 +1222,32 @@ unified_css = f"""
         z-index: 10000000 !important;
     }}
 
-    /* Keep Sidebar Open/Close Expand Button (>>) Always Visible, High-Contrast & Clickable */
+    /* Hide Native Streamlit Sidebar Expand Control (>>) - Replaced by Workstation Header Toggle Button */
     [data-testid="stExpandSidebarButton"],
     [data-testid="stExpandSidebarButton"] button,
     button[data-testid="stExpandSidebarButton"],
-    [data-testid="stSidebarCollapseButton"],
-    [data-testid="stSidebarCollapseButton"] button,
-    button[data-testid="stSidebarCollapseButton"],
     [data-testid="collapsedControl"],
     [data-testid="collapsedControl"] button,
     [data-testid="stSidebarCollapsedControl"],
     [data-testid="stSidebarCollapsedControl"] button,
     button[data-testid="stSidebarCollapsedControl"] {{
-        pointer-events: auto !important;
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        width: 0px !important;
+        height: 0px !important;
+        margin: 0px !important;
+        padding: 0px !important;
+    }}
+    [data-testid="stSidebarCollapseButton"],
+    [data-testid="stSidebarCollapseButton"] button,
+    button[data-testid="stSidebarCollapseButton"] {{
         display: inline-flex !important;
         visibility: visible !important;
         opacity: 1 !important;
         z-index: 10000005 !important;
         cursor: pointer !important;
-    }}
-    [data-testid="stExpandSidebarButton"]:hover,
-    button[data-testid="stExpandSidebarButton"]:hover,
-    [data-testid="stSidebarCollapseButton"]:hover,
-    button[data-testid="stSidebarCollapseButton"]:hover {{
-        transform: scale(1.05) !important;
     }}
 
     .sidebar-toggle-btn {{
@@ -4292,14 +4294,16 @@ client_bridge_code = """
                 frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
                 frozenTb.style.setProperty('transition', 'none', 'important');
 
-                if (isSidebarVisible) {
-                    frozenTb.style.setProperty('padding-left', '10px', 'important');
-                    frozenTb.style.setProperty('padding-right', '10px', 'important');
-                } else {
-                    // When sidebar is collapsed, leave 68px space so >> button never overlaps the ॐ logo
-                    frozenTb.style.setProperty('padding-left', '68px', 'important');
-                    frozenTb.style.setProperty('padding-right', '10px', 'important');
-                }
+                frozenTb.style.setProperty('padding-left', '10px', 'important');
+                frozenTb.style.setProperty('padding-right', '10px', 'important');
+
+                // Hide native Streamlit expand control (>>) so duplicate toggle icons never show
+                const nativeExp = parentDoc.querySelectorAll('[data-testid="stExpandSidebarButton"], [data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"]');
+                nativeExp.forEach(function(el) {
+                    el.style.setProperty('display', 'none', 'important');
+                    el.style.setProperty('visibility', 'hidden', 'important');
+                    el.style.setProperty('opacity', '0', 'important');
+                });
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
                 const isAstrallis = parentDoc.body.classList.contains('astrallis-mode') || localStorage.getItem('jyotish_theme_mode') === 'astrallis';
