@@ -4575,22 +4575,48 @@ PBKDF2-HMAC-SHA256 क्रिप्टोग्राफिक हैशिं
             login_submit = col_l1.button("🚀 सुरक्षित लॉगिन (Sign In)", type="primary", use_container_width=True)
             sync_login = col_l2.button("☁️ 1-क्लिक क्लाउड सिंक", use_container_width=True)
 
-            # Quick role switcher demo helper
+            # Quick 1-click Demo Login for testing roles
             st.markdown("<div style='height: 6px;'></div>", unsafe_allow_html=True)
-            st.markdown("<div style='font-size: 11px; font-weight: 700; color: #64748B;'>⚡ त्वरित परीक्षण डेमो लॉगिन:</div>", unsafe_allow_html=True)
+            st.markdown("<div style='font-size: 11px; font-weight: 700; color: #64748B;'>⚡ त्वरित 1-क्लिक डेमो प्रवेश:</div>", unsafe_allow_html=True)
             d_c1, d_c2, d_c3 = st.columns(3)
             if d_c1.button("🔬 शोधकर्ता (Admin)", use_container_width=True, key="demo_btn_researcher"):
-                st.session_state.auth_login_email = "researcher@jyotishos.com"
-                st.session_state.auth_login_pwd = "Research@2026"
-                st.rerun()
+                u_info = default_auth_service.authenticate("researcher@jyotishos.com", "Research@2026")
+                if u_info:
+                    st.session_state.is_logged_in = True
+                    st.query_params["session_auth"] = "active"
+                    st.session_state.user_role = u_info.get("role", "researcher")
+                    st.session_state.user_role_display = u_info.get("role_display", "🔬 वैदिक शोधकर्ता (Researcher / Admin)")
+                    st.session_state.user_email = u_info.get("email", "researcher@jyotishos.com")
+                    st.session_state.user_is_paid = True
+                    st.session_state.birth_name = u_info.get("name", "Dr. Vedic Researcher")
+                    st.toast("✅ स्वागत है, शोधकर्ता (Admin)!", icon="🔬")
+                    st.rerun()
+
             if d_c2.button("🔮 ज्योतिषी (Pro)", use_container_width=True, key="demo_btn_jyotishi"):
-                st.session_state.auth_login_email = "astrologer@jyotishos.com"
-                st.session_state.auth_login_pwd = "Astro@2026"
-                st.rerun()
+                u_info = default_auth_service.authenticate("astrologer@jyotishos.com", "Astro@2026")
+                if u_info:
+                    st.session_state.is_logged_in = True
+                    st.query_params["session_auth"] = "active"
+                    st.session_state.user_role = u_info.get("role", "jyotishi")
+                    st.session_state.user_role_display = u_info.get("role_display", "🔮 ज्योतिषी (Professional Astrologer)")
+                    st.session_state.user_email = u_info.get("email", "astrologer@jyotishos.com")
+                    st.session_state.user_is_paid = True
+                    st.session_state.birth_name = u_info.get("name", "आचार्य देवेन्द्र शास्त्री")
+                    st.toast("✅ स्वागत है, ज्योतिषी (Pro)!", icon="🔮")
+                    st.rerun()
+
             if d_c3.button("👤 जातक (Free)", use_container_width=True, key="demo_btn_jatak"):
-                st.session_state.auth_login_email = "jatak@jyotishos.com"
-                st.session_state.auth_login_pwd = "Jatak@2026"
-                st.rerun()
+                u_info = default_auth_service.authenticate("jatak@jyotishos.com", "Jatak@2026")
+                if u_info:
+                    st.session_state.is_logged_in = True
+                    st.query_params["session_auth"] = "active"
+                    st.session_state.user_role = u_info.get("role", "jatak")
+                    st.session_state.user_role_display = u_info.get("role_display", "👤 जातक (General User)")
+                    st.session_state.user_email = u_info.get("email", "jatak@jyotishos.com")
+                    st.session_state.user_is_paid = False
+                    st.session_state.birth_name = u_info.get("name", "आनंद कुमार")
+                    st.toast("✅ स्वागत है, जातक!", icon="👤")
+                    st.rerun()
 
             if login_submit:
                 user_info = default_auth_service.authenticate(login_email, login_password)
