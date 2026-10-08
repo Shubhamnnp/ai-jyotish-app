@@ -6395,12 +6395,13 @@ with st.container(key="top_frozen_header_container", border=False):
                 MENU_ACTION_ITEMS.append("🎟️ License (प्रो परचेज कोड सक्रियण)")
             MENU_ACTION_ITEMS.append("🚪 Logout (निकास)")
 
+            _menu_nonce = st.session_state.get("top_bar_menu_nonce", 0)
             selected_action = st.selectbox(
                 "मेन्यू सूची (Menu List)",
                 MENU_ACTION_ITEMS,
                 index=0,
                 label_visibility="collapsed",
-                key="top_bar_menu_action_selector",
+                key=f"top_bar_menu_action_selector_{_menu_nonce}",
                 help="मेन्यू सूची (New, Birth, Notes, Vault, Save, Panchang, AI, BTR, Prashna, PDF, Setup, Language, Mode, Local, Validation, Logout)"
             )
 
@@ -6450,7 +6451,7 @@ with st.container(key="top_frozen_header_container", border=False):
                 elif selected_action.startswith("🚪 Logout"):
                     st.session_state.gla_active_tool = "logout"
 
-                st.session_state.top_bar_menu_action_selector = MENU_ACTION_ITEMS[0]
+                st.session_state["top_bar_menu_nonce"] = _menu_nonce + 1
                 st.rerun()
 
         _cur_tabs_json = json.dumps(cur_mod_tabs)
