@@ -1351,12 +1351,15 @@ unified_css = f"""
     div.st-key-frozen_toolbelt_container {{
         position: fixed !important;
         top: 0px !important;
+        left: 0px !important;
+        right: 0px !important;
+        width: 100% !important;
         z-index: 9990 !important;
         background: #0074cb !important;
         background-color: #0074cb !important;
         padding-top: 6px !important;
         padding-bottom: 6px !important;
-        padding-left: 8px !important;
+        padding-left: 68px !important;
         padding-right: 14px !important;
         margin: 0px !important;
         border-bottom: 2.5px solid #005fa8 !important;
@@ -1423,7 +1426,7 @@ unified_css = f"""
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .st-key-frozen_toolbelt_container,
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container,
         div.stApp:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container {{
-            padding-left: 8px !important;
+            padding-left: 10px !important;
         }}
     }}
 
@@ -3649,6 +3652,9 @@ client_bridge_code = """
                         div.st-key-frozen_toolbelt_container {
                             position: fixed !important;
                             top: 0px !important;
+                            left: 0px !important;
+                            right: 0px !important;
+                            width: 100% !important;
                             z-index: 9990 !important;
                             background: #0074cb !important;
                             background-color: #0074cb !important;
@@ -3656,7 +3662,7 @@ client_bridge_code = """
                             box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
                             padding-top: 6px !important;
                             padding-bottom: 6px !important;
-                            padding-left: 8px !important;
+                            padding-left: 68px !important;
                             padding-right: 14px !important;
                             margin: 0px !important;
                             box-sizing: border-box !important;
@@ -4242,22 +4248,23 @@ client_bridge_code = """
                             if (scRect.right > 60) {
                                 edge = Math.min(edge, scRect.right);
                             }
+                        }
+                        const resizer = parentDoc.querySelector('[data-testid="stSidebarResizer"], [data-testid="stSidebar"] div[style*="col-resize"]');
+                        if (resizer) {
+                            const rzRect = resizer.getBoundingClientRect();
+                            if (rzRect.left > 60 && rzRect.left < edge + 30) {
+                                edge = Math.min(edge, rzRect.left);
+                            }
+                        }
                         // Seamless 0px contact with 1px overlap to eliminate sub-pixel gaps
                         leftPos = Math.max(0, Math.floor(edge) - 1);
                         headerW = Math.max(0, clientW - leftPos);
                     }
                 }
 
-                if (!isSidebarVisible && mainSec) {
-                    const mRect = mainSec.getBoundingClientRect();
-                    if (mRect.left > 60) {
-                        isSidebarVisible = true;
-                        leftPos = Math.max(0, Math.floor(mRect.left) - 1);
-                        headerW = Math.max(0, clientW - leftPos);
-                    } else {
-                        leftPos = 0;
-                        headerW = clientW;
-                    }
+                if (!isSidebarVisible) {
+                    leftPos = 0;
+                    headerW = clientW;
                 }
 
                 frozenTb.style.setProperty('position', 'fixed', 'important');
@@ -4272,11 +4279,12 @@ client_bridge_code = """
                 frozenTb.style.setProperty('transition', 'none', 'important');
 
                 if (isSidebarVisible) {
-                    frozenTb.style.setProperty('padding-left', '8px', 'important');
-                    frozenTb.style.setProperty('padding-right', '8px', 'important');
+                    frozenTb.style.setProperty('padding-left', '10px', 'important');
+                    frozenTb.style.setProperty('padding-right', '10px', 'important');
                 } else {
-                    frozenTb.style.setProperty('padding-left', '50px', 'important');
-                    frozenTb.style.setProperty('padding-right', '8px', 'important');
+                    // When sidebar is collapsed, leave 68px space so >> button never overlaps the ॐ logo
+                    frozenTb.style.setProperty('padding-left', '68px', 'important');
+                    frozenTb.style.setProperty('padding-right', '10px', 'important');
                 }
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
