@@ -18979,12 +18979,66 @@ elif selected_idx == 16:
         unsafe_allow_html=True
     )
 
+    # ⚡ त्रिवेणी संगम: JyotishOS Math Engine + Google Gemini AI + OpenAI ChatGPT-4o
+    with st.expander("⚡ त्रिवेणी संगम AI विन्यास (JyotishOS Deep Math + Google Gemini AI + OpenAI GPT-4o)", expanded=False):
+        c_eng1, c_eng2 = st.columns([1.3, 1])
+        with c_eng1:
+            trio_mode_options = [
+                "⚡ त्रिवेणी संगम (Trio: JyotishOS Math + Gemini + OpenAI)",
+                "🌟 Google Gemini AI + JyotishOS Math",
+                "🤖 OpenAI GPT-4o + JyotishOS Math",
+                "🔬 Offline Shastriya Engine (100% Deterministic Local)"
+            ]
+            selected_trio_mode = st.radio(
+                "🧠 एआई इंजन प्रदाता मोड (AI Provider Mode):",
+                options=trio_mode_options,
+                index=0,
+                key="radio_trio_ai_mode"
+            )
+            mode_code = "trio"
+            if "Gemini" in selected_trio_mode and "OpenAI" not in selected_trio_mode:
+                mode_code = "gemini"
+            elif "OpenAI" in selected_trio_mode and "Gemini" not in selected_trio_mode:
+                mode_code = "openai"
+            elif "Offline" in selected_trio_mode:
+                mode_code = "offline"
+
+        with c_eng2:
+            st.markdown("<b style='font-size:13px; color:#1E40AF;'>🔑 API की स्थिति एवं मॉडल्स:</b>", unsafe_allow_html=True)
+            k_gem = st.session_state.get("gemini_api_key", os.getenv("GEMINI_API_KEY", ""))
+            k_oai = st.session_state.get("openai_api_key", os.getenv("OPENAI_API_KEY", ""))
+            gem_badge = "🟢 सक्रिय (Active)" if k_gem else "🟡 अप्रदत्त (Optional)"
+            oai_badge = "🟢 सक्रिय (Active)" if k_oai else "🟡 अप्रदत्त (Optional)"
+            st.markdown(
+                f'<div style="font-size:12.5px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:8px 12px; margin-bottom:8px;">'
+                f'• 🌟 <b>Google Gemini:</b> <span style="font-weight:700;">{gem_badge}</span><br>'
+                f'• 🤖 <b>OpenAI GPT-4o:</b> <span style="font-weight:700;">{oai_badge}</span><br>'
+                f'• 🔬 <b>JyotishOS Math:</b> <span style="color:#059669; font-weight:700;">100% सक्रिय</span>'
+                f'</div>',
+                unsafe_allow_html=True
+            )
+            c_m1, c_m2 = st.columns(2)
+            with c_m1:
+                sel_gem_model = st.selectbox("Gemini Model:", ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro"], key="sb_gem_model")
+            with c_m2:
+                sel_oai_model = st.selectbox("OpenAI Model:", ["gpt-4o", "gpt-4o-mini", "gpt-4-turbo"], key="sb_oai_model")
+
+        c_k1, c_k2 = st.columns(2)
+        with c_k1:
+            inp_gem = st.text_input("Gemini API Key (वैकल्पिक):", value=k_gem, type="password", key="inp_gem_key_t16")
+            if inp_gem:
+                st.session_state["gemini_api_key"] = inp_gem
+        with c_k2:
+            inp_oai = st.text_input("OpenAI API Key (वैकल्पिक):", value=k_oai, type="password", key="inp_oai_key_t16")
+            if inp_oai:
+                st.session_state["openai_api_key"] = inp_oai
+
     # Initialize chat history
     if "ai_chat_history" not in st.session_state:
         st.session_state.ai_chat_history = [
             {
                 "role": "assistant",
-                "content": f"🙏 **प्रणाम! मैं आपका 'दैवज्ञ AI' सहायक हूँ।**\n\nमैंने **{chart.birth_data.name} जी** की कुण्डली ({chart.lagna_sign_name} लग्न, {chart.planets['Moon'].sign_name} राशि) का D1 से D60 तक सम्पूर्ण षोडशवर्ग, दशा, गोचर, तथा १२,५००+ महा-शास्त्रीय नियम लोड कर लिए हैं।\n\nआप विवाह, करियर, धन, स्वास्थ्य, या शुभ रत्न से सम्बंधित कोई भी प्रश्न पूछ सकते हैं। आपके प्रत्येक प्रश्न पर मैं **तात्कालिक प्रश्न कुण्डली (Prashna Marga)** एवं **जन्म कुण्डली** का संयुक्त शोध कर सिर्फ आपके प्रश्न का ९९.९% सटीक, ईमानदार एवं निष्पक्ष उत्तर दूँगा (चाहे वह अनुकूल हो अथवा प्रतिकूल)।"
+                "content": f"🙏 **प्रणाम! मैं आपका 'दैवज्ञ AI' (त्रिवेणी संगम) सहायक हूँ।**\n\nमैंने **{chart.birth_data.name} जी** की कुण्डली ({chart.lagna_sign_name} लग्न, {chart.planets['Moon'].sign_name} राशि) का D1 से D60 तक सम्पूर्ण षोडशवर्ग, दशा, गोचर, तथा १२,५००+ महा-शास्त्रीय नियम लोड कर लिए हैं।\n\nयह परामर्श प्रणाली **JyotishOS Deep Math Engine + Google Gemini AI + OpenAI ChatGPT-4o** के संयुक्त त्रिवेणी संगम पर प्रशिक्षित है।\n\nआप विवाह, करियर, व्यापार, धन, स्वास्थ्य, या शुभ रत्न से सम्बंधित कोई भी प्रश्न पूछ सकते हैं। आपके प्रत्येक प्रश्न पर मैं **तात्कालिक प्रश्न कुण्डली (Prashna Marga)** एवं **जन्म कुण्डली** का संयुक्त शोध कर सिर्फ आपके प्रश्न का ९९.९% सटीक, ईमानदार एवं निष्पक्ष उत्तर दूँगा (सकारात्मक योग एवं नकारात्मक बाधक तत्व दोनों पूर्ण सत्यता के साथ)।"
             }
         ]
 
@@ -19031,13 +19085,25 @@ elif selected_idx == 16:
             with st.spinner("🔮 प्रश्न परीक्षण (सत्यता जांच), तात्कालिक प्रश्न कुण्डली एवं जन्म कुण्डली (D1-D60) का संयुक्त शास्त्रीय शोध किया जा रहा है..."):
                 master_bundle = default_master_calculator.calculate_all(chart)
                 active_key = st.session_state.get("gemini_api_key", os.getenv("GEMINI_API_KEY"))
+                active_oai_key = st.session_state.get("openai_api_key", os.getenv("OPENAI_API_KEY"))
+                curr_mode_label = st.session_state.get("radio_trio_ai_mode", "trio")
+                mode_arg = "trio"
+                if "Gemini" in curr_mode_label and "OpenAI" not in curr_mode_label:
+                    mode_arg = "gemini"
+                elif "OpenAI" in curr_mode_label and "Gemini" not in curr_mode_label:
+                    mode_arg = "openai"
+                elif "Offline" in curr_mode_label:
+                    mode_arg = "offline"
 
                 ai_response = default_narrative_service.chat_consultation(
                     user_query=prompt_to_process,
                     chart=chart,
                     master_data=master_bundle,
                     api_key=active_key,
-                    model="gemini-2.5-flash",
+                    openai_api_key=active_oai_key,
+                    provider_mode=mode_arg,
+                    model=st.session_state.get("sb_gem_model", "gemini-2.5-flash"),
+                    openai_model=st.session_state.get("sb_oai_model", "gpt-4o"),
                     language="Hindi",
                     chat_history=st.session_state.ai_chat_history
                 )

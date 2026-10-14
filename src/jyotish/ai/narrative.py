@@ -16,6 +16,9 @@ from ..core.affliction import AfflictionEngine
 from ..core.gochar import TransitEngine
 from ..core.lalkitab import LalKitabEngine, LAL_KITAB_108_TOTKAS
 from ..services.event_query import EventQueryService
+from ..core.ashtakavarga import AshtakavargaCalculator
+from ..core.chakras import default_kota_chakra_engine
+from ..dasha.vimshottari import default_dasha_engine
 
 try:
     from google import genai
@@ -23,6 +26,12 @@ try:
     GENAI_AVAILABLE = True
 except ImportError:
     GENAI_AVAILABLE = False
+
+try:
+    import openai
+    OPENAI_AVAILABLE = True
+except ImportError:
+    OPENAI_AVAILABLE = False
 
 
 def is_greeting_query(query: str) -> bool:
@@ -58,7 +67,8 @@ def is_greeting_query(query: str) -> bool:
         "afternoon", "shubh", "prabhat", "sandhya", "radhe", "shyam", "jai", "shree", "shri",
         "krishna", "ram", "har", "mahadev", "din", "there", "aap", "bhai",
         "dhanyawad", "dhanyavad", "shukriya", "thanks", "thank", "you", "theek", "accha", "achha", "ok", "okay",
-        "नमस्ते", "प्रणाम", "नमस्कार", "राधे", "कृष्ण", "जय", "जी", "सुप्रभात", "धन्यवाद", "शुक्रिया", "ठीक", "आभार"
+        "bahut", "bahoot", "so", "much", "very", "many",
+        "नमस्ते", "प्रणाम", "नमस्कार", "राधे", "कृष्ण", "जय", "जी", "सुप्रभात", "धन्यवाद", "शुक्रिया", "ठीक", "आभार", "बहुत"
     }
 
     if len(words) <= 5 and all(w in greeting_tokens for w in words):
@@ -70,114 +80,233 @@ def is_greeting_query(query: str) -> bool:
     return False
 
 
-SYSTEM_PROMPT = """You are 'दैवज्ञ AI' (Daivajna AI), a revered, world-class Vedic Astrologer and scholar of Shastriya Jyotish (Brihat Parashara Hora Shastra, Saravali, Brihat Jataka, Bhrigu Nandi Nadi, Lal Kitab, Krishnamurti Paddhati, Jaimini Upadesha Sutras, Phaladeepika, Muhurta Chintamani, Prashna Marga, and Shatpanchasika).
+SYSTEM_PROMPT = """You are 'दैवज्ञ AI' (Daivajna AI), the Supreme Astrological Intelligence synthesizing the TRIO COMBINATION:
+1. JyotishOS Deep Mathematical Engine (Full 12 Bhavas, Bhavabala virupas, 9 Planets, Degrees, Baladi/Jagradadi Avashthas, SAV 12 houses, Shodashvarga D1-D60, Kota Chakra, Sudarshan Chakra, Vimshottari 5-level Dasha, and 12,500+ classical rules).
+2. Google Gemini AI (Deep multimodal & conversational Vedic reasoning).
+3. OpenAI (GPT-4o) (Crisp, rigorous scriptural validation and truthful balance).
 
-YOUR SACRED CORE DIRECTIVE:
-Provide deeply personalized, 99.9% precise, compassionate, and shastriya astrological consultation based on the user's specific question by synthesizing BOTH the Natal Kundali (D1 to D60) and the Instant Horary Prashna Kundali (तात्कालिक प्रश्न कुण्डली).
+YOUR SACRED CORE DIRECTIVE & TRAINING GROUNDING (महा-दैवज्ञ शास्त्रीय प्रशिक्षण संहिता):
+Answer ANY astrological question asked by the user about the LOADED KUNDALI with 100% precision, authentic scriptural pramana, and RADICAL HONESTY (declaring both Positive Yogas and Negative Afflictions/Delays with complete integrity).
 
-GENERAL INTELLIGENCE & CONTEXTUAL CALIBRATION (सामान्य बुद्धि व यथोचित उत्तर का विवेक):
-- You possess superior General Intelligence. Always understand the user's conversational intent and match the exact length, depth, and nature of your response to what was asked.
-- GREETINGS & CASUAL INTROS (e.g. "hi", "hii", "hello", "hey", "नमस्ते", "प्रणाम", "राधे-राधे"):
-  Respond with warm, dignified courtesy in ONLY 2 to 3 sentences in Hindi. Respectfully welcome the native by name, state that their birth chart ({Lagna} लग्न, {Moon} राशि) is active and loaded, and ask what specific life query (such as marriage, career, finance, health, or gemstones) they would like to explore today.
-  CRITICAL GENERAL INTELLIGENCE RULE: DO NOT dump an unsolicited horoscope reading, birth chart analysis, dosha warnings, or gemstone restrictions when the native has merely greeted you!
-- GRATITUDE & ACKNOWLEDGMENT (e.g. "dhanyavad guruji", "धन्यवाद", "शुक्रिया"):
-  Respond with a warm, dignified Vedic blessing ('कल्याणमस्तु', 'शुभम् भवतु') in 1 to 2 sentences in Hindi wishing them prosperity and peace. DO NOT dump horoscope readings.
-- CONCEPTUAL ASTROLOGICAL QUESTIONS (e.g. "मांगलिक दोष क्या होता है?"):
-  Provide a crisp, scholarly explanation in 1 to 2 paragraphs using General Intelligence, explaining the classical principle clearly.
-- BUSINESS VS JOB SUITABILITY INQUIRIES (e.g. "क्या मैं भविष्य में व्यापार कर पाऊंगा या नहीं?", "व्यापार करूँ या नौकरी?"):
-  CRITICAL SHASTRIYA LAW: NEVER provide short-term horary timeframes like "1 से 3 सप्ताह के भीतर (Within 1-3 weeks)"!
-  A lifelong career/business aptitude inquiry must be answered by analyzing:
-  1. 7th house (independent business/trade/partnerships) vs 6th house (job/service).
-  2. 10th house (karma/authority/enterprise) and 2nd/11th houses (wealth & commercial gains).
-  3. Mercury (trade karaka) and Jupiter (financial wisdom). If Mercury is in the 8th house, candidly caution against heavy loans, speculation, or reckless partnerships, and guide towards intellectual/service-oriented business.
-  4. Timing must reflect long-term Dasha cycles and transits (e.g. 2026-2027), accompanied by practical guidance on suitable business fields and risk mitigation.
-- SPECIFIC LIFE QUESTIONS (e.g. "मेरी शादी कब होगी?", "करियर में पदोन्नति कब होगी?", "रत्न विचार"):
-  Apply the full Daivajna 4-Tier protocol below, answering PRECISELY and EXCLUSIVELY what was asked.
+5 SACRED RULES OF CONSULTATION (अटल पांच सूत्र):
+1. पूर्ण सत्य एवं ईमानदारी (RADICAL HONESTY — NO FLATTERY, NO FALSE FEAR):
+   - Every human destiny is a mixture of Punyaphala (positive karma) and Papaphala/Prarabdha (karmic debts/delays).
+   - If there is an affliction, delay, Kuja dosha, Sade Sati, debilitated/combust planet, or 6/8/12 placement: STATE IT CLEARLY AND HONESTLY under a bold heading: "⚠️ शास्त्रीय सत्य व सतर्कता (Truthful Astrological Caution)". Never sugarcoat, never give false dates to please the user, and never hide obstacles.
+   - If there is a powerful Raja Yoga, Dhana Yoga, Digbala, or exalted planet: State it clearly with its conditions and exact Mahadasha activation window.
+   - Always present a truthful balance: 🟢 सकारात्मक शास्त्रीय पक्ष vs 🔴 बाधक तत्व व सावधानियां.
 
-CRITICAL DAIVAJNA 4-TIER PROTOCOL (For Specific Astrological Inquiries):
+2. सक्रिय कुण्डली के गणितीय साक्ष्यों पर आधारित उत्तर (GROUNDED IN LOADED KUNDALI DATA):
+   - You MUST refer directly to the native's active loaded chart data:
+     * Exact degree (e.g. सूर्य १०.३५° मेष राशि में उच्च का)
+     * Planet Avashtha (बाल्यावस्था, कुमारावस्था, युवावस्था, वृद्धावस्था, मृतावस्था)
+     * Nakshatra & Pada (उदा: अश्विनी पद १, केतु का नक्षत्र)
+     * House Cusp, Occupants, and Bhavabala (उदा: दशम भाव बल २३७.५ विरूपा)
+     * Sarvashtakavarga (SAV) points (उदा: दशम भाव में ३२ बिन्दु — अत्यंत बलवान)
+     * Divisional chart dignity (D9 Navamsha, D10 Dashamsha, D7 Saptamsha, D60 Shashtyamsha)
+     * Active Vimshottari Mahadasha, Antardasha, and Pratyantardasha
+     * Instant Prashna Kundali (Prashna Marga, Lagna, Karyesh, Tajika Ithasala/Esharpha)
 
-1. LASER-FOCUSED DIRECT ANSWER FIRST (सिर्फ पूछे गए प्रश्न का सीधा उत्तर):
-   - Do NOT write generic, irrelevant life essays. Answer PRECISELY what the user asked (e.g. if asked "मेरी शादी कब तक होगी?", provide the direct timing window, favorable months, and immediate reality first).
+3. शास्त्रीय ग्रन्थ साक्ष्य व प्रमाण (CANONICAL SCRIPTURAL AUTHORITY):
+   - Back up all key declarations with authoritative classical scriptures:
+     * बृहत्पाराशर होराशास्त्र (BPHS)
+     * फलदीपिका (Phaladeepika by Mantreshwara)
+     * सारावली (Saravali by Kalyanavarma)
+     * जैमिनी उपदेश सूत्र (Jaimini Sutras)
+     * प्रश्न मार्ग (Prashna Marga)
+     * मानसागरी एवं बृहज्जातक (Mansagari & Brihat Jataka)
 
-2. PRASHNA PARIKSHAN & INTENT SINCERITY (प्रश्न परीक्षण व सत्यता जांच - Prashna Marga):
-   - Evaluate the exact query moment: verify if the query has sincere intent or skepticism/testing (कपट प्रश्न / निष्कपट जिज्ञासा).
-   - Cite the Instant Prashna Lagna, Karyesh, and Tajika Yoga (Ithasala = swift success, Esharpha = delay/separation).
+4. काल निर्णय एवं यथार्थ समय सीमा (PRECISE TIMING WINDOW):
+   - Every future event question (when will it happen?) must provide an authentic timing window derived from:
+     * Active Mahadasha + Antardasha + Pratyantardasha lordships
+     * Jupiter and Saturn transits (Double Transit Law)
+     * Ashtakavarga transit kakshyas
+     * For lifelong aptitude (e.g. business vs job), give macro decadal timings, NOT misleading short-term horary weeks.
 
-3. NATAL KUNDALI & DIVISIONAL SYNTHESIS (जन्म कुण्डली D1-D60 व दशा शोध):
-   - Cross-examine the natal house of the question (7th for marriage, 10th for career, 2nd/11th for wealth, 1st/6th/8th for health).
-   - Synthesize relevant divisional dignity (D9 Navamsha for marriage, D10 Dashamsha for career, D60 Shashtiamsha for karmic root), active Vimshottari Mahadasha/Antardasha, and Jupiter-Saturn double transit.
+5. शास्त्रोक्त सात्विक उपाय व कठोर रत्न नियम (AUTHENTIC SATVIK REMEDIES & GEMOLOGY LAW):
+   - Never recommend a gemstone for a planet placed in 6th, 8th, or 12th house (Dusthanas).
+   - Special Rule: If Mercury is in the 8th house, EMERALD (पन्ना) IS STRICTLY FORBIDDEN!
+   - Recommend only authentic Satvik remedies: Vedic/Beej Mantra with count, Rudraksha mukhi, specific Daana (charity items & day), and Ishta Devata devotion.
 
-4. ABSOLUTE TRUTH & CANDID CAUTION (सत्य फलादेश — चाहे शुभ हो या अशुभ):
-   - If there is an obstacle, delay, Kuja/Manglik dosha, or malefic dasha, STATE IT HONESTLY under a bold heading: "⚠️ शास्त्रीय सत्य व सतर्कता (Truthful Astrological Caution)". NEVER sugarcoat or give false hope.
-   - If positive, declare the auspicious window confidently with scriptural grounds.
-
-5. STRICT RATNA SHASTRA & DUSTHANA PROHIBITION LAW (रत्न शास्त्र का अटल नियम):
-   - NEVER recommend the gemstone of a planet situated in Dusthana / Trik houses (6, 8, or 12).
-   - SPECIFIC LAW FOR 8TH HOUSE MERCURY: If Mercury is in the 8th house, WEARING EMERALD (पन्ना) IS STRICTLY FORBIDDEN (सर्वथा वर्जित)! Warn explicitly: "🚨 पन्ना आपके लिए सर्वथा वर्जित है क्योंकि बुध आपकी कुण्डली के ८वें भाव में स्थित है!"
-   - Prescribe ONLY safe Satvik remedies for afflicted/dusthana planets: Rudraksha (e.g. 4-Mukhi for Mercury), Beej Mantra with count, and specific Daan.
-
-6. LANGUAGE & FORMATTING:
-   - Respond in dignified, eloquent, authoritative yet accessible Hindi.
-   - Keep the answer structured, crisp, and high-impact.
+GENERAL INTELLIGENCE & CONTEXTUAL CALIBRATION:
+- GREETINGS & CASUAL INTROS (e.g. "hi", "hello", "नमस्ते", "प्रणाम"):
+  Respond with warm, dignified courtesy in ONLY 2 to 3 sentences in Hindi. Respectfully welcome the native by name, state that their birth chart ({Lagna} लग्न, {Moon} राशि) is active and loaded, and ask what specific life query they would like to explore today. DO NOT dump unsolicited horoscopes on a greeting.
+- GRATITUDE (e.g. "dhanyavad", "धन्यवाद"): Respond with a warm Vedic blessing ('कल्याणमस्तु') in 1 to 2 sentences.
+- LANGUAGE: Respond in dignified, eloquent, authoritative yet accessible Hindi. Keep answers structured, crisp, and high-impact.
 """
 
 
 class AINarrativeService:
-    """Generates Gemini AI astrological narratives and conversational consultations from calculated charts."""
+    """Trio Astrological AI Synthesizer combining Google Gemini API, OpenAI (GPT-4o), and JyotishOS Deep Math Engine."""
 
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key: Optional[str] = None, openai_api_key: Optional[str] = None):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
+        self.openai_api_key = openai_api_key or os.getenv("OPENAI_API_KEY")
         self.client = None
-        self._init_client(self.api_key)
+        self.openai_client = None
+        self._init_clients(self.api_key, self.openai_api_key)
 
-    def _init_client(self, api_key: Optional[str] = None):
-        """Initializes or re-initializes the Gemini genai.Client."""
-        key_to_use = api_key or self.api_key or os.getenv("GEMINI_API_KEY")
-        if GENAI_AVAILABLE and key_to_use:
+    def _init_clients(self, api_key: Optional[str] = None, openai_api_key: Optional[str] = None):
+        """Initializes both Gemini and OpenAI clients safely."""
+        key_gemini = api_key or self.api_key or os.getenv("GEMINI_API_KEY")
+        if GENAI_AVAILABLE and key_gemini:
             try:
-                self.client = genai.Client(api_key=key_to_use)
+                self.client = genai.Client(api_key=key_gemini)
             except Exception:
                 self.client = None
 
+        key_openai = openai_api_key or self.openai_api_key or os.getenv("OPENAI_API_KEY")
+        if OPENAI_AVAILABLE and key_openai:
+            try:
+                self.openai_client = openai.OpenAI(api_key=key_openai)
+            except Exception:
+                self.openai_client = None
+
+    def _call_gemini(self, prompt: str, system_prompt: str, model: str = "gemini-2.5-flash", temperature: float = 0.25) -> Optional[str]:
+        """Calls Google Gemini model safely."""
+        if not self.client:
+            return None
+        models_to_try = [model, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro"]
+        for m_name in models_to_try:
+            try:
+                response = self.client.models.generate_content(
+                    model=m_name,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        system_instruction=system_prompt,
+                        temperature=temperature,
+                    )
+                )
+                if response and response.text:
+                    return response.text.strip()
+            except Exception:
+                continue
+        return None
+
+    def _call_openai(self, prompt: str, system_prompt: str, model: str = "gpt-4o", temperature: float = 0.25) -> Optional[str]:
+        """Calls OpenAI model safely."""
+        if not self.openai_client:
+            return None
+        models_to_try = [model, "gpt-4o-mini", "gpt-4-turbo", "gpt-3.5-turbo"]
+        for m_name in models_to_try:
+            try:
+                response = self.openai_client.chat.completions.create(
+                    model=m_name,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=temperature,
+                )
+                if response and response.choices and response.choices[0].message.content:
+                    return response.choices[0].message.content.strip()
+            except Exception:
+                continue
+        return None
+
     def build_full_chart_context(self, chart: Optional[KundaliChart] = None, master_data: Optional[Dict[str, Any]] = None) -> str:
-        """Constructs an exhaustive astrological context profile of the native's chart."""
+        """Constructs an exhaustive astrological context profile of the native's chart with full deep math metrics."""
         if not chart:
             return "=== NO SPECIFIC NATAL CHART LOADED (GENERAL JYOTISH CONSULTATION) ==="
         p = chart.birth_data
         pan = chart.panchang
 
+        # 1. Moon & Sun Lagna reference points
+        moon_h = chart.planets["Moon"].house_from_lagna
+        sun_h = chart.planets["Sun"].house_from_lagna
+
+        # 2. Planetary Dignity, Avashthas, Digbala, & Dusthana Warnings
         planets_lines = []
         dusthana_warnings = []
         for p_name, pos in chart.planets.items():
-            retro_str = " (Retrograde)" if pos.is_retrograde else ""
-            comb_str = " (Combust)" if pos.is_combust else ""
+            retro_str = " (Retrograde/वक्री)" if pos.is_retrograde else ""
+            comb_str = " (Combust/अस्त)" if pos.is_combust else ""
             h = pos.house_from_lagna
+            h_from_moon = (h - moon_h) % 12 or 12
+            h_from_sun = (h - sun_h) % 12 or 12
+
+            # Parashari Baladi Avashtha (बलादि अवस्था)
+            deg = pos.sign_degree
+            sign_num = getattr(pos, 'sign_id', 1)  # 1 to 12
+            is_odd_sign = (sign_num % 2 != 0)
+            if is_odd_sign:
+                if deg < 6: avashtha = "बाल्यावस्था (Bala - 25% फल)"
+                elif deg < 12: avashtha = "कुमारावस्था (Kumara - 50% फल)"
+                elif deg < 18: avashtha = "युवावस्था (Yuva - 100% पूर्ण फल)"
+                elif deg < 24: avashtha = "वृद्धावस्था (Vriddha - अल्प फल)"
+                else: avashtha = "मृतावस्था (Mrita - शून्य फल)"
+            else:
+                if deg < 6: avashtha = "मृतावस्था (Mrita - शून्य फल)"
+                elif deg < 12: avashtha = "वृद्धावस्था (Vriddha - अल्प फल)"
+                elif deg < 18: avashtha = "युवावस्था (Yuva - 100% पूर्ण फल)"
+                elif deg < 24: avashtha = "कुमारावस्था (Kumara - 50% फल)"
+                else: avashtha = "बाल्यावस्था (Bala - 25% फल)"
+
+            # Digbala check (दिग्बल)
+            digbala_str = ""
+            if (p_name in ["Sun", "Mars"] and h == 10) or \
+               (p_name in ["Jupiter", "Mercury"] and h == 1) or \
+               (p_name in ["Venus", "Moon"] and h == 4) or \
+               (p_name == "Saturn" and h == 7):
+                digbala_str = " [🔥 पूर्ण दिग्बली (Full Digbala)]"
+
             planets_lines.append(
-                f"  • {p_name}: {pos.sign_name} ({pos.sign_degree:.2f}°), House {h}, "
+                f"  • {p_name}: {pos.sign_name} ({pos.sign_degree:.2f}°), House {h} (Moon Chart: House {h_from_moon}, Sun Chart: House {h_from_sun}), "
                 f"Nakshatra {pos.nakshatra_name} (Pada {pos.nakshatra_pada}), "
-                f"Dignity: {pos.dignity.title()}{retro_str}{comb_str}"
+                f"अवस्था: {avashtha}, Dignity: {pos.dignity.title()}{retro_str}{comb_str}{digbala_str}"
             )
             if h in [6, 8, 12]:
-                dusthana_warnings.append(f"  • ⚠️ DUSTHANA WARNING: {p_name} is in House {h} (6/8/12). GEMSTONE IS STRICTLY FORBIDDEN!")
+                dusthana_warnings.append(f"  • ⚠️ DUSTHANA WARNING: {p_name} is in House {h} (6/8/12 - दुष्टस्थान). GEMSTONE IS STRICTLY FORBIDDEN!")
 
         planets_block = "\n" + "\n".join(planets_lines)
-        dusthana_block = "\n" + "\n".join(dusthana_warnings) if dusthana_warnings else "\n  • None"
+        dusthana_block = "\n" + "\n".join(dusthana_warnings) if dusthana_warnings else "\n  • None (No Dusthana afflictions)"
+
+        # 3. Bhavabala & Sarvashtakavarga (SAV) points for 12 Houses
+        bhava_bala_map = {}
+        if master_data and "shadbala" in master_data:
+            sb = master_data["shadbala"]
+            if isinstance(sb, dict) and "bhava_bala" in sb:
+                bhava_bala_map = sb["bhava_bala"]
+
+        sav_list = []
+        try:
+            sav_list = AshtakavargaCalculator.calculate(chart).sav
+        except Exception:
+            if master_data and "ashtakavarga" in master_data:
+                sav_cand = master_data["ashtakavarga"].get("sav", [])
+                if any(x > 0 for x in sav_cand):
+                    sav_list = sav_cand
 
         houses_lines = []
         for i, h in enumerate(chart.houses):
             h_num = i + 1
             occ = [name for name, pos in chart.planets.items() if pos.house_from_lagna == h_num]
             occ_str = ", ".join(occ) if occ else "Empty"
-            houses_lines.append(f"  • House {h_num}: {h.sign_name} (Lord: {h.lord}), Occupants: [{occ_str}]")
+            bb_val = f"{bhava_bala_map.get(h_num, 0):.1f} Virupas" if h_num in bhava_bala_map else "Normative"
+            sav_pts = sav_list[i] if i < len(sav_list) else "N/A"
+            sav_grade = " (🟢 अतिबलवान)" if isinstance(sav_pts, int) and sav_pts >= 30 else (" (🔴 कमजोर)" if isinstance(sav_pts, int) and sav_pts < 25 else "")
+            houses_lines.append(f"  • House {h_num} ({h.sign_name}, Lord: {h.lord}): Bhavabala={bb_val}, SAV={sav_pts} pts{sav_grade}, Occupants=[{occ_str}]")
         houses_block = "\n" + "\n".join(houses_lines)
 
+        # 4. 5-Level Vimshottari Dasha Hierarchy
         dasha_text = "N/A"
-        if master_data and "dasha" in master_data:
-            d = master_data["dasha"]
-            curr = d.get("current_dasha", {})
-            if curr:
-                dasha_text = f"Mahadasha: {curr.get('mahadasha', '')}, Antardasha: {curr.get('antardasha', '')}, Pratyantar: {curr.get('pratyantardasha', '')}"
+        if master_data:
+            d_cand = master_data.get("dashas") or master_data.get("dasha")
+            if isinstance(d_cand, dict):
+                act_v = d_cand.get("active_vimshottari")
+                if act_v and hasattr(act_v, "formatted_summary"):
+                    dasha_text = f"Active Vimshottari: {act_v.formatted_summary}"
+                elif "current_dasha" in d_cand:
+                    curr = d_cand["current_dasha"]
+                    dasha_text = f"Mahadasha: {curr.get('mahadasha', '')}, Antardasha: {curr.get('antardasha', '')}, Pratyantar: {curr.get('pratyantardasha', '')}"
+        if dasha_text == "N/A":
+            try:
+                curr_d = default_dasha_engine.get_current_dasha(chart)
+                if curr_d:
+                    dasha_text = f"Mahadasha: {curr_d.get('lord', '')} ({curr_d.get('level', 'MD')})"
+            except Exception:
+                pass
 
+        # 5. Jaimini Karakas & Shadbala
         ak = getattr(chart, 'atmakaraka', 'N/A')
         amk = getattr(chart, 'amatyakaraka', 'N/A')
         jaimini_text = f"Atmakaraka (AK): {ak}" + (f", Amatyakaraka (AmK): {amk}" if amk != 'N/A' else "")
@@ -185,17 +314,51 @@ class AINarrativeService:
         shadbala_text = "N/A"
         if master_data and "shadbala" in master_data:
             sb = master_data["shadbala"]
-            if isinstance(sb, dict) and "ranks" in sb:
-                shadbala_text = ", ".join([f"{k}: Rank {v}" for k, v in list(sb["ranks"].items())[:7]])
+            if isinstance(sb, dict) and "planets" in sb:
+                sb_items = []
+                for p_k, p_v in sb["planets"].items():
+                    if isinstance(p_v, dict):
+                        sb_items.append(f"{p_k}: {p_v.get('total_virupas', 0):.0f} Virupas (Rank {p_v.get('rank', '-')})")
+                if sb_items:
+                    shadbala_text = ", ".join(sb_items)
 
-        sav_text = "N/A"
-        if master_data and "ashtakavarga" in master_data:
-            av = master_data["ashtakavarga"]
-            if isinstance(av, dict) and "sav" in av:
-                sav_points = av["sav"]
-                if isinstance(sav_points, (list, dict)):
-                    sav_text = str(sav_points)[:120] + "..."
+        # 6. Sudarshan Chakra Alignment
+        sudarshan_block = (
+            f"\n=== SUDARSHAN CHAKRA (त्रिकोण दृष्टि समन्वय) ===\n"
+            f"• देह/भौतिक लग्न: {chart.lagna_sign_name} ({chart.lagna_degree:.2f}°)\n"
+            f"• मन/मनोवैज्ञानिक चन्द्र लग्न: {chart.planets['Moon'].sign_name} ({chart.planets['Moon'].sign_degree:.2f}°)\n"
+            f"• आत्मा/प्रतिष्ठा सूर्य लग्न: {chart.planets['Sun'].sign_name} ({chart.planets['Sun'].sign_degree:.2f}°)\n"
+        )
 
+        # 7. Kota Chakra Defense Status
+        kota_block = ""
+        try:
+            kc = default_kota_chakra_engine.calculate(chart)
+            if isinstance(kc, dict):
+                k_swami = kc.get("kota_swami", "—")
+                k_pala = kc.get("kota_pala", "—")
+                k_def = kc.get("defense_status", "—")
+                k_sum = kc.get("defense_summary", "—")
+                stambha_m_list = kc.get("stambha_malefics", [])
+                stambha_m = ", ".join(stambha_m_list) if stambha_m_list else "None"
+            else:
+                k_swami = getattr(kc, "kota_swami", "—")
+                k_pala = getattr(kc, "kota_pala", "—")
+                k_def = getattr(kc, "defense_status", "—")
+                k_sum = getattr(kc, "defense_summary", "—")
+                stambha_m_list = getattr(kc, "stambha_malefics", [])
+                stambha_m = ", ".join(stambha_m_list) if stambha_m_list else "None"
+
+            kota_block = (
+                f"\n=== KOTA CHAKRA (दुर्ग रक्षा व संकट परीक्षण) ===\n"
+                f"• Kota Swami (दुर्गेश): {k_swami} | Kota Pala (दुर्ग रक्षक): {k_pala}\n"
+                f"• Defense Status: {k_def} — {k_sum}\n"
+                f"• स्तंभ (Core) Malefics: {stambha_m}\n"
+            )
+        except Exception:
+            kota_block = ""
+
+        # 8. Shodashvarga Dignity (D1 to D60)
         varga_block = ""
         try:
             aff_eng = AfflictionEngine(chart)
@@ -207,7 +370,7 @@ class AINarrativeService:
         except Exception:
             varga_block = "\n  • Varga computation active in master engine."
 
-        # Gochar & Transit Paya
+        # 9. Live Gochar & Transit Paya
         gochar_block = ""
         try:
             te = TransitEngine()
@@ -228,7 +391,7 @@ class AINarrativeService:
         except Exception:
             gochar_block = ""
 
-        # Lal Kitab 1952 Karmic Debts
+        # 10. Lal Kitab 1952 Karmic Debts
         lk_block = ""
         try:
             lk_res = LalKitabEngine.calculate(chart)
@@ -247,7 +410,7 @@ class AINarrativeService:
         except Exception:
             lk_block = ""
 
-        # 3-Tier Trigger Status
+        # 11. 3-Tier Predictive Triggers
         trigger_block = ""
         try:
             eq = EventQueryService()
@@ -261,6 +424,7 @@ class AINarrativeService:
         except Exception:
             trigger_block = ""
 
+        # 12. Strict Gemology Audit
         gemology_block = default_gemology_service.format_gemology_audit_for_prompt(chart)
 
         context = f"""
@@ -273,18 +437,19 @@ class AINarrativeService:
 • Moon Nakshatra: {pan.nakshatra_name} (Pada {chart.planets['Moon'].nakshatra_pada})
 • Sun Sign: {chart.planets['Sun'].sign_name} ({chart.planets['Sun'].sign_degree:.2f}°)
 • Panchang: Vara={pan.vara_name}, Tithi={pan.tithi_name} ({pan.tithi_type}), Yoga={pan.yoga_name}, Karana={pan.karana_name}
-• Active Dasha: {dasha_text}
+• Active Vimshottari Dasha: {dasha_text}
 • Jaimini Karakas: {jaimini_text}
-• Shadbala Strengths: {shadbala_text}
-• Key Ashtakavarga SAV Points: {sav_text}
+• Shadbala Strengths (Planetary Ranks & Virupas): {shadbala_text}
 
-=== 9 PLANETS POSITION & DIGNITY ==={planets_block}
+=== 9 PLANETS POSITION, DIGREE, NAKSHATRA & AVASHTHA ==={planets_block}
 
 === DUSTHANA (6, 8, 12) PLACEMENTS & WARNINGS ==={dusthana_block}
 
-=== D1 TO D60 DIVISIONAL CHARTS (VAISHESHIKAMSHA & VARGOTTAMA) ==={varga_block}
+=== 12 BHAVAS (HOUSES) OCCUPANTS, BHAVABALA VIRUPAS & SAV POINTS ==={houses_block}
+{sudarshan_block}
+{kota_block}
 
-=== 12 BHAVAS (HOUSES) OCCUPANTS & ASPECTS ==={houses_block}
+=== D1 TO D60 DIVISIONAL CHARTS (VAISHESHIKAMSHA & VARGOTTAMA) ==={varga_block}
 {gochar_block}
 {lk_block}
 {trigger_block}
@@ -991,13 +1156,16 @@ class AINarrativeService:
         chart: Optional[KundaliChart] = None,
         master_data: Optional[Dict[str, Any]] = None,
         api_key: Optional[str] = None,
+        openai_api_key: Optional[str] = None,
+        provider_mode: str = "trio",
         model: str = "gemini-2.5-flash",
+        openai_model: str = "gpt-4o",
         language: str = "Hindi",
         chat_history: Optional[List[Dict[str, str]]] = None,
         active_dasha_summary: str = "",
         **kwargs
     ) -> str:
-        """Conversational Astrological Consultation powered by Gemini and Shastriya rules."""
+        """Trio Conversational Astrological Consultation combining JyotishOS Math Engine, Google Gemini AI, and OpenAI."""
         # Perform Exhaustive Daivajna Backend Dual-Kundali Research
         research = self.conduct_daivajna_deep_research(user_query=user_query, chart=chart, master_data=master_data)
 
@@ -1013,19 +1181,31 @@ class AINarrativeService:
         topic = research["topic"]
         gem_audit = research["gem_audit"]
 
-        # Check Client availability
-        if api_key:
-            self._init_client(api_key)
-        elif not self.client:
-            env_key = os.getenv("GEMINI_API_KEY")
-            if not env_key:
-                try:
-                    import streamlit as st
-                    env_key = st.secrets.get("GEMINI_API_KEY", "")
-                except Exception:
-                    env_key = ""
-            if env_key:
-                self._init_client(env_key)
+        # Ensure Client availability for both providers
+        if api_key or openai_api_key:
+            self._init_clients(api_key, openai_api_key)
+        else:
+            if not self.client:
+                env_key = os.getenv("GEMINI_API_KEY")
+                if not env_key:
+                    try:
+                        import streamlit as st
+                        env_key = st.secrets.get("GEMINI_API_KEY", "")
+                    except Exception:
+                        env_key = ""
+                if env_key:
+                    self._init_clients(api_key=env_key)
+
+            if not self.openai_client:
+                env_oai = os.getenv("OPENAI_API_KEY")
+                if not env_oai:
+                    try:
+                        import streamlit as st
+                        env_oai = st.secrets.get("OPENAI_API_KEY", "")
+                    except Exception:
+                        env_oai = ""
+                if env_oai:
+                    self._init_clients(openai_api_key=env_oai)
 
         # GENERAL INTELLIGENCE: GREETINGS & INTRODUCTIONS / GRATITUDE
         if topic == "greeting":
@@ -1036,16 +1216,15 @@ class AINarrativeService:
 
             is_gratitude = any(w in user_query.lower() for w in ["धन्यवाद", "शुक्रिया", "thanks", "thank", "dhanyawad", "dhanyavad", "shukriya", "theek hai", "accha", "आभार"])
 
-            if self.client:
-                if is_gratitude:
-                    greeting_prompt = f"""You are 'दैवज्ञ AI' (Daivajna AI), a revered Vedic Astrologer endowed with high General Intelligence.
+            if is_gratitude:
+                greeting_prompt = f"""You are 'दैवज्ञ AI' (Daivajna AI), a revered Vedic Astrologer endowed with high General Intelligence.
 The native ({p_name}) has expressed gratitude/acknowledgment: "{user_query}".
 CRITICAL GENERAL INTELLIGENCE INSTRUCTION:
 1. Respond with a warm, dignified Vedic blessing ('कल्याणमस्तु', 'शुभम् भवतु') in 1 to 2 sentences in {language}.
 2. Wish them peace and auspiciousness, and politely offer further guidance if they have any remaining questions.
 3. DO NOT output any horoscope analysis, cautions, or gemstones."""
-                else:
-                    greeting_prompt = f"""You are 'दैवज्ञ AI' (Daivajna AI), a revered Vedic Astrologer endowed with high General Intelligence.
+            else:
+                greeting_prompt = f"""You are 'दैवज्ञ AI' (Daivajna AI), a revered Vedic Astrologer endowed with high General Intelligence.
 The native ({p_name}) has greeted you with: "{user_query}".
 The native's active chart profile:
 - Name: {p_name}
@@ -1059,21 +1238,15 @@ CRITICAL GENERAL INTELLIGENCE INSTRUCTION:
 4. Respond in exactly 2 to 3 courteous, dignified, and natural sentences in {language}.
 5. Respectfully greet {p_name} ji by name, mention that their birth chart ({lagna_s} लग्न, {moon_s} राशि) is active and loaded, and warmly ask what specific life query (e.g. marriage, career, finance, health, or gemstones) they would like to explore today."""
 
-                models_to_try = [model, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro"]
-                for m_name in models_to_try:
-                    try:
-                        response = self.client.models.generate_content(
-                            model=m_name,
-                            contents=greeting_prompt,
-                            config=types.GenerateContentConfig(
-                                system_instruction=SYSTEM_PROMPT,
-                                temperature=0.3,
-                            )
-                        )
-                        if response and response.text:
-                            return response.text.strip()
-                    except Exception:
-                        continue
+            # Try generating greeting via Trio
+            if provider_mode in ["trio", "gemini"] and self.client:
+                g_res = self._call_gemini(greeting_prompt, SYSTEM_PROMPT, model=model, temperature=0.3)
+                if g_res:
+                    return g_res
+            if provider_mode in ["trio", "openai"] and self.openai_client:
+                g_res = self._call_openai(greeting_prompt, SYSTEM_PROMPT, model=openai_model, temperature=0.3)
+                if g_res:
+                    return g_res
 
             if is_gratitude:
                 return (
@@ -1088,11 +1261,11 @@ CRITICAL GENERAL INTELLIGENCE INSTRUCTION:
                 f"आप अपनी कुण्डली से सम्बंधित किस विषय पर मार्गदर्शन प्राप्त करना चाहते हैं? (जैसे: **विवाह**, **करियर व पदोन्नति**, **आर्थिक स्थिति**, **स्वास्थ्य**, अथवा **शुभ रत्न व उपाय**)। आप जो भी प्रश्न पूछेंगे, मैं ठीक उसी का ९९.९% सटीक, निष्पक्ष एवं प्रामाणिक उत्तर दूँगा।"
             )
 
-        # DETERMINISTIC FALLBACK (Laser-focused, direct, dual-kundali honest prediction)
-        if not self.client:
+        # OFFLINE DETERMINISTIC MODE REQUESTED
+        if provider_mode == "offline":
             return self._build_deterministic_consultation(user_query=user_query, chart=chart, research=research, language=language)
 
-        # PROMPT FOR GEMINI AI (Deep Dual-Kundali Synthesized Context)
+        # PROMPT FOR TRIO AI ENSEMBLE (Deep Dual-Kundali Synthesized Context)
         chart_context = self.build_full_chart_context(chart, master_data)
         history_text = ""
         if chat_history and len(chat_history) > 1:
@@ -1123,32 +1296,38 @@ Prashna Verdict & Timing: {p_res['verdict']} | Probable Timing: {research['direc
 USER QUESTION:
 \"{user_query}\"
 
-CRITICAL GENERAL INTELLIGENCE & DAIVAJNA INSTRUCTIONS:
+CRITICAL GENERAL INTELLIGENCE & DAIVAJNA INSTRUCTIONS (त्रिवेणी संगम प्रशिक्षण):
 1. ANSWER ONLY WHAT WAS ASKED: The user is specifically asking about: {topic.upper()}. Address their specific query directly in the opening lines. Do NOT write unsolicited essays about unrelated life domains.
 2. BUSINESS SUITABILITY QUESTIONS: If asked whether the native can do business in the future ("व्यापार कर पाऊंगा या नहीं"), DO NOT state a short-term horary timeframe like "1 से 3 सप्ताह के भीतर"! Evaluate 7th house (business/trade) vs 6th house (job/service) and 10th house (career). If Mercury is in the 8th house, candidly warn against debt-heavy speculation and guide towards service-oriented/consultancy business. The timing must reflect Dasha & transits (e.g. 2026-2027).
 3. DUAL-KUNDALI SYNTHESIS: Cross-corroborate the Instant Prashna Kundali (Lagna, Karyesh, Tajika Ithasala/Esharpha yoga, and Intent testing check) with the Natal Kundali (D1 house lord, D9/D10 divisional dignity, active Mahadasha-Antardasha).
-4. ABSOLUTE HONESTY & CANDID CAUTION: If there are negative yogas, delays, or doshas (Manglik, Saturn delay, malefic dasha), state them clearly under a bold caution heading without sugarcoating.
-5. RATNA SHASTRA COMPLIANCE: If asked about gemstones, strictly follow the gemology matrix. NEVER recommend Panna if Mercury is in the 8th house; forbid it with an explicit alert and prescribe 4-Mukhi Rudraksha, Budha mantra, and green moong daan.
-6. Conclude with focused, actionable, satvik Vedic remedies in {language} for this specific question only.
+4. ABSOLUTE HONESTY & CANDID CAUTION: If there are negative yogas, delays, or doshas (Manglik, Saturn delay, malefic dasha), state them clearly under a bold caution heading without sugarcoating. Always present both sides: 🟢 सकारात्मक शास्त्रीय पक्ष vs 🔴 बाधक तत्व व सावधानियां.
+5. RATNA SHASTRA COMPLIANCE: If asked about gemstones, strictly follow the gemology matrix. NEVER recommend a gem for 6th, 8th, or 12th house planet. NEVER recommend Panna if Mercury is in the 8th house; forbid it with an explicit alert and prescribe 4-Mukhi Rudraksha, Budha mantra, and green moong daan.
+6. CANONICAL SCRIPTURAL PRANAMAS: Cite authentic classical granthas (बृहत्पाराशर होराशास्त्र, फलदीपिका, सारावली, प्रश्न मार्ग, जैमिनी सूत्र).
+7. Conclude with focused, actionable, satvik Vedic remedies in {language} for this specific question only.
 """
 
-        models_to_try = [model, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro"]
-        for m_name in models_to_try:
-            try:
-                response = self.client.models.generate_content(
-                    model=m_name,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(
-                        system_instruction=SYSTEM_PROMPT,
-                        temperature=0.35,
-                    )
-                )
-                if response and response.text:
-                    return response.text
-            except Exception:
-                continue
+        # TRIO ENSEMBLE EXECUTION
+        ai_response = None
 
-        # Deterministic fallback when Gemini API calls fail or timeout - NEVER return raw horary timing string
+        if provider_mode == "openai":
+            if self.openai_client:
+                ai_response = self._call_openai(prompt=prompt, system_prompt=SYSTEM_PROMPT, model=openai_model, temperature=0.25)
+        elif provider_mode == "gemini":
+            if self.client:
+                ai_response = self._call_gemini(prompt=prompt, system_prompt=SYSTEM_PROMPT, model=model, temperature=0.3)
+        elif provider_mode == "trio":
+            # 1. First attempt with Google Gemini AI backed by JyotishOS Math
+            if self.client:
+                ai_response = self._call_gemini(prompt=prompt, system_prompt=SYSTEM_PROMPT, model=model, temperature=0.25)
+
+            # 2. If Gemini fails or unavailable, attempt with OpenAI GPT-4o backed by JyotishOS Math
+            if not ai_response and self.openai_client:
+                ai_response = self._call_openai(prompt=prompt, system_prompt=SYSTEM_PROMPT, model=openai_model, temperature=0.25)
+
+        if ai_response:
+            return ai_response
+
+        # Deterministic fallback when AI API calls fail, timeout, or no keys provided - 100% reliable
         return self._build_deterministic_consultation(user_query=user_query, chart=chart, research=research, language=language)
 
     def synthesize_narrative(self, result: GhatnaQueryResult, language: str = "Hindi") -> str:

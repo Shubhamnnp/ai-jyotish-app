@@ -49,3 +49,4 @@ def test_shastriya_faladesh_synthesis_and_faqs():
     assert len(ans["full_answer_md"]) > 20
     assert "प्रत्यक्ष शास्त्रीय निर्णय" in ans["full_answer_md"]
     assert "काल निर्णय" in ans["full_answer_md"]
+
