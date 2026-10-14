@@ -5068,7 +5068,8 @@ if "English" in st.session_state.app_lang:
         "🧬 Body & Physical Traits",
         "🕉️ Ishta Devata & Pooja Vidhan",
         "🧘 Personality & Karmaphala (Karma)",
-        "📅 Vedic Jyotish Panchang"
+        "📅 Vedic Jyotish Panchang",
+        "📜 Classical Predictive Analysis (Shastriya Faladesh)"
     ]
 elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -5101,7 +5102,8 @@ elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_sta
         "🧬 உடலமைப்பு & அங்கங்கள் (Physique)",
         "🕉️ இஷ்ட தெய்வம் & பூஜை முறை (Ishta Devata)",
         "🧘 ஆளுமை & கர்ம பலன்கள் (Karma)",
-        "📅 ஜோதிட பஞ்சாங்கம் (Vedic Panchang)"
+        "📅 ஜோதிட பஞ்சாங்கம் (Vedic Panchang)",
+        "📜 சாஸ்திர பலன்கள் (Shastriya Faladesh)"
     ]
 elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -5134,7 +5136,8 @@ elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session
         "🧬 శరీర నిర్మాణం & అవయవాలు (Physique)",
         "🕉️ ఇష్ట దైవం & పూజా విధానం (Ishta Devata)",
         "🧘 వ్యక్తిత్వం & కర్మఫలం (Karma)",
-        "📅 వైదిక పంచాంగం (Vedic Panchang)"
+        "📅 వైదిక పంచాంగం (Vedic Panchang)",
+        "📜 శాస్త్రీయ ఫలితాలు (Shastriya Faladesh)"
     ]
 elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -5167,7 +5170,8 @@ elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.se
         "🧬 શારીરિક ગઠન અને અંગો (Physique)",
         "🕉️ ઇષ્ટદેવ અને પૂજા વિધાન (Ishta Devata)",
         "🧘 વ્યક્તિત્વ અને કર્મફળ (Karma)",
-        "📅 વૈદિક પંચાંગ (Vedic Panchang)"
+        "📅 વૈદિક પંચાંગ (Vedic Panchang)",
+        "📜 શાસ્ત્રીય ફલાદેશ (Shastriya Faladesh)"
     ]
 elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -5200,7 +5204,8 @@ elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_s
         "🧬 शारीरिक गठन व अवयव (Physique)",
         "🕉️ इष्टदेवता व नित्य पूजा विधी (Ishta Devata)",
         "🧘 व्यक्तिमत्त्व व कर्मफळ (Karma)",
-        "📅 वैदिक पंचांग (Vedic Panchang)"
+        "📅 वैदिक पंचांग (Vedic Panchang)",
+        "📜 शास्त्रीय फलादेश (Shastriya Faladesh)"
     ]
 elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -5233,7 +5238,8 @@ elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_s
         "🧬 শারীরিক গঠন ও অঙ্গপ্রত্যঙ্গ (Physique)",
         "🕉️ ইষ্টদেবতা ও পূজা বিধান (Ishta Devata)",
         "🧘 ব্যক্তিত্ব ও কর্মফল (Karma)",
-        "📅 বৈদিক পঞ্জিকা (Vedic Panchang)"
+        "📅 বৈদিক পঞ্জিকা (Vedic Panchang)",
+        "📜 শাস্ত্রীয় ফলাফল (Shastriya Faladesh)"
     ]
 else:
     MODULE_OPTIONS = [
@@ -5266,7 +5272,8 @@ else:
         "🧬 शारीरिक गठन एवं अंग-दोष (Body & Limbs)",
         "🕉️ इष्टदेवता, नित्य पूजा एवं व्रत (Ishta Devata)",
         "🧘 व्यक्तित्व एवं कर्मफल (Personality & Karma)",
-        "📅 ज्योतिषीय पञ्चाङ्ग (Vedic Panchang)"
+        "📅 ज्योतिषीय पञ्चाङ्ग (Vedic Panchang)",
+        "📜 शास्त्रीय फलादेश (Shastriya Faladesh)"
     ]
 
 
@@ -6220,6 +6227,12 @@ MODULE_TABS_REGISTRY = {
         "📜 दैनिक वैदिक सङ्कल्प मन्त्र",
         "📅 मासिक पञ्चाङ्ग कैलेंडर",
         "🤖 AI पञ्चाङ्ग सारथी व कर्म शुद्धि"
+    ],
+    30: [
+        "🌟 १. ५० जीवन आयाम महा-विश्लेषण (50 Life Dimensions)",
+        "❓ २. १०० शास्त्रीय प्रश्न-उत्तर इंजन (100 Querent FAQs)",
+        "🔬 ३. सर्व-गणना संश्लेषण (All Calculations Matrix)",
+        "📜 ४. शास्त्रीय साक्ष्य, ग्रन्थ प्रमाण व उपाय (Pramana & Remedies)"
     ]
 }
 
@@ -8169,11 +8182,11 @@ with st.container(key="top_frozen_header_container", border=False):
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown("### 📚 समस्त २९ वैदिक मॉड्यूल")
+        st.markdown(f"### 📚 समस्त {len(MODULE_OPTIONS)} वैदिक मॉड्यूल")
         
         sb_query = st.text_input("🔍 मॉड्यूल खोजें (Search):", placeholder="दशा, गोचर, केपी, मिलान...", key="sb_search_filter_input").strip().lower()
         
-        # All 30 modules available directly in the sidebar
+        # All modules available directly in the sidebar
         if sb_query:
             matched_indices = [i for i in range(len(MODULE_OPTIONS)) if sb_query in MODULE_OPTIONS[i].lower()]
             cand_indices = matched_indices if matched_indices else list(range(len(MODULE_OPTIONS)))
@@ -8229,7 +8242,7 @@ is_parashara_layout = False
 # Module Access Control & RBAC Guard for Free Jatak Tier
 # -------------------------------------------------------------
 cur_user_role = st.session_state.get("user_role", "jatak")
-jatak_allowed_modules = [0, 1, 16, 17]
+jatak_allowed_modules = [0, 1, 16, 17, 30]
 
 if cur_user_role == "jatak" and selected_idx not in jatak_allowed_modules:
     st.markdown(f"""
@@ -21413,6 +21426,20 @@ elif selected_idx == 29:
         chart=chart,
         birth_profile=birth_profile,
         is_dark=st.session_state.get("dark_mode", False)
+    )
+
+elif selected_idx == 30:
+    import importlib
+    import src.jyotish.services.shastriya_faladesh as shastriya_svc_mod
+    importlib.reload(shastriya_svc_mod)
+    import src.jyotish.ui.shastriya_faladesh_view as shastriya_view_mod
+    importlib.reload(shastriya_view_mod)
+
+    shastriya_view_mod.render_shastriya_faladesh_view(
+        chart=chart,
+        birth_profile=birth_profile,
+        is_dark=st.session_state.get("dark_mode", False),
+        tz_offset=tz_offset
     )
 
 # -------------------------------------------------------------
