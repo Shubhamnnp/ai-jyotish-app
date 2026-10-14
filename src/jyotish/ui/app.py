@@ -4492,8 +4492,10 @@ def login_user_session(user_info: Dict[str, Any]):
 
 
 def render_login_page():
+    import textwrap
+
     # Top Bar: Theme & Language Selectors
-    st.markdown("""
+    st.markdown(textwrap.dedent("""\
     <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom: 6px;">
         <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border:1px solid #CBD5E1 !important; color:#0F172A !important; padding:3px 10px !important; border-radius:8px; display:inline-flex; align-items:center; gap:5px;" title="थीम चुनें (Select Day / Night Mode)">
             <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:13px;">☀️</span>
@@ -4518,7 +4520,7 @@ def render_login_page():
             </select>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
 
     if st.session_state.get("session_timed_out_banner", False):
         st.warning("⚠️ **सुरक्षा सत्र समाप्त (Session Timeout):** ३० मिनट तक कोई गतिविधि न होने के कारण सुरक्षा हेतु स्वतः लॉगआउट कर दिया गया है। कृपया पुनः लॉगिन करें।")
@@ -4529,9 +4531,8 @@ def render_login_page():
 
     with col_card:
         # 1. Sacred Header: Logo + Sanskrit Shlok + Navagraha Shlok
-        st.markdown("""
+        st.markdown(textwrap.dedent("""\
         <div style="text-align: center; margin-bottom: 14px;">
-            <!-- Logo: Sacred Vedic Navagraha Yantra -->
             <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 8px;">
                 <svg width="74" height="74" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 4px 10px rgba(217, 119, 6, 0.25));">
                     <circle cx="50" cy="50" r="46" stroke="#D97706" stroke-width="2.2" stroke-dasharray="4 2"/>
@@ -4544,8 +4545,6 @@ def render_login_page():
                     <circle cx="50" cy="50" r="2.8" fill="#FFFFFF"/>
                 </svg>
             </div>
-
-            <!-- Sanskrit Shlok & Navagraha Prasann -->
             <div style="font-size: 13.5px; font-weight: 800; color: #D97706; letter-spacing: 0.6px; margin-bottom: 3px;">
                 ॐ श्री गणेशाय नमः • श्री नवग्रह प्रसन्न
             </div>
@@ -4553,8 +4552,6 @@ def render_login_page():
                 ॐ आदित्याय च सोमाय मङ्गलाय बुधाय च।<br>
                 गुरुशुक्रशनिभ्यश्च राहवे केतवे नमः॥
             </div>
-
-            <!-- Platform Branding -->
             <div style="font-size: 24px; font-weight: 900; color: #0F172A; letter-spacing: -0.5px; margin-bottom: 2px;">
                 🔮 JyotishOS Cloud
             </div>
@@ -4562,7 +4559,7 @@ def render_login_page():
                 सर्वं खल्विदं ब्रह्म • प्रामाणिक वैदिक ज्योतिष अनुसंधान एवं निर्णय प्रणाली
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """), unsafe_allow_html=True)
 
         auth_view = st.session_state.get("auth_active_view", "login")
 
@@ -4571,12 +4568,12 @@ def render_login_page():
         # -------------------------------------------------------------
         if auth_view == "login":
             with st.container(border=True):
-                st.markdown("""
+                st.markdown(textwrap.dedent("""\
                 <div style="text-align: center; margin-bottom: 10px;">
                     <div style="font-size: 1.05rem; font-weight: 800; color: #0F172A;">सुरक्षित प्रवेश (Sign In)</div>
                     <div style="font-size: 0.78rem; color: #64748B;">अपने पंजीकृत यूज़रनेम एवं पासवर्ड द्वारा लॉगिन करें।</div>
                 </div>
-                """, unsafe_allow_html=True)
+                """), unsafe_allow_html=True)
 
                 with st.form("clean_login_form"):
                     login_user = st.text_input(
@@ -4620,46 +4617,17 @@ def render_login_page():
                         st.session_state["auth_active_view"] = "signup"
                         st.rerun()
 
-                # Discreet 1-Click Demo Testing Access
-                st.markdown("""
-                <div style="display:flex; align-items:center; margin: 12px 0 8px 0;">
-                    <div style="flex:1; height:1px; background:#E2E8F0;"></div>
-                    <span style="font-size:10.5px; font-weight:700; color:#94A3B8; padding:0 8px;">त्वरित 1-क्लिक परीक्षण (Demo Access)</span>
-                    <div style="flex:1; height:1px; background:#E2E8F0;"></div>
-                </div>
-                """, unsafe_allow_html=True)
-
-                d1, d2, d3 = st.columns(3)
-                with d1:
-                    if st.button("🔬 शोधकर्ता", use_container_width=True, key="demo_btn_res_c", help="सुपर-एडमिन: 30 मॉड्यूल, परचेज कोड सूची"):
-                        u = default_auth_service.authenticate("researcher@jyotishos.com", "Research@2026") or default_auth_service.authenticate("shubham8jyotish@gmail.com", "Bahraich@123")
-                        if u:
-                            login_user_session(u)
-                            st.rerun()
-                with d2:
-                    if st.button("🔮 ज्योतिषी", use_container_width=True, key="demo_btn_jyo_c", help="प्रो ज्योतिषी: 30 मॉड्यूल, क्लाइंट वॉल्ट"):
-                        u = default_auth_service.authenticate("astrologer@jyotishos.com", "Astro@2026")
-                        if u:
-                            login_user_session(u)
-                            st.rerun()
-                with d3:
-                    if st.button("👤 जातक", use_container_width=True, key="demo_btn_jat_c", help="निःशुल्क: कुण्डली, AI, पंचांग"):
-                        u = default_auth_service.authenticate("jatak@jyotishos.com", "Jatak@2026")
-                        if u:
-                            login_user_session(u)
-                            st.rerun()
-
         # -------------------------------------------------------------
-        # View 2: Sign Up (नया खाता पंजीकरण)
+        # View 2: Sign Up (नया खाता पंजीकरण + त्वरित 1-क्लिक डेमो प्रवेश)
         # -------------------------------------------------------------
         elif auth_view == "signup":
             with st.container(border=True):
-                st.markdown("""
+                st.markdown(textwrap.dedent("""\
                 <div style="text-align: center; margin-bottom: 10px;">
                     <div style="font-size: 1.05rem; font-weight: 800; color: #0F172A;">📝 नया खाता पंजीकरण (Sign Up)</div>
                     <div style="font-size: 0.78rem; color: #64748B;">PBKDF2 क्रिप्टोग्राफी द्वारा सुरक्षित नया खाता बनाएं।</div>
                 </div>
-                """, unsafe_allow_html=True)
+                """), unsafe_allow_html=True)
 
                 with st.form("clean_signup_form"):
                     reg_name = st.text_input("पूरा नाम (Full Name)", placeholder="उदा: पं. शुभम तिवारी", key="signup_name_inp")
@@ -4701,6 +4669,35 @@ def render_login_page():
                     else:
                         st.error(f"❌ {msg}")
 
+                # ⚡ 1-Click Demo Testing Access (INSIDE SIGNUP PAGE AS REQUESTED)
+                st.markdown(textwrap.dedent("""\
+                <div style="display:flex; align-items:center; margin: 14px 0 8px 0;">
+                    <div style="flex:1; height:1px; background:#E2E8F0;"></div>
+                    <span style="font-size:10.5px; font-weight:700; color:#94A3B8; padding:0 8px;">त्वरित 1-क्लिक परीक्षण (Demo Access)</span>
+                    <div style="flex:1; height:1px; background:#E2E8F0;"></div>
+                </div>
+                """), unsafe_allow_html=True)
+
+                d1, d2, d3 = st.columns(3)
+                with d1:
+                    if st.button("🔬 शोधकर्ता", use_container_width=True, key="demo_btn_res_c", help="सुपर-एडमिन: 30 मॉड्यूल, परचेज कोड सूची"):
+                        u = default_auth_service.authenticate("researcher@jyotishos.com", "Research@2026") or default_auth_service.authenticate("shubham8jyotish@gmail.com", "Bahraich@123")
+                        if u:
+                            login_user_session(u)
+                            st.rerun()
+                with d2:
+                    if st.button("🔮 ज्योतिषी", use_container_width=True, key="demo_btn_jyo_c", help="प्रो ज्योतिषी: 30 मॉड्यूल, क्लाइंट वॉल्ट"):
+                        u = default_auth_service.authenticate("astrologer@jyotishos.com", "Astro@2026")
+                        if u:
+                            login_user_session(u)
+                            st.rerun()
+                with d3:
+                    if st.button("👤 जातक", use_container_width=True, key="demo_btn_jat_c", help="निःशुल्क: कुण्डली, AI, पंचांग"):
+                        u = default_auth_service.authenticate("jatak@jyotishos.com", "Jatak@2026")
+                        if u:
+                            login_user_session(u)
+                            st.rerun()
+
                 st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
                 if st.button("← पहले से खाता है? लॉगिन करें (Back to Sign In)", key="back_to_login_s", use_container_width=True):
                     st.session_state["auth_active_view"] = "login"
@@ -4711,12 +4708,12 @@ def render_login_page():
         # -------------------------------------------------------------
         elif auth_view == "forgot":
             with st.container(border=True):
-                st.markdown("""
+                st.markdown(textwrap.dedent("""\
                 <div style="text-align: center; margin-bottom: 10px;">
                     <div style="font-size: 1.05rem; font-weight: 800; color: #0F172A;">🔑 पासवर्ड रीसेट (Reset Password)</div>
                     <div style="font-size: 0.78rem; color: #64748B;">ईमेल OTP सत्यापन द्वारा नया पासवर्ड बनाएं।</div>
                 </div>
-                """, unsafe_allow_html=True)
+                """), unsafe_allow_html=True)
 
                 f_email = st.text_input("पंजीकृत ईमेल दर्ज करें (Registered Email)", placeholder="user@example.com", key="forgot_email_inp")
                 if st.button("📩 OTP सत्यापन कोड प्राप्त करें", use_container_width=True, key="btn_send_otp"):
