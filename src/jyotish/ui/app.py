@@ -6584,6 +6584,11 @@ with st.container(key="top_frozen_header_container", border=False):
                         st.session_state.birth_lat = 28.6139
                         st.session_state.birth_lon = 77.2090
                         st.session_state.birth_tz = 5.5
+                        st.session_state["gla_city_query_input"] = "New Delhi, Delhi, India"
+                        st.session_state["gla_lat_input"] = 28.6139
+                        st.session_state["gla_lon_input"] = 77.2090
+                        st.session_state["gla_tz_input"] = 5.5
+                        st.session_state.last_applied_geo_loc = "New Delhi, Delhi, India_28.6139_77.2090"
                         st.session_state.gla_active_tool = "birth"
                         st.toast("✅ नया प्रोफाइल तैयार! कृपया जन्म विवरण भरें।", icon="👶")
                         st.rerun()
@@ -6628,6 +6633,11 @@ with st.container(key="top_frozen_header_container", border=False):
                         st.session_state.birth_lat = 28.6139
                         st.session_state.birth_lon = 77.2090
                         st.session_state.birth_tz = 5.5
+                        st.session_state["gla_city_query_input"] = "New Delhi, Delhi, India"
+                        st.session_state["gla_lat_input"] = 28.6139
+                        st.session_state["gla_lon_input"] = 77.2090
+                        st.session_state["gla_tz_input"] = 5.5
+                        st.session_state.last_applied_geo_loc = "New Delhi, Delhi, India_28.6139_77.2090"
                         st.session_state.gla_active_tool = None
                         st.toast("✅ डिफ़ॉल्ट डेमो प्रोफाइल लोड की गई!", icon="🔄")
                         st.rerun()
@@ -6740,9 +6750,14 @@ with st.container(key="top_frozen_header_container", border=False):
                     with cp_cols[_idx]:
                         if st.button(_c_lbl.split()[0], key=f"btn_city_pr_{_idx}", use_container_width=True, help=f"{_c_lbl} सेट करें"):
                             st.session_state.birth_city = _c_lbl
-                            st.session_state.birth_lat = _c_lt
-                            st.session_state.birth_lon = _c_ln
-                            st.session_state.birth_tz = _c_tzo
+                            st.session_state.birth_lat = float(_c_lt)
+                            st.session_state.birth_lon = float(_c_ln)
+                            st.session_state.birth_tz = float(_c_tzo)
+                            st.session_state["gla_city_query_input"] = _c_lbl
+                            st.session_state["gla_lat_input"] = float(_c_lt)
+                            st.session_state["gla_lon_input"] = float(_c_ln)
+                            st.session_state["gla_tz_input"] = float(_c_tzo)
+                            st.session_state.last_applied_geo_loc = f"{_c_lbl}_{float(_c_lt):.4f}_{float(_c_ln):.4f}"
                             st.rerun()
 
                 col_gps_b1, col_gps_b2 = st.columns([1.8, 3.2])
@@ -6755,7 +6770,7 @@ with st.container(key="top_frozen_header_container", border=False):
                 col_geo1, col_geo2, col_geo3 = st.columns([1.6, 1.4, 1.3])
                 with col_geo1:
                     in_city_query = st.text_input("स्थान खोज (Search City)", value=st.session_state.birth_city, key="gla_city_query_input")
-                    geo_results = default_geocoding_service.search(in_city_query, limit=3)
+                    geo_results = default_geocoding_service.search(in_city_query, limit=5)
                     if geo_results:
                         selected_loc = st.selectbox(
                             "उपलब्ध स्थान (Select Location)",
@@ -6763,10 +6778,18 @@ with st.container(key="top_frozen_header_container", border=False):
                             format_func=lambda x: f"{x.formatted_name} ({x.source})",
                             key="gla_geo_select"
                         )
-                        st.session_state.birth_lat = selected_loc.latitude
-                        st.session_state.birth_lon = selected_loc.longitude
-                        st.session_state.birth_tz = selected_loc.timezone_offset
-                        st.session_state.birth_city = selected_loc.city
+                        loc_key = f"{selected_loc.formatted_name}_{float(selected_loc.latitude):.4f}_{float(selected_loc.longitude):.4f}"
+                        if st.session_state.get("last_applied_geo_loc") != loc_key:
+                            st.session_state.last_applied_geo_loc = loc_key
+                            st.session_state.birth_lat = float(selected_loc.latitude)
+                            st.session_state.birth_lon = float(selected_loc.longitude)
+                            st.session_state.birth_tz = float(selected_loc.timezone_offset)
+                            st.session_state.birth_city = selected_loc.city
+                            st.session_state["gla_lat_input"] = float(selected_loc.latitude)
+                            st.session_state["gla_lon_input"] = float(selected_loc.longitude)
+                            st.session_state["gla_tz_input"] = float(selected_loc.timezone_offset)
+                    else:
+                        st.caption("ℹ️ शहर सूची में नहीं मिला। आप सीधे दाईं ओर अक्षांश/देशांतर दर्ज कर सकते हैं।")
 
                 with col_geo2:
                     col_la, col_lo = st.columns(2)
@@ -6855,6 +6878,11 @@ with st.container(key="top_frozen_header_container", border=False):
                                         st.session_state.birth_lat = float(r_item.get("lat", 28.6139))
                                         st.session_state.birth_lon = float(r_item.get("lon", 77.2090))
                                         st.session_state.birth_tz = float(r_item.get("tz", 5.5))
+                                        st.session_state["gla_city_query_input"] = r_item.get("city", "Delhi")
+                                        st.session_state["gla_lat_input"] = float(r_item.get("lat", 28.6139))
+                                        st.session_state["gla_lon_input"] = float(r_item.get("lon", 77.2090))
+                                        st.session_state["gla_tz_input"] = float(r_item.get("tz", 5.5))
+                                        st.session_state.last_applied_geo_loc = f"{r_item.get('city')}_{float(r_item.get('lat', 28.6139)):.4f}_{float(r_item.get('lon', 77.2090)):.4f}"
                                         try:
                                             st.session_state.birth_date = datetime.strptime(r_item["date"], "%Y-%m-%d").date()
                                             st.session_state.birth_time = datetime.strptime(r_item["time"][:8], "%H:%M:%S").time()
@@ -6917,6 +6945,11 @@ with st.container(key="top_frozen_header_container", border=False):
                                         st.session_state.birth_lat = float(b_data.get("latitude", 28.6139))
                                         st.session_state.birth_lon = float(b_data.get("longitude", 77.2090))
                                         st.session_state.birth_city = b_data.get("city", "Delhi")
+                                        st.session_state["gla_city_query_input"] = b_data.get("city", "Delhi")
+                                        st.session_state["gla_lat_input"] = float(b_data.get("latitude", 28.6139))
+                                        st.session_state["gla_lon_input"] = float(b_data.get("longitude", 77.2090))
+                                        st.session_state["gla_tz_input"] = float(b_data.get("timezone_offset", 5.5))
+                                        st.session_state.last_applied_geo_loc = f"{b_data.get('city')}_{float(b_data.get('latitude', 28.6139)):.4f}_{float(b_data.get('longitude', 77.2090)):.4f}"
                                         try:
                                             st.session_state.birth_date = datetime.strptime(b_data["birth_date"], "%Y-%m-%d").date()
                                             st.session_state.birth_time = datetime.strptime(b_data["birth_time"][:8], "%H:%M:%S").time()
@@ -7418,10 +7451,15 @@ with st.container(key="top_frozen_header_container", border=False):
                     if loc_results:
                         picked_loc = st.selectbox("स्थान का चयन करें", loc_results, format_func=lambda x: f"{x.formatted_name}", key="gla_loc_modal_sel")
                         if st.button("📍 इसे वर्तमान जन्म स्थान बनाएं", type="primary", use_container_width=True, key="gla_apply_location_btn"):
-                            st.session_state.birth_lat = picked_loc.latitude
-                            st.session_state.birth_lon = picked_loc.longitude
-                            st.session_state.birth_tz = picked_loc.timezone_offset
+                            st.session_state.birth_lat = float(picked_loc.latitude)
+                            st.session_state.birth_lon = float(picked_loc.longitude)
+                            st.session_state.birth_tz = float(picked_loc.timezone_offset)
                             st.session_state.birth_city = picked_loc.city
+                            st.session_state["gla_city_query_input"] = picked_loc.city
+                            st.session_state["gla_lat_input"] = float(picked_loc.latitude)
+                            st.session_state["gla_lon_input"] = float(picked_loc.longitude)
+                            st.session_state["gla_tz_input"] = float(picked_loc.timezone_offset)
+                            st.session_state.last_applied_geo_loc = f"{picked_loc.formatted_name}_{float(picked_loc.latitude):.4f}_{float(picked_loc.longitude):.4f}"
                             st.session_state.gla_active_tool = None
                             st.toast(f"✅ स्थान '{picked_loc.city}' सेट किया गया!", icon="📍")
                             st.rerun()
