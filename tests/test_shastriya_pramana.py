@@ -148,7 +148,9 @@ def test_shastriya_shlokas_structure():
         "tajika_muntha_varshesha",
         "mudda_dasha_pramana",
         "btr_kunda_pranapada",
-        "vastu_purusha_mandala"
+        "vastu_purusha_mandala",
+        "lalkitab_farman_dharmi",
+        "lalkitab_rina_parihara"
     ]
     for k in required_keys:
         assert k in SHASTRIYA_SHLOKAS

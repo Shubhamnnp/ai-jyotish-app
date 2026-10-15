@@ -20694,6 +20694,24 @@ elif selected_idx == 22:
         st.markdown("### 🏠 लाल किताब अनुसार १२ खानों में ग्रह स्थिति")
         st.caption("लाल किताब में राशि नहीं, बल्कि खाना (House 1 to 12) सर्वोपरि होता है:")
 
+        lk_f_shl = SHASTRIYA_SHLOKAS.get("lalkitab_farman_dharmi", {})
+        if lk_f_shl:
+            lk_f_lines = "<br/>".join(lk_f_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(220, 38, 38, 0.08); border-left: 4px solid #DC2626; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #B91C1C; font-size: 13.5px; margin-bottom: 4px;">📖 {lk_f_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {lk_f_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {lk_f_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {lk_f_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
         khana_table = []
         for kh in range(1, 13):
             kh_info = lk_mod.LAL_KITAB_KHANA_DATA[kh]
@@ -20710,6 +20728,24 @@ elif selected_idx == 22:
     with tab_lk2:
         st.markdown("### ⚠️ लाल किताब के ९ शास्त्रीय कर्मिक ऋण (9 Karmic Debts)")
         st.caption("पूर्वजन्म अथवा पूर्वजों द्वारा किए गए कृत्यों के कारण उत्पन्न ९ शास्त्रीय ऋण:")
+
+        lk_r_shl = SHASTRIYA_SHLOKAS.get("lalkitab_rina_parihara", {})
+        if lk_r_shl:
+            lk_r_lines = "<br/>".join(lk_r_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(234, 88, 12, 0.08); border-left: 4px solid #EA580C; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #C2410C; font-size: 13.5px; margin-bottom: 4px;">📖 {lk_r_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {lk_r_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {lk_r_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {lk_r_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
         if lk_res.active_debts:
             for d in lk_res.active_debts:
