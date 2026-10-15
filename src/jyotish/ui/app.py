@@ -18097,6 +18097,24 @@ elif selected_idx == 13:
         st.markdown("### 🎯 मुन्था विचार एवं वार्षिक प्रभाव (Muntha Progression)")
         st.write("ताजिक ज्योतिष में मुन्था को 'वार्षिक लग्न' की भांति सर्वाधिक प्रभावी माना गया है। मुन्था प्रति वर्ष १ राशि (३० अंश) आगे बढ़ती है।")
 
+        mun_shl = SHASTRIYA_SHLOKAS.get("tajika_muntha_varshesha", {})
+        if mun_shl:
+            mun_lines = "<br/>".join(mun_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(37, 99, 235, 0.08); border-left: 4px solid #2563EB; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 {mun_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {mun_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {mun_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {mun_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
         c_m1, c_m2, c_m3 = st.columns(3)
         c_m1.metric("मुन्था राशि", f"{vp_res['muntha_sign_hi']}", f"वर्ष कुण्डली में {vp_res['muntha_house']} भाव")
         c_m2.metric("मुन्था पति (Lord)", f"👑 {vp_res['muntha_lord_hi']}", "मुन्था राशि अधिपति")
@@ -18244,6 +18262,24 @@ elif selected_idx == 13:
     with tab_vp7:
         st.markdown("### ⏳ वार्षिक दशा प्रणालियाँ (Mudda Vimshottari & Yogini Dashas)")
         st.write("सौर वर्ष (३६५.२५ दिन) के सूक्ष्म काल-विभाजन हेतु मुद्धा विंशोत्तरी एवं मुद्धा योगिनी दशा चक्र:")
+
+        mud_shl = SHASTRIYA_SHLOKAS.get("mudda_dasha_pramana", {})
+        if mud_shl:
+            mud_lines = "<br/>".join(mud_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid #9333EA; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #7E22CE; font-size: 13.5px; margin-bottom: 4px;">📖 {mud_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {mud_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {mud_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {mud_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
         c_md1, c_md2 = st.columns(2)
         with c_md1:
@@ -18938,6 +18974,24 @@ elif selected_idx == 15:
         st.markdown("### 📊 अष्टकूट ३६ गुण मिलान एवं शास्त्रीय सूत्र (Ashtakoota Breakdown)")
         st.write("चंद्र नक्षत्र व राशि के आधार पर ८ कूटों (गुणों) का सूक्ष्म गणित, प्राप्त अंक तथा मूल ग्रंथ श्लोक:")
 
+        ash_shl = SHASTRIYA_SHLOKAS.get("ashtakoota_milan", {})
+        if ash_shl:
+            ash_lines = "<br/>".join(ash_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(236, 72, 153, 0.08); border-left: 4px solid #EC4899; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #DB2777; font-size: 13.5px; margin-bottom: 4px;">📖 {ash_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {ash_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {ash_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {ash_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
         kootas_list = [
             {"कूट": "१. वर्ण (Varna)", "शास्त्रीय विचार": "कार्य प्रवृत्ति, अहंकार एवं बौद्धिक स्तर", "प्राप्त": m_score.varna, "कुल": 1.0, "महत्व": "कर्म एवं जीवन मूल्यों का तालमेल"},
             {"कूट": "२. वश्य (Vashya)", "शास्त्रीय विचार": "पारस्परिक आकर्षण, प्रभाव व समर्पण", "प्राप्त": m_score.vashya, "कुल": 2.0, "महत्व": "प्रभुत्व एवं आपसी नियंत्रण का संतुलन"},
@@ -18987,6 +19041,24 @@ elif selected_idx == 15:
     with tab_mil2:
         st.markdown("### 🛡️ शास्त्रीय महा-दोष एवं सूक्ष्म परिहार परीक्षण (Doshas & Cancellations)")
         st.write("विवाह मेलापक में नाड़ी, भकूट, रज्जु, वेध आदि का निष्पक्ष परीक्षण एवं प्रामाणिक ग्रंथों के परिहार नियम:")
+
+        nb_shl = SHASTRIYA_SHLOKAS.get("nadi_bhakoot_parihara", {})
+        if nb_shl:
+            nb_lines = "<br/>".join(nb_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #047857; font-size: 13.5px; margin-bottom: 4px;">📖 {nb_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {nb_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {nb_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {nb_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
         col_md1, col_md2, col_md3 = st.columns(3)
         with col_md1:

@@ -86,6 +86,33 @@ def test_badhaka_maraka_audit(sample_chart):
     assert bm["maraka_primary"]["house"] == 2
     assert bm["maraka_secondary"]["house"] == 7
 
+def test_muntha_calculation():
+    # If natal lagna is Aries (1), at age 0 muntha is Aries (1)
+    m0 = default_shastriya_pramana_engine.calculate_muntha(natal_lagna_sign_id=1, completed_age_years=0)
+    assert m0["muntha_sign_id"] == 1
+    assert m0["muntha_sign_en"] == "Aries"
+    assert m0["house_from_natal_lagna"] == 1
+    assert m0["is_auspicious"] is True
+
+    # At age 28, (1 - 1 + 28) % 12 + 1 = 28 % 12 + 1 = 4 + 1 = 5 (Leo)
+    m28 = default_shastriya_pramana_engine.calculate_muntha(natal_lagna_sign_id=1, completed_age_years=28)
+    assert m28["muntha_sign_id"] == 5
+    assert m28["muntha_sign_en"] == "Leo"
+    assert m28["muntha_lord_en"] == "Sun"
+    assert m28["house_from_natal_lagna"] == 5
+    assert m28["is_auspicious"] is True
+
+def test_ashtakoota_parihara_audit():
+    # Same sign (e.g. Leo = 5) but different nakshatras -> Nadi cancelled
+    res1 = default_shastriya_pramana_engine.audit_ashtakoota_parihara(
+        boy_nakshatra="Magha", boy_charan=1,
+        girl_nakshatra="Purva Phalguni", girl_charan=2,
+        boy_sign_id=5, girl_sign_id=5
+    )
+    assert res1["nadi_cancelled"] is True
+    assert "नाड़ी महादोष का पूर्ण परिहार" in res1["nadi_cancellation_reason"]
+    assert res1["bhakoot_cancelled"] is True  # Same sign lord Sun
+
 def test_shastriya_shlokas_structure():
     required_keys = [
         "pushkara_navamsha",
@@ -103,14 +130,18 @@ def test_shastriya_shlokas_structure():
         "double_transit",
         "shodashvarga_vaisheshikamsa",
         "tajika_prashna",
-        "kp_sublord_system"
+        "kp_sublord_system",
+        "ashtakoota_milan",
+        "nadi_bhakoot_parihara",
+        "tajika_muntha_varshesha",
+        "mudda_dasha_pramana"
     ]
     for k in required_keys:
-
         assert k in SHASTRIYA_SHLOKAS
         item = SHASTRIYA_SHLOKAS[k]
         assert "grantha" in item
         assert "shloka" in item
         assert "anuvad_hi" in item
         assert "rule" in item
+
 
