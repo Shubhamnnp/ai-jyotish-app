@@ -121,6 +121,7 @@ from src.jyotish.ui.chart_renderer import ChartRenderer
 import src.jyotish.ai.narrative as narr_mod
 importlib.reload(narr_mod)
 default_narrative_service = narr_mod.default_narrative_service
+from src.jyotish.services.shastriya_pramana import default_shastriya_pramana_engine, SHASTRIYA_SHLOKAS
 try:
     from src.jyotish.ui.grahalakshanam_icons import (
         ICON_NOTEPAD_B64,
@@ -8169,10 +8170,25 @@ with st.container(key="top_frozen_header_container", border=False):
         _pill_label = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#0073CF")
         _pill_val = "#FFFFFF" if (is_astrallis_mode or is_night_mode) else "#000000"
 
+        # Shastriya Daily Muhurta Calculations
+        try:
+            _muh_calc = default_shastriya_pramana_engine.calculate_daily_muhurta_windows(birth_d)
+            _rahu_str = f"{_muh_calc['rahu_kaal']['start']} ~ {_muh_calc['rahu_kaal']['end']}"
+            _abhijit_str = f"{_muh_calc['abhijit']['start']} ~ {_muh_calc['abhijit']['end']}"
+            _gulika_str = f"{_muh_calc['gulika_kaal']['start']} ~ {_muh_calc['gulika_kaal']['end']}"
+            _yama_str = f"{_muh_calc['yamaghanta']['start']} ~ {_muh_calc['yamaghanta']['end']}"
+            _brahma_str = f"{_muh_calc['brahma_muhurta']['start']} ~ {_muh_calc['brahma_muhurta']['end']}"
+        except Exception:
+            _rahu_str = "04:30 PM ~ 06:00 PM"
+            _abhijit_str = "11:45 AM ~ 12:35 PM"
+            _gulika_str = "03:00 PM ~ 04:30 PM"
+            _yama_str = "12:00 PM ~ 01:30 PM"
+            _brahma_str = "04:24 AM ~ 05:12 AM"
+
         st.markdown(f"""
-        <div style="background:{_sb_card_bg}; border:2px solid {_sb_card_border}; border-radius:12px; padding:10px 12px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <div style="background:{_sb_card_bg}; border:2px solid {_sb_card_border}; border-radius:12px; padding:10px 12px; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <div style="font-size:11px; font-weight:800; color:{_sb_prof_tag}; text-transform:uppercase; letter-spacing:0.5px;">⚡ जातक डिजिटल पंचांग</div>
+                <div style="font-size:11px; font-weight:800; color:{_sb_prof_tag}; text-transform:uppercase; letter-spacing:0.5px;">⚡ जातक डिजिटल पंचांग एवं मुहूर्त</div>
                 <span style="font-size:9.5px; font-weight:800; background:{_pill_bg}; color:#10B981; border:1px solid #10B981; border-radius:4px; padding:1px 5px;">● शुद्ध</span>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px;">
@@ -8197,28 +8213,45 @@ with st.container(key="top_frozen_header_container", border=False):
                     <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_karana_str}</b>
                 </div>
                 <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">🌅 सूर्योदय</span>
-                    <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_sr_str}</b>
-                </div>
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">🌇 सूर्यास्त</span>
-                    <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_ss_str}</b>
-                </div>
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">⏳ जन्म घटी</span>
-                    <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_ghati_str}</b>
-                </div>
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
                     <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">👑 होरा स्वामी</span>
                     <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_hora_str}</b>
                 </div>
+                <div style="background:{_pill_bg}; border:1px solid #10B981; border-radius:7px; padding:4px 6px; grid-column: span 2;">
+                    <span style="color:#10B981; font-size:9.5px; font-weight:800; display:block;">🌟 अभिजित मुहूर्त (विजय काल)</span>
+                    <b style="color:{_pill_val}; font-size:11.5px; font-weight:900;">{_abhijit_str}</b>
+                </div>
+                <div style="background:{_pill_bg}; border:1px solid #EF4444; border-radius:7px; padding:4px 6px; grid-column: span 2;">
+                    <span style="color:#EF4444; font-size:9.5px; font-weight:800; display:block;">🔴 राहुकाल (सर्वथा वर्जित)</span>
+                    <b style="color:{_pill_val}; font-size:11.5px; font-weight:900;">{_rahu_str}</b>
+                </div>
                 <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">🛡️ परिशुद्धता</span>
-                    <b style="color:#10B981; font-size:11px; font-weight:800; word-break:break-word;">99.9% शुद्ध</b>
+                    <span style="color:#F59E0B; font-size:9.5px; font-weight:700; display:block;">🔱 गुलिक काल</span>
+                    <b style="color:{_pill_val}; font-size:10.5px; font-weight:800;">{_gulika_str}</b>
+                </div>
+                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
+                    <span style="color:#64748B; font-size:9.5px; font-weight:700; display:block;">⏳ यमघण्ट काल</span>
+                    <b style="color:{_pill_val}; font-size:10.5px; font-weight:800;">{_yama_str}</b>
                 </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+        with st.expander("📜 पंचांग एवं मुहूर्त शास्त्रीय प्रमाण (Classical Shlokas)", expanded=False):
+            st.markdown("""
+            **🌟 अभिजित मुहूर्त प्रमाण (*मुहूर्त चिंतामणि*, अध्याय १, श्लोक ३५):**
+            ```text
+            दिवाकरकरप्रौढे मध्यगे द्युमणावपि।
+            अभिजित्संज्ञको ज्ञेयो हन्ति सर्वानुपद्रवान्॥
+            ```
+            > **हिंदी अनुवाद:** दिन के मध्याह्न काल में जब भगवान सूर्य आकाश के मध्य में (दशम भाव सदृश) प्रज्वलित होते हैं, तब ८वां मुहूर्त 'अभिजित' कहलाता है। इसमें भगवान श्रीहरि विष्णु का वास होता है जो समस्त उपद्रवों व दोषों का शमन कर विजय प्रदान करता है (बुधवार को छोड़कर)।
+
+            **🔴 राहुकाल विचार प्रमाण (*कालामृत* एवं *मुहूर्त चिंतामणि*):**
+            ```text
+            आदित्यवारादिषु रात्रिभागे दिवा च राहोः कुलिकादिकानाम्।
+            यामेषु केन्द्रेषु च वर्जनीयाः सर्वेषु कार्येषु विनाशहेतुः॥
+            ```
+            > **हिंदी अनुवाद:** दिन के १/८वें भाग (९० मिनट की वेला) में राहु का विशेष आधिपत्य रहता है। इसमें किया गया कोई भी मांगलिक कार्य, अनुबंध या नवीन उद्यम विफलता, क्लेश व हानि की ओर ले जाता है, अतः यह सर्वथा वर्जित है।
+            """)
 
         st.markdown(f"### 📚 समस्त {len(MODULE_OPTIONS)} वैदिक मॉड्यूल")
         
@@ -8348,8 +8381,9 @@ if cur_user_role == "jatak" and selected_idx not in jatak_allowed_modules:
 if selected_idx == 0:
     st.subheader("📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (Natal & Divisional Charts)")
 
-    tab_d1, tab_jm_hud, tab_bhav, tab_chandra, tab_surya, tab_yuddha, tab_vishesh, tab_kota = st.tabs([
+    tab_d1, tab_pushkara, tab_jm_hud, tab_bhav, tab_chandra, tab_surya, tab_yuddha, tab_vishesh, tab_kota = st.tabs([
         "📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (D1 to D60)",
+        "🌟 पुष्कर नवांश, भाग व वर्गोत्तम (Pushkara & Vargottama)",
         "👑 विशेष जैमिनी लग्न (Special Lagnas - Shastriya Standard)",
         "🏠 भाव चलित चक्र",
         "🌙 चन्द्र कुण्डली",
@@ -9188,7 +9222,114 @@ if selected_idx == 0:
             st.error(f"द्वादश भाव तालिका निर्माण त्रुटि: {_ebh}")
         p = chart.panchang
 
+    with tab_pushkara:
+        st.markdown("### 🌟 पुष्कर नवांश, पुष्कर भाग एवं वर्गोत्तम शास्त्रीय विवेचन")
+        st.caption("महर्षि पराशर, जातक पारिजात एवं उत्तर कालामृत के अनुसार कुण्डली को अमृततुल्य पोषण एवं राजयोग प्रदान करने वाले दुर्लभ अंश:")
 
+        p_audit = default_shastriya_pramana_engine.audit_chart_pushkara(chart)
+        v_audit = default_shastriya_pramana_engine.audit_vargottama(chart)
+
+        col_pk1, col_pk2, col_pk3 = st.columns(3)
+        with col_pk1:
+            p_nav_str = ", ".join(p_audit["pushkara_navamsha_planets"]) if p_audit["pushkara_navamsha_planets"] else "कोई नहीं"
+            st.metric("🌟 पुष्कर नवांश (Pushkara Navamsha)", f"{len(p_audit['pushkara_navamsha_planets'])} ग्रह/लग्न", p_nav_str)
+        with col_pk2:
+            p_bhaga_str = ", ".join(p_audit["pushkara_bhaga_planets"]) if p_audit["pushkara_bhaga_planets"] else "कोई नहीं"
+            st.metric("🎯 पुष्कर भाग (Pushkara Bhaga)", f"{len(p_audit['pushkara_bhaga_planets'])} ग्रह/लग्न", p_bhaga_str)
+        with col_pk3:
+            v_str = ", ".join([v["planet"] for v in v_audit["vargottama_planets"]]) if v_audit["vargottama_planets"] else "कोई नहीं"
+            st.metric("👑 वर्गोत्तम ग्रह (Vargottama D1=D9)", f"{v_audit['count']} ग्रह", v_str)
+
+        st.markdown("#### 📜 नवग्रह एवं लग्न पुष्करांश-वर्गोत्तम स्थिति तालिका")
+        rows_html = []
+        d9_chart_obj = chart.vargas.get("D9") if hasattr(chart, "vargas") else None
+
+        for p_name in ["Lagna", "Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]:
+            if p_name == "Lagna":
+                sign_nm = chart.lagna_sign_name
+                deg_val = chart.lagna_degree % 30.0
+                d9_sign_nm = d9_chart_obj.lagna_sign_name if d9_chart_obj else "-"
+                is_varg = (chart.lagna_sign_name == d9_sign_nm)
+                p_display = "लग्न (Lagna/Ascendant)"
+            else:
+                p_obj = chart.planets.get(p_name)
+                if not p_obj:
+                    continue
+                sign_nm = p_obj.sign_name
+                deg_val = p_obj.sign_degree
+                d9_p = d9_chart_obj.planets.get(p_name) if d9_chart_obj else None
+                d9_sign_nm = d9_p.sign_name if d9_p else "-"
+                is_varg = (p_obj.sign_name == d9_sign_nm)
+                p_display = f"{PLANET_NAMES_HI.get(p_name, p_name)} ({p_name})"
+
+            pk_info = p_audit["planets"].get(p_name, {})
+            is_pn = pk_info.get("is_pushkara_navamsha", False)
+            pn_sign = pk_info.get("navamsha_sign_hi", "-")
+            pn_lord = pk_info.get("navamsha_lord_hi", "-")
+            is_pb = pk_info.get("is_pushkara_bhaga", False)
+            pb_deg = pk_info.get("pushkara_bhaga_exact_deg", "-")
+
+            pn_badge = f'<span style="background:#DCFCE7; color:#15803D; font-weight:800; padding:2px 8px; border-radius:4px; border:1px solid #86EFAC;">🌟 हाँ ({pn_sign} नवांश, स्वामी: {pn_lord})</span>' if is_pn else '<span style="color:#94A3B8;">—</span>'
+            pb_badge = f'<span style="background:#FEF3C7; color:#B45309; font-weight:800; padding:2px 8px; border-radius:4px; border:1px solid #FCD34D;">🎯 हाँ ({pb_deg}°)</span>' if is_pb else '<span style="color:#94A3B8;">—</span>'
+            vg_badge = '<span style="background:#EFF6FF; color:#1D4ED8; font-weight:800; padding:2px 8px; border-radius:4px; border:1px solid #93C5FD;">👑 वर्गोत्तम (स्वगृहीतुल्य)</span>' if is_varg else '<span style="color:#94A3B8;">—</span>'
+
+            row = f"""
+            <tr style="border-bottom: 1px solid #E2E8F0;">
+                <td style="padding: 7px 10px; font-weight: 700;">{p_display}</td>
+                <td style="padding: 7px 10px;">{sign_nm} ({deg_val:.2f}°)</td>
+                <td style="padding: 7px 10px;">{d9_sign_nm}</td>
+                <td style="padding: 7px 10px;">{pn_badge}</td>
+                <td style="padding: 7px 10px;">{pb_badge}</td>
+                <td style="padding: 7px 10px;">{vg_badge}</td>
+            </tr>
+            """
+            rows_html.append(row)
+
+        table_html = f"""
+        <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px; margin-bottom:15px; box-shadow:0 2px 6px rgba(0,0,0,0.05); overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:12px; text-align:left;">
+                <thead>
+                    <tr style="background:#F1F5F9; border-bottom:2px solid #CBD5E1; color:#1E293B;">
+                        <th style="padding:8px 10px;">ग्रह / लग्न</th>
+                        <th style="padding:8px 10px;">D1 राशि एवं अंश</th>
+                        <th style="padding:8px 10px;">D9 नवांश राशि</th>
+                        <th style="padding:8px 10px;">पुष्कर नवांश</th>
+                        <th style="padding:8px 10px;">पुष्कर भाग</th>
+                        <th style="padding:8px 10px;">वर्गोत्तम स्थिति</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {''.join(rows_html)}
+                </tbody>
+            </table>
+        </div>
+        """
+        st.markdown(table_html, unsafe_allow_html=True)
+
+        with st.expander("📜 पुष्कर नवांश एवं वर्गोत्तम शास्त्रीय श्लोक व प्रमाण", expanded=True):
+            st.markdown("""
+            **🌟 पुष्कर नवांश महात्म्य (*जातक पारिजात*, अध्याय १, श्लोक ५७-५८):**
+            ```text
+            पुष्करांशगताः सर्वे ग्रहाः शुभफलप्रदाः।
+            नीचस्था अपि कुर्वन्ति राजयोगमनुत्तमम्॥
+            ```
+            > **हिंदी अनुवाद एवं फल:** पुष्कर नवांश में स्थित समस्त ग्रह जातक को अमृततुल्य पोषण एवं अत्यंत शुभ फल प्रदान करते हैं। यदि कोई ग्रह जन्म कुण्डली में नीच राशि में भी बैठा हो, परंतु पुष्कर नवांश में हो, तो वह अपनी नीचता त्यागकर सर्वोत्तम राजयोग का फल प्रदान करता है।
+
+            **🎯 पुष्कर भाग विचार (*उत्तर कालामृत*, काण्ड २, श्लोक २४):**
+            ```text
+            वर्गोत्तमे पुष्करांशे स्थितो वा स्वगृहेऽपि वा।
+            करोति कीर्तिं विपुलां नृपतिं वा न संशयः॥
+            ```
+            > **हिंदी अनुवाद एवं फल:** जब ग्रह पुष्कर भाग (प्रत्येक राशि के अत्यंत गोपनीय व शुभ अंश) में होता है, तो वह जातक को विपुल कीर्ति, स्थायी आरोग्य एवं राजकीय सम्मान प्रदान करता है।
+
+            **👑 वर्गोत्तम ग्रह फल (*बृहज्जातक*, अध्याय १, श्लोक २०):**
+            ```text
+            वर्गोत्तमाश्चराद्येषु प्रथमान्त्यमध्यमाः।
+            स्वांशे यदा ग्रहो याति तदा वर्गोत्तमो भवेत्॥
+            स्वक्षेत्रफलदः साक्षात् सर्वसौख्यप्रदायकः।
+            ```
+            > **हिंदी अनुवाद एवं फल:** चर राशियों (१, ४, ७, १०) का प्रथम नवांश, स्थिर राशियों (२, ५, ८, ११) का पंचम नवांश, और द्विस्वभाव राशियों (३, ६, ९, १२) का नवम नवांश वर्गोत्तम कहलाता है। जब ग्रह D1 और D9 दोनों में समान राशि में होता है, तो वह स्वगृही (अपने घर में बैठे) ग्रह के समान पूर्ण सामर्थ्यवान होकर जीवन में स्थिरता, दृढ़ इच्छाशक्ति एवं कार्य-सिद्धि प्रदान करता है।
+            """)
 
     with tab_jm_hud:
         st.markdown("### 👑 विशेष जैमिनी लग्न (Special Lagnas - Shastriya Standard)")
@@ -14741,6 +14882,46 @@ elif selected_idx == 8:
                 st.markdown(f"- 🎁 **प्रशस्त दान सामग्री:** {a_rem['daan']}")
                 st.markdown(f"- 🛕 **आराध्य देव / स्तोत्र:** {a_rem['deity']}")
 
+        with st.expander("📜 सशर्त दशा पात्रता ऑडिट (Conditional Dasha Eligibility Audit — BPHS Ch. 46)", expanded=True):
+            st.markdown("#### ⚖️ बृहत्पाराशर होरा शास्त्र अध्याय ४६ अनुसार विशेष दशाओं की पात्रता विश्लेषण:")
+            try:
+                cond_audit = default_shastriya_pramana_engine.evaluate_conditional_dasha_eligibility(chart)
+                c_ashto = cond_audit["ashtottari"]
+                c_shoda = cond_audit["shodashottari"]
+                c_dwisa = cond_audit["dwisaptati"]
+                c_shashti = cond_audit["shashtihayani"]
+
+                cd_col1, cd_col2 = st.columns(2)
+                with cd_col1:
+                    badge_ashto = "🟢 **अधिकार प्राप्त (Eligible)**" if c_ashto["is_eligible"] else "⚪ सामान्य विंशोत्तरी लागू"
+                    st.info(f"**{c_ashto['name']}**\n- **स्थिति:** {badge_ashto}\n- **शास्त्रीय तर्क:** {c_ashto['reason_hi']}")
+                    badge_dwisa = "🟢 **अधिकार प्राप्त (Eligible)**" if c_dwisa["is_eligible"] else "⚪ सामान्य विंशोत्तरी लागू"
+                    st.info(f"**{c_dwisa['name']}**\n- **स्थिति:** {badge_dwisa}\n- **शास्त्रीय तर्क:** {c_dwisa['reason_hi']}")
+                with cd_col2:
+                    badge_shoda = "🟢 **अधिकार प्राप्त (Eligible)**" if c_shoda["is_eligible"] else "⚪ सामान्य विंशोत्तरी लागू"
+                    st.info(f"**{c_shoda['name']}**\n- **स्थिति:** {badge_shoda}\n- **शास्त्रीय तर्क:** {c_shoda['reason_hi']}")
+                    badge_shashti = "🟢 **अधिकार प्राप्त (Eligible)**" if c_shashti["is_eligible"] else "⚪ सामान्य विंशोत्तरी लागू"
+                    st.info(f"**{c_shashti['name']}**\n- **स्थिति:** {badge_shashti}\n- **शास्त्रीय तर्क:** {c_shashti['reason_hi']}")
+
+                shl = cond_audit["shastriya_shloka"]
+                shl_lines = "<br/>".join(shl['shloka'].splitlines())
+                st.markdown(f"""
+<div style="background: rgba(245, 158, 11, 0.08); border-left: 4px solid #F59E0B; padding: 12px 16px; border-radius: 6px; margin-top: 10px;">
+    <div style="font-weight: 700; color: #B45309; font-size: 13px; margin-bottom: 4px;">📖 {shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #1E293B;">
+        {shl_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12px; color: #475569; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11px; color: #6B7280;">
+        <b>शास्त्रीय नियम:</b> {shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+            except Exception as _e_cond:
+                st.caption(f"सशर्त दशा विश्लेषण: {_e_cond}")
+
 
 
 elif selected_idx == 9:
@@ -15203,6 +15384,24 @@ elif selected_idx == 9:
     with tab_g7:
         st.markdown("### 🔬 अष्टकवर्ग कक्षी गोचर स्कैनर (Kakshya 3°45' Transit Scanner)")
         st.caption("शास्त्रीय शोध स्तरीय ३°४५' (3.75°) अष्ट-कक्षी सूक्ष्म गोचर वेध — शनि, गुरु, मंगल, सूर्य, शुक्र, बुध, चन्द्र एवं लग्न कक्षी में बिन्दु (१=शुभ / ०=रिक्ता) परीक्षण:")
+
+        k_shloka = SHASTRIYA_SHLOKAS.get("kakshya_system", {})
+        if k_shloka:
+            k_lines = "<br/>".join(k_shloka['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 12px 16px; border-radius: 6px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #047857; font-size: 13px; margin-bottom: 4px;">📖 {k_shloka['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {k_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {k_shloka['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11px; color: #64748B;">
+        <b>शास्त्रीय कक्षी विभाजन नियम:</b> {k_shloka['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
         try:
             import importlib

@@ -433,6 +433,25 @@ class AINarrativeService:
         # 12. Strict Gemology Audit
         gemology_block = default_gemology_service.format_gemology_audit_for_prompt(chart)
 
+        # 13. Pushkara Navamsha & Pushkara Bhaga (अमृततुल्य पोषक अंश)
+        pushkara_block = ""
+        try:
+            from src.jyotish.services.shastriya_pramana import default_shastriya_pramana_engine
+            p_audit = default_shastriya_pramana_engine.audit_chart_pushkara(chart)
+            v_audit = default_shastriya_pramana_engine.audit_vargottama(chart)
+            pn_list = ", ".join(p_audit["pushkara_navamsha_planets"]) if p_audit["pushkara_navamsha_planets"] else "None"
+            pb_list = ", ".join(p_audit["pushkara_bhaga_planets"]) if p_audit["pushkara_bhaga_planets"] else "None"
+            vg_list = ", ".join([v["planet"] for v in v_audit["vargottama_planets"]]) if v_audit["vargottama_planets"] else "None"
+            pushkara_block = (
+                f"\n=== PUSHKARA NAVAMSHA, PUSHKARA BHAGA & VARGOTTAMA (अमृततुल्य ग्रह बल) ===\n"
+                f"• Pushkara Navamsha Planets: {pn_list}\n"
+                f"• Pushkara Bhaga Exact Degree Planets: {pb_list}\n"
+                f"• Vargottama Planets (D1=D9): {vg_list}\n"
+                f"• Shastriya Pramana: 'पुष्करांशगताः सर्वे ग्रहाः शुभफलप्रदाः। नीचस्था अपि कुर्वन्ति राजयोगमनुत्तमम्॥' (जातक परिजात १.५७-५८)\n"
+            )
+        except Exception:
+            pushkara_block = ""
+
         context = f"""
 === NATAL KUNDALI BASELINE PROFILE ===
 • Name: {p.name}
@@ -460,6 +479,7 @@ class AINarrativeService:
 {lk_block}
 {trigger_block}
 {gemology_block}
+{pushkara_block}
 ======================================
 """
         return context
