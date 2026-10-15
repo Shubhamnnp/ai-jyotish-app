@@ -410,6 +410,18 @@ class VimshottariDashaEngine:
             formatted_summary=summary
         )
 
+    def get_current_dasha(self, chart: Any, target_dt: Optional[datetime] = None) -> Dict[str, Any]:
+        """
+        Convenience method to retrieve the active 5-level hierarchy for a KundaliChart.
+        Returns a dict containing 'mahadasha', 'antardasha', 'pratyantardasha',
+        'sookshmadasha', 'pranadasha', and 'summary_short'.
+        """
+        if target_dt is None:
+            target_dt = datetime.now()
+        b_dt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
+        moon_lon = chart.planets["Moon"].longitude
+        return self.get_5level_hierarchy(b_dt, moon_lon, target_dt)
+
 
 # Singleton dasha engine
 default_dasha_engine = VimshottariDashaEngine(year_type="solar")

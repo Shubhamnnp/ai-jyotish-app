@@ -298,11 +298,17 @@ class AINarrativeService:
                 elif "current_dasha" in d_cand:
                     curr = d_cand["current_dasha"]
                     dasha_text = f"Mahadasha: {curr.get('mahadasha', '')}, Antardasha: {curr.get('antardasha', '')}, Pratyantar: {curr.get('pratyantardasha', '')}"
-        if dasha_text == "N/A":
+        if dasha_text == "N/A" and chart:
             try:
                 curr_d = default_dasha_engine.get_current_dasha(chart)
                 if curr_d:
-                    dasha_text = f"Mahadasha: {curr_d.get('lord', '')} ({curr_d.get('level', 'MD')})"
+                    md = curr_d.get("mahadasha", {})
+                    ad = curr_d.get("antardasha", {})
+                    pd = curr_d.get("pratyantardasha", {})
+                    md_end_s = md.get("end_date").strftime('%d-%b-%Y') if hasattr(md.get("end_date"), "strftime") else str(md.get("end_date"))
+                    ad_end_s = ad.get("end_date").strftime('%d-%b-%Y') if hasattr(ad.get("end_date"), "strftime") else str(ad.get("end_date"))
+                    pd_end_s = pd.get("end_date").strftime('%d-%b-%Y') if hasattr(pd.get("end_date"), "strftime") else str(pd.get("end_date"))
+                    dasha_text = f"Mahadasha: {md.get('lord', '')} (till {md_end_s}), Antardasha: {ad.get('lord', '')} (till {ad_end_s}), Pratyantar: {pd.get('lord', '')} (till {pd_end_s}) | Sequence: {curr_d.get('summary_short', '')}"
             except Exception:
                 pass
 
@@ -513,7 +519,7 @@ class AINarrativeService:
             "career": ["नौकरी", "करियर", "पदोन्नति", "आजीविका", "काम", "career", "job", "promotion", "profession", "work", "naukri"],
             "wealth": ["धन", "संपत्ति", "आर्थिक", "पैसा", "मकान", "भूमि", "शेयर", "कर्ज", "खजाना", "लाभ", "wealth", "finance", "money", "property", "rich", "income", "paisa"],
             "health": ["स्वास्थ्य", "रोग", "बीमारी", "दुर्घटना", "मानसिक", "कष्ट", "तनाव", "सर्जरी", "आयु", "health", "disease", "illness", "surgery", "accident", "hospital", "bimar"],
-            "dasha": ["दशा", "गोचर", "समय", "महादशा", "अंतर्दशा", "शनि", "साढ़ेसाती", "भ्रमण", "dasha", "transit", "gochar", "period", "timing"],
+            "dasha": ["दशा", "गोचर", "समय", "महादशा", "अंतर्दशा", "प्रत्यंतर्दशा", "विंशोत्तरी", "शनि", "साढ़ेसाती", "भ्रमण", "dasha", "dash", "mahadash", "antardash", "pratyantar", "vimshottari", "transit", "gochar", "period", "timing", "dasa", "dasah", "mahadhasa", "antardhasa", "kiski dasha", "konsi dasha", "kaun si dasha", "chal rahi", "chal raha"],
             "remedies": ["उपाय", "रत्न", "रुद्राक्ष", "मंत्र", "पूजा", "दान", "व्रत", "शांति", "दुरुस्ती", "पन्ना", "माणिक्य", "मोती", "मूँगा", "पुखराज", "हीरा", "नीलम", "गोमेद", "remedy", "gemstone", "rudraksha", "mantra", "fasting", "panna", "emerald", "ratan", "ratna"],
             "progeny": ["संतान", "गर्भ", "पुत्र", "पुत्री", "बच्चा", "family", "child", "children", "pregnancy", "progeny", "santan"],
             "education": ["विद्या", "शिक्षा", "पढ़ाई", "परीक्षा", "ज्ञान", "education", "study", "exam", "learning", "degree", "padhai"],
@@ -601,6 +607,9 @@ class AINarrativeService:
         elif any(w in q_lower for w in ["विदेश", "यात्रा", "वीजा", "travel", "foreign", "abroad"]):
             topic = "travel"
             cat_en = "Travel"
+        elif any(w in q_lower for w in ["दशा", "महादशा", "अंतर्दशा", "प्रत्यंतर्दशा", "विंशोत्तरी", "गोचर", "पाया", "साढ़ेसाती", "dasha", "dash", "mahadash", "antardash", "pratyantar", "vimshottari", "gochar", "transit", "paya", "dasa", "dasah", "mahadhasa", "antardhasa", "kiski dasha", "konsi dasha", "kaun si dasha", "chal rahi"]):
+            topic = "dasha"
+            cat_en = "General"
 
         # 2. Instant Horary Prashna Chart Generation
         lat = chart.birth_data.latitude if chart else 28.6139
@@ -722,6 +731,29 @@ class AINarrativeService:
                 mercury = chart.planets.get("Mercury")
                 if mercury and mercury.house_from_lagna in [6, 8, 12]:
                     cautions.append(f"🚨 विशेष चेतावनी: बुध आपकी कुण्डली के {mercury.house_from_lagna}वें भाव में है, अतः पन्ना रत्न सर्वथा वर्जित है!")
+
+            elif topic == "dasha":
+                try:
+                    curr_d = default_dasha_engine.get_current_dasha(chart)
+                    md = curr_d.get("mahadasha", {})
+                    ad = curr_d.get("antardasha", {})
+                    pd = curr_d.get("pratyantardasha", {})
+                    md_lord = md.get("lord", "")
+                    ad_lord = ad.get("lord", "")
+                    pd_lord = pd.get("lord", "")
+                    md_end_s = md.get("end_date").strftime('%d-%b-%Y') if hasattr(md.get("end_date"), "strftime") else str(md.get("end_date"))
+                    ad_end_s = ad.get("end_date").strftime('%d-%b-%Y') if hasattr(ad.get("end_date"), "strftime") else str(ad.get("end_date"))
+
+                    natal_summary = {
+                        "bhava": "विंशोत्तरी दशा चक्र (Vimshottari Dasha Hierarchy)",
+                        "mahadasha": f"{md_lord} (समाप्ति: {md_end_s})",
+                        "antardasha": f"{ad_lord} (समाप्ति: {ad_end_s})",
+                        "pratyantardasha": f"{pd_lord}",
+                        "summary": curr_d.get("summary_short", "")
+                    }
+                    direct_timing = f"वर्तमान में {md_lord} महादशा में {ad_lord} अंतर्दशा ({ad_end_s} तक) सक्रिय है"
+                except Exception:
+                    direct_timing = "वर्तमान विंशोत्तरी दशा चक्र सक्रिय"
 
         # 6. Shastriya Rules Scan
         rules_scan_info = self.scan_shastriya_rules(chart, query=user_query, limit=12)
@@ -879,7 +911,12 @@ class AINarrativeService:
                 f"🌿 **सात्विक उपाय:** श्री कनकधारा स्तोत्र का नित्य पाठ करें।"
             )
 
-        elif any(w in q_lower for w in ["दशा", "गोचर", "dasha", "gochar", "transit", "पाया", "paya"]):
+        elif topic == "dasha" or any(w in q_lower for w in [
+            "दशा", "महादशा", "अंतर्दशा", "प्रत्यंतर्दशा", "विंशोत्तरी",
+            "dasha", "dash", "mahadash", "antardash", "pratyantar", "vimshottari",
+            "dasa", "dasah", "mahadhasa", "antardhasa", "kiski dasha", "konsi dasha",
+            "kaun si dasha", "chal rahi", "chal raha", "गोचर", "पाया", "gochar", "transit", "paya"
+        ]):
             te = TransitEngine()
             td, ts = te.compute_transit_snapshot(chart, date.today())
             sat_p = ts.saturn_paya or "ताम्र पाया"
@@ -889,28 +926,118 @@ class AINarrativeService:
             sade_s = f"{ts.sade_sati_phase} सक्रिय" if ts.is_sade_sati else "साढ़े साती प्रभाव मुक्त"
             sat_pos = td.get("Saturn", {})
             jup_pos = td.get("Jupiter", {})
-            
-            curr_d = ""
-            if "dasha" in research and "current_dasha" in research.get("dasha", {}):
-                cd = research["dasha"]["current_dasha"]
-                curr_d = f"**{cd.get('mahadasha', '')}** महादशा में **{cd.get('antardasha', '')}** अंतर्दशा"
+
+            # 5-Level Vimshottari Hierarchy Calculation
+            try:
+                curr_dasha_data = default_dasha_engine.get_current_dasha(chart)
+            except Exception:
+                curr_dasha_data = {}
+
+            md = curr_dasha_data.get("mahadasha", {})
+            ad = curr_dasha_data.get("antardasha", {})
+            pd = curr_dasha_data.get("pratyantardasha", {})
+            sd = curr_dasha_data.get("sookshmadasha", {})
+
+            md_lord = md.get("lord", "Jupiter")
+            ad_lord = ad.get("lord", "Saturn")
+            pd_lord = pd.get("lord", "Mercury")
+            sd_lord = sd.get("lord", "")
+
+            p_hi_names = {
+                "Sun": "सूर्य देव (Sun)",
+                "Moon": "चंद्र देव (Moon)",
+                "Mars": "मंगल देव (Mars)",
+                "Mercury": "बुध देव (Mercury)",
+                "Jupiter": "देवगुरु बृहस्पति (Jupiter)",
+                "Venus": "शुक्र देव (Venus)",
+                "Saturn": "शनि देव (Saturn)",
+                "Rahu": "राहु (Rahu)",
+                "Ketu": "केतु (Ketu)"
+            }
+            md_hi = p_hi_names.get(md_lord, md_lord)
+            ad_hi = p_hi_names.get(ad_lord, ad_lord)
+            pd_hi = p_hi_names.get(pd_lord, pd_lord)
+            sd_hi = p_hi_names.get(sd_lord, sd_lord)
+
+            md_start_s = md.get("start_date").strftime('%d %B %Y') if hasattr(md.get("start_date"), "strftime") else str(md.get("start_date"))
+            md_end_s = md.get("end_date").strftime('%d %B %Y') if hasattr(md.get("end_date"), "strftime") else str(md.get("end_date"))
+            ad_start_s = ad.get("start_date").strftime('%d %B %Y') if hasattr(ad.get("start_date"), "strftime") else str(ad.get("start_date"))
+            ad_end_s = ad.get("end_date").strftime('%d %B %Y') if hasattr(ad.get("end_date"), "strftime") else str(ad.get("end_date"))
+            pd_start_s = pd.get("start_date").strftime('%d %B %Y') if hasattr(pd.get("start_date"), "strftime") else str(pd.get("start_date"))
+            pd_end_s = pd.get("end_date").strftime('%d %B %Y') if hasattr(pd.get("end_date"), "strftime") else str(pd.get("end_date"))
+
+            # Natal Placement of Dasha Lords
+            md_p = chart.planets.get(md_lord)
+            if md_p:
+                md_h = md_p.house_from_lagna
+                md_sign = md_p.sign_name
+                md_deg = md_p.sign_degree
+                md_ruled = [h.house_number for h in chart.houses if h.lord == md_lord]
+                md_ruled_str = ", ".join([f"{h}वें" for h in md_ruled]) if md_ruled else "केंद्र/त्रिकोण"
+                md_dignity = md_p.dignity.title()
+                md_vakri_str = "🔄 **वक्री (Retrograde)**" if md_p.is_retrograde else "मार्गी (Direct)"
             else:
-                curr_d = "वर्तमान विंशोत्तरी दशा चक्र सक्रिय"
+                md_h = 1; md_sign = "-"; md_deg = 0.0; md_ruled_str = "-"; md_dignity = "Normal"; md_vakri_str = "मार्गी"
+
+            ad_p = chart.planets.get(ad_lord)
+            if ad_p:
+                ad_h = ad_p.house_from_lagna
+                ad_sign = ad_p.sign_name
+                ad_deg = ad_p.sign_degree
+                ad_ruled = [h.house_number for h in chart.houses if h.lord == ad_lord]
+                ad_ruled_str = ", ".join([f"{h}वें" for h in ad_ruled]) if ad_ruled else "केंद्र/त्रिकोण"
+                ad_dignity = ad_p.dignity.title()
+                ad_vakri_str = "🔄 **वक्री (Retrograde)**" if ad_p.is_retrograde else "मार्गी (Direct)"
+            else:
+                ad_h = 1; ad_sign = "-"; ad_deg = 0.0; ad_ruled_str = "-"; ad_dignity = "Normal"; ad_vakri_str = "मार्गी"
+
+            # Mutual relation (षडाष्टक / द्विर्द्वादश / केंद्र-त्रिकोण)
+            mutual_dist = abs(md_h - ad_h) + 1 if md_p and ad_p else 1
+            if mutual_dist in [6, 8]:
+                sambandh_desc = f"महादशाधिपति ({md_hi}) एवं अंतर्दशाधिपति ({ad_hi}) का परस्पर **६/८ (षडाष्टक संबंध)** है। *फलदीपिका* के अनुसार षडाष्टक दशा में स्वास्थ्य, विवाद व अप्रत्याशित खर्चे बढ़ते हैं, अतः विशेष धैर्य एवं उपाय आवश्यक हैं।"
+            elif mutual_dist in [2, 12]:
+                sambandh_desc = f"महादशाधिपति ({md_hi}) एवं अंतर्दशाधिपति ({ad_hi}) का परस्पर **२/१२ (द्विर्द्वादश संबंध)** है। यह कालखंड आर्थिक लेन-देन, निवेश व यात्राओं में सतर्कता बरतने का निर्देश देता है।"
+            else:
+                sambandh_desc = f"महादशाधिपति ({md_hi}) एवं अंतर्दशाधिपति ({ad_hi}) परस्पर **शुभ स्थिति (केंद्र/त्रिकोण/मित्र संबंध)** में हैं। यह कालखंड आपके पुरुषार्थ को सही दिशा देने पर मान-सम्मान, पदोन्नति एवं स्थिरता प्रदान करने वाला है।"
+
+            remedies_map = {
+                "Jupiter": "प्रतिदिन 'ॐ बृं बृहस्पतये नमः' का १०८ बार जप करें और गुरुवार को गाय को चने की दाल व गुड़ अर्पित करें।",
+                "Saturn": "शनिवार को पीपल वृक्ष पर सरसों तेल का दीपक जलाएं और नित्य हनुमान चालीसा का पाठ करें।",
+                "Mars": "मंगलवार को सुंदरकांड का पाठ करें और हनुमान जी को चमेली के तेल का दीप अर्पित करें।",
+                "Sun": "नित्य प्रातः तांबे के लोटे से सूर्य देव को कुंकुम मिश्रित जल अर्पित करें और आदित्य हृदय स्तोत्र का पाठ करें।",
+                "Moon": "प्रतिदिन 'ॐ नमः शिवाय' का जप करें और सोमवार को शिवलिंग पर कच्चा दूध व जल अर्पित करें।",
+                "Mercury": "बुधवार को गाय को हरी घास अथवा भीगी मूंग खिलाएं और 'ॐ बुं बुधाय नमः' का जप करें।",
+                "Venus": "माता महालक्ष्मी को खीर का भोग लगाएं और श्री सूक्त का पाठ करें।",
+                "Rahu": "भगवान शिव की उपासना करें, 'ॐ नमः शिवाय' का नित्य जप करें और पक्षियों को सात प्रकार का अनाज (सप्तधान्य) डालें।",
+                "Ketu": "भगवान गणेश जी को दूर्वा अर्पित करें और 'ॐ गं गणपतये नमः' का जप करें।"
+            }
+            md_remedy = remedies_map.get(md_lord, "इष्ट आराधना करें और नित्य गायत्री मंत्र का जप करें।")
+            ad_remedy = remedies_map.get(ad_lord, "दशा स्वामी के बीज मंत्र का जप करें।")
 
             return (
-                f"🪐 **वर्तमान दशा एवं गोचर शास्त्रीय फलकथन ({p_name} जी):**\n\n"
-                f"आपकी जन्म कुण्डली (**{lagna_s} लग्न**, **{moon_s} राशि**) के अनुसार तात्कालिक दशा-गोचर का संयुक्त शास्त्रीय निर्णय:\n\n"
-                f"⏳ **१. सक्रिय विंशोत्तरी दशा प्रभाव:**\n"
-                f"- **दशा चक्र:** {curr_d}।\n"
-                f"- *फलदीपिका* के अनुसार महादशाधिपति जीवन के वर्तमान आधारभूत प्रवाह का संचालक है और अंतर्दशाधिपति तात्कालिक घटनाओं का परिणाम निर्धारित करता है।\n\n"
-                f"🪐 **२. वर्तमान गोचर एवं पाया विचार (Transit Paya Vigyan):**\n"
-                f"- **शनि देव गोचर:** जन्म राशि से **{sat_pos.get('house_from_moon', '-')}वें भाव** ({sat_pos.get('sign_name', '')} राशि) में भ्रमणशील।\n"
-                f"- **शनि पाया:** **{sat_p}** — {sat_det.get('desc_hi', 'कार्य-सिद्धि व संतुलन।')}\n"
+                f"⏳ **वर्तमान सक्रिय विंशोत्तरी दशा एवं गोचर शास्त्रीय निर्णय ({p_name} जी):**\n\n"
+                f"आपकी जन्म कुण्डली (**{lagna_s} लग्न**, **{moon_s} राशि**) के अनुसार वर्तमान समय में चल रही दशा का प्रत्यक्ष शास्त्रीय विवरण:\n\n"
+                f"👑 **१. वर्तमान महादशा: {md_hi}**\n"
+                f"- **सक्रिय अवधि:** **{md_start_s}** से **{md_end_s}** तक\n"
+                f"- **जन्म कुण्डली में स्थिति:** {md_hi} आपकी कुण्डली के **{md_h}वें भाव** ({md_sign} राशि, {md_deg:.2f}°) में स्थित हैं तथा **{md_ruled_str} भाव** के स्वामी (भावेश) हैं।\n"
+                f"- **ग्रह गरिमा व अवस्था:** {md_dignity} | {md_vakri_str}\n\n"
+                f"🔍 **२. वर्तमान अंतर्दशा: {ad_hi}**\n"
+                f"- **सक्रिय अवधि:** **{ad_start_s}** से **{ad_end_s}** तक\n"
+                f"- **जन्म कुण्डली में स्थिति:** {ad_hi} आपकी कुण्डली के **{ad_h}वें भाव** ({ad_sign} राशि, {ad_deg:.2f}°) में स्थित हैं तथा **{ad_ruled_str} भाव** के स्वामी हैं।\n"
+                f"- **ग्रह गरिमा व अवस्था:** {ad_dignity} | {ad_vakri_str}\n\n"
+                f"⚡ **३. वर्तमान प्रत्यंतर्दशा: {pd_hi}**\n"
+                f"- **सक्रिय अवधि:** **{pd_start_s}** से **{pd_end_s}** तक\n"
+                f"- **सूक्ष्म दशा:** {sd_hi}\n\n"
+                f"📜 **४. दशा-अंतर्दशा शास्त्रीय फल (*फलदीपिका* अध्याय १९ एवं *बृहत्पाराशर होराशास्त्र*):**\n"
+                f"- **दशा अधिपति प्रभाव:** {sambandh_desc}\n"
+                f"- *बृहत्पाराशर होराशास्त्र* के अनुसार महादशा संपूर्ण जीवन की मूल दिशा तय करती है, जबकि अंतर्दशा तात्कालिक घटनाओं व मानसिक स्थिति का वास्तविक संचालन करती है।\n\n"
+                f"🪐 **५. वर्तमान गोचर एवं पाया विचार (Transit Paya):**\n"
+                f"- **शनि देव गोचर:** जन्म राशि से **{sat_pos.get('house_from_moon', '-')}वें भाव** ({sat_pos.get('sign_name', '')} राशि) में, पाया: **{sat_p}** — {sat_det.get('desc_hi', 'कार्य-सिद्धि व संतुलन।')}\n"
                 f"- **साढ़े साती स्थिति:** **{sade_s}**।\n"
-                f"- **देवगुरु बृहस्पति गोचर:** जन्म राशि से **{jup_pos.get('house_from_moon', '-')}वें भाव** ({jup_pos.get('sign_name', '')} राशि) में।\n"
-                f"- **गुरु पाया:** **{jup_p}** — {jup_det.get('desc_hi', 'विद्या, ज्ञान व धर्म कर्म में अनुकूलता।')}\n\n"
-                f"💡 **दैवज्ञ परामर्श:** वर्तमान समय में गुरु का गोचर आपके ज्ञान और विवेक को प्रबल कर रहा है, जबकि शनि का गोचर कर्म में निष्ठा और धैर्य की मांग करता है।\n\n"
-                f"🌿 **सात्विक उपाय:** शनिवार को पीपल पर सरसों तेल का दीप प्रज्वलित करें और गुरुवार को चने की दाल व गुड़ का दान करें।"
+                f"- **देवगुरु बृहस्पति गोचर:** जन्म राशि से **{jup_pos.get('house_from_moon', '-')}वें भाव** ({jup_pos.get('sign_name', '')} राशि) में, पाया: **{jup_p}** — {jup_det.get('desc_hi', 'ज्ञान व धर्म कर्म में अनुकूलता।')}\n\n"
+                f"🌿 **६. सक्रिय दशा के सात्विक वैदिक उपाय:**\n"
+                f"- **महादशाधिपति उपाय ({md_hi}):** {md_remedy}\n"
+                f"- **अंतर्दशाधिपति उपाय ({ad_hi}):** {ad_remedy}"
             )
 
         elif any(w in q_lower for w in ["लाल किताब", "ऋण", "टोटके", "lal kitab", "debt", "totke"]):
@@ -1132,17 +1259,12 @@ class AINarrativeService:
         else:
             return (
                 f"🙏 **शास्त्रीय परामर्श ({p_name} जी):**\n\n"
-                f"आपके प्रश्न *\"{user_query}\"* पर जन्म कुण्डली ({lagna_s} लग्न) एवं तात्कालिक प्रश्न कुण्डली ({p_res['prashna_lagna_sign']} लग्न) के समन्वय से निष्कर्ष:\n\n"
-                f"- **प्रश्न परीक्षण:** {research['intent_status']}\n"
-                f"- **ताजिक योग:** {p_res['tajika_yoga']}\n"
-                f"- **शास्त्रीय फल:** **{p_res['verdict']}**\n"
-                f"- **संभावित काल:** **{research['direct_timing']}**\n\n"
-                f"💡 **दैवज्ञ परामर्श:** अपने पुरुषार्थ और इष्ट आराधना को बनाए रखें। प्रतिदिन गायत्री मंत्र का १०८ बार जप कल्याणकारी रहेगा।"
                 f"आपके प्रश्न *\"{user_query}\"* पर जन्म कुण्डली (**{lagna_s} लग्न**, **{moon_s} राशि**) एवं ग्रह स्थितियों का शास्त्रीय निष्कर्ष:\n\n"
                 f"🔍 **१. प्रश्न परीक्षण व तात्कालिक ग्रह संकेत (Prashna Marga):**\n"
                 f"- **जिज्ञासा परीक्षण:** {research['intent_status']}\n"
                 f"- **प्रश्न कालीन संबंध:** {p_res['tajika_yoga']} (प्रश्नेश: {p_res['lagnesh_name']}, कार्येश: {p_res['karyesh_name']})\n"
-                f"- **तात्कालिक संकेत:** {p_res['verdict']}\n\n"
+                f"- **तात्कालिक संकेत:** {p_res['verdict']}\n"
+                f"- **संभावित काल:** **{research['direct_timing']}**\n\n"
                 f"📜 **२. जन्म कुण्डली का आधारभूत शास्त्रीय विश्लेषण:**\n"
                 f"- **लग्न विचार:** {lagna_s} लग्न होने से आपके व्यक्तित्व में संतुलन, न्यायप्रियता एवं स्वाभिमान की प्रधानता है।\n"
                 f"- **चंद्र राशि:** {moon_s} राशि अनुसार मन एवं मानसिक प्रवृत्तियों का संचालन होता है।\n"
@@ -1299,11 +1421,12 @@ USER QUESTION:
 CRITICAL GENERAL INTELLIGENCE & DAIVAJNA INSTRUCTIONS (त्रिवेणी संगम प्रशिक्षण):
 1. ANSWER ONLY WHAT WAS ASKED: The user is specifically asking about: {topic.upper()}. Address their specific query directly in the opening lines. Do NOT write unsolicited essays about unrelated life domains.
 2. BUSINESS SUITABILITY QUESTIONS: If asked whether the native can do business in the future ("व्यापार कर पाऊंगा या नहीं"), DO NOT state a short-term horary timeframe like "1 से 3 सप्ताह के भीतर"! Evaluate 7th house (business/trade) vs 6th house (job/service) and 10th house (career). If Mercury is in the 8th house, candidly warn against debt-heavy speculation and guide towards service-oriented/consultancy business. The timing must reflect Dasha & transits (e.g. 2026-2027).
-3. DUAL-KUNDALI SYNTHESIS: Cross-corroborate the Instant Prashna Kundali (Lagna, Karyesh, Tajika Ithasala/Esharpha yoga, and Intent testing check) with the Natal Kundali (D1 house lord, D9/D10 divisional dignity, active Mahadasha-Antardasha).
-4. ABSOLUTE HONESTY & CANDID CAUTION: If there are negative yogas, delays, or doshas (Manglik, Saturn delay, malefic dasha), state them clearly under a bold caution heading without sugarcoating. Always present both sides: 🟢 सकारात्मक शास्त्रीय पक्ष vs 🔴 बाधक तत्व व सावधानियां.
-5. RATNA SHASTRA COMPLIANCE: If asked about gemstones, strictly follow the gemology matrix. NEVER recommend a gem for 6th, 8th, or 12th house planet. NEVER recommend Panna if Mercury is in the 8th house; forbid it with an explicit alert and prescribe 4-Mukhi Rudraksha, Budha mantra, and green moong daan.
-6. CANONICAL SCRIPTURAL PRANAMAS: Cite authentic classical granthas (बृहत्पाराशर होराशास्त्र, फलदीपिका, सारावली, प्रश्न मार्ग, जैमिनी सूत्र).
-7. Conclude with focused, actionable, satvik Vedic remedies in {language} for this specific question only.
+3. DASHA & MAHADASA INQUIRIES: If the user asks which dasha/mahadasha is running (e.g. 'kiski mahadash chal rahi h', 'kaun si dasha hai', 'active dasha'), you MUST IMMEDIATELY in the opening lines name the active Mahadasha lord, Antardasha lord, and Pratyantardasha lord with their exact start and end dates from the Active Vimshottari profile. DO NOT state a generic horary timeframe like "1 से 3 माह के भीतर". Detail the house positions and lordships of the dasha lords and their shastric effects (*Phaladeepika* / *Brihat Parashara Hora Shastra*).
+4. DUAL-KUNDALI SYNTHESIS: Cross-corroborate the Instant Prashna Kundali (Lagna, Karyesh, Tajika Ithasala/Esharpha yoga, and Intent testing check) with the Natal Kundali (D1 house lord, D9/D10 divisional dignity, active Mahadasha-Antardasha).
+5. ABSOLUTE HONESTY & CANDID CAUTION: If there are negative yogas, delays, or doshas (Manglik, Saturn delay, malefic dasha), state them clearly under a bold caution heading without sugarcoating. Always present both sides: 🟢 सकारात्मक शास्त्रीय पक्ष vs 🔴 बाधक तत्व व सावधानियां.
+6. RATNA SHASTRA COMPLIANCE: If asked about gemstones, strictly follow the gemology matrix. NEVER recommend a gem for 6th, 8th, or 12th house planet. NEVER recommend Panna if Mercury is in the 8th house; forbid it with an explicit alert and prescribe 4-Mukhi Rudraksha, Budha mantra, and green moong daan.
+7. CANONICAL SCRIPTURAL PRANAMAS: Cite authentic classical granthas (बृहत्पाराशर होराशास्त्र, फलदीपिका, सारावली, प्रश्न मार्ग, जैमिनी सूत्र).
+8. Conclude with focused, actionable, satvik Vedic remedies in {language} for this specific question only.
 """
 
         # TRIO ENSEMBLE EXECUTION

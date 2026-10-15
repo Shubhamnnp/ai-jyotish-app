@@ -78,3 +78,33 @@ def test_trio_astrological_consultation_offline_fallback(sample_chart):
     assert "शास्त्रीय" in res
     assert "उपाय" in res or "सात्विक" in res
 
+
+def test_dasha_inquiry_with_hinglish_typo(sample_chart):
+    """Verifies that queries with Hinglish typos like 'kiski mahadash chal rahi h' directly return active Dasha periods."""
+    srv = AINarrativeService()
+    res = srv.chat_consultation("meri kundli me kiski mahadash chal rahi h", chart=sample_chart, provider_mode="offline")
+    
+    # Must identify and present active Mahadasha, Antardasha, and Pratyantardasha
+    assert "वर्तमान महादशा" in res or "महादशा" in res
+    assert "वर्तमान अंतर्दशा" in res or "अंतर्दशा" in res
+    assert "प्रत्यंतर्दशा" in res
+    assert "सक्रिय अवधि" in res
+    
+    # Must NOT return generic horary fallback or wrong timing
+    assert "1 से 3 माह के भीतर" not in res
+    assert "फलदीपिका" in res or "बृहत्पाराशर" in res
+    assert "उपाय" in res
+
+
+def test_dasha_inquiry_deep_research_topic(sample_chart):
+    """Verifies that conduct_daivajna_deep_research properly categorizes 'mahadash' into topic 'dasha'."""
+    srv = AINarrativeService()
+    research = srv.conduct_daivajna_deep_research("meri kundli me kiski mahadash chal rahi h", chart=sample_chart)
+    
+    assert research["topic"] == "dasha"
+    assert "महादशा" in research["direct_timing"]
+    assert "अंतर्दशा" in research["direct_timing"]
+    assert "1 से 3 माह के भीतर" not in research["direct_timing"]
+    assert "mahadasha" in research["natal_summary"]
+
+
