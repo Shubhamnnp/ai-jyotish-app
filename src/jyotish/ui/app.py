@@ -10134,6 +10134,24 @@ elif selected_idx == 1:
             st.markdown("#### 📊 माह-दर-माह सम्भावना एवं ३-स्तरीय शास्त्रीय ट्रिगर्स:")
             st.caption("प्रत्येक माह की सम्भावना (०-१००%) = दशा संरेखण (४०) + शनि-गुरु दोहरा गोचर (३५) + अष्टकवर्ग बल (२५):")
 
+            dt_shl = SHASTRIYA_SHLOKAS.get("double_transit", {})
+            if dt_shl:
+                dt_lines = "<br/>".join(dt_shl['shloka'].splitlines())
+                st.markdown(f"""
+<div style="background: rgba(37, 99, 235, 0.08); border-left: 4px solid #2563EB; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 {dt_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {dt_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {dt_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {dt_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
             # Grid of Monthly Records
             m_cols = st.columns(3)
             for idx, r in enumerate(scan_res["monthly_records"]):
@@ -11158,23 +11176,43 @@ elif selected_idx == 3:
 
         # Subsection 4: Scriptural Pramana Shlokas
         st.markdown("##### 📜 शास्त्रीय प्रमाण एवं मूल श्लोक संग्रह (Classical Scriptural Pramana)")
-        st.markdown("""
-        > **बृहत्पाराशर होराशास्त्रम् — षोडशवर्गाध्याय (अध्याय ६, श्लोक १-४):**  
-        > *क्षेत्रं होराऽथ दृक्काणस्तुरियांशस्ततः परम् । सप्तमांशो नवांशश्च दशमांशोऽथ द्वादशः ॥*  
-        > *षोडशांशस्तथा ज्ञेयः विंशांशश्च ततः परम् । चतुर्विंशांशकश्चैव सप्तविंशांशकस्तथा ॥*  
-        > *त्रिंशांशकः खवेदांशस्तथा चाक्षवेदांशकः । षष्ट्यंशश्चैव वर्गाणां षोडशैव प्रकीर्तिताः ॥*  
-        > *(अर्थात्: क्षेत्र (D1), होरा (D2), द्रेष्काण (D3), चतुर्थांश (D4), सप्तमांश (D7), नवांश (D9), दशमांश (D10), द्वादशांश (D12), षोडशांश (D16), विंशांश (D20), चतुर्विंशांश (D24), सप्तविंशांश (D27), त्रिंशांश (D30), खवेदांश (D40), अक्षवेदांश (D45) और षष्ट्यंश (D60) — ये महर्षि पाराशर द्वारा प्रतिपादित १६ मुख्य वर्ग हैं।)*
+        
+        sv_shl = SHASTRIYA_SHLOKAS.get("shodashvarga_vaisheshikamsa", {})
+        if sv_shl:
+            sv_lines = "<br/>".join(sv_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(245, 158, 11, 0.08); border-left: 4px solid #F59E0B; padding: 14px 18px; border-radius: 8px; margin-bottom: 14px;">
+    <div style="font-weight: 700; color: #B45309; font-size: 13.5px; margin-bottom: 4px;">📖 {sv_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {sv_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {sv_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {sv_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-        > **वैशेषिकांश लक्षण प्रमाण (बृहत्पाराशर होराशास्त्रम्, अध्याय ४५):**  
-        > *स्वोच्चे स्वभवने वापि स्वमित्रर्क्षगतेऽपि वा । वर्गेषु जायते खेटो यदा तत्तत्फलप्रदः ॥*  
-        > *द्वाभ्यां स्यात् पारिजाताख्यो त्रिभिरुत्तमसंज्ञकः । चतुर्भिर्गोपुराख्यो हि पञ्चभिः सिंहनामकः ॥*  
-        > *पारावतस्तु षड्भिः स्यात् सप्तभिर्देवलोककः । ऐरावतोऽष्टभिर्ज्ञेयो नवभिर्वैशेषिकः स्मृतः ॥*  
-        > *(अर्थात्: जब कोई ग्रह अपने उच्च, स्वराशि अथवा मित्रराशि के वर्गों में स्थित होता है, तो दो वर्गों में 'पारिजात', तीन में 'उत्तम', चार में 'गोपुर', पांच में 'सिंहासन', छह में 'पारावत', सात में 'देवलोक', आठ में 'ऐरावत' और नौ वर्गों में 'वैशेषिक' संज्ञक होता है।)*
+        vg_shl = SHASTRIYA_SHLOKAS.get("vargottama", {})
+        if vg_shl:
+            vg_lines = "<br/>".join(vg_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 14px 18px; border-radius: 8px; margin-bottom: 14px;">
+    <div style="font-weight: 700; color: #047857; font-size: 13.5px; margin-bottom: 4px;">📖 फलदीपिका — वर्गोत्तम विचार (अध्याय ३, श्लोक ९) एवं बृहज्जातक</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {vg_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {vg_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {vg_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-        > **फलदीपिका — वर्गोत्तम विचार (अध्याय ३, श्लोक ९):**  
-        > *वर्गोत्तमे स्थिते लग्ने तदीशे वा शुभान्विते । जातः कुलदीपकः स्यात् सुखी धर्मपरायणः ॥*  
-        > *(अर्थात्: लग्न अथवा कोई भी ग्रह जब वर्गोत्तम (D1 और D9 में एक ही राशि) होता है, तो वह अत्यंत बलवान होकर जातक को कुलदीपक, सुखी, तेजस्वी और धर्मपरायण बनाता है।)*
-        """)
 
 
 # =============================================================

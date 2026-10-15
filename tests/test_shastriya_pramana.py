@@ -99,9 +99,12 @@ def test_shastriya_shlokas_structure():
         "shadbala_pramana",
         "ishta_kashta_pramana",
         "bhavabala_pramana",
-        "jaimini_sutras"
+        "jaimini_sutras",
+        "double_transit",
+        "shodashvarga_vaisheshikamsa"
     ]
     for k in required_keys:
+
         assert k in SHASTRIYA_SHLOKAS
         item = SHASTRIYA_SHLOKAS[k]
         assert "grantha" in item
