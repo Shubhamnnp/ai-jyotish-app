@@ -75,6 +75,17 @@ def test_chart_pushkara_and_vargottama_audit(sample_chart):
     assert "vargottama_planets" in v_audit
     assert "count" in v_audit
 
+def test_badhaka_maraka_audit(sample_chart):
+    bm = default_shastriya_pramana_engine.audit_badhaka_maraka(sample_chart)
+    assert "lagna_type" in bm
+    assert "badhaka_house" in bm
+    assert "badhakesh" in bm
+    assert "maraka_primary" in bm
+    assert "maraka_secondary" in bm
+    assert "shastriya_shloka" in bm
+    assert bm["maraka_primary"]["house"] == 2
+    assert bm["maraka_secondary"]["house"] == 7
+
 def test_shastriya_shlokas_structure():
     required_keys = [
         "pushkara_navamsha",
@@ -83,7 +94,12 @@ def test_shastriya_shlokas_structure():
         "abhijit_muhurta",
         "rahu_kaal",
         "kakshya_system",
-        "conditional_dashas"
+        "conditional_dashas",
+        "badhaka_maraka",
+        "shadbala_pramana",
+        "ishta_kashta_pramana",
+        "bhavabala_pramana",
+        "jaimini_sutras"
     ]
     for k in required_keys:
         assert k in SHASTRIYA_SHLOKAS
@@ -92,3 +108,4 @@ def test_shastriya_shlokas_structure():
         assert "shloka" in item
         assert "anuvad_hi" in item
         assert "rule" in item
+

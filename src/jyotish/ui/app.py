@@ -10453,10 +10453,11 @@ elif selected_idx == 2:
     if "gla_shared_life_area_id" not in st.session_state:
         st.session_state.gla_shared_life_area_id = 1
 
-    tab_fw_overview, tab_life_areas_deep, tab_remedies_suite = st.tabs([
+    tab_fw_overview, tab_life_areas_deep, tab_remedies_suite, tab_badhaka_maraka = st.tabs([
         "🛡️ दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)",
         "🎯 27 जीवन आयाम विश्लेषण (27 Life Areas Deep Breakdown)",
-        "🌿 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Server Remedy Suite)"
+        "🌿 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Server Remedy Suite)",
+        "⚠️ बाधक एवं मारक ग्रह विचार (Badhaka & Maraka Audit)"
     ])
 
     LIFE_AREA_HINDI_NAMES = {
@@ -10833,6 +10834,64 @@ elif selected_idx == 2:
                - प्रत्येक ग्रह का अपना दैवीय वनस्पति स्वरूप होता है (जैसे सूर्य: मदार, चन्द्र: पलाश, मंगल: खैर, बुध: अपामार्ग/कटहल, गुरु: पीपल, शुक्र: गूलर, शनि: शमी/खेजड़ी)।
                - जब चन्द्रमा अथवा लग्न संबंधित ग्रह की राशि में बिना किसी पाप प्रभाव के स्थित हो, तब निर्धारित संख्या में पौधों का रोपण करने से जन्म जन्मांतर के दोष शांत होते हैं।
             """)
+
+    # =========================================================================
+    # TAB 4: बाधक एवं मारक ग्रह विचार (Badhaka & Maraka Audit)
+    # =========================================================================
+    with tab_badhaka_maraka:
+        st.markdown("### ⚠️ बाधक एवं मारक ग्रह शास्त्रीय परीक्षण (Badhaka & Maraka Diagnostic Suite)")
+        st.caption("महर्षि पराशर एवं प्रश्न मार्ग आधारित बाधक स्थान, बाधकेश, प्रबल महा-मारक (द्वितीय भाव) एवं द्वितीयक मारक (सप्तम भाव) का प्रामाणिक विश्लेषण:")
+
+        try:
+            bm_data = default_shastriya_pramana_engine.audit_badhaka_maraka(chart)
+
+            # Top KPI Cards
+            c_bm1, c_bm2, c_bm3 = st.columns(3)
+            with c_bm1:
+                st.metric("🏛️ लग्न प्रकृति", f"{bm_data['lagna_type']}", f"Lagna #{chart.lagna_sign_id}")
+            with c_bm2:
+                st.metric("⚡ बाधक स्थान व स्वामी", f"भाव {bm_data['badhaka_house']} ({bm_data['badhaka_sign']})", f"बाधकेश: {bm_data['badhakesh']} ({bm_data['badhakesh_placement']})")
+            with c_bm3:
+                p_mar = bm_data["maraka_primary"]
+                s_mar = bm_data["maraka_secondary"]
+                st.metric("⚔️ मारक ग्रह (२ व ७ भाव)", f"२रा: {p_mar['lord']} | ७वां: {s_mar['lord']}", "दशावधि में स्वास्थ्य सावधानी")
+
+            # Classical Sanskrit Shloka Box
+            bm_shl = bm_data["shastriya_shloka"]
+            bm_lines = "<br/>".join(bm_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(239, 68, 68, 0.08); border-left: 4px solid #EF4444; padding: 14px 18px; border-radius: 8px; margin: 12px 0 16px 0;">
+    <div style="font-weight: 700; color: #B91C1C; font-size: 13.5px; margin-bottom: 5px;">📖 {bm_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14.5px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {bm_lines}
+    </div>
+    <div style="margin-top: 8px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {bm_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 6px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {bm_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+            # 2 Detailed Guidance Columns
+            c_det1, c_det2 = st.columns(2)
+            with c_det1:
+                st.markdown("#### ⚡ बाधकेश का व्यावहारिक प्रभाव एवं अवरोध मुक्ति")
+                st.write(f"- **बाधक भाव:** इस कुण्डली का लग्न **{bm_data['lagna_type']}** होने के कारण **भाव {bm_data['badhaka_house']}** बाधक स्थान है।")
+                st.write(f"- **बाधकेश की स्थिति:** बाधकेश **{bm_data['badhakesh']}** कुण्डली के **{bm_data['badhakesh_placement']}** में स्थित हैं।")
+                st.write("- **फलकथन सिद्धांत:** बाधकेश जीवन में सब कुछ अनुकूल दिखते हुए भी ऐन मौके पर अदृश्य बाधा या अप्रत्याशित विलंब उत्पन्न करता है। जब बाधकेश की महादशा या अंतर्दशा चले, तो महत्वपूर्ण कार्यों में सुरक्षा व दैवीय अनुष्ठान अनिवार्य माना जाता है।")
+                st.info(f"🛡️ **बाधकेश शांति उपाय:** {bm_data['badhakesh']} के आराध्य देव की नियमित आराधना एवं गायत्री मंत्र का जप करने से बाधक दोष निष्प्रभावी हो जाता है।")
+
+            with c_det2:
+                st.markdown("#### ⚔️ मारक भाव एवं मारकेश सतर्कता विश्लेषण")
+                st.write(f"- **महा-मारक (द्वितीय भाव):** भावेश **{p_mar['lord']}** — स्थिति: **{p_mar['placement']}**। महर्षि पराशर के अनुसार द्वितीय भाव सप्तम से अधिक प्रबल मारक होता है।")
+                st.write(f"- **द्वितीयक मारक (सप्तम भाव):** भावेश **{s_mar['lord']}** — स्थिति: **{s_mar['placement']}**।")
+                st.write("- **आयुर्दाय सावधानी:** जब विंशोत्तरी दशा में द्वितीयेश या सप्तमेश की परस्पर दशा-अंतर्दशा सक्रिय हो, अथवा गोचर में शनि या राहु का इन पर वेध हो, तब जातक को स्वास्थ्य, यात्रा एवं वाहन संचालन में पूर्ण सतर्कता रखनी चाहिए।")
+                st.warning("🕉️ **मारक निवृत्ति उपाय:** भगवान शिव के **महामृत्युंजय मंत्र** का जप अथवा रुद्राभिषेक मारक प्रभाव को दूर कर दीर्घायु प्रदान करता है।")
+        except Exception as _e_bm:
+            st.error(f"बाधक/मारक विश्लेषण त्रुटि: {_e_bm}")
+
 
 
 # =============================================================
@@ -13103,11 +13162,68 @@ elif selected_idx == 6:
         # TAB 6: षड्बल शास्त्रीय नियम एवं प्रमाण
         # =====================================================================
         with sbtab6:
-            st.markdown("#### 📜 षड्बल शास्त्रीय नियम, प्रमाण एवं फलकथन सिद्धांत")
-            st.caption("बृहत्पाराशर होराशास्त्र, सारावली एवं फलदीपिका के प्रामाणिक श्लोक व फलकथन निर्देश।")
+            st.markdown("#### 📜 षड्बल, भावबल एवं इष्ट-कष्ट फल शास्त्रीय नियम एवं प्रमाण")
+            st.caption("महर्षि पराशर विरचित बृहत्पाराशर होराशास्त्र (BPHS Ch. 27-29), सारावली एवं फलदीपिका के मूल संस्कृत श्लोक, हिंदी अनुवाद एवं गणितीय सूत्र:")
+
+            # Shloka 1: Shadbala Pramana (BPHS Ch. 27)
+            sb_shl = SHASTRIYA_SHLOKAS.get("shadbala_pramana", {})
+            if sb_shl:
+                sb_lines = "<br/>".join(sb_shl['shloka'].splitlines())
+                st.markdown(f"""
+<div style="background: rgba(59, 130, 246, 0.08); border-left: 4px solid #3B82F6; padding: 14px 18px; border-radius: 8px; margin-bottom: 15px;">
+    <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 {sb_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {sb_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {sb_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {sb_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+            # Shloka 2: Ishta-Kashta Phala (BPHS Ch. 29 & Phaladeepika Ch. 4)
+            ik_shl = SHASTRIYA_SHLOKAS.get("ishta_kashta_pramana", {})
+            if ik_shl:
+                ik_lines = "<br/>".join(ik_shl['shloka'].splitlines())
+                st.markdown(f"""
+<div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 14px 18px; border-radius: 8px; margin-bottom: 15px;">
+    <div style="font-weight: 700; color: #047857; font-size: 13.5px; margin-bottom: 4px;">📖 {ik_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {ik_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {ik_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>गणितीय सूत्र:</b> <code>इष्ट फल = √(उच्च बल × चेष्टा बल)</code> एवं <code>कष्ट फल = ६० - इष्ट फल</code>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+            # Shloka 3: Bhavabala Pramana (BPHS Ch. 28)
+            bb_shl = SHASTRIYA_SHLOKAS.get("bhavabala_pramana", {})
+            if bb_shl:
+                bb_lines = "<br/>".join(bb_shl['shloka'].splitlines())
+                st.markdown(f"""
+<div style="background: rgba(245, 158, 11, 0.08); border-left: 4px solid #F59E0B; padding: 14px 18px; border-radius: 8px; margin-bottom: 15px;">
+    <div style="font-weight: 700; color: #B45309; font-size: 13.5px; margin-bottom: 4px;">📖 {bb_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {bb_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {bb_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {bb_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
             st.markdown("""
-            ### १. षड्बल न्यूनतम मानक एवं रूपा विधान (BPHS Ch. 27 Shloka 15-18)
+            ### ⚖️ षड्बल न्यूनतम मानक एवं रूपा विधान (BPHS Ch. 27 Shloka 15-18)
             महर्षि पराशर के अनुसार किसी भी ग्रह को पूर्ण फल देने हेतु निम्नलिखित न्यूनतम विरूपा बल अनिवार्य है:
             - **बुध:** ४२० विरूपा (७.० रूप) — बुद्धि एवं व्यापार की जटिलताओं हेतु सर्वाधिक बल आवश्यक।
             - **सूर्य व गुरु:** ३९० विरूपा (६.५ रूप) — आत्मा, राज्य सत्ता, ज्ञान एवं ईश्वरीय कृपा के मुख्य आधार।
@@ -13119,7 +13235,7 @@ elif selected_idx == 6:
 
             ---
 
-            ### २. दिग्बल शास्त्रीय सूत्र (BPHS Ch. 27 Shloka 7-9)
+            ### 🧭 दिग्बल शास्त्रीय सूत्र (BPHS Ch. 27 Shloka 7-9)
             > **सूर्योदये दिने लग्ने गुरुबुधौ बलान्वितौ।**<br/>
             > **चतुर्थे चन्द्रशुक्रौ च पश्चिमे सूर्यपुत्रकः।**<br/>
             > **दशमे रविभौमौ च दिग्बलेनोत्तमाः स्मृताः॥**
@@ -13131,18 +13247,12 @@ elif selected_idx == 6:
 
             ---
 
-            ### ३. इष्ट-कष्ट फल एवं दशा फलकथन सिद्धांत (Phaladeepika Ch. 4)
-            - **इष्ट फल:** उच्च बल और चेष्टा बल के गुणोत्तर माध्य (Geometric Mean) से परिकलित होता है। यह ग्रह की विशुद्ध शुभ, सुखद एवं कल्याणकारी फल देने की क्षमता को दर्शाता है।
-            - **कष्ट फल:** ग्रह के निर्बलत्व और विपरीत गतियों से उत्पन्न संघर्ष का सूचक है।
-            - **नियम:** यदि किसी ग्रह का **इष्ट फल > कष्ट फल** हो, तो उसकी दशा में जातक को पदोन्नति, धन लाभ, मानसिक शांति एवं यश की प्राप्ति होती है। यदि कष्ट फल अधिक हो, तो शारीरिक व्याधि, व्यर्थ व्यय अथवा मानसिक तनाव रहता है।
-
-            ---
-
-            ### ४. भाव बल एवं कार्यसिद्धि का रहस्य (Saravali Ch. 39)
+            ### 🏰 भाव बल एवं कार्यसिद्धि का रहस्य (Saravali Ch. 39)
             - किसी भाव की सफलता केवल उसमें बैठे ग्रहों पर निर्भर नहीं करती, अपितु उस भाव के स्वामी (भावेश) के षड्बल और भाव की केंद्रादि स्थिति पर निर्भर करती है।
             - **४०० विरूपा से अधिक बल वाला भाव:** जीवन के उस आयाम में सहज सफलता, स्थिरता और संतोष प्रदान करता है।
             - **३३० विरूपा से कम बल वाला भाव:** उस क्षेत्र में अत्यधिक परिश्रम के उपरांत भी आंशिक सफलता या अवरोध का संकेत देता है, जिसके लिए विशिष्ट वैदिक उपचार अनुशंसित हैं।
             """)
+
 
 
 
@@ -13666,40 +13776,60 @@ elif selected_idx == 7:
     # =========================================================================
     with jtab10:
         st.markdown("#### 📜 महर्षि जैमिनी उपदेश सूत्र एवं शास्त्रीय प्रमाण संदर्भ")
-        st.caption("महर्षि जैमिनी विरचित प्रामाणिक उपदेश सूत्रों के मूल संस्कृत श्लोक, हिंदी अर्थ एवं व्यावहारिक फलकथन सिद्धांत।")
+        st.caption("महर्षि जैमिनी विरचित प्रामाणिक उपदेश सूत्रों के मूल संस्कृत सूत्र, हिंदी अनुवाद एवं व्यावहारिक फलकथन सिद्धांत:")
+
+        jm_shl = SHASTRIYA_SHLOKAS.get("jaimini_sutras", {})
+        if jm_shl:
+            jm_lines = "<br/>".join(jm_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(139, 92, 246, 0.08); border-left: 4px solid #8B5CF6; padding: 14px 18px; border-radius: 8px; margin-bottom: 16px;">
+    <div style="font-weight: 700; color: #6D28D9; font-size: 13.5px; margin-bottom: 4px;">📖 {jm_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {jm_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {jm_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {jm_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
         st.markdown("""
         ### १. राशि दृष्टि सूत्र (Upadesha Sutra 1.1.2-3)
         > **अभिपश्यन्ति रिक्षाणि॥ न स्वाभिमुखं तत्रस्थम्॥**
         - **अर्थ:** समस्त राशियाँ दृष्टि डालती हैं, परंतु अपने सम्मुख स्थित निकटवर्ती राशि को छोड़कर अन्य को देखती हैं।
-        - **व्यावहारिक नियम:** चर राशियाँ स्थिर को, स्थिर राशियाँ चर को तथा द्विस्वभाव राशियाँ अन्य द्विस्वभाव को देखती हैं।
+        - **व्यावहारिक नियम:** चर राशियाँ (१, ४, ७, १०) निकटवर्ती स्थिर को छोड़कर अन्य तीन स्थिर राशियों को देखती हैं। स्थिर राशियाँ (२, ५, ८, ११) निकटवर्ती चर को छोड़कर अन्य चर राशियों को देखती हैं। द्विस्वभाव राशियाँ (३, ६, ९, १२) अन्य सभी द्विस्वभाव राशियों को परस्पर देखती हैं।
 
         ---
 
-        ### २. अर्गला सूत्र (Upadesha Sutra 1.1.4-6)
+        ### २. अर्गला एवं विरोधार्गला सूत्र (Upadesha Sutra 1.1.4-6)
         > **दारादिभ्यश्चार्गला॥ न निहन्त्री॥ रिपुकेवला॥**
-        - **अर्थ:** द्वितीय, चतुर्थ एवं एकादश भाव अर्गला (हस्तक्षेप) कारक होते हैं। द्वादश, दशम एवं तृतीय भाव विरोधार्गला कारक होते हैं। यदि विरोधी भाव में अधिक बलवान ग्रह हों, तो अर्गला निष्प्रभावी हो जाती है।
+        - **अर्थ:** द्वितीय, चतुर्थ एवं एकादश भाव शुभ या अशुभ ग्रहों द्वारा 'अर्गला' (हस्तक्षेप/ताला) डालते हैं।
+        - **विरोधार्गला नियम:** द्वादश भाव द्वितीय की, दशम भाव चतुर्थ की, तथा तृतीय भाव एकादश की अर्गला को अवरुद्ध करता है। यदि विरोधी भाव में अधिक बलवान ग्रह हों, तो अर्गला निष्प्रभावी हो जाती है।
 
         ---
 
-        ### ३. आत्मकारक एवं कारकांश सूत्र (Upadesha Sutra 1.2.1-3)
+        ### ३. आत्मकारक एवं कारकांश सूत्र (Upadesha Sutra 1.1.11, 1.2.1)
         > **अथात्मकारकः॥ सांशोऽधिककलः॥ तत्र कारकांशः॥**
-        - **अर्थ:** जो ग्रह कुण्डली में सर्वाधिक अंशों (भोगांश) पर स्थित होता है, वह आत्मकारक (AK) कहलाता है। आत्मकारक ग्रह नवमांश कुण्डली (D9) में जिस राशि में स्थित होता है, वही 'कारकांश लग्न' कहलाता है।
+        - **अर्थ:** जो ग्रह कुण्डली में सर्वाधिक अंशों (०° से ३०° के मध्य) पर स्थित होता है, वह आत्मकारक (AK) कहलाता है। आत्मकारक ग्रह नवमांश कुण्डली (D9) में जिस राशि में स्थित होता है, वही 'कारकांश लग्न' कहलाता है। कारकांश से जातक के प्रारब्ध, साधना एवं जीवन-ध्येय की सिद्धि परखी जाती है।
 
         ---
 
-        ### ४. मोक्ष एवं इष्टदेवता सूत्र (Upadesha Sutra 1.2.14-16)
+        ### ४. मोक्ष एवं इष्टदेवता सूत्र (Upadesha Sutra 1.2.69-72)
         > **केतौ कैवल्यम्॥ क्रियावान्॥**
-        - **अर्थ:** कारकांश लग्न से १२वें भाव में यदि केतु स्थित हो, तो जातक को कैवल्य (मोक्ष) की प्राप्ति होती है।
-        - यदि १२वें भाव पर गुरु या शुक्र की दृष्टि हो, तो सात्विक मोक्ष मार्ग मिलता है।
-        - १२वें भाव का स्वामी अथवा उसमें स्थित ग्रह जातक के वास्तविक **इष्ट देवता** का निर्धारण करता है।
+        - **अर्थ:** कारकांश लग्न से १२वें भाव में यदि केतु स्थित हो अथवा उसकी दृष्टि हो, तो जातक को कैवल्य (मोक्ष) की प्राप्ति होती है।
+        - यदि १२वें भाव पर गुरु या शुक्र की दृष्टि हो, तो जातक सात्विक मोक्ष मार्ग प्राप्त करता है।
+        - कारकांश से १२वें भाव में स्थित ग्रह अथवा उसके स्वामी के आधार पर जातक के वास्तविक **इष्ट देवता** (जैसे सूर्य = शिव/राम, चन्द्र = गौरी/कृष्ण, मंगल = कार्तिकेय/हनुमान, बुध = विष्णु/नारायण, गुरु = शिव/दत्तात्रेय, शुक्र = लक्ष्मी/दुर्गा, शनि = कालभैरव/शास्ता) का प्रामाणिक निर्धारण होता है।
 
         ---
 
         ### ५. उपपद लग्न एवं दांपत्य सूत्र (Upadesha Sutra 1.3.1-4)
         > **उपपदं पदं पितुश्च॥**
-        - **अर्थ:** द्वादश भाव के आरूढ़ को उपपद लग्न (UL) कहा जाता है। उपपद पर शुभ ग्रहों की दृष्टि, उच्च ग्रह अथवा अपने स्वामी की उपस्थिति स्थायी, समृद्ध एवं सुखी दांपत्य जीवन प्रदान करती है।
+        - **अर्थ:** द्वादश भाव के आरूढ़ को 'उपपद लग्न' (UL) कहा जाता है। उपपद पर शुभ ग्रहों की दृष्टि, उच्च ग्रह अथवा अपने स्वामी की उपस्थिति स्थायी, समृद्ध एवं सुखी दांपत्य जीवन प्रदान करती है। उपपद से द्वितीय भाव दांपत्य के स्थायित्व की कुंजी है।
         """)
+
 
 
 
