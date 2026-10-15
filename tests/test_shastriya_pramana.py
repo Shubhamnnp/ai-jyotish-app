@@ -101,7 +101,9 @@ def test_shastriya_shlokas_structure():
         "bhavabala_pramana",
         "jaimini_sutras",
         "double_transit",
-        "shodashvarga_vaisheshikamsa"
+        "shodashvarga_vaisheshikamsa",
+        "tajika_prashna",
+        "kp_sublord_system"
     ]
     for k in required_keys:
 

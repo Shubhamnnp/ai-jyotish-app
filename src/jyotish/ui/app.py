@@ -12409,6 +12409,24 @@ elif selected_idx == 5:
         st.markdown("#### 📖 ताजिक नीलकण्ठी एवं प्रश्न मार्ग के प्रामाणिक सिद्धांत")
         st.write("होरारी फलकथन के मूल स्तंभ: 16 ताजिक योग, ग्रहों के दीप्तांश, केरल प्रश्न मार्ग पद्धतियां एवं सटीक काल निर्धारण सूत्र।")
 
+        taj_shl = SHASTRIYA_SHLOKAS.get("tajika_prashna", {})
+        if taj_shl:
+            taj_lines = "<br/>".join(taj_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid #9333EA; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #7E22CE; font-size: 13.5px; margin-bottom: 4px;">📖 {taj_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {taj_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {taj_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {taj_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
         t_sub1, t_sub2, t_sub3, t_sub4 = st.tabs([
             "1. 🔯 16 ताजिक योग संदर्भ",
             "2. 📐 दीप्तांश एवं दृष्टि सिद्धांत",
@@ -16755,6 +16773,24 @@ elif selected_idx == 10:
     with tab_kp9:
         st.markdown("#### 📜 के.पी. स्वर्णिम नियम, रीडर १-६ प्रमाण एवं वैदिक उपाय (KP Golden Rules & Remedies)")
         st.caption("प्रोफेसर के.एस. कृष्णमूर्ति (KP Readers I to VI) के मूल सिद्धांत एवं उप-स्वामी आधारित वैज्ञानिक उपाय:")
+
+        kp_shl = SHASTRIYA_SHLOKAS.get("kp_sublord_system", {})
+        if kp_shl:
+            kp_lines = "<br/>".join(kp_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #047857; font-size: 13.5px; margin-bottom: 4px;">📖 {kp_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {kp_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {kp_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {kp_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
         with st.expander("📖 प्रोफेसर कृष्णमूर्ति के १० स्वर्णिम नियम (10 Golden Rules of KP)", expanded=True):
             st.markdown("""**१. नक्षत्र स्वामी का फल (Star Lord Rule):**
