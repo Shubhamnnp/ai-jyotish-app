@@ -113,6 +113,18 @@ def test_ashtakoota_parihara_audit():
     assert "नाड़ी महादोष का पूर्ण परिहार" in res1["nadi_cancellation_reason"]
     assert res1["bhakoot_cancelled"] is True  # Same sign lord Sun
 
+def test_kunda_shodhana_audit():
+    # Test kunda calculation
+    res = default_shastriya_pramana_engine.audit_kunda_shodhana(
+        lagna_deg=10.0,
+        moon_nakshatra_num=1,
+        lagna_nakshatra_num=1
+    )
+    assert "kunda_nakshatra_num" in res
+    assert "is_verified" in res
+    assert "shastriya_shloka" in res
+    assert 1 <= res["kunda_nakshatra_num"] <= 27
+
 def test_shastriya_shlokas_structure():
     required_keys = [
         "pushkara_navamsha",
@@ -134,7 +146,9 @@ def test_shastriya_shlokas_structure():
         "ashtakoota_milan",
         "nadi_bhakoot_parihara",
         "tajika_muntha_varshesha",
-        "mudda_dasha_pramana"
+        "mudda_dasha_pramana",
+        "btr_kunda_pranapada",
+        "vastu_purusha_mandala"
     ]
     for k in required_keys:
         assert k in SHASTRIYA_SHLOKAS

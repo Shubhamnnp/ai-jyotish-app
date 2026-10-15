@@ -11418,6 +11418,24 @@ elif selected_idx == 4:
     # TAB 0: समग्र वास्तु मण्डल (Overview, Compass & Comparative Table)
     # -------------------------------------------------------------
     with v_tabs[0]:
+        vas_shl = SHASTRIYA_SHLOKAS.get("vastu_purusha_mandala", {})
+        if vas_shl:
+            vas_lines = "<br/>".join(vas_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #047857; font-size: 13.5px; margin-bottom: 4px;">📖 {vas_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {vas_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {vas_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {vas_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
         scores = [z.get("score", 70) for z in v_zones]
         avg_score = int(round(sum(scores) / len(scores))) if scores else 0
         sorted_zones = sorted(v_zones, key=lambda x: x.get("score", 70), reverse=True)
@@ -18606,6 +18624,24 @@ elif selected_idx == 14:
     with tab_btr3:
         st.markdown("### ☸️ कुण्ड शोधन एवं प्राणपद लग्न (Kunda & Pranapada Shodhana)")
         st.write("बृहत्पाराशर होराशास्त्र (अध्याय ३ व ४) के अनुसार जन्म समय की प्रामाणिकता हेतु कुण्ड नक्षत्र एवं प्राणपद लग्न का त्रिकोण संरेखण अनिवार्य नियम है:")
+
+        btr_shl = SHASTRIYA_SHLOKAS.get("btr_kunda_pranapada", {})
+        if btr_shl:
+            btr_lines = "<br/>".join(btr_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid #9333EA; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #7E22CE; font-size: 13.5px; margin-bottom: 4px;">📖 {btr_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {btr_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {btr_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {btr_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
         kp_kun_res = default_btr_service.calculate_kunda_pranapada(calc_chart, birth_profile)
 
