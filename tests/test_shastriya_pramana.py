@@ -152,7 +152,9 @@ def test_shastriya_shlokas_structure():
         "lalkitab_farman_dharmi",
         "lalkitab_rina_parihara",
         "ayurveda_diet_tridosha",
-        "medical_kalapurusha_anatomy"
+        "medical_kalapurusha_anatomy",
+        "vedic_numerology_graha_anka",
+        "dossier_vedachakshu_vedanga"
     ]
     for k in required_keys:
         assert k in SHASTRIYA_SHLOKAS

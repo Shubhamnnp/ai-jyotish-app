@@ -19740,6 +19740,24 @@ elif selected_idx == 17:
     with tab_rep_master:
         st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, गोचर एवं पाया, लाल किताब ९ ऋण व १०८ टोटके, ३-स्तरीय ट्रिगर, वैदिक मुहूर्त एवं पञ्चक, कुण्डली मिलान १६ परिहार, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु एवं सात्विक उपायों सहित २२ अध्यायों की पूर्ण रंगीन मुद्रण-योग्य पत्रिका।")
 
+        dos_shl = SHASTRIYA_SHLOKAS.get("dossier_vedachakshu_vedanga", {})
+        if dos_shl:
+            dos_lines = "<br/>".join(dos_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid #9333EA; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #7E22CE; font-size: 13.5px; margin-bottom: 4px;">📖 {dos_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {dos_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {dos_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {dos_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
         import importlib
         import src.jyotish.services.report_generator as rep_mod
         importlib.reload(rep_mod)
@@ -20480,6 +20498,24 @@ elif selected_idx == 21:
     with tab_num1:
         st.markdown("### 📊 ३×३ लो-शू ग्रिड (Magic Square of 15)")
         st.caption("जन्म दिनांक के अंकों एवं मूलांक-भाग्यांक से निर्मित दिव्य लो-शू चक्र:")
+
+        num_shl = SHASTRIYA_SHLOKAS.get("vedic_numerology_graha_anka", {})
+        if num_shl:
+            num_lines = "<br/>".join(num_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(59, 130, 246, 0.08); border-left: 4px solid #3B82F6; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 {num_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {num_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {num_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {num_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
         g = num_res.lo_shu_grid
         col_g1, col_g2 = st.columns([1.2, 1.8])
