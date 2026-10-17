@@ -150,7 +150,9 @@ def test_shastriya_shlokas_structure():
         "btr_kunda_pranapada",
         "vastu_purusha_mandala",
         "lalkitab_farman_dharmi",
-        "lalkitab_rina_parihara"
+        "lalkitab_rina_parihara",
+        "ayurveda_diet_tridosha",
+        "medical_kalapurusha_anatomy"
     ]
     for k in required_keys:
         assert k in SHASTRIYA_SHLOKAS

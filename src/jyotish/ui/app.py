@@ -20891,6 +20891,24 @@ elif selected_idx == 23:
         st.markdown(f"### 🌿 आपकी शारीरिक प्रकृति: {diet_res['dosha_title']}")
         st.info(diet_res["characteristics"])
 
+        diet_shl = SHASTRIYA_SHLOKAS.get("ayurveda_diet_tridosha", {})
+        if diet_shl:
+            diet_lines = "<br/>".join(diet_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #047857; font-size: 13.5px; margin-bottom: 4px;">📖 {diet_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {diet_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {diet_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {diet_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
         st.markdown("#### 🍽️ द्वितीय भाव अनुसार आपकी खान-पान शैली एवं रुचियां:")
         for note in diet_res["eating_habits"]:
             st.markdown(f"""
@@ -21125,6 +21143,24 @@ elif selected_idx == 25:
     with tab_h0:
         st.markdown("### 🩺 कालपुरुष देह वेध आरेख (12-Organ Anatomy Map)")
         st.caption("बृहत्संहिता एवं फलदीपिका के अनुसार कालपुरुष के १२ अंगों, राशियों व भावों पर ग्रहों का प्रभाव:")
+
+        med_shl = SHASTRIYA_SHLOKAS.get("medical_kalapurusha_anatomy", {})
+        if med_shl:
+            med_lines = "<br/>".join(med_shl['shloka'].splitlines())
+            st.markdown(f"""
+<div style="background: rgba(220, 38, 38, 0.08); border-left: 4px solid #DC2626; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #B91C1C; font-size: 13.5px; margin-bottom: 4px;">📖 {med_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {med_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {med_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {med_shl['rule']}
+    </div>
+</div>
+""", unsafe_allow_html=True)
         
         anatomy_svg = ChartRenderer.render_kalapurusha_anatomy_svg(med_profile, title=f"कालपुरुष देह वेध चक्र — {chart.birth_data.name}")
         st.markdown(anatomy_svg, unsafe_allow_html=True)
