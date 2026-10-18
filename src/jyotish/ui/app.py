@@ -9424,37 +9424,36 @@ if selected_idx == 0:
             pb_badge = f'<span style="background:#FEF3C7; color:#B45309; font-weight:800; padding:2px 8px; border-radius:4px; border:1px solid #FCD34D;">🎯 हाँ ({pb_deg}°)</span>' if is_pb else '<span style="color:#94A3B8;">—</span>'
             vg_badge = '<span style="background:#EFF6FF; color:#1D4ED8; font-weight:800; padding:2px 8px; border-radius:4px; border:1px solid #93C5FD;">👑 वर्गोत्तम (स्वगृहीतुल्य)</span>' if is_varg else '<span style="color:#94A3B8;">—</span>'
 
-            row = f"""
-            <tr style="border-bottom: 1px solid #E2E8F0;">
-                <td style="padding: 7px 10px; font-weight: 700;">{p_display}</td>
-                <td style="padding: 7px 10px;">{sign_nm} ({deg_val:.2f}°)</td>
-                <td style="padding: 7px 10px;">{d9_sign_nm}</td>
-                <td style="padding: 7px 10px;">{pn_badge}</td>
-                <td style="padding: 7px 10px;">{pb_badge}</td>
-                <td style="padding: 7px 10px;">{vg_badge}</td>
-            </tr>
-            """
+            row = (
+                f'<tr style="border-bottom: 1px solid #E2E8F0;">'
+                f'<td style="padding: 7px 10px; font-weight: 700;">{p_display}</td>'
+                f'<td style="padding: 7px 10px;">{sign_nm} ({deg_val:.2f}°)</td>'
+                f'<td style="padding: 7px 10px;">{d9_sign_nm}</td>'
+                f'<td style="padding: 7px 10px;">{pn_badge}</td>'
+                f'<td style="padding: 7px 10px;">{pb_badge}</td>'
+                f'<td style="padding: 7px 10px;">{vg_badge}</td>'
+                f'</tr>'
+            )
             rows_html.append(row)
 
-        table_html = f"""
-        <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px; margin-bottom:15px; box-shadow:0 2px 6px rgba(0,0,0,0.05); overflow-x:auto;">
-            <table style="width:100%; border-collapse:collapse; font-size:12px; text-align:left;">
-                <thead>
-                    <tr style="background:#F1F5F9; border-bottom:2px solid #CBD5E1; color:#1E293B;">
-                        <th style="padding:8px 10px;">ग्रह / लग्न</th>
-                        <th style="padding:8px 10px;">D1 राशि एवं अंश</th>
-                        <th style="padding:8px 10px;">D9 नवांश राशि</th>
-                        <th style="padding:8px 10px;">पुष्कर नवांश</th>
-                        <th style="padding:8px 10px;">पुष्कर भाग</th>
-                        <th style="padding:8px 10px;">वर्गोत्तम स्थिति</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {''.join(rows_html)}
-                </tbody>
-            </table>
-        </div>
-        """
+        tbody_html = "".join(rows_html)
+        table_html = (
+            f'<div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px; margin-bottom:15px; box-shadow:0 2px 6px rgba(0,0,0,0.05); overflow-x:auto;">'
+            f'<table style="width:100%; border-collapse:collapse; font-size:12px; text-align:left;">'
+            f'<thead>'
+            f'<tr style="background:#F1F5F9; border-bottom:2px solid #CBD5E1; color:#1E293B;">'
+            f'<th style="padding:8px 10px;">ग्रह / लग्न</th>'
+            f'<th style="padding:8px 10px;">D1 राशि एवं अंश</th>'
+            f'<th style="padding:8px 10px;">D9 नवांश राशि</th>'
+            f'<th style="padding:8px 10px;">पुष्कर नवांश</th>'
+            f'<th style="padding:8px 10px;">पुष्कर भाग</th>'
+            f'<th style="padding:8px 10px;">वर्गोत्तम स्थिति</th>'
+            f'</tr>'
+            f'</thead>'
+            f'<tbody>{tbody_html}</tbody>'
+            f'</table>'
+            f'</div>'
+        )
         st.markdown(table_html, unsafe_allow_html=True)
 
         with st.expander("📜 पुष्कर नवांश एवं वर्गोत्तम शास्त्रीय श्लोक व प्रमाण", expanded=True):
