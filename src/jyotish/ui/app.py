@@ -4717,33 +4717,6 @@ def login_user_session(user_info: Dict[str, Any]):
 def render_login_page():
     import textwrap
 
-    # Top Bar: Theme & Language Selectors
-    st.markdown(textwrap.dedent("""\
-    <div class="auth-top-bar" style="display:flex; justify-content:flex-end; align-items:center; gap:8px; margin-bottom: 12px; flex-wrap:wrap;">
-        <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border:1px solid #CBD5E1 !important; color:#0F172A !important; padding:3px 10px !important; border-radius:8px; display:inline-flex; align-items:center; gap:5px;" title="थीम चुनें (Select Day / Night Mode)">
-            <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:13px;">☀️</span>
-            <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11px;">थीम:</b>
-            <select id="software-theme-select" class="notranslate" translate="no" onchange="window.changeSoftwareTheme ? window.changeSoftwareTheme(this.value) : (window.parent && window.parent.changeSoftwareTheme ? window.parent.changeSoftwareTheme(this.value) : null)" style="background:transparent; border:none; color:#0F172A; font-weight:700; font-size:11px; cursor:pointer; outline:none; padding:0;">
-                <option value="astrallis" class="notranslate" translate="no">🔬 एस्ट्रैलिस वेधशाला</option>
-                <option value="night" class="notranslate" translate="no">🌙 कॉस्मिक ओब्सीडियन</option>
-                <option value="day" class="notranslate" translate="no">☀️ वैदिक रॉयल पर्ल</option>
-            </select>
-        </div>
-        <div class="header-sub-pill notranslate lang-select-box" translate="no" style="background:#F0FDF4 !important; border:1px solid #86EFAC !important; color:#166534 !important; padding:3px 10px !important; border-radius:8px; display:inline-flex; align-items:center; gap:5px;">
-            🌐 <b class="notranslate" translate="no" style="font-size:11px;">भाषा:</b>
-            <select id="software-lang-select" class="notranslate" translate="no" onchange="window.changeSoftwareLanguage ? window.changeSoftwareLanguage(this.value) : (window.parent && window.parent.changeSoftwareLanguage ? window.parent.changeSoftwareLanguage(this.value) : null)" style="background:transparent; border:none; color:#166534; font-weight:700; font-size:11px; cursor:pointer; outline:none; padding:0;">
-                <option value="general" class="notranslate" translate="no">General</option>
-                <option value="hi" class="notranslate" translate="no">हिन्दी</option>
-                <option value="en" class="notranslate" translate="no">English</option>
-                <option value="ta" class="notranslate" translate="no">தமிழ்</option>
-                <option value="te" class="notranslate" translate="no">తెలుగు</option>
-                <option value="gu" class="notranslate" translate="no">ગુજરાતી</option>
-                <option value="mr" class="notranslate" translate="no">मराठी</option>
-                <option value="bn" class="notranslate" translate="no">বাংলা</option>
-            </select>
-        </div>
-    </div>
-    """), unsafe_allow_html=True)
 
     if st.session_state.get("session_timed_out_banner", False):
         st.warning("⚠️ **सुरक्षा सत्र समाप्त (Session Timeout):** ३० मिनट तक कोई गतिविधि न होने के कारण सुरक्षा हेतु स्वतः लॉगआउट कर दिया गया है। कृपया पुनः लॉगिन करें।")
