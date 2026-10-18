@@ -18,6 +18,7 @@ class BirthData(BaseModel):
     timezone_offset: float = 5.5  # UTC offset in hours (+5.5 for IST)
     city: Optional[str] = "New Delhi"
     confidence: str = Field(default="Exact", description="Exact / Approx / Unknown")
+    gender: str = Field(default="male", description="male / female")
 
 
 class PlanetPosition(BaseModel):

@@ -37,34 +37,54 @@ SIGN_QUALITIES = {
 }
 
 LIFE_AREAS = [
-    {"Id": 1, "LifeArea": "Career", "house": 10, "karaka": "Saturn", "sec_house": 2},
-    {"Id": 2, "LifeArea": "Health", "house": 1, "karaka": "Sun", "sec_house": 8},
-    {"Id": 3, "LifeArea": "Relationship", "house": 7, "karaka": "Venus", "sec_house": 3},
-    {"Id": 4, "LifeArea": "Accumulated Wealth (Ju)", "house": 2, "karaka": "Jupiter", "sec_house": 11},
-    {"Id": 5, "LifeArea": "Bank Balance (Ve)", "house": 2, "karaka": "Venus", "sec_house": 11},
-    {"Id": 6, "LifeArea": "Peace of Mind", "house": 4, "karaka": "Moon", "sec_house": 5},
-    {"Id": 7, "LifeArea": "Mother", "house": 4, "karaka": "Moon", "sec_house": 4},
-    {"Id": 8, "LifeArea": "Immovable property", "house": 4, "karaka": "Mars", "sec_house": 4},
-    {"Id": 9, "LifeArea": "Education", "house": 5, "karaka": "Jupiter", "sec_house": 4},
-    {"Id": 10, "LifeArea": "Happiness", "house": 4, "karaka": "Venus", "sec_house": 9},
-    {"Id": 11, "LifeArea": "Luxury", "house": 4, "karaka": "Venus", "sec_house": 12},
-    {"Id": 12, "LifeArea": "Heart", "house": 4, "karaka": "Sun", "sec_house": 5},
-    {"Id": 13, "LifeArea": "Intelligence", "house": 5, "karaka": "Mercury", "sec_house": 1},
-    {"Id": 14, "LifeArea": "Children", "house": 5, "karaka": "Jupiter", "sec_house": 9},
-    {"Id": 15, "LifeArea": "Litigation", "house": 6, "karaka": "Mars", "sec_house": 8},
-    {"Id": 16, "LifeArea": "Husband (Ju)", "house": 7, "karaka": "Jupiter", "sec_house": 7},
-    {"Id": 17, "LifeArea": "Husband (Ma)", "house": 7, "karaka": "Mars", "sec_house": 7},
-    {"Id": 18, "LifeArea": "Pregnancy", "house": 5, "karaka": "Jupiter", "sec_house": 8},
-    {"Id": 19, "LifeArea": "Inheritance", "house": 8, "karaka": "Saturn", "sec_house": 9},
-    {"Id": 20, "LifeArea": "Longevity", "house": 8, "karaka": "Saturn", "sec_house": 3},
-    {"Id": 21, "LifeArea": "Father", "house": 9, "karaka": "Sun", "sec_house": 9},
-    {"Id": 22, "LifeArea": "Fortune", "house": 9, "karaka": "Jupiter", "sec_house": 11},
-    {"Id": 23, "LifeArea": "Status", "house": 10, "karaka": "Sun", "sec_house": 1},
-    {"Id": 24, "LifeArea": "Business", "house": 7, "karaka": "Mercury", "sec_house": 10},
-    {"Id": 25, "LifeArea": "Job", "house": 6, "karaka": "Saturn", "sec_house": 10},
-    {"Id": 26, "LifeArea": "Income", "house": 11, "karaka": "Jupiter", "sec_house": 2},
-    {"Id": 27, "LifeArea": "Health & Wealth", "house": 1, "karaka": "Jupiter", "sec_house": 2}
+    {"Id": 1, "LifeArea": "Career", "house": 10, "karaka": "Saturn", "sec_house": 2, "gender": "all"},
+    {"Id": 2, "LifeArea": "Health", "house": 1, "karaka": "Sun", "sec_house": 8, "gender": "all"},
+    {"Id": 3, "LifeArea": "Relationship", "house": 7, "karaka": "Venus", "sec_house": 3, "gender": "all"},
+    {"Id": 4, "LifeArea": "Accumulated Wealth (Ju)", "house": 2, "karaka": "Jupiter", "sec_house": 2, "gender": "all"},
+    {"Id": 5, "LifeArea": "Bank Balance (Ve)", "house": 2, "karaka": "Venus", "sec_house": 10, "gender": "all"},
+    {"Id": 6, "LifeArea": "Peace of Mind", "house": 4, "karaka": "Moon", "sec_house": 1, "gender": "all"},
+    {"Id": 7, "LifeArea": "Mother", "house": 4, "karaka": "Moon", "sec_house": 1, "gender": "all"},
+    {"Id": 8, "LifeArea": "Immovable property", "house": 4, "karaka": "Mars", "sec_house": 10, "gender": "all"},
+    {"Id": 9, "LifeArea": "Education", "house": 4, "karaka": "Mercury", "sec_house": 11, "gender": "all"},
+    {"Id": 10, "LifeArea": "Happiness", "house": 4, "karaka": "Jupiter", "sec_house": 4, "gender": "all"},
+    {"Id": 11, "LifeArea": "Luxury", "house": 4, "karaka": "Venus", "sec_house": 12, "gender": "all"},
+    {"Id": 12, "LifeArea": "Heart", "house": 5, "karaka": "Sun", "sec_house": 12, "gender": "all"},
+    {"Id": 13, "LifeArea": "Intelligence", "house": 5, "karaka": "Mercury", "sec_house": 12, "gender": "all"},
+    {"Id": 14, "LifeArea": "Children", "house": 5, "karaka": "Jupiter", "sec_house": 5, "gender": "all"},
+    {"Id": 15, "LifeArea": "Litigation", "house": 6, "karaka": "Mars", "sec_house": 12, "gender": "all"},
+    # Female-specific Life Areas (Show ONLY for Female charts)
+    {"Id": 16, "LifeArea": "Husband (Ju)", "house": 7, "karaka": "Jupiter", "sec_house": 7, "gender": "female"},
+    {"Id": 17, "LifeArea": "Husband (Ma)", "house": 7, "karaka": "Mars", "sec_house": 1, "gender": "female"},
+    {"Id": 18, "LifeArea": "Pregnancy", "house": 7, "karaka": "Moon", "sec_house": 4, "gender": "female"},
+    # Male-specific Life Areas (Show ONLY for Male charts)
+    {"Id": 27, "LifeArea": "Wife (Ve)", "house": 7, "karaka": "Venus", "sec_house": 7, "gender": "male"},
+    {"Id": 28, "LifeArea": "Wife (Ju)", "house": 7, "karaka": "Jupiter", "sec_house": 1, "gender": "male"},
+    {"Id": 29, "LifeArea": "Paternity / Virility", "house": 5, "karaka": "Jupiter", "sec_house": 5, "gender": "male"},
+    # Common Life Areas continued
+    {"Id": 19, "LifeArea": "Inheritance", "house": 8, "karaka": "Jupiter", "sec_house": 8, "gender": "all"},
+    {"Id": 20, "LifeArea": "Longevity", "house": 8, "karaka": "Saturn", "sec_house": 12, "gender": "all"},
+    {"Id": 21, "LifeArea": "Father", "house": 9, "karaka": "Sun", "sec_house": 4, "gender": "all"},
+    {"Id": 22, "LifeArea": "Fortune", "house": 9, "karaka": "Jupiter", "sec_house": 9, "gender": "all"},
+    {"Id": 23, "LifeArea": "Status", "house": 10, "karaka": "Sun", "sec_house": 5, "gender": "all"},
+    {"Id": 24, "LifeArea": "Business", "house": 7, "karaka": "Mercury", "sec_house": 2, "gender": "all"},
+    {"Id": 25, "LifeArea": "Job", "house": 6, "karaka": "Saturn", "sec_house": 10, "gender": "all"},
+    {"Id": 26, "LifeArea": "Income", "house": 11, "karaka": "Jupiter", "sec_house": 11, "gender": "all"},
+    {"Id": 30, "LifeArea": "Health & Wealth", "house": 1, "karaka": "Jupiter", "sec_house": 2, "gender": "all"}
 ]
+
+
+def get_life_areas_for_gender(gender: str = "male") -> List[Dict[str, Any]]:
+    """
+    Returns the classical life areas strictly filtered for the native's gender:
+    - For Female: Includes Pregnancy (Id 18), Husband Ju (Id 16), Husband Ma (Id 17). Excludes Wife & Paternity.
+    - For Male: Excludes Pregnancy (Id 18) and Husband (Id 16, 17). Includes Wife Ve (Id 27), Wife Ju (Id 28), Paternity (Id 29).
+    """
+    g = str(gender).strip().lower()
+    if g.startswith("f"):
+        return [a for a in LIFE_AREAS if a.get("gender") in ("all", "female")]
+    elif g.startswith("m"):
+        return [a for a in LIFE_AREAS if a.get("gender") in ("all", "male")]
+    return [a for a in LIFE_AREAS if a.get("gender") == "all"]
 
 
 class AfflictionEngine:
@@ -72,9 +92,16 @@ class AfflictionEngine:
 
     def __init__(self, chart: KundaliChart):
         self.chart = chart
+        b_data = getattr(chart, "birth_data", None)
+        self.gender = getattr(b_data, "gender", "male") or "male"
         self.all_vargas = VargaCalculator.calculate_all_vargas(chart)
         self.house_lords = self._compute_house_lords()
         self.dispositors = self._compute_dispositors()
+
+    def get_applicable_life_areas(self, gender: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Returns life areas filtered for the chart's gender (or explicitly supplied gender)."""
+        target_g = gender or self.gender
+        return get_life_areas_for_gender(target_g)
 
     def _compute_house_lords(self) -> Dict[int, str]:
         lords = {}
@@ -585,38 +612,49 @@ class AfflictionEngine:
         hp_dict = {hp["house"]: hp for hp in self.calculate_house_points(detailed=False)}
         pp_dict = {pp["planet"]: pp for pp in self.calculate_planet_points(detailed=False)}
 
-        # Free will & points
+        def _get_house_metrics(h_num: int):
+            h_str = f"{h_num}{_suffix(h_num)} House"
+            h_data = hp_dict.get(h_str, {})
+            fw = float(h_data.get("freeWill", 30))
+            soumya_val = float(h_data.get("soumya", 0))
+            l159_val = float(h_data.get("lords159", 0))
+            krura_val = float(h_data.get("krura", 0))
+            l6812_val = float(h_data.get("lords6812", 0))
+            sc = round((soumya_val + l159_val) - (krura_val + 0.5 * l6812_val), 1)
+            # Dusthana (6,8,12) or negative net score or severe 7th affliction indicates Malefic
+            is_mal = (h_num in (6, 8, 12)) or (sc < 0) or (h_num == 7 and krura_val > soumya_val)
+            bm = {"text": "Malefic", "className": "malefic"} if is_mal else {"text": "Benefic", "className": "benefic"}
+            return fw, sc, bm
+
+        def _get_planet_metrics(p_name: str):
+            p_data = pp_dict.get(p_name, {})
+            fw = float(p_data.get("freeWill", 40))
+            dv = float(p_data.get("dashvarga", 5))
+            soumya_val = float(p_data.get("soumya", 0))
+            krura_val = float(p_data.get("krura", 0))
+            sc = round(((dv - 5.0) * 0.5) + ((soumya_val - krura_val) * 0.5), 1)
+            # Grahalakshanam classifies benefic planets with moderate score or high-dashvarga planets as Benefic
+            is_ben = (p_name in ("Jupiter", "Venus", "Moon", "Mercury") and sc >= -0.5) or (dv >= 7 and sc >= 0)
+            bm = {"text": "Benefic", "className": "benefic"} if is_ben else {"text": "Malefic", "className": "malefic"}
+            return fw, sc, bm
+
         if not lords:
-            h_key = f"{h_pri}{_suffix(h_pri)} House"
-            sec_key = f"{h_sec}{_suffix(h_sec)} House"
-            fw_h = hp_dict.get(h_key, {}).get("freeWill", 40)
-            fw_k = pp_dict.get(p_karaka, {}).get("freeWill", 35)
-            fw_s = hp_dict.get(sec_key, {}).get("freeWill", 45)
-
-            sc_h = round((fw_h - 50.0) / 10.0, 1)
-            sc_k = round((fw_k - 50.0) / 10.0, 1)
-            sc_s = round((fw_s - 50.0) / 10.0, 1)
+            fw_h, sc_h, bm_h = _get_house_metrics(h_pri)
+            fw_k, sc_k, bm_k = _get_planet_metrics(p_karaka)
+            fw_s, sc_s, bm_s = _get_house_metrics(h_sec)
         else:
-            fw_h = pp_dict.get(p_house, {}).get("freeWill", 45)
-            fw_k = pp_dict.get(p_karaka, {}).get("freeWill", 35)
-            fw_s = pp_dict.get(p_sec, {}).get("freeWill", 50)
-
-            sc_h = round((fw_h - 50.0) / 10.0, 1)
-            sc_k = round((fw_k - 50.0) / 10.0, 1)
-            sc_s = round((fw_s - 50.0) / 10.0, 1)
+            fw_h, sc_h, bm_h = _get_planet_metrics(p_house)
+            fw_k, sc_k, bm_k = _get_planet_metrics(p_karaka)
+            fw_s, sc_s, bm_s = _get_planet_metrics(p_sec)
 
         def _fmt_score(sc: float) -> str:
-            sign = "+ " if sc > 0 else ("- " if sc < 0 else "")
-            return f"{sign}{abs(sc)} Point" if sc != 0 else "0 Point"
-
-        def _ben_mal(sc: float, fw: float) -> Dict[str, str]:
-            if sc >= 0 and fw >= 45:
-                return {"text": "Benefic", "className": "benefic"}
-            return {"text": "Malefic", "className": "malefic"}
-
-        bm_h = _ben_mal(sc_h, fw_h)
-        bm_k = _ben_mal(sc_k, fw_k)
-        bm_s = _ben_mal(sc_s, fw_s)
+            if sc > 0:
+                val = int(sc) if sc % 1 == 0 else sc
+                return f"{val} Point"
+            elif sc < 0:
+                val = int(abs(sc)) if sc % 1 == 0 else abs(sc)
+                return f"-{val} Point"
+            return "0 Point"
 
         # 2. Free Will Row
         row_fw = {
@@ -644,7 +682,7 @@ class AfflictionEngine:
 
         # 5. Type Of Remedy
         def _rem_type(bm: Dict[str, str], fw: float) -> str:
-            if bm["className"] == "benefic" and fw >= 50:
+            if bm.get("className") == "benefic":
                 return "Gemstones, Rudraksha, Mantra & Yagya"
             return "Rudraksha, Yagya, Mantra, & Donation"
 
@@ -670,7 +708,7 @@ class AfflictionEngine:
         # 7. Yagya / Gems
         def _get_yagya_gem(planet: str, bm: Dict[str, str], fw: float) -> str:
             cat = PLANETARY_REMEDY_CATALOG.get(planet, PLANETARY_REMEDY_CATALOG["Sun"])
-            if bm["className"] == "benefic" and fw >= 50:
+            if bm.get("className") == "benefic":
                 return f"Auspicious Gemstone: {cat['gem']}"
             return cat["yagya"]
 
@@ -728,31 +766,31 @@ class AfflictionEngine:
         ]
 
 
-# Classical planetary remedies reference dictionary
+# Classical planetary remedies reference dictionary aligned with Grahalakshanam
 PLANETARY_REMEDY_CATALOG: Dict[str, Dict[str, Any]] = {
     "Sun": {
         "planet_hi": "सूर्य",
-        "rudraksha": "Wear 1 Mukhi or 12 Mukhi Rudraksha in red/black thread around the Neck or in the Working Hand on the day of your Janma Nakshatra or Sunday or Surya Hora.",
+        "rudraksha": "Wear 12 Mukhi, 1 Mukhi, 2 Mukhi or 3 Mukhi Rudraksha in red/black thread around the Neck or in the Working Hand on the day of Pushya or Sunday or Sun Hora.",
         "yagya": "Vedic Surya Shanti Yagya For Pacifying The Planet Sun/Surya.",
         "gem": "Natural untreated Burma Ruby (माणिक्य) set in Gold on Ring Finger.",
         "mantra": {
-            "title": "Sun Mantra (सूर्य मंत्र) :",
+            "title": "Sun Mantra (सूर्य मंत्र)",
             "mantra": "ॐ ह्रां ह्रीं ह्रौं सः सूर्याय नमः ॥",
-            "translit": "Aum Hran Hrin Hron seh Suryaye Namah",
+            "translit": "Aum hraan hreen hron seh Suryay Namah",
             "note": "*This mantra should be chanted for 7,000 times within 40 days."
         },
         "donation": {
             "donation_title": "Sun Donation",
             "items": [
                 "More than 12kg of wheat.",
-                "Gemstone of Surya (Ruby) with Golden chain or Ring.",
+                "Gemstone of Surya (Ruby) with Golden chain or Golden ring or Golden earing.",
                 "Red Sandalwood (more than a fist full) – for health.",
                 "Red silk cloth with Golden border.",
                 "More than 3kg of wheat with a copper vessel - for family issues."
             ],
             "timing": "Donate these articles on the day of Pushya or Sunday or Surya Hora."
         },
-        "vriksha": "Plant 2 plants or its multiples of मदार / श्वेतार्क - Madar (Calotropis procera) on the day of your Janma Nakshatra or Sunday or Surya Hora."
+        "vriksha": "Plant 1 or 7 plants or its multiples of मदार - Arka (Calotropis procera) on the day of Pushya or Sunday or Surya Hora."
     },
     "Moon": {
         "planet_hi": "चन्द्र",
@@ -760,7 +798,7 @@ PLANETARY_REMEDY_CATALOG: Dict[str, Dict[str, Any]] = {
         "yagya": "Vedic Chandra Shanti Yagya For Pacifying The Planet Moon/Chandra.",
         "gem": "Natural untreated South Sea Pearl (मोती) set in Silver on Little Finger.",
         "mantra": {
-            "title": "Moon Mantra (चंद्र मंत्र) :",
+            "title": "Moon Mantra (चंद्र मंत्र)",
             "mantra": "ॐ श्रां श्रीं श्रौं सः चंद्राय नमः ॥",
             "translit": "Aum Shran Shrin Shron seh Chandraye Namah",
             "note": "*This mantra should be chanted for 11,000 times within 40 days."
@@ -776,15 +814,15 @@ PLANETARY_REMEDY_CATALOG: Dict[str, Dict[str, Any]] = {
             ],
             "timing": "Donate these articles on the day of Pushya or Monday or Moon Hora."
         },
-        "vriksha": "Plant 8 plants or its multiples of पलाश - Palasha (Butea monosperma) on the time when moon or lagna in the Cancer without affliction."
+        "vriksha": "Plant 2 plants or its multiples of पलाश - Palasha (Butea monosperma) on the day of Pushya or Monday or Chandra Hora."
     },
     "Mars": {
         "planet_hi": "मंगल",
-        "rudraksha": "Wear 3 Mukhi Rudraksha in red/black thread around the Neck or in the Working Hand on the day of Pushya or Tuesday or Mars Hora.",
+        "rudraksha": "Wear 6 Mukhi or 11 Mukhi Rudraksha in red/black thread around the Neck or in the Working Hand on the day of Pushya or Tuesday or Mars Hora.",
         "yagya": "Vedic Mangala Shanti Yagya For Pacifying The Planet Mars/Mangala.",
         "gem": "Natural untreated Red Coral (मूंगा) set in Copper or Gold on Ring Finger.",
         "mantra": {
-            "title": "Mars Mantra (मंगल मंत्र) :",
+            "title": "Mars Mantra (मंगल मंत्र)",
             "mantra": "ॐ क्रां क्रीं क्रौं सः भौमाय नमः ॥",
             "translit": "Aum Kran Krin Kron seh Bhaumaaye Namah",
             "note": "*This mantra should be chanted for 10,000 times within 40 days."
@@ -800,15 +838,15 @@ PLANETARY_REMEDY_CATALOG: Dict[str, Dict[str, Any]] = {
             ],
             "timing": "Donate these articles on the day of Pushya or Tuesday or Mangala Hora."
         },
-        "vriksha": "Plant 8 plants or its multiples of कत्था या खैर - Khadira (Acacia catechu) on the time when moon or lagna in the Aries/Scorpio without affliction."
+        "vriksha": "Plant 9 plants or its multiples of कत्था - Khadira (Acacia catechu) on the day of Pushya or Tuesday or Mangal Hora."
     },
     "Mercury": {
         "planet_hi": "बुध",
-        "rudraksha": "Wear 4 Mukhi or 10 Mukhi Rudraksha in red/black thread around the Neck or in the Working Hand on the day of your Janma Nakshatra or Wednesday or Mercury Hora.",
-        "yagya": "Vedic Budha Shanti Yagya For Pacifying The Planet Mercury/Budha.",
+        "rudraksha": "Wrap the Vidhara in Green thread or wear 4/10 Mukhi Rudraksha on the day of Pushya or Wednesday or Mercury Hora.",
+        "yagya": "Wear a 5 to 7 Carats Emerald (पन्ना) Gold Ring on Little Finger or Vedic Budha Shanti Yagya on Wednesday or Budha Hora.",
         "gem": "Natural untreated Zambian Emerald (पन्ना) set in Bronze or Gold on Little Finger.",
         "mantra": {
-            "title": "Mercury Mantra (बुध मंत्र) :",
+            "title": "Mercury Mantra (बुध मंत्र)",
             "mantra": "ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः ॥",
             "translit": "Aum Bran Brin Bron seh Budhaye Namah",
             "note": "*This mantra should be chanted for 9,000 times within 40 days."
@@ -822,65 +860,63 @@ PLANETARY_REMEDY_CATALOG: Dict[str, Dict[str, Any]] = {
                 "Camphor and green fruits/vegetables.",
                 "Emerald gemstone or green jade."
             ],
-            "timing": "Donate these articles on the day of Janma Nakshatra or Wednesday or Budha Hora."
+            "timing": "Donate these articles on the day of Pushya or Wednesday or Budha Hora."
         },
-        "vriksha": "Plant 2 plants or its multiples of कटहल / अपामार्ग - Panasa / Apamarga on the time when moon or lagna in the Gemini/Virgo without affliction."
+        "vriksha": "Plant 5 clusters or its multiples of चिरचिटा - Apamarga (Achyranthes aspera) on the day of Pushya or Wednesday or Budha Hora."
     },
     "Jupiter": {
         "planet_hi": "गुरु",
-        "rudraksha": "Wear 5 Mukhi Rudraksha in yellow/red thread around the Neck or in the Working Hand on the day of your Janma Nakshatra or Thursday or Jupiter Hora.",
-        "yagya": "Vedic Brihaspati Shanti Yagya For Pacifying The Planet Jupiter/Guru.",
+        "rudraksha": "Wear 5 Mukhi or 13 Mukhi Rudraksha in red/black thread around the Neck or in the Working Hand on the day of Pushya or Thursday or Jupiter Hora.",
+        "yagya": "Vedic Guru Shanti Yagya For Pacifying The Planet Jupiter/Guru.",
         "gem": "Natural untreated Ceylon Yellow Sapphire (पुखराज) set in Gold on Index Finger.",
         "mantra": {
-            "title": "Jupiter Mantra (गुरु मंत्र) :",
-            "mantra": "ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः ॥",
-            "translit": "Aum Gran Grin Gron seh Gurave Namah",
+            "title": "Jupiter Mantra (गुरु मंत्र)",
+            "mantra": "ॐ ग्रां ग्रीं ग्रौं सः गुरूवे नमः ॥",
+            "translit": "Aum Gran Grin Gron seh Guruve Namah",
             "note": "*This mantra should be chanted for 19,000 times within 40 days."
         },
         "donation": {
             "donation_title": "Jupiter Donation",
             "items": [
-                "Chana Dal more than 16kg.",
-                "Yellow Silk cloth with Golden border.",
-                "Turmeric (Haldi) roots.",
-                "Yellow Sapphire or Gold coin.",
-                "Books or educational material to poor scholars."
+                "More than 16kg of Chana Daal.",
+                "Gold Coin or Gold Ring.",
+                "Bronze vessel.",
+                "Plantation of trees."
             ],
-            "timing": "Donate these articles on the day of Janma Nakshatra or Thursday or Guru Hora."
+            "timing": "Donate these articles on the day of Pushya or Thursday or Brihaspati Hora."
         },
-        "vriksha": "Plant 5 plants or its multiples of पीपल - Peepal (Ficus religiosa) on Thursday or Guru Hora."
+        "vriksha": "Plant 3 plants or its multiples of पीपल - Ashwatha (Ficus religiosa) or केला - Kadli (Musa paradisiaca Linn) on the day of Pushya or Thursday or Guru Hora."
     },
     "Venus": {
         "planet_hi": "शुक्र",
-        "rudraksha": "Wear 6 Mukhi or 13 Mukhi Rudraksha in white/red thread around the Neck or in the Working Hand on the day of your Janma Nakshatra or Friday or Venus Hora.",
-        "yagya": "Vedic Shukra Shanti Yagya For Pacifying The Planet Venus/Shukra.",
+        "rudraksha": "Wear 7 Mukhi Rudraksha in red/black thread around the Neck or in the Working Hand on the day of Pushya or Friday or Venus Hora.",
+        "yagya": "Vedic Sukra Shanti Yagya For Pacifying The Planet Venus/Sukra.",
         "gem": "Natural untreated Diamond or White Zircon (हीरा / जरकन) set in Platinum or Silver.",
         "mantra": {
-            "title": "Venus Mantra (शुक्र मंत्र) :",
+            "title": "Venus Mantra (शुक्र मंत्र)",
             "mantra": "ॐ द्रां द्रीं द्रौं सः शुक्राय नमः ॥",
-            "translit": "Aum Dran Drin Dron seh Shukraye Namah",
+            "translit": "Aum Dran Drin Dron Seh Shukraye Namah",
             "note": "*This mantra should be chanted for 16,000 times within 40 days."
         },
         "donation": {
             "donation_title": "Venus Donation",
             "items": [
-                "White Sesame (Safed Til) and Mishri/Sugar.",
-                "White Silk cloth with Silver border.",
-                "Silver ornaments or vessels.",
-                "Pure Ghee and Perfume/Attar.",
-                "Donation for marriage of poor girls."
+                "More than 25kg Nishpava/Ishpava (Lobia Dal).",
+                "More than 3kg Ishpava with White Silk Cloth without border, wrap dhanya in the cloth.",
+                "Gold Coin or Ring.",
+                "Crystals or Sphatik Mala."
             ],
-            "timing": "Donate these articles on the day of Janma Nakshatra or Friday or Shukra Hora."
+            "timing": "Donate these articles on the day of Pushya or Friday or Shukra Hora."
         },
-        "vriksha": "Plant 6 plants or its multiples of गूलर - Audumbara (Ficus glomerata) on Friday or Shukra Hora."
+        "vriksha": "Plant 6 plants or its multiples of गूलर - Udumbara (Ficus glomerata / racemosa) on the day of Pushya or Friday or Shukra Hora."
     },
     "Saturn": {
         "planet_hi": "शनि",
-        "rudraksha": "Wear 4 Mukhi or 7 Mukhi Rudraksha in red/black thread around the Neck or in the Working Hand on the day of Pushya or Saturday or Saturn Hora.",
+        "rudraksha": "Wear 4 Mukhi Rudraksha in red/black thread around the Neck or in the Working Hand on the day of Pushya or Saturday or Saturn Hora.",
         "yagya": "Vedic Shani Shanti Yagya For Pacifying The Planet Saturn/Shani.",
         "gem": "Natural untreated Ceylon Blue Sapphire (नीलम) or Amethyst set in Panchdhatu.",
         "mantra": {
-            "title": "Saturn Mantra (शनि मंत्र) :",
+            "title": "Saturn Mantra (शनि मंत्र)",
             "mantra": "ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः ॥",
             "translit": "Aum Pram Prim Pron seh Shanicharaye Namah",
             "note": "*This mantra should be chanted for 23,000 times within 40 days."
@@ -904,7 +940,7 @@ PLANETARY_REMEDY_CATALOG: Dict[str, Dict[str, Any]] = {
         "yagya": "Vedic Rahu Shanti Yagya For Pacifying The Shadow Planet Rahu.",
         "gem": "Natural untreated Hessonite Garnet (गोमेद) set in Silver on Middle Finger.",
         "mantra": {
-            "title": "Rahu Mantra (राहु मंत्र) :",
+            "title": "Rahu Mantra (राहु मंत्र)",
             "mantra": "ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः ॥",
             "translit": "Aum Bhran Bhrin Bhron seh Rahave Namah",
             "note": "*This mantra should be chanted for 18,000 times within 40 days."
@@ -913,7 +949,7 @@ PLANETARY_REMEDY_CATALOG: Dict[str, Dict[str, Any]] = {
             "donation_title": "Rahu Donation",
             "items": [
                 "Mustard seeds and Urad dal.",
-                "Smoky / Dark blue blanket.",
+                "Dark blue or smoky blanket.",
                 "Seven types of grains (Satnaja).",
                 "Coconut with water offered to running stream.",
                 "Lead or Gomedh stone."
@@ -928,7 +964,7 @@ PLANETARY_REMEDY_CATALOG: Dict[str, Dict[str, Any]] = {
         "yagya": "Vedic Ketu Shanti Yagya For Pacifying The Shadow Planet Ketu.",
         "gem": "Natural untreated Chrysoberyl Cat's Eye (लहसुनिया) set in Silver.",
         "mantra": {
-            "title": "Ketu Mantra (केतु मंत्र) :",
+            "title": "Ketu Mantra (केतु मंत्र)",
             "mantra": "ॐ स्रां स्रीं स्रौं सः केतवे नमः ॥",
             "translit": "Aum Sran Srin Sron seh Ketave Namah",
             "note": "*This mantra should be chanted for 17,000 times within 40 days."

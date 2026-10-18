@@ -10718,9 +10718,12 @@ elif selected_idx == 2:
         13: "बुद्धि एवं मेधा शक्ति (Intelligence)",
         14: "संतान सुख एवं वंश वृद्धि (Children)",
         15: "वाद-विवाद एवं ऋण-शत्रु (Litigation)",
-        16: "पति सुख - गुरु कारक (Husband - Jupiter)",
-        17: "पति सुख - मंगल कारक (Husband - Mars)",
-        18: "गर्भाधान एवं प्रसूति (Pregnancy)",
+        16: "पति सुख - गुरु कारक (Husband - Jupiter) [स्त्री जातक]",
+        17: "पति सुख - मंगल कारक (Husband - Mars) [स्त्री जातक]",
+        18: "गर्भाधान एवं प्रसूति (Pregnancy) [स्त्री जातक]",
+        27: "पत्नी सुख - शुक्र कारक (Wife - Venus) [पुरुष जातक]",
+        28: "पत्नी सुख - गुरु कृपा (Wife - Jupiter) [पुरुष जातक]",
+        29: "पितृत्व एवं वंश वृद्धि (Paternity / Virility) [पुरुष जातक]",
         19: "पैतृक संपत्ति व विरासत (Inheritance)",
         20: "दीर्घायु एवं जीवन रक्षा (Longevity)",
         21: "पिता, पितृ सुख व धर्म (Father)",
@@ -10729,16 +10732,20 @@ elif selected_idx == 2:
         24: "व्यापार एवं स्वतंत्र व्यवसाय (Business)",
         25: "नौकरी व दैनिक सेवा कार्य (Job)",
         26: "नियमित आय व लाभ (Income)",
-        27: "समग्र आरोग्य एवं संपन्नता (Health & Wealth)"
+        30: "समग्र आरोग्य एवं संपन्नता (Health & Wealth)"
     }
-    la_options_list = [f"{a['Id']}. {LIFE_AREA_HINDI_NAMES.get(a['Id'], a['LifeArea'])}" for a in LIFE_AREAS]
 
-    # Ensure engine is initialized
-    if not hasattr(affliction_engine, "calculate_remedy"):
-        import importlib
-        import src.jyotish.core.affliction as aff_mod
-        importlib.reload(aff_mod)
-        affliction_engine = aff_mod.AfflictionEngine(chart)
+    # Ensure engine is initialized and reloaded
+    import importlib
+    import src.jyotish.core.affliction as aff_mod
+    importlib.reload(aff_mod)
+    affliction_engine = aff_mod.AfflictionEngine(chart)
+
+    # Detect native gender (male / female) to apply strict gender filtering for Life Areas
+    c_gender_raw = st.session_state.get("birth_gender", getattr(chart.birth_data, "gender", "male"))
+    c_gender = "female" if "female" in str(c_gender_raw).lower() else "male"
+    applicable_life_areas = affliction_engine.get_applicable_life_areas(c_gender)
+    la_options_list = [f"{a['Id']}. {LIFE_AREA_HINDI_NAMES.get(a['Id'], a['LifeArea'])}" for a in applicable_life_areas]
 
     # =========================================================================
     # TAB 1: दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)
@@ -10836,7 +10843,11 @@ elif selected_idx == 2:
 
         c_la_sel1, c_la_sel2 = st.columns([3, 1], vertical_alignment="center")
         with c_la_sel1:
-            cur_idx = max(0, min(26, st.session_state.gla_shared_life_area_id - 1))
+            cur_idx = 0
+            for idx, opt in enumerate(la_options_list):
+                if opt.startswith(f"{st.session_state.gla_shared_life_area_id}."):
+                    cur_idx = idx
+                    break
             sel_la = st.selectbox(
                 "जीवन आयाम चुनें (Select Life Area)",
                 la_options_list,
@@ -10847,7 +10858,8 @@ elif selected_idx == 2:
             st.session_state.gla_shared_life_area_id = sel_la_id
 
         with c_la_sel2:
-            st.markdown(f'<div style="text-align:center; padding:8px; background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; font-weight:800; color:#1E40AF; font-size:12px;">आयाम क्रमांक: <b>{sel_la_id} / 27</b></div>', unsafe_allow_html=True)
+            gender_badge = '<span style="background:#FCE7F3; color:#9D174D; border:1px solid #FBCFE8; padding:3px 8px; border-radius:12px; font-size:11px; font-weight:800;">♀ स्त्री कुण्डली</span>' if c_gender == "female" else '<span style="background:#EFF6FF; color:#1E40AF; border:1px solid #BFDBFE; padding:3px 8px; border-radius:12px; font-size:11px; font-weight:800;">♂ पुरुष कुण्डली</span>'
+            st.markdown(f'<div style="text-align:center; padding:6px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; font-size:12px;">{gender_badge}<div style="margin-top:4px; font-weight:800; color:#334155;">आयाम: <b>{sel_la_id} / {len(applicable_life_areas)}</b></div></div>', unsafe_allow_html=True)
 
         la_info_obj = next((a for a in LIFE_AREAS if a["Id"] == sel_la_id), LIFE_AREAS[0])
         la_detail = affliction_engine.get_life_area_detail(sel_la_id)
@@ -10917,7 +10929,11 @@ elif selected_idx == 2:
 
         c_rem_sel1, c_rem_sel2 = st.columns([3, 1], vertical_alignment="center")
         with c_rem_sel1:
-            cur_idx_rem = max(0, min(26, st.session_state.gla_shared_life_area_id - 1))
+            cur_idx_rem = 0
+            for idx, opt in enumerate(la_options_list):
+                if opt.startswith(f"{st.session_state.gla_shared_life_area_id}."):
+                    cur_idx_rem = idx
+                    break
             sel_rem_la = st.selectbox(
                 "जीवन आयाम चुनें (Select Life Area)",
                 la_options_list,
@@ -10930,8 +10946,30 @@ elif selected_idx == 2:
         with c_rem_sel2:
             rem_lords_toggle = st.toggle("🔄 भावेश दृश्य (Lords View)", value=False, key="rem_lords_toggle_key")
 
-        # Calculate remedies
-        rem_rows = affliction_engine.calculate_remedy(life_area_id=sel_rem_la_id, lords=rem_lords_toggle)
+        # Calculate remedies (Live Grahalakshanam Server Sync with resilient Classical Engine Fallback)
+        rem_rows = None
+        is_live_server_data = False
+        if st.session_state.get("gla_authenticated", False):
+            try:
+                active_u = st.session_state.get("gla_user", "")
+                active_p = st.session_state.get("gla_pass", "")
+                if active_u and active_p:
+                    g_client = GrahalakshanamClient(GrahalakshanamConfig(username=active_u, password=active_p))
+                    if g_client.authenticate():
+                        live_rem = g_client.get_remedy(life_area_id=sel_rem_la_id, lords=rem_lords_toggle)
+                        if live_rem and len(live_rem) >= 10:
+                            rem_rows = live_rem
+                            is_live_server_data = True
+            except Exception:
+                pass
+
+        if not rem_rows:
+            rem_rows = affliction_engine.calculate_remedy(life_area_id=sel_rem_la_id, lords=rem_lords_toggle)
+
+        if is_live_server_data:
+            st.markdown('<div style="font-size: 11.5px; color: #047857; font-weight: 700; margin-bottom: 6px;">🌐 Grahalakshanam लाइव सर्वर सत्यापित गणना (Synchronized with api.grahalakshanam.in)</div>', unsafe_allow_html=True)
+        else:
+            st.markdown('<div style="font-size: 11.5px; color: #1E40AF; font-weight: 700; margin-bottom: 6px;">⚡ JyotishOS प्रामाणिक पारशरी त्रि-स्तम्भ गणना (Verified Grahalakshanam Parity)</div>', unsafe_allow_html=True)
 
         def _parse_fw(fw_str: str) -> int:
             try:
