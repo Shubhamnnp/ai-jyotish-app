@@ -6625,6 +6625,7 @@ with st.container(key="top_frozen_header_container", border=False):
             u_role = st.session_state.get("user_role", "jatak")
             MENU_ACTION_ITEMS = [
                 "⚡ मेन्यू चुनें (Menu List)...",
+                "🧠 AI Brain (दैवज्ञ महा-मस्तिष्क)",
                 "✨ New (नया प्रोफाइल)",
                 "📅 Birth (जन्म विवरण)",
                 "📝 Notes (परामर्श नोट्स)",
@@ -6654,11 +6655,13 @@ with st.container(key="top_frozen_header_container", border=False):
                 index=0,
                 label_visibility="collapsed",
                 key=f"top_bar_menu_action_selector_{_menu_nonce}",
-                help="मेन्यू सूची (New, Birth, Notes, Vault, Save, Panchang, AI, BTR, Prashna, PDF, Setup, Language, Mode, Local, Validation, Logout)"
+                help="मेन्यू सूची (AI Brain, New, Birth, Notes, Vault, Save, Panchang, AI, BTR, Prashna, PDF, Setup, Language, Mode, Local, Validation, Logout)"
             )
 
             if selected_action != MENU_ACTION_ITEMS[0]:
-                if selected_action.startswith("✨ New"):
+                if selected_action.startswith("🧠 AI Brain"):
+                    st.session_state.gla_active_tool = "daivajna_brain"
+                elif selected_action.startswith("✨ New"):
                     st.session_state.gla_active_tool = "new"
                 elif selected_action.startswith("📅 Birth"):
                     st.session_state.gla_active_tool = "birth"
@@ -8324,6 +8327,183 @@ with st.container(key="top_frozen_header_container", border=False):
                 if st.button("❌ बंद करें", use_container_width=True, key="lic_modal_close_btn"):
                     st.session_state.gla_active_tool = None
                     st.rerun()
+
+        # 17. TOOL: DAIVAJNA AI BRAIN (दैवज्ञ महा-मस्तिष्क - Autonomous Deep Research Engine)
+        elif st.session_state.gla_active_tool == "daivajna_brain":
+            with st.container(border=True):
+                from src.jyotish.services.daivajna_brain import default_daivajna_brain
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8B5CF6; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.25rem; font-weight:900; color:#6D28D9;">
+                        🧠 दैवज्ञ महा-मस्तिष्क (AI Daivajna Brain & Classical Pramana Engine)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                st.caption("🌌 अति-जटिल/दुर्लभ कुण्डली विश्लेषण, शास्त्रीय श्लोक प्रमाण (BPHS, सारावली, फलदीपिका, जातक पारिजात आदि), सूक्ष्म परिहार एवं स्वायत्त जेमिनी-इंटरनेट शोध प्रणाली।")
+
+                # Analyze current chart complexity
+                brain_analysis = default_daivajna_brain.detect_chart_complexities(chart)
+                c_score = brain_analysis.get("complexity_score", 0)
+                c_level = brain_analysis.get("complexity_level", "सामान्य")
+                c_factors = brain_analysis.get("detected_factors", [])
+
+                # Complexity badges & metrics
+                badge_color = "#10B981" if c_score < 30 else ("#F59E0B" if c_score < 60 else "#EF4444")
+                col_b1, col_b2, col_b3 = st.columns([1.5, 1.5, 3])
+                with col_b1:
+                    st.metric("🎯 जटिलता सूचकांक (Score)", f"{c_score} / 100")
+                with col_b2:
+                    st.metric("⚖️ कुण्डली स्तर (Level)", c_level)
+                with col_b3:
+                    st.markdown(f"""
+                    <div style="background:#F5F3FF; border:1px solid #DDD6FE; border-radius:8px; padding:10px; margin-top:4px;">
+                        <b style="color:#6D28D9; font-size:12.5px;">🔬 संसूचक विशेषताएं ({len(c_factors)} विशिष्ट स्थितियां):</b><br/>
+                        <span style="font-size:12px; color:#4B5563;">
+                            {", ".join([f.get("title", "") for f in c_factors]) if c_factors else "कुण्डली में सभी ग्रह विन्यास शास्त्रीय सामान्य सीमा में हैं।"}
+                        </span>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                if c_factors:
+                    with st.expander(f"🔍 संसूचित सूक्ष्म ग्रह विन्यास विवरण ({len(c_factors)} स्थितियां)", expanded=True):
+                        f_cols = st.columns(min(len(c_factors), 3))
+                        for idx, factor in enumerate(c_factors):
+                            with f_cols[idx % 3]:
+                                st.markdown(f"""
+                                <div style="background:#FAF5FF; border-left:3px solid #8B5CF6; border-radius:4px; padding:6px 10px; margin-bottom:6px; font-size:12px;">
+                                    <b style="color:#7C3AED;">{factor.get('title')}</b><br/>
+                                    <span style="color:#374151;">{factor.get('detail')}</span>
+                                </div>
+                                """, unsafe_allow_html=True)
+
+                st.markdown("---")
+                st.markdown("##### 🚀 गहन शास्त्रीय शोध आदेश (Autonomous Research Brief)")
+
+                u_email = st.session_state.get("user_email", "public")
+                col_rq1, col_rq2 = st.columns([3, 1.2])
+                with col_rq1:
+                    custom_brain_q = st.text_area(
+                        "विशिष्ट शोध प्रश्न या अतिरिक्त संदर्भ (Optional Custom Inquiry):",
+                        placeholder="जैसे: इस कुण्डली में नीचभंग की वास्तविक फलप्रदाता शक्ति, गंडान्त दोष की निवृत्ति और करियर-दांपत्य पर इसका प्रभाव बताएं...",
+                        height=75,
+                        key="daivajna_brain_custom_query_input"
+                    )
+                with col_rq2:
+                    st.caption("🔑 जेमिनी API कुंजी (वैकल्पिक/कस्टम):")
+                    custom_gemini_key = st.text_input(
+                        "Gemini API Key:",
+                        value=st.session_state.get("gemini_api_key", ""),
+                        type="password",
+                        placeholder="AIzaSy...",
+                        key="daivajna_brain_key_input",
+                        help="यदि रिक्त छोड़ा तो सिस्टम डिफ़ॉल्ट या ऑफलाइन 12,500+ शास्त्रीय शोध इंजन स्वतः प्रयुक्त होगा।"
+                    )
+                    if custom_gemini_key:
+                        st.session_state["gemini_api_key"] = custom_gemini_key
+
+                col_bact1, col_bact2, col_bact3 = st.columns([2.5, 1.5, 1])
+                run_research_clicked = False
+                force_refresh_clicked = False
+
+                with col_bact1:
+                    if st.button("🚀 1-क्लिक स्वायत्त शास्त्रीय शोध चलाएं (Run Deep Research)", type="primary", use_container_width=True, key="btn_run_daivajna_research"):
+                        run_research_clicked = True
+                with col_bact2:
+                    if st.button("🔄 पुनः शोध (Force Refresh)", use_container_width=True, key="btn_refresh_daivajna_research"):
+                        force_refresh_clicked = True
+                with col_bact3:
+                    if st.button("❌ बंद करें", use_container_width=True, key="btn_close_daivajna_research"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+                # Execution logic
+                if run_research_clicked or force_refresh_clicked:
+                    with st.spinner("🌌 दैवज्ञ महा-मस्तिष्क द्वारा वैदिक ग्रन्थों, इंटरनेट व जेमिनी ग्राउंडिंग से सूक्ष्म शास्त्रीय नियमों का संकलन किया जा रहा है..."):
+                        try:
+                            res = default_daivajna_brain.execute_deep_research(
+                                chart=chart,
+                                owner_email=u_email,
+                                user_prompt=custom_brain_q,
+                                api_key=custom_gemini_key.strip() if custom_gemini_key.strip() else None,
+                                force_refresh=force_refresh_clicked
+                            )
+                            st.session_state["active_brain_research_result"] = res
+                            st.toast("✅ दैवज्ञ महा-मस्तिष्क शोध संपन्न!", icon="🧠")
+                        except Exception as _b_err:
+                            st.error(f"शोध निष्पादन में त्रुटि: {_b_err}")
+
+                # Display Results if available
+                res_data = st.session_state.get("active_brain_research_result", None)
+                if res_data:
+                    st.markdown("---")
+                    st.markdown(f"""
+                    <div style="background:#F0FDF4; border:1px solid #86EFAC; border-radius:8px; padding:10px 14px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <b style="color:#166534; font-size:14px;">📜 दैवज्ञ शोध सार संग्रह ({res_data.get('chart_name', 'Jataka')})</b><br/>
+                            <span style="font-size:11.5px; color:#15803D;">शोध स्रोत: <b>{res_data.get('source_engine', 'Gemini & Classical Sastra Engine')}</b> | समय: {res_data.get('timestamp', '')[:19]}</span>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                    tb_sutra, tb_rules, tb_phala, tb_upaya, tb_cites = st.tabs([
+                        "📜 १. शास्त्रीय श्लोक व ग्रन्थ",
+                        "🔬 २. सूक्ष्म गणित व परिहार",
+                        "🔮 ३. संश्लेषित फलादेश व काल",
+                        "🪔 ४. अनुभूत वैदिक उपाय",
+                        "🌐 ५. उद्धरण व शोध सूत्र"
+                    ])
+
+                    with tb_sutra:
+                        st.markdown(f"""
+                        <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:14px; line-height:1.7; font-size:14px; color:#78350F; white-space:pre-wrap;">
+{res_data.get('sanskrit_slokas', 'शास्त्रीय श्लोक उपलब्ध नहीं')}
+                        </div>
+                        """, unsafe_allow_html=True)
+
+                    with tb_rules:
+                        st.markdown(f"""
+                        <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:14px; line-height:1.7; font-size:14px; color:#1E293B; white-space:pre-wrap;">
+{res_data.get('micro_rules_and_exceptions', 'सूक्ष्म नियम उपलब्ध नहीं')}
+                        </div>
+                        """, unsafe_allow_html=True)
+
+                    with tb_phala:
+                        st.markdown(f"""
+                        <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; padding:14px; line-height:1.7; font-size:14px; color:#14532D; white-space:pre-wrap;">
+{res_data.get('synthesized_faladesh', 'फलादेश उपलब्ध नहीं')}
+                        </div>
+                        """, unsafe_allow_html=True)
+
+                    with tb_upaya:
+                        st.markdown(f"""
+                        <div style="background:#FAF5FF; border:1px solid #E9D5FF; border-radius:8px; padding:14px; line-height:1.7; font-size:14px; color:#581C87; white-space:pre-wrap;">
+{res_data.get('prescriptive_remedies', 'उपाय उपलब्ध नहीं')}
+                        </div>
+                        """, unsafe_allow_html=True)
+
+                    with tb_cites:
+                        citations = res_data.get("citations", [])
+                        if citations:
+                            for c in citations:
+                                st.markdown(f"- 🔗 [{c.get('title', 'Web Citation')}]({c.get('uri', '#')})")
+                        else:
+                            st.info("ℹ️ प्रत्यक्ष वेब उद्धरण उपलब्ध नहीं (आंतरिक १२,५००+ शास्त्रीय नियमों एवं ग्रन्थ संदर्भों से परिपूर्ण शोध)।")
+
+                    # Copy to Consultation Notes
+                    st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+                    if st.button("📋 इस संपूर्ण शोध को जातक के 'परामर्श नोट्स' में जोड़ें (Save to Notes)", use_container_width=True, key="btn_copy_research_to_notes"):
+                        if "client_consultation_notes" not in st.session_state:
+                            st.session_state.client_consultation_notes = {}
+                        _c_key = st.session_state.get("birth_name", "Default Client")
+                        _u_email = st.session_state.get("user_email", "public").strip().lower()
+                        _c_store_key = f"{_u_email}:{_c_key}"
+                        _curr_n = st.session_state.client_consultation_notes.get(_c_store_key, "")
+                        append_txt = f"\n\n--- 🧠 दैवज्ञ महा-मस्तिष्क शोध ({datetime.now().strftime('%d-%b-%Y %H:%M')}) ---\n"
+                        append_txt += f"जटिलता: {c_level} (अंक: {c_score}/100)\n"
+                        append_txt += f"फलादेश:\n{res_data.get('synthesized_faladesh', '')}\n\n"
+                        append_txt += f"उपाय:\n{res_data.get('prescriptive_remedies', '')}\n"
+                        st.session_state.client_consultation_notes[_c_store_key] = _curr_n + append_txt
+                        st.toast("✅ शोध सारांश परामर्श नोट्स में सफलतापूर्वक जोड़ दिया गया!", icon="📝")
 
     # ---------------------------------------------------------
     # 🎨 THEME STYLING TOKENS FOR SIDEBAR & HEADER BREADCRUMB (Grahalakshanam Palette)

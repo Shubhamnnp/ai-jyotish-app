@@ -119,3 +119,4 @@ def test_multi_tenant_chart_isolation(isolated_vault):
     clients_b_after_delete = vault.list_all_clients(owner_email=user_b)
     names_b_after_delete = [c["name"] for c in clients_b_after_delete]
     assert "Rajesh" not in names_b_after_delete
+
