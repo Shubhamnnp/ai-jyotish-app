@@ -1297,13 +1297,42 @@ unified_css = f"""
         position: relative !important;
         height: 100vh !important;
     }}
+    /* Fit Screen & Root Viewport Optimization */
+    html, body, #root, .stApp {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+    }
     .block-container {{
-        padding-top: 2px !important;
-        padding-bottom: 0.5rem !important;
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
+        padding-top: 62px !important;
+        padding-bottom: 2rem !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
         max-width: 100% !important;
+        box-sizing: border-box !important;
         overflow: visible !important;
+    }}
+    @media (max-width: 1024px) {{
+        .block-container {{
+            padding-top: 68px !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }}
+    }}
+    @media (max-width: 768px) {{
+        .block-container {{
+            padding-top: 108px !important;
+            padding-left: 0.65rem !important;
+            padding-right: 0.65rem !important;
+            padding-bottom: 2.5rem !important;
+        }}
+    }}
+    @media (max-width: 480px) {{
+        .block-container {{
+            padding-top: 118px !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+        }}
     }}
     div[data-testid="stVerticalBlock"] {{
         overflow: visible !important;
@@ -1433,9 +1462,7 @@ unified_css = f"""
         font-size: 12.5px !important;
         color: #0F172A !important;
     }}
-    .block-container {{
-        padding-top: 60px !important;
-    }}
+    /* Base padding handled dynamically */
     @media (min-width: 769px) {{
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .st-key-frozen_toolbelt_container,
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container,
@@ -1833,9 +1860,7 @@ unified_css = f"""
     .deb-badge {{ color: #991B1B !important; font-weight: 800; background: #FEE2E2 !important; border: 1.5px solid #EF4444 !important; padding: 3px 8px; border-radius: 6px; }}
 
     /* Responsive DataFrames & Tables */
-    [data-testid="stTable"], [data-testid="stDataFrame"] {{
-    /* Responsive Tables */
-    [data-testid="stTable"] {{
+    [data-testid="stTable"], [data-testid="stDataFrame"], div:has(> table) {{
         border: 1.5px solid #CBD5E1 !important;
         border-radius: 10px !important;
         overflow-x: auto !important;
@@ -1894,8 +1919,6 @@ unified_css = f"""
         display: none !important;
     }}
 
-    /* Responsive SVG & Kundali Charts Auto-Scaling */
-    svg {{
     /* Distinct Luxury Gemstone Colors for Every Module Tab */
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1) {{ background: #FFF1F2 !important; color: #9F1239 !important; border: 1.5px solid #FECDD3 !important; }}
     [data-testid="stTabs"] button[role="tab"]:nth-child(12n + 1)[aria-selected="true"] {{ background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%) !important; color: #FFFFFF !important; border: 1.5px solid #9F1239 !important; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35) !important; }}
@@ -2087,10 +2110,10 @@ unified_css = f"""
     /* Mobile Phones (max-width: 768px) */
     @media (max-width: 768px) {{
         .block-container {{
-            padding-left: 0.75rem !important;
-            padding-right: 0.75rem !important;
-            padding-top: 0px !important;
-            padding-bottom: 2rem !important;
+            padding-left: 0.65rem !important;
+            padding-right: 0.65rem !important;
+            padding-top: 108px !important;
+            padding-bottom: 2.5rem !important;
         }}
         .main-header {{
             font-size: 1.5rem !important;
@@ -2230,7 +2253,7 @@ unified_css = f"""
         .block-container {{
             padding-left: 0.6rem !important;
             padding-right: 0.6rem !important;
-            padding-top: 0.4rem !important;
+            padding-top: 108px !important;
         }}
         .top-nav-bar {{
             padding: 8px 10px !important;
@@ -2248,6 +2271,18 @@ unified_css = f"""
         button, .stButton > button, [data-testid="baseButton-secondary"], [data-testid="baseButton-primary"] {{
             min-height: 42px !important;
             touch-action: manipulation !important;
+        }}
+        /* Fluid column stacking on mobile so charts, tables and cards never squish or overlap */
+        div[data-testid="stHorizontalBlock"]:not(.st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"]):not(:has(div[class*="st-key-ts_btn_"])) {{
+            flex-direction: column !important;
+            gap: 12px !important;
+        }}
+        div[data-testid="stHorizontalBlock"]:not(.st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"]):not(:has(div[class*="st-key-ts_btn_"])) > div[data-testid="column"] {{
+            width: 100% !important;
+            min-width: 100% !important;
+            flex: 1 1 100% !important;
+            padding: 0 !important;
+            margin-bottom: 6px !important;
         }}
         /* Prevent horizontal overflow on tables and charts */
         div[data-testid="stHorizontalBlock"] {{
@@ -2417,6 +2452,28 @@ unified_css = f"""
         border: 1px solid #BAE6FD !important;
         border-radius: 6px !important;
     }}
+
+    
+    /* Universal Card, Expanders, Metrics & Table Anti-Overlap Alignment */
+    .rule-card, .vastu-card, .digital-hud, div[data-testid="stMetric"],
+    div[data-testid="stExpander"], div[style*="border-left"] {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
+        word-wrap: break-word !important;
+        word-break: normal !important;
+    }
+    /* Kundali SVGs auto-fit perfectly on all screens */
+    .kundali-chart svg, .chart-container svg, .observatory-canvas svg, svg.kundali-svg, div:has(> svg.kundali-svg) svg {
+        width: 100% !important;
+        max-width: 520px !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        display: block !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+    }
 
     {theme_mode_css}
 </style>
@@ -3317,7 +3374,6 @@ client_bridge_code = """
                             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
                         }
                         [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
-                        [data-testid="stTable"], [data-testid="stTable"] * {
                             background-color: #050811 !important;
                             color: #F1F5F9 !important;
                             font-family: 'JetBrains Mono', monospace !important;
@@ -3542,7 +3598,6 @@ client_bridge_code = """
                             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
                         }
                         [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
-                        [data-testid="stTable"], [data-testid="stTable"] * {
                             background-color: #111827 !important;
                             color: #FFFFFF !important;
                         }
@@ -3639,11 +3694,19 @@ client_bridge_code = """
                             pointer-events: none !important;
                         }
                         .block-container {
-                            padding-top: 2px !important;
-                            padding-bottom: 0.5rem !important;
-                            padding-left: 0.75rem !important;
-                            padding-right: 0.75rem !important;
+                            padding-top: 62px !important;
+                            padding-bottom: 2rem !important;
+                            padding-left: 1.25rem !important;
+                            padding-right: 1.25rem !important;
                             max-width: 100% !important;
+                            box-sizing: border-box !important;
+                        }
+                        @media (max-width: 768px) {
+                            .block-container {
+                                padding-top: 108px !important;
+                                padding-left: 0.65rem !important;
+                                padding-right: 0.65rem !important;
+                            }
                         }
                         div[data-testid="stVerticalBlock"] {
                             gap: 0.35rem !important;
@@ -3772,9 +3835,7 @@ client_bridge_code = """
                             display: flex !important;
                             align-items: center !important;
                         }
-                        .block-container {
-                            padding-top: 135px !important;
-                        }
+                        /* Dynamic header clearance */
                         .st-key-top_frozen_header_container {
                             border: none !important;
                             box-shadow: none !important;
@@ -4333,11 +4394,15 @@ client_bridge_code = """
 
             const blockContainer = parentDoc.querySelector('.block-container');
             if (blockContainer) {
-                const tbH = (frozenTb && frozenTb.offsetHeight) ? frozenTb.offsetHeight : 48;
-                blockContainer.style.setProperty('padding-top', (tbH + 8) + 'px', 'important');
-                blockContainer.style.setProperty('padding-left', '8px', 'important');
-                blockContainer.style.setProperty('padding-right', '8px', 'important');
+                const isMobile = (window.innerWidth <= 768);
+                const defaultMinH = isMobile ? 104 : 52;
+                const tbH = (frozenTb && frozenTb.offsetHeight && frozenTb.offsetHeight > 30) ? frozenTb.offsetHeight : defaultMinH;
+                const padTop = Math.max(tbH + 12, defaultMinH + 12);
+                blockContainer.style.setProperty('padding-top', padTop + 'px', 'important');
+                blockContainer.style.setProperty('padding-left', isMobile ? '8px' : '16px', 'important');
+                blockContainer.style.setProperty('padding-right', isMobile ? '8px' : '16px', 'important');
                 blockContainer.style.setProperty('max-width', '100%', 'important');
+                blockContainer.style.setProperty('box-sizing', 'border-box', 'important');
             }
 
         } catch(e) {
@@ -11418,24 +11483,6 @@ elif selected_idx == 4:
     # TAB 0: समग्र वास्तु मण्डल (Overview, Compass & Comparative Table)
     # -------------------------------------------------------------
     with v_tabs[0]:
-        vas_shl = SHASTRIYA_SHLOKAS.get("vastu_purusha_mandala", {})
-        if vas_shl:
-            vas_lines = "<br/>".join(vas_shl['shloka'].splitlines())
-            st.markdown(f"""
-<div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #047857; font-size: 13.5px; margin-bottom: 4px;">📖 {vas_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {vas_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {vas_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {vas_shl['rule']}
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
         scores = [z.get("score", 70) for z in v_zones]
         avg_score = int(round(sum(scores) / len(scores))) if scores else 0
         sorted_zones = sorted(v_zones, key=lambda x: x.get("score", 70), reverse=True)
@@ -18625,24 +18672,6 @@ elif selected_idx == 14:
         st.markdown("### ☸️ कुण्ड शोधन एवं प्राणपद लग्न (Kunda & Pranapada Shodhana)")
         st.write("बृहत्पाराशर होराशास्त्र (अध्याय ३ व ४) के अनुसार जन्म समय की प्रामाणिकता हेतु कुण्ड नक्षत्र एवं प्राणपद लग्न का त्रिकोण संरेखण अनिवार्य नियम है:")
 
-        btr_shl = SHASTRIYA_SHLOKAS.get("btr_kunda_pranapada", {})
-        if btr_shl:
-            btr_lines = "<br/>".join(btr_shl['shloka'].splitlines())
-            st.markdown(f"""
-<div style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid #9333EA; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #7E22CE; font-size: 13.5px; margin-bottom: 4px;">📖 {btr_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {btr_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {btr_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {btr_shl['rule']}
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
         kp_kun_res = default_btr_service.calculate_kunda_pranapada(calc_chart, birth_profile)
 
         col_k1, col_k2 = st.columns(2)
@@ -19740,24 +19769,6 @@ elif selected_idx == 17:
     with tab_rep_master:
         st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, गोचर एवं पाया, लाल किताब ९ ऋण व १०८ टोटके, ३-स्तरीय ट्रिगर, वैदिक मुहूर्त एवं पञ्चक, कुण्डली मिलान १६ परिहार, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु एवं सात्विक उपायों सहित २२ अध्यायों की पूर्ण रंगीन मुद्रण-योग्य पत्रिका।")
 
-        dos_shl = SHASTRIYA_SHLOKAS.get("dossier_vedachakshu_vedanga", {})
-        if dos_shl:
-            dos_lines = "<br/>".join(dos_shl['shloka'].splitlines())
-            st.markdown(f"""
-<div style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid #9333EA; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #7E22CE; font-size: 13.5px; margin-bottom: 4px;">📖 {dos_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {dos_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {dos_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {dos_shl['rule']}
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
         import importlib
         import src.jyotish.services.report_generator as rep_mod
         importlib.reload(rep_mod)
@@ -20499,24 +20510,6 @@ elif selected_idx == 21:
         st.markdown("### 📊 ३×३ लो-शू ग्रिड (Magic Square of 15)")
         st.caption("जन्म दिनांक के अंकों एवं मूलांक-भाग्यांक से निर्मित दिव्य लो-शू चक्र:")
 
-        num_shl = SHASTRIYA_SHLOKAS.get("vedic_numerology_graha_anka", {})
-        if num_shl:
-            num_lines = "<br/>".join(num_shl['shloka'].splitlines())
-            st.markdown(f"""
-<div style="background: rgba(59, 130, 246, 0.08); border-left: 4px solid #3B82F6; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 {num_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {num_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {num_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {num_shl['rule']}
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
         g = num_res.lo_shu_grid
         col_g1, col_g2 = st.columns([1.2, 1.8])
 
@@ -20730,24 +20723,6 @@ elif selected_idx == 22:
         st.markdown("### 🏠 लाल किताब अनुसार १२ खानों में ग्रह स्थिति")
         st.caption("लाल किताब में राशि नहीं, बल्कि खाना (House 1 to 12) सर्वोपरि होता है:")
 
-        lk_f_shl = SHASTRIYA_SHLOKAS.get("lalkitab_farman_dharmi", {})
-        if lk_f_shl:
-            lk_f_lines = "<br/>".join(lk_f_shl['shloka'].splitlines())
-            st.markdown(f"""
-<div style="background: rgba(220, 38, 38, 0.08); border-left: 4px solid #DC2626; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #B91C1C; font-size: 13.5px; margin-bottom: 4px;">📖 {lk_f_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {lk_f_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {lk_f_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {lk_f_shl['rule']}
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
         khana_table = []
         for kh in range(1, 13):
             kh_info = lk_mod.LAL_KITAB_KHANA_DATA[kh]
@@ -20764,24 +20739,6 @@ elif selected_idx == 22:
     with tab_lk2:
         st.markdown("### ⚠️ लाल किताब के ९ शास्त्रीय कर्मिक ऋण (9 Karmic Debts)")
         st.caption("पूर्वजन्म अथवा पूर्वजों द्वारा किए गए कृत्यों के कारण उत्पन्न ९ शास्त्रीय ऋण:")
-
-        lk_r_shl = SHASTRIYA_SHLOKAS.get("lalkitab_rina_parihara", {})
-        if lk_r_shl:
-            lk_r_lines = "<br/>".join(lk_r_shl['shloka'].splitlines())
-            st.markdown(f"""
-<div style="background: rgba(234, 88, 12, 0.08); border-left: 4px solid #EA580C; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #C2410C; font-size: 13.5px; margin-bottom: 4px;">📖 {lk_r_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {lk_r_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {lk_r_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {lk_r_shl['rule']}
-    </div>
-</div>
-""", unsafe_allow_html=True)
 
         if lk_res.active_debts:
             for d in lk_res.active_debts:
@@ -20926,24 +20883,6 @@ elif selected_idx == 23:
     with tab_d1:
         st.markdown(f"### 🌿 आपकी शारीरिक प्रकृति: {diet_res['dosha_title']}")
         st.info(diet_res["characteristics"])
-
-        diet_shl = SHASTRIYA_SHLOKAS.get("ayurveda_diet_tridosha", {})
-        if diet_shl:
-            diet_lines = "<br/>".join(diet_shl['shloka'].splitlines())
-            st.markdown(f"""
-<div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #047857; font-size: 13.5px; margin-bottom: 4px;">📖 {diet_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {diet_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {diet_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {diet_shl['rule']}
-    </div>
-</div>
-""", unsafe_allow_html=True)
 
         st.markdown("#### 🍽️ द्वितीय भाव अनुसार आपकी खान-पान शैली एवं रुचियां:")
         for note in diet_res["eating_habits"]:
@@ -21179,24 +21118,6 @@ elif selected_idx == 25:
     with tab_h0:
         st.markdown("### 🩺 कालपुरुष देह वेध आरेख (12-Organ Anatomy Map)")
         st.caption("बृहत्संहिता एवं फलदीपिका के अनुसार कालपुरुष के १२ अंगों, राशियों व भावों पर ग्रहों का प्रभाव:")
-
-        med_shl = SHASTRIYA_SHLOKAS.get("medical_kalapurusha_anatomy", {})
-        if med_shl:
-            med_lines = "<br/>".join(med_shl['shloka'].splitlines())
-            st.markdown(f"""
-<div style="background: rgba(220, 38, 38, 0.08); border-left: 4px solid #DC2626; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #B91C1C; font-size: 13.5px; margin-bottom: 4px;">📖 {med_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {med_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {med_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {med_shl['rule']}
-    </div>
-</div>
-""", unsafe_allow_html=True)
         
         anatomy_svg = ChartRenderer.render_kalapurusha_anatomy_svg(med_profile, title=f"कालपुरुष देह वेध चक्र — {chart.birth_data.name}")
         st.markdown(anatomy_svg, unsafe_allow_html=True)
