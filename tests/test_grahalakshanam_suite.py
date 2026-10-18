@@ -68,8 +68,8 @@ def test_affliction_engine():
     assert "dashvarga" in sun_pt
     print("✓ AfflictionEngine: 9 Planets Free Will & Dashvarga scores verified!")
 
-    # 4. 27 Life Areas (including Health & Wealth)
-    assert len(LIFE_AREAS) == 27
+    # 4. 30 Life Areas (including gender-specific areas & Health & Wealth)
+    assert len(LIFE_AREAS) == 30
     for la in LIFE_AREAS:
         detail = engine.get_life_area_detail(la["Id"])
         assert "HouseRows" in detail and len(detail["HouseRows"]) == 3
@@ -78,7 +78,7 @@ def test_affliction_engine():
         pred = engine.get_rashi_prediction(la["Id"])
         assert "HouseRashiRows" in pred and len(pred["HouseRashiRows"]) == 3
         assert "LordRashiRows" in pred and len(pred["LordRashiRows"]) == 3
-    print("✓ AfflictionEngine: All 27 Life Areas (including Health & Wealth) 3-Pillars and Rashi Tatvas verified!")
+    print("✓ AfflictionEngine: All 30 Life Areas (including gender-specific areas & Health & Wealth) 3-Pillars and Rashi Tatvas verified!")
 
     # 5. 3-Pillar Classical Remedy Matrix (10 Rows)
     rem_false = engine.calculate_remedy(life_area_id=1, lords=False)

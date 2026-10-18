@@ -4704,10 +4704,11 @@ def login_user_session(user_info: Dict[str, Any]):
     st.session_state.auth_user = user_info
     st.session_state.user_role = user_info.get("role", "jatak")
     st.session_state.user_role_display = user_info.get("role_display", "👤 जातक (General User)")
-    st.session_state.user_email = user_info.get("email", "")
+    st.session_state.user_email = (user_info.get("email") or user_info.get("username") or "").strip().lower()
     st.session_state.user_is_paid = user_info.get("is_paid", False)
     st.session_state.birth_name = user_info.get("name", "User")
     st.session_state["last_activity_ts"] = _tmod.time()
+    st.session_state.recent_charts_history = []
     if "session_auth" in st.query_params:
         del st.query_params["session_auth"]
     if "session_timeout" in st.query_params:
@@ -4967,7 +4968,7 @@ if "is_logged_in" not in st.session_state:
 
 
 if "saved_charts" not in st.session_state:
-    st.session_state.saved_charts = default_folder_manager.list_recent_charts()
+    st.session_state.saved_charts = default_folder_manager.list_recent_charts(owner_email=st.session_state.get("user_email"))
 
 if "gla_authenticated" not in st.session_state:
     st.session_state.gla_authenticated = False
@@ -5074,6 +5075,8 @@ if st.session_state.get("is_logged_in", False):
         st.session_state.is_logged_in = False
         st.session_state.gla_authenticated = False
         st.session_state.pop("auth_user", None)
+        st.session_state.user_email = ""
+        st.session_state.recent_charts_history = []
         st.session_state["session_timed_out_banner"] = True
         if "session_auth" in st.query_params:
             del st.query_params["session_auth"]
@@ -6545,10 +6548,12 @@ with st.container(key="top_frozen_header_container", border=False):
         _c_lat = float(st.session_state.get("birth_lat", 28.6139))
         _c_lon = float(st.session_state.get("birth_lon", 77.2090))
         _c_tz = float(st.session_state.get("birth_tz", 5.5))
-        if not any(r.get("name") == _c_name and r.get("date") == _c_date for r in st.session_state.recent_charts_history):
+        _c_owner = str(st.session_state.get("user_email", "")).strip().lower()
+        if not any(r.get("name") == _c_name and r.get("date") == _c_date and r.get("owner_email") == _c_owner for r in st.session_state.recent_charts_history):
             st.session_state.recent_charts_history.insert(0, {
                 "name": _c_name, "date": _c_date, "time": _c_time,
-                "city": _c_city, "lat": _c_lat, "lon": _c_lon, "tz": _c_tz
+                "city": _c_city, "lat": _c_lat, "lon": _c_lon, "tz": _c_tz,
+                "owner_email": _c_owner
             })
             st.session_state.recent_charts_history = st.session_state.recent_charts_history[:5]
 
@@ -7034,7 +7039,12 @@ with st.container(key="top_frozen_header_container", border=False):
                             "city": st.session_state.birth_city,
                             "confidence": st.session_state.get("birth_conf", "Exact")
                         }
-                        default_folder_manager.save_chart(folder_id=0, chart_name=st.session_state.birth_name, birth_data=save_payload)
+                        default_folder_manager.save_chart(
+                            folder_id=0,
+                            chart_name=st.session_state.birth_name,
+                            birth_data=save_payload,
+                            owner_email=st.session_state.get("user_email")
+                        )
                         st.toast(f"✅ कुण्डली '{st.session_state.birth_name}' सफलतापूर्वक सहेज ली गई!", icon="💾")
                 with col_fbtn3:
                     if st.button("❌ बंद करें", use_container_width=True, key="gla_close_birth_btn"):
@@ -7059,8 +7069,11 @@ with st.container(key="top_frozen_header_container", border=False):
                     ])
 
                     with tab_v_browse:
-                        # 🕒 हालिया ५ कुण्डलियाँ (Recent 5 Charts History Quick-Load)
-                        recent_charts = st.session_state.get("recent_charts_history", [])
+                        _curr_owner = str(st.session_state.get("user_email", "")).strip().lower()
+                        recent_charts = [
+                            r for r in st.session_state.get("recent_charts_history", [])
+                            if _curr_owner and str(r.get("owner_email", "")).strip().lower() == _curr_owner
+                        ]
                         if recent_charts:
                             st.markdown("""
                             <div style="font-size:12px; font-weight:800; color:#475569; margin-bottom:4px; display:flex; align-items:center; gap:6px;">
@@ -7160,7 +7173,7 @@ with st.container(key="top_frozen_header_container", border=False):
                                 with c_col3:
                                     st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
                                     if st.button("🗑️", key=f"btn_del_c_{c_id}", help="वॉल्ट से हटाएं"):
-                                        v_service.delete_client(c_id)
+                                        v_service.delete_client(c_id, owner_email=st.session_state.get("user_email"))
                                         st.toast(f"कुण्डली हटाई गई!", icon="🗑️")
                                         st.rerun()
 
@@ -7171,7 +7184,7 @@ with st.container(key="top_frozen_header_container", border=False):
                         c_bk1, c_bk2 = st.columns(2)
                         with c_bk1:
                             st.markdown("##### 📥 बैकअप डाउनलोड")
-                            vault_json = v_service.export_backup_json()
+                            vault_json = v_service.export_backup_json(owner_email=st.session_state.get("user_email"))
                             st.download_button(
                                 label="📥 सम्पूर्ण कुण्डली वॉल्ट डाउनलोड करें (JSON Backup)",
                                 data=vault_json,
@@ -7186,7 +7199,7 @@ with st.container(key="top_frozen_header_container", border=False):
                             if up_file is not None:
                                 if st.button("🔄 बैकअप आयात करें (Confirm Import)", type="primary", use_container_width=True):
                                     content = up_file.getvalue().decode("utf-8")
-                                    ok, msg, cnt = v_service.import_backup_json(content)
+                                    ok, msg, cnt = v_service.import_backup_json(content, owner_email=st.session_state.get("user_email"))
                                     if ok:
                                         st.success(msg)
                                         st.rerun()
@@ -7203,7 +7216,7 @@ with st.container(key="top_frozen_header_container", border=False):
                                 if client.authenticate():
                                     ff = client.get_folders_with_files()
                                     st.session_state.gla_charts = ff.get("files", [])
-                                    default_folder_manager.sync_from_grahalakshanam(ff)
+                                    default_folder_manager.sync_from_grahalakshanam(ff, owner_email=st.session_state.get("user_email"))
                                     st.session_state.gla_authenticated = True
                                     st.success(f"✅ Synced {len(st.session_state.gla_charts)} cloud charts!")
                                 else:
@@ -7232,7 +7245,7 @@ with st.container(key="top_frozen_header_container", border=False):
                         save_name_input = st.text_input("जातक / क्लाइंट का नाम (Client Name)", value=st.session_state.birth_name, key="gla_save_chart_name")
                         sel_tags = st.multiselect("🏷️ श्रेणी / टैग्स चुनें (Tags):", vault_mod.AVAILABLE_TAGS, default=["🌟 VIP"], key="gla_save_tags_ms")
                     with col_sv2:
-                        all_local_folders = default_folder_manager.list_folders()
+                        all_local_folders = default_folder_manager.list_folders(owner_email=st.session_state.get("user_email"))
                         f_options = {f["id"]: f["name"] for f in all_local_folders}
                         sel_fid = st.selectbox("📁 फ़ोल्डर चुनें (Select Folder)", list(f_options.keys()), format_func=lambda x: f_options[x], key="gla_save_folder_sel")
                         save_notes_input = st.text_area("📝 परामर्श नोट्स (Consultant Notes):", placeholder="जैसे: करियर व विवाह विचार, नीलम व पन्ना रत्न संस्तुति...", key="gla_save_notes_ta", height=85)
@@ -7815,6 +7828,8 @@ with st.container(key="top_frozen_header_container", border=False):
                         st.session_state.is_logged_in = False
                         st.session_state.gla_authenticated = False
                         st.session_state.pop("auth_user", None)
+                        st.session_state.user_email = ""
+                        st.session_state.recent_charts_history = []
                         st.session_state.gla_active_tool = None
                         if "session_auth" in st.query_params:
                             del st.query_params["session_auth"]

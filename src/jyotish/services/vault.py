@@ -45,15 +45,13 @@ class KundaliVaultService:
     ) -> List[Dict[str, Any]]:
         """
         Lists all saved clients across all folders with optional search query, tag filter,
-        and strict multi-tenant data isolation based on owner_email and user_role.
-        - Researcher: Full access to all clients
-        - Jyotishi & Jatak: Only their own saved clients + 10 benchmark demo charts
+        and strict multi-tenant data isolation based on owner_email.
+        Each user only sees their own saved clients + 10 benchmark demo charts.
         """
-        folders = self.manager.list_folders()
+        clean_owner = owner_email.strip().lower() if owner_email else None
+        folders = self.manager.list_folders(owner_email=clean_owner)
         all_clients = []
         seen_ids = set()
-        clean_owner = owner_email.strip().lower() if owner_email else None
-        clean_role = str(user_role).lower().strip() if user_role else "jyotishi"
 
         for folder in folders:
             folder_name = folder.get("name", "General")
@@ -74,12 +72,12 @@ class KundaliVaultService:
                 chart_owner = str(c_copy.get("owner_email", "")).strip().lower()
 
                 # Multi-tenant data privacy isolation:
-                # If not researcher, only allow self-saved charts OR the 10 benchmark demo charts
+                # Benchmark demo charts (1000 <= cid <= 1015) are visible to all.
+                # User charts are strictly visible ONLY to the owner who saved them.
                 is_demo = isinstance(cid, int) and 1000 <= cid <= 1015
-                if clean_role != "researcher":
-                    if clean_owner and not is_demo:
-                        if chart_owner != clean_owner:
-                            continue
+                if not is_demo:
+                    if not clean_owner or chart_owner != clean_owner:
+                        continue
 
                 # Filter by tag
                 if tag_filter and tag_filter != "सभी (All)":
@@ -113,10 +111,10 @@ class KundaliVaultService:
         Saves a new client or updates an existing client in the vault with owner_email tracking.
         """
         tags = tags or [" सामान्य"]
-        chart_entry = self.manager.save_chart(folder_id, name, birth_data)
+        clean_owner = owner_email.strip().lower() if owner_email else "public"
+        chart_entry = self.manager.save_chart(folder_id, name, birth_data, owner_email=clean_owner)
         chart_entry["tags"] = tags
         chart_entry["notes"] = notes
-        clean_owner = owner_email.strip().lower() if owner_email else "public"
         chart_entry["owner_email"] = clean_owner
 
         # Update inside the folder
@@ -152,29 +150,51 @@ class KundaliVaultService:
             self.manager._save()
         return updated
 
-    def delete_client(self, client_id: Any) -> bool:
-        """Deletes a client chart from all folders and recent list."""
+    def delete_client(self, client_id: Any, owner_email: Optional[str] = None) -> bool:
+        """Deletes a client chart from all folders and recent list, ensuring ownership."""
+        # Benchmark demo charts cannot be deleted
+        if isinstance(client_id, int) and 1000 <= client_id <= 1015:
+            return False
+
+        clean_owner = owner_email.strip().lower() if owner_email else None
         deleted = False
         for folder in self.manager.data.get("folders", []):
             charts = folder.get("charts", [])
-            initial_len = len(charts)
-            folder["charts"] = [c for c in charts if c.get("id") != client_id]
-            if len(folder["charts"]) < initial_len:
-                deleted = True
+            new_charts = []
+            for c in charts:
+                if c.get("id") == client_id:
+                    c_owner = str(c.get("owner_email", "")).strip().lower()
+                    if clean_owner and c_owner and c_owner != clean_owner:
+                        new_charts.append(c)
+                        continue
+                    deleted = True
+                else:
+                    new_charts.append(c)
+            folder["charts"] = new_charts
 
         recents = self.manager.data.get("recent_charts", [])
-        self.manager.data["recent_charts"] = [c for c in recents if c.get("id") != client_id]
+        self.manager.data["recent_charts"] = [
+            c for c in recents 
+            if c.get("id") != client_id or (clean_owner and str(c.get("owner_email", "")).strip().lower() != clean_owner)
+        ]
         if deleted:
             self.manager._save()
         return deleted
 
-    def export_backup_json(self) -> str:
-        """Exports the entire vault database as formatted JSON string."""
-        return json.dumps(self.manager.data, indent=2, ensure_ascii=False)
+    def export_backup_json(self, owner_email: Optional[str] = None) -> str:
+        """Exports the user's vault database as formatted JSON string."""
+        clean_owner = owner_email.strip().lower() if owner_email else None
+        folders = self.manager.list_folders(owner_email=clean_owner)
+        recents = self.manager.list_recent_charts(owner_email=clean_owner)
+        export_data = {
+            "folders": folders,
+            "recent_charts": recents
+        }
+        return json.dumps(export_data, indent=2, ensure_ascii=False)
 
-    def import_backup_json(self, json_content: str) -> Tuple[bool, str, int]:
+    def import_backup_json(self, json_content: str, owner_email: Optional[str] = None) -> Tuple[bool, str, int]:
         """
-        Imports and merges client charts from JSON string backup.
+        Imports and merges client charts from JSON string backup tagged with owner_email.
         """
         try:
             imported_data = json.loads(json_content)
@@ -182,20 +202,40 @@ class KundaliVaultService:
                 return False, "अमान्य JSON प्रारूप (Invalid Vault Backup Format)", 0
 
             count = 0
+            clean_owner = owner_email.strip().lower() if owner_email else "public"
             existing_folders = {f["id"]: f for f in self.manager.data.get("folders", [])}
 
             for imp_folder in imported_data.get("folders", []):
                 f_id = imp_folder.get("id")
+                # Do not duplicate or overwrite demo folder charts
+                if f_id == 100:
+                    continue
                 if f_id in existing_folders:
                     target_f = existing_folders[f_id]
-                    existing_chart_names = {c.get("name") for c in target_f.get("charts", [])}
+                    existing_chart_names = {c.get("name") for c in target_f.get("charts", []) if str(c.get("owner_email", "")).strip().lower() == clean_owner}
                     for ch in imp_folder.get("charts", []):
+                        cid = ch.get("id")
+                        if isinstance(cid, int) and 1000 <= cid <= 1015:
+                            continue
                         if ch.get("name") not in existing_chart_names:
-                            target_f.setdefault("charts", []).append(ch)
+                            ch_copy = dict(ch)
+                            ch_copy["owner_email"] = clean_owner
+                            target_f.setdefault("charts", []).append(ch_copy)
                             count += 1
                 else:
-                    self.manager.data.setdefault("folders", []).append(imp_folder)
-                    count += len(imp_folder.get("charts", []))
+                    new_f = dict(imp_folder)
+                    new_f["owner_email"] = clean_owner
+                    valid_charts = []
+                    for ch in imp_folder.get("charts", []):
+                        cid = ch.get("id")
+                        if isinstance(cid, int) and 1000 <= cid <= 1015:
+                            continue
+                        ch_copy = dict(ch)
+                        ch_copy["owner_email"] = clean_owner
+                        valid_charts.append(ch_copy)
+                        count += 1
+                    new_f["charts"] = valid_charts
+                    self.manager.data.setdefault("folders", []).append(new_f)
 
             self.manager._save()
             return True, f"सफलतापूर्वक {count} कुण्डलियाँ वॉल्ट में पुनर्स्थापित की गईं।", count
