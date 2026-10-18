@@ -111,8 +111,10 @@ from src.jyotish.services.report_generator import default_report_generator
 from src.jyotish.services.master_calculator import default_master_calculator
 from src.jyotish.services.vastu import VastuJyotishEngine, VASTU_DIRECTIONS
 from src.jyotish.services.grahalakshanam import GrahalakshanamClient, GrahalakshanamConfig
-from src.jyotish.services.folder_manager import default_folder_manager
 import importlib
+import src.jyotish.services.folder_manager as fm_mod
+importlib.reload(fm_mod)
+default_folder_manager = fm_mod.default_folder_manager
 import src.jyotish.services.auth as auth_mod
 importlib.reload(auth_mod)
 default_auth_service = auth_mod.default_auth_service
@@ -4968,7 +4970,15 @@ if "is_logged_in" not in st.session_state:
 
 
 if "saved_charts" not in st.session_state:
-    st.session_state.saved_charts = default_folder_manager.list_recent_charts(owner_email=st.session_state.get("user_email"))
+    try:
+        st.session_state.saved_charts = default_folder_manager.list_recent_charts(owner_email=st.session_state.get("user_email"))
+    except TypeError:
+        try:
+            st.session_state.saved_charts = default_folder_manager.list_recent_charts()
+        except Exception:
+            st.session_state.saved_charts = []
+    except Exception:
+        st.session_state.saved_charts = []
 
 if "gla_authenticated" not in st.session_state:
     st.session_state.gla_authenticated = False

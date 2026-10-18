@@ -217,20 +217,28 @@ class ChartFolderManager:
         except Exception as e:
             logger.error(f"Error saving charts database: {e}")
 
-    def list_folders(self, owner_email: Optional[str] = None) -> List[Dict[str, Any]]:
+    def list_folders(self, owner_email: Optional[str] = None, *args, **kwargs) -> List[Dict[str, Any]]:
         self._ensure_demo_folder()
-        clean_owner = owner_email.strip().lower() if owner_email else None
+        if not owner_email and "owner_email" in kwargs:
+            owner_email = kwargs["owner_email"]
+        elif not owner_email and args:
+            owner_email = args[0]
+        clean_owner = str(owner_email).strip().lower() if (owner_email and isinstance(owner_email, str)) else None
         folders = self.data.get("folders", [])
         
         result = []
         for f in folders:
+            if not isinstance(f, dict):
+                continue
             f_copy = dict(f)
             # Demo folder (id 100) benchmark charts are always visible
             if f.get("id") == 100:
-                f_copy["charts"] = [dict(c) for c in f.get("charts", [])]
+                f_copy["charts"] = [dict(c) for c in f.get("charts", []) if isinstance(c, dict)]
             else:
                 filtered_charts = []
                 for c in f.get("charts", []):
+                    if not isinstance(c, dict):
+                        continue
                     cid = c.get("id")
                     is_demo = isinstance(cid, int) and 1000 <= cid <= 1015
                     c_owner = str(c.get("owner_email", "")).strip().lower()
@@ -240,13 +248,15 @@ class ChartFolderManager:
             result.append(f_copy)
         return result
 
-    def create_folder(self, name: str, parent_id: int = 0, owner_email: Optional[str] = None) -> Dict[str, Any]:
+    def create_folder(self, name: str, parent_id: int = 0, owner_email: Optional[str] = None, *args, **kwargs) -> Dict[str, Any]:
         import time
         new_id = int(time.time() * 1000)
-        all_folder_ids = {f.get("id") for f in self.data.get("folders", [])}
+        all_folder_ids = {f.get("id") for f in self.data.get("folders", []) if isinstance(f, dict)}
         while new_id in all_folder_ids:
             new_id += 1
-        clean_owner = owner_email.strip().lower() if owner_email else None
+        if not owner_email and "owner_email" in kwargs:
+            owner_email = kwargs["owner_email"]
+        clean_owner = str(owner_email).strip().lower() if (owner_email and isinstance(owner_email, str)) else None
         folder = {"id": new_id, "name": name, "children": [], "charts": []}
         if clean_owner:
             folder["owner_email"] = clean_owner
@@ -254,16 +264,20 @@ class ChartFolderManager:
         self._save()
         return folder
 
-    def save_chart(self, folder_id: int, chart_name: str, birth_data: Dict[str, Any], owner_email: Optional[str] = None) -> Dict[str, Any]:
+    def save_chart(self, folder_id: int, chart_name: str, birth_data: Dict[str, Any], owner_email: Optional[str] = None, *args, **kwargs) -> Dict[str, Any]:
         import time
         chart_id = int(time.time() * 1000)
         all_chart_ids = {
-            c.get("id") for f in self.data.get("folders", []) for c in f.get("charts", [])
+            c.get("id") for f in self.data.get("folders", []) if isinstance(f, dict) for c in f.get("charts", []) if isinstance(c, dict)
         }
         while chart_id in all_chart_ids:
             chart_id += 1
 
-        clean_owner = owner_email.strip().lower() if owner_email else "public"
+        if not owner_email and "owner_email" in kwargs:
+            owner_email = kwargs["owner_email"]
+        elif not owner_email and args:
+            owner_email = args[0]
+        clean_owner = str(owner_email).strip().lower() if (owner_email and isinstance(owner_email, str)) else "public"
         chart_entry = {
             "id": chart_id,
             "name": chart_name,
@@ -273,7 +287,7 @@ class ChartFolderManager:
         }
 
         # Add to matching folder or root folder
-        target = next((f for f in self.data.get("folders", []) if f["id"] == folder_id), None)
+        target = next((f for f in self.data.get("folders", []) if isinstance(f, dict) and f.get("id") == folder_id), None)
         if not target and self.data.get("folders"):
             target = self.data["folders"][0]
 
@@ -288,17 +302,24 @@ class ChartFolderManager:
         self._save()
         return chart_entry
 
-    def list_recent_charts(self, owner_email: Optional[str] = None) -> List[Dict[str, Any]]:
-        clean_owner = owner_email.strip().lower() if owner_email else None
+    def list_recent_charts(self, owner_email: Optional[str] = None, *args, **kwargs) -> List[Dict[str, Any]]:
+        if not owner_email and "owner_email" in kwargs:
+            owner_email = kwargs["owner_email"]
+        elif not owner_email and args:
+            owner_email = args[0]
+        clean_owner = str(owner_email).strip().lower() if (owner_email and isinstance(owner_email, str)) else None
         all_recents = self.data.get("recent_charts", [])
         if not clean_owner:
-            return [c for c in all_recents if isinstance(c.get("id"), int) and 1000 <= c.get("id") <= 1015]
+            return [c for c in all_recents if isinstance(c, dict) and isinstance(c.get("id"), int) and 1000 <= c.get("id") <= 1015]
         return [
             c for c in all_recents
-            if (isinstance(c.get("id"), int) and 1000 <= c.get("id") <= 1015) or str(c.get("owner_email", "")).strip().lower() == clean_owner
+            if isinstance(c, dict) and (
+                (isinstance(c.get("id"), int) and 1000 <= c.get("id") <= 1015) or
+                str(c.get("owner_email", "")).strip().lower() == clean_owner
+            )
         ]
 
-    def sync_from_grahalakshanam(self, gla_folders_files: Dict[str, Any], owner_email: Optional[str] = None) -> int:
+    def sync_from_grahalakshanam(self, gla_folders_files: Dict[str, Any], owner_email: Optional[str] = None, *args, **kwargs) -> int:
         """
         Imports folders and files fetched from Grahalakshanam account into local storage.
         Returns the number of imported charts.
