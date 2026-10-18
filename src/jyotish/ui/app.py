@@ -660,8 +660,17 @@ else:
         -moz-osx-font-smoothing: grayscale !important;
     }
     header[data-testid="stHeader"] {
-        background-color: #F8FAFC !important;
-        background: #F8FAFC !important;
+        background-color: transparent !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        height: 0px !important;
+        min-height: 0px !important;
+        max-height: 0px !important;
+        padding: 0px !important;
+        margin: 0px !important;
+        pointer-events: none !important;
+        overflow: visible !important;
     }
     h1, h2, h3, h4, h5, h6 {
         color: #0F172A !important;
@@ -1389,17 +1398,21 @@ unified_css = f"""
         pointer-events: auto !important;
     }}
 
-    /* Frozen Locked Toolbelt (Pins the 8 Top Action Buttons Permanently to the Top of the Viewport) */
+    /* Frozen Locked Toolbelt (Pins the Top Workstation Header Bar Permanently to the Top of the Viewport) */
     .st-key-frozen_toolbelt_container,
-    div.st-key-frozen_toolbelt_container {{
+    div.st-key-frozen_toolbelt_container,
+    div[class*="st-key-frozen_toolbelt_container"] {{
         position: fixed !important;
         top: 0px !important;
         left: 0px !important;
         right: 0px !important;
         width: 100% !important;
-        z-index: 9990 !important;
+        z-index: 9999990 !important;
         background: #0074cb !important;
         background-color: #0074cb !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
         padding-top: 5px !important;
         padding-bottom: 5px !important;
         padding-left: 48px !important;
@@ -1410,10 +1423,30 @@ unified_css = f"""
         box-sizing: border-box !important;
         transition: left 0.15s ease, width 0.15s ease !important;
     }}
-    .st-key-frozen_toolbelt_container div[data-testid="column"] {{
+    .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"],
+    div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] {{
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+        min-height: 34px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        gap: 6px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }}
+    .st-key-frozen_toolbelt_container div[data-testid="column"],
+    div[class*="st-key-frozen_toolbelt_container"] div[data-testid="column"] {{
         min-width: 0 !important;
         padding-left: 3px !important;
         padding-right: 3px !important;
+        display: flex !important;
+        align-items: center !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }}
     .st-key-frozen_toolbelt_container button {{
         padding: 2px 4px !important;
@@ -2273,19 +2306,36 @@ unified_css = f"""
             touch-action: manipulation !important;
         }}
         /* Fluid column stacking on mobile so charts, tables and cards never squish or overlap */
-        div[data-testid="stHorizontalBlock"]:not(.st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"]):not(:has(div[class*="st-key-ts_btn_"])) {{
+        div[data-testid="stMain"] div[data-testid="stHorizontalBlock"]:not(:has(div[class*="st-key-ts_btn_"])) {{
             flex-direction: column !important;
             gap: 12px !important;
         }}
-        div[data-testid="stHorizontalBlock"]:not(.st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"]):not(:has(div[class*="st-key-ts_btn_"])) > div[data-testid="column"] {{
+        div[data-testid="stMain"] div[data-testid="stHorizontalBlock"]:not(:has(div[class*="st-key-ts_btn_"])) > div[data-testid="column"] {{
             width: 100% !important;
             min-width: 100% !important;
             flex: 1 1 100% !important;
             padding: 0 !important;
             margin-bottom: 6px !important;
         }}
+        /* Keep Top Frozen Header Bar in a clean compact flex row across mobile */
+        .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"],
+        div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] {{
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            gap: 4px !important;
+            overflow-x: visible !important;
+            overflow-y: visible !important;
+        }}
+        .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"] > div[data-testid="column"],
+        div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {{
+            width: auto !important;
+            min-width: 48% !important;
+            flex: 1 1 48% !important;
+            margin-bottom: 0px !important;
+            padding: 0 2px !important;
+        }}
         /* Prevent horizontal overflow on tables and charts */
-        div[data-testid="stHorizontalBlock"] {{
+        div[data-testid="stHorizontalBlock"]:not(.st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"]) {{
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch !important;
         }}
@@ -3740,29 +3790,53 @@ client_bridge_code = """
                             pointer-events: auto !important;
                         }
                         .st-key-frozen_toolbelt_container,
-                        div.st-key-frozen_toolbelt_container {
+                        div.st-key-frozen_toolbelt_container,
+                        div[class*="st-key-frozen_toolbelt_container"] {
                             position: fixed !important;
                             top: 0px !important;
                             left: 0px !important;
                             right: 0px !important;
                             width: 100% !important;
-                            z-index: 9990 !important;
+                            z-index: 9999990 !important;
                             background: #0074cb !important;
                             background-color: #0074cb !important;
+                            display: block !important;
+                            visibility: visible !important;
+                            opacity: 1 !important;
                             border-bottom: 2.5px solid #005fa8 !important;
                             box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
-                            padding-top: 6px !important;
-                            padding-bottom: 6px !important;
-                            padding-left: 68px !important;
+                            padding-top: 5px !important;
+                            padding-bottom: 5px !important;
+                            padding-left: 48px !important;
                             padding-right: 14px !important;
                             margin: 0px !important;
                             box-sizing: border-box !important;
                             transition: left 0.15s ease, width 0.15s ease !important;
                         }
-                        .st-key-frozen_toolbelt_container div[data-testid="column"] {
+                        .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"],
+                        div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] {
+                            display: flex !important;
+                            flex-direction: row !important;
+                            align-items: center !important;
+                            flex-wrap: nowrap !important;
+                            width: 100% !important;
+                            min-height: 34px !important;
+                            visibility: visible !important;
+                            opacity: 1 !important;
+                            gap: 6px !important;
+                            margin: 0 !important;
+                            padding: 0 !important;
+                            overflow: visible !important;
+                        }
+                        .st-key-frozen_toolbelt_container div[data-testid="column"],
+                        div[class*="st-key-frozen_toolbelt_container"] div[data-testid="column"] {
                             min-width: 0 !important;
                             padding-left: 2px !important;
                             padding-right: 2px !important;
+                            display: flex !important;
+                            align-items: center !important;
+                            visibility: visible !important;
+                            opacity: 1 !important;
                         }
                         .st-key-frozen_toolbelt_container button {
                             padding: 2px 4px !important;
@@ -4286,8 +4360,11 @@ client_bridge_code = """
             const stHeader = parentDoc.querySelector('header[data-testid="stHeader"]');
             if (stHeader) {
                 stHeader.style.setProperty('background', 'transparent', 'important');
+                stHeader.style.setProperty('background-color', 'transparent', 'important');
                 stHeader.style.setProperty('border', 'none', 'important');
                 stHeader.style.setProperty('pointer-events', 'none', 'important');
+                stHeader.style.setProperty('height', '0px', 'important');
+                stHeader.style.setProperty('min-height', '0px', 'important');
                 stHeader.style.setProperty('z-index', '10000000', 'important');
             }
 
@@ -4298,7 +4375,7 @@ client_bridge_code = """
                 mainSec.style.setProperty('position', 'relative', 'important');
             }
 
-            const frozenTb = parentDoc.querySelector('.st-key-frozen_toolbelt_container');
+            const frozenTb = parentDoc.querySelector('.st-key-frozen_toolbelt_container, [class*="st-key-frozen_toolbelt_container"]');
             if (frozenTb) {
                 const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
                 const sbContent = sb ? sb.querySelector('[data-testid="stSidebarContent"]') : null;
@@ -4322,11 +4399,12 @@ client_bridge_code = """
                 }
 
                 const clientW = parentDoc.documentElement.clientWidth || window.innerWidth;
+                const isMobile = (clientW <= 768 || window.innerWidth <= 768);
                 let isSidebarVisible = false;
                 let leftPos = 0;
                 let headerW = clientW;
 
-                if (sb) {
+                if (!isMobile && sb) {
                     const sbRect = sb.getBoundingClientRect();
                     const isExpanded = sb.getAttribute('aria-expanded') !== 'false' && (sbRect.width > 60 && sbRect.right > 60);
                     if (isExpanded) {
@@ -4351,23 +4429,31 @@ client_bridge_code = """
                     }
                 }
 
-                if (!isSidebarVisible) {
+                if (isMobile || !isSidebarVisible || leftPos >= clientW - 100) {
                     leftPos = 0;
                     headerW = clientW;
                 }
+                if (!headerW || headerW <= 100 || isNaN(headerW)) headerW = clientW;
+                if (!leftPos || leftPos < 0 || isNaN(leftPos)) leftPos = 0;
 
                 frozenTb.style.setProperty('position', 'fixed', 'important');
                 frozenTb.style.setProperty('top', '0px', 'important');
-                frozenTb.style.setProperty('z-index', '9990', 'important');
+                frozenTb.style.setProperty('z-index', '9999990', 'important');
                 frozenTb.style.setProperty('left', leftPos + 'px', 'important');
                 frozenTb.style.setProperty('width', headerW + 'px', 'important');
+                frozenTb.style.setProperty('display', 'block', 'important');
+                frozenTb.style.setProperty('visibility', 'visible', 'important');
+                frozenTb.style.setProperty('opacity', '1', 'important');
                 frozenTb.style.setProperty('padding-top', '5px', 'important');
                 frozenTb.style.setProperty('padding-bottom', '5px', 'important');
                 frozenTb.style.setProperty('margin', '0px', 'important');
                 frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
                 frozenTb.style.setProperty('transition', 'none', 'important');
 
-                if (isSidebarVisible) {
+                if (isMobile) {
+                    frozenTb.style.setProperty('padding-left', '42px', 'important');
+                    frozenTb.style.setProperty('padding-right', '10px', 'important');
+                } else if (isSidebarVisible) {
                     frozenTb.style.setProperty('padding-left', '14px', 'important');
                     frozenTb.style.setProperty('padding-right', '14px', 'important');
                 } else {
