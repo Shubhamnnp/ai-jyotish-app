@@ -866,15 +866,23 @@ else:
     div[data-testid="stExpander"] * {
         color: #0F172A !important;
     }
-    button[kind="secondary"], button[kind="secondary"] * {
-        background-color: #F2F2F2 !important;
-        color: #0077B6 !important;
-        border: 2px solid #00B0F0 !important;
+    button[kind="secondary"] {
+        background-color: #FFFFFF !important;
+        color: #1E293B !important;
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 8px !important;
-        font-weight: 800 !important;
+        font-weight: 700 !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    }
+    button[kind="secondary"] * {
+        border: none !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        color: inherit !important;
+        font-weight: 700 !important;
     }
     button[kind="secondary"]:hover {
-        background-color: #E0F2FE !important;
+        background-color: #EFF6FF !important;
         border-color: #0073CF !important;
         color: #0073CF !important;
     }
@@ -2514,15 +2522,68 @@ unified_css = f"""
         word-wrap: break-word !important;
         word-break: normal !important;
     }}
-    /* Kundali SVGs auto-fit perfectly on all screens */
-    .kundali-chart svg, .chart-container svg, .observatory-canvas svg, svg.kundali-svg, div:has(> svg.kundali-svg) svg {{
+    /* ═════════════════════════════════════════════════════════════════
+       Ultra-Crisp Professional Auth Panel & Login Buttons Styling
+       ═════════════════════════════════════════════════════════════════ */
+    .auth-card-wrapper {{
+        max-width: 440px !important;
         width: 100% !important;
-        max-width: 520px !important;
-        height: auto !important;
-        aspect-ratio: 1 / 1 !important;
-        display: block !important;
         margin: 0 auto !important;
         box-sizing: border-box !important;
+    }}
+    div[class*="st-key-link_goto_"] button,
+    div[class*="st-key-back_to_login_"] button,
+    div[class*="st-key-demo_btn_"] button,
+    div[class*="st-key-btn_send_otp"] button {{
+        background: #FFFFFF !important;
+        background-color: #FFFFFF !important;
+        color: #1E293B !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 8px !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        min-height: 38px !important;
+        height: 38px !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+        transition: all 0.15s ease !important;
+        padding: 0 10px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+    }}
+    div[class*="st-key-link_goto_"] button:hover,
+    div[class*="st-key-back_to_login_"] button:hover,
+    div[class*="st-key-demo_btn_"] button:hover,
+    div[class*="st-key-btn_send_otp"] button:hover {{
+        background: #EFF6FF !important;
+        background-color: #EFF6FF !important;
+        border-color: #2563EB !important;
+        color: #1D4ED8 !important;
+        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.18) !important;
+    }}
+    div[class*="st-key-link_goto_"] button *,
+    div[class*="st-key-back_to_login_"] button *,
+    div[class*="st-key-demo_btn_"] button *,
+    div[class*="st-key-btn_send_otp"] button * {{
+        border: none !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        color: inherit !important;
+        font-weight: 700 !important;
+    }}
+    @media (max-width: 768px) {{
+        div[data-testid="column"]:empty {{
+            display: none !important;
+            height: 0px !important;
+            min-height: 0px !important;
+            margin: 0px !important;
+            padding: 0px !important;
+        }}
+        .auth-top-bar {{
+            justify-content: center !important;
+            margin-bottom: 12px !important;
+        }}
     }}
 
     {theme_mode_css}
@@ -4196,15 +4257,25 @@ client_bridge_code = """
                             color: #000000 !important;
                             font-weight: 900 !important;
                         }
-                        button[kind="secondary"], button[kind="secondary"] * {
+                        button[kind="secondary"] {
                             background-color: #FFFFFF !important;
-                            color: #000000 !important;
-                            border: 1.5px solid #CBDCB8 !important;
-                            font-weight: 800 !important;
+                            color: #1E293B !important;
+                            border: 1.5px solid #CBD5E1 !important;
+                            border-radius: 8px !important;
+                            font-weight: 700 !important;
+                            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+                        }
+                        button[kind="secondary"] * {
+                            border: none !important;
+                            background: transparent !important;
+                            background-color: transparent !important;
+                            color: inherit !important;
+                            font-weight: 700 !important;
                         }
                         button[kind="secondary"]:hover {
-                            background-color: #F4F8EC !important;
-                            border-color: #4D7C0F !important;
+                            background-color: #EFF6FF !important;
+                            border-color: #2563EB !important;
+                            color: #1D4ED8 !important;
                         }
                         /* Tabs Day Mode - Multi-color tabs */
                         [data-testid="stTabs"] [data-baseweb="tab-list"] {
@@ -4648,7 +4719,7 @@ def render_login_page():
 
     # Top Bar: Theme & Language Selectors
     st.markdown(textwrap.dedent("""\
-    <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom: 6px;">
+    <div class="auth-top-bar" style="display:flex; justify-content:flex-end; align-items:center; gap:8px; margin-bottom: 12px; flex-wrap:wrap;">
         <div class="header-sub-pill notranslate theme-select-box" translate="no" style="background:#F8FAFC !important; border:1px solid #CBD5E1 !important; color:#0F172A !important; padding:3px 10px !important; border-radius:8px; display:inline-flex; align-items:center; gap:5px;" title="थीम चुनें (Select Day / Night Mode)">
             <span id="theme-mode-icon" class="notranslate" translate="no" style="font-size:13px;">☀️</span>
             <b class="notranslate" translate="no" style="color:#0F172A !important; font-size:11px;">थीम:</b>
@@ -4682,6 +4753,7 @@ def render_login_page():
     _, col_card, _ = st.columns([1, 1.35, 1])
 
     with col_card:
+        st.markdown('<div class="auth-card-wrapper">', unsafe_allow_html=True)
         # 1. Sacred Header: Logo + Sanskrit Shlok + Navagraha Shlok
         st.markdown(textwrap.dedent("""\
         <div style="text-align: center; margin-bottom: 14px;">
@@ -4907,6 +4979,8 @@ def render_login_page():
                 if st.button("← वापस लॉगिन पर जाएं (Back to Sign In)", key="back_to_login_f", use_container_width=True):
                     st.session_state["auth_active_view"] = "login"
                     st.rerun()
+
+        st.markdown('</div>', unsafe_allow_html=True)
 
 
 
