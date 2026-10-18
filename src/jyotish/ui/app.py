@@ -6183,6 +6183,7 @@ def render_vastu_compass_wheel_svg(zones: list, is_dark: bool = False) -> str:
 MODULE_TABS_REGISTRY = {
     0: [
         "📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (D1 to D60)",
+        "🌟 पुष्कर नवांश, भाग व वर्गोत्तम (Pushkara & Vargottama)",
         "👑 विशेष जैमिनी लग्न (Special Lagnas - Shastriya Standard)",
         "🏠 भाव चलित चक्र",
         "🌙 चन्द्र कुण्डली",
@@ -6198,7 +6199,8 @@ MODULE_TABS_REGISTRY = {
     2: [
         "🛡️ दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)",
         "🎯 27 जीवन आयाम विश्लेषण (27 Life Areas Deep Breakdown)",
-        "🌿 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Server Remedy Suite)"
+        "🌿 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Server Remedy Suite)",
+        "⚠️ बाधक एवं मारक ग्रह विचार (Badhaka & Maraka Audit)"
     ],
     3: [
         "📊 1. दशवर्ग (Dasvarga - 10 Principal Divisions)",
@@ -6359,10 +6361,10 @@ MODULE_TABS_REGISTRY = {
         "🔍 वैदिक ऋषि API सत्यापन एवं बेंचमार्क (Vedic Rishi Cross-Validation)"
     ],
     20: [
-        "🔴 सक्रिय एवं संभावित दोष",
-        "🟢 शुभ राजयोग एवं धनयोग",
-        "📋 सम्पूर्ण १२,५००+ महा-शास्त्रीय नियम",
-        "💊 कुण्डली अनुसार विशेष उपाय"
+        "🔴 सक्रिय एवं संभावित दोष (Active Doshas)",
+        "🟢 शुभ राजयोग एवं धनयोग (Auspicious Yogas)",
+        "📋 सम्पूर्ण १२,५००+ महा-शास्त्रीय नियम (Grand Rules Bank)",
+        "💊 कुण्डली अनुसार विशेष उपाय (Specific Remedies)"
     ],
     21: [
         "📊 ३×३ लो-शू ग्रिड एवं ८ तल (Lo-Shu Grid)",
@@ -20508,10 +20510,10 @@ elif selected_idx == 20:
     _mc4.metric("💊 कुण्डली उपाय (Specific Remedies)", len(_active_doshas) + (1 if not _active_doshas else 0))
 
     _dy_t1, _dy_t2, _dy_t3, _dy_t4 = st.tabs([
-        f"🔴 सक्रिय एवं संभावित दोष ({len(_active_doshas)}/{len(_doshas_ev)})",
-        f"🟢 शुभ राजयोग एवं धनयोग ({len(_active_yogas)}/{len(_yogas_ev)})",
-        f"📋 सम्पूर्ण १२,५००+ महा-शास्त्रीय नियम ({len(_evidences):,} नियम)",
-        f"💊 कुण्डली अनुसार विशेष उपाय ({len(_active_doshas)} सक्रिय दोष)"
+        "🔴 सक्रिय एवं संभावित दोष (Active Doshas)",
+        "🟢 शुभ राजयोग एवं धनयोग (Auspicious Yogas)",
+        "📋 सम्पूर्ण १२,५००+ महा-शास्त्रीय नियम (Grand Rules Bank)",
+        "💊 कुण्डली अनुसार विशेष उपाय (Specific Remedies)"
     ])
 
     with _dy_t1:
