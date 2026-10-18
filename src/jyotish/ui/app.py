@@ -1298,11 +1298,11 @@ unified_css = f"""
         height: 100vh !important;
     }}
     /* Fit Screen & Root Viewport Optimization */
-    html, body, #root, .stApp {
+    html, body, #root, .stApp {{
         max-width: 100vw !important;
         overflow-x: hidden !important;
         box-sizing: border-box !important;
-    }
+    }}
     .block-container {{
         padding-top: 62px !important;
         padding-bottom: 2rem !important;
@@ -2456,16 +2456,16 @@ unified_css = f"""
     
     /* Universal Card, Expanders, Metrics & Table Anti-Overlap Alignment */
     .rule-card, .vastu-card, .digital-hud, div[data-testid="stMetric"],
-    div[data-testid="stExpander"], div[style*="border-left"] {
+    div[data-testid="stExpander"], div[style*="border-left"] {{
         box-sizing: border-box !important;
         width: 100% !important;
         max-width: 100% !important;
         overflow-wrap: break-word !important;
         word-wrap: break-word !important;
         word-break: normal !important;
-    }
+    }}
     /* Kundali SVGs auto-fit perfectly on all screens */
-    .kundali-chart svg, .chart-container svg, .observatory-canvas svg, svg.kundali-svg, div:has(> svg.kundali-svg) svg {
+    .kundali-chart svg, .chart-container svg, .observatory-canvas svg, svg.kundali-svg, div:has(> svg.kundali-svg) svg {{
         width: 100% !important;
         max-width: 520px !important;
         height: auto !important;
@@ -2473,7 +2473,7 @@ unified_css = f"""
         display: block !important;
         margin: 0 auto !important;
         box-sizing: border-box !important;
-    }
+    }}
 
     {theme_mode_css}
 </style>
