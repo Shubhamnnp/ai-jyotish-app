@@ -1408,6 +1408,19 @@ unified_css = f"""
         pointer-events: auto !important;
     }}
 
+    /* Header Collapse Full-Screen Mode */
+    body.header-collapsed .st-key-frozen_toolbelt_container,
+    body.header-collapsed div.st-key-frozen_toolbelt_container,
+    body.header-collapsed div[class*="st-key-frozen_toolbelt_container"] {{
+        display: none !important;
+        visibility: hidden !important;
+        height: 0px !important;
+        overflow: hidden !important;
+    }}
+    body.header-collapsed .block-container {{
+        padding-top: 14px !important;
+    }}
+
     /* Frozen Locked Toolbelt (Pins the Top Workstation Header Bar Permanently to the Top of the Viewport) */
     .st-key-frozen_toolbelt_container,
     div.st-key-frozen_toolbelt_container,
@@ -4509,14 +4522,66 @@ client_bridge_code = """
                 if (!headerW || headerW <= 100 || isNaN(headerW)) headerW = clientW;
                 if (!leftPos || leftPos < 0 || isNaN(leftPos)) leftPos = 0;
 
+                // Check if user has collapsed the header for full-screen mode
+                const isHeaderCollapsed = (
+                    parentDoc.body.classList.contains('header-collapsed') ||
+                    localStorage.getItem('jyotish_header_collapsed') === 'true'
+                );
+
+                let floatPill = parentDoc.getElementById('jyotish_floating_header_pill');
+                if (!floatPill) {
+                    floatPill = parentDoc.createElement('div');
+                    floatPill.id = 'jyotish_floating_header_pill';
+                    floatPill.innerHTML = '<span style="font-weight:900; font-size:14px; letter-spacing:-1px;">&gt;&gt;</span> <span style="font-size:12px; font-weight:800;">हेडर दिखाएं</span>';
+                    floatPill.onclick = function() {
+                        const pW = (window.parent && window.parent.location) ? window.parent : window;
+                        if (pW.__toggleJyotishHeader) {
+                            pW.__toggleJyotishHeader();
+                        } else if (window.__toggleJyotishHeader) {
+                            window.__toggleJyotishHeader();
+                        }
+                    };
+                    parentDoc.body.appendChild(floatPill);
+                }
+
+                if (isHeaderCollapsed) {
+                    parentDoc.body.classList.add('header-collapsed');
+                    frozenTb.style.setProperty('display', 'none', 'important');
+                    floatPill.style.display = 'flex';
+                    floatPill.style.cssText = `
+                        display: flex !important;
+                        align-items: center;
+                        gap: 6px;
+                        position: fixed !important;
+                        top: 8px !important;
+                        right: 12px !important;
+                        z-index: 99999999 !important;
+                        background: linear-gradient(135deg, #0284C7, #0369A1) !important;
+                        color: #FFFFFF !important;
+                        padding: 6px 14px !important;
+                        border-radius: 20px !important;
+                        font-size: 13px !important;
+                        font-weight: 800 !important;
+                        box-shadow: 0 4px 14px rgba(0, 115, 207, 0.45) !important;
+                        cursor: pointer !important;
+                        user-select: none !important;
+                        border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
+                    `;
+                } else {
+                    parentDoc.body.classList.remove('header-collapsed');
+                    frozenTb.style.setProperty('display', 'block', 'important');
+                    floatPill.style.display = 'none';
+                }
+
                 frozenTb.style.setProperty('position', 'fixed', 'important');
                 frozenTb.style.setProperty('top', '0px', 'important');
                 frozenTb.style.setProperty('z-index', '9999990', 'important');
                 frozenTb.style.setProperty('left', leftPos + 'px', 'important');
                 frozenTb.style.setProperty('width', headerW + 'px', 'important');
-                frozenTb.style.setProperty('display', 'block', 'important');
-                frozenTb.style.setProperty('visibility', 'visible', 'important');
-                frozenTb.style.setProperty('opacity', '1', 'important');
+                if (!isHeaderCollapsed) {
+                    frozenTb.style.setProperty('visibility', 'visible', 'important');
+                    frozenTb.style.setProperty('opacity', '1', 'important');
+                }
                 frozenTb.style.setProperty('padding-top', '5px', 'important');
                 frozenTb.style.setProperty('padding-bottom', '5px', 'important');
                 frozenTb.style.setProperty('margin', '0px', 'important');
@@ -4554,10 +4619,18 @@ client_bridge_code = """
             const blockContainer = parentDoc.querySelector('.block-container');
             if (blockContainer) {
                 const isMobile = (window.innerWidth <= 768);
-                const defaultMinH = isMobile ? 104 : 52;
-                const tbH = (frozenTb && frozenTb.offsetHeight && frozenTb.offsetHeight > 30) ? frozenTb.offsetHeight : defaultMinH;
-                const padTop = Math.max(tbH + 12, defaultMinH + 12);
-                blockContainer.style.setProperty('padding-top', padTop + 'px', 'important');
+                const isHeaderCollapsed = (
+                    parentDoc.body.classList.contains('header-collapsed') ||
+                    localStorage.getItem('jyotish_header_collapsed') === 'true'
+                );
+                if (isHeaderCollapsed) {
+                    blockContainer.style.setProperty('padding-top', isMobile ? '12px' : '16px', 'important');
+                } else {
+                    const defaultMinH = isMobile ? 104 : 52;
+                    const tbH = (frozenTb && frozenTb.offsetHeight && frozenTb.offsetHeight > 30) ? frozenTb.offsetHeight : defaultMinH;
+                    const padTop = Math.max(tbH + 12, defaultMinH + 12);
+                    blockContainer.style.setProperty('padding-top', padTop + 'px', 'important');
+                }
                 blockContainer.style.setProperty('padding-left', isMobile ? '8px' : '16px', 'important');
                 blockContainer.style.setProperty('padding-right', isMobile ? '8px' : '16px', 'important');
                 blockContainer.style.setProperty('max-width', '100%', 'important');
@@ -4568,6 +4641,25 @@ client_bridge_code = """
             console.error("Error freezing top header:", e);
         }
     }
+
+    function toggleHeaderCollapse() {
+        try {
+            const parentDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            const isCurrentlyCollapsed = parentDoc.body.classList.contains('header-collapsed') || localStorage.getItem('jyotish_header_collapsed') === 'true';
+            if (isCurrentlyCollapsed) {
+                parentDoc.body.classList.remove('header-collapsed');
+                localStorage.setItem('jyotish_header_collapsed', 'false');
+            } else {
+                parentDoc.body.classList.add('header-collapsed');
+                localStorage.setItem('jyotish_header_collapsed', 'true');
+            }
+            setupStickyTopHeader();
+        } catch(e) {}
+    }
+
+    const pWin = (window.parent && window.parent.location) ? window.parent : window;
+    pWin.__toggleJyotishHeader = toggleHeaderCollapse;
+    window.__toggleJyotishHeader = toggleHeaderCollapse;
 
     function setupPWAandMobile() {
         try {
@@ -6595,11 +6687,16 @@ with st.container(key="top_frozen_header_container", border=False):
 
         with hdr_c_brand:
             st.markdown("""
-            <div style="display:flex; align-items:center; gap:6px; height:34px; overflow:hidden; white-space:nowrap;">
-                <span style="font-size:18px; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); flex-shrink:0;">🕉️</span>
-                <div style="line-height:1.1; overflow:hidden; text-overflow:ellipsis;">
-                    <b style="font-size:14px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.3px;">ब्रह्महोरा (BrahmaHora)</b>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; height:34px; overflow:hidden; white-space:nowrap;">
+                <div style="display:flex; align-items:center; gap:5px; overflow:hidden; text-overflow:ellipsis;">
+                    <span style="font-size:18px; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); flex-shrink:0;">🕉️</span>
+                    <div style="line-height:1.1; overflow:hidden; text-overflow:ellipsis;">
+                        <b style="font-size:13px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.3px;">ब्रह्महोरा</b>
+                    </div>
                 </div>
+                <button onclick="window.parent.__toggleJyotishHeader ? window.parent.__toggleJyotishHeader() : window.__toggleJyotishHeader()" style="background:rgba(255,255,255,0.25); border:1.5px solid rgba(255,255,255,0.65); color:#FFFFFF; border-radius:6px; padding:3px 8px; font-size:13px; font-weight:900; cursor:pointer; line-height:1; flex-shrink:0;" title="हेडर छुपाएं / फुल स्क्रीन (<< Hide Header / Full Screen)">
+                    &lt;&lt;
+                </button>
             </div>
             """, unsafe_allow_html=True)
 
@@ -6648,6 +6745,7 @@ with st.container(key="top_frozen_header_container", border=False):
             u_role = st.session_state.get("user_role", "jatak")
             MENU_ACTION_ITEMS = [
                 "⚡ मेन्यू चुनें (Menu List)...",
+                "🔲 Full Screen (<< हेडर छुपाएं)",
                 "🧠 AI Brain (दैवज्ञ महा-मस्तिष्क)",
                 "📲 Mobile App (मोबाइल ऐप इंस्टॉल)",
                 "✨ New (नया प्रोफाइल)",
@@ -6679,11 +6777,23 @@ with st.container(key="top_frozen_header_container", border=False):
                 index=0,
                 label_visibility="collapsed",
                 key=f"top_bar_menu_action_selector_{_menu_nonce}",
-                help="मेन्यू सूची (AI Brain, Mobile App, New, Birth, Notes, Vault, Save, Panchang, AI, BTR, Prashna, PDF, Setup, Language, Mode, Local, Validation, Logout)"
+                help="मेन्यू सूची (Full Screen, AI Brain, Mobile App, New, Birth, Notes, Vault, Save, Panchang, AI, BTR, Prashna, PDF, Setup, Language, Mode, Local, Validation, Logout)"
             )
 
             if selected_action != MENU_ACTION_ITEMS[0]:
-                if selected_action.startswith("🧠 AI Brain"):
+                if selected_action.startswith("🔲 Full"):
+                    components.html("""
+                    <script>
+                    (function(){
+                        const pWin = (window.parent && window.parent.location) ? window.parent : window;
+                        if (pWin.__toggleJyotishHeader) {
+                            pWin.__toggleJyotishHeader();
+                        }
+                    })();
+                    </script>
+                    """, height=0, width=0)
+                    st.toast("🔲 फुल-स्क्रीन मोड सक्रिय! पुनः हेडर देखने हेतु '>>' टैप करें।", icon="🔲")
+                elif selected_action.startswith("🧠 AI Brain"):
                     st.session_state.gla_active_tool = "daivajna_brain"
                 elif selected_action.startswith("📲 Mobile App"):
                     st.session_state.gla_active_tool = "mobile_app"
