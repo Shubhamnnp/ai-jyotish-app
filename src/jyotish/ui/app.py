@@ -4573,6 +4573,7 @@ client_bridge_code = """
         try {
             const parentDoc = (window.parent && window.parent.document) ? window.parent.document : document;
             if (!parentDoc) return;
+            const parentWin = (window.parent && window.parent.location) ? window.parent : window;
             const head = parentDoc.head || parentDoc.getElementsByTagName('head')[0];
             if (!head) return;
 
@@ -4598,7 +4599,7 @@ client_bridge_code = """
 
                 const m3 = parentDoc.createElement('meta');
                 m3.name = 'apple-mobile-web-app-title';
-                m3.content = 'AI ज्योतिषाचार्य';
+                m3.content = 'ब्रह्महोरा ज्योतिष्';
                 head.appendChild(m3);
 
                 const m4 = parentDoc.createElement('meta');
@@ -4608,7 +4609,7 @@ client_bridge_code = """
 
                 const m5 = parentDoc.createElement('meta');
                 m5.name = 'theme-color';
-                m5.content = '#050811';
+                m5.content = '#0073CF';
                 head.appendChild(m5);
 
                 const iconLink = parentDoc.createElement('link');
@@ -4618,12 +4619,24 @@ client_bridge_code = """
             }
 
             // 3. Register Service Worker on parent window navigator
-            const winNav = (window.parent && window.parent.navigator) ? window.parent.navigator : navigator;
-            if (winNav && 'serviceWorker' in winNav && !window.__sw_registered) {
-                window.__sw_registered = true;
+            const winNav = (parentWin && parentWin.navigator) ? parentWin.navigator : navigator;
+            if (winNav && 'serviceWorker' in winNav && !parentWin.__sw_registered) {
+                parentWin.__sw_registered = true;
                 winNav.serviceWorker.register('/app/static/sw.js').then(function(reg) {
-                    console.log('Jyotish PWA active:', reg.scope);
-                }).catch(function(e) {});
+                    console.log('BrahmaHora PWA active:', reg.scope);
+                }).catch(function(e) {
+                    winNav.serviceWorker.register('/static/sw.js').catch(function(){});
+                });
+            }
+
+            // 4. Capture beforeinstallprompt for 1-Click Install
+            if (!parentWin.__pwa_install_listener_attached) {
+                parentWin.__pwa_install_listener_attached = true;
+                parentWin.addEventListener('beforeinstallprompt', function(e) {
+                    e.preventDefault();
+                    parentWin.__pwa_deferred_prompt = e;
+                    console.log('PWA Install prompt captured and ready');
+                });
             }
         } catch(e) {}
     }
@@ -6636,6 +6649,7 @@ with st.container(key="top_frozen_header_container", border=False):
             MENU_ACTION_ITEMS = [
                 "⚡ मेन्यू चुनें (Menu List)...",
                 "🧠 AI Brain (दैवज्ञ महा-मस्तिष्क)",
+                "📲 Mobile App (मोबाइल ऐप इंस्टॉल)",
                 "✨ New (नया प्रोफाइल)",
                 "📅 Birth (जन्म विवरण)",
                 "📝 Notes (परामर्श नोट्स)",
@@ -6665,12 +6679,14 @@ with st.container(key="top_frozen_header_container", border=False):
                 index=0,
                 label_visibility="collapsed",
                 key=f"top_bar_menu_action_selector_{_menu_nonce}",
-                help="मेन्यू सूची (AI Brain, New, Birth, Notes, Vault, Save, Panchang, AI, BTR, Prashna, PDF, Setup, Language, Mode, Local, Validation, Logout)"
+                help="मेन्यू सूची (AI Brain, Mobile App, New, Birth, Notes, Vault, Save, Panchang, AI, BTR, Prashna, PDF, Setup, Language, Mode, Local, Validation, Logout)"
             )
 
             if selected_action != MENU_ACTION_ITEMS[0]:
                 if selected_action.startswith("🧠 AI Brain"):
                     st.session_state.gla_active_tool = "daivajna_brain"
+                elif selected_action.startswith("📲 Mobile App"):
+                    st.session_state.gla_active_tool = "mobile_app"
                 elif selected_action.startswith("✨ New"):
                     st.session_state.gla_active_tool = "new"
                 elif selected_action.startswith("📅 Birth"):
@@ -8514,6 +8530,149 @@ with st.container(key="top_frozen_header_container", border=False):
                         append_txt += f"उपाय:\n{res_data.get('prescriptive_remedies', '')}\n"
                         st.session_state.client_consultation_notes[_c_store_key] = _curr_n + append_txt
                         st.toast("✅ शोध सारांश परामर्श नोट्स में सफलतापूर्वक जोड़ दिया गया!", icon="📝")
+
+        # 18. TOOL: MOBILE APP INSTALLATION & PWA COMMAND CENTER
+        elif st.session_state.gla_active_tool == "mobile_app":
+            with st.container(border=True):
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0284C7; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.25rem; font-weight:900; color:#0369A1;">
+                        📱 ब्रह्महोरा मोबाइल ऐप एवं ऑफलाइन वेधशाला (Mobile App & PWA Center)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                st.caption("🚀 सभी प्रकार के स्मार्टफोन (Android, iPhone, iPad, Tablet), सभी नेटवर्क (2G / 3G / 4G / 5G / Wi-Fi) एवं बिना ऐप स्टोर के तुरंत 1-क्लिक में इंस्टॉल!")
+
+                # Live Interactive 1-Click Install Button via JS bridge
+                components.html("""
+                <div style="display:flex; justify-content:center; margin:10px 0;">
+                    <button id="pwa_btn" onclick="installBrahmaHoraApp()" style="
+                        background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+                        color: #FFFFFF;
+                        border: none;
+                        border-radius: 10px;
+                        padding: 12px 28px;
+                        font-size: 16px;
+                        font-weight: 800;
+                        cursor: pointer;
+                        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    ">
+                        <span>📲</span>
+                        <span id="btn_txt">सीधे फोन में ऐप इंस्टॉल करें (Install BrahmaHora App)</span>
+                    </button>
+                </div>
+                <script>
+                function installBrahmaHoraApp() {
+                    const parentWin = (window.parent && window.parent.location) ? window.parent : window;
+                    if (parentWin.__pwa_deferred_prompt) {
+                        parentWin.__pwa_deferred_prompt.prompt();
+                        parentWin.__pwa_deferred_prompt.userChoice.then(function(choice) {
+                            if (choice.outcome === 'accepted') {
+                                document.getElementById('btn_txt').innerText = "✅ ऐप सफलतापूर्वक इंस्टॉल हो गया!";
+                            }
+                            parentWin.__pwa_deferred_prompt = null;
+                        });
+                    } else {
+                        alert("📲 मोबाइल ऐप इंस्टॉल करने के लिए:\\n\\n• Android फोन: Chrome के ऊपर दायें कोने में 3 बिंदू (⋮) दबाएं और 'Install app' या 'Add to Home screen' चुनें।\\n• iPhone: Safari के नीचे 'Share' (📤) दबाएं और 'Add to Home Screen' चुनें।");
+                    }
+                }
+                </script>
+                """, height=70)
+
+                # Tabs for Platform-wise Easy Guide
+                tb_android, tb_ios, tb_features, tb_apk = st.tabs([
+                    "🤖 एंड्रॉइड फोन (Android)",
+                    "🍎 आईफोन (iPhone / iOS)",
+                    "⚡ मोबाइल डेटा व नेटवर्क लाभ",
+                    "📦 स्टैंडअलोन APK पैकेजिंग"
+                ])
+
+                with tb_android:
+                    st.markdown("""
+                    <div style="background:#F0FDF4; border:1.5px solid #22C55E; border-radius:10px; padding:16px; line-height:1.7;">
+                        <b style="color:#15803D; font-size:16px;">🤖 Android फोन (Samsung, Realme, Redmi, Vivo, Oppo, OnePlus) पर 10 सेकंड में इंस्टॉल करें:</b>
+                        <ol style="margin-top:10px; padding-left:20px; font-size:14px; color:#1E293B;">
+                            <li>अपने फोन के <b>Google Chrome</b> या <b>Samsung Internet</b> ब्राउज़र में इस लिंक को खोलें।</li>
+                            <li>स्क्रीन के ऊपर दायें कोने में स्थित <b>तीन बिंदू (⋮)</b> पर टैप करें।</li>
+                            <li>मेन्यू में <b>'Install app (ऐप इंस्टॉल करें)'</b> या <b>'Add to Home screen (होम स्क्रीन पर जोड़ें)'</b> पर टैप करें।</li>
+                            <li>पुष्टि के लिए <b>'Install'</b> पर क्लिक करें।</li>
+                            <li>🎉 अब आपके फोन की होम स्क्रीन पर <b>ब्रह्महोरा (BrahmaHora)</b> का असली ऐप आइकन बन जाएगा। अब इसे WhatsApp या YouTube की तरह बिना ब्राउज़र एड्रेस बार के फुल-स्क्रीन इस्तेमाल करें!</li>
+                        </ol>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with tb_ios:
+                    st.markdown("""
+                    <div style="background:#F8FAFC; border:1.5px solid #0284C7; border-radius:10px; padding:16px; line-height:1.7;">
+                        <b style="color:#0369A1; font-size:16px;">🍎 Apple iPhone एवं iPad पर इंस्टॉल करने की विधि:</b>
+                        <ol style="margin-top:10px; padding-left:20px; font-size:14px; color:#1E293B;">
+                            <li>अपने iPhone के <b>Safari Browser</b> में यह लिंक खोलें।</li>
+                            <li>स्क्रीन के सबसे नीचे बीच में स्थित <b>Share (📤 चौकोर बॉक्स में ऊपर तीर)</b> बटन दबाएं।</li>
+                            <li>मेन्यू को थोड़ा नीचे स्क्रॉल करें और <b>'Add to Home Screen' (+ होम स्क्रीन में जोड़ें)</b> पर टैप करें।</li>
+                            <li>ऊपर दायें कोने में <b>'Add (जोड़ें)'</b> पर क्लिक करें।</li>
+                            <li>🎉 आपके iPhone की होम स्क्रीन पर ब्रह्महोरा ऐप का आइकन आ जाएगा और यह एकदम असली iOS ऐप की तरह खुलेगा!</li>
+                        </ol>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with tb_features:
+                    col_mf1, col_mf2 = st.columns(2)
+                    with col_mf1:
+                        st.markdown("""
+                        <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:12px; margin-bottom:10px;">
+                            <b style="color:#1D4ED8; font-size:14px;">🌐 सभी नेटवर्क पर सुपर-फ़ास्ट (2G/3G/4G/5G/Wi-Fi)</b><br/>
+                            <span style="font-size:12.5px; color:#334155;">
+                                इसमें स्मार्ट डेटा कंप्रेशन और PWA सर्विस वर्कर कैशे सक्रिय है, जिससे 2G या धीमे इंटरनेट पर भी कुण्डली बिना अटके तेजी से खुलती है और कम से कम मोबाइल डेटा खर्च होता है।
+                            </span>
+                        </div>
+                        <div style="background:#FAF5FF; border:1px solid #E9D5FF; border-radius:8px; padding:12px;">
+                            <b style="color:#7C3AED; font-size:14px;">🛰️ मोबाइल GPS से सटीक अक्षांश-देशांतर</b><br/>
+                            <span style="font-size:12.5px; color:#334155;">
+                                जातक का जन्म स्थान या प्रश्न कुण्डली बनाते समय फोन के इनबिल्ट GPS चिपसेट से 1-क्लिक में सटीक Latitude/Longitude प्राप्त हो जाते हैं।
+                            </span>
+                        </div>
+                        """, unsafe_allow_html=True)
+
+                    with col_mf2:
+                        st.markdown("""
+                        <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:12px; margin-bottom:10px;">
+                            <b style="color:#B45309; font-size:14px;">📴 सर्विस वर्कर ऑफलाइन सुरक्षा</b><br/>
+                            <span style="font-size:12.5px; color:#334155;">
+                                सफर के दौरान यदि नेटवर्क चला जाए, तब भी आपकी खुली हुई कुण्डली, ग्रह स्थितियां और षोडशवर्ग चार्ट्स स्क्रीन पर सुरक्षित रहते हैं।
+                            </span>
+                        </div>
+                        <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; padding:12px;">
+                            <b style="color:#15803D; font-size:14px;">📲 1-क्लिक व्हाट्सएप व डिजिटल शेयरिंग</b><br/>
+                            <span style="font-size:12.5px; color:#334155;">
+                                कुण्डली का 22-अध्यायीय PDF अथवा सुरक्षित डिजिटल लिंक सीधे जातक के व्हाट्सएप नंबर पर 1-क्लिक में मोबाइल से भेजा जा सकता है।
+                            </span>
+                        </div>
+                        """, unsafe_allow_html=True)
+
+                with tb_apk:
+                    st.markdown("""
+                    <div style="background:#FFF7ED; border:1.5px solid #F97316; border-radius:10px; padding:16px; line-height:1.7;">
+                        <b style="color:#C2410C; font-size:15px;">📦 गूगल प्ले स्टोर हेतु स्टैंडअलोन APK / AAB पैकेजिंग:</b><br/>
+                        <span style="font-size:13.5px; color:#431407;">
+                            चूंकि हमारी ऐप में <code>manifest.json</code> और <code>sw.js</code> पूर्णतः सक्रिय हैं, आप <b>PWABuilder (Google / Microsoft समर्थित)</b> का उपयोग करके केवल १ मिनट में स्टैंडअलोन <b>Android APK फ़ाइल</b> और <b>Google Play Store AAB बंडल</b> बना सकते हैं:
+                        </span>
+                        <div style="margin-top:12px;">
+                            <a href="https://www.pwabuilder.com" target="_blank" style="text-decoration:none;">
+                                <div style="display:inline-block; background:#EA580C; color:#FFFFFF; font-weight:800; font-size:13.5px; padding:8px 18px; border-radius:8px;">
+                                    🚀 PWABuilder पर APK जनरेट करें (Open PWABuilder)
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                st.markdown("<div style='height:12px;'></div>", unsafe_allow_html=True)
+                if st.button("❌ बंद करें (Close)", use_container_width=True, key="btn_close_mobile_app_modal"):
+                    st.session_state.gla_active_tool = None
+                    st.rerun()
 
     # ---------------------------------------------------------
     # 🎨 THEME STYLING TOKENS FOR SIDEBAR & HEADER BREADCRUMB (Grahalakshanam Palette)

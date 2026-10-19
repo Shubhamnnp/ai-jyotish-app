@@ -1,17 +1,20 @@
-// AI ज्योतिषाचार्य SaaS Pro - PWA Service Worker
-const CACHE_NAME = 'ai-jyotish-cache-v1';
+// ब्रह्महोरा (BrahmaHora) वैदिक ज्योतिष OS - PWA Service Worker
+const CACHE_NAME = 'brahmahora-jyotish-cache-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/app/static/manifest.json',
   '/app/static/icon-192.png',
-  '/app/static/icon-512.png'
+  '/app/static/icon-512.png',
+  '/static/manifest.json',
+  '/static/icon-192.png',
+  '/static/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS_TO_CACHE).catch((err) => {
-        console.log('SW cache partial install:', err);
+        console.log('BrahmaHora SW cache partial install:', err);
       });
     })
   );
@@ -34,8 +37,12 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Let Streamlit web sockets and API calls pass directly
-  if (event.request.url.includes('/_stcore/') || event.request.url.includes('stream')) {
+  // Pass through Streamlit WebSocket, streaming, and live calculation endpoints
+  if (
+    event.request.url.includes('/_stcore/') ||
+    event.request.url.includes('stream') ||
+    event.request.url.includes('websocket')
+  ) {
     return;
   }
   event.respondWith(

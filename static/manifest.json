@@ -1,12 +1,14 @@
 {
-  "name": "AI ज्योतिषाचार्य SaaS Pro",
-  "short_name": "AI Jyotish",
-  "description": "Enterprise Shastriya Vedic Astrology & Horoscope Workstation",
+  "name": "ब्रह्महोरा वैदिक ज्योतिष (BrahmaHora AI Jyotish OS)",
+  "short_name": "ब्रह्महोरा",
+  "description": "प्रामाणिक वैदिक ज्योतिष महा-मस्तिष्क, कुण्डली वेधशाला एवं प्रश्न शास्त्र - All Networks & All Phones Compatible",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#0B0F19",
-  "theme_color": "#D97706",
+  "background_color": "#050B14",
+  "theme_color": "#0073CF",
+  "categories": ["lifestyle", "education", "utilities"],
   "icons": [
     {
       "src": "/app/static/icon-192.png",
@@ -16,6 +18,18 @@
     },
     {
       "src": "/app/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
