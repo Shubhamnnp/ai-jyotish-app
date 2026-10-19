@@ -3939,6 +3939,45 @@ client_bridge_code = """
                             color: #000000 !important;
                             font-weight: 700 !important;
                         }
+                        .st-key-frozen_toolbelt_container button.sidebar-toggle-btn,
+                        .st-key-frozen_toolbelt_container button.header-hide-btn,
+                        .st-key-frozen_toolbelt_container button#top_bar_header_hide_btn,
+                        .st-key-frozen_toolbelt_container .sidebar-toggle-btn,
+                        .st-key-frozen_toolbelt_container .header-hide-btn {
+                            background: rgba(255, 255, 255, 0.22) !important;
+                            color: #FFFFFF !important;
+                            border: 1.5px solid rgba(255, 255, 255, 0.75) !important;
+                            border-radius: 6px !important;
+                            width: 34px !important;
+                            min-width: 34px !important;
+                            max-width: 34px !important;
+                            height: 32px !important;
+                            min-height: 32px !important;
+                            max-height: 32px !important;
+                            display: flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            padding: 0 !important;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+                            cursor: pointer !important;
+                            line-height: 1 !important;
+                        }
+                        .st-key-frozen_toolbelt_container button.sidebar-toggle-btn *,
+                        .st-key-frozen_toolbelt_container button.header-hide-btn *,
+                        .st-key-frozen_toolbelt_container button#top_bar_header_hide_btn *,
+                        .st-key-frozen_toolbelt_container .sidebar-toggle-btn *,
+                        .st-key-frozen_toolbelt_container .header-hide-btn * {
+                            color: #FFFFFF !important;
+                        }
+                        .st-key-frozen_toolbelt_container button.sidebar-toggle-btn:hover,
+                        .st-key-frozen_toolbelt_container button.header-hide-btn:hover,
+                        .st-key-frozen_toolbelt_container button#top_bar_header_hide_btn:hover,
+                        .st-key-frozen_toolbelt_container .sidebar-toggle-btn:hover,
+                        .st-key-frozen_toolbelt_container .header-hide-btn:hover {
+                            background: rgba(255, 255, 255, 0.38) !important;
+                            border-color: #FFFFFF !important;
+                            color: #FFFFFF !important;
+                        }
                         .st-key-hdr_top_prev_mod_btn button,
                         .st-key-hdr_top_next_mod_btn button,
                         .st-key-hdr_top_prev_tab_btn button,
@@ -4534,64 +4573,29 @@ client_bridge_code = """
                     localStorage.getItem('jyotish_header_collapsed') === 'true'
                 );
 
-                // 1. Header Hide icon ( ^ ) on the far right of the blue header bar
-                let hideBtn = parentDoc.getElementById('jyotish_header_hide_btn');
-                if (!hideBtn) {
-                    hideBtn = parentDoc.createElement('button');
-                    hideBtn.id = 'jyotish_header_hide_btn';
-                    hideBtn.innerHTML = '^';
-                    hideBtn.title = 'हेडर छुपाएं / फुल स्क्रीन (Hide Header ^)';
-                    hideBtn.onclick = function(e) {
-                        e.stopPropagation();
-                        const pW = (window.parent && window.parent.location) ? window.parent : window;
-                        if (pW.__toggleJyotishHeader) {
-                            pW.__toggleJyotishHeader();
-                        } else if (window.__toggleJyotishHeader) {
-                            window.__toggleJyotishHeader();
-                        }
-                    };
-                    frozenTb.appendChild(hideBtn);
+                // Clean up any legacy injected hideBtn if present so it does not duplicate
+                const oldHideBtn = parentDoc.getElementById('jyotish_header_hide_btn');
+                if (oldHideBtn) {
+                    oldHideBtn.remove();
                 }
-                hideBtn.style.cssText = `
-                    position: absolute !important;
-                    right: 8px !important;
-                    top: 50% !important;
-                    transform: translateY(-50%) !important;
-                    z-index: 9999999 !important;
-                    width: 32px !important;
-                    height: 32px !important;
-                    background: rgba(255, 255, 255, 0.22) !important;
-                    border: 1.5px solid rgba(255, 255, 255, 0.65) !important;
-                    color: #FFFFFF !important;
-                    border-radius: 7px !important;
-                    font-size: 19px !important;
-                    font-weight: 900 !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    cursor: pointer !important;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
-                    line-height: 1 !important;
-                    padding: 0 !important;
-                `;
 
-                // 2. Header Show icon ( v ) floating on the screen when header is collapsed
+                // Header Show icon ( v ) floating on the screen when header is collapsed
                 let floatPill = parentDoc.getElementById('jyotish_floating_header_pill');
                 if (!floatPill) {
                     floatPill = parentDoc.createElement('div');
                     floatPill.id = 'jyotish_floating_header_pill';
-                    floatPill.innerHTML = '<span style="font-weight:900; font-size:16px; line-height:1;">v</span> <span style="font-size:12px; font-weight:800;">हेडर दिखाएं</span>';
-                    floatPill.title = 'हेडर दिखाएं (Show Header v)';
-                    floatPill.onclick = function() {
-                        const pW = (window.parent && window.parent.location) ? window.parent : window;
-                        if (pW.__toggleJyotishHeader) {
-                            pW.__toggleJyotishHeader();
-                        } else if (window.__toggleJyotishHeader) {
-                            window.__toggleJyotishHeader();
-                        }
-                    };
                     parentDoc.body.appendChild(floatPill);
                 }
+                floatPill.innerHTML = '<span style="font-weight:900; font-size:15px; line-height:1; background:rgba(255,255,255,0.25); border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; border:1.5px solid #FFFFFF; margin-right:4px;">v</span> <span style="font-size:12px; font-weight:800; letter-spacing:0.3px;">हेडर दिखाएं</span>';
+                floatPill.title = 'हेडर दिखाएं (Show Header v)';
+                floatPill.onclick = function() {
+                    const pW = (window.parent && window.parent.location) ? window.parent : window;
+                    if (pW.__toggleJyotishHeader) {
+                        pW.__toggleJyotishHeader();
+                    } else if (window.__toggleJyotishHeader) {
+                        window.__toggleJyotishHeader();
+                    }
+                };
 
                 if (isHeaderCollapsed) {
                     parentDoc.body.classList.add('header-collapsed');
@@ -4607,15 +4611,18 @@ client_bridge_code = """
                         z-index: 99999999 !important;
                         background: linear-gradient(135deg, #0284C7, #0369A1) !important;
                         color: #FFFFFF !important;
-                        padding: 6px 14px !important;
+                        padding: 5px 14px !important;
                         border-radius: 20px !important;
                         font-size: 13px !important;
                         font-weight: 800 !important;
-                        box-shadow: 0 4px 14px rgba(0, 115, 207, 0.45) !important;
+                        box-shadow: 0 4px 16px rgba(0, 115, 207, 0.45) !important;
                         cursor: pointer !important;
                         user-select: none !important;
-                        border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
+                        border: 1.5px solid rgba(255, 255, 255, 0.6) !important;
+                        transition: transform 0.15s ease, box-shadow 0.15s ease !important;
                     `;
+                    floatPill.onmouseover = function() { this.style.transform = 'scale(1.05)'; };
+                    floatPill.onmouseout = function() { this.style.transform = 'scale(1.0)'; };
                 } else {
                     parentDoc.body.classList.remove('header-collapsed');
                     frozenTb.style.setProperty('display', 'block', 'important');
@@ -4633,7 +4640,7 @@ client_bridge_code = """
                 }
                 frozenTb.style.setProperty('padding-top', '5px', 'important');
                 frozenTb.style.setProperty('padding-bottom', '5px', 'important');
-                frozenTb.style.setProperty('padding-right', '46px', 'important');
+                frozenTb.style.setProperty('padding-right', '10px', 'important');
                 frozenTb.style.setProperty('margin', '0px', 'important');
                 frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
                 frozenTb.style.setProperty('transition', 'none', 'important');
@@ -6723,23 +6730,33 @@ with st.container(key="top_frozen_header_container", border=False):
     # 🌟 UNIFIED SINGLE-LINE BLUE WORKSTATION HEADER (नीली पट्टी - 1ST LINE ONLY)
     # ═════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # ─── 1st line - Logo, BrahmaHora, all module list, active module ke tab ki list, menu list ───
-        hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [1.7, 3.1, 3.1, 3.1],
+        # ─── 1st line: [ sidebar Show icon (<<) ] , [ Logo ] , [ Bramhahora ] , [ Module List ] , [ Tab List ] , [ Menu ] , [Header Hide icon ( ^ ) ] ───
+        hdr_c_sb, hdr_c_logo, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu, hdr_c_hide = st.columns(
+            [0.45, 0.35, 1.05, 3.35, 3.35, 2.95, 0.5],
             gap="small",
             vertical_alignment="center"
         )
 
-        with hdr_c_brand:
+        with hdr_c_sb:
             st.markdown("""
-            <div style="display:flex; align-items:center; gap:6px; height:34px; overflow:hidden; white-space:nowrap;">
-                <button class="sidebar-toggle-btn" onclick="const pW = (window.parent && window.parent.location) ? window.parent : window; if (pW.__doToggleSidebar) { pW.__doToggleSidebar(); } else if (window.__doToggleSidebar) { window.__doToggleSidebar(); }" style="background:rgba(255,255,255,0.22); border:1.5px solid rgba(255,255,255,0.65); color:#FFFFFF; border-radius:6px; padding:2px 7px; font-size:12px; font-weight:900; cursor:pointer; line-height:1.2; flex-shrink:0;" title="साइडबार दिखाएं / छुपाएं (Sidebar Show/Toggle <<)">
+            <div style="display:flex; align-items:center; justify-content:center; height:34px;">
+                <button class="sidebar-toggle-btn" onclick="const pW = (window.parent && window.parent.location) ? window.parent : window; if (pW.__doToggleSidebar) { pW.__doToggleSidebar(); } else if (window.__doToggleSidebar) { window.__doToggleSidebar(); }" style="background:rgba(255,255,255,0.22); border:1.5px solid rgba(255,255,255,0.75); color:#FFFFFF; border-radius:6px; width:34px; height:32px; font-size:13px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.15s ease; padding:0;" title="साइडबार दिखाएं / छुपाएं (Sidebar Show/Hide <<)">
                     &lt;&lt;
                 </button>
-                <span style="font-size:18px; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); flex-shrink:0;">🕉️</span>
-                <div style="line-height:1.1; overflow:hidden; text-overflow:ellipsis;">
-                    <b style="font-size:13px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.3px;">ब्रह्महोरा</b>
-                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with hdr_c_logo:
+            st.markdown("""
+            <div style="display:flex; align-items:center; justify-content:center; height:34px; font-size:20px; filter:drop-shadow(0 1px 3px rgba(0,0,0,0.45)); user-select:none; cursor:default;" title="ब्रह्महोरा ज्योतिष्">
+                🕉️
+            </div>
+            """, unsafe_allow_html=True)
+
+        with hdr_c_brand:
+            st.markdown("""
+            <div style="display:flex; align-items:center; height:34px; white-space:nowrap; overflow:hidden;">
+                <b style="font-size:14px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.4px; line-height:1;">ब्रह्महोरा</b>
             </div>
             """, unsafe_allow_html=True)
 
@@ -6887,6 +6904,15 @@ with st.container(key="top_frozen_header_container", border=False):
 
                 st.session_state["top_bar_menu_nonce"] = _menu_nonce + 1
                 st.rerun()
+
+        with hdr_c_hide:
+            st.markdown("""
+            <div style="display:flex; align-items:center; justify-content:center; height:34px;">
+                <button id="top_bar_header_hide_btn" class="header-hide-btn" onclick="const pW = (window.parent && window.parent.location) ? window.parent : window; if (pW.__toggleJyotishHeader) { pW.__toggleJyotishHeader(); } else if (window.__toggleJyotishHeader) { window.__toggleJyotishHeader(); }" style="background:rgba(255,255,255,0.22); border:1.5px solid rgba(255,255,255,0.75); color:#FFFFFF; border-radius:6px; width:34px; height:32px; font-size:16px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.15s ease; padding:0;" title="हेडर छुपाएं / फुल स्क्रीन (Hide Header ^)">
+                    ^
+                </button>
+            </div>
+            """, unsafe_allow_html=True)
 
         _cur_tabs_json = json.dumps(cur_mod_tabs)
         components.html(f"""
