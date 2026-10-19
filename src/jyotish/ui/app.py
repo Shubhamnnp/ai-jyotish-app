@@ -1524,7 +1524,7 @@ unified_css = f"""
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container,
         div.stApp:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container {{
             padding-left: 14px !important;
-            padding-right: 14px !important;
+            padding-right: 44px !important;
         }}
     }}
 
@@ -2703,6 +2703,12 @@ client_bridge_code = """
                     console.error('Sidebar toggle bridge error:', err);
                     return false;
                 }
+            }
+
+            parentWin.__doToggleSidebar = doToggle;
+            window.__doToggleSidebar = doToggle;
+            if (parentDoc.defaultView) {
+                parentDoc.defaultView.__doToggleSidebar = doToggle;
             }
         } catch (err) {
             console.error('Sidebar toggle bridge error:', err);
@@ -3884,7 +3890,7 @@ client_bridge_code = """
                             padding-top: 5px !important;
                             padding-bottom: 5px !important;
                             padding-left: 48px !important;
-                            padding-right: 14px !important;
+                            padding-right: 44px !important;
                             margin: 0px !important;
                             box-sizing: border-box !important;
                             transition: left 0.15s ease, width 0.15s ease !important;
@@ -4528,11 +4534,54 @@ client_bridge_code = """
                     localStorage.getItem('jyotish_header_collapsed') === 'true'
                 );
 
+                // 1. Header Hide icon ( ^ ) on the far right of the blue header bar
+                let hideBtn = parentDoc.getElementById('jyotish_header_hide_btn');
+                if (!hideBtn) {
+                    hideBtn = parentDoc.createElement('button');
+                    hideBtn.id = 'jyotish_header_hide_btn';
+                    hideBtn.innerHTML = '^';
+                    hideBtn.title = 'हेडर छुपाएं / फुल स्क्रीन (Hide Header ^)';
+                    hideBtn.onclick = function(e) {
+                        e.stopPropagation();
+                        const pW = (window.parent && window.parent.location) ? window.parent : window;
+                        if (pW.__toggleJyotishHeader) {
+                            pW.__toggleJyotishHeader();
+                        } else if (window.__toggleJyotishHeader) {
+                            window.__toggleJyotishHeader();
+                        }
+                    };
+                    frozenTb.appendChild(hideBtn);
+                }
+                hideBtn.style.cssText = `
+                    position: absolute !important;
+                    right: 8px !important;
+                    top: 50% !important;
+                    transform: translateY(-50%) !important;
+                    z-index: 9999999 !important;
+                    width: 32px !important;
+                    height: 32px !important;
+                    background: rgba(255, 255, 255, 0.22) !important;
+                    border: 1.5px solid rgba(255, 255, 255, 0.65) !important;
+                    color: #FFFFFF !important;
+                    border-radius: 7px !important;
+                    font-size: 19px !important;
+                    font-weight: 900 !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    cursor: pointer !important;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+                    line-height: 1 !important;
+                    padding: 0 !important;
+                `;
+
+                // 2. Header Show icon ( v ) floating on the screen when header is collapsed
                 let floatPill = parentDoc.getElementById('jyotish_floating_header_pill');
                 if (!floatPill) {
                     floatPill = parentDoc.createElement('div');
                     floatPill.id = 'jyotish_floating_header_pill';
-                    floatPill.innerHTML = '<span style="font-weight:900; font-size:14px; letter-spacing:-1px;">&gt;&gt;</span> <span style="font-size:12px; font-weight:800;">हेडर दिखाएं</span>';
+                    floatPill.innerHTML = '<span style="font-weight:900; font-size:16px; line-height:1;">v</span> <span style="font-size:12px; font-weight:800;">हेडर दिखाएं</span>';
+                    floatPill.title = 'हेडर दिखाएं (Show Header v)';
                     floatPill.onclick = function() {
                         const pW = (window.parent && window.parent.location) ? window.parent : window;
                         if (pW.__toggleJyotishHeader) {
@@ -4584,21 +4633,17 @@ client_bridge_code = """
                 }
                 frozenTb.style.setProperty('padding-top', '5px', 'important');
                 frozenTb.style.setProperty('padding-bottom', '5px', 'important');
+                frozenTb.style.setProperty('padding-right', '46px', 'important');
                 frozenTb.style.setProperty('margin', '0px', 'important');
                 frozenTb.style.setProperty('box-sizing', 'border-box', 'important');
                 frozenTb.style.setProperty('transition', 'none', 'important');
 
                 if (isMobile) {
-                    frozenTb.style.setProperty('padding-left', '42px', 'important');
-                    frozenTb.style.setProperty('padding-right', '10px', 'important');
+                    frozenTb.style.setProperty('padding-left', '10px', 'important');
                 } else if (isSidebarVisible) {
                     frozenTb.style.setProperty('padding-left', '14px', 'important');
-                    frozenTb.style.setProperty('padding-right', '14px', 'important');
                 } else {
-                    // When sidebar is collapsed, equal margins on both sides (48px each)
-                    // The left 48px neatly holds the native >> button without overlapping the ॐ logo
-                    frozenTb.style.setProperty('padding-left', '48px', 'important');
-                    frozenTb.style.setProperty('padding-right', '48px', 'important');
+                    frozenTb.style.setProperty('padding-left', '14px', 'important');
                 }
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
@@ -6687,16 +6732,14 @@ with st.container(key="top_frozen_header_container", border=False):
 
         with hdr_c_brand:
             st.markdown("""
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; height:34px; overflow:hidden; white-space:nowrap;">
-                <div style="display:flex; align-items:center; gap:5px; overflow:hidden; text-overflow:ellipsis;">
-                    <span style="font-size:18px; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); flex-shrink:0;">🕉️</span>
-                    <div style="line-height:1.1; overflow:hidden; text-overflow:ellipsis;">
-                        <b style="font-size:13px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.3px;">ब्रह्महोरा</b>
-                    </div>
-                </div>
-                <button onclick="window.parent.__toggleJyotishHeader ? window.parent.__toggleJyotishHeader() : window.__toggleJyotishHeader()" style="background:rgba(255,255,255,0.25); border:1.5px solid rgba(255,255,255,0.65); color:#FFFFFF; border-radius:6px; padding:3px 8px; font-size:13px; font-weight:900; cursor:pointer; line-height:1; flex-shrink:0;" title="हेडर छुपाएं / फुल स्क्रीन (<< Hide Header / Full Screen)">
+            <div style="display:flex; align-items:center; gap:6px; height:34px; overflow:hidden; white-space:nowrap;">
+                <button class="sidebar-toggle-btn" onclick="const pW = (window.parent && window.parent.location) ? window.parent : window; if (pW.__doToggleSidebar) { pW.__doToggleSidebar(); } else if (window.__doToggleSidebar) { window.__doToggleSidebar(); }" style="background:rgba(255,255,255,0.22); border:1.5px solid rgba(255,255,255,0.65); color:#FFFFFF; border-radius:6px; padding:2px 7px; font-size:12px; font-weight:900; cursor:pointer; line-height:1.2; flex-shrink:0;" title="साइडबार दिखाएं / छुपाएं (Sidebar Show/Toggle <<)">
                     &lt;&lt;
                 </button>
+                <span style="font-size:18px; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); flex-shrink:0;">🕉️</span>
+                <div style="line-height:1.1; overflow:hidden; text-overflow:ellipsis;">
+                    <b style="font-size:13px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.3px;">ब्रह्महोरा</b>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -6745,7 +6788,7 @@ with st.container(key="top_frozen_header_container", border=False):
             u_role = st.session_state.get("user_role", "jatak")
             MENU_ACTION_ITEMS = [
                 "⚡ मेन्यू चुनें (Menu List)...",
-                "🔲 Full Screen (<< हेडर छुपाएं)",
+                "🔲 Full Screen (^ हेडर छुपाएं)",
                 "🧠 AI Brain (दैवज्ञ महा-मस्तिष्क)",
                 "📲 Mobile App (मोबाइल ऐप इंस्टॉल)",
                 "✨ New (नया प्रोफाइल)",
@@ -6792,7 +6835,7 @@ with st.container(key="top_frozen_header_container", border=False):
                     })();
                     </script>
                     """, height=0, width=0)
-                    st.toast("🔲 फुल-स्क्रीन मोड सक्रिय! पुनः हेडर देखने हेतु '>>' टैप करें।", icon="🔲")
+                    st.toast("🔲 फुल-स्क्रीन मोड सक्रिय! पुनः हेडर देखने हेतु 'v हेडर दिखाएं' टैप करें।", icon="🔲")
                 elif selected_action.startswith("🧠 AI Brain"):
                     st.session_state.gla_active_tool = "daivajna_brain"
                 elif selected_action.startswith("📲 Mobile App"):
