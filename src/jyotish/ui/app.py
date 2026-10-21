@@ -1262,16 +1262,18 @@ unified_css = f"""
         opacity: 1 !important;
         z-index: 10000005 !important;
         cursor: pointer !important;
-        color: #FFFFFF !important;
+        color: #F59E0B !important;
         background: transparent !important;
         border: none !important;
     }}
     [data-testid="stSidebarCollapsedControl"] svg,
     [data-testid="stExpandSidebarButton"] svg,
     [data-testid="collapsedControl"] svg {{
-        fill: #FFFFFF !important;
-        stroke: #FFFFFF !important;
-        color: #FFFFFF !important;
+        fill: #F59E0B !important;
+        stroke: #F59E0B !important;
+        color: #F59E0B !important;
+        width: 18px !important;
+        height: 18px !important;
     }}
     [data-testid="stExpandSidebarButton"]:hover,
     button[data-testid="stExpandSidebarButton"]:hover,
@@ -1281,25 +1283,31 @@ unified_css = f"""
     }}
 
     .sidebar-toggle-btn {{
-        background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
-        color: #FFFFFF !important;
-        border: 1.5px solid #1E40AF !important;
-        border-radius: 8px !important;
-        padding: 6px 12px !important;
-        font-size: 15px !important;
+        background: rgba(255, 255, 255, 0.12) !important;
+        color: #F59E0B !important;
+        border: 1.5px solid rgba(245, 158, 11, 0.7) !important;
+        border-radius: 6px !important;
+        padding: 0 !important;
+        width: 34px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        max-height: 32px !important;
+        font-size: 13px !important;
         font-weight: 900 !important;
         cursor: pointer !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35) !important;
+        line-height: 1 !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
         transition: all 0.15s ease !important;
         user-select: none !important;
     }}
     .sidebar-toggle-btn:hover {{
-        background: #1D4ED8 !important;
-        transform: scale(1.06) !important;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5) !important;
+        background: rgba(245, 158, 11, 0.22) !important;
+        border-color: #F59E0B !important;
+        color: #FDE047 !important;
+        transform: scale(1.05) !important;
     }}
     .sidebar-toggle-btn:active {{
         transform: scale(0.95) !important;
@@ -1383,9 +1391,9 @@ unified_css = f"""
     [data-testid="stSidebar"] div[class*="eelgd2m"],
     [data-testid="stSidebar"] div[style*="col-resize"] {{
         z-index: 10000000 !important;
-        background-color: #0074cb !important;
-        background: #0074cb !important;
-        border-right: 2px solid #005fa8 !important;
+        background-color: #0A192F !important;
+        background: #0A192F !important;
+        border-right: 2px solid #F59E0B !important;
     }}
     section[data-testid="stSidebar"] *,
     [data-testid="stSidebar"] *,
@@ -1400,20 +1408,45 @@ unified_css = f"""
     [data-testid="stSidebar"] h4 {{
         color: #000000 !important;
     }}
-    /* Cleanly hide Streamlit native sidebar collapse/expand controls from floating over top header */
-    [data-testid="stSidebarCollapsedControl"],
-    [data-testid="collapsedControl"],
-    div[data-testid="stSidebarCollapsedControl"],
-    header[data-testid="stHeader"] button[data-testid="stSidebarCollapseButton"] {{
-        opacity: 0 !important;
-        pointer-events: none !important;
+    /* Explicit positioning for native collapsedControl so it stays vertically centered and NEVER shifts upward */
+    header[data-testid="stHeader"] [data-testid="collapsedControl"],
+    header[data-testid="stHeader"] [data-testid="stSidebarCollapsedControl"],
+    div[data-testid="collapsedControl"],
+    div[data-testid="stSidebarCollapsedControl"] {{
         position: fixed !important;
-        left: -9999px !important;
-        top: -9999px !important;
-        width: 0px !important;
-        height: 0px !important;
-        overflow: hidden !important;
-        z-index: -1 !important;
+        top: 6px !important;
+        left: 8px !important;
+        height: 32px !important;
+        width: 34px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        z-index: 10000005 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+    }}
+    header[data-testid="stHeader"] [data-testid="collapsedControl"] button,
+    header[data-testid="stHeader"] [data-testid="stSidebarCollapsedControl"] button,
+    div[data-testid="collapsedControl"] button,
+    div[data-testid="stSidebarCollapsedControl"] button,
+    button[data-testid="stExpandSidebarButton"] {{
+        width: 34px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        max-height: 32px !important;
+        border-radius: 6px !important;
+        background: rgba(255, 255, 255, 0.12) !important;
+        border: 1.5px solid rgba(245, 158, 11, 0.7) !important;
+        color: #F59E0B !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+        cursor: pointer !important;
+        transition: all 0.15s ease !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }}
 
     /* Header Collapse Full-Screen Mode */
@@ -1429,7 +1462,7 @@ unified_css = f"""
         padding-top: 14px !important;
     }}
 
-    /* Frozen Locked Toolbelt (Pins the Top Workstation Header Bar Permanently to the Top of the Viewport) */
+    /* Frozen Locked Toolbelt - Deep Cosmic Navy Executive Palette */
     .st-key-frozen_toolbelt_container,
     div.st-key-frozen_toolbelt_container,
     div[class*="st-key-frozen_toolbelt_container"] {{
@@ -1439,18 +1472,18 @@ unified_css = f"""
         right: 0px !important;
         width: 100% !important;
         z-index: 9999990 !important;
-        background: #0074cb !important;
-        background-color: #0074cb !important;
+        background: linear-gradient(90deg, #0A192F 0%, #0F2744 35%, #14355A 70%, #0B1C33 100%) !important;
+        background-color: #0A192F !important;
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
         padding-top: 5px !important;
         padding-bottom: 5px !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
+        padding-left: 8px !important;
+        padding-right: 12px !important;
         margin: 0px !important;
-        border-bottom: 2.5px solid #005fa8 !important;
-        box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
+        border-bottom: 2px solid #F59E0B !important;
+        box-shadow: 0 4px 18px rgba(5, 12, 24, 0.45) !important;
         box-sizing: border-box !important;
         transition: left 0.15s ease, width 0.15s ease !important;
     }}
@@ -1531,8 +1564,8 @@ unified_css = f"""
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .st-key-frozen_toolbelt_container,
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container,
         div.stApp:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container {{
-            padding-left: 10px !important;
-            padding-right: 10px !important;
+            padding-left: 14px !important;
+            padding-right: 44px !important;
         }}
     }}
 
@@ -1600,44 +1633,6 @@ unified_css = f"""
         border-color: #2563EB !important;
         color: #1D4ED8 !important;
         box-shadow: 0 2px 6px rgba(37, 99, 235, 0.18) !important;
-    }}
-    .st-key-frozen_toolbelt_container button.sidebar-toggle-btn,
-    .st-key-frozen_toolbelt_container button.header-hide-btn,
-    .st-key-frozen_toolbelt_container button#sidebar-toggle-action-btn,
-    .st-key-frozen_toolbelt_container button#top_bar_header_hide_btn,
-    .st-key-frozen_toolbelt_container .sidebar-toggle-btn,
-    .st-key-frozen_toolbelt_container .header-hide-btn {{
-        background: rgba(255, 255, 255, 0.22) !important;
-        color: #FFFFFF !important;
-        -webkit-text-fill-color: #FFFFFF !important;
-        border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
-        border-radius: 7px !important;
-        width: 34px !important;
-        min-width: 34px !important;
-        max-width: 34px !important;
-        height: 32px !important;
-        min-height: 32px !important;
-        max-height: 32px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 0 !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
-        cursor: pointer !important;
-        line-height: 1 !important;
-    }}
-    .st-key-frozen_toolbelt_container button.sidebar-toggle-btn:hover,
-    .st-key-frozen_toolbelt_container button.header-hide-btn:hover,
-    .st-key-frozen_toolbelt_container button#sidebar-toggle-action-btn:hover,
-    .st-key-frozen_toolbelt_container button#top_bar_header_hide_btn:hover,
-    .st-key-frozen_toolbelt_container .sidebar-toggle-btn:hover,
-    .st-key-frozen_toolbelt_container .header-hide-btn:hover {{
-        background: rgba(255, 255, 255, 0.38) !important;
-        border-color: #FFFFFF !important;
-        color: #FFFFFF !important;
-        -webkit-text-fill-color: #FFFFFF !important;
-        transform: translateY(-1px) !important;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35) !important;
     }}
     .st-key-top_frozen_header_container [data-testid="stExpander"],
     div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] {{
@@ -2390,17 +2385,16 @@ unified_css = f"""
         .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"],
         div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] {{
             flex-direction: row !important;
-            flex-wrap: nowrap !important;
+            flex-wrap: wrap !important;
             gap: 4px !important;
-            overflow-x: auto !important;
-            overflow-y: hidden !important;
-            -webkit-overflow-scrolling: touch !important;
+            overflow-x: visible !important;
+            overflow-y: visible !important;
         }}
         .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"] > div[data-testid="column"],
         div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {{
             width: auto !important;
-            min-width: 0 !important;
-            flex: 0 1 auto !important;
+            min-width: 48% !important;
+            flex: 1 1 48% !important;
             margin-bottom: 0px !important;
             padding: 0 2px !important;
         }}
@@ -2661,26 +2655,11 @@ client_bridge_code = """
 (function() {
     function setupSidebarToggle() {
         try {
-            const parentDoc = (window.parent && window.parent.document) ? window.parent.document : document;
+            const parentDoc = window.parent.document;
             if (!parentDoc) return;
-            const parentWin = (window.parent && window.parent.location) ? window.parent : window;
             
-            const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
-            const isExpanded = sb && (
-                sb.getAttribute('aria-expanded') === 'true' ||
-                (sb.getAttribute('aria-expanded') !== 'false' && (sb.offsetWidth > 50 || (sb.getBoundingClientRect && sb.getBoundingClientRect().width > 50)))
-            );
-
             const toggleBtns = parentDoc.querySelectorAll('.sidebar-toggle-btn, #sidebar-toggle-action-btn');
             toggleBtns.forEach(function(btn) {
-                if (isExpanded) {
-                    btn.innerHTML = '&lt;&lt;';
-                    btn.title = 'साइडबार छुपाएं (Hide Sidebar <<)';
-                } else {
-                    btn.innerHTML = '&gt;&gt;';
-                    btn.title = 'साइडबार दिखाएं (Show Sidebar >>)';
-                }
-
                 if (!btn.dataset.bound) {
                     btn.dataset.bound = "true";
                     btn.addEventListener('click', function(e) {
@@ -2696,8 +2675,8 @@ client_bridge_code = """
                 parentDoc.dataset.sidebarBound = "true";
                 parentDoc.addEventListener('click', function(e) {
                     const btn = e.target.closest('button');
-                    if (btn && (btn.classList.contains('sidebar-toggle-btn') || btn.id === 'sidebar-toggle-action-btn' || btn.innerText.includes('Sidebar') || (btn.getAttribute('key') && btn.getAttribute('key').includes('sidebar')))) {
-                        if (btn.closest('.st-key-frozen_toolbelt_container') || btn.classList.contains('sidebar-toggle-btn')) {
+                    if (btn && (btn.innerText.includes('Sidebar') || btn.innerText.includes('☰') || (btn.getAttribute('key') && btn.getAttribute('key').includes('sidebar')))) {
+                        if (btn.closest('.st-key-frozen_toolbelt_container') || btn.innerText.includes('Sidebar')) {
                             const success = doToggle();
                             if (success) {
                                 e.preventDefault();
@@ -2708,27 +2687,12 @@ client_bridge_code = """
                 }, true);
             }
             
-            function safeClick(el) {
-                if (!el) return false;
-                try {
-                    el.click();
-                    return true;
-                } catch(e) {
-                    try {
-                        el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-                        return true;
-                    } catch(e2) {
-                        return false;
-                    }
-                }
-            }
-
             function doToggle() {
                 try {
-                    const curSb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
-                    const curExpanded = curSb && (
-                        curSb.getAttribute('aria-expanded') === 'true' ||
-                        (curSb.getAttribute('aria-expanded') !== 'false' && (curSb.offsetWidth > 50 || (curSb.getBoundingClientRect && curSb.getBoundingClientRect().width > 50)))
+                    const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
+                    const isExpanded = sb && (
+                        sb.getAttribute('aria-expanded') === 'true' ||
+                        (sb.getAttribute('aria-expanded') !== 'false' && (sb.offsetWidth > 50 || (sb.getBoundingClientRect && sb.getBoundingClientRect().width > 50)))
                     );
 
                     const expandBtn = parentDoc.querySelector(
@@ -2738,11 +2702,8 @@ client_bridge_code = """
                         '[data-testid="stSidebarCollapsedControl"] button, ' +
                         'button[data-testid="stSidebarCollapsedControl"], ' +
                         '[data-testid="collapsedControl"] button, ' +
-                        'button[data-testid="collapsedControl"], ' +
                         'button[aria-label*="Expand sidebar"], ' +
-                        'button[aria-label*="Open sidebar"], ' +
-                        'button[title*="Expand sidebar"], ' +
-                        '[data-testid="stSidebarCollapsedControl"]'
+                        'button[title*="Expand sidebar"]'
                     );
 
                     const collapseBtn = parentDoc.querySelector(
@@ -2751,22 +2712,25 @@ client_bridge_code = """
                         '[data-testid="stSidebarCollapseButton"], ' +
                         '[data-testid="stSidebarHeader"] button, ' +
                         'button[aria-label*="Collapse sidebar"], ' +
-                        'button[aria-label*="Close sidebar"], ' +
                         'button[title*="Collapse sidebar"]'
                     );
 
                     let clicked = false;
-                    if (curExpanded) {
+                    if (isExpanded) {
                         if (collapseBtn) {
-                            clicked = safeClick(collapseBtn);
+                            collapseBtn.click();
+                            clicked = true;
                         } else if (expandBtn) {
-                            clicked = safeClick(expandBtn);
+                            expandBtn.click();
+                            clicked = true;
                         }
                     } else {
                         if (expandBtn) {
-                            clicked = safeClick(expandBtn);
+                            expandBtn.click();
+                            clicked = true;
                         } else if (collapseBtn) {
-                            clicked = safeClick(collapseBtn);
+                            collapseBtn.click();
+                            clicked = true;
                         }
                     }
 
@@ -3936,18 +3900,17 @@ client_bridge_code = """
                         [data-testid="stSidebar"] {
                             z-index: 10000000 !important;
                         }
-                        [data-testid="stSidebarCollapsedControl"],
+                        [data-testid="stExpandSidebarButton"],
+                        [data-testid="stExpandSidebarButton"] button,
+                        button[data-testid="stExpandSidebarButton"],
+                        [data-testid="stSidebarCollapseButton"],
+                        [data-testid="stSidebarCollapseButton"] button,
                         [data-testid="collapsedControl"],
-                        div[data-testid="stSidebarCollapsedControl"] {
-                            opacity: 0 !important;
-                            pointer-events: none !important;
-                            position: fixed !important;
-                            left: -9999px !important;
-                            top: -9999px !important;
-                            width: 0px !important;
-                            height: 0px !important;
-                            overflow: hidden !important;
-                            z-index: -1 !important;
+                        [data-testid="collapsedControl"] button,
+                        [data-testid="stSidebarCollapsedControl"],
+                        [data-testid="stSidebarCollapsedControl"] button {
+                            z-index: 10000005 !important;
+                            pointer-events: auto !important;
                         }
                         .st-key-frozen_toolbelt_container,
                         div.st-key-frozen_toolbelt_container,
@@ -3958,17 +3921,17 @@ client_bridge_code = """
                             right: 0px !important;
                             width: 100% !important;
                             z-index: 9999990 !important;
-                            background: #0074cb !important;
-                            background-color: #0074cb !important;
+                            background: linear-gradient(90deg, #0A192F 0%, #0F2744 35%, #14355A 70%, #0B1C33 100%) !important;
+                            background-color: #0A192F !important;
                             display: block !important;
                             visibility: visible !important;
                             opacity: 1 !important;
-                            border-bottom: 2.5px solid #005fa8 !important;
-                            box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
+                            border-bottom: 2px solid #F59E0B !important;
+                            box-shadow: 0 4px 18px rgba(5, 12, 24, 0.45) !important;
                             padding-top: 5px !important;
                             padding-bottom: 5px !important;
-                            padding-left: 10px !important;
-                            padding-right: 10px !important;
+                            padding-left: 8px !important;
+                            padding-right: 12px !important;
                             margin: 0px !important;
                             box-sizing: border-box !important;
                             transition: left 0.15s ease, width 0.15s ease !important;
@@ -4121,9 +4084,9 @@ client_bridge_code = """
                         [data-testid="stSidebarResizer"],
                         [data-testid="stSidebar"] div[class*="eelgd2m"],
                         [data-testid="stSidebar"] div[style*="col-resize"] {
-                            background-color: #0074cb !important;
-                            background: #0074cb !important;
-                            border-right: 2px solid #005fa8 !important;
+                            background-color: #0A192F !important;
+                            background: #0A192F !important;
+                            border-right: 2px solid #F59E0B !important;
                         }
                         [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b,
                         [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] h4 {
@@ -4724,36 +4687,54 @@ client_bridge_code = """
                 frozenTb.style.setProperty('transition', 'none', 'important');
 
                 if (isMobile) {
-                    frozenTb.style.setProperty('padding-left', '8px', 'important');
-                    frozenTb.style.setProperty('padding-right', '8px', 'important');
-                } else {
                     frozenTb.style.setProperty('padding-left', '10px', 'important');
-                    frozenTb.style.setProperty('padding-right', '10px', 'important');
+                } else if (isSidebarVisible) {
+                    frozenTb.style.setProperty('padding-left', '14px', 'important');
+                } else {
+                    frozenTb.style.setProperty('padding-left', '14px', 'important');
                 }
-
-                const sbToggleBtns = parentDoc.querySelectorAll('.sidebar-toggle-btn, #sidebar-toggle-action-btn');
-                sbToggleBtns.forEach(function(b) {
-                    if (isSidebarVisible) {
-                        b.innerHTML = '&lt;&lt;';
-                        b.title = 'साइडबार छुपाएं (Hide Sidebar <<)';
-                    } else {
-                        b.innerHTML = '&gt;&gt;';
-                        b.title = 'साइडबार दिखाएं (Show Sidebar >>)';
-                    }
-                });
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
                 const isAstrallis = parentDoc.body.classList.contains('astrallis-mode') || localStorage.getItem('jyotish_theme_mode') === 'astrallis';
-                const themeBg = isAstrallis ? '#070A12' : (isNight ? '#111827' : '#0074cb');
+                const themeBg = isAstrallis ? '#070A12' : (isNight ? '#111827' : 'linear-gradient(90deg, #0A192F 0%, #0F2744 35%, #14355A 70%, #0B1C33 100%)');
+                const themeBgColor = isAstrallis ? '#070A12' : (isNight ? '#111827' : '#0A192F');
                 frozenTb.style.setProperty('background', themeBg, 'important');
-                frozenTb.style.setProperty('border-bottom', isAstrallis ? '2.5px solid #00E5FF' : (isNight ? '2.5px solid #374151' : '2.5px solid #00B0F0'), 'important');
-                frozenTb.style.setProperty('box-shadow', '0 4px 14px rgba(0, 115, 207, 0.15)', 'important');
+                frozenTb.style.setProperty('background-color', themeBgColor, 'important');
+                frozenTb.style.setProperty('border-bottom', isAstrallis ? '2.5px solid #00E5FF' : (isNight ? '2.5px solid #374151' : '2px solid #F59E0B'), 'important');
+                frozenTb.style.setProperty('box-shadow', '0 4px 18px rgba(5, 12, 24, 0.45)', 'important');
 
                 // Colorize resizer handle to match theme and prevent white gap
                 const resizers = parentDoc.querySelectorAll('[data-testid="stSidebarResizer"], [data-testid="stSidebar"] div[style*="col-resize"], [data-testid="stSidebar"] div[class*="eelgd2m3"]');
                 resizers.forEach(function(rz) {
-                    rz.style.setProperty('background', themeBg, 'important');
-                    rz.style.setProperty('background-color', themeBg, 'important');
+                    rz.style.setProperty('background', themeBgColor, 'important');
+                    rz.style.setProperty('background-color', themeBgColor, 'important');
+                });
+
+                // Position native collapsed control inside header bar so it never shifts upward
+                const cc = parentDoc.querySelector('[data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"]');
+                if (cc) {
+                    cc.style.setProperty('position', 'fixed', 'important');
+                    cc.style.setProperty('top', '6px', 'important');
+                    cc.style.setProperty('left', '8px', 'important');
+                    cc.style.setProperty('width', '34px', 'important');
+                    cc.style.setProperty('height', '32px', 'important');
+                    cc.style.setProperty('margin', '0px', 'important');
+                    cc.style.setProperty('z-index', '10000005', 'important');
+                    cc.style.setProperty('display', 'flex', 'important');
+                    cc.style.setProperty('align-items', 'center', 'important');
+                    cc.style.setProperty('justify-content', 'center', 'important');
+                }
+
+                // Sync sidebar button icon (<< when open, >> when closed)
+                const toggleBtns = parentDoc.querySelectorAll('.sidebar-toggle-btn');
+                toggleBtns.forEach(function(btn) {
+                    if (isSidebarVisible) {
+                        btn.innerHTML = '&lt;&lt;';
+                        btn.title = 'साइडबार छुपाएं (Hide Sidebar <<)';
+                    } else {
+                        btn.innerHTML = '&gt;&gt;';
+                        btn.title = 'साइडबार दिखाएं (Show Sidebar >>)';
+                    }
                 });
             }
 
@@ -6816,12 +6797,12 @@ with st.container(key="top_frozen_header_container", border=False):
             st.session_state.recent_charts_history = st.session_state.recent_charts_history[:5]
 
     # ═════════════════════════════════════════════════════════════════════
-    # 🌟 UNIFIED SINGLE-LINE BLUE WORKSTATION HEADER (नीली पट्टी - 1ST LINE ONLY)
-    # ═════════════════════════════════════════════════════════════════════
+    # 🌟 UNIFIED SINGLE-LINE COSMIC NAVY WORKSTATION HEADER (1ST LINE ONLY)
+    # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
+    # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # ─── 1st line: [ sidebar Show icon (<<) ] , [ Logo ] , [ Bramhahora ] , [ Module List ] , [ Tab List ] , [ Menu ] , [Header Hide icon ( ^ ) ] ───
-        hdr_c_sb, hdr_c_logo, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu, hdr_c_hide = st.columns(
-            [0.38, 0.38, 1.25, 3.4, 3.4, 2.8, 0.38],
+        hdr_c_sb, hdr_c_logo, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
+            [0.42, 0.38, 1.15, 3.55, 3.55, 2.75],
             gap="small",
             vertical_alignment="center"
         )
@@ -6829,7 +6810,7 @@ with st.container(key="top_frozen_header_container", border=False):
         with hdr_c_sb:
             st.markdown("""
             <div style="display:flex; align-items:center; justify-content:center; height:34px;">
-                <button id="sidebar-toggle-action-btn" class="sidebar-toggle-btn" onclick="const pW = (window.parent && window.parent.location) ? window.parent : window; if (pW.__doToggleSidebar) { pW.__doToggleSidebar(); } else if (window.__doToggleSidebar) { window.__doToggleSidebar(); }" style="background:rgba(255,255,255,0.22); border:1.5px solid rgba(255,255,255,0.8); color:#FFFFFF; border-radius:7px; width:34px; height:32px; font-size:13px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 2px 6px rgba(0,0,0,0.25); transition:all 0.15s ease; padding:0;" title="साइडबार दिखाएं / छुपाएं (Toggle Sidebar << / >>)">
+                <button class="sidebar-toggle-btn" onclick="const pW = (window.parent && window.parent.location) ? window.parent : window; if (pW.__doToggleSidebar) { pW.__doToggleSidebar(); } else if (window.__doToggleSidebar) { window.__doToggleSidebar(); }" style="background:rgba(255,255,255,0.12); border:1.5px solid rgba(245,158,11,0.7); color:#F59E0B; border-radius:6px; width:34px; height:32px; font-size:13px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 2px 6px rgba(0,0,0,0.3); transition:all 0.15s ease; padding:0;" title="साइडबार दिखाएं / छुपाएं (Toggle Sidebar <<)">
                     &lt;&lt;
                 </button>
             </div>
@@ -6837,55 +6818,47 @@ with st.container(key="top_frozen_header_container", border=False):
 
         with hdr_c_logo:
             st.markdown("""
-            <div style="display:flex; align-items:center; justify-content:center; height:34px; user-select:none; cursor:default;" title="ब्रह्महोरा (BrahmaHora) - वैदिक दैवज्ञ महा-मस्तिष्क">
-                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 5px rgba(0,0,0,0.45)); flex-shrink: 0;">
-                  <defs>
-                    <radialGradient id="bhLogoGlow" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stop-color="#FFFBEB"/>
-                      <stop offset="45%" stop-color="#FCD34D"/>
-                      <stop offset="80%" stop-color="#F59E0B"/>
-                      <stop offset="100%" stop-color="#B45309"/>
-                    </radialGradient>
-                    <linearGradient id="bhGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#FEF08A"/>
-                      <stop offset="50%" stop-color="#F59E0B"/>
-                      <stop offset="100%" stop-color="#9A3412"/>
-                    </linearGradient>
-                    <linearGradient id="bhCoreBg" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#0F172A"/>
-                      <stop offset="100%" stop-color="#020617"/>
-                    </linearGradient>
-                  </defs>
-                  <circle cx="50" cy="50" r="47" fill="url(#bhCoreBg)" stroke="url(#bhGoldGrad)" stroke-width="2.5"/>
-                  <g stroke="url(#bhGoldGrad)" stroke-width="2" stroke-linecap="round">
-                    <line x1="50" y1="5" x2="50" y2="14"/>
-                    <line x1="50" y1="86" x2="50" y2="95"/>
-                    <line x1="5" y1="50" x2="14" y2="50"/>
-                    <line x1="86" y1="50" x2="95" y2="50"/>
-                    <line x1="18" y1="18" x2="25" y2="25"/>
-                    <line x1="75" y1="75" x2="82" y2="82"/>
-                    <line x1="18" y1="82" x2="25" y2="75"/>
-                    <line x1="75" y1="25" x2="82" y2="18"/>
-                    <line x1="33" y1="8" x2="36" y2="17"/>
-                    <line x1="67" y1="8" x2="64" y2="17"/>
-                    <line x1="33" y1="92" x2="36" y2="83"/>
-                    <line x1="67" y1="92" x2="64" y2="83"/>
-                  </g>
-                  <rect x="23" y="23" width="54" height="54" rx="4" fill="none" stroke="url(#bhGoldGrad)" stroke-width="1.2" opacity="0.85"/>
-                  <rect x="23" y="23" width="54" height="54" rx="4" fill="none" stroke="#FDE68A" stroke-width="1.2" transform="rotate(45 50 50)" opacity="0.85"/>
-                  <circle cx="50" cy="50" r="18" fill="url(#bhLogoGlow)" stroke="#F59E0B" stroke-width="1.5"/>
-                  <text x="50" y="55" font-family="'Segoe UI', Roboto, 'Noto Sans Devanagari', sans-serif" font-size="20" font-weight="900" fill="#451A03" text-anchor="middle" dominant-baseline="central">ॐ</text>
+            <div style="display:flex; align-items:center; justify-content:center; height:34px; user-select:none; cursor:default;" title="ब्रह्महोरा वैदिक AI">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 6px rgba(245,158,11,0.55));">
+                    <defs>
+                        <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#FDE047" />
+                            <stop offset="60%" stop-color="#F59E0B" />
+                            <stop offset="100%" stop-color="#B45309" />
+                        </radialGradient>
+                        <linearGradient id="cosmicRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FDE047" />
+                            <stop offset="50%" stop-color="#F59E0B" />
+                            <stop offset="100%" stop-color="#D97706" />
+                        </linearGradient>
+                        <radialGradient id="innerCosmos" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#1E293B" />
+                            <stop offset="85%" stop-color="#0F172A" />
+                            <stop offset="100%" stop-color="#020617" />
+                        </radialGradient>
+                    </defs>
+                    <g stroke="url(#cosmicRing)" stroke-width="2.6" stroke-linecap="round">
+                        <line x1="50" y1="4" x2="50" y2="14" />
+                        <line x1="50" y1="86" x2="50" y2="96" />
+                        <line x1="4" y1="50" x2="14" y2="50" />
+                        <line x1="86" y1="50" x2="96" y2="50" />
+                        <line x1="17.5" y1="17.5" x2="24.5" y2="24.5" />
+                        <line x1="75.5" y1="75.5" x2="82.5" y2="82.5" />
+                        <line x1="17.5" y1="82.5" x2="24.5" y2="75.5" />
+                        <line x1="75.5" y1="24.5" x2="82.5" y2="17.5" />
+                    </g>
+                    <circle cx="50" cy="50" r="35" fill="url(#innerCosmos)" stroke="url(#cosmicRing)" stroke-width="2" />
+                    <polygon points="50,22 57,36 72,36 60,46 64,60 50,51 36,60 40,46 28,36 43,36" fill="none" stroke="#FDE047" stroke-width="1.2" opacity="0.75" />
+                    <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', sans-serif" font-size="28" font-weight="900" fill="url(#sunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,0.85));">ॐ</text>
                 </svg>
             </div>
             """, unsafe_allow_html=True)
 
         with hdr_c_brand:
             st.markdown("""
-            <div style="display:flex; flex-direction:column; justify-content:center; height:34px; line-height:1.15; user-select:none; white-space:nowrap; overflow:hidden;" title="BrahmaHora Vedic AI">
-                <div style="display:flex; align-items:center;">
-                    <span style="font-size:15px; font-weight:900; color:#FFFFFF; letter-spacing:0.5px; text-shadow:0 1px 3px rgba(0,0,0,0.6);">ब्रह्महोरा</span>
-                </div>
-                <span style="font-size:8.5px; font-weight:800; color:#BAE6FD; letter-spacing:1px; text-transform:uppercase;">BRAHMAHORA</span>
+            <div style="display:flex; flex-direction:column; justify-content:center; height:34px; line-height:1.15; white-space:nowrap; overflow:hidden;">
+                <span style="font-size:15px; font-weight:900; color:#FFFFFF; letter-spacing:0.6px; text-shadow:0 1px 3px rgba(0,0,0,0.7);">ब्रह्महोरा</span>
+                <span style="font-size:9.5px; font-weight:800; color:#F59E0B; letter-spacing:1px; line-height:1;">BRAHMAHORA</span>
             </div>
             """, unsafe_allow_html=True)
 
@@ -7034,14 +7007,7 @@ with st.container(key="top_frozen_header_container", border=False):
                 st.session_state["top_bar_menu_nonce"] = _menu_nonce + 1
                 st.rerun()
 
-        with hdr_c_hide:
-            st.markdown("""
-            <div style="display:flex; align-items:center; justify-content:center; height:34px;">
-                <button id="top_bar_header_hide_btn" class="header-hide-btn" onclick="const pW = (window.parent && window.parent.location) ? window.parent : window; if (pW.__toggleJyotishHeader) { pW.__toggleJyotishHeader(); } else if (window.__toggleJyotishHeader) { window.__toggleJyotishHeader(); }" style="background:rgba(255,255,255,0.22); border:1.5px solid rgba(255,255,255,0.75); color:#FFFFFF; border-radius:6px; width:34px; height:32px; font-size:16px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.15s ease; padding:0;" title="हेडर छुपाएं / फुल स्क्रीन (Hide Header ^)">
-                    ^
-                </button>
-            </div>
-            """, unsafe_allow_html=True)
+
 
         _cur_tabs_json = json.dumps(cur_mod_tabs)
         components.html(f"""
