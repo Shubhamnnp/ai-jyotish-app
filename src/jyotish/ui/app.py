@@ -1400,12 +1400,20 @@ unified_css = f"""
     [data-testid="stSidebar"] h4 {{
         color: #000000 !important;
     }}
-    [data-testid="collapsedControl"],
-    [data-testid="collapsedControl"] button,
+    /* Cleanly hide Streamlit native sidebar collapse/expand controls from floating over top header */
     [data-testid="stSidebarCollapsedControl"],
-    [data-testid="stSidebarCollapsedControl"] button {{
-        z-index: 10000005 !important;
-        pointer-events: auto !important;
+    [data-testid="collapsedControl"],
+    div[data-testid="stSidebarCollapsedControl"],
+    header[data-testid="stHeader"] button[data-testid="stSidebarCollapseButton"] {{
+        opacity: 0 !important;
+        pointer-events: none !important;
+        position: fixed !important;
+        left: -9999px !important;
+        top: -9999px !important;
+        width: 0px !important;
+        height: 0px !important;
+        overflow: hidden !important;
+        z-index: -1 !important;
     }}
 
     /* Header Collapse Full-Screen Mode */
@@ -1438,8 +1446,8 @@ unified_css = f"""
         opacity: 1 !important;
         padding-top: 5px !important;
         padding-bottom: 5px !important;
-        padding-left: 48px !important;
-        padding-right: 48px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
         margin: 0px !important;
         border-bottom: 2.5px solid #005fa8 !important;
         box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
@@ -1523,8 +1531,8 @@ unified_css = f"""
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .st-key-frozen_toolbelt_container,
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container,
         div.stApp:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container {{
-            padding-left: 14px !important;
-            padding-right: 44px !important;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
         }}
     }}
 
@@ -1592,6 +1600,44 @@ unified_css = f"""
         border-color: #2563EB !important;
         color: #1D4ED8 !important;
         box-shadow: 0 2px 6px rgba(37, 99, 235, 0.18) !important;
+    }}
+    .st-key-frozen_toolbelt_container button.sidebar-toggle-btn,
+    .st-key-frozen_toolbelt_container button.header-hide-btn,
+    .st-key-frozen_toolbelt_container button#sidebar-toggle-action-btn,
+    .st-key-frozen_toolbelt_container button#top_bar_header_hide_btn,
+    .st-key-frozen_toolbelt_container .sidebar-toggle-btn,
+    .st-key-frozen_toolbelt_container .header-hide-btn {{
+        background: rgba(255, 255, 255, 0.22) !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+        border-radius: 7px !important;
+        width: 34px !important;
+        min-width: 34px !important;
+        max-width: 34px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        max-height: 32px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+        cursor: pointer !important;
+        line-height: 1 !important;
+    }}
+    .st-key-frozen_toolbelt_container button.sidebar-toggle-btn:hover,
+    .st-key-frozen_toolbelt_container button.header-hide-btn:hover,
+    .st-key-frozen_toolbelt_container button#sidebar-toggle-action-btn:hover,
+    .st-key-frozen_toolbelt_container button#top_bar_header_hide_btn:hover,
+    .st-key-frozen_toolbelt_container .sidebar-toggle-btn:hover,
+    .st-key-frozen_toolbelt_container .header-hide-btn:hover {{
+        background: rgba(255, 255, 255, 0.38) !important;
+        border-color: #FFFFFF !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35) !important;
     }}
     .st-key-top_frozen_header_container [data-testid="stExpander"],
     div[data-testid="stVerticalBlock"] > div:has(.fixed-header-anchor) [data-testid="stExpander"] {{
@@ -2344,16 +2390,17 @@ unified_css = f"""
         .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"],
         div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] {{
             flex-direction: row !important;
-            flex-wrap: wrap !important;
+            flex-wrap: nowrap !important;
             gap: 4px !important;
-            overflow-x: visible !important;
-            overflow-y: visible !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
         }}
         .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"] > div[data-testid="column"],
         div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {{
             width: auto !important;
-            min-width: 48% !important;
-            flex: 1 1 48% !important;
+            min-width: 0 !important;
+            flex: 0 1 auto !important;
             margin-bottom: 0px !important;
             padding: 0 2px !important;
         }}
@@ -2614,11 +2661,26 @@ client_bridge_code = """
 (function() {
     function setupSidebarToggle() {
         try {
-            const parentDoc = window.parent.document;
+            const parentDoc = (window.parent && window.parent.document) ? window.parent.document : document;
             if (!parentDoc) return;
+            const parentWin = (window.parent && window.parent.location) ? window.parent : window;
             
+            const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
+            const isExpanded = sb && (
+                sb.getAttribute('aria-expanded') === 'true' ||
+                (sb.getAttribute('aria-expanded') !== 'false' && (sb.offsetWidth > 50 || (sb.getBoundingClientRect && sb.getBoundingClientRect().width > 50)))
+            );
+
             const toggleBtns = parentDoc.querySelectorAll('.sidebar-toggle-btn, #sidebar-toggle-action-btn');
             toggleBtns.forEach(function(btn) {
+                if (isExpanded) {
+                    btn.innerHTML = '&lt;&lt;';
+                    btn.title = 'साइडबार छुपाएं (Hide Sidebar <<)';
+                } else {
+                    btn.innerHTML = '&gt;&gt;';
+                    btn.title = 'साइडबार दिखाएं (Show Sidebar >>)';
+                }
+
                 if (!btn.dataset.bound) {
                     btn.dataset.bound = "true";
                     btn.addEventListener('click', function(e) {
@@ -2634,8 +2696,8 @@ client_bridge_code = """
                 parentDoc.dataset.sidebarBound = "true";
                 parentDoc.addEventListener('click', function(e) {
                     const btn = e.target.closest('button');
-                    if (btn && (btn.innerText.includes('Sidebar') || btn.innerText.includes('☰') || (btn.getAttribute('key') && btn.getAttribute('key').includes('sidebar')))) {
-                        if (btn.closest('.st-key-frozen_toolbelt_container') || btn.innerText.includes('Sidebar')) {
+                    if (btn && (btn.classList.contains('sidebar-toggle-btn') || btn.id === 'sidebar-toggle-action-btn' || btn.innerText.includes('Sidebar') || (btn.getAttribute('key') && btn.getAttribute('key').includes('sidebar')))) {
+                        if (btn.closest('.st-key-frozen_toolbelt_container') || btn.classList.contains('sidebar-toggle-btn')) {
                             const success = doToggle();
                             if (success) {
                                 e.preventDefault();
@@ -2646,12 +2708,27 @@ client_bridge_code = """
                 }, true);
             }
             
+            function safeClick(el) {
+                if (!el) return false;
+                try {
+                    el.click();
+                    return true;
+                } catch(e) {
+                    try {
+                        el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+                        return true;
+                    } catch(e2) {
+                        return false;
+                    }
+                }
+            }
+
             function doToggle() {
                 try {
-                    const sb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
-                    const isExpanded = sb && (
-                        sb.getAttribute('aria-expanded') === 'true' ||
-                        (sb.getAttribute('aria-expanded') !== 'false' && (sb.offsetWidth > 50 || (sb.getBoundingClientRect && sb.getBoundingClientRect().width > 50)))
+                    const curSb = parentDoc.querySelector('[data-testid="stSidebar"], section[data-testid="stSidebar"]');
+                    const curExpanded = curSb && (
+                        curSb.getAttribute('aria-expanded') === 'true' ||
+                        (curSb.getAttribute('aria-expanded') !== 'false' && (curSb.offsetWidth > 50 || (curSb.getBoundingClientRect && curSb.getBoundingClientRect().width > 50)))
                     );
 
                     const expandBtn = parentDoc.querySelector(
@@ -2661,8 +2738,11 @@ client_bridge_code = """
                         '[data-testid="stSidebarCollapsedControl"] button, ' +
                         'button[data-testid="stSidebarCollapsedControl"], ' +
                         '[data-testid="collapsedControl"] button, ' +
+                        'button[data-testid="collapsedControl"], ' +
                         'button[aria-label*="Expand sidebar"], ' +
-                        'button[title*="Expand sidebar"]'
+                        'button[aria-label*="Open sidebar"], ' +
+                        'button[title*="Expand sidebar"], ' +
+                        '[data-testid="stSidebarCollapsedControl"]'
                     );
 
                     const collapseBtn = parentDoc.querySelector(
@@ -2671,25 +2751,22 @@ client_bridge_code = """
                         '[data-testid="stSidebarCollapseButton"], ' +
                         '[data-testid="stSidebarHeader"] button, ' +
                         'button[aria-label*="Collapse sidebar"], ' +
+                        'button[aria-label*="Close sidebar"], ' +
                         'button[title*="Collapse sidebar"]'
                     );
 
                     let clicked = false;
-                    if (isExpanded) {
+                    if (curExpanded) {
                         if (collapseBtn) {
-                            collapseBtn.click();
-                            clicked = true;
+                            clicked = safeClick(collapseBtn);
                         } else if (expandBtn) {
-                            expandBtn.click();
-                            clicked = true;
+                            clicked = safeClick(expandBtn);
                         }
                     } else {
                         if (expandBtn) {
-                            expandBtn.click();
-                            clicked = true;
+                            clicked = safeClick(expandBtn);
                         } else if (collapseBtn) {
-                            collapseBtn.click();
-                            clicked = true;
+                            clicked = safeClick(collapseBtn);
                         }
                     }
 
@@ -3859,17 +3936,18 @@ client_bridge_code = """
                         [data-testid="stSidebar"] {
                             z-index: 10000000 !important;
                         }
-                        [data-testid="stExpandSidebarButton"],
-                        [data-testid="stExpandSidebarButton"] button,
-                        button[data-testid="stExpandSidebarButton"],
-                        [data-testid="stSidebarCollapseButton"],
-                        [data-testid="stSidebarCollapseButton"] button,
-                        [data-testid="collapsedControl"],
-                        [data-testid="collapsedControl"] button,
                         [data-testid="stSidebarCollapsedControl"],
-                        [data-testid="stSidebarCollapsedControl"] button {
-                            z-index: 10000005 !important;
-                            pointer-events: auto !important;
+                        [data-testid="collapsedControl"],
+                        div[data-testid="stSidebarCollapsedControl"] {
+                            opacity: 0 !important;
+                            pointer-events: none !important;
+                            position: fixed !important;
+                            left: -9999px !important;
+                            top: -9999px !important;
+                            width: 0px !important;
+                            height: 0px !important;
+                            overflow: hidden !important;
+                            z-index: -1 !important;
                         }
                         .st-key-frozen_toolbelt_container,
                         div.st-key-frozen_toolbelt_container,
@@ -3889,8 +3967,8 @@ client_bridge_code = """
                             box-shadow: 0 4px 14px rgba(0, 116, 203, 0.35) !important;
                             padding-top: 5px !important;
                             padding-bottom: 5px !important;
-                            padding-left: 48px !important;
-                            padding-right: 44px !important;
+                            padding-left: 10px !important;
+                            padding-right: 10px !important;
                             margin: 0px !important;
                             box-sizing: border-box !important;
                             transition: left 0.15s ease, width 0.15s ease !important;
@@ -4646,12 +4724,23 @@ client_bridge_code = """
                 frozenTb.style.setProperty('transition', 'none', 'important');
 
                 if (isMobile) {
-                    frozenTb.style.setProperty('padding-left', '10px', 'important');
-                } else if (isSidebarVisible) {
-                    frozenTb.style.setProperty('padding-left', '14px', 'important');
+                    frozenTb.style.setProperty('padding-left', '8px', 'important');
+                    frozenTb.style.setProperty('padding-right', '8px', 'important');
                 } else {
-                    frozenTb.style.setProperty('padding-left', '14px', 'important');
+                    frozenTb.style.setProperty('padding-left', '10px', 'important');
+                    frozenTb.style.setProperty('padding-right', '10px', 'important');
                 }
+
+                const sbToggleBtns = parentDoc.querySelectorAll('.sidebar-toggle-btn, #sidebar-toggle-action-btn');
+                sbToggleBtns.forEach(function(b) {
+                    if (isSidebarVisible) {
+                        b.innerHTML = '&lt;&lt;';
+                        b.title = 'साइडबार छुपाएं (Hide Sidebar <<)';
+                    } else {
+                        b.innerHTML = '&gt;&gt;';
+                        b.title = 'साइडबार दिखाएं (Show Sidebar >>)';
+                    }
+                });
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
                 const isAstrallis = parentDoc.body.classList.contains('astrallis-mode') || localStorage.getItem('jyotish_theme_mode') === 'astrallis';
@@ -6732,7 +6821,7 @@ with st.container(key="top_frozen_header_container", border=False):
     with st.container(key="frozen_toolbelt_container", border=False):
         # ─── 1st line: [ sidebar Show icon (<<) ] , [ Logo ] , [ Bramhahora ] , [ Module List ] , [ Tab List ] , [ Menu ] , [Header Hide icon ( ^ ) ] ───
         hdr_c_sb, hdr_c_logo, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu, hdr_c_hide = st.columns(
-            [0.45, 0.35, 1.05, 3.35, 3.35, 2.95, 0.5],
+            [0.38, 0.38, 1.25, 3.4, 3.4, 2.8, 0.38],
             gap="small",
             vertical_alignment="center"
         )
@@ -6740,7 +6829,7 @@ with st.container(key="top_frozen_header_container", border=False):
         with hdr_c_sb:
             st.markdown("""
             <div style="display:flex; align-items:center; justify-content:center; height:34px;">
-                <button class="sidebar-toggle-btn" onclick="const pW = (window.parent && window.parent.location) ? window.parent : window; if (pW.__doToggleSidebar) { pW.__doToggleSidebar(); } else if (window.__doToggleSidebar) { window.__doToggleSidebar(); }" style="background:rgba(255,255,255,0.22); border:1.5px solid rgba(255,255,255,0.75); color:#FFFFFF; border-radius:6px; width:34px; height:32px; font-size:13px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.15s ease; padding:0;" title="साइडबार दिखाएं / छुपाएं (Sidebar Show/Hide <<)">
+                <button id="sidebar-toggle-action-btn" class="sidebar-toggle-btn" onclick="const pW = (window.parent && window.parent.location) ? window.parent : window; if (pW.__doToggleSidebar) { pW.__doToggleSidebar(); } else if (window.__doToggleSidebar) { window.__doToggleSidebar(); }" style="background:rgba(255,255,255,0.22); border:1.5px solid rgba(255,255,255,0.8); color:#FFFFFF; border-radius:7px; width:34px; height:32px; font-size:13px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 2px 6px rgba(0,0,0,0.25); transition:all 0.15s ease; padding:0;" title="साइडबार दिखाएं / छुपाएं (Toggle Sidebar << / >>)">
                     &lt;&lt;
                 </button>
             </div>
@@ -6748,15 +6837,55 @@ with st.container(key="top_frozen_header_container", border=False):
 
         with hdr_c_logo:
             st.markdown("""
-            <div style="display:flex; align-items:center; justify-content:center; height:34px; font-size:20px; filter:drop-shadow(0 1px 3px rgba(0,0,0,0.45)); user-select:none; cursor:default;" title="ब्रह्महोरा ज्योतिष्">
-                🕉️
+            <div style="display:flex; align-items:center; justify-content:center; height:34px; user-select:none; cursor:default;" title="ब्रह्महोरा (BrahmaHora) - वैदिक दैवज्ञ महा-मस्तिष्क">
+                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 5px rgba(0,0,0,0.45)); flex-shrink: 0;">
+                  <defs>
+                    <radialGradient id="bhLogoGlow" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="#FFFBEB"/>
+                      <stop offset="45%" stop-color="#FCD34D"/>
+                      <stop offset="80%" stop-color="#F59E0B"/>
+                      <stop offset="100%" stop-color="#B45309"/>
+                    </radialGradient>
+                    <linearGradient id="bhGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#FEF08A"/>
+                      <stop offset="50%" stop-color="#F59E0B"/>
+                      <stop offset="100%" stop-color="#9A3412"/>
+                    </linearGradient>
+                    <linearGradient id="bhCoreBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#0F172A"/>
+                      <stop offset="100%" stop-color="#020617"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="50" cy="50" r="47" fill="url(#bhCoreBg)" stroke="url(#bhGoldGrad)" stroke-width="2.5"/>
+                  <g stroke="url(#bhGoldGrad)" stroke-width="2" stroke-linecap="round">
+                    <line x1="50" y1="5" x2="50" y2="14"/>
+                    <line x1="50" y1="86" x2="50" y2="95"/>
+                    <line x1="5" y1="50" x2="14" y2="50"/>
+                    <line x1="86" y1="50" x2="95" y2="50"/>
+                    <line x1="18" y1="18" x2="25" y2="25"/>
+                    <line x1="75" y1="75" x2="82" y2="82"/>
+                    <line x1="18" y1="82" x2="25" y2="75"/>
+                    <line x1="75" y1="25" x2="82" y2="18"/>
+                    <line x1="33" y1="8" x2="36" y2="17"/>
+                    <line x1="67" y1="8" x2="64" y2="17"/>
+                    <line x1="33" y1="92" x2="36" y2="83"/>
+                    <line x1="67" y1="92" x2="64" y2="83"/>
+                  </g>
+                  <rect x="23" y="23" width="54" height="54" rx="4" fill="none" stroke="url(#bhGoldGrad)" stroke-width="1.2" opacity="0.85"/>
+                  <rect x="23" y="23" width="54" height="54" rx="4" fill="none" stroke="#FDE68A" stroke-width="1.2" transform="rotate(45 50 50)" opacity="0.85"/>
+                  <circle cx="50" cy="50" r="18" fill="url(#bhLogoGlow)" stroke="#F59E0B" stroke-width="1.5"/>
+                  <text x="50" y="55" font-family="'Segoe UI', Roboto, 'Noto Sans Devanagari', sans-serif" font-size="20" font-weight="900" fill="#451A03" text-anchor="middle" dominant-baseline="central">ॐ</text>
+                </svg>
             </div>
             """, unsafe_allow_html=True)
 
         with hdr_c_brand:
             st.markdown("""
-            <div style="display:flex; align-items:center; height:34px; white-space:nowrap; overflow:hidden;">
-                <b style="font-size:14px; font-weight:900; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.5); letter-spacing:0.4px; line-height:1;">ब्रह्महोरा</b>
+            <div style="display:flex; flex-direction:column; justify-content:center; height:34px; line-height:1.15; user-select:none; white-space:nowrap; overflow:hidden;" title="BrahmaHora Vedic AI">
+                <div style="display:flex; align-items:center;">
+                    <span style="font-size:15px; font-weight:900; color:#FFFFFF; letter-spacing:0.5px; text-shadow:0 1px 3px rgba(0,0,0,0.6);">ब्रह्महोरा</span>
+                </div>
+                <span style="font-size:8.5px; font-weight:800; color:#BAE6FD; letter-spacing:1px; text-transform:uppercase;">BRAHMAHORA</span>
             </div>
             """, unsafe_allow_html=True)
 
