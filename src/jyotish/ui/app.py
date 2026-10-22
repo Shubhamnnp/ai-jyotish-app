@@ -1489,7 +1489,7 @@ unified_css = f"""
         opacity: 1 !important;
         padding-top: 5px !important;
         padding-bottom: 5px !important;
-        padding-left: 50px !important;
+        padding-left: 10px !important;
         padding-right: 12px !important;
         margin: 0px !important;
         border-bottom: 2px solid #F59E0B !important;
@@ -1542,6 +1542,19 @@ unified_css = f"""
         -webkit-text-fill-color: #FBBF24 !important;
         font-weight: 800 !important;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+    }}
+    /* Header Brand Box: Ensure >> is strictly to the left of the Logo with 14px gap */
+    .header-brand-box {{
+        margin-left: 48px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 9px !important;
+    }}
+    @media (min-width: 769px) {{
+        div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .header-brand-box,
+        div.stApp:has(section[data-testid="stSidebar"][aria-expanded="true"]) .header-brand-box {{
+            margin-left: 0px !important;
+        }}
     }}
     .st-key-frozen_toolbelt_container button {{
         padding: 2px 4px !important;
@@ -3961,7 +3974,7 @@ client_bridge_code = """
                             box-shadow: 0 4px 18px rgba(5, 12, 24, 0.45) !important;
                             padding-top: 5px !important;
                             padding-bottom: 5px !important;
-                            padding-left: 50px !important;
+                            padding-left: 10px !important;
                             padding-right: 12px !important;
                             margin: 0px !important;
                             box-sizing: border-box !important;
@@ -4757,6 +4770,16 @@ client_bridge_code = """
                     expBtn.style.setProperty('align-items', 'center', 'important');
                     expBtn.style.setProperty('justify-content', 'center', 'important');
                     expBtn.style.setProperty('transform', 'none', 'important');
+                }
+
+                // Prevent >> from ever sitting on top of Logo: shift brandBox 48px to the right when collapsed
+                const brandBox = parentDoc.querySelector('.header-brand-box');
+                if (brandBox) {
+                    if (isSidebarVisible) {
+                        brandBox.style.setProperty('margin-left', '0px', 'important');
+                    } else {
+                        brandBox.style.setProperty('margin-left', '48px', 'important');
+                    }
                 }
 
 
@@ -6833,7 +6856,7 @@ with st.container(key="top_frozen_header_container", border=False):
 
         with hdr_c_brand:
             st.markdown("""
-            <div style="display:flex; align-items:center; gap:9px; height:34px; white-space:nowrap; user-select:none;">
+            <div class="header-brand-box" style="display:flex; align-items:center; gap:9px; height:34px; white-space:nowrap; user-select:none; margin-left:48px;">
                 <!-- Prestigious Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
                 <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 8px rgba(245,158,11,0.75)); flex-shrink:0;">
                     <defs>
