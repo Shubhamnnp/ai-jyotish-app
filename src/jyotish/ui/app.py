@@ -1411,45 +1411,52 @@ unified_css = f"""
     [data-testid="stSidebar"] h4 {{
         color: #000000 !important;
     }}
-    /* Explicit positioning for native collapsedControl so it stays vertically centered and NEVER shifts upward */
+    /* Streamlit 1.63 native sidebar expand button (>>) anchored firmly at top: 6px, left: 10px on the header line */
+    button[data-testid="stExpandSidebarButton"],
+    [data-testid="stExpandSidebarButton"],
+    header[data-testid="stHeader"] button[data-testid="stExpandSidebarButton"],
+    header[data-testid="stHeader"] [data-testid="stExpandSidebarButton"],
     header[data-testid="stHeader"] [data-testid="collapsedControl"],
     header[data-testid="stHeader"] [data-testid="stSidebarCollapsedControl"],
     div[data-testid="collapsedControl"],
     div[data-testid="stSidebarCollapsedControl"] {{
         position: fixed !important;
         top: 6px !important;
-        left: 8px !important;
-        height: 32px !important;
-        width: 34px !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        z-index: 10000005 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        box-sizing: border-box !important;
-    }}
-    header[data-testid="stHeader"] [data-testid="collapsedControl"] button,
-    header[data-testid="stHeader"] [data-testid="stSidebarCollapsedControl"] button,
-    div[data-testid="collapsedControl"] button,
-    div[data-testid="stSidebarCollapsedControl"] button,
-    button[data-testid="stExpandSidebarButton"] {{
+        left: 10px !important;
         width: 34px !important;
         height: 32px !important;
         min-height: 32px !important;
         max-height: 32px !important;
-        border-radius: 6px !important;
-        background: rgba(255, 255, 255, 0.12) !important;
-        border: 1.5px solid rgba(245, 158, 11, 0.7) !important;
-        color: #F59E0B !important;
+        margin: 0px !important;
+        padding: 0px !important;
+        z-index: 10000005 !important;
+        pointer-events: auto !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+        background: rgba(255, 255, 255, 0.12) !important;
+        border: 1.5px solid rgba(245, 158, 11, 0.75) !important;
+        border-radius: 6px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35) !important;
         cursor: pointer !important;
+        box-sizing: border-box !important;
+        transform: none !important;
         transition: all 0.15s ease !important;
-        padding: 0 !important;
-        margin: 0 !important;
+    }}
+    button[data-testid="stExpandSidebarButton"]:hover,
+    [data-testid="stExpandSidebarButton"]:hover {{
+        background: rgba(245, 158, 11, 0.25) !important;
+        border-color: #FDE047 !important;
+        transform: scale(1.05) !important;
+    }}
+    button[data-testid="stExpandSidebarButton"] *,
+    button[data-testid="stExpandSidebarButton"] span,
+    button[data-testid="stExpandSidebarButton"] svg,
+    [data-testid="stExpandSidebarButton"] svg {{
+        fill: #F59E0B !important;
+        color: #F59E0B !important;
+        stroke: #F59E0B !important;
+        font-size: 18px !important;
     }}
 
     /* Header Collapse Full-Screen Mode */
@@ -4735,19 +4742,21 @@ client_bridge_code = """
                     rz.style.setProperty('background-color', themeBgColor, 'important');
                 });
 
-                // Position native collapsed control inside header bar so it never shifts upward
-                const cc = parentDoc.querySelector('[data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"]');
-                if (cc) {
-                    cc.style.setProperty('position', 'fixed', 'important');
-                    cc.style.setProperty('top', '6px', 'important');
-                    cc.style.setProperty('left', '8px', 'important');
-                    cc.style.setProperty('width', '34px', 'important');
-                    cc.style.setProperty('height', '32px', 'important');
-                    cc.style.setProperty('margin', '0px', 'important');
-                    cc.style.setProperty('z-index', '10000005', 'important');
-                    cc.style.setProperty('display', 'flex', 'important');
-                    cc.style.setProperty('align-items', 'center', 'important');
-                    cc.style.setProperty('justify-content', 'center', 'important');
+                // Position native sidebar expand button (>>) firmly at top: 6px, left: 10px on the header line
+                const expBtn = parentDoc.querySelector('button[data-testid="stExpandSidebarButton"], [data-testid="stExpandSidebarButton"], [data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"]');
+                if (expBtn) {
+                    expBtn.style.setProperty('position', 'fixed', 'important');
+                    expBtn.style.setProperty('top', '6px', 'important');
+                    expBtn.style.setProperty('left', '10px', 'important');
+                    expBtn.style.setProperty('width', '34px', 'important');
+                    expBtn.style.setProperty('height', '32px', 'important');
+                    expBtn.style.setProperty('margin', '0px', 'important');
+                    expBtn.style.setProperty('padding', '0px', 'important');
+                    expBtn.style.setProperty('z-index', '10000005', 'important');
+                    expBtn.style.setProperty('display', 'flex', 'important');
+                    expBtn.style.setProperty('align-items', 'center', 'important');
+                    expBtn.style.setProperty('justify-content', 'center', 'important');
+                    expBtn.style.setProperty('transform', 'none', 'important');
                 }
 
 
@@ -6824,39 +6833,30 @@ with st.container(key="top_frozen_header_container", border=False):
 
         with hdr_c_brand:
             st.markdown("""
-            <div style="display:flex; align-items:center; gap:8px; height:34px; white-space:nowrap; user-select:none;">
-                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 8px rgba(245,158,11,0.85)); flex-shrink:0;">
+            <div style="display:flex; align-items:center; gap:9px; height:34px; white-space:nowrap; user-select:none;">
+                <!-- Prestigious Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
+                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 8px rgba(245,158,11,0.75)); flex-shrink:0;">
                     <defs>
-                        <radialGradient id="sunGoldGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#FFFFFF" />
-                            <stop offset="30%" stop-color="#FEF08A" />
-                            <stop offset="70%" stop-color="#F59E0B" />
-                            <stop offset="100%" stop-color="#B45309" />
-                        </radialGradient>
-                        <linearGradient id="goldRayLine" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#FEF08A" />
-                            <stop offset="50%" stop-color="#F59E0B" />
+                        <linearGradient id="vedicGold3D" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFFBEB" />
+                            <stop offset="25%" stop-color="#FDE047" />
+                            <stop offset="65%" stop-color="#F59E0B" />
                             <stop offset="100%" stop-color="#B45309" />
                         </linearGradient>
-                        <radialGradient id="discBg" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#1E293B" />
-                            <stop offset="80%" stop-color="#0F172A" />
-                            <stop offset="100%" stop-color="#020617" />
+                        <radialGradient id="omSunGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#FFFFFF" />
+                            <stop offset="45%" stop-color="#FEF08A" />
+                            <stop offset="85%" stop-color="#F59E0B" />
+                            <stop offset="100%" stop-color="#D97706" />
                         </radialGradient>
                     </defs>
-                    <g stroke="url(#goldRayLine)" stroke-width="3" stroke-linecap="round">
-                        <line x1="50" y1="2" x2="50" y2="14" />
-                        <line x1="50" y1="86" x2="50" y2="98" />
-                        <line x1="2" y1="50" x2="14" y2="50" />
-                        <line x1="86" y1="50" x2="98" y2="50" />
-                        <line x1="16" y1="16" x2="25" y2="25" />
-                        <line x1="75" y1="75" x2="84" y2="84" />
-                        <line x1="16" y1="84" x2="25" y2="75" />
-                        <line x1="75" y1="25" x2="84" y2="16" />
-                    </g>
-                    <circle cx="50" cy="50" r="34" fill="url(#discBg)" stroke="url(#goldRayLine)" stroke-width="2.6" />
-                    <circle cx="50" cy="50" r="28" fill="none" stroke="#FDE047" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.9" />
-                    <text x="50" y="60" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="30" font-weight="900" fill="url(#sunGoldGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.95));">ॐ</text>
+                    <!-- Sacred Ashtamangala Interlocking Star of Lakshmi -->
+                    <rect x="20" y="20" width="60" height="60" rx="9" fill="#0A192F" stroke="url(#vedicGold3D)" stroke-width="2.6" />
+                    <rect x="20" y="20" width="60" height="60" rx="9" transform="rotate(45 50 50)" fill="#0A192F" stroke="url(#vedicGold3D)" stroke-width="2.6" />
+                    <!-- Inner Golden Celestial Halo -->
+                    <circle cx="50" cy="50" r="23" fill="none" stroke="url(#vedicGold3D)" stroke-width="1.6" stroke-dasharray="4 2" />
+                    <!-- Sacred Radiant Om -->
+                    <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="27" font-weight="900" fill="url(#omSunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.95));">ॐ</text>
                 </svg>
                 <div style="display:flex; flex-direction:column; justify-content:center; line-height:1.15;">
                     <span class="hdr-brand-name" style="font-size:16px; font-weight:900; color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; letter-spacing:0.8px; text-shadow:0 1px 4px rgba(0,0,0,0.9); line-height:1.1;">ब्रह्महोरा</span>
