@@ -1241,7 +1241,10 @@ unified_css = f"""
         padding: 0px !important;
         margin: 0px !important;
         pointer-events: none !important;
-        z-index: 10000000 !important;
+        z-index: 9999995 !important;
+        height: 44px !important;
+        min-height: 44px !important;
+        max-height: 44px !important;
     }}
 
     /* Keep Sidebar Open/Close Expand Button (>>) Always Visible, High-Contrast & Clickable */
@@ -1479,7 +1482,7 @@ unified_css = f"""
         opacity: 1 !important;
         padding-top: 5px !important;
         padding-bottom: 5px !important;
-        padding-left: 8px !important;
+        padding-left: 50px !important;
         padding-right: 12px !important;
         margin: 0px !important;
         border-bottom: 2px solid #F59E0B !important;
@@ -1511,6 +1514,27 @@ unified_css = f"""
         align-items: center !important;
         visibility: visible !important;
         opacity: 1 !important;
+    }}
+    /* Header Brand Typography Protection: Force pure white & gold visibility */
+    .st-key-frozen_toolbelt_container [data-testid="stMarkdownContainer"] *,
+    .st-key-frozen_toolbelt_container [data-testid="stMarkdownContainer"] span,
+    .st-key-frozen_toolbelt_container [data-testid="stMarkdownContainer"] b,
+    .st-key-frozen_toolbelt_container [data-testid="stMarkdownContainer"] p,
+    .st-key-frozen_toolbelt_container span.hdr-brand-name,
+    .st-key-frozen_toolbelt_container b.hdr-brand-name,
+    span.hdr-brand-name,
+    b.hdr-brand-name {{
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-weight: 900 !important;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+    }}
+    .st-key-frozen_toolbelt_container span.hdr-brand-sub,
+    span.hdr-brand-sub {{
+        color: #FBBF24 !important;
+        -webkit-text-fill-color: #FBBF24 !important;
+        font-weight: 800 !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
     }}
     .st-key-frozen_toolbelt_container button {{
         padding: 2px 4px !important;
@@ -3930,7 +3954,7 @@ client_bridge_code = """
                             box-shadow: 0 4px 18px rgba(5, 12, 24, 0.45) !important;
                             padding-top: 5px !important;
                             padding-bottom: 5px !important;
-                            padding-left: 8px !important;
+                            padding-left: 50px !important;
                             padding-right: 12px !important;
                             margin: 0px !important;
                             box-sizing: border-box !important;
@@ -4535,9 +4559,10 @@ client_bridge_code = """
                 stHeader.style.setProperty('background-color', 'transparent', 'important');
                 stHeader.style.setProperty('border', 'none', 'important');
                 stHeader.style.setProperty('pointer-events', 'none', 'important');
-                stHeader.style.setProperty('height', '0px', 'important');
-                stHeader.style.setProperty('min-height', '0px', 'important');
-                stHeader.style.setProperty('z-index', '10000000', 'important');
+                stHeader.style.setProperty('height', '44px', 'important');
+                stHeader.style.setProperty('min-height', '44px', 'important');
+                stHeader.style.setProperty('max-height', '44px', 'important');
+                stHeader.style.setProperty('z-index', '9999995', 'important');
             }
 
             const mainSec = parentDoc.querySelector('[data-testid="stMain"], section.main');
@@ -4691,7 +4716,7 @@ client_bridge_code = """
                 } else if (isSidebarVisible) {
                     frozenTb.style.setProperty('padding-left', '14px', 'important');
                 } else {
-                    frozenTb.style.setProperty('padding-left', '14px', 'important');
+                    frozenTb.style.setProperty('padding-left', '50px', 'important');
                 }
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
@@ -4725,17 +4750,7 @@ client_bridge_code = """
                     cc.style.setProperty('justify-content', 'center', 'important');
                 }
 
-                // Sync sidebar button icon (<< when open, >> when closed)
-                const toggleBtns = parentDoc.querySelectorAll('.sidebar-toggle-btn');
-                toggleBtns.forEach(function(btn) {
-                    if (isSidebarVisible) {
-                        btn.innerHTML = '&lt;&lt;';
-                        btn.title = 'साइडबार छुपाएं (Hide Sidebar <<)';
-                    } else {
-                        btn.innerHTML = '&gt;&gt;';
-                        btn.title = 'साइडबार दिखाएं (Show Sidebar >>)';
-                    }
-                });
+
             }
 
             const blockContainer = parentDoc.querySelector('.block-container');
@@ -6801,64 +6816,52 @@ with st.container(key="top_frozen_header_container", border=False):
     # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
     # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        hdr_c_sb, hdr_c_logo, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.42, 0.38, 1.15, 3.55, 3.55, 2.75],
+        hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
+            [1.65, 3.85, 3.85, 2.65],
             gap="small",
             vertical_alignment="center"
         )
 
-        with hdr_c_sb:
+        with hdr_c_brand:
             st.markdown("""
-            <div style="display:flex; align-items:center; justify-content:center; height:34px;">
-                <button class="sidebar-toggle-btn" onclick="const pW = (window.parent && window.parent.location) ? window.parent : window; if (pW.__doToggleSidebar) { pW.__doToggleSidebar(); } else if (window.__doToggleSidebar) { window.__doToggleSidebar(); }" style="background:rgba(255,255,255,0.12); border:1.5px solid rgba(245,158,11,0.7); color:#F59E0B; border-radius:6px; width:34px; height:32px; font-size:13px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 2px 6px rgba(0,0,0,0.3); transition:all 0.15s ease; padding:0;" title="साइडबार दिखाएं / छुपाएं (Toggle Sidebar <<)">
-                    &lt;&lt;
-                </button>
-            </div>
-            """, unsafe_allow_html=True)
-
-        with hdr_c_logo:
-            st.markdown("""
-            <div style="display:flex; align-items:center; justify-content:center; height:34px; user-select:none; cursor:default;" title="ब्रह्महोरा वैदिक AI">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 6px rgba(245,158,11,0.55));">
+            <div style="display:flex; align-items:center; gap:8px; height:34px; white-space:nowrap; user-select:none;">
+                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 8px rgba(245,158,11,0.85)); flex-shrink:0;">
                     <defs>
-                        <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#FDE047" />
-                            <stop offset="60%" stop-color="#F59E0B" />
+                        <radialGradient id="sunGoldGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#FFFFFF" />
+                            <stop offset="30%" stop-color="#FEF08A" />
+                            <stop offset="70%" stop-color="#F59E0B" />
                             <stop offset="100%" stop-color="#B45309" />
                         </radialGradient>
-                        <linearGradient id="cosmicRing" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#FDE047" />
+                        <linearGradient id="goldRayLine" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FEF08A" />
                             <stop offset="50%" stop-color="#F59E0B" />
-                            <stop offset="100%" stop-color="#D97706" />
+                            <stop offset="100%" stop-color="#B45309" />
                         </linearGradient>
-                        <radialGradient id="innerCosmos" cx="50%" cy="50%" r="50%">
+                        <radialGradient id="discBg" cx="50%" cy="50%" r="50%">
                             <stop offset="0%" stop-color="#1E293B" />
-                            <stop offset="85%" stop-color="#0F172A" />
+                            <stop offset="80%" stop-color="#0F172A" />
                             <stop offset="100%" stop-color="#020617" />
                         </radialGradient>
                     </defs>
-                    <g stroke="url(#cosmicRing)" stroke-width="2.6" stroke-linecap="round">
-                        <line x1="50" y1="4" x2="50" y2="14" />
-                        <line x1="50" y1="86" x2="50" y2="96" />
-                        <line x1="4" y1="50" x2="14" y2="50" />
-                        <line x1="86" y1="50" x2="96" y2="50" />
-                        <line x1="17.5" y1="17.5" x2="24.5" y2="24.5" />
-                        <line x1="75.5" y1="75.5" x2="82.5" y2="82.5" />
-                        <line x1="17.5" y1="82.5" x2="24.5" y2="75.5" />
-                        <line x1="75.5" y1="24.5" x2="82.5" y2="17.5" />
+                    <g stroke="url(#goldRayLine)" stroke-width="3" stroke-linecap="round">
+                        <line x1="50" y1="2" x2="50" y2="14" />
+                        <line x1="50" y1="86" x2="50" y2="98" />
+                        <line x1="2" y1="50" x2="14" y2="50" />
+                        <line x1="86" y1="50" x2="98" y2="50" />
+                        <line x1="16" y1="16" x2="25" y2="25" />
+                        <line x1="75" y1="75" x2="84" y2="84" />
+                        <line x1="16" y1="84" x2="25" y2="75" />
+                        <line x1="75" y1="25" x2="84" y2="16" />
                     </g>
-                    <circle cx="50" cy="50" r="35" fill="url(#innerCosmos)" stroke="url(#cosmicRing)" stroke-width="2" />
-                    <polygon points="50,22 57,36 72,36 60,46 64,60 50,51 36,60 40,46 28,36 43,36" fill="none" stroke="#FDE047" stroke-width="1.2" opacity="0.75" />
-                    <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', sans-serif" font-size="28" font-weight="900" fill="url(#sunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 2px rgba(0,0,0,0.85));">ॐ</text>
+                    <circle cx="50" cy="50" r="34" fill="url(#discBg)" stroke="url(#goldRayLine)" stroke-width="2.6" />
+                    <circle cx="50" cy="50" r="28" fill="none" stroke="#FDE047" stroke-width="1.2" stroke-dasharray="3 2" opacity="0.9" />
+                    <text x="50" y="60" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="30" font-weight="900" fill="url(#sunGoldGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.95));">ॐ</text>
                 </svg>
-            </div>
-            """, unsafe_allow_html=True)
-
-        with hdr_c_brand:
-            st.markdown("""
-            <div style="display:flex; flex-direction:column; justify-content:center; height:34px; line-height:1.15; white-space:nowrap; overflow:hidden;">
-                <span style="font-size:15px; font-weight:900; color:#FFFFFF; letter-spacing:0.6px; text-shadow:0 1px 3px rgba(0,0,0,0.7);">ब्रह्महोरा</span>
-                <span style="font-size:9.5px; font-weight:800; color:#F59E0B; letter-spacing:1px; line-height:1;">BRAHMAHORA</span>
+                <div style="display:flex; flex-direction:column; justify-content:center; line-height:1.15;">
+                    <span class="hdr-brand-name" style="font-size:16px; font-weight:900; color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; letter-spacing:0.8px; text-shadow:0 1px 4px rgba(0,0,0,0.9); line-height:1.1;">ब्रह्महोरा</span>
+                    <span class="hdr-brand-sub" style="font-size:9.5px; font-weight:800; color:#FBBF24 !important; -webkit-text-fill-color:#FBBF24 !important; letter-spacing:1px; line-height:1;">BRAHMAHORA</span>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
