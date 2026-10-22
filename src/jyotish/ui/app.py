@@ -1593,15 +1593,72 @@ unified_css = f"""
         margin: 0px !important;
         padding: 0px !important;
     }}
-    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div {{
-        min-height: 32px !important;
-        height: 32px !important;
+    /* Header selectbox trigger: 34px height, crisp white card with smooth hover */
+    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] > div,
+    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
+    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[class*="e1fp86qc0"] {{
+        min-height: 34px !important;
+        height: 34px !important;
+        max-height: 34px !important;
         border-radius: 6px !important;
         border: 1.5px solid #CBD5E1 !important;
         background: #FFFFFF !important;
-        font-weight: 800 !important;
+        font-weight: 750 !important;
         font-size: 12.5px !important;
         color: #0F172A !important;
+        display: flex !important;
+        align-items: center !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+        transition: all 0.15s ease !important;
+        box-sizing: border-box !important;
+    }}
+    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] > div:hover,
+    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div:hover,
+    .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] > div:focus-within {{
+        border-color: #F59E0B !important;
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
+    }}
+
+    /* Header Selectbox Dropdown Lists: Ensure dropdown opens right attached to header in front of all layers */
+    div[data-testid="stSelectboxVirtualDropdown"],
+    [data-testid="stSelectboxVirtualDropdown"],
+    div[data-baseweb="popover"],
+    div[data-baseweb="menu"],
+    ul[role="listbox"],
+    div[role="listbox"],
+    div:has(> [data-testid="stSelectboxVirtualDropdown"]) {{
+        z-index: 10000030 !important;
+        border-radius: 8px !important;
+        border: 1.5px solid #F59E0B !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(245, 158, 11, 0.25) !important;
+        background: #FFFFFF !important;
+        overflow: hidden !important;
+    }}
+    div[data-testid="stSelectboxVirtualDropdown"] ul,
+    div[data-testid="stSelectboxVirtualDropdown"] [role="listbox"],
+    div[data-baseweb="popover"] ul,
+    div[data-baseweb="menu"] ul {{
+        padding: 4px !important;
+        background: #FFFFFF !important;
+    }}
+    div[data-testid="stSelectboxVirtualDropdown"] [role="option"],
+    div[data-baseweb="popover"] [role="option"],
+    div[data-baseweb="menu"] [role="option"] {{
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: #0F172A !important;
+        padding: 7px 12px !important;
+        border-radius: 5px !important;
+        transition: background 0.12s ease, color 0.12s ease !important;
+        cursor: pointer !important;
+    }}
+    div[data-testid="stSelectboxVirtualDropdown"] [role="option"]:hover,
+    div[data-testid="stSelectboxVirtualDropdown"] [role="option"][aria-selected="true"],
+    div[data-baseweb="popover"] [role="option"]:hover,
+    div[data-baseweb="menu"] [role="option"]:hover {{
+        background: #FEF3C7 !important;
+        color: #92400E !important;
+        font-weight: 800 !important;
     }}
     /* Base padding handled dynamically */
     @media (min-width: 769px) {{
@@ -4102,18 +4159,28 @@ client_bridge_code = """
                             margin: 0px !important;
                             padding: 0px !important;
                         }
+                        .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] > div,
                         .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-                            min-height: 33px !important;
-                            height: 33px !important;
+                            min-height: 34px !important;
+                            height: 34px !important;
                             border-radius: 6px !important;
                             border: 1.5px solid #CBD5E1 !important;
                             background: #FFFFFF !important;
-                            font-weight: 800 !important;
-                            font-size: 12px !important;
+                            font-weight: 750 !important;
+                            font-size: 12.5px !important;
                             color: #0F172A !important;
-                            box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+                            box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
                             display: flex !important;
                             align-items: center !important;
+                        }
+                        div[data-testid="stSelectboxVirtualDropdown"],
+                        [data-testid="stSelectboxVirtualDropdown"],
+                        div[data-baseweb="popover"],
+                        div[data-baseweb="menu"] {
+                            z-index: 10000030 !important;
+                            border-radius: 8px !important;
+                            border: 1.5px solid #F59E0B !important;
+                            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
                         }
                         /* Dynamic header clearance */
                         .st-key-top_frozen_header_container {
@@ -4782,7 +4849,19 @@ client_bridge_code = """
                     }
                 }
 
-
+                // Ensure selectbox dropdown lists (Module, Tab, Menu) always open on top directly from the header
+                if (!parentDoc.__headerDropdownObserverBound) {
+                    parentDoc.__headerDropdownObserverBound = true;
+                    const elevateDropdowns = function() {
+                        const dds = parentDoc.querySelectorAll('[data-testid="stSelectboxVirtualDropdown"], [data-baseweb="popover"], [data-baseweb="menu"], [role="listbox"]');
+                        dds.forEach(function(d) {
+                            d.style.setProperty('z-index', '10000030', 'important');
+                        });
+                    };
+                    const mo = new MutationObserver(elevateDropdowns);
+                    mo.observe(parentDoc.body, { childList: true, subtree: true });
+                    elevateDropdowns();
+                }
             }
 
             const blockContainer = parentDoc.querySelector('.block-container');
