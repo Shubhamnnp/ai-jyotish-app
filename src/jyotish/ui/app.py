@@ -1624,22 +1624,65 @@ unified_css = f"""
     [data-testid="stSelectboxVirtualDropdown"],
     div[data-baseweb="popover"],
     div[data-baseweb="menu"],
-    ul[role="listbox"],
-    div[role="listbox"],
     div:has(> [data-testid="stSelectboxVirtualDropdown"]) {{
         z-index: 10000030 !important;
         border-radius: 8px !important;
         border: 1.5px solid #F59E0B !important;
         box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(245, 158, 11, 0.25) !important;
         background: #FFFFFF !important;
-        overflow: hidden !important;
+        max-height: min(440px, 75vh) !important;
     }}
+    /* Inner listbox container: MUST scroll vertically with custom sleek scrollbar */
     div[data-testid="stSelectboxVirtualDropdown"] ul,
     div[data-testid="stSelectboxVirtualDropdown"] [role="listbox"],
+    div[data-testid="stSelectboxVirtualDropdown"] div[class*="e1fp86qc5"],
+    ul[role="listbox"],
+    div[role="listbox"],
     div[data-baseweb="popover"] ul,
     div[data-baseweb="menu"] ul {{
         padding: 4px !important;
         background: #FFFFFF !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        max-height: min(400px, 70vh) !important;
+        overscroll-behavior: contain !important;
+        pointer-events: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: thin !important;
+        scrollbar-color: #CBD5E1 #F1F5F9 !important;
+    }}
+    /* Sleek WebKit scrollbar for listbox options */
+    div[data-testid="stSelectboxVirtualDropdown"] [role="listbox"]::-webkit-scrollbar,
+    div[data-testid="stSelectboxVirtualDropdown"] div[class*="e1fp86qc5"]::-webkit-scrollbar,
+    div[role="listbox"]::-webkit-scrollbar,
+    ul[role="listbox"]::-webkit-scrollbar,
+    div[data-baseweb="popover"] ul::-webkit-scrollbar {{
+        width: 8px !important;
+        display: block !important;
+    }}
+    div[data-testid="stSelectboxVirtualDropdown"] [role="listbox"]::-webkit-scrollbar-track,
+    div[data-testid="stSelectboxVirtualDropdown"] div[class*="e1fp86qc5"]::-webkit-scrollbar-track,
+    div[role="listbox"]::-webkit-scrollbar-track,
+    ul[role="listbox"]::-webkit-scrollbar-track,
+    div[data-baseweb="popover"] ul::-webkit-scrollbar-track {{
+        background: #F1F5F9 !important;
+        border-radius: 4px !important;
+    }}
+    div[data-testid="stSelectboxVirtualDropdown"] [role="listbox"]::-webkit-scrollbar-thumb,
+    div[data-testid="stSelectboxVirtualDropdown"] div[class*="e1fp86qc5"]::-webkit-scrollbar-thumb,
+    div[role="listbox"]::-webkit-scrollbar-thumb,
+    ul[role="listbox"]::-webkit-scrollbar-thumb,
+    div[data-baseweb="popover"] ul::-webkit-scrollbar-thumb {{
+        background: #CBD5E1 !important;
+        border-radius: 4px !important;
+        border: 1px solid #E2E8F0 !important;
+    }}
+    div[data-testid="stSelectboxVirtualDropdown"] [role="listbox"]::-webkit-scrollbar-thumb:hover,
+    div[data-testid="stSelectboxVirtualDropdown"] div[class*="e1fp86qc5"]::-webkit-scrollbar-thumb:hover,
+    div[role="listbox"]::-webkit-scrollbar-thumb:hover,
+    ul[role="listbox"]::-webkit-scrollbar-thumb:hover,
+    div[data-baseweb="popover"] ul::-webkit-scrollbar-thumb:hover {{
+        background: #F59E0B !important;
     }}
     div[data-testid="stSelectboxVirtualDropdown"] [role="option"],
     div[data-baseweb="popover"] [role="option"],
@@ -4182,6 +4225,19 @@ client_bridge_code = """
                             border: 1.5px solid #F59E0B !important;
                             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
                         }
+                        div[data-testid="stSelectboxVirtualDropdown"] [role="listbox"],
+                        div[data-testid="stSelectboxVirtualDropdown"] div[class*="e1fp86qc5"],
+                        div[role="listbox"],
+                        ul[role="listbox"],
+                        div[data-baseweb="popover"] ul,
+                        div[data-baseweb="menu"] ul {
+                            overflow-y: auto !important;
+                            overflow-x: hidden !important;
+                            max-height: min(400px, 70vh) !important;
+                            overscroll-behavior: contain !important;
+                            pointer-events: auto !important;
+                            -webkit-overflow-scrolling: touch !important;
+                        }
                         /* Dynamic header clearance */
                         .st-key-top_frozen_header_container {
                             border: none !important;
@@ -4849,13 +4905,21 @@ client_bridge_code = """
                     }
                 }
 
-                // Ensure selectbox dropdown lists (Module, Tab, Menu) always open on top directly from the header
+                // Ensure selectbox dropdown lists (Module, Tab, Menu) always open on top directly from the header & can scroll
                 if (!parentDoc.__headerDropdownObserverBound) {
                     parentDoc.__headerDropdownObserverBound = true;
                     const elevateDropdowns = function() {
-                        const dds = parentDoc.querySelectorAll('[data-testid="stSelectboxVirtualDropdown"], [data-baseweb="popover"], [data-baseweb="menu"], [role="listbox"]');
+                        const dds = parentDoc.querySelectorAll('[data-testid="stSelectboxVirtualDropdown"], [data-baseweb="popover"], [data-baseweb="menu"]');
                         dds.forEach(function(d) {
                             d.style.setProperty('z-index', '10000030', 'important');
+                        });
+                        const scrollables = parentDoc.querySelectorAll('[data-testid="stSelectboxVirtualDropdown"] [role="listbox"], [data-testid="stSelectboxVirtualDropdown"] div[class*="e1fp86qc5"], [role="listbox"], ul[role="listbox"], [data-baseweb="popover"] ul');
+                        scrollables.forEach(function(s) {
+                            s.style.setProperty('z-index', '10000030', 'important');
+                            s.style.setProperty('overflow-y', 'auto', 'important');
+                            s.style.setProperty('overflow-x', 'hidden', 'important');
+                            s.style.setProperty('max-height', 'min(400px, 70vh)', 'important');
+                            s.style.setProperty('pointer-events', 'auto', 'important');
                         });
                     };
                     const mo = new MutationObserver(elevateDropdowns);
