@@ -6884,27 +6884,25 @@ elif st.session_state._last_module_sync_idx != st.session_state.active_module_id
 cur_mod_tabs = MODULE_TABS_REGISTRY.get(st.session_state.active_module_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
 
 # If user selected a tab from top_bar_tab_selector, sync active_tab_idx immediately
-if "top_bar_tab_selector" in st.session_state and st.session_state.top_bar_tab_selector in cur_mod_tabs:
+cur_tab_key = f"top_bar_tab_selector_{st.session_state.active_module_idx}"
+if cur_tab_key in st.session_state and st.session_state[cur_tab_key] in cur_mod_tabs:
+    st.session_state.active_tab_idx = cur_mod_tabs.index(st.session_state[cur_tab_key])
+elif "top_bar_tab_selector" in st.session_state and st.session_state.top_bar_tab_selector in cur_mod_tabs:
     st.session_state.active_tab_idx = cur_mod_tabs.index(st.session_state.top_bar_tab_selector)
 
 st.session_state.active_tab_idx = max(0, min(int(st.session_state.active_tab_idx), len(cur_mod_tabs) - 1))
 
-# Keep top_bar_module_selector in sync with active_module_idx and current language
-if ("top_bar_module_selector" not in st.session_state or 
-    st.session_state.top_bar_module_selector not in MODULE_OPTIONS):
-    st.session_state.top_bar_module_selector = MODULE_OPTIONS[st.session_state.active_module_idx]
+# Keep top_bar_module_selector in sync with active_module_idx before widget render
+st.session_state.top_bar_module_selector = MODULE_OPTIONS[st.session_state.active_module_idx]
 
-# Keep top_bar_tab_selector in sync
-st.session_state.top_bar_tab_selector = cur_mod_tabs[st.session_state.active_tab_idx]
+# Keep top_bar_tab_selector in sync before widget render
+st.session_state[cur_tab_key] = cur_mod_tabs[st.session_state.active_tab_idx]
 
 def _nav_prev_module():
     new_idx = (st.session_state.active_module_idx - 1) % len(MODULE_OPTIONS)
     st.session_state.active_module_idx = new_idx
     st.session_state.active_tab_idx = 0
     st.session_state.tab_switch_requested = 0
-    st.session_state.top_bar_module_selector = MODULE_OPTIONS[new_idx]
-    new_tabs = MODULE_TABS_REGISTRY.get(new_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
-    st.session_state.top_bar_tab_selector = new_tabs[0]
     if "sb_cat_filter_select" in st.session_state:
         st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
     if "sb_search_filter_input" in st.session_state:
@@ -6915,9 +6913,6 @@ def _nav_next_module():
     st.session_state.active_module_idx = new_idx
     st.session_state.active_tab_idx = 0
     st.session_state.tab_switch_requested = 0
-    st.session_state.top_bar_module_selector = MODULE_OPTIONS[new_idx]
-    new_tabs = MODULE_TABS_REGISTRY.get(new_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
-    st.session_state.top_bar_tab_selector = new_tabs[0]
     if "sb_cat_filter_select" in st.session_state:
         st.session_state.sb_cat_filter_select = "📁 समस्त २९ मॉड्यूल (All Modules)"
     if "sb_search_filter_input" in st.session_state:
@@ -6928,14 +6923,12 @@ def _nav_prev_tab():
     new_tab = (st.session_state.active_tab_idx - 1) % len(cur_tabs)
     st.session_state.active_tab_idx = new_tab
     st.session_state.tab_switch_requested = new_tab
-    st.session_state.top_bar_tab_selector = cur_tabs[new_tab]
 
 def _nav_next_tab():
     cur_tabs = MODULE_TABS_REGISTRY.get(st.session_state.active_module_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
     new_tab = (st.session_state.active_tab_idx + 1) % len(cur_tabs)
     st.session_state.active_tab_idx = new_tab
     st.session_state.tab_switch_requested = new_tab
-    st.session_state.top_bar_tab_selector = cur_tabs[new_tab]
 
 def _nav_to_rules_bank():
     st.session_state.active_module_idx = 18
@@ -7045,18 +7038,17 @@ with st.container(key="top_frozen_header_container", border=False):
                 st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen_module)
                 st.session_state.active_tab_idx = 0
                 st.session_state.tab_switch_requested = 0
-                new_tabs = MODULE_TABS_REGISTRY.get(st.session_state.active_module_idx, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
-                st.session_state.top_bar_tab_selector = new_tabs[0]
                 st.rerun()
 
         with hdr_c_tab:
             _cur_t_idx = min(st.session_state.active_tab_idx, len(cur_mod_tabs) - 1)
+            tab_widget_key = f"top_bar_tab_selector_{st.session_state.active_module_idx}"
             chosen_tab = st.selectbox(
                 "सक्रिय मॉड्यूल के सभी टैब (Active Module Tabs)",
                 cur_mod_tabs,
                 index=_cur_t_idx,
                 label_visibility="collapsed",
-                key="top_bar_tab_selector",
+                key=tab_widget_key,
                 help="सक्रिय मॉड्यूल के सभी टैब की सूची (Active Module Tabs)"
             )
             if cur_mod_tabs.index(chosen_tab) != st.session_state.active_tab_idx:
@@ -7163,8 +7155,6 @@ with st.container(key="top_frozen_header_container", border=False):
                     st.session_state.active_tab_idx = 0
                     st.session_state.tab_switch_requested = 0
                     st.session_state.gla_active_tool = None
-                    new_tabs = MODULE_TABS_REGISTRY.get(19, ["1. 📊 मुख्य विहंगावलोकन (Main View)"])
-                    st.session_state.top_bar_tab_selector = new_tabs[0]
                     st.toast("🔍 वैदिक ऋषि सत्यापन (Validation) मॉड्यूल खोला गया!", icon="🔍")
                 elif selected_action.startswith("👑 Admin"):
                     st.session_state.gla_active_tool = "admin"
