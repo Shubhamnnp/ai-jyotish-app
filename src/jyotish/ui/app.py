@@ -1422,7 +1422,7 @@ unified_css = f"""
     div[data-testid="stSidebarCollapsedControl"] {{
         position: fixed !important;
         top: 6px !important;
-        left: 10px !important;
+        left: 8px !important;
         width: 34px !important;
         height: 32px !important;
         min-height: 32px !important;
@@ -1543,18 +1543,30 @@ unified_css = f"""
         font-weight: 800 !important;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
     }}
-    /* Header Brand Box: Ensure >> is strictly to the left of the Logo with 14px gap */
-    .header-brand-box {{
-        margin-left: 48px !important;
+    /* Header 6-Column Component Styles: [ >> ][ Ashtalakshmi Logo ][ Brahmahora ][ Module ][ Tab ][ Menu ] */
+    .header-toggle-slot {{
+        width: 100% !important;
+        height: 34px !important;
         display: flex !important;
         align-items: center !important;
-        gap: 9px !important;
+        justify-content: center !important;
     }}
-    @media (min-width: 769px) {{
-        div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .header-brand-box,
-        div.stApp:has(section[data-testid="stSidebar"][aria-expanded="true"]) .header-brand-box {{
-            margin-left: 0px !important;
-        }}
+    .header-logo-slot {{
+        width: 100% !important;
+        height: 34px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        padding-right: 4px !important;
+    }}
+    .header-brand-title {{
+        height: 34px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        line-height: 1.15 !important;
+        white-space: nowrap !important;
+        margin-left: 0px !important;
     }}
     .st-key-frozen_toolbelt_container button {{
         padding: 2px 4px !important;
@@ -1708,8 +1720,8 @@ unified_css = f"""
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"][aria-expanded="true"]) .st-key-frozen_toolbelt_container,
         div[data-testid="stAppViewContainer"]:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container,
         div.stApp:has(section[data-testid="stSidebar"]:not([aria-expanded="false"])) .st-key-frozen_toolbelt_container {{
-            padding-left: 14px !important;
-            padding-right: 44px !important;
+            padding-left: 8px !important;
+            padding-right: 12px !important;
         }}
     }}
 
@@ -4855,11 +4867,11 @@ client_bridge_code = """
                 frozenTb.style.setProperty('transition', 'none', 'important');
 
                 if (isMobile) {
-                    frozenTb.style.setProperty('padding-left', '10px', 'important');
+                    frozenTb.style.setProperty('padding-left', '6px', 'important');
                 } else if (isSidebarVisible) {
-                    frozenTb.style.setProperty('padding-left', '14px', 'important');
+                    frozenTb.style.setProperty('padding-left', '8px', 'important');
                 } else {
-                    frozenTb.style.setProperty('padding-left', '50px', 'important');
+                    frozenTb.style.setProperty('padding-left', '8px', 'important');
                 }
 
                 const isNight = parentDoc.body.classList.contains('night-mode') || localStorage.getItem('jyotish_theme_mode') === 'night';
@@ -4878,12 +4890,12 @@ client_bridge_code = """
                     rz.style.setProperty('background-color', themeBgColor, 'important');
                 });
 
-                // Position native sidebar expand button (>>) firmly at top: 6px, left: 10px on the header line
+                // Position native sidebar expand button (>>) firmly at top: 6px, left: 8px inside Col 1 slot
                 const expBtn = parentDoc.querySelector('button[data-testid="stExpandSidebarButton"], [data-testid="stExpandSidebarButton"], [data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"]');
                 if (expBtn) {
                     expBtn.style.setProperty('position', 'fixed', 'important');
                     expBtn.style.setProperty('top', '6px', 'important');
-                    expBtn.style.setProperty('left', '10px', 'important');
+                    expBtn.style.setProperty('left', '8px', 'important');
                     expBtn.style.setProperty('width', '34px', 'important');
                     expBtn.style.setProperty('height', '32px', 'important');
                     expBtn.style.setProperty('margin', '0px', 'important');
@@ -4893,16 +4905,6 @@ client_bridge_code = """
                     expBtn.style.setProperty('align-items', 'center', 'important');
                     expBtn.style.setProperty('justify-content', 'center', 'important');
                     expBtn.style.setProperty('transform', 'none', 'important');
-                }
-
-                // Prevent >> from ever sitting on top of Logo: shift brandBox 48px to the right when collapsed
-                const brandBox = parentDoc.querySelector('.header-brand-box');
-                if (brandBox) {
-                    if (isSidebarVisible) {
-                        brandBox.style.setProperty('margin-left', '0px', 'important');
-                    } else {
-                        brandBox.style.setProperty('margin-left', '48px', 'important');
-                    }
                 }
 
                 // Ensure selectbox dropdown lists (Module, Tab, Menu) always open on top directly from the header & can scroll
@@ -6984,15 +6986,23 @@ with st.container(key="top_frozen_header_container", border=False):
     # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
     # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [1.65, 3.85, 3.85, 2.65],
+        hdr_c_toggle, hdr_c_logo, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
+            [0.42, 1.50, 3.50, 2.50, 2.50, 2.20],
             gap="small",
             vertical_alignment="center"
         )
 
-        with hdr_c_brand:
+        with hdr_c_toggle:
+            st.markdown(
+                '<div class="header-toggle-slot" id="header_sidebar_toggle_slot" '
+                'title="साइडबार टॉगल करें (Toggle Sidebar)" '
+                'style="display:flex; align-items:center; justify-content:center; width:100%; height:34px; min-width:28px;"></div>',
+                unsafe_allow_html=True
+            )
+
+        with hdr_c_logo:
             st.markdown("""
-            <div class="header-brand-box" style="display:flex; align-items:center; gap:9px; height:34px; white-space:nowrap; user-select:none; margin-left:48px;">
+            <div class="header-logo-slot" style="display:flex; align-items:center; justify-content:flex-end; width:100%; height:34px; padding-right:4px;">
                 <!-- Prestigious Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
                 <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 8px rgba(245,158,11,0.75)); flex-shrink:0;">
                     <defs>
@@ -7017,10 +7027,14 @@ with st.container(key="top_frozen_header_container", border=False):
                     <!-- Sacred Radiant Om -->
                     <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="27" font-weight="900" fill="url(#omSunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.95));">ॐ</text>
                 </svg>
-                <div style="display:flex; flex-direction:column; justify-content:center; line-height:1.15;">
-                    <span class="hdr-brand-name" style="font-size:16px; font-weight:900; color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; letter-spacing:0.8px; text-shadow:0 1px 4px rgba(0,0,0,0.9); line-height:1.1;">ब्रह्महोरा</span>
-                    <span class="hdr-brand-sub" style="font-size:9.5px; font-weight:800; color:#FBBF24 !important; -webkit-text-fill-color:#FBBF24 !important; letter-spacing:1px; line-height:1;">BRAHMAHORA</span>
-                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with hdr_c_brand:
+            st.markdown("""
+            <div class="header-brand-title" style="display:flex; flex-direction:column; justify-content:center; height:34px; line-height:1.15; white-space:nowrap; user-select:none;">
+                <span class="hdr-brand-name" style="font-size:16px; font-weight:900; color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; letter-spacing:0.8px; text-shadow:0 1px 4px rgba(0,0,0,0.9); line-height:1.1;">ब्रह्महोरा</span>
+                <span class="hdr-brand-sub" style="font-size:9.5px; font-weight:800; color:#FBBF24 !important; -webkit-text-fill-color:#FBBF24 !important; letter-spacing:1px; line-height:1;">BRAHMAHORA</span>
             </div>
             """, unsafe_allow_html=True)
 
