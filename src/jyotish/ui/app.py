@@ -1561,36 +1561,33 @@ unified_css = f"""
         user-select: none !important;
         margin-left: 0px !important;
     }}
-    .header-brand-box .hdr-brand-name {{
+    .header-brand-box .hdr-brand-hi {{
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         font-weight: 900 !important;
-        font-size: 25px !important;
-        letter-spacing: 2px !important;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 0 16px rgba(245, 158, 11, 0.4) !important;
-        line-height: 1.1 !important;
+        font-size: 24px !important;
+        letter-spacing: 1.2px !important;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95), 0 0 14px rgba(245, 158, 11, 0.35) !important;
+        line-height: 1 !important;
+        display: inline-block !important;
     }}
-    .header-brand-box .hdr-brand-sub {{
+    .header-brand-box .hdr-brand-en {{
         color: #FBBF24 !important;
         -webkit-text-fill-color: #FBBF24 !important;
         font-weight: 800 !important;
-        font-size: 11.5px !important;
-        letter-spacing: 4.5px !important;
+        font-size: 17px !important;
+        letter-spacing: 2.5px !important;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
         line-height: 1 !important;
-    }}
-    .header-brand-box .hdr-brand-tagline {{
-        display: flex !important;
-        align-items: center !important;
-        gap: 10px !important;
-        margin-left: 4px !important;
+        display: inline-block !important;
     }}
     @media (max-width: 1280px) {{
-        .header-brand-box .hdr-brand-tagline {{
-            display: none !important;
+        .header-brand-box .hdr-brand-hi {{
+            font-size: 20px !important;
         }}
-        .header-brand-box .hdr-brand-name {{
-            font-size: 22px !important;
+        .header-brand-box .hdr-brand-en {{
+            font-size: 15px !important;
+            letter-spacing: 1.5px !important;
         }}
     }}
     .st-key-frozen_toolbelt_container button {{
@@ -7052,17 +7049,9 @@ with st.container(key="top_frozen_header_container", border=False):
                     <!-- Sacred Radiant Om -->
                     <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 4px rgba(0,0,0,0.95));">ॐ</text>
                 </svg>
-                <div style="display:flex; flex-direction:column; justify-content:center; line-height:1.15; flex-shrink:0;">
-                    <span class="hdr-brand-name">ब्रह्महोरा</span>
-                    <span class="hdr-brand-sub">BRAHMAHORA</span>
-                </div>
-                <!-- Subtle Golden Divider & Classical Subtitle to gracefully complete the brand area -->
-                <div class="hdr-brand-tagline">
-                    <div style="height:26px; width:1.5px; background:linear-gradient(180deg, transparent, #F59E0B, transparent); flex-shrink:0;"></div>
-                    <div style="display:flex; flex-direction:column; justify-content:center;">
-                        <span style="font-size:12.5px; font-weight:800; color:#FDE047; letter-spacing:1px; line-height:1.15; text-shadow:0 1px 3px rgba(0,0,0,0.85);">दैवज्ञ महा-मस्तिष्क</span>
-                        <span style="font-size:9.5px; font-weight:750; color:#CBD5E1; letter-spacing:1.5px; line-height:1;">AI JYOTISH WORKSTATION</span>
-                    </div>
+                <div style="display:flex; align-items:baseline; gap:10px; flex-shrink:0;">
+                    <span class="hdr-brand-hi">ब्रह्महोरा</span>
+                    <span class="hdr-brand-en">BRAHMAHORA</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
