@@ -1543,7 +1543,7 @@ unified_css = f"""
         font-weight: 800 !important;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
     }}
-    /* Header 6-Column Component Styles: [ >> ][ Ashtalakshmi Logo ][ Brahmahora ][ Module ][ Tab ][ Menu ] */
+    /* Header Component Styles: [ >> ][ Ashtalakshmi Logo + Brahmahora ][ Module ][ Tab ][ Menu ] */
     .header-toggle-slot {{
         width: 100% !important;
         height: 34px !important;
@@ -1551,22 +1551,47 @@ unified_css = f"""
         align-items: center !important;
         justify-content: center !important;
     }}
-    .header-logo-slot {{
-        width: 100% !important;
-        height: 34px !important;
+    .header-brand-box {{
         display: flex !important;
         align-items: center !important;
-        justify-content: flex-end !important;
-        padding-right: 4px !important;
-    }}
-    .header-brand-title {{
-        height: 34px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
-        line-height: 1.15 !important;
+        gap: 12px !important;
+        height: 38px !important;
+        width: 100% !important;
         white-space: nowrap !important;
+        user-select: none !important;
         margin-left: 0px !important;
+    }}
+    .header-brand-box .hdr-brand-name {{
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-weight: 900 !important;
+        font-size: 25px !important;
+        letter-spacing: 2px !important;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 0 16px rgba(245, 158, 11, 0.4) !important;
+        line-height: 1.1 !important;
+    }}
+    .header-brand-box .hdr-brand-sub {{
+        color: #FBBF24 !important;
+        -webkit-text-fill-color: #FBBF24 !important;
+        font-weight: 800 !important;
+        font-size: 11.5px !important;
+        letter-spacing: 4.5px !important;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+        line-height: 1 !important;
+    }}
+    .header-brand-box .hdr-brand-tagline {{
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        margin-left: 4px !important;
+    }}
+    @media (max-width: 1280px) {{
+        .header-brand-box .hdr-brand-tagline {{
+            display: none !important;
+        }}
+        .header-brand-box .hdr-brand-name {{
+            font-size: 22px !important;
+        }}
     }}
     .st-key-frozen_toolbelt_container button {{
         padding: 2px 4px !important;
@@ -6986,8 +7011,8 @@ with st.container(key="top_frozen_header_container", border=False):
     # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
     # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        hdr_c_toggle, hdr_c_logo, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.42, 1.50, 3.50, 2.50, 2.50, 2.20],
+        hdr_c_toggle, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
+            [0.42, 5.00, 2.50, 2.50, 2.20],
             gap="small",
             vertical_alignment="center"
         )
@@ -7000,11 +7025,11 @@ with st.container(key="top_frozen_header_container", border=False):
                 unsafe_allow_html=True
             )
 
-        with hdr_c_logo:
+        with hdr_c_brand:
             st.markdown("""
-            <div class="header-logo-slot" style="display:flex; align-items:center; justify-content:flex-end; width:100%; height:34px; padding-right:4px;">
-                <!-- Prestigious Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
-                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 8px rgba(245,158,11,0.75)); flex-shrink:0;">
+            <div class="header-brand-box">
+                <!-- Prestigious 3D Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 10px rgba(245,158,11,0.85)); flex-shrink:0;">
                     <defs>
                         <linearGradient id="vedicGold3D" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#FFFBEB" />
@@ -7025,16 +7050,20 @@ with st.container(key="top_frozen_header_container", border=False):
                     <!-- Inner Golden Celestial Halo -->
                     <circle cx="50" cy="50" r="23" fill="none" stroke="url(#vedicGold3D)" stroke-width="1.6" stroke-dasharray="4 2" />
                     <!-- Sacred Radiant Om -->
-                    <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="27" font-weight="900" fill="url(#omSunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.95));">ॐ</text>
+                    <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 4px rgba(0,0,0,0.95));">ॐ</text>
                 </svg>
-            </div>
-            """, unsafe_allow_html=True)
-
-        with hdr_c_brand:
-            st.markdown("""
-            <div class="header-brand-title" style="display:flex; flex-direction:column; justify-content:center; height:34px; line-height:1.15; white-space:nowrap; user-select:none;">
-                <span class="hdr-brand-name" style="font-size:16px; font-weight:900; color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; letter-spacing:0.8px; text-shadow:0 1px 4px rgba(0,0,0,0.9); line-height:1.1;">ब्रह्महोरा</span>
-                <span class="hdr-brand-sub" style="font-size:9.5px; font-weight:800; color:#FBBF24 !important; -webkit-text-fill-color:#FBBF24 !important; letter-spacing:1px; line-height:1;">BRAHMAHORA</span>
+                <div style="display:flex; flex-direction:column; justify-content:center; line-height:1.15; flex-shrink:0;">
+                    <span class="hdr-brand-name">ब्रह्महोरा</span>
+                    <span class="hdr-brand-sub">BRAHMAHORA</span>
+                </div>
+                <!-- Subtle Golden Divider & Classical Subtitle to gracefully complete the brand area -->
+                <div class="hdr-brand-tagline">
+                    <div style="height:26px; width:1.5px; background:linear-gradient(180deg, transparent, #F59E0B, transparent); flex-shrink:0;"></div>
+                    <div style="display:flex; flex-direction:column; justify-content:center;">
+                        <span style="font-size:12.5px; font-weight:800; color:#FDE047; letter-spacing:1px; line-height:1.15; text-shadow:0 1px 3px rgba(0,0,0,0.85);">दैवज्ञ महा-मस्तिष्क</span>
+                        <span style="font-size:9.5px; font-weight:750; color:#CBD5E1; letter-spacing:1.5px; line-height:1;">AI JYOTISH WORKSTATION</span>
+                    </div>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
