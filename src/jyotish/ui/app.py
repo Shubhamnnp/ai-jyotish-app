@@ -1522,28 +1522,49 @@ unified_css = f"""
         visibility: visible !important;
         opacity: 1 !important;
     }}
-    /* Header Brand Typography Protection: Force pure white & gold visibility */
-    .st-key-frozen_toolbelt_container [data-testid="stMarkdownContainer"] *,
-    .st-key-frozen_toolbelt_container [data-testid="stMarkdownContainer"] span,
-    .st-key-frozen_toolbelt_container [data-testid="stMarkdownContainer"] b,
-    .st-key-frozen_toolbelt_container [data-testid="stMarkdownContainer"] p,
-    .st-key-frozen_toolbelt_container span.hdr-brand-name,
-    .st-key-frozen_toolbelt_container b.hdr-brand-name,
-    span.hdr-brand-name,
-    b.hdr-brand-name {{
+    /* Header Brand Typography Protection: Pure white Hindi and radiant gold English */
+    .st-key-frozen_toolbelt_container span.hdr-brand-hi,
+    .st-key-frozen_toolbelt_container b.hdr-brand-hi,
+    span.hdr-brand-hi,
+    b.hdr-brand-hi,
+    .header-brand-box .hdr-brand-hi {{
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         font-weight: 900 !important;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 0 10px rgba(245, 158, 11, 0.35) !important;
+        font-size: 21px !important;
+        letter-spacing: 1px !important;
+        line-height: 1 !important;
+        display: flex !important;
+        align-items: center !important;
     }}
-    .st-key-frozen_toolbelt_container span.hdr-brand-sub,
-    span.hdr-brand-sub {{
+    .st-key-frozen_toolbelt_container span.hdr-brand-en,
+    .st-key-frozen_toolbelt_container b.hdr-brand-en,
+    span.hdr-brand-en,
+    b.hdr-brand-en,
+    .header-brand-box .hdr-brand-en {{
         color: #FBBF24 !important;
         -webkit-text-fill-color: #FBBF24 !important;
         font-weight: 800 !important;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9) !important;
+        font-size: 15px !important;
+        letter-spacing: 2px !important;
+        line-height: 1 !important;
+        display: flex !important;
+        align-items: center !important;
     }}
-    /* Header Component Styles: [ >> ][ Ashtalakshmi Logo + Brahmahora ][ Module ][ Tab ][ Menu ] */
+    /* Perfect vertical alignment across all header container wrappers */
+    .st-key-frozen_toolbelt_container div[data-testid="column"] > div[data-testid="stVerticalBlock"],
+    .st-key-frozen_toolbelt_container div[data-testid="column"] div[data-testid="stElementContainer"],
+    .st-key-frozen_toolbelt_container div[data-testid="column"] div[data-testid="stMarkdownContainer"] {{
+        display: flex !important;
+        align-items: center !important;
+        height: 34px !important;
+        min-height: 34px !important;
+        max-height: 34px !important;
+        margin: 0px !important;
+        padding: 0px !important;
+    }}
     .header-toggle-slot {{
         width: 100% !important;
         height: 34px !important;
@@ -1554,39 +1575,22 @@ unified_css = f"""
     .header-brand-box {{
         display: flex !important;
         align-items: center !important;
-        gap: 12px !important;
-        height: 38px !important;
+        gap: 10px !important;
+        height: 34px !important;
+        min-height: 34px !important;
+        max-height: 34px !important;
         width: 100% !important;
         white-space: nowrap !important;
         user-select: none !important;
-        margin-left: 0px !important;
-    }}
-    .header-brand-box .hdr-brand-hi {{
-        color: #FFFFFF !important;
-        -webkit-text-fill-color: #FFFFFF !important;
-        font-weight: 900 !important;
-        font-size: 24px !important;
-        letter-spacing: 1.2px !important;
-        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95), 0 0 14px rgba(245, 158, 11, 0.35) !important;
-        line-height: 1 !important;
-        display: inline-block !important;
-    }}
-    .header-brand-box .hdr-brand-en {{
-        color: #FBBF24 !important;
-        -webkit-text-fill-color: #FBBF24 !important;
-        font-weight: 800 !important;
-        font-size: 17px !important;
-        letter-spacing: 2.5px !important;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9) !important;
-        line-height: 1 !important;
-        display: inline-block !important;
+        margin: 0px !important;
+        padding: 0px !important;
     }}
     @media (max-width: 1280px) {{
         .header-brand-box .hdr-brand-hi {{
-            font-size: 20px !important;
+            font-size: 19px !important;
         }}
         .header-brand-box .hdr-brand-en {{
-            font-size: 15px !important;
+            font-size: 13.5px !important;
             letter-spacing: 1.5px !important;
         }}
     }}
@@ -7024,9 +7028,9 @@ with st.container(key="top_frozen_header_container", border=False):
 
         with hdr_c_brand:
             st.markdown("""
-            <div class="header-brand-box">
-                <!-- Prestigious 3D Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 10px rgba(245,158,11,0.85)); flex-shrink:0;">
+            <div class="header-brand-box" style="display:flex; align-items:center; gap:10px; height:34px; margin:0; padding:0; white-space:nowrap; user-select:none;">
+                <!-- 34px Prestigious 3D Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
+                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 1px 4px rgba(245,158,11,0.7)); flex-shrink:0; display:block;">
                     <defs>
                         <linearGradient id="vedicGold3D" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#FFFBEB" />
@@ -7047,9 +7051,9 @@ with st.container(key="top_frozen_header_container", border=False):
                     <!-- Inner Golden Celestial Halo -->
                     <circle cx="50" cy="50" r="23" fill="none" stroke="url(#vedicGold3D)" stroke-width="1.6" stroke-dasharray="4 2" />
                     <!-- Sacred Radiant Om -->
-                    <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 4px rgba(0,0,0,0.95));">ॐ</text>
+                    <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.95));">ॐ</text>
                 </svg>
-                <div style="display:flex; align-items:baseline; gap:10px; flex-shrink:0;">
+                <div style="display:flex; align-items:center; gap:8px; height:34px; line-height:1; flex-shrink:0;">
                     <span class="hdr-brand-hi">ब्रह्महोरा</span>
                     <span class="hdr-brand-en">BRAHMAHORA</span>
                 </div>
