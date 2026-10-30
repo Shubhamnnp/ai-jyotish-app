@@ -83,10 +83,10 @@ def render_shastriya_faladesh_view(chart: KundaliChart, birth_profile: Optional[
 
     # 4 Master View Sub-Tabs
     sub_tab1, sub_tab2, sub_tab3, sub_tab4 = st.tabs([
-        "🌟 १. ५० जीवन आयाम महा-विश्लेषण (50 Life Dimensions)",
-        "❓ २. १०० शास्त्रीय प्रश्न-उत्तर इंजन (100 Querent FAQs)",
-        "🔬 ३. सर्व-गणना संश्लेषण (All Calculations Matrix)",
-        "📜 ४. शास्त्रीय साक्ष्य, ग्रन्थ प्रमाण व उपाय (Pramana & Remedies)"
+        "🌟 ५० जीवन आयाम",
+        "❓ १०० प्रश्न-उत्तर (FAQs)",
+        "🔬 सर्व-गणना संश्लेषण",
+        "📜 ग्रन्थ प्रमाण व उपाय"
     ])
 
     # -------------------------------------------------------------------------

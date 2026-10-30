@@ -5710,37 +5710,37 @@ current_time_str = now_dt.strftime("%d %b %Y, %I:%M %p")
 # -------------------------------------------------------------
 if "English" in st.session_state.app_lang:
     MODULE_OPTIONS = [
-        "📜 Birth Chart (Natal & Vargas)",
-        "🎯 Event Analysis (Ghatna Query)",
-        "🛡️ Afflictions & Remedies",
-        "📊 Dasvarga Table",
-        "🏛️ Vastu-Jyotish",
-        "❓ Prashna Kundali (Horary)",
-        "⚖️ Shadbala & Bhavabala",
-        "🔱 Jaimini & Upagrahas",
-        "⏱️ Dasha Systems",
-        "🪐 Transit & Ashtakvarga",
-        "📐 KP Astrology System",
-        "⏳ Auspicious Muhurta",
-        "☸️ Sudarshan Chakra",
-        "📅 Annual Varshaphal",
+        "📜 Birth Chart (Kundali)",
+        "🎯 Event Analysis (Events)",
+        "🛡️ Afflictions & Remedies (Remedies)",
+        "📊 Varga Grid (Vargas)",
+        "🏛️ Vastu Astrology (Vastu)",
+        "❓ Horary Chart (Prashna)",
+        "⚖️ Planetary Strengths (Bala)",
+        "🔱 Jaimini Astrology (Jaimini)",
+        "⏱️ Dasha Systems (Dasha)",
+        "🪐 Transit & Ashtakvarga (Transit)",
+        "📐 KP Astrology (KP System)",
+        "⏳ Auspicious Timing (Muhurta)",
+        "☸️ Sudarshan Chakra (Sudarshan)",
+        "📅 Solar Return (Varshaphal)",
         "⏳ Birth Time Rectification (BTR)",
-        "💍 Kundali Matching (Milan)",
-        "💬 Jyotish AI Assistant",
-        "📄 Comprehensive Report",
-        "📚 12,500+ Grand Rules Library (Rules)",
-        "🔍 Vedic Sage Validation",
-        "⚡ Dosh & Yog Analysis (Complete)",
-        "🔢 Numerology & Lo-Shu Grid",
-        "📕 Lal Kitab 1952 & Remedies",
-        "🍽️ Food & Ayurvedic Diet",
-        "🤝 Relationships & Benefactors",
-        "🏥 Health & Disease Forecast",
-        "🧬 Body & Physical Traits",
-        "🕉️ Ishta Devata & Pooja Vidhan",
-        "🧘 Personality & Karmaphala (Karma)",
-        "📅 Vedic Jyotish Panchang",
-        "📜 Classical Predictive Analysis (Shastriya Faladesh)"
+        "💍 Kundali Matching (Matching)",
+        "💬 Daivajna AI (AI Astrologer)",
+        "📄 Kundali Reports (Reports)",
+        "📚 Rules Library (Rules)",
+        "🔍 Calculation Validation (Validation)",
+        "⚡ Yogas & Doshas (Yog & Dosh)",
+        "🔢 Numerology (Lo-Shu)",
+        "📕 Lal Kitab (Lal Kitab)",
+        "🍽️ Ayurvedic Diet (Diet)",
+        "🤝 Relationships (Relations)",
+        "🏥 Health & Disease (Health)",
+        "🧬 Body & Physique (Physique)",
+        "🕉️ Ishta Devata & Pooja (Pooja)",
+        "🧘 Karma & Destiny (Karma)",
+        "📅 Vedic Panchang (Panchang)",
+        "📜 Classical Predictions (Predictions)"
     ]
 elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -6651,33 +6651,33 @@ def render_vastu_compass_wheel_svg(zones: list, is_dark: bool = False) -> str:
 
 MODULE_TABS_REGISTRY = {
     0: [
-        "📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (D1 to D60)",
-        "🌟 पुष्कर नवांश, भाग व वर्गोत्तम (Pushkara & Vargottama)",
-        "👑 विशेष जैमिनी लग्न (Special Lagnas - Shastriya Standard)",
-        "🏠 भाव चलित चक्र",
+        "📜 लग्न व वर्ग चक्र (D1-D60)",
+        "🌟 पुष्कर व वर्गोत्तम",
+        "👑 जैमिनी विशेष लग्न",
+        "🏠 भाव चलित",
         "🌙 चन्द्र कुण्डली",
         "☀️ सूर्य कुण्डली",
         "⚔️ ग्रह युद्ध",
         "🌟 विशेष लग्न",
-        "🏰 कोटा चक्र (Kota Chakra)"
+        "🏰 कोटा चक्र"
     ],
     1: [
-        "🔮 भविष्य घटना पूर्वानुमान (Future Event Prediction)",
-        "🔍 6-Pillar भूतकाल घटना सत्यापन (6-Pillar Past Event Verification)"
+        "🔮 भविष्य घटना पूर्वानुमान",
+        "🔍 भूतकाल घटना सत्यापन"
     ],
     2: [
-        "🛡️ दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)",
-        "🎯 27 जीवन आयाम विश्लेषण (27 Life Areas Deep Breakdown)",
-        "🌿 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Server Remedy Suite)",
-        "⚠️ बाधक एवं मारक ग्रह विचार (Badhaka & Maraka Audit)"
+        "🛡️ ग्रह दोष व फ्री-विल",
+        "🎯 २७ जीवन क्षेत्र स्कोर",
+        "🌿 वैदिक उपचार व उपाय",
+        "⚠️ बाधक व मारक विचार"
     ],
     3: [
-        "📊 1. दशवर्ग (Dasvarga - 10 Principal Divisions)",
-        "🏛️ 2. षोडशवर्ग (Shodashvarga - 16 Full Divisions)",
-        "📜 3. दशवर्ग सारांश, विस्तृत विश्लेषण एवं शास्त्रीय प्रमाण (Dossier & Pramana)"
+        "📊 दशवर्ग (D1-D10)",
+        "🏛️ षोडशवर्ग (D1-D60)",
+        "📜 वर्ग सारांश व प्रमाण"
     ],
     4: [
-        "🧭 समग्र वास्तु मण्डल",
+        "🧭 सम्पूर्ण वास्तु मण्डल",
         "🌅 पूर्व (East)",
         "⚡ आग्नेय (SE)",
         "🔴 दक्षिण (South)",
@@ -6689,223 +6689,223 @@ MODULE_TABS_REGISTRY = {
         "🌌 ब्रह्मस्थान (Center)"
     ],
     5: [
-        "1. 👤 सक्रिय जातक प्रश्न विश्लेषण",
-        "2. ✍️ नवीन प्रश्नकर्ता एवं तात्कालिक प्रश्न",
-        "3. 🪐 प्रश्नकालीन नवग्रह स्थिति तालिका",
-        "4. 🎭 द्वादश भाव भूमिका एवं प्रभाव",
-        "5. 📖 ताजिक एवं प्रश्न मार्ग सिद्धांत",
-        "6. 📜 100 शास्त्रीय प्रश्न नियम एवं प्रमाण"
+        "👤 जातक प्रश्न विश्लेषण",
+        "✍️ नया तात्कालिक प्रश्न",
+        "🪐 प्रश्न ग्रह स्थिति",
+        "🎭 द्वादश भाव भूमिका",
+        "📖 ताजिक व इत्थशाल",
+        "📜 १०० शास्त्रीय प्रश्न नियम"
     ],
     6: [
-        "1. ⚖️ समग्र षड्बल सारणी एवं ग्रह सामर्थ्य",
-        "2. 🔬 षड्विध बल गहन विश्लेषण",
-        "3. 🏰 द्वादश भाव बल तुलना",
-        "4. 🎭 ग्रह अवस्थाएं एवं इष्ट-कष्ट फल",
-        "5. 📐 दृष्टि वेध एवं कोणीय संबंध (Aspectarium)",
-        "6. 📜 षड्बल शास्त्रीय नियम एवं प्रमाण"
+        "⚖️ षड्बल सारणी",
+        "🔬 ६ बल विश्लेषण",
+        "🏰 १२ भाव बल",
+        "🎭 ग्रह अवस्था व इष्ट-कष्ट",
+        "📐 दृष्टि चक्र (Aspectarium)",
+        "📜 षड्बल प्रमाण"
     ],
     7: [
-        "1. 🔱 कारकांश व स्वांश चक्र",
-        "2. 👑 जैमिनी ७ चर कारक",
-        "3. 🌟 विशेष लग्न एवं राजयोग",
-        "4. 🏰 सम्पूर्ण १२ आरूढ़ पद",
-        "5. 📡 जैमिनी राशि दृष्टि",
-        "6. 🔗 अर्गला एवं विरोधार्गला",
-        "7. 🌍 ग्रह आरूढ़ पद",
-        "8. ⏳ आयुर्दाय एवं दीर्घायु",
-        "9. 👻 अप्रकाशित उपग्रह",
-        "10. 📜 जैमिनी उपदेश सूत्र एवं प्रमाण"
+        "🔱 कारकांश व स्वांश",
+        "👑 ७ चर कारक",
+        "🌟 विशेष लग्न व योग",
+        "🏰 १२ आरूढ़ पद",
+        "📡 राशि दृष्टि",
+        "🔗 अर्गला विचार",
+        "🌍 ग्रह आरूढ़",
+        "⏳ आयुर्दाय गणना",
+        "👻 अप्रकाशित उपग्रह",
+        "📜 जैमिनी उपदेश सूत्र"
     ],
     8: [
-        "📊 १२०-वर्षीय दृश्य गेंट",
-        "⏳ ०-१०० वर्ष समग्र जीवन टाइमलाइन",
-        "🌟 विंशोत्तरी ५-स्तरीय सूक्ष्म पदानुक्रम",
+        "📊 १२०-वर्ष गेंट चार्ट",
+        "⏳ जीवन टाइमलाइन",
+        "🌟 विंशोत्तरी (५ स्तर)",
         "🌸 योगिनी दशा (३६ वर्ष)",
         "🔱 जैमिनी चर दशा",
-        "🔄 कालचक्र दशा (देह व जीव)",
-        "⚔️ शूल दशा (आयुर्दाय व मारक)",
-        "🕉️ अष्टोत्तरी दशा (१०८ वर्ष)",
-        "🪐 नारायण राशि दशा",
-        "⏳ द्विसप्ततिसम दशा (७२ वर्ष)",
-        "🔷 स्थिर दशा (आयुर्दाय)",
-        "👁️ दृग दशा (आध्यात्मिक दृष्टि)",
-        "🎯 बहु-दशा सहमति एवं घटना संगम",
-        "📜 शास्त्रीय नियम, प्रमाण एवं उपाय"
+        "🔄 कालचक्र दशा",
+        "⚔️ शूल दशा (मारक)",
+        "🕉️ अष्टोत्तरी दशा",
+        "🪐 नारायण दशा",
+        "⏳ द्विसप्ततिसम दशा",
+        "🔷 स्थिर दशा",
+        "👁️ दृग दशा",
+        "🎯 बहु-दशा संगम",
+        "📜 शास्त्रीय प्रमाण व उपाय"
     ],
     9: [
-        "🎯 जन्म-गोचर ओवरले",
-        "🪐 दैनिक ग्रह गोचर",
-        "⌛ साढ़ेसाती व ढैया ट्रैकर",
-        "⚡ गुरु-शनि दोहरा गोचर",
-        "📊 सर्व व भिन्नाष्टकवर्ग (SAV/BAV)",
-        "⚖️ त्रिकोण व एकाधिपत्य शोधन",
-        "🔬 अष्टकवर्ग कक्षी गोचर",
-        "📋 प्रस्तार अष्टकवर्ग ग्रिड",
-        "🔵 भृगु बिन्दु वेध",
-        "🛡️ सर्वतोभद्र चक्र (९x९)",
+        "🎯 जन्म-गोचर चक्र",
+        "🪐 दैनिक गोचर",
+        "⌛ साढ़ेसाती व ढैया",
+        "⚡ दोहरा गोचर (गुरु-शनि)",
+        "📊 अष्टकवर्ग (SAV/BAV)",
+        "⚖️ त्रिकोण शोधन",
+        "🔬 कक्षी गोचर",
+        "📋 प्रस्ताराष्टकवर्ग",
+        "🔵 भृगु बिन्दु",
+        "🛡️ सर्वतोभद्र चक्र",
         "🏰 कोटा चक्र दुर्ग",
-        "📈 वित्तीय ज्योतिष व बाज़ार वेध",
-        "📊 ग्रह गति व ५-वर्षीय वेव",
-        "📅 मासिक पंचांग, नियम व उपाय"
+        "📈 वित्तीय ज्योतिष वेध",
+        "📊 ग्रह गति व तरंग",
+        "📅 मासिक गोचर कैलेंडर"
     ],
     10: [
-        "🔮 के.पी. प्रश्न फलित व कार्य सिद्धि",
-        "🪐 ग्रह स्पष्ट एवं ४-स्तरीय कार्यकत्व",
-        "🏰 द्वादश भाव कस्पल सब-लॉर्ड",
-        "👑 तात्कालिक रूलिंग प्लैनेट्स (RP)",
-        "🔢 १-२४९ होरारी मास्टर तालिका",
-        "📐 के.पी. पाश्चात्य दृष्टि एवं भाव वेध",
-        "⏱️ के.पी. विंशोत्तरी दशा-भुक्ति-अन्तर",
-        "📊 २२ जीवन घटना सूत्र व कस्पल मैट्रिक्स",
-        "📜 के.पी. स्वर्णिम नियम, रीडर १-६ व उपाय"
+        "🔮 के.पी. कार्य सिद्धि",
+        "🪐 ४-स्तरीय कार्यकत्व",
+        "🏰 कस्पल सब-लॉर्ड",
+        "👑 रूलिंग प्लैनेट्स (RP)",
+        "🔢 १-२४९ होरारी तालिका",
+        "📐 पाश्चात्य दृष्टि वेध",
+        "⏱️ के.पी. दशा भुक्ति",
+        "📊 २२ घटना मैट्रिक्स",
+        "📜 के.पी. स्वर्णिम नियम"
     ],
     11: [
-        "📜 जातक जन्म पञ्चाङ्ग व तत्व",
-        "☀️ दिन व रात्रि अहोरात्र चौघड़िया",
-        "⏳ काल-वेला, राहुकाल व अभिजित",
-        "🌕 जातक ताराबल एवं चन्द्रबल चक्र",
-        "🏛️ १६ प्रमुख कार्य मुहूर्त अनुकूलता",
-        "🔍 स्वचालित बहु-दिवसीय मुहूर्त खोजक",
-        "📜 मुहूर्त चिन्तामणि २१ महादोष",
-        "🪔 दोष परिहार एवं वैदिक शांति उपाय"
+        "📜 जन्म पञ्चाङ्ग व तत्व",
+        "☀️ अहोरात्र चौघड़िया",
+        "⏳ राहुकाल व अभिजित",
+        "🌕 ताराबल व चन्द्रबल",
+        "🏛️ १६ संस्कार मुहूर्त",
+        "🔍 मुहूर्त खोजक (Scanner)",
+        "📜 २१ महादोष विचार",
+        "🪔 दोष परिहार व शांति"
     ],
     12: [
-        "☸️ त्रि-चक्रीय मण्डल (Visual SVG)",
-        "📊 द्वादश भाव त्रिविध समग्र मूल्यांकन",
-        "⏳ सुदर्शन चक्र दशा प्रणाली",
-        "🪐 नवग्रह त्रि-लग्न संरेखण व महायोग",
-        "🔍 प्रमुख जीवन क्षेत्र त्रि-आयामी फलित",
-        "📈 सुदर्शन-अष्टकवर्ग बिन्दु समन्वय",
-        "⚖️ त्रि-लग्न प्राधान्यता व त्रि-शरीर मीमांसा",
-        "📜 बृहत्पाराशर होराशास्त्र अध्याय ७४ प्रमाण",
-        "🪔 श्री सुदर्शन कवच, महामंत्र एवं शांति उपाय"
+        "☸️ त्रि-चक्रीय मण्डल",
+        "📊 १२ भाव त्रिविध फल",
+        "⏳ सुदर्शन दशा",
+        "🪐 त्रि-लग्न संरेखण",
+        "🔍 त्रि-आयामी फलित",
+        "📈 अष्टकवर्ग समन्वय",
+        "⚖️ त्रि-शरीर मीमांसा",
+        "📜 पाराशर प्रमाण (अ. ७४)",
+        "🪔 सुदर्शन कवच व मन्त्र"
     ],
     13: [
-        "🌟 वार्षिक कुण्डली (Varsha D1)",
-        "🎯 मुन्था विचार व फलदीपिका",
-        "👑 पंचाधिकारी वर्षेश चयन",
+        "🌟 वर्ष कुण्डली (D1)",
+        "🎯 मुन्था विचार",
+        "👑 वर्षेश चयन",
         "⚖️ पंचवर्गीय व हर्ष बल",
-        "⚡ १६ ताजिक योग व इत्थशाल",
-        "💫 ३६ ताजिक सहम मण्डल",
-        "⏳ वार्षिक दशाएं (मुद्धा व योगिनी)",
-        "📊 द्वादश भाव वार्षिक फलित",
-        "🗓️ १२ मास प्रवेश (मासफल)",
-        "🪔 वर्षेश शांति व ताजिक उपाय"
+        "⚡ १६ ताजिक योग",
+        "💫 ३६ ताजिक सहम",
+        "⏳ मुद्धा व योगिनी दशा",
+        "📊 १२ भाव वर्षफल",
+        "🗓️ मासफल (१२ मास)",
+        "🪔 वर्षेश शांति उपाय"
     ],
     14: [
-        "🏆 १. बहु-घटना काल शोधन (Multi-Event Scan)",
-        "🌿 २. तत्व शोधन एवं लिंग निर्णय (Tattwa Shodhana)",
-        "☸️ ३. कुण्ड शोधन एवं प्राणपद लग्न (Kunda & Pranapada)",
-        "📐 ४. षोडशवर्ग D9 व D60 सीमा (D9 & D60 Boundary)",
-        "👑 ५. के.पी. रूलिंग प्लैनेट्स (KP Ruling Planets)",
-        "⚖️ ६. मूल बनाम शोधित समय तुलना (Before vs After)",
-        "🎯 ७. त्वरित सेकंड्स स्लाइडर (Micro-Tuning Slider)",
-        "📜 ८. शास्त्रीय सिद्धांत व प्रमाण (Classical Sutras)"
+        "🏆 घटना मिलान शोधन",
+        "🌿 तत्व व लिंग शोधन",
+        "☸️ कुण्ड व प्राणपद लग्न",
+        "📐 D9 व D60 सीमा",
+        "👑 के.पी. रूलिंग प्लैनेट्स",
+        "⚖️ पूर्व व शोधित तुलना",
+        "🎯 सेकंड्स सूक्ष्म स्लाइडर",
+        "📜 शास्त्रीय सूत्र व प्रमाण"
     ],
     15: [
-        "📊 १. अष्टकूट ३६ गुण व सूत्र (36 Gunas)",
-        "🛡️ २. शास्त्रीय महा-दोष व १६ परिहार (16 Cancellations)",
-        "🔥 ३. मांगलिक दोष एवं भौम साम्य (Kuja Dosha)",
-        "☸️ ४. उभय D1 व D9 चक्र व दृष्टि (Dual D1 & D9)",
-        "👶 ५. बीज-क्षेत्र स्फुट व संतान (Beeja-Kshetra)",
-        "🏛️ ६. जैमिनी उपपद व ससुराल सामंजस्य (Upapada & In-Laws)",
-        "⏱️ ७. दशा-संधि व १५-वर्षीय कालक्रम (Dasha Overlay)",
-        "📈 ८. अष्टकवर्ग रेखा व आजीविका भाग्योदय (SAV Synastry)",
-        "💼 ९. व्यापारिक साझेदारी सिनैस्ट्री (Business)",
-        "🖨️ १०. प्रिंटेबल महा-दस्तावेज व उपाय (Print Dossier)"
+        "📊 अष्टकूट (३६ गुण)",
+        "🛡️ महादोष व १६ परिहार",
+        "🔥 मांगलिक व भौम साम्य",
+        "☸️ उभय कुण्डली (D1/D9)",
+        "👶 बीज-क्षेत्र व संतान",
+        "🏛️ उपपद व ससुराल पक्ष",
+        "⏱️ दशा-संधि कालक्रम",
+        "📈 अष्टकवर्ग सिनैस्ट्री",
+        "💼 व्यापार साझेदारी",
+        "🖨️ मिलान रिपोर्ट व उपाय"
     ],
     16: [
-        "💬 दैवज्ञ AI सहायक — प्रामाणिक वैदिक परामर्श"
+        "💬 वैदिक परामर्श AI"
     ],
     17: [
-        "📚 ५०+ पृष्ठीय सम्पूर्ण महा-पत्रिका (Full 50+ Page Kundali Dossier — 22 Chapters)",
-        "📋 १-पेज ज्योतिषी परामर्श पर्ची (1-Page Astrologer Prescription Slip)"
+        "📚 सम्पूर्ण ५०-पेज पत्रिका",
+        "📋 १-पेज परामर्श पर्ची"
     ],
     18: [
-        "📚 १२,५००+ महा-शास्त्रीय नियम बैंक (Grand Rules Library)",
-        "🔍 शास्त्रीय ग्रन्थ नियम एक्सप्लोरर (Classical Grantha Rules Explorer)",
-        "🔬 शास्त्रीय योग एवं कुण्डली अनुसंधान इंजन (Astrological Research & Query Engine)"
+        "📚 १२,५०० नियम बैंक",
+        "🔍 ग्रन्थ एक्सप्लोरर",
+        "🔬 कुण्डली अनुसंधान इंजन"
     ],
     19: [
-        "🔍 वैदिक ऋषि API सत्यापन एवं बेंचमार्क (Vedic Rishi Cross-Validation)"
+        "🔍 वैदिक ऋषि सत्यापन"
     ],
     20: [
-        "🔴 सक्रिय एवं संभावित दोष (Active Doshas)",
-        "🟢 शुभ राजयोग एवं धनयोग (Auspicious Yogas)",
-        "📋 सम्पूर्ण १२,५००+ महा-शास्त्रीय नियम (Grand Rules Bank)",
-        "💊 कुण्डली अनुसार विशेष उपाय (Specific Remedies)"
+        "🔴 सक्रिय दोष",
+        "🟢 राजयोग व धनयोग",
+        "📋 १२,५०० शास्त्रीय नियम",
+        "💊 कुण्डली अनुसार उपाय"
     ],
     21: [
-        "📊 ३×३ लो-शू ग्रिड एवं ८ तल (Lo-Shu Grid)",
-        "🪐 मूलांक व भाग्यांक विस्तृत विश्लेषण",
-        "🧩 मिसिंग नंबर एवं शास्त्रीय उपाय",
-        "💎 लकी फैक्टर्स एवं नेम करेक्शन"
+        "📊 ३×३ लो-शू ग्रिड",
+        "🪐 मूलांक व भाग्यांक",
+        "🧩 मिसिंग नंबर व उपाय",
+        "💎 लकी फैक्टर्स व नाम शोधन"
     ],
     22: [
-        "🏠 १२ पक्के खाने एवं ग्रह स्थिति (12 Khanas)",
-        "⚠️ ९ प्रकार के कर्मिक ऋण एवं पितृ दोष (9 Debts)",
-        "💤 सोए हुए घर एवं ग्रह (Sleeping Houses)",
-        "🌿 १०८ प्रामाणिक लाल किताब टोटके पुस्तकालय"
+        "🏠 १२ पक्के खाने",
+        "⚠️ ९ कर्मिक ऋण व पितृ दोष",
+        "💤 सोए हुए घर व ग्रह",
+        "🌿 १०८ प्रामाणिक टोटके"
     ],
     23: [
-        "🌿 त्रिदोष एवं खानपान स्वभाव (Dosha Profile)",
-        "✅ क्या खाएं (अनुकूल आहार सूची)",
-        "❌ क्या न खाएं (वर्जित एवं त्याज्य)",
-        "⏰ भोजन नियम एवं उपवास परामर्श (Rules & Fasting)"
+        "🌿 त्रिदोष प्रकृति",
+        "✅ अनुकूल आहार",
+        "❌ वर्जित आहार",
+        "⏰ भोजन नियम व उपवास"
     ],
     24: [
-        "👫 दांपत्य एवं जीवनसाथी (Spouse & Partners)",
-        "👨‍👩‍👦 परिवार एवं स्वजन (Family & Siblings)",
-        "🌟 मित्र, उच्चाधिकारी एवं सहायक (Friends & Benefactors)",
-        "⚔️ विरोधी, शत्रु एवं प्रतिस्पर्धा (Opponents & Caution)"
+        "👫 जीवनसाथी व दांपत्य",
+        "👨‍👩‍👦 परिवार व स्वजन",
+        "🌟 मित्र व सहायक",
+        "⚔️ शत्रु व विरोधी"
     ],
     25: [
-        "🩺 कालपुरुष देह वेध आरेख (12-Organ Anatomy Map & Tridosha)",
-        "💪 आरोग्य बल एवं वर्तमान संवेदनशीलता",
-        "⚠️ भविष्य में संभावित रोग (Disease Risks)",
-        "📋 नवग्रह एवं अंग-विशेष चिकित्सा सारणी",
-        "🌿 शास्त्रीय निवारक उपाय एवं दिनचर्या"
+        "🩺 देह वेध आरेख (Anatomy)",
+        "💪 आरोग्य बल व स्थिति",
+        "⚠️ संभावित रोग जोखिम",
+        "📋 ग्रह-अंग चिकित्सा सारणी",
+        "🌿 निवारक उपाय व दिनचर्या"
     ],
     26: [
-        "🏃 देहयष्टि, कद-काठी एवं रंग-रूप",
-        "🦴 १२ कालपुरुष अंग स्थिति (12 Limbs Status)",
-        "🎯 जन्मजात चिन्ह, तिल व मस्से (Birthmarks)",
-        "🔮 शारीरिक सुरक्षा एवं आसन परामर्श"
+        "🏃 कद-काठी व रंग-रूप",
+        "🦴 १२ कालपुरुष अंग",
+        "🎯 तिल, मस्से व चिन्ह",
+        "🔮 सुरक्षा व आसन परामर्श"
     ],
     27: [
-        "🕉️ इष्टदेवता एवं आत्म-मोक्ष निर्णय",
-        "📿 कुलदेवता, धर्मदेवता एवं मंत्र-साधना",
-        "🪔 नित्य पूजा-उपासना एवं सामग्री विधान",
-        "📅 सामान्य व्रत, उपवास एवं पारण नियम",
-        "🚩 नवरात्रि विशेष: ९ दिवसीय पूजा, व्रत व विधान"
+        "🕉️ इष्टदेवता व मोक्ष",
+        "📿 कुलदेवता व मन्त्र साधना",
+        "🪔 नित्य पूजा विधान",
+        "📅 व्रत व उपवास नियम",
+        "🚩 नवरात्रि ९ दिवसीय विधान"
     ],
     28: [
-        "💼 आजीविका: व्यापार बनाम नौकरी",
-        "🎓 शिक्षा, मेधा एवं बौद्धिक क्षमता",
-        "⚖️ नैतिक आचरण एवं गुण-प्रवृत्तियां",
-        "🚫 गलत लत, व्यसन एवं प्रलोभन",
-        "🏛️ पैतृक संपत्ति, सुख एवं शांति",
-        "🕉️ पूर्वजन्म कर्म, ऋणानुबंध एवं प्रारब्ध"
+        "💼 नौकरी बनाम व्यापार",
+        "🎓 शिक्षा व मेधा",
+        "⚖️ आचरण व प्रवृत्तियां",
+        "🚫 व्यसन व प्रलोभन",
+        "🏛️ पैतृक संपत्ति व सुख",
+        "🕉️ पूर्वजन्म प्रारब्ध व ऋण"
     ],
     29: [
-        "🌟 पञ्चाङ्ग के ५ स्तम्भ",
-        "🚩 पर्व, व्रत व एकादशी पारणा",
-        "🪔 पक्ष व पितृपक्ष (श्राद्ध)",
+        "🌟 पञ्चाङ्ग ५ स्तम्भ",
+        "🚩 पर्व, व्रत व एकादशी",
+        "🪔 पक्ष व श्राद्ध",
         "🏛️ २४-घंटे लग्न सारणी",
-        "⏰ शुभ व अशुभ मुहूर्त",
-        "☀️ चौघड़िया, होरा व वैदिक घड़ी",
-        "🛡️ भद्रा, पञ्चक व गण्डमूल",
-        "⚖️ चन्द्रबलम, ताराबलम व शुभ योग",
-        "🪐 ग्रह गोचर व मंत्रिमंडल",
-        "📜 दैनिक वैदिक सङ्कल्प मन्त्र",
-        "📅 मासिक पञ्चाङ्ग कैलेंडर",
-        "🤖 AI पञ्चाङ्ग सारथी व कर्म शुद्धि"
+        "⏰ शुभ-अशुभ मुहूर्त",
+        "☀️ चौघड़िया व होरा",
+        "🛡️ भद्रा व पञ्चक",
+        "⚖️ चन्द्रबल व ताराबल",
+        "🪐 गोचर व मंत्रिमंडल",
+        "📜 दैनिक सङ्कल्प मन्त्र",
+        "📅 मासिक पञ्चाङ्ग",
+        "🤖 AI पञ्चाङ्ग सारथी"
     ],
     30: [
-        "🌟 १. ५० जीवन आयाम महा-विश्लेषण (50 Life Dimensions)",
-        "❓ २. १०० शास्त्रीय प्रश्न-उत्तर इंजन (100 Querent FAQs)",
-        "🔬 ३. सर्व-गणना संश्लेषण (All Calculations Matrix)",
-        "📜 ४. शास्त्रीय साक्ष्य, ग्रन्थ प्रमाण व उपाय (Pramana & Remedies)"
+        "🌟 ५० जीवन आयाम",
+        "❓ १०० प्रश्न-उत्तर (FAQs)",
+        "🔬 सर्व-गणना संश्लेषण",
+        "📜 ग्रन्थ प्रमाण व उपाय"
     ]
 }
 
@@ -9434,17 +9434,7 @@ if cur_user_role == "jatak" and selected_idx not in jatak_allowed_modules:
 if selected_idx == 0:
     st.subheader("📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (Natal & Divisional Charts)")
 
-    tab_d1, tab_pushkara, tab_jm_hud, tab_bhav, tab_chandra, tab_surya, tab_yuddha, tab_vishesh, tab_kota = st.tabs([
-        "📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (D1 to D60)",
-        "🌟 पुष्कर नवांश, भाग व वर्गोत्तम (Pushkara & Vargottama)",
-        "👑 विशेष जैमिनी लग्न (Special Lagnas - Shastriya Standard)",
-        "🏠 भाव चलित चक्र",
-        "🌙 चन्द्र कुण्डली",
-        "☀️ सूर्य कुण्डली",
-        "⚔️ ग्रह युद्ध",
-        "🌟 विशेष लग्न",
-        "🏰 कोटा चक्र (Kota Chakra)"
-    ])
+    tab_d1, tab_pushkara, tab_jm_hud, tab_bhav, tab_chandra, tab_surya, tab_yuddha, tab_vishesh, tab_kota = st.tabs(MODULE_TABS_REGISTRY[0])
 
     with tab_d1:
         VARGA_SIGNIFICANCE = {
@@ -11112,10 +11102,7 @@ if selected_idx == 0:
 elif selected_idx == 1:
     st.subheader("🎯 घटना विश्लेषण एवं काल सत्यापन (Event Analysis & Verification)")
 
-    tab_future_event, tab_past_event = st.tabs([
-        "🔮 भविष्य घटना पूर्वानुमान (Future Event Prediction)",
-        "🔍 6-Pillar भूतकाल घटना सत्यापन (6-Pillar Past Event Verification)"
-    ])
+    tab_future_event, tab_past_event = st.tabs(MODULE_TABS_REGISTRY[1])
 
     with tab_future_event:
         st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का ३-स्तरीय शास्त्रीय ट्रिगर (दशा, गुरु-शनि दोहरा गोचर, अष्टकवर्ग) एवं ३२-शास्त्रीय नियमों द्वारा वैज्ञानिक विश्लेषण प्राप्त करें।")
@@ -11523,12 +11510,7 @@ elif selected_idx == 2:
     if "gla_shared_life_area_id" not in st.session_state:
         st.session_state.gla_shared_life_area_id = 1
 
-    tab_fw_overview, tab_life_areas_deep, tab_remedies_suite, tab_badhaka_maraka = st.tabs([
-        "🛡️ दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)",
-        "🎯 27 जीवन आयाम विश्लेषण (27 Life Areas Deep Breakdown)",
-        "🌿 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Server Remedy Suite)",
-        "⚠️ बाधक एवं मारक ग्रह विचार (Badhaka & Maraka Audit)"
-    ])
+    tab_fw_overview, tab_life_areas_deep, tab_remedies_suite, tab_badhaka_maraka = st.tabs(MODULE_TABS_REGISTRY[2])
 
     LIFE_AREA_HINDI_NAMES = {
         1: "करियर एवं आजीविका (Career)",
@@ -12046,11 +12028,7 @@ elif selected_idx == 3:
     sv_summary = affliction_engine.calculate_varga_dignity_summary(shodashvarga_codes)
 
     # 3 Dedicated Tabs
-    tab_dv, tab_sv, tab_saransh = st.tabs([
-        "📊 1. दशवर्ग (Dasvarga - 10 Principal Divisions)",
-        "🏛️ 2. षोडशवर्ग (Shodashvarga - 16 Full Divisions)",
-        "📜 3. दशवर्ग सारांश, विस्तृत विश्लेषण एवं शास्त्रीय प्रमाण (Dossier & Pramana)"
-    ])
+    tab_dv, tab_sv, tab_saransh = st.tabs(MODULE_TABS_REGISTRY[3])
 
     # =========================================================================
     # TAB 1: DASHVARGA (10 PRINCIPAL DIVISIONS)
@@ -12489,20 +12467,8 @@ elif selected_idx == 4:
         compact = "".join(line.strip() for line in html_markup.splitlines() if line.strip())
         st.markdown(compact, unsafe_allow_html=True)
 
-    v_tab_titles = [
-        "🧭 समग्र वास्तु मण्डल",
-        "🌅 पूर्व (East)",
-        "⚡ आग्नेय (SE)",
-        "🔴 दक्षिण (South)",
-        "⛰️ नैऋत्य (SW)",
-        "🌊 पश्चिम (West)",
-        "💨 वायव्य (NW)",
-        "💰 उत्तर (North)",
-        "🕉️ ईशान (NE)",
-        "🌌 ब्रह्मस्थान (Center)"
-    ]
-
-    v_tabs = st.tabs(v_tab_titles)
+    v_tab_titles = MODULE_TABS_REGISTRY[4]
+    v_tabs = st.tabs(MODULE_TABS_REGISTRY[4])
 
     # -------------------------------------------------------------
     # TAB 0: समग्र वास्तु मण्डल (Overview, Compass & Comparative Table)
@@ -12989,14 +12955,7 @@ elif selected_idx == 5:
         st.session_state.active_prashna_res = st.session_state.get("prashna_native_res")
 
     # 6 Main Tabs as requested by user
-    ptab1, ptab2, ptab3, ptab4, ptab5, ptab6 = st.tabs([
-        "1. 👤 सक्रिय जातक प्रश्न विश्लेषण",
-        "2. ✍️ नवीन प्रश्नकर्ता एवं तात्कालिक प्रश्न",
-        "3. 🪐 प्रश्नकालीन नवग्रह स्थिति तालिका",
-        "4. 🎭 द्वादश भाव भूमिका एवं प्रभाव",
-        "5. 📖 ताजिक एवं प्रश्न मार्ग सिद्धांत",
-        "6. 📜 100 शास्त्रीय प्रश्न नियम एवं प्रमाण"
-    ])
+    ptab1, ptab2, ptab3, ptab4, ptab5, ptab6 = st.tabs(MODULE_TABS_REGISTRY[5])
 
     # =========================================================================
     # TAB 1: सक्रिय जातक प्रश्न विश्लेषण (Active Native Dual Synthesis)
@@ -13935,14 +13894,7 @@ elif selected_idx == 6:
             return "".join(svg)
 
         # 6 Dedicated Shadbala Tabs
-        sbtab1, sbtab2, sbtab3, sbtab4, sbtab5, sbtab6 = st.tabs([
-            "1. ⚖️ समग्र षड्बल सारणी एवं ग्रह सामर्थ्य",
-            "2. 🔬 षड्विध बल गहन विश्लेषण",
-            "3. 🏰 द्वादश भाव बल तुलना",
-            "4. 🎭 ग्रह अवस्थाएं एवं इष्ट-कष्ट फल",
-            "5. 📐 दृष्टि वेध एवं कोणीय संबंध (Aspectarium)",
-            "6. 📜 षड्बल शास्त्रीय नियम एवं प्रमाण"
-        ])
+        sbtab1, sbtab2, sbtab3, sbtab4, sbtab5, sbtab6 = st.tabs(MODULE_TABS_REGISTRY[6])
 
         # =====================================================================
         # TAB 1: समग्र षड्बल सारणी एवं ग्रह सामर्थ्य
@@ -14486,18 +14438,7 @@ elif selected_idx == 7:
         return "".join(svg)
 
     # 10 Dedicated Tabs for Jaimini Suite
-    jtab1, jtab2, jtab3, jtab4, jtab5, jtab6, jtab7, jtab8, jtab9, jtab10 = st.tabs([
-        "1. 🔱 कारकांश व स्वांश चक्र",
-        "2. 👑 जैमिनी ७ चर कारक",
-        "3. 🌟 विशेष लग्न एवं राजयोग",
-        "4. 🏰 सम्पूर्ण १२ आरूढ़ पद",
-        "5. 📡 जैमिनी राशि दृष्टि",
-        "6. 🔗 अर्गला एवं विरोधार्गला",
-        "7. 🌍 ग्रह आरूढ़ पद",
-        "8. ⏳ आयुर्दाय एवं दीर्घायु",
-        "9. 👻 अप्रकाशित उपग्रह",
-        "10. 📜 जैमिनी उपदेश सूत्र एवं प्रमाण"
-    ])
+    jtab1, jtab2, jtab3, jtab4, jtab5, jtab6, jtab7, jtab8, jtab9, jtab10 = st.tabs(MODULE_TABS_REGISTRY[7])
 
     # =========================================================================
     # TAB 1: कारकांश व स्वांश चक्र (Karakamsha & Swamsha Suite)
@@ -15029,22 +14970,7 @@ elif selected_idx == 8:
     sthira_engine = sthira_mod.default_sthira_engine
     drig_engine = sthira_mod.default_drigdasha_engine
 
-    tab_d1, tab_d2, tab_d3, tab_d4, tab_d5, tab_d6, tab_d7, tab_d8, tab_d9, tab_d10, tab_d11, tab_d12, tab_d13, tab_d14 = st.tabs([
-        "📊 १२०-वर्षीय दृश्य गेंट",
-        "⏳ ०-१०० वर्ष समग्र जीवन टाइमलाइन",
-        "🌟 विंशोत्तरी ५-स्तरीय सूक्ष्म पदानुक्रम",
-        "🌸 योगिनी दशा (३६ वर्ष)",
-        "🔱 जैमिनी चर दशा",
-        "🔄 कालचक्र दशा (देह व जीव)",
-        "⚔️ शूल दशा (आयुर्दाय व मारक)",
-        "🕉️ अष्टोत्तरी दशा (१०८ वर्ष)",
-        "🪐 नारायण राशि दशा",
-        "⏳ द्विसप्ततिसम दशा (७२ वर्ष)",
-        "🔷 स्थिर दशा (आयुर्दाय)",
-        "👁️ दृग दशा (आध्यात्मिक दृष्टि)",
-        "🎯 बहु-दशा सहमति एवं घटना संगम",
-        "📜 शास्त्रीय नियम, प्रमाण एवं उपाय"
-    ])
+    tab_d1, tab_d2, tab_d3, tab_d4, tab_d5, tab_d6, tab_d7, tab_d8, tab_d9, tab_d10, tab_d11, tab_d12, tab_d13, tab_d14 = st.tabs(MODULE_TABS_REGISTRY[8])
 
     # =========================================================================
     # TAB 1: 120-YEAR VISUAL GANTT TIMELINE
@@ -16262,22 +16188,7 @@ elif selected_idx == 9:
         "Ketu": "☄️ केतु"
     }
 
-    tab_g1, tab_g2, tab_g3, tab_g4, tab_g5, tab_g6, tab_g7, tab_g8, tab_g9, tab_g10, tab_g11, tab_g12, tab_g13, tab_g14 = st.tabs([
-        "🎯 जन्म-गोचर ओवरले",
-        "🪐 दैनिक ग्रह गोचर",
-        "⌛ साढ़ेसाती व ढैया ट्रैकर",
-        "⚡ गुरु-शनि दोहरा गोचर",
-        "📊 सर्व व भिन्नाष्टकवर्ग (SAV/BAV)",
-        "⚖️ त्रिकोण व एकाधिपत्य शोधन",
-        "🔬 अष्टकवर्ग कक्षी गोचर",
-        "📋 प्रस्तार अष्टकवर्ग ग्रिड",
-        "🔵 भृगु बिन्दु वेध",
-        "🛡️ सर्वतोभद्र चक्र (९x९)",
-        "🏰 कोटा चक्र दुर्ग",
-        "📈 वित्तीय ज्योतिष व बाज़ार वेध",
-        "📊 ग्रह गति व ५-वर्षीय वेव",
-        "📅 मासिक पंचांग, नियम व उपाय"
-    ])
+    tab_g1, tab_g2, tab_g3, tab_g4, tab_g5, tab_g6, tab_g7, tab_g8, tab_g9, tab_g10, tab_g11, tab_g12, tab_g13, tab_g14 = st.tabs(MODULE_TABS_REGISTRY[9])
 
     # =========================================================================
     # TAB 1: DUAL-RING BI-WHEEL OVERLAY CHART
@@ -17400,17 +17311,7 @@ elif selected_idx == 10:
     # =========================================================================
     # 9 DEDICATED KP TABS
     # =========================================================================
-    tab_kp1, tab_kp2, tab_kp3, tab_kp4, tab_kp5, tab_kp6, tab_kp7, tab_kp8, tab_kp9 = st.tabs([
-        "🔮 के.पी. प्रश्न फलित व कार्य सिद्धि",
-        "🪐 ग्रह स्पष्ट एवं ४-स्तरीय कार्यकत्व",
-        "🏰 द्वादश भाव कस्पल सब-लॉर्ड",
-        "👑 तात्कालिक रूलिंग प्लैनेट्स (RP)",
-        "🔢 १-२४९ होरारी मास्टर तालिका",
-        "📐 के.पी. पाश्चात्य दृष्टि एवं भाव वेध",
-        "⏱️ के.पी. विंशोत्तरी दशा-भुक्ति-अन्तर",
-        "📊 २२ जीवन घटना सूत्र व कस्पल मैट्रिक्स",
-        "📜 के.पी. स्वर्णिम नियम, रीडर १-६ व उपाय"
-    ])
+    tab_kp1, tab_kp2, tab_kp3, tab_kp4, tab_kp5, tab_kp6, tab_kp7, tab_kp8, tab_kp9 = st.tabs(MODULE_TABS_REGISTRY[10])
 
     # -------------------------------------------------------------
     # TAB 1: KP FUTURE PREDICTION ENGINE
@@ -17993,16 +17894,7 @@ elif selected_idx == 11:
     # =========================================================================
     # 8 DEDICATED TABS
     # =========================================================================
-    tab_m1, tab_m2, tab_m3, tab_m4, tab_m5, tab_m6, tab_m7, tab_m8 = st.tabs([
-        "📜 जातक जन्म पञ्चाङ्ग व तत्व",
-        "☀️ दिन व रात्रि अहोरात्र चौघड़िया",
-        "⏳ काल-वेला, राहुकाल व अभिजित",
-        "🌕 जातक ताराबल एवं चन्द्रबल चक्र",
-        "🏛️ १६ प्रमुख कार्य मुहूर्त अनुकूलता",
-        "🔍 स्वचालित बहु-दिवसीय मुहूर्त खोजक",
-        "📜 मुहूर्त चिन्तामणि २१ महादोष",
-        "🪔 दोष परिहार एवं वैदिक शांति उपाय"
-    ])
+    tab_m1, tab_m2, tab_m3, tab_m4, tab_m5, tab_m6, tab_m7, tab_m8 = st.tabs(MODULE_TABS_REGISTRY[11])
 
     # -------------------------------------------------------------
     # TAB 1: NATIVE BIRTH PANCHANGA & 5 ELEMENTS
@@ -18629,17 +18521,7 @@ elif selected_idx == 12:
 </div>
 """, unsafe_allow_html=True)
 
-    tab_sd1, tab_sd2, tab_sd3, tab_sd4, tab_sd5, tab_sd6, tab_sd7, tab_sd8, tab_sd9 = st.tabs([
-        "☸️ त्रि-चक्रीय मण्डल (Visual SVG)",
-        "📊 द्वादश भाव त्रिविध समग्र मूल्यांकन",
-        "⏳ सुदर्शन चक्र दशा प्रणाली",
-        "🪐 नवग्रह त्रि-लग्न संरेखण व महायोग",
-        "🔍 प्रमुख जीवन क्षेत्र त्रि-आयामी फलित",
-        "📈 सुदर्शन-अष्टकवर्ग बिन्दु समन्वय",
-        "⚖️ त्रि-लग्न प्राधान्यता व त्रि-शरीर मीमांसा",
-        "📜 बृहत्पाराशर होराशास्त्र अध्याय ७४ प्रमाण",
-        "🪔 श्री सुदर्शन कवच, महामंत्र एवं शांति उपाय"
-    ])
+    tab_sd1, tab_sd2, tab_sd3, tab_sd4, tab_sd5, tab_sd6, tab_sd7, tab_sd8, tab_sd9 = st.tabs(MODULE_TABS_REGISTRY[12])
 
     # -------------------------------------------------------------------------
     # TAB 1: VISUAL SVG MANDALA
@@ -19128,18 +19010,7 @@ elif selected_idx == 13:
 </div>
 """, unsafe_allow_html=True)
 
-    tab_vp1, tab_vp2, tab_vp3, tab_vp4, tab_vp5, tab_vp6, tab_vp7, tab_vp8, tab_vp9, tab_vp10 = st.tabs([
-        "🌟 वार्षिक कुण्डली (Varsha D1)",
-        "🎯 मुन्था विचार व फलदीपिका",
-        "👑 पंचाधिकारी वर्षेश चयन",
-        "⚖️ पंचवर्गीय व हर्ष बल",
-        "⚡ १६ ताजिक योग व इत्थशाल",
-        "💫 ३६ ताजिक सहम मण्डल",
-        "⏳ वार्षिक दशाएं (मुद्धा व योगिनी)",
-        "📊 द्वादश भाव वार्षिक फलित",
-        "🗓️ १२ मास प्रवेश (मासफल)",
-        "🪔 वर्षेश शांति व ताजिक उपाय"
-    ])
+    tab_vp1, tab_vp2, tab_vp3, tab_vp4, tab_vp5, tab_vp6, tab_vp7, tab_vp8, tab_vp9, tab_vp10 = st.tabs(MODULE_TABS_REGISTRY[13])
 
     # -------------------------------------------------------------------------
     # TAB 1: VARSHA D1 CHART
@@ -19514,16 +19385,7 @@ elif selected_idx == 14:
     col_mb4.metric("जन्म वार", f"{calc_chart.panchang.vara_name}", "वार स्वामी")
 
     # 8 Dedicated Tabs
-    tab_btr1, tab_btr2, tab_btr3, tab_btr4, tab_btr5, tab_btr6, tab_btr7, tab_btr8 = st.tabs([
-        "🏆 १. बहु-घटना काल शोधन (Multi-Event Scan)",
-        "🌿 २. तत्व शोधन एवं लिंग निर्णय (Tattwa Shodhana)",
-        "☸️ ३. कुण्ड शोधन एवं प्राणपद लग्न (Kunda & Pranapada)",
-        "📐 ४. षोडशवर्ग D9 व D60 सीमा (D9 & D60 Boundary)",
-        "👑 ५. के.पी. रूलिंग प्लैनेट्स (KP Ruling Planets)",
-        "⚖️ ६. मूल बनाम शोधित समय तुलना (Before vs After)",
-        "🎯 ७. त्वरित सेकंड्स स्लाइडर (Micro-Tuning Slider)",
-        "📜 ८. शास्त्रीय सिद्धांत व प्रमाण (Classical Sutras)"
-    ])
+    tab_btr1, tab_btr2, tab_btr3, tab_btr4, tab_btr5, tab_btr6, tab_btr7, tab_btr8 = st.tabs(MODULE_TABS_REGISTRY[14])
 
     # -------------------------------------------------------------------------
     # TAB 1: MULTI-EVENT SCANNER
@@ -20044,18 +19906,7 @@ elif selected_idx == 15:
     # -------------------------------------------------------------------------
     # 10 DEDICATED TABS
     # -------------------------------------------------------------------------
-    tab_mil1, tab_mil2, tab_mil3, tab_mil4, tab_mil5, tab_mil6, tab_mil7, tab_mil8, tab_mil9, tab_mil10 = st.tabs([
-        "📊 १. अष्टकूट ३६ गुण व सूत्र (36 Gunas)",
-        "🛡️ २. शास्त्रीय महा-दोष व १६ परिहार (16 Cancellations)",
-        "🔥 ३. मांगलिक दोष एवं भौम साम्य (Kuja Dosha)",
-        "☸️ ४. उभय D1 व D9 चक्र व दृष्टि (Dual D1 & D9)",
-        "👶 ५. बीज-क्षेत्र स्फुट व संतान (Beeja-Kshetra)",
-        "🏛️ ६. जैमिनी उपपद व ससुराल सामंजस्य (Upapada & In-Laws)",
-        "⏱️ ७. दशा-संधि व १५-वर्षीय कालक्रम (Dasha Overlay)",
-        "📈 ८. अष्टकवर्ग रेखा व आजीविका भाग्योदय (SAV Synastry)",
-        "💼 ९. व्यापारिक साझेदारी सिनैस्ट्री (Business)",
-        "🖨️ १०. प्रिंटेबल महा-दस्तावेज व उपाय (Print Dossier)"
-    ])
+    tab_mil1, tab_mil2, tab_mil3, tab_mil4, tab_mil5, tab_mil6, tab_mil7, tab_mil8, tab_mil9, tab_mil10 = st.tabs(MODULE_TABS_REGISTRY[15])
 
     # -------------------------------------------------------------------------
     # TAB 1: ASHTAKOOTA 36 GUNAS DETAILED WITH SUTRAS & MATRICES
@@ -20786,10 +20637,7 @@ elif selected_idx == 17:
         astro_org = c_br2.text_input("संस्थान / केंद्र (Center Name)", value="वैदिक ज्योतिष अनुसंधान केंद्र", key="rep_astro_org")
         astro_phone = c_br3.text_input("संपर्क सूत्र / WhatsApp (Contact)", value="+91-9452155742", key="rep_astro_phone")
 
-    tab_rep_master, tab_rep_slip = st.tabs([
-        "📚 ५०+ पृष्ठीय सम्पूर्ण महा-पत्रिका (Full 50+ Page Kundali Dossier — 22 Chapters)",
-        "📋 १-पेज ज्योतिषी परामर्श पर्ची (1-Page Astrologer Prescription Slip)"
-    ])
+    tab_rep_master, tab_rep_slip = st.tabs(MODULE_TABS_REGISTRY[17])
 
     with tab_rep_master:
         st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, गोचर एवं पाया, लाल किताब ९ ऋण व १०८ टोटके, ३-स्तरीय ट्रिगर, वैदिक मुहूर्त एवं पञ्चक, कुण्डली मिलान १६ परिहार, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु एवं सात्विक उपायों सहित २२ अध्यायों की पूर्ण रंगीन मुद्रण-योग्य पत्रिका।")
@@ -20923,11 +20771,7 @@ elif selected_idx == 17:
 
 elif selected_idx == 18:
     st.subheader("📚 १२,५००+ महा-शास्त्रीय नियम बैंक, ग्रन्थ एक्सप्लोरर एवं अनुसंधान इंजन (Vedic Rules & Research Engine)")
-    tab_rules_bank, tab_grantha_explorer, tab_research_engine = st.tabs([
-        "📚 १२,५००+ महा-शास्त्रीय नियम बैंक (Grand Rules Library)",
-        "🔍 शास्त्रीय ग्रन्थ नियम एक्सप्लोरर (Classical Grantha Rules Explorer)",
-        "🔬 शास्त्रीय योग एवं कुण्डली अनुसंधान इंजन (Astrological Research & Query Engine)"
-    ])
+    tab_rules_bank, tab_grantha_explorer, tab_research_engine = st.tabs(MODULE_TABS_REGISTRY[18])
     with tab_rules_bank:
 
             import importlib
@@ -21347,12 +21191,7 @@ elif selected_idx == 20:
     _mc3.metric("📋 मूल्यांकित नियम (Rules Evaluated)", len(_evidences), delta="100% Shastriya")
     _mc4.metric("💊 कुण्डली उपाय (Specific Remedies)", len(_active_doshas) + (1 if not _active_doshas else 0))
 
-    _dy_t1, _dy_t2, _dy_t3, _dy_t4 = st.tabs([
-        "🔴 सक्रिय एवं संभावित दोष (Active Doshas)",
-        "🟢 शुभ राजयोग एवं धनयोग (Auspicious Yogas)",
-        "📋 सम्पूर्ण १२,५००+ महा-शास्त्रीय नियम (Grand Rules Bank)",
-        "💊 कुण्डली अनुसार विशेष उपाय (Specific Remedies)"
-    ])
+    _dy_t1, _dy_t2, _dy_t3, _dy_t4 = st.tabs(MODULE_TABS_REGISTRY[20])
 
     with _dy_t1:
         st.markdown("### 🔴 कुण्डली में शास्त्रीय दोष विश्लेषण (Dosha Analysis)")
@@ -21524,12 +21363,7 @@ elif selected_idx == 21:
     c_n3.metric("कुआ नंबर (Kua / Feng Shui)", f"🧭 {num_res.kua_number}", "दिशात्मक ऊर्जा")
     c_n4.metric("कील्डियन नामांक (Name No.)", f"✍️ {num_res.chaldean_namank}", f"पाइथागोरस: {num_res.pythagorean_namank}")
 
-    tab_num1, tab_num2, tab_num3, tab_num4 = st.tabs([
-        "📊 ३×३ लो-शू ग्रिड एवं ८ तल (Lo-Shu Grid)",
-        "🪐 मूलांक व भाग्यांक विस्तृत विश्लेषण",
-        "🧩 मिसिंग नंबर एवं शास्त्रीय उपाय",
-        "💎 लकी फैक्टर्स एवं नेम करेक्शन"
-    ])
+    tab_num1, tab_num2, tab_num3, tab_num4 = st.tabs(MODULE_TABS_REGISTRY[21])
 
     with tab_num1:
         st.markdown("### 📊 ३×३ लो-शू ग्रिड (Magic Square of 15)")
@@ -21737,12 +21571,7 @@ elif selected_idx == 22:
     c_lk3.metric("सक्रिय कर्मिक ऋण", f"{len(lk_res.active_debts)} / 9 ऋण", "पूर्वजन्म संस्कार")
     c_lk4.metric("सोए हुए घर (Sleeping)", f"{len(lk_res.sleeping_houses)} / 12", "जाग्रत करने योग्य")
 
-    tab_lk1, tab_lk2, tab_lk3, tab_lk4 = st.tabs([
-        "🏠 १२ पक्के खाने एवं ग्रह स्थिति (12 Khanas)",
-        "⚠️ ९ प्रकार के कर्मिक ऋण एवं पितृ दोष (9 Debts)",
-        "💤 सोए हुए घर एवं ग्रह (Sleeping Houses)",
-        "🌿 १०८ प्रामाणिक लाल किताब टोटके पुस्तकालय"
-    ])
+    tab_lk1, tab_lk2, tab_lk3, tab_lk4 = st.tabs(MODULE_TABS_REGISTRY[22])
 
     with tab_lk1:
         st.markdown("### 🏠 लाल किताब अनुसार १२ खानों में ग्रह स्थिति")
@@ -21898,12 +21727,7 @@ elif selected_idx == 23:
     c_d3.metric("अनुकूलतम पेय", "नारियल जल / सौंफ" if "Pitta" in diet_res["primary_dosha"] else ("अदरक काढ़ा" if "Vata" in diet_res["primary_dosha"] else "त्रिकटु जल / छाछ"), "दोष संतुलन")
     c_d4.metric("लवण (नमक) परामर्श", "सेंधा नमक (Rock Salt)", "स्वास्थ्य रक्षा")
 
-    tab_d1, tab_d2, tab_d3, tab_d4 = st.tabs([
-        "🌿 त्रिदोष एवं खानपान स्वभाव (Dosha Profile)",
-        "✅ क्या खाएं (अनुकूल आहार सूची)",
-        "❌ क्या न खाएं (वर्जित एवं त्याज्य)",
-        "⏰ भोजन नियम एवं उपवास परामर्श (Rules & Fasting)"
-    ])
+    tab_d1, tab_d2, tab_d3, tab_d4 = st.tabs(MODULE_TABS_REGISTRY[23])
 
     with tab_d1:
         st.markdown(f"### 🌿 आपकी शारीरिक प्रकृति: {diet_res['dosha_title']}")
@@ -21984,12 +21808,7 @@ elif selected_idx == 24:
     c_r3.metric("विशेष सतर्कता पक्ष", "सट्टेबाज़ / धोखेबाज़", "६/१२ भाव प्रभाव")
     c_r4.metric("संबंध नीति", "पारदर्शिता एवं आदर", "स्थायी सुख")
 
-    tab_r1, tab_r2, tab_r3, tab_r4 = st.tabs([
-        "👫 दांपत्य एवं जीवनसाथी (Spouse & Partners)",
-        "👨‍👩‍👦 परिवार एवं स्वजन (Family & Siblings)",
-        "🌟 मित्र, उच्चाधिकारी एवं सहायक (Friends & Benefactors)",
-        "⚔️ विरोधी, शत्रु एवं प्रतिस्पर्धा (Opponents & Caution)"
-    ])
+    tab_r1, tab_r2, tab_r3, tab_r4 = st.tabs(MODULE_TABS_REGISTRY[24])
 
     with tab_r1:
         st.markdown("### 👫 दांपत्य एवं जीवनसाथी संबंध (सप्तम भाव विचार)")
@@ -22132,13 +21951,7 @@ elif selected_idx == 25:
             "rudraksha_therapy": []
         }
 
-    tab_h0, tab_h1, tab_h2, tab_h3, tab_h4 = st.tabs([
-        "🩺 कालपुरुष देह वेध आरेख (12-Organ Anatomy Map & Tridosha)",
-        "💪 आरोग्य बल एवं वर्तमान संवेदनशीलता",
-        "⚠️ भविष्य में संभावित रोग (Disease Risks)",
-        "📋 नवग्रह एवं अंग-विशेष चिकित्सा सारणी",
-        "🌿 शास्त्रीय निवारक उपाय एवं दिनचर्या"
-    ])
+    tab_h0, tab_h1, tab_h2, tab_h3, tab_h4 = st.tabs(MODULE_TABS_REGISTRY[25])
 
     with tab_h0:
         st.markdown("### 🩺 कालपुरुष देह वेध आरेख (12-Organ Anatomy Map)")
@@ -22293,12 +22106,7 @@ elif selected_idx == 26:
     c_b3.metric("शारीरिक आभा", body_res["physique"]["complexion"].split(" ")[0], "वर्ण व आभा")
     c_b4.metric("तत्व प्रधानता", body_res["physique"]["constitution"].split(" ")[0], "मूल ऊर्जा")
 
-    tab_b1, tab_b2, tab_b3, tab_b4 = st.tabs([
-        "🏃 देहयष्टि, कद-काठी एवं रंग-रूप",
-        "🦴 १२ कालपुरुष अंग स्थिति (12 Limbs Status)",
-        "🎯 जन्मजात चिन्ह, तिल व मस्से (Birthmarks)",
-        "🔮 शारीरिक सुरक्षा एवं आसन परामर्श"
-    ])
+    tab_b1, tab_b2, tab_b3, tab_b4 = st.tabs(MODULE_TABS_REGISTRY[26])
 
     with tab_b1:
         st.markdown(f"### 🏃 आपकी शारीरिक बनावट: {body_res['lagna_sign']} लग्न")
@@ -22393,13 +22201,7 @@ elif selected_idx == 27:
     c_i3.metric("जप माला", ishta_res["ishta_mala"].split(" ")[0], "मंत्र सिद्धि")
     c_i4.metric("पावन व्रत दिवस", ishta_res["ishta_vrat_day"].split(" ")[0], ishta_res["ishta_vrat_tithi"].split(" ")[0])
 
-    tab_i1, tab_i2, tab_i3, tab_i4, tab_i5 = st.tabs([
-        "🕉️ इष्टदेवता एवं आत्म-मोक्ष निर्णय",
-        "📿 कुलदेवता, धर्मदेवता एवं मंत्र-साधना",
-        "🪔 नित्य पूजा-उपासना एवं सामग्री विधान",
-        "📅 सामान्य व्रत, उपवास एवं पारण नियम",
-        "🚩 नवरात्रि विशेष: ९ दिवसीय पूजा, व्रत व विधान"
-    ])
+    tab_i1, tab_i2, tab_i3, tab_i4, tab_i5 = st.tabs(MODULE_TABS_REGISTRY[27])
 
     with tab_i1:
         st.markdown(f"### 🕉️ आपके प्रधान इष्टदेवता: {ishta_res['ishta_deity']}")
@@ -22665,14 +22467,7 @@ elif selected_idx == 28:
     c_k3.metric("व्यसन संवेदनशीलता", f"{vic['addiction_score']}%", vic["risk_level"].split(" / ")[0])
     c_k4.metric("पूर्वजन्म संचित पुण्य", f"{krm['purva_punya_score']}%", f"आत्मकारक: {krm['atmakaraka']}")
 
-    tab_k1, tab_k2, tab_k3, tab_k4, tab_k5, tab_k6 = st.tabs([
-        "💼 आजीविका: व्यापार बनाम नौकरी",
-        "🎓 शिक्षा, मेधा एवं बौद्धिक क्षमता",
-        "⚖️ नैतिक आचरण एवं गुण-प्रवृत्तियां",
-        "🚫 गलत लत, व्यसन एवं प्रलोभन",
-        "🏛️ पैतृक संपत्ति, सुख एवं शांति",
-        "🕉️ पूर्वजन्म कर्म, ऋणानुबंध एवं प्रारब्ध"
-    ])
+    tab_k1, tab_k2, tab_k3, tab_k4, tab_k5, tab_k6 = st.tabs(MODULE_TABS_REGISTRY[28])
 
     # ---------------------------------------------------------
     # TAB 1: आजीविका: व्यापार बनाम नौकरी (Career & Enterprise)
