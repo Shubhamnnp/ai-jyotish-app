@@ -1576,38 +1576,45 @@ unified_css = f"""
         align-items: center !important;
         justify-content: center !important;
     }}
-    .header-brand-box,
-    .header-title-box {{
+    /* Header Brand Card: Unified Logo + BRAMHAHORA in one card matching selectbox boxes */
+    .header-brand-card {{
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: 8px !important;
+        gap: 10px !important;
         height: 34px !important;
         min-height: 34px !important;
         max-height: 34px !important;
         width: 100% !important;
+        border-radius: 6px !important;
+        border: 1.5px solid #CBD5E1 !important;
+        background: #FFFFFF !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+        padding: 0px 10px !important;
+        box-sizing: border-box !important;
         white-space: nowrap !important;
         user-select: none !important;
-        margin: 0px !important;
-        padding: 0px !important;
+        cursor: default !important;
+        transition: all 0.15s ease !important;
     }}
-    .header-logo-box {{
-        width: 100% !important;
-        height: 34px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        margin: 0px !important;
-        padding: 0px !important;
+    .header-brand-card:hover {{
+        border-color: #F59E0B !important;
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
+    }}
+    .header-brand-card .hdr-brand-title {{
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-weight: 900 !important;
+        font-size: 14.5px !important;
+        letter-spacing: 2px !important;
+        line-height: 1 !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        white-space: nowrap !important;
+        display: inline-block !important;
     }}
     @media (max-width: 1280px) {{
-        .header-brand-box .hdr-brand-hi,
-    .header-title-box .hdr-brand-hi {{
-            font-size: 19px !important;
-        }}
-        .header-brand-box .hdr-brand-en,
-    .header-title-box .hdr-brand-en {{
-            font-size: 13.5px !important;
+        .header-brand-card .hdr-brand-title {{
+            font-size: 13px !important;
             letter-spacing: 1.5px !important;
         }}
     }}
@@ -7029,10 +7036,10 @@ with st.container(key="top_frozen_header_container", border=False):
     # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
     # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # सभी 6 घटक सटीक अनुपात [0.40, 2.25, 4.50, 4.50, 4.50, 4.00]:
-        # [ >> ] [ Logo ] [ BRAMHAHORA ] [ Module ] [ Tab ] [ Menu ]
-        hdr_c_toggle, hdr_c_logo, hdr_c_title, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.40, 2.25, 4.50, 4.50, 4.50, 4.00],
+        # सभी घटक सटीक अनुपात [0.40] [ [2.25] [4.50] ] [4.50] [4.50] [4.00]:
+        # [ >> ] [ Logo + BRAMHAHORA Card ] [ Module ] [ Tab ] [ Menu ]
+        hdr_c_toggle, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
+            [0.40, 2.25 + 4.50, 4.50, 4.50, 4.00],
             gap="small",
             vertical_alignment="center"
         )
@@ -7045,19 +7052,19 @@ with st.container(key="top_frozen_header_container", border=False):
                 unsafe_allow_html=True
             )
 
-        with hdr_c_logo:
+        with hdr_c_brand:
             st.markdown("""
-            <div class="header-logo-box" style="display:flex; align-items:center; justify-content:center; width:100%; height:34px; margin:0 auto; padding:0; user-select:none;">
-                <!-- 34px Prestigious 3D Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
-                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 1px 4px rgba(245,158,11,0.7)); flex-shrink:0; display:block;">
+            <div class="header-brand-card" title="BRAMHAHORA Sovereign Vedic Astrology Workstation">
+                <!-- 26px Prestigious 3D Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
+                <svg width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 1px 3px rgba(245,158,11,0.5)); flex-shrink:0; display:block;">
                     <defs>
-                        <linearGradient id="vedicGold3D" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <linearGradient id="vedicGoldCard" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#FFFBEB" />
                             <stop offset="25%" stop-color="#FDE047" />
                             <stop offset="65%" stop-color="#F59E0B" />
                             <stop offset="100%" stop-color="#B45309" />
                         </linearGradient>
-                        <radialGradient id="omSunGlow" cx="50%" cy="50%" r="50%">
+                        <radialGradient id="omSunCard" cx="50%" cy="50%" r="50%">
                             <stop offset="0%" stop-color="#FFFFFF" />
                             <stop offset="45%" stop-color="#FEF08A" />
                             <stop offset="85%" stop-color="#F59E0B" />
@@ -7065,20 +7072,14 @@ with st.container(key="top_frozen_header_container", border=False):
                         </radialGradient>
                     </defs>
                     <!-- Sacred Ashtamangala Interlocking Star of Lakshmi -->
-                    <rect x="20" y="20" width="60" height="60" rx="9" fill="#0A192F" stroke="url(#vedicGold3D)" stroke-width="2.6" />
-                    <rect x="20" y="20" width="60" height="60" rx="9" transform="rotate(45 50 50)" fill="#0A192F" stroke="url(#vedicGold3D)" stroke-width="2.6" />
+                    <rect x="20" y="20" width="60" height="60" rx="9" fill="#0A192F" stroke="url(#vedicGoldCard)" stroke-width="2.6" />
+                    <rect x="20" y="20" width="60" height="60" rx="9" transform="rotate(45 50 50)" fill="#0A192F" stroke="url(#vedicGoldCard)" stroke-width="2.6" />
                     <!-- Inner Golden Celestial Halo -->
-                    <circle cx="50" cy="50" r="23" fill="none" stroke="url(#vedicGold3D)" stroke-width="1.6" stroke-dasharray="4 2" />
+                    <circle cx="50" cy="50" r="23" fill="none" stroke="url(#vedicGoldCard)" stroke-width="1.6" stroke-dasharray="4 2" />
                     <!-- Sacred Radiant Om -->
-                    <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.95));">ॐ</text>
+                    <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunCard)" text-anchor="middle" dominant-baseline="middle">ॐ</text>
                 </svg>
-            </div>
-            """, unsafe_allow_html=True)
-
-        with hdr_c_title:
-            st.markdown("""
-            <div class="header-title-box" style="display:flex; align-items:center; justify-content:center; width:100%; height:34px; line-height:1; white-space:nowrap; user-select:none; margin:0 auto; padding:0; text-align:center;">
-                <span class="hdr-brand-en" style="font-size:18px; font-weight:900; letter-spacing:2.5px; color:#FBBF24 !important; -webkit-text-fill-color:#FBBF24 !important; text-shadow:0 1px 4px rgba(0,0,0,0.95), 0 0 10px rgba(245,158,11,0.35); text-align:center; display:inline-block;">BRAMHAHORA</span>
+                <span class="hdr-brand-title">BRAMHAHORA</span>
             </div>
             """, unsafe_allow_html=True)
 
