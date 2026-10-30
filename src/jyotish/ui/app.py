@@ -1547,13 +1547,15 @@ unified_css = f"""
     .header-title-box .hdr-brand-en {{
         color: #FBBF24 !important;
         -webkit-text-fill-color: #FBBF24 !important;
-        font-weight: 800 !important;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9) !important;
-        font-size: 15px !important;
-        letter-spacing: 2px !important;
+        font-weight: 900 !important;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 0 10px rgba(245, 158, 11, 0.45) !important;
+        font-size: 18px !important;
+        letter-spacing: 2.5px !important;
         line-height: 1 !important;
         display: flex !important;
         align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
     }}
     /* Perfect vertical alignment across all header container wrappers */
     .st-key-frozen_toolbelt_container div[data-testid="column"] > div[data-testid="stVerticalBlock"],
@@ -7027,10 +7029,10 @@ with st.container(key="top_frozen_header_container", border=False):
     # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
     # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # सभी 6 घटक सटीक अनुपात [0.40, 1.25, 5.50, 4.50, 4.50, 4.00]:
+        # सभी 6 घटक सटीक अनुपात [0.40, 2.25, 4.50, 4.50, 4.50, 4.00]:
         # [ >> ] [ Logo ] [ BRAMHAHORA ] [ Module ] [ Tab ] [ Menu ]
         hdr_c_toggle, hdr_c_logo, hdr_c_title, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.40, 1.25, 5.50, 4.50, 4.50, 4.00],
+            [0.40, 2.25, 4.50, 4.50, 4.50, 4.00],
             gap="small",
             vertical_alignment="center"
         )
