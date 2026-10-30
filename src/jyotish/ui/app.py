@@ -1560,14 +1560,18 @@ unified_css = f"""
     /* Perfect vertical alignment across all header container wrappers */
     .st-key-frozen_toolbelt_container div[data-testid="column"] > div[data-testid="stVerticalBlock"],
     .st-key-frozen_toolbelt_container div[data-testid="column"] div[data-testid="stElementContainer"],
-    .st-key-frozen_toolbelt_container div[data-testid="column"] div[data-testid="stMarkdownContainer"] {{
+    .st-key-frozen_toolbelt_container div[data-testid="column"] div[data-testid="stMarkdownContainer"],
+    .st-key-frozen_toolbelt_container div[data-testid="column"] div[data-testid="stMarkdownContainer"] p,
+    .st-key-frozen_toolbelt_container div[data-testid="column"] .stMarkdown {{
         display: flex !important;
         align-items: center !important;
+        justify-content: center !important;
         height: 34px !important;
         min-height: 34px !important;
         max-height: 34px !important;
         margin: 0px !important;
         padding: 0px !important;
+        line-height: 1 !important;
     }}
     .header-toggle-slot {{
         width: 100% !important;
@@ -1576,7 +1580,7 @@ unified_css = f"""
         align-items: center !important;
         justify-content: center !important;
     }}
-    /* Header Brand Card: Unified Logo + BRAMHAHORA in one card matching selectbox boxes */
+    /* Header Brand Card: Unified Logo + BRAMHAHORA in one cosmic workstation box */
     .header-brand-card {{
         display: flex !important;
         align-items: center !important;
@@ -1587,34 +1591,36 @@ unified_css = f"""
         max-height: 34px !important;
         width: 100% !important;
         border-radius: 6px !important;
-        border: 1.5px solid #CBD5E1 !important;
-        background: #FFFFFF !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
-        padding: 0px 10px !important;
+        border: 1.5px solid #F59E0B !important;
+        background: linear-gradient(180deg, #0F2744 0%, #0A192F 100%) !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(245, 158, 11, 0.25) !important;
+        padding: 0px 12px !important;
         box-sizing: border-box !important;
         white-space: nowrap !important;
         user-select: none !important;
         cursor: default !important;
         transition: all 0.15s ease !important;
+        margin: 0px !important;
     }}
     .header-brand-card:hover {{
-        border-color: #F59E0B !important;
-        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
+        border-color: #FDE047 !important;
+        box-shadow: 0 0 10px rgba(245, 158, 11, 0.4) !important;
     }}
     .header-brand-card .hdr-brand-title {{
-        color: #0F172A !important;
-        -webkit-text-fill-color: #0F172A !important;
+        color: #FBBF24 !important;
+        -webkit-text-fill-color: #FBBF24 !important;
         font-weight: 900 !important;
-        font-size: 14.5px !important;
+        font-size: 15px !important;
         letter-spacing: 2px !important;
         line-height: 1 !important;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
         white-space: nowrap !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 8px rgba(245, 158, 11, 0.35) !important;
         display: inline-block !important;
     }}
     @media (max-width: 1280px) {{
         .header-brand-card .hdr-brand-title {{
-            font-size: 13px !important;
+            font-size: 13.5px !important;
             letter-spacing: 1.5px !important;
         }}
     }}
@@ -7036,10 +7042,10 @@ with st.container(key="top_frozen_header_container", border=False):
     # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
     # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # सभी घटक सटीक अनुपात [0.40] [ [2.25] [4.50] ] [4.50] [4.50] [4.00]:
+        # संतुलित एवं सुरुचिपूर्ण अनुपात [0.40, 2.80, 5.50, 5.50, 4.00]:
         # [ >> ] [ Logo + BRAMHAHORA Card ] [ Module ] [ Tab ] [ Menu ]
         hdr_c_toggle, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.40, 2.25 + 4.50, 4.50, 4.50, 4.00],
+            [0.40, 2.80, 5.50, 5.50, 4.00],
             gap="small",
             vertical_alignment="center"
         )
@@ -7053,35 +7059,32 @@ with st.container(key="top_frozen_header_container", border=False):
             )
 
         with hdr_c_brand:
-            st.markdown("""
-            <div class="header-brand-card" title="BRAMHAHORA Sovereign Vedic Astrology Workstation">
-                <!-- 26px Prestigious 3D Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
-                <svg width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 1px 3px rgba(245,158,11,0.5)); flex-shrink:0; display:block;">
-                    <defs>
-                        <linearGradient id="vedicGoldCard" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#FFFBEB" />
-                            <stop offset="25%" stop-color="#FDE047" />
-                            <stop offset="65%" stop-color="#F59E0B" />
-                            <stop offset="100%" stop-color="#B45309" />
-                        </linearGradient>
-                        <radialGradient id="omSunCard" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#FFFFFF" />
-                            <stop offset="45%" stop-color="#FEF08A" />
-                            <stop offset="85%" stop-color="#F59E0B" />
-                            <stop offset="100%" stop-color="#D97706" />
-                        </radialGradient>
-                    </defs>
-                    <!-- Sacred Ashtamangala Interlocking Star of Lakshmi -->
-                    <rect x="20" y="20" width="60" height="60" rx="9" fill="#0A192F" stroke="url(#vedicGoldCard)" stroke-width="2.6" />
-                    <rect x="20" y="20" width="60" height="60" rx="9" transform="rotate(45 50 50)" fill="#0A192F" stroke="url(#vedicGoldCard)" stroke-width="2.6" />
-                    <!-- Inner Golden Celestial Halo -->
-                    <circle cx="50" cy="50" r="23" fill="none" stroke="url(#vedicGoldCard)" stroke-width="1.6" stroke-dasharray="4 2" />
-                    <!-- Sacred Radiant Om -->
-                    <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunCard)" text-anchor="middle" dominant-baseline="middle">ॐ</text>
-                </svg>
-                <span class="hdr-brand-title">BRAMHAHORA</span>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown(
+                '<div class="header-brand-card" title="BRAMHAHORA Sovereign Vedic Astrology Workstation">'
+                '<svg width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 1px 3px rgba(245,158,11,0.5)); flex-shrink:0; display:block;">'
+                '<defs>'
+                '<linearGradient id="vedicGoldCard" x1="0%" y1="0%" x2="100%" y2="100%">'
+                '<stop offset="0%" stop-color="#FFFBEB" />'
+                '<stop offset="25%" stop-color="#FDE047" />'
+                '<stop offset="65%" stop-color="#F59E0B" />'
+                '<stop offset="100%" stop-color="#B45309" />'
+                '</linearGradient>'
+                '<radialGradient id="omSunCard" cx="50%" cy="50%" r="50%">'
+                '<stop offset="0%" stop-color="#FFFFFF" />'
+                '<stop offset="45%" stop-color="#FEF08A" />'
+                '<stop offset="85%" stop-color="#F59E0B" />'
+                '<stop offset="100%" stop-color="#D97706" />'
+                '</radialGradient>'
+                '</defs>'
+                '<rect x="20" y="20" width="60" height="60" rx="9" fill="#0A192F" stroke="url(#vedicGoldCard)" stroke-width="2.6" />'
+                '<rect x="20" y="20" width="60" height="60" rx="9" transform="rotate(45 50 50)" fill="#0A192F" stroke="url(#vedicGoldCard)" stroke-width="2.6" />'
+                '<circle cx="50" cy="50" r="23" fill="none" stroke="url(#vedicGoldCard)" stroke-width="1.6" stroke-dasharray="4 2" />'
+                '<text x="50" y="58" font-family="\'Segoe UI\', \'Noto Sans Devanagari\', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunCard)" text-anchor="middle" dominant-baseline="middle">ॐ</text>'
+                '</svg>'
+                '<span class="hdr-brand-title">BRAMHAHORA</span>'
+                '</div>',
+                unsafe_allow_html=True
+            )
 
         with hdr_c_mod:
             _cur_m_name = MODULE_OPTIONS[st.session_state.active_module_idx] if 0 <= st.session_state.active_module_idx < len(MODULE_OPTIONS) else MODULE_OPTIONS[0]
