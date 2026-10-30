@@ -1527,7 +1527,8 @@ unified_css = f"""
     .st-key-frozen_toolbelt_container b.hdr-brand-hi,
     span.hdr-brand-hi,
     b.hdr-brand-hi,
-    .header-brand-box .hdr-brand-hi {{
+    .header-brand-box .hdr-brand-hi,
+    .header-title-box .hdr-brand-hi {{
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         font-weight: 900 !important;
@@ -1542,7 +1543,8 @@ unified_css = f"""
     .st-key-frozen_toolbelt_container b.hdr-brand-en,
     span.hdr-brand-en,
     b.hdr-brand-en,
-    .header-brand-box .hdr-brand-en {{
+    .header-brand-box .hdr-brand-en,
+    .header-title-box .hdr-brand-en {{
         color: #FBBF24 !important;
         -webkit-text-fill-color: #FBBF24 !important;
         font-weight: 800 !important;
@@ -1572,10 +1574,11 @@ unified_css = f"""
         align-items: center !important;
         justify-content: center !important;
     }}
-    .header-brand-box {{
+    .header-brand-box,
+    .header-title-box {{
         display: flex !important;
         align-items: center !important;
-        gap: 10px !important;
+        gap: 8px !important;
         height: 34px !important;
         min-height: 34px !important;
         max-height: 34px !important;
@@ -1585,11 +1588,22 @@ unified_css = f"""
         margin: 0px !important;
         padding: 0px !important;
     }}
+    .header-logo-box {{
+        width: 100% !important;
+        height: 34px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0px !important;
+        padding: 0px !important;
+    }}
     @media (max-width: 1280px) {{
-        .header-brand-box .hdr-brand-hi {{
+        .header-brand-box .hdr-brand-hi,
+    .header-title-box .hdr-brand-hi {{
             font-size: 19px !important;
         }}
-        .header-brand-box .hdr-brand-en {{
+        .header-brand-box .hdr-brand-en,
+    .header-title-box .hdr-brand-en {{
             font-size: 13.5px !important;
             letter-spacing: 1.5px !important;
         }}
@@ -5197,8 +5211,8 @@ def render_login_page():
                 ॐ आदित्याय च सोमाय मङ्गलाय बुधाय च।<br>
                 गुरुशुक्रशनिभ्यश्च राहवे केतवे नमः॥
             </div>
-            <div style="font-size: 24px; font-weight: 900; color: #0F172A; letter-spacing: -0.5px; margin-bottom: 2px;">
-                🔮 JyotishOS Cloud
+            <div style="font-size: 26px; font-weight: 900; color: #0F172A; letter-spacing: 1.5px; margin-bottom: 2px;">
+                BRAMHAHORA
             </div>
             <div style="font-size: 11px; color: #64748B; font-weight: 600;">
                 सर्वं खल्विदं ब्रह्म • प्रामाणिक वैदिक ज्योतिष अनुसंधान एवं निर्णय प्रणाली
@@ -7012,8 +7026,10 @@ with st.container(key="top_frozen_header_container", border=False):
     # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
     # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        hdr_c_toggle, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.42, 5.00, 2.50, 2.50, 2.20],
+        # सभी 6 घटक सटीक अनुपात [0.42, 1.25, 5.50, 2.50, 2.50, 2.50]:
+        # [ >> ] [ अष्टलक्ष्मी लोगो ] [ ब्रह्महोरा ] [ मॉड्यूल ] [ टैब ] [ मेन्यू ]
+        hdr_c_toggle, hdr_c_logo, hdr_c_title, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
+            [0.42, 1.25, 5.50, 2.50, 2.50, 2.50],
             gap="small",
             vertical_alignment="center"
         )
@@ -7026,9 +7042,9 @@ with st.container(key="top_frozen_header_container", border=False):
                 unsafe_allow_html=True
             )
 
-        with hdr_c_brand:
+        with hdr_c_logo:
             st.markdown("""
-            <div class="header-brand-box" style="display:flex; align-items:center; gap:10px; height:34px; margin:0; padding:0; white-space:nowrap; user-select:none;">
+            <div class="header-logo-box" style="display:flex; align-items:center; justify-content:center; height:34px; margin:0; padding:0; user-select:none;">
                 <!-- 34px Prestigious 3D Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
                 <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 1px 4px rgba(245,158,11,0.7)); flex-shrink:0; display:block;">
                     <defs>
@@ -7053,10 +7069,14 @@ with st.container(key="top_frozen_header_container", border=False):
                     <!-- Sacred Radiant Om -->
                     <text x="50" y="58" font-family="'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunGlow)" text-anchor="middle" dominant-baseline="middle" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.95));">ॐ</text>
                 </svg>
-                <div style="display:flex; align-items:center; gap:8px; height:34px; line-height:1; flex-shrink:0;">
-                    <span class="hdr-brand-hi">ब्रह्महोरा</span>
-                    <span class="hdr-brand-en">BRAHMAHORA</span>
-                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with hdr_c_title:
+            st.markdown("""
+            <div class="header-title-box" style="display:flex; align-items:center; gap:8px; height:34px; line-height:1; white-space:nowrap; user-select:none; margin:0; padding:0;">
+                <span class="hdr-brand-hi">ब्रह्महोरा</span>
+                <span class="hdr-brand-en">BRAHMAHORA</span>
             </div>
             """, unsafe_allow_html=True)
 
