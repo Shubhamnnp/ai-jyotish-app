@@ -1487,8 +1487,8 @@ unified_css = f"""
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
-        padding-top: 6px !important;
-        padding-bottom: 6px !important;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
         padding-left: 10px !important;
         padding-right: 12px !important;
         margin: 0px !important;
@@ -1502,12 +1502,15 @@ unified_css = f"""
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
+        justify-content: center !important;
         flex-wrap: nowrap !important;
         width: 100% !important;
-        min-height: 34px !important;
+        min-height: 36px !important;
+        height: 36px !important;
+        max-height: 36px !important;
         visibility: visible !important;
         opacity: 1 !important;
-        gap: 6px !important;
+        gap: 8px !important;
         margin: 0 !important;
         padding: 0 !important;
         overflow: visible !important;
@@ -1519,8 +1522,11 @@ unified_css = f"""
         padding-right: 3px !important;
         display: flex !important;
         align-items: center !important;
+        justify-content: center !important;
+        height: 36px !important;
         visibility: visible !important;
         opacity: 1 !important;
+        margin: 0 !important;
     }}
     /* Header Brand Typography Protection: Pure white Hindi and radiant gold English */
     .st-key-frozen_toolbelt_container span.hdr-brand-hi,
@@ -1580,11 +1586,11 @@ unified_css = f"""
         align-items: center !important;
         justify-content: center !important;
     }}
-    /* Header Open Sovereign Brand: Clean, Unboxed, Majestic Gold Badge (Option A) */
+    /* Header Open Sovereign Brand: Clean, Unboxed, Dead-Center Gold Badge (Option A) */
     .header-brand-open {{
         display: flex !important;
         align-items: center !important;
-        justify-content: flex-start !important;
+        justify-content: center !important;
         gap: 10px !important;
         height: 36px !important;
         min-height: 36px !important;
@@ -1593,16 +1599,19 @@ unified_css = f"""
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
-        padding: 0px 4px !important;
+        padding: 0px !important;
         box-sizing: border-box !important;
         white-space: nowrap !important;
         user-select: none !important;
         cursor: default !important;
-        margin: 0px !important;
+        margin: 0 auto !important;
+        text-align: center !important;
     }}
     .header-brand-open svg {{
         filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.75)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.95)) !important;
         flex-shrink: 0 !important;
+        display: block !important;
+        margin: 0 !important;
         transition: transform 0.25s ease !important;
     }}
     .header-brand-open:hover svg {{
@@ -1618,7 +1627,11 @@ unified_css = f"""
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
         white-space: nowrap !important;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 12px rgba(245, 158, 11, 0.45) !important;
-        display: inline-block !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }}
     @media (max-width: 1280px) {{
         .header-brand-open .hdr-brand-title {{
@@ -7084,7 +7097,7 @@ with st.container(key="top_frozen_header_container", border=False):
                 '<!-- Inner Golden Celestial Halo -->'
                 '<circle cx="50" cy="50" r="23" fill="none" stroke="url(#vedicGoldCard)" stroke-width="1.6" stroke-dasharray="4 2" />'
                 '<!-- Sacred Radiant Om -->'
-                '<text x="50" y="58" font-family="\'Segoe UI\', \'Noto Sans Devanagari\', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunCard)" text-anchor="middle" dominant-baseline="middle">ॐ</text>'
+                '<text x="50" y="52" font-family="\'Segoe UI\', \'Noto Sans Devanagari\', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunCard)" text-anchor="middle" dominant-baseline="central">ॐ</text>'
                 '</svg>'
                 '<span class="hdr-brand-title">BRAMHAHORA</span>'
                 '</div>',
