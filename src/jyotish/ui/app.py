@@ -1487,13 +1487,13 @@ unified_css = f"""
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
-        padding-top: 5px !important;
-        padding-bottom: 5px !important;
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
         padding-left: 10px !important;
         padding-right: 12px !important;
         margin: 0px !important;
         border-bottom: 2px solid #F59E0B !important;
-        box-shadow: 0 4px 18px rgba(5, 12, 24, 0.45) !important;
+        box-shadow: 0 4px 20px rgba(3, 8, 18, 0.6), 0 1px 6px rgba(245, 158, 11, 0.3) !important;
         box-sizing: border-box !important;
         transition: left 0.15s ease, width 0.15s ease !important;
     }}
@@ -1557,7 +1557,7 @@ unified_css = f"""
         justify-content: center !important;
         text-align: center !important;
     }}
-    /* Perfect vertical alignment across all header container wrappers */
+    /* Perfect vertical alignment across all header container wrappers (36px workstation height) */
     .st-key-frozen_toolbelt_container div[data-testid="column"] > div[data-testid="stVerticalBlock"],
     .st-key-frozen_toolbelt_container div[data-testid="column"] div[data-testid="stElementContainer"],
     .st-key-frozen_toolbelt_container div[data-testid="column"] div[data-testid="stMarkdownContainer"],
@@ -1566,62 +1566,64 @@ unified_css = f"""
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        height: 34px !important;
-        min-height: 34px !important;
-        max-height: 34px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
         margin: 0px !important;
         padding: 0px !important;
         line-height: 1 !important;
     }}
     .header-toggle-slot {{
         width: 100% !important;
-        height: 34px !important;
+        height: 36px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
     }}
-    /* Header Brand Card: Unified Logo + BRAMHAHORA in one cosmic workstation box */
-    .header-brand-card {{
+    /* Header Open Sovereign Brand: Clean, Unboxed, Majestic Gold Badge (Option A) */
+    .header-brand-open {{
         display: flex !important;
         align-items: center !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
         gap: 10px !important;
-        height: 34px !important;
-        min-height: 34px !important;
-        max-height: 34px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        max-height: 36px !important;
         width: 100% !important;
-        border-radius: 6px !important;
-        border: 1.5px solid #F59E0B !important;
-        background: linear-gradient(180deg, #0F2744 0%, #0A192F 100%) !important;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(245, 158, 11, 0.25) !important;
-        padding: 0px 12px !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0px 4px !important;
         box-sizing: border-box !important;
         white-space: nowrap !important;
         user-select: none !important;
         cursor: default !important;
-        transition: all 0.15s ease !important;
         margin: 0px !important;
     }}
-    .header-brand-card:hover {{
-        border-color: #FDE047 !important;
-        box-shadow: 0 0 10px rgba(245, 158, 11, 0.4) !important;
+    .header-brand-open svg {{
+        filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.75)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.95)) !important;
+        flex-shrink: 0 !important;
+        transition: transform 0.25s ease !important;
     }}
-    .header-brand-card .hdr-brand-title {{
+    .header-brand-open:hover svg {{
+        transform: scale(1.06) rotate(3deg) !important;
+    }}
+    .header-brand-open .hdr-brand-title {{
         color: #FBBF24 !important;
         -webkit-text-fill-color: #FBBF24 !important;
         font-weight: 900 !important;
-        font-size: 15px !important;
-        letter-spacing: 2px !important;
+        font-size: 16.5px !important;
+        letter-spacing: 2.6px !important;
         line-height: 1 !important;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
         white-space: nowrap !important;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 8px rgba(245, 158, 11, 0.35) !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 12px rgba(245, 158, 11, 0.45) !important;
         display: inline-block !important;
     }}
     @media (max-width: 1280px) {{
-        .header-brand-card .hdr-brand-title {{
-            font-size: 13.5px !important;
-            letter-spacing: 1.5px !important;
+        .header-brand-open .hdr-brand-title {{
+            font-size: 14.5px !important;
+            letter-spacing: 2px !important;
         }}
     }}
     .st-key-frozen_toolbelt_container button {{
@@ -1631,8 +1633,8 @@ unified_css = f"""
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
-        min-height: 32px !important;
-        height: 32px !important;
+        min-height: 34px !important;
+        height: 34px !important;
         background: #FFFFFF !important;
         color: #000000 !important;
         border: 1.5px solid #CBD5E1 !important;
@@ -1661,30 +1663,30 @@ unified_css = f"""
         margin: 0px !important;
         padding: 0px !important;
     }}
-    /* Header selectbox trigger: 34px height, crisp white card with smooth hover */
+    /* Header selectbox trigger: 36px height, soft luxury ivory/white card with smooth golden hover (Option A) */
     .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] > div,
     .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
     .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[class*="e1fp86qc0"] {{
-        min-height: 34px !important;
-        height: 34px !important;
-        max-height: 34px !important;
-        border-radius: 6px !important;
+        min-height: 36px !important;
+        height: 36px !important;
+        max-height: 36px !important;
+        border-radius: 8px !important;
         border: 1.5px solid #CBD5E1 !important;
         background: #FFFFFF !important;
         font-weight: 750 !important;
-        font-size: 12.5px !important;
+        font-size: 13px !important;
         color: #0F172A !important;
         display: flex !important;
         align-items: center !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
-        transition: all 0.15s ease !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 2px 5px rgba(15, 23, 42, 0.04) !important;
+        transition: all 0.2s ease !important;
         box-sizing: border-box !important;
     }}
     .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] > div:hover,
     .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] div[data-baseweb="select"] > div:hover,
     .st-key-frozen_toolbelt_container [data-testid="stSelectbox"] > div:focus-within {{
         border-color: #F59E0B !important;
-        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
+        box-shadow: 0 0 10px rgba(245, 158, 11, 0.35) !important;
     }}
 
     /* Header Selectbox Dropdown Lists: Ensure dropdown opens right attached to header in front of all layers */
@@ -6667,7 +6669,7 @@ def render_vastu_compass_wheel_svg(zones: list, is_dark: bool = False) -> str:
 
 MODULE_TABS_REGISTRY = {
     0: [
-        "📜 लग्न व वर्ग चक्र (D1-D60)",
+        "☸️ लग्न व वर्ग चक्र (D1-D60)",
         "🌟 पुष्कर व वर्गोत्तम",
         "👑 जैमिनी विशेष लग्न",
         "🏠 भाव चलित",
@@ -7042,10 +7044,10 @@ with st.container(key="top_frozen_header_container", border=False):
     # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
     # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # संतुलित एवं सुरुचिपूर्ण अनुपात [0.40, 2.80, 5.50, 5.50, 4.00]:
-        # [ >> ] [ Logo + BRAMHAHORA Card ] [ Module ] [ Tab ] [ Menu ]
+        # संतुलित एवं सुरुचिपूर्ण अनुपात (Option A) [0.40, 2.70, 5.50, 5.50, 4.00]:
+        # [ >> ] [ Open Sovereign Brand ] [ Module ] [ Tab ] [ Menu ]
         hdr_c_toggle, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.40, 2.80, 5.50, 5.50, 4.00],
+            [0.40, 2.70, 5.50, 5.50, 4.00],
             gap="small",
             vertical_alignment="center"
         )
@@ -7054,14 +7056,14 @@ with st.container(key="top_frozen_header_container", border=False):
             st.markdown(
                 '<div class="header-toggle-slot" id="header_sidebar_toggle_slot" '
                 'title="साइडबार टॉगल करें (Toggle Sidebar)" '
-                'style="display:flex; align-items:center; justify-content:center; width:100%; height:34px; min-width:28px;"></div>',
+                'style="display:flex; align-items:center; justify-content:center; width:100%; height:36px; min-width:28px;"></div>',
                 unsafe_allow_html=True
             )
 
         with hdr_c_brand:
             st.markdown(
-                '<div class="header-brand-card" title="BRAMHAHORA Sovereign Vedic Astrology Workstation">'
-                '<svg width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 1px 3px rgba(245,158,11,0.5)); flex-shrink:0; display:block;">'
+                '<div class="header-brand-open" title="BRAMHAHORA Sovereign Vedic Astrology Workstation">'
+                '<svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0; display:block;">'
                 '<defs>'
                 '<linearGradient id="vedicGoldCard" x1="0%" y1="0%" x2="100%" y2="100%">'
                 '<stop offset="0%" stop-color="#FFFBEB" />'
@@ -7076,9 +7078,12 @@ with st.container(key="top_frozen_header_container", border=False):
                 '<stop offset="100%" stop-color="#D97706" />'
                 '</radialGradient>'
                 '</defs>'
+                '<!-- Sacred Ashtamangala Interlocking Star of Lakshmi -->'
                 '<rect x="20" y="20" width="60" height="60" rx="9" fill="#0A192F" stroke="url(#vedicGoldCard)" stroke-width="2.6" />'
                 '<rect x="20" y="20" width="60" height="60" rx="9" transform="rotate(45 50 50)" fill="#0A192F" stroke="url(#vedicGoldCard)" stroke-width="2.6" />'
+                '<!-- Inner Golden Celestial Halo -->'
                 '<circle cx="50" cy="50" r="23" fill="none" stroke="url(#vedicGoldCard)" stroke-width="1.6" stroke-dasharray="4 2" />'
+                '<!-- Sacred Radiant Om -->'
                 '<text x="50" y="58" font-family="\'Segoe UI\', \'Noto Sans Devanagari\', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunCard)" text-anchor="middle" dominant-baseline="middle">ॐ</text>'
                 '</svg>'
                 '<span class="hdr-brand-title">BRAMHAHORA</span>'
