@@ -7027,10 +7027,10 @@ with st.container(key="top_frozen_header_container", border=False):
     # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
     # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # सभी 6 घटक सटीक अनुपात [0.40, 1.25, 5.50, 3.50, 3.50, 3.00]:
+        # सभी 6 घटक सटीक अनुपात [0.40, 1.25, 5.50, 4.50, 4.50, 4.00]:
         # [ >> ] [ Logo ] [ BRAMHAHORA ] [ Module ] [ Tab ] [ Menu ]
         hdr_c_toggle, hdr_c_logo, hdr_c_title, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.40, 1.25, 5.50, 3.50, 3.50, 3.00],
+            [0.40, 1.25, 5.50, 4.50, 4.50, 4.00],
             gap="small",
             vertical_alignment="center"
         )
@@ -7045,7 +7045,7 @@ with st.container(key="top_frozen_header_container", border=False):
 
         with hdr_c_logo:
             st.markdown("""
-            <div class="header-logo-box" style="display:flex; align-items:center; justify-content:center; width:100%; height:34px; margin:0; padding:0; user-select:none;">
+            <div class="header-logo-box" style="display:flex; align-items:center; justify-content:center; width:100%; height:34px; margin:0 auto; padding:0; user-select:none;">
                 <!-- 34px Prestigious 3D Ashtalakshmi Vedic Star Logo (अष्टलक्ष्मी महा-यंत्र) -->
                 <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 1px 4px rgba(245,158,11,0.7)); flex-shrink:0; display:block;">
                     <defs>
@@ -7075,9 +7075,8 @@ with st.container(key="top_frozen_header_container", border=False):
 
         with hdr_c_title:
             st.markdown("""
-            <div class="header-title-box" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; height:34px; line-height:1; white-space:nowrap; user-select:none; margin:0; padding:0;">
-                <span class="hdr-brand-hi">ब्रह्महोरा</span>
-                <span class="hdr-brand-en">BRAHMAHORA</span>
+            <div class="header-title-box" style="display:flex; align-items:center; justify-content:center; width:100%; height:34px; line-height:1; white-space:nowrap; user-select:none; margin:0 auto; padding:0; text-align:center;">
+                <span class="hdr-brand-en" style="font-size:18px; font-weight:900; letter-spacing:2.5px; color:#FBBF24 !important; -webkit-text-fill-color:#FBBF24 !important; text-shadow:0 1px 4px rgba(0,0,0,0.95), 0 0 10px rgba(245,158,11,0.35); text-align:center; display:inline-block;">BRAMHAHORA</span>
             </div>
             """, unsafe_allow_html=True)
 
