@@ -198,11 +198,13 @@ if is_astrallis_mode:
         -webkit-font-smoothing: antialiased !important;
     }
     [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-        background-color: #0A0E1A !important;
-        border-right: 1.5px solid #1E293B !important;
+        background-color: #FFF2DF !important;
+        background: #FFF2DF !important;
+        border-right: 2px solid #E67E22 !important;
     }
-    /* ===== SIDEBAR BASE TEXT — only native Streamlit widgets, NOT custom HTML cards ===== */
+    /* ===== SIDEBAR BASE TEXT — light saffron (bhagwa) background → black text ===== */
     [data-testid="stSidebar"] > div > div,
+    [data-testid="stSidebar"] .stMarkdownContainer,
     [data-testid="stSidebar"] .stMarkdownContainer > p,
     [data-testid="stSidebar"] .stMarkdownContainer > h1,
     [data-testid="stSidebar"] .stMarkdownContainer > h2,
@@ -210,25 +212,35 @@ if is_astrallis_mode:
     [data-testid="stSidebar"] .element-container > .stMarkdownContainer > *,
     [data-testid="stSidebar"] label,
     [data-testid="stSidebar"] .stTextInput label,
-    [data-testid="stSidebar"] .stSelectbox label {
-        color: #E2E8F0 !important;
+    [data-testid="stSidebar"] .stSelectbox label,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] b,
+    [data-testid="stSidebar"] div {
+        color: #000000 !important;
     }
-    /* ===== WHITE CARD OVERRIDES — highest specificity wins ===== */
-    [data-testid="stSidebar"] .sb-card-white { background: #FFFFFF !important; }
+    /* ===== LIGHT GREENISH + YELLOWISH MIX CARDS (Pistachio Cream) ===== */
+    [data-testid="stSidebar"] .sb-card-white {
+        background-color: #F4FCE3 !important;
+        background: linear-gradient(145deg, #F9FDE8 0%, #EBF8D8 100%) !important;
+        border: 1.5px solid #C3E69B !important;
+    }
     [data-testid="stSidebar"] .sb-card-white,
-    [data-testid="stSidebar"] .sb-card-white * { color: #0F172A !important; }
-    /* ===== RADIO LABELS — dark background with light text ===== */
+    [data-testid="stSidebar"] .sb-card-white * {
+        color: #000000 !important;
+    }
+    /* ===== RADIO LABELS — Light greenish-yellow on bhagwa background ===== */
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
     section[data-testid="stSidebar"] .stRadio label,
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label,
     div[data-testid="stRadio"] label {
-        background: #0D1322 !important;
-        border: 1.5px solid #1E293B !important;
-        color: #E2E8F0 !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+        background: linear-gradient(135deg, #F8FEEF 0%, #EDF8DB 100%) !important;
+        border: 1.5px solid #B8E088 !important;
+        color: #000000 !important;
+        box-shadow: 0 1px 3px rgba(100, 150, 30, 0.15) !important;
         border-radius: 6px !important;
-        padding: 4px 8px !important;
-        margin-bottom: 3px !important;
+        padding: 5px 8px !important;
+        margin-bottom: 4px !important;
         display: flex !important;
         align-items: center !important;
     }
@@ -240,39 +252,52 @@ if is_astrallis_mode:
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label span,
     div[data-testid="stRadio"] label p,
     div[data-testid="stRadio"] label span {
-        color: #CBD5E1 !important;
+        color: #000000 !important;
         font-size: 11.5px !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         white-space: normal !important;
         word-break: break-word !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover,
     section[data-testid="stSidebar"] .stRadio label:hover,
     div[data-testid="stRadio"] label:hover {
-        background: #1E293B !important;
-        border-color: #00E5FF !important;
+        background: #E2F5C2 !important;
+        border-color: #7BBF3A !important;
         transform: translateY(-1px) !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked),
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="true"],
     section[data-testid="stSidebar"] .stRadio label:has(input:checked),
     div[data-testid="stRadio"] label:has(input:checked) {
-        background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%) !important;
-        border: 2px solid #00E5FF !important;
-        box-shadow: 0 4px 14px rgba(0, 229, 255, 0.25) !important;
+        background: linear-gradient(135deg, #5C9A1E 0%, #76B828 100%) !important;
+        border: 2px solid #D97706 !important;
+        box-shadow: 0 3px 10px rgba(92, 154, 30, 0.35) !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) p,
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) span,
-    div[data-testid="stRadio"] label:has(input:checked) p {
+    div[data-testid="stRadio"] label:has(input:checked) p,
+    div[data-testid="stRadio"] label:has(input:checked) span {
         color: #FFFFFF !important;
         font-weight: 800 !important;
     }
     h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
         color: #E2E8F0 !important;
     }
-    /* ===== NUCLEAR OVERRIDE: sb-card-white elements get dark text, period ===== */
+    /* ===== NUCLEAR OVERRIDE: SIDEBAR ELEMENTS ALWAYS BLACK TEXT & GREENISH-YELLOW CARDS ===== */
     /* These rules must come AFTER the global rule above to win the cascade */
-    .sb-card-white { background: #FFFFFF !important; }
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] h4, [data-testid="stSidebar"] h5, [data-testid="stSidebar"] h6,
+    [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] div,
+    [data-testid="stSidebar"] b, [data-testid="stSidebar"] strong, [data-testid="stSidebar"] i,
+    [data-testid="stSidebar"] em, [data-testid="stSidebar"] a, [data-testid="stSidebar"] li,
+    [data-testid="stSidebar"] label, [data-testid="stSidebar"] caption, [data-testid="stSidebar"] small {
+        color: #000000 !important;
+    }
+    .sb-card-white {
+        background-color: #F4FCE3 !important;
+        background: linear-gradient(145deg, #F9FDE8 0%, #EBF8D8 100%) !important;
+        border-color: #C3E69B !important;
+    }
     .sb-card-white,
     .sb-card-white h1, .sb-card-white h2, .sb-card-white h3,
     .sb-card-white h4, .sb-card-white h5, .sb-card-white h6,
@@ -280,7 +305,7 @@ if is_astrallis_mode:
     .sb-card-white b, .sb-card-white strong, .sb-card-white i,
     .sb-card-white em, .sb-card-white a, .sb-card-white li,
     .sb-card-white label, .sb-card-white caption, .sb-card-white small {
-        color: #0F172A !important;
+        color: #000000 !important;
     }
     [data-testid="stSidebar"] .sb-card-white,
     [data-testid="stSidebar"] .sb-card-white *,
@@ -292,23 +317,18 @@ if is_astrallis_mode:
     [data-testid="stSidebar"] .sb-card-white div,
     [data-testid="stSidebar"] .sb-card-white b,
     [data-testid="stSidebar"] .sb-card-white strong {
-        color: #0F172A !important;
-        background-color: transparent;
+        color: #000000 !important;
     }
-    /* Colored accent overrides inside white cards */
-    .sb-card-white [style*="color:#1D4ED8"], .sb-card-white [style*="color: #1D4ED8"] { color: #1D4ED8 !important; }
-    .sb-card-white [style*="color:#B45309"], .sb-card-white [style*="color: #B45309"] { color: #B45309 !important; }
-    .sb-card-white [style*="color:#047857"], .sb-card-white [style*="color: #047857"] { color: #047857 !important; }
-    .sb-card-white [style*="color:#B91C1C"], .sb-card-white [style*="color: #B91C1C"] { color: #B91C1C !important; }
-    .sb-card-white [style*="color:#065F46"], .sb-card-white [style*="color: #065F46"] { color: #065F46 !important; }
-    .sb-card-white [style*="color:#7C3AED"], .sb-card-white [style*="color: #7C3AED"] { color: #7C3AED !important; }
-    .sb-card-white [style*="color:#0369A1"], .sb-card-white [style*="color: #0369A1"] { color: #0369A1 !important; }
-    .sb-card-white [style*="color:#92400E"], .sb-card-white [style*="color: #92400E"] { color: #92400E !important; }
-    .sb-card-white [style*="color:#78350F"], .sb-card-white [style*="color: #78350F"] { color: #78350F !important; }
-    .sb-card-white [style*="color:#020617"], .sb-card-white [style*="color: #020617"] { color: #020617 !important; }
-    .sb-card-white [style*="color:#334155"], .sb-card-white [style*="color: #334155"] { color: #334155 !important; }
-    .sb-card-white [style*="color:#1E293B"], .sb-card-white [style*="color: #1E293B"] { color: #1E293B !important; }
-    .sb-card-white [style*="color:#1E40AF"], .sb-card-white [style*="color: #1E40AF"] { color: #1E40AF !important; }
+    /* Inner sub-blocks inside cards */
+    [data-testid="stSidebar"] .sb-card-white div[style*="background:"] {
+        background-color: #EBF8D8 !important;
+        border-color: #C3E69B !important;
+    }
+    [data-testid="stSidebar"] .sb-card-white span,
+    [data-testid="stSidebar"] .sb-card-white b,
+    [data-testid="stSidebar"] .sb-card-white div {
+        color: #000000 !important;
+    }
 
     input, textarea, select,
     div[data-baseweb="input"] input,
@@ -9256,20 +9276,20 @@ with st.container(key="top_frozen_header_container", border=False):
     with st.sidebar:
         # 1. 🪐 TOP SIDEBAR COLLAPSE TOGGLE BAR (<< बटन सबसे ऊपर)
         st.markdown("""
-        <div style="display:flex; justify-content:space-between; align-items:center; background:#0B1A30; border:1.5px solid #F59E0B; border-radius:10px; padding:6px 12px; margin-bottom:10px; box-shadow:0 3px 8px rgba(0,0,0,0.35);">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:linear-gradient(135deg, #FFE8C2 0%, #FFD699 100%); border:1.5px solid #E67E22; border-radius:10px; padding:6px 12px; margin-bottom:10px; box-shadow:0 3px 8px rgba(230,126,34,0.25);">
             <div style="display:flex; align-items:center; gap:8px;">
                 <span style="font-size:16px;">🪐</span>
-                <span style="font-size:13px; font-weight:900; color:#F59E0B; letter-spacing:0.8px; text-transform:uppercase;">ब्रह्महोरा साइडबार</span>
+                <span style="font-size:13px; font-weight:900; color:#000000; letter-spacing:0.8px; text-transform:uppercase;">ब्रह्महोरा साइडबार</span>
             </div>
             <button onclick="(document.querySelector('[data-testid=\\'stSidebarCollapseButton\\']') || parent.document.querySelector('[data-testid=\\'stSidebarCollapseButton\\']))?.click();" 
                     title="साइडबार संकुचित करें (Collapse Sidebar)" 
-                    style="background:#1E293B; border:1px solid #F59E0B; color:#F59E0B; font-weight:900; font-size:14px; border-radius:6px; padding:2px 10px; cursor:pointer; transition:all 0.2s ease;">
+                    style="background:#FFF2DF; border:1.5px solid #E67E22; color:#000000; font-weight:900; font-size:14px; border-radius:6px; padding:2px 10px; cursor:pointer; transition:all 0.2s ease;">
                 ««
             </button>
         </div>
         """, unsafe_allow_html=True)
 
-        # 2. 👤 सक्रिय जातक प्रोफाइल कार्ड (Active Jatak Profile Card - High Contrast White)
+        # 2. 👤 सक्रिय जातक प्रोफाइल कार्ड (Active Jatak Profile Card - Light Greenish-Yellow)
         _rashi_hi_map = {
             "Aries": "मेष", "Taurus": "वृषभ", "Gemini": "मिथुन", "Cancer": "कर्क",
             "Leo": "सिंह", "Virgo": "कन्या", "Libra": "तुला", "Scorpio": "वृश्चिक",
@@ -9282,23 +9302,23 @@ with st.container(key="top_frozen_header_container", border=False):
         _moon_hi = _rashi_hi_map.get(_moon_en, _moon_en)
 
         st.markdown(f"""
-        <div class="sb-card-white" style="background:#FFFFFF !important; border:2px solid #CBD5E1; border-top:4px solid #2563EB; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 10px rgba(0,0,0,0.18);">
+        <div class="sb-card-white" style="border:1.5px solid #B8E088; border-top:4px solid #76B828; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 8px rgba(100,150,30,0.12);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <div style="font-size:11px; font-weight:800; color:#2563EB !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
-                    <span>👤</span> <span style="color:#2563EB !important;">सक्रिय जातक प्रोफाइल</span>
+                <div style="font-size:11px; font-weight:800; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
+                    <span>👤</span> <span style="color:#000000 !important;">सक्रिय जातक प्रोफाइल</span>
                 </div>
-                <span style="font-size:9.5px; font-weight:800; background:#EFF6FF; color:#1D4ED8 !important; border:1px solid #BFDBFE; border-radius:4px; padding:1px 6px;">● जातक</span>
+                <span style="font-size:9.5px; font-weight:800; background:#E2F5C2; color:#000000 !important; border:1px solid #B8E088; border-radius:4px; padding:1px 6px;">● जातक</span>
             </div>
-            <div style="font-size:16px; font-weight:900; color:#0F172A !important; margin:3px 0 4px 0; letter-spacing:0.2px;">{name}</div>
-            <div style="font-size:11.5px; color:#334155 !important; line-height:1.5;">
-                📅 <b style="color:#0F172A !important;">{birth_d.strftime('%d-%b-%Y')}</b> &nbsp;|&nbsp; ⏰ <b style="color:#0F172A !important;">{birth_t.strftime('%I:%M %p')}</b><br/>
-                📍 <span style="color:#334155 !important;">{default_city_name}</span> &nbsp;|&nbsp; <b style="color:#0F172A !important;">लग्न:</b> <span style="font-weight:800; color:#1D4ED8 !important;">{_lagna_en} ({_lagna_hi})</span><br/>
-                🌙 <b style="color:#0F172A !important;">चन्द्र राशि:</b> <span style="font-weight:800; color:#7C3AED !important;">{_moon_en} ({_moon_hi})</span>
+            <div style="font-size:16px; font-weight:900; color:#000000 !important; margin:3px 0 4px 0; letter-spacing:0.2px;">{name}</div>
+            <div style="font-size:11.5px; color:#000000 !important; line-height:1.5;">
+                📅 <b style="color:#000000 !important;">{birth_d.strftime('%d-%b-%Y')}</b> &nbsp;|&nbsp; ⏰ <b style="color:#000000 !important;">{birth_t.strftime('%I:%M %p')}</b><br/>
+                📍 <span style="color:#000000 !important;">{default_city_name}</span> &nbsp;|&nbsp; <b style="color:#000000 !important;">लग्न:</b> <span style="font-weight:800; color:#000000 !important;">{_lagna_en} ({_lagna_hi})</span><br/>
+                🌙 <b style="color:#000000 !important;">चन्द्र राशि:</b> <span style="font-weight:800; color:#000000 !important;">{_moon_en} ({_moon_hi})</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-        # 3. ⚡ सक्रिय जातक का पंचांग कार्ड (Jatak Birth Panchang Card - High Contrast White)
+        # 3. ⚡ सक्रिय जातक का पंचांग कार्ड (Jatak Birth Panchang Card - Light Greenish-Yellow)
         p_sb = getattr(chart, "panchang", None)
         _tithi_str = getattr(p_sb, "tithi_name", "N/A") if p_sb else "N/A"
         _vara_str = getattr(p_sb, "vara_name", "N/A") if p_sb else "N/A"
@@ -9341,61 +9361,61 @@ with st.container(key="top_frozen_header_container", border=False):
             _brahma_str = "04:24 AM ~ 05:12 AM"
 
         st.markdown(f"""
-        <div class="sb-card-white" style="background:#FFFFFF !important; border:2px solid #CBD5E1; border-top:4px solid #F59E0B; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 10px rgba(0,0,0,0.18);">
+        <div class="sb-card-white" style="border:1.5px solid #B8E088; border-top:4px solid #D97706; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 8px rgba(100,150,30,0.12);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <div style="font-size:11px; font-weight:800; color:#B45309 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
-                    <span>⚡</span> <span style="color:#B45309 !important;">जातक जन्म पंचांग एवं मुहूर्त</span>
+                <div style="font-size:11px; font-weight:800; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
+                    <span>⚡</span> <span style="color:#000000 !important;">जातक जन्म पंचांग एवं मुहूर्त</span>
                 </div>
-                <span style="font-size:9.5px; font-weight:800; background:#FEF3C7; color:#B45309 !important; border:1px solid #FDE68A; border-radius:4px; padding:1px 6px;">● जन्मकालीन</span>
+                <span style="font-size:9.5px; font-weight:800; background:#E2F5C2; color:#000000 !important; border:1px solid #B8E088; border-radius:4px; padding:1px 6px;">● जन्मकालीन</span>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px;">
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">📅 जन्म तिथि</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_tithi_str}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">📅 जन्म तिथि</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_tithi_str}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">🪐 जन्म वार</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_vara_str}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🪐 जन्म वार</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_vara_str}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">✨ जन्म नक्षत्र</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_nak_str}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">✨ जन्म नक्षत्र</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_nak_str}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">🌿 जन्म योग</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_yoga_str}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🌿 जन्म योग</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_yoga_str}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">⚡ जन्म करण</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_karana_str}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">⚡ जन्म करण</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_karana_str}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">👑 जन्म होरा</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_hora_str}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">👑 जन्म होरा</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_hora_str}</b>
                 </div>
-                <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:7px; padding:5px 7px; grid-column: span 2;">
-                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">🌟 अभिजित मुहूर्त (विजय काल)</span>
-                    <b style="color:#065F46 !important; font-size:11.5px; font-weight:900;">{_abhijit_str}</b>
+                <div style="background:#E2F5C2; border:1.5px solid #76B828; border-radius:7px; padding:5px 7px; grid-column: span 2;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🌟 अभिजित मुहूर्त (विजय काल)</span>
+                    <b style="color:#000000 !important; font-size:11.5px; font-weight:900;">{_abhijit_str}</b>
                 </div>
-                <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:7px; padding:5px 7px; grid-column: span 2;">
-                    <span style="color:#B91C1C !important; font-size:9.5px; font-weight:800; display:block;">🔴 राहुकाल (सर्वथा वर्जित)</span>
-                    <b style="color:#991B1B !important; font-size:11.5px; font-weight:900;">{_rahu_str}</b>
+                <div style="background:#FFE6E6; border:1.5px solid #E57373; border-radius:7px; padding:5px 7px; grid-column: span 2;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🔴 राहुकाल (सर्वथा वर्जित)</span>
+                    <b style="color:#000000 !important; font-size:11.5px; font-weight:900;">{_rahu_str}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#B45309 !important; font-size:9.5px; font-weight:800; display:block;">🔱 गुलिक काल</span>
-                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_gulika_str}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🔱 गुलिक काल</span>
+                    <b style="color:#000000 !important; font-size:10.5px; font-weight:800;">{_gulika_str}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#475569 !important; font-size:9.5px; font-weight:800; display:block;">⏳ यमघण्ट काल</span>
-                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_yama_str}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">⏳ यमघण्ट काल</span>
+                    <b style="color:#000000 !important; font-size:10.5px; font-weight:800;">{_yama_str}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#475569 !important; font-size:9.5px; font-weight:800; display:block;">🌅 सूर्योदय / सूर्यास्त</span>
-                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_sr_str} / {_ss_str}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🌅 सूर्योदय / सूर्यास्त</span>
+                    <b style="color:#000000 !important; font-size:10.5px; font-weight:800;">{_sr_str} / {_ss_str}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#475569 !important; font-size:9.5px; font-weight:800; display:block;">⏱ जन्म घटी</span>
-                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_ghati_str}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">⏱ जन्म घटी</span>
+                    <b style="color:#000000 !important; font-size:10.5px; font-weight:800;">{_ghati_str}</b>
                 </div>
             </div>
         </div>
@@ -9453,65 +9473,65 @@ with st.container(key="top_frozen_header_container", border=False):
         _t_hora = _hora_order[(_t_s_idx + _h_live_offset) % 7]
 
         st.markdown(f"""
-        <div class="sb-card-white" style="background:#FFFFFF !important; border:2px solid #10B981; border-top:4px solid #10B981; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 10px rgba(0,0,0,0.18);">
+        <div class="sb-card-white" style="border:1.5px solid #B8E088; border-top:4px solid #10B981; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 8px rgba(100,150,30,0.12);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-                <div style="font-size:11px; font-weight:800; color:#047857 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
-                    <span>🪐</span> <span style="color:#047857 !important;">आज का पंचांग (Live Gochar)</span>
+                <div style="font-size:11px; font-weight:800; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
+                    <span>🪐</span> <span style="color:#000000 !important;">आज का पंचांग (Live Gochar)</span>
                 </div>
-                <span style="font-size:9.5px; font-weight:800; background:#ECFDF5; color:#047857 !important; border:1px solid #A7F3D0; border-radius:4px; padding:1px 6px;">● लाइव आज</span>
+                <span style="font-size:9.5px; font-weight:800; background:#E2F5C2; color:#000000 !important; border:1px solid #B8E088; border-radius:4px; padding:1px 6px;">● लाइव आज</span>
             </div>
-            <div style="font-size:11px; color:#334155 !important; line-height:1.4; margin-bottom:8px;">
-                📅 <b style="color:#0F172A !important;">{_now_dt.strftime('%d-%b-%Y')} ({_t_vara})</b> &nbsp;|&nbsp; ⏰ <b style="color:#0F172A !important;">{_now_dt.strftime('%I:%M %p')}</b><br/>
-                📍 <span style="color:#334155 !important;">{_today_city}</span>
+            <div style="font-size:11px; color:#000000 !important; line-height:1.4; margin-bottom:8px;">
+                📅 <b style="color:#000000 !important;">{_now_dt.strftime('%d-%b-%Y')} ({_t_vara})</b> &nbsp;|&nbsp; ⏰ <b style="color:#000000 !important;">{_now_dt.strftime('%I:%M %p')}</b><br/>
+                📍 <span style="color:#000000 !important;">{_today_city}</span>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px;">
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">📅 आज की तिथि</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_tithi}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">📅 आज की तिथि</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_tithi}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">🪐 आज का वार</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_vara}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🪐 आज का वार</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_vara}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">✨ आज का नक्षत्र</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_nak}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">✨ आज का नक्षत्र</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_nak}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">🌿 आज का योग</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_yoga}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🌿 आज का योग</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_yoga}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">⚡ आज का करण</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_karana}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">⚡ आज का करण</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_karana}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">👑 वर्तमान होरा</span>
-                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_hora} स्वामी</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">👑 वर्तमान होरा</span>
+                    <b style="color:#000000 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_hora} स्वामी</b>
                 </div>
-                <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:7px; padding:5px 7px; grid-column: span 2;">
-                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">🌟 आज का अभिजित मुहूर्त (विजय काल)</span>
-                    <b style="color:#065F46 !important; font-size:11.5px; font-weight:900;">{_t_abhijit}</b>
+                <div style="background:#E2F5C2; border:1.5px solid #76B828; border-radius:7px; padding:5px 7px; grid-column: span 2;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🌟 आज का अभिजित मुहूर्त (विजय काल)</span>
+                    <b style="color:#000000 !important; font-size:11.5px; font-weight:900;">{_t_abhijit}</b>
                 </div>
-                <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:7px; padding:5px 7px; grid-column: span 2;">
-                    <span style="color:#B91C1C !important; font-size:9.5px; font-weight:800; display:block;">🔴 आज का राहुकाल (सर्वथा वर्जित)</span>
-                    <b style="color:#991B1B !important; font-size:11.5px; font-weight:900;">{_t_rahu}</b>
+                <div style="background:#FFE6E6; border:1.5px solid #E57373; border-radius:7px; padding:5px 7px; grid-column: span 2;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🔴 आज का राहुकाल (सर्वथा वर्जित)</span>
+                    <b style="color:#000000 !important; font-size:11.5px; font-weight:900;">{_t_rahu}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#B45309 !important; font-size:9.5px; font-weight:800; display:block;">🔱 आज का गुलिक</span>
-                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_t_gulika}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🔱 आज का गुलिक</span>
+                    <b style="color:#000000 !important; font-size:10.5px; font-weight:800;">{_t_gulika}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#475569 !important; font-size:9.5px; font-weight:800; display:block;">⏳ आज का यमघण्ट</span>
-                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_t_yama}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">⏳ आज का यमघण्ट</span>
+                    <b style="color:#000000 !important; font-size:10.5px; font-weight:800;">{_t_yama}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#475569 !important; font-size:9.5px; font-weight:800; display:block;">🌅 सूर्योदय / 🌇 सूर्यास्त</span>
-                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_t_sunrise} / {_t_sunset}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🌅 सूर्योदय / 🌇 सूर्यास्त</span>
+                    <b style="color:#000000 !important; font-size:10.5px; font-weight:800;">{_t_sunrise} / {_t_sunset}</b>
                 </div>
-                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
-                    <span style="color:#7C3AED !important; font-size:9.5px; font-weight:800; display:block;">🧘 ब्रह्म मुहूर्त</span>
-                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_t_brahma}</b>
+                <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#000000 !important; font-size:9.5px; font-weight:800; display:block;">🧘 ब्रह्म मुहूर्त</span>
+                    <b style="color:#000000 !important; font-size:10.5px; font-weight:800;">{_t_brahma}</b>
                 </div>
             </div>
         </div>
@@ -9519,38 +9539,38 @@ with st.container(key="top_frozen_header_container", border=False):
 
         # 5. 📜 शास्त्रीय प्रमाण एवं फलादेश (दोनों पंचांग: जातक पंचांग व आज का पंचांग)
         st.markdown(f"""
-        <div class="sb-card-white" style="background:#FFFFFF !important; border:2px solid #F59E0B; border-top:4px solid #D97706; border-radius:12px; padding:11px 13px; margin-bottom:12px; box-shadow:0 3px 10px rgba(0,0,0,0.18);">
-            <div style="font-size:11.5px; font-weight:900; color:#B45309 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:5px; margin-bottom:6px;">
-                <span>📜</span> <span style="color:#B45309 !important;">शास्त्रीय प्रमाण एवं फलादेश</span>
+        <div class="sb-card-white" style="border:1.5px solid #B8E088; border-top:4px solid #D97706; border-radius:12px; padding:11px 13px; margin-bottom:12px; box-shadow:0 3px 8px rgba(100,150,30,0.12);">
+            <div style="font-size:11.5px; font-weight:900; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:5px; margin-bottom:6px;">
+                <span>📜</span> <span style="color:#000000 !important;">शास्त्रीय प्रमाण एवं फलादेश</span>
             </div>
-            <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:8px 10px; margin-bottom:8px;">
-                <div style="font-size:9.5px; font-weight:800; color:#92400E !important; text-transform:uppercase; margin-bottom:3px;">🏛️ पंचाङ्ग फल श्लोक (मुहूर्त चिंतामणि):</div>
-                <div style="font-size:10.5px; font-weight:800; color:#78350F !important; line-height:1.5; margin-bottom:4px;">
+            <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:8px; padding:8px 10px; margin-bottom:8px;">
+                <div style="font-size:9.5px; font-weight:800; color:#000000 !important; text-transform:uppercase; margin-bottom:3px;">🏛️ पंचाङ्ग फल श्लोक (मुहूर्त चिंतामणि):</div>
+                <div style="font-size:10.5px; font-weight:800; color:#000000 !important; line-height:1.5; margin-bottom:4px;">
                     तिथेश्च श्रियमाप्नोति वारादायुष्यवर्धनम्।<br/>
                     नक्षत्राद्धरते पापं योगाद्रोगनिवारणम्॥<br/>
                     करणात् कार्यसिद्धिः स्यात् पञ्चाङ्गस्य फलं शृणु॥
                 </div>
-                <div style="font-size:9.5px; color:#92400E !important; line-height:1.35;">
-                    <b style="color:#78350F !important;">भावार्थ:</b> <span style="color:#92400E !important;">तिथि = लक्ष्मी, वार = दीर्घायु, नक्षत्र = पापनाश, योग = रोगमुक्ति, करण = कार्यसिद्धि।</span>
+                <div style="font-size:9.5px; color:#000000 !important; line-height:1.35;">
+                    <b style="color:#000000 !important;">भावार्थ:</b> <span style="color:#000000 !important;">तिथि = लक्ष्मी, वार = दीर्घायु, नक्षत्र = पापनाश, योग = रोगमुक्ति, करण = कार्यसिद्धि।</span>
                 </div>
             </div>
-            <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:8px 10px; margin-bottom:6px;">
-                <div style="font-size:10px; font-weight:800; color:#1E40AF !important; margin-bottom:5px;">👶 जातक जन्म पंचांग फलादेश:</div>
-                <div style="font-size:10px; color:#1E293B !important; line-height:1.5;">
-                    <div style="margin-bottom:4px;"><b style="color:#0369A1 !important;">📅 तिथि ({_tithi_str}):</b> <span style="color:#0F172A !important;">कुशाग्र बुद्धि, पराक्रम व समाज में सम्मान।</span></div>
-                    <div style="margin-bottom:4px;"><b style="color:#0369A1 !important;">🪐 वार ({_vara_str}):</b> <span style="color:#0F172A !important;">गंभीरता, कार्य-दक्षता व सतत प्रयत्न से सिद्धि।</span></div>
-                    <div style="margin-bottom:4px;"><b style="color:#0369A1 !important;">✨ नक्षत्र ({_nak_str}):</b> <span style="color:#0F172A !important;">विद्यानुरागी, विचारशील व दृढ़ संकल्पी।</span></div>
-                    <div style="margin-bottom:4px;"><b style="color:#0369A1 !important;">🌿 योग/करण ({_yoga_str}/{_karana_str}):</b> <span style="color:#0F172A !important;">आरोग्यता व कार्य-सिद्धि में सहायक।</span></div>
-                    <div><b style="color:#0369A1 !important;">👑 जन्म होरा ({_hora_str}):</b> <span style="color:#0F172A !important;">आत्मबल व निर्णय क्षमता का संबल।</span></div>
+            <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:8px; padding:8px 10px; margin-bottom:6px;">
+                <div style="font-size:10px; font-weight:800; color:#000000 !important; margin-bottom:5px;">👶 जातक जन्म पंचांग फलादेश:</div>
+                <div style="font-size:10px; color:#000000 !important; line-height:1.5;">
+                    <div style="margin-bottom:4px;"><b style="color:#000000 !important;">📅 तिथि ({_tithi_str}):</b> <span style="color:#000000 !important;">कुशाग्र बुद्धि, पराक्रम व समाज में सम्मान।</span></div>
+                    <div style="margin-bottom:4px;"><b style="color:#000000 !important;">🪐 वार ({_vara_str}):</b> <span style="color:#000000 !important;">गंभीरता, कार्य-दक्षता व सतत प्रयत्न से सिद्धि।</span></div>
+                    <div style="margin-bottom:4px;"><b style="color:#000000 !important;">✨ नक्षत्र ({_nak_str}):</b> <span style="color:#000000 !important;">विद्यानुरागी, विचारशील व दृढ़ संकल्पी।</span></div>
+                    <div style="margin-bottom:4px;"><b style="color:#000000 !important;">🌿 योग/करण ({_yoga_str}/{_karana_str}):</b> <span style="color:#000000 !important;">आरोग्यता व कार्य-सिद्धि में सहायक।</span></div>
+                    <div><b style="color:#000000 !important;">👑 जन्म होरा ({_hora_str}):</b> <span style="color:#000000 !important;">आत्मबल व निर्णय क्षमता का संबल।</span></div>
                 </div>
             </div>
-            <div style="background:#ECFDF5; border:1px solid #A7F3D0; border-radius:8px; padding:8px 10px;">
-                <div style="font-size:10px; font-weight:800; color:#065F46 !important; margin-bottom:5px;">🪐 आज का गोचर फल व मुहूर्त निर्णय:</div>
-                <div style="font-size:10px; color:#1E293B !important; line-height:1.5;">
-                    <div style="margin-bottom:4px;"><b style="color:#047857 !important;">📅 आज ({_t_vara}, {_t_tithi}):</b> <span style="color:#0F172A !important;">व्यावहारिक कर्म, अध्ययन व शुभ संवाद हेतु अनुकूल।</span></div>
-                    <div style="margin-bottom:4px;"><b style="color:#047857 !important;">🌟 अभिजित ({_t_abhijit}):</b> <span style="color:#0F172A !important;">मुहूर्त चिंतामणि अनुसार विजय काल — नवीन कार्य हेतु सर्वोत्तम।</span></div>
-                    <div style="margin-bottom:4px;"><b style="color:#B91C1C !important;">🔴 राहुकाल ({_t_rahu}):</b> <span style="color:#0F172A !important;">कालामृत अनुसार — नया कार्य, यात्रा व अनुबंध वर्जित।</span></div>
-                    <div><b style="color:#047857 !important;">👑 वर्तमान होरा ({_t_hora}):</b> <span style="color:#0F172A !important;">{_t_hora} ग्रह के अनुकूल कार्य (ज्ञान, संवाद) हेतु प्रशस्त।</span></div>
+            <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:8px; padding:8px 10px;">
+                <div style="font-size:10px; font-weight:800; color:#000000 !important; margin-bottom:5px;">🪐 आज का गोचर फल व मुहूर्त निर्णय:</div>
+                <div style="font-size:10px; color:#000000 !important; line-height:1.5;">
+                    <div style="margin-bottom:4px;"><b style="color:#000000 !important;">📅 आज ({_t_vara}, {_t_tithi}):</b> <span style="color:#000000 !important;">व्यावहारिक कर्म, अध्ययन व शुभ संवाद हेतु अनुकूल।</span></div>
+                    <div style="margin-bottom:4px;"><b style="color:#000000 !important;">🌟 अभिजित ({_t_abhijit}):</b> <span style="color:#000000 !important;">मुहूर्त चिंतामणि अनुसार विजय काल — नवीन कार्य हेतु सर्वोत्तम।</span></div>
+                    <div style="margin-bottom:4px;"><b style="color:#000000 !important;">🔴 राहुकाल ({_t_rahu}):</b> <span style="color:#000000 !important;">कालामृत अनुसार — नया कार्य, यात्रा व अनुबंध वर्जित।</span></div>
+                    <div><b style="color:#000000 !important;">👑 वर्तमान होरा ({_t_hora}):</b> <span style="color:#000000 !important;">{_t_hora} ग्रह के अनुकूल कार्य (ज्ञान, संवाद) हेतु प्रशस्त।</span></div>
                 </div>
             </div>
         </div>
@@ -9559,7 +9579,7 @@ with st.container(key="top_frozen_header_container", border=False):
         # 6. 📚 समस्त ३१ वैदिक मॉड्यूल सूची (All 31 Vedic Modules List)
         st.markdown(f"""
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; margin-bottom:6px;">
-            <span style="font-size:13px; font-weight:900; color:#F59E0B; text-transform:uppercase; letter-spacing:0.5px;">📚 समस्त {len(MODULE_OPTIONS)} वैदिक मॉड्यूल</span>
+            <span style="font-size:13px; font-weight:900; color:#000000; text-transform:uppercase; letter-spacing:0.5px;">📚 समस्त {len(MODULE_OPTIONS)} वैदिक मॉड्यूल</span>
         </div>
         """, unsafe_allow_html=True)
         
