@@ -1421,12 +1421,12 @@ unified_css = f"""
     div[data-testid="collapsedControl"],
     div[data-testid="stSidebarCollapsedControl"] {{
         position: fixed !important;
-        top: 6px !important;
-        left: 8px !important;
-        width: 34px !important;
-        height: 32px !important;
-        min-height: 32px !important;
-        max-height: 32px !important;
+        top: 7px !important;
+        left: 10px !important;
+        width: 36px !important;
+        height: 34px !important;
+        min-height: 34px !important;
+        max-height: 34px !important;
         margin: 0px !important;
         padding: 0px !important;
         z-index: 10000005 !important;
@@ -1527,6 +1527,14 @@ unified_css = f"""
         visibility: visible !important;
         opacity: 1 !important;
         margin: 0 !important;
+    }}
+    /* Dedicated spacing for the toggle button slot so it never collides with module selectbox */
+    .st-key-frozen_toolbelt_container div[data-testid="column"]:first-child,
+    div[class*="st-key-frozen_toolbelt_container"] div[data-testid="column"]:first-child {{
+        min-width: 52px !important;
+        width: 52px !important;
+        flex: 0 0 52px !important;
+        margin-right: 8px !important;
     }}
     /* Header Brand Typography Protection: Pure white Hindi and radiant gold English */
     .st-key-frozen_toolbelt_container span.hdr-brand-hi,
@@ -7059,7 +7067,7 @@ with st.container(key="top_frozen_header_container", border=False):
     with st.container(key="frozen_toolbelt_container", border=False):
         # संतुलित कार्यक्षेत्र अनुपात: [ >> ] [ समस्त मॉड्यूल ] [ सक्रिय टैब ] [ मेन्यू ]
         hdr_c_toggle, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.45, 6.80, 6.80, 4.50],
+            [0.80, 6.60, 6.60, 4.40],
             gap="small",
             vertical_alignment="center"
         )
