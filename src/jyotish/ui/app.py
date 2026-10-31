@@ -1481,9 +1481,9 @@ unified_css = f"""
     [data-testid="stSidebar"] div[class*="eelgd2m"],
     [data-testid="stSidebar"] div[style*="col-resize"] {{
         z-index: 10000000 !important;
-        background-color: #0A192F !important;
-        background: #0A192F !important;
-        border-right: 2px solid #F59E0B !important;
+        background-color: #FFF2DF !important;
+        background: #FFF2DF !important;
+        border-right: 2.5px solid #E67E22 !important;
     }}
     section[data-testid="stSidebar"] *,
     [data-testid="stSidebar"] *,
@@ -4429,9 +4429,9 @@ client_bridge_code = """
                         [data-testid="stSidebarResizer"],
                         [data-testid="stSidebar"] div[class*="eelgd2m"],
                         [data-testid="stSidebar"] div[style*="col-resize"] {
-                            background-color: #0A192F !important;
-                            background: #0A192F !important;
-                            border-right: 2px solid #F59E0B !important;
+                            background-color: #FFF2DF !important;
+                            background: #FFF2DF !important;
+                            border-right: 2.5px solid #E67E22 !important;
                         }
                         [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b,
                         [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] h4 {
@@ -5049,11 +5049,11 @@ client_bridge_code = """
                 frozenTb.style.setProperty('border-bottom', isAstrallis ? '2.5px solid #00E5FF' : (isNight ? '2.5px solid #374151' : '2px solid #F59E0B'), 'important');
                 frozenTb.style.setProperty('box-shadow', '0 4px 18px rgba(5, 12, 24, 0.45)', 'important');
 
-                // Colorize resizer handle to match theme and prevent white gap
+                // Colorize resizer handle to match sidebar bhagwa theme
                 const resizers = parentDoc.querySelectorAll('[data-testid="stSidebarResizer"], [data-testid="stSidebar"] div[style*="col-resize"], [data-testid="stSidebar"] div[class*="eelgd2m3"]');
                 resizers.forEach(function(rz) {
-                    rz.style.setProperty('background', themeBgColor, 'important');
-                    rz.style.setProperty('background-color', themeBgColor, 'important');
+                    rz.style.setProperty('background', '#FFF2DF', 'important');
+                    rz.style.setProperty('background-color', '#FFF2DF', 'important');
                 });
 
                 // Position native sidebar expand button (>>) firmly at top: 6px, left: 8px inside Col 1 slot
