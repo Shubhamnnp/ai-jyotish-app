@@ -7057,10 +7057,9 @@ with st.container(key="top_frozen_header_container", border=False):
     # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
     # ═══════════════════════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # संतुलित एवं सुरुचिपूर्ण अनुपात (Option A) [0.40, 2.70, 5.50, 5.50, 4.00]:
-        # [ >> ] [ Open Sovereign Brand ] [ Module ] [ Tab ] [ Menu ]
-        hdr_c_toggle, hdr_c_brand, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.40, 2.70, 5.50, 5.50, 4.00],
+        # संतुलित कार्यक्षेत्र अनुपात: [ >> ] [ समस्त मॉड्यूल ] [ सक्रिय टैब ] [ मेन्यू ]
+        hdr_c_toggle, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
+            [0.45, 6.80, 6.80, 4.50],
             gap="small",
             vertical_alignment="center"
         )
@@ -7070,37 +7069,6 @@ with st.container(key="top_frozen_header_container", border=False):
                 '<div class="header-toggle-slot" id="header_sidebar_toggle_slot" '
                 'title="साइडबार टॉगल करें (Toggle Sidebar)" '
                 'style="display:flex; align-items:center; justify-content:center; width:100%; height:36px; min-width:28px;"></div>',
-                unsafe_allow_html=True
-            )
-
-        with hdr_c_brand:
-            st.markdown(
-                '<div class="header-brand-open" title="BRAMHAHORA Sovereign Vedic Astrology Workstation">'
-                '<svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0; display:block;">'
-                '<defs>'
-                '<linearGradient id="vedicGoldCard" x1="0%" y1="0%" x2="100%" y2="100%">'
-                '<stop offset="0%" stop-color="#FFFBEB" />'
-                '<stop offset="25%" stop-color="#FDE047" />'
-                '<stop offset="65%" stop-color="#F59E0B" />'
-                '<stop offset="100%" stop-color="#B45309" />'
-                '</linearGradient>'
-                '<radialGradient id="omSunCard" cx="50%" cy="50%" r="50%">'
-                '<stop offset="0%" stop-color="#FFFFFF" />'
-                '<stop offset="45%" stop-color="#FEF08A" />'
-                '<stop offset="85%" stop-color="#F59E0B" />'
-                '<stop offset="100%" stop-color="#D97706" />'
-                '</radialGradient>'
-                '</defs>'
-                '<!-- Sacred Ashtamangala Interlocking Star of Lakshmi -->'
-                '<rect x="20" y="20" width="60" height="60" rx="9" fill="#0A192F" stroke="url(#vedicGoldCard)" stroke-width="2.6" />'
-                '<rect x="20" y="20" width="60" height="60" rx="9" transform="rotate(45 50 50)" fill="#0A192F" stroke="url(#vedicGoldCard)" stroke-width="2.6" />'
-                '<!-- Inner Golden Celestial Halo -->'
-                '<circle cx="50" cy="50" r="23" fill="none" stroke="url(#vedicGoldCard)" stroke-width="1.6" stroke-dasharray="4 2" />'
-                '<!-- Sacred Radiant Om -->'
-                '<text x="50" y="52" font-family="\'Segoe UI\', \'Noto Sans Devanagari\', Arial, sans-serif" font-size="28" font-weight="900" fill="url(#omSunCard)" text-anchor="middle" dominant-baseline="central">ॐ</text>'
-                '</svg>'
-                '<span class="hdr-brand-title">BRAMHAHORA</span>'
-                '</div>',
                 unsafe_allow_html=True
             )
 
