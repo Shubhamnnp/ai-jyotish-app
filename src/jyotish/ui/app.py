@@ -6952,6 +6952,15 @@ if "active_module_idx" not in st.session_state:
     st.session_state.active_module_idx = 0
 st.session_state.active_module_idx = max(0, min(int(st.session_state.active_module_idx), len(MODULE_OPTIONS) - 1))
 
+# Check if user selected a new module from top_bar_module_selector and sync active_module_idx
+if "top_bar_module_selector" in st.session_state and st.session_state.top_bar_module_selector in MODULE_OPTIONS:
+    _sel_m_idx = MODULE_OPTIONS.index(st.session_state.top_bar_module_selector)
+    if _sel_m_idx != st.session_state.active_module_idx:
+        st.session_state.active_module_idx = _sel_m_idx
+        st.session_state.active_tab_idx = 0
+        st.session_state.tab_switch_requested = 0
+        st.session_state._last_module_sync_idx = _sel_m_idx
+
 if "active_tab_idx" not in st.session_state:
     st.session_state.active_tab_idx = 0
 
@@ -7094,6 +7103,7 @@ with st.container(key="top_frozen_header_container", border=False):
                 st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen_module)
                 st.session_state.active_tab_idx = 0
                 st.session_state.tab_switch_requested = 0
+                st.session_state._last_module_sync_idx = st.session_state.active_module_idx
                 st.rerun()
 
         with hdr_c_tab:
