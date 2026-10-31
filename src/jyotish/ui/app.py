@@ -197,10 +197,26 @@ if is_astrallis_mode:
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Noto Sans", sans-serif !important;
         -webkit-font-smoothing: antialiased !important;
     }
-    [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-        background-color: #FFF2DF !important;
-        background: #FFF2DF !important;
-        border-right: 2px solid #E67E22 !important;
+    /* ---------------------------------------------------------
+       Hide Streamlit native header bars / side bars lines at top of sidebar
+       --------------------------------------------------------- */
+    [data-testid="stSidebar"] [data-testid="stSidebarHeader"],
+    [data-testid="stSidebar"] header,
+    section[data-testid="stSidebar"] > div:first-child > div:first-child > div:first-child:empty {
+        display: none !important;
+        height: 0px !important;
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+    [data-testid="stSidebar"] {
+        border-right: none !important;
+    }
+    section[data-testid="stSidebar"] {
+        border-right: 1.5px solid #E8D3B9 !important;
+    }
+    [data-testid="stSidebarCollapseButton"] {
+        border: none !important;
+        outline: none !important;
     }
     /* ===== SIDEBAR BASE TEXT — light saffron (bhagwa) background → black text ===== */
     [data-testid="stSidebar"] > div > div,
@@ -219,11 +235,16 @@ if is_astrallis_mode:
     [data-testid="stSidebar"] div {
         color: #000000 !important;
     }
-    /* ===== LIGHT GREENISH + YELLOWISH MIX CARDS (Pistachio Cream) ===== */
+    /* ===== LIGHT GREENISH + YELLOWISH MIX CARDS (Pistachio Yellow Cream) ===== */
     [data-testid="stSidebar"] .sb-card-white {
-        background-color: #F4FCE3 !important;
-        background: linear-gradient(145deg, #F9FDE8 0%, #EBF8D8 100%) !important;
-        border: 1.5px solid #C3E69B !important;
+        background-color: #F3FCE0 !important;
+        background: linear-gradient(145deg, #F9FDE6 0%, #EBF8D3 100%) !important;
+        border: 1.5px solid #BDDE85 !important;
+        border-radius: 14px !important;
+        margin-top: 14px !important;
+        margin-bottom: 18px !important;
+        padding: 13px 15px !important;
+        box-shadow: 0 4px 12px rgba(110, 160, 40, 0.12) !important;
     }
     [data-testid="stSidebar"] .sb-card-white,
     [data-testid="stSidebar"] .sb-card-white * {
@@ -825,7 +846,7 @@ else:
     [data-testid="stSidebar"], section[data-testid="stSidebar"] {
         background-color: #FFF2DF !important;
         background: #FFF2DF !important;
-        border-right: 2.5px solid #E67E22 !important;
+        border-right: 1.5px solid #E8D3B9 !important;
     }
     [data-testid="stSidebar"] * {
         color: #000000 !important;
@@ -1484,7 +1505,7 @@ unified_css = f"""
         z-index: 10000000 !important;
         background-color: #FFF2DF !important;
         background: #FFF2DF !important;
-        border-right: 2.5px solid #E67E22 !important;
+        border-right: 1.5px solid #E8D3B9 !important;
     }}
     section[data-testid="stSidebar"] *,
     [data-testid="stSidebar"] *,
@@ -9277,22 +9298,7 @@ with st.container(key="top_frozen_header_container", border=False):
     # 📚 LEFT SIDEBAR: ACTIVE CLIENT PROFILE & ALL 30 VEDIC MODULES
     # ---------------------------------------------------------
     with st.sidebar:
-        # 1. 🪐 TOP SIDEBAR COLLAPSE TOGGLE BAR (<< बटन सबसे ऊपर)
-        st.markdown("""
-        <div style="display:flex; justify-content:space-between; align-items:center; background:linear-gradient(135deg, #FFE8C2 0%, #FFD699 100%); border:1.5px solid #E67E22; border-radius:10px; padding:6px 12px; margin-bottom:10px; box-shadow:0 3px 8px rgba(230,126,34,0.25);">
-            <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:16px;">🪐</span>
-                <span style="font-size:13px; font-weight:900; color:#000000; letter-spacing:0.8px; text-transform:uppercase;">ब्रह्महोरा साइडबार</span>
-            </div>
-            <button onclick="(document.querySelector('[data-testid=\\'stSidebarCollapseButton\\']') || parent.document.querySelector('[data-testid=\\'stSidebarCollapseButton\\']))?.click();" 
-                    title="साइडबार संकुचित करें (Collapse Sidebar)" 
-                    style="background:#FFF2DF; border:1.5px solid #E67E22; color:#000000; font-weight:900; font-size:14px; border-radius:6px; padding:2px 10px; cursor:pointer; transition:all 0.2s ease;">
-                ««
-            </button>
-        </div>
-        """, unsafe_allow_html=True)
-
-        # 2. 👤 सक्रिय जातक प्रोफाइल कार्ड (Active Jatak Profile Card - Light Greenish-Yellow)
+        # 1. 👤 सक्रिय जातक प्रोफाइल कार्ड (Active Jatak Profile Card - Light Greenish-Yellow)
         _rashi_hi_map = {
             "Aries": "मेष", "Taurus": "वृषभ", "Gemini": "मिथुन", "Cancer": "कर्क",
             "Leo": "सिंह", "Virgo": "कन्या", "Libra": "तुला", "Scorpio": "वृश्चिक",
@@ -9305,15 +9311,15 @@ with st.container(key="top_frozen_header_container", border=False):
         _moon_hi = _rashi_hi_map.get(_moon_en, _moon_en)
 
         st.markdown(f"""
-        <div class="sb-card-white" style="border:1.5px solid #B8E088; border-top:4px solid #76B828; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 8px rgba(100,150,30,0.12);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                <div style="font-size:11px; font-weight:800; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
+        <div class="sb-card-white" style="border:1.5px solid #BDDE85; border-top:4px solid #76B828; border-radius:14px; padding:12px 14px; margin-top:6px; margin-bottom:18px; box-shadow:0 4px 12px rgba(110,160,40,0.12);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <div style="font-size:11.5px; font-weight:800; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
                     <span>👤</span> <span style="color:#000000 !important;">सक्रिय जातक प्रोफाइल</span>
                 </div>
-                <span style="font-size:9.5px; font-weight:800; background:#E2F5C2; color:#000000 !important; border:1px solid #B8E088; border-radius:4px; padding:1px 6px;">● जातक</span>
+                <span style="font-size:9.5px; font-weight:800; background:#E2F5C2; color:#000000 !important; border:1px solid #B8E088; border-radius:4px; padding:2px 7px;">● जातक</span>
             </div>
-            <div style="font-size:16px; font-weight:900; color:#000000 !important; margin:3px 0 4px 0; letter-spacing:0.2px;">{name}</div>
-            <div style="font-size:11.5px; color:#000000 !important; line-height:1.5;">
+            <div style="font-size:16px; font-weight:900; color:#000000 !important; margin:3px 0 6px 0; letter-spacing:0.2px;">{name}</div>
+            <div style="font-size:11.5px; color:#000000 !important; line-height:1.6;">
                 📅 <b style="color:#000000 !important;">{birth_d.strftime('%d-%b-%Y')}</b> &nbsp;|&nbsp; ⏰ <b style="color:#000000 !important;">{birth_t.strftime('%I:%M %p')}</b><br/>
                 📍 <span style="color:#000000 !important;">{default_city_name}</span> &nbsp;|&nbsp; <b style="color:#000000 !important;">लग्न:</b> <span style="font-weight:800; color:#000000 !important;">{_lagna_en} ({_lagna_hi})</span><br/>
                 🌙 <b style="color:#000000 !important;">चन्द्र राशि:</b> <span style="font-weight:800; color:#000000 !important;">{_moon_en} ({_moon_hi})</span>
@@ -9364,12 +9370,12 @@ with st.container(key="top_frozen_header_container", border=False):
             _brahma_str = "04:24 AM ~ 05:12 AM"
 
         st.markdown(f"""
-        <div class="sb-card-white" style="border:1.5px solid #B8E088; border-top:4px solid #D97706; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 8px rgba(100,150,30,0.12);">
+        <div class="sb-card-white" style="border:1.5px solid #BDDE85; border-top:4px solid #D97706; border-radius:14px; padding:12px 14px; margin-top:16px; margin-bottom:18px; box-shadow:0 4px 12px rgba(110,160,40,0.12);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <div style="font-size:11px; font-weight:800; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
+                <div style="font-size:11.5px; font-weight:800; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
                     <span>⚡</span> <span style="color:#000000 !important;">जातक जन्म पंचांग एवं मुहूर्त</span>
                 </div>
-                <span style="font-size:9.5px; font-weight:800; background:#E2F5C2; color:#000000 !important; border:1px solid #B8E088; border-radius:4px; padding:1px 6px;">● जन्मकालीन</span>
+                <span style="font-size:9.5px; font-weight:800; background:#E2F5C2; color:#000000 !important; border:1px solid #B8E088; border-radius:4px; padding:2px 7px;">● जन्मकालीन</span>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px;">
                 <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:7px; padding:5px 7px;">
@@ -9476,14 +9482,14 @@ with st.container(key="top_frozen_header_container", border=False):
         _t_hora = _hora_order[(_t_s_idx + _h_live_offset) % 7]
 
         st.markdown(f"""
-        <div class="sb-card-white" style="border:1.5px solid #B8E088; border-top:4px solid #10B981; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 8px rgba(100,150,30,0.12);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-                <div style="font-size:11px; font-weight:800; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
+        <div class="sb-card-white" style="border:1.5px solid #BDDE85; border-top:4px solid #10B981; border-radius:14px; padding:12px 14px; margin-top:16px; margin-bottom:18px; box-shadow:0 4px 12px rgba(110,160,40,0.12);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <div style="font-size:11.5px; font-weight:800; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
                     <span>🪐</span> <span style="color:#000000 !important;">आज का पंचांग (Live Gochar)</span>
                 </div>
-                <span style="font-size:9.5px; font-weight:800; background:#E2F5C2; color:#000000 !important; border:1px solid #B8E088; border-radius:4px; padding:1px 6px;">● लाइव आज</span>
+                <span style="font-size:9.5px; font-weight:800; background:#E2F5C2; color:#000000 !important; border:1px solid #B8E088; border-radius:4px; padding:2px 7px;">● लाइव आज</span>
             </div>
-            <div style="font-size:11px; color:#000000 !important; line-height:1.4; margin-bottom:8px;">
+            <div style="font-size:11.5px; color:#000000 !important; line-height:1.5; margin-bottom:8px;">
                 📅 <b style="color:#000000 !important;">{_now_dt.strftime('%d-%b-%Y')} ({_t_vara})</b> &nbsp;|&nbsp; ⏰ <b style="color:#000000 !important;">{_now_dt.strftime('%I:%M %p')}</b><br/>
                 📍 <span style="color:#000000 !important;">{_today_city}</span>
             </div>
@@ -9542,8 +9548,8 @@ with st.container(key="top_frozen_header_container", border=False):
 
         # 5. 📜 शास्त्रीय प्रमाण एवं फलादेश (दोनों पंचांग: जातक पंचांग व आज का पंचांग)
         st.markdown(f"""
-        <div class="sb-card-white" style="border:1.5px solid #B8E088; border-top:4px solid #D97706; border-radius:12px; padding:11px 13px; margin-bottom:12px; box-shadow:0 3px 8px rgba(100,150,30,0.12);">
-            <div style="font-size:11.5px; font-weight:900; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:5px; margin-bottom:6px;">
+        <div class="sb-card-white" style="border:1.5px solid #BDDE85; border-top:4px solid #D97706; border-radius:14px; padding:12px 14px; margin-top:16px; margin-bottom:20px; box-shadow:0 4px 12px rgba(110,160,40,0.12);">
+            <div style="font-size:11.5px; font-weight:900; color:#000000 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:5px; margin-bottom:8px;">
                 <span>📜</span> <span style="color:#000000 !important;">शास्त्रीय प्रमाण एवं फलादेश</span>
             </div>
             <div style="background:#EDF8DB; border:1px solid #C3E69B; border-radius:8px; padding:8px 10px; margin-bottom:8px;">
