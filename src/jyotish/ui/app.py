@@ -201,9 +201,23 @@ if is_astrallis_mode:
         background-color: #0A0E1A !important;
         border-right: 1.5px solid #1E293B !important;
     }
-    [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
+    /* ===== SIDEBAR BASE TEXT — only native Streamlit widgets, NOT custom HTML cards ===== */
+    [data-testid="stSidebar"] > div > div,
+    [data-testid="stSidebar"] .stMarkdownContainer > p,
+    [data-testid="stSidebar"] .stMarkdownContainer > h1,
+    [data-testid="stSidebar"] .stMarkdownContainer > h2,
+    [data-testid="stSidebar"] .stMarkdownContainer > h3,
+    [data-testid="stSidebar"] .element-container > .stMarkdownContainer > *,
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] .stTextInput label,
+    [data-testid="stSidebar"] .stSelectbox label {
         color: #E2E8F0 !important;
     }
+    /* ===== WHITE CARD OVERRIDES — highest specificity wins ===== */
+    [data-testid="stSidebar"] .sb-card-white { background: #FFFFFF !important; }
+    [data-testid="stSidebar"] .sb-card-white,
+    [data-testid="stSidebar"] .sb-card-white * { color: #0F172A !important; }
+    /* ===== RADIO LABELS — dark background with light text ===== */
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
     section[data-testid="stSidebar"] .stRadio label,
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label,
@@ -212,12 +226,25 @@ if is_astrallis_mode:
         border: 1.5px solid #1E293B !important;
         color: #E2E8F0 !important;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+        border-radius: 6px !important;
+        padding: 4px 8px !important;
+        margin-bottom: 3px !important;
+        display: flex !important;
+        align-items: center !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label p,
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label span,
     section[data-testid="stSidebar"] .stRadio label p,
+    section[data-testid="stSidebar"] .stRadio label span,
     [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label p,
-    div[data-testid="stRadio"] label p {
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label span,
+    div[data-testid="stRadio"] label p,
+    div[data-testid="stRadio"] label span {
         color: #CBD5E1 !important;
+        font-size: 11.5px !important;
+        font-weight: 600 !important;
+        white-space: normal !important;
+        word-break: break-word !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover,
     section[data-testid="stSidebar"] .stRadio label:hover,
@@ -243,27 +270,45 @@ if is_astrallis_mode:
     h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
         color: #E2E8F0 !important;
     }
-    /* 🌟 High Contrast White Cards in Sidebar (विरोधाभासी एवं प्रीमियम डिज़ाइन) */
+    /* ===== NUCLEAR OVERRIDE: sb-card-white elements get dark text, period ===== */
+    /* These rules must come AFTER the global rule above to win the cascade */
+    .sb-card-white { background: #FFFFFF !important; }
     .sb-card-white,
-    .sb-card-white *,
-    .sb-card-white div,
-    .sb-card-white p,
-    .sb-card-white span,
-    .sb-card-white b,
-    .sb-card-white strong,
-    .sb-card-white i,
-    .sb-card-white em,
-    .sb-card-white summary,
-    [data-testid="stSidebar"] .sb-card-white,
-    [data-testid="stSidebar"] .sb-card-white * {
+    .sb-card-white h1, .sb-card-white h2, .sb-card-white h3,
+    .sb-card-white h4, .sb-card-white h5, .sb-card-white h6,
+    .sb-card-white p, .sb-card-white span, .sb-card-white div,
+    .sb-card-white b, .sb-card-white strong, .sb-card-white i,
+    .sb-card-white em, .sb-card-white a, .sb-card-white li,
+    .sb-card-white label, .sb-card-white caption, .sb-card-white small {
         color: #0F172A !important;
     }
-    .sb-card-white .text-blue { color: #1D4ED8 !important; }
-    .sb-card-white .text-amber { color: #B45309 !important; }
-    .sb-card-white .text-green { color: #047857 !important; }
-    .sb-card-white .text-red { color: #B91C1C !important; }
-    .sb-card-white .text-muted { color: #475569 !important; }
-    .sb-card-white .val-black { color: #020617 !important; font-weight: 800 !important; }
+    [data-testid="stSidebar"] .sb-card-white,
+    [data-testid="stSidebar"] .sb-card-white *,
+    [data-testid="stSidebar"] .sb-card-white h1,
+    [data-testid="stSidebar"] .sb-card-white h2,
+    [data-testid="stSidebar"] .sb-card-white h3,
+    [data-testid="stSidebar"] .sb-card-white p,
+    [data-testid="stSidebar"] .sb-card-white span,
+    [data-testid="stSidebar"] .sb-card-white div,
+    [data-testid="stSidebar"] .sb-card-white b,
+    [data-testid="stSidebar"] .sb-card-white strong {
+        color: #0F172A !important;
+        background-color: transparent;
+    }
+    /* Colored accent overrides inside white cards */
+    .sb-card-white [style*="color:#1D4ED8"], .sb-card-white [style*="color: #1D4ED8"] { color: #1D4ED8 !important; }
+    .sb-card-white [style*="color:#B45309"], .sb-card-white [style*="color: #B45309"] { color: #B45309 !important; }
+    .sb-card-white [style*="color:#047857"], .sb-card-white [style*="color: #047857"] { color: #047857 !important; }
+    .sb-card-white [style*="color:#B91C1C"], .sb-card-white [style*="color: #B91C1C"] { color: #B91C1C !important; }
+    .sb-card-white [style*="color:#065F46"], .sb-card-white [style*="color: #065F46"] { color: #065F46 !important; }
+    .sb-card-white [style*="color:#7C3AED"], .sb-card-white [style*="color: #7C3AED"] { color: #7C3AED !important; }
+    .sb-card-white [style*="color:#0369A1"], .sb-card-white [style*="color: #0369A1"] { color: #0369A1 !important; }
+    .sb-card-white [style*="color:#92400E"], .sb-card-white [style*="color: #92400E"] { color: #92400E !important; }
+    .sb-card-white [style*="color:#78350F"], .sb-card-white [style*="color: #78350F"] { color: #78350F !important; }
+    .sb-card-white [style*="color:#020617"], .sb-card-white [style*="color: #020617"] { color: #020617 !important; }
+    .sb-card-white [style*="color:#334155"], .sb-card-white [style*="color: #334155"] { color: #334155 !important; }
+    .sb-card-white [style*="color:#1E293B"], .sb-card-white [style*="color: #1E293B"] { color: #1E293B !important; }
+    .sb-card-white [style*="color:#1E40AF"], .sb-card-white [style*="color: #1E40AF"] { color: #1E40AF !important; }
 
     input, textarea, select,
     div[data-baseweb="input"] input,
@@ -9476,77 +9521,38 @@ with st.container(key="top_frozen_header_container", border=False):
         st.markdown(f"""
         <div class="sb-card-white" style="background:#FFFFFF !important; border:2px solid #F59E0B; border-top:4px solid #D97706; border-radius:12px; padding:11px 13px; margin-bottom:12px; box-shadow:0 3px 10px rgba(0,0,0,0.18);">
             <div style="font-size:11.5px; font-weight:900; color:#B45309 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:5px; margin-bottom:6px;">
-                <span>📜</span> <span style="color:#B45309 !important;">शास्त्रीय प्रमाण एवं फलादेश (द्विविध पंचांग)</span>
+                <span>📜</span> <span style="color:#B45309 !important;">शास्त्रीय प्रमाण एवं फलादेश</span>
             </div>
-            
-            <!-- Shastriya Universal Shloka -->
             <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:8px 10px; margin-bottom:8px;">
-                <div style="font-size:9.5px; font-weight:800; color:#92400E !important; text-transform:uppercase;">🏛️ सार्वभौमिक पंचांग फल प्रमाण (*मुहूर्त चिंतामणि*):</div>
-                <div style="font-size:11px; font-weight:800; color:#78350F !important; font-family:'Noto Sans Devanagari', serif; line-height:1.45; margin:3px 0;">
+                <div style="font-size:9.5px; font-weight:800; color:#92400E !important; text-transform:uppercase; margin-bottom:3px;">🏛️ पंचाङ्ग फल श्लोक (मुहूर्त चिंतामणि):</div>
+                <div style="font-size:10.5px; font-weight:800; color:#78350F !important; line-height:1.5; margin-bottom:4px;">
                     तिथेश्च श्रियमाप्नोति वारादायुष्यवर्धनम्।<br/>
                     नक्षत्राद्धरते पापं योगाद्रोगनिवारणम्॥<br/>
                     करणात् कार्यसिद्धिः स्यात् पञ्चाङ्गस्य फलं शृणु॥
                 </div>
                 <div style="font-size:9.5px; color:#92400E !important; line-height:1.35;">
-                    <b>भावार्थ:</b> तिथि से लक्ष्मी (धन-वैभव), वार से दीर्घायु, नक्षत्र से पापनाश, योग से रोगमुक्ति और करण से कार्यों में अभीष्ट सिद्धि होती है।
+                    <b style="color:#78350F !important;">भावार्थ:</b> <span style="color:#92400E !important;">तिथि = लक्ष्मी, वार = दीर्घायु, नक्षत्र = पापनाश, योग = रोगमुक्ति, करण = कार्यसिद्धि।</span>
                 </div>
             </div>
-
-            <!-- Section 1: Jatak Janma Phaladeesh -->
-            <details open style="margin-bottom:6px; border:1px solid #CBD5E1; border-radius:8px; overflow:hidden;">
-                <summary style="background:#EFF6FF; padding:7px 10px; font-size:11px; font-weight:800; color:#1E40AF !important; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
-                    <span>👶 जातक जन्म पंचांग शास्त्रीय फलादेश</span>
-                    <span style="font-size:10px;">▼</span>
-                </summary>
-                <div style="padding:8px 10px; font-size:10.5px; color:#1E293B !important; line-height:1.5; background:#FFFFFF;">
-                    <div style="margin-bottom:5px;">
-                        <b style="color:#0369A1 !important;">📅 जन्म तिथि फल ({_tithi_str}):</b>
-                        <span style="color:#0F172A !important;"> <i>फलदीपिका</i> अनुसार यह तिथि जातक को कुशाग्र बुद्धि, पराक्रम, नीति-निष्ठा और समाज में सम्मान प्रदान करती है।</span>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <b style="color:#0369A1 !important;">🪐 जन्म वार फल ({_vara_str}):</b>
-                        <span style="color:#0F172A !important;"> <i>मानसागरी</i> अनुसार जन्म वार स्वामी जातक के स्वभाव में गंभीरता, कार्य-दक्षता और सतत प्रयत्न से सिद्धि का वरदान देता है।</span>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <b style="color:#0369A1 !important;">✨ जन्म नक्षत्र फल ({_nak_str}):</b>
-                        <span style="color:#0F172A !important;"> <i>बृहज्जातक</i> अनुसार इस नक्षत्र में जन्मा जातक विद्यानुरागी, विचारशील, दृढ़ संकल्पी और संकट मोचक होता है।</span>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <b style="color:#0369A1 !important;">🌿 योग व करण फल ({_yoga_str} / {_karana_str}):</b>
-                        <span style="color:#0F172A !important;"> शारीरिक आरोग्यता, सहयोगियों का संबल और व्यावहारिक कार्य-सिद्धि में विशेष सहायक।</span>
-                    </div>
-                    <div>
-                        <b style="color:#0369A1 !important;">👑 जन्म होरा स्वामी ({_hora_str}):</b>
-                        <span style="color:#0F172A !important;"> जातक की जीवन-ऊर्जा, आत्मबल और तात्कालिक निर्णय क्षमता को संबल प्रदान करता है।</span>
-                    </div>
+            <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:8px 10px; margin-bottom:6px;">
+                <div style="font-size:10px; font-weight:800; color:#1E40AF !important; margin-bottom:5px;">👶 जातक जन्म पंचांग फलादेश:</div>
+                <div style="font-size:10px; color:#1E293B !important; line-height:1.5;">
+                    <div style="margin-bottom:4px;"><b style="color:#0369A1 !important;">📅 तिथि ({_tithi_str}):</b> <span style="color:#0F172A !important;">कुशाग्र बुद्धि, पराक्रम व समाज में सम्मान।</span></div>
+                    <div style="margin-bottom:4px;"><b style="color:#0369A1 !important;">🪐 वार ({_vara_str}):</b> <span style="color:#0F172A !important;">गंभीरता, कार्य-दक्षता व सतत प्रयत्न से सिद्धि।</span></div>
+                    <div style="margin-bottom:4px;"><b style="color:#0369A1 !important;">✨ नक्षत्र ({_nak_str}):</b> <span style="color:#0F172A !important;">विद्यानुरागी, विचारशील व दृढ़ संकल्पी।</span></div>
+                    <div style="margin-bottom:4px;"><b style="color:#0369A1 !important;">🌿 योग/करण ({_yoga_str}/{_karana_str}):</b> <span style="color:#0F172A !important;">आरोग्यता व कार्य-सिद्धि में सहायक।</span></div>
+                    <div><b style="color:#0369A1 !important;">👑 जन्म होरा ({_hora_str}):</b> <span style="color:#0F172A !important;">आत्मबल व निर्णय क्षमता का संबल।</span></div>
                 </div>
-            </details>
-
-            <!-- Section 2: Today Transit Panchang Phaladeesh & Muhurta Decisions -->
-            <details open style="border:1px solid #CBD5E1; border-radius:8px; overflow:hidden;">
-                <summary style="background:#ECFDF5; padding:7px 10px; font-size:11px; font-weight:800; color:#065F46 !important; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
-                    <span>🪐 आज के पंचांग का गोचर फल व मुहूर्त निर्णय</span>
-                    <span style="font-size:10px;">▼</span>
-                </summary>
-                <div style="padding:8px 10px; font-size:10.5px; color:#1E293B !important; line-height:1.5; background:#FFFFFF;">
-                    <div style="margin-bottom:5px;">
-                        <b style="color:#047857 !important;">📅 आज का गोचर प्रभाव ({_t_vara}, {_t_tithi}):</b>
-                        <span style="color:#0F172A !important;"> आज का दिवस व्यावहारिक कर्म, अध्ययन, योजना निर्माण व शुभ संवाद हेतु विशेष रूप से अनुकूल है।</span>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <b style="color:#047857 !important;">🌟 आज का अभिजित मुहूर्त ({_t_abhijit}):</b>
-                        <span style="color:#0F172A !important;"> <i>मुहूर्त चिंतामणि</i> (अ. १, श्लोक ३५) अनुसार मध्याह्न का यह विजय काल समस्त विघ्नों का शमन करता है; नवीन कार्य शुभारंभ हेतु सर्वोत्तम।</span>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <b style="color:#B91C1C !important;">🔴 आज का राहुकाल ({_t_rahu}):</b>
-                        <span style="color:#0F172A !important;"> <i>कालामृत</i> अनुसार इस अवधि में नया अनुबंध, यात्रा अथवा मांगलिक कार्य सर्वथा वर्जित हैं।</span>
-                    </div>
-                    <div>
-                        <b style="color:#047857 !important;">👑 वर्तमान होरा ({_t_hora}):</b>
-                        <span style="color:#0F172A !important;"> वर्तमान वेला {_t_hora} ग्रह के अनुकूल कार्यों (ज्ञान, संवाद, क्रय अथवा कर्म) हेतु प्रशस्त है।</span>
-                    </div>
+            </div>
+            <div style="background:#ECFDF5; border:1px solid #A7F3D0; border-radius:8px; padding:8px 10px;">
+                <div style="font-size:10px; font-weight:800; color:#065F46 !important; margin-bottom:5px;">🪐 आज का गोचर फल व मुहूर्त निर्णय:</div>
+                <div style="font-size:10px; color:#1E293B !important; line-height:1.5;">
+                    <div style="margin-bottom:4px;"><b style="color:#047857 !important;">📅 आज ({_t_vara}, {_t_tithi}):</b> <span style="color:#0F172A !important;">व्यावहारिक कर्म, अध्ययन व शुभ संवाद हेतु अनुकूल।</span></div>
+                    <div style="margin-bottom:4px;"><b style="color:#047857 !important;">🌟 अभिजित ({_t_abhijit}):</b> <span style="color:#0F172A !important;">मुहूर्त चिंतामणि अनुसार विजय काल — नवीन कार्य हेतु सर्वोत्तम।</span></div>
+                    <div style="margin-bottom:4px;"><b style="color:#B91C1C !important;">🔴 राहुकाल ({_t_rahu}):</b> <span style="color:#0F172A !important;">कालामृत अनुसार — नया कार्य, यात्रा व अनुबंध वर्जित।</span></div>
+                    <div><b style="color:#047857 !important;">👑 वर्तमान होरा ({_t_hora}):</b> <span style="color:#0F172A !important;">{_t_hora} ग्रह के अनुकूल कार्य (ज्ञान, संवाद) हेतु प्रशस्त।</span></div>
                 </div>
-            </details>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
