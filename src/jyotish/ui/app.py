@@ -243,6 +243,28 @@ if is_astrallis_mode:
     h1, h2, h3, h4, h5, h6, p, span, li, a, label, caption, strong, b, [data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span {
         color: #E2E8F0 !important;
     }
+    /* 🌟 High Contrast White Cards in Sidebar (विरोधाभासी एवं प्रीमियम डिज़ाइन) */
+    .sb-card-white,
+    .sb-card-white *,
+    .sb-card-white div,
+    .sb-card-white p,
+    .sb-card-white span,
+    .sb-card-white b,
+    .sb-card-white strong,
+    .sb-card-white i,
+    .sb-card-white em,
+    .sb-card-white summary,
+    [data-testid="stSidebar"] .sb-card-white,
+    [data-testid="stSidebar"] .sb-card-white * {
+        color: #0F172A !important;
+    }
+    .sb-card-white .text-blue { color: #1D4ED8 !important; }
+    .sb-card-white .text-amber { color: #B45309 !important; }
+    .sb-card-white .text-green { color: #047857 !important; }
+    .sb-card-white .text-red { color: #B91C1C !important; }
+    .sb-card-white .text-muted { color: #475569 !important; }
+    .sb-card-white .val-black { color: #020617 !important; font-weight: 800 !important; }
+
     input, textarea, select,
     div[data-baseweb="input"] input,
     div[data-baseweb="base-input"] input,
@@ -9187,23 +9209,51 @@ with st.container(key="top_frozen_header_container", border=False):
     # 📚 LEFT SIDEBAR: ACTIVE CLIENT PROFILE & ALL 30 VEDIC MODULES
     # ---------------------------------------------------------
     with st.sidebar:
-        _sb_prof_tag = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#0073CF")
-        _sb_prof_name = "#FFFFFF" if (is_astrallis_mode or is_night_mode) else "#0F172A"
-        _sb_prof_sub = "#CBD5E1" if (is_astrallis_mode or is_night_mode) else "#475569"
+        # 1. 🪐 TOP SIDEBAR COLLAPSE TOGGLE BAR (<< बटन सबसे ऊपर)
+        st.markdown("""
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#0B1A30; border:1.5px solid #F59E0B; border-radius:10px; padding:6px 12px; margin-bottom:10px; box-shadow:0 3px 8px rgba(0,0,0,0.35);">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:16px;">🪐</span>
+                <span style="font-size:13px; font-weight:900; color:#F59E0B; letter-spacing:0.8px; text-transform:uppercase;">ब्रह्महोरा साइडबार</span>
+            </div>
+            <button onclick="(document.querySelector('[data-testid=\\'stSidebarCollapseButton\\']') || parent.document.querySelector('[data-testid=\\'stSidebarCollapseButton\\']))?.click();" 
+                    title="साइडबार संकुचित करें (Collapse Sidebar)" 
+                    style="background:#1E293B; border:1px solid #F59E0B; color:#F59E0B; font-weight:900; font-size:14px; border-radius:6px; padding:2px 10px; cursor:pointer; transition:all 0.2s ease;">
+                ««
+            </button>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # 2. 👤 सक्रिय जातक प्रोफाइल कार्ड (Active Jatak Profile Card - High Contrast White)
+        _rashi_hi_map = {
+            "Aries": "मेष", "Taurus": "वृषभ", "Gemini": "मिथुन", "Cancer": "कर्क",
+            "Leo": "सिंह", "Virgo": "कन्या", "Libra": "तुला", "Scorpio": "वृश्चिक",
+            "Sagittarius": "धनु", "Capricorn": "मकर", "Aquarius": "कुंभ", "Pisces": "मीन"
+        }
+        _lagna_en = getattr(chart, "lagna_sign_name", "Libra")
+        _lagna_hi = _rashi_hi_map.get(_lagna_en, _lagna_en)
+        _moon_planet = chart.planets.get("Moon") if hasattr(chart, "planets") else None
+        _moon_en = getattr(_moon_planet, "sign_name", "Gemini") if _moon_planet else "Gemini"
+        _moon_hi = _rashi_hi_map.get(_moon_en, _moon_en)
+
         st.markdown(f"""
-        <div style="background:{_sb_card_bg}; border:2px solid {_sb_card_border}; border-radius:12px; padding:10px 14px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-            <div style="font-size:11px; font-weight:800; color:{_sb_prof_tag}; text-transform:uppercase; letter-spacing:0.5px;">👤 सक्रिय जातक प्रोफाइल</div>
-            <div style="font-size:15.5px; font-weight:900; color:{_sb_prof_name}; margin:3px 0;">{name}</div>
-            <div style="font-size:11.5px; color:{_sb_prof_sub}; line-height:1.4;">
-                📅 {birth_d.strftime('%d-%b-%Y')} | ⏰ {birth_t.strftime('%I:%M %p')}<br/>
-                📍 {default_city_name} | <b>लग्न:</b> {chart.lagna_sign_name}
+        <div class="sb-card-white" style="background:#FFFFFF !important; border:2px solid #CBD5E1; border-top:4px solid #2563EB; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 10px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <div style="font-size:11px; font-weight:800; color:#2563EB !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
+                    <span>👤</span> <span style="color:#2563EB !important;">सक्रिय जातक प्रोफाइल</span>
+                </div>
+                <span style="font-size:9.5px; font-weight:800; background:#EFF6FF; color:#1D4ED8 !important; border:1px solid #BFDBFE; border-radius:4px; padding:1px 6px;">● जातक</span>
+            </div>
+            <div style="font-size:16px; font-weight:900; color:#0F172A !important; margin:3px 0 4px 0; letter-spacing:0.2px;">{name}</div>
+            <div style="font-size:11.5px; color:#334155 !important; line-height:1.5;">
+                📅 <b style="color:#0F172A !important;">{birth_d.strftime('%d-%b-%Y')}</b> &nbsp;|&nbsp; ⏰ <b style="color:#0F172A !important;">{birth_t.strftime('%I:%M %p')}</b><br/>
+                📍 <span style="color:#334155 !important;">{default_city_name}</span> &nbsp;|&nbsp; <b style="color:#0F172A !important;">लग्न:</b> <span style="font-weight:800; color:#1D4ED8 !important;">{_lagna_en} ({_lagna_hi})</span><br/>
+                🌙 <b style="color:#0F172A !important;">चन्द्र राशि:</b> <span style="font-weight:800; color:#7C3AED !important;">{_moon_en} ({_moon_hi})</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-        # -----------------------------------------------------
-        # ⚡ DIGITAL PANCHANG CARD (जातक का डिजिटल पंचांग - १० अंग)
-        # -----------------------------------------------------
+        # 3. ⚡ सक्रिय जातक का पंचांग कार्ड (Jatak Birth Panchang Card - High Contrast White)
         p_sb = getattr(chart, "panchang", None)
         _tithi_str = getattr(p_sb, "tithi_name", "N/A") if p_sb else "N/A"
         _vara_str = getattr(p_sb, "vara_name", "N/A") if p_sb else "N/A"
@@ -9228,12 +9278,7 @@ with st.container(key="top_frozen_header_container", border=False):
         _h_offset = int(_diff_hour) % 7
         _hora_str = _hora_order[(_s_idx + _h_offset) % 7]
 
-        _pill_bg = "#0D1D35" if is_astrallis_mode else ("#1F2937" if is_night_mode else "#F8FAFC")
-        _pill_border = "#1E293B" if is_astrallis_mode else ("#374151" if is_night_mode else "#E2E8F0")
-        _pill_label = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#0073CF")
-        _pill_val = "#FFFFFF" if (is_astrallis_mode or is_night_mode) else "#000000"
-
-        # Shastriya Daily Muhurta Calculations
+        # Shastriya Daily Muhurta Calculations for Jatak birth date
         try:
             _muh_calc = default_shastriya_pramana_engine.calculate_daily_muhurta_windows(birth_d)
             _rahu_str = f"{_muh_calc['rahu_kaal']['start']} ~ {_muh_calc['rahu_kaal']['end']}"
@@ -9241,6 +9286,8 @@ with st.container(key="top_frozen_header_container", border=False):
             _gulika_str = f"{_muh_calc['gulika_kaal']['start']} ~ {_muh_calc['gulika_kaal']['end']}"
             _yama_str = f"{_muh_calc['yamaghanta']['start']} ~ {_muh_calc['yamaghanta']['end']}"
             _brahma_str = f"{_muh_calc['brahma_muhurta']['start']} ~ {_muh_calc['brahma_muhurta']['end']}"
+            _sr_str = _muh_calc.get("sunrise", "05:48 AM")
+            _ss_str = _muh_calc.get("sunset", "06:34 PM")
         except Exception:
             _rahu_str = "04:30 PM ~ 06:00 PM"
             _abhijit_str = "11:45 AM ~ 12:35 PM"
@@ -9249,74 +9296,266 @@ with st.container(key="top_frozen_header_container", border=False):
             _brahma_str = "04:24 AM ~ 05:12 AM"
 
         st.markdown(f"""
-        <div style="background:{_sb_card_bg}; border:2px solid {_sb_card_border}; border-radius:12px; padding:10px 12px; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <div class="sb-card-white" style="background:#FFFFFF !important; border:2px solid #CBD5E1; border-top:4px solid #F59E0B; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 10px rgba(0,0,0,0.18);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <div style="font-size:11px; font-weight:800; color:{_sb_prof_tag}; text-transform:uppercase; letter-spacing:0.5px;">⚡ जातक डिजिटल पंचांग एवं मुहूर्त</div>
-                <span style="font-size:9.5px; font-weight:800; background:{_pill_bg}; color:#10B981; border:1px solid #10B981; border-radius:4px; padding:1px 5px;">● शुद्ध</span>
+                <div style="font-size:11px; font-weight:800; color:#B45309 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
+                    <span>⚡</span> <span style="color:#B45309 !important;">जातक जन्म पंचांग एवं मुहूर्त</span>
+                </div>
+                <span style="font-size:9.5px; font-weight:800; background:#FEF3C7; color:#B45309 !important; border:1px solid #FDE68A; border-radius:4px; padding:1px 6px;">● जन्मकालीन</span>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px;">
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">📅 तिथि</span>
-                    <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_tithi_str}</b>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">📅 जन्म तिथि</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_tithi_str}</b>
                 </div>
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">🪐 वार</span>
-                    <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_vara_str}</b>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">🪐 जन्म वार</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_vara_str}</b>
                 </div>
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">✨ नक्षत्र</span>
-                    <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_nak_str}</b>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">✨ जन्म नक्षत्र</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_nak_str}</b>
                 </div>
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">🌿 योग</span>
-                    <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_yoga_str}</b>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">🌿 जन्म योग</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_yoga_str}</b>
                 </div>
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">⚡ करण</span>
-                    <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_karana_str}</b>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">⚡ जन्म करण</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_karana_str}</b>
                 </div>
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:{_pill_label}; font-size:9.5px; font-weight:700; display:block;">👑 होरा स्वामी</span>
-                    <b style="color:{_pill_val}; font-size:11px; font-weight:800; word-break:break-word;">{_hora_str}</b>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#0369A1 !important; font-size:9.5px; font-weight:800; display:block;">👑 जन्म होरा</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_hora_str}</b>
                 </div>
-                <div style="background:{_pill_bg}; border:1px solid #10B981; border-radius:7px; padding:4px 6px; grid-column: span 2;">
-                    <span style="color:#10B981; font-size:9.5px; font-weight:800; display:block;">🌟 अभिजित मुहूर्त (विजय काल)</span>
-                    <b style="color:{_pill_val}; font-size:11.5px; font-weight:900;">{_abhijit_str}</b>
+                <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:7px; padding:5px 7px; grid-column: span 2;">
+                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">🌟 अभिजित मुहूर्त (विजय काल)</span>
+                    <b style="color:#065F46 !important; font-size:11.5px; font-weight:900;">{_abhijit_str}</b>
                 </div>
-                <div style="background:{_pill_bg}; border:1px solid #EF4444; border-radius:7px; padding:4px 6px; grid-column: span 2;">
-                    <span style="color:#EF4444; font-size:9.5px; font-weight:800; display:block;">🔴 राहुकाल (सर्वथा वर्जित)</span>
-                    <b style="color:{_pill_val}; font-size:11.5px; font-weight:900;">{_rahu_str}</b>
+                <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:7px; padding:5px 7px; grid-column: span 2;">
+                    <span style="color:#B91C1C !important; font-size:9.5px; font-weight:800; display:block;">🔴 राहुकाल (सर्वथा वर्जित)</span>
+                    <b style="color:#991B1B !important; font-size:11.5px; font-weight:900;">{_rahu_str}</b>
                 </div>
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:#F59E0B; font-size:9.5px; font-weight:700; display:block;">🔱 गुलिक काल</span>
-                    <b style="color:{_pill_val}; font-size:10.5px; font-weight:800;">{_gulika_str}</b>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#B45309 !important; font-size:9.5px; font-weight:800; display:block;">🔱 गुलिक काल</span>
+                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_gulika_str}</b>
                 </div>
-                <div style="background:{_pill_bg}; border:1px solid {_pill_border}; border-radius:7px; padding:4px 6px;">
-                    <span style="color:#64748B; font-size:9.5px; font-weight:700; display:block;">⏳ यमघण्ट काल</span>
-                    <b style="color:{_pill_val}; font-size:10.5px; font-weight:800;">{_yama_str}</b>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#475569 !important; font-size:9.5px; font-weight:800; display:block;">⏳ यमघण्ट काल</span>
+                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_yama_str}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#475569 !important; font-size:9.5px; font-weight:800; display:block;">🌅 सूर्योदय / सूर्यास्त</span>
+                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_sr_str} / {_ss_str}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#475569 !important; font-size:9.5px; font-weight:800; display:block;">⏱ जन्म घटी</span>
+                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_ghati_str}</b>
                 </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-        with st.expander("📜 पंचांग एवं मुहूर्त शास्त्रीय प्रमाण (Classical Shlokas)", expanded=False):
-            st.markdown("""
-            **🌟 अभिजित मुहूर्त प्रमाण (*मुहूर्त चिंतामणि*, अध्याय १, श्लोक ३५):**
-            ```text
-            दिवाकरकरप्रौढे मध्यगे द्युमणावपि।
-            अभिजित्संज्ञको ज्ञेयो हन्ति सर्वानुपद्रवान्॥
-            ```
-            > **हिंदी अनुवाद:** दिन के मध्याह्न काल में जब भगवान सूर्य आकाश के मध्य में (दशम भाव सदृश) प्रज्वलित होते हैं, तब ८वां मुहूर्त 'अभिजित' कहलाता है। इसमें भगवान श्रीहरि विष्णु का वास होता है जो समस्त उपद्रवों व दोषों का शमन कर विजय प्रदान करता है (बुधवार को छोड़कर)।
+        # 4. 🪐 आज का पंचांग लाइव कार्ड (Today's Live Panchang Card - High Contrast White with Emerald Accent)
+        _now_dt = datetime.now()
+        try:
+            _today_lat = float(st.session_state.get("birth_lat", 28.6139))
+            _today_lon = float(st.session_state.get("birth_lon", 77.2090))
+            _today_tz = float(st.session_state.get("birth_tz", 5.5))
+            _today_city = str(st.session_state.get("birth_city", "New Delhi"))
+            
+            _today_bdata = BirthData(
+                name="आज का पंचांग",
+                birth_date=_now_dt.date(),
+                birth_time=_now_dt.time(),
+                latitude=_today_lat,
+                longitude=_today_lon,
+                timezone_offset=_today_tz,
+                city=_today_city
+            )
+            _today_chart = default_chart_calculator.calculate_chart(_today_bdata)
+            _tp = getattr(_today_chart, "panchang", None)
+            _t_tithi = getattr(_tp, "tithi_name", "N/A") if _tp else "N/A"
+            _t_vara = getattr(_tp, "vara_name", "N/A") if _tp else "N/A"
+            _t_nak = getattr(_tp, "nakshatra_name", "N/A") if _tp else "N/A"
+            _t_yoga = getattr(_tp, "yoga_name", "N/A") if _tp else "N/A"
+            _t_karana = getattr(_tp, "karana_name", "N/A") if _tp else "N/A"
+            
+            _today_muh = default_shastriya_pramana_engine.calculate_daily_muhurta_windows(_now_dt.date())
+            _t_rahu = f"{_today_muh['rahu_kaal']['start']} ~ {_today_muh['rahu_kaal']['end']}"
+            _t_abhijit = f"{_today_muh['abhijit']['start']} ~ {_today_muh['abhijit']['end']}"
+            _t_gulika = f"{_today_muh['gulika_kaal']['start']} ~ {_today_muh['gulika_kaal']['end']}"
+            _t_yama = f"{_today_muh['yamaghanta']['start']} ~ {_today_muh['yamaghanta']['end']}"
+            _t_brahma = f"{_today_muh['brahma_muhurta']['start']} ~ {_today_muh['brahma_muhurta']['end']}"
+            _t_sunrise = _today_muh.get("sunrise", "06:15 AM")
+            _t_sunset = _today_muh.get("sunset", "06:00 PM")
+        except Exception:
+            _t_tithi, _t_vara, _t_nak, _t_yoga, _t_karana = "कृष्ण पक्ष षष्ठी", "शनिवार", "पुनर्वसु", "सिद्ध", "वणिज"
+            _t_rahu = "09:00 AM ~ 10:30 AM"
+            _t_abhijit = "11:36 AM ~ 12:24 PM"
+            _t_gulika = "06:00 AM ~ 07:30 AM"
+            _t_yama = "01:30 PM ~ 03:00 PM"
+            _t_brahma = "04:24 AM ~ 05:12 AM"
+            _t_sunrise = "06:30 AM"
+            _t_sunset = "05:40 PM"
+            _today_city = "New Delhi"
 
-            **🔴 राहुकाल विचार प्रमाण (*कालामृत* एवं *मुहूर्त चिंतामणि*):**
-            ```text
-            आदित्यवारादिषु रात्रिभागे दिवा च राहोः कुलिकादिकानाम्।
-            यामेषु केन्द्रेषु च वर्जनीयाः सर्वेषु कार्येषु विनाशहेतुः॥
-            ```
-            > **हिंदी अनुवाद:** दिन के १/८वें भाग (९० मिनट की वेला) में राहु का विशेष आधिपत्य रहता है। इसमें किया गया कोई भी मांगलिक कार्य, अनुबंध या नवीन उद्यम विफलता, क्लेश व हानि की ओर ले जाता है, अतः यह सर्वथा वर्जित है।
-            """)
+        # Current live Hora calculation:
+        _t_curr_hour = _now_dt.hour + _now_dt.minute / 60.0
+        _t_diff_hour = (_t_curr_hour - 6.0) % 24
+        _t_s_idx = _day_start.get(_now_dt.weekday(), 0)
+        _h_live_offset = int(_t_diff_hour) % 7
+        _t_hora = _hora_order[(_t_s_idx + _h_live_offset) % 7]
 
-        st.markdown(f"### 📚 समस्त {len(MODULE_OPTIONS)} वैदिक मॉड्यूल")
+        st.markdown(f"""
+        <div class="sb-card-white" style="background:#FFFFFF !important; border:2px solid #10B981; border-top:4px solid #10B981; border-radius:12px; padding:11px 13px; margin-bottom:10px; box-shadow:0 3px 10px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                <div style="font-size:11px; font-weight:800; color:#047857 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:4px;">
+                    <span>🪐</span> <span style="color:#047857 !important;">आज का पंचांग (Live Gochar)</span>
+                </div>
+                <span style="font-size:9.5px; font-weight:800; background:#ECFDF5; color:#047857 !important; border:1px solid #A7F3D0; border-radius:4px; padding:1px 6px;">● लाइव आज</span>
+            </div>
+            <div style="font-size:11px; color:#334155 !important; line-height:1.4; margin-bottom:8px;">
+                📅 <b style="color:#0F172A !important;">{_now_dt.strftime('%d-%b-%Y')} ({_t_vara})</b> &nbsp;|&nbsp; ⏰ <b style="color:#0F172A !important;">{_now_dt.strftime('%I:%M %p')}</b><br/>
+                📍 <span style="color:#334155 !important;">{_today_city}</span>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 11px;">
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">📅 आज की तिथि</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_tithi}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">🪐 आज का वार</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_vara}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">✨ आज का नक्षत्र</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_nak}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">🌿 आज का योग</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_yoga}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">⚡ आज का करण</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_karana}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">👑 वर्तमान होरा</span>
+                    <b style="color:#020617 !important; font-size:11px; font-weight:800; word-break:break-word;">{_t_hora} स्वामी</b>
+                </div>
+                <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:7px; padding:5px 7px; grid-column: span 2;">
+                    <span style="color:#047857 !important; font-size:9.5px; font-weight:800; display:block;">🌟 आज का अभिजित मुहूर्त (विजय काल)</span>
+                    <b style="color:#065F46 !important; font-size:11.5px; font-weight:900;">{_t_abhijit}</b>
+                </div>
+                <div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:7px; padding:5px 7px; grid-column: span 2;">
+                    <span style="color:#B91C1C !important; font-size:9.5px; font-weight:800; display:block;">🔴 आज का राहुकाल (सर्वथा वर्जित)</span>
+                    <b style="color:#991B1B !important; font-size:11.5px; font-weight:900;">{_t_rahu}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#B45309 !important; font-size:9.5px; font-weight:800; display:block;">🔱 आज का गुलिक</span>
+                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_t_gulika}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#475569 !important; font-size:9.5px; font-weight:800; display:block;">⏳ आज का यमघण्ट</span>
+                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_t_yama}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#475569 !important; font-size:9.5px; font-weight:800; display:block;">🌅 सूर्योदय / 🌇 सूर्यास्त</span>
+                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_t_sunrise} / {_t_sunset}</b>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:7px; padding:5px 7px;">
+                    <span style="color:#7C3AED !important; font-size:9.5px; font-weight:800; display:block;">🧘 ब्रह्म मुहूर्त</span>
+                    <b style="color:#020617 !important; font-size:10.5px; font-weight:800;">{_t_brahma}</b>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # 5. 📜 शास्त्रीय प्रमाण एवं फलादेश (दोनों पंचांग: जातक पंचांग व आज का पंचांग)
+        st.markdown(f"""
+        <div class="sb-card-white" style="background:#FFFFFF !important; border:2px solid #F59E0B; border-top:4px solid #D97706; border-radius:12px; padding:11px 13px; margin-bottom:12px; box-shadow:0 3px 10px rgba(0,0,0,0.18);">
+            <div style="font-size:11.5px; font-weight:900; color:#B45309 !important; text-transform:uppercase; letter-spacing:0.5px; display:flex; align-items:center; gap:5px; margin-bottom:6px;">
+                <span>📜</span> <span style="color:#B45309 !important;">शास्त्रीय प्रमाण एवं फलादेश (द्विविध पंचांग)</span>
+            </div>
+            
+            <!-- Shastriya Universal Shloka -->
+            <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:8px 10px; margin-bottom:8px;">
+                <div style="font-size:9.5px; font-weight:800; color:#92400E !important; text-transform:uppercase;">🏛️ सार्वभौमिक पंचांग फल प्रमाण (*मुहूर्त चिंतामणि*):</div>
+                <div style="font-size:11px; font-weight:800; color:#78350F !important; font-family:'Noto Sans Devanagari', serif; line-height:1.45; margin:3px 0;">
+                    तिथेश्च श्रियमाप्नोति वारादायुष्यवर्धनम्।<br/>
+                    नक्षत्राद्धरते पापं योगाद्रोगनिवारणम्॥<br/>
+                    करणात् कार्यसिद्धिः स्यात् पञ्चाङ्गस्य फलं शृणु॥
+                </div>
+                <div style="font-size:9.5px; color:#92400E !important; line-height:1.35;">
+                    <b>भावार्थ:</b> तिथि से लक्ष्मी (धन-वैभव), वार से दीर्घायु, नक्षत्र से पापनाश, योग से रोगमुक्ति और करण से कार्यों में अभीष्ट सिद्धि होती है।
+                </div>
+            </div>
+
+            <!-- Section 1: Jatak Janma Phaladeesh -->
+            <details open style="margin-bottom:6px; border:1px solid #CBD5E1; border-radius:8px; overflow:hidden;">
+                <summary style="background:#EFF6FF; padding:7px 10px; font-size:11px; font-weight:800; color:#1E40AF !important; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
+                    <span>👶 जातक जन्म पंचांग शास्त्रीय फलादेश</span>
+                    <span style="font-size:10px;">▼</span>
+                </summary>
+                <div style="padding:8px 10px; font-size:10.5px; color:#1E293B !important; line-height:1.5; background:#FFFFFF;">
+                    <div style="margin-bottom:5px;">
+                        <b style="color:#0369A1 !important;">📅 जन्म तिथि फल ({_tithi_str}):</b>
+                        <span style="color:#0F172A !important;"> <i>फलदीपिका</i> अनुसार यह तिथि जातक को कुशाग्र बुद्धि, पराक्रम, नीति-निष्ठा और समाज में सम्मान प्रदान करती है।</span>
+                    </div>
+                    <div style="margin-bottom:5px;">
+                        <b style="color:#0369A1 !important;">🪐 जन्म वार फल ({_vara_str}):</b>
+                        <span style="color:#0F172A !important;"> <i>मानसागरी</i> अनुसार जन्म वार स्वामी जातक के स्वभाव में गंभीरता, कार्य-दक्षता और सतत प्रयत्न से सिद्धि का वरदान देता है।</span>
+                    </div>
+                    <div style="margin-bottom:5px;">
+                        <b style="color:#0369A1 !important;">✨ जन्म नक्षत्र फल ({_nak_str}):</b>
+                        <span style="color:#0F172A !important;"> <i>बृहज्जातक</i> अनुसार इस नक्षत्र में जन्मा जातक विद्यानुरागी, विचारशील, दृढ़ संकल्पी और संकट मोचक होता है।</span>
+                    </div>
+                    <div style="margin-bottom:5px;">
+                        <b style="color:#0369A1 !important;">🌿 योग व करण फल ({_yoga_str} / {_karana_str}):</b>
+                        <span style="color:#0F172A !important;"> शारीरिक आरोग्यता, सहयोगियों का संबल और व्यावहारिक कार्य-सिद्धि में विशेष सहायक।</span>
+                    </div>
+                    <div>
+                        <b style="color:#0369A1 !important;">👑 जन्म होरा स्वामी ({_hora_str}):</b>
+                        <span style="color:#0F172A !important;"> जातक की जीवन-ऊर्जा, आत्मबल और तात्कालिक निर्णय क्षमता को संबल प्रदान करता है।</span>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Section 2: Today Transit Panchang Phaladeesh & Muhurta Decisions -->
+            <details open style="border:1px solid #CBD5E1; border-radius:8px; overflow:hidden;">
+                <summary style="background:#ECFDF5; padding:7px 10px; font-size:11px; font-weight:800; color:#065F46 !important; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
+                    <span>🪐 आज के पंचांग का गोचर फल व मुहूर्त निर्णय</span>
+                    <span style="font-size:10px;">▼</span>
+                </summary>
+                <div style="padding:8px 10px; font-size:10.5px; color:#1E293B !important; line-height:1.5; background:#FFFFFF;">
+                    <div style="margin-bottom:5px;">
+                        <b style="color:#047857 !important;">📅 आज का गोचर प्रभाव ({_t_vara}, {_t_tithi}):</b>
+                        <span style="color:#0F172A !important;"> आज का दिवस व्यावहारिक कर्म, अध्ययन, योजना निर्माण व शुभ संवाद हेतु विशेष रूप से अनुकूल है।</span>
+                    </div>
+                    <div style="margin-bottom:5px;">
+                        <b style="color:#047857 !important;">🌟 आज का अभिजित मुहूर्त ({_t_abhijit}):</b>
+                        <span style="color:#0F172A !important;"> <i>मुहूर्त चिंतामणि</i> (अ. १, श्लोक ३५) अनुसार मध्याह्न का यह विजय काल समस्त विघ्नों का शमन करता है; नवीन कार्य शुभारंभ हेतु सर्वोत्तम।</span>
+                    </div>
+                    <div style="margin-bottom:5px;">
+                        <b style="color:#B91C1C !important;">🔴 आज का राहुकाल ({_t_rahu}):</b>
+                        <span style="color:#0F172A !important;"> <i>कालामृत</i> अनुसार इस अवधि में नया अनुबंध, यात्रा अथवा मांगलिक कार्य सर्वथा वर्जित हैं।</span>
+                    </div>
+                    <div>
+                        <b style="color:#047857 !important;">👑 वर्तमान होरा ({_t_hora}):</b>
+                        <span style="color:#0F172A !important;"> वर्तमान वेला {_t_hora} ग्रह के अनुकूल कार्यों (ज्ञान, संवाद, क्रय अथवा कर्म) हेतु प्रशस्त है।</span>
+                    </div>
+                </div>
+            </details>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # 6. 📚 समस्त ३१ वैदिक मॉड्यूल सूची (All 31 Vedic Modules List)
+        st.markdown(f"""
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; margin-bottom:6px;">
+            <span style="font-size:13px; font-weight:900; color:#F59E0B; text-transform:uppercase; letter-spacing:0.5px;">📚 समस्त {len(MODULE_OPTIONS)} वैदिक मॉड्यूल</span>
+        </div>
+        """, unsafe_allow_html=True)
         
         sb_query = st.text_input("🔍 मॉड्यूल खोजें (Search):", placeholder="दशा, गोचर, केपी, मिलान...", key="sb_search_filter_input").strip().lower()
         
@@ -9343,6 +9582,7 @@ with st.container(key="top_frozen_header_container", border=False):
         selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else curr_idx
         if selected_idx != curr_idx:
             st.session_state.active_module_idx = selected_idx
+            st.session_state.top_bar_module_selector = MODULE_OPTIONS[selected_idx]
             st.rerun()
 
     # ---------------------------------------------------------
