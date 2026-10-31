@@ -504,11 +504,12 @@ elif is_night_mode:
         -moz-osx-font-smoothing: grayscale !important;
     }
     [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-        background-color: #0D1322 !important;
-        border-right: 1.5px solid #1E293B !important;
+        background-color: #FFF2DF !important;
+        background: #FFF2DF !important;
+        border-right: 2.5px solid #E67E22 !important;
     }
     [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
-        color: #F1F5F9 !important;
+        color: #000000 !important;
     }
     section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
     section[data-testid="stSidebar"] .stRadio label,
@@ -822,12 +823,12 @@ else:
         box-shadow: 0 2px 8px rgba(0, 115, 207, 0.08) !important;
     }
     [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-        background-color: #FFFFFF !important;
-        background: #FFFFFF !important;
-        border-right: 1.5px solid #E2E8F0 !important;
+        background-color: #FFF2DF !important;
+        background: #FFF2DF !important;
+        border-right: 2.5px solid #E67E22 !important;
     }
     [data-testid="stSidebar"] * {
-        color: #0F172A !important;
+        color: #000000 !important;
     }
     [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
         color: #0073CF !important;
@@ -3728,11 +3729,12 @@ client_bridge_code = """
                             color: #E2E8F0 !important;
                         }
                         [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-                            background-color: #0A0E1A !important;
-                            border-right: 1.5px solid #1E293B !important;
+                            background-color: #FFF2DF !important;
+                            background: #FFF2DF !important;
+                            border-right: 2.5px solid #E67E22 !important;
                         }
                         [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
-                            color: #E2E8F0 !important;
+                            color: #000000 !important;
                         }
                         section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
                         section[data-testid="stSidebar"] .stRadio label,
@@ -3953,11 +3955,12 @@ client_bridge_code = """
                             color: #F8FAFC !important;
                         }
                         [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-                            background-color: #0D1322 !important;
-                            border-right: 1.5px solid #1E293B !important;
+                            background-color: #FFF2DF !important;
+                            background: #FFF2DF !important;
+                            border-right: 2.5px solid #E67E22 !important;
                         }
                         [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
-                            color: #F1F5F9 !important;
+                            color: #000000 !important;
                         }
                         section[data-testid="stSidebar"] div[data-testid="stRadio"] label,
                         section[data-testid="stSidebar"] .stRadio label,
