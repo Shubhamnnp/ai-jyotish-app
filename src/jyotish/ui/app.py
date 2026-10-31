@@ -7254,10 +7254,8 @@ with st.container(key="top_frozen_header_container", border=False):
                 "📝 परामर्श नोट्स (Consultation Notes)",
                 "📄 PDF रिपोर्ट (Download PDF)",
                 "💬 दैवज्ञ AI परामर्श (AI Astrologer)",
-                "📲 मोबाइल ऐप (Install App)",
                 f"🌐 भाषा: {lang_lbl}",
                 f"🌓 थीम: {th_lbl}",
-                "🔲 फुल स्क्रीन (Toggle Header)",
                 "⚙️ सेटिंग्स (Settings)"
             ]
             if u_role == "researcher":
@@ -7289,26 +7287,12 @@ with st.container(key="top_frozen_header_container", border=False):
                     st.session_state.gla_active_tool = "pdf"
                 elif "दैवज्ञ AI" in selected_action or "AI" in selected_action:
                     st.session_state.gla_active_tool = "daivajna_brain"
-                elif "मोबाइल ऐप" in selected_action or "App" in selected_action:
-                    st.session_state.gla_active_tool = "mobile_app"
                 elif "भाषा" in selected_action or "Language" in selected_action:
                     st.session_state.app_lang = "English (अंग्रेजी)" if is_hindi else "General (जनरल)"
                     st.toast(f"✅ भाषा परिवर्तित: {st.session_state.app_lang}", icon="🌐")
                 elif "थीम" in selected_action or "Mode" in selected_action:
                     st.session_state.app_theme_mode = "day" if cur_th in ["astrallis", "night"] else "astrallis"
                     st.toast(f"✅ थीम मोड: {st.session_state.app_theme_mode.upper()}", icon="🌓")
-                elif "फुल स्क्रीन" in selected_action or "Full" in selected_action:
-                    components.html("""
-                    <script>
-                    (function(){
-                        const pWin = (window.parent && window.parent.location) ? window.parent : window;
-                        if (pWin.__toggleJyotishHeader) {
-                            pWin.__toggleJyotishHeader();
-                        }
-                    })();
-                    </script>
-                    """, height=0, width=0)
-                    st.toast("🔲 फुल-स्क्रीन मोड सक्रिय! पुनः हेडर देखने हेतु 'v हेडर दिखाएं' टैप करें।", icon="🔲")
                 elif "सेटिंग्स" in selected_action or "Settings" in selected_action or "Setup" in selected_action:
                     st.session_state.gla_active_tool = "settings"
                 elif "एडमिन" in selected_action or "Admin" in selected_action:
