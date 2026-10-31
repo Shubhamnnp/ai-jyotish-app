@@ -7239,41 +7239,32 @@ with st.container(key="top_frozen_header_container", border=False):
                 st.rerun()
 
         with hdr_c_menu:
-            is_srv_conn = st.session_state.get("gla_authenticated", False)
             cur_th = st.session_state.get("app_theme_mode", "day")
             th_lbl = "डे मोड" if cur_th in ["astrallis", "night"] else "नाइट मोड"
             cur_lang = st.session_state.get("app_lang", "General (जनरल)")
             is_hindi = ("जनरल" in cur_lang or "Hindi" in cur_lang)
-            lang_lbl = "English (अंग्रेजी)" if is_hindi else "हिंदी (Hindi)"
-            srv_lbl = "सर्वर: लाइव" if is_srv_conn else "लोकल मोड"
+            lang_lbl = "English" if is_hindi else "हिंदी"
 
             u_role = st.session_state.get("user_role", "jatak")
             MENU_ACTION_ITEMS = [
-                "⚡ मेन्यू चुनें (Menu List)...",
-                "🔲 Full Screen (^ हेडर छुपाएं)",
-                "🧠 AI Brain (दैवज्ञ महा-मस्तिष्क)",
-                "📲 Mobile App (मोबाइल ऐप इंस्टॉल)",
-                "✨ New (नया प्रोफाइल)",
-                "📅 Birth (जन्म विवरण)",
-                "📝 Notes (परामर्श नोट्स)",
-                "📂 Vault (क्लाइंट वॉल्ट)",
-                "💾 Save (कुण्डली सहेजें)",
-                "⚡ Panchang (पंचांग HUD)",
-                "💬 AI (सह-पायलट)",
-                "⏱️ BTR (समय शोधन)",
-                "🔮 Prashna (तात्कालिक प्रश्न)",
-                "📄 PDF (त्वरित रिपोर्ट)",
-                "⚙️ Setup (सेटिंग्स)",
-                f"🌐 Language ({lang_lbl})",
-                f"🌓 Mode ({th_lbl})",
-                f"💻 {srv_lbl}",
-                "🔍 वैदिक ऋषि सत्यापन (Validation)"
+                "⚡ मेन्यू (Menu)...",
+                "✨ नया जातक (New Kundali)",
+                "📂 कुण्डली वॉल्ट (Client Vault)",
+                "💾 कुण्डली सहेजें (Save Kundali)",
+                "📝 परामर्श नोट्स (Consultation Notes)",
+                "📄 PDF रिपोर्ट (Download PDF)",
+                "💬 दैवज्ञ AI परामर्श (AI Astrologer)",
+                "📲 मोबाइल ऐप (Install App)",
+                f"🌐 भाषा: {lang_lbl}",
+                f"🌓 थीम: {th_lbl}",
+                "🔲 फुल स्क्रीन (Toggle Header)",
+                "⚙️ सेटिंग्स (Settings)"
             ]
             if u_role == "researcher":
-                MENU_ACTION_ITEMS.append("👑 Admin (शोधकर्ता नियंत्रण व कोड जनरेटर)")
+                MENU_ACTION_ITEMS.append("👑 एडमिन (Admin Control)")
             else:
-                MENU_ACTION_ITEMS.append("🎟️ License (प्रो परचेज कोड सक्रियण)")
-            MENU_ACTION_ITEMS.append("🚪 Logout (निकास)")
+                MENU_ACTION_ITEMS.append("🎟️ प्रो लाइसेंस (Activate License)")
+            MENU_ACTION_ITEMS.append("🚪 लॉगआउट (Logout)")
 
             _menu_nonce = st.session_state.get("top_bar_menu_nonce", 0)
             selected_action = st.selectbox(
@@ -7282,11 +7273,31 @@ with st.container(key="top_frozen_header_container", border=False):
                 index=0,
                 label_visibility="collapsed",
                 key=f"top_bar_menu_action_selector_{_menu_nonce}",
-                help="मेन्यू सूची (Full Screen, AI Brain, Mobile App, New, Birth, Notes, Vault, Save, Panchang, AI, BTR, Prashna, PDF, Setup, Language, Mode, Local, Validation, Logout)"
+                help="मेन्यू सूची (नया जातक, वॉल्ट, सहेजें, नोट्स, PDF रिपोर्ट, AI परामर्श, सेटिंग्स, भाषा, थीम, लॉगआउट)"
             )
 
             if selected_action != MENU_ACTION_ITEMS[0]:
-                if selected_action.startswith("🔲 Full"):
+                if "नया जातक" in selected_action or "New" in selected_action:
+                    st.session_state.gla_active_tool = "new"
+                elif "वॉल्ट" in selected_action or "Vault" in selected_action:
+                    st.session_state.gla_active_tool = "open"
+                elif "सहेजें" in selected_action or "Save" in selected_action:
+                    st.session_state.gla_active_tool = "save"
+                elif "नोट्स" in selected_action or "Notes" in selected_action:
+                    st.session_state.gla_active_tool = "notes"
+                elif "PDF" in selected_action:
+                    st.session_state.gla_active_tool = "pdf"
+                elif "दैवज्ञ AI" in selected_action or "AI" in selected_action:
+                    st.session_state.gla_active_tool = "daivajna_brain"
+                elif "मोबाइल ऐप" in selected_action or "App" in selected_action:
+                    st.session_state.gla_active_tool = "mobile_app"
+                elif "भाषा" in selected_action or "Language" in selected_action:
+                    st.session_state.app_lang = "English (अंग्रेजी)" if is_hindi else "General (जनरल)"
+                    st.toast(f"✅ भाषा परिवर्तित: {st.session_state.app_lang}", icon="🌐")
+                elif "थीम" in selected_action or "Mode" in selected_action:
+                    st.session_state.app_theme_mode = "day" if cur_th in ["astrallis", "night"] else "astrallis"
+                    st.toast(f"✅ थीम मोड: {st.session_state.app_theme_mode.upper()}", icon="🌓")
+                elif "फुल स्क्रीन" in selected_action or "Full" in selected_action:
                     components.html("""
                     <script>
                     (function(){
@@ -7298,51 +7309,13 @@ with st.container(key="top_frozen_header_container", border=False):
                     </script>
                     """, height=0, width=0)
                     st.toast("🔲 फुल-स्क्रीन मोड सक्रिय! पुनः हेडर देखने हेतु 'v हेडर दिखाएं' टैप करें।", icon="🔲")
-                elif selected_action.startswith("🧠 AI Brain"):
-                    st.session_state.gla_active_tool = "daivajna_brain"
-                elif selected_action.startswith("📲 Mobile App"):
-                    st.session_state.gla_active_tool = "mobile_app"
-                elif selected_action.startswith("✨ New"):
-                    st.session_state.gla_active_tool = "new"
-                elif selected_action.startswith("📅 Birth"):
-                    st.session_state.gla_active_tool = "birth"
-                elif selected_action.startswith("📝 Notes"):
-                    st.session_state.gla_active_tool = "notes"
-                elif selected_action.startswith("📂 Vault"):
-                    st.session_state.gla_active_tool = "open"
-                elif selected_action.startswith("💾 Save"):
-                    st.session_state.gla_active_tool = "save"
-                elif selected_action.startswith("⚡ Panchang"):
-                    st.session_state.gla_active_tool = "panchang"
-                elif selected_action.startswith("💬 AI"):
-                    st.session_state.gla_active_tool = "ai_copilot"
-                elif selected_action.startswith("⏱️ BTR"):
-                    st.session_state.gla_active_tool = "clock"
-                elif selected_action.startswith("🔮 Prashna"):
-                    st.session_state.gla_active_tool = "prashna"
-                elif selected_action.startswith("📄 PDF"):
-                    st.session_state.gla_active_tool = "pdf"
-                elif selected_action.startswith("⚙️ Setup"):
+                elif "सेटिंग्स" in selected_action or "Settings" in selected_action or "Setup" in selected_action:
                     st.session_state.gla_active_tool = "settings"
-                elif selected_action.startswith("🌐 Language"):
-                    st.session_state.app_lang = "English (अंग्रेजी)" if is_hindi else "General (जनरल)"
-                    st.toast(f"✅ भाषा परिवर्तित: {st.session_state.app_lang}", icon="🌐")
-                elif selected_action.startswith("🌓 Mode"):
-                    st.session_state.app_theme_mode = "day" if cur_th in ["astrallis", "night"] else "astrallis"
-                    st.toast(f"✅ थीम मोड: {st.session_state.app_theme_mode.upper()}", icon="🌓")
-                elif selected_action.startswith("💻"):
-                    st.session_state.gla_active_tool = "server"
-                elif "वैदिक ऋषि सत्यापन" in selected_action or "Validation" in selected_action:
-                    st.session_state.active_module_idx = 19
-                    st.session_state.active_tab_idx = 0
-                    st.session_state.tab_switch_requested = 0
-                    st.session_state.gla_active_tool = None
-                    st.toast("🔍 वैदिक ऋषि सत्यापन (Validation) मॉड्यूल खोला गया!", icon="🔍")
-                elif selected_action.startswith("👑 Admin"):
+                elif "एडमिन" in selected_action or "Admin" in selected_action:
                     st.session_state.gla_active_tool = "admin"
-                elif selected_action.startswith("🎟️ License"):
+                elif "लाइसेंस" in selected_action or "License" in selected_action:
                     st.session_state.gla_active_tool = "license"
-                elif selected_action.startswith("🚪 Logout"):
+                elif "लॉगआउट" in selected_action or "Logout" in selected_action:
                     st.session_state.gla_active_tool = "logout"
 
                 st.session_state["top_bar_menu_nonce"] = _menu_nonce + 1
