@@ -197,6 +197,11 @@ if is_astrallis_mode:
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Noto Sans", sans-serif !important;
         -webkit-font-smoothing: antialiased !important;
     }
+    [data-testid="stSidebar"], section[data-testid="stSidebar"] {
+        background-color: #EBF5E4 !important;
+        background: #EBF5E4 !important;
+        border-right: 1.5px solid #C8DEC0 !important;
+    }
     /* ---------------------------------------------------------
        Hide Streamlit native header bars / side bars lines at top of sidebar
        --------------------------------------------------------- */
@@ -212,13 +217,13 @@ if is_astrallis_mode:
         border-right: none !important;
     }
     section[data-testid="stSidebar"] {
-        border-right: 1.5px solid #E8D3B9 !important;
+        border-right: 1.5px solid #C8DEC0 !important;
     }
     [data-testid="stSidebarCollapseButton"] {
         border: none !important;
         outline: none !important;
     }
-    /* ===== SIDEBAR BASE TEXT — light saffron (bhagwa) background → black text ===== */
+    /* ===== SIDEBAR BASE TEXT — light greenish background → black text ===== */
     [data-testid="stSidebar"] > div > div,
     [data-testid="stSidebar"] .stMarkdownContainer,
     [data-testid="stSidebar"] .stMarkdownContainer > p,
@@ -525,9 +530,9 @@ elif is_night_mode:
         -moz-osx-font-smoothing: grayscale !important;
     }
     [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-        background-color: #FFF2DF !important;
-        background: #FFF2DF !important;
-        border-right: 2.5px solid #E67E22 !important;
+        background-color: #EBF5E4 !important;
+        background: #EBF5E4 !important;
+        border-right: 1.5px solid #C8DEC0 !important;
     }
     [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
         color: #000000 !important;
@@ -844,9 +849,9 @@ else:
         box-shadow: 0 2px 8px rgba(0, 115, 207, 0.08) !important;
     }
     [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-        background-color: #FFF2DF !important;
-        background: #FFF2DF !important;
-        border-right: 1.5px solid #E8D3B9 !important;
+        background-color: #EBF5E4 !important;
+        background: #EBF5E4 !important;
+        border-right: 1.5px solid #C8DEC0 !important;
     }
     [data-testid="stSidebar"] * {
         color: #000000 !important;
@@ -1503,9 +1508,9 @@ unified_css = f"""
     [data-testid="stSidebar"] div[class*="eelgd2m"],
     [data-testid="stSidebar"] div[style*="col-resize"] {{
         z-index: 10000000 !important;
-        background-color: #FFF2DF !important;
-        background: #FFF2DF !important;
-        border-right: 1.5px solid #E8D3B9 !important;
+        background-color: #EBF5E4 !important;
+        background: #EBF5E4 !important;
+        border-right: 1.5px solid #C8DEC0 !important;
     }}
     section[data-testid="stSidebar"] *,
     [data-testid="stSidebar"] *,
@@ -3750,9 +3755,9 @@ client_bridge_code = """
                             color: #E2E8F0 !important;
                         }
                         [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-                            background-color: #FFF2DF !important;
-                            background: #FFF2DF !important;
-                            border-right: 2.5px solid #E67E22 !important;
+                            background-color: #EBF5E4 !important;
+                            background: #EBF5E4 !important;
+                            border-right: 1.5px solid #C8DEC0 !important;
                         }
                         [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
                             color: #000000 !important;
@@ -3976,9 +3981,9 @@ client_bridge_code = """
                             color: #F8FAFC !important;
                         }
                         [data-testid="stSidebar"], section[data-testid="stSidebar"] {
-                            background-color: #FFF2DF !important;
-                            background: #FFF2DF !important;
-                            border-right: 2.5px solid #E67E22 !important;
+                            background-color: #EBF5E4 !important;
+                            background: #EBF5E4 !important;
+                            border-right: 1.5px solid #C8DEC0 !important;
                         }
                         [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b {
                             color: #000000 !important;
@@ -4453,9 +4458,9 @@ client_bridge_code = """
                         [data-testid="stSidebarResizer"],
                         [data-testid="stSidebar"] div[class*="eelgd2m"],
                         [data-testid="stSidebar"] div[style*="col-resize"] {
-                            background-color: #FFF2DF !important;
-                            background: #FFF2DF !important;
-                            border-right: 2.5px solid #E67E22 !important;
+                            background-color: #EBF5E4 !important;
+                            background: #EBF5E4 !important;
+                            border-right: 1.5px solid #C8DEC0 !important;
                         }
                         [data-testid="stSidebar"] *, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label, [data-testid="stSidebar"] div, [data-testid="stSidebar"] b,
                         [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] h4 {
@@ -5073,11 +5078,11 @@ client_bridge_code = """
                 frozenTb.style.setProperty('border-bottom', isAstrallis ? '2.5px solid #00E5FF' : (isNight ? '2.5px solid #374151' : '2px solid #F59E0B'), 'important');
                 frozenTb.style.setProperty('box-shadow', '0 4px 18px rgba(5, 12, 24, 0.45)', 'important');
 
-                // Colorize resizer handle to match sidebar bhagwa theme
+                // Colorize resizer handle to match sidebar greenish theme
                 const resizers = parentDoc.querySelectorAll('[data-testid="stSidebarResizer"], [data-testid="stSidebar"] div[style*="col-resize"], [data-testid="stSidebar"] div[class*="eelgd2m3"]');
                 resizers.forEach(function(rz) {
-                    rz.style.setProperty('background', '#FFF2DF', 'important');
-                    rz.style.setProperty('background-color', '#FFF2DF', 'important');
+                    rz.style.setProperty('background', '#EBF5E4', 'important');
+                    rz.style.setProperty('background-color', '#EBF5E4', 'important');
                 });
 
                 // Position native sidebar expand button (>>) firmly at top: 6px, left: 8px inside Col 1 slot
