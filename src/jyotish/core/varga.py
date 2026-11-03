@@ -5,7 +5,7 @@ for D1, D2, D3, D7, D9, D10, D12, and D60.
 """
 
 from typing import Dict, Tuple, Optional, Any, List
-from .constants import SIGN_NAMES
+from .constants import SIGN_NAMES, SIGN_LORDS, EXALTATION, DEBILITATION, MOOLATRIKONA, OWN_SIGNS, NATURAL_FRIENDS, NATURAL_ENEMIES
 from .models import VargaChart, VargaPlanetPosition, KundaliChart
 
 
@@ -500,24 +500,206 @@ class VargaCalculator:
         return VargaChart(varga_code="D45", varga_name="Akshavedamsha", division=45,
                           lagna_sign_id=lagna_d45, lagna_sign_name=SIGN_NAMES[lagna_d45 - 1], planets=planets)
 
+    @staticmethod
+    def calculate_d5(chart: KundaliChart) -> VargaChart:
+        """D5 (Panchamsha - Fame, Power, Punya). 5 parts of 6.0 deg."""
+        odd_map = [1, 11, 9, 3, 7]    # Aries, Aquarius, Sagittarius, Gemini, Libra
+        even_map = [2, 6, 8, 10, 12]  # Taurus, Virgo, Scorpio, Capricorn, Pisces
+
+        def get_d5_sign(sign_id: int, deg: float) -> int:
+            part = min(4, int(deg // 6.0))
+            is_odd = (sign_id % 2 != 0)
+            return odd_map[part] if is_odd else even_map[part]
+
+        lagna_d5 = get_d5_sign(chart.lagna_sign_id, chart.lagna_degree)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        for name, p in chart.planets.items():
+            s_id = get_d5_sign(p.sign_id, p.sign_degree)
+            house = ((s_id - lagna_d5) % 12) + 1
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.sign_degree % 6.0) / 6.0) * 30.0,
+                house_number=house
+            )
+        return VargaChart(varga_code="D5", varga_name="Panchamsha", division=5,
+                          lagna_sign_id=lagna_d5, lagna_sign_name=SIGN_NAMES[lagna_d5 - 1], planets=planets)
+
+    @staticmethod
+    def calculate_d6(chart: KundaliChart) -> VargaChart:
+        """D6 (Shashtamsha - Health, Obstacles, Debts). 6 parts of 5.0 deg."""
+        def get_d6_sign(sign_id: int, deg: float) -> int:
+            part = min(5, int(deg // 5.0))
+            is_odd = (sign_id % 2 != 0)
+            start_sign = 1 if is_odd else 7  # Aries for odd, Libra for even
+            return ((start_sign - 1 + part) % 12) + 1
+
+        lagna_d6 = get_d6_sign(chart.lagna_sign_id, chart.lagna_degree)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        for name, p in chart.planets.items():
+            s_id = get_d6_sign(p.sign_id, p.sign_degree)
+            house = ((s_id - lagna_d6) % 12) + 1
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.sign_degree % 5.0) / 5.0) * 30.0,
+                house_number=house
+            )
+        return VargaChart(varga_code="D6", varga_name="Shashtamsha", division=6,
+                          lagna_sign_id=lagna_d6, lagna_sign_name=SIGN_NAMES[lagna_d6 - 1], planets=planets)
+
+    @staticmethod
+    def calculate_d8(chart: KundaliChart) -> VargaChart:
+        """D8 (Ashtamsha - Longevity, Transformations, Hidden Realities). 8 parts of 3.75 deg."""
+        def get_d8_sign(sign_id: int, deg: float) -> int:
+            part = min(7, int(deg // 3.75))
+            m_type = (sign_id - 1) % 3  # 0: Movable, 1: Fixed, 2: Dual
+            start_sign = 1 if m_type == 0 else (9 if m_type == 1 else 5)
+            return ((start_sign - 1 + part) % 12) + 1
+
+        lagna_d8 = get_d8_sign(chart.lagna_sign_id, chart.lagna_degree)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        for name, p in chart.planets.items():
+            s_id = get_d8_sign(p.sign_id, p.sign_degree)
+            house = ((s_id - lagna_d8) % 12) + 1
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.sign_degree % 3.75) / 3.75) * 30.0,
+                house_number=house
+            )
+        return VargaChart(varga_code="D8", varga_name="Ashtamsha", division=8,
+                          lagna_sign_id=lagna_d8, lagna_sign_name=SIGN_NAMES[lagna_d8 - 1], planets=planets)
+
+    @staticmethod
+    def calculate_d11(chart: KundaliChart) -> VargaChart:
+        """D11 (Rudramsha / Ekadashamsha - Warfare, Destruction, Longevity). 11 parts of 30/11 deg."""
+        span = 30.0 / 11.0
+        def get_d11_sign(sign_id: int, deg: float) -> int:
+            part = min(10, int(deg // span))
+            start_sign = 13 - sign_id
+            return ((start_sign - 1 - part) % 12) + 1
+
+        lagna_d11 = get_d11_sign(chart.lagna_sign_id, chart.lagna_degree)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        for name, p in chart.planets.items():
+            s_id = get_d11_sign(p.sign_id, p.sign_degree)
+            house = ((s_id - lagna_d11) % 12) + 1
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.sign_degree % span) / span) * 30.0,
+                house_number=house
+            )
+        return VargaChart(varga_code="D11", varga_name="Rudramsha", division=11,
+                          lagna_sign_id=lagna_d11, lagna_sign_name=SIGN_NAMES[lagna_d11 - 1], planets=planets)
+
     @classmethod
-    def calculate_vimsopaka_bala(cls, chart: KundaliChart) -> Dict[str, float]:
+    def get_vargottama_planets(cls, chart: KundaliChart) -> List[str]:
         """
-        Vimsopaka Bala: 20-point Shadvarga strength evaluation according to BPHS.
-        Vargas: D1 (6), D2 (2), D3 (4), D9 (5), D12 (2), D30 (1) -> Total 20 points.
+        Identify planets that occupy the exact same zodiac sign in D1 (Rashi) and D9 (Navamsha).
+        Includes 'Lagna' if the ascendant is vargottama.
         """
-        weights = {"D1": 6.0, "D2": 2.0, "D3": 4.0, "D9": 5.0, "D12": 2.0, "D30": 1.0}
+        vargas = chart.vargas or cls.calculate_all_vargas(chart)
+        d1 = vargas.get("D1", cls.calculate_d1(chart))
+        d9 = vargas.get("D9", cls.calculate_d9(chart))
+
+        vargottama_list: List[str] = []
+        if d1.lagna_sign_id == d9.lagna_sign_id:
+            vargottama_list.append("Lagna")
+
+        for p_name, d1_pos in d1.planets.items():
+            d9_pos = d9.planets.get(p_name)
+            if d9_pos and d1_pos.sign_id == d9_pos.sign_id:
+                vargottama_list.append(p_name)
+
+        return vargottama_list
+
+    @classmethod
+    def get_bhavottama_planets(cls, chart: KundaliChart) -> List[str]:
+        """
+        Identify planets that occupy the same house number in D1 (Rashi) and D9 (Navamsha).
+        """
+        vargas = chart.vargas or cls.calculate_all_vargas(chart)
+        d1 = vargas.get("D1", cls.calculate_d1(chart))
+        d9 = vargas.get("D9", cls.calculate_d9(chart))
+
+        bhavottama_list: List[str] = []
+        for p_name, d1_pos in d1.planets.items():
+            d9_pos = d9.planets.get(p_name)
+            if d9_pos and d1_pos.house_number == d9_pos.house_number:
+                bhavottama_list.append(p_name)
+
+        return bhavottama_list
+
+    @classmethod
+    def _evaluate_planet_dignity(cls, planet_name: str, sign_id: int) -> float:
+        """
+        Calculate BPHS dignity score (0 to 20) for a planet in a given sign.
+        """
+        sign_name = SIGN_NAMES[sign_id - 1]
+
+        # 1. Exaltation
+        if planet_name in EXALTATION and EXALTATION[planet_name][0] == sign_name:
+            return 20.0
+
+        # 2. Debilitation
+        if planet_name in DEBILITATION and DEBILITATION[planet_name][0] == sign_name:
+            return 0.0
+
+        # 3. Moolatrikona
+        if planet_name in MOOLATRIKONA and MOOLATRIKONA[planet_name][0] == sign_name:
+            return 18.0
+
+        # 4. Own Sign
+        if planet_name in OWN_SIGNS and sign_name in OWN_SIGNS[planet_name]:
+            return 15.0
+
+        # 5. Planetary Relationship via Sign Lord
+        lord = SIGN_LORDS.get(sign_id)
+        if not lord or lord == planet_name:
+            return 15.0
+
+        friends = NATURAL_FRIENDS.get(planet_name, [])
+        enemies = NATURAL_ENEMIES.get(planet_name, [])
+
+        if lord in friends:
+            return 10.0
+        elif lord in enemies:
+            return 4.0
+        else:
+            return 7.0
+
+    @classmethod
+    def calculate_vimsopaka_bala(cls, chart: KundaliChart, scheme: str = "shadvarga") -> Dict[str, float]:
+        """
+        Vimsopaka Bala: 20-point divisional strength evaluation according to BPHS Ch. 45.
+        Supported schemes: 'shadvarga', 'saptavarga', 'dashavarga', 'shodashavarga'.
+        """
+        schemes = {
+            "shadvarga": {"D1": 6.0, "D2": 2.0, "D3": 4.0, "D9": 5.0, "D12": 2.0, "D30": 1.0},
+            "saptavarga": {"D1": 5.0, "D2": 2.0, "D3": 3.0, "D7": 2.5, "D9": 4.5, "D12": 2.0, "D30": 1.0},
+            "dashavarga": {"D1": 3.0, "D2": 1.5, "D3": 1.5, "D7": 1.5, "D9": 1.5, "D10": 1.5, "D12": 1.5, "D16": 1.5, "D30": 1.5, "D60": 5.0},
+            "shodashavarga": {
+                "D1": 3.5, "D2": 1.0, "D3": 1.0, "D4": 0.5, "D7": 0.5, "D9": 3.0, "D10": 0.5, "D12": 0.5,
+                "D16": 2.0, "D20": 0.5, "D24": 0.5, "D27": 0.5, "D30": 1.0, "D40": 0.5, "D45": 0.5, "D60": 4.0
+            }
+        }
+        weights = schemes.get(scheme, schemes["shadvarga"])
         all_v = cls.calculate_all_vargas(chart)
         scores: Dict[str, float] = {}
 
-        for p_name in ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]:
-            total_score = 0.0
+        planets_to_score = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
+        total_weight = sum(weights.values())
+
+        for p_name in planets_to_score:
+            weighted_points = 0.0
             for v_code, wt in weights.items():
-                if v_code in all_v:
-                    v_planet = all_v[v_code].planets.get(p_name)
+                v_chart = all_v.get(v_code)
+                if v_chart:
+                    v_planet = v_chart.planets.get(p_name)
                     if v_planet:
-                        total_score += wt * 0.75
-            scores[p_name] = round(total_score, 2)
+                        dignity = cls._evaluate_planet_dignity(p_name, v_planet.sign_id)
+                        weighted_points += (dignity / 20.0) * wt
+            score_out_of_20 = (weighted_points / total_weight) * 20.0 if total_weight > 0 else 0.0
+            scores[p_name] = round(score_out_of_20, 2)
+
         return scores
 
     @classmethod
@@ -533,9 +715,13 @@ class VargaCalculator:
             "D2": cls.calculate_d2(chart, variation=d2_var),
             "D3": cls.calculate_d3(chart, variation=d3_var),
             "D4": cls.calculate_d4(chart),
+            "D5": cls.calculate_d5(chart),
+            "D6": cls.calculate_d6(chart),
             "D7": cls.calculate_d7(chart),
+            "D8": cls.calculate_d8(chart),
             "D9": cls.calculate_d9(chart, variation=d9_var),
             "D10": cls.calculate_d10(chart),
+            "D11": cls.calculate_d11(chart),
             "D12": cls.calculate_d12(chart),
             "D16": cls.calculate_d16(chart),
             "D20": cls.calculate_d20(chart),
