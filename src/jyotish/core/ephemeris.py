@@ -185,8 +185,18 @@ class PyEphemProvider(BaseEphemerisProvider):
         results: Dict[str, Dict[str, float]] = {}
 
         for name, body in bodies.items():
-            body.compute(ephem_date)
-            ecl = ephem.Ecliptic(body)
+            if name == "Moon" and kwargs.get("topocentric_moon") and "latitude" in kwargs and "longitude" in kwargs:
+                obs = ephem.Observer()
+                obs.lat = str(kwargs["latitude"])
+                obs.lon = str(kwargs["longitude"])
+                obs.elevation = float(kwargs.get("elevation", 0.0))
+                obs.date = ephem_date
+                body.compute(obs)
+                eq_topo = ephem.Equatorial(body.ra, body.dec, epoch=ephem_date)
+                ecl = ephem.Ecliptic(eq_topo)
+            else:
+                body.compute(ephem_date)
+                ecl = ephem.Ecliptic(body)
             trop_lon = math.degrees(ecl.lon) % 360.0
             trop_lat = math.degrees(ecl.lat)
 
@@ -282,9 +292,14 @@ class PyEphemProvider(BaseEphemerisProvider):
 
         # Classical formula for Ascendant longitude:
         # tan(lambda) = -cos(RAMC) / (sin(RAMC)*cos(eps) + tan(lat)*sin(eps))
-        y = math.cos(ramc_rad)
-        x = -(math.sin(ramc_rad) * math.cos(eps_rad) + math.tan(lat_rad) * math.sin(eps_rad))
-        asc_trop_deg = math.degrees(math.atan2(y, x)) % 360.0
+        # Polar latitude safeguard: when abs(lat) > 66.5, quadrant cusp projection can become singular.
+        if abs(latitude) > 66.5:
+            # Fallback to RAMC-perpendicular ecliptic intersection for Arctic/Antarctic circles
+            asc_trop_deg = (ramc_deg + 90.0) % 360.0
+        else:
+            y = math.cos(ramc_rad)
+            x = -(math.sin(ramc_rad) * math.cos(eps_rad) + math.tan(lat_rad) * math.sin(eps_rad))
+            asc_trop_deg = math.degrees(math.atan2(y, x)) % 360.0
 
         # Sidereal Lagna
         asc_sid_deg = (asc_trop_deg - ayanamsa_val) % 360.0

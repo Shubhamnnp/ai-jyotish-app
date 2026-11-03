@@ -8,7 +8,6 @@ from src.jyotish.services.shastriya_pramana import (
     PUSHKARA_NAVAMSHA_MATRIX,
     PUSHKARA_BHAGA_MAP,
 )
-
 @pytest.fixture
 def sample_chart():
     b = BirthData(

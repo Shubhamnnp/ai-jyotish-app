@@ -161,6 +161,21 @@ class UpagrahaResult(BaseModel):
     upaketu_longitude: float
 
 
+class CalculationMetadata(BaseModel):
+    """Deterministic reproducibility metadata for astronomical chart computation."""
+    engine_type: str = "Swiss Ephemeris / PyEphem Calibrated"
+    engine_version: str = "2.1.0"
+    ayanamsa_name: str = "Lahiri"
+    ayanamsa_value: float
+    house_system: str = "Whole Sign"
+    node_type: str = "mean"
+    coordinate_type: str = "geocentric"
+    topocentric_moon: bool = False
+    polar_latitude_adjusted: bool = False
+    calculation_timestamp_utc: Optional[datetime] = None
+    jd_ut: float = 0.0
+
+
 class KundaliChart(BaseModel):
     """Complete computed Vedic Chart."""
     birth_data: BirthData
@@ -179,6 +194,7 @@ class KundaliChart(BaseModel):
     shadbala: Optional[ShadbalaSummary] = None
     jaimini: Optional[JaiminiResult] = None
     upagrahas: Optional[UpagrahaResult] = None
+    metadata: Optional[CalculationMetadata] = None
 
 
 class DashaLevel(BaseModel):

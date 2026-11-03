@@ -15,8 +15,9 @@ from .constants import (
 )
 from .models import (
     BirthData, PlanetPosition, HouseCusp, PanchangData,
-    KundaliChart
+    KundaliChart, CalculationMetadata
 )
+from datetime import timezone
 from .ephemeris import PyEphemProvider, default_ephemeris_provider
 
 
@@ -313,6 +314,22 @@ class ChartCalculator:
         # 8. Calculate Panchang
         panchang = self.calculate_panchang(dt_utc, sun_lon, moon_lon)
 
+        jd_val = self.provider.datetime_to_jd(dt_utc) if hasattr(self.provider, "datetime_to_jd") else 0.0
+        engine_str = getattr(self.provider, "engine_type", "PyEphem High-Precision Calibrated")
+        calc_meta = CalculationMetadata(
+            engine_type=engine_str,
+            engine_version="2.1.0",
+            ayanamsa_name=ayanamsa_name,
+            ayanamsa_value=ayanamsa_val,
+            house_system=house_system,
+            node_type=node_type,
+            coordinate_type="topocentric" if kwargs.get("topocentric_moon") else "geocentric",
+            topocentric_moon=bool(kwargs.get("topocentric_moon", False)),
+            polar_latitude_adjusted=abs(birth_data.latitude) > 66.5,
+            calculation_timestamp_utc=datetime.now(timezone.utc),
+            jd_ut=jd_val
+        )
+
         return KundaliChart(
             birth_data=birth_data,
             ayanamsa_name=ayanamsa_name,
@@ -325,6 +342,7 @@ class ChartCalculator:
             houses=houses,
             panchang=panchang,
             atmakaraka=atmakaraka,
+            metadata=calc_meta,
         )
 
     def calculate_full_chart(
