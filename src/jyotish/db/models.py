@@ -5,7 +5,7 @@ benchmarks, Vargas, Dashas, Argon2id protected users, and Retrospective Event Ve
 """
 
 import uuid
-from datetime import datetime, date, time
+from datetime import datetime, date, time, timezone
 from typing import Optional, List, Dict, Any
 from sqlalchemy import (
     Column, String, Integer, Float, Boolean, Text, Date, Time, DateTime, JSON, ForeignKey
@@ -18,6 +18,10 @@ def generate_uuid() -> str:
     return str(uuid.uuid4())
 
 
+def utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
 class Organization(Base):
     __tablename__ = "organizations"
 
@@ -25,7 +29,7 @@ class Organization(Base):
     name = Column(String(255), nullable=False)
     slug = Column(String(100), unique=True, nullable=False)
     tier = Column(String(50), default="standard")
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     users = relationship("User", back_populates="organization", cascade="all, delete-orphan")
     clients = relationship("Client", back_populates="organization", cascade="all, delete-orphan")
@@ -41,7 +45,7 @@ class User(Base):
     full_name = Column(String(255), nullable=False)
     role = Column(String(50), default="astrologer")
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     organization = relationship("Organization", back_populates="users")
 
@@ -56,7 +60,7 @@ class Client(Base):
     email = Column(String(255), nullable=True)
     notes = Column(Text, nullable=True)
     tags = Column(JSON, default=list)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     organization = relationship("Organization", back_populates="clients")
     birth_profiles = relationship("BirthProfile", back_populates="client", cascade="all, delete-orphan")
@@ -92,7 +96,7 @@ class BirthProfile(Base):
     birth_time_confidence = Column(String(50), default="Exact")
     is_rectified = Column(Boolean, default=False)
     rectified_time = Column(Time, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     client = relationship("Client", back_populates="birth_profiles")
     charts = relationship("Chart", back_populates="birth_profile", cascade="all, delete-orphan")
@@ -109,7 +113,7 @@ class Chart(Base):
     lagna_degree = Column(Float, nullable=False)
     lagna_longitude = Column(Float, nullable=False)
     panchang_data = Column(JSON, default=dict)
-    calculated_at = Column(DateTime, default=datetime.utcnow)
+    calculated_at = Column(DateTime, default=utc_now)
 
     birth_profile = relationship("BirthProfile", back_populates="charts")
     planets = relationship("PlanetPositionModel", back_populates="chart", cascade="all, delete-orphan")
@@ -228,7 +232,7 @@ class EventVerificationModel(Base):
     ai_explanation_hi = Column(Text, nullable=True)
     ai_explanation_en = Column(Text, nullable=True)
     verified_by_user = Column(Boolean, default=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     chart = relationship("Chart", back_populates="verifications")
 
@@ -243,5 +247,5 @@ class AuditLog(Base):
     resource_type = Column(String(100), nullable=False)
     resource_id = Column(String(255), nullable=True)
     ip_address = Column(String(50), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 

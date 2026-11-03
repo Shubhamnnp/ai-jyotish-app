@@ -112,3 +112,4 @@ Every rule conforms to the following strict JSON schema:
 2. **Deduplication:** Remove the 27 duplicate nakshatra transit entries in `samhita_rules.json`.
 3. **PostgreSQL Migration:** Migrate all 12,479 unique rules into the PostgreSQL `shastriya_rules` table with full B-Tree indexes on `school`, `domain`, `category`, and GIN indexes on `condition_ast` and `themes`.
 4. **pgvector Embedding:** Generate vector embeddings for the Sanskrit and Hindi text to enable RAG retrieval for specialist AI agents.
+

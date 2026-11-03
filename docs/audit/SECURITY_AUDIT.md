@@ -67,3 +67,4 @@ Security Health Score: **86 / 100** (Strong multi-tenant isolation and password 
 - [ ] Configure HTTPS/TLS 1.3 termination and HSTS security headers.
 - [ ] Set up automated database encryption-at-rest and daily encrypted backups.
 - [ ] Implement automated user account deletion and data export endpoints (GDPR/DPDP compliance).
+

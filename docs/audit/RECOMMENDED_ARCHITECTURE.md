@@ -115,3 +115,4 @@ Every event pipeline evaluates:
 | **Vector Database** | `pgvector` (embedded) | Pinecone, Qdrant | Zero operational complexity, co-locates rule text embeddings directly with relational rule rows. |
 | **Cache & Task Queue** | Redis 7 + Celery / ARQ | RabbitMQ | Low-latency in-memory cache for ephemeris computations + async queue for PDF generation. |
 | **Frontend SaaS** | Next.js 14+ (App Router) | Vue, Angular | Server-Side Rendering (SSR) for SEO, optimal Devanagari typography rendering, dynamic SVG chart rendering. |
+
