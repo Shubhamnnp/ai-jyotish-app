@@ -57,6 +57,7 @@ class TajikaResult(BaseModel):
     varsheshwara: str
     varshesh_reason_hi: str
     tajika_yogas: List[Dict[str, Any]]
+    sahams: Dict[str, Dict[str, Any]] = {}
 
 
 class TajikaEngine:
@@ -64,6 +65,68 @@ class TajikaEngine:
     Classical Tajika Neelakanthi Varshaphala Engine.
     Computes Muntha, 5 Candidates for Lord of the Year, and Ithasala Yogas.
     """
+
+    @classmethod
+    def calculate_sahams(cls, chart: KundaliChart) -> Dict[str, Dict[str, Any]]:
+        """
+        Calculates key Classical Tajika Sahams (Sensitive Points) per Tajika Neelakanthi.
+        Formulas differ between Day and Night births:
+        - Punya Saham (Fortune): Day: Moon - Sun + Lagna; Night: Sun - Moon + Lagna
+        - Vidya Saham (Learning): Day: Sun - Moon + Lagna; Night: Moon - Sun + Lagna
+        - Yashas/Karma Saham (Fame/Honor): Day: Jupiter - Sun + Lagna; Night: Sun - Jupiter + Lagna
+        - Vivaha Saham (Marriage): Day: Venus - Saturn + Lagna; Night: Saturn - Venus + Lagna
+        - Bhratri Saham (Siblings): Day: Jupiter - Saturn + Lagna; Night: Jupiter - Saturn + Lagna
+        """
+        sun = chart.planets["Sun"].longitude
+        moon = chart.planets["Moon"].longitude
+        jup = chart.planets["Jupiter"].longitude
+        ven = chart.planets["Venus"].longitude
+        sat = chart.planets["Saturn"].longitude
+        lagna = chart.lagna_longitude
+
+        is_day = (6 <= chart.birth_data.birth_time.hour < 18)
+
+        def _calc(a: float, b: float, c: float) -> float:
+            return (a - b + c) % 360.0
+
+        # Punya Saham
+        punya_lon = _calc(moon, sun, lagna) if is_day else _calc(sun, moon, lagna)
+
+        # Vidya Saham
+        vidya_lon = _calc(sun, moon, lagna) if is_day else _calc(moon, sun, lagna)
+
+        # Yashas / Karma Saham
+        yashas_lon = _calc(jup, sun, lagna) if is_day else _calc(sun, jup, lagna)
+
+        # Vivaha Saham
+        vivaha_lon = _calc(ven, sat, lagna) if is_day else _calc(sat, ven, lagna)
+
+        # Bhratri Saham
+        bhratri_lon = _calc(jup, sat, lagna)
+
+        sahams_raw = {
+            "punya_saham": ("पुण्य सहम (Fortune / Prosperity)", punya_lon),
+            "vidya_saham": ("विद्या सहम (Knowledge / Intellect)", vidya_lon),
+            "yashas_saham": ("यश / कर्म सहम (Fame & Career)", yashas_lon),
+            "vivaha_saham": ("विवाह सहम (Marriage Felicity)", vivaha_lon),
+            "bhratri_saham": ("भ्रातृ सहम (Siblings / Courage)", bhratri_lon),
+        }
+
+        results: Dict[str, Dict[str, Any]] = {}
+        for key, (name_hi, lon) in sahams_raw.items():
+            s_idx = int((lon % 360.0) // 30.0)
+            deg = lon % 30.0
+            h_from_lagna = ((s_idx + 1 - chart.lagna_sign_id) % 12) + 1
+            results[key] = {
+                "name_hi": name_hi,
+                "longitude": round(lon, 2),
+                "sign_id": s_idx + 1,
+                "sign_name": SIGN_NAMES[s_idx],
+                "sign_degree": round(deg, 2),
+                "house_from_lagna": h_from_lagna,
+            }
+
+        return results
 
     @classmethod
     def calculate(
@@ -168,6 +231,8 @@ class TajikaEngine:
                                 "explanation_hi": f"{p1_name} और {p2_name} के मध्य ईसराफ योग बन रहा है। फल निकल चुका है अथवा अत्यधिक प्रयास की आवश्यकता होगी।"
                             })
 
+        sahams = cls.calculate_sahams(chart)
+
         return TajikaResult(
             target_year=t_year,
             completed_age=completed_age,
@@ -179,7 +244,8 @@ class TajikaEngine:
             varshesh_candidates=candidates,
             varsheshwara=chosen_varshesh,
             varshesh_reason_hi=reason,
-            tajika_yogas=tajika_yogas[:6]  # Top 6 salient yogas
+            tajika_yogas=tajika_yogas[:6],  # Top 6 salient yogas
+            sahams=sahams
         )
 
 
