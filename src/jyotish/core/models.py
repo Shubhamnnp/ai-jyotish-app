@@ -267,6 +267,7 @@ class TransitSummary(BaseModel):
     jupiter_paya: Optional[str] = None
     transit_paya_detail: Dict[str, Any] = {}
     ashtakavarga_transit_bindus: Dict[str, int] = {}
+    vedha_analysis: Optional[Dict[str, Any]] = None
 
 
 class GhatnaQueryResult(BaseModel):

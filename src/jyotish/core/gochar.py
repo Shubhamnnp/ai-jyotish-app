@@ -16,11 +16,76 @@ from .ephemeris import PyEphemProvider, default_ephemeris_provider
 from .ashtakavarga import AshtakavargaCalculator
 
 
+
+# Classical Phaladeepika Ch. 26 Gochar Vedha (Favorable House -> Vedha House)
+GOCHAR_VEDHA_MAP: Dict[str, Dict[int, int]] = {
+    "Sun": {3: 9, 6: 12, 10: 4, 11: 5},
+    "Moon": {1: 5, 3: 9, 6: 12, 7: 2, 10: 4, 11: 8},
+    "Mars": {3: 12, 6: 9, 11: 5},
+    "Mercury": {2: 5, 4: 3, 6: 12, 8: 11, 10: 9, 11: 8},
+    "Jupiter": {2: 12, 5: 4, 7: 3, 9: 10, 11: 8},
+    "Venus": {1: 8, 2: 7, 3: 1, 4: 10, 5: 9, 8: 5, 9: 11, 11: 6, 12: 3},
+    "Saturn": {3: 12, 6: 9, 11: 5},
+}
+
 class TransitEngine:
     """Computes and analyzes Gochar relative to a natal KundaliChart."""
 
     def __init__(self, ephem_provider: Optional[PyEphemProvider] = None):
         self.provider = ephem_provider or default_ephemeris_provider
+
+    @classmethod
+    def evaluate_gochar_vedha(
+        cls,
+        transit_data: Dict[str, Dict[str, Any]]
+    ) -> Dict[str, Dict[str, Any]]:
+        """
+        Evaluates classical Gochar Vedha (Obstruction) from natal Moon per Phaladeepika Ch. 26.
+        A favorable transit house loses its beneficence if an obstructing planet is transiting its Vedha house.
+        Exemptions: Sun & Saturn do not cause mutual Vedha; Moon & Mercury do not cause mutual Vedha.
+        """
+        # Map house_from_moon -> list of occupying transit planets
+        occupants_by_house: Dict[int, List[str]] = {h: [] for h in range(1, 13)}
+        for p_name, p_info in transit_data.items():
+            h_moon = p_info.get("house_from_moon", 1)
+            occupants_by_house[h_moon].append(p_name)
+
+        vedha_results: Dict[str, Dict[str, Any]] = {}
+
+        for p_name, rules in GOCHAR_VEDHA_MAP.items():
+            if p_name not in transit_data:
+                continue
+            h_moon = transit_data[p_name].get("house_from_moon", 1)
+            is_favorable = h_moon in rules
+            vedha_house = rules.get(h_moon)
+
+            is_obstructed = False
+            blocking_planets = []
+
+            if is_favorable and vedha_house:
+                potential_blockers = occupants_by_house.get(vedha_house, [])
+                for blocker in potential_blockers:
+                    if blocker == p_name or blocker in ("Rahu", "Ketu"):
+                        continue
+                    # Check classical exemption pairs
+                    if (p_name == "Sun" and blocker == "Saturn") or (p_name == "Saturn" and blocker == "Sun"):
+                        continue  # Sun-Saturn father-son exemption
+                    if (p_name == "Moon" and blocker == "Mercury") or (p_name == "Mercury" and blocker == "Moon"):
+                        continue  # Moon-Mercury exemption
+
+                    is_obstructed = True
+                    blocking_planets.append(blocker)
+
+            vedha_results[p_name] = {
+                "house_from_moon": h_moon,
+                "is_favorable": is_favorable,
+                "vedha_house": vedha_house,
+                "is_obstructed": is_obstructed,
+                "blocking_planets": blocking_planets,
+                "net_benefic": is_favorable and not is_obstructed,
+            }
+
+        return vedha_results
 
     def compute_transit_snapshot(
         self,
@@ -159,6 +224,9 @@ class TransitEngine:
             "jupiter_paya": paya_info
         }
 
+        # --- 6. Gochar Vedha (Obstruction) Evaluation ---
+        vedha_analysis = self.evaluate_gochar_vedha(transit_data)
+
         summary = TransitSummary(
             saturn_house_from_moon=saturn_h_moon,
             saturn_house_from_lagna=sat_h_lagna,
@@ -176,6 +244,7 @@ class TransitEngine:
             jupiter_paya=paya_info["name_hi"],
             transit_paya_detail=transit_paya_detail,
             ashtakavarga_transit_bindus=transit_bindus,
+            vedha_analysis=vedha_analysis,
         )
 
         return transit_data, summary
