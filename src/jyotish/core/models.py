@@ -287,3 +287,45 @@ class GhatnaQueryResult(BaseModel):
     narrative_en: str
     disclaimer: str
 
+
+class ClassicalYogaItem(BaseModel):
+    yoga_id: str
+    name_hi: str
+    name_en: str
+    category: str
+    is_active: bool
+    strength_score: float = 75.0
+    planets_involved: List[str] = []
+    houses_involved: List[int] = []
+    description_hi: str
+    description_en: str
+    shloka_reference: str = ""
+
+
+class ClassicalDoshaItem(BaseModel):
+    dosha_id: str
+    name_hi: str
+    name_en: str
+    category: str
+    is_present: bool
+    severity: str = "None"  # None, Mild, Moderate, Severe
+    is_cancelled: bool = False
+    cancellation_reasons: List[str] = []
+    planets_involved: List[str] = []
+    houses_involved: List[int] = []
+    description_hi: str
+    description_en: str
+    remedy_summary: str = ""
+    shloka_reference: str = ""
+
+
+class YogaDoshaAnalysisResult(BaseModel):
+    yogas: List[ClassicalYogaItem] = []
+    active_yogas_count: int = 0
+    doshas: List[ClassicalDoshaItem] = []
+    active_doshas_count: int = 0
+    is_manglik: bool = False
+    manglik_severity: str = "None"
+    manglik_cancelled: bool = False
+    kaal_sarp_type: Optional[str] = None
+    kaal_sarp_active: bool = False
