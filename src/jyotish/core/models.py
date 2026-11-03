@@ -124,11 +124,17 @@ class ShadbalaPlanetResult(BaseModel):
     baladi_avastha: str = "Yuva"
     jagratadi_avastha: str = "Jagrat"
     deeptadi_avastha: str = "Deepta"
+    uchha_bala: float = 0.0
+    kendradi_bala: float = 0.0
+    ojayugma_bala: float = 0.0
+    nathonnatha_bala: float = 0.0
+    paksha_bala: float = 0.0
 
 
 class ShadbalaSummary(BaseModel):
     planets: Dict[str, ShadbalaPlanetResult]
     bhava_bala: Dict[int, float]
+    bhava_bala_components: Optional[Dict[int, Dict[str, float]]] = None
 
 
 class JaiminiResult(BaseModel):

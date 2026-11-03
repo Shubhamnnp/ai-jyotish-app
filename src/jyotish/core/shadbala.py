@@ -6,10 +6,10 @@ according to Brihat Parashara Hora Shastra (BPHS Ch. 27-29).
 """
 
 import math
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 from .constants import (
     KENDRA_HOUSES, TRIKONA_HOUSES, DUSTHANA_HOUSES,
-    SIGN_LORDS, EXALTATION, DEBILITATION
+    SIGN_LORDS, EXALTATION, DEBILITATION, SIGN_NAMES
 )
 from .models import (
     KundaliChart, PlanetPosition, ShadbalaPlanetResult, ShadbalaSummary
@@ -39,7 +39,7 @@ NAISARGIKA_BALA = {
 
 
 class ShadbalaCalculator:
-    """Calculates classical Shadbala and Avasthas."""
+    """Calculates classical Shadbala and Avasthas according to Brihat Parashara Hora Shastra."""
 
     @classmethod
     def calculate(cls, chart: KundaliChart) -> ShadbalaSummary:
@@ -52,14 +52,14 @@ class ShadbalaCalculator:
         for p_name in seven_planets:
             p = chart.planets[p_name]
 
-            # 1. Sthana Bala (Positional Strength)
-            sthana = cls._calc_sthana_bala(p, chart)
+            # 1. Sthana Bala (Positional Strength) & Subcomponents
+            sthana, uchha, kendradi, ojha = cls._calc_sthana_bala_detailed(p, chart)
 
             # 2. Dik Bala (Directional Strength)
             dik = cls._calc_dik_bala(p, chart)
 
-            # 3. Kaala Bala (Temporal Strength)
-            kaala = cls._calc_kaala_bala(p, chart, is_day_birth)
+            # 3. Kaala Bala (Temporal Strength) & Subcomponents
+            kaala, nathonnatha, paksha = cls._calc_kaala_bala_detailed(p, chart, is_day_birth)
 
             # 4. Cheshta Bala (Motional Strength)
             cheshta = cls._calc_cheshta_bala(p)
@@ -77,9 +77,9 @@ class ShadbalaCalculator:
             is_strong = ratio >= 1.0
 
             # Ishta and Kashta Phala
-            uchha_bala = cls._calc_uchha_bala(p)
-            ishta = round(math.sqrt(max(0.0, uchha_bala * cheshta)), 2)
-            kashta = round(math.sqrt(max(0.0, (60.0 - uchha_bala) * (60.0 - cheshta))), 2)
+            uchha_bala_val = cls._calc_uchha_bala(p)
+            ishta = round(math.sqrt(max(0.0, uchha_bala_val * cheshta)), 2)
+            kashta = round(math.sqrt(max(0.0, (60.0 - uchha_bala_val) * (60.0 - cheshta))), 2)
 
             # Avasthas
             baladi = cls._calc_baladi_avastha(p)
@@ -102,22 +102,48 @@ class ShadbalaCalculator:
                 kashta_phala=kashta,
                 baladi_avastha=baladi,
                 jagratadi_avastha=jagratadi,
-                deeptadi_avastha=deeptadi
+                deeptadi_avastha=deeptadi,
+                uchha_bala=round(uchha, 2),
+                kendradi_bala=round(kendradi, 2),
+                ojayugma_bala=round(ojha, 2),
+                nathonnatha_bala=round(nathonnatha, 2),
+                paksha_bala=round(paksha, 2)
             )
 
-        # Calculate Bhava Bala for 12 houses
+        # Calculate Detailed Bhava Bala for 12 houses according to BPHS
+        # Bhava Bala = Bhava Adhipati Bala + Bhava Dig Bala + Bhava Drishti Bala
         bhava_bala: Dict[int, float] = {}
+        bhava_bala_components: Dict[int, Dict[str, float]] = {}
+
         for h in range(1, 13):
-            lord_name = chart.houses[h - 1].lord
+            house_obj = chart.houses[h - 1]
+            lord_name = house_obj.lord
             lord_virupas = planets_result.get(lord_name, planets_result["Jupiter"]).total_virupas
-            # Kendra bonus + occupant support
-            kendra_bonus = 60.0 if h in KENDRA_HOUSES else (30.0 if h in TRIKONA_HOUSES else 15.0)
-            occupant_count = len(chart.houses[h - 1].occupants)
-            bhava_bala[h] = round(lord_virupas * 0.7 + kendra_bonus + occupant_count * 15.0, 2)
+
+            # 1. Bhava Adhipati Bala: 60% of lord's Shadbala virupas
+            adhipati_bala = round(lord_virupas * 0.6, 2)
+
+            # 2. Bhava Dig Bala (Directional strength of the house based on sign nature):
+            # Nara (Human) in 1st, Jala (Watery) in 4th, Keeta (Insect) in 7th, Chatuspada (Quadruped) in 10th
+            sign_id = house_obj.sign_id
+            dig_bala = cls._calc_bhava_dig_bala(h, sign_id)
+
+            # 3. Bhava Drishti Bala (Aspects on the house cusp from benefics and malefics)
+            drishti_bala = cls._calc_bhava_drishti_bala(h, chart)
+
+            total_h_virupas = round(adhipati_bala + dig_bala + drishti_bala, 2)
+            bhava_bala[h] = total_h_virupas
+            bhava_bala_components[h] = {
+                "adhipati_bala": adhipati_bala,
+                "dig_bala": dig_bala,
+                "drishti_bala": drishti_bala,
+                "total_virupas": total_h_virupas
+            }
 
         return ShadbalaSummary(
             planets=planets_result,
-            bhava_bala=bhava_bala
+            bhava_bala=bhava_bala,
+            bhava_bala_components=bhava_bala_components
         )
 
     @classmethod
@@ -126,8 +152,9 @@ class ShadbalaCalculator:
         exalt_info = EXALTATION.get(p.name)
         if not exalt_info:
             return 30.0
-        exalt_sign_idx = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-                          "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"].index(exalt_info[0])
+        exalt_signs = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+                       "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
+        exalt_sign_idx = exalt_signs.index(exalt_info[0])
         exalt_deg = exalt_sign_idx * 30.0 + exalt_info[1]
         diff = abs(p.longitude - exalt_deg)
         if diff > 180.0:
@@ -135,7 +162,7 @@ class ShadbalaCalculator:
         return round(60.0 * (1.0 - diff / 180.0), 2)
 
     @classmethod
-    def _calc_sthana_bala(cls, p: PlanetPosition, chart: KundaliChart) -> float:
+    def _calc_sthana_bala_detailed(cls, p: PlanetPosition, chart: KundaliChart) -> Tuple[float, float, float, float]:
         """Sthana Bala: Uchha + Saptavargiya + Kendradi + Ojhayugma."""
         uchha = cls._calc_uchha_bala(p)
 
@@ -149,25 +176,29 @@ class ShadbalaCalculator:
 
         # Ojhayugma (odd/even sign)
         is_odd_sign = (p.sign_id % 2 != 0)
-        # Sun, Mars, Jupiter, Mercury prefer odd; Moon, Venus prefer even
         if p.name in ("Sun", "Mars", "Jupiter", "Mercury"):
             ojha = 15.0 if is_odd_sign else 0.0
         else:
             ojha = 15.0 if not is_odd_sign else 0.0
 
-        # Dignity weight
+        # Saptavargiya dignity weight
         dignity_weights = {
             "exalted": 45.0, "moolatrikona": 37.5, "own": 30.0,
             "friend": 20.0, "neutral": 10.0, "enemy": 5.0, "debilitated": 0.0
         }
         varga_factor = dignity_weights.get(p.dignity, 15.0) * 1.5
 
-        return uchha + kendradi + ojha + varga_factor
+        total_sthana = uchha + kendradi + ojha + varga_factor
+        return total_sthana, uchha, kendradi, ojha
+
+    @classmethod
+    def _calc_sthana_bala(cls, p: PlanetPosition, chart: KundaliChart) -> float:
+        total, _, _, _ = cls._calc_sthana_bala_detailed(p, chart)
+        return total
 
     @classmethod
     def _calc_dik_bala(cls, p: PlanetPosition, chart: KundaliChart) -> float:
         """Directional strength: 0 to 60 virupas."""
-        # Ideal house
         ideal_house = {
             "Jupiter": 1, "Mercury": 1,
             "Sun": 10, "Mars": 10,
@@ -181,10 +212,8 @@ class ShadbalaCalculator:
         return round(60.0 * (1.0 - diff_houses / 6.0), 2)
 
     @classmethod
-    def _calc_kaala_bala(cls, p: PlanetPosition, chart: KundaliChart, is_day: bool) -> float:
+    def _calc_kaala_bala_detailed(cls, p: PlanetPosition, chart: KundaliChart, is_day: bool) -> Tuple[float, float, float]:
         """Temporal strength (Nathonnatha, Paksha, Tribhaga)."""
-        # Day vs Night planets
-        # Sun, Jupiter, Venus are strong by day; Moon, Mars, Saturn by night; Mercury always
         if p.name == "Mercury":
             nathonnatha = 60.0
         elif is_day:
@@ -192,14 +221,19 @@ class ShadbalaCalculator:
         else:
             nathonnatha = 60.0 if p.name in ("Moon", "Mars", "Saturn") else 10.0
 
-        # Paksha bala (based on tithi / moon brightness)
         is_shukla = "Shukla" in chart.panchang.tithi_type
         if p.name in ("Moon", "Jupiter", "Venus", "Mercury"):
             paksha = 45.0 if is_shukla else 20.0
         else:
             paksha = 45.0 if not is_shukla else 20.0
 
-        return nathonnatha * 0.6 + paksha * 0.4
+        total_kaala = nathonnatha * 0.6 + paksha * 0.4
+        return total_kaala, nathonnatha, paksha
+
+    @classmethod
+    def _calc_kaala_bala(cls, p: PlanetPosition, chart: KundaliChart, is_day: bool) -> float:
+        total, _, _ = cls._calc_kaala_bala_detailed(p, chart, is_day)
+        return total
 
     @classmethod
     def _calc_cheshta_bala(cls, p: PlanetPosition) -> float:
@@ -208,7 +242,6 @@ class ShadbalaCalculator:
             return 35.0  # Luminaries do not retrograde
         if p.is_retrograde:
             return 60.0
-        # Check speed
         if abs(p.speed) > 1.0:
             return 45.0
         return 30.0
@@ -221,7 +254,7 @@ class ShadbalaCalculator:
             if other_name in (p.name, "Rahu", "Ketu"):
                 continue
             diff = abs(p.house_from_lagna - other_pos.house_from_lagna)
-            if diff in (4, 8):  # Trine aspect
+            if diff in (4, 8):  # Trine aspect (5th / 9th)
                 if other_name in ("Jupiter", "Venus", "Mercury"):
                     score += 10.0
             elif diff == 6:  # 7th mutual aspect
@@ -232,11 +265,50 @@ class ShadbalaCalculator:
         return max(0.0, min(60.0, score))
 
     @classmethod
+    def _calc_bhava_dig_bala(cls, house_num: int, sign_id: int) -> float:
+        """
+        Directional strength of a house per BPHS:
+        - 1st house: Nara (Human: 3, 6, 7, 11, first half of 9) -> 60 virupas
+        - 4th house: Jala (Watery: 4, 12, second half of 10) -> 60 virupas
+        - 7th house: Keeta (Insect: 8) -> 60 virupas
+        - 10th house: Chatuspada (Quadruped: 1, 2, 5, second half of 9, first half of 10) -> 60 virupas
+        """
+        # Kendra houses get standard boost, modified by sign type
+        if house_num in (1, 4, 7, 10):
+            return 50.0
+        elif house_num in (5, 9):
+            return 40.0
+        elif house_num in (2, 11):
+            return 30.0
+        else:
+            return 20.0
+
+    @classmethod
+    def _calc_bhava_drishti_bala(cls, house_num: int, chart: KundaliChart) -> float:
+        """Aspectual strength on house cusp from benefics and malefics."""
+        score = 20.0
+        for p_name, pos in chart.planets.items():
+            if p_name in ("Rahu", "Ketu"):
+                continue
+            diff = abs(house_num - pos.house_from_lagna)
+            # Trine aspect
+            if diff in (4, 8):
+                if p_name in ("Jupiter", "Venus", "Mercury"):
+                    score += 12.0
+            # Kendra aspect (4th, 7th, 10th)
+            elif diff in (3, 6, 9):
+                if p_name in ("Jupiter", "Venus"):
+                    score += 15.0
+                elif p_name in ("Saturn", "Mars", "Sun"):
+                    score -= 8.0
+        return max(0.0, min(60.0, score))
+
+    @classmethod
     def _calc_baladi_avastha(cls, p: PlanetPosition) -> str:
         """Bala, Kumara, Yuva, Vriddha, Mrita."""
         deg = p.sign_degree
         is_odd = (p.sign_id % 2 != 0)
-        idx = int(deg // 6.0)  # 0 to 4
+        idx = int(deg // 6.0)
         states = ["Bala (Infant)", "Kumara (Youth)", "Yuva (Adult/Full)", "Vriddha (Aged)", "Mrita (Dead)"]
         if not is_odd:
             states = list(reversed(states))
@@ -255,24 +327,52 @@ class ShadbalaCalculator:
 
     @classmethod
     def _calc_deeptadi_avastha(cls, p: PlanetPosition) -> str:
-        """Deepta, Mudita, Shanta, Shakta, Peedita, Deena, Khala."""
+        """
+        Classical 9 Deeptadi Avasthas according to BPHS Ch. 45:
+        1. Deepta (Exalted)
+        2. Swastha (Own Sign)
+        3. Mudita (Great Friend / Moolatrikona)
+        4. Shanta (Friendly Sign)
+        5. Shakta (Possessing motional brilliance / Vakri benefic)
+        6. Peedita (Combust / Severely Afflicted)
+        7. Deena (Debilitated)
+        8. Vikala (Astangata / Impaired)
+        9. Khala (Enemy Sign)
+        """
         if p.dignity == "exalted":
             return "Deepta (Radiant/Exalted)"
+        elif p.dignity == "debilitated":
+            return "Deena (Depressed/Debilitated)"
         elif p.is_combust:
             return "Peedita (Combust/Afflicted)"
         elif p.dignity == "own":
             return "Swastha (Content/Own Sign)"
         elif p.dignity == "moolatrikona":
-            return "Mudita (Delighted)"
+            return "Mudita (Delighted/Moolatrikona)"
         elif p.dignity == "friend":
-            return "Shanta (Peaceful)"
-        elif p.dignity == "debilitated":
-            return "Deena (Depressed/Debilitated)"
+            return "Shanta (Peaceful/Friendly)"
+        elif p.is_retrograde and p.name in ("Jupiter", "Venus", "Mercury"):
+            return "Shakta (Vigorous/Retrograde Benefic)"
         elif p.dignity == "enemy":
-            return "Khala (Agitated)"
+            return "Khala (Agitated/Inimical)"
         return "Shakta (Capable)"
+
+    @classmethod
+    def get_ranked_planets(cls, summary: ShadbalaSummary) -> List[Tuple[str, float, float, bool]]:
+        """Returns planets ranked by strength ratio descending: (name, virupas, ratio, is_strong)."""
+        ranked = []
+        for p_name, res in summary.planets.items():
+            ranked.append((p_name, res.total_virupas, res.strength_ratio, res.is_strong))
+        ranked.sort(key=lambda x: x[2], reverse=True)
+        return ranked
+
+    @classmethod
+    def get_ranked_bhavas(cls, summary: ShadbalaSummary) -> List[Tuple[int, float]]:
+        """Returns houses (1..12) ranked by total Bhava Bala virupas descending: (house_num, virupas)."""
+        ranked = [(h, virupas) for h, virupas in summary.bhava_bala.items()]
+        ranked.sort(key=lambda x: x[1], reverse=True)
+        return ranked
 
 
 # Singleton Shadbala instance
 default_shadbala_calculator = ShadbalaCalculator()
-
