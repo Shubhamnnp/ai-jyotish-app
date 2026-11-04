@@ -10,6 +10,7 @@ from .exceptions import (
 )
 from .historical_india import get_historical_indian_offset
 from .service import TimeService, TimeResolutionResult
+from .geo import GeoLocationService, GeoLocationResult, KNOWN_CITIES
 
 __all__ = [
     "TimeLocationError",
@@ -19,4 +20,7 @@ __all__ = [
     "get_historical_indian_offset",
     "TimeService",
     "TimeResolutionResult",
+    "GeoLocationService",
+    "GeoLocationResult",
+    "KNOWN_CITIES",
 ]

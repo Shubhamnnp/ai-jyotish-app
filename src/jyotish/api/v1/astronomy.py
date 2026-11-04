@@ -45,3 +45,34 @@ def get_astronomy_health():
     """Diagnostic health status for astronomical ephemeris engine."""
     return get_engine_health()
 
+
+@router.get("/timeloc/resolve")
+def resolve_timeloc(
+    city: str = None,
+    latitude: float = None,
+    longitude: float = None,
+    timezone: str = None
+):
+    """Resolves coordinates, city, and IANA timezone via offline deterministic service."""
+    from src.jyotish.timeloc.geo import GeoLocationService
+    from fastapi import HTTPException
+    try:
+        res = GeoLocationService.resolve_location(
+            city=city,
+            latitude=latitude,
+            longitude=longitude,
+            timezone=timezone
+        )
+        return {
+            "city": res.city,
+            "latitude": res.latitude,
+            "longitude": res.longitude,
+            "timezone": res.timezone,
+            "elevation": res.elevation,
+            "country": res.country,
+            "resolution_source": res.resolution_source
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
