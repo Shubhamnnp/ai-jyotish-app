@@ -54,6 +54,15 @@ from src.jyotish.core.upagraha import default_upagraha_calculator
 from src.jyotish.core.chakras import default_sarvatobhadra_engine, default_kota_chakra_engine
 from src.jyotish.core.ayurdaya import default_ayurdaya_engine
 from src.jyotish.core.kp import default_kp_engine
+from src.jyotish.ui.components.birth_form import (
+    BIRTH_CONFIDENCE_LEVELS,
+    AYANAMSA_CATALOGUE,
+    HOUSE_SYSTEM_CATALOGUE,
+    NODE_TYPE_CATALOGUE,
+    ASTRO_SCHOOLS_CATALOGUE,
+    get_historical_tz_note,
+    evaluate_geo_ambiguity
+)
 import importlib
 try:
     from src.jyotish.services.muhurta import default_muhurta_engine, default_muhurta_scanner
@@ -7592,6 +7601,9 @@ with st.container(key="top_frozen_header_container", border=False):
                     in_city_query = st.text_input("स्थान खोज (Search City)", value=st.session_state.birth_city, key="gla_city_query_input")
                     geo_results = default_geocoding_service.search(in_city_query, limit=5)
                     if geo_results:
+                        amb_eval = evaluate_geo_ambiguity(geo_results, in_city_query)
+                        if amb_eval["is_ambiguous"] and amb_eval.get("prompt"):
+                            st.caption(f"⚠️ {amb_eval['prompt']}")
                         selected_loc = st.selectbox(
                             "उपलब्ध स्थान (Select Location)",
                             geo_results,
@@ -7621,7 +7633,16 @@ with st.container(key="top_frozen_header_container", border=False):
                 with col_geo3:
                     col_tz_a, col_conf_a = st.columns(2)
                     in_tz = col_tz_a.number_input("TZ Offset", value=float(st.session_state.get("birth_tz", 5.5)), step=0.5, key="gla_tz_input")
-                    in_conf = col_conf_a.selectbox("Confidence", ["Exact", "Approx (±15 min)", "Unknown"], key="gla_conf_select")
+                    conf_labels = [c["short_name"] for c in BIRTH_CONFIDENCE_LEVELS]
+                    cur_conf = st.session_state.get("birth_conf", "Exact")
+                    conf_idx = conf_labels.index(cur_conf) if cur_conf in conf_labels else 0
+                    in_conf = col_conf_a.selectbox(
+                        "Confidence",
+                        conf_labels,
+                        index=conf_idx,
+                        key="gla_conf_select",
+                        help="विश्वसनीयता स्तर: Exact (<2m), Approx (±15m), Approx (±1h), या Unknown (शोधन आवश्यक)"
+                    )
                     st.session_state.birth_tz = in_tz
                     st.session_state.birth_conf = in_conf
                     in_dst = st.checkbox("🌐 विदेशी DST (+1 घंटा)", value=st.session_state.get("birth_dst_active", False), key="gla_foreign_dst_cb", help="डेलाइट सेविंग टाइम (Daylight Saving Time) सक्रिय करें")
@@ -7632,6 +7653,12 @@ with st.container(key="top_frozen_header_container", border=False):
                         else:
                             st.session_state.birth_tz = float(st.session_state.birth_tz) - 1.0
                         st.rerun()
+
+                # Historical Timezone & DST Alert Notice
+                tz_hint = get_historical_tz_note(st.session_state.birth_date, float(st.session_state.get("birth_tz", 5.5)), country_hint="IN")
+                if tz_hint["has_anomaly"]:
+                    for n_item in tz_hint["notes"]:
+                        st.warning(n_item)
 
                 # Form Buttons: Calculate & Close
                 st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
@@ -8063,35 +8090,43 @@ with st.container(key="top_frozen_header_container", border=False):
 
                 st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
 
-                # Row 3: Fundamental Calculation Engine (Ayanamsa, Nodes, Houses, Pro Mode)
+                # Row 3: Fundamental Calculation Engine (Ayanamsa, Nodes, Houses, School, Pro Mode)
                 st.markdown("##### 📐 मूल गणना प्राथमिकताएं (Fundamental Calculation Preferences)")
-                col_st1, col_st2, col_st3, col_st4 = st.columns([2.2, 1.8, 1.6, 1.4])
+                col_st1, col_st2, col_st3, col_st4, col_st5 = st.columns([2.0, 1.8, 1.6, 1.6, 1.2])
                 with col_st1:
-                    ay_opts = [
-                        "Lahiri", "Pushya-Paksha (PVR Rao)", "KP Old", "KP New (Straight Line)",
-                        "Raman", "True Chitra (Spica 180°)", "Yukteshwar", "Fagan-Bradley"
-                    ]
+                    ay_opts = list(AYANAMSA_CATALOGUE.keys())
                     cur_ay = st.session_state.get("app_ayanamsa", "Lahiri")
                     ay_idx = ay_opts.index(cur_ay) if cur_ay in ay_opts else 0
-                    in_ay = col_st1.selectbox("अयनांश (Ayanamsa)", ay_opts, index=ay_idx, key="gla_settings_ayanamsa")
+                    ay_tooltip = AYANAMSA_CATALOGUE.get(cur_ay, {}).get("tooltip", "अयनांश प्रणाली")
+                    in_ay = col_st1.selectbox("अयनांश (Ayanamsa)", ay_opts, index=ay_idx, key="gla_settings_ayanamsa", help=ay_tooltip)
                     st.session_state.app_ayanamsa = in_ay
 
                 with col_st2:
                     node_opts = ["Mean Node (पारंपरिक औसत)", "True Node (सच्चे पात - Meeus)"]
                     cur_node = st.session_state.get("app_node_type", "Mean Node (पारंपरिक औसत)")
                     node_idx = node_opts.index(cur_node) if cur_node in node_opts else 0
-                    in_node = col_st2.selectbox("राहु-केतु गणना (Nodes)", node_opts, index=node_idx, key="gla_settings_node")
+                    node_tooltip = NODE_TYPE_CATALOGUE["mean"]["tooltip"] if "Mean" in cur_node else NODE_TYPE_CATALOGUE["true"]["tooltip"]
+                    in_node = col_st2.selectbox("राहु-केतु गणना (Nodes)", node_opts, index=node_idx, key="gla_settings_node", help=node_tooltip)
                     st.session_state.app_node_type = in_node
 
                 with col_st3:
-                    hs_opts = ["Whole Sign", "Equal", "Placidus", "Shripati", "Koch"]
+                    hs_opts = list(HOUSE_SYSTEM_CATALOGUE.keys())
                     cur_hs = st.session_state.get("app_house_system", "Whole Sign")
                     hs_idx = hs_opts.index(cur_hs) if cur_hs in hs_opts else 0
-                    in_hs = col_st3.selectbox("भाव पद्धति (Houses)", hs_opts, index=hs_idx, key="gla_settings_hs")
+                    hs_tooltip = HOUSE_SYSTEM_CATALOGUE.get(cur_hs, {}).get("tooltip", "भाव गणना पद्धति")
+                    in_hs = col_st3.selectbox("भाव पद्धति (Houses)", hs_opts, index=hs_idx, key="gla_settings_hs", help=hs_tooltip)
                     st.session_state.app_house_system = in_hs
 
                 with col_st4:
-                    in_pm = col_st4.toggle("⚡ Pro Mode", value=st.session_state.get("app_pro_mode", True), key="gla_settings_pm_toggle")
+                    school_opts = ["Parashari", "Jaimini", "KP", "Tajika", "Lal Kitab"]
+                    cur_school = st.session_state.get("app_astro_school", "Parashari")
+                    school_idx = school_opts.index(cur_school) if cur_school in school_opts else 0
+                    school_tooltip = ASTRO_SCHOOLS_CATALOGUE.get(cur_school.lower(), {}).get("tooltip", "शास्त्रीय ज्योतिष सम्प्रदाय")
+                    in_school = col_st4.selectbox("सम्प्रदाय (School)", school_opts, index=school_idx, key="gla_settings_school", help=school_tooltip)
+                    st.session_state.app_astro_school = in_school
+
+                with col_st5:
+                    in_pm = col_st5.toggle("⚡ Pro Mode", value=st.session_state.get("app_pro_mode", True), key="gla_settings_pm_toggle")
                     st.session_state.app_pro_mode = in_pm
 
                 st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
