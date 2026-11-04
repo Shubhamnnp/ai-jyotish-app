@@ -18,7 +18,7 @@ from .models import (
     KundaliChart, CalculationMetadata
 )
 from datetime import timezone
-from .ephemeris import PyEphemProvider, default_ephemeris_provider
+from .ephemeris import BaseEphemerisProvider, PyEphemProvider, default_ephemeris_provider
 
 
 # 27 Yogas (Sun + Moon longitude / 13.333333 deg)
@@ -42,7 +42,7 @@ VARA_LORDS = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
 class ChartCalculator:
     """Core calculation engine for Vedic Kundali Charts."""
 
-    def __init__(self, ephem_provider: Optional[PyEphemProvider] = None):
+    def __init__(self, ephem_provider: Optional[BaseEphemerisProvider] = None):
         self.provider = ephem_provider or default_ephemeris_provider
 
     def longitude_to_sign(self, lon: float) -> Tuple[int, str, float]:

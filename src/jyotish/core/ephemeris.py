@@ -4,10 +4,11 @@ Provides sidereal planetary longitudes, speeds, retrograde status, and combustio
 Uses PyEphem (`ephem`) with classical Ayanamsa systems (Lahiri, Raman, KP, True Chitra).
 """
 
+import os
 import math
 from abc import ABC, abstractmethod
 from datetime import datetime, date, time, timezone, timedelta
-from typing import Dict, Tuple, Optional
+from typing import Dict, Tuple, Optional, List, Any
 import ephem
 
 from .constants import (
@@ -306,73 +307,146 @@ class PyEphemProvider(BaseEphemerisProvider):
         return asc_sid_deg
 
 
+class EphemerisUnavailable(RuntimeError):
+    """Raised when Swiss Ephemeris is unavailable and degraded fallback is disallowed."""
+    pass
+
+
 class SwissEphemerisProvider(BaseEphemerisProvider):
     """
-    Swiss Ephemeris Provider (JPL DE431-based precision).
-    Supports pyswisseph/swisseph C-bindings when installed, with graceful
-    fallback to calibrated PyEphem astronomical provider.
+    Swiss Ephemeris Provider.
+    Primary professional astronomical engine using C-bindings (pyswisseph/swisseph/pysweph).
+    Supports high-precision JPL DE431 (.se1 files) and built-in Moshier semi-analytical mode.
     """
 
     def __init__(self, ephe_path: Optional[str] = None):
         self._swe = None
         self._has_swisseph = False
+        self._ephe_path = None
+        self._ephe_files: List[str] = []
         self._fallback = PyEphemProvider()
+
         try:
             import swisseph as swe
             self._swe = swe
-            if ephe_path and hasattr(swe, 'set_ephe_path'):
-                swe.set_ephe_path(ephe_path)
-            # Perform sanity check
-            if hasattr(swe, 'julday') and hasattr(swe, 'calc_ut') and hasattr(swe, 'set_sid_mode') and hasattr(swe, 'get_ayanamsa_ut'):
-                t_jd = float(swe.julday(2000, 1, 1, 12.0))
-                swe.set_sid_mode(1)
-                _ = float(swe.get_ayanamsa_ut(t_jd))
-                self._has_swisseph = True
-        except BaseException:
+        except ImportError:
             try:
                 import pyswisseph as swe
                 self._swe = swe
-                if ephe_path and hasattr(swe, 'set_ephe_path'):
-                    swe.set_ephe_path(ephe_path)
-                if hasattr(swe, 'julday') and hasattr(swe, 'calc_ut') and hasattr(swe, 'set_sid_mode') and hasattr(swe, 'get_ayanamsa_ut'):
-                    t_jd = float(swe.julday(2000, 1, 1, 12.0))
-                    swe.set_sid_mode(1)
-                    _ = float(swe.get_ayanamsa_ut(t_jd))
-                    self._has_swisseph = True
-            except BaseException:
-                self._has_swisseph = False
+            except ImportError:
+                self._swe = None
+
+        if self._swe is None:
+            allow_degraded = os.getenv("ALLOW_DEGRADED_ENGINE", "false").strip().lower() in ("true", "1", "yes")
+            if not allow_degraded:
+                raise EphemerisUnavailable(
+                    "pyswisseph / swisseph library is not installed and ALLOW_DEGRADED_ENGINE is false. "
+                    "Please install pysweph or pyswisseph."
+                )
+            self._has_swisseph = False
+            return
+
+        # Resolve ephemeris path
+        path_to_try = ephe_path or os.getenv("SWE_EPHE_PATH")
+        if not path_to_try:
+            for cand in ["ephe", "ephemeris_data", "/usr/share/ephe", "/usr/local/share/ephe"]:
+                if os.path.isdir(cand):
+                    path_to_try = cand
+                    break
+
+        if path_to_try and os.path.isdir(path_to_try):
+            self._ephe_path = os.path.abspath(path_to_try)
+            if hasattr(self._swe, "set_ephe_path"):
+                self._swe.set_ephe_path(self._ephe_path)
+            try:
+                self._ephe_files = [f for f in os.listdir(self._ephe_path) if f.endswith(".se1")]
+            except Exception:
+                self._ephe_files = []
+        else:
+            self._ephe_path = None
+            self._ephe_files = []
+
+        self._has_swisseph = True
+        self.self_test_result = self.run_self_test()
+
+    @property
+    def version(self) -> str:
+        return getattr(self._swe, "__version__", "unknown") if self._swe else "none"
+
+    @property
+    def ephe_path(self) -> Optional[str]:
+        return self._ephe_path
+
+    @property
+    def ephe_files(self) -> List[str]:
+        return list(self._ephe_files)
+
+    @property
+    def ephe_files_count(self) -> int:
+        return len(self._ephe_files)
+
+    @property
+    def ephemeris_mode(self) -> str:
+        if not self._has_swisseph:
+            return "degraded (pyephem)"
+        return "Swiss Ephemeris (DE431)" if len(self._ephe_files) > 0 else "Swiss Ephemeris (Moshier)"
 
     @property
     def engine_type(self) -> str:
-        return "Swiss Ephemeris (DE431)" if self._has_swisseph else "PyEphem High-Precision Calibrated"
+        return self.ephemeris_mode
+
+    def run_self_test(self) -> Dict[str, Any]:
+        """Runs startup self-test verifying Sun sidereal longitude at J2000.0."""
+        if not self._swe:
+            return {"status": "failed", "error": "swisseph not imported"}
+        try:
+            swe = self._swe
+            jd_j2000 = float(swe.julday(2000, 1, 1, 12.0))
+            swe.set_sid_mode(getattr(swe, "SIDM_LAHIRI", 1))
+            flg = getattr(swe, "FLG_SWIEPH", 2) | getattr(swe, "FLG_SPEED", 256) | getattr(swe, "FLG_SIDEREAL", 65536)
+            calc_res = swe.calc_ut(jd_j2000, getattr(swe, "SUN", 0), flg)
+            sun_lon = float(calc_res[0][0])
+            sun_speed = float(calc_res[0][3])
+            # J2000 Sun in Lahiri is ~256.515697 deg
+            diff = abs(sun_lon - 256.515697)
+            passed = diff < 0.001 and sun_speed > 0.95
+            return {
+                "status": "passed" if passed else "failed",
+                "test": "Sun sidereal longitude at J2000.0 (JD 2451545.0)",
+                "calculated_longitude": round(sun_lon, 6),
+                "expected_longitude": 256.515697,
+                "difference_degrees": round(diff, 9),
+                "daily_speed": round(sun_speed, 6),
+                "ayanamsa_j2000": round(float(swe.get_ayanamsa_ut(jd_j2000)), 6),
+            }
+        except Exception as e:
+            return {"status": "failed", "error": str(e)}
 
     def datetime_to_jd(self, dt: datetime) -> float:
         if self._has_swisseph and self._swe:
             try:
                 return float(self._swe.julday(dt.year, dt.month, dt.day, dt.hour + dt.minute / 60.0 + dt.second / 3600.0))
-            except BaseException:
+            except Exception:
                 return self._fallback.datetime_to_jd(dt)
         return self._fallback.datetime_to_jd(dt)
 
     def calculate_ayanamsa(self, jd: float, ayanamsa_name: str = "Lahiri") -> float:
         if self._has_swisseph and self._swe:
-            try:
-                swe = self._swe
-                sid_modes = {
-                    "lahiri": 1,
-                    "raman": 3,
-                    "kp": 5,
-                    "krishnamurti": 5,
-                    "true_chitra": 27,
-                    "true_citra": 27,
-                    "yukteshwar": 7,
-                    "bhasin": 8,
-                }
-                mode = sid_modes.get(str(ayanamsa_name).lower().strip(), 1)
-                swe.set_sid_mode(mode)
-                return float(swe.get_ayanamsa_ut(jd))
-            except BaseException:
-                return self._fallback.calculate_ayanamsa(jd, ayanamsa_name)
+            swe = self._swe
+            sid_modes = {
+                "lahiri": 1,
+                "raman": 3,
+                "kp": 5,
+                "krishnamurti": 5,
+                "true_chitra": 27,
+                "true_citra": 27,
+                "yukteshwar": 7,
+                "bhasin": 8,
+                "fagan_bradley": 0,
+            }
+            mode = sid_modes.get(str(ayanamsa_name).lower().strip(), 1)
+            swe.set_sid_mode(mode)
+            return float(swe.get_ayanamsa_ut(jd))
         return self._fallback.calculate_ayanamsa(jd, ayanamsa_name)
 
     def get_planet_positions(
@@ -385,60 +459,69 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
         if not self._has_swisseph or not self._swe:
             return self._fallback.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type, **kwargs)
 
-        try:
-            swe = self._swe
-            jd = self.datetime_to_jd(dt_utc)
-            ayanamsa_val = self.calculate_ayanamsa(jd, ayanamsa_name)
+        swe = self._swe
+        jd = self.datetime_to_jd(dt_utc)
+        ayanamsa_val = self.calculate_ayanamsa(jd, ayanamsa_name)
 
-            # Swiss Ephemeris body IDs (Sun=0, Moon=1, Mercury=2, Venus=3, Mars=4, Jupiter=5, Saturn=6, Mean Node=10, True Node=11)
-            rahu_id = getattr(swe, "TRUE_NODE", 11) if str(node_type).lower() == "true" else getattr(swe, "MEAN_NODE", 10)
-            planet_map = {
-                "Sun": getattr(swe, "SUN", 0),
-                "Moon": getattr(swe, "MOON", 1),
-                "Mars": getattr(swe, "MARS", 4),
-                "Mercury": getattr(swe, "MERCURY", 2),
-                "Jupiter": getattr(swe, "JUPITER", 5),
-                "Venus": getattr(swe, "VENUS", 3),
-                "Saturn": getattr(swe, "SATURN", 6),
-                "Rahu": rahu_id,
+        # Swiss Ephemeris body IDs
+        rahu_id = getattr(swe, "TRUE_NODE", 11) if str(node_type).lower() == "true" else getattr(swe, "MEAN_NODE", 10)
+        planet_map = {
+            "Sun": getattr(swe, "SUN", 0),
+            "Moon": getattr(swe, "MOON", 1),
+            "Mars": getattr(swe, "MARS", 4),
+            "Mercury": getattr(swe, "MERCURY", 2),
+            "Jupiter": getattr(swe, "JUPITER", 5),
+            "Venus": getattr(swe, "VENUS", 3),
+            "Saturn": getattr(swe, "SATURN", 6),
+            "Rahu": rahu_id,
+        }
+
+        flg_swieph = getattr(swe, "FLG_SWIEPH", 2)
+        flg_speed = getattr(swe, "FLG_SPEED", 256)
+        flg_sidereal = getattr(swe, "FLG_SIDEREAL", 65536)
+        flags = flg_swieph | flg_speed | flg_sidereal
+
+        # Support topocentric Moon parallax calculation when observer coordinates are supplied
+        is_topo_moon = bool(kwargs.get("topocentric_moon")) and ("latitude" in kwargs and "longitude" in kwargs)
+        if is_topo_moon and hasattr(swe, "set_topo"):
+            obs_lat = float(kwargs["latitude"])
+            obs_lon = float(kwargs["longitude"])
+            obs_alt = float(kwargs.get("elevation", 0.0))
+            swe.set_topo(obs_lon, obs_lat, obs_alt)
+
+        results: Dict[str, Dict[str, float]] = {}
+
+        for name, p_id in planet_map.items():
+            p_flags = flags
+            if name == "Moon" and is_topo_moon:
+                p_flags = flags | getattr(swe, "FLG_TOPOCTR", 32768)
+            calc_res = swe.calc_ut(jd, p_id, p_flags)
+            res = calc_res[0]
+            lon = float(res[0]) % 360.0
+            lat = float(res[1])
+            speed = float(res[3])
+            is_retro = speed < 0.0
+
+            results[name] = {
+                "longitude": lon,
+                "latitude": lat,
+                "speed": speed,
+                "is_retrograde": is_retro,
+                "tropical_lon": (lon + ayanamsa_val) % 360.0,
             }
 
-            flg_swieph = getattr(swe, "FLG_SWIEPH", 2)
-            flg_speed = getattr(swe, "FLG_SPEED", 256)
-            flg_sidereal = getattr(swe, "FLG_SIDEREAL", 65536)
-            flags = flg_swieph | flg_speed | flg_sidereal
+        # Ketu is exactly 180 degrees from Rahu
+        rahu_lon = results["Rahu"]["longitude"]
+        ketu_lon = (rahu_lon + 180.0) % 360.0
+        results["Ketu"] = {
+            "longitude": ketu_lon,
+            "latitude": -results["Rahu"]["latitude"],
+            "speed": results["Rahu"]["speed"],
+            "is_retrograde": True,
+            "tropical_lon": (results["Rahu"]["tropical_lon"] + 180.0) % 360.0,
+        }
 
-            results: Dict[str, Dict[str, float]] = {}
-
-            for name, p_id in planet_map.items():
-                res, ret_flag = swe.calc_ut(jd, p_id, flags)
-                lon = float(res[0]) % 360.0
-                lat = float(res[1])
-                speed = float(res[3])
-                is_retro = speed < 0.0
-
-                results[name] = {
-                    "longitude": lon,
-                    "latitude": lat,
-                    "speed": speed,
-                    "is_retrograde": is_retro,
-                    "tropical_lon": (lon + ayanamsa_val) % 360.0,
-                }
-
-            # Ketu is exactly 180 degrees from Rahu
-            rahu_lon = results["Rahu"]["longitude"]
-            ketu_lon = (rahu_lon + 180.0) % 360.0
-            results["Ketu"] = {
-                "longitude": ketu_lon,
-                "latitude": -results["Rahu"]["latitude"],
-                "speed": results["Rahu"]["speed"],
-                "is_retrograde": True,
-                "tropical_lon": (results["Rahu"]["tropical_lon"] + 180.0) % 360.0,
-            }
-
-            return results, ayanamsa_val
-        except BaseException:
-            return self._fallback.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type, **kwargs)
+        return results, ayanamsa_val
 
     def calculate_ascendant(
         self,
@@ -450,21 +533,44 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
         if not self._has_swisseph or not self._swe:
             return self._fallback.calculate_ascendant(dt_utc, latitude, longitude, ayanamsa_val)
 
-        try:
-            swe = self._swe
-            jd = self.datetime_to_jd(dt_utc)
-            flg_sidereal = getattr(swe, "FLG_SIDEREAL", 65536)
-            cusps, ascmc = swe.houses_ex(jd, latitude, longitude, b'W', flg_sidereal)
-            return float(ascmc[0]) % 360.0
-        except BaseException:
-            return self._fallback.calculate_ascendant(dt_utc, latitude, longitude, ayanamsa_val)
+        swe = self._swe
+        jd = self.datetime_to_jd(dt_utc)
+        flg_sidereal = getattr(swe, "FLG_SIDEREAL", 65536)
+        cusps, ascmc = swe.houses_ex(jd, latitude, longitude, b'W', flg_sidereal)
+        return float(ascmc[0]) % 360.0
 
 
 def get_ephemeris_provider(preference: str = "auto") -> BaseEphemerisProvider:
     """Factory returning the optimal astronomical ephemeris provider."""
-    if preference.lower() in ("swiss", "swisseph"):
-        return SwissEphemerisProvider()
-    return PyEphemProvider()
+    pref = str(preference).lower()
+    if pref in ("pyephem", "fallback", "degraded"):
+        return PyEphemProvider()
+    return SwissEphemerisProvider()
+
+
+def get_engine_health() -> Dict[str, Any]:
+    """Returns engine health, active provider, Swiss Ephemeris version, path, and self-test."""
+    provider = default_ephemeris_provider
+    if isinstance(provider, SwissEphemerisProvider):
+        st = provider.self_test_result if hasattr(provider, "self_test_result") else provider.run_self_test()
+        return {
+            "engine": "swisseph",
+            "version": provider.version,
+            "ephe_path": provider.ephe_path or "default (built-in Moshier)",
+            "ephe_files_count": provider.ephe_files_count,
+            "ephe_files_sample": provider.ephe_files[:10],
+            "ephemeris_mode": provider.ephemeris_mode,
+            "self_test": st.get("status", "unknown"),
+            "self_test_details": st,
+        }
+    return {
+        "engine": "pyephem",
+        "version": getattr(ephem, "__version__", "unknown"),
+        "ephe_path": None,
+        "ephe_files_count": 0,
+        "ephemeris_mode": "PyEphem (Degraded)",
+        "self_test": "bypassed",
+    }
 
 
 # Singleton provider instance

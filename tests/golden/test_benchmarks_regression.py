@@ -20,7 +20,8 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 from src.jyotish.core.models import BirthData
-from src.jyotish.core.calculator import default_chart_calculator
+from src.jyotish.core.calculator import ChartCalculator, default_chart_calculator
+from src.jyotish.core.ephemeris import PyEphemProvider
 from src.jyotish.core.ashtakavarga import AshtakavargaCalculator
 from src.jyotish.core.jaimini import default_jaimini_calculator
 
@@ -40,9 +41,11 @@ def test_golden_snapshots_loaded(golden_data):
     assert golden_data["metadata"]["invariant_sav_sum"] == 337
 
 
+@pytest.mark.regression
 def test_golden_benchmarks_astronomical_invariants(golden_data):
-    """Verify precision of planetary calculations against golden snapshots."""
+    """Verify precision of planetary calculations against legacy golden snapshots."""
     benchmarks = golden_data["benchmarks"]
+    legacy_calculator = ChartCalculator(ephem_provider=PyEphemProvider())
 
     for name, b_data in benchmarks.items():
         inp = b_data["birth_data"]
@@ -60,7 +63,7 @@ def test_golden_benchmarks_astronomical_invariants(golden_data):
             confidence="Exact"
         )
 
-        chart = default_chart_calculator.calculate_full_chart(b_obj)
+        chart = legacy_calculator.calculate_full_chart(b_obj)
 
         snap_lagna = b_data["lagna"]
         assert chart.lagna_sign_id == snap_lagna["sign_id"], f"Lagna sign mismatch for {name}"

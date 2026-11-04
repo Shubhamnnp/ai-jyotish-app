@@ -45,14 +45,24 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
+    from src.jyotish.core.ephemeris import get_engine_health
+    engine_info = get_engine_health()
     return {
         "service": "JyotishOS Engine",
         "version": "1.0.0",
         "status": "operational",
         "total_rules": len(default_rules_engine.rules),
         "ayanamsa_default": "Lahiri (Chitra Paksha)",
-        "ephemeris": "PyEphem (IAU high-precision sidereal)",
+        "ephemeris": engine_info.get("ephemeris_mode", "Swiss Ephemeris"),
+        "engine_health": engine_info.get("self_test", "unknown"),
     }
+
+
+@app.get("/health/engine")
+def health_engine():
+    """Returns detailed ephemeris engine status, Swiss version, files found, and self-test results."""
+    from src.jyotish.core.ephemeris import get_engine_health
+    return get_engine_health()
 
 
 @app.post("/api/chart/calculate", response_model=KundaliChart)
