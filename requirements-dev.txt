@@ -1,0 +1,8 @@
+# AI Jyotish SaaS & Grahalakshanam Suite - Development & Testing Dependencies
+-r requirements.txt
+
+# Testing & Quality
+pytest>=8.0.0
+pytest-cov>=5.0.0
+pytest-asyncio>=0.23.0
+

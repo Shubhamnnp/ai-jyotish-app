@@ -32,8 +32,7 @@ jobs:
       - name: Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest pytest-asyncio
+          pip install -r requirements-dev.txt
 
       - name: Run Golden Invariant Regression Tests (< 0.0001 deg, SAV=337)
         run: |
