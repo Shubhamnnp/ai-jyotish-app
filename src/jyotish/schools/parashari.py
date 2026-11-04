@@ -11,7 +11,8 @@ Governs classical Parashari Jyotish:
 from typing import Dict, List, Any, Optional
 from ..core.models import KundaliChart
 from ..core.constants import KENDRA_HOUSES, TRIKONA_HOUSES, DUSTHANA_HOUSES, SIGN_LORDS
-from ..core.yoga import default_yoga_engine
+from ..core.yoga import ClassicalYogaDoshaEngine, default_yoga_dosha_engine
+default_yoga_engine = default_yoga_dosha_engine
 from ..core.shadbala import default_shadbala_engine
 from .base import BaseSchoolEngine, SchoolResult, Finding, PrecedenceRecord, PrecedencePrinciple
 from .conflict import ShastriyaPrecedenceEngine

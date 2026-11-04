@@ -765,4 +765,5 @@ class ClassicalYogaDoshaEngine:
 
 
 default_yoga_dosha_engine = ClassicalYogaDoshaEngine()
+default_yoga_engine = default_yoga_dosha_engine
 
