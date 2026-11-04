@@ -8902,7 +8902,7 @@ with st.container(key="top_frozen_header_container", border=False):
                 col_lic1, col_lic2 = st.columns([2.5, 1])
                 with col_lic1:
                     user_curr_email = st.session_state.get("user_email", "")
-                    lic_code_in = st.text_input("परचेज कोड दर्ज करें (Enter Purchase Code):", placeholder="उदा: BH-PRO-2026-MASTER", key="user_lic_code_input")
+                    lic_code_in = st.text_input("परचेज कोड दर्ज करें (Enter Purchase Code):", placeholder="उदा: BH-PRO-XXXX-YYYY", key="user_lic_code_input")
                 with col_lic2:
                     st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
                     if st.button("🚀 अभी सक्रिय करें (Activate)", type="primary", use_container_width=True, key="user_lic_activate_btn"):
@@ -9645,7 +9645,7 @@ if cur_user_role == "jatak" and selected_idx not in jatak_allowed_modules:
         with col_up_code:
             user_input_code = st.text_input(
                 "परचेज कोड (Enter Purchase Code):",
-                placeholder="उदा: BH-PRO-2026-MASTER",
+                placeholder="उदा: BH-PRO-XXXX-YYYY",
                 key="module_guard_purchase_code"
             )
         with col_up_btn:

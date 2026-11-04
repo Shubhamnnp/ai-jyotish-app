@@ -194,32 +194,8 @@ class AuthService:
             self._save_users(users)
 
     def _ensure_seed_codes(self) -> None:
-        """Seed initial purchase codes for instant testing."""
-        codes = self._load_codes()
-        if not codes:
-            codes = [
-                {
-                    "code": "BH-PRO-2026-MASTER",
-                    "created_by": "researcher@jyotishos.com",
-                    "tier": "pro_annual",
-                    "created_at": "2026-01-01T00:00:00",
-                    "is_redeemed": False,
-                    "redeemed_by": None,
-                    "redeemed_at": None,
-                    "notes": "मास्टर प्रो एक्टिवेशन कोड (1 वर्ष)"
-                },
-                {
-                    "code": "BH-PRO-VIP-VAIDIK",
-                    "created_by": "researcher@jyotishos.com",
-                    "tier": "pro_lifetime",
-                    "created_at": "2026-01-01T00:00:00",
-                    "is_redeemed": False,
-                    "redeemed_by": None,
-                    "redeemed_at": None,
-                    "notes": "आजीवन प्रो एक्टिवेशन कोड (Lifetime VIP)"
-                }
-            ]
-            self._save_codes(codes)
+        """Seed initial purchase codes if needed. No hard-coded master codes in production (P0-T2)."""
+        pass
 
     # -------------------------------------------------------------
     # Authentication & Registration
@@ -359,8 +335,10 @@ class AuthService:
             self._save_users(users)
 
         codes = self._load_codes()
+        code_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
         codes.insert(0, {
             "code": code,
+            "code_hash": code_hash,
             "created_by": created_by_email,
             "tier": tier,
             "created_at": datetime.now().isoformat(),
@@ -396,10 +374,11 @@ class AuthService:
         return enriched
 
     def redeem_purchase_code(self, email: str, code_str: str) -> Tuple[bool, str]:
-        """Validate and redeem a purchase code, activating Jyotishi Pro tier."""
+        """Validate and redeem a purchase code using secure SHA-256 hash match, activating Jyotishi Pro tier."""
         clean_code = code_str.strip().upper()
+        clean_hash = hashlib.sha256(clean_code.encode("utf-8")).hexdigest()
         codes = self._load_codes()
-        code_entry = next((c for c in codes if c["code"].upper() == clean_code), None)
+        code_entry = next((c for c in codes if c.get("code_hash") == clean_hash or c.get("code", "").upper() == clean_code), None)
 
         if not code_entry:
             return False, "यह परचेज कोड अमान्य है। कृपया सही कोड दर्ज करें।"
