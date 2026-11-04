@@ -1,0 +1,44 @@
+domain: "health"
+display_name_en: "Health Tendencies & Physical Vitality"
+display_name_hi: "शारीरिक ऊर्जा, जीवन शक्ति एवं स्वास्थ्य प्रवृत्तियां"
+analysis_order:
+  - "bhava_occupants"
+  - "bhava_lord"
+  - "karaka_strength"
+  - "aspects"
+  - "varga_d6"
+  - "dasha_alignment"
+  - "transit_trigger"
+
+disclaimer: "Non-medical guidance. Astrological assessments reflect traditional vitality tendencies and should never replace qualified medical consultation."
+
+schools:
+  parashari:
+    primary_bhavas: [1, 6, 8]
+    secondary_bhavas: [12]
+    primary_karakas: ["Sun", "Moon", "Saturn", "Mars"]
+    relevant_vargas: ["D1", "D6", "D9", "D30"]
+    bhava_descriptions:
+      1: "प्रथम भाव: शारीरिक गठन, सामान्य जीवनी शक्ति (Vitality), रोग प्रतिरोधक क्षमता"
+      6: "षष्ठ भाव: दैनिक स्वास्थ्य संघर्ष, मौसमी रोग, उपचारात्मक क्षमता"
+      8: "अष्टम भाव: दीर्घायु, जीवन में आकस्मिक स्वास्थ्य उतार-चढ़ाव"
+
+  jaimini:
+    primary_karakas: ["GK"]
+    secondary_karakas: ["AK"]
+    primary_arudhas: ["A6", "A8"]
+    relevant_vargas: ["D1", "D3"]
+
+  kp:
+    primary_cusps: [1, 6]
+    favorable_houses: [1, 5, 11]
+    unfavorable_houses: [6, 8, 12]
+
+  lal_kitab:
+    primary_khanas: [1, 6, 8]
+    pakka_ruler: "Saturn"
+    karaka: "Saturn"
+
+  tajika:
+    primary_house: 6
+    sahams: ["Roga Saham"]

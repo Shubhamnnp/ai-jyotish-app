@@ -1,0 +1,44 @@
+domain: "wealth"
+display_name_en: "Wealth, Finances & Accumulated Assets"
+display_name_hi: "धन, संचित संपदा एवं वित्तीय समृद्धि"
+analysis_order:
+  - "bhava_occupants"
+  - "bhava_lord"
+  - "karaka_strength"
+  - "aspects"
+  - "varga_d2"
+  - "dasha_alignment"
+  - "transit_trigger"
+
+schools:
+  parashari:
+    primary_bhavas: [2, 11]
+    secondary_bhavas: [1, 5, 9]
+    primary_karakas: ["Jupiter", "Venus", "Mercury"]
+    relevant_vargas: ["D1", "D2", "D9"]
+    bhava_descriptions:
+      2: "द्वितीय भाव: संचित धन (Kosha), बैंक बैलेंस, पारिवारिक संपदा"
+      11: "एकादश भाव: आय के स्रोत (Aya), निरंतर लाभ, आर्थिक विस्तार"
+      5: "पंचम भाव: पूर्वपुण्य से प्राप्त अचानक धन, सट्टा, निवेश लाभ"
+      9: "नवम भाव: भाग्यवश आर्थिक संपन्नता एवं लक्ष्मी कृपा"
+
+  jaimini:
+    primary_karakas: ["AmK"]
+    secondary_karakas: ["DK"]
+    primary_arudhas: ["A2", "A11"]
+    special_lagnas: ["Hora Lagna", "Indu Lagna", "Sri Lagna"]
+    relevant_vargas: ["D1", "D2"]
+
+  kp:
+    primary_cusps: [2, 11]
+    favorable_houses: [2, 6, 11]
+    unfavorable_houses: [5, 8, 12]
+
+  lal_kitab:
+    primary_khanas: [2, 11]
+    pakka_ruler: "Jupiter"
+    karaka: "Jupiter"
+
+  tajika:
+    primary_house: 2
+    sahams: ["Dhana Saham", "Labha Saham"]

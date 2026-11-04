@@ -1,0 +1,40 @@
+domain: "children"
+display_name_en: "Children, Lineage & Creative Intellect"
+display_name_hi: "संतान, वंश वृद्धि एवं रचनात्मक बुद्धि"
+analysis_order:
+  - "bhava_occupants"
+  - "bhava_lord"
+  - "karaka_strength"
+  - "aspects"
+  - "varga_d7"
+  - "dasha_alignment"
+  - "transit_trigger"
+
+schools:
+  parashari:
+    primary_bhavas: [5]
+    secondary_bhavas: [9, 2]
+    primary_karakas: ["Jupiter"]
+    relevant_vargas: ["D1", "D7", "D9"]
+    bhava_descriptions:
+      5: "पंचम भाव: संतान सुख, पूर्वपुण्य, रचनात्मक सृजनशीलता"
+      9: "नवम भाव: पंचम से पंचम (संतान का भाग्य एवं उन्नति)"
+
+  jaimini:
+    primary_karakas: ["PK"]
+    primary_arudhas: ["A5"]
+    relevant_vargas: ["D1", "D7"]
+
+  kp:
+    primary_cusps: [5]
+    favorable_houses: [2, 5, 11]
+    unfavorable_houses: [1, 4, 10]
+
+  lal_kitab:
+    primary_khanas: [5]
+    pakka_ruler: "Jupiter"
+    karaka: "Jupiter"
+
+  tajika:
+    primary_house: 5
+    sahams: ["Putra Saham"]

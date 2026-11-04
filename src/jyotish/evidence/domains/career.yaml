@@ -1,0 +1,43 @@
+domain: "career"
+display_name_en: "Career, Profession & Status"
+display_name_hi: "आजीविका, कर्मक्षेत्र एवं पद-प्रतिष्ठा"
+analysis_order:
+  - "bhava_occupants"
+  - "bhava_lord"
+  - "karaka_strength"
+  - "aspects"
+  - "varga_d10"
+  - "dasha_alignment"
+  - "transit_trigger"
+
+schools:
+  parashari:
+    primary_bhavas: [10]
+    secondary_bhavas: [2, 6, 11]
+    primary_karakas: ["Sun", "Saturn", "Mercury", "Jupiter"]
+    relevant_vargas: ["D1", "D9", "D10"]
+    bhava_descriptions:
+      10: "दशम भाव: मुख्य कर्मक्षेत्र, राज्य सम्मान, अधिकार, व्यवसाय एवं ख्याति"
+      6: "षष्ठ भाव: सेवा कार्य, नौकरी, प्रतिस्पर्धा, दैनिक उत्तरदायित्व"
+      2: "द्वितीय भाव: अर्थोपार्जन, धन संचय, पारिवारिक व्यवसाय"
+      11: "एकादश भाव: कर्म से प्राप्त लाभ, सिद्धि, पदोन्नति"
+
+  jaimini:
+    primary_karakas: ["AmK"]
+    secondary_karakas: ["AK"]
+    primary_arudhas: ["A10", "AL"]
+    relevant_vargas: ["D1", "D9"]
+
+  kp:
+    primary_cusps: [10, 6]
+    favorable_houses: [2, 6, 10, 11]
+    unfavorable_houses: [5, 8, 12]
+
+  lal_kitab:
+    primary_khanas: [10]
+    pakka_ruler: "Saturn"
+    karaka: "Saturn"
+
+  tajika:
+    primary_house: 10
+    muntha_significance: "Muntha in 10th indicates career elevation and administrative authority."

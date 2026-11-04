@@ -1,0 +1,40 @@
+domain: "property"
+display_name_en: "Property, Vehicles & Real Estate"
+display_name_hi: "भूमि, भवन, वाहन एवं अचल संपत्ति"
+analysis_order:
+  - "bhava_occupants"
+  - "bhava_lord"
+  - "karaka_strength"
+  - "aspects"
+  - "varga_d4"
+  - "dasha_alignment"
+  - "transit_trigger"
+
+schools:
+  parashari:
+    primary_bhavas: [4]
+    secondary_bhavas: [11, 2]
+    primary_karakas: ["Mars", "Venus", "Saturn"]
+    relevant_vargas: ["D1", "D4", "D16"]
+    bhava_descriptions:
+      4: "चतुर्थ भाव: भूमि, गृह, वाहन एवं भौतिक सुख-सुविधाएं"
+      11: "एकादश भाव: संपत्ति से लाभ एवं क्रय-विक्रय सफलता"
+
+  jaimini:
+    primary_karakas: ["MK"]
+    primary_arudhas: ["A4"]
+    relevant_vargas: ["D1", "D4"]
+
+  kp:
+    primary_cusps: [4]
+    favorable_houses: [4, 11, 12]
+    unfavorable_houses: [3, 8]
+
+  lal_kitab:
+    primary_khanas: [4]
+    pakka_ruler: "Moon"
+    karaka: "Mars"
+
+  tajika:
+    primary_house: 4
+    sahams: ["Bandhu Saham"]

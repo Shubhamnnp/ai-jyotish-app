@@ -1,0 +1,43 @@
+domain: "spirituality"
+display_name_en: "Spirituality, Dharma & Inner Awakening"
+display_name_hi: "धर्म, आध्यात्मिकता एवं आत्म-बोध"
+analysis_order:
+  - "bhava_occupants"
+  - "bhava_lord"
+  - "karaka_strength"
+  - "aspects"
+  - "varga_d9"
+  - "dasha_alignment"
+  - "transit_trigger"
+
+schools:
+  parashari:
+    primary_bhavas: [9, 12]
+    secondary_bhavas: [4, 5, 8]
+    primary_karakas: ["Jupiter", "Ketu", "Sun", "Saturn"]
+    relevant_vargas: ["D1", "D9", "D20"]
+    bhava_descriptions:
+      9: "नवम भाव: धर्म, उच्च ज्ञान, गुरु भक्ति, तीर्थ यात्रा"
+      12: "द्वादश भाव: मोक्ष, ध्यान, एकांत साधना, त्याग"
+      5: "पंचम भाव: मंत्र सिद्धि, पूर्वजन्म के पुण्य, ध्यान एकाग्रता"
+
+  jaimini:
+    primary_karakas: ["AK"]
+    secondary_karakas: ["PK"]
+    primary_arudhas: ["A9", "A12"]
+    special_points: ["Karakamsha"]
+    relevant_vargas: ["D1", "D9"]
+
+  kp:
+    primary_cusps: [9, 12]
+    favorable_houses: [9, 12, 5]
+    unfavorable_houses: [2, 7, 11]
+
+  lal_kitab:
+    primary_khanas: [2, 9, 12]
+    pakka_ruler: "Jupiter"
+    karaka: "Jupiter"
+
+  tajika:
+    primary_house: 9
+    sahams: ["Punya Saham"]

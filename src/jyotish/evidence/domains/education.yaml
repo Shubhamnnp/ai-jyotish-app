@@ -1,0 +1,42 @@
+domain: "education"
+display_name_en: "Education, Intellect & Knowledge"
+display_name_hi: "शिक्षा, मेधा शक्ति एवं विद्या अर्जन"
+analysis_order:
+  - "bhava_occupants"
+  - "bhava_lord"
+  - "karaka_strength"
+  - "aspects"
+  - "varga_d24"
+  - "dasha_alignment"
+  - "transit_trigger"
+
+schools:
+  parashari:
+    primary_bhavas: [4, 5, 9]
+    secondary_bhavas: [1, 2]
+    primary_karakas: ["Mercury", "Jupiter"]
+    relevant_vargas: ["D1", "D9", "D24"]
+    bhava_descriptions:
+      4: "चतुर्थ भाव: बुनियादी एवं महाविद्यालयीन औपचारिक शिक्षा"
+      5: "पंचम भाव: प्रज्ञा, ग्रहण क्षमता, रचनात्मक मेधा एवं अनुसंधान"
+      9: "नवम भाव: उच्चतर अध्ययन, दर्शन, विधिक व वैज्ञानिक शोध"
+
+  jaimini:
+    primary_karakas: ["PK"]
+    secondary_karakas: ["AmK"]
+    primary_arudhas: ["A4", "A5"]
+    relevant_vargas: ["D1", "D9"]
+
+  kp:
+    primary_cusps: [4, 9]
+    favorable_houses: [4, 9, 11]
+    unfavorable_houses: [3, 6, 8]
+
+  lal_kitab:
+    primary_khanas: [4, 5]
+    pakka_ruler: "Moon"
+    karaka: "Jupiter"
+
+  tajika:
+    primary_house: 5
+    sahams: ["Vidya Saham"]

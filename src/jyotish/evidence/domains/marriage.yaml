@@ -1,0 +1,43 @@
+domain: "marriage"
+display_name_en: "Marriage, Partnership & Relationships"
+display_name_hi: "विवाह, वैवाहिक सामंजस्य एवं जीवनसाथी"
+analysis_order:
+  - "bhava_occupants"
+  - "bhava_lord"
+  - "karaka_strength"
+  - "aspects"
+  - "varga_d9"
+  - "dasha_alignment"
+  - "transit_trigger"
+
+schools:
+  parashari:
+    primary_bhavas: [7]
+    secondary_bhavas: [2, 11]
+    dusthana_afflictions: [6, 8, 12]
+    primary_karakas: ["Venus", "Jupiter"]
+    relevant_vargas: ["D1", "D9"]
+    bhava_descriptions:
+      7: "सप्तम भाव: जीवनसाथी, दांपत्य सुख, विवाह की गुणवत्ता, दीर्घकालिक साझेदारी"
+      2: "द्वितीय भाव: कुटुंब का विस्तार, पारिवारिक सुख"
+      11: "एकादश भाव: वैवाहिक इच्छाओं की पूर्ति एवं सामाजिक स्वीकृति"
+
+  jaimini:
+    primary_karakas: ["DK"]
+    secondary_karakas: ["AmK"]
+    primary_arudhas: ["UL", "A7"]
+    relevant_vargas: ["D1", "D9"]
+
+  kp:
+    primary_cusps: [7]
+    favorable_houses: [2, 7, 11]
+    unfavorable_houses: [1, 6, 10, 12]
+
+  lal_kitab:
+    primary_khanas: [7]
+    pakka_ruler: "Venus"
+    karaka: "Venus"
+
+  tajika:
+    primary_house: 7
+    sahams: ["Vivaha Saham"]
