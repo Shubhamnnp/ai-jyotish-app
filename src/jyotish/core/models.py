@@ -19,6 +19,7 @@ class BirthData(BaseModel):
     city: Optional[str] = "New Delhi"
     confidence: str = Field(default="Exact", description="Exact / Approx / Unknown")
     gender: str = Field(default="male", description="male / female")
+    house_system: str = Field(default="Whole Sign", description="Whole Sign, Equal, Sripati, Porphyry, Placidus")
 
 
 class PlanetPosition(BaseModel):
@@ -53,6 +54,9 @@ class HouseCusp(BaseModel):
     lord: str
     occupants: List[str] = []
     aspecting_planets: List[str] = []
+    sandhi_start: Optional[float] = None
+    sandhi_end: Optional[float] = None
+    bhava_madhya: Optional[float] = None
 
 
 class PanchangData(BaseModel):

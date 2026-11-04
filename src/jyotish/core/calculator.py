@@ -6,7 +6,7 @@ Signs, Nakshatras, Padas, Houses, Dignities, Panchang, and Atmakaraka.
 
 import math
 from datetime import datetime, date, time, timedelta
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Any
 
 from .constants import (
     SIGNS, SIGN_NAMES, SIGN_LORDS, NAKSHATRAS, GRAHAS,
@@ -184,20 +184,57 @@ class ChartCalculator:
     def calculate_houses(
         self,
         lagna_lon: float,
-        house_system: str = "Whole Sign"
+        house_system: str = "Whole Sign",
+        jd: Optional[float] = None,
+        latitude: Optional[float] = None,
+        longitude: Optional[float] = None,
+        ayanamsa_code: int = 1
     ) -> List[HouseCusp]:
-        """Calculates 12 bhava cusps and sign rulers."""
-        houses: List[HouseCusp] = []
+        """Calculates 12 bhava cusps and sign rulers via Swiss Ephemeris when coordinates are supplied."""
+        from .houses import HouseCalculator, normalize_house_system_name
+        canonical_hsys = normalize_house_system_name(house_system)
+
+        if jd is not None and latitude is not None and longitude is not None:
+            house_res = HouseCalculator.calculate_houses(
+                jd=jd,
+                latitude=latitude,
+                longitude=longitude,
+                house_system=canonical_hsys,
+                ayanamsa_code=ayanamsa_code
+            )
+            houses: List[HouseCusp] = []
+            for h in range(1, 13):
+                cusp_lon = house_res.cusps[h - 1]
+                sign_id, sign_name, _ = self.longitude_to_sign(cusp_lon)
+                lord = SIGN_LORDS[sign_name]
+                s_start = house_res.sandhis[(h - 2) % 12] if house_res.sandhis else None
+                s_end = house_res.sandhis[(h - 1) % 12] if house_res.sandhis else None
+                madhya = house_res.madhyas[h - 1] if house_res.madhyas else cusp_lon
+
+                houses.append(HouseCusp(
+                    house_number=h,
+                    sign_id=sign_id,
+                    sign_name=sign_name,
+                    cusp_longitude=cusp_lon,
+                    lord=lord,
+                    occupants=[],
+                    aspecting_planets=[],
+                    sandhi_start=s_start,
+                    sandhi_end=s_end,
+                    bhava_madhya=madhya
+                ))
+            return houses
+
+        # Simplified fallback when JD / coordinates are not directly passed
+        houses = []
         lagna_sign_id, _, _ = self.longitude_to_sign(lagna_lon)
 
         for h in range(1, 13):
-            if house_system.lower() == "whole sign":
-                # Whole sign: House 1 = Lagna sign, House 2 = Next sign, etc.
+            if canonical_hsys == "Whole Sign":
                 sign_id = ((lagna_sign_id - 1 + (h - 1)) % 12) + 1
                 sign_name = SIGN_NAMES[sign_id - 1]
-                cusp_lon = (sign_id - 1) * 30.0 + 15.0  # Midpoint of sign
+                cusp_lon = (sign_id - 1) * 30.0 + 15.0
             else:
-                # Equal house: Cusp starts from exact Lagna degree
                 cusp_lon = (lagna_lon + (h - 1) * 30.0) % 360.0
                 sign_id, sign_name, _ = self.longitude_to_sign(cusp_lon)
 
@@ -242,14 +279,44 @@ class ChartCalculator:
         # 2. Compute Planetary Positions & Ayanamsa
         raw_positions, ayanamsa_val = self.provider.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type, **kwargs)
 
-        # 3. Compute Lagna
-        lagna_lon = self.provider.calculate_ascendant(
-            dt_utc, birth_data.latitude, birth_data.longitude, ayanamsa_val
-        )
-        lagna_sign_id, lagna_sign_name, lagna_deg = self.longitude_to_sign(lagna_lon)
+        # 3. Compute Lagna & Houses
+        effective_hsys = house_system or getattr(birth_data, "house_system", "Whole Sign")
+        jd_val = self.provider.datetime_to_jd(dt_utc) if hasattr(self.provider, "datetime_to_jd") else 0.0
 
-        # 4. Generate Houses
-        houses = self.calculate_houses(lagna_lon, house_system)
+        from .houses import HouseCalculator, normalize_house_system_name
+        canonical_hsys = normalize_house_system_name(effective_hsys)
+
+        if getattr(self.provider, "_has_swisseph", False):
+            from .ephemeris import resolve_ayanamsa_mode
+            _, ayanamsa_code = resolve_ayanamsa_mode(ayanamsa_name)
+            house_res = HouseCalculator.calculate_houses(
+                jd=jd_val,
+                latitude=birth_data.latitude,
+                longitude=birth_data.longitude,
+                house_system=canonical_hsys,
+                ayanamsa_code=ayanamsa_code
+            )
+            lagna_lon = house_res.ascendant
+            polar_adjusted = house_res.polar_latitude_adjusted
+            houses = self.calculate_houses(
+                lagna_lon=lagna_lon,
+                house_system=canonical_hsys,
+                jd=jd_val,
+                latitude=birth_data.latitude,
+                longitude=birth_data.longitude,
+                ayanamsa_code=ayanamsa_code
+            )
+        else:
+            lagna_lon = self.provider.calculate_ascendant(
+                dt_utc, birth_data.latitude, birth_data.longitude, ayanamsa_val
+            )
+            polar_adjusted = abs(birth_data.latitude) > 66.5
+            houses = self.calculate_houses(
+                lagna_lon=lagna_lon,
+                house_system=canonical_hsys
+            )
+
+        lagna_sign_id, lagna_sign_name, lagna_deg = self.longitude_to_sign(lagna_lon)
         sun_lon = raw_positions["Sun"]["longitude"]
         moon_lon = raw_positions["Moon"]["longitude"]
         moon_sign_id, _, _ = self.longitude_to_sign(moon_lon)
@@ -323,11 +390,11 @@ class ChartCalculator:
             engine_version="2.1.0",
             ayanamsa_name=ayanamsa_name,
             ayanamsa_value=ayanamsa_val,
-            house_system=house_system,
+            house_system=canonical_hsys,
             node_type=node_type,
             coordinate_type="topocentric" if kwargs.get("topocentric_moon") else "geocentric",
             topocentric_moon=bool(kwargs.get("topocentric_moon", False)),
-            polar_latitude_adjusted=abs(birth_data.latitude) > 66.5,
+            polar_latitude_adjusted=polar_adjusted or (abs(birth_data.latitude) > 66.5),
             calculation_timestamp_utc=datetime.now(timezone.utc),
             jd_ut=jd_val,
             engine_degraded=is_degraded,
@@ -373,32 +440,31 @@ class ChartCalculator:
         chart.upagrahas = default_upagraha_calculator.calculate(chart)
         return chart
 
-    def calculate_bhava_chalit(self, chart: KundaliChart) -> List[Dict]:
+    def calculate_bhava_chalit(self, chart: KundaliChart) -> Dict[str, Any]:
         """
-        Calculates Bhava Chalit (Chalit chart / Cuspal chart).
-        In Bhava Chalit, each bhava spans 30 degrees centered on its cusp.
-        The cusp of Bhava 1 = exact Lagna degree. Each subsequent cusp = +30 degrees.
+        Calculates Bhava Chalit using actual house cusps and sandhis from chart.houses.
         Planets may fall in a different bhava than their Rashi house.
-
-        Returns a list of dicts: [{planet, rashi_house, chalit_house, is_different}]
         """
+        from .houses import point_in_arc
+
         lagna_lon = chart.lagna_longitude
         chalit_results = []
-
-        # Bhava cusps: House 1 starts at lagna_lon, each +30 degrees
-        # Mid-bhava points (where each bhava is centered):
-        bhava_cusps = [(lagna_lon + (h * 30.0)) % 360.0 for h in range(12)]
+        has_sandhis = any(h.sandhi_start is not None and h.sandhi_end is not None for h in chart.houses)
 
         def find_chalit_house(planet_lon: float) -> int:
-            """Find which bhava the planet falls in based on equal cusps from Lagna."""
-            # Distance from Lagna
-            dist = (planet_lon - lagna_lon) % 360.0
-            # Chalit house = floor(dist / 30) + 1
-            chalit_h = int(dist // 30.0) + 1
-            return chalit_h if 1 <= chalit_h <= 12 else 12
+            if has_sandhis:
+                for h in chart.houses:
+                    if h.sandhi_start is not None and h.sandhi_end is not None:
+                        if point_in_arc(planet_lon, h.sandhi_start, h.sandhi_end):
+                            return h.house_number
+                return 1
+            else:
+                dist = (planet_lon - lagna_lon) % 360.0
+                chalit_h = int(dist // 30.0) + 1
+                return chalit_h if 1 <= chalit_h <= 12 else 12
 
         for p_name, p_pos in chart.planets.items():
-            rashi_house = p_pos.house_from_lagna  # Whole sign house
+            rashi_house = p_pos.house_from_lagna
             chalit_house = find_chalit_house(p_pos.longitude)
             chalit_results.append({
                 "planet": p_name,
@@ -410,19 +476,17 @@ class ChartCalculator:
                 "sign_degree": round(p_pos.sign_degree, 4),
             })
 
-        # Also calculate bhava cusp signs
         bhava_details = []
-        for h, cusp_lon in enumerate(bhava_cusps):
-            sign_id = int(cusp_lon // 30.0) + 1
-            if sign_id > 12:
-                sign_id = 12
-            sign_name = SIGN_NAMES[sign_id - 1]
+        for h in chart.houses:
             bhava_details.append({
-                "bhava": h + 1,
-                "cusp_longitude": round(cusp_lon, 4),
-                "sign_id": sign_id,
-                "sign_name": sign_name,
-                "cusp_degree": round(cusp_lon % 30.0, 4),
+                "bhava": h.house_number,
+                "cusp_longitude": round(h.cusp_longitude, 4),
+                "sign_id": h.sign_id,
+                "sign_name": h.sign_name,
+                "cusp_degree": round(h.cusp_longitude % 30.0, 4),
+                "bhava_madhya": round(h.bhava_madhya, 4) if h.bhava_madhya is not None else None,
+                "sandhi_start": round(h.sandhi_start, 4) if h.sandhi_start is not None else None,
+                "sandhi_end": round(h.sandhi_end, 4) if h.sandhi_end is not None else None,
             })
 
         return {"planet_positions": chalit_results, "bhava_cusps": bhava_details}
