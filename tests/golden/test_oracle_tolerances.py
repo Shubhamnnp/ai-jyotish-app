@@ -36,6 +36,7 @@ def oracle_data():
         return json.load(f)
 
 
+@pytest.mark.fast
 def test_oracle_dataset_integrity(oracle_data):
     """Verify oracle dataset loaded with all 100 benchmarks across 4 categories."""
     assert "benchmarks" in oracle_data
