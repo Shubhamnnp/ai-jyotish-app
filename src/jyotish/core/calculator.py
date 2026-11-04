@@ -274,7 +274,22 @@ class ChartCalculator:
         elif isinstance(b_t, datetime):
             b_t = b_t.time()
         birth_dt = datetime.combine(b_d, b_t)
-        dt_utc = birth_dt - timedelta(hours=float(birth_data.timezone_offset))
+        tz_set = "timezone" in getattr(birth_data, "__pydantic_fields_set__", set())
+        tz_off_set = "timezone_offset" in getattr(birth_data, "__pydantic_fields_set__", set())
+
+        from ..timeloc import TimeService
+        if tz_set or not tz_off_set:
+            time_res = TimeService.resolve_to_utc(
+                local_date=b_d,
+                local_time=b_t,
+                timezone_name=getattr(birth_data, "timezone", "Asia/Kolkata"),
+                fold=getattr(birth_data, "fold", None),
+                longitude=birth_data.longitude
+            )
+            dt_utc = time_res.utc_datetime.replace(tzinfo=None)
+        else:
+            tz_off = float(birth_data.timezone_offset if birth_data.timezone_offset is not None else 5.5)
+            dt_utc = birth_dt - timedelta(hours=tz_off)
 
         # 2. Compute Planetary Positions & Ayanamsa
         raw_positions, ayanamsa_val = self.provider.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type, **kwargs)

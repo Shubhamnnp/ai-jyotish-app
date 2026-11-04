@@ -15,9 +15,13 @@ class BirthData(BaseModel):
     birth_time: time  # HH:MM:SS
     latitude: float
     longitude: float
-    timezone_offset: float = 5.5  # UTC offset in hours (+5.5 for IST)
+    timezone: str = Field(default="Asia/Kolkata", description="Standard IANA timezone string, e.g. 'Asia/Kolkata'")
+    timezone_offset: Optional[float] = Field(default=5.5, description="UTC offset in hours (+5.5 for IST). Deprecated in favor of timezone.")
     city: Optional[str] = "New Delhi"
     confidence: str = Field(default="Exact", description="Exact / Approx / Unknown")
+    birth_time_confidence: str = Field(default="exact", description="exact, approximate_plus_minus_minutes, unknown")
+    confidence_minutes: Optional[int] = Field(default=None, description="Tolerance in minutes if confidence is approximate")
+    fold: Optional[int] = Field(default=None, description="0 (first/DST) or 1 (second/standard) for ambiguous DST transition times")
     gender: str = Field(default="male", description="male / female")
     house_system: str = Field(default="Whole Sign", description="Whole Sign, Equal, Sripati, Porphyry, Placidus")
 
