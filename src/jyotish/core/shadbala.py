@@ -235,16 +235,39 @@ class ShadbalaCalculator:
         total, _, _ = cls._calc_kaala_bala_detailed(p, chart, is_day)
         return total
 
+    MEAN_MOTIONS = {
+        "Mars": 0.524,
+        "Mercury": 1.383,
+        "Jupiter": 0.0831,
+        "Venus": 1.200,
+        "Saturn": 0.0335,
+    }
+
     @classmethod
     def _calc_cheshta_bala(cls, p: PlanetPosition) -> float:
-        """Motional strength: Retrograde = 60, Direct = 30-45."""
+        """
+        Motional strength (Cheshta Bala) derived from Swiss Ephemeris speed:
+        - Retrograde (Vakra): 60.0 Virupas per BPHS.
+        - Stationary (Vikala): 15.0 to 30.0 Virupas.
+        - Direct: scaled proportional to speed / mean_speed (15 to 60 Virupas).
+        - Luminaries: 35.0 Virupas.
+        """
         if p.name in ("Sun", "Moon"):
-            return 35.0  # Luminaries do not retrograde
-        if p.is_retrograde:
+            return 35.0
+        if p.is_retrograde or p.speed < 0.0:
             return 60.0
-        if abs(p.speed) > 1.0:
-            return 45.0
-        return 30.0
+
+        mean_speed = cls.MEAN_MOTIONS.get(p.name, 1.0)
+        speed = abs(p.speed) if p.speed else mean_speed
+        ratio = speed / mean_speed
+        if ratio < 0.2:
+            return 15.0  # Stationary
+        elif ratio < 0.8:
+            return 30.0  # Manda (slow)
+        elif ratio <= 1.2:
+            return 45.0  # Sama (normal)
+        else:
+            return 50.0  # Chara / Atichara (accelerated)
 
     @classmethod
     def _calc_drik_bala(cls, p: PlanetPosition, chart: KundaliChart) -> float:
