@@ -177,6 +177,15 @@ class UpagrahaResult(BaseModel):
     parivesha_longitude: float
     indrachapa_longitude: float
     upaketu_longitude: float
+    dhuma_sign_name: Optional[str] = None
+    vyatipata_sign_name: Optional[str] = None
+    parivesha_sign_name: Optional[str] = None
+    indrachapa_sign_name: Optional[str] = None
+    upaketu_sign_name: Optional[str] = None
+    gulika_segment: Optional[int] = None
+    is_night_birth: Optional[bool] = None
+    dinamana_hours: Optional[float] = None
+    ratrimana_hours: Optional[float] = None
 
 
 class CalculationMetadata(BaseModel):
