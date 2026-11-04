@@ -258,6 +258,22 @@ class ChartCalculator:
         **kwargs
     ) -> KundaliChart:
         """Full Natal Kundali Calculation Pipeline."""
+        use_cache = kwargs.get("use_cache", True)
+        from .cache import default_chart_cache, compute_chart_cache_key
+        cache_key = None
+        deg_flag = getattr(self.provider, 'is_degraded', False)
+        if callable(deg_flag):
+            deg_flag = deg_flag()
+        provider_id = f"{self.provider.__class__.__name__}_{deg_flag}"
+        if use_cache:
+            cache_key = compute_chart_cache_key(
+                birth_data, ayanamsa_name, house_system, node_type,
+                is_full=False, provider_id=provider_id, extra_options=kwargs
+            )
+            cached_chart = default_chart_cache.get(cache_key)
+            if cached_chart is not None:
+                return cached_chart
+
         # 1. Convert local birth time to UTC
         b_d = birth_data.birth_date
         b_t = birth_data.birth_time
@@ -436,7 +452,7 @@ class ChartCalculator:
             ephemeris_mode=ephe_mode,
         )
 
-        return KundaliChart(
+        res_chart = KundaliChart(
             birth_data=birth_data,
             ayanamsa_name=ayanamsa_name,
             ayanamsa_value=ayanamsa_val,
@@ -451,6 +467,9 @@ class ChartCalculator:
             metadata=calc_meta,
             engine_degraded=is_degraded,
         )
+        if use_cache and cache_key:
+            default_chart_cache.put(cache_key, res_chart)
+        return res_chart
 
     def calculate_full_chart(
         self,
@@ -461,6 +480,22 @@ class ChartCalculator:
         **kwargs
     ) -> KundaliChart:
         """Calculates complete chart including Vargas, Ashtakavarga with Shodhana, Shadbala, Jaimini, and Upagrahas."""
+        use_cache = kwargs.get("use_cache", True)
+        from .cache import default_chart_cache, compute_chart_cache_key
+        cache_key = None
+        deg_flag = getattr(self.provider, 'is_degraded', False)
+        if callable(deg_flag):
+            deg_flag = deg_flag()
+        provider_id = f"{self.provider.__class__.__name__}_{deg_flag}"
+        if use_cache:
+            cache_key = compute_chart_cache_key(
+                birth_data, ayanamsa_name, house_system, node_type,
+                is_full=True, provider_id=provider_id, extra_options=kwargs
+            )
+            cached_chart = default_chart_cache.get(cache_key)
+            if cached_chart is not None:
+                return cached_chart
+
         from .varga import VargaCalculator
         from .ashtakavarga import AshtakavargaCalculator
         from .shadbala import default_shadbala_calculator
@@ -473,6 +508,9 @@ class ChartCalculator:
         chart.shadbala = default_shadbala_calculator.calculate(chart)
         chart.jaimini = default_jaimini_calculator.calculate(chart)
         chart.upagrahas = default_upagraha_calculator.calculate(chart)
+
+        if use_cache and cache_key:
+            default_chart_cache.put(cache_key, chart)
         return chart
 
     def calculate_bhava_chalit(self, chart: KundaliChart) -> Dict[str, Any]:
