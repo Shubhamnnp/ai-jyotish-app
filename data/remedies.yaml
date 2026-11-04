@@ -1,0 +1,147 @@
+# Curated, Source-Referenced Classical Jyotish Remedies Catalog
+# Reference: docs/IMPLEMENTATION_PRD.md (Section 5.4, P5-T7).
+# All remedies cite classical sources (BPHS, Phaladeepika, Brihat Samhita).
+# Zero fear-based upsell or superstitious extortion.
+
+metadata:
+  version: "1.0"
+  policy: "Non-fear-based traditional guidance with mandatory practitioner caution."
+
+remedies:
+  # --- Sun (Surya) ---
+  - remedy_id: "REM-SUN-MANTRA"
+    planet: "Sun"
+    type: "mantra"
+    title_en: "Surya Gayatri & Aditya Hridaya Stotra"
+    title_hi: "सूर्य गायत्री एवं आदित्य हृदय स्तोत्र"
+    description_en: "Recitation of Aditya Hridaya Stotra on Sundays to invigorate soul vitality and willpower."
+    description_hi: "रविवार को आदित्य हृदय स्तोत्र का पाठ आत्मबल, तेज एवं मानसिक स्पष्टता में वृद्धि करता है।"
+    source_text: "Valmiki Ramayana (Yuddha Kanda) & BPHS"
+    source_chapter: "Aditya Hridaya Adhyaya"
+    caution_text: "Traditional spiritual discipline for mental focus; not a medical cure."
+    is_fear_based: false
+
+  - remedy_id: "REM-SUN-DAAN"
+    planet: "Sun"
+    type: "daan"
+    title_en: "Charity of Wheat and Copper"
+    title_hi: "गेहूं, तांबा एवं गुड़ का दान"
+    description_en: "Donating wheat, copper vessels, or jaggery to the needy on Sundays."
+    description_hi: "रविवार को जरूरतमंदों को गेहूं, गुड़ अथवा तांबे के पात्र का दान।"
+    source_text: "BPHS"
+    source_chapter: "Ch. 84 (Graha Shanti Adhyaya)"
+    caution_text: "Charitable act intended to foster benevolence and humility."
+    is_fear_based: false
+
+  - remedy_id: "REM-SUN-GEM"
+    planet: "Sun"
+    type: "gemstone"
+    title_en: "Ruby (Manikya)"
+    title_hi: "माणिक्य (Ruby)"
+    description_en: "Natural untreated Ruby set in copper/gold for functionally benefic Sun."
+    description_hi: "कुंडली में कारक सूर्य होने पर तांबे या स्वर्ण में प्राकृतिक माणिक्य धारण।"
+    source_text: "Brihat Samhita & Garuda Purana"
+    source_chapter: "Ratna Pariksha"
+    caution_text: "Gemstones must be selected in consultation with a qualified practitioner based on functional beneficence, not mere placement; this is traditional guidance and not a medical or financial guarantee."
+    is_fear_based: false
+
+  # --- Moon (Chandra) ---
+  - remedy_id: "REM-MOON-MANTRA"
+    planet: "Moon"
+    type: "mantra"
+    title_en: "Chandra Bija Mantra"
+    title_hi: "चन्द्र बीज मंत्र (ॐ श्रां श्रीं श्रौं सः चन्द्रमसे नमः)"
+    description_en: "Chanting Chandra Bija Mantra on Mondays to harmonize emotions and calm the mind."
+    description_hi: "सोमवार की संध्या को चन्द्र बीज मंत्र का जप मानसिक शांति एवं भावनात्मक संतुलन प्रदान करता है।"
+    source_text: "BPHS"
+    source_chapter: "Ch. 84"
+    caution_text: "Spiritual practice for emotional peace; consult medical practitioners for clinical mood disorders."
+    is_fear_based: false
+
+  - remedy_id: "REM-MOON-GEM"
+    planet: "Moon"
+    type: "gemstone"
+    title_en: "Natural Pearl (Moti)"
+    title_hi: "प्राकृतिक मोती (Pearl)"
+    description_en: "Natural South Sea or Basra Pearl set in silver for functionally auspicious Moon."
+    description_hi: "शुभ चन्द्रमा की दशा में चांदी में प्राकृतिक मोती कनिष्ठिका अंगुली में धारण।"
+    source_text: "Brihat Samhita"
+    source_chapter: "Ratna Pariksha"
+    caution_text: "Gemstones must be selected in consultation with a qualified practitioner based on functional beneficence, not mere placement; this is traditional guidance and not a medical or financial guarantee."
+    is_fear_based: false
+
+  # --- Mars (Mangal) ---
+  - remedy_id: "REM-MARS-MANTRA"
+    planet: "Mars"
+    type: "mantra"
+    title_en: "Mangal Gayatri & Kartikeya / Hanuman Chalisa"
+    title_hi: "मंगल गायत्री एवं हनुमान चालीसा"
+    description_en: "Recitation of Hanuman Chalisa or Mangal Gayatri on Tuesdays to direct physical vigor constructively."
+    description_hi: "मंगलवार को हनुमान चालीसा का नियमित पाठ ऊर्जा, पराक्रम एवं संयम में सहायक होता है।"
+    source_text: "BPHS & Parashara Samhita"
+    source_chapter: "Ch. 84"
+    caution_text: "Devotional practice to instill courage and patience; avoid reckless physical risks."
+    is_fear_based: false
+
+  # --- Jupiter (Guru) ---
+  - remedy_id: "REM-JUPITER-MANTRA"
+    planet: "Jupiter"
+    type: "mantra"
+    title_en: "Brihaspati Stotra & Guru Bija Mantra"
+    title_hi: "बृहस्पति स्तोत्र एवं गुरु बीज मंत्र"
+    description_en: "Reciting Brihaspati Kavacha or Bija Mantra on Thursdays for wisdom and ethical discernment."
+    description_hi: "गुरुवार को गुरु बीज मंत्र का जप विवेक, सदाचार एवं ज्ञान संवर्धन में सहायक है।"
+    source_text: "Phaladeepika & BPHS"
+    source_chapter: "Ch. 84"
+    caution_text: "Philosophical study and spiritual reflection; not a substitute for sound financial planning."
+    is_fear_based: false
+
+  - remedy_id: "REM-JUPITER-GEM"
+    planet: "Jupiter"
+    type: "gemstone"
+    title_en: "Yellow Sapphire (Pukhraj)"
+    title_hi: "पीला पुखराज (Yellow Sapphire)"
+    description_en: "Natural untreated Yellow Sapphire set in gold for functionally benefic Jupiter."
+    description_hi: "कारक बृहस्पति हेतु स्वर्ण में प्राकृतिक पीला पुखराज तर्जनी अंगुली में धारण।"
+    source_text: "Brihat Samhita"
+    source_chapter: "Ratna Pariksha"
+    caution_text: "Gemstones must be selected in consultation with a qualified practitioner based on functional beneficence, not mere placement; this is traditional guidance and not a medical or financial guarantee."
+    is_fear_based: false
+
+  # --- Saturn (Shani) ---
+  - remedy_id: "REM-SATURN-MANTRA"
+    planet: "Saturn"
+    type: "mantra"
+    title_en: "Shani Bija Mantra & Dasharatha Shani Stotra"
+    title_hi: "शनि बीज मंत्र एवं दशरथ कृत शनि स्तोत्र"
+    description_en: "Reciting Dasharatha Shani Stotra on Saturdays to develop discipline and equanimity during trials."
+    description_hi: "शनिवार की संध्या को दशरथ कृत शनि स्तोत्र का पाठ धैर्य, संयम एवं कर्म-निष्ठा विकसित करता है।"
+    source_text: "Padma Purana & BPHS"
+    source_chapter: "Ch. 84"
+    caution_text: "Encourages ethical conduct, charity to laborers, and perseverance; free from fear-mongering."
+    is_fear_based: false
+
+  - remedy_id: "REM-SATURN-DAAN"
+    planet: "Saturn"
+    type: "daan"
+    title_en: "Service and Charity to Laborers"
+    title_hi: "श्रमजीवियों एवं असहाय जनों की सेवा"
+    description_en: "Providing warm blankets, footwear, or nutritious meals to elderly laborers and cleaners on Saturdays."
+    description_hi: "शनिवार को श्रमजीवियों, सफाईकर्मियों अथवा वृद्ध जनों को अन्न, कंबल या वस्त्र भेंट करना।"
+    source_text: "BPHS"
+    source_chapter: "Ch. 84"
+    caution_text: "Compassionate social service directly fulfilling the Saturnian ideal of selfless duty."
+    is_fear_based: false
+
+  # --- Universal Mahamrityunjaya ---
+  - remedy_id: "REM-UNIVERSAL-MAHAMRITYUNJAYA"
+    planet: "Universal"
+    type: "mantra"
+    title_en: "Maha Mrityunjaya Mantra"
+    title_hi: "महामृत्युंजय मंत्र (त्र्यम्बकं यजामहे...)"
+    description_en: "Chanting the Vedic Maha Mrityunjaya Mantra for peace, spiritual fortitude, and overcoming existential fear."
+    description_hi: "समस्त क्लेशों एवं भय निवारण हेतु वैदिक महामृत्युंजय मंत्र का शांत चित्त से जप।"
+    source_text: "Rigveda (7.59.12) & BPHS"
+    source_chapter: "Ch. 84"
+    caution_text: "Universal Vedic prayer for inner spiritual strength and vitality; never a substitute for medical emergency care."
+    is_fear_based: false
