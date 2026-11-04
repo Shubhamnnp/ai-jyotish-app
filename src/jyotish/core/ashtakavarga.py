@@ -49,6 +49,8 @@ class AshtakavargaCalculator:
             sav[s_idx] = sum(bav[p][s_idx] for p in bav.keys())
 
         total = sum(sav)
+        if total != 337:
+            raise ValueError(f"Ashtakavarga mathematical invariant violated: total SAV bindus {total} != 337")
 
         # Calculate Shodhana (Trikona & Ekadhipatya reductions + Pinda)
         shodhana = cls.calculate_shodhana(bav, chart)
