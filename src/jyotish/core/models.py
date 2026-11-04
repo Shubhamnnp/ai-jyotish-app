@@ -80,6 +80,8 @@ class VargaPlanetPosition(BaseModel):
     sign_name: str
     degree_in_varga: float
     house_number: int
+    deity: Optional[str] = None
+    is_benefic_deity: Optional[bool] = None
 
 
 class VargaChart(BaseModel):
@@ -90,6 +92,8 @@ class VargaChart(BaseModel):
     lagna_sign_id: int
     lagna_sign_name: str
     planets: Dict[str, VargaPlanetPosition]
+    lagna_deity: Optional[str] = None
+    lagna_is_benefic_deity: Optional[bool] = None
 
 
 class ShodhanaResult(BaseModel):

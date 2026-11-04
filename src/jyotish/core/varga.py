@@ -9,6 +9,43 @@ from .constants import SIGN_NAMES, SIGN_LORDS, EXALTATION, DEBILITATION, MOOLATR
 from .models import VargaChart, VargaPlanetPosition, KundaliChart
 
 
+D60_DEITIES = [
+    "Ghora", "Rakshasa", "Deva", "Kubera", "Yaksha", "Kinnara", "Bhrashta", "Kulaghna", "Garala", "Vahni",
+    "Maya", "Purishaka", "Apampati", "Marutvana", "Kaala", "Sarpa", "Amrita", "Indu", "Mridu", "Komala",
+    "Heramba", "Brahma", "Vishnu", "Maheshwara", "Deva", "Ardra", "Kalinasha", "Kshiteesha", "Kamalakara", "Gulika",
+    "Mrityu", "Kaala", "Davagni", "Ghora", "Adhama", "Kantaka", "Sudha", "Amrita", "Purnachandra", "Vishadagdha",
+    "Kulanasha", "Vamshakshaya", "Utpata", "Kaala", "Saumya", "Komala", "Sheetala", "Karaladamshtra", "Chandramukhi", "Praveena",
+    "Kalapavaka", "Dandayudha", "Nirmala", "Saumya", "Krura", "Atisheetala", "Amrita", "Payodhi", "Bhramana", "Chandrarekha"
+]
+
+D60_MALEFIC_INDICES = {
+    0, 1, 6, 7, 8, 9, 10, 11, 14, 15, 26, 29, 30, 31, 32, 33, 34, 35, 39, 40, 41, 42, 43, 47, 50, 51, 54, 58
+}
+
+SHODASHAVARGA_CODES = [
+    "D1", "D2", "D3", "D4", "D7", "D9", "D10", "D12",
+    "D16", "D20", "D24", "D27", "D30", "D40", "D45", "D60"
+]
+
+VAISHESHIKAMSA_BENCHMARKS = {
+    2: "Parijata",
+    3: "Uttama",
+    4: "Gopura",
+    5: "Simhasana",
+    6: "Paravata",
+    7: "Devaloka",
+    8: "Kumkumamsha",
+    9: "Airavata",
+    10: "Vaisheshikamsa",
+    11: "Goloka",
+    12: "Vaikuntha",
+    13: "Sarvathasiddha",
+    14: "Kalpavriksha",
+    15: "Brahmaloka",
+    16: "Shridham",
+}
+
+
 class VargaCalculator:
     """Calculates Divisional Charts according to Parashara principles."""
 
@@ -436,23 +473,47 @@ class VargaCalculator:
 
     @staticmethod
     def calculate_d60(chart: KundaliChart) -> VargaChart:
-        """D60 (Shashtiamsha - All Matters, Supreme Karmic Blueprint). 60 parts of 0.5 deg."""
-        def get_d60_sign(sign_id: int, deg: float) -> int:
-            part = int(deg // 0.5)  # 0 to 59
-            return ((sign_id - 1 + part) % 12) + 1
+        """
+        D60 (Shashtiamsha - All Matters, Supreme Karmic Blueprint). 60 parts of 0.5 deg.
+        BPHS Ch. 6:
+        - 60 parts of 30' (0.5°) each.
+        - Deities:
+            Odd signs: Counted directly from 0 (Ghora) to 59 (Chandrarekha).
+            Even signs: Counted in reverse order from 59 (Chandrarekha) down to 0 (Ghora).
+        """
+        def get_d60_info(sign_id: int, deg: float) -> Tuple[int, str, bool]:
+            part = min(59, int(deg // 0.5))  # 0 to 59
+            target_sign = ((sign_id - 1 + part) % 12) + 1
+            is_odd = (sign_id % 2 != 0)
+            deity_idx = part if is_odd else (59 - part)
+            deity_name = D60_DEITIES[deity_idx]
+            is_benefic = deity_idx not in D60_MALEFIC_INDICES
+            return target_sign, deity_name, is_benefic
 
-        lagna_d60 = get_d60_sign(chart.lagna_sign_id, chart.lagna_degree)
+        lagna_d60, lagna_deity, lagna_is_benefic = get_d60_info(chart.lagna_sign_id, chart.lagna_degree)
         planets: Dict[str, VargaPlanetPosition] = {}
         for name, p in chart.planets.items():
-            s_id = get_d60_sign(p.sign_id, p.sign_degree)
+            s_id, d_name, is_ben = get_d60_info(p.sign_id, p.sign_degree)
             house = ((s_id - lagna_d60) % 12) + 1
             planets[name] = VargaPlanetPosition(
-                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                name=name,
+                sign_id=s_id,
+                sign_name=SIGN_NAMES[s_id - 1],
                 degree_in_varga=(p.sign_degree % 0.5) * 60.0,
-                house_number=house
+                house_number=house,
+                deity=d_name,
+                is_benefic_deity=is_ben
             )
-        return VargaChart(varga_code="D60", varga_name="Shashtiamsha", division=60,
-                          lagna_sign_id=lagna_d60, lagna_sign_name=SIGN_NAMES[lagna_d60 - 1], planets=planets)
+        return VargaChart(
+            varga_code="D60",
+            varga_name="Shashtiamsha",
+            division=60,
+            lagna_sign_id=lagna_d60,
+            lagna_sign_name=SIGN_NAMES[lagna_d60 - 1],
+            planets=planets,
+            lagna_deity=lagna_deity,
+            lagna_is_benefic_deity=lagna_is_benefic
+        )
 
     @staticmethod
     def calculate_d40(chart: KundaliChart) -> VargaChart:
@@ -732,5 +793,88 @@ class VargaCalculator:
             "D45": cls.calculate_d45(chart),
             "D60": cls.calculate_d60(chart),
         }
+
+    @classmethod
+    def calculate_all_shodashavarga(
+        cls,
+        chart: KundaliChart,
+        variations: Optional[Dict[str, str]] = None
+    ) -> Dict[str, VargaChart]:
+        """
+        Compute the canonical 16 Shodashavarga divisional charts (BPHS Ch. 6).
+        Canonical 16: D1, D2, D3, D4, D7, D9, D10, D12, D16, D20, D24, D27, D30, D40, D45, D60.
+        """
+        all_v = cls.calculate_all_vargas(chart, variations=variations)
+        return {code: all_v[code] for code in SHODASHAVARGA_CODES if code in all_v}
+
+    @classmethod
+    def calculate_vaisheshikamsa(
+        cls,
+        chart: KundaliChart,
+        include_friends: bool = False
+    ) -> Dict[str, Dict[str, Any]]:
+        """
+        Evaluate Vaisheshikamsa dignity tally across the classical 16 Shodashavargas (BPHS Ch. 6).
+        Tally counts how many vargas a planet occupies in its Exaltation, Moolatrikona, or Own sign.
+        Designations:
+          2: Parijata
+          3: Uttama
+          4: Gopura
+          5: Simhasana
+          6: Paravata
+          7: Devaloka
+          8: Kumkumamsha
+          9: Airavata
+          10: Vaisheshikamsa
+          11: Goloka
+          12: Vaikuntha
+          13: Sarvathasiddha
+          14: Kalpavriksha
+          15: Brahmaloka
+          16: Shridham
+        """
+        shodasha_vargas = cls.calculate_all_shodashavarga(chart)
+        planets_to_eval = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
+        results: Dict[str, Dict[str, Any]] = {}
+
+        for p_name in planets_to_eval:
+            dignified_vargas: List[str] = []
+            for v_code in SHODASHAVARGA_CODES:
+                v_chart = shodasha_vargas.get(v_code)
+                if not v_chart:
+                    continue
+                v_planet = v_chart.planets.get(p_name)
+                if not v_planet:
+                    continue
+
+                sign_name = v_planet.sign_name
+                is_exalted = p_name in EXALTATION and EXALTATION[p_name][0] == sign_name
+                is_mt = p_name in MOOLATRIKONA and MOOLATRIKONA[p_name][0] == sign_name
+                is_own = p_name in OWN_SIGNS and sign_name in OWN_SIGNS[p_name]
+                is_friend = False
+                if include_friends:
+                    lord = SIGN_LORDS.get(v_planet.sign_id)
+                    is_friend = lord in NATURAL_FRIENDS.get(p_name, [])
+
+                if is_exalted or is_mt or is_own or is_friend:
+                    dignified_vargas.append(v_code)
+
+            count = len(dignified_vargas)
+            designation = VAISHESHIKAMSA_BENCHMARKS.get(count)
+            if designation is None:
+                if count >= 16:
+                    designation = "Shridham"
+                elif count == 1:
+                    designation = "Sadharana (1 Varga)"
+                else:
+                    designation = "Sadharana"
+
+            results[p_name] = {
+                "count": count,
+                "designation": designation,
+                "vargas": dignified_vargas
+            }
+
+        return results
 
 
