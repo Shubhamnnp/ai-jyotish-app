@@ -36,7 +36,7 @@ app = FastAPI(
 # CORS middleware for Next.js / Web frontends
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[o.strip() for o in __import__("os").getenv("ALLOWED_ORIGINS", "").split(",") if o.strip()],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
