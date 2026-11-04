@@ -55,26 +55,37 @@ class AuthService:
         self._ensure_seed_codes()
 
     # -------------------------------------------------------------
-    # Password Cryptography (PBKDF2-HMAC-SHA256)
+    # Password Cryptography (PBKDF2-HMAC-SHA256 >= 600k iterations & Argon2id, P0-T6)
     # -------------------------------------------------------------
     def _hash_password(self, password: str, salt: Optional[str] = None) -> Tuple[str, str]:
-        """Hash a password using PBKDF2-HMAC-SHA256 with 100,000 iterations and 16-byte random salt."""
+        """Hash a password using PBKDF2-HMAC-SHA256 with 600,000 iterations (OWASP standard, P0-T6)."""
         if salt is None:
             salt = secrets.token_hex(16)
         key = hashlib.pbkdf2_hmac(
             'sha256',
             password.encode('utf-8'),
             salt.encode('utf-8'),
-            100000
+            600000
         )
         return salt, key.hex()
 
     def _verify_password(self, plain_password: str, salt: str, hashed_key: str) -> bool:
         """Verify plain password against stored salt and hashed key in constant time."""
-        if not salt or not hashed_key:
+        if not hashed_key:
             return False
-        _, computed_key = self._hash_password(plain_password, salt)
-        return secrets.compare_digest(computed_key, hashed_key)
+        if hashed_key.startswith("$argon2id$"):
+            try:
+                from argon2 import PasswordHasher
+                return PasswordHasher().verify(hashed_key, plain_password)
+            except Exception:
+                return False
+        if not salt:
+            return False
+        key_600k = hashlib.pbkdf2_hmac('sha256', plain_password.encode('utf-8'), salt.encode('utf-8'), 600000).hex()
+        if secrets.compare_digest(key_600k, hashed_key):
+            return True
+        key_100k = hashlib.pbkdf2_hmac('sha256', plain_password.encode('utf-8'), salt.encode('utf-8'), 100000).hex()
+        return secrets.compare_digest(key_100k, hashed_key)
 
     # -------------------------------------------------------------
     # Storage IO
