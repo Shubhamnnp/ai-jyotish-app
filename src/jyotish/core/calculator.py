@@ -110,24 +110,23 @@ class ChartCalculator:
 
         return "neutral"
 
-    def check_combustion(self, planet_name: str, planet_lon: float, sun_lon: float, is_retro: bool) -> bool:
-        """Determines if a planet is combust (Asta) by closeness to the Sun."""
-        if planet_name in ("Sun", "Rahu", "Ketu"):
-            return False
-
-        diff = abs(planet_lon - sun_lon)
-        if diff > 180.0:
-            diff = 360.0 - diff
-
-        limits = {
-            "Moon": 12.0,
-            "Mars": 17.0,
-            "Mercury": 12.0 if is_retro else 14.0,
-            "Jupiter": 11.0,
-            "Venus": 8.0 if is_retro else 10.0,
-            "Saturn": 15.0,
-        }
-        return diff <= limits.get(planet_name, 10.0)
+    def check_combustion(
+        self,
+        planet_name: str,
+        planet_lon: float,
+        sun_lon: float,
+        is_retro: bool,
+        config: Optional[Any] = None
+    ) -> bool:
+        """Determines if a planet is combust (Asta) by closeness to the Sun using classical configurable orbs."""
+        from .combustion import CombustionCalculator
+        return CombustionCalculator.check_combustion(
+            planet_name=planet_name,
+            planet_lon=planet_lon,
+            sun_lon=sun_lon,
+            is_retrograde=is_retro,
+            config=config
+        )
 
     def calculate_panchang(self, dt_utc: datetime, sun_lon: float, moon_lon: float) -> PanchangData:
         """Calculates Tithi, Vara, Nakshatra, Yoga, and Karana."""
@@ -349,8 +348,13 @@ class ChartCalculator:
             # House from Moon
             house_moon = ((sign_id - moon_sign_id) % 12) + 1
 
+            comb_cfg = kwargs.get("combustion_config")
+            if not comb_cfg and "combustion_school" in kwargs:
+                from .combustion import CombustionOrbConfig
+                comb_cfg = CombustionOrbConfig.from_school(kwargs["combustion_school"])
+
             dignity = self.determine_dignity(name, sign_name, sign_deg)
-            is_combust = self.check_combustion(name, lon, sun_lon, pos["is_retrograde"])
+            is_combust = self.check_combustion(name, lon, sun_lon, pos["is_retrograde"], config=comb_cfg)
 
             planet_obj = PlanetPosition(
                 name=name,
