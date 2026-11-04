@@ -1,17 +1,24 @@
 import streamlit as st
 import pandas as pd
 import importlib
+from datetime import datetime
 from src.jyotish.core.constants import SIGN_NAMES
+from src.jyotish.rules.quarantine import get_quarantine_stats, filter_rules_by_verification
 
 def render_rules_library_view(chart, tabs=None):
     if tabs is None:
         tabs = [
             '📚 १२,५०० नियम बैंक',
             '🔍 ग्रन्थ एक्सप्लोरर',
-            '🔬 कुण्डली अनुसंधान इंजन'
+            '🔬 कुण्डली अनुसंधान इंजन',
+            '🛡️ Rules Lab (Admin)'
         ]
     st.subheader("📚 १२,५००+ महा-शास्त्रीय नियम बैंक, ग्रन्थ एक्सप्लोरर एवं अनुसंधान इंजन (Vedic Rules & Research Engine)")
-    tab_rules_bank, tab_grantha_explorer, tab_research_engine = st.tabs(tabs)
+    rendered_tabs = st.tabs(tabs)
+    tab_rules_bank = rendered_tabs[0]
+    tab_grantha_explorer = rendered_tabs[1]
+    tab_research_engine = rendered_tabs[2]
+    tab_admin_lab = rendered_tabs[3] if len(rendered_tabs) > 3 else None
     with tab_rules_bank:
 
             import importlib
@@ -268,5 +275,101 @@ def render_rules_library_view(chart, tabs=None):
                     st.divider()
         else:
             st.warning("दिए गए मापदंडों से मेल खाती कोई कुण्डली नहीं मिली। कृपया फ़िल्टर शिथिल करके पुनः प्रयास करें।")
+
+    if tab_admin_lab is not None:
+        with tab_admin_lab:
+            render_rules_lab_admin_panel(all_rules=all_rules if 'all_rules' in locals() else None)
+
+
+def render_rules_lab_admin_panel(all_rules=None):
+    """Admin-only view for the Rules Lab audit stats and draft review queue."""
+    if all_rules is None:
+        from src.jyotish.rules.engine import default_rules_engine
+        all_rules = default_rules_engine.rules
+
+    st.markdown("### 🛡️ शास्त्रीय नियम संगरोध व विद्वान समीक्षा प्रयोगशाला (Rules Lab & Scholar Review)")
+    st.caption("वैदिक ज्योतिष अनुसंधान एवं श्लोक-प्रमाण सत्यापन मंच — केवल अधिकृत विद्वानों एवं व्यवस्थापकों हेतु।")
+
+    # Admin Auth Gate
+    is_authed = st.session_state.get("admin_authenticated", False)
+    if not is_authed:
+        c_auth1, c_auth2 = st.columns([3, 1])
+        with c_auth1:
+            entered_key = st.text_input("🔑 शोधकर्ता / व्यवस्थापक कुंजी (Admin / Scholar Key)", type="password", key="rules_lab_auth_key")
+        with c_auth2:
+            st.write("")
+            st.write("")
+            if st.button("प्रवेश करें (Unlock)", key="btn_unlock_rules_lab"):
+                if entered_key in ("admin", "shastriya2025", "scholar", "researcher"):
+                    st.session_state["admin_authenticated"] = True
+                    st.success("व्यवस्थापक प्रमाणीकरण सफल!")
+                    st.rerun()
+                else:
+                    st.error("अमान्य सुरक्षा कुंजी। (Invalid Key)")
+
+    if st.session_state.get("admin_authenticated", False):
+        stats = get_quarantine_stats(all_rules)
+        c_s1, c_s2, c_s3, c_s4, c_s5 = st.columns(5)
+        c_s1.metric("कुल पंजीकृत नियम", f"{stats.get('total', len(all_rules)):,}")
+        c_s2.metric("विद्वान-सत्यापित (Scholar Verified)", f"{stats.get('scholar_verified', 0):,}")
+        c_s3.metric("मशीन-जांचित (Machine Checked)", f"{stats.get('machine_checked', 0):,}")
+        c_s4.metric("समीक्षा प्रतीक्षारत (Draft)", f"{stats.get('draft', 0):,}")
+        c_s5.metric("अस्वीकृत (Rejected)", f"{stats.get('rejected', 0):,}")
+
+        st.markdown("---")
+        st.markdown("#### 📝 समीक्षा प्रतीक्षारत नियम सूची (Draft Review Queue)")
+
+        draft_rules = filter_rules_by_verification(all_rules, "draft")
+        if not draft_rules:
+            st.success("🎉 वर्तमान में कोई भी नियम ड्राफ्ट या संगरोध स्थिति में प्रतीक्षारत नहीं है! सभी नियम सत्यापित हैं।")
+        else:
+            c_dq1, c_dq2 = st.columns([2, 2])
+            with c_dq1:
+                filter_grantha = st.selectbox(
+                    "ग्रन्थ अनुसार फ़िल्टर",
+                    ["सभी ग्रन्थ"] + sorted(list({r.get("source", {}).get("text", "Unknown") for r in draft_rules})),
+                    key="rules_lab_filter_grantha"
+                )
+            with c_dq2:
+                page_size = 5
+                filtered_drafts = [r for r in draft_rules if filter_grantha == "सभी ग्रन्थ" or r.get("source", {}).get("text") == filter_grantha]
+                total_pages = max(1, (len(filtered_drafts) + page_size - 1) // page_size)
+                page_num = st.number_input("पृष्ठ", min_value=1, max_value=total_pages, value=1, step=1, key="rules_lab_page")
+
+            start_idx = (page_num - 1) * page_size
+            page_items = filtered_drafts[start_idx:start_idx + page_size]
+
+            st.write(f"प्रदर्शित: **{len(page_items)}** / कुल ड्राफ्ट: **{len(filtered_drafts)}**")
+
+            for d_rule in page_items:
+                rid = d_rule.get("id", "N/A")
+                with st.expander(f"📌 {rid} — {d_rule.get('name', 'अनाम नियम')} ({d_rule.get('source', {}).get('text', 'Unknown')})"):
+                    st.markdown(f"**श्लोक सन्दर्भ:** {d_rule.get('source', {}).get('text', 'N/A')} अ. {d_rule.get('source', {}).get('chapter', '-')} श्लोक {d_rule.get('source', {}).get('verse', '-')}")
+                    if d_rule.get("condition"):
+                        st.code(str(d_rule.get("condition")), language="python")
+                    st.write(f"**फलित विवरण:** {d_rule.get('effect', {}).get('description', 'N/A')}")
+
+                    col_act1, col_act2, col_act3 = st.columns([2, 1.2, 1.2])
+                    with col_act1:
+                        scholar_note = st.text_input("विद्वान समीक्षा टिप्पणी (Notes)", key=f"note_{rid}", placeholder="शास्त्रीय सन्दर्भ या प्रमाण दर्ज करें...")
+                    with col_act2:
+                        if st.button("✅ प्रमाणित करें (Verify)", key=f"verify_{rid}", type="primary"):
+                            if "verification" not in d_rule:
+                                d_rule["verification"] = {}
+                            d_rule["verification"]["status"] = "scholar_verified"
+                            if scholar_note:
+                                d_rule["verification"]["notes"] = scholar_note
+                            st.success(f"नियम {rid} को विद्वान-सत्यापित (scholar_verified) घोषित किया गया!")
+                            st.rerun()
+                    with col_act3:
+                        if st.button("❌ अस्वीकृत करें (Reject)", key=f"reject_{rid}"):
+                            if "verification" not in d_rule:
+                                d_rule["verification"] = {}
+                            d_rule["verification"]["status"] = "rejected"
+                            if scholar_note:
+                                d_rule["verification"]["notes"] = scholar_note
+                            st.warning(f"नियम {rid} को अस्वीकृत किया गया।")
+                            st.rerun()
+
 
 

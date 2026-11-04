@@ -4,10 +4,18 @@ Provides catalog count, metadata, and fast O(1) indexed search across classical 
 """
 
 from typing import Optional, List, Dict, Any
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Header, HTTPException, status
+from pydantic import BaseModel
 from ...rules.engine import default_rules_engine
+from ...rules.quarantine import get_quarantine_stats, filter_rules_by_verification
 
 router = APIRouter(prefix="/rules", tags=["v1-rules"])
+
+
+class RuleReviewRequest(BaseModel):
+    rule_id: str
+    new_status: str  # "scholar_verified", "verified", "rejected", "draft"
+    scholar_notes: Optional[str] = None
 
 
 @router.get("/count")
@@ -70,4 +78,75 @@ def search_rules(
         "matched_count": len(matched),
         "limit": limit,
         "rules": matched
+    }
+
+
+@router.get("/audit-stats")
+def get_audit_stats(x_admin_role: Optional[str] = Header(None, alias="X-Admin-Role")):
+    """Returns quarantined rules audit and review queue statistics (Admin)."""
+    if x_admin_role not in ("admin", "researcher", "scholar"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin privileges required to access Rules Lab audit stats."
+        )
+    stats = get_quarantine_stats(default_rules_engine.rules)
+    return {
+        "status": "success",
+        "stats": stats,
+        "rules_lab_ready": True
+    }
+
+
+@router.get("/drafts")
+def list_draft_rules(
+    limit: int = Query(default=20, le=100),
+    offset: int = Query(default=0, ge=0),
+    grantha: Optional[str] = Query(None),
+    x_admin_role: Optional[str] = Header(None, alias="X-Admin-Role")
+):
+    """Lists draft quarantined rules waiting in the scholar review queue (Admin)."""
+    if x_admin_role not in ("admin", "researcher", "scholar"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin privileges required to access draft review queue."
+        )
+    drafts = filter_rules_by_verification(default_rules_engine.rules, "draft")
+    if grantha:
+        drafts = [r for r in drafts if r.get("source", {}).get("text", "").lower() == grantha.lower()]
+
+    total_drafts = len(drafts)
+    slice_drafts = drafts[offset:offset + limit]
+    return {
+        "total_drafts": total_drafts,
+        "offset": offset,
+        "limit": limit,
+        "drafts": slice_drafts
+    }
+
+
+@router.post("/review")
+def review_rule(
+    payload: RuleReviewRequest,
+    x_admin_role: Optional[str] = Header(None, alias="X-Admin-Role")
+):
+    """Reviews and updates the verification status of a rule (Admin)."""
+    if x_admin_role not in ("admin", "researcher", "scholar"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin privileges required to review and promote rules."
+        )
+    r = default_rules_engine.rules_by_id.get(payload.rule_id)
+    if not r:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Rule {payload.rule_id} not found.")
+
+    if "verification" not in r:
+        r["verification"] = {}
+    r["verification"]["status"] = payload.new_status
+    if payload.scholar_notes:
+        r["verification"]["notes"] = payload.scholar_notes
+
+    return {
+        "status": "updated",
+        "rule_id": payload.rule_id,
+        "new_status": payload.new_status
     }
