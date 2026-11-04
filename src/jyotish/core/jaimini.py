@@ -193,21 +193,38 @@ class JaiminiCalculator:
             arudha_details=arudha_details
         )
 
+    BENEFIC_PRIORITY = {
+        "Jupiter": 7, "Venus": 6, "Mercury": 5, "Moon": 4, "Sun": 3, "Mars": 2, "Saturn": 1, "Rahu": 0
+    }
+
     @classmethod
     def _calculate_karakas(cls, chart: KundaliChart) -> Tuple[Dict[str, str], Dict[str, str]]:
-        """Computes 7-Karaka and 8-Karaka designations by descending degrees."""
+        """
+        Computes 7-Karaka and 8-Karaka designations by descending degrees
+        with strict degree tie-breaker (minutes/seconds -> speed -> benefic priority).
+        """
         seven_names = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
-        sorted_7 = sorted(seven_names, key=lambda p: chart.planets[p].sign_degree, reverse=True)
 
+        def key_7(p_name: str):
+            p = chart.planets[p_name]
+            return (round(p.sign_degree, 6), abs(p.speed), cls.BENEFIC_PRIORITY.get(p_name, 0))
+
+        sorted_7 = sorted(seven_names, key=key_7, reverse=True)
         labels_7 = ["AK", "AmK", "BK", "MK", "PK", "GK", "DK"]
         karakas_7 = {labels_7[i]: sorted_7[i] for i in range(7)}
 
         # 8-Karaka scheme includes Rahu (degree from end of sign since retrograde)
-        rahu_deg = 30.0 - chart.planets["Rahu"].sign_degree  # inverted for retrograde
-        deg_map = {p: chart.planets[p].sign_degree for p in seven_names}
-        deg_map["Rahu"] = rahu_deg
-        sorted_8 = sorted(deg_map.keys(), key=lambda p: deg_map[p], reverse=True)
+        def key_8(p_name: str):
+            if p_name == "Rahu":
+                deg = 30.0 - chart.planets["Rahu"].sign_degree
+                spd = abs(chart.planets["Rahu"].speed)
+            else:
+                deg = chart.planets[p_name].sign_degree
+                spd = abs(chart.planets[p_name].speed)
+            return (round(deg, 6), spd, cls.BENEFIC_PRIORITY.get(p_name, 0))
 
+        all_8 = seven_names + ["Rahu"]
+        sorted_8 = sorted(all_8, key=key_8, reverse=True)
         labels_8 = ["AK", "AmK", "BK", "MK", "PiK", "PK", "GK", "DK"]
         karakas_8 = {labels_8[i]: sorted_8[i] for i in range(8)}
 
@@ -240,18 +257,21 @@ class JaiminiCalculator:
             # Distance from house to its lord (1 to 12)
             distance = ((lord_sign - house_sign) % 12) + 1
 
-            exception_text = "सामान्य (Standard Rule)"
-            if distance == 1:
-                # Exception 1: Lord in same house -> Pada falls in 10th
+            # Standard rule: project distance steps ahead from lord
+            raw_target = ((lord_sign - 1 + (distance - 1)) % 12) + 1
+            proj_from_house = ((raw_target - house_sign) % 12) + 1
+
+            if distance == 1 or proj_from_house == 1:
+                # Exception 1: Lord in 1st or projection falls in 1st -> Pada in 10th
                 target_sign = ((house_sign - 1 + 9) % 12) + 1
-                exception_text = "अपवाद १ (स्वामी स्वगृह में -> १०वां भाव)"
-            elif distance == 7:
-                # Exception 2: Lord in 7th from house -> Pada falls in 4th
+                exception_text = "अपवाद १ (आरूढ़ प्रथम भाव में -> १०वां भाव)"
+            elif distance == 7 or proj_from_house == 7:
+                # Exception 2: Lord in 7th or projection falls in 7th -> Pada in 4th (10th from 7th)
                 target_sign = ((house_sign - 1 + 3) % 12) + 1
-                exception_text = "अपवाद २ (स्वामी ७वें भाव में -> ४था भाव)"
+                exception_text = "अपवाद २ (आरूढ़ सप्तम भाव में -> ४था भाव)"
             else:
-                # Standard rule: project distance steps ahead from lord
-                target_sign = ((lord_sign - 1 + (distance - 1)) % 12) + 1
+                target_sign = raw_target
+                exception_text = "सामान्य (Standard Rule)"
 
             label = "AL" if h == 1 else ("UL" if h == 12 else f"A{h}")
             pada_name = SIGN_NAMES[target_sign - 1]
