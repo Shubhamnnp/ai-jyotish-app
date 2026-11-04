@@ -18,6 +18,102 @@ from .constants import (
 from .models import PlanetPosition, BirthData
 
 
+SUPPORTED_AYANAMSAS: Dict[str, Tuple[int, str]] = {
+    "Lahiri": (1, "Chitra Paksha / Indian Govt standard (SIDM_LAHIRI)"),
+    "Raman": (3, "B.V. Raman Ayanamsa (SIDM_RAMAN)"),
+    "Krishnamurti": (5, "KP / K.P. Krishnamurti (SIDM_KRISHNAMURTI)"),
+    "Yukteshwar": (7, "Sri Yukteshwar Giri Ayanamsa (SIDM_YUKTESHWAR)"),
+    "JN_Bhasin": (8, "J.N. Bhasin Ayanamsa (SIDM_JN_BHASIN)"),
+    "Fagan_Bradley": (0, "Western Sidereal Fagan-Bradley (SIDM_FAGAN_BRADLEY)"),
+    "DeLuce": (2, "Robert DeLuce Ayanamsa (SIDM_DELUCE)"),
+    "Usha_Shashi": (4, "Usha-Shashi Ayanamsa (SIDM_USHASHASHI)"),
+    "Djwhal_Khul": (6, "Djwhal Khul Ayanamsa (SIDM_DJWHAL_KHUL)"),
+    "SuryaSiddhanta": (21, "Surya Siddhanta traditional (SIDM_SURYASIDDHANTA)"),
+    "SuryaSiddhanta_MSun": (22, "Surya Siddhanta with mean Sun (SIDM_SURYASIDDHANTA_MSUN)"),
+    "Aryabhata": (23, "Aryabhata standard (SIDM_ARYABHATA)"),
+    "Aryabhata_MSun": (24, "Aryabhata with mean Sun (SIDM_ARYABHATA_MSUN)"),
+    "SS_Revati": (25, "Surya Siddhanta Revati-based (SIDM_SS_REVATI)"),
+    "SS_Citra": (26, "Surya Siddhanta Citra-based (SIDM_SS_CITRA)"),
+    "True_Citra": (27, "True Citra / Spica anchored at 180° sidereal (SIDM_TRUE_CITRA)"),
+    "True_Revati": (28, "True Revati / Zeta Piscium at 359°50' (SIDM_TRUE_REVATI)"),
+    "True_Pushya": (29, "Pushya-Paksha / PVR Narasimha Rao (SIDM_TRUE_PUSHYA)"),
+    "True_Mula": (35, "True Mula / Galactic Center anchor (SIDM_TRUE_MULA)"),
+    "True_Sheoran": (39, "Chandra Hari / True Sheoran Ayanamsa (SIDM_TRUE_SHEORAN)"),
+    "Lahiri_1940": (43, "Lahiri 1940 standard (SIDM_LAHIRI_1940)"),
+    "Lahiri_VP285": (44, "Lahiri with VP 285 epoch (SIDM_LAHIRI_VP285)"),
+    "Krishnamurti_VP291": (45, "KP with VP 291 epoch (SIDM_KRISHNAMURTI_VP291)"),
+    "Lahiri_ICRC": (46, "Lahiri Indian Calendar Reform Committee (SIDM_LAHIRI_ICRC)"),
+}
+
+AYANAMSA_ALIASES: Dict[str, str] = {
+    "lahiri": "Lahiri",
+    "chitra_paksha": "Lahiri",
+    "chitrapaksha": "Lahiri",
+    "default": "Lahiri",
+    "indian_standard": "Lahiri",
+    "raman": "Raman",
+    "bv_raman": "Raman",
+    "bvraman": "Raman",
+    "kp": "Krishnamurti",
+    "krishnamurti": "Krishnamurti",
+    "kp_old": "Krishnamurti",
+    "kp_new": "Krishnamurti",
+    "yukteshwar": "Yukteshwar",
+    "sri_yukteshwar": "Yukteshwar",
+    "bhasin": "JN_Bhasin",
+    "jn_bhasin": "JN_Bhasin",
+    "jnbhasin": "JN_Bhasin",
+    "fagan": "Fagan_Bradley",
+    "fagan_bradley": "Fagan_Bradley",
+    "faganbradley": "Fagan_Bradley",
+    "western_sidereal": "Fagan_Bradley",
+    "deluce": "DeLuce",
+    "usha_shashi": "Usha_Shashi",
+    "djwhal_khul": "Djwhal_Khul",
+    "suryasiddhanta": "SuryaSiddhanta",
+    "surya_siddhanta": "SuryaSiddhanta",
+    "aryabhata": "Aryabhata",
+    "true_citra": "True_Citra",
+    "true_chitra": "True_Citra",
+    "truechitra": "True_Citra",
+    "chitra": "True_Citra",
+    "citra": "True_Citra",
+    "true_revati": "True_Revati",
+    "revati": "True_Revati",
+    "true_pushya": "True_Pushya",
+    "pushya": "True_Pushya",
+    "pushya_paksha": "True_Pushya",
+    "true_mula": "True_Mula",
+    "mula": "True_Mula",
+    "true_sheoran": "True_Sheoran",
+    "sheoran": "True_Sheoran",
+    "chandra_hari": "True_Sheoran",
+}
+
+
+def resolve_ayanamsa_mode(name: Optional[str] = "Lahiri") -> Tuple[str, int]:
+    """
+    Resolves an ayanamsa name or alias to its (canonical_name, swiss_sidm_code).
+    Raises ValueError on unknown ayanamsa name (never silently defaults to Lahiri).
+    """
+    if not name or not str(name).strip():
+        return "Lahiri", SUPPORTED_AYANAMSAS["Lahiri"][0]
+
+    raw = str(name).strip()
+    key = raw.lower().replace("-", "_").replace(" ", "_")
+
+    if key in AYANAMSA_ALIASES:
+        canonical = AYANAMSA_ALIASES[key]
+        return canonical, SUPPORTED_AYANAMSAS[canonical][0]
+
+    for cname in SUPPORTED_AYANAMSAS:
+        if cname.lower() == key:
+            return cname, SUPPORTED_AYANAMSAS[cname][0]
+
+    supported_list = ", ".join(sorted(SUPPORTED_AYANAMSAS.keys()))
+    raise ValueError(f"Unknown ayanamsa '{raw}'. Supported ayanamsas are: {supported_list}")
+
+
 class BaseEphemerisProvider(ABC):
     """Abstract interface for astronomical computation."""
 
@@ -63,8 +159,10 @@ class PyEphemProvider(BaseEphemerisProvider):
     def calculate_ayanamsa(self, jd: float, ayanamsa_name: str = "Lahiri") -> float:
         """
         Calculate sidereal ayanamsa in degrees.
-        Lahiri is Indian Govt standard (Chitra Paksha): 23.857092 deg at J2000.0.
+        Strictly resolves name via resolve_ayanamsa_mode; raises ValueError on unknown name.
         """
+        canonical_name, _ = resolve_ayanamsa_mode(ayanamsa_name)
+
         # Epoch J2000.0 = JD 2451545.0 (2000-01-01 12:00:00 UTC)
         days_from_j2000 = jd - 2451545.0
         centuries = days_from_j2000 / 36525.0
@@ -73,35 +171,22 @@ class PyEphemProvider(BaseEphemerisProvider):
         # Precession ~ 50.290966 arcsec / year = 5029.0966 arcsec / century
         lahiri_base = 23.857092 + (5029.0966 * centuries + 1.1116 * centuries**2) / 3600.0
 
-        ayanamsa_name_lower = ayanamsa_name.strip().lower().replace("-", "_").replace(" ", "_")
-        if ayanamsa_name_lower in ("lahiri", "chitra_paksha", "default"):
+        if canonical_name == "Lahiri":
             return lahiri_base % 360.0
-        elif ayanamsa_name_lower in ("raman", "bv_raman"):
-            return (lahiri_base - 1.4444) % 360.0
-        elif ayanamsa_name_lower in ("kp", "krishnamurti", "kp_old"):
-            return (lahiri_base - 0.10) % 360.0
-        elif ayanamsa_name_lower in ("kp_new", "kp_straight_line"):
-            return (lahiri_base - 0.04) % 360.0
-        elif "pushya" in ayanamsa_name_lower:
-            # PVR Narasimha Rao's Pushya-Paksha Ayanamsha (Pushya center at 106° sidereal)
-            return (lahiri_base - 1.838) % 360.0
-        elif "chitra" in ayanamsa_name_lower:
-            # True Chitra anchors Spica at exact 180.0 degrees sidereal
-            try:
-                spica = ephem.Star("Spica")
-                d = ephem.Date(jd - 2415020.0)  # Dublin Julian Date
-                spica.compute(d)
-                spica_ecl = ephem.Ecliptic(spica)
-                trop_spica_deg = math.degrees(spica_ecl.lon)
-                return (trop_spica_deg - 180.0) % 360.0
-            except Exception:
-                return lahiri_base % 360.0
-        elif "yukteshwar" in ayanamsa_name_lower:
-            return (lahiri_base + 0.28) % 360.0
-        elif "bhasin" in ayanamsa_name_lower:
-            return (lahiri_base - 0.35) % 360.0
-        elif "fagan" in ayanamsa_name_lower:
-            return (lahiri_base + 0.88) % 360.0
+        elif canonical_name == "Raman":
+            return (lahiri_base - 1.4463) % 360.0
+        elif canonical_name == "Krishnamurti":
+            return (lahiri_base - 0.0968) % 360.0
+        elif canonical_name == "True_Pushya":
+            return (lahiri_base - 1.1300) % 360.0
+        elif canonical_name == "True_Citra":
+            return (lahiri_base - 0.01707) % 360.0
+        elif canonical_name == "Yukteshwar":
+            return (lahiri_base - 1.3782) % 360.0
+        elif canonical_name == "JN_Bhasin":
+            return (lahiri_base - 1.0949) % 360.0
+        elif canonical_name == "Fagan_Bradley":
+            return (lahiri_base + 0.8832) % 360.0
         else:
             return lahiri_base % 360.0
 
@@ -446,28 +531,17 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
         return self._fallback.datetime_to_jd(dt)
 
     def calculate_ayanamsa(self, jd: float, ayanamsa_name: str = "Lahiri") -> float:
+        canonical_name, mode_id = resolve_ayanamsa_mode(ayanamsa_name)
         if self._has_swisseph and self._swe:
             try:
                 swe = self._swe
-                sid_modes = {
-                    "lahiri": 1,
-                    "raman": 3,
-                    "kp": 5,
-                    "krishnamurti": 5,
-                    "true_chitra": 27,
-                    "true_citra": 27,
-                    "yukteshwar": 7,
-                    "bhasin": 8,
-                    "fagan_bradley": 0,
-                }
-                mode = sid_modes.get(str(ayanamsa_name).lower().strip(), 1)
-                swe.set_sid_mode(mode)
+                swe.set_sid_mode(mode_id)
                 return float(swe.get_ayanamsa_ut(jd))
             except Exception as e:
                 self._handle_degraded_or_raise("calculate_ayanamsa", e)
-                return self._fallback.calculate_ayanamsa(jd, ayanamsa_name)
+                return self._fallback.calculate_ayanamsa(jd, canonical_name)
         self._handle_degraded_or_raise("calculate_ayanamsa")
-        return self._fallback.calculate_ayanamsa(jd, ayanamsa_name)
+        return self._fallback.calculate_ayanamsa(jd, canonical_name)
 
     def get_planet_positions(
         self,

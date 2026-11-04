@@ -11,6 +11,7 @@ from .rules import router as rules_router
 from .billing import router as billing_router
 from .reports import router as reports_router
 from .chat import router as chat_router
+from .astronomy import router as astronomy_router
 
 api_v1_router = APIRouter()
 
@@ -21,4 +22,5 @@ api_v1_router.include_router(rules_router)
 api_v1_router.include_router(billing_router)
 api_v1_router.include_router(reports_router)
 api_v1_router.include_router(chat_router)
+api_v1_router.include_router(astronomy_router)
 
