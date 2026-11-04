@@ -196,5 +196,13 @@ class AstrologicalSafetyFilter:
         safe_msg = check.redirection_message_hi if is_hi else check.redirection_message_en
         return False, safe_msg
 
+    @classmethod
+    def validate_query(cls, text: str) -> Tuple[bool, str]:
+        """Convenience class method to check query against safety boundaries."""
+        check = default_safety_filter.check_safety(text)
+        if check.is_safe:
+            return True, ""
+        return False, check.redirection_message_hi or check.redirection_message_en
+
 
 default_safety_filter = AstrologicalSafetyFilter()

@@ -22,12 +22,45 @@ import math
 from src.jyotish.core.constants import GRAHAS, SIGNS, SIGN_NAMES, SIGN_LORDS, NAKSHATRAS
 from src.jyotish.core.models import KundaliChart, BirthData
 from src.jyotish.dasha.vimshottari import default_dasha_engine
+from ..evidence.pack import default_evidence_pack_builder
+from ..safety.filter import AstrologicalSafetyFilter
 
 PLANET_NAMES_HI = {
     "Sun": "सूर्य", "Moon": "चन्द्र", "Mars": "मंगल", "Mercury": "बुध",
     "Jupiter": "गुरु", "Venus": "शुक्र", "Saturn": "शनि", "Rahu": "राहु", "Ketu": "केतु",
     "Ascendant": "लग्न"
 }
+
+def get_domain_for_dimension(dim: Dict[str, Any]) -> str:
+    """Maps a 50-dimension record to a verified Phase 5 life domain."""
+    dim_id = dim.get("id", 1)
+    mapping = {
+        1: "career", 21: "career", 22: "career", 24: "career",
+        2: "wealth",
+        3: "marriage", 20: "marriage",
+        4: "children",
+        5: "health", 25: "health", 26: "health", 27: "health", 28: "health", 29: "health", 30: "health", 31: "health", 32: "health",
+        6: "education", 23: "education", 34: "education",
+        7: "property", 33: "property",
+        8: "spirituality", 35: "spirituality", 47: "spirituality", 50: "spirituality",
+    }
+    if dim_id in mapping:
+        return mapping[dim_id]
+
+    cat = dim.get("category", "").lower()
+    if "कर्म" in cat or "career" in cat or "finance" in cat or "अर्थ" in cat:
+        return "career"
+    elif "स्वास्थ्य" in cat or "health" in cat:
+        return "health"
+    elif "विद्या" in cat or "education" in cat:
+        return "education"
+    elif "संबंध" in cat or "relationship" in cat:
+        return "marriage"
+    elif "आध्यात्म" in cat or "spirituality" in cat:
+        return "spirituality"
+    elif "संपत्ति" in cat or "material" in cat:
+        return "property"
+    return "personality"
 
 # -----------------------------------------------------------------------------
 # 50 COMPREHENSIVE LIFE DIMENSIONS (जीवन के ५० सम्पूर्ण आयाम)
@@ -994,9 +1027,36 @@ class ShastriyaFaladeshEngine:
         if md_lord in dim["karakas"]:
             planet_positives.append(f"वर्तमान महादशा स्वामी {PLANET_NAMES_HI.get(md_lord, md_lord)} सीधे इस विषय का नैसर्गिक कारक है (सक्रिय कालखंड)।")
 
+        # Build grounded Evidence Pack for this dimension
+        dom_key = get_domain_for_dimension(dim)
+        epack = None
+        provenanced_positives = []
+        provenanced_negatives = []
+        provenanced_citations = []
+
+        try:
+            epack = default_evidence_pack_builder.build_evidence_pack(chart=chart, domain=dom_key)
+            if epack and epack.findings:
+                for f in epack.findings:
+                    s_ref = f.source_ref
+                    grantha_info = f" ({s_ref.grantha}, {s_ref.chapter})" if s_ref else ""
+                    entry_str = f"[{f.finding_id}] {f.claim_hi}{grantha_info}"
+                    if f.polarity == "+":
+                        provenanced_positives.append(entry_str)
+                    else:
+                        provenanced_negatives.append(entry_str)
+
+                    if s_ref:
+                        v_str = f", {s_ref.verse}" if s_ref.verse else ""
+                        provenanced_citations.append(f"**{s_ref.grantha} ({s_ref.chapter}{v_str})**: {f.claim_hi}")
+        except Exception:
+            pass
+
         # 6. Overall Positive / Negative balance calculation
-        num_pos = len(house_positives) + len(planet_positives)
-        num_neg = len(house_negatives) + len(planet_negatives)
+        all_positives = provenanced_positives + house_positives + planet_positives
+        all_negatives = provenanced_negatives + house_negatives + planet_negatives
+        num_pos = len(all_positives)
+        num_neg = len(all_negatives)
         tot_factors = max(1, num_pos + num_neg)
         positive_pct = min(98, max(15, int((num_pos / tot_factors) * 100)))
         negative_pct = 100 - positive_pct
@@ -1015,7 +1075,7 @@ class ShastriyaFaladeshEngine:
             verdict_color = "#DC2626"
 
         # 7. Shastric Scriptural Pramana & Citations
-        citations = [
+        citations = (provenanced_citations[:3] if provenanced_citations else []) + [
             f"**बृहत्पाराशर होराशास्त्र (BPHS), अध्याय ११-१४:** '{dim['name_hi']} विचार' — भावाधिपतेर्बले सति सर्वं शुभं भवति। यदि भाव स्वामी एवं कारक ग्रह षड्बल में ६.० रूपा से अधिक हों तो जातक को संपूर्ण सुख व सिद्धि मिलती है।",
             f"**फलदीपिका (मन्त्रेश्वर), अध्याय १५:** कारको भावयुक्तश्चेत् फलं संवर्धयेच्छुभम्। {dim['karakas'][0] if dim['karakas'] else 'गुरु'} की अनुकूल स्थिति एवं D10/D9 वर्ग में प्रतिष्ठा जातक के पुरुषार्थ को द्विगुणित करती है।",
             f"**सर्वार्थ चिन्तामणि:** भावे शुभग्रहाणां दृष्टियोगे पापरहिते सति जातकः चिरकालं सुखमनुभवति। अष्टकवर्ग में २८ से अधिक बिंदु बाधाओं का शमन करते हैं।"
@@ -1036,6 +1096,8 @@ class ShastriyaFaladeshEngine:
 
         return {
             "dimension": dim,
+            "domain": dom_key,
+            "evidence_pack": epack.model_dump() if epack else None,
             "houses_data": houses_data,
             "planets_data": planets_data,
             "varga_data": varga_data,
@@ -1046,8 +1108,8 @@ class ShastriyaFaladeshEngine:
             "negative_pct": negative_pct,
             "verdict_badge": verdict_badge,
             "verdict_color": verdict_color,
-            "positives": house_positives + planet_positives,
-            "negatives": house_negatives + planet_negatives,
+            "positives": all_positives,
+            "negatives": all_negatives,
             "citations": citations,
             "remedies": remedies,
             "faqs_100": faqs_100
@@ -1062,21 +1124,41 @@ class ShastriyaFaladeshEngine:
 
         q_text = faq["question"]
         theme = faq["theme"]
+        p_data = synth["planets_data"]
+        h_data = synth["houses_data"]
 
-        # Calculate individualized answer based on real chart metrics
+        # Astrological Safety Check
+        is_safe, safety_msg = AstrologicalSafetyFilter.validate_query(q_text)
+        if not is_safe:
+            return {
+                "faq_num": faq_num,
+                "question": q_text,
+                "theme": theme,
+                "positive_pct": 0,
+                "negative_pct": 100,
+                "full_answer_md": f"**शास्त्रीय एवं नैतिक मर्यादा (Ethical & Safety Boundary):**\n\n{safety_msg}",
+                "citations": [
+                    "**बृहत्पाराशर होराशास्त्र (BPHS), अध्याय १-२:** ज्योतिष शास्त्र प्रारब्ध कर्मों का दिग्दर्शन कराता है, यह मृत्यु-काल अथवा अनैतिक प्रश्नों हेतु प्रयुक्त नहीं किया जा सकता।"
+                ],
+                "remedies": synth["remedies"],
+                "planets_data": p_data,
+                "houses_data": h_data,
+                "active_dasha": synth["active_dasha"],
+                "is_safe": False
+            }
+
+        # Calculate individualized answer based on real chart metrics and evidence pack
         pos_list = synth["positives"]
         neg_list = synth["negatives"]
         pos_pct = synth["positive_pct"]
         active_md = synth["active_dasha"]["mahadasha"]
         active_ad = synth["active_dasha"]["antardasha"]
         active_pd = synth["active_dasha"]["pratyantardasha"]
-        p_data = synth["planets_data"]
-        h_data = synth["houses_data"]
 
         # Formulate answer text
         ans_parts = []
         ans_parts.append(f"**प्रत्यक्ष शास्त्रीय निर्णय (Verdict):** जातक की सक्रिय कुण्डली के अनुसार '{q_text}' के संदर्भ में अनुकूलता का अनुपात **{pos_pct}% सकारात्मक** एवं **{100-pos_pct}% सावधानीकारी/बाधक** है।")
-        
+
         # Timing
         ans_parts.append(f"**काल निर्णय (Timing Window):** वर्तमान में **{PLANET_NAMES_HI.get(active_md, active_md)}** की महादशा में **{PLANET_NAMES_HI.get(active_ad, active_ad)}** की अंतर्दशा एवं **{PLANET_NAMES_HI.get(active_pd, active_pd)}** का प्रत्यंतर गतिशील है। यह कालखंड इस विषय के लिए {synth['verdict_badge']} की श्रेणी में आता है।")
 
@@ -1085,6 +1167,11 @@ class ShastriyaFaladeshEngine:
         top_neg = neg_list[0] if neg_list else "कोई गंभीर शास्त्रीय दोष दृष्टिगोचर नहीं हो रहा है।"
         ans_parts.append(f"**सकारात्मक शास्त्रीय पक्ष (Favorable Evidence):** {top_pos}")
         ans_parts.append(f"**सावधानी व बाधक पहलू (Honest Caution):** {top_neg}")
+
+        if synth.get("citations"):
+            ans_parts.append(f"**शास्त्रीय ग्रन्थ आधार (Scriptural Grounding):** {synth['citations'][0]}")
+
+        ans_parts.append("*शास्त्रीय फलादेश ज्योतिषीय साक्ष्यों पर आधारित संभाव्यता का दिग्दर्शन कराता है; इसे अंतिम भाग्यवादी अनिवार्यता न मानकर विवेकपूर्ण पुरुषार्थ का मार्गदर्शन मानें।*")
 
         return {
             "faq_num": faq_num,
@@ -1097,7 +1184,9 @@ class ShastriyaFaladeshEngine:
             "remedies": synth["remedies"],
             "planets_data": p_data,
             "houses_data": h_data,
-            "active_dasha": synth["active_dasha"]
+            "active_dasha": synth["active_dasha"],
+            "evidence_pack": synth.get("evidence_pack"),
+            "is_safe": True
         }
 
 
