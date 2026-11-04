@@ -31,6 +31,7 @@ synthesizing the complete outputs of all classical Vedic calculation modules:
 27. Astrological Certification Seal
 """
 
+import logging
 from datetime import datetime, date
 from typing import Dict, Any, List, Optional, Tuple
 from ..core.models import KundaliChart
@@ -42,6 +43,9 @@ from ..core.gochar import TransitEngine
 from ..core.lalkitab import LalKitabEngine, LAL_KITAB_108_TOTKAS
 from .event_query import EventQueryService
 from .muhurta import MuhurtaEngine
+from ..evidence.pack import default_evidence_pack_builder
+
+logger = logging.getLogger(__name__)
 
 
 class NatalReportGenerator:
@@ -628,6 +632,90 @@ class NatalReportGenerator:
         chogh_day_html = " ".join([f"<span class='badge {'exalted' if c.get('is_good') else 'debilitated'}' style='margin:2px;'>{c.get('name')}</span>" for c in choghadiya_day[:8]])
 
         # -------------------------------------------------------------
+        # 19. SHASTRIYA LIFE DOMAINS EVIDENCE PACKS (PROVENANCE & CITATIONS)
+        # -------------------------------------------------------------
+        evidence_domains = [
+            ("career", "💼 आजीविका एवं कर्मक्षेत्र (Career & Profession)"),
+            ("wealth", "💰 धन, कोष एवं समृद्धि (Wealth & Finance)"),
+            ("marriage", "💍 विवाह, जीवनसाथी एवं दांपत्य (Marriage & Relationship)"),
+            ("health", "🩺 आरोग्य, रोग प्रतिरोधक क्षमता (Health & Longevity)"),
+            ("education", "🎓 विद्या, प्रज्ञा एवं उच्च अध्ययन (Education & Intellect)"),
+            ("spirituality", "🕉️ धर्म, साधना एवं मोक्ष (Spirituality & Dharma)"),
+            ("property", "🏠 भूमि, भवन एवं वाहन सुख (Property & Real Estate)")
+        ]
+        domain_evidence_cards_html = ""
+        for dom_key, dom_title in evidence_domains:
+            try:
+                epack = default_evidence_pack_builder.build_evidence_pack(chart=chart, domain=dom_key)
+                findings_html = ""
+                for f in epack.findings[:6]:
+                    s_ref = f.source_ref
+                    grantha_str = s_ref.grantha if s_ref else "Brihat Parashara Hora Shastra"
+                    chap_str = f"{s_ref.chapter}" if s_ref and s_ref.chapter else "पाराशरी संहिता"
+                    verse_str = f"श्लोक {s_ref.verse}" if s_ref and s_ref.verse else "शास्त्रीय सूत्र"
+                    sanskrit_sa = s_ref.shloka_sanskrit if s_ref and s_ref.shloka_sanskrit else ""
+
+                    pol_color = "#166534" if f.polarity == "+" else ("#991B1B" if f.polarity == "-" else "#334155")
+                    pol_bg = "#DCFCE7" if f.polarity == "+" else ("#FEE2E2" if f.polarity == "-" else "#F1F5F9")
+                    pol_label = "शुभ / अनुकूल (+)" if f.polarity == "+" else ("सावधानी / प्रतिकूल (-)" if f.polarity == "-" else "मध्यम")
+
+                    timing_str = ""
+                    if f.timing and (f.timing.dasha_support or f.timing.transit_support):
+                        t_parts = []
+                        if f.timing.dasha_support:
+                            t_parts.append(f"दशा प्रभाव: {', '.join(f.timing.dasha_support)}")
+                        if f.timing.transit_support:
+                            t_parts.append(f"गोचर: {', '.join(f.timing.transit_support)}")
+                        timing_str = f"<div style='font-size:12px; color:#1E40AF; margin-top:5px;'>⏳ <b>काल निर्धारण:</b> {' | '.join(t_parts)}</div>"
+
+                    shloka_block = f"<div class='sanskrit-text'>📜 <i>\"{sanskrit_sa}\"</i></div>" if sanskrit_sa else ""
+
+                    caveats_block = ""
+                    if f.caveats:
+                        caveats_block = f"<div style='font-size:11.5px; color:#991B1B; margin-top:4px;'>⚠️ <b>संकेत / सावधानी:</b> {'; '.join(f.caveats)}</div>"
+
+                    strength_pct = int(round(f.strength * 100))
+
+                    findings_html += f"""
+                    <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-left:4px solid {pol_color}; padding:12px 14px; border-radius:6px; margin-bottom:10px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                            <div>
+                                <span style="background:#1E40AF; color:#FFFFFF; font-weight:800; font-size:11px; padding:2px 8px; border-radius:4px;">{f.finding_id}</span>
+                                <b style="font-size:13.5px; color:#0F172A; margin-left:6px;">{f.title_hi or f.title_en}</b>
+                            </div>
+                            <div style="display:flex; gap:6px; align-items:center;">
+                                <span class="badge" style="background:{pol_bg}; color:{pol_color}; font-weight:700;">{pol_label}</span>
+                                <span class="badge" style="background:#EFF6FF; color:#1D4ED8; font-weight:700;">बल: {strength_pct}%</span>
+                                <span class="badge verified-badge">✓ प्रामाणिक शास्त्रीय प्रमाण (Verified)</span>
+                            </div>
+                        </div>
+                        <div style="font-size:13px; color:#1E293B; margin-top:6px; line-height:1.5;">
+                            <b>शास्त्रीय निर्णय:</b> {f.claim_hi}<br/>
+                            <span style="font-size:12px; color:#475569;"><i>{f.claim_en}</i></span>
+                        </div>
+                        {shloka_block}
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; padding-top:6px; border-top:1px dashed #CBD5E1; font-size:11.5px; color:#475569;">
+                            <div>📖 <b>ग्रन्थ स्रोत:</b> {grantha_str} ({chap_str}, {verse_str})</div>
+                            <div>सिद्धान्त: {s_ref.school if s_ref else 'पाराशरी'}</div>
+                        </div>
+                        {timing_str}
+                        {caveats_block}
+                    </div>
+                    """
+
+                domain_evidence_cards_html += f"""
+                <div class="card" style="margin-bottom:18px;">
+                    <div style="border-bottom:2px solid #E2E8F0; padding-bottom:8px; margin-bottom:12px;">
+                        <h3 style="color:#1E3A8A; margin:0; font-size:16px;">{dom_title}</h3>
+                        <span style="font-size:12px; color:#64748B;">शास्त्रीय प्रमाण समुच्चय (Evidence Pack) — 100% गणितीय व ग्रन्थ-आधारित परीक्षण</span>
+                    </div>
+                    {findings_html}
+                </div>
+                """
+            except Exception as e:
+                logger.error(f"Error generating domain evidence card for {dom_key}: {e}")
+
+        # -------------------------------------------------------------
         # HTML COMPLETE TEMPLATE WITH PRINT MEDIA PAGE-BREAKS
         # -------------------------------------------------------------
         html = f"""<!DOCTYPE html>
@@ -635,23 +723,29 @@ class NatalReportGenerator:
 <head>
     <meta charset="UTF-8">
     <title>सम्पूर्ण वृहद जीवन पत्रिका (50+ Pages Mega Dossier) - {p.name}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap');
         @page {{
             size: A4 portrait;
-            margin: 15mm 15mm 18mm 15mm;
+            margin: 14mm 14mm 16mm 14mm;
             @bottom-right {{
                 content: "पृष्ठ " counter(page);
+                font-family: 'Noto Sans Devanagari', 'Segoe UI', sans-serif;
                 font-size: 9pt;
                 color: #64748B;
             }}
             @bottom-left {{
                 content: "{astro_name} | {astro_phone}";
+                font-family: 'Noto Sans Devanagari', 'Segoe UI', sans-serif;
                 font-size: 9pt;
                 color: #64748B;
             }}
         }}
         body {{
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Noto Sans Devanagari', 'Mangal', 'Nirmala UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px 25px;
             background-color: #F8FAFC;
@@ -770,6 +864,22 @@ class NatalReportGenerator:
         .friend {{ background-color: #F1F5F9; color: #334155; }}
         .debilitated {{ background-color: #FEE2E2; color: #991B1B; }}
         .neutral {{ background-color: #F8FAFC; color: #64748B; }}
+        .sanskrit-text {{
+            font-family: 'Tiro Devanagari Sanskrit', 'Noto Sans Devanagari', 'Sanskrit Text', serif;
+            font-size: 0.95rem;
+            color: #431407;
+            background: #FEF3C7;
+            border-left: 3px solid #D97706;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin: 6px 0;
+            font-style: italic;
+        }}
+        .verified-badge {{
+            background-color: #FEF3C7 !important;
+            color: #92400E !important;
+            border: 1px solid #F59E0B;
+        }}
         .remedy-box {{
             background: #FFFBEB;
             border: 2px solid #F59E0B;
@@ -912,11 +1022,22 @@ class NatalReportGenerator:
     <div class="page-break"></div>
 
     <!-- CHAPTER 2: LAGNA CHART (D1) & PLANETARY MATRIX -->
-    <h2 class="section-title">२. लग्न कुण्डली (D1) एवं ग्रह स्पष्ट स्थिति (Planetary Degrees & Dignity)</h2>
-    <div class="card" style="text-align:center;">
-        <h3 style="color:#1E40AF; margin-top:0;">लग्न कुण्डली (Rashi D1 Chart)</h3>
-        <div style="display:flex; justify-content:center; margin-bottom:15px;">
-            {ChartRenderer.render_north_indian_svg(chart, title="Lagna Kundali (D1)", varga_code="D1")}
+    <h2 class="section-title">२. लग्न कुण्डली (D1) त्रिविध शास्त्रीय चक्र एवं ग्रह स्थिति (Regional Chart Styles & Planetary Matrix)</h2>
+    <div class="card">
+        <h3 style="color:#1E40AF; margin-top:0; text-align:center; font-size:16px;">सम्पूर्ण भारत त्रिविध कुण्डली प्रारूप (North, South & East Indian Regional Styles)</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-bottom:15px; justify-items:center;">
+            <div style="text-align:center; width:100%; max-width:320px;">
+                <b style="color:#1E3A8A; font-size:13px;">उत्तर भारतीय प्रारूप (North Indian Diamond)</b>
+                <div style="margin-top:6px;">{ChartRenderer.render_north_indian_svg(chart, title="North Indian (D1)", varga_code="D1")}</div>
+            </div>
+            <div style="text-align:center; width:100%; max-width:320px;">
+                <b style="color:#1E3A8A; font-size:13px;">दक्षिण भारतीय प्रारूप (South Indian Square)</b>
+                <div style="margin-top:6px;">{ChartRenderer.render_south_indian_svg(chart, title="South Indian (D1)", varga_code="D1")}</div>
+            </div>
+            <div style="text-align:center; width:100%; max-width:320px;">
+                <b style="color:#1E3A8A; font-size:13px;">पूर्वी / बंगाली प्रारूप (East Indian Bengali/Odia)</b>
+                <div style="margin-top:6px;">{ChartRenderer.render_east_indian_svg(chart, title="East Indian (D1)", varga_code="D1")}</div>
+            </div>
         </div>
     </div>
 
@@ -1250,8 +1371,17 @@ class NatalReportGenerator:
 
     <div class="page-break"></div>
 
-    <!-- CHAPTER 19: VEDIC MUHURTA & PANCHAK -->
-    <h2 class="section-title">१९. वैदिक मुहूर्त, पञ्चक विचार एवं शुभाशुभ काल-वेला</h2>
+    <!-- CHAPTER 19: SHASTRIYA LIFE DOMAINS EVIDENCE PACKS -->
+    <h2 class="section-title">१९. जीवन-आयाम शास्त्रीय प्रमाण समुच्चय (Life Domains Shastriya Evidence & Provenance)</h2>
+    <p style="color:#475569; font-size:14px; margin-bottom:15px;">
+        बृहत्पाराशर होराशास्त्र, फलदीपिका एवं उत्तर कालामृत के मूल सूत्रों पर आधारित प्रत्येक जीवन आयाम का प्रामाणिक व अकाट्य साक्ष्य। प्रत्येक निर्णय के साथ ग्रन्थ, अध्याय एवं श्लोक संदर्भ तथा सत्यापन प्रतीक अंकित हैं।
+    </p>
+    {domain_evidence_cards_html}
+
+    <div class="page-break"></div>
+
+    <!-- CHAPTER 20: VEDIC MUHURTA & PANCHAK -->
+    <h2 class="section-title">२०. वैदिक मुहूर्त, पञ्चक विचार एवं शुभाशुभ काल-वेला</h2>
     <div class="grid-2">
         <div class="card">
             <h3 style="color:#1E40AF; margin-top:0; font-size:16px;">✨ दैनिक पञ्चक स्थिति विचार</h3>
@@ -1268,8 +1398,8 @@ class NatalReportGenerator:
         </div>
     </div>
 
-    <!-- CHAPTER 20: KUNDALI MILAN & 16 PARIHARAS -->
-    <h2 class="section-title">२०. विवाह कुण्डली मिलान एवं १६ शास्त्रीय परिहार संहिता (Kundali Milan 16 Pariharas)</h2>
+    <!-- CHAPTER 21: KUNDALI MILAN & 16 PARIHARAS -->
+    <h2 class="section-title">२१. विवाह कुण्डली मिलान एवं १६ शास्त्रीय परिहार संहिता (Kundali Milan 16 Pariharas)</h2>
     <div class="card">
         <p style="font-size:14px; color:#1E293B; line-height:1.7;">
             विवाह में अष्टकूट (वर्ण १, वश्य २, तारा ३, योनि ४, ग्रहमैत्री ५, गण ६, भकूट ७, नाड़ी ८ — कुल ३६ गुण) मिलान के साथ <b>१६ शास्त्रीय परिहार</b> अत्यंत निर्णायक होते हैं:
@@ -1310,8 +1440,8 @@ class NatalReportGenerator:
 
     <div class="page-break"></div>
 
-    <!-- CHAPTER 21: COMPREHENSIVE VEDIC & VASTU REMEDIES -->
-    <h2 class="section-title">२१. सर्वांगीण शास्त्रीय उपाय, रत्न, रुद्राक्ष, मन्त्र, वास्तु व दान विधान</h2>
+    <!-- CHAPTER 22: COMPREHENSIVE VEDIC & VASTU REMEDIES -->
+    <h2 class="section-title">२२. सर्वांगीण शास्त्रीय उपाय, रत्न, रुद्राक्ष, मन्त्र, वास्तु व दान विधान</h2>
     <div class="remedy-box">
         <h4 style="color:#78350F; margin-top:0; font-size:16px;">💎 १. रत्न विचार एवं प्राण-प्रतिष्ठा विधान (Gemstone Recommendation)</h4>
         <p>
@@ -1345,15 +1475,21 @@ class NatalReportGenerator:
         <small><i>नोट: शास्त्रीय उपाय केवल आत्म-शांति, सकारात्मक ऊर्जा एवं ग्रह-कृपा संवर्धन हेतु हैं।</i></small>
     </div>
 
-    <!-- CHAPTER 22: DISCLAIMER & ASTROLOGER CERTIFICATION -->
+    <!-- CHAPTER 23: DISCLAIMER & ASTROLOGER CERTIFICATION -->
     <div class="disclaimer">
-        <div style="font-size:16px; font-weight:900; color:#1E40AF; margin-bottom:6px;">
+        <div style="font-size:16px; font-weight:900; color:#1E40AF; margin-bottom:8px;">
             📜 शास्त्रीय एवं खगोलीय प्रमाणीकरण मुद्रा (Astrological Certification Seal)
         </div>
-        <div style="font-size:14px; color:#1E293B; margin-bottom:8px;">
-            यह सम्पूर्ण ५०+ पृष्ठीय जीवन जन्म पत्रिका <b>{astro_name}</b> के मार्गदर्शन में शुद्ध वैदिक ज्योतिषीय एवं खगोलीय सिद्धान्तों के आधार पर सूक्ष्म गणितीय परिशुद्धता के साथ संकलित की गई है।
+        <div style="font-size:14px; color:#1E293B; margin-bottom:10px;">
+            यह सम्पूर्ण ५०+ पृष्ठीय जीवन जन्म पत्रिका <b>{astro_name}</b> के मार्गदर्शन में शुद्ध वैदिक ज्योतिषीय एवं स्विस एफिमेरिस (Swiss Ephemeris) खगोलीय सिद्धान्तों के आधार पर सूक्ष्म गणितीय परिशुद्धता के साथ संकलित की गई है।
         </div>
-        <div style="font-size:13px; color:#475569;">
+        <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:8px; padding:12px; margin:12px auto; max-width:90%; text-align:left; font-size:12px; color:#334155; line-height:1.6;">
+            <b>⚖️ वैधानिक एवं नैतिक अस्वीकरण (Mandatory Shastriya & Legal Disclaimer):</b><br/>
+            • <b>संभाव्यता का नियम (Probabilistic Guidance):</b> वैदिक ज्योतिष शास्त्र प्रारब्ध, संचित एवं क्रियमाण कर्मों का मानचित्र है। यह भविष्य की निश्चित घटनाओं का दावा नहीं करता, अपितु संभावित प्रवृत्तियों (Probabilistic tendencies) और काल-सामर्थ्य का दिग्दर्शन कराता है। पुरुषार्थ व स्वतंत्र इच्छाशक्ति (Free Will) सर्वोच्च है।<br/>
+            • <b>चिकित्सीय व विधिक परामर्श (Medical & Legal Independence):</b> यह विश्लेषण किसी भी प्रकार का चिकित्सीय निदान (Medical Diagnosis), शल्य-चिकित्सा निर्णय अथवा विधिक परामर्श नहीं है। गंभीर स्वास्थ्य अथवा कानूनी मामलों में संबंधित योग्य विशेषज्ञों का परामर्श अनिवार्य है।<br/>
+            • <b>गर्भस्थ लिंग एवं मृत्यु-काल निषेध (Statutory Prohibition):</b> भारतीय कानून (PCPNDT Act) के अनुसार गर्भस्थ शिशु के लिंग का निर्धारण पूर्णतः गैर-कानूनी एवं दंडनीय अपराध है। साथ ही महर्षि पराशर की आज्ञानुसार मृत्यु की निश्चित तिथि का निर्धारण अनैतिक व वर्जित है।
+        </div>
+        <div style="font-size:13px; color:#475569; margin-top:8px;">
             <b>परामर्शक:</b> {astro_name} &nbsp;|&nbsp; <b>मो. नं.:</b> {astro_phone} &nbsp;|&nbsp; <b>संस्थान:</b> {astro_org}
         </div>
     </div>

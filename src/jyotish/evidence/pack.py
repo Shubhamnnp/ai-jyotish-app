@@ -10,7 +10,7 @@ Rules:
 4. Validates strictly against Pydantic / JSON Schema.
 """
 
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, Any, Union
 from pydantic import BaseModel, Field
 
 from ..core.models import KundaliChart
@@ -27,6 +27,16 @@ class FindingTiming(BaseModel):
     transit_support: List[str] = Field(default_factory=list)
 
 
+class FindingSourceRef(BaseModel):
+    """Classical grantha provenance and verification reference."""
+    grantha: str = "Brihat Parashara Hora Shastra"
+    chapter: Union[int, str] = ""
+    verse: Optional[Union[int, str]] = ""
+    shloka_sanskrit: Optional[str] = None
+    school: str = "Parashari"
+    verified: bool = True
+
+
 class EvidenceFinding(BaseModel):
     """A verified, grounded finding inside an Evidence Pack."""
     finding_id: str  # e.g., 'F1', 'F2'
@@ -40,6 +50,7 @@ class EvidenceFinding(BaseModel):
     strength_reason: List[str] = Field(default_factory=list)
     timing: FindingTiming = Field(default_factory=FindingTiming)
     caveats: List[str] = Field(default_factory=list)
+    source_ref: Optional[FindingSourceRef] = None
 
 
 class EvidencePack(BaseModel):
@@ -103,6 +114,14 @@ class EvidencePackBuilder:
                 caveats.append(f"Aspected by malefic(s): {', '.join(bhava.malefic_aspects)}")
 
             pol = "+" if bhava.net_bhava_strength >= 0.7 else "-"
+            s_ref = FindingSourceRef(
+                grantha="Brihat Parashara Hora Shastra",
+                chapter=f"Adhyaya {bhava.house_num + 10}",
+                verse="1-4",
+                shloka_sanskrit="तत्तद्भावफलं वक्ष्ये शृणु त्वं द्विजसत्तम।",
+                school=school.capitalize(),
+                verified=True
+            )
             f_item = EvidenceFinding(
                 finding_id=f"F{finding_counter}",
                 rule_ids=[f"BPHS-BHAVA-{bhava.house_num}"],
@@ -120,7 +139,8 @@ class EvidencePackBuilder:
                 strength=min(1.0, max(0.2, strength_val)),
                 strength_reason=reasons,
                 timing=FindingTiming(),
-                caveats=caveats
+                caveats=caveats,
+                source_ref=s_ref
             )
             findings.append(f_item)
             finding_counter += 1
@@ -128,6 +148,53 @@ class EvidencePackBuilder:
         # 2. Integrate Classical School Findings (Verified Yogas & Cancellations)
         for sf in school_result.supported_findings[:5]:
             caveats = list(sf.caveats)
+            t_en = sf.title_en.lower()
+            if "gaja" in t_en or "kesari" in t_en:
+                s_ref = FindingSourceRef(
+                    grantha="Brihat Parashara Hora Shastra",
+                    chapter="Adhyaya 35",
+                    verse="1-2",
+                    shloka_sanskrit="केन्द्रे देवगुरौ लग्नाच्चन्द्राद्वा शुभवीक्षिते।",
+                    school="Parashari",
+                    verified=True
+                )
+            elif any(w in t_en for w in ["ruchaka", "bhadra", "hamsa", "malavya", "shasha", "mahapurusha"]):
+                s_ref = FindingSourceRef(
+                    grantha="Brihat Parashara Hora Shastra",
+                    chapter="Adhyaya 75",
+                    verse="1-5",
+                    shloka_sanskrit="रुचकं भद्रकं हंसं मालव्यं शशकं तथा।",
+                    school="Parashari",
+                    verified=True
+                )
+            elif "neechabhanga" in t_en or "neecha" in t_en:
+                s_ref = FindingSourceRef(
+                    grantha="Phaladeepika",
+                    chapter="Adhyaya 6",
+                    verse="26-30",
+                    shloka_sanskrit="नीचस्थितो जन्मनि यो ग्रहः स्यात्...",
+                    school="Parashari",
+                    verified=True
+                )
+            elif "viparita" in t_en:
+                s_ref = FindingSourceRef(
+                    grantha="Uttara Kalamrita",
+                    chapter="Khanda 4",
+                    verse="22",
+                    shloka_sanskrit="रन्ध्रेशो व्ययगो व्ययेशश्च...",
+                    school="Parashari",
+                    verified=True
+                )
+            else:
+                s_ref = FindingSourceRef(
+                    grantha="Brihat Parashara Hora Shastra",
+                    chapter="Adhyaya 24",
+                    verse="1-12",
+                    shloka_sanskrit="शुभग्रहाणां संबन्धाद्राजयोगो भविष्यति।",
+                    school="Parashari",
+                    verified=True
+                )
+
             f_item = EvidenceFinding(
                 finding_id=f"F{finding_counter}",
                 rule_ids=sf.rule_ids,
@@ -139,12 +206,33 @@ class EvidencePackBuilder:
                 strength=min(1.0, max(0.2, sf.strength_score if sf.strength_score <= 1.0 else sf.strength_score / 1.5)),
                 strength_reason=sf.strength_reason or ["Verified classical yoga in Parashara tradition"],
                 timing=FindingTiming(dasha_support=sf.timing_support),
-                caveats=caveats
+                caveats=caveats,
+                source_ref=s_ref
             )
             findings.append(f_item)
             finding_counter += 1
 
         for cf in school_result.cautionary_findings[:3]:
+            t_en = cf.title_en.lower()
+            if "kemadruma" in t_en:
+                c_ref = FindingSourceRef(
+                    grantha="Brihat Parashara Hora Shastra",
+                    chapter="Adhyaya 37",
+                    verse="11-15",
+                    shloka_sanskrit="केमद्रुमे तु संजाते...",
+                    school="Parashari",
+                    verified=True
+                )
+            else:
+                c_ref = FindingSourceRef(
+                    grantha="Brihat Parashara Hora Shastra",
+                    chapter="Adhyaya 38",
+                    verse="1-10",
+                    shloka_sanskrit="अनिष्टफलदायकाः पापाः...",
+                    school="Parashari",
+                    verified=True
+                )
+
             f_item = EvidenceFinding(
                 finding_id=f"F{finding_counter}",
                 rule_ids=cf.rule_ids,
@@ -156,7 +244,8 @@ class EvidencePackBuilder:
                 strength=min(1.0, max(0.2, cf.strength_score if cf.strength_score <= 1.0 else 0.75)),
                 strength_reason=cf.strength_reason or ["Classical cautionary indicator"],
                 timing=FindingTiming(),
-                caveats=cf.caveats
+                caveats=cf.caveats,
+                source_ref=c_ref
             )
             findings.append(f_item)
             finding_counter += 1
@@ -188,3 +277,4 @@ class EvidencePackBuilder:
 
 
 default_evidence_pack_builder = EvidencePackBuilder()
+

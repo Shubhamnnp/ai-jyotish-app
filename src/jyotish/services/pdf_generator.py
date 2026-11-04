@@ -151,6 +151,7 @@ class NativePDFService:
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
                 "--no-pdf-header-footer",
+                "--font-render-hinting=medium",
                 f"--print-to-pdf={temp_pdf}",
             ]
             if landscape:
