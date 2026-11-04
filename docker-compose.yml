@@ -16,13 +16,23 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - JWT_SECRET=${JWT_SECRET:-jyotish-saas-enterprise-secret-key-2026}
+      - JYOTISH_ENCRYPTION_KEY=${JYOTISH_ENCRYPTION_KEY:-jyotish-shastriya-default-at-rest-secret-key-2026}
+      - EPHE_PATH=/app/ephe
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
     volumes:
       - ./data:/app/data
+      - ./ephe:/app/ephe:ro
 
   # 2. Streamlit Astrologer Dashboard
   ui:
@@ -39,11 +49,15 @@ services:
       - API_GATEWAY_URL=http://api:8000
       - DATABASE_URL=postgresql://jyotish_admin:BharatJyotish2026@postgres:5432/jyotish_enterprise
       - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - JYOTISH_ENCRYPTION_KEY=${JYOTISH_ENCRYPTION_KEY:-jyotish-shastriya-default-at-rest-secret-key-2026}
+      - EPHE_PATH=/app/ephe
     depends_on:
-      - api
+      api:
+        condition: service_healthy
     volumes:
       - ./data:/app/data
       - ./saved_charts_db.json:/app/saved_charts_db.json
+      - ./ephe:/app/ephe:ro
 
   # 3. High-Performance Enterprise Relational Database
   postgres:
