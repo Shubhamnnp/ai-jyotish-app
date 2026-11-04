@@ -157,3 +157,4 @@ def get_quarantine_stats(rules: List[Dict[str, Any]]) -> Dict[str, int]:
             stats["generated"] += 1
 
     return stats
+

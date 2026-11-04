@@ -73,3 +73,4 @@ def load_rules_file_v2(file_path: Union[str, Path]) -> List[RuleV2]:
 def export_schema_v2_json() -> Dict[str, Any]:
     """Generates standard JSON Schema for RuleV2."""
     return RuleV2.model_json_schema()
+

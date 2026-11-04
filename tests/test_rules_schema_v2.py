@@ -159,3 +159,4 @@ def test_load_rules_file_v2(tmp_path, valid_rule_v2_dict):
     assert len(loaded) == 2
     assert loaded[0].rule_id == "BPHS-24-LORD1-H1"
     assert loaded[1].rule_id == "BPHS-24-LORD1-H2"
+

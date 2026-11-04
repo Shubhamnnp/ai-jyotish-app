@@ -100,3 +100,4 @@ def test_kemadruma_bhanga(swami_vivekananda_chart):
     assert k_dosha.dosha_id == "DOSHA_KEMADRUMA"
     if k_dosha.is_present and k_dosha.is_cancelled:
         assert "cancels Kemadruma" in "; ".join(k_dosha.cancellation_reasons)
+

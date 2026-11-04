@@ -9,3 +9,4 @@
 1. **Historical Preservation Only:** These scripts are archived here strictly for audit, provenance tracking, and historical reference.
 2. **Never Generate Rules:** Never run these scripts to inflate rule numbers or populate production rule libraries.
 3. **Schema v2 Compliance:** All new rules must be authored or verified according to **Schema v2** (`docs/IMPLEMENTATION_PRD.md` Section 4.1), with verifiable Grantha editions, adhyayas, and shlokas, and marked `scholar_verified` before user-facing deployment.
+

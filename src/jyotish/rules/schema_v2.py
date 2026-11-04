@@ -113,3 +113,4 @@ class RuleV2(BaseModel):
         False,
         description="Whether this rule was emitted by a bulk generator script rather than handwritten"
     )
+

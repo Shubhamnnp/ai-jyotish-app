@@ -93,3 +93,4 @@ def test_engine_quarantine_integration():
     assert summary["draft"] > 0
     # By default, draft rules are quarantined but tracked
     assert summary["total"] == summary["draft"] + summary["scholar_verified"] + summary["machine_checked"] + summary["rejected"]
+
