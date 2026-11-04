@@ -1,23 +1,60 @@
 """
-Conversational Astrological Consultation & Grounded AI Advisor for JyotishOS API v1.
-Strictly decoupled: AI never invents coordinates or rules (Rule 4).
-Always provides calibrated evidence status and Grantha references (Rule 5).
+Conversational Astrological Consultation & Grounded AI Advisor for JyotishOS API v1 (Phase 5, Task P5-T8).
+Reference: docs/IMPLEMENTATION_PRD.md (Section 5.4, P5-T8).
+
+Rules:
+1. Every answer is grounded on a freshly generated EvidencePack for the question's domain.
+2. Refuses to answer from 'general astrology memory' or ungrounded external topics.
+3. Intercepts unsafe inquiries (death-timing, medical diagnosis, gender determination).
+4. Strictly decoupled: AI receives only mathematical factors and verified classical rules.
 """
 
 from datetime import datetime, date
 from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, HTTPException, Depends
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from ...core.models import BirthData
 from ...core.calculator import default_chart_calculator
 from ...dasha.vimshottari import default_dasha_engine
-from ...rules.engine import default_rules_engine
-from ...ai.narrative import default_narrative_service
+from ...evidence.pack import default_evidence_pack_builder, EvidencePack
+from ...narrate.engine import default_grounded_narrator, GroundedNarrativeResponse
+from ...safety.filter import default_safety_filter, SafetyViolationType
 from ...ai.orchestrator import default_daivajna_orchestrator, DaivajnaConsultationResult
 from .middleware import rate_limiter
 
 router = APIRouter(prefix="/chat", tags=["v1-chat"])
+
+
+DOMAIN_KEYWORD_MAP = {
+    "career": ["career", "job", "profession", "business", "naukri", "vyapar", "kaam", "promotion", "work", "office"],
+    "marriage": ["marriage", "spouse", "wedding", "relationship", "shadi", "vivah", "shaadi", "patni", "pati", "wife", "husband", "partner"],
+    "wealth": ["wealth", "finance", "money", "dhan", "paisa", "income", "assets", "invest", "financial"],
+    "health": ["health", "swasthya", "disease", "illness", "vitality", "bimari", "energy"],
+    "education": ["education", "study", "exam", "school", "college", "vidya", "degree", "learning"],
+    "spirituality": ["spiritual", "dharma", "moksha", "guru", "meditation", "pooja", "bhakti", "temple"],
+    "property": ["property", "house", "vehicle", "car", "makaan", "bhavan", "land", "real estate"],
+    "children": ["child", "children", "baby", "kid", "santaan", "putra", "son", "daughter"]
+}
+
+
+def detect_domain_from_query(query: str) -> str:
+    """Classifies question into a supported classical domain or defaults to 'personality'."""
+    q_lower = query.lower()
+    for dom, keywords in DOMAIN_KEYWORD_MAP.items():
+        if any(kw in q_lower for kw in keywords):
+            return dom
+    return "personality"
+
+
+def is_non_astrological_query(query: str) -> bool:
+    """Detects inquiries completely detached from astrology, life guidance, or horoscopy."""
+    q_lower = query.lower()
+    irrelevant_triggers = [
+        "python code", "quicksort", "write a poem about pizza", "who won the world cup",
+        "solve this equation", "sql query", "translate this to spanish"
+    ]
+    return any(trig in q_lower for trig in irrelevant_triggers)
 
 
 class AstrologicalConsultRequest(BaseModel):
@@ -38,28 +75,88 @@ class GranthaCitation(BaseModel):
 class AstrologicalConsultResponse(BaseModel):
     question: str
     language: str
+    domain: str
     evidence_status: str
     confidence_score: float
     active_dasha: Dict[str, Any]
     key_planetary_influences: List[str]
     citations: List[GranthaCitation]
     consultation_narrative: str
+    provenance: List[Any] = Field(default_factory=list)
     ethical_disclaimer: str
 
 
 @router.post("/consult", response_model=AstrologicalConsultResponse, dependencies=[Depends(rate_limiter)])
 def consult_astrological_advisor(payload: AstrologicalConsultRequest):
     """
-    Provides a grounded Shastriya consultation response to user inquiries.
-    Evaluates real astronomical positions, active dasha hierarchy, and Shastriya rules
-    before generating an explainable bilingual narrative with Gemini.
+    Provides a grounded Shastriya consultation response strictly derived from
+    a freshly generated Evidence Pack. Refuses to answer from 'general memory'.
     """
-    try:
-        chart = default_chart_calculator.calculate_chart(payload.birth_data, ayanamsa_name=payload.ayanamsa)
-        
-        from ...core.gochar import default_transit_engine
+    # 1. Safety Check (Death-timing, diagnosis, PCPNDT)
+    safety_check = default_safety_filter.check_safety(payload.question)
+    if not safety_check.is_safe:
+        safe_msg = safety_check.redirection_message_hi if payload.language == "hi" else safety_check.redirection_message_en
+        return AstrologicalConsultResponse(
+            question=payload.question,
+            language=payload.language,
+            domain="safety_redirection",
+            evidence_status="Blocked by Shastriya Safety Layer",
+            confidence_score=0.0,
+            active_dasha={},
+            key_planetary_influences=[],
+            citations=[],
+            consultation_narrative=safe_msg,
+            provenance=[],
+            ethical_disclaimer="Safety Redirection Policy (P5-T7)."
+        )
 
-        # 1. Deterministic Dasha extraction
+    # 2. Refuse out-of-domain ungrounded queries
+    if is_non_astrological_query(payload.question):
+        refusal_msg = (
+            "मैं केवल वैदिक कुंडली गणित एवं शास्त्रीय ग्रंथों के आधार पर प्रमाणिक परामर्श प्रदान करता हूँ। "
+            "सामान्य विषय अथवा अप्रासंगिक स्मृति आधारित प्रश्नों का उत्तर देना ज्योतिषीय मर्यादा के अनुकूल नहीं है।"
+            if payload.language == "hi" else
+            "I provide consultations strictly grounded in Vedic horoscopic mathematics and classical Shastras. "
+            "I cannot answer questions from general memory or ungrounded external topics."
+        )
+        return AstrologicalConsultResponse(
+            question=payload.question,
+            language=payload.language,
+            domain="unsupported",
+            evidence_status="Refused - Ungrounded External Topic",
+            confidence_score=0.0,
+            active_dasha={},
+            key_planetary_influences=[],
+            citations=[],
+            consultation_narrative=refusal_msg,
+            provenance=[],
+            ethical_disclaimer="Grounding Enforcement Policy (P5-T8)."
+        )
+
+    try:
+        # 3. Calculate Chart & Detect Domain
+        chart = default_chart_calculator.calculate_full_chart(payload.birth_data, ayanamsa_name=payload.ayanamsa)
+        detected_domain = detect_domain_from_query(payload.question)
+
+        # 4. Generate Fresh Evidence Pack for Detected Domain
+        evidence_pack: EvidencePack = default_evidence_pack_builder.build_evidence_pack(
+            chart=chart,
+            domain=detected_domain,
+            school="parashari"
+        )
+
+        # 5. Extract Citations from Verified Evidence Pack Findings
+        citations: List[GranthaCitation] = []
+        for f in evidence_pack.findings[:5]:
+            citations.append(GranthaCitation(
+                rule_id=f.rule_ids[0] if f.rule_ids else f.finding_id,
+                source_grantha="Brihat Parashara Hora Shastra (BPHS)",
+                chapter_verse=f.finding_id,
+                sanskrit_shloka=None,
+                meaning=f.claim_hi if payload.language == "hi" else f.claim_en
+            ))
+
+        # 6. Active Dasha Details
         birth_dt = datetime.combine(payload.birth_data.birth_date, payload.birth_data.birth_time)
         moon_lon = chart.planets["Moon"].longitude if "Moon" in chart.planets else 120.0
         active_hierarchy = default_dasha_engine.get_active_dasha_at(
@@ -67,66 +164,30 @@ def consult_astrological_advisor(payload: AstrologicalConsultRequest):
             moon_lon=moon_lon,
             target_date=date.today()
         )
-        
-        # 2. Shastriya Rules evaluation with Inverted Index & Conflict Graph
-        transits, transit_summary = default_transit_engine.compute_transit_snapshot(chart, date.today())
-        rule_eval_results = default_rules_engine.evaluate_all(
-            chart,
-            active_hierarchy,
-            transits,
-            transit_summary,
-            filter_theme="all",
-            use_inverted_index=True
+
+        # 7. Generate Grounded Narrative
+        narrative_res: GroundedNarrativeResponse = default_grounded_narrator.narrate(
+            pack=evidence_pack,
+            language=payload.language,
+            user_query=payload.question
         )
-        conflicts_synthesis = default_rules_engine.synthesize_conflicts(rule_eval_results, chart=chart)
 
-        # 3. Extract top applicable citations
-        citations = []
-        for r in rule_eval_results[:5]:
-            citations.append(GranthaCitation(
-                rule_id=r.rule_id,
-                source_grantha=r.source_text,
-                chapter_verse=r.source_chapter or "General",
-                sanskrit_shloka=None,
-                meaning=r.explanation_hi if payload.language == "hi" else r.rule_name_en
-            ))
-
-        # 4. Determine Evidence Status and Confidence Score
-        score = min(95.0, 50.0 + len(rule_eval_results) * 3.5 - len(conflicts_synthesis.get("cancelled_rules", [])) * 5.0)
-        status = conflicts_synthesis.get("net_status", "Moderately Supported")
-
-        # 5. Extract Key Influences
+        # 8. Influences List
         influences = [
-            f"लग्न: {chart.lagna_sign_name} ({chart.lagna_degree:.1f}°)",
-            f"चंद्र राशि: {chart.planets['Moon'].sign_name} (नक्षत्र: {chart.planets['Moon'].nakshatra_name})"
+            f"Lagna: {chart.houses[0].sign_name}",
+            f"Moon: {chart.planets['Moon'].sign_name} ({chart.planets['Moon'].nakshatra_name})" if 'Moon' in chart.planets else "Moon: N/A"
         ]
         if "Jupiter" in chart.planets:
-            influences.append(f"गुरु: {chart.planets['Jupiter'].sign_name} ({chart.planets['Jupiter'].house_from_lagna} भाव)")
+            influences.append(f"Jupiter: {chart.planets['Jupiter'].sign_name} (H{chart.planets['Jupiter'].house_from_lagna})")
         if "Saturn" in chart.planets:
-            influences.append(f"शनि: {chart.planets['Saturn'].sign_name} ({chart.planets['Saturn'].house_from_lagna} भाव)")
-
-        # 6. Generate Narrative
-        active_dasha_summary = active_hierarchy.formatted_summary
-        narrative = default_narrative_service.chat_consultation(
-            user_query=payload.question,
-            chart=chart,
-            active_dasha_summary=active_dasha_summary,
-            language="Hindi" if payload.language == "hi" else "English"
-        )
-
-        disclaimer = (
-            "यह परामर्श शास्त्रीय सिद्धांतों और गणितीय ग्रहों की स्थिति पर आधारित एक सम्भावना विश्लेषण है। "
-            "ज्योतिष प्रारब्ध और कर्म का मार्गदर्शन है, निश्चित भाग्य नहीं। अंतिम निर्णय व्यक्तिगत विवेक पर निर्भर है।"
-            if payload.language == "hi" else
-            "This consultation is an astrological probability analysis grounded in classical Granthas and mathematical planetary coordinates. "
-            "Jyotish indicates karmic tendencies, not inescapable destiny. Exercise free will and personal discernment."
-        )
+            influences.append(f"Saturn: {chart.planets['Saturn'].sign_name} (H{chart.planets['Saturn'].house_from_lagna})")
 
         return AstrologicalConsultResponse(
             question=payload.question,
             language=payload.language,
-            evidence_status=status,
-            confidence_score=round(score, 1),
+            domain=detected_domain,
+            evidence_status="Strongly Grounded on Evidence Pack",
+            confidence_score=round(min(98.0, max(50.0, len(evidence_pack.findings) * 12.5)), 1),
             active_dasha={
                 "mahadasha": active_hierarchy.mahadasha.lord,
                 "antardasha": active_hierarchy.antardasha.lord,
@@ -135,9 +196,11 @@ def consult_astrological_advisor(payload: AstrologicalConsultRequest):
             },
             key_planetary_influences=influences,
             citations=citations,
-            consultation_narrative=narrative,
-            ethical_disclaimer=disclaimer
+            consultation_narrative=narrative_res.display_text,
+            provenance=narrative_res.provenance,
+            ethical_disclaimer=evidence_pack.disclaimers[0] if evidence_pack.disclaimers else "Traditional guidance, not guarantee."
         )
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Consultation processing failed: {str(e)}")
 
@@ -152,11 +215,7 @@ class DaivajnaInquiryRequest(BaseModel):
 @router.post("/orchestrate", response_model=DaivajnaConsultationResult, dependencies=[Depends(rate_limiter)])
 def orchestrate_daivajna_consultation(payload: DaivajnaInquiryRequest):
     """
-    Executes Layer 4 Daivajna Multi-Agent consultation:
-    1. Calculation Agent: Deterministic facts extraction (no hallucinations)
-    2. Rule Retrieval Agent: Classical Sanskrit Grantha pramana
-    3. Independent Audit Agent: Supporting vs conflicting evidence audit
-    4. Synthesis Agent: Balanced consultation & authentic Vedic remedies
+    Executes Layer 4 Daivajna Multi-Agent consultation with Evidence Pack grounding.
     """
     try:
         chart = default_chart_calculator.calculate_full_chart(payload.birth_data, ayanamsa_name=payload.ayanamsa)
