@@ -14,6 +14,39 @@ from argon2.exceptions import VerifyMismatchError
 
 from ...db.session import SessionLocal
 from ...db.models import User
+from .middleware import rate_limiter
+import time
+
+# Brute-force Login Lockout Tracking (P0-T5)
+_failed_login_attempts: Dict[str, Any] = {}
+MAX_FAILED_ATTEMPTS = 5
+LOCKOUT_DURATION_SEC = 300.0  # 5 minutes
+
+
+def check_login_lockout(email: str) -> None:
+    now = time.time()
+    attempts = _failed_login_attempts.get(email, [])
+    valid_attempts = [t for t in attempts if now - t < LOCKOUT_DURATION_SEC]
+    _failed_login_attempts[email] = valid_attempts
+    if len(valid_attempts) >= MAX_FAILED_ATTEMPTS:
+        retry_after = max(1, int(LOCKOUT_DURATION_SEC - (now - valid_attempts[0])))
+        raise HTTPException(
+            status_code=429,
+            detail=f"Too many failed login attempts. Account temporarily locked for security. Try again in {retry_after}s.",
+            headers={"Retry-After": str(retry_after)}
+        )
+
+
+def record_failed_login(email: str) -> None:
+    now = time.time()
+    attempts = _failed_login_attempts.get(email, [])
+    attempts.append(now)
+    _failed_login_attempts[email] = attempts
+
+
+def clear_failed_login(email: str) -> None:
+    if email in _failed_login_attempts:
+        del _failed_login_attempts[email]
 
 router = APIRouter(prefix="/auth", tags=["v1-auth"])
 
@@ -33,19 +66,26 @@ class LoginResponse(BaseModel):
     user: Dict[str, Any]
 
 
-@router.post("/login", response_model=LoginResponse)
+@router.post("/login", response_model=LoginResponse, dependencies=[Depends(rate_limiter)])
 def login(payload: LoginRequest):
-    """Authenticates user credentials using Argon2id and emits JWT access token."""
+    """Authenticates user credentials using Argon2id with lockout defense and emits JWT access token."""
+    email_clean = payload.email.strip().lower()
+    check_login_lockout(email_clean)
+
     db = SessionLocal()
     try:
-        user = db.query(User).filter(User.email == payload.email.strip().lower()).first()
+        user = db.query(User).filter(User.email == email_clean).first()
         if not user:
+            record_failed_login(email_clean)
             raise HTTPException(status_code=401, detail="Invalid email or password")
 
         try:
             ph.verify(user.password_hash, payload.password)
         except (VerifyMismatchError, Exception):
+            record_failed_login(email_clean)
             raise HTTPException(status_code=401, detail="Invalid email or password")
+
+        clear_failed_login(email_clean)
 
         exp_time = datetime.now(timezone.utc) + timedelta(days=7)
         token_payload = {
