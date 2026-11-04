@@ -5828,6 +5828,16 @@ except TypeError:
 
 if getattr(chart, "engine_degraded", False) or (getattr(chart, "metadata", None) and getattr(chart.metadata, "engine_degraded", False)):
     st.warning("⚠️ **Warning: Planetary calculations are running in degraded fallback mode (PyEphem).** Professional astronomical precision may be reduced. Please ensure Swiss Ephemeris is active.")
+
+if getattr(chart, "metadata", None):
+    meta = chart.metadata
+    with st.expander("🌐 Astronomical Provenance & Metadata (Shastriya Pramana)", expanded=False):
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Engine", meta.engine)
+        c2.metric("Julian Day (UT)", f"{meta.jd_ut:.5f}")
+        c3.metric("Delta T", f"{meta.delta_t_seconds:.2f}s")
+        c4.metric("Ayanamsa", f"{meta.ayanamsa_name} ({meta.ayanamsa_value:.4f}°)")
+        st.caption(f"Timezone: `{meta.timezone_iana}` | House System: `{meta.house_system}` | Ephemeris: `{meta.ephemeris_mode}` | UTC: `{meta.utc_datetime}`")
 affliction_engine = AfflictionEngine(chart)
 vastu_engine = VastuJyotishEngine(chart)
 

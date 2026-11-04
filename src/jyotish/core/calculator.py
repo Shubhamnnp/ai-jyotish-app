@@ -404,17 +404,33 @@ class ChartCalculator:
         engine_str = getattr(self.provider, "engine_type", "PyEphem High-Precision Calibrated")
         is_degraded = bool(getattr(self.provider, "is_degraded", False) or not getattr(self.provider, "_has_swisseph", False))
         ephe_mode = getattr(self.provider, "ephemeris_mode", "PyEphem (Degraded)" if is_degraded else "Swiss (Moshier)")
+
+        delta_t = 0.0
+        if getattr(self.provider, "_has_swisseph", False) and hasattr(self.provider, "_swe"):
+            try:
+                delta_t = float(self.provider._swe.deltat(jd_val) * 86400.0)
+            except Exception:
+                delta_t = 0.0
+
+        tz_iana = getattr(birth_data, "timezone", "Asia/Kolkata") or "Asia/Kolkata"
+        engine_id = "degraded_pyephem" if is_degraded else "swisseph"
+
         calc_meta = CalculationMetadata(
+            engine=engine_id,
             engine_type=engine_str,
             engine_version="2.1.0",
             ayanamsa_name=ayanamsa_name,
             ayanamsa_value=ayanamsa_val,
+            ayanamsa={"name": ayanamsa_name, "value_degrees": ayanamsa_val},
             house_system=canonical_hsys,
             node_type=node_type,
             coordinate_type="topocentric" if kwargs.get("topocentric_moon") else "geocentric",
             topocentric_moon=bool(kwargs.get("topocentric_moon", False)),
             polar_latitude_adjusted=polar_adjusted or (abs(birth_data.latitude) > 66.5),
             calculation_timestamp_utc=datetime.now(timezone.utc),
+            utc_datetime=dt_utc,
+            timezone_iana=tz_iana,
+            delta_t_seconds=round(delta_t, 4),
             jd_ut=jd_val,
             engine_degraded=is_degraded,
             ephemeris_mode=ephe_mode,

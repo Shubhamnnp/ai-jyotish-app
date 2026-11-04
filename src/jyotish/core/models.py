@@ -177,16 +177,21 @@ class UpagrahaResult(BaseModel):
 
 class CalculationMetadata(BaseModel):
     """Deterministic reproducibility metadata for astronomical chart computation."""
+    engine: str = "swisseph"  # "swisseph" | "degraded_pyephem"
     engine_type: str = "Swiss Ephemeris / PyEphem Calibrated"
     engine_version: str = "2.1.0"
     ayanamsa_name: str = "Lahiri"
     ayanamsa_value: float
+    ayanamsa: Optional[Dict[str, Any]] = None  # {"name": ..., "value_degrees": ...}
     house_system: str = "Whole Sign"
     node_type: str = "mean"
     coordinate_type: str = "geocentric"
     topocentric_moon: bool = False
     polar_latitude_adjusted: bool = False
     calculation_timestamp_utc: Optional[datetime] = None
+    utc_datetime: Optional[datetime] = None
+    timezone_iana: str = "Asia/Kolkata"
+    delta_t_seconds: float = 0.0
     jd_ut: float = 0.0
     engine_degraded: bool = False
     ephemeris_mode: str = "Swiss (Moshier)"
