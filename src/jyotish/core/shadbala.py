@@ -399,3 +399,4 @@ class ShadbalaCalculator:
 
 # Singleton Shadbala instance
 default_shadbala_calculator = ShadbalaCalculator()
+default_shadbala_engine = default_shadbala_calculator

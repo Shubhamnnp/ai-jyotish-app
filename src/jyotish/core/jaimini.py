@@ -638,3 +638,4 @@ class JaiminiCalculator:
 
 # Singleton Jaimini Calculator
 default_jaimini_calculator = JaiminiCalculator()
+default_jaimini_engine = default_jaimini_calculator
