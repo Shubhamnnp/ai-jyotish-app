@@ -32,8 +32,14 @@ class ClassicalYogaDoshaEngine:
         # 2. Evaluate Raja Yogas & Neechabhanga
         yogas.extend(cls._evaluate_raja_yogas(chart))
 
-        # 3. Evaluate Chandra & Surya Yogas
+        # 3. Evaluate Dhana Yogas
+        yogas.extend(cls._evaluate_dhana_yogas(chart))
+
+        # 4. Evaluate Chandra & Surya Yogas
         yogas.extend(cls._evaluate_chandra_surya_yogas(chart))
+
+        # 5. Evaluate Amala & Special Yogas
+        yogas.extend(cls._evaluate_amala_yoga(chart))
 
         # 4. Evaluate Major Doshas
         m_dosha, is_manglik, m_sev, m_canc = cls._evaluate_manglik_dosha(chart)
@@ -248,6 +254,113 @@ class ClassicalYogaDoshaEngine:
                 ))
 
         return results
+
+    # -------------------------------------------------------------
+    # 2B. DHANA YOGAS (Wealth Combinations)
+    # -------------------------------------------------------------
+    @classmethod
+    def _evaluate_dhana_yogas(cls, chart: KundaliChart) -> List[ClassicalYogaItem]:
+        """Evaluates classical wealth combinations (BPHS Ch. 41-42)."""
+        results = []
+        l1 = chart.houses[0].lord
+        l2 = chart.houses[1].lord
+        l5 = chart.houses[4].lord
+        l9 = chart.houses[8].lord
+        l11 = chart.houses[10].lord
+
+        p1 = chart.planets[l1]
+        p2 = chart.planets[l2]
+        p5 = chart.planets[l5]
+        p9 = chart.planets[l9]
+        p11 = chart.planets[l11]
+
+        # 1. 2nd & 11th Lords connection (Prime Dhana Yoga)
+        is_2_11 = (p2.sign_id == p11.sign_id) or (abs(p2.house_from_lagna - p11.house_from_lagna) == 6)
+        results.append(ClassicalYogaItem(
+            yoga_id="DY_2_11_PRIME",
+            name_hi="धन-लाभ अधिपति योग",
+            name_en="Dhana Yoga (2nd & 11th Lords)",
+            category="Dhana Yoga",
+            is_active=is_2_11,
+            strength_score=85.0 if is_2_11 else 0.0,
+            planets_involved=list(set([l2, l11])),
+            houses_involved=[p2.house_from_lagna, p11.house_from_lagna],
+            description_hi="धन भाव (द्वितीय) व लाभ भाव (एकादश) के स्वामियों की युति या दृष्टि से जातक प्रचुर सम्पत्ति अर्जित करता है।",
+            description_en="Alliance of 2nd (accumulated wealth) and 11th (gains) lords creates enduring financial prosperity.",
+            shloka_reference="BPHS Ch. 41.1-5, Jataka Parijata Ch. 7"
+        ))
+
+        # 2. 1st & 2nd / 1st & 11th Lord connection (Lakshmi Dhana Yoga)
+        is_1_2 = (p1.sign_id == p2.sign_id) or (abs(p1.house_from_lagna - p2.house_from_lagna) == 6)
+        is_1_11 = (p1.sign_id == p11.sign_id) or (abs(p1.house_from_lagna - p11.house_from_lagna) == 6)
+        is_lakshmi = is_1_2 or is_1_11
+        lakshmi_planets = [l1]
+        if is_1_2: lakshmi_planets.append(l2)
+        if is_1_11: lakshmi_planets.append(l11)
+
+        results.append(ClassicalYogaItem(
+            yoga_id="DY_LAGNESH_DHANA",
+            name_hi="लग्नेश धन-लाभ योग",
+            name_en="Lagnesha Dhana Yoga",
+            category="Dhana Yoga",
+            is_active=is_lakshmi,
+            strength_score=80.0 if is_lakshmi else 0.0,
+            planets_involved=list(set(lakshmi_planets)),
+            houses_involved=[p1.house_from_lagna],
+            description_hi="लग्नेश का धन अथवा लाभ भाव के स्वामी से संबंध जातक को स्वप्रयास से विपुल वैभव प्रदान करता है।",
+            description_en="Connection of 1st lord with 2nd or 11th lord grants wealth through personal enterprise.",
+            shloka_reference="BPHS Ch. 41.6-10"
+        ))
+
+        # 3. 5th & 9th Lords connection (Mahalakshmi Trikona Dhana Yoga)
+        is_5_9 = (p5.sign_id == p9.sign_id) or (abs(p5.house_from_lagna - p9.house_from_lagna) == 6)
+        results.append(ClassicalYogaItem(
+            yoga_id="DY_TRIKONA_LAKSHMI",
+            name_hi="त्रिकोण महालक्ष्मी योग",
+            name_en="Mahalakshmi Trikona Dhana Yoga",
+            category="Dhana Yoga",
+            is_active=is_5_9,
+            strength_score=88.0 if is_5_9 else 0.0,
+            planets_involved=list(set([l5, l9])),
+            houses_involved=[p5.house_from_lagna, p9.house_from_lagna],
+            description_hi="पंचम (धी) व नवम (भाग्य) स्वामियों का संबंध पूर्व-पुण्य एवं ईश्वरीय कृपा से प्रचुर ऐश्वर्य दिलाता है।",
+            description_en="The mutual conjunction or aspect of 5th and 9th lords produces supreme fortune and divine prosperity.",
+            shloka_reference="Phaladeepika Ch. 6.35, BPHS Ch. 42"
+        ))
+
+        return results
+
+    # -------------------------------------------------------------
+    # 2C. AMALA YOGA (Pure Benefic in 10th)
+    # -------------------------------------------------------------
+    @classmethod
+    def _evaluate_amala_yoga(cls, chart: KundaliChart) -> List[ClassicalYogaItem]:
+        """Evaluates Amala Yoga: pure natural benefic in 10th from Lagna or Moon (BPHS Ch. 36 / Phaladeepika Ch. 6)."""
+        benefics = ["Jupiter", "Venus", "Mercury"]
+        active_planets = []
+        moon_h = chart.planets["Moon"].house_from_lagna
+
+        for b_name in benefics:
+            b_p = chart.planets[b_name]
+            h_lagna = b_p.house_from_lagna
+            h_moon = ((h_lagna - moon_h) % 12) + 1
+            if h_lagna == 10 or h_moon == 10:
+                active_planets.append(b_name)
+
+        is_amala = len(active_planets) > 0
+        return [ClassicalYogaItem(
+            yoga_id="AY_AMALA",
+            name_hi="अमला योग",
+            name_en="Amala Yoga",
+            category="Auspicious Yoga",
+            is_active=is_amala,
+            strength_score=80.0 if is_amala else 0.0,
+            planets_involved=active_planets if is_amala else ["Jupiter", "Venus", "Mercury"],
+            houses_involved=[10],
+            description_hi="लग्न अथवा चन्द्रमा से दशम भाव में केवल शुभ ग्रह होने से अमला योग बनता है, जो निष्कलंक यश, सदाचार एवं स्थाई राजसम्मान दिलाता है।",
+            description_en="A natural benefic occupying 10th house from Lagna or Moon creates Amala Yoga, conferring spotless fame, pure virtue, and lasting respect.",
+            shloka_reference="BPHS Ch. 36.5-6, Phaladeepika Ch. 6.21"
+        )]
 
     # -------------------------------------------------------------
     # 3. CHANDRA & SURYA YOGAS
