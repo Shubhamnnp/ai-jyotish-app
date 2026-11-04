@@ -14,6 +14,7 @@ from ...core.calculator import default_chart_calculator
 from ...dasha.vimshottari import default_dasha_engine
 from ...rules.engine import default_rules_engine
 from ...ai.narrative import default_narrative_service
+from ...ai.orchestrator import default_daivajna_orchestrator, DaivajnaConsultationResult
 from .middleware import rate_limiter
 
 router = APIRouter(prefix="/chat", tags=["v1-chat"])
@@ -139,3 +140,31 @@ def consult_astrological_advisor(payload: AstrologicalConsultRequest):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Consultation processing failed: {str(e)}")
+
+
+class DaivajnaInquiryRequest(BaseModel):
+    birth_data: BirthData
+    topic: str = "general"
+    user_query: Optional[str] = None
+    ayanamsa: str = "Lahiri"
+
+
+@router.post("/orchestrate", response_model=DaivajnaConsultationResult, dependencies=[Depends(rate_limiter)])
+def orchestrate_daivajna_consultation(payload: DaivajnaInquiryRequest):
+    """
+    Executes Layer 4 Daivajna Multi-Agent consultation:
+    1. Calculation Agent: Deterministic facts extraction (no hallucinations)
+    2. Rule Retrieval Agent: Classical Sanskrit Grantha pramana
+    3. Independent Audit Agent: Supporting vs conflicting evidence audit
+    4. Synthesis Agent: Balanced consultation & authentic Vedic remedies
+    """
+    try:
+        chart = default_chart_calculator.calculate_full_chart(payload.birth_data, ayanamsa_name=payload.ayanamsa)
+        result = default_daivajna_orchestrator.process_consultation(
+            chart=chart,
+            topic=payload.topic,
+            user_query=payload.user_query
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Daivajna orchestration failed: {str(e)}")
