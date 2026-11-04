@@ -395,7 +395,7 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
                 with p_row2_c3:
                     st.markdown(f"""
                     <div style="border:1.5px solid #EC4899; border-radius:8px; padding:12px; height:100%; background:rgba(236,72,153,0.06);">
-                        <b style="color:#DB2777; font-size:14px;">६. शास्त्रीय नियम बैंक (12,500+ Rules)</b><br/>
+                        <b style="color:#DB2777; font-size:14px;">६. शास्त्रीय नियम बैंक (Classical Rules Bank)</b><br/>
                         <div style="margin-top:6px; font-size:12.5px;">
                             • <b>सक्रिय नियम (Fired Rules):</b> {p6.get('rules_fired_count', 0)} नियम<br/>
                             • <b>अनुकूल शास्त्रीय साक्ष्य:</b> {p6.get('rules_favorable_count', 0)} योग<br/>

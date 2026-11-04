@@ -1,6 +1,6 @@
 """
 Classical Shastriya Rules Endpoints for /api/v1/rules.
-Provides catalog count, metadata, and fast O(1) indexed search across 12,500+ classical rules.
+Provides catalog count, metadata, and fast O(1) indexed search across classical Shastriya rules.
 """
 
 from typing import Optional, List, Dict, Any

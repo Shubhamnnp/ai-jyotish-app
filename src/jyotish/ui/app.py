@@ -9007,7 +9007,7 @@ with st.container(key="top_frozen_header_container", border=False):
                         type="password",
                         placeholder="AIzaSy...",
                         key="daivajna_brain_key_input",
-                        help="यदि रिक्त छोड़ा तो सिस्टम डिफ़ॉल्ट या ऑफलाइन 12,500+ शास्त्रीय शोध इंजन स्वतः प्रयुक्त होगा।"
+                        help="यदि रिक्त छोड़ा तो सिस्टम डिफ़ॉल्ट या ऑफलाइन शास्त्रीय शोध इंजन स्वतः प्रयुक्त होगा।"
                     )
                     if custom_gemini_key:
                         st.session_state["gemini_api_key"] = custom_gemini_key
