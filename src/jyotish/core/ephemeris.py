@@ -613,7 +613,7 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
                 "longitude": ketu_lon,
                 "latitude": -results["Rahu"]["latitude"],
                 "speed": results["Rahu"]["speed"],
-                "is_retrograde": True,
+                "is_retrograde": results["Rahu"]["is_retrograde"],
                 "tropical_lon": (results["Rahu"]["tropical_lon"] + 180.0) % 360.0,
             }
 
