@@ -42,6 +42,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from .middleware import StructuredLoggingMiddleware
+app.add_middleware(StructuredLoggingMiddleware)
+
 
 @app.get("/")
 def read_root():
@@ -56,6 +59,13 @@ def read_root():
         "ephemeris": engine_info.get("ephemeris_mode", "Swiss Ephemeris"),
         "engine_health": engine_info.get("self_test", "unknown"),
     }
+
+
+@app.get("/health")
+def health_check():
+    """System health check endpoint for monitoring & uptime probes."""
+    from .v1.health import get_system_health
+    return get_system_health()
 
 
 @app.get("/health/engine")
