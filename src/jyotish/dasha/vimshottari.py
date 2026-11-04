@@ -17,11 +17,18 @@ DASHA_YEARS: Dict[str, float] = {d["lord"]: float(d["years"]) for d in VIMSHOTTA
 
 
 class VimshottariDashaEngine:
-    """Calculates Vimshottari Mahadasha, Antardasha, and Pratyantardasha periods."""
+    """Calculates Vimshottari Mahadasha, Antardasha, Pratyantardasha, Sookshma, and Prana periods."""
 
     def __init__(self, year_type: str = "solar"):
-        # Solar year = 365.2425 days; Savana = 360 days
-        self.year_days = 360.0 if year_type.lower() == "savana" else 365.2425
+        # Solar year = 365.2425 days; Savana = 360 days; Nakshatra = 327.85 days
+        self.year_type = str(year_type).lower().strip()
+        if self.year_type == "savana":
+            self.year_days = 360.0
+        elif self.year_type in ("nakshatra", "sidereal_lunar"):
+            self.year_days = 327.85
+        else:
+            self.year_type = "solar"
+            self.year_days = 365.2425
 
     def calculate_birth_balance(self, moon_lon: float) -> Tuple[str, float, float]:
         """
@@ -360,6 +367,9 @@ class VimshottariDashaEngine:
         if not active_prana:
             active_prana = pranas[0] if pranas else {"lord": active_sookshma["lord"], "start_date": active_sookshma["start_date"], "end_date": active_sookshma["end_date"]}
 
+        # 6. Dasha Sandhi Check
+        sandhi_info = self.check_dasha_sandhi(birth_dt, moon_lon, target_dt)
+
         return {
             "mahadasha": active_maha,
             "antardasha": active_antar,
@@ -370,7 +380,71 @@ class VimshottariDashaEngine:
             "all_pratyantardashas": pratyantars,
             "all_sookshmadashas": sookshmas,
             "all_pranadashas": pranas,
+            "dasha_sandhi": sandhi_info,
             "summary_short": f"{active_maha['lord']} / {active_antar['lord']} / {active_prat['lord']} / {active_sookshma['lord']} / {active_prana['lord']}"
+        }
+
+    def check_dasha_sandhi(
+        self,
+        birth_dt: datetime,
+        moon_lon: float,
+        target_dt: datetime,
+        maha_window_days: float = 30.0,
+        antar_window_days: float = 7.0
+    ) -> Dict[str, Any]:
+        """
+        Calculates Dasha Sandhi (transition vulnerability window) per classical principles:
+        1. 30-day window before and after a Mahadasha shift.
+        2. 7-day window before and after an Antardasha shift.
+        """
+        mahadashas = self.generate_mahadasha_sequence(birth_dt, moon_lon)
+        active_maha = None
+        for m in mahadashas:
+            if m["start_date"] <= target_dt <= m["end_date"]:
+                active_maha = m
+                break
+        if not active_maha:
+            active_maha = mahadashas[-1] if target_dt > mahadashas[-1]["end_date"] else mahadashas[0]
+
+        antardashas = self.generate_antardashas(
+            active_maha["lord"],
+            active_maha["start_date"],
+            active_maha["end_date"],
+            is_partial=active_maha.get("is_partial", False)
+        )
+        active_antar = None
+        for a in antardashas:
+            if a["start_date"] <= target_dt <= a["end_date"]:
+                active_antar = a
+                break
+        if not active_antar:
+            active_antar = antardashas[0]
+
+        # Mahadasha boundaries
+        days_from_maha_start = (target_dt - active_maha["start_date"]).total_seconds() / 86400.0
+        days_to_maha_end = (active_maha["end_date"] - target_dt).total_seconds() / 86400.0
+        is_maha_sandhi = (0.0 <= days_from_maha_start <= maha_window_days) or (0.0 <= days_to_maha_end <= maha_window_days)
+
+        # Antardasha boundaries
+        days_from_antar_start = (target_dt - active_antar["start_date"]).total_seconds() / 86400.0
+        days_to_antar_end = (active_antar["end_date"] - target_dt).total_seconds() / 86400.0
+        is_antar_sandhi = (0.0 <= days_from_antar_start <= antar_window_days) or (0.0 <= days_to_antar_end <= antar_window_days)
+
+        sandhi_type = None
+        if is_maha_sandhi:
+            sandhi_type = "Mahadasha Sandhi"
+        elif is_antar_sandhi:
+            sandhi_type = "Antardasha Sandhi"
+
+        return {
+            "is_sandhi": is_maha_sandhi or is_antar_sandhi,
+            "is_mahadasha_sandhi": is_maha_sandhi,
+            "is_antardasha_sandhi": is_antar_sandhi,
+            "sandhi_type": sandhi_type,
+            "maha_days_to_boundary": round(min(abs(days_from_maha_start), abs(days_to_maha_end)), 2),
+            "antar_days_to_boundary": round(min(abs(days_from_antar_start), abs(days_to_antar_end)), 2),
+            "active_mahadasha": active_maha["lord"],
+            "active_antardasha": active_antar["lord"],
         }
 
     def get_active_dasha_at(
