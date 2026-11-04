@@ -5840,7 +5840,9 @@ if getattr(chart, "engine_degraded", False) or (getattr(chart, "metadata", None)
 
 if getattr(chart, "metadata", None):
     meta = chart.metadata
-    with st.expander("🌐 Astronomical Provenance & Metadata (Shastriya Pramana)", expanded=False):
+    from src.jyotish.ui.components.provenance import render_provenance_badge_html
+    st.markdown(render_provenance_badge_html(chart, verified_rules_count=32), unsafe_allow_html=True)
+    with st.expander("🌐 Astronomical Provenance & Metadata Details (Shastriya Pramana)", expanded=False):
         c1, c2, c3, c4 = st.columns(4)
         c1.metric("Engine", meta.engine)
         c2.metric("Julian Day (UT)", f"{meta.jd_ut:.5f}")
