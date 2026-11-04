@@ -5825,6 +5825,9 @@ except TypeError:
             ayanamsa_name=ayanamsa,
             house_system=house_system
         )
+
+if getattr(chart, "engine_degraded", False) or (getattr(chart, "metadata", None) and getattr(chart.metadata, "engine_degraded", False)):
+    st.warning("⚠️ **Warning: Planetary calculations are running in degraded fallback mode (PyEphem).** Professional astronomical precision may be reduced. Please ensure Swiss Ephemeris is active.")
 affliction_engine = AfflictionEngine(chart)
 vastu_engine = VastuJyotishEngine(chart)
 

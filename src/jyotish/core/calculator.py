@@ -316,6 +316,8 @@ class ChartCalculator:
 
         jd_val = self.provider.datetime_to_jd(dt_utc) if hasattr(self.provider, "datetime_to_jd") else 0.0
         engine_str = getattr(self.provider, "engine_type", "PyEphem High-Precision Calibrated")
+        is_degraded = bool(getattr(self.provider, "is_degraded", False) or not getattr(self.provider, "_has_swisseph", False))
+        ephe_mode = getattr(self.provider, "ephemeris_mode", "PyEphem (Degraded)" if is_degraded else "Swiss (Moshier)")
         calc_meta = CalculationMetadata(
             engine_type=engine_str,
             engine_version="2.1.0",
@@ -327,7 +329,9 @@ class ChartCalculator:
             topocentric_moon=bool(kwargs.get("topocentric_moon", False)),
             polar_latitude_adjusted=abs(birth_data.latitude) > 66.5,
             calculation_timestamp_utc=datetime.now(timezone.utc),
-            jd_ut=jd_val
+            jd_ut=jd_val,
+            engine_degraded=is_degraded,
+            ephemeris_mode=ephe_mode,
         )
 
         return KundaliChart(
@@ -343,6 +347,7 @@ class ChartCalculator:
             panchang=panchang,
             atmakaraka=atmakaraka,
             metadata=calc_meta,
+            engine_degraded=is_degraded,
         )
 
     def calculate_full_chart(

@@ -180,6 +180,8 @@ class CalculationMetadata(BaseModel):
     polar_latitude_adjusted: bool = False
     calculation_timestamp_utc: Optional[datetime] = None
     jd_ut: float = 0.0
+    engine_degraded: bool = False
+    ephemeris_mode: str = "Swiss (Moshier)"
 
 
 class KundaliChart(BaseModel):
@@ -201,6 +203,7 @@ class KundaliChart(BaseModel):
     jaimini: Optional[JaiminiResult] = None
     upagrahas: Optional[UpagrahaResult] = None
     metadata: Optional[CalculationMetadata] = None
+    engine_degraded: bool = False
 
 
 class DashaLevel(BaseModel):

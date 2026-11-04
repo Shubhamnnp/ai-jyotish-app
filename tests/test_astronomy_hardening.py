@@ -29,7 +29,7 @@ def test_calculation_metadata_attached():
     
     assert chart.metadata is not None
     assert chart.metadata.engine_version == "2.1.0"
-    assert "Ephem" in chart.metadata.engine_type
+    assert "Swiss" in chart.metadata.engine_type or "Ephem" in chart.metadata.engine_type
     assert chart.metadata.ayanamsa_name == "Lahiri"
     assert 23.0 < chart.metadata.ayanamsa_value < 25.0
     assert chart.metadata.jd_ut > 2440000.0
