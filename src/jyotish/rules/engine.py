@@ -44,14 +44,16 @@ class RulesEngine:
         self.rules_by_id = {}
 
         # 1. Load primary rules library if present
+        from .quarantine import migrate_rule_to_v2_dict
         if os.path.exists(self.rules_file_path):
             try:
                 with open(self.rules_file_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
                 self.rules_metadata = data.get("metadata", {})
                 for r in data.get("rules", []):
-                    self.rules.append(r)
-                    self.rules_by_id[r["rule_id"]] = r
+                    q_r = migrate_rule_to_v2_dict(r)
+                    self.rules.append(q_r)
+                    self.rules_by_id[q_r["rule_id"]] = q_r
             except Exception as e:
                 print(f"Warning loading {self.rules_file_path}: {e}")
 
@@ -66,10 +68,11 @@ class RulesEngine:
                         with open(fpath, "r", encoding="utf-8") as gf:
                             gdata = json.load(gf)
                             for gr in gdata.get("rules", []):
-                                r_id = gr["rule_id"]
+                                q_gr = migrate_rule_to_v2_dict(gr)
+                                r_id = q_gr["rule_id"]
                                 if r_id not in self.rules_by_id:
-                                    self.rules.append(gr)
-                                    self.rules_by_id[r_id] = gr
+                                    self.rules.append(q_gr)
+                                    self.rules_by_id[r_id] = q_gr
                     except Exception as ge:
                         print(f"Warning loading grantha rule {fname}: {ge}")
 
@@ -1147,9 +1150,15 @@ class RulesEngine:
         transits: Dict[str, Any],
         transit_summary: TransitSummary,
         filter_theme: str = "all",
-        use_inverted_index: bool = False
+        use_inverted_index: bool = False,
+        allow_drafts: bool = True,
+        allowed_statuses: Optional[Tuple[str, ...]] = None
     ) -> List[RuleEvidence]:
-        """Evaluates all rules matching theme filter (or all rules), optionally with O(1) indexed pruning."""
+        """
+        Evaluates all rules matching theme filter (or all rules), optionally with O(1) indexed pruning.
+        If allow_drafts is False, only rules with authorized verification status (e.g. 'scholar_verified')
+        are evaluated for user-facing phaladesh.
+        """
         evidences = []
         theme_lower = filter_theme.strip().lower()
 
@@ -1157,6 +1166,12 @@ class RulesEngine:
             candidate_rules = self.inverted_index.get_candidate_rules(chart, filter_theme=theme_lower)
         else:
             candidate_rules = self.rules
+
+        # Quarantine check: filter draft rules if allow_drafts is False
+        if not allow_drafts:
+            from .quarantine import filter_rules_by_verification
+            target_statuses = allowed_statuses or ("scholar_verified", "machine_checked")
+            candidate_rules = filter_rules_by_verification(candidate_rules, allowed_statuses=target_statuses)
 
         for rule in candidate_rules:
             themes = [t.lower() for t in rule.get("effect", {}).get("themes", [])]
@@ -1168,6 +1183,31 @@ class RulesEngine:
             evidences.append(ev)
 
         return evidences
+
+    def evaluate_verified_only(
+        self,
+        chart: KundaliChart,
+        active_dasha: ActiveDashaHierarchy,
+        transits: Dict[str, Any],
+        transit_summary: TransitSummary,
+        filter_theme: str = "all",
+        use_inverted_index: bool = False
+    ) -> List[RuleEvidence]:
+        """User-facing Phaladesh evaluator: strictly excludes unverified / draft rules."""
+        return self.evaluate_all(
+            chart=chart,
+            active_dasha=active_dasha,
+            transits=transits,
+            transit_summary=transit_summary,
+            filter_theme=filter_theme,
+            use_inverted_index=use_inverted_index,
+            allow_drafts=False
+        )
+
+    def get_quarantine_summary(self) -> Dict[str, int]:
+        """Returns distribution of rules by verification lifecycle status."""
+        from .quarantine import get_quarantine_stats
+        return get_quarantine_stats(self.rules)
 
     def synthesize_conflicts(
         self,
