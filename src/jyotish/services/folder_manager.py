@@ -362,5 +362,44 @@ class ChartFolderManager:
         self._save()
         return imported_count
 
+    def export_user_data(self, owner_email: str) -> Dict[str, Any]:
+        """Exports all folders and charts belonging to owner_email (GDPR / DPDP portability)."""
+        clean_owner = owner_email.strip().lower()
+        matched_folders = [f for f in self.data.get("folders", []) if f.get("owner_email", "public") == clean_owner]
+        matched_recent = [c for c in self.data.get("recent", []) if c.get("owner_email", "public") == clean_owner]
+        return {
+            "owner_email": clean_owner,
+            "folders": matched_folders,
+            "recent_consultations": matched_recent
+        }
+
+    def delete_user_data(self, owner_email: str) -> Dict[str, Any]:
+        """Right-to-be-forgotten: Permanently removes all data for owner_email."""
+        clean_owner = owner_email.strip().lower()
+        if clean_owner in ("public", "system"):
+            return {"deleted_folders": 0, "deleted_charts": 0, "status": "cannot_delete_system_data"}
+
+        initial_folders = len(self.data.get("folders", []))
+        self.data["folders"] = [
+            f for f in self.data.get("folders", [])
+            if f.get("id") == 1 or f.get("owner_email", "public") != clean_owner
+        ]
+        deleted_folders = initial_folders - len(self.data["folders"])
+
+        initial_recent = len(self.data.get("recent", []))
+        self.data["recent"] = [
+            c for c in self.data.get("recent", [])
+            if c.get("owner_email", "public") != clean_owner
+        ]
+        deleted_recent = initial_recent - len(self.data["recent"])
+
+        self._save()
+        return {
+            "status": "success",
+            "owner_email": clean_owner,
+            "deleted_folders": deleted_folders,
+            "deleted_charts": deleted_recent
+        }
+
 
 default_folder_manager = ChartFolderManager()
