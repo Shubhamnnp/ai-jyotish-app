@@ -1,0 +1,12 @@
+[
+  {
+    "code": "BH-EXAMPLE-CODE-0001",
+    "created_by": "admin@example.com",
+    "tier": "pro_annual",
+    "created_at": "2026-01-01T00:00:00",
+    "is_redeemed": false,
+    "redeemed_by": null,
+    "redeemed_at": null,
+    "notes": "Example License Code"
+  }
+]

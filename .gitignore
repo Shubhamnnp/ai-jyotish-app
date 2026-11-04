@@ -24,3 +24,17 @@ scratch/
 test_*.json
 saved_charts_test_*.json
 
+# Data, SQLite databases, and user state (P0-T1)
+data/*.json
+!data/*.example.json
+data/*.db
+data/daivajna_brain_cache.json
+*.db
+saved_charts_db.json
+
+# Secrets & Environment
+.env
+.env.*
+!.env.example
+
+
