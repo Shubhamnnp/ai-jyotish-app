@@ -44,7 +44,7 @@ def test_p8_t1_domain_intelligence_pipeline(benchmark_chart):
     """Verify deep-dive analysis across life domains with significator grounding."""
     factors = default_factor_extractor.extract_factors(benchmark_chart)
 
-    domains = ["career", "wealth", "marriage", "progeny", "health"]
+    domains = ["career", "wealth", "marriage", "children", "health"]
     for dom in domains:
         result = default_domain_analyzer.analyze_domain(dom, factors, school="parashari")
         assert result.domain == dom
@@ -129,9 +129,9 @@ def test_p8_t3_panchang_and_muhurta_engine():
     full_p = panchang_svc.get_full_panchang(test_d, 28.6139, 77.2090)
     assert full_p is not None
 
-    # 1. Five Classical Limbs (Panchanga)
-    assert "panchanga" in full_p
-    p_pillars = full_p["panchanga"]
+    # 1. Five Classical Limbs (Panchanga / Five Pillars)
+    assert "five_pillars" in full_p
+    p_pillars = full_p["five_pillars"]
     assert "tithi" in p_pillars
     assert "vara" in p_pillars
     assert "nakshatra" in p_pillars
@@ -139,18 +139,22 @@ def test_p8_t3_panchang_and_muhurta_engine():
     assert "karana" in p_pillars
 
     # 2. Choghadiya & Horas
-    assert "choghadiya" in full_p
-    chogh = full_p["choghadiya"]
-    assert "day_choghadiya" in chogh
-    assert "night_choghadiya" in chogh
-    assert len(chogh["day_choghadiya"]) == 8
-    assert len(chogh["night_choghadiya"]) == 8
+    assert "choghadiya_horas" in full_p
+    chogh = full_p["choghadiya_horas"]
+    assert "day_choghadiyas" in chogh
+    assert "night_choghadiyas" in chogh
+    assert len(chogh["day_choghadiyas"]) == 8
+    assert len(chogh["night_choghadiyas"]) == 8
 
     # 3. Shubh & Ashubh Muhurtas (Abhijit, Rahukaal, etc.)
     assert "muhurtas" in full_p
     muhurtas = full_p["muhurtas"]
-    assert "rahukaal" in muhurtas
-    assert "abhijit" in muhurtas
+    assert "shubh_windows" in muhurtas
+    assert "ashubh_windows" in muhurtas
+    shubh_titles = [m.get("title", "") for m in muhurtas["shubh_windows"]]
+    ashubh_titles = [m.get("title", "") for m in muhurtas["ashubh_windows"]]
+    assert any("अभिजित" in t or "Abhijit" in t for t in shubh_titles)
+    assert any("राहुकाल" in t or "Rahu" in t for t in ashubh_titles)
 
 
 # -----------------------------------------------------------------------------
