@@ -40,6 +40,11 @@ for p in [curr_dir, src_dir, project_root]:
     if p not in sys.path:
         sys.path.insert(0, p)
 
+# Evict cached core modules in Streamlit runtime so newly deployed code is always reloaded
+for _mod in list(sys.modules.keys()):
+    if _mod.startswith("src.jyotish"):
+        del sys.modules[_mod]
+
 from src.jyotish.core.models import (
     BirthData, GhatnaQueryInput, KundaliChart,
     VargaChart, VargaPlanetPosition

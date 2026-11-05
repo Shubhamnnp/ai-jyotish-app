@@ -175,6 +175,12 @@ class HouseCalculator:
         house_result: HouseComputationResult
     ) -> int:
         """Determines which house (1-12) a planet occupies based on the calculated house system."""
+        if not house_result or not getattr(house_result, "cusps", None) or len(house_result.cusps) < 12:
+            asc = getattr(house_result, "ascendant", 0.0) if house_result else 0.0
+            asc_sign = int(asc // 30.0) + 1
+            p_sign = int(planet_lon // 30.0) + 1
+            return ((p_sign - asc_sign) % 12) + 1
+
         hsys = house_result.house_system_name
 
         if hsys == "Whole Sign":

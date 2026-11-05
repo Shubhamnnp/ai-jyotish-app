@@ -203,12 +203,12 @@ class ChartCalculator:
             )
             houses: List[HouseCusp] = []
             for h in range(1, 13):
-                cusp_lon = house_res.cusps[h - 1]
+                cusp_lon = house_res.cusps[h - 1] if (house_res.cusps and len(house_res.cusps) >= h) else ((lagna_lon + (h - 1) * 30.0) % 360.0)
                 sign_id, sign_name, _ = self.longitude_to_sign(cusp_lon)
                 lord = SIGN_LORDS[sign_name]
-                s_start = house_res.sandhis[(h - 2) % 12] if house_res.sandhis else None
-                s_end = house_res.sandhis[(h - 1) % 12] if house_res.sandhis else None
-                madhya = house_res.madhyas[h - 1] if house_res.madhyas else cusp_lon
+                s_start = house_res.sandhis[(h - 2) % 12] if (house_res.sandhis and len(house_res.sandhis) >= 12) else None
+                s_end = house_res.sandhis[(h - 1) % 12] if (house_res.sandhis and len(house_res.sandhis) >= 12) else None
+                madhya = house_res.madhyas[h - 1] if (house_res.madhyas and len(house_res.madhyas) >= h) else cusp_lon
 
                 houses.append(HouseCusp(
                     house_number=h,
