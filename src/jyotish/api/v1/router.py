@@ -15,6 +15,7 @@ from .astronomy import router as astronomy_router
 from .evidence import router as evidence_router
 from .health import router as health_router
 from .privacy import router as privacy_router
+from .tasks import router as tasks_router
 
 api_v1_router = APIRouter()
 
@@ -29,4 +30,5 @@ api_v1_router.include_router(astronomy_router)
 api_v1_router.include_router(evidence_router)
 api_v1_router.include_router(health_router)
 api_v1_router.include_router(privacy_router)
+api_v1_router.include_router(tasks_router)
 
