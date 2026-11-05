@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import date, time
 import importlib
 import streamlit.components.v1 as components
-from src.jyotish.models import BirthData
+from src.jyotish.core.models import BirthData
 from src.jyotish.core.calculator import default_chart_calculator
 from src.jyotish.services.partners import BusinessPartnershipService
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS

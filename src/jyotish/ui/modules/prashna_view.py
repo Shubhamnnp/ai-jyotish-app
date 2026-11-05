@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta, date, time
 import importlib
 import re
 
-from src.jyotish.models import KundaliChart
+from src.jyotish.core.models import KundaliChart
 from src.jyotish.services.prashna import default_prashna_service, PRASHNA_CATEGORIES
 from src.jyotish.services.geocoding import default_geocoding_service
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS

@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timezone, timedelta, date, time
 import importlib
-from src.jyotish.models import BirthData
+from src.jyotish.core.models import BirthData
 from src.jyotish.core.calculator import default_chart_calculator
 from src.jyotish.services.geocoding import default_geocoding_service
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS

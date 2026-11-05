@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime, timezone, timedelta, date, time
 import importlib
 
-from src.jyotish.models import BirthData
+from src.jyotish.core.models import BirthData
 from src.jyotish.core.calculator import default_chart_calculator
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 from src.jyotish.ui.sudarshan import PLANET_NAMES_HI

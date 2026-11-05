@@ -203,12 +203,8 @@ def render_varga_grid_view(chart, tabs=None):
     st.subheader("📊 दशवर्ग एवं षोडशवर्ग विश्लेषण (Dasvarga & Shodashvarga Dignity Suite)")
     st.caption("महर्षि पराशर प्रणीत दशवर्ग (10 Divisions) एवं षोडशवर्ग (16 Divisions) ग्रह गरिमा, विंशोपक बल, वैशेषिकांश एवं शास्त्रीय फल सारांश।")
 
-    # Hot reload check for AfflictionEngine methods
-    if not hasattr(affliction_engine, "calculate_shodashvarga_table"):
-        import importlib
-        import src.jyotish.core.affliction as aff_mod
-        importlib.reload(aff_mod)
-        affliction_engine = aff_mod.AfflictionEngine(chart)
+    import src.jyotish.core.affliction as aff_mod
+    affliction_engine = aff_mod.AfflictionEngine(chart)
 
     _is_dark = is_astrallis_mode or is_night_mode
 

@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime as dt_cls, timedelta, date
 import importlib
-from src.jyotish.models import BirthData
+from src.jyotish.core.models import BirthData
 from src.jyotish.core.varga import VargaCalculator
 from src.jyotish.core.calculator import default_chart_calculator
 from src.jyotish.services.btr import default_btr_service, LifeEvent

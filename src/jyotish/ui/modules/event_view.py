@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime, timezone, timedelta, date, time
 import importlib
 
-from src.jyotish.models import GhatnaQueryInput
+from src.jyotish.core.models import GhatnaQueryInput
 from src.jyotish.events.past_verification import default_past_event_engine, PastEventVerificationInput, AstrologicalEvidenceStatus
 from src.jyotish.services.event_query import default_event_query_service
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS

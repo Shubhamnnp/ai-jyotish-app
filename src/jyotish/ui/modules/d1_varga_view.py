@@ -30,20 +30,20 @@ def get_varga_dignity_info(planet: str, sign_name: str, aff_eng=None):
     target_aff = aff_eng or affliction_engine
     text, css = target_aff.get_dignity(planet, sign_name)
     if css == "exalt":
-        return "उच्च (Exalted)", 5, "#10B981"
-    elif css == "moolatrikona":
-        return "मूलत्रिकोण (Moolatrikona)", 4, "#059669"
-    elif css == "own":
-        return "स्वक्षेत्री (Own)", 3, "#3B82F6"
-    elif css == "friendly":
-        return "मित्रक्षेत्री (Friendly)", 2, "#6366F1"
-    elif css == "neutral":
-        return "सम (Neutral)", 1, "#64748B"
-    elif css == "enemy":
-        return "शत्रुक्षेत्री (Enemy)", -1, "#F59E0B"
-    elif css == "debilitated":
-        return "नीच (Debilitated)", -2, "#EF4444"
-    return text, 0, "#64748B"
+        return "🌟 उच्च (Exalted)", 20, "परमोच्च बल एवं अत्यंत शुभ फल"
+    elif css in ("mool", "moolatrikona"):
+        return "💎 मूलत्रिकोण (Moolatrikona)", 18, "प्रबल शुभ एवं फलदायक"
+    elif css in ("own", "swakshetra"):
+        return "👑 स्वराशि (Own Sign)", 15, "सशक्त एवं अनुकूल आधार"
+    elif css in ("friend", "friendly"):
+        return "🤝 मित्र राशि (Friend Sign)", 11, "मित्रवत एवं सहयोगी प्रभाव"
+    elif css in ("neutral", "sama"):
+        return "⚖️ सम राशि (Neutral)", 7, "तटस्थ / सामान्य संतुलित फल"
+    elif css in ("enemy", "shatru"):
+        return "⚔️ शत्रु राशि (Enemy Sign)", 4, "प्रतिरोधी एवं संघर्षपूर्ण फल"
+    elif css in ("deb", "debilitated"):
+        return "⚠️ नीच (Debilitated)", 0, "कमजोर स्थिति / उपाय आवश्यक"
+    return "⚖️ सामान्य", 7, "सामान्य प्रभाव" 
 
 def render_styled_meters_html(items, max_val=20, is_dark=False):
     card_bg = "#111827" if is_dark else "#FFFFFF"
@@ -690,7 +690,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 b_bg, b_fg, b_bdr = "#BCE636", "#1E293B", "#A4D024"
             elif "मूलत्रिकोण" in d_lbl:
                 b_bg, b_fg, b_bdr = "#CAF0F8", "#0077B6", "#00B4D8"
-            elif "स्वराशि" in d_lbl:
+            elif "स्व" in d_lbl:
                 b_bg, b_fg, b_bdr = "#0073CF", "#FFFFFF", "#00B0F0"
             elif "नीच" in d_lbl:
                 b_bg, b_fg, b_bdr = "#FF0000", "#FFFFFF", "#CC0000"
