@@ -2841,3 +2841,6 @@ class VedicPanchangService:
             "festivals_and_vrat": festivals_vrat,
             "sankalpa_mantra": sankalpa_mantra
         }
+
+
+default_panchang_service = VedicPanchangService()
