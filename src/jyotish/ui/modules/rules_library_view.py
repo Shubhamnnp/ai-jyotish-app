@@ -38,10 +38,12 @@ def render_rules_library_view(chart, tabs=None):
 
             # Top Status Metrics
             col_rm1, col_rm2, col_rm3, col_rm4 = st.columns(4)
-            col_rm1.metric("कुल शास्त्रीय नियम", f"{len(all_rules):,}", "१० महा-ग्रंथ")
+            col_rm1.metric("कुल संकलित नियम", f"{len(all_rules):,}", "१५ महा-ग्रंथ")
             col_rm2.metric("कुण्डली में सक्रिय नियम", f"{len(fired_evs)}", f"सत्यापित ({round((len(fired_evs)/max(1, len(all_rules)))*100)}%)")
             col_rm3.metric("सक्रिय शुभ योग", f"{len(fired_yogas)}", "शुभ फलित")
             col_rm4.metric("सक्रिय दोष / चेतावनियां", f"{len(fired_doshas)}", "सावधानी अपेक्षित")
+
+            st.info("ℹ️ **सत्यनिष्ठा व प्रामाणिकता नीति:** मुख्य फलादेश व AI विश्लेषण में केवल **मशीन-जांचित (३,५९५)** व **विद्वान-सत्यापित** नियम सक्रिय रहते हैं। शेष ८,९११ नियम ड्राफ्ट व संगरोध (Quarantine) में सुरक्षित हैं और आंतरिक अनुसंधान हेतु **Rules Lab** में उपलब्ध हैं।")
 
             st.markdown("---")
 
@@ -309,12 +311,13 @@ def render_rules_lab_admin_panel(all_rules=None):
 
     if st.session_state.get("admin_authenticated", False):
         stats = get_quarantine_stats(all_rules)
-        c_s1, c_s2, c_s3, c_s4, c_s5 = st.columns(5)
+        c_s1, c_s2, c_s3, c_s4, c_s5, c_s6 = st.columns(6)
         c_s1.metric("कुल पंजीकृत नियम", f"{stats.get('total', len(all_rules)):,}")
-        c_s2.metric("विद्वान-सत्यापित (Scholar Verified)", f"{stats.get('scholar_verified', 0):,}")
-        c_s3.metric("मशीन-जांचित (Machine Checked)", f"{stats.get('machine_checked', 0):,}")
-        c_s4.metric("समीक्षा प्रतीक्षारत (Draft)", f"{stats.get('draft', 0):,}")
-        c_s5.metric("अस्वीकृत (Rejected)", f"{stats.get('rejected', 0):,}")
+        c_s2.metric("विद्वान-सत्यापित (Scholar)", f"{stats.get('scholar_verified', 0):,}")
+        c_s3.metric("मशीन-जांचित (Checked)", f"{stats.get('machine_checked', 0):,}")
+        c_s4.metric("समीक्षाधीन (Draft)", f"{stats.get('draft', 0):,}")
+        c_s5.metric("संगरोध (Quarantined)", f"{stats.get('quarantined', 0):,}")
+        c_s6.metric("अस्वीकृत (Rejected)", f"{stats.get('rejected', 0):,}")
 
         st.markdown("---")
         st.markdown("#### 📝 समीक्षा प्रतीक्षारत नियम सूची (Draft Review Queue)")

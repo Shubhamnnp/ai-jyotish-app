@@ -8172,7 +8172,7 @@ with st.container(key="top_frozen_header_container", border=False):
             with st.container(border=True):
                 c_btr_h1, c_btr_h2 = st.columns([5, 1], vertical_alignment="center")
                 with c_btr_h1:
-                    st.markdown("### ⏱️ BTR (जन्म समय शोधन), काल गति नियंत्रक एवं १२,५००+ शास्त्रीय नियम")
+                    st.markdown("### ⏱️ BTR (जन्म समय शोधन), काल गति नियंत्रक एवं शास्त्रीय नियम बैंक")
                 with c_btr_h2:
                     if st.button("❌ बंद करें", use_container_width=True, key="gla_close_clock_modal_btn"):
                         st.session_state.gla_active_tool = None
@@ -8221,7 +8221,7 @@ with st.container(key="top_frozen_header_container", border=False):
                     st.markdown(f"""
                     <div style="background: {_rules_bg}; border: 1.5px solid {_rules_border}; border-radius: 8px; padding: 4px 10px; min-height: 38px; height: 38px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(139, 92, 246, 0.12);">
                         <div style="color: {_rules_text_color} !important; font-size: 12.5px; font-weight: 800; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                            <span style="color: {_rules_text_color} !important;">📚 <b>१२,५००+ महा-शास्त्रीय नियम इंजन (AI लिंक्ड):</b></span>
+                            <span style="color: {_rules_text_color} !important;">📚 <b>शास्त्रीय नियम बैंक (३,५९५ जांचित / १२,५०६ संकलित):</b></span>
                             <span style="background: {_rules_count_bg}; color: {_rules_count_color} !important; border: 1px solid {_rules_count_border}; padding: 2px 7px; border-radius: 6px; font-weight: 900; font-size: 11.5px;">{_gr_fired:,} सक्रिय नियम फलित</span>
                         </div>
                         <div style="font-size: 11px; display: flex; gap: 5px; align-items: center; flex-shrink: 0;">
