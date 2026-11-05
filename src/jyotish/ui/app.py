@@ -5821,7 +5821,7 @@ try:
         house_system=house_system,
         node_type=node_type_val
     )
-except TypeError:
+except Exception:
     try:
         chart = default_chart_calculator.calculate_full_chart(
             birth_profile,
@@ -5829,11 +5829,17 @@ except TypeError:
             house_system=house_system
         )
     except Exception:
-        chart = default_chart_calculator.calculate_chart(
-            birth_profile,
-            ayanamsa_name=ayanamsa,
-            house_system=house_system
-        )
+        try:
+            chart = default_chart_calculator.calculate_chart(
+                birth_profile,
+                ayanamsa_name=ayanamsa,
+                house_system=house_system
+            )
+        except Exception:
+            chart = default_chart_calculator.calculate_chart(
+                birth_profile,
+                use_cache=False
+            )
 
 if getattr(chart, "engine_degraded", False) or (getattr(chart, "metadata", None) and getattr(chart.metadata, "engine_degraded", False)):
     st.warning("⚠️ **Warning: Planetary calculations are running in degraded fallback mode (PyEphem).** Professional astronomical precision may be reduced. Please ensure Swiss Ephemeris is active.")

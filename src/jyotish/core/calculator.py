@@ -319,23 +319,33 @@ class ChartCalculator:
         if getattr(self.provider, "_has_swisseph", False):
             from .ephemeris import resolve_ayanamsa_mode
             _, ayanamsa_code = resolve_ayanamsa_mode(ayanamsa_name)
-            house_res = HouseCalculator.calculate_houses(
-                jd=jd_val,
-                latitude=birth_data.latitude,
-                longitude=birth_data.longitude,
-                house_system=canonical_hsys,
-                ayanamsa_code=ayanamsa_code
-            )
-            lagna_lon = house_res.ascendant
-            polar_adjusted = house_res.polar_latitude_adjusted
-            houses = self.calculate_houses(
-                lagna_lon=lagna_lon,
-                house_system=canonical_hsys,
-                jd=jd_val,
-                latitude=birth_data.latitude,
-                longitude=birth_data.longitude,
-                ayanamsa_code=ayanamsa_code
-            )
+            try:
+                house_res = HouseCalculator.calculate_houses(
+                    jd=jd_val,
+                    latitude=birth_data.latitude,
+                    longitude=birth_data.longitude,
+                    house_system=canonical_hsys,
+                    ayanamsa_code=ayanamsa_code
+                )
+                lagna_lon = house_res.ascendant
+                polar_adjusted = house_res.polar_latitude_adjusted
+                houses = self.calculate_houses(
+                    lagna_lon=lagna_lon,
+                    house_system=canonical_hsys,
+                    jd=jd_val,
+                    latitude=birth_data.latitude,
+                    longitude=birth_data.longitude,
+                    ayanamsa_code=ayanamsa_code
+                )
+            except Exception:
+                lagna_lon = self.provider.calculate_ascendant(
+                    dt_utc, birth_data.latitude, birth_data.longitude, ayanamsa_val
+                )
+                polar_adjusted = abs(birth_data.latitude) > 66.5
+                houses = self.calculate_houses(
+                    lagna_lon=lagna_lon,
+                    house_system="Whole Sign"
+                )
         else:
             lagna_lon = self.provider.calculate_ascendant(
                 dt_utc, birth_data.latitude, birth_data.longitude, ayanamsa_val

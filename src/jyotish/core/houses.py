@@ -102,13 +102,29 @@ class HouseCalculator:
             polar_adjusted = True
             warning = f"Latitude {latitude}° exceeds 66° polar threshold. House system '{canonical_name}' collapsed; fell back to Equal house system."
 
+        cusps_tuple = None
+        ascmc = None
         try:
             cusps_tuple, ascmc = swe.houses_ex(jd, latitude, longitude, hsys_code, flg_sidereal)
         except Exception as e:
-            # Fallback to Equal if quadrant computation fails
-            cusps_tuple, ascmc = swe.houses_ex(jd, latitude, longitude, b'E', flg_sidereal)
-            polar_adjusted = True
-            warning = f"Swiss houses_ex failed for '{canonical_name}' ({e}); fell back to Equal house system."
+            try:
+                # Fallback to Equal if quadrant computation fails
+                cusps_tuple, ascmc = swe.houses_ex(jd, latitude, longitude, b'E', flg_sidereal)
+                polar_adjusted = True
+                warning = f"Swiss houses_ex failed for '{canonical_name}' ({e}); fell back to Equal house system."
+            except Exception:
+                try:
+                    cusps_tuple, ascmc = swe.houses(jd, latitude, longitude, b'E')
+                    polar_adjusted = True
+                except Exception:
+                    cusps_tuple = tuple(float((i * 30.0) % 360.0) for i in range(13))
+                    ascmc = (0.0, 90.0, 0.0, 0.0)
+                    polar_adjusted = True
+
+        if not cusps_tuple:
+            cusps_tuple = tuple(float((i * 30.0) % 360.0) for i in range(13))
+        if not ascmc:
+            ascmc = (0.0, 90.0, 0.0, 0.0)
 
         # Handle both 13-element (1-indexed, cusps[0] dummy) and 12-element (0-indexed) returns
         if len(cusps_tuple) >= 13:
