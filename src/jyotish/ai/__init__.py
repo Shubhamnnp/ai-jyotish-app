@@ -1,44 +1,55 @@
-# AI package for JyotishOS (Layer 4 Intelligence)
+"""
+Daivajna Brain & Multi-Agent AI Subsystem.
+"""
 
-from .knowledge_base import (
-    ShastraPassage,
-    ShastriyaKnowledgeBase,
-    default_knowledge_base,
-    CLASSICAL_SHASTRA_CHUNKS,
+from .agents.registry import (
+    AgentDomain,
+    SpecialistAgentDefinition,
+    CANONICAL_14_AGENTS,
+    AgentRegistry,
+    default_agent_registry,
 )
-from .narrative import AINarrativeService, default_narrative_service
-from .orchestrator import (
-    DeterministicFactSheet,
-    ShastriyaPramanaItem,
-    EvidenceFactor,
+from .protocol import (
+    AgentMessage,
+    AgentProtocolValidator,
+    default_protocol_validator,
+)
+from .shastra_rag import (
+    ShastraCitation,
+    VERIFIED_SHASTRA_CITATIONS,
+    ShastraRAGService,
+    default_shastra_rag,
+)
+from .style import (
+    LanguageStyle,
+    StylisticFormatter,
+    default_style_formatter,
+)
+from .auditor import (
     AuditVerdict,
-    VedicRemedyRecommendation,
-    DaivajnaConsultationResult,
-    SpecialistCalculationAgent,
-    ShastriyaRuleRetrievalAgent,
-    EvidenceVerificationAuditAgent,
-    SynthesisExplanationAgent,
-    MasterDaivajnaOrchestrator,
-    default_daivajna_orchestrator,
+    AuditResult,
+    IndependentAuditorAgent,
+    default_auditor_agent,
 )
 
 __all__ = [
-    "ShastraPassage",
-    "ShastriyaKnowledgeBase",
-    "default_knowledge_base",
-    "CLASSICAL_SHASTRA_CHUNKS",
-    "AINarrativeService",
-    "default_narrative_service",
-    "DeterministicFactSheet",
-    "ShastriyaPramanaItem",
-    "EvidenceFactor",
+    "AgentDomain",
+    "SpecialistAgentDefinition",
+    "CANONICAL_14_AGENTS",
+    "AgentRegistry",
+    "default_agent_registry",
+    "AgentMessage",
+    "AgentProtocolValidator",
+    "default_protocol_validator",
+    "ShastraCitation",
+    "VERIFIED_SHASTRA_CITATIONS",
+    "ShastraRAGService",
+    "default_shastra_rag",
+    "LanguageStyle",
+    "StylisticFormatter",
+    "default_style_formatter",
     "AuditVerdict",
-    "VedicRemedyRecommendation",
-    "DaivajnaConsultationResult",
-    "SpecialistCalculationAgent",
-    "ShastriyaRuleRetrievalAgent",
-    "EvidenceVerificationAuditAgent",
-    "SynthesisExplanationAgent",
-    "MasterDaivajnaOrchestrator",
-    "default_daivajna_orchestrator",
+    "AuditResult",
+    "IndependentAuditorAgent",
+    "default_auditor_agent",
 ]
