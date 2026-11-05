@@ -352,6 +352,34 @@ class PrashnaService:
                 "is_retrograde": p_obj.is_retrograde
             })
 
+        # Classical Daivajna Authenticity Assessment (Prashna Marga Ch. 2-3)
+        lagna_deg_val = chart.lagna_degree
+        is_lagna_sandhi = (lagna_deg_val < 1.0 or lagna_deg_val > 29.0)
+        is_moon_afflicted = moon.house_from_lagna in [6, 8, 12]
+        is_saturn_lagna = any(p == "Saturn" for p, pos in chart.planets.items() if pos.house_from_lagna == 1 and lagnesh_name != "Saturn")
+
+        authenticity_score = 1.0
+        authenticity_reasons = []
+        if is_lagna_sandhi:
+            authenticity_score -= 0.35
+            authenticity_reasons.append("Lagna in Rashi Sandhi (<1° or >29°); matter may be premature or already decided.")
+        if is_moon_afflicted:
+            authenticity_score -= 0.30
+            authenticity_reasons.append(f"Moon situated in Dusthana ({moon.house_from_lagna}th house); emotional perturbation or hidden impediment.")
+        if is_saturn_lagna:
+            authenticity_score -= 0.25
+            authenticity_reasons.append("Saturn posited in Prashna Lagna; patience required, delays indicated.")
+
+        is_query_authentic = (authenticity_score >= 0.50)
+        daivajna_authenticity = {
+            "is_authentic": is_query_authentic,
+            "authenticity_score": round(max(0.0, authenticity_score), 2),
+            "is_lagna_sandhi": is_lagna_sandhi,
+            "moon_house": moon.house_from_lagna,
+            "caveats": authenticity_reasons,
+            "daivajna_verdict": "शुद्ध एवं विचारणीय प्रश्न (Valid & Propitious Query)" if is_query_authentic else "सावधानी / अपरिपक्व अथवा संदिग्ध प्रश्न (Premature or Sensitive Query)"
+        }
+
         return {
             "chart": chart,
             "questioner_name": questioner_name,
@@ -390,6 +418,7 @@ class PrashnaService:
             "all_rules": rules_analysis["all_rules"],
             "house_roles": house_roles,
             "graha_table": graha_table_data,
+            "daivajna_authenticity": daivajna_authenticity,
             "explanation_hi": (
                 f"प्रश्न समय पर लग्न '{chart.lagna_sign_name}' उदित है जिसके स्वामी '{lagnesh_name}' {house_lagnesh}वें भाव में स्थित हैं। "
                 f"प्रश्न से सम्बंधित कार्य भाव {karya_house_num} के स्वामी '{karyesh_name}' की स्थिति {house_karyesh}वें भाव में है। "
@@ -397,6 +426,60 @@ class PrashnaService:
                 f"100 शास्त्रीय प्रश्न नियमों के अंतर्गत कुल {rules_analysis['active_positive_count']} शुभ (+) व {rules_analysis['active_negative_count']} अशुभ (-) योग सक्रिय हैं। "
                 f"शास्त्रीय फल: {verdict}। कार्य सिद्धि का संभावित काल: {timing}।"
             )
+        }
+
+
+
+    @classmethod
+    def compare_natal_and_prashna(
+        cls,
+        natal_chart: KundaliChart,
+        prashna_result: Dict[str, Any],
+        domain: str = "career"
+    ) -> Dict[str, Any]:
+        """
+        P6-T2: Strictly isolates Natal Kundali analysis from Horary Prashna Kundali,
+        generating independent verdicts and reporting systemic divergence.
+        """
+        domain_clean = domain.strip().lower()
+        natal_house_map = {"career": 10, "job": 6, "marriage": 7, "wealth": 2, "progeny": 5, "health": 1}
+        target_house = natal_house_map.get(domain_clean, 10)
+
+        natal_h = natal_chart.houses[target_house - 1]
+        natal_lord = natal_chart.planets.get(natal_h.lord)
+        natal_promising = natal_lord.dignity in ("exalted", "own", "moolatrikona", "friend") if natal_lord else True
+
+        prashna_score = prashna_result.get("verdict_score", 0.50)
+        prashna_promising = (prashna_score >= 0.55)
+
+        if natal_promising and prashna_promising:
+            consensus = "ALIGNED_FAVORABLE"
+            summary_en = "Both Natal chart and Prashna chart indicate favorable fruition."
+            summary_hi = "जन्म कुण्डली एवं प्रश्न कुण्डली दोनों अनुकूल फल सिद्धि का संकेत कर रही हैं।"
+        elif (not natal_promising) and (not prashna_promising):
+            consensus = "ALIGNED_OBSTRUCTED"
+            summary_en = "Both Natal chart and Prashna chart indicate significant challenges or obstacles."
+            summary_hi = "जन्म कुण्डली एवं प्रश्न कुण्डली दोनों में अवरोध अथवा विलंब के संकेत हैं।"
+        elif natal_promising and (not prashna_promising):
+            consensus = "DIVERGENT_NATAL_FAVORABLE_PRASHNA_OBSTRUCTED"
+            summary_en = "Natal potential is strong, but the immediate Prashna timing shows temporary delay or obstacle."
+            summary_hi = "जन्म कुण्डली में दीर्घकालिक योग प्रबल है, परंतु तात्कालिक प्रश्न समय में विलंब अथवा बाधा दर्शित है।"
+        else:
+            consensus = "DIVERGENT_PRASHNA_FAVORABLE_NATAL_OBSTRUCTED"
+            summary_en = "Current Prashna moment is favorable for immediate action, despite natal constraints."
+            summary_hi = "जन्म कुण्डली में बाधाओं के उपरांत भी तात्कालिक प्रश्न समय कार्य आरम्भ हेतु शुभ है।"
+
+        return {
+            "domain": domain_clean,
+            "target_house": target_house,
+            "natal_verdict": "Favorable" if natal_promising else "Obstructed",
+            "prashna_verdict": "Favorable" if prashna_promising else "Obstructed",
+            "prashna_score": prashna_score,
+            "consensus_status": consensus,
+            "is_aligned": "ALIGNED" in consensus,
+            "summary_en": summary_en,
+            "summary_hi": summary_hi,
+            "daivajna_prashna_authenticity": prashna_result.get("daivajna_authenticity")
         }
 
 
