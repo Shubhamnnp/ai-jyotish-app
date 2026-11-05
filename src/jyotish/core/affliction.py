@@ -90,13 +90,19 @@ def get_life_areas_for_gender(gender: str = "male") -> List[Dict[str, Any]]:
 class AfflictionEngine:
     """Calculates Dasvarga dignity matrix, Free Will scores, and 26 Life Area breakdowns."""
 
-    def __init__(self, chart: KundaliChart):
+    def __init__(self, chart: Optional[KundaliChart] = None):
         self.chart = chart
-        b_data = getattr(chart, "birth_data", None)
-        self.gender = getattr(b_data, "gender", "male") or "male"
-        self.all_vargas = VargaCalculator.calculate_all_vargas(chart)
-        self.house_lords = self._compute_house_lords()
-        self.dispositors = self._compute_dispositors()
+        if chart is not None:
+            b_data = getattr(chart, "birth_data", None)
+            self.gender = getattr(b_data, "gender", "male") or "male"
+            self.all_vargas = VargaCalculator.calculate_all_vargas(chart)
+            self.house_lords = self._compute_house_lords()
+            self.dispositors = self._compute_dispositors()
+        else:
+            self.gender = "male"
+            self.all_vargas = {}
+            self.house_lords = {}
+            self.dispositors = {}
 
     def get_applicable_life_areas(self, gender: Optional[str] = None) -> List[Dict[str, Any]]:
         """Returns life areas filtered for the chart's gender (or explicitly supplied gender)."""
