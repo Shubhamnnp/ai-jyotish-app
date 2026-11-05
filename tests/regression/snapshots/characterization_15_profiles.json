@@ -1,0 +1,2566 @@
+{
+  "metadata": {
+    "characterization_type": "characterization_baseline_snapshot",
+    "engine_mode": "SwissEph (precise)",
+    "library_versions": {
+      "swisseph": "20260201",
+      "python": "3.13.7",
+      "platform": "Windows-10-10.0.19045-SP0"
+    },
+    "ephemeris_file": "Swiss Ephemeris built-in Moshier semi-analytical model",
+    "ayanamsa": "Lahiri",
+    "note": "Regression tests must never compare across differing engine_modes. Float comparisons must use explicit tolerance."
+  },
+  "profiles": [
+    {
+      "id": "P01_NORTH_DELHI",
+      "name": "Delhi Northern Standard",
+      "tier": "quick",
+      "profile": {
+        "id": "P01_NORTH_DELHI",
+        "name": "Delhi Northern Standard",
+        "birth_date": "1990-05-15",
+        "birth_time": "14:30:00",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "timezone": "Asia/Kolkata",
+        "timezone_offset": 5.5,
+        "tier": "quick",
+        "astronomical_significance": "Standard Indian sub-continent birth profile, daytime Northern hemisphere."
+      },
+      "expected": {
+        "lagna_longitude": 151.904621,
+        "lagna_sign_id": 6,
+        "lagna_sign_name": "Virgo",
+        "planets": {
+          "Sun": {
+            "longitude": 30.549786,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 271.893544,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 324.51521,
+            "sign_id": 11,
+            "sign_name": "Aquarius",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 14.302288,
+            "sign_id": 1,
+            "sign_name": "Aries",
+            "is_retrograde": true
+          },
+          "Jupiter": {
+            "longitude": 75.792251,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": false
+          },
+          "Venus": {
+            "longitude": 348.949948,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 271.525743,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": true
+          },
+          "Rahu": {
+            "longitude": 287.619963,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 107.619963,
+            "sign_id": 4,
+            "sign_name": "Cancer",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          150.0,
+          180.0,
+          210.0,
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0
+        ],
+        "d9_signs": {
+          "Sun": 10,
+          "Moon": 10,
+          "Mars": 2,
+          "Mercury": 5,
+          "Jupiter": 11,
+          "Venus": 9,
+          "Saturn": 10,
+          "Rahu": 3,
+          "Ketu": 9
+        },
+        "d60_signs": {
+          "Sun": 3,
+          "Moon": 1,
+          "Mars": 12,
+          "Mercury": 5,
+          "Jupiter": 10,
+          "Venus": 1,
+          "Saturn": 1,
+          "Rahu": 9,
+          "Ketu": 3
+        },
+        "sav": [
+          26,
+          23,
+          30,
+          25,
+          25,
+          27,
+          24,
+          38,
+          29,
+          27,
+          32,
+          31
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 4.83,
+          "Moon": 4.08,
+          "Mars": 3.87,
+          "Mercury": 3.74,
+          "Jupiter": 5.16,
+          "Venus": 6.28,
+          "Saturn": 4.56
+        },
+        "chara_karakas": {
+          "AK": "Mars",
+          "AmK": "Venus",
+          "BK": "Jupiter",
+          "MK": "Mercury",
+          "PK": "Moon",
+          "GK": "Saturn",
+          "DK": "Sun"
+        },
+        "arudha_padas": {
+          "AL": 8,
+          "A2": 5,
+          "A3": 11,
+          "A4": 6,
+          "A5": 7,
+          "A6": 9,
+          "A7": 3,
+          "A8": 9,
+          "A9": 10,
+          "A10": 11,
+          "A11": 1,
+          "UL": 8
+        },
+        "upagrahas": {
+          "mandi_longitude": 157.713,
+          "gulika_longitude": 146.6541
+        },
+        "vimshottari_balance": {
+          "lord": "Sun",
+          "fraction": 0.392016,
+          "remaining_years": 3.6479
+        }
+      }
+    },
+    {
+      "id": "P02_SOUTH_SYDNEY",
+      "name": "Sydney Southern Hemisphere",
+      "tier": "quick",
+      "profile": {
+        "id": "P02_SOUTH_SYDNEY",
+        "name": "Sydney Southern Hemisphere",
+        "birth_date": "1988-11-20",
+        "birth_time": "08:15:00",
+        "latitude": -33.8688,
+        "longitude": 151.2093,
+        "timezone": "Australia/Sydney",
+        "timezone_offset": 11.0,
+        "tier": "quick",
+        "astronomical_significance": "Southern hemisphere negative latitude Ascendant and house cusp inversion."
+      },
+      "expected": {
+        "lagna_longitude": 251.713752,
+        "lagna_sign_id": 9,
+        "lagna_sign_name": "Sagittarius",
+        "planets": {
+          "Sun": {
+            "longitude": 214.069399,
+            "sign_id": 8,
+            "sign_name": "Scorpio",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 343.523333,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 339.329033,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 207.501899,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 37.785712,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": true
+          },
+          "Venus": {
+            "longitude": 181.767946,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 247.066164,
+            "sign_id": 9,
+            "sign_name": "Sagittarius",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 316.314591,
+            "sign_id": 11,
+            "sign_name": "Aquarius",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 136.314591,
+            "sign_id": 5,
+            "sign_name": "Leo",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0,
+          150.0,
+          180.0,
+          210.0
+        ],
+        "d9_signs": {
+          "Sun": 5,
+          "Moon": 8,
+          "Mars": 6,
+          "Mercury": 3,
+          "Jupiter": 12,
+          "Venus": 7,
+          "Saturn": 3,
+          "Rahu": 11,
+          "Ketu": 5
+        },
+        "d60_signs": {
+          "Sun": 4,
+          "Moon": 3,
+          "Mars": 6,
+          "Mercury": 2,
+          "Jupiter": 5,
+          "Venus": 10,
+          "Saturn": 11,
+          "Rahu": 7,
+          "Ketu": 1
+        },
+        "sav": [
+          24,
+          28,
+          25,
+          23,
+          34,
+          32,
+          30,
+          17,
+          32,
+          29,
+          29,
+          34
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 4.37,
+          "Moon": 5.32,
+          "Mars": 3.54,
+          "Mercury": 5.01,
+          "Jupiter": 3.95,
+          "Venus": 4.25,
+          "Saturn": 3.45
+        },
+        "chara_karakas": {
+          "AK": "Mercury",
+          "AmK": "Moon",
+          "BK": "Mars",
+          "MK": "Jupiter",
+          "PK": "Saturn",
+          "GK": "Sun",
+          "DK": "Venus"
+        },
+        "arudha_padas": {
+          "AL": 7,
+          "A2": 8,
+          "A3": 7,
+          "A4": 4,
+          "A5": 11,
+          "A6": 12,
+          "A7": 11,
+          "A8": 8,
+          "A9": 8,
+          "A10": 8,
+          "A11": 4,
+          "UL": 4
+        },
+        "upagrahas": {
+          "mandi_longitude": 26.5659,
+          "gulika_longitude": 15.5425
+        },
+        "vimshottari_balance": {
+          "lord": "Saturn",
+          "fraction": 0.76425,
+          "remaining_years": 4.4793
+        }
+      }
+    },
+    {
+      "id": "P03_HIGH_LAT_TROMSO",
+      "name": "Tromso Arctic Circle",
+      "tier": "quick",
+      "profile": {
+        "id": "P03_HIGH_LAT_TROMSO",
+        "name": "Tromso Arctic Circle",
+        "birth_date": "1995-06-21",
+        "birth_time": "12:00:00",
+        "latitude": 69.6492,
+        "longitude": 18.9553,
+        "timezone": "Europe/Oslo",
+        "timezone_offset": 2.0,
+        "tier": "quick",
+        "astronomical_significance": "High latitude (> 66° N) summer solstice circumpolar polar safeguard."
+      },
+      "expected": {
+        "lagna_longitude": 150.223292,
+        "lagna_sign_id": 6,
+        "lagna_sign_name": "Virgo",
+        "planets": {
+          "Sun": {
+            "longitude": 65.783191,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 353.198284,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 139.392046,
+            "sign_id": 5,
+            "sign_name": "Leo",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 46.668976,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 224.289315,
+            "sign_id": 8,
+            "sign_name": "Scorpio",
+            "is_retrograde": true
+          },
+          "Venus": {
+            "longitude": 49.278566,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 330.769322,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 188.893623,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 8.893623,
+            "sign_id": 1,
+            "sign_name": "Aries",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          150.0,
+          180.0,
+          210.0,
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0
+        ],
+        "d9_signs": {
+          "Sun": 8,
+          "Moon": 10,
+          "Mars": 6,
+          "Mercury": 3,
+          "Jupiter": 8,
+          "Venus": 3,
+          "Saturn": 4,
+          "Rahu": 9,
+          "Ketu": 3
+        },
+        "d60_signs": {
+          "Sun": 2,
+          "Moon": 10,
+          "Mars": 7,
+          "Mercury": 11,
+          "Jupiter": 12,
+          "Venus": 4,
+          "Saturn": 1,
+          "Rahu": 12,
+          "Ketu": 6
+        },
+        "sav": [
+          28,
+          26,
+          30,
+          28,
+          25,
+          35,
+          28,
+          23,
+          25,
+          33,
+          25,
+          31
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 5.92,
+          "Moon": 4.87,
+          "Mars": 3.47,
+          "Mercury": 3.59,
+          "Jupiter": 4.5,
+          "Venus": 4.82,
+          "Saturn": 4.23
+        },
+        "chara_karakas": {
+          "AK": "Moon",
+          "AmK": "Mars",
+          "BK": "Venus",
+          "MK": "Mercury",
+          "PK": "Jupiter",
+          "GK": "Sun",
+          "DK": "Saturn"
+        },
+        "arudha_padas": {
+          "AL": 10,
+          "A2": 9,
+          "A3": 11,
+          "A4": 7,
+          "A5": 2,
+          "A6": 1,
+          "A7": 4,
+          "A8": 9,
+          "A9": 11,
+          "A10": 1,
+          "A11": 8,
+          "UL": 1
+        },
+        "upagrahas": {
+          "mandi_longitude": 138.9733,
+          "gulika_longitude": 127.7233
+        },
+        "vimshottari_balance": {
+          "lord": "Mercury",
+          "fraction": 0.489871,
+          "remaining_years": 8.6722
+        }
+      }
+    },
+    {
+      "id": "P04_NEAR_MIDNIGHT",
+      "name": "Midnight Boundary Transit",
+      "tier": "full",
+      "profile": {
+        "id": "P04_NEAR_MIDNIGHT",
+        "name": "Midnight Boundary Transit",
+        "birth_date": "2000-01-01",
+        "birth_time": "23:59:45",
+        "latitude": 19.076,
+        "longitude": 72.8777,
+        "timezone": "Asia/Kolkata",
+        "timezone_offset": 5.5,
+        "tier": "full",
+        "astronomical_significance": "Near-midnight date rollover boundary with Y2K epoch transition."
+      },
+      "expected": {
+        "lagna_longitude": 157.131598,
+        "lagna_sign_id": 6,
+        "lagna_sign_name": "Virgo",
+        "planets": {
+          "Sun": {
+            "longitude": 256.791609,
+            "sign_id": 9,
+            "sign_name": "Sagittarius",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 202.71898,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 304.320024,
+            "sign_id": 11,
+            "sign_name": "Aquarius",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 248.457451,
+            "sign_id": 9,
+            "sign_name": "Sagittarius",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 1.410953,
+            "sign_id": 1,
+            "sign_name": "Aries",
+            "is_retrograde": false
+          },
+          "Venus": {
+            "longitude": 218.039845,
+            "sign_id": 8,
+            "sign_name": "Scorpio",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 16.537074,
+            "sign_id": 1,
+            "sign_name": "Aries",
+            "is_retrograde": true
+          },
+          "Rahu": {
+            "longitude": 101.173081,
+            "sign_id": 4,
+            "sign_name": "Cancer",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 281.173081,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          150.0,
+          180.0,
+          210.0,
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0
+        ],
+        "d9_signs": {
+          "Sun": 6,
+          "Moon": 1,
+          "Mars": 8,
+          "Mercury": 3,
+          "Jupiter": 1,
+          "Venus": 6,
+          "Saturn": 5,
+          "Rahu": 7,
+          "Ketu": 1
+        },
+        "d60_signs": {
+          "Sun": 6,
+          "Moon": 4,
+          "Mars": 7,
+          "Mercury": 1,
+          "Jupiter": 3,
+          "Venus": 12,
+          "Saturn": 10,
+          "Rahu": 2,
+          "Ketu": 8
+        },
+        "sav": [
+          24,
+          22,
+          24,
+          30,
+          30,
+          33,
+          31,
+          29,
+          32,
+          21,
+          36,
+          25
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 4.52,
+          "Moon": 3.98,
+          "Mars": 4.32,
+          "Mercury": 4.86,
+          "Jupiter": 3.62,
+          "Venus": 3.76,
+          "Saturn": 3.81
+        },
+        "chara_karakas": {
+          "AK": "Moon",
+          "AmK": "Sun",
+          "BK": "Saturn",
+          "MK": "Mercury",
+          "PK": "Venus",
+          "GK": "Mars",
+          "DK": "Jupiter"
+        },
+        "arudha_padas": {
+          "AL": 9,
+          "A2": 9,
+          "A3": 11,
+          "A4": 5,
+          "A5": 1,
+          "A6": 3,
+          "A7": 2,
+          "A8": 9,
+          "A9": 11,
+          "A10": 12,
+          "A11": 7,
+          "UL": 1
+        },
+        "upagrahas": {
+          "mandi_longitude": 179.4176,
+          "gulika_longitude": 167.8585
+        },
+        "vimshottari_balance": {
+          "lord": "Jupiter",
+          "fraction": 0.203924,
+          "remaining_years": 12.7372
+        }
+      }
+    },
+    {
+      "id": "P05_WAR_TIME_MUMBAI",
+      "name": "Indian War Time 1942",
+      "tier": "full",
+      "profile": {
+        "id": "P05_WAR_TIME_MUMBAI",
+        "name": "Indian War Time 1942",
+        "birth_date": "1942-08-15",
+        "birth_time": "09:30:00",
+        "latitude": 18.922,
+        "longitude": 72.8347,
+        "timezone": "Asia/Kolkata",
+        "timezone_offset": 6.5,
+        "tier": "full",
+        "astronomical_significance": "WWII historical Daylight Saving / Indian War Time (+6.5 hours UTC offset)."
+      },
+      "expected": {
+        "lagna_longitude": 162.417548,
+        "lagna_sign_id": 6,
+        "lagna_sign_name": "Virgo",
+        "planets": {
+          "Sun": {
+            "longitude": 118.646268,
+            "sign_id": 4,
+            "sign_name": "Cancer",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 154.500318,
+            "sign_id": 6,
+            "sign_name": "Virgo",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 135.663226,
+            "sign_id": 5,
+            "sign_name": "Leo",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 130.780665,
+            "sign_id": 5,
+            "sign_name": "Leo",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 81.496677,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": false
+          },
+          "Venus": {
+            "longitude": 94.562082,
+            "sign_id": 4,
+            "sign_name": "Cancer",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 47.991223,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 131.812259,
+            "sign_id": 5,
+            "sign_name": "Leo",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 311.812259,
+            "sign_id": 11,
+            "sign_name": "Aquarius",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          150.0,
+          180.0,
+          210.0,
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0
+        ],
+        "d9_signs": {
+          "Sun": 12,
+          "Moon": 11,
+          "Mars": 5,
+          "Mercury": 4,
+          "Jupiter": 1,
+          "Venus": 5,
+          "Saturn": 3,
+          "Rahu": 4,
+          "Ketu": 10
+        },
+        "d60_signs": {
+          "Sun": 1,
+          "Moon": 3,
+          "Mars": 12,
+          "Mercury": 2,
+          "Jupiter": 9,
+          "Venus": 1,
+          "Saturn": 1,
+          "Rahu": 4,
+          "Ketu": 10
+        },
+        "sav": [
+          29,
+          35,
+          32,
+          29,
+          20,
+          25,
+          26,
+          29,
+          29,
+          27,
+          30,
+          26
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 4.8,
+          "Moon": 4.67,
+          "Mars": 3.37,
+          "Mercury": 5.06,
+          "Jupiter": 5.35,
+          "Venus": 4.11,
+          "Saturn": 3.28
+        },
+        "chara_karakas": {
+          "AK": "Sun",
+          "AmK": "Jupiter",
+          "BK": "Saturn",
+          "MK": "Mars",
+          "PK": "Mercury",
+          "GK": "Venus",
+          "DK": "Moon"
+        },
+        "arudha_padas": {
+          "AL": 4,
+          "A2": 10,
+          "A3": 11,
+          "A4": 6,
+          "A5": 6,
+          "A6": 2,
+          "A7": 3,
+          "A8": 9,
+          "A9": 6,
+          "A10": 7,
+          "A11": 8,
+          "UL": 3
+        },
+        "upagrahas": {
+          "mandi_longitude": 151.7587,
+          "gulika_longitude": 140.6997
+        },
+        "vimshottari_balance": {
+          "lord": "Sun",
+          "fraction": 0.587524,
+          "remaining_years": 2.4749
+        }
+      }
+    },
+    {
+      "id": "P06_HIST_LMT_PORBANDAR",
+      "name": "Historical LMT 1869",
+      "tier": "full",
+      "profile": {
+        "id": "P06_HIST_LMT_PORBANDAR",
+        "name": "Historical LMT 1869",
+        "birth_date": "1869-10-02",
+        "birth_time": "07:12:00",
+        "latitude": 21.6417,
+        "longitude": 69.6293,
+        "timezone": "Asia/Kolkata",
+        "timezone_offset": 4.64195,
+        "tier": "full",
+        "astronomical_significance": "Pre-standard time Local Mean Time (LMT) derived from exact longitude."
+      },
+      "expected": {
+        "lagna_longitude": 184.615957,
+        "lagna_sign_id": 7,
+        "lagna_sign_name": "Libra",
+        "planets": {
+          "Sun": {
+            "longitude": 166.893502,
+            "sign_id": 6,
+            "sign_name": "Virgo",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 117.937857,
+            "sign_id": 4,
+            "sign_name": "Cancer",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 206.36582,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 191.735543,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 28.138673,
+            "sign_id": 1,
+            "sign_name": "Aries",
+            "is_retrograde": true
+          },
+          "Venus": {
+            "longitude": 204.399566,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 230.327945,
+            "sign_id": 8,
+            "sign_name": "Scorpio",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 102.147248,
+            "sign_id": 4,
+            "sign_name": "Cancer",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 282.147248,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          180.0,
+          210.0,
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0,
+          150.0
+        ],
+        "d9_signs": {
+          "Sun": 3,
+          "Moon": 12,
+          "Mars": 2,
+          "Mercury": 10,
+          "Jupiter": 9,
+          "Venus": 2,
+          "Saturn": 10,
+          "Rahu": 7,
+          "Ketu": 1
+        },
+        "d60_signs": {
+          "Sun": 3,
+          "Moon": 11,
+          "Mars": 11,
+          "Mercury": 6,
+          "Jupiter": 9,
+          "Venus": 7,
+          "Saturn": 12,
+          "Rahu": 4,
+          "Ketu": 10
+        },
+        "sav": [
+          21,
+          25,
+          26,
+          35,
+          39,
+          27,
+          22,
+          24,
+          28,
+          26,
+          31,
+          33
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 4.03,
+          "Moon": 4.45,
+          "Mars": 4.51,
+          "Mercury": 5.76,
+          "Jupiter": 5.02,
+          "Venus": 5.1,
+          "Saturn": 3.5
+        },
+        "chara_karakas": {
+          "AK": "Jupiter",
+          "AmK": "Moon",
+          "BK": "Mars",
+          "MK": "Venus",
+          "PK": "Saturn",
+          "GK": "Sun",
+          "DK": "Mercury"
+        },
+        "arudha_padas": {
+          "AL": 4,
+          "A2": 6,
+          "A3": 5,
+          "A4": 6,
+          "A5": 2,
+          "A6": 2,
+          "A7": 10,
+          "A8": 12,
+          "A9": 11,
+          "A10": 1,
+          "A11": 7,
+          "UL": 8
+        },
+        "upagrahas": {
+          "mandi_longitude": 198.3716,
+          "gulika_longitude": 187.9956
+        },
+        "vimshottari_balance": {
+          "lord": "Mercury",
+          "fraction": 0.845339,
+          "remaining_years": 2.6292
+        }
+      }
+    },
+    {
+      "id": "P07_EQUATORIAL_PONTIANAK",
+      "name": "Equator 0 Deg Latitude",
+      "tier": "full",
+      "profile": {
+        "id": "P07_EQUATORIAL_PONTIANAK",
+        "name": "Equator 0 Deg Latitude",
+        "birth_date": "1992-03-21",
+        "birth_time": "06:00:00",
+        "latitude": 0.0,
+        "longitude": 109.3333,
+        "timezone": "Asia/Pontianak",
+        "timezone_offset": 7.0,
+        "tier": "full",
+        "astronomical_significance": "Equator 0.0° latitude equinox sunrise with zero latitude singularities."
+      },
+      "expected": {
+        "lagna_longitude": 339.57562,
+        "lagna_sign_id": 12,
+        "lagna_sign_name": "Pisces",
+        "planets": {
+          "Sun": {
+            "longitude": 336.834253,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 186.057217,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 300.723391,
+            "sign_id": 11,
+            "sign_name": "Aquarius",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 346.541457,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": true
+          },
+          "Jupiter": {
+            "longitude": 133.322112,
+            "sign_id": 5,
+            "sign_name": "Leo",
+            "is_retrograde": true
+          },
+          "Venus": {
+            "longitude": 314.840193,
+            "sign_id": 11,
+            "sign_name": "Aquarius",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 291.176356,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 251.819437,
+            "sign_id": 9,
+            "sign_name": "Sagittarius",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 71.819437,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0,
+          150.0,
+          180.0,
+          210.0,
+          240.0,
+          270.0,
+          300.0
+        ],
+        "d9_signs": {
+          "Sun": 6,
+          "Moon": 8,
+          "Mars": 7,
+          "Mercury": 8,
+          "Jupiter": 4,
+          "Venus": 11,
+          "Saturn": 4,
+          "Rahu": 4,
+          "Ketu": 10
+        },
+        "d60_signs": {
+          "Sun": 1,
+          "Moon": 7,
+          "Mars": 12,
+          "Mercury": 9,
+          "Jupiter": 7,
+          "Venus": 4,
+          "Saturn": 4,
+          "Rahu": 8,
+          "Ketu": 2
+        },
+        "sav": [
+          21,
+          30,
+          29,
+          27,
+          34,
+          19,
+          24,
+          30,
+          38,
+          35,
+          18,
+          32
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 5.55,
+          "Moon": 3.32,
+          "Mars": 4.42,
+          "Mercury": 4.42,
+          "Jupiter": 4.59,
+          "Venus": 4.55,
+          "Saturn": 3.95
+        },
+        "chara_karakas": {
+          "AK": "Saturn",
+          "AmK": "Mercury",
+          "BK": "Venus",
+          "MK": "Jupiter",
+          "PK": "Sun",
+          "GK": "Moon",
+          "DK": "Mars"
+        },
+        "arudha_padas": {
+          "AL": 10,
+          "A2": 9,
+          "A3": 5,
+          "A4": 6,
+          "A5": 7,
+          "A6": 7,
+          "A7": 3,
+          "A8": 3,
+          "A9": 11,
+          "A10": 1,
+          "A11": 7,
+          "UL": 9
+        },
+        "upagrahas": {
+          "mandi_longitude": 12.0069,
+          "gulika_longitude": 359.6217
+        },
+        "vimshottari_balance": {
+          "lord": "Mars",
+          "fraction": 0.954291,
+          "remaining_years": 0.32
+        }
+      }
+    },
+    {
+      "id": "P08_WEST_SAN_FRANCISCO",
+      "name": "San Francisco Western Longitude",
+      "tier": "full",
+      "profile": {
+        "id": "P08_WEST_SAN_FRANCISCO",
+        "name": "San Francisco Western Longitude",
+        "birth_date": "1985-09-10",
+        "birth_time": "18:45:00",
+        "latitude": 37.7749,
+        "longitude": -122.4194,
+        "timezone": "America/Los_Angeles",
+        "timezone_offset": -7.0,
+        "tier": "full",
+        "astronomical_significance": "Negative longitude (Western Hemisphere) and negative timezone offset."
+      },
+      "expected": {
+        "lagna_longitude": 310.46504,
+        "lagna_sign_id": 11,
+        "lagna_sign_name": "Aquarius",
+        "planets": {
+          "Sun": {
+            "longitude": 144.620206,
+            "sign_id": 5,
+            "sign_name": "Leo",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 95.955451,
+            "sign_id": 4,
+            "sign_name": "Cancer",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 126.986083,
+            "sign_id": 5,
+            "sign_name": "Leo",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 134.08029,
+            "sign_id": 5,
+            "sign_name": "Leo",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 284.267547,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": true
+          },
+          "Venus": {
+            "longitude": 112.974501,
+            "sign_id": 4,
+            "sign_name": "Cancer",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 209.559076,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 18.093355,
+            "sign_id": 1,
+            "sign_name": "Aries",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 198.093355,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0,
+          150.0,
+          180.0,
+          210.0,
+          240.0,
+          270.0
+        ],
+        "d9_signs": {
+          "Sun": 8,
+          "Moon": 5,
+          "Mars": 3,
+          "Mercury": 5,
+          "Jupiter": 2,
+          "Venus": 10,
+          "Saturn": 3,
+          "Rahu": 6,
+          "Ketu": 12
+        },
+        "d60_signs": {
+          "Sun": 6,
+          "Moon": 3,
+          "Mars": 6,
+          "Mercury": 9,
+          "Jupiter": 2,
+          "Venus": 1,
+          "Saturn": 6,
+          "Rahu": 1,
+          "Ketu": 7
+        },
+        "sav": [
+          28,
+          41,
+          35,
+          23,
+          27,
+          22,
+          25,
+          30,
+          35,
+          23,
+          24,
+          24
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 4.99,
+          "Moon": 5.24,
+          "Mars": 4.57,
+          "Mercury": 4.82,
+          "Jupiter": 3.44,
+          "Venus": 3.84,
+          "Saturn": 5.11
+        },
+        "chara_karakas": {
+          "AK": "Saturn",
+          "AmK": "Sun",
+          "BK": "Venus",
+          "MK": "Jupiter",
+          "PK": "Mercury",
+          "GK": "Mars",
+          "DK": "Moon"
+        },
+        "arudha_padas": {
+          "AL": 3,
+          "A2": 8,
+          "A3": 9,
+          "A4": 6,
+          "A5": 7,
+          "A6": 1,
+          "A7": 2,
+          "A8": 4,
+          "A9": 10,
+          "A10": 11,
+          "A11": 11,
+          "UL": 1
+        },
+        "upagrahas": {
+          "mandi_longitude": 253.5415,
+          "gulika_longitude": 243.7254
+        },
+        "vimshottari_balance": {
+          "lord": "Saturn",
+          "fraction": 0.196659,
+          "remaining_years": 15.2635
+        }
+      }
+    },
+    {
+      "id": "P09_RETROGRADE_HEAVY",
+      "name": "Retrograde Heavy Day 2020",
+      "tier": "full",
+      "profile": {
+        "id": "P09_RETROGRADE_HEAVY",
+        "name": "Retrograde Heavy Day 2020",
+        "birth_date": "2020-05-14",
+        "birth_time": "10:00:00",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "timezone": "Asia/Kolkata",
+        "timezone_offset": 5.5,
+        "tier": "full",
+        "astronomical_significance": "Multiple concurrent planetary retrogrades (Jupiter, Saturn, Venus retrograde)."
+      },
+      "expected": {
+        "lagna_longitude": 92.84146,
+        "lagna_sign_id": 4,
+        "lagna_sign_name": "Cancer",
+        "planets": {
+          "Sun": {
+            "longitude": 29.707804,
+            "sign_id": 1,
+            "sign_name": "Aries",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 295.200476,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 306.552754,
+            "sign_id": 11,
+            "sign_name": "Aquarius",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 40.608813,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 273.103504,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Venus": {
+            "longitude": 57.687318,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": true
+          },
+          "Saturn": {
+            "longitude": 277.812898,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": true
+          },
+          "Rahu": {
+            "longitude": 66.996483,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 246.996483,
+            "sign_id": 9,
+            "sign_name": "Sagittarius",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          90.0,
+          120.0,
+          150.0,
+          180.0,
+          210.0,
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0
+        ],
+        "d9_signs": {
+          "Sun": 9,
+          "Moon": 5,
+          "Mars": 8,
+          "Mercury": 1,
+          "Jupiter": 10,
+          "Venus": 6,
+          "Saturn": 12,
+          "Rahu": 9,
+          "Ketu": 3
+        },
+        "d60_signs": {
+          "Sun": 12,
+          "Moon": 12,
+          "Mars": 12,
+          "Mercury": 11,
+          "Jupiter": 4,
+          "Venus": 9,
+          "Saturn": 1,
+          "Rahu": 4,
+          "Ketu": 10
+        },
+        "sav": [
+          26,
+          28,
+          23,
+          26,
+          24,
+          30,
+          34,
+          36,
+          27,
+          24,
+          27,
+          32
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 7.0,
+          "Moon": 4.71,
+          "Mars": 4.39,
+          "Mercury": 4.39,
+          "Jupiter": 3.15,
+          "Venus": 5.19,
+          "Saturn": 5.69
+        },
+        "chara_karakas": {
+          "AK": "Sun",
+          "AmK": "Venus",
+          "BK": "Moon",
+          "MK": "Mercury",
+          "PK": "Saturn",
+          "GK": "Mars",
+          "DK": "Jupiter"
+        },
+        "arudha_padas": {
+          "AL": 1,
+          "A2": 9,
+          "A3": 10,
+          "A4": 9,
+          "A5": 11,
+          "A6": 11,
+          "A7": 7,
+          "A8": 9,
+          "A9": 8,
+          "A10": 9,
+          "A11": 11,
+          "UL": 1
+        },
+        "upagrahas": {
+          "mandi_longitude": 113.7793,
+          "gulika_longitude": 102.7591
+        },
+        "vimshottari_balance": {
+          "lord": "Mars",
+          "fraction": 0.140036,
+          "remaining_years": 6.0197
+        }
+      }
+    },
+    {
+      "id": "P10_SOLAR_ECLIPSE_2020",
+      "name": "Annular Solar Eclipse 2020",
+      "tier": "full",
+      "profile": {
+        "id": "P10_SOLAR_ECLIPSE_2020",
+        "name": "Annular Solar Eclipse 2020",
+        "birth_date": "2020-06-21",
+        "birth_time": "12:10:00",
+        "latitude": 29.9695,
+        "longitude": 76.8783,
+        "timezone": "Asia/Kolkata",
+        "timezone_offset": 5.5,
+        "tier": "full",
+        "astronomical_significance": "Exact Sun-Moon conjunction and Rahu proximity at peak of annular eclipse."
+      },
+      "expected": {
+        "lagna_longitude": 153.072405,
+        "lagna_sign_id": 6,
+        "lagna_sign_name": "Virgo",
+        "planets": {
+          "Sun": {
+            "longitude": 66.217265,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 66.205222,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 331.674736,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 80.277632,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": true
+          },
+          "Jupiter": {
+            "longitude": 270.982557,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": true
+          },
+          "Venus": {
+            "longitude": 41.511542,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": true
+          },
+          "Saturn": {
+            "longitude": 276.536636,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": true
+          },
+          "Rahu": {
+            "longitude": 64.978004,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 244.978004,
+            "sign_id": 9,
+            "sign_name": "Sagittarius",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          150.0,
+          180.0,
+          210.0,
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0
+        ],
+        "d9_signs": {
+          "Sun": 8,
+          "Moon": 8,
+          "Mars": 4,
+          "Mercury": 1,
+          "Jupiter": 10,
+          "Venus": 1,
+          "Saturn": 11,
+          "Rahu": 8,
+          "Ketu": 2
+        },
+        "d60_signs": {
+          "Sun": 3,
+          "Moon": 3,
+          "Mars": 3,
+          "Mercury": 7,
+          "Jupiter": 11,
+          "Venus": 1,
+          "Saturn": 11,
+          "Rahu": 12,
+          "Ketu": 6
+        },
+        "sav": [
+          37,
+          20,
+          28,
+          25,
+          28,
+          26,
+          29,
+          38,
+          26,
+          27,
+          24,
+          29
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 5.92,
+          "Moon": 4.24,
+          "Mars": 4.5,
+          "Mercury": 5.44,
+          "Jupiter": 3.58,
+          "Venus": 5.03,
+          "Saturn": 4.7
+        },
+        "chara_karakas": {
+          "AK": "Mercury",
+          "AmK": "Venus",
+          "BK": "Saturn",
+          "MK": "Sun",
+          "PK": "Moon",
+          "GK": "Mars",
+          "DK": "Jupiter"
+        },
+        "arudha_padas": {
+          "AL": 9,
+          "A2": 9,
+          "A3": 4,
+          "A4": 11,
+          "A5": 7,
+          "A6": 9,
+          "A7": 8,
+          "A8": 11,
+          "A9": 11,
+          "A10": 12,
+          "A11": 2,
+          "UL": 1
+        },
+        "upagrahas": {
+          "mandi_longitude": 237.0956,
+          "gulika_longitude": 225.9214
+        },
+        "vimshottari_balance": {
+          "lord": "Mars",
+          "fraction": 0.965392,
+          "remaining_years": 0.2423
+        }
+      }
+    },
+    {
+      "id": "P11_GRAHA_YUDDHA",
+      "name": "Mars Venus Graha Yuddha",
+      "tier": "full",
+      "profile": {
+        "id": "P11_GRAHA_YUDDHA",
+        "name": "Mars Venus Graha Yuddha",
+        "birth_date": "2022-03-12",
+        "birth_time": "05:30:00",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "timezone": "Asia/Kolkata",
+        "timezone_offset": 5.5,
+        "tier": "full",
+        "astronomical_significance": "Planetary war (Graha Yuddha) with Mars and Venus at identical longitude within 1 degree."
+      },
+      "expected": {
+        "lagna_longitude": 303.707767,
+        "lagna_sign_id": 11,
+        "lagna_sign_name": "Aquarius",
+        "planets": {
+          "Sun": {
+            "longitude": 327.224714,
+            "sign_id": 11,
+            "sign_name": "Aquarius",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 74.029488,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 280.123377,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 308.903481,
+            "sign_id": 11,
+            "sign_name": "Aquarius",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 322.361363,
+            "sign_id": 11,
+            "sign_name": "Aquarius",
+            "is_retrograde": false
+          },
+          "Venus": {
+            "longitude": 280.98123,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 295.862969,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 31.660762,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 211.660762,
+            "sign_id": 8,
+            "sign_name": "Scorpio",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0,
+          150.0,
+          180.0,
+          210.0,
+          240.0,
+          270.0
+        ],
+        "d9_signs": {
+          "Sun": 3,
+          "Moon": 11,
+          "Mars": 1,
+          "Mercury": 9,
+          "Jupiter": 1,
+          "Venus": 1,
+          "Saturn": 5,
+          "Rahu": 10,
+          "Ketu": 4
+        },
+        "d60_signs": {
+          "Sun": 5,
+          "Moon": 7,
+          "Mars": 6,
+          "Mercury": 4,
+          "Jupiter": 7,
+          "Venus": 7,
+          "Saturn": 1,
+          "Rahu": 5,
+          "Ketu": 11
+        },
+        "sav": [
+          32,
+          24,
+          25,
+          31,
+          24,
+          27,
+          27,
+          44,
+          36,
+          21,
+          25,
+          21
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 4.7,
+          "Moon": 5.53,
+          "Mars": 5.04,
+          "Mercury": 5.03,
+          "Jupiter": 4.82,
+          "Venus": 3.78,
+          "Saturn": 3.84
+        },
+        "chara_karakas": {
+          "AK": "Sun",
+          "AmK": "Saturn",
+          "BK": "Jupiter",
+          "MK": "Moon",
+          "PK": "Venus",
+          "GK": "Mars",
+          "DK": "Mercury"
+        },
+        "arudha_padas": {
+          "AL": 9,
+          "A2": 10,
+          "A3": 4,
+          "A4": 6,
+          "A5": 7,
+          "A6": 2,
+          "A7": 2,
+          "A8": 4,
+          "A9": 10,
+          "A10": 12,
+          "A11": 1,
+          "UL": 7
+        },
+        "upagrahas": {
+          "mandi_longitude": 260.6052,
+          "gulika_longitude": 250.6742
+        },
+        "vimshottari_balance": {
+          "lord": "Rahu",
+          "fraction": 0.552212,
+          "remaining_years": 8.0602
+        }
+      }
+    },
+    {
+      "id": "P12_GANDANTA_MOON",
+      "name": "Jyeshtha Moola Gandanta",
+      "tier": "full",
+      "profile": {
+        "id": "P12_GANDANTA_MOON",
+        "name": "Jyeshtha Moola Gandanta",
+        "birth_date": "2021-11-19",
+        "birth_time": "09:00:00",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "timezone": "Asia/Kolkata",
+        "timezone_offset": 5.5,
+        "tier": "full",
+        "astronomical_significance": "Rashi-Nakshatra sandhi at critical Water-Fire Gandanta boundary (Scorpio-Sagittarius)."
+      },
+      "expected": {
+        "lagna_longitude": 240.77517,
+        "lagna_sign_id": 9,
+        "lagna_sign_name": "Sagittarius",
+        "planets": {
+          "Sun": {
+            "longitude": 212.853656,
+            "sign_id": 8,
+            "sign_name": "Scorpio",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 30.385608,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 199.076136,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 207.083183,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 299.833875,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Venus": {
+            "longitude": 257.957209,
+            "sign_id": 9,
+            "sign_name": "Sagittarius",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 283.974346,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 37.641128,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 217.641128,
+            "sign_id": 8,
+            "sign_name": "Scorpio",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0,
+          150.0,
+          180.0,
+          210.0
+        ],
+        "d9_signs": {
+          "Sun": 4,
+          "Moon": 10,
+          "Mars": 12,
+          "Mercury": 3,
+          "Jupiter": 6,
+          "Venus": 6,
+          "Saturn": 2,
+          "Rahu": 12,
+          "Ketu": 6
+        },
+        "d60_signs": {
+          "Sun": 1,
+          "Moon": 2,
+          "Mars": 9,
+          "Mercury": 1,
+          "Jupiter": 9,
+          "Venus": 8,
+          "Saturn": 1,
+          "Rahu": 5,
+          "Ketu": 11
+        },
+        "sav": [
+          21,
+          29,
+          27,
+          29,
+          35,
+          29,
+          35,
+          28,
+          25,
+          22,
+          26,
+          31
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 4.11,
+          "Moon": 5.53,
+          "Mars": 3.89,
+          "Mercury": 5.01,
+          "Jupiter": 4.03,
+          "Venus": 4.56,
+          "Saturn": 3.66
+        },
+        "chara_karakas": {
+          "AK": "Jupiter",
+          "AmK": "Mercury",
+          "BK": "Mars",
+          "MK": "Venus",
+          "PK": "Saturn",
+          "GK": "Sun",
+          "DK": "Moon"
+        },
+        "arudha_padas": {
+          "AL": 11,
+          "A2": 7,
+          "A3": 9,
+          "A4": 8,
+          "A5": 10,
+          "A6": 4,
+          "A7": 11,
+          "A8": 12,
+          "A9": 8,
+          "A10": 8,
+          "A11": 11,
+          "UL": 6
+        },
+        "upagrahas": {
+          "mandi_longitude": 261.9223,
+          "gulika_longitude": 253.1439
+        },
+        "vimshottari_balance": {
+          "lord": "Sun",
+          "fraction": 0.278921,
+          "remaining_years": 4.3265
+        }
+      }
+    },
+    {
+      "id": "P13_SANDHI_DEGREE",
+      "name": "Rashi Sandhi Ingress Degree",
+      "tier": "full",
+      "profile": {
+        "id": "P13_SANDHI_DEGREE",
+        "name": "Rashi Sandhi Ingress Degree",
+        "birth_date": "2023-01-17",
+        "birth_time": "18:00:00",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "timezone": "Asia/Kolkata",
+        "timezone_offset": 5.5,
+        "tier": "full",
+        "astronomical_significance": "Slow-moving Saturn exactly entering 0°01' Aquarius at sign threshold."
+      },
+      "expected": {
+        "lagna_longitude": 96.45979,
+        "lagna_sign_id": 4,
+        "lagna_sign_name": "Cancer",
+        "planets": {
+          "Sun": {
+            "longitude": 272.938527,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 212.887092,
+            "sign_id": 8,
+            "sign_name": "Scorpio",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 44.088961,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 254.035011,
+            "sign_id": 9,
+            "sign_name": "Sagittarius",
+            "is_retrograde": true
+          },
+          "Jupiter": {
+            "longitude": 339.348549,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": false
+          },
+          "Venus": {
+            "longitude": 293.869168,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 299.999651,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 15.152653,
+            "sign_id": 1,
+            "sign_name": "Aries",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 195.152653,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          90.0,
+          120.0,
+          150.0,
+          180.0,
+          210.0,
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0
+        ],
+        "d9_signs": {
+          "Sun": 10,
+          "Moon": 4,
+          "Mars": 2,
+          "Mercury": 5,
+          "Jupiter": 6,
+          "Venus": 5,
+          "Saturn": 6,
+          "Rahu": 5,
+          "Ketu": 11
+        },
+        "d60_signs": {
+          "Sun": 3,
+          "Moon": 1,
+          "Mars": 6,
+          "Mercury": 1,
+          "Jupiter": 6,
+          "Venus": 9,
+          "Saturn": 9,
+          "Rahu": 7,
+          "Ketu": 1
+        },
+        "sav": [
+          30,
+          30,
+          21,
+          24,
+          31,
+          33,
+          32,
+          32,
+          26,
+          26,
+          27,
+          25
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 4.32,
+          "Moon": 4.01,
+          "Mars": 3.85,
+          "Mercury": 3.83,
+          "Jupiter": 3.58,
+          "Venus": 4.85,
+          "Saturn": 5.57
+        },
+        "chara_karakas": {
+          "AK": "Saturn",
+          "AmK": "Venus",
+          "BK": "Mars",
+          "MK": "Mercury",
+          "PK": "Jupiter",
+          "GK": "Sun",
+          "DK": "Moon"
+        },
+        "arudha_padas": {
+          "AL": 12,
+          "A2": 3,
+          "A3": 9,
+          "A4": 10,
+          "A5": 5,
+          "A6": 12,
+          "A7": 7,
+          "A8": 9,
+          "A9": 9,
+          "A10": 3,
+          "A11": 6,
+          "UL": 12
+        },
+        "upagrahas": {
+          "mandi_longitude": 128.7869,
+          "gulika_longitude": 118.0391
+        },
+        "vimshottari_balance": {
+          "lord": "Jupiter",
+          "fraction": 0.966532,
+          "remaining_years": 0.5355
+        }
+      }
+    },
+    {
+      "id": "P14_DST_LONDON",
+      "name": "London British Summer Time",
+      "tier": "full",
+      "profile": {
+        "id": "P14_DST_LONDON",
+        "name": "London British Summer Time",
+        "birth_date": "1996-07-15",
+        "birth_time": "15:30:00",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "timezone": "Europe/London",
+        "timezone_offset": 1.0,
+        "tier": "full",
+        "astronomical_significance": "European daylight saving boundary with near-prime meridian longitude."
+      },
+      "expected": {
+        "lagna_longitude": 199.040655,
+        "lagna_sign_id": 7,
+        "lagna_sign_name": "Libra",
+        "planets": {
+          "Sun": {
+            "longitude": 89.555349,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 88.759671,
+            "sign_id": 3,
+            "sign_name": "Gemini",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 59.283615,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 94.507681,
+            "sign_id": 4,
+            "sign_name": "Cancer",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 257.545586,
+            "sign_id": 9,
+            "sign_name": "Sagittarius",
+            "is_retrograde": true
+          },
+          "Venus": {
+            "longitude": 51.07893,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 343.581601,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 168.216801,
+            "sign_id": 6,
+            "sign_name": "Virgo",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 348.216801,
+            "sign_id": 12,
+            "sign_name": "Pisces",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          180.0,
+          210.0,
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0,
+          150.0
+        ],
+        "d9_signs": {
+          "Sun": 3,
+          "Moon": 3,
+          "Mars": 6,
+          "Mercury": 5,
+          "Jupiter": 6,
+          "Venus": 4,
+          "Saturn": 8,
+          "Rahu": 3,
+          "Ketu": 9
+        },
+        "d60_signs": {
+          "Sun": 2,
+          "Moon": 12,
+          "Mars": 12,
+          "Mercury": 1,
+          "Jupiter": 8,
+          "Venus": 8,
+          "Saturn": 3,
+          "Rahu": 6,
+          "Ketu": 12
+        },
+        "sav": [
+          30,
+          26,
+          24,
+          29,
+          28,
+          25,
+          29,
+          31,
+          30,
+          28,
+          20,
+          37
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 5.12,
+          "Moon": 3.78,
+          "Mars": 3.51,
+          "Mercury": 4.48,
+          "Jupiter": 4.57,
+          "Venus": 4.73,
+          "Saturn": 3.0
+        },
+        "chara_karakas": {
+          "AK": "Sun",
+          "AmK": "Mars",
+          "BK": "Moon",
+          "MK": "Venus",
+          "PK": "Jupiter",
+          "GK": "Saturn",
+          "DK": "Mercury"
+        },
+        "arudha_padas": {
+          "AL": 9,
+          "A2": 5,
+          "A3": 6,
+          "A4": 2,
+          "A5": 1,
+          "A6": 3,
+          "A7": 3,
+          "A8": 11,
+          "A9": 5,
+          "A10": 2,
+          "A11": 1,
+          "UL": 2
+        },
+        "upagrahas": {
+          "mandi_longitude": 229.5547,
+          "gulika_longitude": 218.897
+        },
+        "vimshottari_balance": {
+          "lord": "Jupiter",
+          "fraction": 0.656975,
+          "remaining_years": 5.4884
+        }
+      }
+    },
+    {
+      "id": "P15_GOLDEN_VIVEKANANDA",
+      "name": "Swami Vivekananda Golden Chart",
+      "tier": "full",
+      "profile": {
+        "id": "P15_GOLDEN_VIVEKANANDA",
+        "name": "Swami Vivekananda Golden Chart",
+        "birth_date": "1863-01-12",
+        "birth_time": "06:33:00",
+        "latitude": 22.5726,
+        "longitude": 88.3639,
+        "timezone": "Asia/Kolkata",
+        "timezone_offset": 5.8909,
+        "tier": "full",
+        "astronomical_significance": "Canonical historical benchmark chart (Sagittarius Lagna 26.08°, Capricorn Sun 29.41°)."
+      },
+      "expected": {
+        "lagna_longitude": 266.024678,
+        "lagna_sign_id": 9,
+        "lagna_sign_name": "Sagittarius",
+        "planets": {
+          "Sun": {
+            "longitude": 269.423137,
+            "sign_id": 9,
+            "sign_name": "Sagittarius",
+            "is_retrograde": false
+          },
+          "Moon": {
+            "longitude": 167.446718,
+            "sign_id": 6,
+            "sign_name": "Virgo",
+            "is_retrograde": false
+          },
+          "Mars": {
+            "longitude": 6.323453,
+            "sign_id": 1,
+            "sign_name": "Aries",
+            "is_retrograde": false
+          },
+          "Mercury": {
+            "longitude": 281.772668,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Jupiter": {
+            "longitude": 184.013805,
+            "sign_id": 7,
+            "sign_name": "Libra",
+            "is_retrograde": false
+          },
+          "Venus": {
+            "longitude": 277.102789,
+            "sign_id": 10,
+            "sign_name": "Capricorn",
+            "is_retrograde": false
+          },
+          "Saturn": {
+            "longitude": 163.573605,
+            "sign_id": 6,
+            "sign_name": "Virgo",
+            "is_retrograde": false
+          },
+          "Rahu": {
+            "longitude": 232.24714,
+            "sign_id": 8,
+            "sign_name": "Scorpio",
+            "is_retrograde": true
+          },
+          "Ketu": {
+            "longitude": 52.24714,
+            "sign_id": 2,
+            "sign_name": "Taurus",
+            "is_retrograde": true
+          }
+        },
+        "house_cusps": [
+          240.0,
+          270.0,
+          300.0,
+          330.0,
+          0.0,
+          30.0,
+          60.0,
+          90.0,
+          120.0,
+          150.0,
+          180.0,
+          210.0
+        ],
+        "d9_signs": {
+          "Sun": 9,
+          "Moon": 3,
+          "Mars": 2,
+          "Mercury": 1,
+          "Jupiter": 8,
+          "Venus": 12,
+          "Saturn": 2,
+          "Rahu": 10,
+          "Ketu": 4
+        },
+        "d60_signs": {
+          "Sun": 7,
+          "Moon": 4,
+          "Mars": 1,
+          "Mercury": 9,
+          "Jupiter": 3,
+          "Venus": 12,
+          "Saturn": 9,
+          "Rahu": 4,
+          "Ketu": 10
+        },
+        "sav": [
+          21,
+          34,
+          27,
+          31,
+          22,
+          32,
+          33,
+          30,
+          25,
+          25,
+          30,
+          27
+        ],
+        "sav_total": 337,
+        "shadbala_rupas": {
+          "Sun": 5.42,
+          "Moon": 4.26,
+          "Mars": 4.41,
+          "Mercury": 4.1,
+          "Jupiter": 4.19,
+          "Venus": 4.92,
+          "Saturn": 4.42
+        },
+        "chara_karakas": {
+          "AK": "Sun",
+          "AmK": "Moon",
+          "BK": "Saturn",
+          "MK": "Mercury",
+          "PK": "Venus",
+          "GK": "Mars",
+          "DK": "Jupiter"
+        },
+        "arudha_padas": {
+          "AL": 5,
+          "A2": 2,
+          "A3": 1,
+          "A4": 2,
+          "A5": 10,
+          "A6": 6,
+          "A7": 5,
+          "A8": 8,
+          "A9": 1,
+          "A10": 2,
+          "A11": 10,
+          "UL": 6
+        },
+        "upagrahas": {
+          "mandi_longitude": 166.8455,
+          "gulika_longitude": 155.5513
+        },
+        "vimshottari_balance": {
+          "lord": "Moon",
+          "fraction": 0.558504,
+          "remaining_years": 4.415
+        }
+      }
+    }
+  ]
+}
