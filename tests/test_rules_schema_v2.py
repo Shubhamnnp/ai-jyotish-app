@@ -160,3 +160,11 @@ def test_load_rules_file_v2(tmp_path, valid_rule_v2_dict):
     assert loaded[0].rule_id == "BPHS-24-LORD1-H1"
     assert loaded[1].rule_id == "BPHS-24-LORD1-H2"
 
+
+def test_quarantined_verification_status(valid_rule_v2_dict):
+    """Verify quarantined verification status is valid in Schema v2."""
+    rule_data = valid_rule_v2_dict.copy()
+    rule_data["verification"] = {"status": "quarantined", "notes": "Quarantined due to contradictory polarity."}
+    rule = load_rule_v2(rule_data)
+    assert rule.verification.status == "quarantined"
+

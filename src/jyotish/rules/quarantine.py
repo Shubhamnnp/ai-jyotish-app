@@ -31,10 +31,11 @@ def is_generated_rule(rule: Dict[str, Any]) -> bool:
         if prefix in r_id:
             return True
 
-    # Check for metadata era/generator markers
+    # Check for metadata synthetic/generator markers (Classical Vedic is authentic antiquity, not a generator marker)
     source = rule.get("source", {})
-    if isinstance(source, dict) and source.get("era") == "Classical Vedic":
-        return True
+    if isinstance(source, dict):
+        if source.get("generator") or source.get("synthetic") or "generator" in str(source.get("notes", "")).lower():
+            return True
 
     return False
 
@@ -142,6 +143,7 @@ def get_quarantine_stats(rules: List[Dict[str, Any]]) -> Dict[str, int]:
         "scholar_verified": 0,
         "machine_checked": 0,
         "draft": 0,
+        "quarantined": 0,
         "rejected": 0,
         "generated": 0
     }

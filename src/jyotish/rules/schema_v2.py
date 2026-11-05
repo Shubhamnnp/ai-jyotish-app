@@ -82,9 +82,9 @@ class RuleVerification(BaseModel):
     """Academic and editorial provenance tracking."""
     model_config = ConfigDict(extra="ignore")
 
-    status: Literal["draft", "machine_checked", "scholar_verified", "rejected"] = Field(
+    status: Literal["draft", "machine_checked", "scholar_verified", "quarantined", "rejected"] = Field(
         "draft",
-        description="Verification lifecycle status"
+        description="Verification lifecycle status: draft, machine_checked, scholar_verified, quarantined, or rejected"
     )
     verified_by: Optional[str] = Field(None, description="Name/credential of the scholar/verifier")
     verified_on: Optional[Union[datetime, date, str]] = Field(None, description="Date/time of verification")

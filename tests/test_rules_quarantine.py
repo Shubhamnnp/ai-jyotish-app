@@ -92,5 +92,25 @@ def test_engine_quarantine_integration():
     assert summary["total"] >= 12500
     assert summary["draft"] > 0
     # By default, draft rules are quarantined but tracked
-    assert summary["total"] == summary["draft"] + summary["scholar_verified"] + summary["machine_checked"] + summary["rejected"]
+    assert summary["total"] == summary["draft"] + summary["scholar_verified"] + summary["machine_checked"] + summary.get("quarantined", 0) + summary["rejected"]
+
+
+def test_quarantined_status_and_classical_source_retention():
+    """Verify quarantined status is recognized and classical sources are not labeled as generated."""
+    rules = [
+        {"rule_id": "BPHS_CLASSICAL_01", "source": {"text": "Brihat Parashara", "era": "Classical Vedic"}, "verification": {"status": "quarantined"}},
+        {"rule_id": "GEN_01", "generated": True, "verification": {"status": "draft"}},
+    ]
+    # Classical Vedic must not be falsely treated as generated
+    assert is_generated_rule(rules[0]) is False
+    assert is_generated_rule(rules[1]) is True
+
+    stats = get_quarantine_stats(rules)
+    assert stats["quarantined"] == 1
+    assert stats["draft"] == 1
+    assert stats["generated"] == 1
+
+    # Filter out quarantined from default customer predictions
+    verified = filter_rules_by_verification(rules, allowed_statuses=("scholar_verified", "machine_checked"))
+    assert len(verified) == 0
 
