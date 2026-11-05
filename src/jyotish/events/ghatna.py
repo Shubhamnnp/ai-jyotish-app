@@ -1,10 +1,9 @@
 """
-Ghatna Query & Event Window Analysis Engine (Phase 5, Task P5-T4).
-Reference: docs/IMPLEMENTATION_PRD.md (Section 5.4, P5-T4).
+Ghatna Query & Multi-Layer Event Timing Engine (Phase 5, Task P5-T3).
+Reference: docs/upgrade/MASTER_10_PHASE_ROADMAP.md (Phase 5).
 
-Refactored to consume grounded Evidence Packs and Dasha/Transit Timing evaluations.
-Solves event-window questions across career, marriage, travel, and material fruition
-using verified planetary factors instead of ungrounded templates.
+Upgraded from legacy heuristic threshold (0.55 cutoff) to the classical 5-level
+fruition architecture with grounded Evidence Packs and Dasha/Transit timing.
 """
 
 from datetime import date, datetime
@@ -15,8 +14,9 @@ from ..core.models import BirthData, KundaliChart
 from ..core.calculator import default_chart_calculator
 from ..evidence.factors import default_factor_extractor
 from ..evidence.domains.analyzer import default_domain_analyzer
-from ..evidence.timing import default_timing_integrator, TimingEvaluation
 from ..evidence.pack import default_evidence_pack_builder, EvidencePack
+from .taxonomy import default_event_taxonomy
+from .multi_layer_engine import default_multi_layer_engine, MultiLayerPredictionResult, EventFruitionState
 
 
 class GhatnaQueryResult(BaseModel):
@@ -33,88 +33,109 @@ class GhatnaQueryResult(BaseModel):
     event_summary_en: str
     event_summary_hi: str
     disclaimers: List[str] = Field(default_factory=list)
+    event_id: Optional[str] = None
+    fruition_state: Optional[str] = None
+    level_breakdown: Optional[Dict[str, Any]] = None
+
+
+# Domain-to-default-event mapping
+DOMAIN_TO_EVENT_MAP = {
+    "career": "career_recognition",
+    "job": "job_start",
+    "promotion": "promotion",
+    "marriage": "marriage",
+    "relationship": "marriage",
+    "wealth": "property_purchase",
+    "property": "property_purchase",
+    "progeny": "childbirth",
+    "children": "childbirth",
+    "travel": "foreign_travel",
+    "health": "disease_onset",
+    "legal": "litigation"
+}
 
 
 class GhatnaQueryEngine:
-    """Evaluates life event windows grounded on Evidence Packs."""
+    """Evaluates life event windows grounded on Evidence Packs and Multi-Layer Engine."""
 
     @classmethod
     def evaluate_event_window(
         cls,
         birth_data: BirthData,
         target_date: date,
-        domain: str = "career"
+        domain: str = "career",
+        event_id: Optional[str] = None
     ) -> GhatnaQueryResult:
         """
-        Evaluates whether target_date serves as a high-probability fruition window
-        for domain based on chart potential, dasha hierarchy, and double transit.
+        Evaluates whether target_date serves as an auspicious/active fruition window
+        using the classical 5-layer pipeline (Natal, Varga, Dasha, Double Transit, Yogas).
         """
         chart = default_chart_calculator.calculate_full_chart(birth_data)
-        factors = default_factor_extractor.extract_factors(chart)
         domain_clean = domain.strip().lower()
 
-        # 1. Domain Significators & Timing
-        sigs = default_domain_analyzer.get_significators(domain_clean)
-        timing_eval: TimingEvaluation = default_timing_integrator.evaluate_timing_for_domain(
+        # Resolve event_id
+        if not event_id:
+            event_id = DOMAIN_TO_EVENT_MAP.get(domain_clean, "career_recognition")
+
+        # 1. Evaluate via MultiLayerPredictionEngine (5 Classical Layers)
+        multi_layer_res: MultiLayerPredictionResult = default_multi_layer_engine.evaluate_event(
             chart=chart,
-            factors=factors,
-            target_date=target_date,
-            primary_bhavas=sigs.parashari_primary_bhavas,
-            primary_karakas=sigs.parashari_karakas
+            event_id=event_id,
+            target_date=target_date
         )
 
-        # 2. Grounded Evidence Pack
+        # 2. Build Grounded Evidence Pack
         evidence_pack = default_evidence_pack_builder.build_evidence_pack(
             chart=chart,
-            domain=domain_clean,
+            domain=domain_clean if domain_clean in ("career", "marriage", "wealth", "health") else "career",
             school="parashari"
         )
 
-        # Annotate findings with active timing
+        # 3. Annotate findings with active timing and layer evidence
         for finding in evidence_pack.findings:
-            if timing_eval.is_dasha_significator:
-                finding.timing.dasha_support.append(
-                    f"Active during {timing_eval.active_md_lord} MD / {timing_eval.active_ad_lord} AD"
-                )
-            if timing_eval.is_double_transit_active:
+            finding.timing.dasha_support.append(
+                f"Active during {multi_layer_res.active_md_lord} MD / {multi_layer_res.active_ad_lord} AD"
+            )
+            if multi_layer_res.double_transit_active:
                 finding.timing.transit_support.append(
-                    f"Triggered by Double Transit at {target_date}"
+                    f"Triggered by Classical Double Transit at {target_date}"
                 )
 
-        # 3. Formulate Summary
-        is_active = (timing_eval.timing_confidence >= 0.55)
-        operating_dasha_str = f"{timing_eval.active_md_lord} ({timing_eval.md_window})"
-        operating_ad_str = f"{timing_eval.active_ad_lord} ({timing_eval.ad_window})"
+        operating_dasha_str = f"{multi_layer_res.active_md_lord} MD"
+        operating_ad_str = f"{multi_layer_res.active_ad_lord} AD"
 
-        status_en = "Favorable Alignment" if is_active else "Moderate / Deliberate Progression"
-        status_hi = "अनुकूल कालखंड" if is_active else "सामान्य / मध्यम गतिशीलता"
-
-        all_reasons = timing_eval.dasha_significance_reasons + timing_eval.transit_reasons
-
-        summary_en = (
-            f"Event analysis for {sigs.display_name_en} at {target_date}: {status_en}. "
-            f"Operating Dasha: {operating_dasha_str}, Antar: {operating_ad_str}. "
-            f"Timing confidence: {timing_eval.timing_confidence:.2f}."
+        # Collect timing reasons across layers 3 and 4
+        all_reasons = (
+            multi_layer_res.level_breakdown["level_3_dasha"].reasons_en +
+            multi_layer_res.level_breakdown["level_4_transit"].reasons_en
         )
-        summary_hi = (
-            f"{sigs.display_name_hi} हेतु {target_date} पर विश्लेषण: {status_hi}। "
-            f"सक्रिय दशा: {timing_eval.active_md_lord} महादशा / {timing_eval.active_ad_lord} अंतर्दशा। "
-            f"समय अनुकूलता सूचकांक: {timing_eval.timing_confidence:.2f}।"
-        )
+
+        level_dict = {
+            k: {
+                "score": v.score,
+                "weight": v.weight,
+                "contribution": v.contribution,
+                "reasons": v.reasons_en
+            }
+            for k, v in multi_layer_res.level_breakdown.items()
+        }
 
         return GhatnaQueryResult(
             domain=domain_clean,
             target_date=target_date,
-            is_window_active=is_active,
-            timing_confidence=timing_eval.timing_confidence,
+            is_window_active=multi_layer_res.is_window_active,
+            timing_confidence=multi_layer_res.timing_confidence,
             operating_dasha=operating_dasha_str,
             operating_bhukti=operating_ad_str,
-            double_transit_active=timing_eval.is_double_transit_active,
+            double_transit_active=multi_layer_res.double_transit_active,
             grounded_evidence_pack=evidence_pack,
             timing_reasons=all_reasons,
-            event_summary_en=summary_en,
-            event_summary_hi=summary_hi,
-            disclaimers=evidence_pack.disclaimers
+            event_summary_en=multi_layer_res.summary_en,
+            event_summary_hi=multi_layer_res.summary_hi,
+            disclaimers=evidence_pack.disclaimers,
+            event_id=event_id,
+            fruition_state=multi_layer_res.fruition_state.value,
+            level_breakdown=level_dict
         )
 
 
