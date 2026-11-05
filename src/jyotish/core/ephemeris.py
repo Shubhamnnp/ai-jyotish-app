@@ -235,7 +235,8 @@ class PyEphemProvider(BaseEphemerisProvider):
             true_rahu = (mean_rahu + delta_omega) % 360.0
             true_ketu = (true_rahu + 180.0) % 360.0
             return true_rahu, true_ketu
-        except Exception:
+        except Exception as e:
+            logger.debug("True lunar node fallback to mean nodes: %s", e)
             jd = self.datetime_to_jd(dt_utc)
             return self.calculate_mean_lunar_nodes(jd)
 
@@ -450,7 +451,8 @@ class SwissEphemerisProvider(BaseEphemerisProvider):
                 self._swe.set_ephe_path(self._ephe_path)
             try:
                 self._ephe_files = [f for f in os.listdir(self._ephe_path) if f.endswith(".se1")]
-            except Exception:
+            except Exception as e:
+                logger.debug("Ephemeris directory file scan fallback: %s", e)
                 self._ephe_files = []
         else:
             self._ephe_path = None

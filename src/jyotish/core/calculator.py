@@ -5,6 +5,7 @@ Signs, Nakshatras, Padas, Houses, Dignities, Panchang, and Atmakaraka.
 """
 
 import math
+import logging
 from datetime import datetime, date, time, timedelta
 from typing import Dict, List, Tuple, Optional, Any
 
@@ -19,6 +20,8 @@ from .models import (
 )
 from datetime import timezone
 from .ephemeris import BaseEphemerisProvider, PyEphemProvider, default_ephemeris_provider
+
+logger = logging.getLogger(__name__)
 
 
 # 27 Yogas (Sun + Moon longitude / 13.333333 deg)
@@ -337,7 +340,8 @@ class ChartCalculator:
                     longitude=birth_data.longitude,
                     ayanamsa_code=ayanamsa_code
                 )
-            except Exception:
+            except Exception as e:
+                logger.warning("House calculation fallback triggered: %s", e)
                 lagna_lon = self.provider.calculate_ascendant(
                     dt_utc, birth_data.latitude, birth_data.longitude, ayanamsa_val
                 )
@@ -435,7 +439,8 @@ class ChartCalculator:
         if getattr(self.provider, "_has_swisseph", False) and hasattr(self.provider, "_swe"):
             try:
                 delta_t = float(self.provider._swe.deltat(jd_val) * 86400.0)
-            except Exception:
+            except Exception as e:
+                logger.debug("Delta T query fallback: %s", e)
                 delta_t = 0.0
 
         tz_iana = getattr(birth_data, "timezone", "Asia/Kolkata") or "Asia/Kolkata"
