@@ -716,6 +716,26 @@ class NatalReportGenerator:
                 logger.error(f"Error generating domain evidence card for {dom_key}: {e}")
 
         # -------------------------------------------------------------
+        # ENGINE HONESTY PROVENANCE BANNER (Phase U1 Task U1-T6)
+        # -------------------------------------------------------------
+        is_degraded = getattr(chart, "engine_degraded", False)
+        if hasattr(chart, "metadata") and getattr(chart.metadata, "engine_degraded", False):
+            is_degraded = True
+
+        if is_degraded:
+            engine_banner_html = """
+            <div style="background:#FEE2E2; border:2px solid #EF4444; color:#991B1B; padding:8px 14px; border-radius:8px; margin-top:12px; font-weight:800; font-size:13px; text-align:center;">
+                ⚠️ चेतावनी: यह फलादेश अवनत खगोलीय गणना इंजन (PyEphem Fallback) पर आधारित है। सूक्ष्म वर्ग एवं भाव सीमाओं में Swiss Ephemeris की तुलना में विचलन संभव है।
+            </div>
+            """
+        else:
+            engine_banner_html = """
+            <div style="background:#DCFCE7; border:1.5px solid #22C55E; color:#14532D; padding:6px 14px; border-radius:8px; margin-top:10px; font-weight:700; font-size:12.5px; text-align:center;">
+                ⚡ प्रमाणित उच्च-परिशुद्ध खगोलीय गणना (Swiss Ephemeris High Precision Engine) • शून्य मौन फॉलबैक
+            </div>
+            """
+
+        # -------------------------------------------------------------
         # HTML COMPLETE TEMPLATE WITH PRINT MEDIA PAGE-BREAKS
         # -------------------------------------------------------------
         html = f"""<!DOCTYPE html>
@@ -959,6 +979,7 @@ class NatalReportGenerator:
         <div class="astro-badge">
             👑 परामर्शक: {astro_name} &nbsp;|&nbsp; 📞 {astro_phone} &nbsp;|&nbsp; 🏛️ {astro_org}
         </div>
+        {engine_banner_html}
     </div>
 
     <!-- TABLE OF CONTENTS (अनुक्रमणिका) -->

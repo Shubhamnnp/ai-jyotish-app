@@ -16,10 +16,10 @@ import os
 import pytest
 from datetime import date, time
 
-from jyotish.core.models import BirthData
-from jyotish.core.calculator import default_chart_calculator
-from jyotish.services.report_generator import default_report_generator
-from jyotish.services.pdf_generator import default_pdf_service
+from src.jyotish.core.models import BirthData
+from src.jyotish.core.calculator import default_chart_calculator
+from src.jyotish.services.report_generator import default_report_generator
+from src.jyotish.services.pdf_generator import default_pdf_service
 
 
 @pytest.fixture(scope="module")
@@ -88,6 +88,20 @@ def test_page_numbering_and_disclaimer(benchmark_chart):
     assert "PCPNDT Act" in html
     assert "मृत्यु की निश्चित तिथि" in html
     assert "चिकित्सीय निदान" in html
+
+
+def test_engine_honesty_banner_in_report(benchmark_chart):
+    """Test that report header truthfully exposes active astronomical engine mode."""
+    # When precise (default)
+    html_precise = default_report_generator.generate_html_report(benchmark_chart)
+    assert "Swiss Ephemeris" in html_precise
+    assert "शून्य मौन फॉलबैक" in html_precise
+
+    # When degraded
+    benchmark_chart.engine_degraded = True
+    html_degraded = default_report_generator.generate_html_report(benchmark_chart)
+    assert "अवनत खगोलीय गणना इंजन (PyEphem Fallback)" in html_degraded
+    benchmark_chart.engine_degraded = False
 
 
 def test_pdf_service_browser_locator():
