@@ -89,3 +89,13 @@ Production container orchestrators (Kubernetes / ECS / Cloud Run) should configu
 - **At-Rest Encryption**:
   All stored personal identifying fields (names, locations, contact notes) are automatically encrypted using authenticated Fernet symmetric encryption.
 
+---
+
+## 7. OpenAPI Integration & Background Task Processing
+
+- **OpenAPI Schema Contract**:
+  The static OpenAPI 3.x schema is version-controlled at `docs/openapi.json` for frontend SDK generation (Next.js, Flutter, React Native).
+- **Asynchronous Processing**:
+  Heavy calculations and 50+ page multi-page PDF generation run asynchronously via `/api/v1/tasks/generate-report` returning HTTP 202 with polling status via `/api/v1/tasks/{task_id}`.
+
+

@@ -22,6 +22,40 @@
         }
       }
     },
+    "/health": {
+      "get": {
+        "summary": "Health Check",
+        "description": "System health check endpoint for monitoring & uptime probes.",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/engine": {
+      "get": {
+        "summary": "Health Engine",
+        "description": "Returns detailed ephemeris engine status, Swiss version, files found, and self-test results.",
+        "operationId": "health_engine_health_engine_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/chart/calculate": {
       "post": {
         "summary": "Calculate Natal Chart",
@@ -895,17 +929,35 @@
           "v1-auth"
         ],
         "summary": "Login",
-        "description": "Authenticates user credentials using Argon2id and emits JWT access token.",
+        "description": "Authenticates user credentials using Argon2id with lockout defense and emits JWT access token.",
         "operationId": "login_api_v1_auth_login_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/LoginRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -1346,6 +1398,198 @@
         }
       }
     },
+    "/api/v1/rules/audit-stats": {
+      "get": {
+        "tags": [
+          "v1-rules"
+        ],
+        "summary": "Get Audit Stats",
+        "description": "Returns quarantined rules audit and review queue statistics (Admin).",
+        "operationId": "get_audit_stats_api_v1_rules_audit_stats_get",
+        "parameters": [
+          {
+            "name": "X-Admin-Role",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Admin-Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rules/drafts": {
+      "get": {
+        "tags": [
+          "v1-rules"
+        ],
+        "summary": "List Draft Rules",
+        "description": "Lists draft quarantined rules waiting in the scholar review queue (Admin).",
+        "operationId": "list_draft_rules_api_v1_rules_drafts_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "grantha",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Grantha"
+            }
+          },
+          {
+            "name": "X-Admin-Role",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Admin-Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rules/review": {
+      "post": {
+        "tags": [
+          "v1-rules"
+        ],
+        "summary": "Review Rule",
+        "description": "Reviews and updates the verification status of a rule (Admin).",
+        "operationId": "review_rule_api_v1_rules_review_post",
+        "parameters": [
+          {
+            "name": "X-Admin-Role",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Admin-Role"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RuleReviewRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/billing/plans": {
       "get": {
         "tags": [
@@ -1544,7 +1788,7 @@
           "v1-reports"
         ],
         "summary": "Generate Master Natal Html Report",
-        "description": "Generates a 50+ Page Comprehensive Master Natal Report (सम्पूर्ण वृहद जन्म पत्रिका महा-दस्तावेज़)\nin full publication-ready HTML format with SVG charts, Panchang, Vargas, Shadbala, and Remedies.\nRequires PRO or ENTERPRISE subscription tier.",
+        "description": "Generates a 50+ Page Comprehensive Master Natal Report (\u0938\u092e\u094d\u092a\u0942\u0930\u094d\u0923 \u0935\u0943\u0939\u0926 \u091c\u0928\u094d\u092e \u092a\u0924\u094d\u0930\u093f\u0915\u093e \u092e\u0939\u093e-\u0926\u0938\u094d\u0924\u093e\u0935\u0947\u091c\u093c)\nin full publication-ready HTML format with SVG charts, Panchang, Vargas, Shadbala, and Remedies.\nRequires PRO or ENTERPRISE subscription tier.",
         "operationId": "generate_master_natal_html_report_api_v1_reports_master_html_post",
         "parameters": [
           {
@@ -1660,7 +1904,7 @@
           "v1-chat"
         ],
         "summary": "Consult Astrological Advisor",
-        "description": "Provides a grounded Shastriya consultation response to user inquiries.\nEvaluates real astronomical positions, active dasha hierarchy, and Shastriya rules\nbefore generating an explainable bilingual narrative with Gemini.",
+        "description": "Provides a grounded Shastriya consultation response strictly derived from\na freshly generated Evidence Pack. Refuses to answer from 'general memory'.",
         "operationId": "consult_astrological_advisor_api_v1_chat_consult_post",
         "parameters": [
           {
@@ -1707,6 +1951,658 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/chat/orchestrate": {
+      "post": {
+        "tags": [
+          "v1-chat"
+        ],
+        "summary": "Orchestrate Daivajna Consultation",
+        "description": "Executes Layer 4 Daivajna Multi-Agent consultation with Evidence Pack grounding.",
+        "operationId": "orchestrate_daivajna_consultation_api_v1_chat_orchestrate_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DaivajnaInquiryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DaivajnaConsultationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/astronomy/ayanamsas": {
+      "get": {
+        "tags": [
+          "Astronomy & Ephemeris"
+        ],
+        "summary": "Get Supported Ayanamsas",
+        "description": "Lists all validated astronomical sidereal ayanamsa modes and their J2000 offsets.",
+        "operationId": "get_supported_ayanamsas_api_v1_astronomy_ayanamsas_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AyanamsaInfo"
+                  },
+                  "type": "array",
+                  "title": "Response Get Supported Ayanamsas Api V1 Astronomy Ayanamsas Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/astronomy/engine/health": {
+      "get": {
+        "tags": [
+          "Astronomy & Ephemeris"
+        ],
+        "summary": "Get Astronomy Health",
+        "description": "Diagnostic health status for astronomical ephemeris engine.",
+        "operationId": "get_astronomy_health_api_v1_astronomy_engine_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/astronomy/timeloc/resolve": {
+      "get": {
+        "tags": [
+          "Astronomy & Ephemeris"
+        ],
+        "summary": "Resolve Timeloc",
+        "description": "Resolves coordinates, city, and IANA timezone via offline deterministic service.",
+        "operationId": "resolve_timeloc_api_v1_astronomy_timeloc_resolve_get",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "City"
+            }
+          },
+          {
+            "name": "latitude",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "title": "Latitude"
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "title": "Longitude"
+            }
+          },
+          {
+            "name": "timezone",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Timezone"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evidence/domains": {
+      "get": {
+        "tags": [
+          "v1-evidence"
+        ],
+        "summary": "Get Supported Domains",
+        "description": "Returns all supported astrological domains and their classical significators.",
+        "operationId": "get_supported_domains_api_v1_evidence_domains_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupportedDomainsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evidence/schema": {
+      "get": {
+        "tags": [
+          "v1-evidence"
+        ],
+        "summary": "Get Evidence Pack Schema",
+        "description": "Returns the official JSON Schema for EvidencePack validation.",
+        "operationId": "get_evidence_pack_schema_api_v1_evidence_schema_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evidence/pack": {
+      "post": {
+        "tags": [
+          "v1-evidence"
+        ],
+        "summary": "Generate Evidence Pack",
+        "description": "Builds a complete, grounded Evidence Pack for a birth chart and domain.\nAll claims in the evidence pack are backed by verified classical rules,\nplanetary dignities, Shadbala, and Shastriya Grantha citations.",
+        "operationId": "generate_evidence_pack_api_v1_evidence_pack_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenceBuildRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidencePack"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evidence/factors": {
+      "post": {
+        "tags": [
+          "v1-evidence"
+        ],
+        "summary": "Extract Chart Factors",
+        "description": "Extracts typed, structured chart factors (planets, houses, yogas, special lagnas)\nfor downstream shastriya analysis.",
+        "operationId": "extract_chart_factors_api_v1_evidence_factors_post",
+        "parameters": [
+          {
+            "name": "ayanamsa",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Lahiri",
+              "title": "Ayanamsa"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BirthData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChartFactors"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/health/": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Get System Health",
+        "description": "Returns high-level health report of the JyotishOS backend:\n- Ephemeris engine mode and verification\n- Quarantine & scholar rules breakdown\n- Uptime and memory footprint",
+        "operationId": "get_system_health_api_v1_health__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemHealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Get System Health",
+        "description": "Returns high-level health report of the JyotishOS backend:\n- Ephemeris engine mode and verification\n- Quarantine & scholar rules breakdown\n- Uptime and memory footprint",
+        "operationId": "get_system_health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemHealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/health/engine": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Get Engine Health Endpoint",
+        "description": "Returns detailed ephemeris engine status, Swiss version, files found, and self-test.",
+        "operationId": "get_engine_health_endpoint_api_v1_health_engine_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/privacy/delete-user-data": {
+      "post": {
+        "tags": [
+          "v1-privacy"
+        ],
+        "summary": "Delete User Data",
+        "description": "Right-to-be-Forgotten (GDPR / DPDP) Endpoint:\nPermanently purges all saved folders, natal charts, and consultation records\nbelonging to the specified user email. Returns a cryptographically verifiable audit record.",
+        "operationId": "delete_user_data_api_v1_privacy_delete_user_data_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserDataRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserDataResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/privacy/export-user-data": {
+      "get": {
+        "tags": [
+          "v1-privacy"
+        ],
+        "summary": "Export User Data",
+        "description": "Data Portability (GDPR / DPDP) Endpoint:\nExports all stored folders, charts, and consultations for the requested email\nin structured, portable JSON format.",
+        "operationId": "export_user_data_api_v1_privacy_export_user_data_get",
+        "parameters": [
+          {
+            "name": "owner_email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "User email address",
+              "title": "Owner Email"
+            },
+            "description": "User email address"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/privacy/encrypt": {
+      "post": {
+        "tags": [
+          "v1-privacy"
+        ],
+        "summary": "Encrypt Payload",
+        "description": "At-rest encryption endpoint for sensitive birth fields.",
+        "operationId": "encrypt_payload_api_v1_privacy_encrypt_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataPrivacyPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/privacy/decrypt": {
+      "post": {
+        "tags": [
+          "v1-privacy"
+        ],
+        "summary": "Decrypt Payload",
+        "description": "At-rest decryption endpoint for authorized client viewing.",
+        "operationId": "decrypt_payload_api_v1_privacy_decrypt_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataPrivacyPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tasks/generate-report": {
+      "post": {
+        "tags": [
+          "v1-tasks"
+        ],
+        "summary": "Submit Report Task",
+        "description": "Enqueue a background report generation task without blocking the HTTP worker thread.\nReturns task_id immediately.",
+        "operationId": "submit_report_task_api_v1_tasks_generate_report_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BackgroundReportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskSubmissionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tasks/{task_id}": {
+      "get": {
+        "tags": [
+          "v1-tasks"
+        ],
+        "summary": "Get Task Status",
+        "description": "Poll task execution status and retrieve result.",
+        "operationId": "get_task_status_api_v1_tasks__task_id__get",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskStatusResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tasks": {
+      "get": {
+        "tags": [
+          "v1-tasks"
+        ],
+        "summary": "List Recent Tasks",
+        "description": "List all recently enqueued tasks.",
+        "operationId": "list_recent_tasks_api_v1_tasks_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TaskStatusResponse"
+                  },
+                  "type": "array",
+                  "title": "Response List Recent Tasks Api V1 Tasks Get"
                 }
               }
             }
@@ -1841,6 +2737,10 @@
             "type": "string",
             "title": "Language"
           },
+          "domain": {
+            "type": "string",
+            "title": "Domain"
+          },
           "evidence_status": {
             "type": "string",
             "title": "Evidence Status"
@@ -1872,6 +2772,11 @@
             "type": "string",
             "title": "Consultation Narrative"
           },
+          "provenance": {
+            "items": {},
+            "type": "array",
+            "title": "Provenance"
+          },
           "ethical_disclaimer": {
             "type": "string",
             "title": "Ethical Disclaimer"
@@ -1881,6 +2786,7 @@
         "required": [
           "question",
           "language",
+          "domain",
           "evidence_status",
           "confidence_score",
           "active_dasha",
@@ -1903,6 +2809,91 @@
           "Not Supported"
         ],
         "title": "AstrologicalEvidenceStatus"
+      },
+      "AuditVerdict": {
+        "properties": {
+          "supporting_evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceFactor"
+            },
+            "type": "array",
+            "title": "Supporting Evidence",
+            "default": []
+          },
+          "conflicting_evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceFactor"
+            },
+            "type": "array",
+            "title": "Conflicting Evidence",
+            "default": []
+          },
+          "total_supporting_weight": {
+            "type": "number",
+            "title": "Total Supporting Weight",
+            "default": 0.0
+          },
+          "total_conflicting_weight": {
+            "type": "number",
+            "title": "Total Conflicting Weight",
+            "default": 0.0
+          },
+          "confidence_score": {
+            "type": "number",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Confidence Score"
+          },
+          "confidence_tier": {
+            "type": "string",
+            "title": "Confidence Tier"
+          },
+          "verdict_summary": {
+            "type": "string",
+            "title": "Verdict Summary"
+          },
+          "methodology": {
+            "type": "string",
+            "title": "Methodology",
+            "default": "Weighted Bayesian ratio: Sum(W_support) / (Sum(W_support) + Sum(W_conflict)), bounded between 15% and 92% per PRD classical non-determinism guidelines."
+          }
+        },
+        "type": "object",
+        "required": [
+          "confidence_score",
+          "confidence_tier",
+          "verdict_summary"
+        ],
+        "title": "AuditVerdict",
+        "description": "Deterministic, formulaic confidence audit evaluating both sides."
+      },
+      "AyanamsaInfo": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "swiss_sidm_code": {
+            "type": "integer",
+            "title": "Swiss Sidm Code"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "reference_j2000_degrees": {
+            "type": "number",
+            "title": "Reference J2000 Degrees"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "swiss_sidm_code",
+          "description",
+          "reference_j2000_degrees"
+        ],
+        "title": "AyanamsaInfo"
       },
       "BTRRequest": {
         "properties": {
@@ -1932,6 +2923,47 @@
         ],
         "title": "BTRRequest"
       },
+      "BackgroundReportRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "default": "Client"
+          },
+          "birth_date": {
+            "type": "string",
+            "title": "Birth Date",
+            "default": "1990-01-01"
+          },
+          "birth_time": {
+            "type": "string",
+            "title": "Birth Time",
+            "default": "12:00:00"
+          },
+          "latitude": {
+            "type": "number",
+            "title": "Latitude",
+            "default": 28.6139
+          },
+          "longitude": {
+            "type": "number",
+            "title": "Longitude",
+            "default": 77.209
+          },
+          "timezone_offset": {
+            "type": "number",
+            "title": "Timezone Offset",
+            "default": 5.5
+          },
+          "gender": {
+            "type": "string",
+            "title": "Gender",
+            "default": "male"
+          }
+        },
+        "type": "object",
+        "title": "BackgroundReportRequest"
+      },
       "BirthData": {
         "properties": {
           "name": {
@@ -1957,9 +2989,23 @@
             "type": "number",
             "title": "Longitude"
           },
+          "timezone": {
+            "type": "string",
+            "title": "Timezone",
+            "description": "Standard IANA timezone string, e.g. 'Asia/Kolkata'",
+            "default": "Asia/Kolkata"
+          },
           "timezone_offset": {
-            "type": "number",
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Timezone Offset",
+            "description": "UTC offset in hours (+5.5 for IST). Deprecated in favor of timezone.",
             "default": 5.5
           },
           "city": {
@@ -1979,6 +3025,48 @@
             "title": "Confidence",
             "description": "Exact / Approx / Unknown",
             "default": "Exact"
+          },
+          "birth_time_confidence": {
+            "type": "string",
+            "title": "Birth Time Confidence",
+            "description": "exact, approximate_plus_minus_minutes, unknown",
+            "default": "exact"
+          },
+          "confidence_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence Minutes",
+            "description": "Tolerance in minutes if confidence is approximate"
+          },
+          "fold": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fold",
+            "description": "0 (first/DST) or 1 (second/standard) for ambiguous DST transition times"
+          },
+          "gender": {
+            "type": "string",
+            "title": "Gender",
+            "description": "male / female",
+            "default": "male"
+          },
+          "house_system": {
+            "type": "string",
+            "title": "House System",
+            "description": "Whole Sign, Equal, Sripati, Porphyry, Placidus",
+            "default": "Whole Sign"
           }
         },
         "type": "object",
@@ -1990,6 +3078,243 @@
         ],
         "title": "BirthData",
         "description": "Input birth data for a profile."
+      },
+      "CalculationMetadata": {
+        "properties": {
+          "engine": {
+            "type": "string",
+            "title": "Engine",
+            "default": "swisseph"
+          },
+          "engine_type": {
+            "type": "string",
+            "title": "Engine Type",
+            "default": "Swiss Ephemeris / PyEphem Calibrated"
+          },
+          "engine_version": {
+            "type": "string",
+            "title": "Engine Version",
+            "default": "2.1.0"
+          },
+          "ayanamsa_name": {
+            "type": "string",
+            "title": "Ayanamsa Name",
+            "default": "Lahiri"
+          },
+          "ayanamsa_value": {
+            "type": "number",
+            "title": "Ayanamsa Value"
+          },
+          "ayanamsa": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ayanamsa"
+          },
+          "house_system": {
+            "type": "string",
+            "title": "House System",
+            "default": "Whole Sign"
+          },
+          "node_type": {
+            "type": "string",
+            "title": "Node Type",
+            "default": "mean"
+          },
+          "coordinate_type": {
+            "type": "string",
+            "title": "Coordinate Type",
+            "default": "geocentric"
+          },
+          "topocentric_moon": {
+            "type": "boolean",
+            "title": "Topocentric Moon",
+            "default": false
+          },
+          "polar_latitude_adjusted": {
+            "type": "boolean",
+            "title": "Polar Latitude Adjusted",
+            "default": false
+          },
+          "calculation_timestamp_utc": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Calculation Timestamp Utc"
+          },
+          "utc_datetime": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Utc Datetime"
+          },
+          "timezone_iana": {
+            "type": "string",
+            "title": "Timezone Iana",
+            "default": "Asia/Kolkata"
+          },
+          "delta_t_seconds": {
+            "type": "number",
+            "title": "Delta T Seconds",
+            "default": 0.0
+          },
+          "jd_ut": {
+            "type": "number",
+            "title": "Jd Ut",
+            "default": 0.0
+          },
+          "engine_degraded": {
+            "type": "boolean",
+            "title": "Engine Degraded",
+            "default": false
+          },
+          "ephemeris_mode": {
+            "type": "string",
+            "title": "Ephemeris Mode",
+            "default": "Swiss (Moshier)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ayanamsa_value"
+        ],
+        "title": "CalculationMetadata",
+        "description": "Deterministic reproducibility metadata for astronomical chart computation."
+      },
+      "ChartFactors": {
+        "properties": {
+          "chart_id": {
+            "type": "string",
+            "title": "Chart Id"
+          },
+          "lagna_sign": {
+            "type": "string",
+            "title": "Lagna Sign"
+          },
+          "lagna_degree": {
+            "type": "number",
+            "title": "Lagna Degree"
+          },
+          "lagna_lord": {
+            "type": "string",
+            "title": "Lagna Lord"
+          },
+          "moon_sign": {
+            "type": "string",
+            "title": "Moon Sign"
+          },
+          "moon_nakshatra": {
+            "type": "string",
+            "title": "Moon Nakshatra"
+          },
+          "sun_sign": {
+            "type": "string",
+            "title": "Sun Sign"
+          },
+          "planets": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PlanetFactors"
+            },
+            "type": "object",
+            "title": "Planets"
+          },
+          "houses": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/HouseFactors"
+            },
+            "type": "object",
+            "title": "Houses"
+          },
+          "atmakaraka": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Atmakaraka"
+          },
+          "amatyakaraka": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amatyakaraka"
+          },
+          "vargottama_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Vargottama Planets"
+          },
+          "combust_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Combust Planets"
+          },
+          "retrograde_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Retrograde Planets"
+          },
+          "exalted_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Exalted Planets"
+          },
+          "debilitated_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Debilitated Planets"
+          }
+        },
+        "type": "object",
+        "required": [
+          "chart_id",
+          "lagna_sign",
+          "lagna_degree",
+          "lagna_lord",
+          "moon_sign",
+          "moon_nakshatra",
+          "sun_sign",
+          "planets",
+          "houses"
+        ],
+        "title": "ChartFactors",
+        "description": "Unified collection of typed astrological factors for the entire chart."
       },
       "ChatRequest": {
         "properties": {
@@ -2096,6 +3421,108 @@
         ],
         "title": "CheckoutSessionResponse"
       },
+      "DaivajnaConsultationResult": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "success"
+          },
+          "topic": {
+            "type": "string",
+            "title": "Topic"
+          },
+          "user_query": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Query"
+          },
+          "fact_sheet": {
+            "$ref": "#/components/schemas/DeterministicFactSheet"
+          },
+          "shastriya_pramana": {
+            "items": {
+              "$ref": "#/components/schemas/ShastriyaPramanaItem"
+            },
+            "type": "array",
+            "title": "Shastriya Pramana",
+            "default": []
+          },
+          "audit_verdict": {
+            "$ref": "#/components/schemas/AuditVerdict"
+          },
+          "synthesis_hi": {
+            "type": "string",
+            "title": "Synthesis Hi"
+          },
+          "synthesis_en": {
+            "type": "string",
+            "title": "Synthesis En"
+          },
+          "remedies": {
+            "items": {
+              "$ref": "#/components/schemas/VedicRemedyRecommendation"
+            },
+            "type": "array",
+            "title": "Remedies",
+            "default": []
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer",
+            "default": "\u0936\u093e\u0938\u094d\u0924\u094d\u0930\u0940\u092f \u0938\u0942\u091a\u0928\u093e: \u0935\u0948\u0926\u093f\u0915 \u091c\u094d\u092f\u094b\u0924\u093f\u0937 \u0938\u092e\u094d\u092d\u093e\u0935\u0928\u093e, \u092a\u094d\u0930\u093e\u0930\u092c\u094d\u0927 \u090f\u0935\u0902 \u0915\u093e\u0932-\u091c\u094d\u091e\u093e\u0928 \u0915\u093e \u0936\u093e\u0938\u094d\u0924\u094d\u0930 \u0939\u0948\u0964 \u092f\u0939 \u0928\u093f\u092f\u0924\u093f\u0935\u093e\u0926 (Fatalism) \u0928\u0939\u0940\u0902 \u0905\u092a\u093f\u0924\u0941 \u092a\u0941\u0930\u0941\u0937\u093e\u0930\u094d\u0925 \u0914\u0930 \u0915\u0930\u094d\u092e-\u0938\u0902\u0936\u094b\u0927\u0928 \u0915\u093e \u092e\u093e\u0930\u094d\u0917\u0926\u0930\u094d\u0936\u0915 \u0939\u0948\u0964"
+          }
+        },
+        "type": "object",
+        "required": [
+          "topic",
+          "fact_sheet",
+          "audit_verdict",
+          "synthesis_hi",
+          "synthesis_en"
+        ],
+        "title": "DaivajnaConsultationResult",
+        "description": "Full Layer 4 synthesized consultation output."
+      },
+      "DaivajnaInquiryRequest": {
+        "properties": {
+          "birth_data": {
+            "$ref": "#/components/schemas/BirthData"
+          },
+          "topic": {
+            "type": "string",
+            "title": "Topic",
+            "default": "general"
+          },
+          "user_query": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Query"
+          },
+          "ayanamsa": {
+            "type": "string",
+            "title": "Ayanamsa",
+            "default": "Lahiri"
+          }
+        },
+        "type": "object",
+        "required": [
+          "birth_data"
+        ],
+        "title": "DaivajnaInquiryRequest"
+      },
       "DashaLevel": {
         "properties": {
           "lord": {
@@ -2138,6 +3565,614 @@
           "target_date"
         ],
         "title": "DashaQueryRequest"
+      },
+      "DataPrivacyPayload": {
+        "properties": {
+          "data": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "title": "DataPrivacyPayload",
+        "description": "Payload containing birth data or text for encryption/decryption."
+      },
+      "DeleteUserDataRequest": {
+        "properties": {
+          "owner_email": {
+            "type": "string",
+            "title": "Owner Email",
+            "description": "Email address of user requesting erasure"
+          },
+          "confirm": {
+            "type": "boolean",
+            "title": "Confirm",
+            "description": "Confirmation flag must be True"
+          }
+        },
+        "type": "object",
+        "required": [
+          "owner_email",
+          "confirm"
+        ],
+        "title": "DeleteUserDataRequest",
+        "description": "Payload to request complete data erasure."
+      },
+      "DeleteUserDataResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "audit_id": {
+            "type": "string",
+            "title": "Audit Id"
+          },
+          "owner_email": {
+            "type": "string",
+            "title": "Owner Email"
+          },
+          "deleted_folders": {
+            "type": "integer",
+            "title": "Deleted Folders"
+          },
+          "deleted_charts": {
+            "type": "integer",
+            "title": "Deleted Charts"
+          },
+          "timestamp": {
+            "type": "string",
+            "title": "Timestamp"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "audit_id",
+          "owner_email",
+          "deleted_folders",
+          "deleted_charts",
+          "timestamp",
+          "message"
+        ],
+        "title": "DeleteUserDataResponse",
+        "description": "Audit certificate of successful right-to-be-forgotten deletion."
+      },
+      "DeterministicFactSheet": {
+        "properties": {
+          "native_name": {
+            "type": "string",
+            "title": "Native Name"
+          },
+          "birth_datetime": {
+            "type": "string",
+            "title": "Birth Datetime"
+          },
+          "latitude": {
+            "type": "number",
+            "title": "Latitude"
+          },
+          "longitude": {
+            "type": "number",
+            "title": "Longitude"
+          },
+          "ayanamsa_name": {
+            "type": "string",
+            "title": "Ayanamsa Name"
+          },
+          "ayanamsa_value": {
+            "type": "number",
+            "title": "Ayanamsa Value"
+          },
+          "ascendant_sign": {
+            "type": "string",
+            "title": "Ascendant Sign"
+          },
+          "ascendant_degree": {
+            "type": "number",
+            "title": "Ascendant Degree"
+          },
+          "ascendant_lord": {
+            "type": "string",
+            "title": "Ascendant Lord"
+          },
+          "moon_sign": {
+            "type": "string",
+            "title": "Moon Sign"
+          },
+          "moon_degree": {
+            "type": "number",
+            "title": "Moon Degree"
+          },
+          "moon_nakshatra": {
+            "type": "string",
+            "title": "Moon Nakshatra"
+          },
+          "moon_pada": {
+            "type": "integer",
+            "title": "Moon Pada"
+          },
+          "sun_sign": {
+            "type": "string",
+            "title": "Sun Sign"
+          },
+          "sun_degree": {
+            "type": "number",
+            "title": "Sun Degree"
+          },
+          "active_mahadasha": {
+            "type": "string",
+            "title": "Active Mahadasha"
+          },
+          "active_antardasha": {
+            "type": "string",
+            "title": "Active Antardasha"
+          },
+          "dasha_summary": {
+            "type": "string",
+            "title": "Dasha Summary"
+          },
+          "planets": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Planets"
+          },
+          "houses_sav": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Houses Sav"
+          },
+          "dusthana_occupants": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Dusthana Occupants",
+            "default": []
+          },
+          "exalted_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Exalted Planets",
+            "default": []
+          },
+          "debilitated_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Debilitated Planets",
+            "default": []
+          },
+          "combust_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Combust Planets",
+            "default": []
+          },
+          "retrograde_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Retrograde Planets",
+            "default": []
+          },
+          "digbala_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Digbala Planets",
+            "default": []
+          },
+          "vargottama_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Vargottama Planets",
+            "default": []
+          },
+          "active_yogas": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Active Yogas",
+            "default": []
+          },
+          "active_doshas": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Active Doshas",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "native_name",
+          "birth_datetime",
+          "latitude",
+          "longitude",
+          "ayanamsa_name",
+          "ayanamsa_value",
+          "ascendant_sign",
+          "ascendant_degree",
+          "ascendant_lord",
+          "moon_sign",
+          "moon_degree",
+          "moon_nakshatra",
+          "moon_pada",
+          "sun_sign",
+          "sun_degree",
+          "active_mahadasha",
+          "active_antardasha",
+          "dasha_summary",
+          "planets",
+          "houses_sav"
+        ],
+        "title": "DeterministicFactSheet",
+        "description": "Deterministic, verified astronomical facts. AI must never hallucinate these."
+      },
+      "DomainSummary": {
+        "properties": {
+          "domain": {
+            "type": "string",
+            "title": "Domain"
+          },
+          "display_name_en": {
+            "type": "string",
+            "title": "Display Name En"
+          },
+          "display_name_hi": {
+            "type": "string",
+            "title": "Display Name Hi"
+          },
+          "primary_bhavas": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Primary Bhavas"
+          },
+          "secondary_bhavas": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Secondary Bhavas"
+          },
+          "karakas": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Karakas"
+          },
+          "vargas": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Vargas"
+          },
+          "disclaimer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Disclaimer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "domain",
+          "display_name_en",
+          "display_name_hi",
+          "primary_bhavas",
+          "secondary_bhavas",
+          "karakas",
+          "vargas"
+        ],
+        "title": "DomainSummary",
+        "description": "Summary of domain significators for client discovery."
+      },
+      "EvidenceBuildRequest": {
+        "properties": {
+          "birth_data": {
+            "$ref": "#/components/schemas/BirthData"
+          },
+          "domain": {
+            "type": "string",
+            "title": "Domain",
+            "description": "Domain key (e.g. career, marriage, wealth, health)",
+            "default": "career"
+          },
+          "school": {
+            "type": "string",
+            "title": "School",
+            "description": "Astrological school (parashari, jaimini, kp)",
+            "default": "parashari"
+          },
+          "ayanamsa": {
+            "type": "string",
+            "title": "Ayanamsa",
+            "description": "Ayanamsa system name",
+            "default": "Lahiri"
+          }
+        },
+        "type": "object",
+        "required": [
+          "birth_data"
+        ],
+        "title": "EvidenceBuildRequest",
+        "description": "Payload to build a grounded Evidence Pack for a given birth profile."
+      },
+      "EvidenceFactor": {
+        "properties": {
+          "factor": {
+            "type": "string",
+            "title": "Factor"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "weight": {
+            "type": "number",
+            "title": "Weight"
+          },
+          "impact": {
+            "type": "string",
+            "title": "Impact"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "factor",
+          "category",
+          "weight",
+          "impact",
+          "rationale"
+        ],
+        "title": "EvidenceFactor",
+        "description": "A weighted evidence factor evaluated by the Audit Agent."
+      },
+      "EvidenceFinding": {
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "title": "Finding Id"
+          },
+          "rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Rule Ids"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En",
+            "default": ""
+          },
+          "title_hi": {
+            "type": "string",
+            "title": "Title Hi",
+            "default": ""
+          },
+          "claim_en": {
+            "type": "string",
+            "title": "Claim En"
+          },
+          "claim_hi": {
+            "type": "string",
+            "title": "Claim Hi"
+          },
+          "polarity": {
+            "type": "string",
+            "title": "Polarity",
+            "default": "+"
+          },
+          "strength": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Strength"
+          },
+          "strength_reason": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Strength Reason"
+          },
+          "timing": {
+            "$ref": "#/components/schemas/FindingTiming"
+          },
+          "caveats": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Caveats"
+          },
+          "source_ref": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FindingSourceRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "finding_id",
+          "claim_en",
+          "claim_hi",
+          "strength"
+        ],
+        "title": "EvidenceFinding",
+        "description": "A verified, grounded finding inside an Evidence Pack."
+      },
+      "EvidencePack": {
+        "properties": {
+          "chart_meta": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Chart Meta"
+          },
+          "domain": {
+            "type": "string",
+            "title": "Domain"
+          },
+          "school": {
+            "type": "string",
+            "title": "School",
+            "default": "parashari"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceFinding"
+            },
+            "type": "array",
+            "title": "Findings"
+          },
+          "unresolved_conflicts": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Unresolved Conflicts"
+          },
+          "disclaimers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Disclaimers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "chart_meta",
+          "domain"
+        ],
+        "title": "EvidencePack",
+        "description": "Complete, verified Evidence Pack passed to the narrator."
+      },
+      "FindingSourceRef": {
+        "properties": {
+          "grantha": {
+            "type": "string",
+            "title": "Grantha",
+            "default": "Brihat Parashara Hora Shastra"
+          },
+          "chapter": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Chapter",
+            "default": ""
+          },
+          "verse": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verse",
+            "default": ""
+          },
+          "shloka_sanskrit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shloka Sanskrit"
+          },
+          "school": {
+            "type": "string",
+            "title": "School",
+            "default": "Parashari"
+          },
+          "verified": {
+            "type": "boolean",
+            "title": "Verified",
+            "default": true
+          }
+        },
+        "type": "object",
+        "title": "FindingSourceRef",
+        "description": "Classical grantha provenance and verification reference."
+      },
+      "FindingTiming": {
+        "properties": {
+          "dasha_support": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Dasha Support"
+          },
+          "transit_support": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Transit Support"
+          }
+        },
+        "type": "object",
+        "title": "FindingTiming",
+        "description": "Timing windows associated with a finding."
       },
       "GhatnaQueryInput": {
         "properties": {
@@ -2392,6 +4427,39 @@
             "type": "array",
             "title": "Aspecting Planets",
             "default": []
+          },
+          "sandhi_start": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sandhi Start"
+          },
+          "sandhi_end": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sandhi End"
+          },
+          "bhava_madhya": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bhava Madhya"
           }
         },
         "type": "object",
@@ -2404,6 +4472,130 @@
         ],
         "title": "HouseCusp",
         "description": "Cusp information for a bhava."
+      },
+      "HouseFactors": {
+        "properties": {
+          "house_num": {
+            "type": "integer",
+            "title": "House Num"
+          },
+          "sign_name": {
+            "type": "string",
+            "title": "Sign Name"
+          },
+          "sign_id": {
+            "type": "integer",
+            "title": "Sign Id"
+          },
+          "lord": {
+            "type": "string",
+            "title": "Lord"
+          },
+          "lord_placement_house": {
+            "type": "integer",
+            "title": "Lord Placement House"
+          },
+          "lord_dignity": {
+            "type": "string",
+            "title": "Lord Dignity"
+          },
+          "lord_shadbala_ratio": {
+            "type": "number",
+            "title": "Lord Shadbala Ratio"
+          },
+          "occupants": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Occupants"
+          },
+          "benefic_occupants": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Benefic Occupants"
+          },
+          "malefic_occupants": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Malefic Occupants"
+          },
+          "aspecting_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Aspecting Planets"
+          },
+          "benefic_aspects": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Benefic Aspects"
+          },
+          "malefic_aspects": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Malefic Aspects"
+          },
+          "sav_bindus": {
+            "type": "integer",
+            "title": "Sav Bindus"
+          },
+          "is_kendra": {
+            "type": "boolean",
+            "title": "Is Kendra"
+          },
+          "is_trikona": {
+            "type": "boolean",
+            "title": "Is Trikona"
+          },
+          "is_dusthana": {
+            "type": "boolean",
+            "title": "Is Dusthana"
+          },
+          "is_upachaya": {
+            "type": "boolean",
+            "title": "Is Upachaya"
+          },
+          "arudha_padas_resident": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Arudha Padas Resident"
+          }
+        },
+        "type": "object",
+        "required": [
+          "house_num",
+          "sign_name",
+          "sign_id",
+          "lord",
+          "lord_placement_house",
+          "lord_dignity",
+          "lord_shadbala_ratio",
+          "occupants",
+          "benefic_occupants",
+          "malefic_occupants",
+          "aspecting_planets",
+          "benefic_aspects",
+          "malefic_aspects",
+          "sav_bindus",
+          "is_kendra",
+          "is_trikona",
+          "is_dusthana",
+          "is_upachaya"
+        ],
+        "title": "HouseFactors",
+        "description": "Typed astrological factors for a single house / bhava."
       },
       "JaiminiResult": {
         "properties": {
@@ -2646,6 +4838,21 @@
                 "type": "null"
               }
             ]
+          },
+          "metadata": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CalculationMetadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "engine_degraded": {
+            "type": "boolean",
+            "title": "Engine Degraded",
+            "default": false
           }
         },
         "type": "object",
@@ -2725,7 +4932,7 @@
               }
             ],
             "title": "Astro Name",
-            "default": "ज्योतिषाचार्य पं. शुभम तिवारी"
+            "default": "\u091c\u094d\u092f\u094b\u0924\u093f\u0937\u093e\u091a\u093e\u0930\u094d\u092f \u092a\u0902. \u0936\u0941\u092d\u092e \u0924\u093f\u0935\u093e\u0930\u0940"
           },
           "astro_phone": {
             "anyOf": [
@@ -2749,7 +4956,7 @@
               }
             ],
             "title": "Astro Org",
-            "default": "वैदिक ज्योतिष अनुसंधान केंद्र"
+            "default": "\u0935\u0948\u0926\u093f\u0915 \u091c\u094d\u092f\u094b\u0924\u093f\u0937 \u0905\u0928\u0941\u0938\u0902\u0927\u093e\u0928 \u0915\u0947\u0902\u0926\u094d\u0930"
           }
         },
         "type": "object",
@@ -3017,7 +5224,7 @@
           "disclaimer_hi": {
             "type": "string",
             "title": "Disclaimer Hi",
-            "default": "यह विश्लेषण विशुद्ध वैदिक गणितीय गणना, ६ शास्त्रीय स्तंभों एवं १२,५००+ नियमों के साक्ष्य पर आधारित है। यह कोई मनगढ़ंत दावा नहीं अपितु शास्त्र-सम्मत संभावना का मापन है।"
+            "default": "\u092f\u0939 \u0935\u093f\u0936\u094d\u0932\u0947\u0937\u0923 \u0935\u093f\u0936\u0941\u0926\u094d\u0927 \u0935\u0948\u0926\u093f\u0915 \u0917\u0923\u093f\u0924\u0940\u092f \u0917\u0923\u0928\u093e, \u096c \u0936\u093e\u0938\u094d\u0924\u094d\u0930\u0940\u092f \u0938\u094d\u0924\u0902\u092d\u094b\u0902 \u090f\u0935\u0902 \u0967\u0968,\u096b\u0966\u0966+ \u0928\u093f\u092f\u092e\u094b\u0902 \u0915\u0947 \u0938\u093e\u0915\u094d\u0937\u094d\u092f \u092a\u0930 \u0906\u0927\u093e\u0930\u093f\u0924 \u0939\u0948\u0964 \u092f\u0939 \u0915\u094b\u0908 \u092e\u0928\u0917\u0922\u093c\u0902\u0924 \u0926\u093e\u0935\u093e \u0928\u0939\u0940\u0902 \u0905\u092a\u093f\u0924\u0941 \u0936\u093e\u0938\u094d\u0924\u094d\u0930-\u0938\u092e\u094d\u092e\u0924 \u0938\u0902\u092d\u093e\u0935\u0928\u093e \u0915\u093e \u092e\u093e\u092a\u0928 \u0939\u0948\u0964"
           }
         },
         "type": "object",
@@ -3036,6 +5243,188 @@
           "ai_explanation_en"
         ],
         "title": "PastEventVerificationResult"
+      },
+      "PlanetFactors": {
+        "properties": {
+          "planet": {
+            "type": "string",
+            "title": "Planet"
+          },
+          "longitude": {
+            "type": "number",
+            "title": "Longitude"
+          },
+          "sign_name": {
+            "type": "string",
+            "title": "Sign Name"
+          },
+          "sign_id": {
+            "type": "integer",
+            "title": "Sign Id"
+          },
+          "house_from_lagna": {
+            "type": "integer",
+            "title": "House From Lagna"
+          },
+          "house_from_moon": {
+            "type": "integer",
+            "title": "House From Moon"
+          },
+          "dignity": {
+            "type": "string",
+            "title": "Dignity"
+          },
+          "is_retrograde": {
+            "type": "boolean",
+            "title": "Is Retrograde"
+          },
+          "is_combust": {
+            "type": "boolean",
+            "title": "Is Combust"
+          },
+          "combustion_separation": {
+            "type": "number",
+            "title": "Combustion Separation"
+          },
+          "baladi_avastha": {
+            "type": "string",
+            "title": "Baladi Avastha"
+          },
+          "jagratadi_avastha": {
+            "type": "string",
+            "title": "Jagratadi Avastha"
+          },
+          "deeptadi_avastha": {
+            "type": "string",
+            "title": "Deeptadi Avastha"
+          },
+          "shadbala_virupas": {
+            "type": "number",
+            "title": "Shadbala Virupas"
+          },
+          "shadbala_ratio": {
+            "type": "number",
+            "title": "Shadbala Ratio"
+          },
+          "is_shadbala_strong": {
+            "type": "boolean",
+            "title": "Is Shadbala Strong"
+          },
+          "houses_owned": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Houses Owned"
+          },
+          "nakshatra_name": {
+            "type": "string",
+            "title": "Nakshatra Name"
+          },
+          "nakshatra_pada": {
+            "type": "integer",
+            "title": "Nakshatra Pada"
+          },
+          "nakshatra_lord": {
+            "type": "string",
+            "title": "Nakshatra Lord"
+          },
+          "conjunctions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Conjunctions"
+          },
+          "aspects_given_to_houses": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Aspects Given To Houses"
+          },
+          "aspects_given_to_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Aspects Given To Planets"
+          },
+          "aspects_received_from_planets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Aspects Received From Planets"
+          },
+          "d9_navamsha_sign": {
+            "type": "string",
+            "title": "D9 Navamsha Sign"
+          },
+          "d10_dashamsha_sign": {
+            "type": "string",
+            "title": "D10 Dashamsha Sign"
+          },
+          "is_vargottama": {
+            "type": "boolean",
+            "title": "Is Vargottama"
+          },
+          "chara_karaka": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chara Karaka"
+          },
+          "naisargika_karakatwas": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Naisargika Karakatwas"
+          },
+          "bav_bindus": {
+            "type": "integer",
+            "title": "Bav Bindus",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "planet",
+          "longitude",
+          "sign_name",
+          "sign_id",
+          "house_from_lagna",
+          "house_from_moon",
+          "dignity",
+          "is_retrograde",
+          "is_combust",
+          "combustion_separation",
+          "baladi_avastha",
+          "jagratadi_avastha",
+          "deeptadi_avastha",
+          "shadbala_virupas",
+          "shadbala_ratio",
+          "is_shadbala_strong",
+          "houses_owned",
+          "nakshatra_name",
+          "nakshatra_pada",
+          "nakshatra_lord",
+          "conjunctions",
+          "aspects_given_to_houses",
+          "aspects_given_to_planets",
+          "aspects_received_from_planets",
+          "d9_navamsha_sign",
+          "d10_dashamsha_sign",
+          "is_vargottama"
+        ],
+        "title": "PlanetFactors",
+        "description": "Typed astrological factors for a single planet."
       },
       "PlanetPosition": {
         "properties": {
@@ -3310,6 +5699,35 @@
         "title": "RuleEvidence",
         "description": "Detailed evidence of a rule evaluation."
       },
+      "RuleReviewRequest": {
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "new_status": {
+            "type": "string",
+            "title": "New Status"
+          },
+          "scholar_notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scholar Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rule_id",
+          "new_status"
+        ],
+        "title": "RuleReviewRequest"
+      },
       "ShadbalaPlanetResult": {
         "properties": {
           "sthana_bala": {
@@ -3380,6 +5798,31 @@
             "type": "string",
             "title": "Deeptadi Avastha",
             "default": "Deepta"
+          },
+          "uchha_bala": {
+            "type": "number",
+            "title": "Uchha Bala",
+            "default": 0.0
+          },
+          "kendradi_bala": {
+            "type": "number",
+            "title": "Kendradi Bala",
+            "default": 0.0
+          },
+          "ojayugma_bala": {
+            "type": "number",
+            "title": "Ojayugma Bala",
+            "default": 0.0
+          },
+          "nathonnatha_bala": {
+            "type": "number",
+            "title": "Nathonnatha Bala",
+            "default": 0.0
+          },
+          "paksha_bala": {
+            "type": "number",
+            "title": "Paksha Bala",
+            "default": 0.0
           }
         },
         "type": "object",
@@ -3413,6 +5856,23 @@
             },
             "type": "object",
             "title": "Bhava Bala"
+          },
+          "bhava_bala_components": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "type": "number"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bhava Bala Components"
           }
         },
         "type": "object",
@@ -3421,6 +5881,69 @@
           "bhava_bala"
         ],
         "title": "ShadbalaSummary"
+      },
+      "ShastriyaPramanaItem": {
+        "properties": {
+          "grantha": {
+            "type": "string",
+            "title": "Grantha"
+          },
+          "author": {
+            "type": "string",
+            "title": "Author"
+          },
+          "chapter": {
+            "type": "string",
+            "title": "Chapter"
+          },
+          "theme": {
+            "type": "string",
+            "title": "Theme"
+          },
+          "shloka_sanskrit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shloka Sanskrit"
+          },
+          "translation_hi": {
+            "type": "string",
+            "title": "Translation Hi"
+          },
+          "translation_en": {
+            "type": "string",
+            "title": "Translation En"
+          },
+          "principles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Principles",
+            "default": []
+          },
+          "relevance_context": {
+            "type": "string",
+            "title": "Relevance Context",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "grantha",
+          "author",
+          "chapter",
+          "theme",
+          "translation_hi",
+          "translation_en"
+        ],
+        "title": "ShastriyaPramanaItem",
+        "description": "Classical scripture citation and rule pramana."
       },
       "ShodhanaResult": {
         "properties": {
@@ -3476,6 +5999,171 @@
         ],
         "title": "ShodhanaResult",
         "description": "Trikona and Ekadhipatya Shodhana with Shodhita Pinda."
+      },
+      "SupportedDomainsResponse": {
+        "properties": {
+          "total_domains": {
+            "type": "integer",
+            "title": "Total Domains"
+          },
+          "domains": {
+            "items": {
+              "$ref": "#/components/schemas/DomainSummary"
+            },
+            "type": "array",
+            "title": "Domains"
+          }
+        },
+        "type": "object",
+        "required": [
+          "total_domains",
+          "domains"
+        ],
+        "title": "SupportedDomainsResponse",
+        "description": "Supported domains discovery response."
+      },
+      "SystemHealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "healthy"
+          },
+          "uptime_seconds": {
+            "type": "number",
+            "title": "Uptime Seconds"
+          },
+          "timestamp": {
+            "type": "string",
+            "title": "Timestamp"
+          },
+          "engine_degraded": {
+            "type": "boolean",
+            "title": "Engine Degraded",
+            "default": false
+          },
+          "ephemeris": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Ephemeris"
+          },
+          "rules": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Rules"
+          },
+          "system": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "System"
+          }
+        },
+        "type": "object",
+        "required": [
+          "uptime_seconds",
+          "timestamp",
+          "ephemeris",
+          "rules",
+          "system"
+        ],
+        "title": "SystemHealthResponse",
+        "description": "Structured health response for JyotishOS engine."
+      },
+      "TaskStatusResponse": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "duration_seconds": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Seconds"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id",
+          "status",
+          "created_at"
+        ],
+        "title": "TaskStatusResponse"
+      },
+      "TaskSubmissionResponse": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id",
+          "status",
+          "created_at",
+          "message"
+        ],
+        "title": "TaskSubmissionResponse"
       },
       "TransitSummary": {
         "properties": {
@@ -3545,6 +6233,34 @@
             "title": "Jupiter Retrograde",
             "default": false
           },
+          "saturn_paya": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saturn Paya"
+          },
+          "jupiter_paya": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jupiter Paya"
+          },
+          "transit_paya_detail": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Transit Paya Detail",
+            "default": {}
+          },
           "ashtakavarga_transit_bindus": {
             "additionalProperties": {
               "type": "integer"
@@ -3552,6 +6268,18 @@
             "type": "object",
             "title": "Ashtakavarga Transit Bindus",
             "default": {}
+          },
+          "vedha_analysis": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vedha Analysis"
           }
         },
         "type": "object",
@@ -3603,6 +6331,105 @@
           "upaketu_longitude": {
             "type": "number",
             "title": "Upaketu Longitude"
+          },
+          "dhuma_sign_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dhuma Sign Name"
+          },
+          "vyatipata_sign_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vyatipata Sign Name"
+          },
+          "parivesha_sign_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parivesha Sign Name"
+          },
+          "indrachapa_sign_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Indrachapa Sign Name"
+          },
+          "upaketu_sign_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Upaketu Sign Name"
+          },
+          "gulika_segment": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gulika Segment"
+          },
+          "is_night_birth": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Night Birth"
+          },
+          "dinamana_hours": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dinamana Hours"
+          },
+          "ratrimana_hours": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ratrimana Hours"
           }
         },
         "type": "object",
@@ -3687,6 +6514,28 @@
             },
             "type": "object",
             "title": "Planets"
+          },
+          "lagna_deity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lagna Deity"
+          },
+          "lagna_is_benefic_deity": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lagna Is Benefic Deity"
           }
         },
         "type": "object",
@@ -3722,6 +6571,28 @@
           "house_number": {
             "type": "integer",
             "title": "House Number"
+          },
+          "deity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deity"
+          },
+          "is_benefic_deity": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Benefic Deity"
           }
         },
         "type": "object",
@@ -3750,6 +6621,45 @@
           "birth_data"
         ],
         "title": "VarshaphalRequest"
+      },
+      "VedicRemedyRecommendation": {
+        "properties": {
+          "planet_or_deity": {
+            "type": "string",
+            "title": "Planet Or Deity"
+          },
+          "remedy_type": {
+            "type": "string",
+            "title": "Remedy Type"
+          },
+          "title_hi": {
+            "type": "string",
+            "title": "Title Hi"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "procedure": {
+            "type": "string",
+            "title": "Procedure"
+          },
+          "classical_reference": {
+            "type": "string",
+            "title": "Classical Reference"
+          }
+        },
+        "type": "object",
+        "required": [
+          "planet_or_deity",
+          "remedy_type",
+          "title_hi",
+          "title_en",
+          "procedure",
+          "classical_reference"
+        ],
+        "title": "VedicRemedyRecommendation",
+        "description": "Authentic, classical non-commercial Vedic remedy."
       },
       "VerificationCertificateRequest": {
         "properties": {
@@ -3793,7 +6703,7 @@
               }
             ],
             "title": "Astro Name",
-            "default": "ज्योतिषाचार्य पं. शुभम तिवारी"
+            "default": "\u091c\u094d\u092f\u094b\u0924\u093f\u0937\u093e\u091a\u093e\u0930\u094d\u092f \u092a\u0902. \u0936\u0941\u092d\u092e \u0924\u093f\u0935\u093e\u0930\u0940"
           },
           "astro_org": {
             "anyOf": [
@@ -3805,7 +6715,7 @@
               }
             ],
             "title": "Astro Org",
-            "default": "वैदिक ज्योतिष अनुसंधान केंद्र"
+            "default": "\u0935\u0948\u0926\u093f\u0915 \u091c\u094d\u092f\u094b\u0924\u093f\u0937 \u0905\u0928\u0941\u0938\u0902\u0927\u093e\u0928 \u0915\u0947\u0902\u0926\u094d\u0930"
           }
         },
         "type": "object",
