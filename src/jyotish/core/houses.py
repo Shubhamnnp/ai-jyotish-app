@@ -12,7 +12,13 @@ Handles circumpolar polar latitude singularities (> 66° N/S) with automatic fal
 
 from typing import Dict, List, Tuple, Optional, Any
 from dataclasses import dataclass
-import swisseph as swe
+try:
+    import swisseph as swe
+except ImportError:
+    try:
+        import pyswisseph as swe
+    except ImportError:
+        import pysweph as swe
 
 from .constants import SIGN_NAMES, SIGN_LORDS
 
@@ -104,12 +110,21 @@ class HouseCalculator:
             polar_adjusted = True
             warning = f"Swiss houses_ex failed for '{canonical_name}' ({e}); fell back to Equal house system."
 
-        # cusps_tuple has length 13: index 0 dummy, index 1..12 are houses 1..12
-        raw_cusps = [float(cusps_tuple[h]) % 360.0 for h in range(1, 13)]
-        asc = float(ascmc[0]) % 360.0
-        mc = float(ascmc[1]) % 360.0
-        armc = float(ascmc[2]) % 360.0
-        vertex = float(ascmc[3]) % 360.0
+        # Handle both 13-element (1-indexed, cusps[0] dummy) and 12-element (0-indexed) returns
+        if len(cusps_tuple) >= 13:
+            raw_cusps = [float(cusps_tuple[h]) % 360.0 for h in range(1, 13)]
+        elif len(cusps_tuple) == 12:
+            raw_cusps = [float(c) % 360.0 for c in cusps_tuple]
+        else:
+            raw_cusps = [float(c) % 360.0 for c in cusps_tuple[:12]]
+            while len(raw_cusps) < 12:
+                base = raw_cusps[-1] if raw_cusps else (float(ascmc[0]) if len(ascmc) > 0 else 0.0)
+                raw_cusps.append((base + 30.0) % 360.0)
+
+        asc = float(ascmc[0]) % 360.0 if len(ascmc) > 0 else (raw_cusps[0] if raw_cusps else 0.0)
+        mc = float(ascmc[1]) % 360.0 if len(ascmc) > 1 else (raw_cusps[9] if len(raw_cusps) > 9 else 0.0)
+        armc = float(ascmc[2]) % 360.0 if len(ascmc) > 2 else 0.0
+        vertex = float(ascmc[3]) % 360.0 if len(ascmc) > 3 else 0.0
 
         sandhis = None
         madhyas = None

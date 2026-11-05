@@ -170,3 +170,25 @@ def test_chart_calculator_with_house_systems():
     assert "bhava_cusps" in chalit
     assert len(chalit["planet_positions"]) == len(chart_sripati.planets)
     assert len(chalit["bhava_cusps"]) == 12
+
+
+def test_house_calculator_tuple_length_compatibility(monkeypatch):
+    """Verifies HouseCalculator safely handles both 12-element and 13-element cusps tuples."""
+    import src.jyotish.core.houses as houses_mod
+
+    # Case 1: 12-element tuple (0-indexed cusps from some Linux pyswisseph builds)
+    mock_12 = tuple(float(i * 30) for i in range(12))
+    mock_ascmc = (15.0, 105.0, 15.0, 195.0)
+
+    monkeypatch.setattr(houses_mod.swe, "houses_ex", lambda *args, **kwargs: (mock_12, mock_ascmc))
+    res12 = houses_mod.HouseCalculator.calculate_houses(2460000.5, 28.6139, 77.2090, "Whole Sign")
+    assert len(res12.cusps) == 12
+    assert res12.ascendant == 15.0
+
+    # Case 2: 13-element tuple (1-indexed with dummy index 0)
+    mock_13 = (0.0,) + tuple(float(i * 30) for i in range(12))
+    monkeypatch.setattr(houses_mod.swe, "houses_ex", lambda *args, **kwargs: (mock_13, mock_ascmc))
+    res13 = houses_mod.HouseCalculator.calculate_houses(2460000.5, 28.6139, 77.2090, "Whole Sign")
+    assert len(res13.cusps) == 12
+    assert res13.ascendant == 15.0
+
