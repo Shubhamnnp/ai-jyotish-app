@@ -380,7 +380,14 @@ def grahalakshanam_sync():
     return {"status": "success", "imported_charts": imported}
 
 # =============================================================
-# Enterprise API Gateway v1 Mount
+# Enterprise API Gateway v1 Mount & Static Web App
 # =============================================================
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
 from .v1.router import api_v1_router
+
 app.include_router(api_v1_router, prefix="/api/v1")
+
+WEB_DIR = Path(__file__).resolve().parent.parent / "ui" / "web"
+if WEB_DIR.exists():
+    app.mount("/web", StaticFiles(directory=str(WEB_DIR), html=True), name="web")
