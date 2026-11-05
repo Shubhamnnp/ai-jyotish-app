@@ -316,4 +316,27 @@ class PastEventVerificationEngine:
         )
 
 
+
+    @classmethod
+    def verify_benchmark_event(
+        cls,
+        birth_data: BirthData,
+        event_id: str,
+        target_date: date,
+        query_text: str = ""
+    ) -> PastEventVerificationResult:
+        """Back-testing helper for historical event benchmark validation."""
+        from .taxonomy import default_event_taxonomy
+        ev_def = default_event_taxonomy.get_event(event_id)
+        theme = ev_def.domain if ev_def else "career"
+        inp = PastEventVerificationInput(
+            birth_data=birth_data,
+            event_theme=theme,
+            query_text=query_text or (ev_def.name_en if ev_def else event_id),
+            target_date=target_date
+        )
+        engine = cls()
+        return engine.verify_past_event(inp)
+
+
 default_past_event_engine = PastEventVerificationEngine()
