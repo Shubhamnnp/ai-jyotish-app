@@ -237,6 +237,111 @@ const KundliChartRenderer = {
 
     svg += `</svg>`;
     return svg;
+  },
+
+  /**
+   * Render East Indian (Bangla/Assam/Odisha) Chart SVG
+   * Fixed Zodiac Signs (Aries at top center), Lagna indicated dynamically
+   */
+  renderEastIndian(chartData, vargaKey = "D1") {
+    const size = 500;
+    const mid = size / 2;
+
+    let lagnaSign = (vargaKey === "D1") 
+      ? (chartData.lagna_sign_id || chartData.lagna_sign || 1)
+      : (chartData.vargas && chartData.vargas[vargaKey] ? (chartData.vargas[vargaKey].lagna_sign_id || chartData.vargas[vargaKey].lagna_sign || 1) : 1);
+
+    const planetsSource = (vargaKey === "D1") 
+      ? chartData.planets 
+      : (chartData.vargas && chartData.vargas[vargaKey] ? chartData.vargas[vargaKey].planets : chartData.planets);
+
+    const signPlanets = { 1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[] };
+    if (planetsSource) {
+      Object.entries(planetsSource).forEach(([pName, pObj]) => {
+        let pSign = pObj.sign_id || pObj.sign || 1;
+        let degVal = pObj.sign_degree != null 
+          ? pObj.sign_degree 
+          : (pObj.degree_in_varga != null 
+            ? pObj.degree_in_varga 
+            : (pObj.longitude_in_sign != null ? pObj.longitude_in_sign : (pObj.longitude ? pObj.longitude % 30 : null)));
+
+        if (signPlanets[pSign]) {
+          signPlanets[pSign].push({
+            name: pName,
+            is_retro: pObj.is_retrograde || false,
+            deg: degVal != null ? degVal.toFixed(1) : ""
+          });
+        }
+      });
+    }
+
+    // East Indian Sign Coordinates (Signs 1-12 fixed)
+    const eastSignCoords = {
+      1:  { rashiPos: { x: mid, y: 115 }, plPos: { x: mid, y: 65 } },      // Mesha (Top diamond)
+      2:  { rashiPos: { x: 125, y: 35 }, plPos: { x: 125, y: 70 } },      // Vrishabha (Top-left corner)
+      3:  { rashiPos: { x: 35, y: 125 }, plPos: { x: 70, y: 125 } },      // Mithuna (Left-top)
+      4:  { rashiPos: { x: 115, y: mid }, plPos: { x: 65, y: mid } },      // Karka (Left diamond)
+      5:  { rashiPos: { x: 35, y: 375 }, plPos: { x: 70, y: 375 } },      // Simha (Left-bottom)
+      6:  { rashiPos: { x: 125, y: 465 }, plPos: { x: 125, y: 430 } },    // Kanya (Bottom-left corner)
+      7:  { rashiPos: { x: mid, y: 385 }, plPos: { x: mid, y: 435 } },     // Tula (Bottom diamond)
+      8:  { rashiPos: { x: 375, y: 465 }, plPos: { x: 375, y: 430 } },    // Vrishchika (Bottom-right corner)
+      9:  { rashiPos: { x: 465, y: 375 }, plPos: { x: 430, y: 375 } },    // Dhanu (Right-bottom)
+      10: { rashiPos: { x: 385, y: mid }, plPos: { x: 435, y: mid } },     // Makara (Right diamond)
+      11: { rashiPos: { x: 465, y: 125 }, plPos: { x: 430, y: 125 } },    // Kumbha (Right-top)
+      12: { rashiPos: { x: 375, y: 35 }, plPos: { x: 375, y: 70 } }       // Meena (Top-right corner)
+    };
+
+    let svg = `<svg viewBox="0 0 ${size} ${size}" class="svg-kundli" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background & Outer Box -->
+      <rect x="4" y="4" width="${size - 8}" height="${size - 8}" fill="#FFFFFF" stroke="#D97706" stroke-width="2.5" rx="6" />
+
+      <!-- Inner Geometry Lines (East Indian) -->
+      <g stroke="#F59E0B" stroke-width="2">
+        <!-- Outer Diamond -->
+        <line x1="${mid}" y1="4" x2="${size - 4}" y2="${mid}" />
+        <line x1="${size - 4}" y1="${mid}" x2="${mid}" y2="${size - 4}" />
+        <line x1="${mid}" y1="${size - 4}" x2="4" y2="${mid}" />
+        <line x1="4" y1="${mid}" x2="${mid}" y2="4" />
+
+        <!-- Diagonal Crossed Lines -->
+        <line x1="4" y1="4" x2="${size - 4}" y2="${size - 4}" />
+        <line x1="${size - 4}" y1="4" x2="4" y2="${size - 4}" />
+      </g>`;
+
+    // Watermark
+    svg += `<g opacity="0.15">
+      <text x="${mid}" y="${mid}" text-anchor="middle" dominant-baseline="central" fill="#D97706" font-size="24" font-weight="900" font-family="sans-serif">${vargaKey} East Indian</text>
+    </g>`;
+
+    // Render 12 Fixed Signs & Lagna
+    for (let s = 1; s <= 12; s++) {
+      let pos = eastSignCoords[s];
+      let isLagna = (s === lagnaSign);
+
+      // Sign label
+      let rashiColor = isLagna ? "#DC2626" : "#4B5563";
+      let rashiText = `${s} ${this.rashiNames[s - 1]}`;
+      if (isLagna) {
+        rashiText += " (लग्न)";
+      }
+      svg += `<text x="${pos.rashiPos.x}" y="${pos.rashiPos.y}" text-anchor="middle" dominant-baseline="central" fill="${rashiColor}" font-weight="${isLagna ? 900 : 700}" font-size="${isLagna ? 11.5 : 10.5}" font-family="sans-serif">${rashiText}</text>`;
+
+      // Planets in sign
+      let pls = signPlanets[s] || [];
+      if (pls.length > 0) {
+        let startY = pos.plPos.y - ((pls.length - 1) * 7);
+        pls.forEach((p, idx) => {
+          let gInfo = this.grahaInfo[p.name] || { sym: p.name.substring(0,2), col: "#2563EB" };
+          let curY = startY + (idx * 15);
+          let retLabel = p.is_retro ? "<tspan fill='#DC2626'> (R)</tspan>" : "";
+          let degStr = p.deg ? `<tspan font-size="9" fill="#6B7280"> ${p.deg}°</tspan>` : "";
+          svg += `<text x="${pos.plPos.x}" y="${curY}" text-anchor="middle" dominant-baseline="central" fill="${gInfo.col}" font-weight="850" font-size="11" font-family="sans-serif">${gInfo.sym}${retLabel}${degStr}</text>`;
+        });
+      }
+    }
+
+    svg += `</svg>`;
+    return svg;
   }
 };
 

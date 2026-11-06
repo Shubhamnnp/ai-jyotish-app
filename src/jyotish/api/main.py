@@ -95,6 +95,60 @@ class DashaQueryRequest(BaseModel):
     target_date: date
 
 
+class PanchangQueryRequest(BaseModel):
+    date: str
+    time: Optional[str] = "12:00:00"
+    latitude: float = 28.6139
+    longitude: float = 77.2090
+    timezone_offset: float = 5.5
+
+
+@app.post("/api/panchang/calculate")
+def calculate_panchang_endpoint(payload: PanchangQueryRequest):
+    """Calculates comprehensive Shastriya Panchang for a given date and location."""
+    try:
+        from src.jyotish.services.panchang import VedicPanchangService
+        from datetime import datetime
+        if isinstance(payload.date, str):
+            target_d = datetime.strptime(payload.date, "%Y-%m-%d").date()
+        else:
+            target_d = payload.date
+        res = VedicPanchangService.get_full_panchang(
+            target_date=target_d,
+            latitude=payload.latitude,
+            longitude=payload.longitude,
+            tz_offset_hours=payload.timezone_offset
+        )
+        pillars = res.get("five_pillars", {})
+        return {
+            "date": str(target_d),
+            "weekday": pillars.get("vara", {}).get("name_hi", "सोमवार"),
+            "tithi": {
+                "name": pillars.get("tithi", {}).get("name_hi", "सप्तमी"),
+                "paksha": pillars.get("tithi", {}).get("paksha", "शुक्ल"),
+                "end_time": pillars.get("tithi", {}).get("end_time_fmt", "")
+            },
+            "nakshatra": {
+                "name": pillars.get("nakshatra", {}).get("name_hi", "पुष्य"),
+                "pada": pillars.get("nakshatra", {}).get("pada", 1),
+                "end_time": pillars.get("nakshatra", {}).get("end_time_fmt", "")
+            },
+            "yoga": {
+                "name": pillars.get("yoga", {}).get("name_hi", "वृद्धि"),
+                "end_time": pillars.get("yoga", {}).get("end_time_fmt", "")
+            },
+            "karana": {
+                "name": pillars.get("karana", {}).get("name_hi", "वणिज"),
+                "end_time": pillars.get("karana", {}).get("end_time_fmt", "")
+            },
+            "sunrise": str(res.get("sun_moon", {}).get("sunrise", "05:28:00")),
+            "sunset": str(res.get("sun_moon", {}).get("sunset", "18:54:00")),
+            "details": res
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/api/dasha/active", response_model=ActiveDashaHierarchy)
 def get_active_dasha(payload: DashaQueryRequest):
     """Returns active 3-level Vimshottari Dasha for a specific event date."""

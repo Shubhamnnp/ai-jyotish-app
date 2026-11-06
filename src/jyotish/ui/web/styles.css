@@ -955,3 +955,296 @@ html, body {
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   11. BRAMHAHORA SPECIALIZED UI EXTENSIONS (Header, Meters & Panchang)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Top Header Quick Action Extensions */
+.hdr-btn-panchang {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  color: #FFFFFF !important;
+}
+.hdr-btn-panchang:hover {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-color: var(--accent-gold) !important;
+  color: var(--accent-gold) !important;
+}
+
+.btn-cta-prashna {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+  border-color: #F59E0B !important;
+  color: #FFFFFF !important;
+}
+.btn-cta-prashna:hover {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.4) !important;
+}
+
+/* Sidebar Quick Panchang Box */
+.sidebar-quick-panchang-box {
+  padding: 8px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(0, 115, 207, 0.03);
+}
+
+.sb-quick-btn {
+  padding: 6px 4px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sb-quick-btn:hover {
+  background: var(--accent-light);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+/* Analytical Sub-Nav Tab Buttons */
+.analytical-subnav {
+  padding: 6px 10px !important;
+  background: #F8FAFC !important;
+  border-bottom: 1.5px solid var(--border-subtle) !important;
+}
+
+.analytical-tab-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.subtab-btn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background: #FFFFFF;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.subtab-btn:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.subtab-btn.active {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+  box-shadow: 0 2px 6px rgba(0, 115, 207, 0.25);
+}
+
+/* D1 Summary & Panchang Matrix */
+.panchang-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  padding: 14px;
+  background: #FFFFFF;
+}
+
+.panchang-summary-cell {
+  background: #F8FAFC;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.panchang-cell-label {
+  font-size: 11px;
+  font-weight: 750;
+  color: var(--text-sub);
+}
+.panchang-cell-val {
+  font-size: 13.5px;
+  font-weight: 900;
+  color: var(--text-main);
+}
+.panchang-cell-sub {
+  font-size: 10px;
+  color: #64748B;
+}
+
+/* D1 Graha Bala Graph & Meters */
+.graph-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #F8FAFC;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.graph-title-label {
+  font-size: 12.5px;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.graph-toggle-radios {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 750;
+  color: var(--text-sub);
+  cursor: pointer;
+}
+
+.graph-render-container {
+  padding: 14px 16px;
+  background: #FFFFFF;
+}
+
+/* Horizontal Meter Styling */
+.meter-row {
+  display: grid;
+  grid-template-columns: 85px 110px 1fr 55px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 11px;
+}
+
+.meter-graha-name {
+  font-size: 12px;
+  font-weight: 850;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meter-track {
+  height: 14px;
+  background: #E2E8F0;
+  border-radius: 7px;
+  overflow: hidden;
+  position: relative;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: 7px;
+  transition: width 0.4s ease;
+}
+
+.meter-val-num {
+  font-size: 11px;
+  font-weight: 850;
+  color: var(--text-sub);
+  text-align: right;
+}
+
+/* Vertical Column Graph Styling */
+.vertical-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 8px;
+  height: 240px;
+  align-items: flex-end;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--border-subtle);
+  margin-top: 10px;
+}
+
+.v-col-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.v-col-bar-wrap {
+  width: 100%;
+  max-width: 28px;
+  height: 180px;
+  background: #E2E8F0;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.v-col-bar {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  transition: height 0.4s ease;
+}
+
+.v-col-val {
+  font-size: 10px;
+  font-weight: 850;
+  color: #475569;
+}
+
+.v-col-name {
+  font-size: 10.5px;
+  font-weight: 850;
+  color: var(--text-main);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Panchang Detail Modals Styling */
+.panchang-modal-card {
+  background: #F8FAFC;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.panchang-modal-card h4 {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  color: var(--primary);
+  font-weight: 900;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 5px;
+}
+.panchang-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  font-size: 12px;
+}
+.panchang-row-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px dashed #E2E8F0;
+}
+.panchang-row-key {
+  font-weight: 700;
+  color: #64748B;
+}
+.panchang-row-val {
+  font-weight: 850;
+  color: #1E293B;
+}
