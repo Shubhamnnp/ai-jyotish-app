@@ -28,23 +28,41 @@ class JyotishWebApp {
     this.isSidebarOpen = true;
 
     this.modulesList = [
-      { id: "kundli_core", name: "लग्न व नवमांश कुण्डली", cat: "core", icon: "🪐" },
-      { id: "varga_shodash", name: "षोडशवर्ग चक्र (D1-D60)", cat: "core", icon: "💫" },
-      { id: "shadbala", name: "षड्बल व भाव बल", cat: "core", icon: "⚖️" },
+      { id: "kundli_core", name: "जन्म कुण्डली (D1-D60)", cat: "core", icon: "🪐" },
+      { id: "varga_tables", name: "षोडशवर्ग चक्र व तालिकाएं", cat: "core", icon: "📊" },
+      { id: "shadbala_bhavabala", name: "षड्बल व द्वादश भावबल", cat: "core", icon: "⚖️" },
       { id: "panchang", name: "दैनिक पंचांग व चौघड़िया", cat: "core", icon: "☀️" },
-      { id: "dasha_vimshottari", name: "विंशोत्तरी दशा (5 स्तर)", cat: "dasha", icon: "⏳" },
+      { id: "bhava_chalita", name: "श्रीपति भाव चलित चक्र", cat: "core", icon: "🏠" },
+      { id: "chandra_kundli", name: "चन्द्र कुण्डली फलित", cat: "core", icon: "🌙" },
+      { id: "surya_kundli", name: "सूर्य कुण्डली फलित", cat: "core", icon: "☀️" },
+      { id: "upagraha", name: "गुलिक, मांदी व अप्रकाशित ग्रह", cat: "core", icon: "🪐" },
+
+      { id: "dasha_vimshottari", name: "विंशोत्तरी दशा (5 स्तर)", cat: "dasha", icon: "⏱️" },
       { id: "gochar_transit", name: "लाइव गोचर व साढ़े साती", cat: "dasha", icon: "🌐" },
-      { id: "ashtakavarga", name: "अष्टकवर्ग (SAV / BAV)", cat: "dasha", icon: "📊" },
-      { id: "varshaphal", name: "वर्षफल (ताजिक मुन्था)", cat: "dasha", icon: "📅" },
-      { id: "kp_system", name: "केपी ज्योतिष (KP System)", cat: "special", icon: "📐" },
-      { id: "jaimini_system", name: "जैमिनी ज्योतिष व कारक", cat: "special", icon: "👑" },
-      { id: "lal_kitab", name: "लाल किताब व अचूक उपाय", cat: "special", icon: "🌿" },
-      { id: "prashna_kundali", name: "प्रश्न कुण्डली (Horary)", cat: "special", icon: "❓" },
-      { id: "yogas_doshas", name: "300+ योग व शास्त्रीय फलित", cat: "advanced", icon: "📜" },
-      { id: "kundli_milan", name: "अष्टकूट कुण्डली मिलान", cat: "advanced", icon: "💖" },
-      { id: "vastu_chakra", name: "वास्तु चक्र व दिशाएं", cat: "advanced", icon: "🗺️" },
+      { id: "ashtakavarga", name: "सर्वाष्टकवर्ग (SAV/BAV)", cat: "dasha", icon: "📈" },
+      { id: "varshaphal", name: "वर्षफल (ताजिक मुन्था चक्र)", cat: "dasha", icon: "📅" },
+      { id: "ayu_nirnaya", name: "आयु निर्णय व अरिष्ट विचार", cat: "dasha", icon: "⏳" },
+
+      { id: "shastriya_yogas", name: "300+ शास्त्रीय राजयोग", cat: "yogas", icon: "📜" },
+      { id: "dosha_upaya", name: "दोष विचार व शास्त्रीय उपाय", cat: "yogas", icon: "🛡️" },
+      { id: "event_prediction", name: "घटना विश्लेषण (Ghatna)", cat: "yogas", icon: "🎯" },
+      { id: "pushkar_vargottama", name: "पुष्कर नवमांश व वर्गोत्तम", cat: "yogas", icon: "🌟" },
+      { id: "graha_prishtha", name: "ग्रह पृष्ठ व कर्तरी शुभाशुभ", cat: "yogas", icon: "⚔️" },
+      { id: "kota_chakra", name: "कोटा चक्र (दुर्ग रक्षा)", cat: "yogas", icon: "⛺" },
+
+      { id: "jaimini_kp", name: "जैमिनी पद्धति व KP सिस्टम", cat: "special", icon: "🔮" },
+      { id: "jaimini_special", name: "जैमिनी 7 चर कारक व विशेष लग्न", cat: "special", icon: "👑" },
+      { id: "lal_kitab", name: "लाल किताब फरमान व उपाय", cat: "special", icon: "🌿" },
+      { id: "prashna_kundali", name: "तात्कालिक प्रश्न कुण्डली", cat: "special", icon: "❓" },
+      { id: "vastu_chakra", name: "वैदिक वास्तु चक्र व दिशाएं", cat: "special", icon: "🗺️" },
+      { id: "samudrik", name: "हस्तरेखा व सामुद्रिक शास्त्र", cat: "special", icon: "✋" },
+
+      { id: "kundli_milan", name: "अष्टकूट 36 गुण मिलान", cat: "advanced", icon: "💖" },
+      { id: "medical_astro", name: "आयुर्वेद व मेडिकल ज्योतिष", cat: "advanced", icon: "🩺" },
+      { id: "ratna_rudraksha", name: "रत्न व रुद्राक्ष परामर्श", cat: "advanced", icon: "💎" },
+      { id: "muhurta", name: "अभिजीत व शुभ मुहूर्त शोधन", cat: "advanced", icon: "🕉️" },
       { id: "ai_jyotish", name: "AI दैवज्ञ परामर्श चैट", cat: "advanced", icon: "🤖" },
-      { id: "report_pdf", name: "100+ पेज PDF रिपोर्ट", cat: "advanced", icon: "📄" }
+      { id: "report_pdf", name: "100+ पेज विस्तृत PDF रिपोर्ट", cat: "advanced", icon: "📄" }
     ];
 
     this.rashiNames = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"];
@@ -1213,12 +1231,189 @@ class JyotishWebApp {
       }
     }
 
+    const genderEl = document.getElementById("formGender");
+    if (genderEl) this.client.gender = genderEl.value;
+
     this.client.latitude = isNaN(lat) ? 27.8643 : lat;
     this.client.longitude = isNaN(lon) ? 81.5033 : lon;
     this.client.ayanamsa = document.getElementById("formAyanamsa").value;
 
     this.closeModals();
     await this.calculateChart();
+  }
+
+  /**
+   * Scroll Toolbelt Bar smoothly
+   */
+  scrollToolbelt(direction) {
+    const bar = document.getElementById("toolbeltBar");
+    if (!bar) return;
+    bar.scrollBy({ left: direction * 240, behavior: "smooth" });
+  }
+
+  /**
+   * Saved Kundlis Local Storage Management
+   */
+  getSavedKundlis() {
+    try {
+      const data = localStorage.getItem("bramhahora_saved_kundlis");
+      if (data) return JSON.parse(data);
+    } catch (e) {}
+    const defaults = [
+      {
+        id: "knd_1",
+        name: "शुभम कुमार (Shubham Kumar)",
+        gender: "Male",
+        birth_date: "1994-05-16",
+        birth_time: "17:00:00",
+        city: "Nanpara",
+        latitude: 27.8643,
+        longitude: 81.5033,
+        ayanamsa: "Lahiri",
+        lagna: "तुला (Libra 9.59°)"
+      },
+      {
+        id: "knd_2",
+        name: "पं. शुभम तिवारी",
+        gender: "Male",
+        birth_date: "1992-10-24",
+        birth_time: "08:24:00",
+        city: "Varanasi",
+        latitude: 25.3176,
+        longitude: 82.9739,
+        ayanamsa: "Lahiri",
+        lagna: "वृश्चिक (Scorpio)"
+      }
+    ];
+    try {
+      localStorage.setItem("bramhahora_saved_kundlis", JSON.stringify(defaults));
+    } catch (e) {}
+    return defaults;
+  }
+
+  saveKundli(record) {
+    const list = this.getSavedKundlis();
+    const existingIdx = list.findIndex(k => k.id === record.id || (k.name === record.name && k.birth_date === record.birth_date));
+    if (existingIdx >= 0) {
+      list[existingIdx] = record;
+    } else {
+      list.unshift(record);
+    }
+    localStorage.setItem("bramhahora_saved_kundlis", JSON.stringify(list));
+  }
+
+  saveCurrentKundliFromForm() {
+    const name = document.getElementById("formName").value || "जातक";
+    const genderEl = document.getElementById("formGender");
+    const gender = genderEl ? genderEl.value : "Male";
+    const birth_date = document.getElementById("formDate").value;
+    let bTime = document.getElementById("formTime").value || "12:00:00";
+    if (bTime.split(":").length === 2) bTime += ":00";
+    const city = document.getElementById("formCity").value || "Nanpara";
+    const lat = parseFloat(document.getElementById("formLat").value) || 27.8643;
+    const lon = parseFloat(document.getElementById("formLon").value) || 81.5033;
+    const ayanamsa = document.getElementById("formAyanamsa").value || "Lahiri";
+
+    const record = {
+      id: "knd_" + Date.now(),
+      name,
+      gender,
+      birth_date,
+      birth_time: bTime,
+      city,
+      latitude: lat,
+      longitude: lon,
+      ayanamsa,
+      lagna: this.chartData ? (this.chartData.lagna_sign_name || "तुला") : "तुला"
+    };
+
+    this.saveKundli(record);
+    alert(`💾 कुण्डली "${name}" सफलतापूर्वक सहेज ली गई है! आप इसे [📂] बटन से कभी भी लोड कर सकते हैं।`);
+  }
+
+  openSavedKundlisModal() {
+    const modal = document.getElementById("savedKundlisModal");
+    if (!modal) return;
+    this.renderSavedKundlisList();
+    modal.classList.add("active");
+  }
+
+  renderSavedKundlisList() {
+    const box = document.getElementById("savedKundlisContainer");
+    if (!box) return;
+    const list = this.getSavedKundlis();
+    if (list.length === 0) {
+      box.innerHTML = `<div style="text-align:center; padding:30px; color:#64748B;">कोई सहेजी गई कुण्डली उपलब्ध नहीं है।</div>`;
+      return;
+    }
+    let html = "";
+    list.forEach(k => {
+      html += `
+        <div class="saved-kundli-card">
+          <div class="saved-kundli-title">
+            <span>👤 ${k.name}</span>
+            <span class="badge badge-own">${k.gender === "Female" ? "स्त्री" : "पुरुष"}</span>
+          </div>
+          <div class="saved-kundli-meta">
+            <span>📅 ${k.birth_date} | ⏰ ${k.birth_time.substring(0,5)}</span>
+            <span>📍 ${k.city} (${k.latitude.toFixed(2)}° N, ${k.longitude.toFixed(2)}° E)</span>
+            <span>☸️ लग्न: <b>${k.lagna || "गणना शेष"}</b> | अयनांश: ${k.ayanamsa}</span>
+          </div>
+          <div class="saved-kundli-actions">
+            <button class="btn-load-kundli" onclick="app.loadSavedKundli('${k.id}')">⚡ लाइव लोड करें</button>
+            <button class="btn-del-kundli" onclick="app.deleteSavedKundli('${k.id}')">🗑️ हटाएं</button>
+          </div>
+        </div>
+      `;
+    });
+    box.innerHTML = html;
+  }
+
+  async loadSavedKundli(id) {
+    const list = this.getSavedKundlis();
+    const found = list.find(k => k.id === id);
+    if (!found) return;
+
+    this.client = {
+      name: found.name,
+      gender: found.gender || "Male",
+      birth_date: found.birth_date,
+      birth_time: found.birth_time,
+      city: found.city,
+      latitude: found.latitude,
+      longitude: found.longitude,
+      timezone_offset: 5.5,
+      ayanamsa: found.ayanamsa || "Lahiri"
+    };
+
+    const fName = document.getElementById("formName");
+    const fGender = document.getElementById("formGender");
+    const fDate = document.getElementById("formDate");
+    const fTime = document.getElementById("formTime");
+    const fCity = document.getElementById("formCity");
+    const fLat = document.getElementById("formLat");
+    const fLon = document.getElementById("formLon");
+    const fAya = document.getElementById("formAyanamsa");
+
+    if (fName) fName.value = this.client.name;
+    if (fGender) fGender.value = this.client.gender;
+    if (fDate) fDate.value = this.client.birth_date;
+    if (fTime) fTime.value = this.client.birth_time;
+    if (fCity) fCity.value = this.client.city;
+    if (fLat) fLat.value = this.client.latitude;
+    if (fLon) fLon.value = this.client.longitude;
+    if (fAya) fAya.value = this.client.ayanamsa;
+
+    this.closeModals();
+    await this.calculateChart();
+  }
+
+  deleteSavedKundli(id) {
+    if (!confirm("क्या आप वाकई इस सहेजी गई कुण्डली को हटाना चाहते हैं?")) return;
+    let list = this.getSavedKundlis();
+    list = list.filter(k => k.id !== id);
+    localStorage.setItem("bramhahora_saved_kundlis", JSON.stringify(list));
+    this.renderSavedKundlisList();
   }
 
   /**

@@ -43,6 +43,28 @@ def test_web_static_index_html_exists_and_serves():
     assert "panelGrahaBalaGraph" in content
     assert "grahaBalaGraphBox" in content
 
+    # Check gender dropdown and Save Kundli button
+    assert "formGender" in content
+    assert "Save Kundli" in content
+    assert "savedKundlisModal" in content
+
+
+def test_toolbelt_has_31_modules():
+    index_file = WEB_DIR / "index.html"
+    content = index_file.read_text(encoding="utf-8")
+    
+    expected_modules = [
+        "kundli_core", "dosha_upaya", "event_prediction", "varga_tables", "shadbala_bhavabala",
+        "dasha_vimshottari", "jaimini_kp", "shastriya_yogas", "gochar_transit", "ashtakavarga",
+        "panchang", "varshaphal", "prashna_kundali", "kundli_milan", "bhava_chalita",
+        "chandra_kundli", "surya_kundli", "graha_prishtha", "kota_chakra", "pushkar_vargottama",
+        "jaimini_special", "vastu_chakra", "medical_astro", "ayu_nirnaya", "ratna_rudraksha",
+        "lal_kitab", "muhurta", "samudrik", "upagraha", "ai_jyotish", "report_pdf"
+    ]
+    assert len(expected_modules) == 31
+    for mod in expected_modules:
+        assert f'data-mod="{mod}"' in content, f"Module {mod} must be present in toolbelt"
+
 
 def test_web_chart_js_has_east_indian_renderer():
     chart_js = WEB_DIR / "chart.js"
@@ -64,6 +86,10 @@ def test_web_app_js_has_bramhahora_methods():
     assert "openJanmaPanchangModal" in content
     assert "openTodayPanchangModal" in content
     assert "createInstantPrashnaKundli" in content
+    assert "openSavedKundlisModal" in content
+    assert "saveCurrentKundliFromForm" in content
+    assert "loadSavedKundli" in content
+    assert "scrollToolbelt" in content
 
 
 def test_api_panchang_endpoint_for_bramhahora():

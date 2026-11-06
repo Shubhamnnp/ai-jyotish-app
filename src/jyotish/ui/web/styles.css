@@ -1248,3 +1248,136 @@ html, body {
   font-weight: 850;
   color: #1E293B;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   12. TOOLBELT 31 MODULES SCROLLER & SAVED KUNDLIS STYLING
+   ═══════════════════════════════════════════════════════════════════ */
+.toolbelt-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-toolbelt);
+  border-bottom: 2px solid var(--border-cyan);
+  padding: 0 4px;
+  position: relative;
+}
+
+.tb-scroll-btn {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-cyan);
+  color: var(--primary);
+  width: 24px;
+  height: 38px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.tb-scroll-btn:hover {
+  background: var(--accent-light);
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
+.btn-secondary-action {
+  background: #F1F5F9;
+  color: #1E293B;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 850;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-secondary-action:hover {
+  background: #E2E8F0;
+  border-color: #94A3B8;
+  transform: translateY(-1px);
+}
+
+/* Saved Kundlis Manager Grid */
+.saved-kundlis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.saved-kundli-card {
+  background: #F8FAFC;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.saved-kundli-card:hover {
+  border-color: var(--primary);
+  background: #FFFFFF;
+  box-shadow: 0 3px 10px rgba(0, 115, 207, 0.12);
+}
+
+.saved-kundli-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.saved-kundli-meta {
+  font-size: 11.5px;
+  color: #64748B;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.saved-kundli-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.btn-load-kundli {
+  flex: 1;
+  background: var(--primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.btn-load-kundli:hover {
+  background: #005FA8;
+}
+
+.btn-del-kundli {
+  background: #FEE2E2;
+  color: #DC2626;
+  border: 1px solid #FCA5A5;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.btn-del-kundli:hover {
+  background: #F87171;
+  color: #FFFFFF;
+}
