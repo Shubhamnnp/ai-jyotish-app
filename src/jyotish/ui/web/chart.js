@@ -345,6 +345,75 @@ const KundliChartRenderer = {
 
     svg += `</svg>`;
     return svg;
+  },
+
+  /**
+   * Render Chandra Kundali (Moon as Ascendant)
+   */
+  renderChandraChart(chartData, style = "north") {
+    if (!chartData || !chartData.planets || !chartData.planets.Moon) {
+      return `<div class="p-3 text-center">चन्द्र कुण्डली डेटा उपलब्ध नहीं है</div>`;
+    }
+    const moonSign = chartData.planets.Moon.sign_id || 1;
+    const chandraData = {
+      lagna_sign_id: moonSign,
+      lagna_sign: moonSign,
+      lagna_sign_name: chartData.planets.Moon.sign_name || "Moon Sign",
+      planets: chartData.planets
+    };
+    return this.renderChart(chandraData, style, "CHANDRA");
+  },
+
+  /**
+   * Render Surya Kundali (Sun as Ascendant)
+   */
+  renderSuryaChart(chartData, style = "north") {
+    if (!chartData || !chartData.planets || !chartData.planets.Sun) {
+      return `<div class="p-3 text-center">सूर्य कुण्डली डेटा उपलब्ध नहीं है</div>`;
+    }
+    const sunSign = chartData.planets.Sun.sign_id || 1;
+    const suryaData = {
+      lagna_sign_id: sunSign,
+      lagna_sign: sunSign,
+      lagna_sign_name: chartData.planets.Sun.sign_name || "Sun Sign",
+      planets: chartData.planets
+    };
+    return this.renderChart(suryaData, style, "SURYA");
+  },
+
+  /**
+   * Render Bhava Chalit Chart (Cusp Positions)
+   */
+  renderChalitChart(chartData, chalitData, style = "north") {
+    if (!chartData) return `<div class="p-3 text-center">चलित कुण्डली डेटा लोड हो रहा है...</div>`;
+    const lagnaSign = chartData.lagna_sign_id || chartData.lagna_sign || 1;
+    
+    // Map chalit houses
+    const chalitPlanets = {};
+    if (chalitData && chalitData.planet_positions) {
+      chalitData.planet_positions.forEach(item => {
+        const pName = item.planet;
+        const chalitHouse = item.chalit_house || 1;
+        const mappedSign = ((lagnaSign + chalitHouse - 2) % 12) + 1;
+        chalitPlanets[pName] = {
+          name: pName,
+          sign_id: mappedSign,
+          sign: mappedSign,
+          house_from_lagna: chalitHouse,
+          house_number: chalitHouse,
+          is_retrograde: item.is_retrograde || (chartData.planets && chartData.planets[pName] ? chartData.planets[pName].is_retrograde : false),
+          sign_degree: item.chalit_degree || (chartData.planets && chartData.planets[pName] ? chartData.planets[pName].sign_degree : 0)
+        };
+      });
+    }
+
+    const customChart = {
+      lagna_sign_id: lagnaSign,
+      lagna_sign: lagnaSign,
+      lagna_sign_name: chartData.lagna_sign_name,
+      planets: Object.keys(chalitPlanets).length > 0 ? chalitPlanets : chartData.planets
+    };
+    return this.renderChart(customChart, style, "CHALIT");
   }
 };
 

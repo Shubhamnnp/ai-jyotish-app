@@ -421,6 +421,227 @@ def grahalakshanam_folders():
     return client.get_folders_with_files()
 
 
+@app.post("/api/chart/shastriya-full")
+def calculate_shastriya_full(payload: BirthData, ayanamsa: str = "Lahiri"):
+    """
+    Computes comprehensive Shastriya Astrology audit across:
+    - Pushkara Navamsha & Pushkara Bhaga (with BPHS slokas)
+    - Vargottama planets (with classical verse)
+    - Badhaka & Maraka analysis
+    - Jaimini 7 Chara Karakas, Arudha Padas (A1-A12, UL, AL), Swamsha & Karakamsha
+    - Sripati Bhava Chalit shifts & cusp boundaries
+    - Chandra Kundli & Surya Kundli structures
+    - Graha Prishtha & Papakartari / Shubhakartari analysis & Dagdha Rashis
+    - Kota Chakra 4-zone fortress analysis & SVG markup
+    - Classical Fired Yogas & Doshas (evaluated via 3,500+ Grantha Rules) with Sanskrit verses
+    - Ayurvedic Medical Astrology & Tridosha balance
+    - Gemology recommendations & prohibited gems
+    - Vastu 9-direction elemental zones
+    - Vedic Prescription (Mantras, Charity, Gemstones)
+    """
+    try:
+        from ..services.shastriya_pramana import ShastriyaPramanaEngine
+        from ..services.jaimini_suite import default_jaimini_suite_service
+        from ..core.chakras import default_kota_chakra_engine
+        from ..ui.chart_renderer import ChartRenderer
+        from ..services.gemology import default_gemology_service
+        from ..services.medical import default_medical_service
+        from ..services.vastu import VastuJyotishEngine
+        from ..services.prescription import default_prescription_service
+        from ..core.gochar import default_transit_engine
+
+        chart = default_chart_calculator.calculate_chart(payload, ayanamsa=ayanamsa)
+
+        # 1. Pushkar, Vargottama & Badhaka
+        pushkar = ShastriyaPramanaEngine.audit_chart_pushkara(chart)
+        vargottama = ShastriyaPramanaEngine.audit_vargottama(chart)
+        badhaka_maraka = ShastriyaPramanaEngine.audit_badhaka_maraka(chart)
+
+        # 2. Jaimini Suite
+        jaimini = default_jaimini_suite_service.analyze_jaimini_suite(chart)
+        if "result_obj" in jaimini:
+            del jaimini["result_obj"]
+
+        # 3. Bhava Chalit
+        chalit = default_chart_calculator.calculate_bhava_chalit(chart)
+
+        # 4. Chandra & Surya Kundlis
+        moon_sign_id = chart.planets["Moon"].sign_id
+        sun_sign_id = chart.planets["Sun"].sign_id
+
+        chandra_planets = {}
+        surya_planets = {}
+        for p_name, p_data in chart.planets.items():
+            chandra_house = ((p_data.sign_id - moon_sign_id + 12) % 12) + 1
+            surya_house = ((p_data.sign_id - sun_sign_id + 12) % 12) + 1
+            chandra_planets[p_name] = {
+                "sign_id": p_data.sign_id,
+                "sign_name": p_data.sign_name,
+                "sign_degree": p_data.sign_degree,
+                "house_number": chandra_house,
+                "is_retrograde": p_data.is_retrograde
+            }
+            surya_planets[p_name] = {
+                "sign_id": p_data.sign_id,
+                "sign_name": p_data.sign_name,
+                "sign_degree": p_data.sign_degree,
+                "house_number": surya_house,
+                "is_retrograde": p_data.is_retrograde
+            }
+
+        # 5. Graha Prishtha & Kartari Analysis
+        benefics = {"Jupiter", "Venus", "Moon", "Mercury"}
+        malefics = {"Saturn", "Mars", "Rahu", "Ketu", "Sun"}
+
+        house_planets = {h: [] for h in range(1, 13)}
+        for p_name, p_data in chart.planets.items():
+            house_planets[p_data.house_from_lagna].append(p_name)
+
+        kartari_analysis = []
+        for h in range(1, 13):
+            prev_h = 12 if h == 1 else h - 1
+            next_h = 1 if h == 12 else h + 1
+            prev_occ = house_planets[prev_h]
+            next_occ = house_planets[next_h]
+
+            has_prev_mal = any(p in malefics for p in prev_occ)
+            has_next_mal = any(p in malefics for p in next_occ)
+            has_prev_ben = any(p in benefics for p in prev_occ)
+            has_next_ben = any(p in benefics for p in next_occ)
+
+            k_type = "तटस्थ (Neutral)"
+            if has_prev_mal and has_next_mal:
+                k_type = "पापकर्तरी (Papakartari - पीडित)"
+            elif has_prev_ben and has_next_ben:
+                k_type = "शुभकर्तरी (Shubhakartari - रक्षित)"
+
+            kartari_analysis.append({
+                "house": h,
+                "prev_house": prev_h,
+                "prev_planets": prev_occ,
+                "next_house": next_h,
+                "next_planets": next_occ,
+                "kartari_status": k_type,
+                "occupants": house_planets[h]
+            })
+
+        # Dagdha Rashis by Tithi
+        dagdha_map = {
+            1: [8, 12], 2: [9, 12], 3: [5, 9], 4: [4, 6], 5: [3, 7],
+            6: [1, 5], 7: [2, 6], 8: [3, 11], 9: [4, 8], 10: [5, 9],
+            11: [6, 10], 12: [7, 11], 13: [8, 12], 14: [1, 2, 7, 8], 15: []
+        }
+        tithi_num = getattr(chart.panchang, "tithi_number", 1) or 1
+        tithi_base = ((tithi_num - 1) % 15) + 1
+        dagdha_signs = dagdha_map.get(tithi_base, [])
+
+        # 6. Kota Chakra
+        kc = default_kota_chakra_engine.calculate(chart)
+        kota_svg = ChartRenderer.render_kota_chakra_svg(kc, title=f"कोटा चक्र दुर्ग — {chart.birth_data.name if chart.birth_data else 'जातक'}")
+
+        # 7. Rules: Yogas and Doshas
+        _eval_date = date.today()
+        _full_bdt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
+        _moon_lon = chart.planets["Moon"].longitude
+        _active_dasha = default_dasha_engine.get_active_dasha_at(_full_bdt, _moon_lon, _eval_date)
+        _transits, _tr_summary = default_transit_engine.compute_transit_snapshot(chart, _eval_date, chart.ayanamsa_name)
+
+        evs = default_rules_engine.evaluate_all(
+            chart=chart,
+            active_dasha=_active_dasha,
+            transits=_transits,
+            transit_summary=_tr_summary,
+            filter_theme="all"
+        )
+
+        fired_yogas = []
+        for e in evs:
+            if e.polarity == "+" and e.fired:
+                r_def = default_rules_engine.rules_by_id.get(e.rule_id, {})
+                r_src = r_def.get("source", {}) if isinstance(r_def, dict) else {}
+                fired_yogas.append({
+                    "rule_id": e.rule_id,
+                    "rule_name_hi": e.rule_name_hi or e.rule_name_en,
+                    "rule_name_en": e.rule_name_en,
+                    "source_text": e.source_text or r_src.get("text", "बृहत्पाराशर होराशास्त्र (BPHS)"),
+                    "source_chapter": e.source_chapter or r_src.get("chapter", "राजयोगाध्याय"),
+                    "source_verse": r_src.get("verse", ""),
+                    "signal_score": e.signal_score,
+                    "base_strength": e.base_strength,
+                    "explanation_hi": e.explanation_hi or ""
+                })
+
+        fired_doshas = []
+        for e in evs:
+            if e.polarity == "-" and e.fired:
+                r_def = default_rules_engine.rules_by_id.get(e.rule_id, {})
+                r_src = r_def.get("source", {}) if isinstance(r_def, dict) else {}
+                fired_doshas.append({
+                    "rule_id": e.rule_id,
+                    "rule_name_hi": e.rule_name_hi or e.rule_name_en,
+                    "rule_name_en": e.rule_name_en,
+                    "source_text": e.source_text or r_src.get("text", "बृहत्पाराशर होराशास्त्र (BPHS)"),
+                    "source_chapter": e.source_chapter or r_src.get("chapter", "अरिष्ट योगाध्याय"),
+                    "source_verse": r_src.get("verse", ""),
+                    "signal_score": e.signal_score,
+                    "base_strength": e.base_strength,
+                    "explanation_hi": e.explanation_hi or ""
+                })
+
+        # 8. Gemology
+        gemology = default_gemology_service.audit_all_planets(chart)
+
+        # 9. Medical
+        medical = default_medical_service.analyze_health_profile(chart)
+
+        # 10. Vastu
+        vastu_zones = VastuJyotishEngine(chart).evaluate_vastu_zones()
+
+        # 11. Prescription
+        rx = default_prescription_service.generate_prescription(chart)
+
+        return {
+            "pushkar": pushkar,
+            "vargottama": vargottama,
+            "badhaka_maraka": badhaka_maraka,
+            "jaimini": jaimini,
+            "chalit": chalit,
+            "chandra_kundli": {
+                "lagna_sign_id": moon_sign_id,
+                "lagna_sign_name": chart.planets["Moon"].sign_name,
+                "planets": chandra_planets
+            },
+            "surya_kundli": {
+                "lagna_sign_id": sun_sign_id,
+                "lagna_sign_name": chart.planets["Sun"].sign_name,
+                "planets": surya_planets
+            },
+            "grahaprishtha": {
+                "kartari": kartari_analysis,
+                "dagdha_rashis": dagdha_signs,
+                "tithi_number": tithi_num
+            },
+            "kota_chakra": {
+                "details": kc,
+                "svg": kota_svg
+            },
+            "yogas": {
+                "total_fired": len(fired_yogas),
+                "catalog": fired_yogas[:120]
+            },
+            "doshas": {
+                "total_fired": len(fired_doshas),
+                "catalog": fired_doshas[:60]
+            },
+            "gemology": gemology,
+            "medical": medical,
+            "vastu": vastu_zones,
+            "prescription": rx
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/api/grahalakshanam/sync")
 def grahalakshanam_sync():
     """Syncs all charts from Grahalakshanam into JyotishOS local database."""

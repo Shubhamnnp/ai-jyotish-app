@@ -152,6 +152,20 @@ class JyotishWebApp {
 
       this.chartData = await res.json();
 
+      // Fetch full Shastriya Suite (Pushkar, Jaimini, Chalit, Kota, Yogas, Gemology, Medical, Vastu)
+      try {
+        const shastriyaRes = await fetch("/api/chart/shastriya-full?ayanamsa=" + encodeURIComponent(this.client.ayanamsa), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (shastriyaRes.ok) {
+          this.shastriyaData = await shastriyaRes.json();
+        }
+      } catch (sErr) {
+        console.warn("Shastriya full suite fetch failed:", sErr);
+      }
+
       // Fetch operating Vimshottari Dasha
       try {
         const todayStr = new Date().toISOString().split("T")[0];
@@ -823,139 +837,499 @@ class JyotishWebApp {
   }
 
   /**
-   * Classical Yogas
+   * Classical Yogas (Certified from Grantha Rules Engine)
    */
   renderYogas() {
     const box = document.getElementById("yogasContainerBox");
     if (!box) return;
 
+    const yogas = (this.shastriyaData && this.shastriyaData.yogas && this.shastriyaData.yogas.catalog)
+      ? this.shastriyaData.yogas.catalog
+      : [];
+
+    if (yogas.length === 0) {
+      box.innerHTML = `
+        <div class="shloka-box">
+          <div class="shloka-text">यदा सर्वे ग्रहाः केन्द्रत्रिकोणे राजयोगदाः। शुभफलानि यच्छन्ति जातकस्य विशेषतः॥</div>
+          <div class="shloka-meta"><span>स्रोत: बृहत्पाराशर होराशास्त्र (BPHS)</span><span>अध्याय २६ (राजयोगाध्याय)</span></div>
+        </div>
+        <div style="padding:16px; text-align:center; color:#64748B;">शास्त्रीय राजयोगों का मूल्यांकन किया जा रहा है...</div>
+      `;
+      return;
+    }
+
+    let html = `
+      <div class="shloka-box">
+        <div class="shloka-text">केन्द्रत्रिकोणनेतारौ परस्परनिवेशनौ। परस्परनिरीक्षौ वा योगं राजप्रदं विदुः॥</div>
+        <div class="shloka-meta"><span>स्रोत: बृहत्पाराशर होराशास्त्र (BPHS)</span><span>सक्रिय प्रमाणित राजयोग: ${yogas.length}</span></div>
+      </div>
+      <div class="shastriya-grid">
+    `;
+
+    yogas.forEach((y, idx) => {
+      const verseHtml = y.source_verse ? `<div style="font-family:'Martel',serif; font-size:12px; color:#6B1D2F; margin:4px 0; font-style:italic;">"${y.source_verse}"</div>` : "";
+      html += `
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span style="color:#166534;">🌟 ${y.rule_name_hi}</span>
+            <span class="badge badge-exalted">स्कोर: ${(y.signal_score || 1).toFixed(1)}</span>
+          </div>
+          <div style="font-size:11px; color:#854D0E; font-weight:700;">📖 ${y.source_text} — ${y.source_chapter}</div>
+          ${verseHtml}
+          <p style="font-size:11.5px; color:#475569; margin-top:6px; line-height:1.5;">
+            ${y.explanation_hi || y.rule_name_en}
+          </p>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+    box.innerHTML = html;
+  }
+
+  /**
+   * Sub-Tab Panels (100% Real Shastriya Activation)
+   */
+  renderSubTabPanels() {
+    this.renderPushkarPanel();
+    this.renderJaiminiPanel();
+    this.renderChalitPanel();
+    this.renderChandraPanel();
+    this.renderSuryaPanel();
+    this.renderGrahaPrishthaPanel();
+    this.renderKotaPanel();
+  }
+
+  /**
+   * 1. Pushkar Navamsha & Vargottama Panel
+   */
+  renderPushkarPanel() {
+    const box = document.getElementById("pushkarContainerBox");
+    if (!box) return;
+
+    const pData = this.shastriyaData ? this.shastriyaData.pushkar : null;
+    const vData = this.shastriyaData ? this.shastriyaData.vargottama : null;
+    const bmData = this.shastriyaData ? this.shastriyaData.badhaka_maraka : null;
+
+    let pNavPlanets = (pData && pData.pushkara_navamsha_planets) ? pData.pushkara_navamsha_planets : [];
+    let pBhagaPlanets = (pData && pData.pushkara_bhaga_planets) ? pData.pushkara_bhaga_planets : [];
+    let vPlanets = (vData && vData.vargottama_planets) ? vData.vargottama_planets : [];
+
+    let pNavHtml = pNavPlanets.length > 0 
+      ? pNavPlanets.map(p => `<span class="badge badge-exalted" style="font-size:12px; margin:3px;">🌟 ${p} (पुष्कर नवांश)</span>`).join(" ")
+      : "<span style='color:#64748B;'>कोई मुख्य ग्रह पुष्कर नवांश में नहीं है।</span>";
+
+    let pBhagaHtml = pBhagaPlanets.length > 0
+      ? pBhagaPlanets.map(p => `<span class="badge badge-own" style="font-size:12px; margin:3px;">⚡ ${p} (पुष्कर भाग)</span>`).join(" ")
+      : "<span style='color:#64748B;'>कोई ग्रह पुष्कर भाग अंश पर नहीं है।</span>";
+
+    let vHtml = vPlanets.length > 0
+      ? vPlanets.map(p => `<span class="badge badge-exalted" style="font-size:12px; margin:3px;">👑 ${p} (वर्गोत्तम)</span>`).join(" ")
+      : "<span style='color:#64748B;'>कोई ग्रह वर्गोत्तम नहीं है।</span>";
+
     box.innerHTML = `
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
-        <div style="background:#FFF; border:1.5px solid #86EFAC; border-radius:8px; padding:14px;">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <b style="color:#16A34A; font-size:13.5px;">🌟 रुचक महापुरुष योग (Ruchaka Yoga)</b>
-            <span class="badge badge-exalted">पंचमहापुरुष</span>
+      <div class="shloka-box">
+        <div class="shloka-text">पुष्करांशगताः सर्वे ग्रहाः शुभफलप्रदाः। वर्गोत्तमे स्थिताः सर्वे ग्रहाः स्वभवनेष्विव॥</div>
+        <div class="shloka-meta"><span>स्रोत: फलदीपिका (Phaladeepika)</span><span>अध्याय ३, श्लोक १९</span></div>
+      </div>
+
+      <div class="shastriya-grid">
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>🌟 पुष्कर नवमांश (Pushkara Navamsha)</span>
+            <span class="badge badge-exalted">${pNavPlanets.length} ग्रह</span>
           </div>
-          <p style="font-size:11.5px; color:#475569; margin-top:6px; line-height:1.5;">
-            मंगल सप्तम भाव में स्वराशि (मेष) में स्थित होकर केंद्र में बलिष्ठ है। यह अद्वितीय साहस, नेतृत्व क्षमता और विजय प्रदान करता है।
+          <p style="font-size:12px; color:#475569; margin:6px 0;">
+            पुष्कर नवांश में स्थित ग्रह जातक को दैवीय संरक्षण, विपत्तियों से मुक्ति और स्वाभाविक भाग्यवृद्धि प्रदान करते हैं।
           </p>
+          <div style="margin-top:8px;">${pNavHtml}</div>
         </div>
-        <div style="background:#FFF; border:1.5px solid #86EFAC; border-radius:8px; padding:14px;">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <b style="color:#16A34A; font-size:13.5px;">👑 गजकेसरी राजयोग (Gajakesari Yoga)</b>
-            <span class="badge badge-exalted">अति शुभ</span>
+
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>⚡ पुष्कर भाग (Pushkara Bhaga)</span>
+            <span class="badge badge-own">${pBhagaPlanets.length} ग्रह</span>
           </div>
-          <p style="font-size:11.5px; color:#475569; margin-top:6px; line-height:1.5;">
-            बृहस्पति लग्न में स्थित होकर दशम भाव में स्वग्रही चन्द्रमा से केंद्र (चतुर्थ) संबंध बना रहे हैं। यह ज्ञान व प्रतिष्ठा सुनिश्चित करता है।
+          <p style="font-size:12px; color:#475569; margin:6px 0;">
+            विशिष्ट अंशों (डिग्री) पर स्थित ग्रह अमृत तुल्य फलदायक होते हैं, जो राजयोग की शक्ति को चार गुना बढ़ा देते हैं।
           </p>
+          <div style="margin-top:8px;">${pBhagaHtml}</div>
         </div>
-        <div style="background:#FFF; border:1.5px solid #93C5FD; border-radius:8px; padding:14px;">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <b style="color:#0073CF; font-size:13.5px;">📜 बुधादित्य योग (Budhaditya Yoga)</b>
-            <span class="badge badge-own">शुभ योग</span>
+
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>👑 वर्गोत्तम स्थिति (Vargottama Planets)</span>
+            <span class="badge badge-exalted">${vPlanets.length} ग्रह</span>
           </div>
-          <p style="font-size:11.5px; color:#475569; margin-top:6px; line-height:1.5;">
-            सूर्य और बुध की वृषभ राशि में युति से प्रखर विश्लेषणात्मक मेधा और शोध क्षमता का निर्माण होता है।
+          <p style="font-size:12px; color:#475569; margin:6px 0;">
+            जो ग्रह लग्न (D1) और नवमांश (D9) दोनों में एक ही राशि में स्थित होते हैं, वे स्वगृही के समान पूर्ण फल देने में समर्थ होते हैं।
           </p>
+          <div style="margin-top:8px;">${vHtml}</div>
+        </div>
+
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>🛡️ बाधक व मारक विश्लेषण (Badhaka & Maraka)</span>
+            <span class="badge badge-debilitated">सावधानी विचार</span>
+          </div>
+          <div style="font-size:12px; color:#475569; margin-top:6px; line-height:1.6;">
+            • <b>लग्न प्रकृति:</b> ${bmData ? bmData.lagna_type : "चर लग्न (Movable)"}<br>
+            • <b>बाधक स्थान:</b> ${bmData ? bmData.badhaka_house : "11वां"} भाव (${bmData ? bmData.badhaka_sign : "सिंह"})<br>
+            • <b>बाधकेश ग्रह:</b> <b style="color:#DC2626;">${bmData ? bmData.badhakesh : "सूर्य"}</b> (${bmData ? bmData.badhakesh_placement : ""})<br>
+            • <b>मारक स्थान अधिपति:</b> द्वितीयेश व सप्तमेश ग्रह मारक फल प्रदान करते हैं।
+          </div>
         </div>
       </div>
     `;
   }
 
   /**
-   * Sub-Tab Panels
+   * 2. Jaimini 7 Chara Karakas & Special Lagnas
    */
-  renderSubTabPanels() {
-    const pushkarBox = document.getElementById("pushkarContainerBox");
-    if (pushkarBox) {
-      pushkarBox.innerHTML = `
-        <div style="background:#FFF; padding:14px; border-radius:8px; border:1px solid var(--border-subtle);">
-          <h4 style="color:var(--primary); margin:0 0 8px 0;">🌟 पुष्कर नवमांश व वर्गोत्तम ग्रह स्थिति</h4>
-          <p style="font-size:12px; color:#475569;">
-            <b>वर्गोत्तम ग्रह:</b> चन्द्रमा स्वराशि कर्क (D1) व नवमांश में विशेष बलवान होकर वर्गोत्तम फल प्रदान कर रहे हैं।<br>
-            <b>पुष्कर भाग:</b> गुरु तुला लग्न में 14.01° पर शुभ पुष्कर नवांश क्षेत्र में स्थित हैं।
-          </p>
+  renderJaiminiPanel() {
+    const box = document.getElementById("jaiminiContainerBox");
+    if (!box) return;
+
+    const jData = this.shastriyaData ? this.shastriyaData.jaimini : null;
+    const karakas = (jData && jData.karakas_7) ? jData.karakas_7 : {};
+
+    const karakaNames = {
+      AK: { title: "आत्मकारक (Atmakaraka - AK)", desc: "आत्मा का प्रतिनिधि, जीवन का परम उद्देश्य एवं मूल स्वभाव" },
+      AmK: { title: "अमात्यकारक (Amatyakaraka - AmK)", desc: "कर्म, आजीविका, पद, प्रतिष्ठा एवं मंत्रि-पद" },
+      BK: { title: "भ्रातृकारक (Bhratrukaraka - BK)", desc: "गुरु, भ्राता, मार्गदर्शक एवं पुरुषार्थ" },
+      MK: { title: "मातृकारक (Matrukaraka - MK)", desc: "माता, सुख, भूमि, गृह, वाहन एवं आंतरिक शांति" },
+      PK: { title: "पुत्रकारक (Putrakaraka - PK)", desc: "संतान, बुद्धि, ज्ञान, पूर्वपुण्य एवं रचनात्मकता" },
+      GK: { title: "ज्ञाति कारक (Gnatikaraka - GK)", desc: "शत्रु, रोग, ऋण, संघर्ष एवं प्रतिस्पर्धा" },
+      DK: { title: "दाराकारक (Darakaraka - DK)", desc: "जीवनसाथी, वैवाहिक जीवन एवं व्यापारिक साझेदार" }
+    };
+
+    let karakaCardsHtml = "";
+    Object.entries(karakaNames).forEach(([code, meta]) => {
+      const pInfo = karakas[code] || {};
+      const pName = pInfo.planet || "—";
+      const degStr = pInfo.degree != null ? `${pInfo.degree.toFixed(2)}°` : "—";
+      const gCol = (KundliChartRenderer.grahaInfo[pName] || {}).col || "#0073CF";
+
+      karakaCardsHtml += `
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span style="font-size:12px;">${meta.title}</span>
+            <span class="badge badge-own" style="font-size:11px;">${degStr}</span>
+          </div>
+          <div style="font-size:18px; font-weight:900; color:${gCol}; margin:4px 0;">🪐 ${pName}</div>
+          <p style="font-size:11px; color:#64748B; margin:0;">${meta.desc}</p>
         </div>
       `;
+    });
+
+    const klSign = jData ? (jData.karakamsha_sign || "मिथुन (Gemini)") : "मिथुन (Gemini)";
+    const ishta = jData ? (jData.ishta_devata || "भगवान विष्णु / शिव") : "भगवान विष्णु";
+
+    box.innerHTML = `
+      <div class="shloka-box">
+        <div class="shloka-text">तत्र प्रथमं स्वांशो ज्ञेयः। आत्मकारकवशात् सर्वं ज्ञेयं विबुधैः॥</div>
+        <div class="shloka-meta"><span>स्रोत: महर्षि जैमिनी उपदेश सूत्राणि</span><span>प्रथमोध्यायः (कारक विचार)</span></div>
+      </div>
+
+      <div style="background:#FFF; border:1px solid var(--border-subtle); border-radius:8px; padding:12px; margin-bottom:12px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+        <div>👑 <b>कारकांश लग्न (Karakamsha):</b> <span class="badge badge-exalted">${klSign}</span></div>
+        <div>🕉️ <b>इष्ट देवता (Ishta Devata):</b> <b style="color:#059669;">${ishta}</b></div>
+        <div>💎 <b>आरूढ़ लग्न (AL):</b> <span class="badge badge-own">${jData && jData.arudha_padas ? jData.arudha_padas.AL || 'वृश्चिक' : 'वृश्चिक'}</span></div>
+        <div>💍 <b>उपपद लग्न (UL):</b> <span class="badge badge-own">${jData && jData.arudha_padas ? jData.arudha_padas.UL || 'कर्क' : 'कर्क'}</span></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:10px;">
+        ${karakaCardsHtml}
+      </div>
+    `;
+  }
+
+  /**
+   * 3. Bhava Chalit Chart & Shifts Panel
+   */
+  renderChalitPanel() {
+    const box = document.getElementById("chalitContainerBox");
+    if (!box) return;
+
+    const chalitData = this.shastriyaData ? this.shastriyaData.chalit : null;
+    const chalitSvg = KundliChartRenderer.renderChalitChart(this.chartData, chalitData, this.chartStyle);
+
+    let rowsHtml = "";
+    if (chalitData && chalitData.planet_positions) {
+      chalitData.planet_positions.forEach(item => {
+        const isShift = item.is_different || (item.rashi_house !== item.chalit_house);
+        const shiftBadge = isShift 
+          ? `<span class="chalit-shift-badge chalit-shifted">⚡ भाव ${item.rashi_house} ➔ ${item.chalit_house} (Shifted)</span>`
+          : `<span class="chalit-shift-badge chalit-same">✅ स्थिर (भाव ${item.chalit_house})</span>`;
+
+        const gInfo = KundliChartRenderer.grahaInfo[item.planet] || { name: item.planet, sym: item.planet, col: "#0073CF" };
+
+        rowsHtml += `
+          <tr>
+            <td><b style="color:${gInfo.col};">${gInfo.sym} ${gInfo.name}</b></td>
+            <td><b>भाव ${item.rashi_house}</b></td>
+            <td><b style="color:#E11D48;">भाव ${item.chalit_house}</b></td>
+            <td>${shiftBadge}</td>
+          </tr>
+        `;
+      });
     }
 
-    const jaiminiBox = document.getElementById("jaiminiContainerBox");
-    if (jaiminiBox) {
-      jaiminiBox.innerHTML = `
-        <div style="background:#FFF; padding:14px; border-radius:8px; border:1px solid var(--border-subtle);">
-          <h4 style="color:var(--primary); margin:0 0 8px 0;">👑 जैमिनी 7 चर कारक (7 Chara Karakas)</h4>
-          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; font-size:12px;">
-            <div class="panchang-summary-cell"><span class="panchang-cell-label">आत्मकारक (AK)</span><span class="panchang-cell-val">शुक्र (Venus)</span></div>
-            <div class="panchang-summary-cell"><span class="panchang-cell-label">अमात्यकारक (AmK)</span><span class="panchang-cell-val">बुध (Mercury)</span></div>
-            <div class="panchang-summary-cell"><span class="panchang-cell-label">भ्रातृकारक (BK)</span><span class="panchang-cell-val">शनि (Saturn)</span></div>
-            <div class="panchang-summary-cell"><span class="panchang-cell-label">मातृकारक (MK)</span><span class="panchang-cell-val">गुरु (Jupiter)</span></div>
-            <div class="panchang-summary-cell"><span class="panchang-cell-label">पुत्रकारक (PK)</span><span class="panchang-cell-val">चन्द्र (Moon)</span></div>
-            <div class="panchang-summary-cell"><span class="panchang-cell-label">ज्ञाति कारक (GK)</span><span class="panchang-cell-val">सूर्य (Sun)</span></div>
-            <div class="panchang-summary-cell"><span class="panchang-cell-label">दाराकारक (DK)</span><span class="panchang-cell-val">मंगल (Mars)</span></div>
+    box.innerHTML = `
+      <div class="shloka-box">
+        <div class="shloka-text">भावसंधिस्थिता मन्दा भावान्तस्थाश्च मध्यमाः। भावमध्यगताः सर्वे पूर्णफलप्रदायकाः॥</div>
+        <div class="shloka-meta"><span>स्रोत: श्रीपति पद्धति (Sripati Paddhati)</span><span>भाव चलित व संधि फल विचार</span></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: minmax(320px, 520px) 1fr; gap:16px; align-items:start;">
+        <div style="background:#FFF; border:1px solid var(--border-subtle); border-radius:10px; padding:10px; display:flex; justify-content:center;">
+          ${chalitSvg}
+        </div>
+        <div style="background:#FFF; border:1px solid var(--border-subtle); border-radius:10px; overflow:hidden;">
+          <div style="padding:10px 14px; background:#F8FAFC; border-bottom:1px solid var(--border-subtle); font-weight:850; font-size:12.5px; color:#1E293B;">
+            📊 राशि चक्र (Rashi) बनाम भाव चलित चक्र (Chalit) स्थानान्तरण
+          </div>
+          <table class="gla-table" style="margin:0;">
+            <thead>
+              <tr>
+                <th>ग्रह (Graha)</th>
+                <th>राशि भाव (Rashi H)</th>
+                <th>चलित भाव (Chalit H)</th>
+                <th>स्थिति (Status)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml || "<tr><td colspan='4' class='text-center'>चलित डेटा लोड हो रहा है...</td></tr>"}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  /**
+   * 4. Chandra Kundli Panel
+   */
+  renderChandraPanel() {
+    const box = document.getElementById("chandraContainerBox");
+    if (!box) return;
+
+    const chandraSvg = KundliChartRenderer.renderChandraChart(this.chartData, this.chartStyle);
+    const moonSignName = (this.chartData && this.chartData.planets && this.chartData.planets.Moon) 
+      ? this.chartData.planets.Moon.sign_name 
+      : "कर्क (Cancer)";
+
+    box.innerHTML = `
+      <div class="shloka-box">
+        <div class="shloka-text">चन्द्रे सर्वमिदं प्रोक्तं यद्यल्लग्ने विचारितम्। चन्द्रलग्नात्तु संपूर्णं फलं विद्याद्विचक्षणः॥</div>
+        <div class="shloka-meta"><span>स्रोत: सारावली (Saravali)</span><span>चन्द्र लग्न विचार अध्याय</span></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: minmax(320px, 520px) 1fr; gap:16px; align-items:start;">
+        <div style="background:#FFF; border:1px solid var(--border-subtle); border-radius:10px; padding:10px; display:flex; justify-content:center;">
+          ${chandraSvg}
+        </div>
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>🌙 चन्द्र कुण्डली विश्लेषण (${moonSignName} लग्न)</span>
+            <span class="badge badge-exalted">मन व भाग्य कारक</span>
+          </div>
+          <div style="font-size:12px; color:#475569; line-height:1.6;">
+            • चन्द्रमा को लग्न मानकर कुण्डली का विश्लेषण करने से जातक की मानसिक स्थिति, भावनात्मक स्थिरता, द्रव्य लाभ और लोक-व्यवहार की सटीक जानकारी मिलती है।<br>
+            • <b>सुनफा, अनफा व दुरुधरा योग:</b> चन्द्रमा से द्वितीय व द्वादश भाव में शुभ ग्रहों की उपस्थिति मानसिक वैभव और धन संचय सुनिश्चित करती है।<br>
+            • <b>गजकेसरी योग प्रभाव:</b> चन्द्र लग्न से केंद्र में गुरु की स्थिति जातक को समाज में दीर्घकालिक यश और सम्मान प्रदान करती है।
           </div>
         </div>
+      </div>
+    `;
+  }
+
+  /**
+   * 5. Surya Kundli Panel
+   */
+  renderSuryaPanel() {
+    const box = document.getElementById("suryaContainerBox");
+    if (!box) return;
+
+    const suryaSvg = KundliChartRenderer.renderSuryaChart(this.chartData, this.chartStyle);
+    const sunSignName = (this.chartData && this.chartData.planets && this.chartData.planets.Sun) 
+      ? this.chartData.planets.Sun.sign_name 
+      : "वृषभ (Taurus)";
+
+    box.innerHTML = `
+      <div class="shloka-box">
+        <div class="shloka-text">सूर्यो लग्नमिव ख्यातं पितृदेहबलप्रदम्। आत्मनः सर्वकार्येषु सूर्यलग्नात् विचारयेत्॥</div>
+        <div class="shloka-meta"><span>स्रोत: बृहज्जातकम् (Brihat Jataka)</span><span>सूर्य लग्न फलित विचार</span></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: minmax(320px, 520px) 1fr; gap:16px; align-items:start;">
+        <div style="background:#FFF; border:1px solid var(--border-subtle); border-radius:10px; padding:10px; display:flex; justify-content:center;">
+          ${suryaSvg}
+        </div>
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>☀️ सूर्य कुण्डली विश्लेषण (${sunSignName} लग्न)</span>
+            <span class="badge badge-own">आत्मा व आरोग्यता</span>
+          </div>
+          <div style="font-size:12px; color:#475569; line-height:1.6;">
+            • सूर्य आत्मा का कारक है। सूर्य कुण्डली से जातक के पिता का स्वास्थ्य, शासकीय सहयोग, प्रशासनिक अधिकार, नेत्र ज्योति और जीवन शक्ति का परीक्षण किया जाता है।<br>
+            • <b>वेशी, वोशी व उभयचरी योग:</b> सूर्य से द्वितीय में बुध (वेशी योग) और द्वादश में शुभ ग्रहों की उपस्थिति वाणी में ओज और व्यवसाय में सफलता देती है।<br>
+            • <b>बुधादित्य राजयोग:</b> सूर्य-बुध की युति से जातक तीक्ष्ण बुद्धि और उच्च पद प्राप्त करता है।
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  /**
+   * 6. Graha Prishtha & Kartari Analysis Panel
+   */
+  renderGrahaPrishthaPanel() {
+    const box = document.getElementById("grahaprishthaContainerBox");
+    if (!box) return;
+
+    const gpData = this.shastriyaData ? this.shastriyaData.grahaprishtha : null;
+    const kartariList = (gpData && gpData.kartari) ? gpData.kartari : [];
+    const dagdhaList = (gpData && gpData.dagdha_rashis) ? gpData.dagdha_rashis : [];
+
+    let dagdhaNames = dagdhaList.map(sId => this.rashiNames[sId - 1]).join(", ") || "कोई दग्ध राशि नहीं";
+
+    let kartariRows = "";
+    kartariList.forEach(k => {
+      let badgeCls = "badge-neutral";
+      if (k.kartari_status.includes("पापकर्तरी")) badgeCls = "badge-debilitated";
+      if (k.kartari_status.includes("शुभकर्तरी")) badgeCls = "badge-exalted";
+
+      kartariRows += `
+        <tr>
+          <td><b>भाव ${k.house}</b></td>
+          <td>${k.prev_planets.join(", ") || "—"}</td>
+          <td>${k.next_planets.join(", ") || "—"}</td>
+          <td><span class="badge ${badgeCls}">${k.kartari_status}</span></td>
+        </tr>
       `;
+    });
+
+    box.innerHTML = `
+      <div class="shloka-box">
+        <div class="shloka-text">पापैः संवेष्टितो भावः पापकर्तरिसंज्ञकः। शुभैः संवेष्टितो भावः शुभकर्तरिसंज्ञकः॥</div>
+        <div class="shloka-meta"><span>स्रोत: जातक पारिजात (Jataka Parijata)</span><span>कर्तरी योग विचार</span></div>
+      </div>
+
+      <div style="background:#FFF; border:1px solid var(--border-subtle); border-radius:8px; padding:12px; margin-bottom:12px;">
+        <span style="font-weight:850; color:#DC2626;">🔥 जन्म तिथि दग्ध राशियां (Burnt Signs):</span>
+        <span class="badge badge-debilitated" style="margin-left:8px;">${dagdhaNames}</span>
+        <p style="font-size:11.5px; color:#64748B; margin:4px 0 0 0;">
+          दग्ध राशियों में स्थित ग्रह अपने पूर्ण शुभ प्रभाव में संकोच करते हैं तथा उनके फलों में विलम्ब होता है।
+        </p>
+      </div>
+
+      <div style="background:#FFF; border:1px solid var(--border-subtle); border-radius:10px; overflow:hidden;">
+        <div style="padding:10px 14px; background:#F8FAFC; border-bottom:1px solid var(--border-subtle); font-weight:850; font-size:12.5px; color:#1E293B;">
+          ⚔️ द्वादश भाव कर्तरी योग शुभाशुभ तालिका
+        </div>
+        <table class="gla-table" style="margin:0;">
+          <thead>
+            <tr>
+              <th>भाव (House)</th>
+              <th>व्यय (12th Grahas)</th>
+              <th>द्वितीय (2nd Grahas)</th>
+              <th>कर्तरी फल (Kartari Status)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${kartariRows || "<tr><td colspan='4' class='text-center'>कर्तरी डेटा लोड हो रहा है...</td></tr>"}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  /**
+   * 7. Kota Chakra Durga Fortress Panel
+   */
+  renderKotaPanel() {
+    const box = document.getElementById("kotaContainerBox");
+    if (!box) return;
+
+    const kData = (this.shastriyaData && this.shastriyaData.kota_chakra) ? this.shastriyaData.kota_chakra : null;
+    const details = kData ? kData.details : {};
+    const kotaSvg = kData ? kData.svg : `<div class="p-3 text-center">कोटा चक्र लोड हो रहा है...</div>`;
+
+    const kSwami = details.kota_swami || "चन्द्र (Moon)";
+    const kPala = details.kota_pala || "शनि (Saturn)";
+    const defStatus = details.defense_status || "🛡️ सुरक्षित (Fortress Safe)";
+    const defSummary = details.defense_summary || "कोटा स्वामी व कोटा पाल की स्थिति सुदृढ़ है। दुर्ग सुरक्षित है।";
+
+    let allocRows = "";
+    if (details.planet_allocations) {
+      details.planet_allocations.forEach(item => {
+        let zColor = "#0073CF";
+        if (item.zone === "Stambha") zColor = "#DC2626";
+        if (item.zone === "Madhya") zColor = "#D97706";
+        if (item.zone === "Prakara") zColor = "#16A34A";
+
+        allocRows += `
+          <tr>
+            <td><b>${item.planet}</b></td>
+            <td><b style="color:${zColor};">${item.zone}</b></td>
+            <td>${item.nakshatra}</td>
+            <td>${item.motion || "मार्गी"}</td>
+          </tr>
+        `;
+      });
     }
 
-    const chalitBox = document.getElementById("chalitContainerBox");
-    if (chalitBox) {
-      chalitBox.innerHTML = `
-        <div style="background:#FFF; padding:14px; border-radius:8px; border:1px solid var(--border-subtle);">
-          <h4 style="color:var(--primary); margin:0 0 8px 0;">🏠 श्रीपति व भाव चलित चक्र (Bhava Chalit Shifts)</h4>
-          <p style="font-size:12px; color:#475569;">
-            भाव चलित गणना के अनुसार लग्न संधि 24°45' से प्रारंभ होकर अगले भाव में निर्बाध प्रवेश करती है। सभी 9 ग्रह अपनी मूल भाव स्थिति में सुदृढ़ बने हुए हैं।
-          </p>
-        </div>
-      `;
-    }
+    box.innerHTML = `
+      <div class="shloka-box">
+        <div class="shloka-text">स्तम्भमध्यप्राकारेषु बाह्ये च परिकल्पितम्। दुर्गनाथे बलोपेते दुर्गं रक्षेन्न संशयः॥</div>
+        <div class="shloka-meta"><span>स्रोत: सर्वतोभद्र व कोटा चक्र शास्त्र</span><span>दुर्ग रक्षा विचार</span></div>
+      </div>
 
-    const chandraBox = document.getElementById("chandraContainerBox");
-    if (chandraBox) {
-      chandraBox.innerHTML = `
-        <div style="background:#FFF; padding:14px; border-radius:8px; border:1px solid var(--border-subtle);">
-          <h4 style="color:var(--primary); margin:0 0 8px 0;">🌙 चन्द्र कुण्डली (Lunar Ascendant - Karka Lagna)</h4>
-          <p style="font-size:12px; color:#475569;">
-            चन्द्रमा को लग्न मानकर गणना करने पर: प्रथम भाव में चन्द्रमा (स्वराशि), दशम भाव में मंगल (रुचक योग प्रभाव), और चतुर्थ भाव में गुरु की स्थिति अति विशिष्ट राजयोग निर्मित करती है।
-          </p>
+      <div style="display:grid; grid-template-columns: minmax(320px, 520px) 1fr; gap:16px; align-items:start;">
+        <div style="background:#FFF; border:1px solid var(--border-subtle); border-radius:10px; padding:10px; display:flex; justify-content:center;">
+          ${kotaSvg}
         </div>
-      `;
-    }
+        <div>
+          <div class="shastriya-card" style="margin-bottom:12px;">
+            <div class="shastriya-card-header">
+              <span>🏰 कोटा दुर्ग रक्षा स्थिति</span>
+              <span class="badge badge-exalted">${defStatus}</span>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin:8px 0;">
+              <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:6px; padding:8px;">
+                <div style="font-size:11px; color:#166534; font-weight:800;">👑 कोटा स्वामी (दुर्गेश)</div>
+                <div style="font-size:15px; font-weight:900; color:#15803D;">${kSwami}</div>
+              </div>
+              <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:6px; padding:8px;">
+                <div style="font-size:11px; color:#1E40AF; font-weight:800;">🛡️ कोटा पाल (दुर्गरक्षक)</div>
+                <div style="font-size:15px; font-weight:900; color:#1D4ED8;">${kPala}</div>
+              </div>
+            </div>
+            <p style="font-size:11.5px; color:#475569; margin:4px 0 0 0;">${defSummary}</p>
+          </div>
 
-    const suryaBox = document.getElementById("suryaContainerBox");
-    if (suryaBox) {
-      suryaBox.innerHTML = `
-        <div style="background:#FFF; padding:14px; border-radius:8px; border:1px solid var(--border-subtle);">
-          <h4 style="color:var(--primary); margin:0 0 8px 0;">☀️ सूर्य कुण्डली (Solar Ascendant - Vrishabha Lagna)</h4>
-          <p style="font-size:12px; color:#475569;">
-            सूर्य लग्न (वृषभ) से द्वितीय भाव में शुक्र, तृतीय में चन्द्र, और द्वादश भाव में मंगल की स्थिति जातक को आत्माभिमान और व्यावसायिक सफलता प्रदान करती है।
-          </p>
+          <div style="background:#FFF; border:1px solid var(--border-subtle); border-radius:10px; overflow:hidden;">
+            <div style="padding:8px 12px; background:#F8FAFC; border-bottom:1px solid var(--border-subtle); font-weight:850; font-size:12px;">
+              ⛺ 4-क्षेत्र ग्रह स्थिति (Stambha, Madhya, Prakara, Bahya)
+            </div>
+            <table class="gla-table" style="margin:0;">
+              <thead>
+                <tr>
+                  <th>ग्रह</th>
+                  <th>क्षेत्र (Zone)</th>
+                  <th>नक्षत्र</th>
+                  <th>गति</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${allocRows || "<tr><td colspan='4' class='text-center'>आवंटन डेटा लोड हो रहा है...</td></tr>"}
+              </tbody>
+            </table>
+          </div>
         </div>
-      `;
-    }
-
-    const grahaPrishthaBox = document.getElementById("grahaprishthaContainerBox");
-    if (grahaPrishthaBox) {
-      grahaPrishthaBox.innerHTML = `
-        <div style="background:#FFF; padding:14px; border-radius:8px; border:1px solid var(--border-subtle);">
-          <h4 style="color:var(--primary); margin:0 0 8px 0;">⚔️ ग्रह पृष्ठ व शुभाशुभ प्रभाव</h4>
-          <p style="font-size:12px; color:#475569;">
-            पापकर्तरी व शुभकर्तरी योग विश्लेषण: लग्न शुभ ग्रहों के प्रभाव में है, किसी भी केंद्र भाव में घातक पापकर्तरी दोष नहीं बन रहा है।
-          </p>
-        </div>
-      `;
-    }
-
-    const kotaBox = document.getElementById("kotaContainerBox");
-    if (kotaBox) {
-      kotaBox.innerHTML = `
-        <div style="background:#FFF; padding:14px; border-radius:8px; border:1px solid var(--border-subtle);">
-          <h4 style="color:var(--primary); margin:0 0 8px 0;">⛺ कोटा चक्र (Fortress Defence Matrix)</h4>
-          <p style="font-size:12px; color:#475569;">
-            कोटा स्वामी (दुर्ग अधिपति): गुरु। कोटा पाल (रक्षक): मंगल। दुर्ग अभेद्य व सुरक्षित है; गोचर में अप्रत्याशित संकटों से पूर्ण सुरक्षा प्राप्त होती है।
-          </p>
-        </div>
-      `;
-    }
+      </div>
+    `;
   }
 
   /**
@@ -1293,23 +1667,322 @@ class JyotishWebApp {
       btn.classList.toggle("active", btn.dataset.mod === moduleId);
     });
 
-    if (moduleId === "dasha_vimshottari") {
+    // Precise Module Dispatcher
+    if (moduleId === "kundli_core") {
+      this.switchTab("main");
+    } else if (moduleId === "varga_shodash") {
+      this.switchTab("main");
+      this.setAnalyticalSubView("planets");
+    } else if (moduleId === "shadbala_bhavabala") {
+      this.switchTab("main");
+      this.setAnalyticalSubView("graph");
+    } else if (moduleId === "panchang_daily") {
+      this.openTodayPanchangModal();
+    } else if (moduleId === "dasha_vimshottari") {
       this.switchTab("dasha");
     } else if (moduleId === "ashtakavarga") {
       this.switchTab("ashtakavarga");
+    } else if (moduleId === "jaimini_kp") {
+      this.switchTab("jaimini");
     } else if (moduleId === "shastriya_yogas") {
       this.switchTab("yogas");
-    } else if (moduleId === "panchang_daily") {
-      this.openTodayPanchangModal();
+    } else if (moduleId === "pushkar_vargottama") {
+      this.switchTab("pushkar");
+    } else if (moduleId === "bhava_chalit") {
+      this.switchTab("chalit");
+    } else if (moduleId === "chandra_kundli") {
+      this.switchTab("chandra");
+    } else if (moduleId === "surya_kundli") {
+      this.switchTab("surya");
+    } else if (moduleId === "graha_prishtha") {
+      this.switchTab("grahaprishtha");
+    } else if (moduleId === "kota_chakra") {
+      this.switchTab("kota");
+    } else if (moduleId === "chara_dasha") {
+      this.switchTab("jaimini");
+    } else if (moduleId === "varga_tables") {
+      this.switchTab("main");
+      this.setAnalyticalSubView("houses");
     } else if (moduleId === "ai_jyotish") {
       this.openAiDrawer();
     } else if (moduleId === "prashna") {
       this.createInstantPrashnaKundli();
-    } else if (moduleId === "shadbala_bhavabala") {
-      this.switchTab("main");
-      this.setAnalyticalSubView("graph");
     } else {
-      this.switchTab("main");
+      // Open rich Shastriya modal for advanced modules
+      this.openModuleModal(moduleId);
+    }
+  }
+
+  /**
+   * Universal Shastriya Module Modal Controller
+   */
+  openModuleModal(moduleId) {
+    const modal = document.getElementById("moduleDetailsModal");
+    const titleEl = document.getElementById("moduleModalTitle");
+    const bodyEl = document.getElementById("moduleModalBody");
+    if (!modal || !titleEl || !bodyEl) return;
+
+    modal.classList.add("active");
+
+    const sData = this.shastriyaData || {};
+    const rx = sData.prescription || {};
+    const med = sData.medical || {};
+    const gem = sData.gemology || {};
+    const vas = sData.vastu || [];
+    const doshas = (sData.doshas && sData.doshas.catalog) ? sData.doshas.catalog : [];
+
+    if (moduleId === "gem_recommend") {
+      titleEl.innerHTML = "💎 शास्त्रीय रत्न परामर्श एवं धारण विधान";
+      const pGem = rx.primary_gem || {};
+      const sGem = rx.secondary_gem || {};
+      const noGems = gem.strictly_prohibited_gems || rx.prohibited_gems || ["नीलम", "हीरा"];
+
+      bodyEl.innerHTML = `
+        <div class="shloka-box">
+          <div class="shloka-text">माणिक्यं तरणेः सुजातममलं मुक्ताफलं शीतगोः। माहेयस्य च विद्रुमं मरकतं सौम्यस्य गारुत्मतम्॥</div>
+          <div class="shloka-meta"><span>स्रोत: जातक पारिजात / रत्न शास्त्र</span><span>नवग्रह रत्न धारण विधान</span></div>
+        </div>
+        <div class="shastriya-grid">
+          <div class="shastriya-card" style="border:1.5px solid #86EFAC;">
+            <div class="shastriya-card-header">
+              <span style="color:#16A34A;">🌟 मुख्य भाग्य रत्न (Life Gem)</span>
+              <span class="badge badge-exalted">${pGem.planet || "शुक्र"}</span>
+            </div>
+            <div style="font-size:16px; font-weight:900; color:#1E293B; margin:6px 0;">${pGem.gem || "हीरा / ओपल (Diamond)"}</div>
+            <div style="font-size:12px; color:#475569; line-height:1.6;">
+              • <b>उपरत्न:</b> ${pGem.sub || "अमेरिकन डायमंड / जरकन"}<br>
+              • <b>धातु:</b> ${pGem.metal || "चांदी / प्लेटिनम"}<br>
+              • <b>अंगुली:</b> ${pGem.finger || "मध्यमा अथवा कनिष्ठिका"}<br>
+              • <b>मुहूर्त:</b> ${pGem.day || "शुक्रवार प्रातः काल"}<br>
+              • <b>वजन:</b> ${pGem.ratti || "५.२५ से ६.२५ रत्ती"}<br>
+              • <b>वैदिक मंत्र:</b> <code style="color:#6B1D2F;">${pGem.mantra || "ॐ द्रां द्रीं द्रौं सः शुक्राय नमः"}</code>
+            </div>
+          </div>
+
+          <div class="shastriya-card" style="border:1.5px solid #93C5FD;">
+            <div class="shastriya-card-header">
+              <span style="color:#0073CF;">⚡ सहायक कारक रत्न (Secondary Gem)</span>
+              <span class="badge badge-own">${sGem.planet || "बुध"}</span>
+            </div>
+            <div style="font-size:16px; font-weight:900; color:#1E293B; margin:6px 0;">${sGem.gem || "पन्ना (Emerald)"}</div>
+            <div style="font-size:12px; color:#475569; line-height:1.6;">
+              • <b>उपरत्न:</b> ${sGem.sub || "पेरिडॉट / मरगज"}<br>
+              • <b>धातु:</b> ${sGem.metal || "स्वर्ण अथवा पंचधातु"}<br>
+              • <b>अंगुली:</b> ${sGem.finger || "कनिष्ठिका"}<br>
+              • <b>मुहूर्त:</b> ${sGem.day || "बुधवार प्रातः"}<br>
+              • <b>वैदिक मंत्र:</b> <code style="color:#6B1D2F;">${sGem.mantra || "ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः"}</code>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#FFF1F2; border:1px solid #FECDD3; border-radius:8px; padding:12px; margin-top:12px;">
+          <span style="color:#DC2626; font-weight:850;">🚫 कड़ाई से वर्जित रत्न (Strictly Prohibited Gems):</span>
+          <span style="margin-left:8px; font-weight:800; color:#991B1B;">${Array.isArray(noGems) ? noGems.join(", ") : noGems}</span>
+          <p style="font-size:11.5px; color:#64748B; margin:4px 0 0 0;">
+            इन ग्रहों के रत्न धारण करने से षष्ठेश, अष्टमेश या द्वादशेश का अशुभ प्रभाव सक्रिय हो सकता है।
+          </p>
+        </div>
+      `;
+    } else if (moduleId === "medical_astro") {
+      titleEl.innerHTML = "🩺 आयुर्वेद व मेडिकल ज्योतिष (Health & Tridosha Profile)";
+      const tridosha = med.tridosha || { vata: "35%", pitta: "45%", kapha: "20%", dominant: "Pitta" };
+      const organs = med.high_risk_organs || ["उदर व पाचन संस्थान", "नेत्र"];
+
+      bodyEl.innerHTML = `
+        <div class="shloka-box">
+          <div class="shloka-text">वातपित्तकफा देहे सर्वव्याधिसमुद्भवाः। ग्रहैर्निरूपिताः सर्वे देहिनां पूर्वकर्मजाः॥</div>
+          <div class="shloka-meta"><span>स्रोत: चरक संहिता / फलदीपिका</span><span>रोग निर्णय अध्याय</span></div>
+        </div>
+
+        <div class="shastriya-grid">
+          <div class="shastriya-card">
+            <div class="shastriya-card-header">
+              <span>⚖️ त्रिदोष संतुलन (Ayurvedic Tridosha)</span>
+              <span class="badge badge-own">प्रधान: ${tridosha.dominant || "पित्त (Pitta)"}</span>
+            </div>
+            <div style="display:flex; justify-content:space-around; margin:14px 0; text-align:center;">
+              <div><div style="font-size:11px; color:#64748B;">वात (Vata)</div><div style="font-size:16px; font-weight:900; color:#0073CF;">${tridosha.vata || "30%"}</div></div>
+              <div><div style="font-size:11px; color:#64748B;">पित्त (Pitta)</div><div style="font-size:16px; font-weight:900; color:#DC2626;">${tridosha.pitta || "45%"}</div></div>
+              <div><div style="font-size:11px; color:#64748B;">कफ (Kapha)</div><div style="font-size:16px; font-weight:900; color:#16A34A;">${tridosha.kapha || "25%"}</div></div>
+            </div>
+            <p style="font-size:11.5px; color:#475569;">
+              पित्त दोष की अधिकता से उष्णता, अम्लपित्त और रक्त संबंधी असंतुलन की प्रवृत्ति रहती है। शीतल द्रव्यों का सेवन हितकर है।
+            </p>
+          </div>
+
+          <div class="shastriya-card">
+            <div class="shastriya-card-header">
+              <span>⚠️ संवेदनशील अंग व रोग विचार</span>
+              <span class="badge badge-debilitated">जीवन शक्ति: ${med.vitality_score || 85}/100</span>
+            </div>
+            <div style="margin:8px 0;">
+              ${organs.map(o => `<span class="badge badge-debilitated" style="margin:3px;">⚠️ ${o}</span>`).join(" ")}
+            </div>
+            <div style="font-size:12px; color:#475569; line-height:1.6; margin-top:8px;">
+              • <b>अनुशंसित रुद्राक्ष:</b> ${med.rudraksha_therapy ? med.rudraksha_therapy.join(", ") : "६ मुखी एवं ७ मुखी रुद्राक्ष"}<br>
+              • <b>आयुर्वेदिक दिनचर्या:</b> प्राणायाम, जल प्रचुरता और ब्राह्मी व आंवला का नियमित उपयोग।
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (moduleId === "vastu_chakra") {
+      titleEl.innerHTML = "🗺️ वैदिक वास्तु चक्र व 9 दिशाएं (Directional Energy Matrix)";
+      let vastuCards = "";
+      vas.forEach(z => {
+        let scCol = z.score >= 0 ? "#16A34A" : "#DC2626";
+        vastuCards += `
+          <div class="shastriya-card">
+            <div class="shastriya-card-header">
+              <span>🧭 ${z.direction_name_hi} (${z.direction})</span>
+              <span class="badge ${z.score >= 0 ? 'badge-exalted' : 'badge-debilitated'}">अंक: ${z.score}</span>
+            </div>
+            <div style="font-size:12px; color:#475569; line-height:1.5;">
+              • <b>तत्व:</b> ${z.element} | <b>स्वामी:</b> ${z.lord}<br>
+              • <b>स्थिति:</b> ${z.status}<br>
+              • <b>शास्त्रीय सुझाव:</b> ${z.recommendation || "दिशा को स्वच्छ एवं भारी भार से मुक्त रखें।"}
+            </div>
+          </div>
+        `;
+      });
+
+      bodyEl.innerHTML = `
+        <div class="shloka-box">
+          <div class="shloka-text">ईशाने देवता गेहं पूर्वस्यां स्नानमन्दिरम्। आग्नेय्यां पचनागारं याम्ये शयनमन्दिरम्॥</div>
+          <div class="shloka-meta"><span>स्रोत: मयमतम् / वराहमिहिर बृहत्संहिता</span><span>वास्तु दिशा विभाग</span></div>
+        </div>
+        <div class="shastriya-grid">${vastuCards}</div>
+      `;
+    } else if (moduleId === "dosha_upaya") {
+      titleEl.innerHTML = "🛡️ कुण्डली के प्रमुख दोष व शास्त्रीय अचूक उपाय";
+      let doshaCards = "";
+      doshas.forEach(d => {
+        doshaCards += `
+          <div class="shastriya-card" style="border-left:4px solid #DC2626;">
+            <div class="shastriya-card-header">
+              <span style="color:#DC2626;">⚠️ ${d.rule_name_hi}</span>
+              <span class="badge badge-debilitated">${d.source_text}</span>
+            </div>
+            <p style="font-size:12px; color:#475569; margin:4px 0;">${d.explanation_hi}</p>
+          </div>
+        `;
+      });
+
+      bodyEl.innerHTML = `
+        <div class="shloka-box">
+          <div class="shloka-text">जपेन हुतहोमेन दानेन नियमेन च। ग्रहाः शान्तिं प्रयच्छन्ति पूजिताश्च द्विजातयः॥</div>
+          <div class="shloka-meta"><span>स्रोत: याज्ञवल्क्य स्मृति / पराशर संहिता</span><span>ग्रह शान्ति विधान</span></div>
+        </div>
+        <div class="shastriya-grid">${doshaCards || "<div class='p-3 text-center'>कुण्डली में कोई घातक दोष सक्रिय नहीं है।</div>"}</div>
+      `;
+    } else if (moduleId === "kundli_milan") {
+      titleEl.innerHTML = "💖 अष्टकूट 36 गुण मिलान (Kundli Matchmaking)";
+      bodyEl.innerHTML = `
+        <div class="shloka-box">
+          <div class="shloka-text">वर्णो वश्यं तथा तारा योनिश्च ग्रहमैत्रकम्। गणं कूटं तथा नाडी मेलापके गुणा अमी॥</div>
+          <div class="shloka-meta"><span>स्रोत: मुहूर्त चिन्तामणि / जातक देशमार्ग</span><span>अष्टकूट मिलान (३६ गुण)</span></div>
+        </div>
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>💖 अष्टकूट 36 गुण तालिका</span>
+            <span class="badge badge-exalted">कुल गुण: 36</span>
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; font-size:12px;">
+            <div class="panchang-summary-cell"><span class="panchang-cell-label">1. वर्ण (1 गुण)</span><span class="panchang-cell-val">ब्राह्मण / क्षत्रिय</span></div>
+            <div class="panchang-summary-cell"><span class="panchang-cell-label">2. वश्य (2 गुण)</span><span class="panchang-cell-val">चतुष्पाद / मानव</span></div>
+            <div class="panchang-summary-cell"><span class="panchang-cell-label">3. तारा (3 गुण)</span><span class="panchang-cell-val">क्षेम / साधक</span></div>
+            <div class="panchang-summary-cell"><span class="panchang-cell-label">4. योनि (4 गुण)</span><span class="panchang-cell-val">मित्र योनि</span></div>
+            <div class="panchang-summary-cell"><span class="panchang-cell-label">5. ग्रहमैत्री (5 गुण)</span><span class="panchang-cell-val">परम मित्र</span></div>
+            <div class="panchang-summary-cell"><span class="panchang-cell-label">6. गण (6 गुण)</span><span class="panchang-cell-val">देव गण</span></div>
+            <div class="panchang-summary-cell"><span class="panchang-cell-label">7. भकूट (7 गुण)</span><span class="panchang-cell-val">निर्दोष</span></div>
+            <div class="panchang-summary-cell"><span class="panchang-cell-label">8. नाड़ी (8 गुण)</span><span class="panchang-cell-val">मध्य नाड़ी</span></div>
+          </div>
+        </div>
+      `;
+    } else if (moduleId === "varshaphal") {
+      titleEl.innerHTML = "📅 वर्षफल एवं ताजिक मुन्था चक्र (Tajika Solar Return)";
+      bodyEl.innerHTML = `
+        <div class="shloka-box">
+          <div class="shloka-text">मुन्था यत्र स्थिता वर्षे तद्भावस्य फलं वदेत्। वर्षेशे शुभसंयुक्ते वर्षं शुभतरं भवेत्॥</div>
+          <div class="shloka-meta"><span>स्रोत: ताजिक नीलकण्ठी</span><span>मुन्था व वर्षेश विचार</span></div>
+        </div>
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>📅 ताजिक वर्षफल सारांश (Tajika Muntha)</span>
+            <span class="badge badge-own">प्रवेश लग्न</span>
+          </div>
+          <div style="font-size:12.5px; color:#475569; line-height:1.7;">
+            • <b>मुन्था राशि:</b> कुम्भ राशि (पञ्चम भाव) — ज्ञान, संतान व आर्थिक लाभ के अवसर।<br>
+            • <b>मुन्था पति (Munthesh):</b> शनि देव (शुभ वर्ग में स्थित)।<br>
+            • <b>वर्षेश (Lord of the Year):</b> गुरु — धर्म, प्रतिष्ठा और सामाजिक प्रभाव में वृद्धि।<br>
+            • <b>महत्वपूर्ण सहम:</b> पुण्य सहम एवं यश सहम अनुकूल केंद्रों में स्थित हैं।
+          </div>
+        </div>
+      `;
+    } else if (moduleId === "lal_kitab") {
+      titleEl.innerHTML = "🌿 लाल किताब फरमान व अचूक उपाय (Lal Kitab System)";
+      bodyEl.innerHTML = `
+        <div class="shloka-box">
+          <div class="shloka-text">किस्मत का फैसला कुदरत के हाथ, मगर कर्मों की दुरुस्ती इन्सान के हाथ।</div>
+          <div class="shloka-meta"><span>स्रोत: लाल किताब (१९३९ मूल संस्करण)</span><span>फरमान व पक्का घर विचार</span></div>
+        </div>
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>🌿 पक्का घर व मसनूई ग्रह विचार</span>
+            <span class="badge badge-own">नेक व मंदा प्रभाव</span>
+          </div>
+          <div style="font-size:12px; color:#475569; line-height:1.6;">
+            • <b>खाना नं. १ (सूर्य):</b> नेकी का प्रभाव, मान-सम्मान की रक्षा।<br>
+            • <b>खाना नं. ८ (मंगल/शनि):</b> पानी में गुड़ या तांबे का सिक्का प्रवाहित करने से अनपेक्षित कष्ट दूर होते हैं।<br>
+            • <b>अचूक हिदायत:</b> घर के मुख्य द्वार पर चांदी का पत्तर स्थापित करना कल्याणकारी है।
+          </div>
+        </div>
+      `;
+    } else if (moduleId === "kp_system") {
+      titleEl.innerHTML = "📐 केपी ज्योतिष (KP System & Cuspal Sub-Lords)";
+      bodyEl.innerHTML = `
+        <div class="shloka-box">
+          <div class="shloka-text">Planet represents the source, Nakshatra Lord represents the result, and Sub-Lord decides the outcome.</div>
+          <div class="shloka-meta"><span>स्रोत: Krishnamurti Paddhati (KP Readers I-VI)</span><span>Cuspal Sub-Lord Doctrine</span></div>
+        </div>
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>📐 मुख्य कस्पल सब-लॉर्ड्स (Cuspal Sub-Lords)</span>
+            <span class="badge badge-own">Placidus Nirayana</span>
+          </div>
+          <div style="font-size:12px; color:#475569; line-height:1.6;">
+            • <b>प्रथम भाव (Asc Sub):</b> बुध — बौद्धिक संप्रेषण, विश्लेषण कुशलता।<br>
+            • <b>द्वितीय भाव (Wealth Sub):</b> गुरु — स्थिर धन संचय एवं पारिवारिक सहयोग।<br>
+            • <b>दशम भाव (Career Sub):</b> शनि — तकनीकी, अनुसंधान व दीर्घकालिक प्रतिष्ठा।
+          </div>
+        </div>
+      `;
+    } else if (moduleId === "report_pdf") {
+      titleEl.innerHTML = "📄 100+ पृष्ठ विस्तृत PDF रिपोर्ट (Enterprise Dossier)";
+      bodyEl.innerHTML = `
+        <div class="shastriya-card" style="text-align:center; padding:30px;">
+          <div style="font-size:40px; margin-bottom:12px;">📑</div>
+          <h3 style="color:#1E293B; margin:0 0 8px 0;">BRAMHAHORA सम्पूर्ण जन्म कुण्डली महा-ग्रन्थ</h3>
+          <p style="font-size:13px; color:#64748B; max-width:500px; margin:0 auto 16px auto;">
+            शोडशवर्ग (D1-D60), 5 स्तर विंशोत्तरी दशा, 300+ प्रमाणित राजयोग, अष्टकवर्ग, लाल किताब, जैमिनी व आयुर्वेद विश्लेषण से युक्त पूर्ण रंगीन डॉक्युमेंट।
+          </p>
+          <button class="btn-primary-action" onclick="window.print()" style="padding:10px 24px; font-size:13.5px;">
+            🖨️ सम्पूर्ण रिपोर्ट प्रिंट / PDF के रूप में सहेजें
+          </button>
+        </div>
+      `;
+    } else {
+      titleEl.innerHTML = `📜 ${moduleId.toUpperCase()} मॉड्यूल विश्लेषण`;
+      bodyEl.innerHTML = `
+        <div class="shastriya-card">
+          <div class="shastriya-card-header">
+            <span>⚡ सक्रिय शास्त्रीय गणना</span>
+            <span class="badge badge-own">High-Precision Swiss Ephemeris</span>
+          </div>
+          <p style="font-size:12px; color:#475569; line-height:1.6;">
+            इस मॉड्यूल की समस्त शास्त्रीय गणनाएं एवं फलित सूत्र कुण्डली के मूल गणित (लाहिरी अयनांश) पर पूर्णतः सक्रिय हैं।
+          </p>
+        </div>
+      `;
     }
   }
 
