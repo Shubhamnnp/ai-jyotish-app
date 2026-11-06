@@ -33,27 +33,35 @@ const KundliChartRenderer = {
     
     // Determine lagna sign
     let lagnaSign = 1;
-    if (vargaKey === "D1" && chartData.lagna_sign) {
-      lagnaSign = chartData.lagna_sign;
-    } else if (chartData.vargas && chartData.vargas[vargaKey] && chartData.vargas[vargaKey].lagna_sign) {
-      lagnaSign = chartData.vargas[vargaKey].lagna_sign;
+    if (vargaKey === "D1") {
+      lagnaSign = chartData.lagna_sign_id || chartData.lagna_sign || 1;
+    } else if (chartData.vargas && chartData.vargas[vargaKey]) {
+      lagnaSign = chartData.vargas[vargaKey].lagna_sign_id || chartData.vargas[vargaKey].lagna_sign || 1;
     }
 
     // Organize planets by house
     const housePlanets = { 1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[] };
     
-    const planetsSource = (vargaKey === "D1") ? chartData.planets : (chartData.vargas && chartData.vargas[vargaKey] ? chartData.vargas[vargaKey].planets : chartData.planets);
+    const planetsSource = (vargaKey === "D1") 
+      ? chartData.planets 
+      : (chartData.vargas && chartData.vargas[vargaKey] ? chartData.vargas[vargaKey].planets : chartData.planets);
 
     if (planetsSource) {
       Object.entries(planetsSource).forEach(([pName, pObj]) => {
-        let pSign = pObj.sign || 1;
-        // House = ((pSign - lagnaSign + 12) % 12) + 1
-        let hNum = ((pSign - lagnaSign + 12) % 12) + 1;
+        let pSign = pObj.sign_id || pObj.sign || 1;
+        // House = exact house from lagna or calculate from sign offset
+        let hNum = pObj.house_from_lagna || pObj.house_number || (((pSign - lagnaSign + 12) % 12) + 1);
+        let degVal = pObj.sign_degree != null 
+          ? pObj.sign_degree 
+          : (pObj.degree_in_varga != null 
+            ? pObj.degree_in_varga 
+            : (pObj.longitude_in_sign != null ? pObj.longitude_in_sign : (pObj.longitude ? pObj.longitude % 30 : null)));
+
         if (housePlanets[hNum]) {
           housePlanets[hNum].push({
             name: pName,
             is_retro: pObj.is_retrograde || false,
-            deg: pObj.longitude_in_sign ? pObj.longitude_in_sign.toFixed(1) : ""
+            deg: degVal != null ? degVal.toFixed(1) : ""
           });
         }
       });
@@ -151,17 +159,29 @@ const KundliChartRenderer = {
       9: { r: 3, c: 0 }, 8: { r: 3, c: 1 }, 7: { r: 3, c: 2 }, 6: { r: 3, c: 3 }
     };
 
-    let lagnaSign = (vargaKey === "D1" && chartData.lagna_sign) ? chartData.lagna_sign : 1;
-    const planetsSource = (vargaKey === "D1") ? chartData.planets : (chartData.vargas && chartData.vargas[vargaKey] ? chartData.vargas[vargaKey].planets : chartData.planets);
+    let lagnaSign = (vargaKey === "D1") 
+      ? (chartData.lagna_sign_id || chartData.lagna_sign || 1)
+      : (chartData.vargas && chartData.vargas[vargaKey] ? (chartData.vargas[vargaKey].lagna_sign_id || chartData.vargas[vargaKey].lagna_sign || 1) : 1);
+
+    const planetsSource = (vargaKey === "D1") 
+      ? chartData.planets 
+      : (chartData.vargas && chartData.vargas[vargaKey] ? chartData.vargas[vargaKey].planets : chartData.planets);
 
     const signPlanets = { 1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[], 10:[], 11:[], 12:[] };
     if (planetsSource) {
       Object.entries(planetsSource).forEach(([pName, pObj]) => {
-        let pSign = pObj.sign || 1;
+        let pSign = pObj.sign_id || pObj.sign || 1;
+        let degVal = pObj.sign_degree != null 
+          ? pObj.sign_degree 
+          : (pObj.degree_in_varga != null 
+            ? pObj.degree_in_varga 
+            : (pObj.longitude_in_sign != null ? pObj.longitude_in_sign : (pObj.longitude ? pObj.longitude % 30 : null)));
+
         if (signPlanets[pSign]) {
           signPlanets[pSign].push({
             name: pName,
-            is_retro: pObj.is_retrograde || false
+            is_retro: pObj.is_retrograde || false,
+            deg: degVal != null ? degVal.toFixed(1) : ""
           });
         }
       });

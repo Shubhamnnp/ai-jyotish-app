@@ -52,7 +52,41 @@ class JyotishWebApp {
       9: "गुरु", 10: "शनि", 11: "शनि", 12: "गुरु"
     };
 
+    this.cityDatabase = {
+      "nanpara": { lat: 27.8643, lon: 81.5033 },
+      "bahraich": { lat: 27.5744, lon: 81.5947 },
+      "delhi": { lat: 28.6139, lon: 77.2090 },
+      "new delhi": { lat: 28.6139, lon: 77.2090 },
+      "lucknow": { lat: 26.8467, lon: 80.9462 },
+      "varanasi": { lat: 25.3176, lon: 82.9739 },
+      "kashi": { lat: 25.3176, lon: 82.9739 },
+      "kanpur": { lat: 26.4499, lon: 80.3319 },
+      "ayodhya": { lat: 26.7922, lon: 82.1998 },
+      "prayagraj": { lat: 25.4358, lon: 81.8463 },
+      "allahabad": { lat: 25.4358, lon: 81.8463 },
+      "gorakhpur": { lat: 26.7606, lon: 83.3732 },
+      "mumbai": { lat: 19.0760, lon: 72.8777 },
+      "kolkata": { lat: 22.5726, lon: 88.3639 },
+      "bengaluru": { lat: 12.9716, lon: 77.5946 },
+      "bangalore": { lat: 12.9716, lon: 77.5946 },
+      "chennai": { lat: 13.0827, lon: 80.2707 },
+      "hyderabad": { lat: 17.3850, lon: 78.4867 },
+      "ahmedabad": { lat: 23.0225, lon: 72.5714 },
+      "pune": { lat: 18.5204, lon: 73.8567 },
+      "jaipur": { lat: 26.9124, lon: 75.7873 },
+      "patna": { lat: 25.5941, lon: 85.1376 },
+      "ujjain": { lat: 23.1765, lon: 75.7885 },
+      "haridwar": { lat: 29.9457, lon: 78.1642 },
+      "rishikesh": { lat: 30.0869, lon: 78.2676 }
+    };
+
     this.init();
+  }
+
+  lookupCityCoordinates(cityName) {
+    if (!cityName) return null;
+    const clean = cityName.trim().toLowerCase();
+    return this.cityDatabase[clean] || null;
   }
 
   async init() {
@@ -68,6 +102,7 @@ class JyotishWebApp {
     this.showLoading(true);
     try {
       const payload = {
+        name: this.client.name,
         birth_date: this.client.birth_date,
         birth_time: this.client.birth_time,
         latitude: parseFloat(this.client.latitude),
@@ -86,6 +121,25 @@ class JyotishWebApp {
       }
 
       this.chartData = await res.json();
+
+      // Fetch operating Vimshottari Dasha
+      try {
+        const todayStr = new Date().toISOString().split("T")[0];
+        const dashaRes = await fetch("/api/dasha/active", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            birth_data: payload,
+            target_date: todayStr
+          })
+        });
+        if (dashaRes.ok) {
+          this.activeDashaData = await dashaRes.json();
+        }
+      } catch (dErr) {
+        console.warn("Active Dasha fetch failed:", dErr);
+      }
+
       this.updateUI();
     } catch (err) {
       console.warn("API direct call failed, falling back to simulated high-precision baseline:", err);
@@ -181,10 +235,17 @@ class JyotishWebApp {
     const tbody = document.getElementById("planetaryTableBody");
     if (!tbody || !this.chartData || !this.chartData.planets) return;
 
-    const planets = this.chartData.planets;
+    const vargaKey = this.activeVarga || "D1";
+    const vargaObj = (vargaKey !== "D1" && this.chartData.vargas && this.chartData.vargas[vargaKey]) 
+      ? this.chartData.vargas[vargaKey] 
+      : null;
+
+    const planets = vargaObj ? vargaObj.planets : this.chartData.planets;
     const grahaList = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
     const rashiNames = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"];
-    const lagnaSign = this.chartData.lagna_sign || 1;
+    const lagnaSign = vargaObj 
+      ? (vargaObj.lagna_sign_id || vargaObj.lagna_sign || 1) 
+      : (this.chartData.lagna_sign_id || this.chartData.lagna_sign || 1);
 
     let html = "";
     grahaList.forEach(pName => {
@@ -192,26 +253,42 @@ class JyotishWebApp {
       if (!p) return;
 
       const gInfo = KundliChartRenderer.grahaInfo[pName] || { name: pName, sym: pName, col: "#0073CF" };
-      const signIdx = p.sign || 1;
+      const signIdx = p.sign_id || p.sign || 1;
       const signName = rashiNames[signIdx - 1];
       const lordName = this.rashiLords[signIdx] || "-";
-      const houseNum = ((signIdx - lagnaSign + 12) % 12) + 1;
-      const degStr = p.longitude_in_sign ? `${p.longitude_in_sign.toFixed(2)}°` : `${(p.longitude % 30).toFixed(2)}°`;
-      const nakStr = p.nakshatra ? `${p.nakshatra} (पद ${p.nakshatra_pada || 1})` : "-";
+      const houseNum = p.house_from_lagna || p.house_number || (((signIdx - lagnaSign + 12) % 12) + 1);
+      
+      const degVal = p.sign_degree != null 
+        ? p.sign_degree 
+        : (p.degree_in_varga != null 
+          ? p.degree_in_varga 
+          : (p.longitude_in_sign != null ? p.longitude_in_sign : (p.longitude ? (p.longitude % 30) : 0)));
+      const degStr = `${degVal.toFixed(2)}°`;
+
+      const nakStr = p.nakshatra_name 
+        ? `${p.nakshatra_name} (पद ${p.nakshatra_pada || 1})` 
+        : (p.nakshatra ? `${p.nakshatra} (पद ${p.nakshatra_pada || 1})` : "-");
 
       // Classical Dignity Detection & Badge
       let dignityClass = "dignity-neutral";
       let dignityText = "सम";
 
-      if ((pName === "Sun" && signIdx === 1) || (pName === "Moon" && signIdx === 2) || (pName === "Jupiter" && signIdx === 4) || (pName === "Mars" && signIdx === 10) || (pName === "Mercury" && signIdx === 6) || (pName === "Saturn" && signIdx === 7) || (pName === "Venus" && signIdx === 12) || (pName === "Rahu" && signIdx === 2) || (pName === "Ketu" && signIdx === 8)) {
+      const rawDig = (p.dignity || "").toLowerCase();
+      if (rawDig.includes("exalt") || (pName === "Sun" && signIdx === 1) || (pName === "Moon" && signIdx === 2) || (pName === "Jupiter" && signIdx === 4) || (pName === "Mars" && signIdx === 10) || (pName === "Mercury" && signIdx === 6) || (pName === "Saturn" && signIdx === 7) || (pName === "Venus" && signIdx === 12)) {
         dignityClass = "dignity-exalted";
         dignityText = "उच्च (Exalted)";
-      } else if ((pName === "Sun" && signIdx === 7) || (pName === "Moon" && signIdx === 8) || (pName === "Jupiter" && signIdx === 10) || (pName === "Mars" && signIdx === 4) || (pName === "Mercury" && signIdx === 12) || (pName === "Saturn" && signIdx === 1) || (pName === "Venus" && signIdx === 6) || (pName === "Rahu" && signIdx === 8) || (pName === "Ketu" && signIdx === 2)) {
+      } else if (rawDig.includes("debil") || (pName === "Sun" && signIdx === 7) || (pName === "Moon" && signIdx === 8) || (pName === "Jupiter" && signIdx === 10) || (pName === "Mars" && signIdx === 4) || (pName === "Mercury" && signIdx === 12) || (pName === "Saturn" && signIdx === 1) || (pName === "Venus" && signIdx === 6)) {
         dignityClass = "dignity-debilitated";
         dignityText = "नीच (Debilitated)";
-      } else if ((pName === "Sun" && signIdx === 5) || (pName === "Moon" && signIdx === 4) || (pName === "Mars" && [1,8].includes(signIdx)) || (pName === "Mercury" && [3,6].includes(signIdx)) || (pName === "Jupiter" && [9,12].includes(signIdx)) || (pName === "Venus" && [2,7].includes(signIdx)) || (pName === "Saturn" && [10,11].includes(signIdx))) {
+      } else if (rawDig.includes("own") || rawDig.includes("moola") || (pName === "Sun" && signIdx === 5) || (pName === "Moon" && signIdx === 4) || (pName === "Mars" && [1,8].includes(signIdx)) || (pName === "Mercury" && [3,6].includes(signIdx)) || (pName === "Jupiter" && [9,12].includes(signIdx)) || (pName === "Venus" && [2,7].includes(signIdx)) || (pName === "Saturn" && [10,11].includes(signIdx))) {
         dignityClass = "dignity-own";
         dignityText = "स्वराशि (Own)";
+      } else if (rawDig.includes("great_friend") || rawDig.includes("friend")) {
+        dignityClass = "dignity-friend";
+        dignityText = "मित्र (Friend)";
+      } else if (rawDig.includes("enemy")) {
+        dignityClass = "dignity-debilitated";
+        dignityText = "शत्रु (Enemy)";
       } else {
         dignityClass = "dignity-friend";
         dignityText = "मित्र (Friend)";
@@ -247,20 +324,34 @@ class JyotishWebApp {
     const box = document.getElementById("dashaTimelineBox");
     if (!box) return;
 
+    if (this.activeDashaData && this.activeDashaData.mahadasha) {
+      const md = this.activeDashaData.mahadasha;
+      const ad = this.activeDashaData.antardasha;
+      const pd = this.activeDashaData.pratyantardasha;
+      const mdStart = md.start_date ? md.start_date.substring(0, 4) : "";
+      const mdEnd = md.end_date ? md.end_date.substring(0, 4) : "";
+      const adStart = ad && ad.start_date ? ad.start_date.substring(0, 4) : "";
+      const adEnd = ad && ad.end_date ? ad.end_date.substring(0, 4) : "";
+
+      box.innerHTML = `
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;">
+          <span class="dasha-pill-badge">👑 महादशा: <b>${md.lord}</b> (${mdStart} से ${mdEnd})</span>
+          ${ad ? `<span class="dasha-pill-badge" style="background:#0284C7;">⭐ अंतर्दशा: <b>${ad.lord}</b> (${adStart} से ${adEnd})</span>` : ""}
+          ${pd ? `<span class="dasha-pill-badge" style="background:#059669;">✨ प्रत्यंतर्दशा: <b>${pd.lord}</b> (सक्रिय)</span>` : ""}
+        </div>
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px;">
+          <div style="display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 800; color: #475569;">
+            <span>सक्रिय विंशोत्तरी दशा चक्र (Vimshottari Operating Period)</span>
+            <span>${this.activeDashaData.formatted_summary || ""}</span>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     box.innerHTML = `
       <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;">
-        <span class="dasha-pill-badge">👑 महादशा: शनि (Saturn) - 2018 से 2037</span>
-        <span class="dasha-pill-badge" style="background:#0284C7;">⭐ अंतर्दशा: शुक्र (Venus) - 2024 से 2027</span>
-        <span class="dasha-pill-badge" style="background:#059669;">✨ प्रत्यंतर्दशा: सूर्य (Sun) - सक्रिय</span>
-      </div>
-      <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px;">
-        <div style="display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 800; color: #475569;">
-          <span>वर्तमान दशा प्रगति (Current Dasha Progress)</span>
-          <span>64% व्यतीत</span>
-        </div>
-        <div class="dasha-progress-bar">
-          <div class="dasha-progress-fill" style="width: 64%;"></div>
-        </div>
+        <span class="dasha-pill-badge">👑 महादशा गणना प्रक्रिया में है...</span>
       </div>
     `;
   }
@@ -272,17 +363,26 @@ class JyotishWebApp {
     const box = document.getElementById("ashtakavargaGridBox");
     if (!box) return;
 
-    const scores = [32, 28, 34, 25, 30, 36, 24, 29, 33, 31, 38, 26]; // 12 houses sample
-    let html = `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)); gap: 8px;">`;
+    const scores = (this.chartData.ashtakavarga && Array.isArray(this.chartData.ashtakavarga.sav) && this.chartData.ashtakavarga.sav.length === 12) 
+      ? this.chartData.ashtakavarga.sav 
+      : [28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28];
+
+    const lagnaSign = this.chartData.lagna_sign_id || this.chartData.lagna_sign || 1;
+    const rashiNames = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"];
+
+    let html = `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(75px, 1fr)); gap: 8px;">`;
     scores.forEach((sc, idx) => {
+      const houseNum = idx + 1;
+      const signIdx = ((lagnaSign + idx - 1) % 12) + 1;
+      const signName = rashiNames[signIdx - 1];
       const isHigh = sc >= 28;
       const color = isHigh ? "#10B981" : "#EF4444";
       const bg = isHigh ? "#ECFDF5" : "#FEF2F2";
       html += `
         <div style="background: ${bg}; border: 1.5px solid ${color}; border-radius: 8px; padding: 6px; text-align: center;">
-          <div style="font-size: 10px; font-weight: 800; color: #64748B;">भाव ${idx + 1}</div>
+          <div style="font-size: 10px; font-weight: 800; color: #64748B;">भाव ${houseNum} (${signName})</div>
           <div style="font-size: 16px; font-weight: 900; color: ${color}; margin: 2px 0;">${sc}</div>
-          <div style="font-size: 9px; font-weight: 750; color: ${color};">${isHigh ? 'शुभ' : 'अल्प'}</div>
+          <div style="font-size: 9px; font-weight: 750; color: ${color};">${isHigh ? 'शुभ (Strong)' : 'अल्प (Low)'}</div>
         </div>
       `;
     });
@@ -295,16 +395,103 @@ class JyotishWebApp {
    */
   renderYogas() {
     const box = document.getElementById("yogasContainerBox");
-    if (!box) return;
+    if (!box || !this.chartData || !this.chartData.planets) return;
 
-    const sampleYogas = [
-      { name: "गजलक्ष्मी योग (Gaja Lakshmi Yoga)", ref: "बृहत्पाराशर होराशास्त्र (BPHS)", impact: "अति शुभ", desc: "गुरु व चन्द्र केंद्र भाव में स्थित होकर जातक को प्रचुर धन, सम्मान व वैभव प्रदान करते हैं।" },
-      { name: "बुधादित्य राजयोग (Budhaditya Yoga)", ref: "सारावली (Saravali ch. 8)", impact: "शुभ", desc: "सूर्य व बुध की शुभ युति जातक को प्रखर बुद्धि, व्यापारिक सफलता व प्रशासनिक प्रतिष्ठा देती है।" },
-      { name: "मालव्य महापुरुष योग (Malavya Yoga)", ref: "फलदीपिका (Phaladeepika)", impact: "अति शुभ", desc: "शुक्र केंद्र में स्वराशि या उच्च राशि में स्थित होकर भौतिक सुख, वाहन व कला में सफलता देते हैं।" }
-    ];
+    const planets = this.chartData.planets;
+    const detectedYogas = [];
+
+    // 1. Ruchaka Mahapurusha Yoga (Mars in Kendra in Own/Exaltation: Aries, Scorpio, Capricorn)
+    const mars = planets["Mars"];
+    if (mars && [1, 4, 7, 10].includes(mars.house_from_lagna) && [1, 8, 10].includes(mars.sign_id)) {
+      detectedYogas.push({
+        name: "🔴 रुचक महापुरुष योग (Ruchaka Mahapurusha Yoga)",
+        ref: "बृहत्पाराशर होराशास्त्र (BPHS Ch. 35) / फलदीपिका (Ch. 6)",
+        impact: "अति शुभ (Supreme Auspicious)",
+        desc: `मंगल केंद्र (${mars.house_from_lagna}वें भाव) में स्व/उच्च राशि में स्थित है — अदम्य साहस, नेतृत्व क्षमता, भूमि-संपत्ति लाभ एवं प्रशासनिक प्रतिष्ठा प्रदान करता है।`
+      });
+    }
+
+    // 2. Gajakesari Yoga (Jupiter in Kendra from Moon)
+    const jup = planets["Jupiter"];
+    const moon = planets["Moon"];
+    if (jup && moon) {
+      const distFromMoon = ((jup.house_from_lagna - moon.house_from_lagna + 12) % 12) + 1;
+      if ([1, 4, 7, 10].includes(distFromMoon)) {
+        detectedYogas.push({
+          name: "🐘 गजकेसरी योग (Gajakesari Yoga)",
+          ref: "बृहत्पाराशर होराशास्त्र (BPHS Ch. 36, v. 3)",
+          impact: "अति शुभ (Supreme Auspicious)",
+          desc: "गुरु चन्द्र से केंद्र में स्थित होकर जातक को विद्वता, प्रचुर यश, सात्विक बुद्धि एवं समाज में पूज्य सम्मान प्रदान करता है।"
+        });
+      }
+    }
+
+    // 3. Budhaditya Yoga (Sun & Mercury together)
+    const sun = planets["Sun"];
+    const merc = planets["Mercury"];
+    if (sun && merc && sun.sign_id === merc.sign_id) {
+      detectedYogas.push({
+        name: "⚡ बुधादित्य योग (Budhaditya Yoga)",
+        ref: "सारावली (Saravali Ch. 8) / होरा भूषण",
+        impact: "शुभ (Auspicious)",
+        desc: `सूर्य व बुध की ${sun.house_from_lagna}वें भाव में युति जातक को तीक्ष्ण बुद्धि, गणितीय दक्षता, व्यापारिक सूझबूझ एवं प्रशासनिक कुशलता प्रदान करती है।`
+      });
+    }
+
+    // 4. Malavya Mahapurusha Yoga (Venus in Kendra in Taurus, Libra, Pisces)
+    const ven = planets["Venus"];
+    if (ven && [1, 4, 7, 10].includes(ven.house_from_lagna) && [2, 7, 12].includes(ven.sign_id)) {
+      detectedYogas.push({
+        name: "🌸 मालव्य महापुरुष योग (Malavya Yoga)",
+        ref: "फलदीपिका (Phaladeepika Ch. 6, v. 2)",
+        impact: "अति शुभ (Supreme Auspicious)",
+        desc: "शुक्र केंद्र में स्व/उच्च राशि में स्थित होकर राजसी वैभव, कला-कौशल, वाहन सुख एवं सुखी दांपत्य जीवन प्रदान करता है।"
+      });
+    }
+
+    // 5. Sasa Mahapurusha Yoga (Saturn in Kendra in Capricorn, Aquarius, Libra)
+    const sat = planets["Saturn"];
+    if (sat && [1, 4, 7, 10].includes(sat.house_from_lagna) && [7, 10, 11].includes(sat.sign_id)) {
+      detectedYogas.push({
+        name: "🪐 शश महापुरुष योग (Sasa Yoga)",
+        ref: "बृहत्पाराशर होराशास्त्र (BPHS Ch. 35)",
+        impact: "अति शुभ (Supreme Auspicious)",
+        desc: "शनि केंद्र में स्व/उच्च राशि में स्थित होकर दीर्घायु, अपार धैर्य, जनसमूह का नेतृत्व एवं स्थिर सत्ता प्रदान करता है।"
+      });
+    }
+
+    // 6. Chandra-Mangala Yoga (Moon and Mars together or mutually aspecting)
+    if (moon && mars && (moon.sign_id === mars.sign_id || ((mars.house_from_lagna - moon.house_from_lagna + 12) % 12 === 6))) {
+      detectedYogas.push({
+        name: "💰 चन्द्र-मंगल योग (Chandra-Mangala Yoga)",
+        ref: "बृहत् जातक (Brihat Jataka)",
+        impact: "शुभ (Wealth & Property)",
+        desc: "चन्द्र व मंगल का परस्पर संबंध जातक को स्वअर्जित धन, अचल संपत्ति, व्यापारिक साहस व आर्थिक समृद्धि देता है।"
+      });
+    }
+
+    // 7. Amala / Parvata Yoga (Benefics in 10th house or strong Lagna)
+    if (moon && moon.house_from_lagna === 10 && moon.sign_id === 4) {
+      detectedYogas.push({
+        name: "🌕 स्वगृही कर्म योग (Own-House 10th Moon Yoga)",
+        ref: "फलदीपिका (Phaladeepika Ch. 15)",
+        impact: "अति शुभ (Career Eminence)",
+        desc: "दशम कर्म भाव में चन्द्रमा स्वराशि कर्क में स्थित होकर जातक को सम्मानित करियर, उच्च जन-संपर्क एवं कार्यक्षेत्र में ख्याति दिलाता है।"
+      });
+    }
+
+    // Default fallback if no major yogas fired
+    if (detectedYogas.length === 0) {
+      detectedYogas.push({
+        name: "✨ शास्त्रीय शुभ ग्रह स्थिति",
+        ref: "पाराशर सिद्धान्त",
+        impact: "संतुलित",
+        desc: "कुण्डली में ग्रह अपनी स्वाभाविक भावगत व राशिगत स्थिति अनुसार सामान्य फल प्रदान कर रहे हैं।"
+      });
+    }
 
     let html = `<div style="display: flex; flex-direction: column; gap: 8px;">`;
-    sampleYogas.forEach(y => {
+    detectedYogas.forEach(y => {
       html += `
         <div style="background: #FFFFFF; border: 1.5px solid #00B0F0; border-radius: 8px; padding: 10px; box-shadow: 0 2px 6px rgba(0, 115, 207, 0.06);">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
@@ -413,6 +600,7 @@ class JyotishWebApp {
       el.classList.toggle("active", el.dataset.varga === varga);
     });
     this.renderChart();
+    this.renderPlanetaryTable();
   }
 
   /**
@@ -454,12 +642,34 @@ class JyotishWebApp {
    */
   async submitNewKundli(event) {
     event.preventDefault();
-    this.client.name = document.getElementById("formName").value;
+    this.client.name = document.getElementById("formName").value || "जातक";
     this.client.birth_date = document.getElementById("formDate").value;
-    this.client.birth_time = document.getElementById("formTime").value;
-    this.client.city = document.getElementById("formCity").value;
-    this.client.latitude = parseFloat(document.getElementById("formLat").value);
-    this.client.longitude = parseFloat(document.getElementById("formLon").value);
+
+    let bTime = document.getElementById("formTime").value || "12:00:00";
+    if (bTime.split(":").length === 2) bTime += ":00";
+    this.client.birth_time = bTime;
+
+    const cityName = document.getElementById("formCity").value || "नई दिल्ली";
+    this.client.city = cityName;
+
+    let lat = parseFloat(document.getElementById("formLat").value);
+    let lon = parseFloat(document.getElementById("formLon").value);
+
+    // Auto-resolve coordinates if city is recognized
+    const cityCoords = this.lookupCityCoordinates(cityName);
+    if (cityCoords) {
+      if (isNaN(lat) || (Math.abs(lat - 28.6139) < 0.001 && Math.abs(lon - 77.2090) < 0.001 && !cityName.toLowerCase().includes("delhi"))) {
+        lat = cityCoords.lat;
+        lon = cityCoords.lon;
+        const latEl = document.getElementById("formLat");
+        const lonEl = document.getElementById("formLon");
+        if (latEl) latEl.value = lat;
+        if (lonEl) lonEl.value = lon;
+      }
+    }
+
+    this.client.latitude = isNaN(lat) ? 28.6139 : lat;
+    this.client.longitude = isNaN(lon) ? 77.2090 : lon;
     this.client.ayanamsa = document.getElementById("formAyanamsa").value;
 
     this.closeModals();
@@ -499,6 +709,20 @@ class JyotishWebApp {
       sInput.addEventListener("input", (e) => this.filterModules(e.target.value));
     }
 
+    // City auto-fill
+    const cityInput = document.getElementById("formCity");
+    if (cityInput) {
+      cityInput.addEventListener("input", (e) => {
+        const coords = this.lookupCityCoordinates(e.target.value);
+        if (coords) {
+          const latEl = document.getElementById("formLat");
+          const lonEl = document.getElementById("formLon");
+          if (latEl) latEl.value = coords.lat;
+          if (lonEl) lonEl.value = coords.lon;
+        }
+      });
+    }
+
     // New Kundli form submit
     const kForm = document.getElementById("newKundliForm");
     if (kForm) {
@@ -521,34 +745,36 @@ class JyotishWebApp {
    */
   generateFallbackChart() {
     return {
+      lagna_sign_id: 9,
       lagna_sign: 9, // Sagittarius (धनु)
       lagna_sign_name: "धनु (Sagittarius)",
       lagna_degree: 14.47,
       ayanamsa_used: "Lahiri (Chitra Paksha)",
       planets: {
-        "Sun": { sign: 5, longitude: 120.5, longitude_in_sign: 0.5, is_retrograde: false, nakshatra: "मघा", nakshatra_pada: 1 },
-        "Moon": { sign: 12, longitude: 352.8, longitude_in_sign: 22.8, is_retrograde: false, nakshatra: "रेवती", nakshatra_pada: 2 },
-        "Mars": { sign: 6, longitude: 155.2, longitude_in_sign: 5.2, is_retrograde: false, nakshatra: "उत्तरा फाल्गुनी", nakshatra_pada: 3 },
-        "Mercury": { sign: 5, longitude: 142.1, longitude_in_sign: 22.1, is_retrograde: false, nakshatra: "पूर्वा फाल्गुनी", nakshatra_pada: 3 },
-        "Jupiter": { sign: 8, longitude: 222.4, longitude_in_sign: 12.4, is_retrograde: false, nakshatra: "अनुराधा", nakshatra_pada: 3 },
-        "Venus": { sign: 4, longitude: 114.7, longitude_in_sign: 24.7, is_retrograde: false, nakshatra: "आश्लेषा", nakshatra_pada: 3 },
-        "Saturn": { sign: 11, longitude: 326.5, longitude_in_sign: 26.5, is_retrograde: true, nakshatra: "पूर्वा भाद्रपद", nakshatra_pada: 2 },
-        "Rahu": { sign: 7, longitude: 185.3, longitude_in_sign: 5.3, is_retrograde: true, nakshatra: "चित्रा", nakshatra_pada: 4 },
-        "Ketu": { sign: 1, longitude: 5.3, longitude_in_sign: 5.3, is_retrograde: true, nakshatra: "अश्विनी", nakshatra_pada: 2 }
+        "Sun": { sign_id: 5, sign: 5, longitude: 120.5, longitude_in_sign: 0.5, sign_degree: 0.5, is_retrograde: false, nakshatra_name: "मघा", nakshatra_pada: 1 },
+        "Moon": { sign_id: 12, sign: 12, longitude: 352.8, longitude_in_sign: 22.8, sign_degree: 22.8, is_retrograde: false, nakshatra_name: "रेवती", nakshatra_pada: 2 },
+        "Mars": { sign_id: 6, sign: 6, longitude: 155.2, longitude_in_sign: 5.2, sign_degree: 5.2, is_retrograde: false, nakshatra_name: "उत्तरा फाल्गुनी", nakshatra_pada: 3 },
+        "Mercury": { sign_id: 5, sign: 5, longitude: 142.1, longitude_in_sign: 22.1, sign_degree: 22.1, is_retrograde: false, nakshatra_name: "पूर्वा फाल्गुनी", nakshatra_pada: 3 },
+        "Jupiter": { sign_id: 8, sign: 8, longitude: 222.4, longitude_in_sign: 12.4, sign_degree: 12.4, is_retrograde: false, nakshatra_name: "अनुराधा", nakshatra_pada: 3 },
+        "Venus": { sign_id: 4, sign: 4, longitude: 114.7, longitude_in_sign: 24.7, sign_degree: 24.7, is_retrograde: false, nakshatra_name: "आश्लेषा", nakshatra_pada: 3 },
+        "Saturn": { sign_id: 11, sign: 11, longitude: 326.5, longitude_in_sign: 26.5, sign_degree: 26.5, is_retrograde: true, nakshatra_name: "पूर्वा भाद्रपद", nakshatra_pada: 2 },
+        "Rahu": { sign_id: 7, sign: 7, longitude: 185.3, longitude_in_sign: 5.3, sign_degree: 5.3, is_retrograde: true, nakshatra_name: "चित्रा", nakshatra_pada: 4 },
+        "Ketu": { sign_id: 1, sign: 1, longitude: 5.3, longitude_in_sign: 5.3, sign_degree: 5.3, is_retrograde: true, nakshatra_name: "अश्विनी", nakshatra_pada: 2 }
       },
       vargas: {
         "D9": {
+          lagna_sign_id: 1,
           lagna_sign: 1,
           planets: {
-            "Sun": { sign: 1, longitude_in_sign: 4.5, is_retrograde: false },
-            "Moon": { sign: 11, longitude_in_sign: 25.2, is_retrograde: false },
-            "Mars": { sign: 10, longitude_in_sign: 16.8, is_retrograde: false },
-            "Mercury": { sign: 6, longitude_in_sign: 18.9, is_retrograde: false },
-            "Jupiter": { sign: 4, longitude_in_sign: 21.6, is_retrograde: false },
-            "Venus": { sign: 12, longitude_in_sign: 12.3, is_retrograde: false },
-            "Saturn": { sign: 7, longitude_in_sign: 28.5, is_retrograde: true },
-            "Rahu": { sign: 2, longitude_in_sign: 17.7, is_retrograde: true },
-            "Ketu": { sign: 8, longitude_in_sign: 17.7, is_retrograde: true }
+            "Sun": { sign_id: 1, sign: 1, degree_in_varga: 4.5, is_retrograde: false },
+            "Moon": { sign_id: 11, sign: 11, degree_in_varga: 25.2, is_retrograde: false },
+            "Mars": { sign_id: 10, sign: 10, degree_in_varga: 16.8, is_retrograde: false },
+            "Mercury": { sign_id: 6, sign: 6, degree_in_varga: 18.9, is_retrograde: false },
+            "Jupiter": { sign_id: 4, sign: 4, degree_in_varga: 21.6, is_retrograde: false },
+            "Venus": { sign_id: 12, sign: 12, degree_in_varga: 12.3, is_retrograde: false },
+            "Saturn": { sign_id: 7, sign: 7, degree_in_varga: 28.5, is_retrograde: true },
+            "Rahu": { sign_id: 2, sign: 2, degree_in_varga: 17.7, is_retrograde: true },
+            "Ketu": { sign_id: 8, sign: 8, degree_in_varga: 17.7, is_retrograde: true }
           }
         }
       }

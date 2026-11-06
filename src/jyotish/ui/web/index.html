@@ -282,7 +282,25 @@
 
           <div class="form-group">
             <label class="form-label">जन्म स्थान / शहर (City / Location)</label>
-            <input type="text" id="formCity" class="form-control" value="नई दिल्ली (New Delhi)" required>
+            <input type="text" id="formCity" class="form-control" list="citySuggestions" value="नई दिल्ली (New Delhi)" required placeholder="उदा. Nanpara, Lucknow, Delhi">
+            <datalist id="citySuggestions">
+              <option value="Nanpara">Nanpara, Bahraich (UP) [27.86° N, 81.50° E]</option>
+              <option value="Bahraich">Bahraich (UP) [27.57° N, 81.59° E]</option>
+              <option value="Lucknow">Lucknow (UP) [26.85° N, 80.95° E]</option>
+              <option value="Varanasi">Varanasi (Kashi, UP) [25.32° N, 82.97° E]</option>
+              <option value="Ayodhya">Ayodhya (UP) [26.79° N, 82.20° E]</option>
+              <option value="Kanpur">Kanpur (UP) [26.45° N, 80.33° E]</option>
+              <option value="Gorakhpur">Gorakhpur (UP) [26.76° N, 83.37° E]</option>
+              <option value="Prayagraj">Prayagraj / Allahabad (UP) [25.44° N, 81.85° E]</option>
+              <option value="New Delhi">New Delhi [28.61° N, 77.21° E]</option>
+              <option value="Mumbai">Mumbai (MH) [19.08° N, 72.88° E]</option>
+              <option value="Kolkata">Kolkata (WB) [22.57° N, 88.36° E]</option>
+              <option value="Bengaluru">Bengaluru (KA) [12.97° N, 77.59° E]</option>
+              <option value="Jaipur">Jaipur (RJ) [26.91° N, 75.79° E]</option>
+              <option value="Patna">Patna (BR) [25.59° N, 85.14° E]</option>
+              <option value="Ujjain">Ujjain (MP) [23.18° N, 75.79° E]</option>
+              <option value="Haridwar">Haridwar (UK) [29.95° N, 78.16° E]</option>
+            </datalist>
           </div>
 
           <div class="form-row">
