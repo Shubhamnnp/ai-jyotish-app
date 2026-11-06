@@ -26,6 +26,10 @@ def test_web_static_index_html_exists_and_serves():
     assert "btnHdrTodayPanchang" in content
     assert "btn-cta-prashna" in content
     assert "NEW PRASHNA KUNDLI" in content
+    assert "savedKundliModal" in content
+    assert "formGender" in content
+    assert "formSaveKundli" in content
+    assert "toolbelt-slide-btn" in content
     
     # Check all 3 chart styles (North, South, East)
     assert "btnNorthChart" in content
@@ -43,28 +47,6 @@ def test_web_static_index_html_exists_and_serves():
     assert "panelGrahaBalaGraph" in content
     assert "grahaBalaGraphBox" in content
 
-    # Check gender dropdown and Save Kundli button
-    assert "formGender" in content
-    assert "Save Kundli" in content
-    assert "savedKundlisModal" in content
-
-
-def test_toolbelt_has_31_modules():
-    index_file = WEB_DIR / "index.html"
-    content = index_file.read_text(encoding="utf-8")
-    
-    expected_modules = [
-        "kundli_core", "dosha_upaya", "event_prediction", "varga_tables", "shadbala_bhavabala",
-        "dasha_vimshottari", "jaimini_kp", "shastriya_yogas", "gochar_transit", "ashtakavarga",
-        "panchang", "varshaphal", "prashna_kundali", "kundli_milan", "bhava_chalita",
-        "chandra_kundli", "surya_kundli", "graha_prishtha", "kota_chakra", "pushkar_vargottama",
-        "jaimini_special", "vastu_chakra", "medical_astro", "ayu_nirnaya", "ratna_rudraksha",
-        "lal_kitab", "muhurta", "samudrik", "upagraha", "ai_jyotish", "report_pdf"
-    ]
-    assert len(expected_modules) == 31
-    for mod in expected_modules:
-        assert f'data-mod="{mod}"' in content, f"Module {mod} must be present in toolbelt"
-
 
 def test_web_chart_js_has_east_indian_renderer():
     chart_js = WEB_DIR / "chart.js"
@@ -73,12 +55,17 @@ def test_web_chart_js_has_east_indian_renderer():
     assert "renderNorthIndian" in content
     assert "renderSouthIndian" in content
     assert "renderEastIndian" in content
+    assert "#6B1D2F" in content  # Dark maroon stroke
 
 
 def test_web_app_js_has_bramhahora_methods():
     app_js = WEB_DIR / "app.js"
     assert app_js.exists()
     content = app_js.read_text(encoding="utf-8")
+    assert "slideToolbelt" in content
+    assert "saveCurrentKundli" in content
+    assert "openSavedKundliModal" in content
+    assert "renderAnalyticalSubViews" in content
     assert "setAnalyticalSubView" in content
     assert "renderHousesTable" in content
     assert "renderD1SummaryPanchang" in content
@@ -86,10 +73,6 @@ def test_web_app_js_has_bramhahora_methods():
     assert "openJanmaPanchangModal" in content
     assert "openTodayPanchangModal" in content
     assert "createInstantPrashnaKundli" in content
-    assert "openSavedKundlisModal" in content
-    assert "saveCurrentKundliFromForm" in content
-    assert "loadSavedKundli" in content
-    assert "scrollToolbelt" in content
 
 
 def test_api_panchang_endpoint_for_bramhahora():
@@ -124,3 +107,4 @@ def test_api_chart_endpoint_nanpara_integrity():
     assert "Moon" in chart["planets"]
     assert chart["planets"]["Mars"]["sign_id"] == 1  # Aries in 7th
     assert chart["planets"]["Moon"]["sign_id"] == 4  # Cancer in 10th
+

@@ -1250,134 +1250,174 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   12. TOOLBELT 31 MODULES SCROLLER & SAVED KUNDLIS STYLING
+   12. TOOLBELT SLIDER, BALANCED WORKSTATION & SAVED HOROSCOPES
    ═══════════════════════════════════════════════════════════════════ */
-.toolbelt-wrapper {
+
+/* Toolbelt Slider Wrapper & Buttons */
+.toolbelt-slider-wrapper {
   display: flex;
   align-items: center;
-  background-color: var(--bg-toolbelt);
-  border-bottom: 2px solid var(--border-cyan);
-  padding: 0 4px;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-subtle);
   position: relative;
 }
 
-.tb-scroll-btn {
-  background: #FFFFFF;
-  border: 1.5px solid var(--border-cyan);
+.toolbelt-slide-btn {
+  background: #F1F5F9;
+  border: none;
   color: var(--primary);
-  width: 24px;
-  height: 38px;
-  border-radius: 6px;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 900;
+  padding: 0 12px;
+  height: 52px;
   cursor: pointer;
+  transition: all 0.15s;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  transition: all 0.15s;
-  flex-shrink: 0;
-}
-.tb-scroll-btn:hover {
-  background: var(--accent-light);
-  border-color: var(--primary);
-  transform: scale(1.05);
+  user-select: none;
 }
 
-.btn-secondary-action {
-  background: #F1F5F9;
-  color: #1E293B;
-  border: 1.5px solid #CBD5E1;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 850;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-secondary-action:hover {
-  background: #E2E8F0;
-  border-color: #94A3B8;
-  transform: translateY(-1px);
+.toolbelt-slide-btn:hover {
+  background: var(--primary);
+  color: #FFFFFF;
 }
 
-/* Saved Kundlis Manager Grid */
-.saved-kundlis-grid {
+.toolbelt-bar {
+  flex: 1;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  border-bottom: none !important;
+}
+
+.toolbelt-bar::-webkit-scrollbar {
+  height: 3px;
+}
+
+/* Balanced Equal-Height 50-50 Workstation Columns */
+.kundli-workstation-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 12px;
-  max-height: 420px;
-  overflow-y: auto;
-  padding: 4px;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: stretch !important;
 }
 
-.saved-kundli-card {
-  background: #F8FAFC;
-  border: 1.5px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 12px 14px;
+#chartCard, #analyticalCard {
+  height: 100%;
+  min-height: 580px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  transition: all 0.15s;
-}
-.saved-kundli-card:hover {
-  border-color: var(--primary);
-  background: #FFFFFF;
-  box-shadow: 0 3px 10px rgba(0, 115, 207, 0.12);
 }
 
-.saved-kundli-title {
+#chartCard .gla-card-body, #analyticalCard .gla-card-body {
+  flex: 1;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+}
+
+.chart-container-box {
+  flex: 1;
+  display: flex;
   align-items: center;
-  font-size: 13.5px;
-  font-weight: 900;
-  color: var(--primary);
+  justify-content: center;
+  padding: 8px;
+}
+
+.chart-container-box svg {
+  max-height: 480px;
+  width: 100%;
+  height: auto;
+}
+
+/* Saved Kundli Modal Card List */
+.saved-kundli-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: #F8FAFC;
+  transition: all 0.15s;
+}
+
+.saved-kundli-item:hover {
+  border-color: var(--primary);
+  background: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 115, 207, 0.1);
+}
+
+.saved-kundli-name {
+  font-size: 13px;
+  font-weight: 850;
+  color: var(--text-main);
 }
 
 .saved-kundli-meta {
-  font-size: 11.5px;
+  font-size: 11px;
   color: #64748B;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  margin-top: 2px;
 }
 
-.saved-kundli-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 6px;
-}
-
-.btn-load-kundli {
-  flex: 1;
+.saved-kundli-btn-load {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--primary);
   background: var(--primary);
   color: #FFFFFF;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 10px;
   font-size: 11.5px;
   font-weight: 800;
   cursor: pointer;
-  transition: all 0.12s;
 }
-.btn-load-kundli:hover {
+
+.saved-kundli-btn-load:hover {
   background: #005FA8;
 }
 
-.btn-del-kundli {
-  background: #FEE2E2;
-  color: #DC2626;
-  border: 1px solid #FCA5A5;
+.saved-kundli-btn-del {
+  padding: 5px 10px;
   border-radius: 6px;
-  padding: 6px 10px;
-  font-size: 11.5px;
-  font-weight: 800;
+  border: 1px solid #EF4444;
+  background: transparent;
+  color: #EF4444;
+  font-size: 11px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.12s;
+  margin-left: 6px;
 }
-.btn-del-kundli:hover {
-  background: #F87171;
+
+.saved-kundli-btn-del:hover {
+  background: #EF4444;
   color: #FFFFFF;
 }
+
+/* 8-Day & 8-Night Choghadiya Table */
+.choghadiya-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 11.5px;
+}
+
+.choghadiya-table th, .choghadiya-table td {
+  padding: 6px 8px;
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.choghadiya-table th {
+  background: #F1F5F9;
+  font-weight: 850;
+  color: #334155;
+}
+
+.chogh-shubh { background: #DCFCE7; color: #166534; font-weight: 850; }
+.chogh-amrit { background: #FEF08A; color: #854D0E; font-weight: 850; }
+.chogh-labh { background: #E0E7FF; color: #3730A3; font-weight: 850; }
+.chogh-char { background: #F3F4F6; color: #374151; font-weight: 800; }
+.chogh-rog { background: #FEE2E2; color: #991B1B; font-weight: 800; }
+.chogh-kaal { background: #FECDD3; color: #9F1239; font-weight: 800; }
+.chogh-udveg { background: #FFEDD5; color: #9A3412; font-weight: 800; }
+

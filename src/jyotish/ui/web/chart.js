@@ -1,34 +1,46 @@
 /**
- * JyotishOS - Vedic Kundali Vector SVG Chart Engine
- * Renders high-precision, responsive North & South Indian Kundali Charts
+ * BRAMHAHORA - Vedic Kundali Vector SVG Chart Engine
+ * Renders high-precision, classical North, South & East Indian Kundali Charts
+ * Styled with traditional Dark Maroon & Charcoal Shastriya borders
  */
 
 const KundliChartRenderer = {
   // Planetary symbols & colors
   grahaInfo: {
-    "Sun": { name: "सूर्य", sym: "☉ Su", col: "#E11D48" },
-    "Moon": { name: "चन्द्र", sym: "☽ Mo", col: "#2563EB" },
-    "Mars": { name: "मंगल", sym: "♂ Ma", col: "#DC2626" },
-    "Mercury": { name: "बुध", sym: "☿ Me", col: "#059669" },
-    "Jupiter": { name: "गुरु", sym: "♃ Ju", col: "#D97706" },
-    "Venus": { name: "शुक्र", sym: "♀ Ve", col: "#DB2777" },
-    "Saturn": { name: "शनि", sym: "♄ Sa", col: "#475569" },
-    "Rahu": { name: "राहु", sym: "☊ Ra", col: "#7C3AED" },
-    "Ketu": { name: "केतु", sym: "☋ Ke", col: "#B45309" },
-    "Uranus": { name: "हर्षल", sym: "♅ Ur", col: "#0284C7" },
-    "Neptune": { name: "नेपच्यून", sym: "♆ Ne", col: "#0284C7" },
-    "Pluto": { name: "प्लूटो", sym: "♇ Pl", col: "#0284C7" }
+    "Sun": { name: "सूर्य", sym: "☉ Su", col: "#991B1B" },
+    "Moon": { name: "चन्द्र", sym: "☽ Mo", col: "#1E40AF" },
+    "Mars": { name: "मंगल", sym: "♂ Ma", col: "#B91C1C" },
+    "Mercury": { name: "बुध", sym: "☿ Me", col: "#047857" },
+    "Jupiter": { name: "गुरु", sym: "♃ Ju", col: "#B45309" },
+    "Venus": { name: "शुक्र", sym: "♀ Ve", col: "#BE185D" },
+    "Saturn": { name: "शनि", sym: "♄ Sa", col: "#334155" },
+    "Rahu": { name: "राहु", sym: "☊ Ra", col: "#6D28D9" },
+    "Ketu": { name: "केतु", sym: "☋ Ke", col: "#92400E" },
+    "Uranus": { name: "हर्षल", sym: "♅ Ur", col: "#0369A1" },
+    "Neptune": { name: "नेपच्यून", sym: "♆ Ne", col: "#0369A1" },
+    "Pluto": { name: "प्लूटो", sym: "♇ Pl", col: "#0369A1" }
   },
 
   rashiNames: ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"],
 
   /**
-   * Render North Indian Diamond Chart SVG
-   * @param {Object} chartData - Complete natal chart object from /api/chart/calculate
-   * @param {String} vargaKey - e.g. "D1", "D9", "D10"
+   * Universal Chart Dispatcher
+   */
+  renderChart(chartData, style = "north", vargaKey = "D1") {
+    if (!chartData) return `<div class="p-4 text-center">कुण्डली डेटा लोड हो रहा है...</div>`;
+    if (style === "south") {
+      return this.renderSouthIndian(chartData, vargaKey);
+    } else if (style === "east") {
+      return this.renderEastIndian(chartData, vargaKey);
+    }
+    return this.renderNorthIndian(chartData, vargaKey);
+  },
+
+  /**
+   * Render North Indian Diamond Chart SVG (Dark Maroon Shastriya Aesthetics)
    */
   renderNorthIndian(chartData, vargaKey = "D1") {
-    const size = 500;
+    const size = 520;
     const mid = size / 2;
     
     // Determine lagna sign
@@ -49,7 +61,6 @@ const KundliChartRenderer = {
     if (planetsSource) {
       Object.entries(planetsSource).forEach(([pName, pObj]) => {
         let pSign = pObj.sign_id || pObj.sign || 1;
-        // House = exact house from lagna or calculate from sign offset
         let hNum = pObj.house_from_lagna || pObj.house_number || (((pSign - lagnaSign + 12) % 12) + 1);
         let degVal = pObj.sign_degree != null 
           ? pObj.sign_degree 
@@ -67,47 +78,44 @@ const KundliChartRenderer = {
       });
     }
 
-    // House diamond polygon definitions
+    // Exact house centers & sign label positions
     const houseCoords = {
-      1: { rashiPos: { x: mid, y: mid - 35 }, plPos: { x: mid, y: mid - 65 } },
-      2: { rashiPos: { x: mid - 85, y: 70 }, plPos: { x: mid - 85, y: 40 } },
-      3: { rashiPos: { x: 70, y: mid - 85 }, plPos: { x: 40, y: mid - 85 } },
-      4: { rashiPos: { x: mid - 35, y: mid }, plPos: { x: mid - 65, y: mid } },
-      5: { rashiPos: { x: 70, y: mid + 85 }, plPos: { x: 40, y: mid + 85 } },
-      6: { rashiPos: { x: mid - 85, y: size - 70 }, plPos: { x: mid - 85, y: size - 40 } },
-      7: { rashiPos: { x: mid, y: mid + 35 }, plPos: { x: mid, y: mid + 65 } },
-      8: { rashiPos: { x: mid + 85, y: size - 70 }, plPos: { x: mid + 85, y: size - 40 } },
-      9: { rashiPos: { x: size - 70, y: mid + 85 }, plPos: { x: size - 40, y: mid + 85 } },
-      10: { rashiPos: { x: mid + 35, y: mid }, plPos: { x: mid + 65, y: mid } },
-      11: { rashiPos: { x: size - 70, y: mid - 85 }, plPos: { x: size - 40, y: mid - 85 } },
-      12: { rashiPos: { x: mid + 85, y: 70 }, plPos: { x: mid + 85, y: 40 } }
+      1:  { rashiPos: { x: mid, y: mid - 32 },  plPos: { x: mid, y: mid - 75 } },
+      2:  { rashiPos: { x: mid - 75, y: 75 },   plPos: { x: mid - 85, y: 45 } },
+      3:  { rashiPos: { x: 75, y: mid - 75 },   plPos: { x: 45, y: mid - 85 } },
+      4:  { rashiPos: { x: mid - 32, y: mid },  plPos: { x: mid - 75, y: mid } },
+      5:  { rashiPos: { x: 75, y: mid + 75 },   plPos: { x: 45, y: mid + 85 } },
+      6:  { rashiPos: { x: mid - 75, y: size - 75 }, plPos: { x: mid - 85, y: size - 45 } },
+      7:  { rashiPos: { x: mid, y: mid + 32 },  plPos: { x: mid, y: mid + 75 } },
+      8:  { rashiPos: { x: mid + 75, y: size - 75 }, plPos: { x: mid + 85, y: size - 45 } },
+      9:  { rashiPos: { x: size - 75, y: mid + 75 }, plPos: { x: size - 45, y: mid + 85 } },
+      10: { rashiPos: { x: mid + 32, y: mid },  plPos: { x: mid + 75, y: mid } },
+      11: { rashiPos: { x: size - 75, y: mid - 75 }, plPos: { x: size - 45, y: mid - 85 } },
+      12: { rashiPos: { x: mid + 75, y: 75 },   plPos: { x: mid + 85, y: 45 } }
     };
 
     let svg = `<svg viewBox="0 0 ${size} ${size}" class="svg-kundli" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="kundliGoldGrad" cx="50%" cy="50%" r="50%">
+        <radialGradient id="kundliParchment" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stop-color="#FFFFFF" />
-          <stop offset="100%" stop-color="#F8FAFC" />
+          <stop offset="100%" stop-color="#FFFBEB" />
         </radialGradient>
-        <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="110%">
-          <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0073CF" flood-opacity="0.15"/>
-        </filter>
       </defs>
 
-      <!-- Background Square -->
-      <rect x="4" y="4" width="${size - 8}" height="${size - 8}" fill="url(#kundliGoldGrad)" stroke="#0073CF" stroke-width="2.5" rx="10" />
+      <!-- Outer Boundary Rectangle (Dark Maroon #6B1D2F) -->
+      <rect x="5" y="5" width="${size - 10}" height="${size - 10}" fill="url(#kundliParchment)" stroke="#6B1D2F" stroke-width="3" rx="8" />
 
-      <!-- Inner Geometry Lines -->
-      <g stroke="#00B0F0" stroke-width="2">
+      <!-- Inner Geometry Lines (Dark Maroon #800000) -->
+      <g stroke="#800000" stroke-width="2.2" stroke-linecap="round">
         <!-- Outer Diamond -->
-        <line x1="${mid}" y1="4" x2="${size - 4}" y2="${mid}" />
-        <line x1="${size - 4}" y1="${mid}" x2="${mid}" y2="${size - 4}" />
-        <line x1="${mid}" y1="${size - 4}" x2="4" y2="${mid}" />
-        <line x1="4" y1="${mid}" x2="${mid}" y2="4" />
+        <line x1="${mid}" y1="5" x2="${size - 5}" y2="${mid}" />
+        <line x1="${size - 5}" y1="${mid}" x2="${mid}" y2="${size - 5}" />
+        <line x1="${mid}" y1="${size - 5}" x2="5" y2="${mid}" />
+        <line x1="5" y1="${mid}" x2="${mid}" y2="5" />
 
         <!-- Diagonal Crossed Lines -->
-        <line x1="4" y1="4" x2="${size - 4}" y2="${size - 4}" />
-        <line x1="${size - 4}" y1="4" x2="4" y2="${size - 4}" />
+        <line x1="5" y1="5" x2="${size - 5}" y2="${size - 5}" />
+        <line x1="${size - 5}" y1="5" x2="5" y2="${size - 5}" />
       </g>`;
 
     // Render Sign Numbers and Planets for each house
@@ -115,25 +123,26 @@ const KundliChartRenderer = {
       let rashiNum = ((lagnaSign + h - 2) % 12) + 1;
       let pos = houseCoords[h];
 
-      // Sign number
-      svg += `<text x="${pos.rashiPos.x}" y="${pos.rashiPos.y}" text-anchor="middle" dominant-baseline="central" fill="#0073CF" font-weight="900" font-size="13" font-family="sans-serif">${rashiNum}</text>`;
+      // Sign number (Bold dark maroon)
+      svg += `<text x="${pos.rashiPos.x}" y="${pos.rashiPos.y}" text-anchor="middle" dominant-baseline="central" fill="#6B1D2F" font-weight="900" font-size="14" font-family="'Segoe UI', Roboto, sans-serif">${rashiNum}</text>`;
 
       // Planets in house
       let planets = housePlanets[h] || [];
       if (planets.length > 0) {
-        let startY = pos.plPos.y - ((planets.length - 1) * 7);
+        let startY = pos.plPos.y - ((planets.length - 1) * 8);
         planets.forEach((p, idx) => {
-          let gInfo = this.grahaInfo[p.name] || { sym: p.name.substring(0,2), col: "#2563EB" };
+          let gInfo = this.grahaInfo[p.name] || { sym: p.name.substring(0,2), col: "#1E293B" };
           let retLabel = p.is_retro ? "<tspan fill='#DC2626' font-weight='900'> (R)</tspan>" : "";
-          let curY = startY + (idx * 15);
-          svg += `<text x="${pos.plPos.x}" y="${curY}" text-anchor="middle" dominant-baseline="central" fill="${gInfo.col}" font-weight="850" font-size="11.5" font-family="sans-serif">${gInfo.sym}${retLabel}</text>`;
+          let degLabel = p.deg ? `<tspan fill='#64748B' font-size='9.5'> ${p.deg}°</tspan>` : "";
+          let curY = startY + (idx * 16);
+          svg += `<text x="${pos.plPos.x}" y="${curY}" text-anchor="middle" dominant-baseline="central" fill="${gInfo.col}" font-weight="850" font-size="12" font-family="'Segoe UI', Roboto, sans-serif">${gInfo.sym}${retLabel}${degLabel}</text>`;
         });
       }
     }
 
     // Chart Center Watermark / Label
-    svg += `<g opacity="0.18">
-      <text x="${mid}" y="${mid}" text-anchor="middle" dominant-baseline="central" fill="#0073CF" font-size="28" font-weight="900" font-family="sans-serif">${vargaKey}</text>
+    svg += `<g opacity="0.12">
+      <text x="${mid}" y="${mid}" text-anchor="middle" dominant-baseline="central" fill="#6B1D2F" font-size="30" font-weight="900" font-family="'Segoe UI', Roboto, sans-serif">${vargaKey}</text>
     </g>`;
 
     svg += `</svg>`;
@@ -141,17 +150,12 @@ const KundliChartRenderer = {
   },
 
   /**
-   * Render South Indian Square Chart SVG
+   * Render South Indian Square Chart SVG (Dark Maroon Shastriya Grid)
    */
   renderSouthIndian(chartData, vargaKey = "D1") {
-    const size = 500;
+    const size = 520;
     const box = size / 4;
     
-    // South Indian sign positions:
-    // Row 0: Pisces(12), Aries(1), Taurus(2), Gemini(3)
-    // Row 1: Aquarius(11), [CENTER], [CENTER], Cancer(4)
-    // Row 2: Capricorn(10), [CENTER], [CENTER], Leo(5)
-    // Row 3: Sagittarius(9), Scorpio(8), Libra(7), Virgo(6)
     const signBoxes = {
       12: { r: 0, c: 0 }, 1: { r: 0, c: 1 }, 2: { r: 0, c: 2 }, 3: { r: 0, c: 3 },
       11: { r: 1, c: 0 }, 4: { r: 1, c: 3 },
@@ -189,24 +193,24 @@ const KundliChartRenderer = {
 
     let svg = `<svg viewBox="0 0 ${size} ${size}" class="svg-kundli" xmlns="http://www.w3.org/2000/svg">
       <!-- Background & Outer Boundary -->
-      <rect x="4" y="4" width="${size - 8}" height="${size - 8}" fill="#FFFFFF" stroke="#0073CF" stroke-width="2.5" rx="8" />
+      <rect x="5" y="5" width="${size - 10}" height="${size - 10}" fill="#FFFDF8" stroke="#6B1D2F" stroke-width="3" rx="8" />
 
-      <!-- South Indian 4x4 Grid Lines -->
-      <g stroke="#00B0F0" stroke-width="1.8">
-        <line x1="${box}" y1="4" x2="${box}" y2="${size - 4}" />
-        <line x1="${box * 2}" y1="4" x2="${box * 2}" y2="${box}" />
-        <line x1="${box * 2}" y1="${box * 3}" x2="${box * 2}" y2="${size - 4}" />
-        <line x1="${box * 3}" y1="4" x2="${box * 3}" y2="${size - 4}" />
+      <!-- South Indian 4x4 Grid Lines (Dark Maroon #800000) -->
+      <g stroke="#800000" stroke-width="2.2" stroke-linecap="round">
+        <line x1="${box}" y1="5" x2="${box}" y2="${size - 5}" />
+        <line x1="${box * 2}" y1="5" x2="${box * 2}" y2="${box}" />
+        <line x1="${box * 2}" y1="${box * 3}" x2="${box * 2}" y2="${size - 5}" />
+        <line x1="${box * 3}" y1="5" x2="${box * 3}" y2="${size - 5}" />
 
-        <line x1="4" y1="${box}" x2="${size - 4}" y2="${box}" />
-        <line x1="4" y1="${box * 2}" x2="${box}" y2="${box * 2}" />
-        <line x1="${box * 3}" y1="${box * 2}" x2="${size - 4}" y2="${box * 2}" />
-        <line x1="4" y1="${box * 3}" x2="${size - 4}" y2="${box * 3}" />
+        <line x1="5" y1="${box}" x2="${size - 5}" y2="${box}" />
+        <line x1="5" y1="${box * 2}" x2="${box}" y2="${box * 2}" />
+        <line x1="${box * 3}" y1="${box * 2}" x2="${size - 5}" y2="${box * 2}" />
+        <line x1="5" y1="${box * 3}" x2="${size - 5}" y2="${box * 3}" />
       </g>`;
 
     // Center Box Watermark
-    svg += `<g opacity="0.15">
-      <text x="${size / 2}" y="${size / 2}" text-anchor="middle" dominant-baseline="central" fill="#0073CF" font-size="24" font-weight="900" font-family="sans-serif">${vargaKey} South Indian</text>
+    svg += `<g opacity="0.14">
+      <text x="${size / 2}" y="${size / 2}" text-anchor="middle" dominant-baseline="central" fill="#6B1D2F" font-size="26" font-weight="900" font-family="'Segoe UI', Roboto, sans-serif">${vargaKey} South Indian</text>
     </g>`;
 
     // Populate each sign box
@@ -218,20 +222,21 @@ const KundliChartRenderer = {
       let isLagna = (s === lagnaSign);
       if (isLagna) {
         // Red Lagna diagonal slash
-        svg += `<line x1="${bx + 4}" y1="${by + 4}" x2="${bx + box - 4}" y2="${by + box - 4}" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="3,3" />`;
-        svg += `<text x="${bx + 8}" y="${by + 16}" fill="#DC2626" font-weight="900" font-size="11">लग्न (Asc)</text>`;
+        svg += `<line x1="${bx + 5}" y1="${by + 5}" x2="${bx + box - 5}" y2="${by + box - 5}" stroke="#DC2626" stroke-width="2" stroke-dasharray="4,3" />`;
+        svg += `<text x="${bx + 10}" y="${by + 18}" fill="#DC2626" font-weight="900" font-size="12">लग्न (Asc)</text>`;
       }
 
       // Rashi label
-      svg += `<text x="${bx + box - 6}" y="${by + 14}" text-anchor="end" fill="#64748B" font-size="10" font-weight="700">${this.rashiNames[s - 1]}</text>`;
+      svg += `<text x="${bx + box - 8}" y="${by + 16}" text-anchor="end" fill="#6B1D2F" font-size="11" font-weight="800">${this.rashiNames[s - 1]}</text>`;
 
       // Planets
       let pls = signPlanets[s] || [];
       pls.forEach((p, idx) => {
-        let gInfo = this.grahaInfo[p.name] || { sym: p.name.substring(0,2), col: "#2563EB" };
-        let curY = by + 30 + (idx * 16);
+        let gInfo = this.grahaInfo[p.name] || { sym: p.name.substring(0,2), col: "#1E293B" };
+        let curY = by + 34 + (idx * 16);
         let retLabel = p.is_retro ? "<tspan fill='#DC2626'> (R)</tspan>" : "";
-        svg += `<text x="${bx + 10}" y="${curY}" fill="${gInfo.col}" font-weight="850" font-size="11">${gInfo.sym}${retLabel}</text>`;
+        let degLabel = p.deg ? `<tspan fill='#64748B' font-size='9.5'> ${p.deg}°</tspan>` : "";
+        svg += `<text x="${bx + 12}" y="${curY}" fill="${gInfo.col}" font-weight="850" font-size="11.5">${gInfo.sym}${retLabel}${degLabel}</text>`;
       });
     }
 
@@ -240,11 +245,10 @@ const KundliChartRenderer = {
   },
 
   /**
-   * Render East Indian (Bangla/Assam/Odisha) Chart SVG
-   * Fixed Zodiac Signs (Aries at top center), Lagna indicated dynamically
+   * Render East Indian (Bangla/Assam/Odisha) Chart SVG (Dark Maroon Shastriya Aesthetic)
    */
   renderEastIndian(chartData, vargaKey = "D1") {
-    const size = 500;
+    const size = 520;
     const mid = size / 2;
 
     let lagnaSign = (vargaKey === "D1") 
@@ -277,40 +281,40 @@ const KundliChartRenderer = {
 
     // East Indian Sign Coordinates (Signs 1-12 fixed)
     const eastSignCoords = {
-      1:  { rashiPos: { x: mid, y: 115 }, plPos: { x: mid, y: 65 } },      // Mesha (Top diamond)
-      2:  { rashiPos: { x: 125, y: 35 }, plPos: { x: 125, y: 70 } },      // Vrishabha (Top-left corner)
-      3:  { rashiPos: { x: 35, y: 125 }, plPos: { x: 70, y: 125 } },      // Mithuna (Left-top)
-      4:  { rashiPos: { x: 115, y: mid }, plPos: { x: 65, y: mid } },      // Karka (Left diamond)
-      5:  { rashiPos: { x: 35, y: 375 }, plPos: { x: 70, y: 375 } },      // Simha (Left-bottom)
-      6:  { rashiPos: { x: 125, y: 465 }, plPos: { x: 125, y: 430 } },    // Kanya (Bottom-left corner)
-      7:  { rashiPos: { x: mid, y: 385 }, plPos: { x: mid, y: 435 } },     // Tula (Bottom diamond)
-      8:  { rashiPos: { x: 375, y: 465 }, plPos: { x: 375, y: 430 } },    // Vrishchika (Bottom-right corner)
-      9:  { rashiPos: { x: 465, y: 375 }, plPos: { x: 430, y: 375 } },    // Dhanu (Right-bottom)
-      10: { rashiPos: { x: 385, y: mid }, plPos: { x: 435, y: mid } },     // Makara (Right diamond)
-      11: { rashiPos: { x: 465, y: 125 }, plPos: { x: 430, y: 125 } },    // Kumbha (Right-top)
-      12: { rashiPos: { x: 375, y: 35 }, plPos: { x: 375, y: 70 } }       // Meena (Top-right corner)
+      1:  { rashiPos: { x: mid, y: 120 }, plPos: { x: mid, y: 70 } },
+      2:  { rashiPos: { x: 130, y: 40 }, plPos: { x: 130, y: 75 } },
+      3:  { rashiPos: { x: 40, y: 130 }, plPos: { x: 75, y: 130 } },
+      4:  { rashiPos: { x: 120, y: mid }, plPos: { x: 70, y: mid } },
+      5:  { rashiPos: { x: 40, y: 390 }, plPos: { x: 75, y: 390 } },
+      6:  { rashiPos: { x: 130, y: 480 }, plPos: { x: 130, y: 445 } },
+      7:  { rashiPos: { x: mid, y: 400 }, plPos: { x: mid, y: 450 } },
+      8:  { rashiPos: { x: 390, y: 480 }, plPos: { x: 390, y: 445 } },
+      9:  { rashiPos: { x: 480, y: 390 }, plPos: { x: 445, y: 390 } },
+      10: { rashiPos: { x: 400, y: mid }, plPos: { x: 450, y: mid } },
+      11: { rashiPos: { x: 480, y: 130 }, plPos: { x: 445, y: 130 } },
+      12: { rashiPos: { x: 390, y: 40 }, plPos: { x: 390, y: 75 } }
     };
 
     let svg = `<svg viewBox="0 0 ${size} ${size}" class="svg-kundli" xmlns="http://www.w3.org/2000/svg">
-      <!-- Background & Outer Box -->
-      <rect x="4" y="4" width="${size - 8}" height="${size - 8}" fill="#FFFFFF" stroke="#D97706" stroke-width="2.5" rx="6" />
+      <!-- Background & Outer Box (Dark Maroon) -->
+      <rect x="5" y="5" width="${size - 10}" height="${size - 10}" fill="#FFFDF8" stroke="#6B1D2F" stroke-width="3" rx="8" />
 
       <!-- Inner Geometry Lines (East Indian) -->
-      <g stroke="#F59E0B" stroke-width="2">
+      <g stroke="#800000" stroke-width="2.2" stroke-linecap="round">
         <!-- Outer Diamond -->
-        <line x1="${mid}" y1="4" x2="${size - 4}" y2="${mid}" />
-        <line x1="${size - 4}" y1="${mid}" x2="${mid}" y2="${size - 4}" />
-        <line x1="${mid}" y1="${size - 4}" x2="4" y2="${mid}" />
-        <line x1="4" y1="${mid}" x2="${mid}" y2="4" />
+        <line x1="${mid}" y1="5" x2="${size - 5}" y2="${mid}" />
+        <line x1="${size - 5}" y1="${mid}" x2="${mid}" y2="${size - 5}" />
+        <line x1="${mid}" y1="${size - 5}" x2="5" y2="${mid}" />
+        <line x1="5" y1="${mid}" x2="${mid}" y2="5" />
 
         <!-- Diagonal Crossed Lines -->
-        <line x1="4" y1="4" x2="${size - 4}" y2="${size - 4}" />
-        <line x1="${size - 4}" y1="4" x2="4" y2="${size - 4}" />
+        <line x1="5" y1="5" x2="${size - 5}" y2="${size - 5}" />
+        <line x1="${size - 5}" y1="5" x2="5" y2="${size - 5}" />
       </g>`;
 
     // Watermark
-    svg += `<g opacity="0.15">
-      <text x="${mid}" y="${mid}" text-anchor="middle" dominant-baseline="central" fill="#D97706" font-size="24" font-weight="900" font-family="sans-serif">${vargaKey} East Indian</text>
+    svg += `<g opacity="0.14">
+      <text x="${mid}" y="${mid}" text-anchor="middle" dominant-baseline="central" fill="#6B1D2F" font-size="26" font-weight="900" font-family="'Segoe UI', Roboto, sans-serif">${vargaKey} East Indian</text>
     </g>`;
 
     // Render 12 Fixed Signs & Lagna
@@ -318,24 +322,23 @@ const KundliChartRenderer = {
       let pos = eastSignCoords[s];
       let isLagna = (s === lagnaSign);
 
-      // Sign label
-      let rashiColor = isLagna ? "#DC2626" : "#4B5563";
+      let rashiColor = isLagna ? "#DC2626" : "#6B1D2F";
       let rashiText = `${s} ${this.rashiNames[s - 1]}`;
       if (isLagna) {
         rashiText += " (लग्न)";
       }
-      svg += `<text x="${pos.rashiPos.x}" y="${pos.rashiPos.y}" text-anchor="middle" dominant-baseline="central" fill="${rashiColor}" font-weight="${isLagna ? 900 : 700}" font-size="${isLagna ? 11.5 : 10.5}" font-family="sans-serif">${rashiText}</text>`;
+      svg += `<text x="${pos.rashiPos.x}" y="${pos.rashiPos.y}" text-anchor="middle" dominant-baseline="central" fill="${rashiColor}" font-weight="${isLagna ? 900 : 800}" font-size="${isLagna ? 12 : 11}" font-family="'Segoe UI', Roboto, sans-serif">${rashiText}</text>`;
 
       // Planets in sign
       let pls = signPlanets[s] || [];
       if (pls.length > 0) {
-        let startY = pos.plPos.y - ((pls.length - 1) * 7);
+        let startY = pos.plPos.y - ((pls.length - 1) * 8);
         pls.forEach((p, idx) => {
-          let gInfo = this.grahaInfo[p.name] || { sym: p.name.substring(0,2), col: "#2563EB" };
-          let curY = startY + (idx * 15);
+          let gInfo = this.grahaInfo[p.name] || { sym: p.name.substring(0,2), col: "#1E293B" };
+          let curY = startY + (idx * 16);
           let retLabel = p.is_retro ? "<tspan fill='#DC2626'> (R)</tspan>" : "";
-          let degStr = p.deg ? `<tspan font-size="9" fill="#6B7280"> ${p.deg}°</tspan>` : "";
-          svg += `<text x="${pos.plPos.x}" y="${curY}" text-anchor="middle" dominant-baseline="central" fill="${gInfo.col}" font-weight="850" font-size="11" font-family="sans-serif">${gInfo.sym}${retLabel}${degStr}</text>`;
+          let degStr = p.deg ? `<tspan font-size="9.5" fill="#64748B"> ${p.deg}°</tspan>` : "";
+          svg += `<text x="${pos.plPos.x}" y="${curY}" text-anchor="middle" dominant-baseline="central" fill="${gInfo.col}" font-weight="850" font-size="11.5" font-family="'Segoe UI', Roboto, sans-serif">${gInfo.sym}${retLabel}${degStr}</text>`;
         });
       }
     }

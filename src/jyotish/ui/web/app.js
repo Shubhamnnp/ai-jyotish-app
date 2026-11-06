@@ -1,5 +1,5 @@
 /**
- * BRAMHAHORA - World-Class Vedic Astrology Enterprise SaaS Web Application
+ * BRAMHAHORA - World-Class Vedic Astrology Enterprise Workstation Web Application
  * Master Controller & Reactive State Manager
  */
 
@@ -27,42 +27,39 @@ class JyotishWebApp {
     this.activeModule = "kundli_core";
     this.isSidebarOpen = true;
 
+    // Full 31 Modules catalog
     this.modulesList = [
-      { id: "kundli_core", name: "जन्म कुण्डली (D1-D60)", cat: "core", icon: "🪐" },
-      { id: "varga_tables", name: "षोडशवर्ग चक्र व तालिकाएं", cat: "core", icon: "📊" },
-      { id: "shadbala_bhavabala", name: "षड्बल व द्वादश भावबल", cat: "core", icon: "⚖️" },
-      { id: "panchang", name: "दैनिक पंचांग व चौघड़िया", cat: "core", icon: "☀️" },
-      { id: "bhava_chalita", name: "श्रीपति भाव चलित चक्र", cat: "core", icon: "🏠" },
-      { id: "chandra_kundli", name: "चन्द्र कुण्डली फलित", cat: "core", icon: "🌙" },
-      { id: "surya_kundli", name: "सूर्य कुण्डली फलित", cat: "core", icon: "☀️" },
-      { id: "upagraha", name: "गुलिक, मांदी व अप्रकाशित ग्रह", cat: "core", icon: "🪐" },
-
-      { id: "dasha_vimshottari", name: "विंशोत्तरी दशा (5 स्तर)", cat: "dasha", icon: "⏱️" },
+      { id: "kundli_core", name: "लग्न व नवमांश कुण्डली", cat: "core", icon: "🪐" },
+      { id: "varga_shodash", name: "षोडशवर्ग चक्र (D1-D60)", cat: "core", icon: "💫" },
+      { id: "shadbala_bhavabala", name: "षड्बल व भाव बल", cat: "core", icon: "⚖️" },
+      { id: "panchang_daily", name: "दैनिक पंचांग व चौघड़िया", cat: "core", icon: "☀️" },
+      { id: "dasha_vimshottari", name: "विंशोत्तरी दशा (5 स्तर)", cat: "dasha", icon: "⏳" },
       { id: "gochar_transit", name: "लाइव गोचर व साढ़े साती", cat: "dasha", icon: "🌐" },
-      { id: "ashtakavarga", name: "सर्वाष्टकवर्ग (SAV/BAV)", cat: "dasha", icon: "📈" },
-      { id: "varshaphal", name: "वर्षफल (ताजिक मुन्था चक्र)", cat: "dasha", icon: "📅" },
-      { id: "ayu_nirnaya", name: "आयु निर्णय व अरिष्ट विचार", cat: "dasha", icon: "⏳" },
-
-      { id: "shastriya_yogas", name: "300+ शास्त्रीय राजयोग", cat: "yogas", icon: "📜" },
-      { id: "dosha_upaya", name: "दोष विचार व शास्त्रीय उपाय", cat: "yogas", icon: "🛡️" },
-      { id: "event_prediction", name: "घटना विश्लेषण (Ghatna)", cat: "yogas", icon: "🎯" },
-      { id: "pushkar_vargottama", name: "पुष्कर नवमांश व वर्गोत्तम", cat: "yogas", icon: "🌟" },
-      { id: "graha_prishtha", name: "ग्रह पृष्ठ व कर्तरी शुभाशुभ", cat: "yogas", icon: "⚔️" },
-      { id: "kota_chakra", name: "कोटा चक्र (दुर्ग रक्षा)", cat: "yogas", icon: "⛺" },
-
-      { id: "jaimini_kp", name: "जैमिनी पद्धति व KP सिस्टम", cat: "special", icon: "🔮" },
-      { id: "jaimini_special", name: "जैमिनी 7 चर कारक व विशेष लग्न", cat: "special", icon: "👑" },
-      { id: "lal_kitab", name: "लाल किताब फरमान व उपाय", cat: "special", icon: "🌿" },
-      { id: "prashna_kundali", name: "तात्कालिक प्रश्न कुण्डली", cat: "special", icon: "❓" },
-      { id: "vastu_chakra", name: "वैदिक वास्तु चक्र व दिशाएं", cat: "special", icon: "🗺️" },
-      { id: "samudrik", name: "हस्तरेखा व सामुद्रिक शास्त्र", cat: "special", icon: "✋" },
-
-      { id: "kundli_milan", name: "अष्टकूट 36 गुण मिलान", cat: "advanced", icon: "💖" },
+      { id: "ashtakavarga", name: "अष्टकवर्ग (SAV / BAV)", cat: "dasha", icon: "📈" },
+      { id: "varshaphal", name: "वर्षफल (ताजिक मुन्था)", cat: "dasha", icon: "📅" },
+      { id: "kp_system", name: "केपी ज्योतिष (KP System)", cat: "special", icon: "📐" },
+      { id: "jaimini_kp", name: "जैमिनी ज्योतिष व कारक", cat: "special", icon: "👑" },
+      { id: "lal_kitab", name: "लाल किताब व अचूक उपाय", cat: "special", icon: "🌿" },
+      { id: "prashna", name: "प्रश्न कुण्डली (Horary)", cat: "special", icon: "❓" },
+      { id: "shastriya_yogas", name: "300+ योग व शास्त्रीय फलित", cat: "advanced", icon: "📜" },
+      { id: "kundli_milan", name: "अष्टकूट कुण्डली मिलान", cat: "advanced", icon: "💖" },
+      { id: "vastu_chakra", name: "वास्तु चक्र व दिशाएं", cat: "advanced", icon: "🗺️" },
       { id: "medical_astro", name: "आयुर्वेद व मेडिकल ज्योतिष", cat: "advanced", icon: "🩺" },
-      { id: "ratna_rudraksha", name: "रत्न व रुद्राक्ष परामर्श", cat: "advanced", icon: "💎" },
-      { id: "muhurta", name: "अभिजीत व शुभ मुहूर्त शोधन", cat: "advanced", icon: "🕉️" },
+      { id: "pushkar_vargottama", name: "पुष्कर नवमांश व वर्गोत्तम", cat: "special", icon: "🌟" },
+      { id: "bhava_chalit", name: "भाव चलित चक्र व संधि", cat: "special", icon: "🏠" },
+      { id: "chandra_kundli", name: "चन्द्र कुण्डली लग्न", cat: "core", icon: "🌙" },
+      { id: "surya_kundli", name: "सूर्य कुण्डली लग्न", cat: "core", icon: "☀️" },
+      { id: "graha_prishtha", name: "ग्रह पृष्ठ व पापकर्तरी", cat: "special", icon: "⚔️" },
+      { id: "kota_chakra", name: "कोटा चक्र दुर्ग रक्षा", cat: "special", icon: "⛺" },
+      { id: "gem_recommend", name: "शास्त्रीय रत्न परामर्श", cat: "advanced", icon: "💎" },
+      { id: "mantra_yantra", name: "वैदिक मंत्र व यंत्र साधन", cat: "advanced", icon: "🕯️" },
+      { id: "chara_dasha", name: "जैमिनी चर व योगिनी दशा", cat: "dasha", icon: "⏳" },
+      { id: "upagraha_chakra", name: "अप्रकाशित उपग्रह चक्र", cat: "special", icon: "🌌" },
+      { id: "btr_rectification", name: "BTR जन्म समय संशोधन", cat: "special", icon: "🕰️" },
+      { id: "event_prediction", name: "घटना काल-खंड विश्लेषण", cat: "advanced", icon: "🎯" },
+      { id: "varga_tables", name: "षोडशवर्ग विश्लेषण तालिका", cat: "core", icon: "📊" },
       { id: "ai_jyotish", name: "AI दैवज्ञ परामर्श चैट", cat: "advanced", icon: "🤖" },
-      { id: "report_pdf", name: "100+ पेज विस्तृत PDF रिपोर्ट", cat: "advanced", icon: "📄" }
+      { id: "report_pdf", name: "100+ पृष्ठ विस्तृत PDF रिपोर्ट", cat: "advanced", icon: "📄" }
     ];
 
     this.rashiNames = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"];
@@ -114,7 +111,18 @@ class JyotishWebApp {
   async init() {
     this.renderSidebarModules();
     this.attachEventListeners();
+    this.ensureDefaultSavedKundli();
     await this.calculateChart();
+  }
+
+  /**
+   * Toolbelt Slider Handler
+   */
+  slideToolbelt(direction) {
+    const track = document.getElementById("toolbeltTrack");
+    if (track) {
+      track.scrollBy({ left: direction * 280, behavior: "smooth" });
+    }
   }
 
   /**
@@ -181,10 +189,7 @@ class JyotishWebApp {
     this.renderHeaderClientInfo();
     this.renderClientInfoStrip();
     this.renderChart();
-    this.renderPlanetaryTable();
-    this.renderHousesTable();
-    this.renderD1SummaryPanchang();
-    this.renderGrahaBalaGraph();
+    this.renderAnalyticalSubViews();
     this.renderDashaTimeline();
     this.renderAshtakavarga();
     this.renderYogas();
@@ -205,58 +210,41 @@ class JyotishWebApp {
   }
 
   /**
-   * Info HUD Strip
+   * Info HUD Strip (Exact format requested)
    */
   renderClientInfoStrip() {
     const strip = document.getElementById("clientInfoStrip");
     if (!strip || !this.chartData) return;
 
-    const lagnaName = this.chartData.lagna_sign_name || "तुला";
+    const lagnaName = this.chartData.lagna_sign_name || "Libra";
     const degStr = this.chartData.lagna_degree ? `${this.chartData.lagna_degree.toFixed(2)}°` : "9.59°";
 
-    let moonSign = "कर्क (Cancer)";
-    let moonDeg = "6.50°";
-    let sunSign = "वृषभ (Taurus)";
-    let akPlanet = "Venus (शुक्र)";
+    let moonSign = "Cancer (6.50°)";
+    let sunSign = "Taurus (1.59°)";
 
     if (this.chartData.planets) {
       if (this.chartData.planets.Moon) {
-        moonSign = `${this.chartData.planets.Moon.sign_name}`;
-        moonDeg = `${(this.chartData.planets.Moon.sign_degree || 0).toFixed(2)}°`;
+        moonSign = `${this.chartData.planets.Moon.sign_name} (${(this.chartData.planets.Moon.sign_degree || 6.50).toFixed(2)}°)`;
       }
       if (this.chartData.planets.Sun) {
-        sunSign = `${this.chartData.planets.Sun.sign_name}`;
+        sunSign = `${this.chartData.planets.Sun.sign_name} (${(this.chartData.planets.Sun.sign_degree || 1.59).toFixed(2)}°)`;
       }
-      // Calculate Atmakaraka (highest degree excluding Rahu/Ketu)
-      let maxDeg = -1;
-      const akCandidates = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
-      akCandidates.forEach(pName => {
-        const pObj = this.chartData.planets[pName];
-        if (pObj) {
-          const d = pObj.sign_degree || (pObj.longitude ? pObj.longitude % 30 : 0);
-          if (d > maxDeg) {
-            maxDeg = d;
-            akPlanet = `${pName} (${(KundliChartRenderer.grahaInfo[pName] || {}).name || pName})`;
-          }
-        }
-      });
     }
 
     strip.innerHTML = `
       <div class="info-strip-left">
-        <span class="info-strip-tag">👤 सक्रिय जातक</span>
-        <span><b>${this.client.name}</b></span>
-        <span>📅 ${this.client.birth_date} | ⏰ ${this.client.birth_time.substring(0,5)}</span>
-        <span>📍 ${this.client.city}</span>
-        <span><b>☸️ लग्न:</b> ${lagnaName} (${degStr})</span>
-        <span><b>🌙 चन्द्र राशि:</b> ${moonSign} (${moonDeg})</span>
-        <span><b>☀️ सूर्य राशि:</b> ${sunSign}</span>
-        <span><b>👑 आत्मकारक:</b> ${akPlanet}</span>
+        <span>👤 <b>${this.client.name}</b></span>
+        <span>📅 <b>${this.client.birth_date}</b></span>
+        <span>⏰ <b>${this.client.birth_time.substring(0,5)}</b></span>
+        <span>📍 <b>${this.client.city}</b></span>
+        <span>☸️ <b>लग्न:</b> ${lagnaName} (${degStr})</span>
+        <span>🌙 <b>चन्द्र राशि:</b> ${moonSign}</span>
+        <span>☀️ <b>सूर्य राशि:</b> ${sunSign}</span>
+        <span class="info-pill">📐 Lahiri: 24.23°</span>
       </div>
       <div class="info-strip-right">
-        <span class="info-pill">⚡ Swiss Ephemeris (High Precision)</span>
-        <span class="info-pill">📐 ${this.client.ayanamsa}: 24.23°</span>
-        <span class="info-pill">📜 12,500+ Verified Rules</span>
+        <span class="info-pill">⚡ Swiss Ephemeris</span>
+        <span class="info-pill">🛡️ Canonical Rules</span>
       </div>
     `;
   }
@@ -268,24 +256,53 @@ class JyotishWebApp {
     const box = document.getElementById("chartContainer");
     if (!box || !window.KundliChartRenderer) return;
 
-    let svgHtml = "";
-    if (this.chartStyle === "south") {
-      svgHtml = window.KundliChartRenderer.renderSouthIndian(this.chartData, this.activeVarga);
-    } else if (this.chartStyle === "east") {
-      svgHtml = window.KundliChartRenderer.renderEastIndian(this.chartData, this.activeVarga);
-    } else {
-      svgHtml = window.KundliChartRenderer.renderNorthIndian(this.chartData, this.activeVarga);
-    }
+    let svgHtml = window.KundliChartRenderer.renderChart(this.chartData, this.chartStyle, this.activeVarga);
     box.innerHTML = svgHtml;
 
     // Update title
     const titleEl = document.getElementById("chartCardTitle");
     if (titleEl) {
-      let styleName = "उत्तर भारतीय";
-      if (this.chartStyle === "south") styleName = "दक्षिण भारतीय";
-      if (this.chartStyle === "east") styleName = "पूर्व भारतीय (East Indian)";
+      let styleName = "उत्तर भारतीय (North)";
+      if (this.chartStyle === "south") styleName = "दक्षिण भारतीय (South)";
+      if (this.chartStyle === "east") styleName = "पूर्व भारतीय (East)";
       titleEl.innerHTML = `🪐 कुण्डली चक्र [${this.activeVarga}] - ${styleName}`;
     }
+  }
+
+  /**
+   * Set Divisional Chart (Varga) D1 to D60 & Re-render Analytical Card dynamically
+   */
+  setVarga(varga) {
+    this.activeVarga = varga;
+    document.querySelectorAll(".varga-pill").forEach(el => {
+      el.classList.toggle("active", el.dataset.varga === varga);
+    });
+
+    // Update Tab Titles on Right Analytical Card for Active Varga
+    const pBtn = document.getElementById("tabBtnPlanets");
+    const hBtn = document.getElementById("tabBtnHouses");
+    const sBtn = document.getElementById("tabBtnSummary");
+    const gBtn = document.getElementById("tabBtnGraph");
+    const gLbl = document.getElementById("graphTitleLabel");
+
+    if (pBtn) pBtn.innerHTML = `🌟 ${varga} नवग्रह स्थिति`;
+    if (hBtn) hBtn.innerHTML = `🏛️ ${varga} द्वादश भाव स्थिति`;
+    if (sBtn) sBtn.innerHTML = `📜 ${varga} सारांश एवं पंचांग`;
+    if (gBtn) gBtn.innerHTML = `📊 ${varga} ग्रह बल Graph`;
+    if (gLbl) gLbl.innerHTML = `📊 ${varga} ग्रह गरिमा एवं बल`;
+
+    this.renderChart();
+    this.renderAnalyticalSubViews();
+  }
+
+  /**
+   * Re-render all 4 analytical subviews for active varga
+   */
+  renderAnalyticalSubViews() {
+    this.renderPlanetaryTable();
+    this.renderHousesTable();
+    this.renderD1SummaryPanchang();
+    this.renderGrahaBalaGraph();
   }
 
   /**
@@ -308,16 +325,13 @@ class JyotishWebApp {
     if (pGraph) pGraph.style.display = subView === "graph" ? "block" : "none";
   }
 
-  /**
-   * Graph Display Mode Switcher (Horizontal vs Vertical)
-   */
   setGraphDisplayMode(mode) {
     this.graphDisplayMode = mode;
     this.renderGrahaBalaGraph();
   }
 
   /**
-   * 1. Planetary Table
+   * 1. [Active Varga] Planetary Table
    */
   renderPlanetaryTable() {
     const tbody = document.getElementById("planetaryTableBody");
@@ -346,7 +360,6 @@ class JyotishWebApp {
       const lordName = this.rashiLords[signIdx] || "-";
       const houseNum = p.house_from_lagna || p.house_number || (((signIdx - lagnaSign + 12) % 12) + 1);
 
-      // Degree formatting
       let degVal = p.sign_degree != null 
         ? p.sign_degree 
         : (p.degree_in_varga != null 
@@ -354,17 +367,14 @@ class JyotishWebApp {
           : (p.longitude_in_sign != null ? p.longitude_in_sign : (p.longitude ? p.longitude % 30 : 0)));
       const degStr = `${degVal.toFixed(2)}°`;
 
-      // Classical Dignity determination
       let dignity = this.calculatePlanetaryDignity(pName, signIdx, degVal);
       let dignBadge = `<span class="badge ${dignity.badgeClass}">${dignity.label}</span>`;
 
-      // Motion
       const isRetro = p.is_retrograde || false;
       const motionBadge = isRetro 
         ? `<span class="badge badge-retro">वक्री (R)</span>` 
         : `<span class="badge badge-direct">मार्गी</span>`;
 
-      // Nakshatra
       const nakName = p.nakshatra_name || this.calculateNakshatra(p.longitude || (signIdx - 1) * 30 + degVal);
       const pada = p.nakshatra_pada || 1;
       const nakStr = `${nakName} (${pada})`;
@@ -387,14 +397,23 @@ class JyotishWebApp {
   }
 
   /**
-   * 2. 12 Houses (द्वादश भाव स्थिति) Table
+   * 2. [Active Varga] 12 Houses Table
    */
   renderHousesTable() {
     const tbody = document.getElementById("housesTableBody");
     if (!tbody || !this.chartData) return;
 
-    const lagnaSign = this.chartData.lagna_sign_id || this.chartData.lagna_sign || 1;
+    const vargaKey = this.activeVarga || "D1";
+    const vargaObj = (vargaKey !== "D1" && this.chartData.vargas && this.chartData.vargas[vargaKey]) 
+      ? this.chartData.vargas[vargaKey] 
+      : null;
+
+    const lagnaSign = vargaObj 
+      ? (vargaObj.lagna_sign_id || vargaObj.lagna_sign || 1) 
+      : (this.chartData.lagna_sign_id || this.chartData.lagna_sign || 1);
+
     const cuspDeg = this.chartData.lagna_degree ? `${this.chartData.lagna_degree.toFixed(2)}°` : "9.59°";
+    const planets = vargaObj ? vargaObj.planets : this.chartData.planets;
 
     const houseKaraka = {
       1: { name: "तनु (Self, Health)", karaka: "सूर्य", desc: "शारीरिक गठन, जीवन शक्ति, स्वास्थ्य" },
@@ -417,10 +436,9 @@ class JyotishWebApp {
       const signName = this.rashiNames[signIdx - 1];
       const lordName = this.rashiLords[signIdx] || "-";
 
-      // Find occupants
       const occupants = [];
-      if (this.chartData.planets) {
-        Object.entries(this.chartData.planets).forEach(([pName, pObj]) => {
+      if (planets) {
+        Object.entries(planets).forEach(([pName, pObj]) => {
           const pSign = pObj.sign_id || pObj.sign || 1;
           const pCurHouse = pObj.house_from_lagna || pObj.house_number || (((pSign - lagnaSign + 12) % 12) + 1);
           if (pCurHouse === h) {
@@ -431,23 +449,19 @@ class JyotishWebApp {
       }
       const occStr = occupants.length > 0 ? occupants.join(", ") : "<span style='color:#94A3B8;'>— रिक्त —</span>";
 
-      // Aspects on this house
+      // Vedic Aspects on this house in active varga
       const aspects = [];
-      if (this.chartData.planets) {
-        Object.entries(this.chartData.planets).forEach(([pName, pObj]) => {
+      if (planets) {
+        Object.entries(planets).forEach(([pName, pObj]) => {
           const pSign = pObj.sign_id || pObj.sign || 1;
           const pCurHouse = pObj.house_from_lagna || pObj.house_number || (((pSign - lagnaSign + 12) % 12) + 1);
-          if (pCurHouse === h) return; // Already inside
+          if (pCurHouse === h) return;
 
           const diff = ((h - pCurHouse + 12) % 12) + 1;
           let isAspecting = false;
-          // All planets aspect 7th
           if (diff === 7) isAspecting = true;
-          // Mars aspects 4, 7, 8
           if (pName === "Mars" && (diff === 4 || diff === 8)) isAspecting = true;
-          // Jupiter & Rahu/Ketu aspect 5, 7, 9
           if ((pName === "Jupiter" || pName === "Rahu" || pName === "Ketu") && (diff === 5 || diff === 9)) isAspecting = true;
-          // Saturn aspects 3, 7, 10
           if (pName === "Saturn" && (diff === 3 || diff === 10)) isAspecting = true;
 
           if (isAspecting) {
@@ -457,7 +471,6 @@ class JyotishWebApp {
         });
       }
       const aspStr = aspects.length > 0 ? aspects.join(", ") : "<span style='color:#94A3B8;'>—</span>";
-
       const info = houseKaraka[h];
 
       html += `
@@ -477,64 +490,77 @@ class JyotishWebApp {
   }
 
   /**
-   * 3. D1 Summary & Panchang Matrix
+   * 3. [Active Varga] Summary & Panchang Matrix
    */
   renderD1SummaryPanchang() {
     const grid = document.getElementById("panchangSummaryGrid");
     if (!grid || !this.chartData) return;
 
-    const lagnaSign = this.chartData.lagna_sign_id || 7;
-    const lagnaName = this.chartData.lagna_sign_name || "तुला";
+    const vargaKey = this.activeVarga || "D1";
+    const vargaObj = (vargaKey !== "D1" && this.chartData.vargas && this.chartData.vargas[vargaKey]) 
+      ? this.chartData.vargas[vargaKey] 
+      : null;
+
+    const lagnaSign = vargaObj 
+      ? (vargaObj.lagna_sign_id || vargaObj.lagna_sign || 1) 
+      : (this.chartData.lagna_sign_id || this.chartData.lagna_sign || 7);
+
+    const lagnaName = this.rashiNames[lagnaSign - 1];
     const lagnaDeg = this.chartData.lagna_degree ? `${this.chartData.lagna_degree.toFixed(2)}°` : "9.59°";
 
+    const planets = vargaObj ? vargaObj.planets : this.chartData.planets;
     let moonSign = "कर्क (Cancer)";
     let moonDeg = "6.50°";
     let moonNak = "पुष्य";
     let sunSign = "वृषभ (Taurus)";
     let sunDeg = "1.59°";
 
-    if (this.chartData.planets) {
-      if (this.chartData.planets.Moon) {
-        moonSign = `${this.chartData.planets.Moon.sign_name}`;
-        moonDeg = `${(this.chartData.planets.Moon.sign_degree || 0).toFixed(2)}°`;
-        moonNak = this.chartData.planets.Moon.nakshatra_name || "पुष्य";
+    if (planets) {
+      if (planets.Moon) {
+        const mSignIdx = planets.Moon.sign_id || planets.Moon.sign || 4;
+        moonSign = `${this.rashiNames[mSignIdx - 1]} (${this.rashiEnglish[mSignIdx - 1]})`;
+        moonDeg = `${(planets.Moon.sign_degree || planets.Moon.degree_in_varga || 6.50).toFixed(2)}°`;
+        moonNak = planets.Moon.nakshatra_name || "पुष्य";
       }
-      if (this.chartData.planets.Sun) {
-        sunSign = `${this.chartData.planets.Sun.sign_name}`;
-        sunDeg = `${(this.chartData.planets.Sun.sign_degree || 0).toFixed(2)}°`;
+      if (planets.Sun) {
+        const sSignIdx = planets.Sun.sign_id || planets.Sun.sign || 2;
+        sunSign = `${this.rashiNames[sSignIdx - 1]} (${this.rashiEnglish[sSignIdx - 1]})`;
+        sunDeg = `${(planets.Sun.sign_degree || planets.Sun.degree_in_varga || 1.59).toFixed(2)}°`;
       }
     }
 
-    // Atmakaraka calculation
+    // Atmakaraka calculation for active varga
     let akName = "शुक्र (Venus)";
     let akDeg = "24.7°";
     let maxD = -1;
     const candidates = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"];
-    candidates.forEach(p => {
-      const obj = (this.chartData.planets || {})[p];
-      if (obj) {
-        const d = obj.sign_degree != null ? obj.sign_degree : (obj.longitude ? obj.longitude % 30 : 0);
-        if (d > maxD) {
-          maxD = d;
-          akName = (KundliChartRenderer.grahaInfo[p] || {}).name || p;
-          akDeg = `${d.toFixed(2)}°`;
+    if (planets) {
+      candidates.forEach(p => {
+        const obj = planets[p];
+        if (obj) {
+          const d = obj.sign_degree != null ? obj.sign_degree : (obj.degree_in_varga != null ? obj.degree_in_varga : 0);
+          if (d > maxD) {
+            maxD = d;
+            akName = (KundliChartRenderer.grahaInfo[p] || {}).name || p;
+            akDeg = `${d.toFixed(2)}°`;
+          }
         }
-      }
-    });
+      });
+    }
 
     const cells = [
-      { label: "वर्ग लग्न (Varga Lagna)", val: `${this.activeVarga} - ${lagnaName}`, sub: `अंश: ${lagnaDeg}` },
-      { label: "जन्म लग्न (D1 Rashi)", val: `${lagnaName} (${lagnaSign})`, sub: `नक्षत्र: स्वाति (1)` },
-      { label: "चन्द्र राशि (Moon Sign)", val: moonSign, sub: `अंश: ${moonDeg} | नक्षत्र: ${moonNak}` },
-      { label: "सूर्य राशि (Sun Sign)", val: sunSign, sub: `अंश: ${sunDeg} | सौर मास: वृषभ` },
+      { label: `सक्रिय वर्ग लग्न (${vargaKey})`, val: `${vargaKey} - ${lagnaName}`, sub: `अंश: ${lagnaDeg}` },
+      { label: "जन्म लग्न (D1 Rashi)", val: `तुला (7) [Libra]`, sub: "स्वामी: शुक्र" },
+      { label: `चन्द्र राशि (${vargaKey})`, val: moonSign, sub: `अंश: ${moonDeg} | नक्षत्र: ${moonNak}` },
+      { label: `सूर्य राशि (${vargaKey})`, val: sunSign, sub: `अंश: ${sunDeg}` },
       { label: "आत्मकारक (Atmakaraka - AK)", val: akName, sub: `सर्वोच्च अंश: ${akDeg}` },
-      { label: "तिथि (Lunar Tithi)", val: "शुक्ल पक्ष सप्तमी", sub: "देवता: सूर्य" },
+      { label: "तिथि (Tithi)", val: "शुक्ल पक्ष सप्तमी", sub: "देवता: सूर्य" },
       { label: "वार (Weekday)", val: "सोमवार (Monday)", sub: "स्वामी: चन्द्र" },
-      { label: "नक्षत्र (Nakshatra)", val: moonNak, sub: "स्वामी: शनि (चरण: 1)" },
+      { label: "नक्षत्र (Nakshatra)", val: moonNak, sub: "स्वामी: शनि" },
       { label: "योग (Yoga)", val: "वृद्धि योग (Vriddhi)", sub: "शुभ फलदायक" },
-      { label: "करण (Karana)", val: "वणिज करण (Vanija)", sub: "व्यापार व यात्रा अनुकूल" },
-      { label: "सूर्योदय व सूर्यास्त", val: "05:28 AM / 06:54 PM", sub: "दिनमान: 33 घटी 25 पल" },
-      { label: "अयनांश मानक", val: "Lahiri (Chitra Paksha)", sub: "24° 13' 55\"" }
+      { label: "करण (Karana)", val: "वणिज करण (Vanija)", sub: "व्यापार अनुकूल" },
+      { label: "सूर्योदय व सूर्यास्त", val: "05:28 AM / 06:54 PM", sub: "दिनमान: 33 घटी" },
+      { label: "अयनांश प्रणाली", val: "लाहिरी (Lahiri - Chitra)", sub: "24° 13' 55\"" }
     ];
 
     let html = "";
@@ -552,14 +578,19 @@ class JyotishWebApp {
   }
 
   /**
-   * 4. D1 Graha Bala Graph (Horizontal Meter vs Vertical Column)
+   * 4. [Active Varga] Graha Bala Graph
    */
   renderGrahaBalaGraph() {
     const box = document.getElementById("grahaBalaGraphBox");
     if (!box || !this.chartData || !this.chartData.planets) return;
 
+    const vargaKey = this.activeVarga || "D1";
+    const vargaObj = (vargaKey !== "D1" && this.chartData.vargas && this.chartData.vargas[vargaKey]) 
+      ? this.chartData.vargas[vargaKey] 
+      : null;
+
+    const planets = vargaObj ? vargaObj.planets : this.chartData.planets;
     const grahaList = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
-    const planets = this.chartData.planets;
 
     const scores = [];
     grahaList.forEach(pName => {
@@ -567,10 +598,9 @@ class JyotishWebApp {
       if (!p) return;
       const gInfo = KundliChartRenderer.grahaInfo[pName] || { name: pName, sym: pName, col: "#0073CF" };
       const signIdx = p.sign_id || p.sign || 1;
-      const degVal = p.sign_degree != null ? p.sign_degree : 0;
+      const degVal = p.sign_degree != null ? p.sign_degree : (p.degree_in_varga != null ? p.degree_in_varga : 0);
       const dign = this.calculatePlanetaryDignity(pName, signIdx, degVal);
 
-      // Convert dignity to numeric strength (0.0 to 20.0)
       let score = 10.0;
       if (dign.type === "exalted") score = 20.0;
       else if (dign.type === "moolatrikona") score = 17.5;
@@ -580,7 +610,6 @@ class JyotishWebApp {
       else if (dign.type === "enemy") score = 6.0;
       else if (dign.type === "debilitated") score = 2.0;
 
-      // Retrograde bonus for non-nodes
       if (p.is_retrograde && pName !== "Rahu" && pName !== "Ketu") {
         score = Math.min(20.0, score + 2.0);
       }
@@ -600,9 +629,9 @@ class JyotishWebApp {
       scores.forEach(s => {
         const pct = ((s.score / 20.0) * 100).toFixed(0);
         let barColor = "#2563EB";
-        if (s.score >= 17) barColor = "#16A34A"; // High
-        else if (s.score >= 14) barColor = "#0073CF"; // Own
-        else if (s.score <= 4) barColor = "#DC2626"; // Low
+        if (s.score >= 17) barColor = "#16A34A";
+        else if (s.score >= 14) barColor = "#0073CF";
+        else if (s.score <= 4) barColor = "#DC2626";
         else if (s.score < 9) barColor = "#D97706";
 
         html += `
@@ -618,7 +647,6 @@ class JyotishWebApp {
       });
       box.innerHTML = html;
     } else {
-      // Vertical Columns
       let html = `<div class="vertical-columns-grid">`;
       scores.forEach(s => {
         const hPct = ((s.score / 20.0) * 100).toFixed(0);
@@ -706,7 +734,7 @@ class JyotishWebApp {
       "मूल", "पूर्वाषाढ़ा", "उत्तराषाढ़ा", "श्रवण", "धनिष्ठा", "शतभिषा",
       "पूर्वा भाद्रपद", "उत्तरा भाद्रपद", "रेवती"
     ];
-    const span = 360 / 27; // 13.333°
+    const span = 360 / 27;
     const idx = Math.floor(((absDeg % 360) + 360) % 360 / span);
     return nakNames[idx] || "चित्रा";
   }
@@ -722,9 +750,7 @@ class JyotishWebApp {
       maha: "केतु (Ketu)",
       antar: "शुक्र (Venus)",
       pratyantar: "राहु (Rahu)",
-      start: "2024-03-12",
-      end: "2027-05-18",
-      balance: "2 वर्ष 2 माह 14 दिन"
+      end: "2027-05-18"
     };
 
     if (this.activeDashaData) {
@@ -811,7 +837,7 @@ class JyotishWebApp {
             <span class="badge badge-exalted">पंचमहापुरुष</span>
           </div>
           <p style="font-size:11.5px; color:#475569; margin-top:6px; line-height:1.5;">
-            मंगल सप्तम भाव में स्वराशि (मेष) में स्थित होकर केंद्र में बलिष्ठ है। यह जातक को अद्वितीय साहस, नेतृत्व क्षमता, भूमि-संपत्ति और दृढ़ संकल्प प्रदान करता है।
+            मंगल सप्तम भाव में स्वराशि (मेष) में स्थित होकर केंद्र में बलिष्ठ है। यह अद्वितीय साहस, नेतृत्व क्षमता और विजय प्रदान करता है।
           </p>
         </div>
         <div style="background:#FFF; border:1.5px solid #86EFAC; border-radius:8px; padding:14px;">
@@ -820,7 +846,7 @@ class JyotishWebApp {
             <span class="badge badge-exalted">अति शुभ</span>
           </div>
           <p style="font-size:11.5px; color:#475569; margin-top:6px; line-height:1.5;">
-            बृहस्पति लग्न में स्थित होकर दशम भाव में स्वग्रही चन्द्रमा से केंद्र (चतुर्थ) संबंध बना रहे हैं। यह ज्ञान, प्रतिष्ठा, धार्मिक निष्ठा और जीवनभर अक्षुण्ण सम्मान सुनिश्चित करता है।
+            बृहस्पति लग्न में स्थित होकर दशम भाव में स्वग्रही चन्द्रमा से केंद्र (चतुर्थ) संबंध बना रहे हैं। यह ज्ञान व प्रतिष्ठा सुनिश्चित करता है।
           </p>
         </div>
         <div style="background:#FFF; border:1.5px solid #93C5FD; border-radius:8px; padding:14px;">
@@ -829,7 +855,7 @@ class JyotishWebApp {
             <span class="badge badge-own">शुभ योग</span>
           </div>
           <p style="font-size:11.5px; color:#475569; margin-top:6px; line-height:1.5;">
-            सूर्य और बुध की वृषभ राशि (अष्टम भाव) में युति से प्रखर विश्लेषणात्मक मेधा, शोध क्षमता और गूढ़ रहस्यों को सुलझाने की तीव्र प्रतिभा का निर्माण होता है।
+            सूर्य और बुध की वृषभ राशि में युति से प्रखर विश्लेषणात्मक मेधा और शोध क्षमता का निर्माण होता है।
           </p>
         </div>
       </div>
@@ -837,7 +863,7 @@ class JyotishWebApp {
   }
 
   /**
-   * Render Sub-Tab Panels (Pushkar, Jaimini, Chalit, Chandra, Surya, etc.)
+   * Sub-Tab Panels
    */
   renderSubTabPanels() {
     const pushkarBox = document.getElementById("pushkarContainerBox");
@@ -980,7 +1006,7 @@ class JyotishWebApp {
   }
 
   /**
-   * Modal: Today's Panchang
+   * Modal: Today's Panchang (With 8 Day / 8 Night Choghadiya)
    */
   async openTodayPanchangModal() {
     const modal = document.getElementById("todayPanchangModal");
@@ -1008,6 +1034,38 @@ class JyotishWebApp {
       });
 
       const pData = pRes.ok ? await pRes.json() : {};
+
+      // 8 Day & 8 Night Choghadiya sequence
+      const dayChoghadiya = [
+        { name: "चर (Char)", time: "06:30 - 08:00", type: "chogh-char", qual: "सामान्य" },
+        { name: "लाभ (Labh)", time: "08:00 - 09:30", type: "chogh-labh", qual: "शुभ / उन्नति" },
+        { name: "अमृत (Amrit)", time: "09:30 - 11:00", type: "chogh-amrit", qual: "सर्वोत्तम" },
+        { name: "काल (Kaal)", time: "11:00 - 12:30", type: "chogh-kaal", qual: "अशुभ" },
+        { name: "शुभ (Shubh)", time: "12:30 - 14:00", type: "chogh-shubh", qual: "अति शुभ" },
+        { name: "रोग (Rog)", time: "14:00 - 15:30", type: "chogh-rog", qual: "अशुभ / क्लेश" },
+        { name: "उद्वेग (Udveg)", time: "15:30 - 17:00", type: "chogh-udveg", qual: "चिंता" },
+        { name: "चर (Char)", time: "17:00 - 18:30", type: "chogh-char", qual: "सामान्य" }
+      ];
+
+      const nightChoghadiya = [
+        { name: "रोग (Rog)", time: "18:30 - 20:00", type: "chogh-rog", qual: "अशुभ" },
+        { name: "काल (Kaal)", time: "20:00 - 21:30", type: "chogh-kaal", qual: "अशुभ" },
+        { name: "लाभ (Labh)", time: "21:30 - 23:00", type: "chogh-labh", qual: "उन्नति" },
+        { name: "उद्वेग (Udveg)", time: "23:00 - 00:30", type: "chogh-udveg", qual: "चिंता" },
+        { name: "शुभ (Shubh)", time: "00:30 - 02:00", type: "chogh-shubh", qual: "शुभ" },
+        { name: "अमृत (Amrit)", time: "02:00 - 03:30", type: "chogh-amrit", qual: "सर्वोत्तम" },
+        { name: "चर (Char)", time: "03:30 - 05:00", type: "chogh-char", qual: "सामान्य" },
+        { name: "रोग (Rog)", time: "05:00 - 06:30", type: "chogh-rog", qual: "अशुभ" }
+      ];
+
+      let dayRows = dayChoghadiya.map(c => `
+        <tr><td><b>${c.name}</b></td><td>${c.time}</td><td><span class="badge ${c.type}">${c.qual}</span></td></tr>
+      `).join("");
+
+      let nightRows = nightChoghadiya.map(c => `
+        <tr><td><b>${c.name}</b></td><td>${c.time}</td><td><span class="badge ${c.type}">${c.qual}</span></td></tr>
+      `).join("");
+
       body.innerHTML = `
         <div class="panchang-modal-card">
           <h4>☀️ आज का तात्कालिक पंचांग (${todayStr})</h4>
@@ -1019,10 +1077,26 @@ class JyotishWebApp {
             <div class="panchang-row-item"><span class="panchang-row-key">नक्षत्र:</span><span class="panchang-row-val">${pData.nakshatra ? pData.nakshatra.name : "हस्त"}</span></div>
             <div class="panchang-row-item"><span class="panchang-row-key">योग:</span><span class="panchang-row-val">${pData.yoga ? pData.yoga.name : "इन्द्र"}</span></div>
             <div class="panchang-row-item"><span class="panchang-row-key">करण:</span><span class="panchang-row-val">${pData.karana ? pData.karana.name : "कौलव"}</span></div>
-            <div class="panchang-row-item"><span class="panchang-row-key">अभिजीत मुहूर्त:</span><span class="panchang-row-val" style="color:#16A34A;">11:44 AM - 12:30 PM</span></div>
-            <div class="panchang-row-item"><span class="panchang-row-key">राहु काल (अशुभ):</span><span class="panchang-row-val" style="color:#DC2626;">10:30 AM - 12:00 PM</span></div>
+            <div class="panchang-row-item"><span class="panchang-row-key">अभिजीत मुहूर्त:</span><span class="panchang-row-val" style="color:#16A34A; font-weight:900;">11:44 AM - 12:30 PM</span></div>
+            <div class="panchang-row-item"><span class="panchang-row-key">राहु काल (अशुभ):</span><span class="panchang-row-val" style="color:#DC2626; font-weight:900;">10:30 AM - 12:00 PM</span></div>
             <div class="panchang-row-item"><span class="panchang-row-key">गुलिक काल:</span><span class="panchang-row-val">07:30 AM - 09:00 AM</span></div>
           </div>
+        </div>
+
+        <div class="panchang-modal-card">
+          <h4>☀️ 8 दिन का चौघड़िया (Day Choghadiya)</h4>
+          <table class="choghadiya-table">
+            <thead><tr><th>मुहूर्त नाम</th><th>समय अवधि</th><th>प्रभाव</th></tr></thead>
+            <tbody>${dayRows}</tbody>
+          </table>
+        </div>
+
+        <div class="panchang-modal-card">
+          <h4>🌙 8 रात्रि का चौघड़िया (Night Choghadiya)</h4>
+          <table class="choghadiya-table">
+            <thead><tr><th>मुहूर्त नाम</th><th>समय अवधि</th><th>प्रभाव</th></tr></thead>
+            <tbody>${nightRows}</tbody>
+          </table>
         </div>
       `;
     } catch (err) {
@@ -1047,7 +1121,130 @@ class JyotishWebApp {
   }
 
   /**
-   * Render Sidebar Module Tree
+   * Saved Kundlis in localStorage (📂)
+   */
+  ensureDefaultSavedKundli() {
+    const key = "bramhahora_saved_kundlis";
+    let list = [];
+    try {
+      const data = localStorage.getItem(key);
+      if (data) list = JSON.parse(data);
+    } catch (e) {}
+
+    if (list.length === 0) {
+      list.push({
+        id: "default_shubham",
+        name: "शुभम कुमार (Shubham Kumar)",
+        gender: "Male",
+        birth_date: "1994-05-16",
+        birth_time: "17:00:00",
+        city: "Nanpara",
+        latitude: 27.8643,
+        longitude: 81.5033,
+        timezone_offset: 5.5,
+        ayanamsa: "Lahiri"
+      });
+      try {
+        localStorage.setItem(key, JSON.stringify(list));
+      } catch (e) {}
+    }
+  }
+
+  saveCurrentKundli() {
+    const key = "bramhahora_saved_kundlis";
+    let list = [];
+    try {
+      const data = localStorage.getItem(key);
+      if (data) list = JSON.parse(data);
+    } catch (e) {}
+
+    const newEntry = {
+      id: "kundli_" + Date.now(),
+      ...this.client
+    };
+    list.unshift(newEntry);
+    try {
+      localStorage.setItem(key, JSON.stringify(list));
+    } catch (e) {}
+  }
+
+  openSavedKundliModal() {
+    const modal = document.getElementById("savedKundliModal");
+    const container = document.getElementById("savedKundlisListContainer");
+    if (!modal || !container) return;
+
+    modal.classList.add("active");
+    this.renderSavedKundlisList();
+  }
+
+  renderSavedKundlisList() {
+    const container = document.getElementById("savedKundlisListContainer");
+    if (!container) return;
+
+    const key = "bramhahora_saved_kundlis";
+    let list = [];
+    try {
+      const data = localStorage.getItem(key);
+      if (data) list = JSON.parse(data);
+    } catch (e) {}
+
+    if (list.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding:20px; color:#64748B;">कोई सहेजी गई कुण्डली उपलब्ध नहीं है।</div>`;
+      return;
+    }
+
+    let html = "";
+    list.forEach(k => {
+      html += `
+        <div class="saved-kundli-item">
+          <div>
+            <div class="saved-kundli-name">👤 ${k.name} (${k.gender || "Male"})</div>
+            <div class="saved-kundli-meta">📅 ${k.birth_date} | ⏰ ${k.birth_time} | 📍 ${k.city}</div>
+          </div>
+          <div style="display:flex; align-items:center;">
+            <button class="saved-kundli-btn-load" onclick="app.loadSavedKundli('${k.id}')">लोड करें (Load)</button>
+            <button class="saved-kundli-btn-del" onclick="app.deleteSavedKundli('${k.id}')">✕</button>
+          </div>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+  }
+
+  loadSavedKundli(id) {
+    const key = "bramhahora_saved_kundlis";
+    let list = [];
+    try {
+      const data = localStorage.getItem(key);
+      if (data) list = JSON.parse(data);
+    } catch (e) {}
+
+    const found = list.find(k => k.id === id);
+    if (found) {
+      this.client = { ...found };
+      this.closeModals();
+      this.calculateChart();
+    }
+  }
+
+  deleteSavedKundli(id) {
+    const key = "bramhahora_saved_kundlis";
+    let list = [];
+    try {
+      const data = localStorage.getItem(key);
+      if (data) list = JSON.parse(data);
+    } catch (e) {}
+
+    list = list.filter(k => k.id !== id);
+    try {
+      localStorage.setItem(key, JSON.stringify(list));
+    } catch (e) {}
+    this.renderSavedKundlisList();
+  }
+
+  /**
+   * Render Sidebar Module Tree (All 31 modules)
    */
   renderSidebarModules() {
     const container = document.getElementById("sidebarModulesContainer");
@@ -1087,9 +1284,6 @@ class JyotishWebApp {
     container.innerHTML = html;
   }
 
-  /**
-   * Select Active Module
-   */
   selectModule(moduleId) {
     this.activeModule = moduleId;
     document.querySelectorAll(".module-link-item").forEach(el => {
@@ -1103,15 +1297,15 @@ class JyotishWebApp {
       this.switchTab("dasha");
     } else if (moduleId === "ashtakavarga") {
       this.switchTab("ashtakavarga");
-    } else if (moduleId === "yogas_doshas" || moduleId === "shastriya_yogas") {
+    } else if (moduleId === "shastriya_yogas") {
       this.switchTab("yogas");
-    } else if (moduleId === "panchang") {
+    } else if (moduleId === "panchang_daily") {
       this.openTodayPanchangModal();
     } else if (moduleId === "ai_jyotish") {
       this.openAiDrawer();
-    } else if (moduleId === "prashna_kundali") {
+    } else if (moduleId === "prashna") {
       this.createInstantPrashnaKundli();
-    } else if (moduleId === "shadbala_bhavabala" || moduleId === "shadbala") {
+    } else if (moduleId === "shadbala_bhavabala") {
       this.switchTab("main");
       this.setAnalyticalSubView("graph");
     } else {
@@ -1119,9 +1313,6 @@ class JyotishWebApp {
     }
   }
 
-  /**
-   * Switch Workstation Tab
-   */
   switchTab(tabId) {
     this.activeTab = tabId;
     document.querySelectorAll(".ws-tab-btn").forEach(btn => {
@@ -1148,23 +1339,6 @@ class JyotishWebApp {
     });
   }
 
-  /**
-   * Set Divisional Chart (Varga)
-   */
-  setVarga(varga) {
-    this.activeVarga = varga;
-    document.querySelectorAll(".varga-pill").forEach(el => {
-      el.classList.toggle("active", el.dataset.varga === varga);
-    });
-    this.renderChart();
-    this.renderPlanetaryTable();
-    this.renderHousesTable();
-    this.renderD1SummaryPanchang();
-  }
-
-  /**
-   * Toggle North / South / East Style
-   */
   toggleChartStyle(style) {
     this.chartStyle = style;
     const btnN = document.getElementById("btnNorthChart");
@@ -1176,36 +1350,28 @@ class JyotishWebApp {
     this.renderChart();
   }
 
-  /**
-   * Toggle Sidebar
-   */
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
     const sb = document.getElementById("appSidebar");
     if (sb) sb.classList.toggle("collapsed", !this.isSidebarOpen);
   }
 
-  /**
-   * Open New Kundli Modal
-   */
   openNewKundliModal() {
     const modal = document.getElementById("newKundliModal");
     if (modal) modal.classList.add("active");
   }
 
-  /**
-   * Close All Modals
-   */
   closeModals() {
     document.querySelectorAll(".modal-overlay").forEach(m => m.classList.remove("active"));
   }
 
   /**
-   * Save & Calculate New Kundli Form
+   * Save & Calculate New Kundli Form (With gender, auto-coordinates, and save option)
    */
   async submitNewKundli(event) {
     event.preventDefault();
     this.client.name = document.getElementById("formName").value || "जातक";
+    this.client.gender = document.getElementById("formGender").value || "Male";
     this.client.birth_date = document.getElementById("formDate").value;
 
     let bTime = document.getElementById("formTime").value || "12:00:00";
@@ -1218,7 +1384,6 @@ class JyotishWebApp {
     let lat = parseFloat(document.getElementById("formLat").value);
     let lon = parseFloat(document.getElementById("formLon").value);
 
-    // Auto-resolve coordinates if city is recognized
     const cityCoords = this.lookupCityCoordinates(cityName);
     if (cityCoords) {
       if (isNaN(lat) || (Math.abs(lat - 28.6139) < 0.001 && Math.abs(lon - 77.2090) < 0.001 && !cityName.toLowerCase().includes("delhi"))) {
@@ -1231,194 +1396,19 @@ class JyotishWebApp {
       }
     }
 
-    const genderEl = document.getElementById("formGender");
-    if (genderEl) this.client.gender = genderEl.value;
-
     this.client.latitude = isNaN(lat) ? 27.8643 : lat;
     this.client.longitude = isNaN(lon) ? 81.5033 : lon;
     this.client.ayanamsa = document.getElementById("formAyanamsa").value;
 
-    this.closeModals();
-    await this.calculateChart();
-  }
-
-  /**
-   * Scroll Toolbelt Bar smoothly
-   */
-  scrollToolbelt(direction) {
-    const bar = document.getElementById("toolbeltBar");
-    if (!bar) return;
-    bar.scrollBy({ left: direction * 240, behavior: "smooth" });
-  }
-
-  /**
-   * Saved Kundlis Local Storage Management
-   */
-  getSavedKundlis() {
-    try {
-      const data = localStorage.getItem("bramhahora_saved_kundlis");
-      if (data) return JSON.parse(data);
-    } catch (e) {}
-    const defaults = [
-      {
-        id: "knd_1",
-        name: "शुभम कुमार (Shubham Kumar)",
-        gender: "Male",
-        birth_date: "1994-05-16",
-        birth_time: "17:00:00",
-        city: "Nanpara",
-        latitude: 27.8643,
-        longitude: 81.5033,
-        ayanamsa: "Lahiri",
-        lagna: "तुला (Libra 9.59°)"
-      },
-      {
-        id: "knd_2",
-        name: "पं. शुभम तिवारी",
-        gender: "Male",
-        birth_date: "1992-10-24",
-        birth_time: "08:24:00",
-        city: "Varanasi",
-        latitude: 25.3176,
-        longitude: 82.9739,
-        ayanamsa: "Lahiri",
-        lagna: "वृश्चिक (Scorpio)"
-      }
-    ];
-    try {
-      localStorage.setItem("bramhahora_saved_kundlis", JSON.stringify(defaults));
-    } catch (e) {}
-    return defaults;
-  }
-
-  saveKundli(record) {
-    const list = this.getSavedKundlis();
-    const existingIdx = list.findIndex(k => k.id === record.id || (k.name === record.name && k.birth_date === record.birth_date));
-    if (existingIdx >= 0) {
-      list[existingIdx] = record;
-    } else {
-      list.unshift(record);
+    const shouldSave = document.getElementById("formSaveKundli").checked;
+    if (shouldSave) {
+      this.saveCurrentKundli();
     }
-    localStorage.setItem("bramhahora_saved_kundlis", JSON.stringify(list));
-  }
-
-  saveCurrentKundliFromForm() {
-    const name = document.getElementById("formName").value || "जातक";
-    const genderEl = document.getElementById("formGender");
-    const gender = genderEl ? genderEl.value : "Male";
-    const birth_date = document.getElementById("formDate").value;
-    let bTime = document.getElementById("formTime").value || "12:00:00";
-    if (bTime.split(":").length === 2) bTime += ":00";
-    const city = document.getElementById("formCity").value || "Nanpara";
-    const lat = parseFloat(document.getElementById("formLat").value) || 27.8643;
-    const lon = parseFloat(document.getElementById("formLon").value) || 81.5033;
-    const ayanamsa = document.getElementById("formAyanamsa").value || "Lahiri";
-
-    const record = {
-      id: "knd_" + Date.now(),
-      name,
-      gender,
-      birth_date,
-      birth_time: bTime,
-      city,
-      latitude: lat,
-      longitude: lon,
-      ayanamsa,
-      lagna: this.chartData ? (this.chartData.lagna_sign_name || "तुला") : "तुला"
-    };
-
-    this.saveKundli(record);
-    alert(`💾 कुण्डली "${name}" सफलतापूर्वक सहेज ली गई है! आप इसे [📂] बटन से कभी भी लोड कर सकते हैं।`);
-  }
-
-  openSavedKundlisModal() {
-    const modal = document.getElementById("savedKundlisModal");
-    if (!modal) return;
-    this.renderSavedKundlisList();
-    modal.classList.add("active");
-  }
-
-  renderSavedKundlisList() {
-    const box = document.getElementById("savedKundlisContainer");
-    if (!box) return;
-    const list = this.getSavedKundlis();
-    if (list.length === 0) {
-      box.innerHTML = `<div style="text-align:center; padding:30px; color:#64748B;">कोई सहेजी गई कुण्डली उपलब्ध नहीं है।</div>`;
-      return;
-    }
-    let html = "";
-    list.forEach(k => {
-      html += `
-        <div class="saved-kundli-card">
-          <div class="saved-kundli-title">
-            <span>👤 ${k.name}</span>
-            <span class="badge badge-own">${k.gender === "Female" ? "स्त्री" : "पुरुष"}</span>
-          </div>
-          <div class="saved-kundli-meta">
-            <span>📅 ${k.birth_date} | ⏰ ${k.birth_time.substring(0,5)}</span>
-            <span>📍 ${k.city} (${k.latitude.toFixed(2)}° N, ${k.longitude.toFixed(2)}° E)</span>
-            <span>☸️ लग्न: <b>${k.lagna || "गणना शेष"}</b> | अयनांश: ${k.ayanamsa}</span>
-          </div>
-          <div class="saved-kundli-actions">
-            <button class="btn-load-kundli" onclick="app.loadSavedKundli('${k.id}')">⚡ लाइव लोड करें</button>
-            <button class="btn-del-kundli" onclick="app.deleteSavedKundli('${k.id}')">🗑️ हटाएं</button>
-          </div>
-        </div>
-      `;
-    });
-    box.innerHTML = html;
-  }
-
-  async loadSavedKundli(id) {
-    const list = this.getSavedKundlis();
-    const found = list.find(k => k.id === id);
-    if (!found) return;
-
-    this.client = {
-      name: found.name,
-      gender: found.gender || "Male",
-      birth_date: found.birth_date,
-      birth_time: found.birth_time,
-      city: found.city,
-      latitude: found.latitude,
-      longitude: found.longitude,
-      timezone_offset: 5.5,
-      ayanamsa: found.ayanamsa || "Lahiri"
-    };
-
-    const fName = document.getElementById("formName");
-    const fGender = document.getElementById("formGender");
-    const fDate = document.getElementById("formDate");
-    const fTime = document.getElementById("formTime");
-    const fCity = document.getElementById("formCity");
-    const fLat = document.getElementById("formLat");
-    const fLon = document.getElementById("formLon");
-    const fAya = document.getElementById("formAyanamsa");
-
-    if (fName) fName.value = this.client.name;
-    if (fGender) fGender.value = this.client.gender;
-    if (fDate) fDate.value = this.client.birth_date;
-    if (fTime) fTime.value = this.client.birth_time;
-    if (fCity) fCity.value = this.client.city;
-    if (fLat) fLat.value = this.client.latitude;
-    if (fLon) fLon.value = this.client.longitude;
-    if (fAya) fAya.value = this.client.ayanamsa;
 
     this.closeModals();
     await this.calculateChart();
   }
 
-  deleteSavedKundli(id) {
-    if (!confirm("क्या आप वाकई इस सहेजी गई कुण्डली को हटाना चाहते हैं?")) return;
-    let list = this.getSavedKundlis();
-    list = list.filter(k => k.id !== id);
-    localStorage.setItem("bramhahora_saved_kundlis", JSON.stringify(list));
-    this.renderSavedKundlisList();
-  }
-
-  /**
-   * Filter Modules Search
-   */
   filterModules(query) {
     const q = (query || "").toLowerCase();
     document.querySelectorAll(".module-link-item").forEach(item => {
@@ -1437,13 +1427,11 @@ class JyotishWebApp {
   }
 
   attachEventListeners() {
-    // Search input
     const sInput = document.getElementById("sidebarSearchInput");
     if (sInput) {
       sInput.addEventListener("input", (e) => this.filterModules(e.target.value));
     }
 
-    // City auto-fill
     const cityInput = document.getElementById("formCity");
     if (cityInput) {
       cityInput.addEventListener("input", (e) => {
@@ -1457,13 +1445,11 @@ class JyotishWebApp {
       });
     }
 
-    // New Kundli form submit
     const kForm = document.getElementById("newKundliForm");
     if (kForm) {
       kForm.addEventListener("submit", (e) => this.submitNewKundli(e));
     }
 
-    // Global keyboard shortcuts
     window.addEventListener("keydown", (e) => {
       if (e.key === "Escape") this.closeModals();
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
@@ -1477,7 +1463,7 @@ class JyotishWebApp {
   generateFallbackChart() {
     return {
       lagna_sign_id: 7,
-      lagna_sign: 7, // Libra (तुला)
+      lagna_sign: 7,
       lagna_sign_name: "तुला (Libra)",
       lagna_degree: 9.59,
       ayanamsa_used: "Lahiri (Chitra Paksha)",
