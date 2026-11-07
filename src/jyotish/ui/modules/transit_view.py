@@ -52,10 +52,11 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
     st.write("तात्कालिक ग्रह गोचर, साढ़ेसाती व ढैया, ८x१२ भिन्नाष्टकवर्ग, शोधन व शोधित पिण्ड, कक्षी गोचर, प्रस्तार, भृगु बिन्दु, सर्वतोभद्र, कोटा चक्र व वित्तीय वेध।")
 
     # Initialize interactive transit datetime in session state
-    if "transit_interactive_dt" not in st.session_state or st.session_state.transit_interactive_dt is None:
-        st.session_state.transit_interactive_dt = get_live_local_now(tz_offset)
-
-    cur_t_dt = st.session_state.transit_interactive_dt
+    now_live = get_live_local_now(tz_offset)
+    if "t_manual_date" not in st.session_state:
+        st.session_state.t_manual_date = now_live.date()
+    if "t_manual_time" not in st.session_state:
+        st.session_state.t_manual_time = now_live.time().replace(microsecond=0)
 
     # Interactive Step Clock & Time-Machine
     with st.container(border=True):
@@ -78,29 +79,28 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
             is_now = (lbl == "NOW")
             if c_btn[col_i].button(lbl, key=f"t_clk_btn_{lbl}", use_container_width=True, type="primary" if is_now else "secondary", help=help_txt):
                 if is_now:
-                    st.session_state.transit_interactive_dt = get_live_local_now(tz_offset)
+                    curr_now = get_live_local_now(tz_offset)
+                    st.session_state.t_manual_date = curr_now.date()
+                    st.session_state.t_manual_time = curr_now.time().replace(microsecond=0)
                 else:
-                    st.session_state.transit_interactive_dt = cur_t_dt + delta
+                    comb = datetime.combine(st.session_state.t_manual_date, st.session_state.t_manual_time)
+                    new_dt = comb + delta
+                    st.session_state.t_manual_date = new_dt.date()
+                    st.session_state.t_manual_time = new_dt.time().replace(microsecond=0)
                 st.rerun()
 
         col_gt1, col_gt2, col_gt3 = st.columns([1.5, 1.5, 2])
         with col_gt1:
-            new_date = col_gt1.date_input("📅 गोचर दिनांक (Transit Date)", value=cur_t_dt.date(), format="DD/MM/YYYY", key="t_manual_date")
+            st.date_input("📅 गोचर दिनांक (Transit Date)", key="t_manual_date", format="DD/MM/YYYY")
         with col_gt2:
-            new_time = col_gt2.time_input("🕒 गोचर समय (Transit Time)", value=cur_t_dt.time().replace(microsecond=0), step=60, key="t_manual_time")
+            st.time_input("🕒 गोचर समय (Transit Time)", key="t_manual_time", step=60)
         with col_gt3:
             st.caption(f"📍 स्थान: **{default_city_name}** ({latitude:.2f}°, {longitude:.2f}°)")
-            st.info(f"सक्रिय गोचर: **{cur_t_dt.strftime('%d-%b-%Y %I:%M:%S %p')}**")
+            active_t_dt = datetime.combine(st.session_state.t_manual_date, st.session_state.t_manual_time)
+            st.info(f"सक्रिय गोचर: **{active_t_dt.strftime('%d-%b-%Y %I:%M:%S %p')}**")
 
-        manual_dt = datetime.combine(new_date, new_time)
-        if (manual_dt.date() != cur_t_dt.date() or 
-            manual_dt.time().hour != cur_t_dt.time().hour or 
-            manual_dt.time().minute != cur_t_dt.time().minute):
-            st.session_state.transit_interactive_dt = manual_dt
-            st.rerun()
-
-    t_date = cur_t_dt.date()
-    t_time = cur_t_dt.time()
+    t_date = st.session_state.t_manual_date
+    t_time = st.session_state.t_manual_time
 
     is_topo = bool(st.session_state.get("app_is_topocentric", False))
     alt_val = float(st.session_state.get("app_altitude", 0.0))
@@ -118,9 +118,9 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
         is_topocentric=is_topo
     )
     try:
-        t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system, node_type=node_type_val, topocentric_moon=is_topo, elevation=alt_val)
+        t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system, node_type=node_type_val, topocentric_moon=is_topo, elevation=alt_val, use_cache=False)
     except TypeError:
-        t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system, topocentric_moon=is_topo, elevation=alt_val)
+        t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system, topocentric_moon=is_topo, elevation=alt_val, use_cache=False)
 
     rashi_names_hi = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"]
     rashi_symbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"]
@@ -142,23 +142,41 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
     tab_g1, tab_g2, tab_g3, tab_g4, tab_g5, tab_g6, tab_g7, tab_g8, tab_g9, tab_g10, tab_g11, tab_g12, tab_g13, tab_g14 = st.tabs(tabs)
 
     # =========================================================================
-    # TAB 1: DUAL-RING BI-WHEEL OVERLAY CHART
+    # TAB 1: DUAL-RING BI-WHEEL OVERLAY & TRANSIT LAGNA CHART
     # =========================================================================
     with tab_g1:
-        st.markdown("#### 🎯 जन्म एवं तात्कालिक गोचर संयुक्त ओवरले चक्र (Dual-Ring Bi-Wheel Overlay)")
-        st.caption("अंदर जन्म के ग्रह (नीले रंग में) और बाहर तात्कालिक गोचर ग्रह (सुनहरे रंग में ⚡ चिन्ह के साथ):")
-
         import importlib
         import src.jyotish.ui.chart_renderer as cr_mod
         importlib.reload(cr_mod)
         ChartRenderer = cr_mod.ChartRenderer
 
-        t_pos_dict = {p_n: p_o.sign_id for p_n, p_o in t_chart.planets.items()}
-        bw_svg = ChartRenderer.render_transit_biwheel_svg(chart, t_pos_dict, title=f"जन्म-गोचर ओवरले कुण्डली ({t_date.strftime('%d-%b-%Y')})")
+        c_tmode1, c_tmode2 = st.columns([2.5, 1.5], vertical_alignment="center")
+        with c_tmode1:
+            transit_chart_type = st.radio(
+                "गोचर चक्र प्रदर्शन रूप (Transit Chart Mode)",
+                ["🎯 जन्म-गोचर संयुक्त ओवरले (Dual Bi-Wheel)", "🪐 तात्कालिक गोचर लग्न चक्र (Transit Lagna Kundali)"],
+                horizontal=True,
+                key="transit_view_chart_type_radio"
+            )
+        with c_tmode2:
+            st.caption(f"**गोचर लग्न:** {rashi_names_hi[t_chart.lagna_sign_id - 1]} ({t_chart.lagna_sign_id}) | **समय:** {t_date.strftime('%d-%b-%Y')} {t_time.strftime('%I:%M %p')}")
 
         c_bw1, c_bw2 = st.columns([1.2, 0.8])
         with c_bw1:
-            st.markdown(bw_svg, unsafe_allow_html=True)
+            if "Bi-Wheel" in transit_chart_type:
+                st.caption("अंदर जन्म के ग्रह (नीले रंग में) और बाहर तात्कालिक गोचर ग्रह अंश-कला सहित (सुनहरे रंग में ⚡ चिन्ह के साथ):")
+                bw_svg = ChartRenderer.render_transit_biwheel_svg(chart, t_chart.planets, title=f"जन्म-गोचर ओवरले कुण्डली ({t_date.strftime('%d-%b-%Y')} {t_time.strftime('%I:%M %p')})")
+                st.markdown(bw_svg, unsafe_allow_html=True)
+            else:
+                st.caption("तात्कालिक आकाश की स्वतंत्र गोचर कुण्डली (समय बदलने पर गोचर लग्न व भाव निरंतर घूमते हैं):")
+                c_style = st.session_state.get("app_chart_style", "North Indian")
+                if "South" in c_style:
+                    t_svg = ChartRenderer.render_south_indian_svg(t_chart, title=f"तात्कालिक गोचर लग्न कुण्डली ({t_date.strftime('%d-%b-%Y')} {t_time.strftime('%I:%M %p')})")
+                elif "East" in c_style:
+                    t_svg = ChartRenderer.render_east_indian_svg(t_chart, title=f"तात्कालिक गोचर लग्न कुण्डली ({t_date.strftime('%d-%b-%Y')} {t_time.strftime('%I:%M %p')})")
+                else:
+                    t_svg = ChartRenderer.render_north_indian_svg(t_chart, title=f"तात्कालिक गोचर लग्न कुण्डली ({t_date.strftime('%d-%b-%Y')} {t_time.strftime('%I:%M %p')})")
+                st.markdown(t_svg, unsafe_allow_html=True)
         with c_bw2:
             st.markdown("##### ⚡ गोचर एवं जन्म ग्रह युति वेध (Direct Conjunctions)")
             natal_h_map = {p: chart.planets[p].house_from_lagna for p in chart.planets}

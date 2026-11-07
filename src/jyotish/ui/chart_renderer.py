@@ -440,8 +440,20 @@ class ChartRenderer:
         # Transit planets by house (sign_id 1..12)
         transit_house_planets: Dict[int, List[str]] = {h: [] for h in range(1, 13)}
         if transit_positions:
-            for p_name, s_id in transit_positions.items():
-                short = p_name[:2]
+            for p_name, val in transit_positions.items():
+                if hasattr(val, "sign_id"):
+                    s_id = val.sign_id
+                    deg = int(getattr(val, "sign_degree", 0.0))
+                    r_str = "(R)" if getattr(val, "is_retrograde", False) else ""
+                    short = f"{p_name[:2]}{r_str} {deg}°"
+                elif isinstance(val, dict):
+                    s_id = val.get("sign_id", 1)
+                    deg = int(val.get("sign_degree", 0.0))
+                    r_str = "(R)" if val.get("is_retrograde", False) else ""
+                    short = f"{p_name[:2]}{r_str} {deg}°"
+                else:
+                    s_id = int(val)
+                    short = p_name[:2]
                 h_num = ((s_id - lagna_s_id) % 12) + 1
                 transit_house_planets[h_num].append(short)
 
