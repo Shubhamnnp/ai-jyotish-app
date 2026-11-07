@@ -58,9 +58,11 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
     if "t_manual_time" not in st.session_state:
         st.session_state.t_manual_time = now_live.time().replace(microsecond=0)
 
-    # Interactive Step Clock & Time-Machine
-    with st.container(border=True):
-        st.markdown("##### ⏱️ इंटरैक्टिव गोचर काल-घड़ी (11-Step Transit Time Clock)")
+    active_t_dt = datetime.combine(st.session_state.t_manual_date, st.session_state.t_manual_time)
+    expander_title = f"⏱️ गोचर काल-घड़ी एवं टाइम-मशीन (सक्रिय: {active_t_dt.strftime('%d-%b-%Y %I:%M %p')}) — क्लिक करके खोलें/बंद करें"
+
+    # Interactive Step Clock & Time-Machine (Collapsible Expander)
+    with st.expander(expander_title, expanded=st.session_state.get("tm_expanded", False)):
         c_btn = st.columns(11)
         step_actions = [
             ("-1Y", timedelta(days=-365), "१ वर्ष पीछे"),
@@ -78,6 +80,7 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
         for col_i, (lbl, delta, help_txt) in enumerate(step_actions):
             is_now = (lbl == "NOW")
             if c_btn[col_i].button(lbl, key=f"t_clk_btn_{lbl}", use_container_width=True, type="primary" if is_now else "secondary", help=help_txt):
+                st.session_state.tm_expanded = True
                 if is_now:
                     curr_now = get_live_local_now(tz_offset)
                     st.session_state.t_manual_date = curr_now.date()
@@ -89,15 +92,19 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
                     st.session_state.t_manual_time = new_dt.time().replace(microsecond=0)
                 st.rerun()
 
-        col_gt1, col_gt2, col_gt3 = st.columns([1.5, 1.5, 2])
+        col_gt1, col_gt2, col_gt3, col_gt4 = st.columns([1.5, 1.5, 2, 1.2])
         with col_gt1:
             st.date_input("📅 गोचर दिनांक (Transit Date)", key="t_manual_date", format="DD/MM/YYYY")
         with col_gt2:
             st.time_input("🕒 गोचर समय (Transit Time)", key="t_manual_time", step=60)
         with col_gt3:
             st.caption(f"📍 स्थान: **{default_city_name}** ({latitude:.2f}°, {longitude:.2f}°)")
-            active_t_dt = datetime.combine(st.session_state.t_manual_date, st.session_state.t_manual_time)
             st.info(f"सक्रिय गोचर: **{active_t_dt.strftime('%d-%b-%Y %I:%M:%S %p')}**")
+        with col_gt4:
+            st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+            if st.button("✖️ संक्षिप्त करें", key="btn_collapse_tm", use_container_width=True, help="टाइम-मशीन को बंद करें"):
+                st.session_state.tm_expanded = False
+                st.rerun()
 
     t_date = st.session_state.t_manual_date
     t_time = st.session_state.t_manual_time
