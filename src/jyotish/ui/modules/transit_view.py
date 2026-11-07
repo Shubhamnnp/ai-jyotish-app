@@ -61,6 +61,16 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
     active_t_dt = datetime.combine(st.session_state.t_manual_date, st.session_state.t_manual_time)
     expander_title = f"⏱️ गोचर काल-घड़ी एवं टाइम-मशीन (सक्रिय: {active_t_dt.strftime('%d-%b-%Y %I:%M %p')}) — क्लिक करके खोलें/बंद करें"
 
+    # Floating active indicator when auto-play is running
+    if st.session_state.get("transit_autoplay", False):
+        c_p_bar1, c_p_bar2 = st.columns([4, 1.2], vertical_alignment="center")
+        with c_p_bar1:
+            st.success(f"🟢 **गोचर एनीमेशन सक्रिय (Auto-Playing...)** — वर्तमान: `{active_t_dt.strftime('%d-%b-%Y %I:%M %p')}`")
+        with c_p_bar2:
+            if st.button("⏸️ एनीमेशन रोकें (Pause)", key="btn_floating_pause", type="primary", use_container_width=True):
+                st.session_state.transit_autoplay = False
+                st.rerun()
+
     # Interactive Step Clock & Time-Machine (Collapsible Expander)
     with st.expander(expander_title, expanded=st.session_state.get("tm_expanded", False)):
         c_btn = st.columns(11)
@@ -105,6 +115,41 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
             if st.button("✖️ संक्षिप्त करें", key="btn_collapse_tm", use_container_width=True, help="टाइम-मशीन को बंद करें"):
                 st.session_state.tm_expanded = False
                 st.rerun()
+
+        # Auto-Play Continuous Motion Controls
+        st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
+        col_ap1, col_ap2, col_ap3 = st.columns([1.6, 2.4, 2.0], vertical_alignment="center")
+        is_playing = st.session_state.get("transit_autoplay", False)
+        with col_ap1:
+            if is_playing:
+                if st.button("⏸️ एनीमेशन रोकें (Pause)", key="btn_transit_pause", type="primary", use_container_width=True):
+                    st.session_state.transit_autoplay = False
+                    st.rerun()
+            else:
+                if st.button("▶️ ऑटो-प्ले (Auto-Play)", key="btn_transit_play", type="secondary", use_container_width=True, help="ग्रहों को निरंतर समय के साथ घूमते हुए देखने के लिए चलाएं"):
+                    st.session_state.transit_autoplay = True
+                    st.session_state.tm_expanded = True
+                    st.rerun()
+        with col_ap2:
+            step_mode_options = [
+                "+1 दिन प्रति कदम (+1 Day/step)",
+                "+1 सप्ताह प्रति कदम (+1 Week/step)",
+                "+1 माह प्रति कदम (+1 Month/step)",
+                "+1 घंटा प्रति कदम (+1 Hour/step - सूक्ष्म)"
+            ]
+            cur_ap_step = st.session_state.get("transit_play_step_choice", step_mode_options[0])
+            sel_ap_step = st.selectbox(
+                "एनिमेशन गति (Animation Step)",
+                step_mode_options,
+                index=step_mode_options.index(cur_ap_step) if cur_ap_step in step_mode_options else 0,
+                key="sel_transit_play_step"
+            )
+            st.session_state.transit_play_step_choice = sel_ap_step
+        with col_ap3:
+            if is_playing:
+                st.markdown("<span style='color:#10B981; font-weight:800; font-size:13px;'>🟢 एनीमेशन सक्रिय (Playing...)</span>", unsafe_allow_html=True)
+            else:
+                st.caption("स्वचालित गोचर भ्रमण चक्र — ग्रहों की गति को सजीव देखें")
 
     t_date = st.session_state.t_manual_date
     t_time = st.session_state.t_manual_time
@@ -1095,6 +1140,27 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
     ##### 🐉 राहु-केतु गोचर संक्रांति उपाय:
     - 📿 **मंत्र:** `ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः` / `ॐ स्रां स्रीं स्रौं सः केतवे नमः`
     - 🛕 **स्तोत्र:** श्री दुर्गा सप्तशती का पाठ अथवा भैरव कवच। पक्षियों को बाजरा/सप्तधान्य डालें।""")
+
+    # -------------------------------------------------------------------------
+    # TRANSIT CONTINUOUS AUTOPLAY LOOP HANDLER
+    # -------------------------------------------------------------------------
+    if st.session_state.get("transit_autoplay", False):
+        import time
+        time.sleep(0.7)
+        step_choice = st.session_state.get("transit_play_step_choice", "+1 दिन")
+        if "घंटा" in step_choice:
+            delta = timedelta(hours=1)
+        elif "सप्ताह" in step_choice:
+            delta = timedelta(days=7)
+        elif "माह" in step_choice:
+            delta = timedelta(days=30)
+        else:
+            delta = timedelta(days=1)
+        comb = datetime.combine(st.session_state.t_manual_date, st.session_state.t_manual_time)
+        new_dt = comb + delta
+        st.session_state.t_manual_date = new_dt.date()
+        st.session_state.t_manual_time = new_dt.time().replace(microsecond=0)
+        st.rerun()
 
 
 

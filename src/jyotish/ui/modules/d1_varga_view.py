@@ -219,31 +219,92 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
         chart_view_mode = st.session_state.get("app_chart_view_mode", "Single")
 
         if chart_view_mode == "Quad":
-            st.markdown("#### 🖥️ ४-कुण्डली एकीकृत्त वर्कबेंच (D1 लग्न + D9 नवांश + D10 दशमांश + D7 सप्तांश)")
-            st.caption("विश्वस्तरीय वैदिक ज्योतिष वर्कबेंच समान एक ही स्क्रीन पर प्रमुख वर्ग चक्रों का एक साथ अध्ययन:")
+            st.markdown("#### 🖥️ ४-कुण्डली एकीकृत्त कस्टम वर्कबेंच (Multi-Chart Split-Screen Worksheet)")
+            st.caption("विश्वस्तरीय वैदिक ज्योतिष वर्कबेंच समान एक ही स्क्रीन पर किसी भी ४ वर्ग चक्रों का एक साथ अध्ययन:")
+
+            v_opts = list(chart.vargas.keys()) if chart.vargas else ["D1"]
+            if "D1" not in v_opts:
+                v_opts = ["D1"] + v_opts
+
+            # Classical Focus Presets
+            st.markdown("##### 🎯 शास्त्रीय अध्ययन प्रीसेट्स (Quick Focus Presets):")
+            c_ps1, c_ps2, c_ps3, c_ps4, c_ps5 = st.columns(5)
+            if c_ps1.button("👑 सामान्य दैवज्ञ", key="btn_preset_general", use_container_width=True, help="D1 लग्न + D9 नवांश + D10 दशमांश + D7 सप्तांश"):
+                st.session_state.quad_slot_1 = "D1"
+                st.session_state.quad_slot_2 = "D9"
+                st.session_state.quad_slot_3 = "D10"
+                st.session_state.quad_slot_4 = "D7"
+                st.rerun()
+            if c_ps2.button("💼 करियर व अर्थ", key="btn_preset_career", use_container_width=True, help="D1 लग्न + D9 नवांश + D10 दशमांश + D11 एकादशांश"):
+                st.session_state.quad_slot_1 = "D1"
+                st.session_state.quad_slot_2 = "D9"
+                st.session_state.quad_slot_3 = "D10"
+                st.session_state.quad_slot_4 = "D11" if "D11" in v_opts else "D2"
+                st.rerun()
+            if c_ps3.button("💍 विवाह व संबंध", key="btn_preset_marriage", use_container_width=True, help="D1 लग्न + D9 नवांश + D7 सप्तांश + D3 द्रेष्काण"):
+                st.session_state.quad_slot_1 = "D1"
+                st.session_state.quad_slot_2 = "D9"
+                st.session_state.quad_slot_3 = "D7"
+                st.session_state.quad_slot_4 = "D3"
+                st.rerun()
+            if c_ps4.button("🏥 स्वास्थ्य व अरिष्ट", key="btn_preset_health", use_container_width=True, help="D1 लग्न + D6 षष्ठांश + D8 अष्टांश + D30 त्रिंशांश"):
+                st.session_state.quad_slot_1 = "D1"
+                st.session_state.quad_slot_2 = "D6" if "D6" in v_opts else "D9"
+                st.session_state.quad_slot_3 = "D8" if "D8" in v_opts else "D3"
+                st.session_state.quad_slot_4 = "D30" if "D30" in v_opts else "D12"
+                st.rerun()
+            if c_ps5.button("🧘 साधना व प्रारब्ध", key="btn_preset_spiritual", use_container_width=True, help="D1 लग्न + D9 नवांश + D20 विंशांश + D60 षष्ट्यंश"):
+                st.session_state.quad_slot_1 = "D1"
+                st.session_state.quad_slot_2 = "D9"
+                st.session_state.quad_slot_3 = "D20" if "D20" in v_opts else "D12"
+                st.session_state.quad_slot_4 = "D60" if "D60" in v_opts else "D7"
+                st.rerun()
+
+            st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
+
+            def render_quad_slot(col, slot_key, label, default_code):
+                with col:
+                    cur_code = st.session_state.get(slot_key, default_code)
+                    if cur_code not in v_opts:
+                        cur_code = default_code if default_code in v_opts else v_opts[0]
+                    sel_code = st.selectbox(
+                        label,
+                        v_opts,
+                        index=v_opts.index(cur_code),
+                        key=f"quad_sel_{slot_key}",
+                        format_func=lambda x: f"{x} - {chart.vargas[x].varga_name}" if (chart.vargas and x in chart.vargas and hasattr(chart.vargas[x], 'varga_name')) else x
+                    )
+                    if sel_code != cur_code:
+                        st.session_state[slot_key] = sel_code
+                        st.rerun()
+
+                    # Dynamic Sampradaya Variation Allocation if needed
+                    cur_d3_act = st.session_state.get("v_d3_meth", "parashari")
+                    cur_d9_act = st.session_state.get("v_d9_meth", "parashari")
+                    cur_d2_act = st.session_state.get("v_d2_meth", "parashari")
+                    if sel_code == "D3" and cur_d3_act != "parashari":
+                        chart.vargas["D3"] = VargaCalculator.calculate_d3(chart, variation=cur_d3_act)
+                    elif sel_code == "D9" and cur_d9_act != "parashari":
+                        chart.vargas["D9"] = VargaCalculator.calculate_d9(chart, variation=cur_d9_act)
+                    elif sel_code == "D2" and cur_d2_act != "parashari":
+                        chart.vargas["D2"] = VargaCalculator.calculate_d2(chart, variation=cur_d2_act)
+
+                    target_v = chart.vargas.get(sel_code) if (chart.vargas and sel_code in chart.vargas) else None
+                    v_name = target_v.varga_name if target_v else sel_code
+                    v_title = f"{sel_code} - {v_name}"
+                    svg_out = render_chart_svg(chart, v_title, varga_code=sel_code)
+                    st.markdown(f'<div class="kundali-chart" style="width:100%;">{svg_out}</div>', unsafe_allow_html=True)
+                    l_sign = target_v.lagna_sign_name if target_v else chart.lagna_sign_name
+                    l_id = target_v.lagna_sign_id if target_v else chart.lagna_sign_id
+                    st.caption(f"**{sel_code} लग्न:** {l_sign} ({l_id})")
 
             q_col1, q_col2 = st.columns(2, gap="medium")
-            with q_col1:
-                svg_d1 = render_chart_svg(chart, "D1 जन्म लग्न (Rashi)", varga_code="D1")
-                st.markdown(f'<div class="kundali-chart" style="width:100%;">{svg_d1}</div>', unsafe_allow_html=True)
-                st.caption(f"**D1 लग्न:** {chart.lagna_sign_name} ({chart.lagna_sign_id}) | आत्मकारक (AK): {chart.atmakaraka}")
-            with q_col2:
-                svg_d9 = render_chart_svg(chart, "D9 नवांश (Navamsha — धर्म व दांपत्य)", varga_code="D9")
-                st.markdown(f'<div class="kundali-chart" style="width:100%;">{svg_d9}</div>', unsafe_allow_html=True)
-                d9_v = chart.vargas.get("D9")
-                st.caption(f"**D9 नवांश लग्न:** {d9_v.lagna_sign_name if d9_v else '—'} | विवाह, भाग्य व ग्रहों का आंतरिक बल")
+            render_quad_slot(q_col1, "quad_slot_1", "चक्र १ (Slot 1)", "D1")
+            render_quad_slot(q_col2, "quad_slot_2", "चक्र २ (Slot 2)", "D9")
 
             q_col3, q_col4 = st.columns(2, gap="medium")
-            with q_col3:
-                svg_d10 = render_chart_svg(chart, "D10 दशमांश (Dashamsha — कर्म व पद)", varga_code="D10")
-                st.markdown(f'<div class="kundali-chart" style="width:100%;">{svg_d10}</div>', unsafe_allow_html=True)
-                d10_v = chart.vargas.get("D10")
-                st.caption(f"**D10 दशमांश लग्न:** {d10_v.lagna_sign_name if d10_v else '—'} | आजीविका, नेतृत्व व करियर")
-            with q_col4:
-                svg_d7 = render_chart_svg(chart, "D7 सप्तांश (Saptamsha — संतान व सृजन)", varga_code="D7")
-                st.markdown(f'<div class="kundali-chart" style="width:100%;">{svg_d7}</div>', unsafe_allow_html=True)
-                d7_v = chart.vargas.get("D7")
-                st.caption(f"**D7 सप्तांश लग्न:** {d7_v.lagna_sign_name if d7_v else '—'} | वंश वृद्धि, संतान सुख व रचनात्मकता")
+            render_quad_slot(q_col3, "quad_slot_3", "चक्र ३ (Slot 3)", "D10")
+            render_quad_slot(q_col4, "quad_slot_4", "चक्र ४ (Slot 4)", "D7")
 
         # =========================================================================
         # 🏛️ PARASHARA'S LIGHT AUTHENTIC 2x2 WORKSTATION GRID (70% RIGHT PANEL)
