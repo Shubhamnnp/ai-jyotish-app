@@ -5807,6 +5807,9 @@ house_system = st.session_state.get("app_house_system", "Whole Sign")
 chart_style = st.session_state.get("app_chart_style", "North Indian (Diamond)")
 pro_mode = st.session_state.get("app_pro_mode", True)
 
+is_topocentric = bool(st.session_state.get("app_is_topocentric", False))
+altitude_m = float(st.session_state.get("app_altitude", 0.0))
+
 # Compute full baseline chart with all extensions
 birth_profile = BirthData(
     name=name,
@@ -5816,7 +5819,9 @@ birth_profile = BirthData(
     longitude=longitude,
     timezone_offset=tz_offset,
     city=default_city_name,
-    confidence=confidence
+    confidence=confidence,
+    altitude=altitude_m,
+    is_topocentric=is_topocentric
 )
 
 try:
@@ -5824,14 +5829,18 @@ try:
         birth_profile,
         ayanamsa_name=ayanamsa,
         house_system=house_system,
-        node_type=node_type_val
+        node_type=node_type_val,
+        topocentric_moon=is_topocentric,
+        elevation=altitude_m
     )
 except Exception:
     try:
         chart = default_chart_calculator.calculate_full_chart(
             birth_profile,
             ayanamsa_name=ayanamsa,
-            house_system=house_system
+            house_system=house_system,
+            topocentric_moon=is_topocentric,
+            elevation=altitude_m
         )
     except Exception:
         try:
@@ -5854,12 +5863,13 @@ if getattr(chart, "metadata", None):
     from src.jyotish.ui.components.provenance import render_provenance_badge_html
     st.markdown(render_provenance_badge_html(chart, verified_rules_count=32), unsafe_allow_html=True)
     with st.expander("🌐 Astronomical Provenance & Metadata Details (Shastriya Pramana)", expanded=False):
-        c1, c2, c3, c4 = st.columns(4)
+        c1, c2, c3, c4, c5 = st.columns(5)
         c1.metric("Engine", meta.engine)
         c2.metric("Julian Day (UT)", f"{meta.jd_ut:.5f}")
         c3.metric("Delta T", f"{meta.delta_t_seconds:.2f}s")
         c4.metric("Ayanamsa", f"{meta.ayanamsa_name} ({meta.ayanamsa_value:.4f}°)")
-        st.caption(f"Timezone: `{meta.timezone_iana}` | House System: `{meta.house_system}` | Ephemeris: `{meta.ephemeris_mode}` | UTC: `{meta.utc_datetime}`")
+        c5.metric("Coord Mode", getattr(chart, "calculation_mode", "Geocentric"))
+        st.caption(f"Timezone: `{meta.timezone_iana}` | House System: `{meta.house_system}` | Ephemeris: `{meta.ephemeris_mode}` | Mode: `{getattr(chart, 'calculation_mode', 'Geocentric')}` (Moon Parallax: `{getattr(chart, 'moon_parallax_arcmin', 0.0):.2f}'`) | UTC: `{meta.utc_datetime}`")
 affliction_engine = AfflictionEngine(chart)
 vastu_engine = VastuJyotishEngine(chart)
 
@@ -8143,6 +8153,30 @@ with st.container(key="top_frozen_header_container", border=False):
                     in_pm = col_st5.toggle("⚡ Pro Mode", value=st.session_state.get("app_pro_mode", True), key="gla_settings_pm_toggle")
                     st.session_state.app_pro_mode = in_pm
 
+                st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+
+                # Row 4: Topocentric Parallax Correction
+                st.markdown("##### 🌍 स्थान-केन्द्रीय (Topocentric) गणना व प्रेक्षक लम्बन (Observer Parallax)")
+                col_tp1, col_tp2, col_tp3 = st.columns([2.0, 1.5, 2.5])
+                with col_tp1:
+                    cur_topo = st.session_state.get("app_is_topocentric", False)
+                    in_topo = col_tp1.toggle("⚲ स्थान-केन्द्रीय (Topocentric) गणना", value=cur_topo, key="gla_settings_topocentric_toggle", help="पृथ्वी के केंद्र के बजाय जन्म स्थान की सतह (समुद्र तल से ऊंचाई) से ग्रहों और विशेष रूप से चन्द्रमा की सटीक स्थिति")
+                    if in_topo != cur_topo:
+                        st.session_state.app_is_topocentric = in_topo
+                        st.rerun()
+                with col_tp2:
+                    cur_alt = float(st.session_state.get("app_altitude", 0.0))
+                    in_alt = col_tp2.number_input("ऊंचाई / Elevation (मीटर)", value=cur_alt, min_value=-500.0, max_value=9000.0, step=50.0, key="gla_settings_alt_input", help="जन्म स्थान की समुद्र तल से ऊंचाई")
+                    if in_alt != cur_alt:
+                        st.session_state.app_altitude = in_alt
+                        st.rerun()
+                with col_tp3:
+                    if st.session_state.get("app_is_topocentric", False):
+                        moon_px = getattr(chart, "moon_parallax_arcmin", 0.0)
+                        st.success(f"✅ **Topocentric सक्रिय**: चन्द्र लम्बन सुधार ~ {moon_px:.2f} कला (arcmin)")
+                    else:
+                        st.info("ℹ️ **पारम्परिक भू-केन्द्रीय (Geocentric - BPHS)** सक्रिय (पृथ्वी केन्द्र)")
+
                 st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
                 col_cls1, col_cls2 = st.columns([3, 1])
                 with col_cls2:
@@ -9641,7 +9675,6 @@ with st.container(key="top_frozen_header_container", border=False):
         selected_idx = MODULE_OPTIONS.index(selected_module) if selected_module in MODULE_OPTIONS else curr_idx
         if selected_idx != curr_idx:
             st.session_state.active_module_idx = selected_idx
-            st.session_state.top_bar_module_selector = MODULE_OPTIONS[selected_idx]
             st.rerun()
 
     # ---------------------------------------------------------

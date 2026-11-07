@@ -24,6 +24,8 @@ class BirthData(BaseModel):
     fold: Optional[int] = Field(default=None, description="0 (first/DST) or 1 (second/standard) for ambiguous DST transition times")
     gender: str = Field(default="male", description="male / female")
     house_system: str = Field(default="Whole Sign", description="Whole Sign, Equal, Sripati, Porphyry, Placidus")
+    altitude: float = Field(default=0.0, description="Elevation above sea level in meters (for topocentric calculations)")
+    is_topocentric: bool = Field(default=False, description="Whether to compute positions from observer's location (topocentric) vs Earth's center (geocentric)")
 
 
 class PlanetPosition(BaseModel):
@@ -230,6 +232,8 @@ class KundaliChart(BaseModel):
     upagrahas: Optional[UpagrahaResult] = None
     metadata: Optional[CalculationMetadata] = None
     engine_degraded: bool = False
+    calculation_mode: str = "Geocentric"
+    moon_parallax_arcmin: float = 0.0
 
 
 class DashaLevel(BaseModel):

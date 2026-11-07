@@ -310,7 +310,15 @@ class ChartCalculator:
             dt_utc = birth_dt - timedelta(hours=tz_off)
 
         # 2. Compute Planetary Positions & Ayanamsa
-        raw_positions, ayanamsa_val = self.provider.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type, **kwargs)
+        calc_kwargs = dict(kwargs)
+        is_topo = bool(getattr(birth_data, "is_topocentric", False)) or bool(calc_kwargs.get("topocentric_moon", False))
+        if is_topo:
+            calc_kwargs["topocentric_moon"] = True
+            calc_kwargs.setdefault("latitude", birth_data.latitude)
+            calc_kwargs.setdefault("longitude", birth_data.longitude)
+            calc_kwargs.setdefault("elevation", getattr(birth_data, "altitude", 0.0))
+
+        raw_positions, ayanamsa_val = self.provider.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type, **calc_kwargs)
 
         # 3. Compute Lagna & Houses
         effective_hsys = house_system or getattr(birth_data, "house_system", "Whole Sign")
@@ -446,6 +454,16 @@ class ChartCalculator:
         tz_iana = getattr(birth_data, "timezone", "Asia/Kolkata") or "Asia/Kolkata"
         engine_id = "degraded_pyephem" if is_degraded else "swisseph"
 
+        moon_parallax_arcmin = 0.0
+        if is_topo:
+            try:
+                geo_raw, _ = self.provider.get_planet_positions(dt_utc, ayanamsa_name, node_type=node_type)
+                if "Moon" in geo_raw and "Moon" in raw_positions:
+                    d_moon = (raw_positions["Moon"]["longitude"] - geo_raw["Moon"]["longitude"] + 180.0) % 360.0 - 180.0
+                    moon_parallax_arcmin = round(abs(d_moon) * 60.0, 2)
+            except Exception:
+                moon_parallax_arcmin = 0.0
+
         calc_meta = CalculationMetadata(
             engine=engine_id,
             engine_type=engine_str,
@@ -455,8 +473,8 @@ class ChartCalculator:
             ayanamsa={"name": ayanamsa_name, "value_degrees": ayanamsa_val},
             house_system=canonical_hsys,
             node_type=node_type,
-            coordinate_type="topocentric" if kwargs.get("topocentric_moon") else "geocentric",
-            topocentric_moon=bool(kwargs.get("topocentric_moon", False)),
+            coordinate_type="topocentric" if is_topo else "geocentric",
+            topocentric_moon=is_topo,
             polar_latitude_adjusted=polar_adjusted or (abs(birth_data.latitude) > 66.5),
             calculation_timestamp_utc=datetime.now(timezone.utc),
             utc_datetime=dt_utc,
@@ -481,6 +499,8 @@ class ChartCalculator:
             atmakaraka=atmakaraka,
             metadata=calc_meta,
             engine_degraded=is_degraded,
+            calculation_mode="Topocentric" if is_topo else "Geocentric",
+            moon_parallax_arcmin=moon_parallax_arcmin,
         )
         if use_cache and cache_key:
             default_chart_cache.put(cache_key, res_chart)

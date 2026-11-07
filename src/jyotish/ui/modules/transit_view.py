@@ -51,31 +51,59 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
     st.subheader("🪐 गोचर, अष्टकवर्ग, सर्वतोभद्र चक्र एवं कोटा चक्र")
     st.write("तात्कालिक ग्रह गोचर, साढ़ेसाती व ढैया, ८x१२ भिन्नाष्टकवर्ग, शोधन व शोधित पिण्ड, कक्षी गोचर, प्रस्तार, भृगु बिन्दु, सर्वतोभद्र, कोटा चक्र व वित्तीय वेध।")
 
-    # Interactive Transit Time-Machine
-    with st.expander("⏱️ गोचर समय-चक्र टाइम-मशीन (Interactive Transit Date Slider)", expanded=False):
-        col_tm1, col_tm2 = st.columns([3, 1])
-        with col_tm1:
-            time_offset_days = st.slider(
-                "दिनों को आगे-पीछे खींचकर भविष्य/भूतकाल का गोचर देखें (Days Offset from Today)",
-                min_value=-365,
-                max_value=365*5,
-                value=0,
-                step=1
-            )
-        with col_tm2:
-            live_transit_now = get_live_local_now(tz_offset)
-            target_calc_date = live_transit_now.date() + timedelta(days=time_offset_days)
-            st.metric("सक्रिय गोचर दिनांक", target_calc_date.strftime("%d-%b-%Y"), f"{'+' if time_offset_days>=0 else ''}{time_offset_days} दिन")
+    # Initialize interactive transit datetime in session state
+    if "transit_interactive_dt" not in st.session_state or st.session_state.transit_interactive_dt is None:
+        st.session_state.transit_interactive_dt = get_live_local_now(tz_offset)
 
-    # Date-time picker for live transit
-    col_gt1, col_gt2, col_gt3 = st.columns([1.5, 1.5, 2])
-    with col_gt1:
-        t_date = st.date_input("📅 गोचर दिनांक (Transit Date)", value=target_calc_date if 'target_calc_date' in locals() else live_transit_now.date(), format="DD/MM/YYYY")
-    with col_gt2:
-        t_time = st.time_input("🕒 गोचर समय (Transit Time)", value=live_transit_now.time().replace(microsecond=0), step=1)
-    with col_gt3:
-        st.write("")
-        st.caption("📍 स्थान: **" + str(default_city_name) + "** (Lat: " + f"{latitude:.2f}" + ", Lon: " + f"{longitude:.2f}" + ")")
+    cur_t_dt = st.session_state.transit_interactive_dt
+
+    # Interactive Step Clock & Time-Machine
+    with st.container(border=True):
+        st.markdown("##### ⏱️ इंटरैक्टिव गोचर काल-घड़ी (11-Step Transit Time Clock)")
+        c_btn = st.columns(11)
+        step_actions = [
+            ("-1Y", timedelta(days=-365), "१ वर्ष पीछे"),
+            ("-1M", timedelta(days=-30), "१ माह पीछे"),
+            ("-1W", timedelta(days=-7), "१ सप्ताह पीछे"),
+            ("-1D", timedelta(days=-1), "१ दिन पीछे"),
+            ("-1h", timedelta(hours=-1), "१ घंटा पीछे"),
+            ("NOW", None, "वर्तमान तात्कालिक समय"),
+            ("+1h", timedelta(hours=1), "१ घंटा आगे"),
+            ("+1D", timedelta(days=1), "१ दिन आगे"),
+            ("+1W", timedelta(days=7), "१ सप्ताह आगे"),
+            ("+1M", timedelta(days=30), "१ माह आगे"),
+            ("+1Y", timedelta(days=365), "१ वर्ष आगे"),
+        ]
+        for col_i, (lbl, delta, help_txt) in enumerate(step_actions):
+            is_now = (lbl == "NOW")
+            if c_btn[col_i].button(lbl, key=f"t_clk_btn_{lbl}", use_container_width=True, type="primary" if is_now else "secondary", help=help_txt):
+                if is_now:
+                    st.session_state.transit_interactive_dt = get_live_local_now(tz_offset)
+                else:
+                    st.session_state.transit_interactive_dt = cur_t_dt + delta
+                st.rerun()
+
+        col_gt1, col_gt2, col_gt3 = st.columns([1.5, 1.5, 2])
+        with col_gt1:
+            new_date = col_gt1.date_input("📅 गोचर दिनांक (Transit Date)", value=cur_t_dt.date(), format="DD/MM/YYYY", key="t_manual_date")
+        with col_gt2:
+            new_time = col_gt2.time_input("🕒 गोचर समय (Transit Time)", value=cur_t_dt.time().replace(microsecond=0), step=60, key="t_manual_time")
+        with col_gt3:
+            st.caption(f"📍 स्थान: **{default_city_name}** ({latitude:.2f}°, {longitude:.2f}°)")
+            st.info(f"सक्रिय गोचर: **{cur_t_dt.strftime('%d-%b-%Y %I:%M:%S %p')}**")
+
+        manual_dt = datetime.combine(new_date, new_time)
+        if (manual_dt.date() != cur_t_dt.date() or 
+            manual_dt.time().hour != cur_t_dt.time().hour or 
+            manual_dt.time().minute != cur_t_dt.time().minute):
+            st.session_state.transit_interactive_dt = manual_dt
+            st.rerun()
+
+    t_date = cur_t_dt.date()
+    t_time = cur_t_dt.time()
+
+    is_topo = bool(st.session_state.get("app_is_topocentric", False))
+    alt_val = float(st.session_state.get("app_altitude", 0.0))
 
     # Calculate live transit chart
     t_birth = BirthData(
@@ -85,12 +113,14 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
         latitude=latitude,
         longitude=longitude,
         timezone_offset=tz_offset,
-        city=default_city_name
+        city=default_city_name,
+        altitude=alt_val,
+        is_topocentric=is_topo
     )
     try:
-        t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system, node_type=node_type_val)
+        t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system, node_type=node_type_val, topocentric_moon=is_topo, elevation=alt_val)
     except TypeError:
-        t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system)
+        t_chart = default_chart_calculator.calculate_full_chart(t_birth, ayanamsa_name=ayanamsa, house_system=house_system, topocentric_moon=is_topo, elevation=alt_val)
 
     rashi_names_hi = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुम्भ", "मीन"]
     rashi_symbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"]
