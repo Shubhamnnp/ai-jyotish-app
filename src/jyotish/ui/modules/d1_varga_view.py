@@ -190,7 +190,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
             '🌙 चन्द्र कुण्डली',
             '☀️ सूर्य कुण्डली',
             '⚔️ ग्रह युद्ध',
-            '🌟 विशेष लग्न',
+            '🏰 १२ आरूढ़ पद (Arudha Padas)',
             '🏰 कोटा चक्र'
         ]
     st.subheader("📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (Natal & Divisional Charts)")
@@ -463,6 +463,47 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
                 v_desc = VARGA_SIGNIFICANCE.get(varga_choice, "शास्त्रीय सूक्ष्म विश्लेषण")
                 st.info(f"🎯 **{varga_choice} ({v_name}) शास्त्रीय प्रयोजन:** {v_desc}")
+
+                # ─── Dynamic Varga Phalit Synthesis Card ───
+                try:
+                    _v_planets = getattr(target_varga, 'planets', {}) if target_varga else {}
+                    _v_exalted, _v_own, _v_deb = [], [], []
+                    _EXALT_SIGNS = {"Sun": "Aries", "Moon": "Taurus", "Mars": "Capricorn", "Mercury": "Virgo", "Jupiter": "Cancer", "Venus": "Pisces", "Saturn": "Libra", "Rahu": "Taurus", "Ketu": "Scorpio"}
+                    _DEB_SIGNS = {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries", "Rahu": "Scorpio", "Ketu": "Taurus"}
+                    
+                    for _pname, _ppos in _v_planets.items():
+                        _psign = getattr(_ppos, 'sign_name', '')
+                        if _psign == _EXALT_SIGNS.get(_pname):
+                            _v_exalted.append(_pname)
+                        elif _psign == _DEB_SIGNS.get(_pname):
+                            _v_deb.append(_pname)
+                        elif _psign in SIGN_LORDS and SIGN_LORDS.get(_psign) == _pname:
+                            _v_own.append(_pname)
+
+                    _v_lagna_lord = SIGN_LORDS.get(v_lagna_sign, "—")
+                    _v_synthesis_points = []
+                    if _v_exalted:
+                        _v_synthesis_points.append(f"🌟 **उच्च ग्रह ({', '.join(_v_exalted)}):** इस वर्ग के कार्यक्षेत्र में असाधारण सफलता एवं प्रभुत्व का संकेत देते हैं।")
+                    if _v_own:
+                        _v_synthesis_points.append(f"🏰 **स्वगृही ग्रह ({', '.join(_v_own)}):** वर्ग फल में स्थायित्व एवं आत्म-निर्भरता का निर्माण करते हैं।")
+                    if _v_deb:
+                        _v_synthesis_points.append(f"⚠️ **नीच ग्रह ({', '.join(_v_deb)}):** संबंधित विषय में अतिरिक्त पुरुषार्थ, जागरूकता एवं शांति उपायों की आवश्यकता दर्शाते हैं।")
+                    if not _v_synthesis_points:
+                        _v_synthesis_points.append("⚖️ **संतुलित ग्रह प्रभाव:** ग्रह सामान्य गरिमा के साथ स्थित होकर मध्यम एवं क्रमिक परिणाम प्रदान कर रहे हैं।")
+
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%); border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 14px; margin-top: 8px; font-size: 12px; color: #1E293B;">
+                        <div style="font-weight: 800; color: #1E40AF; margin-bottom: 4px; display:flex; justify-content:space-between;">
+                            <span>🔬 <b>{varga_choice} शास्त्रीय फलित समन्वय (Varga Synthesis)</b></span>
+                            <span style="color: #64748B;">वर्ग लग्न: <b>{v_lagna_sign}</b> (स्वामी: <b>{_v_lagna_lord}</b>)</span>
+                        </div>
+                        <div style="line-height: 1.5;">
+                            {'<br/>'.join(_v_synthesis_points)}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                except Exception as _e_syn:
+                    st.caption(f"वर्ग समन्वय लोड हो रहा है: {_e_syn}")
 
             with col_chart2:
                 _is_astrallis_chart = ("Astrallis" in curr_style or "Circular" in curr_style)
@@ -1170,6 +1211,35 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
         )
         st.markdown(table_html, unsafe_allow_html=True)
 
+        # ─── Pushkara & Vargottama Dynamic Timing & Auspicious Elevation Card ───
+        try:
+            _p_pn_names = [p for p, info in p_audit.get("planets", {}).items() if info.get("is_pushkara_navamsha")]
+            _p_pb_names = [p for p, info in p_audit.get("planets", {}).items() if info.get("is_pushkara_bhaga")]
+            _p_vg_names = [p for p, pos in chart.planets.items() if d9_chart and pos.sign_name == d9_chart.planets.get(p, pos).sign_name]
+            
+            _elev_items = []
+            if _p_pn_names:
+                _elev_items.append(f"🌟 **पुष्कर नवांश स्थित ग्रह ({', '.join(_p_pn_names)}):** इनकी विंशोत्तरी महादशा व अंतर्दशा में जातक को अमृततुल्य पोषण, आकस्मिक भाग्योदय एवं संकटों से दैवीय सुरक्षा प्राप्त होती है।")
+            if _p_pb_names:
+                _elev_items.append(f"🎯 **पुष्कर भाग स्थित ग्रह ({', '.join(_p_pb_names)}):** यह ग्रह परम राजयोगकारक हैं; अपने समय में समाज में शीर्ष प्रतिष्ठा, राजकीय सम्मान व स्थायी समृद्धि प्रदान करते हैं।")
+            if _p_vg_names:
+                _elev_items.append(f"👑 **वर्गोत्तम ग्रह ({', '.join(_p_vg_names)}):** स्वक्षेत्री बल से युक्त होकर दृढ़ इच्छाशक्ति, मानसिक स्थिरता एवं आजीवन निर्बाध कार्य-सिद्धि प्रदान करते हैं।")
+            if not _elev_items:
+                _elev_items.append("⚖️ **सामान्य शुभ स्थिति:** कुण्डली में अन्य शुभ योगों (केंद्र-त्रिकोण राजयोग, गजकेसरी) के आधार पर दशा-अंतर्दशा का फल संचालित होगा।")
+
+            st.markdown(f"""
+            <div style="background: linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%); border: 1.5px solid #10B981; border-radius: 10px; padding: 12px 16px; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.1);">
+                <div style="color: #065F46; font-size: 13px; font-weight: 900; margin-bottom: 6px; display:flex; align-items:center; gap:6px;">
+                    <span>🛡️ <b>पुष्कर व वर्गोत्तम सक्रिय फलित एवं दशा समय (Auspicious Dasha Timing)</b></span>
+                </div>
+                <div style="font-size: 12px; color: #1E293B; line-height: 1.6;">
+                    {'<br/>'.join(_elev_items)}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        except Exception as _e_pk_syn:
+            st.caption(f"पुष्कर फलित समन्वय: {_e_pk_syn}")
+
         with st.expander("📜 पुष्कर नवांश एवं वर्गोत्तम शास्त्रीय श्लोक व प्रमाण", expanded=True):
             st.markdown("""
             **🌟 पुष्कर नवांश महात्म्य (*जातक पारिजात*, अध्याय १, श्लोक ५७-५८):**
@@ -1438,6 +1508,27 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     _c_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:180px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 8px; text-align:left;">भाव</th><th style="padding:4px 8px; text-align:left;">राशि</th><th style="padding:4px 8px; text-align:left;">आरंभ</th><th style="padding:4px 8px; text-align:left;">मध्य (Cusp)</th><th style="padding:4px 8px; text-align:left;">संधि (अंत)</th></tr></thead><tbody>{"".join(_c_tbl_rows)}</tbody></table></div>'
                     st.markdown(_c_tbl_html, unsafe_allow_html=True)
 
+                # ─── Bhava Sandhi Alert (Zero Bhava Bala Check) ───
+                _sandhi_alerts = []
+                for _pname, _ppos in chart.planets.items():
+                    _plon = _ppos.longitude
+                    for _h in getattr(chart, 'houses', []):
+                        _s_start = getattr(_h, 'sandhi_start', None)
+                        _s_end = getattr(_h, 'sandhi_end', None)
+                        if _s_start is not None:
+                            _d_start = abs((_plon - _s_start + 180.0) % 360.0 - 180.0)
+                            if _d_start <= 1.0:
+                                _sandhi_alerts.append(f"**{_pname}** ({_h.house_number} भाव आरंभ संधि से केवल {_d_start:.2f}°)")
+                        if _s_end is not None:
+                            _d_end = abs((_plon - _s_end + 180.0) % 360.0 - 180.0)
+                            if _d_end <= 1.0:
+                                _sandhi_alerts.append(f"**{_pname}** ({_h.house_number} भाव विराम संधि से केवल {_d_end:.2f}°)")
+
+                if _sandhi_alerts:
+                    st.warning(f"⚠️ **भाव संधि दोष (Sandhi Grihas — निस्तेज / फल शून्य):** {', '.join(_sandhi_alerts)}। शास्त्रीय नियमानुसार जो ग्रह भाव के आरंभ या अंत सीमा के १° के भीतर स्थित होते हैं, उनका भाव-फल सामर्थ्य क्षीण अथवा निष्प्रभावी हो जाता है।")
+                else:
+                    st.success("✅ **संधि दोष रहित:** इस कुण्डली में कोई भी ग्रह भाव संधि के १° के भीतर नहीं है; सभी ग्रह अपने-अपने भाव का पूर्ण एवं स्वतंत्र फल प्रदान कर रहे हैं।")
+
         except Exception as _ebc:
             st.error(f"भाव चलित गणना त्रुटि: {_ebc}")
 
@@ -1525,12 +1616,28 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 elif _h12_planets:
                     _lunar_yogas.append(("🕊️ अनफा योग (Anapha)", f"चन्द्रमा से द्वादश भाव में {', '.join(_h12_planets)} स्थित हैं। जातक निरोगी, विनम्र, उदार, आध्यात्मिक एवं नीतिवान होता है।", "#F0FDF4", "#065F46"))
                 else:
-                    # Kemadruma check
+                    # Kemadruma & Shastric Bhanga check (Phaladeepika Ch. 6, Sloka 5-7)
                     _kendra_planets = [pn for pn, p in chart.planets.items() if ((p.sign_id - _moon.sign_id + 12) % 12) + 1 in [1, 4, 7, 10] and pn not in ["Moon", "Rahu", "Ketu"]]
+                    _lagna_kendra_planets = [pn for pn, p in chart.planets.items() if p.house_from_lagna in [1, 4, 7, 10] and pn not in ["Moon", "Rahu", "Ketu"]]
+                    _jup_aspects_moon = False
+                    if _jup:
+                        _jm_dist = ((_moon.sign_id - _jup.sign_id + 12) % 12) + 1
+                        _jup_aspects_moon = (_jm_dist in [5, 7, 9])
+
+                    _bhanga_points = []
                     if _kendra_planets:
-                        _lunar_yogas.append(("⚖️ केमद्रुम भंग राजयोग", f"चन्द्रमा के अगल-बगल ग्रह नहीं हैं किन्तु केंद्र में {', '.join(_kendra_planets)} स्थित होकर केमद्रुम दोष का पूर्ण निवारण कर रहे हैं।", "#ECFDF5", "#047857"))
+                        _bhanga_points.append(f"चन्द्र केंद्र में स्थित ग्रह ({', '.join(_kendra_planets)})")
+                    if _jup_aspects_moon:
+                        _bhanga_points.append("देवगुरु बृहस्पति की पूर्ण दृष्टि")
+                    if _moon.house_from_lagna in [1, 4, 7, 10]:
+                        _bhanga_points.append("चन्द्रमा का स्वयं लग्न केंद्र में होना")
+                    elif _lagna_kendra_planets:
+                        _bhanga_points.append(f"लग्न केंद्र में स्थित ग्रह ({', '.join(_lagna_kendra_planets)})")
+
+                    if _bhanga_points:
+                        _lunar_yogas.append(("⚖️ केमद्रुम भंग राजयोग", f"चन्द्रमा से द्वितीय/द्वादश रिक्त होने पर भी {', '.join(_bhanga_points)} के प्रभाव से केमद्रुम दोष सर्वथा भंग होकर उच्च कोटि के राजयोग में परिवर्तित हो गया है। (फलदीपिका अ. ६)", "#ECFDF5", "#047857"))
                     else:
-                        _lunar_yogas.append(("⚠️ केमद्रुम योग (Kemadruma)", "चन्द्रमा से द्वितीय एवं द्वादश दोनों रिक्त हैं। जीवन में कभी-कभी मानसिक एकाकीपन या वित्तीय उतार-चढ़ाव संभव है; शिव आराधना शुभप्रद है।", "#FEE2E2", "#991B1B"))
+                        _lunar_yogas.append(("⚠️ केमद्रुम योग (Kemadruma)", "चन्द्रमा से द्वितीय एवं द्वादश दोनों रिक्त हैं। जीवन में कभी-कभी मानसिक एकाकीपन या वित्तीय उतार-चढ़ाव संभव है; शिव आराधना एवं चंद्र कवच पाठ शुभप्रद है।", "#FEE2E2", "#991B1B"))
 
                 # 3. Chandra-Mangala Yoga
                 _mars = chart.planets.get("Mars")
@@ -1626,11 +1733,19 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 _h12_s_planets = [pn for pn, p in chart.planets.items() if p.sign_id == (((_sun.sign_id - 2 + 12) % 12) + 1) and pn not in ["Moon", "Rahu", "Ketu"]]
 
                 if _h2_s_planets and _h12_s_planets:
-                    _solar_yogas.append(("👑 उभयाचारी योग (Ubhayachari)", f"सूर्य के दोनों ओर (द्वितीय में {', '.join(_h2_s_planets)} एवं द्वादश में {', '.join(_h12_s_planets)}) शुभ/ग्रह स्थित हैं। जातक राजा समान सम्मानित, वक्तृत्व कला में निपुण व सुखी होता है।", "#FEF3C7", "#92400E"))
+                    _solar_yogas.append(("👑 उभयाचारी योग (Ubhayachari)", f"सूर्य के दोनों ओर (द्वितीय में {', '.join(_h2_s_planets)} एवं द्वादश में {', '.join(_h12_s_planets)}) ग्रह स्थित हैं। जातक राजा समान सम्मानित, वक्तृत्व कला में निपुण, स्थिर वैभव व सुखी होता है।", "#FEF3C7", "#92400E"))
                 elif _h2_s_planets:
-                    _solar_yogas.append(("🏛️ वेसि योग (Vesi)", f"सूर्य से द्वितीय भाव में {', '.join(_h2_s_planets)} स्थित हैं। जातक धैर्यवान, सत्यवादी, वाक्पटु एवं यशस्वी जीवन व्यतीत करता है।", "#DCFCE7", "#166534"))
+                    _is_subha = any(p in ["Jupiter", "Venus", "Mercury"] for p in _h2_s_planets)
+                    if _is_subha:
+                        _solar_yogas.append(("🏛️ शुभ-वेसि योग (Subha-Vesi)", f"सूर्य से द्वितीय भाव में शुभ ग्रह ({', '.join(_h2_s_planets)}) स्थित हैं। जातक सत्यवादी, वाक्पटु, उदार, धैर्यवान एवं प्रचुर धन-धान्य से संपन्न होता है। (BPHS)", "#DCFCE7", "#166534"))
+                    else:
+                        _solar_yogas.append(("🏛️ पाप-वेसि योग (Papa-Vesi)", f"सूर्य से द्वितीय भाव में क्रूर ग्रह ({', '.join(_h2_s_planets)}) स्थित हैं। जातक तीव्र पराक्रमी, साहसी एवं स्वतंत्र आजीविका का स्वामी होता है।", "#FEF3C7", "#B45309"))
                 elif _h12_s_planets:
-                    _solar_yogas.append(("📚 वोसि योग (Vosi)", f"सूर्य से द्वादश भाव में {', '.join(_h12_s_planets)} स्थित हैं। जातक बुद्धिमान, विद्यावान, परोपकारी एवं दृढ़ स्मरण शक्ति वाला होता है।", "#F0FDF4", "#065F46"))
+                    _is_subha_v = any(p in ["Jupiter", "Venus", "Mercury"] for p in _h12_s_planets)
+                    if _is_subha_v:
+                        _solar_yogas.append(("📚 शुभ-वोसि योग (Subha-Vosi)", f"सूर्य से द्वादश भाव में शुभ ग्रह ({', '.join(_h12_s_planets)}) स्थित हैं। जातक बुद्धिमान, विद्यावान, परोपकारी, यशस्वी एवं उच्च संस्कारों से युक्त होता है। (BPHS)", "#F0FDF4", "#065F46"))
+                    else:
+                        _solar_yogas.append(("📚 पाप-वोसि योग (Papa-Vosi)", f"सूर्य से द्वादश भाव में क्रूर ग्रह ({', '.join(_h12_s_planets)}) स्थित हैं। जातक कर्मठ, यात्राप्रिय एवं गुप्त युक्तियों में कुशल होता है।", "#FEF3C7", "#B45309"))
                 else:
                     _solar_yogas.append(("☀️ स्वतंत्र सौर तेज (Independent Sun)", "सूर्य के अगल-बगल कोई ग्रह नहीं है; जातक आत्मनिर्भर, आत्म-प्रेरित एवं स्वतंत्र व्यक्तित्व का धनी होता है।", "#F8FAFC", "#334155"))
 
@@ -1723,8 +1838,9 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                         <div style="font-size:12.5px; color:#1E293B; line-height:1.6;">
                             • <b>युद्ध प्रकार:</b> {_w_type}<br/>
                             • 🏆 <b>विजेता ग्रह:</b> <b style="color:#047857;">{_GRAHA_HINDI.get(_win, _win)}</b>{_w_lord_str} (उत्तर अक्षांश की प्रधानता के कारण विजयी)<br/>
-                            • ⚠️ <b>पराजित ग्रह:</b> <b style="color:#DC2626;">{_GRAHA_HINDI.get(_los, _los)}</b>{_l_lord_str} (षड्बल हरण के कारण निर्बल)<br/>
-                            • <b>फल प्रभाव:</b> विजयी ग्रह के स्वामित्व वाले भावों के शुभ फल में वृद्धि होगी; पराजित ग्रह के स्वामित्व वाले भावों से संबंधित विषयों में संघर्ष अथवा विलम्ब का सामना करना पड़ सकता है।
+                            • ⚠️ <b>पराजित ग्रह:</b> <b style="color:#DC2626;">{_GRAHA_HINDI.get(_los, _los)}</b>{_l_lord_str} (षड्बल व चेष्टा बल हरण के कारण निर्बल)<br/>
+                            • <b>फल प्रभाव:</b> विजयी ग्रह के स्वामित्व वाले भावों के शुभ फल में वृद्धि होगी; पराजित ग्रह के स्वामित्व वाले भावों से संबंधित विषयों में संघर्ष अथवा विलम्ब का सामना करना पड़ सकता है।<br/>
+                            • 📜 <b>चेष्टा बल हरण सूत्र (सूर्य सिद्धांत व फलदीपिका):</b> पराजित ग्रह की विंशोत्तरी महादशा या अंतर्दशा के दौरान संबंधित भावों के फल में गतिरोध रहता है, जबकि विजयी ग्रह जीवन में अप्रत्याशित विजय एवं वर्चस्व दिलाता है।
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
@@ -1840,6 +1956,53 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
+
+            # ─── Jaimini Rashi Drishti on AL and UL ───
+            st.markdown("#### 👁️ आरूढ़ लग्न एवं उपपद पर जैमिनी राशि दृष्टि (Jaimini Rashi Drishti on AL & UL)")
+            try:
+                def _get_j_aspecting_signs(sid):
+                    if sid in [1, 4, 7, 10]: # चर राशि -> स्थिर (निकटवर्ती छोड़कर)
+                        fixed_s = [2, 5, 8, 11]
+                        adj = (sid % 12) + 1
+                        return [s for s in fixed_s if s != adj]
+                    elif sid in [2, 5, 8, 11]: # स्थिर राशि -> चर (निकटवर्ती छोड़कर)
+                        mov_s = [1, 4, 7, 10]
+                        adj = ((sid - 2 + 12) % 12) + 1
+                        return [s for s in mov_s if s != adj]
+                    else: # द्विस्वभाव राशि -> अन्य 3 द्विस्वभाव
+                        return [s for s in [3, 6, 9, 12] if s != sid]
+
+                _al_sid = SIGN_NAMES.index(_al_sign) + 1 if _al_sign in SIGN_NAMES else 1
+                _ul_sid = SIGN_NAMES.index(_ul_sign) + 1 if _ul_sign in SIGN_NAMES else 1
+
+                _al_asp_sids = _get_j_aspecting_signs(_al_sid)
+                _ul_asp_sids = _get_j_aspecting_signs(_ul_sid)
+
+                _al_planets_asp = [pn for pn, p in chart.planets.items() if p.sign_id in _al_asp_sids]
+                _ul_planets_asp = [pn for pn, p in chart.planets.items() if p.sign_id in _ul_asp_sids]
+
+                col_jrd1, col_jrd2 = st.columns(2, gap="medium")
+                with col_jrd1:
+                    _al_asp_names = [SIGN_NAMES[s-1] for s in _al_asp_sids]
+                    st.markdown(f"""
+                    <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12px; color:#1E293B;">
+                        <b>👑 AL ({_al_sign}) पर दृष्टि देने वाली राशियां:</b> {', '.join(_al_asp_names)}<br/>
+                        • <b>दृष्टि देने वाले ग्रह:</b> <b>{', '.join(_al_planets_asp) if _al_planets_asp else 'कोई प्रत्यक्ष ग्रह नहीं (केवल राशि दृष्टि)'}</b><br/>
+                        • <b>प्रभाव:</b> शुभ ग्रहों की दृष्टि सामाजिक यश, सम्मान व पद-प्रतिष्ठा में वृद्धि करती है।
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with col_jrd2:
+                    _ul_asp_names = [SIGN_NAMES[s-1] for s in _ul_asp_sids]
+                    st.markdown(f"""
+                    <div style="background:#FDF2F8; border:1px solid #FBCFE8; border-radius:8px; padding:10px 14px; font-size:12px; color:#1E293B;">
+                        <b>💍 UL ({_ul_sign}) पर दृष्टि देने वाली राशियां:</b> {', '.join(_ul_asp_names)}<br/>
+                        • <b>दृष्टि देने वाले ग्रह:</b> <b>{', '.join(_ul_planets_asp) if _ul_planets_asp else 'कोई प्रत्यक्ष ग्रह नहीं (केवल राशि दृष्टि)'}</b><br/>
+                        • <b>प्रभाव:</b> उपपद पर गुरु/शुक्र की राशि दृष्टि वैवाहिक सद्भाव, जीवनसाथी के परिवार से सहयोग एवं प्रेम में प्रगाढ़ता लाती है।
+                    </div>
+                    """, unsafe_allow_html=True)
+            except Exception as _e_jrd:
+                st.caption(f"जैमिनी दृष्टि गणना: {_e_jrd}")
         else:
             st.info("आरूढ़ पद गणना लोड हो रही है...")
 
@@ -1913,6 +2076,17 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
                     _k_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:220px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 6px; text-align:left;">ग्रह</th><th style="padding:4px 6px; text-align:left;">नक्षत्र</th><th style="padding:4px 6px; text-align:left;">दुर्ग क्षेत्र</th><th style="padding:4px 6px; text-align:left;">गति दिशा</th><th style="padding:4px 6px; text-align:center;">भूमिका</th></tr></thead><tbody>{"".join(_pl_k_rows)}</tbody></table></div>'
                     st.markdown(_k_tbl_html, unsafe_allow_html=True)
+
+                # ─── Live Transit Defense Assessment Overlay ───
+                _stambha_malefics = [pa["planet"] for pa in _p_allocs if pa.get("zone") == "Stambha" and ("Malefic" in pa.get("nature", "") or pa["planet"] in ["Mars", "Saturn", "Rahu", "Ketu"])]
+                _madhya_malefics = [pa["planet"] for pa in _p_allocs if pa.get("zone") == "Madhya" and ("Malefic" in pa.get("nature", "") or pa["planet"] in ["Mars", "Saturn", "Rahu", "Ketu"])]
+
+                if _stambha_malefics:
+                    st.warning(f"🚨 **दुर्ग स्तम्भ वेध संकट:** क्रूर ग्रह ({', '.join(_stambha_malefics)}) सीधे दुर्ग के स्तम्भ (गर्भगृह) में स्थित हैं। स्वास्थ्य, मानसिक शांति एवं सुरक्षा हेतु विशेष सावधानी अपेक्षित है।")
+                elif _madhya_malefics:
+                    st.info(f"⚠️ **मध्य परकोटा वेध:** क्रूर ग्रह ({', '.join(_madhya_malefics)}) मध्य प्राचीर में स्थित हैं। परिवार व वित्तीय सुरक्षा पर सतर्क दृष्टि रखें।")
+                else:
+                    st.success("🛡️ **दुर्ग गर्भगृह अभेद्य व सुरक्षित:** स्तम्भ एवं मध्य प्राचीर में किसी भी प्रमुख क्रूर ग्रह का वेध नहीं है; जातक का जीवन दुर्ग सुदृढ़ है।")
 
         except Exception as _ekc:
             st.error(f"कोटा चक्र गणना त्रुटि: {_ekc}")
