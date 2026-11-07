@@ -125,18 +125,11 @@ from src.jyotish.services.report_generator import default_report_generator
 from src.jyotish.services.master_calculator import default_master_calculator
 from src.jyotish.services.vastu import VastuJyotishEngine, VASTU_DIRECTIONS
 from src.jyotish.services.grahalakshanam import GrahalakshanamClient, GrahalakshanamConfig
-import importlib
-import src.jyotish.services.folder_manager as fm_mod
-importlib.reload(fm_mod)
-default_folder_manager = fm_mod.default_folder_manager
-import src.jyotish.services.auth as auth_mod
-importlib.reload(auth_mod)
-default_auth_service = auth_mod.default_auth_service
+from src.jyotish.services.folder_manager import default_folder_manager
+from src.jyotish.services.auth import default_auth_service
 from src.jyotish.rules.engine import default_rules_engine
 from src.jyotish.ui.chart_renderer import ChartRenderer
-import src.jyotish.ai.narrative as narr_mod
-importlib.reload(narr_mod)
-default_narrative_service = narr_mod.default_narrative_service
+from src.jyotish.ai.narrative import default_narrative_service
 from src.jyotish.services.shastriya_pramana import default_shastriya_pramana_engine, SHASTRIYA_SHLOKAS
 try:
     from src.jyotish.ui.grahalakshanam_icons import (

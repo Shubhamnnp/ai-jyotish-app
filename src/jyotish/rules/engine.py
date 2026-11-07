@@ -1220,6 +1220,22 @@ class RulesEngine:
         return default_conflict_graph.synthesize_conflicts(evidences, chart, target_theme=target_theme)
 
 
-# Singleton engine instance
-default_rules_engine = RulesEngine()
+# Thread-safe lazy singleton proxy preventing import-time race conditions on Streamlit Cloud
+_default_engine_instance: Optional[RulesEngine] = None
+
+def get_default_rules_engine() -> RulesEngine:
+    global _default_engine_instance
+    if _default_engine_instance is None:
+        _default_engine_instance = RulesEngine()
+    return _default_engine_instance
+
+class _LazyRulesEngineProxy:
+    """Thread-safe proxy that instantiates RulesEngine on first access rather than import time."""
+    def __getattr__(self, name):
+        return getattr(get_default_rules_engine(), name)
+
+    def __repr__(self):
+        return repr(get_default_rules_engine())
+
+default_rules_engine = _LazyRulesEngineProxy()
 
