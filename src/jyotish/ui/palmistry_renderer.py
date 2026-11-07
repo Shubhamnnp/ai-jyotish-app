@@ -28,7 +28,7 @@ class PalmRenderer:
         the thumb is positioned on the RIGHT side, matching camera/photo input.
         """
         if is_right_hand is None:
-            is_right_hand = (profile.hand_side != "Left")
+            is_right_hand = (getattr(profile, "hand_side", "Right") != "Left")
 
         # Sacred marks visibility
         show_yava = profile.has_buddha_eye

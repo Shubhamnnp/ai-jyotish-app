@@ -26,8 +26,8 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
     st.subheader("✋ हस्तरेखा एवं सामुद्रिक शास्त्र विज्ञान (Vedic Palmistry & Samudrika Shastra)")
     st.caption("गरुड़ पुराण, भविष्य पुराण, बृहत्संहिता व कीरो-बेनहम मानकों पर आधारित प्रामाणिक हस्तरेखा, पर्वत बल, आयु काल-विभाजन एवं ९९.९९% अचूक फलादेश:")
 
-    # Initialize Palm Profile in session state if missing
-    if "palm_profile_data" not in st.session_state:
+    # Initialize Palm Profile in session state if missing or outdated schema
+    if "palm_profile_data" not in st.session_state or not hasattr(st.session_state.palm_profile_data, "hand_side"):
         st.session_state.palm_profile_data = PalmInputProfile()
 
     p_profile = st.session_state.palm_profile_data
@@ -203,7 +203,11 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
                 key="palm_tab1_hand_orient"
             )
             is_right_hand_selected = "दायां" in hand_orient_choice
-            p_profile.hand_side = "Right" if is_right_hand_selected else "Left"
+            try:
+                p_profile.hand_side = "Right" if is_right_hand_selected else "Left"
+            except Exception:
+                st.session_state.palm_profile_data = PalmInputProfile(hand_side="Right" if is_right_hand_selected else "Left")
+                p_profile = st.session_state.palm_profile_data
 
         with c_orient2:
             if has_uploaded_img:
