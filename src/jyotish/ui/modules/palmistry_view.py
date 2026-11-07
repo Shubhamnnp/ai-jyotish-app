@@ -57,9 +57,9 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
             image_bytes = captured_file.getvalue()
             st.session_state.uploaded_palm_image_bytes = image_bytes
 
-            c_img1, c_img2 = st.columns([1.2, 1.8], gap="medium", vertical_alignment="center")
+            c_img1, c_img2 = st.columns([1, 2], gap="medium", vertical_alignment="center")
             with c_img1:
-                st.image(image_bytes, caption="📸 अपलोड / कैप्चर की गई हथेली", use_container_width=True)
+                st.image(image_bytes, caption="📸 अपलोड / कैप्चर की गई हथेली", width=240)
 
             with c_img2:
                 st.markdown("##### 🔮 हथेली का कम्प्यूटर विज़न एवं सामुद्रिक विश्लेषण:")
@@ -193,11 +193,11 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
 
         has_uploaded_img = "uploaded_palm_image_bytes" in st.session_state and st.session_state.uploaded_palm_image_bytes is not None
 
-        c_orient1, c_orient2 = st.columns([1.5, 1.5], vertical_alignment="center")
+        c_orient1, c_orient2, c_orient3 = st.columns([1.2, 1.0, 1.1], vertical_alignment="center")
         with c_orient1:
             hand_orient_choice = st.radio(
-                "🖐️ हस्त दिशा चयन (Select Hand Orientation):",
-                ["✋ दायां हाथ (Right Hand - अंगूठा दाईं ओर)", "🤚 बायां हाथ (Left Hand - अंगूठा बाईं ओर)"],
+                "🖐️ हस्त दिशा (Hand Side):",
+                ["✋ दायां हाथ (Right)", "🤚 बायां हाथ (Left)"],
                 horizontal=True,
                 index=0,
                 key="palm_tab1_hand_orient"
@@ -211,17 +211,29 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
 
         with c_orient2:
             if has_uploaded_img:
-                palm_view_mode = st.radio("प्रदर्शन मोड (View Mode):", ["📸 संयुक्त दृश्य (Side-by-Side)", "✋ केवल शास्त्रीय नक्शा"], horizontal=True, key="palm_tab1_view_mode")
+                palm_view_mode = st.radio("प्रदर्शन मोड (View):", ["📸 संयुक्त (Side-by-Side)", "✋ केवल नक्शा"], horizontal=True, key="palm_tab1_view_mode")
             else:
-                palm_view_mode = "✋ केवल शास्त्रीय नक्शा"
+                palm_view_mode = "✋ केवल नक्शा"
+
+        with c_orient3:
+            if has_uploaded_img and "संयुक्त" in palm_view_mode:
+                img_size_opt = st.select_slider(
+                    "📐 फोटो आकार (Size):",
+                    options=["छोटा (240px)", "संतुलित (300px)", "मध्यम (360px)"],
+                    value="संतुलित (300px)",
+                    key="palm_photo_size_choice"
+                )
+                photo_width = int(img_size_opt.split("(")[1].replace("px)", ""))
+            else:
+                photo_width = 300
 
         svg_markup = PalmRenderer.render_palm_svg(p_profile, width=540, height=670, is_right_hand=is_right_hand_selected)
 
-        if has_uploaded_img and "Side-by-Side" in palm_view_mode:
-            col_svg1, col_svg2 = st.columns([1, 1], gap="medium")
+        if has_uploaded_img and "संयुक्त" in palm_view_mode:
+            col_svg1, col_svg2 = st.columns([1, 1.3], gap="medium")
             with col_svg1:
-                st.markdown("##### 📸 जातक की वास्तविक स्कैन हथेली:")
-                st.image(st.session_state.uploaded_palm_image_bytes, use_container_width=True)
+                st.markdown("##### 📸 जातक की वास्तविक हथेली:")
+                st.image(st.session_state.uploaded_palm_image_bytes, width=photo_width)
                 if "palm_scan_results" in st.session_state:
                     res = st.session_state.palm_scan_results
                     st.caption(f"**पहचानी गई विशेषताएं:** {res.line_prominence} | {res.mount_activity}")
