@@ -1,7 +1,7 @@
 """
 हस्तरेखा विज़ुअलाइज़र (Interactive High-Definition SVG Palm Renderer)
-Renders canonical palm maps with planetary mounts, major/minor lines, age markers, and sacred marks.
-Supports both Right Hand (दायां हाथ - Thumb on Right) and Left Hand (बायां हाथ - Thumb on Left).
+Professional, anatomically proportional palm diagrams with non-colliding labels,
+canonical planetary mounts, natural curvature lines, age markers, and sacred signs.
 """
 
 from typing import Dict, Any, Optional
@@ -11,322 +11,313 @@ from src.jyotish.core.palmistry import PalmInputProfile
 class PalmRenderer:
     """
     Renders scalable, crisp, responsive SVG palm diagrams for Vedic Hastarekha.
-    Supports both Right Hand (Dakshina Hasta) and Left Hand (Vama Hasta).
+    Zero-collision typography, graceful organic line curves, and authentic anatomy.
     """
 
     @classmethod
     def render_palm_svg(
         cls,
         profile: PalmInputProfile,
-        width: int = 540,
-        height: int = 680,
+        width: int = 580,
+        height: int = 740,
         is_right_hand: Optional[bool] = None
     ) -> str:
         """
         Generates full-detail SVG markup representing the native's palm.
-        When is_right_hand is True (default in Vedic for right hand photo),
-        the thumb is positioned on the RIGHT side, matching camera/photo input.
         """
         if is_right_hand is None:
             is_right_hand = (getattr(profile, "hand_side", "Right") != "Left")
 
         # Sacred marks visibility
-        show_yava = profile.has_buddha_eye
-        show_cross = profile.has_mystic_cross
-        show_matsya = profile.has_matsya_sign
-        show_trishul = profile.has_trishul_sign
-        show_jup_cross = profile.mount_jupiter.has_cross
+        show_yava = getattr(profile, "has_buddha_eye", True)
+        show_cross = getattr(profile, "has_mystic_cross", True)
+        show_matsya = getattr(profile, "has_matsya_sign", True)
+        show_trishul = getattr(profile, "has_trishul_sign", False)
 
         hand_label = "दायां हाथ (Right Palm)" if is_right_hand else "बायां हाथ (Left Palm)"
 
+        # Safe attribute extraction
+        jup_prom = getattr(profile.mount_jupiter, "prominence", "Prominent")
+        sat_prom = getattr(profile.mount_saturn, "prominence", "Normal")
+        sun_prom = getattr(profile.mount_sun, "prominence", "Prominent")
+        mer_prom = getattr(profile.mount_mercury, "prominence", "Normal")
+        ven_prom = getattr(profile.mount_venus, "prominence", "Prominent")
+        moon_prom = getattr(profile.mount_moon, "prominence", "Prominent")
+
         if is_right_hand:
             # =================================================================
-            # RIGHT HAND GEOMETRY (Thumb on RIGHT, Little finger on LEFT)
+            # RIGHT HAND (Thumb on RIGHT, Little finger on LEFT)
+            # Coordinates designed for width=580, height=740
             # =================================================================
-            # Hand Contour Path
             contour_path = (
-                "M 170 560 "
-                "C 140 530, 130 480, 132 440 "
-                "C 134 380, 140 320, 145 270 "
-                "C 142 220, 150 160, 160 135 "
-                "C 168 115, 185 125, 188 150 "
-                "C 192 190, 188 230, 192 250 "
-                "C 198 210, 208 100, 218 75 "
-                "C 228 55, 245 70, 245 105 "
-                "C 245 160, 246 215, 248 235 "
-                "C 255 180, 270 70, 280 50 "
-                "C 292 35, 310 50, 308 100 "
-                "C 305 160, 302 215, 304 235 "
-                "C 315 190, 332 135, 345 120 "
-                "C 360 110, 372 130, 368 170 "
-                "C 360 220, 356 260, 358 290 "
-                "C 362 310, 385 315, 415 325 "
-                "C 455 340, 485 355, 480 385 "
-                "C 475 415, 435 430, 410 455 "
-                "C 390 480, 385 525, 370 560 "
+                "M 210 645 "
+                "C 175 620, 155 555, 155 490 "
+                "C 155 435, 165 380, 170 335 "
+                "C 170 295, 175 230, 182 185 "
+                "C 186 160, 204 160, 208 185 "
+                "C 212 230, 215 285, 218 315 "
+                "C 220 280, 225 190, 232 125 "
+                "C 236 100, 256 100, 260 125 "
+                "C 264 190, 268 255, 270 298 "
+                "C 272 260, 278 150, 288 75 "
+                "C 292 50, 314 50, 318 75 "
+                "C 324 150, 326 245, 328 300 "
+                "C 332 260, 338 175, 345 115 "
+                "C 349 90, 370 90, 374 115 "
+                "C 378 180, 380 260, 382 325 "
+                "C 386 365, 392 395, 400 420 "
+                "C 422 415, 460 420, 495 440 "
+                "C 520 455, 520 480, 498 495 "
+                "C 475 510, 445 520, 425 545 "
+                "C 405 570, 390 610, 370 645 "
                 "Z"
             )
 
-            # Mount positions
-            m_jup = (335, 280, "♃ गुरु", profile.mount_jupiter.prominence, "#92400E", "#FEF3C7", "#D97706")
-            m_sat = (275, 260, "♄ शनि", profile.mount_saturn.prominence, "#1E293B", "#E2E8F0", "#475569")
-            m_sun = (215, 275, "☉ सूर्य", profile.mount_sun.prominence, "#854D0E", "#FEF9C3", "#CA8A04")
-            m_mer = (160, 295, "☿ बुध", profile.mount_mercury.prominence, "#166534", "#DCFCE7", "#16A34A")
-            m_lmars = (365, 345, "♂ नि.मंगल", "#991B1B", "#FEE2E2", "#DC2626")
-            m_umars = (155, 365, "♂ उ.मंगल", "#991B1B", "#FEE2E2", "#DC2626")
-            m_rahu = (270, 380, "☊ राहु गर्त", "#6B21A8", "#F3E8FF", "#9333EA")
-            m_ven = (365, 465, "♀ शुक्र", profile.mount_venus.prominence, "#9D174D", "#FCE7F3", "#DB2777")
-            m_moon = (175, 475, "☽ चन्द्र", profile.mount_moon.prominence, "#075985", "#E0F2FE", "#0284C7")
-            m_ketu = (270, 535, "☋ केतु", "#334155", "#F1F5F9", "#475569")
-
-            # Lines Paths
-            # 1. Heart Line (Starts under little finger on Left, sweeps right towards Jupiter)
-            heart_path = "M 135 325 C 190 315, 260 310, 310 285 C 325 278, 335 270, 340 265"
-            heart_lbl_x, heart_lbl_y, heart_anchor = 125, 320, "end"
-
-            # 2. Head Line (Starts near thumb on Right, sweeps left towards Moon mount)
-            head_path = "M 365 330 C 315 335, 245 365, 195 395 C 175 410, 160 425, 150 440"
-            head_lbl_x, head_lbl_y, head_anchor = 140, 445, "end"
-
-            # 3. Life Line (Starts near thumb on Right, wraps around Venus mount down to Ketu)
-            life_path = "M 365 325 C 345 345, 320 395, 315 440 C 310 490, 320 525, 290 555"
-            life_lbl_x, life_lbl_y, life_anchor = 280, 565, "end"
-
-            # Life Line Age Markers (Right Hand)
-            age_dots = [
-                (345, 365, "२० व.", 355, 368),
-                (325, 425, "४० व.", 335, 428),
-                (315, 485, "६० व.", 325, 488),
-                (300, 535, "८० व.", 310, 538),
+            # Mount badge coordinates (x, y, label, symbol)
+            mount_badges = [
+                (358, 325, "गुरु", "♃", "#92400E", "#FEF3C7", "#D97706"),
+                (303, 310, "शनि", "♄", "#1E293B", "#F1F5F9", "#64748B"),
+                (246, 322, "सूर्य", "☉", "#854D0E", "#FEF9C3", "#CA8A04"),
+                (192, 335, "बुध", "☿", "#166534", "#DCFCE7", "#16A34A"),
+                (178, 415, "उ.मंगल", "♂", "#991B1B", "#FEE2E2", "#DC2626"),
+                (388, 410, "नि.मंगल", "♂", "#991B1B", "#FEE2E2", "#DC2626"),
+                (285, 445, "राहु", "☊", "#6B21A8", "#F3E8FF", "#A855F7"),
+                (385, 530, "शुक्र", "♀", "#9D174D", "#FCE7F3", "#EC4899"),
+                (195, 530, "चन्द्र", "☽", "#075985", "#E0F2FE", "#0284C7"),
+                (285, 605, "केतु", "☋", "#334155", "#F1F5F9", "#64748B"),
             ]
 
-            # 4. Fate Line (Vertical up center towards Saturn)
-            fate_path = "M 270 545 C 272 485, 274 395, 275 320 C 275 295, 275 275, 275 255"
-            fate_lbl_x, fate_lbl_y = 275, 240
+            # Primary Lines (natural organic curvatures)
+            # 1. Heart Line (Red) - from outer under pinky curving up towards Jupiter
+            heart_d = "M 160 375 C 215 382, 275 375, 320 350 C 342 338, 355 320, 360 305"
+            heart_badge = (65, 372, "हृदय रेखा", "#E11D48", 160, 375)
 
-            # 5. Sun Line (Vertical towards Sun mount)
-            sun_path = "M 218 385 C 216 350, 215 315, 215 270"
-            sun_lbl_x, sun_lbl_y = 215, 255
+            # 2. Head Line (Blue) - from index/thumb sloping towards Moon mount
+            head_d = "M 390 410 C 340 420, 280 445, 230 480 C 195 505, 175 530, 162 550"
+            head_badge = (65, 548, "मस्तिष्क रेखा", "#2563EB", 162, 550)
 
-            # 6. Marriage Line (Outer edge below little finger)
-            marr_path = "M 132 295 L 155 295"
-            marr_lbl_x, marr_lbl_y = 125, 298
+            # 3. Life Line (Green) - wrapping graciously around Venus mount
+            life_d = "M 390 405 C 375 440, 352 490, 352 540 C 352 585, 342 615, 308 635"
+            life_badge = (395, 645, "जीवन रेखा (आयु)", "#059669", 308, 635)
 
-            # Bracelets
-            brc1 = "M 190 572 C 250 585, 290 585, 350 572"
-            brc2 = "M 195 584 C 250 597, 290 597, 345 584"
-            brc3 = "M 200 596 C 250 608, 290 608, 340 596"
-            brc_lbl_x = 175
+            # Age markers along life line
+            age_markers = [
+                (362, 442, "२०"),
+                (352, 498, "४०"),
+                (352, 555, "६०"),
+                (330, 612, "८०"),
+            ]
 
-            # Sacred Marks Coordinates
-            yava_cx, yava_cy = 430, 375
-            cross_x, cross_y = 250, 345
-            matsya_x, matsya_y = 270, 515
-            jup_cross_x, jup_cross_y = 340, 290
-            trishul_x, trishul_y = 275, 248
+            # 4. Fate Line (Gold) - vertical from wrist to Saturn mount
+            fate_d = "M 285 630 C 288 560, 292 480, 295 415 C 298 375, 300 340, 300 310"
+            fate_badge = (300, 255, "भाग्य रेखा", "#D97706", 300, 310)
+
+            # 5. Sun Line (Yellow) - rising towards Sun mount
+            sun_d = "M 246 455 C 246 410, 246 365, 246 325"
+
+            # 6. Marriage Line (Pink)
+            marr_d = "M 158 355 L 180 355"
+            marr_badge = (75, 354, "विवाह", "#BE123C")
+
+            # Bracelets at wrist
+            brc_paths = [
+                "M 215 658 C 265 670, 315 670, 365 658",
+                "M 220 670 C 265 682, 315 682, 360 670",
+                "M 225 682 C 265 694, 315 694, 355 682",
+            ]
+
+            # Sacred Marks
+            yava_pos = (455, 455)
+            cross_pos = (255, 415)
+            matsya_pos = (285, 590)
 
         else:
             # =================================================================
-            # LEFT HAND GEOMETRY (Thumb on LEFT, Little finger on RIGHT)
+            # LEFT HAND (Thumb on LEFT, Little finger on RIGHT)
             # =================================================================
             contour_path = (
-                "M 370 560 "
-                "C 400 530, 410 480, 408 440 "
-                "C 406 380, 400 320, 395 270 "
-                "C 398 220, 390 160, 380 135 "
-                "C 372 115, 355 125, 352 150 "
-                "C 348 190, 352 230, 348 250 "
-                "C 342 210, 332 100, 322 75 "
-                "C 312 55, 295 70, 295 105 "
-                "C 295 160, 294 215, 292 235 "
-                "C 285 180, 270 70, 260 50 "
-                "C 248 35, 230 50, 232 100 "
-                "C 235 160, 238 215, 236 235 "
-                "C 225 190, 208 135, 195 120 "
-                "C 180 110, 168 130, 172 170 "
-                "C 180 220, 184 260, 182 290 "
-                "C 178 310, 155 315, 125 325 "
-                "C 85 340, 55 355, 60 385 "
-                "C 65 415, 105 430, 130 455 "
-                "C 150 480, 155 525, 170 560 "
+                "M 370 645 "
+                "C 405 620, 425 555, 425 490 "
+                "C 425 435, 415 380, 410 335 "
+                "C 410 295, 405 230, 398 185 "
+                "C 394 160, 376 160, 372 185 "
+                "C 368 230, 365 285, 362 315 "
+                "C 360 280, 355 190, 348 125 "
+                "C 344 100, 324 100, 320 125 "
+                "C 316 190, 312 255, 310 298 "
+                "C 308 260, 302 150, 292 75 "
+                "C 288 50, 266 50, 262 75 "
+                "C 256 150, 254 245, 252 300 "
+                "C 248 260, 242 175, 235 115 "
+                "C 231 90, 210 90, 206 115 "
+                "C 202 180, 200 260, 198 325 "
+                "C 194 365, 188 395, 180 420 "
+                "C 158 415, 120 420, 85 440 "
+                "C 60 455, 60 480, 82 495 "
+                "C 105 510, 135 520, 155 545 "
+                "C 175 570, 190 610, 210 645 "
                 "Z"
             )
 
-            m_jup = (205, 280, "♃ गुरु", profile.mount_jupiter.prominence, "#92400E", "#FEF3C7", "#D97706")
-            m_sat = (265, 260, "♄ शनि", profile.mount_saturn.prominence, "#1E293B", "#E2E8F0", "#475569")
-            m_sun = (325, 275, "☉ सूर्य", profile.mount_sun.prominence, "#854D0E", "#FEF9C3", "#CA8A04")
-            m_mer = (380, 295, "☿ बुध", profile.mount_mercury.prominence, "#166534", "#DCFCE7", "#16A34A")
-            m_lmars = (175, 345, "♂ नि.मंगल", "#991B1B", "#FEE2E2", "#DC2626")
-            m_umars = (385, 365, "♂ उ.मंगल", "#991B1B", "#FEE2E2", "#DC2626")
-            m_rahu = (270, 380, "☊ राहु गर्त", "#6B21A8", "#F3E8FF", "#9333EA")
-            m_ven = (175, 465, "♀ शुक्र", profile.mount_venus.prominence, "#9D174D", "#FCE7F3", "#DB2777")
-            m_moon = (365, 475, "☽ चन्द्र", profile.mount_moon.prominence, "#075985", "#E0F2FE", "#0284C7")
-            m_ketu = (270, 535, "☋ केतु", "#334155", "#F1F5F9", "#475569")
-
-            heart_path = "M 405 325 C 350 315, 280 310, 230 285 C 215 278, 205 270, 200 265"
-            heart_lbl_x, heart_lbl_y, heart_anchor = 415, 320, "start"
-
-            head_path = "M 175 330 C 225 335, 295 365, 345 395 C 365 410, 380 425, 390 440"
-            head_lbl_x, head_lbl_y, head_anchor = 400, 445, "start"
-
-            life_path = "M 175 325 C 195 345, 220 395, 225 440 C 230 490, 220 525, 250 555"
-            life_lbl_x, life_lbl_y, life_anchor = 260, 565, "start"
-
-            age_dots = [
-                (195, 365, "२० व.", 185, 368),
-                (215, 425, "४० व.", 205, 428),
-                (225, 485, "६० व.", 215, 488),
-                (240, 535, "८० व.", 230, 538),
+            mount_badges = [
+                (222, 325, "गुरु", "♃", "#92400E", "#FEF3C7", "#D97706"),
+                (277, 310, "शनि", "♄", "#1E293B", "#F1F5F9", "#64748B"),
+                (334, 322, "सूर्य", "☉", "#854D0E", "#FEF9C3", "#CA8A04"),
+                (388, 335, "बुध", "☿", "#166534", "#DCFCE7", "#16A34A"),
+                (402, 415, "उ.मंगल", "♂", "#991B1B", "#FEE2E2", "#DC2626"),
+                (192, 410, "नि.मंगल", "♂", "#991B1B", "#FEE2E2", "#DC2626"),
+                (295, 445, "राहु", "☊", "#6B21A8", "#F3E8FF", "#A855F7"),
+                (195, 530, "शुक्र", "♀", "#9D174D", "#FCE7F3", "#EC4899"),
+                (385, 530, "चन्द्र", "☽", "#075985", "#E0F2FE", "#0284C7"),
+                (295, 605, "केतु", "☋", "#334155", "#F1F5F9", "#64748B"),
             ]
 
-            fate_path = "M 270 545 C 268 485, 266 395, 265 320 C 265 295, 265 275, 265 255"
-            fate_lbl_x, fate_lbl_y = 265, 240
+            heart_d = "M 420 375 C 365 382, 305 375, 260 350 C 238 338, 225 320, 220 305"
+            heart_badge = (515, 372, "हृदय रेखा", "#E11D48", 420, 375)
 
-            sun_path = "M 322 385 C 324 350, 325 315, 325 270"
-            sun_lbl_x, sun_lbl_y = 325, 255
+            head_d = "M 190 410 C 240 420, 300 445, 350 480 C 385 505, 405 530, 418 550"
+            head_badge = (515, 548, "मस्तिष्क रेखा", "#2563EB", 418, 550)
 
-            marr_path = "M 408 295 L 385 295"
-            marr_lbl_x, marr_lbl_y = 415, 298
+            life_d = "M 190 405 C 205 440, 228 490, 228 540 C 228 585, 238 615, 272 635"
+            life_badge = (185, 645, "जीवन रेखा (आयु)", "#059669", 272, 635)
 
-            brc1 = "M 350 572 C 290 585, 250 585, 190 572"
-            brc2 = "M 345 584 C 290 597, 250 597, 195 584"
-            brc3 = "M 340 596 C 290 608, 250 608, 200 596"
-            brc_lbl_x = 365
+            age_markers = [
+                (218, 442, "२०"),
+                (228, 498, "४०"),
+                (228, 555, "६०"),
+                (250, 612, "८०"),
+            ]
 
-            yava_cx, yava_cy = 110, 375
-            cross_x, cross_y = 290, 345
-            matsya_x, matsya_y = 270, 515
-            jup_cross_x, jup_cross_y = 200, 290
-            trishul_x, trishul_y = 265, 248
+            fate_d = "M 295 630 C 292 560, 288 480, 285 415 C 282 375, 280 340, 280 310"
+            fate_badge = (280, 255, "भाग्य रेखा", "#D97706", 280, 310)
 
-        # Build clean compact SVG without blank lines
+            sun_d = "M 334 455 C 334 410, 334 365, 334 325"
+
+            marr_d = "M 422 355 L 400 355"
+            marr_badge = (505, 354, "विवाह", "#BE123C")
+
+            brc_paths = [
+                "M 365 658 C 315 670, 265 670, 215 658",
+                "M 360 670 C 315 682, 265 682, 220 670",
+                "M 355 682 C 315 694, 265 694, 225 682",
+            ]
+
+            yava_pos = (125, 455)
+            cross_pos = (325, 415)
+            matsya_pos = (295, 590)
+
+        # Build crisp, modern SVG with zero clutter
         svg_parts = [
-            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="{height}" style="background: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #F8FAFC 100%); border: 2px solid #CBD5E1; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif;">',
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="{height}" style="background: radial-gradient(circle at 50% 40%, #FFFFFF 0%, #F8FAFC 100%); border: 1.5px solid #CBD5E1; border-radius: 16px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif;">',
             '<defs>',
-            '  <linearGradient id="palmSkinGrad" x1="0%" y1="0%" x2="100%" y2="100%">',
-            '    <stop offset="0%" stop-color="#FFF5EB" />',
-            '    <stop offset="50%" stop-color="#FFEAD6" />',
-            '    <stop offset="100%" stop-color="#FED7AA" />',
+            '  <linearGradient id="palmGrad" x1="0%" y1="0%" x2="100%" y2="100%">',
+            '    <stop offset="0%" stop-color="#FFF8F0" />',
+            '    <stop offset="50%" stop-color="#FFEEDD" />',
+            '    <stop offset="100%" stop-color="#FCDCB2" />',
             '  </linearGradient>',
-            '  <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">',
-            '    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#D97706" flood-opacity="0.25" />',
+            '  <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">',
+            '    <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#D97706" flood-opacity="0.18" />',
             '  </filter>',
             '</defs>',
-            f'<text x="{width//2}" y="30" text-anchor="middle" fill="#0F172A" font-size="16" font-weight="900" letter-spacing="0.5">✋ शास्त्रीय हस्तरेखा एवं नवग्रह पर्वत आरेख ({hand_label})</text>',
-            f'<text x="{width//2}" y="48" text-anchor="middle" fill="#64748B" font-size="11" font-weight="600">हस्त: {profile.hand_type} | अंगूठा: {profile.thumb_type} | वर्ण: {profile.skin_texture}</text>',
-            f'<g id="handContour"><path d="{contour_path}" fill="url(#palmSkinGrad)" stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round" /></g>',
-            # Mounts
-            '<g id="mounts">',
-            f'  <circle cx="{m_jup[0]}" cy="{m_jup[1]}" r="22" fill="{m_jup[5]}" stroke="{m_jup[6]}" stroke-width="1.6" stroke-dasharray="2 2" opacity="0.85" />',
-            f'  <text x="{m_jup[0]}" y="{m_jup[1]-3}" text-anchor="middle" fill="{m_jup[4]}" font-size="11" font-weight="900">{m_jup[2]}</text>',
-            f'  <text x="{m_jup[0]}" y="{m_jup[1]+10}" text-anchor="middle" fill="{m_jup[4]}" font-size="8.5" font-weight="700">{m_jup[3]}</text>',
-            f'  <circle cx="{m_sat[0]}" cy="{m_sat[1]}" r="22" fill="{m_sat[5]}" stroke="{m_sat[6]}" stroke-width="1.6" stroke-dasharray="2 2" opacity="0.85" />',
-            f'  <text x="{m_sat[0]}" y="{m_sat[1]-3}" text-anchor="middle" fill="{m_sat[4]}" font-size="11" font-weight="900">{m_sat[2]}</text>',
-            f'  <text x="{m_sat[0]}" y="{m_sat[1]+10}" text-anchor="middle" fill="{m_sat[4]}" font-size="8.5" font-weight="700">{m_sat[3]}</text>',
-            f'  <circle cx="{m_sun[0]}" cy="{m_sun[1]}" r="22" fill="{m_sun[5]}" stroke="{m_sun[6]}" stroke-width="1.6" stroke-dasharray="2 2" opacity="0.85" />',
-            f'  <text x="{m_sun[0]}" y="{m_sun[1]-3}" text-anchor="middle" fill="{m_sun[4]}" font-size="11" font-weight="900">{m_sun[2]}</text>',
-            f'  <text x="{m_sun[0]}" y="{m_sun[1]+10}" text-anchor="middle" fill="{m_sun[4]}" font-size="8.5" font-weight="700">{m_sun[3]}</text>',
-            f'  <circle cx="{m_mer[0]}" cy="{m_mer[1]}" r="20" fill="{m_mer[5]}" stroke="{m_mer[6]}" stroke-width="1.6" stroke-dasharray="2 2" opacity="0.85" />',
-            f'  <text x="{m_mer[0]}" y="{m_mer[1]-3}" text-anchor="middle" fill="{m_mer[4]}" font-size="11" font-weight="900">{m_mer[2]}</text>',
-            f'  <text x="{m_mer[0]}" y="{m_mer[1]+10}" text-anchor="middle" fill="{m_mer[4]}" font-size="8.5" font-weight="700">{m_mer[3]}</text>',
-            f'  <circle cx="{m_lmars[0]}" cy="{m_lmars[1]}" r="18" fill="{m_lmars[4]}" stroke="{m_lmars[5]}" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.85" />',
-            f'  <text x="{m_lmars[0]}" y="{m_lmars[1]+4}" text-anchor="middle" fill="{m_lmars[3]}" font-size="9.5" font-weight="800">{m_lmars[2]}</text>',
-            f'  <circle cx="{m_umars[0]}" cy="{m_umars[1]}" r="18" fill="{m_umars[4]}" stroke="{m_umars[5]}" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.85" />',
-            f'  <text x="{m_umars[0]}" y="{m_umars[1]+4}" text-anchor="middle" fill="{m_umars[3]}" font-size="9.5" font-weight="800">{m_umars[2]}</text>',
-            f'  <ellipse cx="{m_rahu[0]}" cy="{m_rahu[1]}" rx="35" ry="25" fill="{m_rahu[4]}" stroke="{m_rahu[5]}" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.7" />',
-            f'  <text x="{m_rahu[0]}" y="{m_rahu[1]+4}" text-anchor="middle" fill="{m_rahu[3]}" font-size="10" font-weight="800">{m_rahu[2]}</text>',
-            f'  <ellipse cx="{m_ven[0]}" cy="{m_ven[1]}" rx="36" ry="48" fill="{m_ven[5]}" stroke="{m_ven[6]}" stroke-width="1.6" stroke-dasharray="2 2" opacity="0.8" />',
-            f'  <text x="{m_ven[0]}" y="{m_ven[1]-3}" text-anchor="middle" fill="{m_ven[4]}" font-size="12" font-weight="900">{m_ven[2]}</text>',
-            f'  <text x="{m_ven[0]}" y="{m_ven[1]+11}" text-anchor="middle" fill="{m_ven[4]}" font-size="9" font-weight="700">{m_ven[3]}</text>',
-            f'  <ellipse cx="{m_moon[0]}" cy="{m_moon[1]}" rx="36" ry="48" fill="{m_moon[5]}" stroke="{m_moon[6]}" stroke-width="1.6" stroke-dasharray="2 2" opacity="0.8" />',
-            f'  <text x="{m_moon[0]}" y="{m_moon[1]-3}" text-anchor="middle" fill="{m_moon[4]}" font-size="12" font-weight="900">{m_moon[2]}</text>',
-            f'  <text x="{m_moon[0]}" y="{m_moon[1]+11}" text-anchor="middle" fill="{m_moon[4]}" font-size="9" font-weight="700">{m_moon[3]}</text>',
-            f'  <circle cx="{m_ketu[0]}" cy="{m_ketu[1]}" r="16" fill="{m_ketu[4]}" stroke="{m_ketu[5]}" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.85" />',
-            f'  <text x="{m_ketu[0]}" y="{m_ketu[1]+4}" text-anchor="middle" fill="{m_ketu[3]}" font-size="9.5" font-weight="800">{m_ketu[2]}</text>',
-            '</g>',
-            # Main Lines
-            '<g id="mainLines" stroke-linecap="round" fill="none">',
-            f'  <path d="{heart_path}" stroke="#DC2626" stroke-width="3.8" filter="url(#subtleGlow)" />',
-            f'  <text x="{heart_lbl_x}" y="{heart_lbl_y}" text-anchor="{heart_anchor}" fill="#DC2626" font-size="11" font-weight="900">हृदय रेखा</text>',
-            f'  <path d="{head_path}" stroke="#2563EB" stroke-width="3.8" />',
-            f'  <text x="{head_lbl_x}" y="{head_lbl_y}" text-anchor="{head_anchor}" fill="#2563EB" font-size="11" font-weight="900">मस्तिष्क रेखा</text>',
-            f'  <path d="{life_path}" stroke="#059669" stroke-width="4.0" />',
-            f'  <text x="{life_lbl_x}" y="{life_lbl_y}" text-anchor="{life_anchor}" fill="#059669" font-size="11" font-weight="900">जीवन रेखा</text>',
-            f'  <path d="{fate_path}" stroke="#D97706" stroke-width="3.4" />',
-            f'  <text x="{fate_lbl_x}" y="{fate_lbl_y}" text-anchor="middle" fill="#D97706" font-size="11" font-weight="900">भाग्य रेखा</text>',
-            f'  <path d="{sun_path}" stroke="#CA8A04" stroke-width="2.8" />',
-            f'  <text x="{sun_lbl_x}" y="{sun_lbl_y}" text-anchor="middle" fill="#CA8A04" font-size="9.5" font-weight="900">सूर्य रेखा</text>',
-            f'  <path d="{marr_path}" stroke="#E11D48" stroke-width="2.8" />',
-            f'  <text x="{marr_lbl_x}" y="{marr_lbl_y}" text-anchor="{heart_anchor}" fill="#E11D48" font-size="9.5" font-weight="800">विवाह</text>',
-            '</g>',
-            # Age Milestones on Life Line
-            '<g id="ageMarkers">',
+            # Header Titles
+            f'<text x="{width//2}" y="28" text-anchor="middle" fill="#0F172A" font-size="15" font-weight="900" letter-spacing="0.5">✋ शास्त्रीय हस्तरेखा एवं नवग्रह पर्वत आरेख</text>',
+            f'<text x="{width//2}" y="46" text-anchor="middle" fill="#64748B" font-size="11" font-weight="600">{hand_label} | हस्त: {profile.hand_type} | अंगूठा: {profile.thumb_type}</text>',
+            # Hand Contour with Soft Shadow
+            f'<path d="{contour_path}" fill="url(#palmGrad)" stroke="#F59E0B" stroke-width="2.2" stroke-linejoin="round" filter="url(#softShadow)" />',
+            # Mount Badges
+            '<g id="mountBadges">',
         ]
 
-        for dot in age_dots:
-            svg_parts.append(f'  <circle cx="{dot[0]}" cy="{dot[1]}" r="3.5" fill="#059669" stroke="#FFFFFF" stroke-width="1.2" />')
-            svg_parts.append(f'  <text x="{dot[3]}" y="{dot[4]}" fill="#047857" font-size="8.5" font-weight="900">{dot[2]}</text>')
+        for mb in mount_badges:
+            bx, by, bname, bsym, btxt, bbg, bstrk = mb
+            svg_parts.append(
+                f'<g transform="translate({bx-24}, {by-11})">'
+                f'<rect width="48" height="22" rx="11" fill="{bbg}" stroke="{bstrk}" stroke-width="1.2" opacity="0.9" />'
+                f'<text x="24" y="15" text-anchor="middle" fill="{btxt}" font-size="10.5" font-weight="900">{bsym} {bname}</text>'
+                f'</g>'
+            )
         svg_parts.append('</g>')
 
-        # Wrist Bracelets
+        # Major Lines
         svg_parts.extend([
-            '<g id="bracelets" stroke="#0D9488" stroke-width="2.2" stroke-linecap="round" fill="none">',
-            f'  <path d="{brc1}" />',
-            f'  <text x="{brc_lbl_x}" y="575" fill="#0D9488" font-size="9" font-weight="700">१. आरोग्य</text>',
-            f'  <path d="{brc2}" />',
-            f'  <text x="{brc_lbl_x}" y="587" fill="#0D9488" font-size="9" font-weight="700">२. संपदा</text>',
-            f'  <path d="{brc3}" />' if profile.bracelets_count >= 3 else '',
-            f'  <text x="{brc_lbl_x}" y="599" fill="#0D9488" font-size="9" font-weight="700">३. दीर्घायु</text>' if profile.bracelets_count >= 3 else '',
+            '<g id="majorLines" stroke-linecap="round" fill="none">',
+            f'  <path d="{heart_d}" stroke="#E11D48" stroke-width="3.6" />',
+            f'  <path d="{head_d}" stroke="#2563EB" stroke-width="3.6" />',
+            f'  <path d="{life_d}" stroke="#059669" stroke-width="4.0" />',
+            f'  <path d="{fate_d}" stroke="#D97706" stroke-width="3.2" stroke-dasharray="0" />',
+            f'  <path d="{sun_d}" stroke="#CA8A04" stroke-width="2.6" />',
+            f'  <path d="{marr_d}" stroke="#BE123C" stroke-width="2.8" />',
             '</g>',
         ])
 
-        # Sacred Marks
+        # Age Milestones on Life Line
+        svg_parts.append('<g id="ageMarkers">')
+        for am in age_markers:
+            svg_parts.append(
+                f'<circle cx="{am[0]}" cy="{am[1]}" r="4" fill="#059669" stroke="#FFFFFF" stroke-width="1.5" />'
+                f'<text x="{am[0]+8}" y="{am[1]+4}" fill="#047857" font-size="9" font-weight="900">{am[2]}व.</text>'
+            )
+        svg_parts.append('</g>')
+
+        # Callout Badges with clean pointers
+        # Heart Line Badge
+        svg_parts.extend([
+            f'<line x1="{heart_badge[0]+38}" y1="{heart_badge[1]}" x2="{heart_badge[4]}" y2="{heart_badge[5]}" stroke="#E11D48" stroke-width="1" stroke-dasharray="2 2" opacity="0.7" />',
+            f'<g transform="translate({heart_badge[0]-35}, {heart_badge[1]-11})">',
+            f'  <rect width="76" height="22" rx="6" fill="#FFF1F2" stroke="#E11D48" stroke-width="1.2" />',
+            f'  <text x="38" y="15" text-anchor="middle" fill="#BE123C" font-size="10" font-weight="900">{heart_badge[2]}</text>',
+            '</g>',
+            # Head Line Badge
+            f'<line x1="{head_badge[0]+42}" y1="{head_badge[1]}" x2="{head_badge[4]}" y2="{head_badge[5]}" stroke="#2563EB" stroke-width="1" stroke-dasharray="2 2" opacity="0.7" />',
+            f'<g transform="translate({head_badge[0]-42}, {head_badge[1]-11})">',
+            f'  <rect width="84" height="22" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.2" />',
+            f'  <text x="42" y="15" text-anchor="middle" fill="#1D4ED8" font-size="10" font-weight="900">{head_badge[2]}</text>',
+            '</g>',
+            # Fate Line Badge
+            f'<g transform="translate({fate_badge[0]-34}, {fate_badge[1]-11})">',
+            f'  <rect width="68" height="22" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2" />',
+            f'  <text x="34" y="15" text-anchor="middle" fill="#B45309" font-size="10" font-weight="900">{fate_badge[2]}</text>',
+            '</g>',
+            # Marriage Badge
+            f'<text x="{marr_badge[0]}" y="{marr_badge[1]}" fill="#BE123C" font-size="9.5" font-weight="800">{marr_badge[2]}</text>',
+        ])
+
+        # Bracelets at Wrist
+        svg_parts.append('<g id="bracelets" stroke="#0D9488" stroke-width="2.2" stroke-linecap="round" fill="none">')
+        for bp in brc_paths:
+            svg_parts.append(f'  <path d="{bp}" />')
+        svg_parts.append('</g>')
+
+        # Sacred Marks (Yava, Cross, Matsya)
         svg_parts.append('<g id="sacredMarks">')
         if show_yava:
             svg_parts.extend([
-                f'  <ellipse cx="{yava_cx}" cy="{yava_cy}" rx="9" ry="5" fill="#FEF3C7" stroke="#B45309" stroke-width="2" />',
-                f'  <circle cx="{yava_cx}" cy="{yava_cy}" r="2.5" fill="#B45309" />',
-                f'  <text x="{yava_cx}" y="{yava_cy+18}" text-anchor="middle" fill="#B45309" font-size="8.5" font-weight="900">👁️ यव (बुद्ध चक्षु)</text>',
+                f'<ellipse cx="{yava_pos[0]}" cy="{yava_pos[1]}" rx="9" ry="5" fill="#FEF3C7" stroke="#B45309" stroke-width="1.8" />',
+                f'<circle cx="{yava_pos[0]}" cy="{yava_pos[1]}" r="2" fill="#B45309" />',
+                f'<text x="{yava_pos[0]}" y="{yava_pos[1]+16}" text-anchor="middle" fill="#B45309" font-size="8.5" font-weight="800">बुद्ध चक्षु</text>',
             ])
         if show_cross:
             svg_parts.extend([
-                f'  <g transform="translate({cross_x}, {cross_y})">',
-                '    <line x1="-7" y1="-7" x2="7" y2="7" stroke="#7C3AED" stroke-width="2.6" stroke-linecap="round" />',
-                '    <line x1="7" y1="-7" x2="-7" y2="7" stroke="#7C3AED" stroke-width="2.6" stroke-linecap="round" />',
-                '    <text x="12" y="4" fill="#7C3AED" font-size="9" font-weight="900">✨ रहस्यमयी क्रॉस</text>',
-                '  </g>',
+                f'<g transform="translate({cross_pos[0]}, {cross_pos[1]})">',
+                '  <line x1="-6" y1="-6" x2="6" y2="6" stroke="#7C3AED" stroke-width="2.4" stroke-linecap="round" />',
+                '  <line x1="6" y1="-6" x2="-6" y2="6" stroke="#7C3AED" stroke-width="2.4" stroke-linecap="round" />',
+                '  <text x="10" y="4" fill="#7C3AED" font-size="8.5" font-weight="800">क्रॉस</text>',
+                '</g>',
             ])
         if show_matsya:
             svg_parts.extend([
-                f'  <g transform="translate({matsya_x}, {matsya_y})">',
-                '    <path d="M -10 -8 C 0 0, 5 5, 10 5 C 5 5, 0 0, -10 8 C -5 2, -5 -2, -10 -8 Z" fill="#FDE68A" stroke="#B45309" stroke-width="1.8" />',
-                '    <line x1="-10" y1="-8" x2="-14" y2="-12" stroke="#B45309" stroke-width="1.6" />',
-                '    <line x1="-10" y1="8" x2="-14" y2="12" stroke="#B45309" stroke-width="1.6" />',
-                '    <text x="14" y="4" fill="#B45309" font-size="9" font-weight="900">🐟 मत्स्य</text>',
-                '  </g>',
-            ])
-        if show_jup_cross:
-            svg_parts.extend([
-                f'  <g transform="translate({jup_cross_x}, {jup_cross_y})">',
-                '    <line x1="-6" y1="-6" x2="6" y2="6" stroke="#059669" stroke-width="2.2" stroke-linecap="round" />',
-                '    <line x1="6" y1="-6" x2="-6" y2="6" stroke="#059669" stroke-width="2.2" stroke-linecap="round" />',
-                '  </g>',
-            ])
-        if show_trishul:
-            svg_parts.extend([
-                f'  <g transform="translate({trishul_x}, {trishul_y})">',
-                '    <line x1="0" y1="8" x2="0" y2="-8" stroke="#B45309" stroke-width="2" />',
-                '    <path d="M -6 -2 C -6 -6, -2 -8, 0 -4 C 2 -8, 6 -6, 6 -2" fill="none" stroke="#B45309" stroke-width="1.8" />',
-                '    <text x="8" y="-4" fill="#B45309" font-size="9" font-weight="900">🔱 त्रिशूल</text>',
-                '  </g>',
+                f'<g transform="translate({matsya_pos[0]}, {matsya_pos[1]})">',
+                '  <path d="M -8 -6 C 0 0, 4 4, 8 4 C 4 4, 0 0, -8 6 C -4 2, -4 -2, -8 -6 Z" fill="#FDE68A" stroke="#B45309" stroke-width="1.6" />',
+                '  <text x="12" y="3" fill="#B45309" font-size="8.5" font-weight="800">मत्स्य</text>',
+                '</g>',
             ])
         svg_parts.append('</g>')
 
         # Footer Legend Strip
         svg_parts.extend([
-            f'<rect x="20" y="{height-42}" width="{width - 40}" height="32" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />',
-            f'<text x="{width//2}" y="{height-22}" text-anchor="middle" fill="#475569" font-size="9.5" font-weight="700">',
-            '🟢 जीवन रेखा | 🔵 मस्तिष्क रेखा | 🔴 हृदय रेखा | 🟠 भाग्य रेखा | 🟡 सूर्य रेखा | 🟣 रहस्यमयी क्रॉस | 🟤 यव/मत्स्य',
+            f'<rect x="15" y="{height-38}" width="{width - 30}" height="28" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />',
+            f'<text x="{width//2}" y="{height-20}" text-anchor="middle" fill="#475569" font-size="10" font-weight="700">',
+            '🔴 हृदय रेखा | 🔵 मस्तिष्क रेखा | 🟢 जीवन रेखा (आयु) | 🟠 भाग्य रेखा | 🟡 सूर्य रेखा | 📿 मणिबंध कंकण',
             '</text>',
             '</svg>'
         ])

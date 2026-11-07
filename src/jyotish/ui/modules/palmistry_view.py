@@ -227,10 +227,10 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
             else:
                 photo_width = 300
 
-        svg_markup = PalmRenderer.render_palm_svg(p_profile, width=540, height=670, is_right_hand=is_right_hand_selected)
+        svg_markup = PalmRenderer.render_palm_svg(p_profile, width=580, height=740, is_right_hand=is_right_hand_selected)
 
         if has_uploaded_img and "संयुक्त" in palm_view_mode:
-            col_svg1, col_svg2 = st.columns([1, 1.3], gap="medium")
+            col_svg1, col_svg2 = st.columns([1, 1.4], gap="medium")
             with col_svg1:
                 st.markdown("##### 📸 जातक की वास्तविक हथेली:")
                 st.image(st.session_state.uploaded_palm_image_bytes, width=photo_width)
@@ -239,11 +239,11 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
                     st.caption(f"**पहचानी गई विशेषताएं:** {res.line_prominence} | {res.mount_activity}")
             with col_svg2:
                 st.markdown("##### ✋ चिन्हित शास्त्रीय हस्त-नक्शा (Vedic Palm Map):")
-                components.html(f"""<div style="display:flex; justify-content:center; align-items:center; width:100%;">{svg_markup}</div>""", height=690, scrolling=False)
+                components.html(f"""<div style="display:flex; justify-content:center; align-items:center; width:100%;">{svg_markup}</div>""", height=760, scrolling=False)
         else:
             col_svg1, col_svg2 = st.columns([1.3, 1.0], gap="medium")
             with col_svg1:
-                components.html(f"""<div style="display:flex; justify-content:center; align-items:center; width:100%;">{svg_markup}</div>""", height=690, scrolling=False)
+                components.html(f"""<div style="display:flex; justify-content:center; align-items:center; width:100%;">{svg_markup}</div>""", height=760, scrolling=False)
             with col_svg2:
                 st.markdown("##### 📌 हस्त संरचना एवं लक्षण सारणी:")
                 st.markdown(f"""
