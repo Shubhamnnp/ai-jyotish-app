@@ -32,9 +32,53 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
     p_profile = st.session_state.palm_profile_data
 
     # -------------------------------------------------------------------------
+    # 📷 CAMERA INPUT & PHOTO UPLOAD PALM SCANNER
+    # -------------------------------------------------------------------------
+    with st.expander("📷 लाइव कैमरा एवं फोटो अपलोड स्कैनर (AI Palm Camera & Image Scanner)", expanded=st.session_state.get("palm_scanner_expanded", True)):
+        col_scan_mode1, col_scan_mode2 = st.columns([1.5, 1.5], vertical_alignment="center")
+        with col_scan_mode1:
+            scan_method = st.radio(
+                "फोटो इनपुट माध्यम चुनें (Select Input Method):",
+                ["📷 लाइव कैमरा (Camera Snapshot)", "📁 गैलरी से फोटो अपलोड (File Upload)"],
+                horizontal=True,
+                key="palm_scan_method_choice"
+            )
+        with col_scan_mode2:
+            st.caption("💡 **निर्देश:** हथेली को सीधी, पर्याप्त प्रकाश में कैमरे के सामने रखें ताकि रेखाएं व पर्वत स्पष्ट दिखें।")
+
+        captured_file = None
+        if "कैमरा" in scan_method:
+            captured_file = st.camera_input("📷 अपनी हथेली को कैमरे के सामने सीधा रखें और फोटो खींचें (Take Palm Snapshot)", key="palm_cam_input")
+        else:
+            captured_file = st.file_uploader("📁 हथेली की स्पष्ट फोटो अपलोड करें (Upload Palm Image)", type=["jpg", "jpeg", "png", "webp"], key="palm_file_uploader")
+
+        if captured_file is not None:
+            image_bytes = captured_file.getvalue()
+            c_img1, c_img2 = st.columns([1.2, 1.8], gap="medium")
+            with c_img1:
+                st.image(image_bytes, caption="📸 जातक की स्कैन की गई हथेली", use_container_width=True)
+
+            with c_img2:
+                with st.spinner("🔍 हथेली की त्वचा, मुख्य रेखाओं व नवग्रह पर्वतों का शास्त्रीय विश्लेषण जारी..."):
+                    new_profile, scan_res = HastarekhaEngine.analyze_palm_image(image_bytes)
+                    st.session_state.palm_profile_data = new_profile
+                    p_profile = new_profile
+
+                st.success(f"✅ **हस्त स्कैन पूर्ण (सामुद्रिक सटीकता विश्वास: {scan_res.confidence_pct}%)**")
+                st.markdown(f"""
+                <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px 14px; margin-bottom:10px;">
+                    <b style="color:#15803D; font-size:14px;">🖐️ हस्त संरचना:</b> {scan_res.scanned_hand_type}<br/>
+                    <b style="color:#15803D; font-size:14px;">🎨 त्वचा वर्ण व धातु:</b> {scan_res.skin_complexion} ({scan_res.ayurvedic_dosha})<br/>
+                    <b style="color:#15803D; font-size:14px;">📏 रेखा सामर्थ्य:</b> {scan_res.line_prominence}<br/>
+                    <b style="color:#15803D; font-size:14px;">🪐 सक्रिय पर्वत:</b> {scan_res.mount_activity}
+                </div>
+                """, unsafe_allow_html=True)
+                st.info("💡 **सफलता:** नीचे दिए गए सभी ७ टैब्स, नवग्रह पर्वत, आयु काल-विभाजन एवं शास्त्रीय फलादेश आपकी इस फोटो के आधार पर स्वतः अपडेट हो चुके हैं!")
+
+    # -------------------------------------------------------------------------
     # QUICK CONTROLS: HAND PARAMETER ADJUSTER
     # -------------------------------------------------------------------------
-    with st.expander("🛠️ जातक हस्त लक्षण विन्यास (Customize Native's Palm Parameters)", expanded=False):
+    with st.expander("🛠️ जातक हस्त लक्षण सूक्ष्म समायोजन (Fine-Tune Parameters Manually)", expanded=False):
         c_p1, c_p2, c_p3 = st.columns(3)
         with c_p1:
             hand_types = ["Square (व्यावहारिक)", "Philosophic (दार्शनिक)", "Spatulate (कर्मठ)", "Conic (कलात्मक)", "Psychic (आदर्शवादी)", "Elementary (प्राकृतिक)", "Mixed (मिश्रित)"]

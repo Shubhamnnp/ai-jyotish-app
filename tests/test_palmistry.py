@@ -53,5 +53,20 @@ class TestPalmistryEngine(unittest.TestCase):
             self.assertTrue(len(sec.detailed_points) > 0)
 
 
+    def test_palm_image_analysis(self):
+        import io
+        from PIL import Image
+        img = Image.new("RGB", (200, 200), color=(220, 180, 150))
+        buf = io.BytesIO()
+        img.save(buf, format="JPEG")
+        image_bytes = buf.getvalue()
+
+        prof, scan_res = HastarekhaEngine.analyze_palm_image(image_bytes)
+        self.assertIsNotNone(prof)
+        self.assertIsNotNone(scan_res)
+        self.assertGreaterEqual(scan_res.confidence_pct, 80)
+        self.assertTrue(len(scan_res.detected_features) > 0)
+
+
 if __name__ == "__main__":
     unittest.main()
