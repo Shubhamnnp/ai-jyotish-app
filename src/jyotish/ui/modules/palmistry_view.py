@@ -54,26 +54,47 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
 
         if captured_file is not None:
             image_bytes = captured_file.getvalue()
-            c_img1, c_img2 = st.columns([1.2, 1.8], gap="medium")
+            st.session_state.uploaded_palm_image_bytes = image_bytes
+
+            c_img1, c_img2 = st.columns([1.2, 1.8], gap="medium", vertical_alignment="center")
             with c_img1:
-                st.image(image_bytes, caption="📸 जातक की स्कैन की गई हथेली", use_container_width=True)
+                st.image(image_bytes, caption="📸 अपलोड / कैप्चर की गई हथेली", use_container_width=True)
 
             with c_img2:
-                with st.spinner("🔍 हथेली की त्वचा, मुख्य रेखाओं व नवग्रह पर्वतों का शास्त्रीय विश्लेषण जारी..."):
-                    new_profile, scan_res = HastarekhaEngine.analyze_palm_image(image_bytes)
-                    st.session_state.palm_profile_data = new_profile
-                    p_profile = new_profile
+                st.markdown("##### 🔮 हथेली का कम्प्यूटर विज़न एवं सामुद्रिक विश्लेषण:")
+                st.write("हथेली की रेखाओं की गहराई, लंबाई, पर्वतों के उभार, त्वचा की दीप्ति एवं गुप्त चिन्हों को शास्त्र सम्मत स्कैन करने के लिए सबमिट बटन दबाएं।")
+                if st.button("🔮 हथेली स्कैन करें एवं सम्पूर्ण फलादेश अपडेट करें (Submit & Analyze Palm)", type="primary", use_container_width=True, key="btn_submit_palm_scan"):
+                    with st.spinner("🔍 हथेली की रेखाओं, पर्वतों एवं त्वचा वर्ण का गहन विश्लेषण जारी..."):
+                        new_profile, scan_res = HastarekhaEngine.analyze_palm_image(image_bytes)
+                        st.session_state.palm_profile_data = new_profile
+                        st.session_state.palm_scan_results = scan_res
 
-                st.success(f"✅ **हस्त स्कैन पूर्ण (सामुद्रिक सटीकता विश्वास: {scan_res.confidence_pct}%)**")
-                st.markdown(f"""
-                <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px 14px; margin-bottom:10px;">
-                    <b style="color:#15803D; font-size:14px;">🖐️ हस्त संरचना:</b> {scan_res.scanned_hand_type}<br/>
-                    <b style="color:#15803D; font-size:14px;">🎨 त्वचा वर्ण व धातु:</b> {scan_res.skin_complexion} ({scan_res.ayurvedic_dosha})<br/>
-                    <b style="color:#15803D; font-size:14px;">📏 रेखा सामर्थ्य:</b> {scan_res.line_prominence}<br/>
-                    <b style="color:#15803D; font-size:14px;">🪐 सक्रिय पर्वत:</b> {scan_res.mount_activity}
-                </div>
-                """, unsafe_allow_html=True)
-                st.info("💡 **सफलता:** नीचे दिए गए सभी ७ टैब्स, नवग्रह पर्वत, आयु काल-विभाजन एवं शास्त्रीय फलादेश आपकी इस फोटो के आधार पर स्वतः अपडेट हो चुके हैं!")
+                        # UPDATE ALL MANUAL ADJUSTER WIDGET KEYS IN SESSION STATE!
+                        st.session_state["sel_palm_ht"] = f"{new_profile.hand_type} (व्यावहारिक)" if new_profile.hand_type == "Square" else (f"{new_profile.hand_type} (दार्शनिक)" if new_profile.hand_type == "Philosophic" else f"{new_profile.hand_type} (कर्मठ)")
+                        st.session_state["sel_palm_st"] = f"{new_profile.skin_texture} (कोमल/स्निग्ध)" if "Soft" in new_profile.skin_texture else f"{new_profile.skin_texture} (सामान्य)"
+                        st.session_state["sel_palm_tb"] = f"{new_profile.thumb_type} (दृढ़ संतुलित)"
+                        st.session_state["sld_palm_bracelets"] = new_profile.bracelets_count
+                        st.session_state["chk_p_yava"] = new_profile.has_buddha_eye
+                        st.session_state["chk_p_cross"] = new_profile.has_mystic_cross
+                        st.session_state["chk_p_matsya"] = new_profile.has_matsya_sign
+                        st.session_state["chk_p_trishul"] = new_profile.has_trishul_sign
+                        st.session_state["chk_p_jupcross"] = new_profile.mount_jupiter.has_cross
+                        st.session_state["chk_p_solomon"] = new_profile.has_solomon_ring
+
+                        st.rerun()
+
+                if "palm_scan_results" in st.session_state:
+                    scan_res = st.session_state.palm_scan_results
+                    st.success(f"✅ **हस्त स्कैन पूर्ण (सामुद्रिक सटीकता विश्वास: {scan_res.confidence_pct}%)**")
+                    st.markdown(f"""
+                    <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px 14px; margin-bottom:10px;">
+                        <b style="color:#15803D; font-size:14px;">🖐️ हस्त संरचना:</b> {scan_res.scanned_hand_type}<br/>
+                        <b style="color:#15803D; font-size:14px;">🎨 त्वचा वर्ण व धातु:</b> {scan_res.skin_complexion} ({scan_res.ayurvedic_dosha})<br/>
+                        <b style="color:#15803D; font-size:14px;">📏 रेखा सामर्थ्य:</b> {scan_res.line_prominence}<br/>
+                        <b style="color:#15803D; font-size:14px;">🪐 सक्रिय पर्वत:</b> {scan_res.mount_activity}
+                    </div>
+                    """, unsafe_allow_html=True)
+                    st.info("💡 **सफलता:** सूक्ष्म समायोजन, शास्त्रीय हस्त-नक्शा एवं सभी ७ मॉड्यूल्स आपकी फोटो के आधार पर स्वतः अपडेट हो चुके हैं!")
 
     # -------------------------------------------------------------------------
     # QUICK CONTROLS: HAND PARAMETER ADJUSTER
@@ -82,32 +103,57 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
         c_p1, c_p2, c_p3 = st.columns(3)
         with c_p1:
             hand_types = ["Square (व्यावहारिक)", "Philosophic (दार्शनिक)", "Spatulate (कर्मठ)", "Conic (कलात्मक)", "Psychic (आदर्शवादी)", "Elementary (प्राकृतिक)", "Mixed (मिश्रित)"]
-            sel_ht = st.selectbox("हस्त प्रकार (Hand Type)", hand_types, index=0, key="sel_palm_ht")
+            if "sel_palm_ht" not in st.session_state:
+                st.session_state.sel_palm_ht = hand_types[0]
+            sel_ht = st.selectbox("हस्त प्रकार (Hand Type)", hand_types, key="sel_palm_ht")
             p_profile.hand_type = sel_ht.split(" ")[0]
 
             skin_opts = ["Normal (सामान्य)", "Soft/Silky (कोमल/स्निग्ध)", "Hard/Rough (कठोर/स्थूल)"]
-            sel_st = st.selectbox("त्वचा स्पर्श (Skin Texture)", skin_opts, index=0, key="sel_palm_st")
+            if "sel_palm_st" not in st.session_state:
+                st.session_state.sel_palm_st = skin_opts[0]
+            sel_st = st.selectbox("त्वचा स्पर्श (Skin Texture)", skin_opts, key="sel_palm_st")
             p_profile.skin_texture = sel_st.split(" ")[0]
 
         with c_p2:
             thumb_opts = ["Firm & Balanced (दृढ़ संतुलित)", "Supple (लचीला)", "Stiff/Clubbed (कड़ा/गदाकार)"]
-            sel_tb = st.selectbox("अंगूठा प्रकार (Thumb)", thumb_opts, index=0, key="sel_palm_tb")
+            if "sel_palm_tb" not in st.session_state:
+                st.session_state.sel_palm_tb = thumb_opts[0]
+            sel_tb = st.selectbox("अंगूठा प्रकार (Thumb)", thumb_opts, key="sel_palm_tb")
             p_profile.thumb_type = sel_tb.split(" ")[0]
 
-            bracelets = st.slider("मणिबंध रेखाएं (Wrist Bracelets)", min_value=1, max_value=4, value=p_profile.bracelets_count, key="sld_palm_bracelets")
+            if "sld_palm_bracelets" not in st.session_state:
+                st.session_state.sld_palm_bracelets = p_profile.bracelets_count
+            bracelets = st.slider("मणिबंध रेखाएं (Wrist Bracelets)", min_value=1, max_value=4, key="sld_palm_bracelets")
             p_profile.bracelets_count = bracelets
 
         with c_p3:
             st.markdown("##### ⚜️ विशिष्ट शास्त्रीय चिन्ह (Sacred Marks):")
             c_m1, c_m2 = st.columns(2)
             with c_m1:
-                p_profile.has_buddha_eye = st.checkbox("👁️ यव (बुद्ध चक्षु)", value=p_profile.has_buddha_eye, key="chk_p_yava")
-                p_profile.has_mystic_cross = st.checkbox("✨ रहस्यमयी क्रॉस", value=p_profile.has_mystic_cross, key="chk_p_cross")
-                p_profile.has_matsya_sign = st.checkbox("🐟 मत्स्य चिन्ह (Fish)", value=p_profile.has_matsya_sign, key="chk_p_matsya")
+                if "chk_p_yava" not in st.session_state:
+                    st.session_state.chk_p_yava = p_profile.has_buddha_eye
+                p_profile.has_buddha_eye = st.checkbox("👁️ यव (बुद्ध चक्षु)", key="chk_p_yava")
+
+                if "chk_p_cross" not in st.session_state:
+                    st.session_state.chk_p_cross = p_profile.has_mystic_cross
+                p_profile.has_mystic_cross = st.checkbox("✨ रहस्यमयी क्रॉस", key="chk_p_cross")
+
+                if "chk_p_matsya" not in st.session_state:
+                    st.session_state.chk_p_matsya = p_profile.has_matsya_sign
+                p_profile.has_matsya_sign = st.checkbox("🐟 मत्स्य चिन्ह (Fish)", key="chk_p_matsya")
+
             with c_m2:
-                p_profile.has_trishul_sign = st.checkbox("🔱 त्रिशूल चिन्ह", value=p_profile.has_trishul_sign, key="chk_p_trishul")
-                p_profile.mount_jupiter.has_cross = st.checkbox("➕ गुरु क्रॉस", value=p_profile.mount_jupiter.has_cross, key="chk_p_jupcross")
-                p_profile.has_solomon_ring = st.checkbox("⭕ गुरु मुद्रिका", value=p_profile.has_solomon_ring, key="chk_p_solomon")
+                if "chk_p_trishul" not in st.session_state:
+                    st.session_state.chk_p_trishul = p_profile.has_trishul_sign
+                p_profile.has_trishul_sign = st.checkbox("🔱 त्रिशूल चिन्ह", key="chk_p_trishul")
+
+                if "chk_p_jupcross" not in st.session_state:
+                    st.session_state.chk_p_jupcross = p_profile.mount_jupiter.has_cross
+                p_profile.mount_jupiter.has_cross = st.checkbox("➕ गुरु क्रॉस", key="chk_p_jupcross")
+
+                if "chk_p_solomon" not in st.session_state:
+                    st.session_state.chk_p_solomon = p_profile.has_solomon_ring
+                p_profile.has_solomon_ring = st.checkbox("⭕ गुरु मुद्रिका", key="chk_p_solomon")
 
     # Generate Full Prediction Report
     report = HastarekhaEngine.analyze_palm(p_profile, chart=chart)
@@ -142,32 +188,78 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
     # =========================================================================
     with t1:
         st.markdown("#### ✋ शास्त्रीय हस्तरेखा एवं नवग्रह पर्वत आरेख (High-Definition Palm Map)")
-        st.caption("हथेली के प्रमुख क्षेत्रों, नवग्रह पर्वतों, रेखाओं के प्रवाह एवं दिव्य चिन्हों का शास्त्रीय मानचित्र:")
+        st.caption("अपलोड की गई फोटो से पहचानी गई रेखाएं, नवग्रह पर्वत, काल-विभाजन एवं शास्त्रीय हस्त-नक्शा:")
 
-        col_svg1, col_svg2 = st.columns([1.3, 1.0], gap="medium")
-        with col_svg1:
-            svg_markup = PalmRenderer.render_palm_svg(p_profile, width=540, height=660)
-            st.markdown(svg_markup, unsafe_allow_html=True)
+        has_uploaded_img = "uploaded_palm_image_bytes" in st.session_state and st.session_state.uploaded_palm_image_bytes is not None
 
-        with col_svg2:
-            st.markdown("##### 📌 हस्त संरचना एवं लक्षण सारणी:")
-            st.markdown(f"""
-            <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:12px; padding:14px; margin-bottom:12px;">
-                <b style="color:#0F172A; font-size:14px;">🖐️ हस्त प्रकार:</b> <span style="color:#2563EB; font-weight:700;">{p_profile.hand_type} (व्यावहारिक व स्थिर)</span><br/>
-                <b style="color:#0F172A; font-size:14px;">👍 अंगूठा संरचना:</b> <span style="color:#D97706; font-weight:700;">{p_profile.thumb_type}</span><br/>
-                <b style="color:#0F172A; font-size:14px;">🌾 त्वचा वर्ण व स्पर्श:</b> <span style="color:#059669; font-weight:700;">{p_profile.skin_texture}</span><br/>
-                <b style="color:#0F172A; font-size:14px;">📿 मणिबंध रेखाएं:</b> <span style="color:#7C3AED; font-weight:700;">{p_profile.bracelets_count} पूर्ण कंकण (७५+ वर्ष आयु)</span>
-            </div>
-            """, unsafe_allow_html=True)
+        if has_uploaded_img:
+            c_view_toggle1, c_view_toggle2 = st.columns([2, 1.2], vertical_alignment="center")
+            with c_view_toggle1:
+                st.markdown("##### 🔍 हस्त फोटो एवं शास्त्रीय रेखा मानचित्र का सजीव मिलान:")
+            with c_view_toggle2:
+                palm_view_mode = st.radio("प्रदर्शन मोड", ["📸 संयुक्त दृश्य (Side-by-Side)", "✋ केवल शास्त्रीय नक्शा"], horizontal=True, key="palm_tab1_view_mode")
 
-            st.markdown("##### 🌟 सक्रिय शास्त्रीय योग (Active Palm Yogas):")
-            for yg in report.classical_yogas_detected:
+            if "Side-by-Side" in palm_view_mode:
+                col_svg1, col_svg2 = st.columns([1, 1], gap="medium")
+                with col_svg1:
+                    st.markdown("##### 📸 जातक की वास्तविक स्कैन हथेली:")
+                    st.image(st.session_state.uploaded_palm_image_bytes, use_container_width=True)
+                    if "palm_scan_results" in st.session_state:
+                        res = st.session_state.palm_scan_results
+                        st.caption(f"**पहचानी गई विशेषताएं:** {res.line_prominence} | {res.mount_activity}")
+                with col_svg2:
+                    st.markdown("##### ✋ चिन्हित शास्त्रीय हस्त-नक्शा (Vedic Palm Map):")
+                    svg_markup = PalmRenderer.render_palm_svg(p_profile, width=540, height=660)
+                    st.markdown(svg_markup, unsafe_allow_html=True)
+            else:
+                col_svg1, col_svg2 = st.columns([1.3, 1.0], gap="medium")
+                with col_svg1:
+                    svg_markup = PalmRenderer.render_palm_svg(p_profile, width=540, height=660)
+                    st.markdown(svg_markup, unsafe_allow_html=True)
+                with col_svg2:
+                    st.markdown("##### 📌 हस्त संरचना एवं लक्षण सारणी:")
+                    st.markdown(f"""
+                    <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:12px; padding:14px; margin-bottom:12px;">
+                        <b style="color:#0F172A; font-size:14px;">🖐️ हस्त प्रकार:</b> <span style="color:#2563EB; font-weight:700;">{p_profile.hand_type} (व्यावहारिक व स्थिर)</span><br/>
+                        <b style="color:#0F172A; font-size:14px;">👍 अंगूठा संरचना:</b> <span style="color:#D97706; font-weight:700;">{p_profile.thumb_type}</span><br/>
+                        <b style="color:#0F172A; font-size:14px;">🌾 त्वचा वर्ण व स्पर्श:</b> <span style="color:#059669; font-weight:700;">{p_profile.skin_texture}</span><br/>
+                        <b style="color:#0F172A; font-size:14px;">📿 मणिबंध रेखाएं:</b> <span style="color:#7C3AED; font-weight:700;">{p_profile.bracelets_count} पूर्ण कंकण (७५+ वर्ष आयु)</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                    st.markdown("##### 🌟 सक्रिय शास्त्रीय योग (Active Palm Yogas):")
+                    for yg in report.classical_yogas_detected:
+                        st.markdown(f"""
+                        <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-left:4px solid #D97706; border-radius:8px; padding:10px 12px; margin-bottom:8px;">
+                            <b style="color:#92400E; font-size:13px;">{yg['name']}</b><br/>
+                            <small style="color:#475569;">{yg['effect_hi']}</small>
+                        </div>
+                        """, unsafe_allow_html=True)
+        else:
+            col_svg1, col_svg2 = st.columns([1.3, 1.0], gap="medium")
+            with col_svg1:
+                svg_markup = PalmRenderer.render_palm_svg(p_profile, width=540, height=660)
+                st.markdown(svg_markup, unsafe_allow_html=True)
+
+            with col_svg2:
+                st.markdown("##### 📌 हस्त संरचना एवं लक्षण सारणी:")
                 st.markdown(f"""
-                <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-left:4px solid #D97706; border-radius:8px; padding:10px 12px; margin-bottom:8px;">
-                    <b style="color:#92400E; font-size:13px;">{yg['name']}</b><br/>
-                    <small style="color:#475569;">{yg['effect_hi']}</small>
+                <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:12px; padding:14px; margin-bottom:12px;">
+                    <b style="color:#0F172A; font-size:14px;">🖐️ हस्त प्रकार:</b> <span style="color:#2563EB; font-weight:700;">{p_profile.hand_type} (व्यावहारिक व स्थिर)</span><br/>
+                    <b style="color:#0F172A; font-size:14px;">👍 अंगूठा संरचना:</b> <span style="color:#D97706; font-weight:700;">{p_profile.thumb_type}</span><br/>
+                    <b style="color:#0F172A; font-size:14px;">🌾 त्वचा वर्ण व स्पर्श:</b> <span style="color:#059669; font-weight:700;">{p_profile.skin_texture}</span><br/>
+                    <b style="color:#0F172A; font-size:14px;">📿 मणिबंध रेखाएं:</b> <span style="color:#7C3AED; font-weight:700;">{p_profile.bracelets_count} पूर्ण कंकण (७५+ वर्ष आयु)</span>
                 </div>
                 """, unsafe_allow_html=True)
+
+                st.markdown("##### 🌟 सक्रिय शास्त्रीय योग (Active Palm Yogas):")
+                for yg in report.classical_yogas_detected:
+                    st.markdown(f"""
+                    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-left:4px solid #D97706; border-radius:8px; padding:10px 12px; margin-bottom:8px;">
+                        <b style="color:#92400E; font-size:13px;">{yg['name']}</b><br/>
+                        <small style="color:#475569;">{yg['effect_hi']}</small>
+                    </div>
+                    """, unsafe_allow_html=True)
 
     # =========================================================================
     # TAB 2: COMPREHENSIVE SHASTRIYA PREDICTIONS (99.99% ACCURACY)
