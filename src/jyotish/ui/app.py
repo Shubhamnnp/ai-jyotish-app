@@ -5940,7 +5940,8 @@ if "English" in st.session_state.app_lang:
         "🕉️ Ishta Devata & Pooja (Pooja)",
         "🧘 Karma & Destiny (Karma)",
         "📅 Vedic Panchang (Panchang)",
-        "📜 Classical Predictions (Predictions)"
+        "📜 Classical Predictions (Predictions)",
+        "✋ Palmistry & Samudrika (Palmistry)"
     ]
 elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -5974,7 +5975,8 @@ elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_sta
         "🕉️ இஷ்ட தெய்வம் (Pooja)",
         "🧘 கர்ம பலன் (Karma)",
         "📅 பஞ்சாங்கம் (Panchang)",
-        "📜 சாஸ்திர பலன் (Predictions)"
+        "📜 சாஸ்திர பலன் (Predictions)",
+        "✋ கைரேகை ஜோதிடம் (Palmistry)"
     ]
 elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -6008,7 +6010,8 @@ elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session
         "🕉️ ఇష్ట దైవం (Pooja)",
         "🧘 కర్మఫలం (Karma)",
         "📅 పంచాంగం (Panchang)",
-        "📜 శాస్త్రీయ ఫలితాలు (Predictions)"
+        "📜 శాస్త్రీయ ఫలితాలు (Predictions)",
+        "✋ హస్తసాముద్రికం (Palmistry)"
     ]
 elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -6042,7 +6045,8 @@ elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.se
         "🕉️ ઇષ્ટદેવ પૂજા (Pooja)",
         "🧘 કર્મફળ (Karma)",
         "📅 વૈદિક પંચાંગ (Panchang)",
-        "📜 શાસ્ત્રીય ફલાદેશ (Predictions)"
+        "📜 શાસ્ત્રીય ફલાદેશ (Predictions)",
+        "✋ હસ્તરેખા વિજ્ઞાન (Palmistry)"
     ]
 elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -6076,7 +6080,8 @@ elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_s
         "🕉️ इष्टदेवता पूजा (Pooja)",
         "🧘 कर्मफळ (Karma)",
         "📅 वैदिक पंचांग (Panchang)",
-        "📜 शास्त्रीय फलादेश (Predictions)"
+        "📜 शास्त्रीय फलादेश (Predictions)",
+        "✋ हस्तरेषा विज्ञान (Palmistry)"
     ]
 elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -6110,7 +6115,8 @@ elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_s
         "🕉️ ইষ্টদেবতা পূজা (Pooja)",
         "🧘 কর্মফল (Karma)",
         "📅 বৈদিক পঞ্জিকা (Panchang)",
-        "📜 শাস্ত্রীয় ফলাফল (Predictions)"
+        "📜 শাস্ত্রীয় ফলাফল (Predictions)",
+        "✋ হস্তরেখা বিজ্ঞান (Palmistry)"
     ]
 else:
     MODULE_OPTIONS = [
@@ -6144,7 +6150,8 @@ else:
         "🕉️ इष्टदेवता व पूजा (Pooja)",
         "🧘 व्यक्तित्व व कर्मफल (Karma)",
         "📅 वैदिक पञ्चाङ्ग (Panchang)",
-        "📜 शास्त्रीय फलादेश (Predictions)"
+        "📜 शास्त्रीय फलादेश (Predictions)",
+        "✋ हस्तरेखा व सामुद्रिक (Palmistry)"
     ]
 
 
@@ -7107,6 +7114,15 @@ MODULE_TABS_REGISTRY = {
         "❓ १०० प्रश्न-उत्तर (FAQs)",
         "🔬 सर्व-गणना संश्लेषण",
         "📜 ग्रन्थ प्रमाण व उपाय"
+    ],
+    31: [
+        "✋ १. विज़ुअल हस्त-नक्शा (Palm Map)",
+        "📜 २. समग्र शास्त्रीय फलादेश (Predictions)",
+        "🪐 ३. नवग्रह पर्वत एवं बल (Mounts)",
+        "📏 ४. रेखाएं एवं आयु काल-विभाजन (Age Dating)",
+        "⚜️ ५. विशिष्ट दिव्य चिन्ह व योग (Yogas)",
+        "🔗 ६. कुण्डली-हस्तरेखा समन्वय (Synthesis)",
+        "🪔 ७. दोष निवारण एवं वैदिक उपाय (Remedies)"
     ]
 }
 
@@ -9972,6 +9988,16 @@ elif selected_idx == 30:
         birth_profile=birth_profile,
         is_dark=st.session_state.get("dark_mode", False),
         tz_offset=tz_offset
+    )
+
+elif selected_idx == 31:
+    import importlib
+    import src.jyotish.ui.modules.palmistry_view as palmistry_view_mod
+    importlib.reload(palmistry_view_mod)
+
+    palmistry_view_mod.render_palmistry_view(
+        chart=chart,
+        tabs=MODULE_TABS_REGISTRY.get(31)
     )
 
 # -------------------------------------------------------------
