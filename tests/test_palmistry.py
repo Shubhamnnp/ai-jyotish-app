@@ -67,6 +67,25 @@ class TestPalmistryEngine(unittest.TestCase):
         self.assertGreaterEqual(scan_res.confidence_pct, 80)
         self.assertTrue(len(scan_res.detected_features) > 0)
 
+    def test_palm_svg_rendering_right_and_left(self):
+        from src.jyotish.ui.palmistry_renderer import PalmRenderer
+        svg_right = PalmRenderer.render_palm_svg(self.profile, is_right_hand=True)
+        self.assertIn("दायां हाथ (Right Palm)", svg_right)
+        self.assertIn("हृदय रेखा", svg_right)
+        self.assertIn("मस्तिष्क रेखा", svg_right)
+        self.assertIn("जीवन रेखा", svg_right)
+        self.assertIn("भाग्य रेखा", svg_right)
+        self.assertIn("सूर्य रेखा", svg_right)
+        self.assertIn("गुरु", svg_right)
+        self.assertIn("शनि", svg_right)
+        self.assertIn("शुक्र", svg_right)
+        self.assertIn("चन्द्र", svg_right)
+
+        svg_left = PalmRenderer.render_palm_svg(self.profile, is_right_hand=False)
+        self.assertIn("बायां हाथ (Left Palm)", svg_left)
+        self.assertIn("हृदय रेखा", svg_left)
+        self.assertIn("मस्तिष्क रेखा", svg_left)
+
 
 if __name__ == "__main__":
     unittest.main()

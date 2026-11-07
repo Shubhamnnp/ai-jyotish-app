@@ -5,6 +5,7 @@ Scriptural Predictions, Kundali-Palm Cross Validation, and Shastric Remedies.
 """
 
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 from typing import Optional, Any
 
@@ -192,55 +193,41 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
 
         has_uploaded_img = "uploaded_palm_image_bytes" in st.session_state and st.session_state.uploaded_palm_image_bytes is not None
 
-        if has_uploaded_img:
-            c_view_toggle1, c_view_toggle2 = st.columns([2, 1.2], vertical_alignment="center")
-            with c_view_toggle1:
-                st.markdown("##### 🔍 हस्त फोटो एवं शास्त्रीय रेखा मानचित्र का सजीव मिलान:")
-            with c_view_toggle2:
-                palm_view_mode = st.radio("प्रदर्शन मोड", ["📸 संयुक्त दृश्य (Side-by-Side)", "✋ केवल शास्त्रीय नक्शा"], horizontal=True, key="palm_tab1_view_mode")
+        c_orient1, c_orient2 = st.columns([1.5, 1.5], vertical_alignment="center")
+        with c_orient1:
+            hand_orient_choice = st.radio(
+                "🖐️ हस्त दिशा चयन (Select Hand Orientation):",
+                ["✋ दायां हाथ (Right Hand - अंगूठा दाईं ओर)", "🤚 बायां हाथ (Left Hand - अंगूठा बाईं ओर)"],
+                horizontal=True,
+                index=0,
+                key="palm_tab1_hand_orient"
+            )
+            is_right_hand_selected = "दायां" in hand_orient_choice
+            p_profile.hand_side = "Right" if is_right_hand_selected else "Left"
 
-            if "Side-by-Side" in palm_view_mode:
-                col_svg1, col_svg2 = st.columns([1, 1], gap="medium")
-                with col_svg1:
-                    st.markdown("##### 📸 जातक की वास्तविक स्कैन हथेली:")
-                    st.image(st.session_state.uploaded_palm_image_bytes, use_container_width=True)
-                    if "palm_scan_results" in st.session_state:
-                        res = st.session_state.palm_scan_results
-                        st.caption(f"**पहचानी गई विशेषताएं:** {res.line_prominence} | {res.mount_activity}")
-                with col_svg2:
-                    st.markdown("##### ✋ चिन्हित शास्त्रीय हस्त-नक्शा (Vedic Palm Map):")
-                    svg_markup = PalmRenderer.render_palm_svg(p_profile, width=540, height=660)
-                    st.markdown(svg_markup, unsafe_allow_html=True)
+        with c_orient2:
+            if has_uploaded_img:
+                palm_view_mode = st.radio("प्रदर्शन मोड (View Mode):", ["📸 संयुक्त दृश्य (Side-by-Side)", "✋ केवल शास्त्रीय नक्शा"], horizontal=True, key="palm_tab1_view_mode")
             else:
-                col_svg1, col_svg2 = st.columns([1.3, 1.0], gap="medium")
-                with col_svg1:
-                    svg_markup = PalmRenderer.render_palm_svg(p_profile, width=540, height=660)
-                    st.markdown(svg_markup, unsafe_allow_html=True)
-                with col_svg2:
-                    st.markdown("##### 📌 हस्त संरचना एवं लक्षण सारणी:")
-                    st.markdown(f"""
-                    <div style="background:#F8FAFC; border:1.5px solid #CBD5E1; border-radius:12px; padding:14px; margin-bottom:12px;">
-                        <b style="color:#0F172A; font-size:14px;">🖐️ हस्त प्रकार:</b> <span style="color:#2563EB; font-weight:700;">{p_profile.hand_type} (व्यावहारिक व स्थिर)</span><br/>
-                        <b style="color:#0F172A; font-size:14px;">👍 अंगूठा संरचना:</b> <span style="color:#D97706; font-weight:700;">{p_profile.thumb_type}</span><br/>
-                        <b style="color:#0F172A; font-size:14px;">🌾 त्वचा वर्ण व स्पर्श:</b> <span style="color:#059669; font-weight:700;">{p_profile.skin_texture}</span><br/>
-                        <b style="color:#0F172A; font-size:14px;">📿 मणिबंध रेखाएं:</b> <span style="color:#7C3AED; font-weight:700;">{p_profile.bracelets_count} पूर्ण कंकण (७५+ वर्ष आयु)</span>
-                    </div>
-                    """, unsafe_allow_html=True)
+                palm_view_mode = "✋ केवल शास्त्रीय नक्शा"
 
-                    st.markdown("##### 🌟 सक्रिय शास्त्रीय योग (Active Palm Yogas):")
-                    for yg in report.classical_yogas_detected:
-                        st.markdown(f"""
-                        <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-left:4px solid #D97706; border-radius:8px; padding:10px 12px; margin-bottom:8px;">
-                            <b style="color:#92400E; font-size:13px;">{yg['name']}</b><br/>
-                            <small style="color:#475569;">{yg['effect_hi']}</small>
-                        </div>
-                        """, unsafe_allow_html=True)
+        svg_markup = PalmRenderer.render_palm_svg(p_profile, width=540, height=670, is_right_hand=is_right_hand_selected)
+
+        if has_uploaded_img and "Side-by-Side" in palm_view_mode:
+            col_svg1, col_svg2 = st.columns([1, 1], gap="medium")
+            with col_svg1:
+                st.markdown("##### 📸 जातक की वास्तविक स्कैन हथेली:")
+                st.image(st.session_state.uploaded_palm_image_bytes, use_container_width=True)
+                if "palm_scan_results" in st.session_state:
+                    res = st.session_state.palm_scan_results
+                    st.caption(f"**पहचानी गई विशेषताएं:** {res.line_prominence} | {res.mount_activity}")
+            with col_svg2:
+                st.markdown("##### ✋ चिन्हित शास्त्रीय हस्त-नक्शा (Vedic Palm Map):")
+                components.html(f"""<div style="display:flex; justify-content:center; align-items:center; width:100%;">{svg_markup}</div>""", height=690, scrolling=False)
         else:
             col_svg1, col_svg2 = st.columns([1.3, 1.0], gap="medium")
             with col_svg1:
-                svg_markup = PalmRenderer.render_palm_svg(p_profile, width=540, height=660)
-                st.markdown(svg_markup, unsafe_allow_html=True)
-
+                components.html(f"""<div style="display:flex; justify-content:center; align-items:center; width:100%;">{svg_markup}</div>""", height=690, scrolling=False)
             with col_svg2:
                 st.markdown("##### 📌 हस्त संरचना एवं लक्षण सारणी:")
                 st.markdown(f"""
@@ -251,6 +238,15 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
                     <b style="color:#0F172A; font-size:14px;">📿 मणिबंध रेखाएं:</b> <span style="color:#7C3AED; font-weight:700;">{p_profile.bracelets_count} पूर्ण कंकण (७५+ वर्ष आयु)</span>
                 </div>
                 """, unsafe_allow_html=True)
+
+                st.markdown("##### 🌟 सक्रिय शास्त्रीय योग (Active Palm Yogas):")
+                for yg in report.classical_yogas_detected:
+                    st.markdown(f"""
+                    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-left:4px solid #D97706; border-radius:8px; padding:10px 12px; margin-bottom:8px;">
+                        <b style="color:#92400E; font-size:13px;">{yg['name']}</b><br/>
+                        <small style="color:#475569;">{yg['effect_hi']}</small>
+                    </div>
+                    """, unsafe_allow_html=True)
 
                 st.markdown("##### 🌟 सक्रिय शास्त्रीय योग (Active Palm Yogas):")
                 for yg in report.classical_yogas_detected:

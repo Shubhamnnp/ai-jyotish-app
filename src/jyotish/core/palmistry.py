@@ -46,6 +46,7 @@ class LineStatus(BaseModel):
 
 
 class PalmInputProfile(BaseModel):
+    hand_side: str = Field(default="Right", description="Right (दायां हाथ), Left (बायां हाथ)")
     hand_type: str = Field(default="Square", description="Square, Elementary, Spatulate, Philosophic, Conic, Psychic, Mixed")
     skin_texture: str = Field(default="Normal", description="Soft/Silky, Normal, Hard/Rough")
     hand_flexibility: str = Field(default="Flexible", description="Stiff, Firm, Flexible, Extremely Flexible")
