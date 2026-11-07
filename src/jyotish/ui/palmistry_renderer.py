@@ -1,7 +1,7 @@
 """
-हस्तरेखा विज़ुअलाइज़र (Interactive High-Definition SVG Palm Renderer)
-Professional, anatomically proportional palm diagrams with non-colliding labels,
-canonical planetary mounts, natural curvature lines, age markers, and sacred signs.
+हस्तरेखा विज़ुअलाइज़र (Interactive High-Definition Realistic SVG Palm Renderer)
+Professional, anatomically authentic palm diagrams with 3D pad volumes, finger joint
+creases (पोर), natural skin shading, non-colliding labels, and sacred shastriya marks.
 """
 
 from typing import Dict, Any, Optional
@@ -11,7 +11,8 @@ from src.jyotish.core.palmistry import PalmInputProfile
 class PalmRenderer:
     """
     Renders scalable, crisp, responsive SVG palm diagrams for Vedic Hastarekha.
-    Zero-collision typography, graceful organic line curves, and authentic anatomy.
+    Features realistic anatomical volume, finger phalanxes, thenar/hypothenar cushions,
+    zero-collision typography, and canonical scriptural line paths.
     """
 
     @classmethod
@@ -23,7 +24,7 @@ class PalmRenderer:
         is_right_hand: Optional[bool] = None
     ) -> str:
         """
-        Generates full-detail SVG markup representing the native's palm.
+        Generates realistic 3D anatomical SVG representing the native's palm.
         """
         if is_right_hand is None:
             is_right_hand = (getattr(profile, "hand_side", "Right") != "Left")
@@ -36,18 +37,9 @@ class PalmRenderer:
 
         hand_label = "दायां हाथ (Right Palm)" if is_right_hand else "बायां हाथ (Left Palm)"
 
-        # Safe attribute extraction
-        jup_prom = getattr(profile.mount_jupiter, "prominence", "Prominent")
-        sat_prom = getattr(profile.mount_saturn, "prominence", "Normal")
-        sun_prom = getattr(profile.mount_sun, "prominence", "Prominent")
-        mer_prom = getattr(profile.mount_mercury, "prominence", "Normal")
-        ven_prom = getattr(profile.mount_venus, "prominence", "Prominent")
-        moon_prom = getattr(profile.mount_moon, "prominence", "Prominent")
-
         if is_right_hand:
             # =================================================================
             # RIGHT HAND (Thumb on RIGHT, Little finger on LEFT)
-            # Coordinates designed for width=580, height=740
             # =================================================================
             contour_path = (
                 "M 210 645 "
@@ -73,7 +65,28 @@ class PalmRenderer:
                 "Z"
             )
 
-            # Mount badge coordinates (x, y, label, symbol)
+            # Realistic Finger Joint Creases (पोर)
+            finger_creases = [
+                # Little finger joints
+                "M 176 235 C 185 237, 195 237, 204 235",
+                "M 178 280 C 187 282, 197 282, 206 280",
+                # Ring finger joints
+                "M 226 180 C 236 182, 246 182, 254 180",
+                "M 228 245 C 238 247, 248 247, 258 245",
+                # Middle finger joints
+                "M 282 155 C 292 157, 302 157, 312 155",
+                "M 284 225 C 295 227, 305 227, 316 225",
+                # Index finger joints
+                "M 342 175 C 350 177, 360 177, 368 175",
+                "M 344 240 C 354 242, 364 242, 372 240",
+                # Thumb joint
+                "M 432 440 C 445 448, 460 455, 475 460",
+            ]
+
+            thenar_pos = (395, 525)
+            moon_pos = (195, 525)
+            rahu_pos = (285, 445)
+
             mount_badges = [
                 (358, 325, "गुरु", "♃", "#92400E", "#FEF3C7", "#D97706"),
                 (303, 310, "शनि", "♄", "#1E293B", "#F1F5F9", "#64748B"),
@@ -87,20 +100,15 @@ class PalmRenderer:
                 (285, 605, "केतु", "☋", "#334155", "#F1F5F9", "#64748B"),
             ]
 
-            # Primary Lines (natural organic curvatures)
-            # 1. Heart Line (Red) - from outer under pinky curving up towards Jupiter
             heart_d = "M 160 375 C 215 382, 275 375, 320 350 C 342 338, 355 320, 360 305"
             heart_badge = (65, 372, "हृदय रेखा", "#E11D48", 160, 375)
 
-            # 2. Head Line (Blue) - from index/thumb sloping towards Moon mount
             head_d = "M 390 410 C 340 420, 280 445, 230 480 C 195 505, 175 530, 162 550"
             head_badge = (65, 548, "मस्तिष्क रेखा", "#2563EB", 162, 550)
 
-            # 3. Life Line (Green) - wrapping graciously around Venus mount
             life_d = "M 390 405 C 375 440, 352 490, 352 540 C 352 585, 342 615, 308 635"
             life_badge = (395, 645, "जीवन रेखा (आयु)", "#059669", 308, 635)
 
-            # Age markers along life line
             age_markers = [
                 (362, 442, "२०"),
                 (352, 498, "४०"),
@@ -108,25 +116,21 @@ class PalmRenderer:
                 (330, 612, "८०"),
             ]
 
-            # 4. Fate Line (Gold) - vertical from wrist to Saturn mount
             fate_d = "M 285 630 C 288 560, 292 480, 295 415 C 298 375, 300 340, 300 310"
             fate_badge = (300, 255, "भाग्य रेखा", "#D97706", 300, 310)
 
-            # 5. Sun Line (Yellow) - rising towards Sun mount
             sun_d = "M 246 455 C 246 410, 246 365, 246 325"
+            sun_badge = (246, 265, "सूर्य रेखा", "#CA8A04")
 
-            # 6. Marriage Line (Pink)
             marr_d = "M 158 355 L 180 355"
             marr_badge = (75, 354, "विवाह", "#BE123C")
 
-            # Bracelets at wrist
             brc_paths = [
                 "M 215 658 C 265 670, 315 670, 365 658",
                 "M 220 670 C 265 682, 315 682, 360 670",
                 "M 225 682 C 265 694, 315 694, 355 682",
             ]
 
-            # Sacred Marks
             yava_pos = (455, 455)
             cross_pos = (255, 415)
             matsya_pos = (285, 590)
@@ -158,6 +162,22 @@ class PalmRenderer:
                 "C 175 570, 190 610, 210 645 "
                 "Z"
             )
+
+            finger_creases = [
+                "M 404 235 C 395 237, 385 237, 376 235",
+                "M 402 280 C 393 282, 383 282, 374 280",
+                "M 354 180 C 344 182, 334 182, 326 180",
+                "M 352 245 C 342 247, 332 247, 322 245",
+                "M 298 155 C 288 157, 278 157, 268 155",
+                "M 296 225 C 285 227, 275 227, 264 225",
+                "M 238 175 C 230 177, 220 177, 212 175",
+                "M 236 240 C 226 242, 216 242, 208 240",
+                "M 148 440 C 135 448, 120 455, 105 460",
+            ]
+
+            thenar_pos = (185, 525)
+            moon_pos = (385, 525)
+            rahu_pos = (295, 445)
 
             mount_badges = [
                 (222, 325, "गुरु", "♃", "#92400E", "#FEF3C7", "#D97706"),
@@ -192,6 +212,7 @@ class PalmRenderer:
             fate_badge = (280, 255, "भाग्य रेखा", "#D97706", 280, 310)
 
             sun_d = "M 334 455 C 334 410, 334 365, 334 325"
+            sun_badge = (334, 265, "सूर्य रेखा", "#CA8A04")
 
             marr_d = "M 422 355 L 400 355"
             marr_badge = (505, 354, "विवाह", "#BE123C")
@@ -206,45 +227,76 @@ class PalmRenderer:
             cross_pos = (325, 415)
             matsya_pos = (295, 590)
 
-        # Build crisp, modern SVG with zero clutter
+        # Build realistic 3D anatomical SVG
         svg_parts = [
-            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="{height}" style="background: radial-gradient(circle at 50% 40%, #FFFFFF 0%, #F8FAFC 100%); border: 1.5px solid #CBD5E1; border-radius: 16px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif;">',
+            f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="{height}" style="background: radial-gradient(circle at 50% 35%, #FFFFFF 0%, #F1F5F9 100%); border: 1.5px solid #CBD5E1; border-radius: 16px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif;">',
             '<defs>',
-            '  <linearGradient id="palmGrad" x1="0%" y1="0%" x2="100%" y2="100%">',
-            '    <stop offset="0%" stop-color="#FFF8F0" />',
-            '    <stop offset="50%" stop-color="#FFEEDD" />',
-            '    <stop offset="100%" stop-color="#FCDCB2" />',
+            '  <!-- Realistic Multi-Stop Skin Gradient -->',
+            '  <linearGradient id="realSkin" x1="20%" y1="0%" x2="80%" y2="100%">',
+            '    <stop offset="0%" stop-color="#FFF5EB" />',
+            '    <stop offset="35%" stop-color="#FFE7D3" />',
+            '    <stop offset="70%" stop-color="#FDD0A2" />',
+            '    <stop offset="100%" stop-color="#F6B26B" />',
             '  </linearGradient>',
-            '  <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">',
-            '    <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#D97706" flood-opacity="0.18" />',
+            '  <!-- Thenar Venus Cushion 3D Highlight -->',
+            '  <radialGradient id="venusCushion" cx="45%" cy="45%" r="55%">',
+            '    <stop offset="0%" stop-color="#FFEEDD" stop-opacity="0.85" />',
+            '    <stop offset="60%" stop-color="#FDBA74" stop-opacity="0.35" />',
+            '    <stop offset="100%" stop-color="#F59E0B" stop-opacity="0" />',
+            '  </radialGradient>',
+            '  <!-- Moon Hypothenar Cushion 3D Highlight -->',
+            '  <radialGradient id="moonCushion" cx="45%" cy="45%" r="55%">',
+            '    <stop offset="0%" stop-color="#FFEEDD" stop-opacity="0.75" />',
+            '    <stop offset="60%" stop-color="#FDBA74" stop-opacity="0.30" />',
+            '    <stop offset="100%" stop-color="#F59E0B" stop-opacity="0" />',
+            '  </radialGradient>',
+            '  <!-- Rahu Palm Hollow Center Shadow -->',
+            '  <radialGradient id="rahuDepth" cx="50%" cy="50%" r="50%">',
+            '    <stop offset="0%" stop-color="#92400E" stop-opacity="0.10" />',
+            '    <stop offset="70%" stop-color="#92400E" stop-opacity="0.03" />',
+            '    <stop offset="100%" stop-color="#92400E" stop-opacity="0" />',
+            '  </radialGradient>',
+            '  <!-- Soft Natural Drop Shadow -->',
+            '  <filter id="handShadow" x="-15%" y="-10%" width="130%" height="120%">',
+            '    <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#78350F" flood-opacity="0.22" />',
             '  </filter>',
             '</defs>',
-            # Header Titles
-            f'<text x="{width//2}" y="28" text-anchor="middle" fill="#0F172A" font-size="15" font-weight="900" letter-spacing="0.5">✋ शास्त्रीय हस्तरेखा एवं नवग्रह पर्वत आरेख</text>',
+            # Header
+            f'<text x="{width//2}" y="28" text-anchor="middle" fill="#0F172A" font-size="15" font-weight="900" letter-spacing="0.5">✋ यथार्थवादी ३D हस्तरेखा एवं नवग्रह पर्वत आरेख</text>',
             f'<text x="{width//2}" y="46" text-anchor="middle" fill="#64748B" font-size="11" font-weight="600">{hand_label} | हस्त: {profile.hand_type} | अंगूठा: {profile.thumb_type}</text>',
-            # Hand Contour with Soft Shadow
-            f'<path d="{contour_path}" fill="url(#palmGrad)" stroke="#F59E0B" stroke-width="2.2" stroke-linejoin="round" filter="url(#softShadow)" />',
-            # Mount Badges
-            '<g id="mountBadges">',
+            # Base Hand Contour with 3D Depth
+            f'<path d="{contour_path}" fill="url(#realSkin)" stroke="#D97706" stroke-width="2.4" stroke-linejoin="round" filter="url(#handShadow)" />',
+            # 3D Palm Cushions & Hollow
+            f'<ellipse cx="{thenar_pos[0]}" cy="{thenar_pos[1]}" rx="45" ry="58" fill="url(#venusCushion)" />',
+            f'<ellipse cx="{moon_pos[0]}" cy="{moon_pos[1]}" rx="40" ry="54" fill="url(#moonCushion)" />',
+            f'<ellipse cx="{rahu_pos[0]}" cy="{rahu_pos[1]}" rx="46" ry="32" fill="url(#rahuDepth)" />',
+            # Finger Phalanx Joint Creases (पोर)
+            '<g id="fingerJoints" stroke="#C2410C" stroke-width="1.3" opacity="0.45" stroke-linecap="round">',
         ]
 
+        for fc in finger_creases:
+            svg_parts.append(f'  <path d="{fc}" />')
+        svg_parts.append('</g>')
+
+        # Mount Badges
+        svg_parts.append('<g id="mountBadges">')
         for mb in mount_badges:
             bx, by, bname, bsym, btxt, bbg, bstrk = mb
             svg_parts.append(
                 f'<g transform="translate({bx-24}, {by-11})">'
-                f'<rect width="48" height="22" rx="11" fill="{bbg}" stroke="{bstrk}" stroke-width="1.2" opacity="0.9" />'
+                f'<rect width="48" height="22" rx="11" fill="{bbg}" stroke="{bstrk}" stroke-width="1.2" opacity="0.95" />'
                 f'<text x="24" y="15" text-anchor="middle" fill="{btxt}" font-size="10.5" font-weight="900">{bsym} {bname}</text>'
                 f'</g>'
             )
         svg_parts.append('</g>')
 
-        # Major Lines
+        # Major Canonical Lines
         svg_parts.extend([
             '<g id="majorLines" stroke-linecap="round" fill="none">',
-            f'  <path d="{heart_d}" stroke="#E11D48" stroke-width="3.6" />',
-            f'  <path d="{head_d}" stroke="#2563EB" stroke-width="3.6" />',
-            f'  <path d="{life_d}" stroke="#059669" stroke-width="4.0" />',
-            f'  <path d="{fate_d}" stroke="#D97706" stroke-width="3.2" stroke-dasharray="0" />',
+            f'  <path d="{heart_d}" stroke="#E11D48" stroke-width="3.8" />',
+            f'  <path d="{head_d}" stroke="#2563EB" stroke-width="3.8" />',
+            f'  <path d="{life_d}" stroke="#059669" stroke-width="4.2" />',
+            f'  <path d="{fate_d}" stroke="#D97706" stroke-width="3.4" />',
             f'  <path d="{sun_d}" stroke="#CA8A04" stroke-width="2.6" />',
             f'  <path d="{marr_d}" stroke="#BE123C" stroke-width="2.8" />',
             '</g>',
@@ -260,25 +312,21 @@ class PalmRenderer:
         svg_parts.append('</g>')
 
         # Callout Badges with clean pointers
-        # Heart Line Badge
         svg_parts.extend([
             f'<line x1="{heart_badge[0]+38}" y1="{heart_badge[1]}" x2="{heart_badge[4]}" y2="{heart_badge[5]}" stroke="#E11D48" stroke-width="1" stroke-dasharray="2 2" opacity="0.7" />',
             f'<g transform="translate({heart_badge[0]-35}, {heart_badge[1]-11})">',
             f'  <rect width="76" height="22" rx="6" fill="#FFF1F2" stroke="#E11D48" stroke-width="1.2" />',
             f'  <text x="38" y="15" text-anchor="middle" fill="#BE123C" font-size="10" font-weight="900">{heart_badge[2]}</text>',
             '</g>',
-            # Head Line Badge
             f'<line x1="{head_badge[0]+42}" y1="{head_badge[1]}" x2="{head_badge[4]}" y2="{head_badge[5]}" stroke="#2563EB" stroke-width="1" stroke-dasharray="2 2" opacity="0.7" />',
             f'<g transform="translate({head_badge[0]-42}, {head_badge[1]-11})">',
             f'  <rect width="84" height="22" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.2" />',
             f'  <text x="42" y="15" text-anchor="middle" fill="#1D4ED8" font-size="10" font-weight="900">{head_badge[2]}</text>',
             '</g>',
-            # Fate Line Badge
             f'<g transform="translate({fate_badge[0]-34}, {fate_badge[1]-11})">',
             f'  <rect width="68" height="22" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2" />',
             f'  <text x="34" y="15" text-anchor="middle" fill="#B45309" font-size="10" font-weight="900">{fate_badge[2]}</text>',
             '</g>',
-            # Marriage Badge
             f'<text x="{marr_badge[0]}" y="{marr_badge[1]}" fill="#BE123C" font-size="9.5" font-weight="800">{marr_badge[2]}</text>',
         ])
 

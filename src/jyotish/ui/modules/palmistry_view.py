@@ -211,12 +211,30 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
 
         with c_orient2:
             if has_uploaded_img:
-                palm_view_mode = st.radio("प्रदर्शन मोड (View):", ["📸 संयुक्त (Side-by-Side)", "✋ केवल नक्शा"], horizontal=True, key="palm_tab1_view_mode")
+                palm_view_mode = st.radio(
+                    "प्रदर्शन मोड (Display View):",
+                    [
+                        "🔬 हस्तरेखा एक्स-रे विज़न (Line X-Ray)",
+                        "📸 त्रिवेणी तुलना (Photo + X-Ray + 3D Map)",
+                        "📸 संयुक्त दृश्य (Photo + 3D Map)",
+                        "✋ केवल ३D नक्शा"
+                    ],
+                    horizontal=True,
+                    index=0,
+                    key="palm_tab1_view_mode"
+                )
             else:
-                palm_view_mode = "✋ केवल नक्शा"
+                palm_view_mode = "✋ केवल ३D नक्शा"
 
         with c_orient3:
-            if has_uploaded_img and "संयुक्त" in palm_view_mode:
+            if has_uploaded_img and ("एक्स-रे" in palm_view_mode or "त्रिवेणी" in palm_view_mode):
+                xray_palette = st.selectbox(
+                    "🎨 एक्स-रे रंग (X-Ray Palette):",
+                    ["neon_cyan (⚡ साइबर नियॉन)", "gold_shastra (🌟 स्वर्णिम)", "emerald (🌿 मरकत)", "monochrome (🩺 मेडिकल)"],
+                    key="palm_xray_palette_sel"
+                )
+                xray_mode = xray_palette.split(" ")[0]
+            elif has_uploaded_img and "संयुक्त" in palm_view_mode:
                 img_size_opt = st.select_slider(
                     "📐 फोटो आकार (Size):",
                     options=["छोटा (240px)", "संतुलित (300px)", "मध्यम (360px)"],
@@ -224,12 +242,40 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
                     key="palm_photo_size_choice"
                 )
                 photo_width = int(img_size_opt.split("(")[1].replace("px)", ""))
+                xray_mode = "neon_cyan"
             else:
                 photo_width = 300
+                xray_mode = "neon_cyan"
 
         svg_markup = PalmRenderer.render_palm_svg(p_profile, width=580, height=740, is_right_hand=is_right_hand_selected)
 
-        if has_uploaded_img and "संयुक्त" in palm_view_mode:
+        if has_uploaded_img and "एक्स-रे" in palm_view_mode:
+            # 🔬 DEDICATED X-RAY VIEW
+            xray_bytes = HastarekhaEngine.generate_palm_xray(st.session_state.uploaded_palm_image_bytes, mode=xray_mode)
+            col_x1, col_x2 = st.columns([1.1, 1.2], gap="medium")
+            with col_x1:
+                st.markdown("##### 🔬 आपकी फोटो से एक्सट्रेक्ट की गई असली रेखाओं का एक्स-रे (Biometric Ridge Scanner):")
+                st.image(xray_bytes, caption="✨ कंप्यूटर विज़न द्वारा फोटो की असली रेखाओं का सजीव एक्स-रे", use_container_width=True)
+                st.info("💡 **एक्स-रे विशेषता:** जातक की हथेली की बारीक से बारीक सिलवटें, भाग्य रेखा, हृदय व मस्तिष्क रेखाएं अंधेरे बैकग्राउंड पर स्पष्ट रूप से चमक रही हैं।")
+            with col_x2:
+                st.markdown("##### ✋ चिन्हित यथार्थवादी ३D हस्त-नक्शा (Vedic 3D Map):")
+                components.html(f"""<div style="display:flex; justify-content:center; align-items:center; width:100%;">{svg_markup}</div>""", height=760, scrolling=False)
+
+        elif has_uploaded_img and "त्रिवेणी" in palm_view_mode:
+            # 📸 TRIPLE VIEW: PHOTO + X-RAY + 3D MAP
+            xray_bytes = HastarekhaEngine.generate_palm_xray(st.session_state.uploaded_palm_image_bytes, mode=xray_mode)
+            col_t1, col_t2, col_t3 = st.columns([1, 1, 1.3], gap="small")
+            with col_t1:
+                st.markdown("##### 📸 १. वास्तविक फोटो")
+                st.image(st.session_state.uploaded_palm_image_bytes, use_container_width=True)
+            with col_t2:
+                st.markdown("##### 🔬 २. रेखा एक्स-रे")
+                st.image(xray_bytes, use_container_width=True)
+            with col_t3:
+                st.markdown("##### ✋ ३. ३D शास्त्रीय नक्शा")
+                components.html(f"""<div style="display:flex; justify-content:center; align-items:center; width:100%;">{svg_markup}</div>""", height=650, scrolling=False)
+
+        elif has_uploaded_img and "संयुक्त" in palm_view_mode:
             col_svg1, col_svg2 = st.columns([1, 1.4], gap="medium")
             with col_svg1:
                 st.markdown("##### 📸 जातक की वास्तविक हथेली:")

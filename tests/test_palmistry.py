@@ -67,6 +67,11 @@ class TestPalmistryEngine(unittest.TestCase):
         self.assertGreaterEqual(scan_res.confidence_pct, 80)
         self.assertTrue(len(scan_res.detected_features) > 0)
 
+        # Test X-Ray generation
+        xray_bytes = HastarekhaEngine.generate_palm_xray(image_bytes, mode="neon_cyan")
+        self.assertIsNotNone(xray_bytes)
+        self.assertGreater(len(xray_bytes), 100)
+
     def test_palm_svg_rendering_right_and_left(self):
         from src.jyotish.ui.palmistry_renderer import PalmRenderer
         svg_right = PalmRenderer.render_palm_svg(self.profile, is_right_hand=True)

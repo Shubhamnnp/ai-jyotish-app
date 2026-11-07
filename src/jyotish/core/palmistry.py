@@ -273,6 +273,59 @@ class HastarekhaEngine:
         return profile, scan_result
 
     @classmethod
+    def generate_palm_xray(cls, image_bytes: bytes, mode: str = "neon_cyan") -> bytes:
+        """
+        Extracts high-contrast biometric crease/ridge lines from native's real palm photograph
+        using Difference of Gaussians (DoG) and multi-band frequency enhancement.
+        Produces luminous X-Ray visualization of the actual lines.
+        """
+        import io
+        from PIL import Image, ImageFilter, ImageOps
+        import numpy as np
+
+        img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        gray = ImageOps.grayscale(img)
+
+        # Difference of Gaussians (DoG) for fine-crease edge and ridge extraction
+        b1 = gray.filter(ImageFilter.GaussianBlur(radius=1.8))
+        b2 = gray.filter(ImageFilter.GaussianBlur(radius=7.5))
+        dog = np.array(b2, dtype=np.float32) - np.array(b1, dtype=np.float32)
+        dog_clipped = np.clip(dog, 0, None)
+
+        p98 = np.percentile(dog_clipped, 98)
+        if p98 > 0:
+            norm = np.clip(dog_clipped / p98 * 255.0, 0, 255).astype(np.uint8)
+        else:
+            norm = dog_clipped.astype(np.uint8)
+
+        h, w = norm.shape
+        out = np.zeros((h, w, 3), dtype=np.uint8)
+        dark_gray = (np.array(gray, dtype=np.float32) * 0.18).astype(np.uint8)
+
+        if mode == "neon_cyan":
+            out[:, :, 0] = np.clip(dark_gray * 0.25 + norm * 0.15, 0, 255)
+            out[:, :, 1] = np.clip(dark_gray * 0.60 + norm * 0.90, 0, 255)
+            out[:, :, 2] = np.clip(dark_gray * 0.95 + norm * 1.0, 0, 255)
+        elif mode == "gold_shastra":
+            out[:, :, 0] = np.clip(dark_gray * 0.85 + norm * 1.0, 0, 255)
+            out[:, :, 1] = np.clip(dark_gray * 0.60 + norm * 0.82, 0, 255)
+            out[:, :, 2] = np.clip(dark_gray * 0.20 + norm * 0.22, 0, 255)
+        elif mode == "emerald":
+            out[:, :, 0] = np.clip(dark_gray * 0.20 + norm * 0.15, 0, 255)
+            out[:, :, 1] = np.clip(dark_gray * 0.85 + norm * 1.0, 0, 255)
+            out[:, :, 2] = np.clip(dark_gray * 0.40 + norm * 0.35, 0, 255)
+        else:
+            m = np.clip(norm * 1.25 + 25, 0, 255).astype(np.uint8)
+            out[:, :, 0] = m
+            out[:, :, 1] = m
+            out[:, :, 2] = m
+
+        out_img = Image.fromarray(out)
+        buf = io.BytesIO()
+        out_img.save(buf, format="JPEG", quality=92)
+        return buf.getvalue()
+
+    @classmethod
     def analyze_palm(cls, profile: PalmInputProfile, chart: Optional[Any] = None) -> HastarekhaReport:
         """
         Synthesizes complete predictive report based on palm parameters and cross-references
