@@ -127,8 +127,8 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
     </div>
     <div style="font-size:12px; font-weight:700; color:#334155; margin-top:6px;">{r['status_hi']}</div>
     <div style="font-size:11px; color:#475569; margin-top:4px;">
-        • <b>दशा:</b> {r['active_dasha']}<br/>
-        • <b>दोहरा गोचर:</b> {'✅ सक्रिय' if r['double_transit'] else '⚪ आंशिक/तटस्थ'}<br/>
+        • <b>सक्रिय दशा:</b> {r['active_dasha']}<br/>
+        • <b>प्रत्यन्तर स्वामी:</b> {r.get('eval_detail', {}).get('tier1', {}).get('pratyantardasha', '')} | <b>दोहरा गोचर:</b> {'✅ सक्रिय' if r['double_transit'] else '⚪ आंशिक/तटस्थ'}<br/>
         • <b>ट्रिगर अंक:</b> दशा {r['tier1_score']}/40 | गोचर {r['tier2_score']}/35 | अष्टक {r['tier3_score']}/25
     </div>
     <div style="font-size:11px; color:#065F46; margin-top:6px; font-style:italic; line-height:1.4;">
@@ -233,14 +233,17 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
         past_target_date = col_p1.date_input("भूतपूर्व घटना तिथि (Past Event Date)", value=default_past_date, format="DD/MM/YYYY", key="pe_target_date_inp")
         past_theme = col_p2.selectbox(
             "घटना का विषय (Event Theme)",
-            ["marriage", "career", "wealth", "education", "children", "health"],
+            ["marriage", "career", "wealth", "education", "children", "property", "travel", "health", "spirituality"],
             format_func=lambda x: {
                 "marriage": "💍 विवाह / संबंध (Marriage)",
                 "career": "💼 आजीविका / नौकरी / पदोन्नति (Career)",
-                "wealth": "💰 धन / संपत्ति / वाहन क्रय (Wealth)",
+                "wealth": "💰 धन / संचित वैभव (Wealth)",
                 "education": "🎓 उच्च शिक्षा / उपाधि (Education)",
                 "children": "👶 संतान प्राप्ति (Children)",
-                "health": "🌿 स्वास्थ्य संकट / रोग (Health)"
+                "property": "🏠 भूमि / भवन / वाहन क्रय (Property)",
+                "travel": "✈️ विदेश गमन / दूरस्थ यात्रा (Travel)",
+                "health": "🌿 स्वास्थ्य संकट / रोग (Health)",
+                "spirituality": "🕉️ दीक्षा / साधना / आध्यात्म (Spirituality)"
             }.get(x, x),
             key="pe_theme_sel"
         )

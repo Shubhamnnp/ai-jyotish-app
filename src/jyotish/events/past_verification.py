@@ -79,7 +79,10 @@ class PastEventVerificationEngine:
             "wealth": {"primary_house": 2, "varga": "D2", "karaka": "Jupiter"},
             "education": {"primary_house": 5, "varga": "D24", "karaka": "Mercury"},
             "children": {"primary_house": 5, "varga": "D7", "karaka": "Jupiter"},
+            "property": {"primary_house": 4, "varga": "D4", "karaka": "Mars"},
+            "travel": {"primary_house": 12, "varga": "D9", "karaka": "Moon"},
             "health": {"primary_house": 1, "varga": "D6", "karaka": "Sun"},
+            "spirituality": {"primary_house": 9, "varga": "D20", "karaka": "Jupiter"},
         }
         cfg = THEME_MAP.get(theme, {"primary_house": 10, "varga": "D10", "karaka": "Jupiter"})
 

@@ -9789,9 +9789,7 @@ if selected_idx == 0:
     d1_varga_view_mod.render_d1_varga_view(chart=chart, birth_profile=birth_profile, tz_offset=tz_offset, default_city_name=default_city_name, render_chart_svg_fn=render_chart_svg, tabs=MODULE_TABS_REGISTRY.get(0))
 
 elif selected_idx == 1:
-    import importlib
     import src.jyotish.ui.modules.event_view as event_view_mod
-    importlib.reload(event_view_mod)
     event_view_mod.render_event_view(chart=chart, birth_profile=birth_profile, tz_offset=tz_offset, tabs=MODULE_TABS_REGISTRY.get(1))
 
 elif selected_idx == 2:
