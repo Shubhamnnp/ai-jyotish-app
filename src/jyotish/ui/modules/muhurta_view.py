@@ -10,22 +10,22 @@ def render_muhurta_view(chart, tz_offset=5.5, default_city_name=None, tabs=None)
     if default_city_name is None:
         default_city_name = st.session_state.get("birth_city", "New Delhi, Delhi, India")
     
-    if tabs is None:
+    if tabs is None or len(tabs) < 8:
         tabs = [
-            '🌟 दैनिक पञ्चाङ्ग व शुभ चौघड़िया',
-            '🛡️ राहुकाल, यमगण्ड व कुलिक',
-            '⚡ अभिजीत व अमृत मुहूर्त',
-            '🔍 मुहूर्त अन्वेषक (Muhurta Scanner)',
-            '📜 संस्कार व कार्य मुहूर्त निर्णय'
+            "📜 जन्म पञ्चाङ्ग व तत्व",
+            "☀️ अहोरात्र चौघड़िया",
+            "⏳ राहुकाल व अभिजित",
+            "🌕 ताराबल व चन्द्रबल",
+            "🏛️ १६ संस्कार मुहूर्त",
+            "🔍 मुहूर्त खोजक (Scanner)",
+            "📜 २१ महादोष विचार",
+            "🪔 दोष परिहार व शांति"
         ]
     st.subheader("⏳ शुभ मुहूर्त, दैनिक चौघड़िया एवं जातक पञ्चाङ्ग (Vedic Muhurta & Birth Panchanga)")
     st.write("सूर्य सिद्धांत, मुहूर्त चिन्तामणि एवं कालप्रकाशिका आधारित जातक जन्म पञ्चाङ्ग तत्व, अहोरात्र चौघड़िया, काल-वेला, ताराबल-चन्द्रबल, १६ कार्य मुहूर्त एवं २१ महादोष परिहार।")
 
-    import importlib
     import src.jyotish.services.muhurta as muh_svc_mod
     import src.jyotish.services.milan as milan_mod
-    if not hasattr(muh_svc_mod.default_muhurta_engine, "get_daily_panchang_and_doshas"):
-        importlib.reload(muh_svc_mod)
     m_engine = muh_svc_mod.default_muhurta_engine
     m_scanner = muh_svc_mod.default_muhurta_scanner or muh_svc_mod.MuhurtaRangeScanner()
 
