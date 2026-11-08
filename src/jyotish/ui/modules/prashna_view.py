@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timezone, timedelta, date, time
-import importlib
 import re
 
 from src.jyotish.core.models import KundaliChart
@@ -43,12 +42,21 @@ def get_varga_dignity_info(planet: str, sign_name: str, aff_eng=None):
         return "नीच (Debilitated)", -2, "#EF4444"
     return text, 0, "#64748B"
 
+# Classical Deeptamsha Orbs
+PRASHNA_DEEPTAMSHA = {
+    "Sun": 15.0, "Moon": 12.0, "Mars": 8.0, "Mercury": 7.0,
+    "Jupiter": 9.0, "Venus": 7.0, "Saturn": 9.0, "Rahu": 5.0, "Ketu": 5.0
+}
+
 def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name=None, render_chart_svg_fn=None, tabs=None):
     if default_city_name is None:
         default_city_name = st.session_state.get("birth_city", "New Delhi, Delhi, India")
     if render_chart_svg_fn is None:
         render_chart_svg_fn = render_chart_svg_default
     render_chart_svg = render_chart_svg_fn
+
+    b_data = getattr(chart, "birth_data", None)
+    name = b_data.name if (b_data and getattr(b_data, "name", None)) else st.session_state.get("birth_name", "सक्रिय जातक")
     
     is_dark = st.session_state.get("dark_mode", False)
     is_astrallis_mode = st.session_state.get("astrallis_mode", False)

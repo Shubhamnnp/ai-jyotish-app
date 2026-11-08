@@ -251,6 +251,8 @@ class PrashnaService:
 
         is_ithasala = False
         is_esharpha = False
+        is_nakta = False
+        is_yamaya = False
         tajika_yoga_name = "सामान्य दृष्टि (Neutral Sambandha)"
 
         if in_aspect:
@@ -274,6 +276,40 @@ class PrashnaService:
         elif is_same:
             is_ithasala = True
             tajika_yoga_name = "👑 एकाधिपत्य योग (Same Lord for Lagna & Karya - Natural Success)"
+        else:
+            # Check Nakta Yoga (Intermediary planet - especially Moon - transferring light between non-aspecting lords)
+            moon_planet = chart.planets.get("Moon")
+            if moon_planet and lagnesh_name != "Moon" and karyesh_name != "Moon":
+                def _check_applying_aspect(p1_name, p1_pos, p2_name, p2_pos):
+                    d = abs(p1_pos.longitude - p2_pos.longitude) % 360.0
+                    if d > 180.0: d = 360.0 - d
+                    o1 = TAJIKA_DEEPTAMSHA.get(p1_name, 8.0)
+                    o2 = TAJIKA_DEEPTAMSHA.get(p2_name, 8.0)
+                    m_orb = (o1 + o2) / 2.0
+                    m_diff = min(abs(d - a) for a in aspect_angles)
+                    if m_diff <= m_orb:
+                        sp1 = PLANET_DAILY_MOTION.get(p1_name, 1.0)
+                        sp2 = PLANET_DAILY_MOTION.get(p2_name, 1.0)
+                        if sp1 > sp2 and p1_pos.sign_degree < p2_pos.sign_degree:
+                            return True
+                        if sp2 > sp1 and p2_pos.sign_degree < p1_pos.sign_degree:
+                            return True
+                    return False
+
+                moon_to_lag = _check_applying_aspect("Moon", moon_planet, lagnesh_name, lagnesh_planet)
+                moon_to_kar = _check_applying_aspect("Moon", moon_planet, karyesh_name, karyesh_planet)
+                if moon_to_lag and moon_to_kar:
+                    is_nakta = True
+                    tajika_yoga_name = "🤝 नक्त योग (Nakta Yoga - Success via Intermediary / Third Party)"
+                else:
+                    # Check Yamaya Yoga (slower benefic planet mediating between both)
+                    jup_planet = chart.planets.get("Jupiter")
+                    if jup_planet and lagnesh_name != "Jupiter" and karyesh_name != "Jupiter":
+                        jup_to_lag = _check_applying_aspect("Jupiter", jup_planet, lagnesh_name, lagnesh_planet)
+                        jup_to_kar = _check_applying_aspect("Jupiter", jup_planet, karyesh_name, karyesh_planet)
+                        if jup_to_lag and jup_to_kar:
+                            is_yamaya = True
+                            tajika_yoga_name = "👑 यमया योग (Yamaya Yoga - Success via Authority / Senior Guide)"
 
         # Moon condition check
         moon = chart.planets["Moon"]
@@ -282,6 +318,8 @@ class PrashnaService:
         is_promising = (
             is_same or
             is_ithasala or
+            is_nakta or
+            is_yamaya or
             (house_karyesh in [1, 2, 4, 5, 7, 9, 10, 11] and house_lagnesh in [1, 2, 4, 5, 7, 9, 10, 11])
         )
 
@@ -402,6 +440,8 @@ class PrashnaService:
             "tajika_yoga": tajika_yoga_name,
             "is_ithasala": is_ithasala,
             "is_esharpha": is_esharpha,
+            "is_nakta": is_nakta,
+            "is_yamaya": is_yamaya,
             "moon_placement": f"चन्द्र देव: {moon.sign_name} ({moon.sign_degree:.2f}°) — {moon.house_from_lagna}वां भाव",
             "verdict": verdict,
             "verdict_badge": verdict_badge,
