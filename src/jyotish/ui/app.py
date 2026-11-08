@@ -9817,9 +9817,7 @@ elif selected_idx == 7:
     jaimini_view_mod.render_jaimini_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(7))
 
 elif selected_idx == 8:
-    import importlib
     import src.jyotish.ui.modules.dasha_view as dasha_view_mod
-    importlib.reload(dasha_view_mod)
     dasha_view_mod.render_dasha_view(chart=chart, tz_offset=tz_offset, tabs=MODULE_TABS_REGISTRY.get(8))
 
 elif selected_idx == 9:
