@@ -24,21 +24,23 @@ def render_varshaphal_view(chart, birth_profile, tz_offset=5.5, render_chart_svg
         render_chart_svg_fn = render_chart_svg_default
     render_chart_svg = render_chart_svg_fn
     
-    if tabs is None:
+    if tabs is None or len(tabs) < 10:
         tabs = [
-            '🏛️ वर्ष कुण्डली व पञ्चाधिकारी',
-            '🌟 मुन्था एवं वर्षेश विचार',
-            '⏳ मुद्दा दशा (Mudda Dasha)',
-            '📜 १६ ताजिक योग एवं दृष्टि',
-            '📊 हर्ष बल एवं पाचक अंश'
+            "🌟 वर्ष कुण्डली (D1)",
+            "🎯 मुन्था विचार",
+            "👑 वर्षेश चयन",
+            "⚖️ पंचवर्गीय व हर्ष बल",
+            "⚡ १६ ताजिक योग",
+            "💫 ३६ ताजिक सहम",
+            "⏳ मुद्धा व योगिनी दशा",
+            "📊 १२ भाव वर्षफल",
+            "🗓️ मासफल (१२ मास)",
+            "🪔 वर्षेश शांति उपाय"
         ]
     st.subheader("📅 वर्षफल / ताजिक वार्षिक चक्र (Tajika Annual Solar Return)")
     st.write("ताजिक नीलकण्ठी एवं हायन रत्न अनुसार वार्षिक सौर वापसी कुण्डली, मुन्था विचार, पंचाधिकारी वर्षेश निर्णय, पंचवर्गीय व हर्ष बल, १६ ताजिक योग, २८ सहम एवं १-वर्षीय मुद्धा दशा चक्र।")
 
-    import importlib
     from src.jyotish.services import varshaphal
-    if not hasattr(default_varshaphal_service, "_calculate_panchavargiya_bala"):
-        importlib.reload(varshaphal)
     service_vp = getattr(varshaphal, "default_varshaphal_service", default_varshaphal_service)
 
     col_vy1, col_vy2 = st.columns([1.5, 2.5])

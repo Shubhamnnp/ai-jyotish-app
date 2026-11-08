@@ -9837,9 +9837,7 @@ elif selected_idx == 12:
     sudarshan_view_mod.render_sudarshan_chakra_view(chart=chart, birth_profile=birth_profile, tz_offset=tz_offset, tabs=MODULE_TABS_REGISTRY.get(12))
 
 elif selected_idx == 13:
-    import importlib
     import src.jyotish.ui.modules.varshaphal_view as varshaphal_view_mod
-    importlib.reload(varshaphal_view_mod)
     varshaphal_view_mod.render_varshaphal_view(chart=chart, birth_profile=birth_profile, tz_offset=tz_offset, render_chart_svg_fn=render_chart_svg, tabs=MODULE_TABS_REGISTRY.get(13))
 
 elif selected_idx == 14:
