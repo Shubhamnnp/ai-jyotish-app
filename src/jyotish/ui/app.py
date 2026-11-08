@@ -9845,9 +9845,7 @@ elif selected_idx == 14:
     btr_view_mod.render_btr_view(chart=chart, birth_profile=birth_profile, tabs=MODULE_TABS_REGISTRY.get(14))
 
 elif selected_idx == 15:
-    import importlib
     import src.jyotish.ui.modules.matching_view as matching_view_mod
-    importlib.reload(matching_view_mod)
     matching_view_mod.render_matching_view(birth_profile=birth_profile, render_chart_svg_fn=render_chart_svg, tabs=MODULE_TABS_REGISTRY.get(15))
 
 elif selected_idx == 16:

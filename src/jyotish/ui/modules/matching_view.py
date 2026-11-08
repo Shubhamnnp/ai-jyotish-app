@@ -1,13 +1,14 @@
 import streamlit as st
 import pandas as pd
 from datetime import date, time
-import importlib
 import streamlit.components.v1 as components
 from src.jyotish.core.models import BirthData
 from src.jyotish.core.calculator import default_chart_calculator
 from src.jyotish.services.partners import BusinessPartnershipService
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 from src.jyotish.ui.chart_renderer import ChartRenderer
+import src.jyotish.services.milan as milan_mod
+from src.jyotish.services.milan import default_milan_service, AshtakootaScore
 
 def render_chart_svg_default(c_obj, chart_title, varga_code="D1"):
     chart_style = st.session_state.get("chart_style", "North Indian")
@@ -22,7 +23,7 @@ def render_matching_view(birth_profile, render_chart_svg_fn=None, tabs=None):
         render_chart_svg_fn = render_chart_svg_default
     render_chart_svg = render_chart_svg_fn
     
-    if tabs is None:
+    if tabs is None or len(tabs) < 10:
         tabs = [
             "📊 अष्टकूट (३६ गुण)",
             "🛡️ महादोष व १६ परिहार",
@@ -35,11 +36,6 @@ def render_matching_view(birth_profile, render_chart_svg_fn=None, tabs=None):
             "💼 व्यापार साझेदारी",
             "🖨️ मिलान रिपोर्ट व उपाय"
         ]
-    import importlib
-    import src.jyotish.services.milan as milan_mod
-    importlib.reload(milan_mod)
-    from src.jyotish.services.milan import default_milan_service, AshtakootaScore
-    from src.jyotish.services.partners import BusinessPartnershipService
 
     st.subheader("💍 वैदिक कुण्डली मिलान एवं सिनैस्ट्री महा-प्रणाली (Vedic Kundali Milan & Synastry)")
     st.write(
