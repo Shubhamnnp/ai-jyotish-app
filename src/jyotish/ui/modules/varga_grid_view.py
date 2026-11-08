@@ -3,6 +3,7 @@ import pandas as pd
 from typing import Dict, Any
 import importlib
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
+from src.jyotish.core.constants import SIGN_LORDS, SIGN_NAMES
 import src.jyotish.core.affliction as aff_mod
 
 def render_dignity_legend_bar() -> str:

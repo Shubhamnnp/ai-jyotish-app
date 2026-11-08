@@ -71,6 +71,14 @@ class TestModule3VargaAudit(unittest.TestCase):
         sv_tbl = self.engine.calculate_shodashvarga_table()
         self.assertGreater(len(sv_tbl), 0)
 
+    def test_varga_grid_view_module_symbols(self):
+        """Test that varga_grid_view imports all required symbols without NameError."""
+        import src.jyotish.ui.modules.varga_grid_view as vgv
+        self.assertTrue(hasattr(vgv, 'SIGN_LORDS'))
+        self.assertTrue(hasattr(vgv, 'SIGN_NAMES'))
+        self.assertIn("Aries", vgv.SIGN_LORDS)
+        self.assertEqual(vgv.SIGN_LORDS["Aries"], "Mars")
+
 
 if __name__ == "__main__":
     unittest.main()
