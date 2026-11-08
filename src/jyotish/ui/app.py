@@ -7028,7 +7028,8 @@ MODULE_TABS_REGISTRY = {
         "🛡️ Rules Lab (Admin)"
     ],
     19: [
-        "🔍 वैदिक ऋषि सत्यापन"
+        "🔍 स्विस एफिमेरिस बनाम वैदिक ऋषि सत्यापन",
+        "📐 अयनांश व कोणीय विचलन विश्लेषण"
     ],
     20: [
         "🔴 सक्रिय दोष",
@@ -9861,10 +9862,8 @@ elif selected_idx == 18:
     rules_view_mod.render_rules_library_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(18))
 
 elif selected_idx == 19:
-    import importlib
     import src.jyotish.ui.modules.validation_view as validation_view_mod
-    importlib.reload(validation_view_mod)
-    validation_view_mod.render_validation_view(chart=chart)
+    validation_view_mod.render_validation_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(19))
 
 elif selected_idx == 20:
     import importlib
