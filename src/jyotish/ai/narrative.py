@@ -68,7 +68,7 @@ def is_greeting_query(query: str) -> bool:
         "krishna", "ram", "har", "mahadev", "din", "there", "aap", "bhai",
         "dhanyawad", "dhanyavad", "shukriya", "thanks", "thank", "you", "theek", "accha", "achha", "ok", "okay",
         "bahut", "bahoot", "so", "much", "very", "many",
-        "नमस्ते", "प्रणाम", "नमस्कार", "राधे", "कृष्ण", "जय", "जी", "सुप्रभात", "धन्यवाद", "शुक्रिया", "ठीक", "आभार", "बहुत"
+        "नमस्ते", "प्रणाम", "नमस्कार", "राधे", "कृष्ण", "जय", "जी", "सुप्रभात", "धन्यवाद", "शुक्रिया", "ठीक", "आभार", "बहुत", "गुरुजी", "पंडितजी", "श्री", "महाराज"
     }
 
     if len(words) <= 5 and all(w in greeting_tokens for w in words):
@@ -609,7 +609,7 @@ class AINarrativeService:
         elif any(w in q_lower for w in ["नौकरी", "करियर", "पदोन्नति", "आजीविका", "career", "job", "promotion", "naukri"]):
             topic = "career"
             cat_en = "Career"
-        elif any(w in q_lower for w in ["धन", "संपत्ति", "आर्थिक", "पैसा", "मकान", "भूमि", "wealth", "finance", "money", "income", "paisa"]):
+        elif any(w in q_lower for w in ["संपत्ति", "आर्थिक", "पैसा", "मकान", "भूमि", "wealth", "finance", "money", "income", "paisa"]) or ("धन" in q_lower and "धन्य" not in q_lower):
             topic = "wealth"
             cat_en = "Wealth"
         elif any(w in q_lower for w in ["स्वास्थ्य", "रोग", "बीमारी", "दुर्घटना", "health", "disease", "illness", "surgery", "hospital", "bimar"]):

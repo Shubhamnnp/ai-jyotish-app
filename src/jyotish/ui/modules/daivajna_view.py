@@ -1,11 +1,10 @@
 import streamlit as st
 import os
-import importlib
 from src.jyotish.services.master_calculator import default_master_calculator
 from src.jyotish.ai.narrative import default_narrative_service
 from src.jyotish.dasha.vimshottari import default_dasha_engine as default_vimshottari_engine
 
-def render_daivajna_view(chart):
+def render_daivajna_view(chart, tabs=None):
     st.subheader("💬 दैवज्ञ AI सहायक — प्रामाणिक वैदिक परामर्श (Dual-Kundali AI Astrologer)")
     st.write("९९.९% शास्त्रीय परिशुद्धता: जन्म कुण्डली (D1-D60) एवं तात्कालिक प्रश्न कुण्डली (Prashna Marga) के संयुक्त शोध पर आधारित निष्पक्ष, ईमानदार एवं सत्य फलादेश।")
 

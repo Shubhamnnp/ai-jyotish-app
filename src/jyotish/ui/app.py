@@ -9849,10 +9849,8 @@ elif selected_idx == 15:
     matching_view_mod.render_matching_view(birth_profile=birth_profile, render_chart_svg_fn=render_chart_svg, tabs=MODULE_TABS_REGISTRY.get(15))
 
 elif selected_idx == 16:
-    import importlib
     import src.jyotish.ui.modules.daivajna_view as daivajna_view_mod
-    importlib.reload(daivajna_view_mod)
-    daivajna_view_mod.render_daivajna_view(chart=chart)
+    daivajna_view_mod.render_daivajna_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(16))
 
 elif selected_idx == 17:
     import importlib
