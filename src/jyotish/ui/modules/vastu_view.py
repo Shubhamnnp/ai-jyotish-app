@@ -90,7 +90,6 @@ def render_vastu_view(chart, tabs=None):
     is_dark = st.session_state.get("dark_mode", False)
     is_astrallis_mode = st.session_state.get("astrallis_mode", False)
     is_night_mode = is_dark
-    vastu_engine = _VastuEngine(chart)
 
     if tabs is None:
         tabs = [
@@ -108,17 +107,22 @@ def render_vastu_view(chart, tabs=None):
     st.subheader("🏛️ वास्तु-ज्योतिष दिशा मण्डल (Vastu-Jyotish Architectural Alignment)")
     st.write("जन्म कुण्डली के ग्रहों, भावों एवं दिग्बल का अष्ट दिशाओं और ब्रह्मस्थान से शास्त्रीय समन्वय, 360° दिशा चक्र, गहन गणनाएं एवं पंच-आयामी शास्त्रीय उपचार।")
 
-    # Ensure latest vastu engine and metadata
+    # Detect active Mahadasha lord if birth data is present
+    active_dasha_lord = None
     try:
-        import importlib
-        import src.jyotish.services.vastu as _v_mod
-        importlib.reload(_v_mod)
-        from src.jyotish.services.vastu import VastuJyotishEngine as _VastuEngine
-        _v_engine = _VastuEngine(chart)
+        from src.jyotish.core.dasha import default_dasha_engine
+        from datetime import datetime
+        if hasattr(chart, "birth_data") and chart.birth_data and "Moon" in chart.planets:
+            _cur_dt = datetime.now()
+            _b_full_dt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
+            _active_d = default_dasha_engine.get_active_dasha_at(_b_full_dt, chart.planets["Moon"].longitude, _cur_dt.date())
+            if _active_d and _active_d.mahadasha:
+                active_dasha_lord = _active_d.mahadasha.lord
     except Exception:
-        _v_engine = vastu_engine
+        active_dasha_lord = None
 
-    v_zones = _v_engine.evaluate_vastu_zones()
+    vastu_engine = _VastuEngine(chart, current_dasha_lord=active_dasha_lord)
+    v_zones = vastu_engine.evaluate_vastu_zones()
     zone_dict = {z.get("direction"): z for z in v_zones}
     _is_dark = (is_astrallis_mode or is_night_mode)
 
@@ -334,6 +338,24 @@ def render_vastu_view(chart, tabs=None):
             </div>
             """)
 
+        # Active Mahadasha Direction Vibration Alert
+        active_zone = next((z for z in v_zones if z.get("is_active_dasha")), None)
+        if active_zone and active_dasha_lord:
+            _v_render(f"""
+            <div style="background: {'#1E1B4B' if _is_dark else '#EEF2FF'}; border: 1.5px solid #6366F1; border-radius: 12px; padding: 12px 18px; margin: 14px 0 6px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 26px;">⚡</span>
+                    <div>
+                        <div style="font-weight: 800; color: #4F46E5; font-size: 14px;">वर्तमान सक्रिय महादशा दिशा: {active_zone.get('hindi', '')} ({active_zone.get('direction', '')})</div>
+                        <div style="font-size: 12px; color: {text_secondary};">आपकी वर्तमान विंशोत्तरी महादशा स्वामी <b>{active_dasha_lord}</b> हैं। इस समय भवन की <b>{active_zone.get('hindi', '')}</b> दिशा सर्वाधिक सक्रिय कंपन पैदा कर रही है, इसे वास्तु-दोषमुक्त व प्रकाशयुक्त रखें।</div>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <span style="background: #4F46E5; color: #FFFFFF; padding: 4px 10px; border-radius: 12px; font-weight: 700; font-size: 11.5px;">दिशा स्कोर: {active_zone.get('score', 70)}/100</span>
+                </div>
+            </div>
+            """)
+
         _v_render("<div style='height: 14px;'></div>")
 
         # 360 Degree Cosmic Compass SVG Wheel
@@ -474,11 +496,12 @@ def render_vastu_view(chart, tabs=None):
                 badge_text = "🚨 उच्च दोष जोखिम (High Risk / Requires Remediation)"
 
             # Direction Header Hero Card
+            dasha_badge_html = '<span style="background: #4F46E5; color: white; border-radius: 12px; padding: 3px 9px; font-size: 11px; margin-left: 8px; font-weight: 700;">⚡ सक्रिय महादशा दिशा</span>' if z.get("is_active_dasha") else ''
             _v_render(f"""
             <div style="background: {card_bg}; border: 1.5px solid {border_color}; border-left: 6px solid {border_color}; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.06);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                     <div>
-                        <div style="font-size: 22px; font-weight: 900; color: {text_primary};">{z.get('hindi', '')} &nbsp;<span style="font-size: 15px; color: {text_secondary}; font-weight: 600;">({z.get('direction', '')} Zone)</span></div>
+                        <div style="font-size: 22px; font-weight: 900; color: {text_primary};">{z.get('hindi', '')} &nbsp;<span style="font-size: 15px; color: {text_secondary}; font-weight: 600;">({z.get('direction', '')} Zone)</span>{dasha_badge_html}</div>
                         <div style="font-size: 13px; color: {text_secondary}; margin-top: 4px;">
                             🏛️ <b>दिक्पाल:</b> {deity_val} &nbsp;|&nbsp; 
                             🪐 <b>स्वामी ग्रह:</b> {z.get('lord', '')} &nbsp;|&nbsp; 
@@ -524,6 +547,22 @@ def render_vastu_view(chart, tabs=None):
                     </div>
                 </div>
                 """)
+
+                # Special Brahmasthan Kendra Energy Flow Analysis
+                if d_key == "Center":
+                    k_b = z.get("kendra_benefics", [])
+                    k_m = z.get("kendra_malefics", [])
+                    b_txt = ", ".join(k_b) if k_b else "कोई शुभ ग्रह नहीं"
+                    m_txt = ", ".join(k_m) if k_m else "कोई पाप ग्रह नहीं (परम शुभ)"
+                    _v_render(f"""
+                    <div style="background: {'#0F172A' if _is_dark else '#F0F9FF'}; border: 1.5px solid #0284C7; border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; font-size: 12.5px;">
+                        <b style="color: #0284C7; font-size: 13px;">🌌 चतुष्कोण केंद्र-संतुलन (Brahmasthan Kendra Energy Flow):</b>
+                        <div style="margin-top: 6px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                            <div><b>🌿 केंद्र में शुभ ग्रह (बलवर्धक):</b><br><span style="color: {'#38BDF8' if _is_dark else '#0369A1'};">{b_txt}</span></div>
+                            <div><b>⚠️ केंद्र में क्रूर ग्रह (वेध कारक):</b><br><span style="color: {'#FCA5A5' if _is_dark else '#B91C1C'};">{m_txt}</span></div>
+                        </div>
+                    </div>
+                    """)
 
                 st.markdown("##### 🏛️ वास्तु नियोजन: शुभ एवं वर्जित व्यवस्था")
                 ideal_items = "".join([f"<li>{item}</li>" for item in meta.get("ideal_uses", [])])

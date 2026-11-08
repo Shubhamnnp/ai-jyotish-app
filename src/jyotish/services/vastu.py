@@ -217,8 +217,9 @@ VASTU_DIRECTIONS = {
 class VastuJyotishEngine:
     """Engine mapping natal chart strengths and afflictions to architectural Vastu layout."""
 
-    def __init__(self, chart: KundaliChart):
+    def __init__(self, chart: KundaliChart, current_dasha_lord: Optional[str] = None):
         self.chart = chart
+        self.current_dasha_lord = current_dasha_lord
 
     def evaluate_vastu_zones(self) -> List[Dict[str, Any]]:
         """
@@ -228,6 +229,8 @@ class VastuJyotishEngine:
         - Directional strength (Digbala)
         - House rulership in chart
         - Vastu zone harmony score (0 to 100)
+        - Brahmasthan Kendra-balance synthesis
+        - Active Dasha directional vibration tracking
         - Specific architectural defects and comprehensive remedies
         """
         results = []
@@ -262,9 +265,20 @@ class VastuJyotishEngine:
         for direction, meta in VASTU_DIRECTIONS.items():
             lord_name = meta["lord"]
             if lord_name == "Cosmic (Lord Brahma)" or lord_name == "All":
-                # Compute Brahmasthan score from Kendra strength
-                kendra_planets = [p for p, pos in self.chart.planets.items() if pos.house_from_lagna in [1, 4, 7, 10]]
-                k_score = 80 + min(15, len(kendra_planets) * 4)
+                # Shastriya Brahmasthan calculation based on Kendra balance & 4th house griha bhava
+                benefic_planets = ["Jupiter", "Venus", "Mercury", "Moon"]
+                malefic_planets = ["Rahu", "Ketu", "Saturn", "Mars"]
+
+                kendra_benefics = [p for p in benefic_planets if p in self.chart.planets and self.chart.planets[p].house_from_lagna in [1, 4, 7, 10]]
+                kendra_malefics = [p for p in malefic_planets if p in self.chart.planets and self.chart.planets[p].house_from_lagna in [1, 4, 7, 10]]
+                h4_affliction = any(self.chart.planets[p].house_from_lagna == 4 for p in kendra_malefics)
+
+                # Baseline harmony score: 75
+                k_score = 75.0 + (len(kendra_benefics) * 7.0) - (len(kendra_malefics) * 5.0)
+                if h4_affliction:
+                    k_score -= 8.0
+                k_score = max(20.0, min(100.0, k_score))
+
                 results.append({
                     "direction": direction,
                     "hindi": meta["hindi"],
@@ -278,8 +292,11 @@ class VastuJyotishEngine:
                     "is_combust": False,
                     "is_retrograde": False,
                     "digbala": "अक्षय ब्रह्म बल",
-                    "score": min(100, k_score),
-                    "defect_risk": "Harmonious" if k_score >= 75 else "Moderate Risk",
+                    "is_active_dasha": False,
+                    "kendra_benefics": kendra_benefics,
+                    "kendra_malefics": kendra_malefics,
+                    "score": int(round(k_score)),
+                    "defect_risk": "Harmonious" if k_score >= 75 else "Moderate Risk" if k_score >= 50 else "High Risk",
                     "meta": meta
                 })
                 continue
@@ -329,6 +346,10 @@ class VastuJyotishEngine:
             score = max(15.0, min(100.0, score))
             defect_risk = "High Risk" if score < 50 else "Moderate Risk" if score < 75 else "Harmonious"
 
+            is_active_d = False
+            if self.current_dasha_lord and lord_name.lower() == self.current_dasha_lord.lower():
+                is_active_d = True
+
             results.append({
                 "direction": direction,
                 "hindi": meta["hindi"],
@@ -342,6 +363,7 @@ class VastuJyotishEngine:
                 "is_combust": pos.is_combust,
                 "is_retrograde": pos.is_retrograde,
                 "digbala": dig_lbl,
+                "is_active_dasha": is_active_d,
                 "score": int(round(score)),
                 "defect_risk": defect_risk,
                 "meta": meta
