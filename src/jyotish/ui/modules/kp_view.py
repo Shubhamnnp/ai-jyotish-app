@@ -14,22 +14,23 @@ def render_kp_view(chart, tz_offset=5.5, default_city_name=None, tabs=None):
     if default_city_name is None:
         default_city_name = st.session_state.get("birth_city", "New Delhi, Delhi, India")
         
-    if tabs is None:
+    if tabs is None or len(tabs) < 9:
         tabs = [
-            '🪐 ग्रह एवं भाव उप-स्वामी (Cuspal Sublords)',
-            '🔢 ४-चरणीय कारकत्व (4-Step Significators)',
-            '🎯 केपी घटना विश्लेषण (KP Event Analysis)',
-            '🔮 तात्कालिक प्रश्न (KP Horary 1-249)',
-            '👑 रूलिंग प्लैनेट्स (KP Ruling Planets)'
+            "🔮 के.पी. कार्य सिद्धि",
+            "🪐 ४-स्तरीय कार्यकत्व",
+            "🏰 कस्पल सब-लॉर्ड",
+            "👑 रूलिंग प्लैनेट्स (RP)",
+            "🔢 १-२४९ होरारी तालिका",
+            "📐 पाश्चात्य दृष्टि वेध",
+            "⏱️ के.पी. दशा भुक्ति",
+            "📊 २२ घटना मैट्रिक्स",
+            "📜 के.पी. स्वर्णिम नियम"
         ]
     st.subheader("📐 के.पी. ज्योतिष प्रणाली (Krishnamurti Paddhati - Complete Professional KP System)")
     st.write("प्रोफेसर के.एस. कृष्णमूर्ति (KP Readers I-VI) प्रतिपादित ४-स्तरीय कार्यकत्व, कस्पल सब-लॉर्ड, रूलिंग प्लैनेट्स, १-२४९ होरारी, पाश्चात्य दृष्टि एवं अचूक भविष्य फलित निर्णय।")
 
-    import importlib
     import src.jyotish.core.kp as kp_mod
     import src.jyotish.dasha.vimshottari as vim_mod
-    if not hasattr(kp_mod.default_kp_engine, "predict_kp_query"):
-        importlib.reload(kp_mod)
     k_engine = kp_mod.default_kp_engine
     d_engine = vim_mod.default_dasha_engine
 

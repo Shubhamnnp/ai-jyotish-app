@@ -9825,9 +9825,7 @@ elif selected_idx == 9:
     transit_view_mod.render_transit_view(chart=chart, ayanamsa=ayanamsa, house_system=house_system, node_type_val=node_type_val, tz_offset=tz_offset, latitude=latitude, longitude=longitude, default_city_name=default_city_name, tabs=MODULE_TABS_REGISTRY.get(9))
 
 elif selected_idx == 10:
-    import importlib
     import src.jyotish.ui.modules.kp_view as kp_view_mod
-    importlib.reload(kp_view_mod)
     kp_view_mod.render_kp_view(chart=chart, tz_offset=tz_offset, default_city_name=default_city_name, tabs=MODULE_TABS_REGISTRY.get(10))
 
 elif selected_idx == 11:
