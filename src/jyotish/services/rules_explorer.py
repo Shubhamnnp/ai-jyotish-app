@@ -42,6 +42,7 @@ GRANTHA_FILES = {
     "Sarvatobhadra Chakra (सर्वतोभद्र चक्र वेध)": "sarvatobhadra_rules.json",
     "Classical Misc Granthas (विविध योग व संहिता)": "classic_misc_rules.json",
     "Vedic Numerology (अंक ज्योतिष शास्त्र)": "numerology_rules.json",
+    "Samudrika Shastra (सामुद्रिक एवं हस्तरेखा शास्त्र)": "samudrika_rules.json",
 }
 
 RULES_DIR = os.path.join(os.path.dirname(__file__), "..", "rules", "grantha_rules")

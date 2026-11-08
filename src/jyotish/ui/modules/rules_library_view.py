@@ -20,11 +20,8 @@ def render_rules_library_view(chart, tabs=None):
     tab_research_engine = rendered_tabs[2]
     tab_admin_lab = rendered_tabs[3] if len(rendered_tabs) > 3 else None
     with tab_rules_bank:
-
-            import importlib
-            import src.jyotish.rules.engine as rules_mod
-            importlib.reload(rules_mod)
-            rules_engine = rules_mod.RulesEngine()
+            from src.jyotish.rules.engine import RulesEngine
+            rules_engine = RulesEngine()
             all_rules = rules_engine.rules
 
             # Evaluate all rules on current chart dynamically
@@ -101,6 +98,9 @@ def render_rules_library_view(chart, tabs=None):
                 border_color = "#86EFAC" if is_fired else "#CBD5E1"
                 bg_color = "#F0FDF4" if is_fired else "#FFFFFF"
 
+                shloka_sa = r.get('source', {}).get('original_excerpt_sa', '')
+                shloka_html = f'<div style="background:#FFFBEB; border-left:3px solid #D97706; padding:6px 10px; margin:6px 0; font-size:13px; color:#78350F; font-weight:600; font-family:sans-serif; border-radius:4px;"><b>📜 मूल शास्त्रीय श्लोक / प्रमाण:</b><br>{shloka_sa}</div>' if shloka_sa else ''
+
                 with st.expander(f"{'⭐ ' if is_fired else ''}{r.get('rule_name_hi', '')} — {r.get('rule_name_en', '')} [{status_badge}]", expanded=is_fired):
                     st.markdown(f"""
                     <div style="background:{bg_color}; border:1px solid {border_color}; border-radius:8px; padding:12px; margin-bottom:8px;">
@@ -114,6 +114,7 @@ def render_rules_library_view(chart, tabs=None):
                             <b>पद्धति:</b> {r.get('school', 'Classical')} | 
                             <b>श्रेणी:</b> {r.get('category', 'yoga')}
                         </div>
+                        {shloka_html}
                         <p style="margin:6px 0; color:#0F172A; font-size:13.5px; line-height:1.5;">
                             <b>शास्त्रीय फलित:</b> {ev.explanation_hi if (ev and is_fired) else r.get('effect', {}).get('description_hi', '')}
                         </p>
@@ -134,10 +135,7 @@ def render_rules_library_view(chart, tabs=None):
         st.caption("बृहत्पाराशर होराशास्त्र, बृहज्जातक, सारावली, फलदीपिका, जैमिनी सूत्र, लाल किताब, के.पी. ज्योतिष, नाड़ी एवं प्रश्न मार्ग के १२,५००+ नियमों का लाइव सर्च व कुण्डली परीक्षण:")
 
         try:
-            import importlib
-            import src.jyotish.services.rules_explorer as re_mod
-            importlib.reload(re_mod)
-            re_svc = re_mod.default_rules_explorer_service
+            from src.jyotish.services.rules_explorer import default_rules_explorer_service as re_svc
 
             stats = re_svc.get_stats()
             total_rules_indexed = stats["total_rules"]
@@ -145,7 +143,7 @@ def render_rules_library_view(chart, tabs=None):
             # Top KPI metrics
             c_rk1, c_rk2, c_rk3 = st.columns(3)
             with c_rk1:
-                st.metric("इंडेक्स किए गए कुल नियम", f"{total_rules_indexed:,}", "१५ शास्त्रीय ग्रन्थ")
+                st.metric("इंडेक्स किए गए कुल नियम", f"{total_rules_indexed:,}", f"{stats['granthas_count']} शास्त्रीय ग्रन्थ")
             with c_rk2:
                 st.metric("ग्रन्थ पुस्तकालय (Granthas)", f"{stats['granthas_count']} ग्रन्थ", "पारंपरिक व आधुनिक")
             with c_rk3:
@@ -154,7 +152,7 @@ def render_rules_library_view(chart, tabs=None):
             # Search & Filter Bar
             c_qs1, c_qs2, c_qs3 = st.columns([2.5, 2, 1])
             with c_qs1:
-                search_q = st.text_input("🔍 नियम या योग खोजें (Search by Keyword)", placeholder="उदा: गजकेसरी, उच्च, नीच, अष्टम, केमद्रुम, विवाह, धन...", key="re_search_q")
+                search_q = st.text_input("🔍 नियम या योग खोजें (Search by Keyword)", placeholder="उदा: गजकेसरी, उच्च, नीच, मत्स्य, मूलांक, विवाह, धन...", key="re_search_q")
             with c_qs2:
                 g_options = ["सभी ग्रन्थ (All Granthas)"] + list(stats["breakdown"].keys())
                 sel_g = st.selectbox("📖 ग्रन्थ चुनें (Filter Grantha)", g_options, key="re_sel_grantha")
@@ -177,6 +175,8 @@ def render_rules_library_view(chart, tabs=None):
                 desc_hi = eff.get("description_hi", "")
                 pol = eff.get("polarity", "+")
                 themes = eff.get("themes", [])
+                shloka_sa = src_meta.get("original_excerpt_sa", "")
+                shloka_html = f'<div style="background:#FFFBEB; border-left:3px solid #D97706; padding:6px 10px; margin:6px 0; font-size:13px; color:#78350F; font-weight:600; border-radius:4px;"><b>📜 मूल शास्त्रीय श्लोक / प्रमाण:</b><br>{shloka_sa}</div>' if shloka_sa else ''
 
                 # Live Test on Current Chart
                 is_active, active_reason = re_svc.test_rule_on_chart(r, chart)
@@ -191,9 +191,10 @@ def render_rules_library_view(chart, tabs=None):
                     st.markdown(
                         f'<div style="background:#FFFFFF; border:1px solid {border_color}; border-left:5px solid {left_border}; padding:12px; border-radius:8px; margin-bottom:8px;">'
                         f'<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">'
-                        f'<div><b>📖 ग्रन्थ:</b> <span style="color:#2563EB; font-weight:700;">{grantha_title}</span> ({src_meta.get("chapter", "अध्याय")}, {src_meta.get("shloka", "")})</div>'
+                        f'<div><b>📖 ग्रन्थ:</b> <span style="color:#2563EB; font-weight:700;">{grantha_title}</span> ({src_meta.get("chapter", "अध्याय")}, {src_meta.get("shloka", src_meta.get("verse", ""))})</div>'
                         f'<span style="background:{badge_bg}; color:{badge_fg}; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:800;">{status_badge}</span>'
                         f'</div>'
+                        f'{shloka_html}'
                         f'<div style="font-size:13.5px; color:#0F172A; margin:6px 0; line-height:1.5;"><b>📜 शास्त्रीय फल:</b> {desc_hi}</div>'
                         f'<div style="font-size:12px; color:#475569;">🎯 <b>विषय:</b> {", ".join(themes) if themes else "सामान्य"} | <b>नियम ID:</b> <code>{r_id}</code></div>'
                         f'<div style="margin-top:8px; padding:6px 10px; background:#F8FAFC; border-radius:6px; font-size:12px; color:#1E293B;">'

@@ -9857,9 +9857,7 @@ elif selected_idx == 17:
     reports_view_mod.render_reports_view(chart=chart, birth_profile=birth_profile, tabs=MODULE_TABS_REGISTRY.get(17))
 
 elif selected_idx == 18:
-    import importlib
     import src.jyotish.ui.modules.rules_library_view as rules_view_mod
-    importlib.reload(rules_view_mod)
     rules_view_mod.render_rules_library_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(18))
 
 elif selected_idx == 19:
