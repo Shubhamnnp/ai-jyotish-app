@@ -7032,10 +7032,10 @@ MODULE_TABS_REGISTRY = {
         "📐 अयनांश व कोणीय विचलन विश्लेषण"
     ],
     20: [
-        "🔴 सक्रिय दोष",
-        "🟢 राजयोग व धनयोग",
-        "📋 १२,५०० शास्त्रीय नियम",
-        "💊 कुण्डली अनुसार उपाय"
+        "🔴 सक्रिय दोष एवं कुण्डली वेध",
+        "🟢 राजयोग, धनयोग व महापुरुष योग",
+        "📋 १२,५०० महा-शास्त्रीय नियम स्कैन",
+        "💊 कुण्डली-आधारित विशिष्ट उपाय"
     ],
     21: [
         "📊 ३×३ लो-शू ग्रिड",
@@ -9866,9 +9866,7 @@ elif selected_idx == 19:
     validation_view_mod.render_validation_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(19))
 
 elif selected_idx == 20:
-    import importlib
     import src.jyotish.ui.modules.yogas_doshas_view as yogas_view_mod
-    importlib.reload(yogas_view_mod)
     yogas_view_mod.render_yogas_doshas_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(20))
 
 elif selected_idx == 21:

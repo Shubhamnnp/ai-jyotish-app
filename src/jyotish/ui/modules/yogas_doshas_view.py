@@ -1,28 +1,100 @@
-import streamlit as st
-from datetime import datetime, date
-import importlib
+# -*- coding: utf-8 -*-
+"""
+Module 20: Yogas & Doshas Analysis and Specific Shastriya Remedies View.
+Evaluates classical rules, identifies active and inactive afflictions (Doshas) and blessings (Yogas),
+provides full 12,500 rule evidence scan, and matches targeted Vedic remedies.
+"""
 
-def render_yogas_doshas_view(chart, tabs=None):
+import streamlit as st
+import pandas as pd
+from datetime import datetime, date
+from typing import List, Optional
+import src.jyotish.rules.engine as r_mod
+import src.jyotish.dasha.vimshottari as vim_mod
+import src.jyotish.core.gochar as goc_mod
+
+
+# Specific Remedial Mapping Database per Dosha / Affliction
+REMEDY_MAP = {
+    "BPHS_KAAL_SARPA_DOSHA": {
+        "title": "काल सर्प दोष निवारण",
+        "vedic_mantra": "ॐ नमः शिवाय | महामृत्युंजय मंत्र",
+        "remedy": "सोमवार को शिवलिंग पर कच्चा दूध, बेलपत्र एवं चाँदी के नाग-नागिन का जोड़ा अर्पित करें। नागपंचमी पर रुद्राभिषेक कराएं।",
+        "gem_color": "चाँदी का कड़ा / गोमेद एवं लहसुनिया केवल विद्वान ज्योतिषी के परामर्श से",
+        "dan": "काले-सफेद कंबल, तिल, उड़द का दान शनिवार को करें।",
+        "precaution": "पक्षियों को दाना डालें, साँपों को कभी न सताएं या मारें।"
+    },
+    "BPHS_MANGAL_DOSHA_VIVAH": {
+        "title": "मांगलिक दोष शांति उपाय",
+        "vedic_mantra": "ॐ अं अंगारकाय नमः | हनुमान चालीसा / सुंदरकांड",
+        "remedy": "नित्य अथवा प्रत्येक मंगलवार को श्री हनुमान चालीसा या बजरंग बाण का पाठ करें। कुंभ विवाह / अर्क विवाह शास्त्रोक्त विधि से संभव है।",
+        "gem_color": "लाल मूंगा (यदि मंगल योगकारक हो) अथवा ताम्बे का कड़ा धारण करें।",
+        "dan": "गुड़, मसूर दाल, लाल वस्त्र अथवा तांबे के पात्र का दान करें।",
+        "precaution": "क्रोध, जल्दबाजी और कटु वचनों से बचें, विशेषकर वैवाहिक वार्ता में।"
+    },
+    "BPHS_PITRA_DOSHA": {
+        "title": "पितृ दोष निवारण उपाय",
+        "vedic_mantra": "ॐ पितृभ्यो नमः | पितृ गायत्री मंत्र",
+        "remedy": "अमावस्या को पितरों के निमित्त तर्पण, पिंडदान अथवा ब्राह्मण भोजन कराएं। पीपल के वृक्ष में जल अर्पित कर दीप प्रज्वलित करें।",
+        "gem_color": "सूर्य देव को नित्य तांबे के लोटे से रोली-अक्षत मिलाकर अर्घ्य दें।",
+        "dan": "अमावस्या को खीर, अन्न, वस्त्र और छाता जरूरतमंदों को दान करें।",
+        "precaution": "माता-पिता एवं परिवार के वृद्धजनों का सदैव सम्मान व सेवा करें।"
+    },
+    "BPHS_KEMADRUMA_DOSHA": {
+        "title": "केमद्रुम दोष (मानसिक अस्थिरता) उपाय",
+        "vedic_mantra": "ॐ सों सोमाय नमः | श्री सूक्तम",
+        "remedy": "पूर्णिमा का व्रत रखें, माता का चरण स्पर्श कर आशीर्वाद लें। भगवान शिव का जलाभिषेक करें।",
+        "gem_color": "चाँदी के पात्र में जल पीने का नियम बनाएं, कनिष्ठिका में चाँदी की अंगूठी पहनें।",
+        "dan": "दूध, चावल, मिश्री, चीनी अथवा सफेद वस्त्र का सोमवार को दान।",
+        "precaution": "अकेलेपन व नकारात्मक विचारों से दूर रहें, नित्य ध्यान (Meditation) करें।"
+    },
+    "GOCHARA_SHANI_SADE_SATI": {
+        "title": "शनि साढ़ेसाती एवं ढैया रक्षा कवच",
+        "vedic_mantra": "ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः | दशरथ कृत शनि स्तोत्र",
+        "remedy": "शनिवार को पीपल के नीचे सरसों के तेल का दीपक जलाएं। नित्य हनुमान चालीसा का पाठ करें।",
+        "gem_color": "लोहे का छल्ला (काले घोड़े की नाल का) मध्यमा अंगुली में शनिवार को पहनें।",
+        "dan": "काले तिल, उड़द की दाल, सरसों का तेल, चमड़े के जूते अथवा लोहा दान करें।",
+        "precaution": "मदिरा, जुआ, असत्य भाषण व कर्मचारियों/मजदूरों का अहित कभी न करें।"
+    },
+    "GOCHARA_SHANI_DHAIYA": {
+        "title": "शनि ढैया शांति उपाय",
+        "vedic_mantra": "ॐ शं शनैश्चराय नमः",
+        "remedy": "शनिवार को हनुमान मंदिर में सिंदूर व चमेली का तेल चढ़ाएं। सुंदरकांड का पाठ करें।",
+        "gem_color": "शनि यंत्र की स्थापना कर धूप-दीप दें।",
+        "dan": "गरीबों को भोजन अथवा सरसों के तेल में छाया दान करें।",
+        "precaution": "आलस्य से बचें और समय का सदुपयोग करें।"
+    },
+    "GOCHARA_GURU_CHANDAL_YOG": {
+        "title": "गुरु-चांडाल दोष निवारण",
+        "vedic_mantra": "ॐ बृं बृहस्पतये नमः | विष्णु सहस्रनाम",
+        "remedy": "गुरुवार को भगवान विष्णु की पूजा करें, केले के पेड़ में जल दें, गाय को गुड़-चना खिलाएं।",
+        "gem_color": "पुखराज अथवा सुनहला (विद्वान परामर्श से) या हल्दी की गांठ बांधें।",
+        "dan": "पीले वस्त्र, चने की दाल, हल्दी, बेसन के लड्डू व धार्मिक पुस्तकें दान करें।",
+        "precaution": "गुरु, शिक्षक और ज्ञानियों का उपहास न उड़ाएं।"
+    },
+    "BPHS_RUDRA_YOGA_MARS_AFFLICTED": {
+        "title": "रुद्र योग / अंगारक योग शांति",
+        "vedic_mantra": "ॐ रुद्राय नमः | महामृत्युंजय मंत्र",
+        "remedy": "भगवान कार्तिकेय अथवा भैरव जी की आराधना करें। शिवलिंग पर गन्ने का रस या शहद अर्पित करें।",
+        "gem_color": "चांदी में जड़ा मूंगा अथवा लाल चंदन का टीका लगाएं।",
+        "dan": "तांबा, मसूर, लाल मिठाई और रक्तदान करें।",
+        "precaution": "अग्नि, वाहन और धारदार हथियारों के प्रयोग में सदैव सावधानी रखें।"
+    }
+}
+
+
+def render_yogas_doshas_view(chart, tabs: Optional[List[str]] = None):
     if tabs is None:
         tabs = [
-            '🛡️ कुण्डली के प्रमुख दोष व शांति',
-            '👑 राजयोग एवं धनयोग',
-            '📜 १०० शास्त्रीय नियम लाइब्रेरी',
-            '🌿 कुण्डली-आधारित अचूक उपाय'
+            "🔴 सक्रिय दोष एवं कुण्डली वेध",
+            "🟢 राजयोग, धनयोग व महापुरुष योग",
+            "📋 १२,५०० महा-शास्त्रीय नियम स्कैन",
+            "💊 कुण्डली-आधारित विशिष्ट उपाय"
         ]
     st.subheader("⚡ सम्पूर्ण दोष एवं योग विश्लेषण एवं कुण्डली आधारित उपाय")
-    st.write("बृहत्पाराशर होराशास्त्र, फलदीपिका, सारावली एवं जातक पारिजात अनुसार कुण्डली के समस्त सक्रिय/निष्क्रिय दोषों, राजयोगों, धनयोगों तथा कुण्डली-आधारित अचूक उपायों का पूर्ण विश्लेषण।")
+    st.caption("बृहत्पाराशर होराशास्त्र, फलदीपिका, सारावली एवं जातक पारिजात अनुसार कुण्डली के समस्त सक्रिय/निष्क्रिय दोषों, राजयोगों, धनयोगों तथा कुण्डली-आधारित अचूक उपायों का पूर्ण विश्लेषण।")
 
-    from datetime import datetime
-    import importlib
-    import src.jyotish.rules.engine as r_mod
-    import src.jyotish.dasha.vimshottari as vim_mod
-    import src.jyotish.core.gochar as goc_mod
-
-    importlib.reload(r_mod)
-    importlib.reload(goc_mod)
-
-    # 1. Compute Active Dasha & Transit Context required by the 100 Rules Library
+    # 1. Compute Active Dasha & Transit Context required by the Rules Library
     try:
         _eval_date = date.today()
         _full_bdt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
@@ -34,8 +106,7 @@ def render_yogas_doshas_view(chart, tabs=None):
             chart=chart,
             active_dasha=_active_dasha,
             transits=_transits,
-            transit_summary=_tr_summary,
-            filter_theme="all"
+            transit_summary=_tr_summary
         )
     except Exception as _r_err:
         _evidences = []
@@ -48,79 +119,11 @@ def render_yogas_doshas_view(chart, tabs=None):
     _active_doshas = [e for e in _doshas_ev if e.fired]
     _active_yogas = [e for e in _yogas_ev if e.fired]
 
-    # Specific Remedial Mapping Database per Dosha / Affliction
-    REMEDY_MAP = {
-        "BPHS_KAAL_SARPA_DOSHA": {
-            "title": "काल सर्प दोष निवारण",
-            "vedic_mantra": "ॐ नमः शिवाय | महामृत्युंजय मंत्र",
-            "remedy": "सोमवार को शिवलिंग पर कच्चा दूध, बेलपत्र एवं चाँदी के नाग-नागिन का जोड़ा अर्पित करें। नागपंचमी पर रुद्राभिषेक कराएं।",
-            "gem_color": "चाँदी का कड़ा / गोमेद एवं लहसुनिया केवल विद्वान ज्योतिषी के परामर्श से",
-            "dan": "काले-सफेद कंबल, तिल, उड़द का दान शनिवार को करें।",
-            "precaution": "पक्षियों को दाना डालें, साँपों को कभी न सताएं या मारें।"
-        },
-        "BPHS_MANGAL_DOSHA_VIVAH": {
-            "title": "मांगलिक दोष शांति उपाय",
-            "vedic_mantra": "ॐ अं अंगारकाय नमः | हनुमान चालीसा / सुंदरकांड",
-            "remedy": "नित्य अथवा प्रत्येक मंगलवार को श्री हनुमान चालीसा या बजरंग बाण का पाठ करें। कुंभ विवाह / अर्क विवाह शास्त्रोक्त विधि से संभव है।",
-            "gem_color": "लाल मूंगा (यदि मंगल योगकारक हो) अथवा ताम्बे का कड़ा धारण करें।",
-            "dan": "गुड़, मसूर दाल, लाल वस्त्र अथवा तांबे के पात्र का दान करें।",
-            "precaution": "क्रोध, जल्दबाजी और कटु वचनों से बचें, विशेषकर वैवाहिक वार्ता में।"
-        },
-        "BPHS_PITRA_DOSHA": {
-            "title": "पितृ दोष निवारण उपाय",
-            "vedic_mantra": "ॐ पितृभ्यो नमः | पितृ गायत्री मंत्र",
-            "remedy": "अमावस्या को पितरों के निमित्त तर्पण, पिंडदान अथवा ब्राह्मण भोजन कराएं। पीपल के वृक्ष में जल अर्पित कर दीप प्रज्वलित करें।",
-            "gem_color": "सूर्य देव को नित्य तांबे के लोटे से रोली-अक्षत मिलाकर अर्घ्य दें।",
-            "dan": "अमावस्या को खीर, अन्न, वस्त्र और छाता जरूरतमंदों को दान करें।",
-            "precaution": "माता-पिता एवं परिवार के वृद्धजनों का सदैव सम्मान व सेवा करें।"
-        },
-        "BPHS_KEMADRUMA_DOSHA": {
-            "title": "केमद्रुम दोष (मानसिक अस्थिरता) उपाय",
-            "vedic_mantra": "ॐ सों सोमाय नमः | श्री सूक्तम",
-            "remedy": "पूर्णिमा का व्रत रखें, माता का चरण स्पर्श कर आशीर्वाद लें। भगवान शिव का जलाभिषेक करें।",
-            "gem_color": "चाँदी के पात्र में जल पीने का नियम बनाएं, कनिष्ठिका में चाँदी की अंगूठी पहनें।",
-            "dan": "दूध, चावल, मिश्री, चीनी अथवा सफेद वस्त्र का सोमवार को दान।",
-            "precaution": "अकेलेपन व नकारात्मक विचारों से दूर रहें, नित्य ध्यान (Meditation) करें।"
-        },
-        "GOCHARA_SHANI_SADE_SATI": {
-            "title": "शनि साढ़ेसाती एवं ढैया रक्षा कवच",
-            "vedic_mantra": "ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः | दशरथ कृत शनि स्तोत्र",
-            "remedy": "शनिवार को पीपल के नीचे सरसों के तेल का दीपक जलाएं। नित्य हनुमान चालीसा का पाठ करें।",
-            "gem_color": "लोहे का छल्ला (काले घोड़े की नाल का) मध्यमा अंगुली में शनिवार को पहनें।",
-            "dan": "काले तिल, उड़द की दाल, सरसों का तेल, चमड़े के जूते अथवा लोहा दान करें।",
-            "precaution": "मदिरा, जुआ, असत्य भाषण व कर्मचारियों/मजदूरों का अहित कभी न करें।"
-        },
-        "GOCHARA_SHANI_DHAIYA": {
-            "title": "शनि ढैया शांति उपाय",
-            "vedic_mantra": "ॐ शं शनैश्चराय नमः",
-            "remedy": "शनिवार को हनुमान मंदिर में सिंदूर व चमेली का तेल चढ़ाएं। सुंदरकांड का पाठ करें।",
-            "gem_color": "शनि यंत्र की स्थापना कर धूप-दीप दें।",
-            "dan": "गरीबों को भोजन अथवा सरसों के तेल में छाया दान करें।",
-            "precaution": "आलस्य से बचें और समय का सदुपयोग करें।"
-        },
-        "GOCHARA_GURU_CHANDAL_YOG": {
-            "title": "गुरु-चांडाल दोष निवारण",
-            "vedic_mantra": "ॐ बृं बृहस्पतये नमः | विष्णु सहस्रनाम",
-            "remedy": "गुरुवार को भगवान विष्णु की पूजा करें, केले के पेड़ में जल दें, गाय को गुड़-चना खिलाएं।",
-            "gem_color": "पुखराज अथवा सुनहला (विद्वान परामर्श से) या हल्दी की गांठ बांधें।",
-            "dan": "पीले वस्त्र, चने की दाल, हल्दी, बेसन के लड्डू व धार्मिक पुस्तकें दान करें।",
-            "precaution": "गुरु, शिक्षक और ज्ञानियों का उपहास न उड़ाएं।"
-        },
-        "BPHS_RUDRA_YOGA_MARS_AFFLICTED": {
-            "title": "रुद्र योग / अंगारक योग शांति",
-            "vedic_mantra": "ॐ रुद्राय नमः | महामृत्युंजय मंत्र",
-            "remedy": "भगवान कार्तिकेय अथवा भैरव जी की आराधना करें। शिवलिंग पर गन्ने का रस या शहद अर्पित करें।",
-            "gem_color": "चांदी में जड़ा मूंगा अथवा लाल चंदन का टीका लगाएं।",
-            "dan": "तांबा, मसूर, लाल मिठाई और रक्तदान करें।",
-            "precaution": "अग्नि, वाहन और धारदार हथियारों के प्रयोग में सदैव सावधानी रखें।"
-        }
-    }
-
     # Summary metric HUD
     _mc1, _mc2, _mc3, _mc4 = st.columns(4)
     _mc1.metric("⚠️ सक्रिय दोष (Active Doshas)", len(_active_doshas), delta=f"कुल {_active_doshas and 'ध्यान दें' or 'सुरक्षित'}", delta_color="inverse")
     _mc2.metric("✨ सक्रिय योग (Active Yogas)", len(_active_yogas), delta=f"कुल {len(_yogas_ev)} योगों में से")
-    _mc3.metric("📋 मूल्यांकित नियम (Rules Evaluated)", len(_evidences), delta="100% Shastriya")
+    _mc3.metric("📋 मूल्यांकित नियम (Rules Evaluated)", f"{len(_evidences):,}", delta="100% Shastriya")
     _mc4.metric("💊 कुण्डली उपाय (Specific Remedies)", len(_active_doshas) + (1 if not _active_doshas else 0))
 
     _dy_t1, _dy_t2, _dy_t3, _dy_t4 = st.tabs(tabs)
@@ -255,21 +258,5 @@ def render_yogas_doshas_view(chart, tabs=None):
                 unsafe_allow_html=True
             )
 
-        # Classical reference guidelines
         st.markdown("---")
         st.info("📌 **ज्योतिषीय परामर्श नियम:** कोई भी रत्न धारण करने या तंत्र-मंत्र का अनुष्ठान करने से पूर्व योग्य ज्योतिषी से अपनी लग्न कुण्डली की ग्रह दशा एवं महादशा का व्यक्तिगत विश्लेषण अवश्य कराएं।")
-
-        st.markdown(
-            f"""<div style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:2px solid #F59E0B;border-radius:10px;padding:14px;text-align:center;margin-top:12px;">
-            <b style="font-size:16px;color:#92400E;">🔱 ज्योतिषाचार्य पं. शुभम तिवारी</b><br/>
-            <small style="color:#78350F;font-weight:600;">वैदिक ज्योतिष अनुसंधान केंद्र | सम्पूर्ण कुण्डली विवेचन एवं परामर्श</small><br/>
-            <b style="color:#B45309;font-size:15px;">📞 +91-9452155742</b>
-            </div>""",
-            unsafe_allow_html=True
-        )
-
-
-    # =============================================================
-    # MODULE 22: अंकशास्त्र एवं लो-शू ग्रिड (NUMEROLOGY & LO-SHU GRID)
-    # =============================================================
-
