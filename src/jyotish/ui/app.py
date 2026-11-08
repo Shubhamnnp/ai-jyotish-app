@@ -9841,9 +9841,7 @@ elif selected_idx == 13:
     varshaphal_view_mod.render_varshaphal_view(chart=chart, birth_profile=birth_profile, tz_offset=tz_offset, render_chart_svg_fn=render_chart_svg, tabs=MODULE_TABS_REGISTRY.get(13))
 
 elif selected_idx == 14:
-    import importlib
     import src.jyotish.ui.modules.btr_view as btr_view_mod
-    importlib.reload(btr_view_mod)
     btr_view_mod.render_btr_view(chart=chart, birth_profile=birth_profile, tabs=MODULE_TABS_REGISTRY.get(14))
 
 elif selected_idx == 15:

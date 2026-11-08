@@ -1,25 +1,23 @@
 import streamlit as st
 import pandas as pd
-from datetime import datetime as dt_cls, timedelta, date
-import importlib
+from datetime import datetime, timedelta, date
 from src.jyotish.core.models import BirthData
 from src.jyotish.core.varga import VargaCalculator
 from src.jyotish.core.calculator import default_chart_calculator
-from src.jyotish.services.btr import default_btr_service, LifeEvent
+from src.jyotish.services.btr import default_btr_service, LifeEvent, BTRCandidate
 
 def render_btr_view(chart, birth_profile, tabs=None):
-    if tabs is None:
+    if tabs is None or len(tabs) < 8:
         tabs = [
-            '🎯 BTR समग्र सुधार व स्कोर',
-            '🌿 तत्त्व शोधन व कुण्ड/प्राणपद',
-            '⚡ वर्ग सीमा परिवर्तन विश्लेषण',
-            '🔮 केपी रूलिंग प्लैनेट्स (RP)',
-            '🔄 मूल बनाम संशोधित कुण्डली'
+            "🏆 घटना मिलान शोधन",
+            "🌿 तत्व व लिंग शोधन",
+            "☸️ कुण्ड व प्राणपद लग्न",
+            "📐 D9 व D60 सीमा",
+            "👑 के.पी. रूलिंग प्लैनेट्स",
+            "⚖️ पूर्व व शोधित तुलना",
+            "🎯 सेकंड्स सूक्ष्म स्लाइडर",
+            "📜 शास्त्रीय सूत्र व प्रमाण"
         ]
-    import importlib
-    import src.jyotish.services.btr as btr_mod
-    importlib.reload(btr_mod)
-    from src.jyotish.services.btr import default_btr_service, LifeEvent, BTRCandidate
 
     st.subheader("⏳ जन्म समय शोधन महा-प्रणाली (Vedic & KP Birth Time Rectification - BTR)")
     st.write(
