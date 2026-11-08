@@ -9853,9 +9853,7 @@ elif selected_idx == 16:
     daivajna_view_mod.render_daivajna_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(16))
 
 elif selected_idx == 17:
-    import importlib
     import src.jyotish.ui.modules.reports_view as reports_view_mod
-    importlib.reload(reports_view_mod)
     reports_view_mod.render_reports_view(chart=chart, birth_profile=birth_profile, tabs=MODULE_TABS_REGISTRY.get(17))
 
 elif selected_idx == 18:

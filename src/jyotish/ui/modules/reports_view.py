@@ -1,7 +1,8 @@
 import streamlit as st
-import importlib
 import urllib.parse as urllib
 from src.jyotish.services.master_calculator import default_master_calculator
+from src.jyotish.services.report_generator import default_report_generator
+from src.jyotish.services.pdf_generator import default_pdf_service
 try:
     from src.jyotish.services.prescription import default_prescription_service, ConsultationSlipService
 except ImportError:
@@ -9,7 +10,7 @@ except ImportError:
     ConsultationSlipService = None
 
 def render_reports_view(chart, birth_profile, tabs=None):
-    if tabs is None:
+    if tabs is None or len(tabs) < 2:
         tabs = [
             '📚 सम्पूर्ण ५०-पेज पत्रिका',
             '📋 १-पेज परामर्श पर्ची'
@@ -27,10 +28,7 @@ def render_reports_view(chart, birth_profile, tabs=None):
     with tab_rep_master:
         st.write("पूरी जन्म कुण्डली, षोडशवर्ग, द्वादश भाव, षड्बल, जैमिनी, ५ दशा प्रणालियाँ, अष्टकवर्ग, साढ़ेसाती, गोचर एवं पाया, लाल किताब ९ ऋण व १०८ टोटके, ३-स्तरीय ट्रिगर, वैदिक मुहूर्त एवं पञ्चक, कुण्डली मिलान १६ परिहार, के.पी. कस्पल सब-लॉर्ड्स, सुदर्शन चक्र, वास्तु एवं सात्विक उपायों सहित २२ अध्यायों की पूर्ण रंगीन मुद्रण-योग्य पत्रिका।")
 
-        import importlib
-        import src.jyotish.services.report_generator as rep_mod
-        importlib.reload(rep_mod)
-        r_gen = rep_mod.default_report_generator
+        r_gen = default_report_generator
 
         with st.spinner("🔮 समस्त शास्त्रीय गणनाओं को संकलित कर सम्पूर्ण पत्रिका तैयार की जा रही है..."):
             master_bundle = default_master_calculator.calculate_all(chart)
@@ -42,9 +40,7 @@ def render_reports_view(chart, birth_profile, tabs=None):
                 astro_org=astro_org
             )
 
-        import src.jyotish.services.pdf_generator as pdf_mod
-        importlib.reload(pdf_mod)
-        pdf_service = pdf_mod.default_pdf_service
+        pdf_service = default_pdf_service
 
         chart_cache_key = f"pdf_{birth_profile.name}_{birth_profile.birth_date}_{birth_profile.birth_time}"
         pdf_bytes = st.session_state.get(chart_cache_key, None)
