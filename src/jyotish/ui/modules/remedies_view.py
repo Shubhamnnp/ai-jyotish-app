@@ -375,10 +375,8 @@ def render_remedies_view(chart, tabs=None):
         30: "समग्र आरोग्य एवं संपन्नता (Health & Wealth)"
     }
 
-    # Ensure engine is initialized and reloaded
-    import importlib
+    # Ensure engine is initialized
     import src.jyotish.core.affliction as aff_mod
-    importlib.reload(aff_mod)
     affliction_engine = aff_mod.AfflictionEngine(chart)
 
     # Detect native gender (male / female) to apply strict gender filtering for Life Areas
@@ -437,6 +435,16 @@ def render_remedies_view(chart, tabs=None):
                 <div style="font-size: 14px; font-weight: 900; color: #991B1B;">H{min_h_idx+1} ({h_fws[min_h_idx]:.0f}%) | {pp_list[min_p_idx].get('planet')} ({p_fws[min_p_idx]:.0f}%)</div>
                 <div style="font-size: 10.5px; color: #DC2626;">शास्त्रीय उपाय एवं शांति अपेक्षित</div>
             </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%); border: 1.5px solid #BFDBFE; border-radius: 8px; padding: 10px 16px; margin-bottom: 12px; font-size: 12px; color: #1E293B; line-height: 1.6;">
+            <div style="font-weight: 800; color: #1E40AF; margin-bottom: 4px; display:flex; align-items:center; gap:6px;">
+                <span>📜 <b>कर्म-सिद्धांत एवं फ्री-विल शास्त्रीय रहस्य (Purushartha vs Prarabdha)</b></span>
+            </div>
+            • <b>५०% से अधिक फ्री-विल (अदृढ़ कर्म):</b> जातक के चेतन संकल्प, पुरुषार्थ एवं सतत् उद्यम द्वारा इन क्षेत्रों के परिणामों को पूर्णतः अनुकूल बनाया जा सकता है।<br/>
+            • <b>५०% से कम फ्री-विल (दृढ़ प्रारब्ध):</b> पूर्वजन्म संचित प्रारब्ध की प्रधानता है; यहाँ केवल हठपूर्वक कर्म करने के स्थान पर शास्त्रीय दान, मंत्र जप, रुद्राक्ष एवं ईश्वरीय शरणागति से ही शांति संभव है।
         </div>
         """, unsafe_allow_html=True)
 
@@ -535,6 +543,49 @@ def render_remedies_view(chart, tabs=None):
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+        # Life Area Classical Quality Evaluation Card
+        try:
+            _total_soumya = 0
+            _total_krura = 0
+            for _r in la_detail.get("HouseRows", []) + la_detail.get("LordRows", []):
+                for _idx in [1, 2]:
+                    try: _total_soumya += int(_r[_idx])
+                    except Exception: pass
+                for _idx in [3, 4, 5]:
+                    try: _total_krura += int(_r[_idx])
+                    except Exception: pass
+
+            if _total_soumya > _total_krura + 1:
+                _area_status = "🌟 शुभ व पुष्ट क्षेत्र (Fortified & Auspicious)"
+                _status_bg = "#ECFDF5"
+                _status_bdr = "#10B981"
+                _status_col = "#065F46"
+                _status_desc = "इस आयाम में सौम्य ग्रहों एवं त्रिकोणेशों (१/५/९) का अनुकूल प्रभाव अधिक है; जीवन में यह क्षेत्र सहज रूप से फलदायी व समृद्ध रहेगा।"
+            elif _total_krura > _total_soumya + 1:
+                _area_status = "⚠️ संघर्ष व पीड़ित क्षेत्र (Challenging / Afflicted)"
+                _status_bg = "#FEF2F2"
+                _status_bdr = "#EF4444"
+                _status_col = "#991B1B"
+                _status_desc = "इस आयाम में क्रूर व त्रिक ग्रहों (६/८/१२) का दबाव अधिक है; इस क्षेत्र की स्थिरता हेतु शास्त्रोक्त दान, मंत्र जप व शांति उपाय अनिवार्य हैं।"
+            else:
+                _area_status = "⚖️ मिश्रित व सम क्षेत्र (Balanced & Effort-Driven)"
+                _status_bg = "#FFFBEB"
+                _status_bdr = "#F59E0B"
+                _status_col = "#92400E"
+                _status_desc = "इस आयाम में शुभ व क्रूर ग्रहों का मिला-जुला प्रभाव है; इस क्षेत्र की सफलता जातक के पुरुषार्थ, विवेक और निरंतर उद्यम पर निर्भर करेगी।"
+
+            st.markdown(f"""
+            <div style="background:{_status_bg}; border:1.5px solid {_status_bdr}; border-radius:8px; padding:10px 14px; margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <span style="font-weight:900; color:{_status_col}; font-size:13.5px;">{_area_status}</span>
+                    <span style="font-size:11.5px; font-weight:800; color:#475569;">कुल सौम्य अंक: <b style="color:#059669;">{_total_soumya}</b> | कुल क्रूर अंक: <b style="color:#DC2626;">{_total_krura}</b></span>
+                </div>
+                <div style="font-size:12px; color:#1E293B; margin-top:4px; line-height:1.5;">{_status_desc}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        except Exception as _e_la_ev:
+            st.caption(f"आयाम मूल्यांकन: {_e_la_ev}")
 
         h_cols = ["Pillar", "सौम्य (Benefic)", "1/5/9 Lords", "क्रूर (Malefic)", "6/8/12 Lords", "Separative"]
         r_cols = ["Entity", "Sign", "Mobility", "Element", "Varna", "Purushartha", "Gender", "Rising", "Day/Night", "Guna"]
@@ -739,6 +790,50 @@ def render_remedies_view(chart, tabs=None):
         rem_html += '</tbody></table></div>'
         st.markdown(rem_html, unsafe_allow_html=True)
 
+        # ─── Gemstone Safety Guard (पात्रता व सर्वथा वर्जित रत्न) ───
+        try:
+            _lag_id = chart.lagna_sign_id
+            _trika_h = [6, 8, 12]
+            _trika_lords = {SIGN_LORDS[SIGN_NAMES[((_lag_id - 1 + (h - 1)) % 12)]] for h in _trika_h}
+
+            _safe_houses = [1, 5, 9]
+            _safe_lords = []
+            for _h in _safe_houses:
+                _sl = SIGN_LORDS[SIGN_NAMES[((_lag_id - 1 + (_h - 1)) % 12)]]
+                if _sl not in _trika_lords and _sl not in _safe_lords:
+                    _safe_lords.append(_sl)
+
+            _GEM_MAP = {
+                "Sun": "माणिक्य (Ruby)", "Moon": "मोती (Pearl)", "Mars": "मूंगा (Red Coral)",
+                "Mercury": "पन्ना (Emerald)", "Jupiter": "पुखराज (Yellow Sapphire)",
+                "Venus": "हीरा / ओपल (Diamond)", "Saturn": "नीलम (Blue Sapphire)",
+                "Rahu": "गोमेद (Hessonite)", "Ketu": "लहसुनिया (Cat's Eye)"
+            }
+            _safe_gem_list = [f"<b>{_GEM_MAP.get(l, l)}</b> ({l})" for l in _safe_lords]
+            _forbid_gem_list = [f"<b>{_GEM_MAP.get(l, l)}</b> ({l})" for l in _trika_lords]
+
+            st.markdown(f"""
+            <div style="background: linear-gradient(135deg, #FEF2F2 0%, #FFFBEB 100%); border: 1.5px solid #F59E0B; border-radius: 10px; padding: 12px 16px; margin: 12px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+                <div style="font-weight: 900; color: #92400E; font-size: 13.5px; margin-bottom: 6px; display:flex; align-items:center; gap:6px;">
+                    <span>🛡️ <b>रत्न धारण पात्रता एवं शास्त्रीय सुरक्षा गार्ड (Gemstone Safety Guard)</b></span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; font-size: 12px; color: #1E293B;">
+                    <div style="background: #F0FDF4; border: 1px solid #86EFAC; border-radius: 6px; padding: 8px 12px;">
+                        <span style="color: #166534; font-weight: 800;">✅ शास्त्र-सम्मत सुरक्षित रत्न (अनुशंसित):</span><br/>
+                        {', '.join(_safe_gem_list) if _safe_gem_list else 'केवल लग्न शुद्धि अनुसार'}<br/>
+                        <small style="color: #047857;">त्रिकोणेश (१, ५, ९) रत्न बल एवं सौभाग्य संवर्धन करते हैं।</small>
+                    </div>
+                    <div style="background: #FEF2F2; border: 1px solid #FCA5A5; border-radius: 6px; padding: 8px 12px;">
+                        <span style="color: #991B1B; font-weight: 800;">🚫 सर्वथा वर्जित रत्न (Strictly Forbidden):</span><br/>
+                        {', '.join(_forbid_gem_list)}<br/>
+                        <small style="color: #DC2626;">त्रिक भाव (६, ८, १२) के स्वामियों का रत्न धारण करना विष समान घातक होता है।</small>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        except Exception as _e_gem:
+            st.caption(f"रत्न सुरक्षा लोड हो रहा है: {_e_gem}")
+
         # Remedy Shastriya Rules & Guidance Box
         with st.expander("📖 सर्वर शास्त्रीय उपाय नियम पुस्तिका (Remedy Rules & Scientific Guide)", expanded=True):
             st.markdown("""
@@ -793,6 +888,35 @@ def render_remedies_view(chart, tabs=None):
     </div>
     </div>
     """, unsafe_allow_html=True)
+
+            # ─── Operational Vimshottari Dasha Live Audit ───
+            try:
+                from src.jyotish.core.dasha import default_dasha_engine
+                from datetime import datetime
+                _cur_dt = datetime.now()
+                _b_full_dt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
+                _active_d = default_dasha_engine.get_active_dasha_at(_b_full_dt, chart.planets["Moon"].longitude, _cur_dt.date())
+                _active_md = _active_d.mahadasha.lord
+                _active_ad = _active_d.antardasha.lord
+                _badhaka_lord = bm_data["badhakesh"]
+                _maraka1_lord = p_mar["lord"]
+                _maraka2_lord = s_mar["lord"]
+
+                _dasha_badhaka_alert = (_active_md == _badhaka_lord or _active_ad == _badhaka_lord)
+                _dasha_maraka_alert = (_active_md in [_maraka1_lord, _maraka2_lord] or _active_ad in [_maraka1_lord, _maraka2_lord])
+
+                if _dasha_badhaka_alert or _dasha_maraka_alert:
+                    _alert_msgs = []
+                    if _dasha_badhaka_alert:
+                        _alert_msgs.append(f"बाधकेश ({_badhaka_lord})")
+                    if _dasha_maraka_alert:
+                        _m_which = _active_md if _active_md in [_maraka1_lord, _maraka2_lord] else _active_ad
+                        _alert_msgs.append(f"मारकेश ({_m_which})")
+                    st.warning(f"🚨 **सक्रिय दशा चेतावनी (Active Operational Advisory):** वर्तमान विंशोत्तरी दशा ({_active_d.formatted_summary}) में {', '.join(_alert_msgs)} की दशा सक्रिय है। महत्वपूर्ण उपक्रमों, यात्रा व स्वास्थ्य में अतिरिक्त सतर्कता बरतें तथा महामृत्युंजय जप व बाधक शांति अनुष्ठान विहित है।")
+                else:
+                    st.success(f"🛡️ **वर्तमान दशा सुरक्षित:** वर्तमान सक्रिय दशा ({_active_d.formatted_summary}) प्रत्यक्ष मारकेश अथवा बाधकेश के सीधे प्रभाव से मुक्त है। कार्य-सिद्धि सामान्य रूप से अग्रसर रहेगी।")
+            except Exception as _e_dsh_bm:
+                st.caption(f"सक्रिय दशा परीक्षण: {_e_dsh_bm}")
 
             # 2 Detailed Guidance Columns
             c_det1, c_det2 = st.columns(2)

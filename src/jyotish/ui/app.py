@@ -9793,9 +9793,7 @@ elif selected_idx == 1:
     event_view_mod.render_event_view(chart=chart, birth_profile=birth_profile, tz_offset=tz_offset, tabs=MODULE_TABS_REGISTRY.get(1))
 
 elif selected_idx == 2:
-    import importlib
     import src.jyotish.ui.modules.remedies_view as remedies_view_mod
-    importlib.reload(remedies_view_mod)
     remedies_view_mod.render_remedies_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(2))
 
 elif selected_idx == 3:
