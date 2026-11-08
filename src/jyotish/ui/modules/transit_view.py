@@ -40,13 +40,22 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
     if default_city_name is None:
         default_city_name = st.session_state.get("birth_city", "New Delhi, Delhi, India")
         
-    if tabs is None:
+    if tabs is None or len(tabs) < 14:
         tabs = [
-            '🪐 गोचर ग्रह स्थिति एवं वेध',
-            '📈 अष्टकवर्ग गोचर एवं काक्ष्य',
-            '⚖️ अष्टकवर्ग प्रस्तारक एवं शुद्धि',
-            '🌊 पञ्च-शलाका एवं चक्र वेध',
-            '🗓️ मासिक एवं वार्षिक गोचर कैलंडर'
+            "🎯 जन्म-गोचर चक्र",
+            "🪐 दैनिक गोचर",
+            "⌛ साढ़ेसाती व ढैया",
+            "⚡ दोहरा गोचर (गुरु-शनि)",
+            "📊 अष्टकवर्ग (SAV/BAV)",
+            "⚖️ त्रिकोण शोधन",
+            "🔬 कक्षी गोचर",
+            "📋 प्रस्ताराष्टकवर्ग",
+            "🔵 भृगु बिन्दु",
+            "🛡️ सर्वतोभद्र चक्र",
+            "🏰 कोटा चक्र दुर्ग",
+            "📈 वित्तीय ज्योतिष वेध",
+            "📊 ग्रह गति व तरंग",
+            "📅 मासिक गोचर कैलेंडर"
         ]
     st.subheader("🪐 गोचर, अष्टकवर्ग, सर्वतोभद्र चक्र एवं कोटा चक्र")
     st.write("तात्कालिक ग्रह गोचर, साढ़ेसाती व ढैया, ८x१२ भिन्नाष्टकवर्ग, शोधन व शोधित पिण्ड, कक्षी गोचर, प्रस्तार, भृगु बिन्दु, सर्वतोभद्र, कोटा चक्र व वित्तीय वेध।")
@@ -197,9 +206,7 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
     # TAB 1: DUAL-RING BI-WHEEL OVERLAY & TRANSIT LAGNA CHART
     # =========================================================================
     with tab_g1:
-        import importlib
         import src.jyotish.ui.chart_renderer as cr_mod
-        importlib.reload(cr_mod)
         ChartRenderer = cr_mod.ChartRenderer
 
         c_tmode1, c_tmode2 = st.columns([2.5, 1.5], vertical_alignment="center")
@@ -612,9 +619,7 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
     """, unsafe_allow_html=True)
 
         try:
-            import importlib
             import src.jyotish.services.kakshya as kakshya_mod
-            importlib.reload(kakshya_mod)
             kak_svc = kakshya_mod.default_kakshya_service
 
             kak_res = kak_svc.scan_all_transits(chart, target_date=t_date)
@@ -703,9 +708,7 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
         st.markdown("### 📊 प्रस्तार अष्टकवर्ग (Prastara Ashtakvarga — 8×12 Matrix Grid)")
         st.caption("८ योगदानकर्ता (सूर्य, चन्द्र, मंगल, बुध, गुरु, शुक्र, शनि, लग्न) × १२ राशियां = प्रत्येक ग्रह का बिन्दु/रेखा ग्रिड:")
         try:
-            import importlib
             import src.jyotish.core.ashtakavarga as ak_mod
-            importlib.reload(ak_mod)
             if chart.ashtakavarga:
                 _prastara = ak_mod.AshtakavargaCalculator.calculate_prastara(chart, chart.ashtakavarga)
                 if _prastara:
@@ -748,9 +751,7 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
         st.markdown("### 🔵 भृगु बिन्दु एवं संवेदनशील गोचर वेध (Bhrigu Bindu)")
         st.caption("राहु और चन्द्रमा का स्पष्ट मध्य बिन्दु — जब कोई ग्रह इस बिन्दु पर या ५° की परिधि में गोचर करता है, तो जीवन में बड़ी नियति-घटना घटित होती है:")
         try:
-            import importlib
             import src.jyotish.core.ashtakavarga as ak_mod
-            importlib.reload(ak_mod)
             _bb = ak_mod.AshtakavargaCalculator.calculate_bhrigu_bindu(chart)
             if _bb:
                 _bbc1, _bbc2, _bbc3 = st.columns(3)
@@ -877,7 +878,6 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
 
         try:
             import src.jyotish.ui.chart_renderer as cr_mod
-            importlib.reload(cr_mod)
             kota_svg_m10 = cr_mod.ChartRenderer.render_kota_chakra_svg(kota_res, title=f"कोटा चक्र दुर्ग आरेख (Kota Chakra — {t_date.strftime('%d-%b-%Y')})")
             st.markdown(kota_svg_m10, unsafe_allow_html=True)
             st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
@@ -901,9 +901,7 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
         st.caption("बृहत्संहिता, नारद संहिता एवं सर्वतोभद्र चक्र वेध अनुसार स्वर्ण, चांदी, कच्चा तेल, धातु, निफ्टी/इक्विटी का बाजार रुख एवं जातक की व्यक्तिगत ट्रेडिंग/निवेश कुण्डली:")
 
         try:
-            import importlib
             import src.jyotish.services.financial as fin_mod
-            importlib.reload(fin_mod)
             fin_service = fin_mod.default_financial_service
 
             c_f_radar, c_f_personal = st.tabs([
@@ -1011,9 +1009,7 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
             st.caption("शास्त्रीय ५-वर्षीय दीर्घकालिक गोचर वेव आरेख — शनि, गुरु, राहु एवं मंगल के राशि संचरण, वक्र-मार्गी दोलन (Retrograde Loops) एवं राशि संक्रमण (Ingress):")
 
             try:
-                import importlib
                 import src.jyotish.services.ephemeris_waves as ew_mod
-                importlib.reload(ew_mod)
                 ew_svc = ew_mod.default_ephemeris_waves_service
 
                 c_w1, c_w2 = st.columns([1.5, 3])
