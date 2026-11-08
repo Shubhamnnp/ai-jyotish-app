@@ -301,6 +301,40 @@ def render_varga_grid_view(chart, tabs=None):
         dv_table = affliction_engine.calculate_dasvarga_table()
         st.markdown(render_styled_varga_table_html(dv_table, varga_meta_full, is_dark=_is_dark), unsafe_allow_html=True)
 
+        # ─── Interactive Dasvarga Domain Insight Explorer ───
+        with st.expander("🔍 विशिष्ट दशवर्ग फलित अन्वेषक (Dasvarga Life-Domain Deep Dive)", expanded=False):
+            sel_dv_code = st.selectbox(
+                "विश्लेषण हेतु वर्ग चुनें (Select Dasvarga)",
+                dasvarga_codes,
+                format_func=lambda x: varga_meta_full.get(x, x),
+                key="dv_deep_dive_sel"
+            )
+            _t_varga = chart.vargas.get(sel_dv_code) if chart.vargas else None
+            if _t_varga:
+                _v_l_sign = getattr(_t_varga, "lagna_sign_name", chart.lagna_sign_name)
+                _v_l_lord = SIGN_LORDS.get(_v_l_sign, "—")
+                _v_p_map = getattr(_t_varga, "planets", {})
+
+                _ex_p = [pn for pn, pp in _v_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Aries", "Moon": "Taurus", "Mars": "Capricorn", "Mercury": "Virgo", "Jupiter": "Cancer", "Venus": "Pisces", "Saturn": "Libra"}.get(pn)]
+                _own_p = [pn for pn, pp in _v_p_map.items() if SIGN_LORDS.get(getattr(pp, "sign_name", "")) == pn]
+                _deb_p = [pn for pn, pp in _v_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries"}.get(pn)]
+
+                st.markdown(f"""
+                <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'}; font-size:13.5px;">🎯 {varga_meta_full.get(sel_dv_code, sel_dv_code)}</span>
+                        <span style="font-size:11px; font-weight:800; background:#EFF6FF; color:#1E40AF; padding:2px 8px; border-radius:4px;">वर्ग लग्न: {_v_l_sign} (स्वामी: {_v_l_lord})</span>
+                    </div>
+                    <div style="line-height:1.6; color:{'#E2E8F0' if _is_dark else '#1E293B'};">
+                        • 🌟 <b>उच्च ग्रह:</b> {', '.join(_ex_p) if _ex_p else 'कोई नहीं'} {'— इस क्षेत्र में विशिष्ट कीर्ति व अधिकार' if _ex_p else ''}<br/>
+                        • 🏰 <b>स्वगृही ग्रह:</b> {', '.join(_own_p) if _own_p else 'कोई नहीं'} {'— इस क्षेत्र में आत्म-निर्भरता व स्थायित्व' if _own_p else ''}<br/>
+                        • ⚠️ <b>नीच ग्रह:</b> {', '.join(_deb_p) if _deb_p else 'कोई नहीं (दोष मुक्त)'} {'— अतिरिक्त साधना व जागरूकता अपेक्षित' if _deb_p else ''}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.caption(f"{sel_dv_code} वर्ग गणना उपलब्ध नहीं।")
+
     # =========================================================================
     # TAB 2: SHODASHVARGA (16 FULL DIVISIONS)
     # =========================================================================
@@ -362,6 +396,41 @@ def render_varga_grid_view(chart, tabs=None):
         # Styled HTML Table for all 16 Vargas
         sv_table = affliction_engine.calculate_shodashvarga_table()
         st.markdown(render_styled_varga_table_html(sv_table, varga_meta_full, is_dark=_is_dark), unsafe_allow_html=True)
+
+        # ─── Interactive Higher Shodashvarga Domain Insight Explorer ───
+        with st.expander("🔬 सूक्ष्म षोडशवर्ग उच्च-स्तरीय फलित अन्वेषक (Higher Shodashvarga Deep Dive: D16-D60)", expanded=False):
+            higher_codes = ["D16", "D20", "D24", "D27", "D30", "D40", "D45", "D60"]
+            sel_hv_code = st.selectbox(
+                "सूक्ष्म वर्ग चुनें (Select Higher Division)",
+                higher_codes,
+                format_func=lambda x: varga_meta_full.get(x, x),
+                key="hv_deep_dive_sel"
+            )
+            _hv_varga = chart.vargas.get(sel_hv_code) if chart.vargas else None
+            if _hv_varga:
+                _hv_l_sign = getattr(_hv_varga, "lagna_sign_name", chart.lagna_sign_name)
+                _hv_l_lord = SIGN_LORDS.get(_hv_l_sign, "—")
+                _hv_p_map = getattr(_hv_varga, "planets", {})
+
+                _h_ex_p = [pn for pn, pp in _hv_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Aries", "Moon": "Taurus", "Mars": "Capricorn", "Mercury": "Virgo", "Jupiter": "Cancer", "Venus": "Pisces", "Saturn": "Libra"}.get(pn)]
+                _h_own_p = [pn for pn, pp in _hv_p_map.items() if SIGN_LORDS.get(getattr(pp, "sign_name", "")) == pn]
+                _h_deb_p = [pn for pn, pp in _hv_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries"}.get(pn)]
+
+                st.markdown(f"""
+                <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="font-weight:900; color:{'#A78BFA' if _is_dark else '#6D28D9'}; font-size:13.5px;">👑 {varga_meta_full.get(sel_hv_code, sel_hv_code)}</span>
+                        <span style="font-size:11px; font-weight:800; background:#F5F3FF; color:#6D28D9; padding:2px 8px; border-radius:4px;">सूक्ष्म वर्ग लग्न: {_hv_l_sign} (स्वामी: {_hv_l_lord})</span>
+                    </div>
+                    <div style="line-height:1.6; color:{'#E2E8F0' if _is_dark else '#1E293B'};">
+                        • 🌟 <b>उच्च ग्रह:</b> {', '.join(_h_ex_p) if _h_ex_p else 'कोई नहीं'}<br/>
+                        • 🏰 <b>स्वगृही ग्रह:</b> {', '.join(_h_own_p) if _h_own_p else 'कोई नहीं'}<br/>
+                        • ⚠️ <b>नीच ग्रह:</b> {', '.join(_h_deb_p) if _h_deb_p else 'कोई नहीं (दोष मुक्त)'}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.caption(f"{sel_hv_code} वर्ग गणना उपलब्ध नहीं।")
 
     # =========================================================================
     # TAB 3: SARANSH, ALL DETAILS & SHASTRIYA PRAMAN

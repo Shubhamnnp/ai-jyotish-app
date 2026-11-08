@@ -9797,9 +9797,7 @@ elif selected_idx == 2:
     remedies_view_mod.render_remedies_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(2))
 
 elif selected_idx == 3:
-    import importlib
     import src.jyotish.ui.modules.varga_grid_view as varga_grid_view_mod
-    importlib.reload(varga_grid_view_mod)
     varga_grid_view_mod.render_varga_grid_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(3))
 
 elif selected_idx == 4:
