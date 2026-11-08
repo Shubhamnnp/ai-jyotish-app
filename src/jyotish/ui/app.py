@@ -9813,9 +9813,7 @@ elif selected_idx == 6:
     shadbala_view_mod.render_shadbala_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(6))
 
 elif selected_idx == 7:
-    import importlib
     import src.jyotish.ui.modules.jaimini_view as jaimini_view_mod
-    importlib.reload(jaimini_view_mod)
     jaimini_view_mod.render_jaimini_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(7))
 
 elif selected_idx == 8:

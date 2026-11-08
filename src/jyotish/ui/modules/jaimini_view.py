@@ -9,15 +9,18 @@ def render_jaimini_view(chart, tabs=None):
     is_astrallis_mode = st.session_state.get("astrallis_mode", False)
     is_night_mode = is_dark
 
-    if tabs is None:
+    if tabs is None or len(tabs) < 10:
         tabs = [
-            '🔱 कारकांश व स्वांश',
-            '👑 ७ चर कारक',
-            '🌟 विशेष लग्न व योग',
-            '🏰 १२ आरूढ़ पद',
-            '🛡️ अर्गला व बाधा',
-            '⏳ चर व त्रिकोण दशा',
-            '⚔️ आयुर्दाय ( Longevity )'
+            "🔱 कारकांश व स्वांश",
+            "👑 ७ चर कारक",
+            "🌟 विशेष लग्न व योग",
+            "🏰 १२ आरूढ़ पद",
+            "📡 राशि दृष्टि",
+            "🔗 अर्गला विचार",
+            "🌍 ग्रह आरूढ़",
+            "⏳ आयुर्दाय गणना",
+            "👻 अप्रकाशित उपग्रह",
+            "📜 जैमिनी उपदेश सूत्र"
         ]
     st.subheader("🔱 जैमिनी ज्योतिष, विशेष लग्न, आरूढ़ पद एवं अप्रकाशित उपग्रह (Jaimini Master Suite)")
     st.write("महर्षि जैमिनी उपदेश सूत्र एवं बृहत्पाराशर होराशास्त्र (BPHS) आधारित १० समर्पित प्रभाग: कारकांश, ७ चर कारक, विशेष लग्न, १२ आरूढ़ पद, राशि दृष्टि, अर्गला, ग्रह आरूढ़, आयुर्दाय, अप्रकाशित उपग्रह एवं शास्त्रीय सूत्र।")
@@ -26,16 +29,13 @@ def render_jaimini_view(chart, tabs=None):
         return "".join(line.strip() for line in s.splitlines() if line.strip())
 
     try:
-        import importlib
         import src.jyotish.services.jaimini_suite as js_mod
-        importlib.reload(js_mod)
         j_res = js_mod.default_jaimini_suite_service.analyze_jaimini_suite(chart)
     except Exception as _e_js:
         j_res = {}
 
     try:
         import src.jyotish.core.jaimini as jm_mod
-        importlib.reload(jm_mod)
         rashi_drishti_data = jm_mod.JaiminiCalculator.calculate_rashi_drishti(chart)
         argala_data = jm_mod.JaiminiCalculator.calculate_argala(chart)
         graha_arudha_data = jm_mod.JaiminiCalculator.calculate_graha_arudhas(chart)
