@@ -9,22 +9,24 @@ def get_live_local_now(tz_offset_hours: float = 5.5) -> datetime:
     return datetime.now(timezone.utc) + timedelta(hours=tz_offset_hours)
 
 def render_sudarshan_chakra_view(chart, birth_profile, tz_offset=5.5, tabs=None):
-    if tabs is None:
+    if tabs is None or len(tabs) < 9:
         tabs = [
-            '☸️ त्रि-स्तरीय सुदर्शन चक्र',
-            '🏰 १२ भाव त्रिकोणीय दृष्टि',
-            '🪐 सुदर्शन दशा व चक्र वर्ष',
-            '📊 संयुक्त शुभ-अशुभ स्कोर'
+            "☸️ त्रि-चक्रीय मण्डल",
+            "📊 १२ भाव त्रिविध फल",
+            "⏳ सुदर्शन दशा",
+            "🪐 त्रि-लग्न संरेखण",
+            "🔍 त्रि-आयामी फलित",
+            "📈 अष्टकवर्ग समन्वय",
+            "⚖️ त्रि-शरीर मीमांसा",
+            "📜 पाराशर प्रमाण (अ. ७४)",
+            "🪔 सुदर्शन कवच व मन्त्र"
         ]
     st.subheader("☸️ सुदर्शन चक्र (Sudarshan Chakra - 3-Ring Concentric Mandala)")
     st.write("बृहत्पाराशर होराशास्त्र (BPHS), अध्याय ७४ अनुसार लग्न (स्थूल देह), चन्द्र (सूक्ष्म मन) एवं सूर्य (कारण आत्मा) तीनों संकेंद्री चक्रों का एक साथ सर्वांगीण त्रिविध विश्लेषण।")
 
     # Native basic info for age calculation
     from datetime import datetime, date
-    import importlib
     from src.jyotish.ui import sudarshan
-    if not hasattr(default_sudarshan_engine, "calculate_triad_dominance") or not hasattr(default_sudarshan_engine, "calculate_dasha"):
-        importlib.reload(sudarshan)
     engine_sd = getattr(sudarshan, "default_sudarshan_engine", default_sudarshan_engine)
 
     # Shastric naming dictionaries & fallbacks

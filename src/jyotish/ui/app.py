@@ -9833,9 +9833,7 @@ elif selected_idx == 11:
     muhurta_view_mod.render_muhurta_view(chart=chart, tz_offset=tz_offset, default_city_name=default_city_name, tabs=MODULE_TABS_REGISTRY.get(11))
 
 elif selected_idx == 12:
-    import importlib
     import src.jyotish.ui.modules.sudarshan_chakra_view as sudarshan_view_mod
-    importlib.reload(sudarshan_view_mod)
     sudarshan_view_mod.render_sudarshan_chakra_view(chart=chart, birth_profile=birth_profile, tz_offset=tz_offset, tabs=MODULE_TABS_REGISTRY.get(12))
 
 elif selected_idx == 13:
