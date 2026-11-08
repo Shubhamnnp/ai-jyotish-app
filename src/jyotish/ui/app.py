@@ -7038,10 +7038,10 @@ MODULE_TABS_REGISTRY = {
         "💊 कुण्डली-आधारित विशिष्ट उपाय"
     ],
     21: [
-        "📊 ३×३ लो-शू ग्रिड",
-        "🪐 मूलांक व भाग्यांक",
-        "🧩 मिसिंग नंबर व उपाय",
-        "💎 लकी फैक्टर्स व नाम शोधन"
+        "📊 ३×३ लो-शू ग्रिड व ८ तल",
+        "🪐 मूलांक व भाग्यांक — शास्त्रीय फल",
+        "🧩 मिसिंग नंबर व पंचतत्व उपाय",
+        "💎 लकी फैक्टर्स, नामांक व फोन शोधन"
     ],
     22: [
         "🏠 १२ पक्के खाने",
@@ -9870,9 +9870,7 @@ elif selected_idx == 20:
     yogas_view_mod.render_yogas_doshas_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(20))
 
 elif selected_idx == 21:
-    import importlib
     import src.jyotish.ui.modules.numerology_view as numerology_view_mod
-    importlib.reload(numerology_view_mod)
     numerology_view_mod.render_numerology_view(birth_profile=birth_profile, tabs=MODULE_TABS_REGISTRY.get(21))
 
 elif selected_idx == 22:

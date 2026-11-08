@@ -1,21 +1,32 @@
-import streamlit as st
-from datetime import date
-import importlib
+# -*- coding: utf-8 -*-
+"""
+Module 21: Vedic & Lo-Shu Numerology View.
+Provides:
+1. 3x3 Lo-Shu Grid (Magic Square of 15), 8 Planes analysis, and Number Frequency Repetitions.
+2. Mulank (Driver) & Bhagyank (Conductor) classical Sanskrit shlokas, positive and shadow/negative phalas.
+3. Missing Numbers with Five-Element (Panchatattva), Gemstone, Crystal and Metal remedies.
+4. Lucky Factors, Chaldean Name Spelling Tuning, and Vehicle/Mobile Number Harmonizer.
+"""
 
-def render_numerology_view(birth_profile, tabs=None):
+import streamlit as st
+import pandas as pd
+from datetime import date
+from typing import List, Optional
+import src.jyotish.core.numerology as num_mod
+from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
+
+
+def render_numerology_view(birth_profile, tabs: Optional[List[str]] = None):
     if tabs is None:
         tabs = [
-            '🧭 लो-शू ग्रिड व तल',
-            '🔢 मूलांक व भाग्यांक विश्लेषण',
-            '✍️ नाम सुधार व अनुकूलता',
-            '💎 क्रिस्टल व अंक उपाय'
+            "📊 ३×३ लो-शू ग्रिड व ८ तल",
+            "🪐 मूलांक व भाग्यांक — शास्त्रीय फल",
+            "🧩 मिसिंग नंबर व पंचतत्व उपाय",
+            "💎 लकी फैक्टर्स, नामांक व फोन शोधन"
         ]
-    st.subheader("🔢 अंकशास्त्र एवं लो-शू ग्रिड (Vedic & Lo-Shu Numerology)")
-    st.write("कील्डियन नामांक, मूलांक, भाग्यांक, कुआ नंबर, ३×३ लो-शू ग्रिड (८ तल), मिसिंग नंबर एवं क्रिस्टल/धातु आधारित शास्त्रीय उपाय।")
 
-    import importlib
-    import src.jyotish.core.numerology as num_mod
-    importlib.reload(num_mod)
+    st.subheader("🔢 अंकशास्त्र एवं लो-शू ग्रिड (Vedic & Lo-Shu Numerology)")
+    st.caption("कील्डियन नामांक, मूलांक, भाग्यांक, कुआ नंबर, ३×३ लो-शू ग्रिड (८ तल), मिसिंग नंबर एवं शास्त्रीय रत्न/धातु/क्रिस्टल आधारित अचूक उपाय।")
 
     b_date = birth_profile.birth_date
     num_res = num_mod.default_numerology_engine.calculate(
@@ -31,17 +42,27 @@ def render_numerology_view(birth_profile, tabs=None):
     c_n3.metric("कुआ नंबर (Kua / Feng Shui)", f"🧭 {num_res.kua_number}", "दिशात्मक ऊर्जा")
     c_n4.metric("कील्डियन नामांक (Name No.)", f"✍️ {num_res.chaldean_namank}", f"पाइथागोरस: {num_res.pythagorean_namank}")
 
-    tab_num1, tab_num2, tab_num3, tab_num4 = st.tabs(tabs)
+    rendered_tabs = st.tabs(tabs)
 
-    with tab_num1:
-        st.markdown("### 📊 ३×३ लो-शू ग्रिड (Magic Square of 15)")
-        st.caption("जन्म दिनांक के अंकों एवं मूलांक-भाग्यांक से निर्मित दिव्य लो-शू चक्र:")
+    # -------------------------------------------------------------
+    # TAB 1: ३×३ लो-शू ग्रिड व ८ तल
+    # -------------------------------------------------------------
+    with rendered_tabs[0]:
+        st.markdown("### 📊 ३×३ लो-शू ग्रिड (Magic Square of 15) एवं ८ तल")
+        loshu_pramana = SHASTRIYA_SHLOKAS.get("loshu_grid_planes", {})
+        if loshu_pramana:
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border-left:3px solid #D97706; padding:8px 12px; margin-bottom:12px; border-radius:6px; font-size:13px; color:#78350F;">
+                <b>📜 लो-शू पञ्चदश यन्त्र प्रमाण:</b><br/>
+                <i>{loshu_pramana.get('shloka_sanskrit', '').replace(chr(10), '<br/>')}</i><br/>
+                <small style="color:#92400E;"><b>ग्रन्थ:</b> {loshu_pramana.get('grantha', '')}</small>
+            </div>
+            """, unsafe_allow_html=True)
 
         g = num_res.lo_shu_grid
         col_g1, col_g2 = st.columns([1.2, 1.8])
 
         with col_g1:
-            # 3x3 Lo-Shu Box HTML
             def fmt_cell(n):
                 cnt = g.get(n, 0)
                 if cnt == 0:
@@ -68,7 +89,7 @@ def render_numerology_view(birth_profile, tabs=None):
             </table>
             """
             st.markdown(grid_html, unsafe_allow_html=True)
-            st.caption("📌 ग्रिड में उपस्थित अंक जातक की आंतरिक शक्तियों को दर्शाते हैं।")
+            st.caption("📌 ग्रिड में उपस्थित अंक जातक की आंतरिक शक्तियों व तलों को प्रकट करते हैं।")
 
         with col_g2:
             st.markdown("#### 🌟 सक्रिय योग / तल (Active Planes)")
@@ -77,7 +98,7 @@ def render_numerology_view(birth_profile, tabs=None):
                     st.markdown(f"""
                     <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:8px; padding:10px; margin-bottom:8px;">
                         <b style="color:#065F46; font-size:15px;">✅ {p['name']} (100% पूर्ण)</b><br/>
-                        <small style="color:#1F2937;">{p['significance_hi']}</small>
+                        <span style="color:#1F2937; font-size:13px;">{p['significance_hi']}</span>
                     </div>
                     """, unsafe_allow_html=True)
             else:
@@ -87,51 +108,108 @@ def render_numerology_view(birth_profile, tabs=None):
                 for p in num_res.incomplete_planes:
                     st.markdown(f"• **{p['name']}** — शक्ति: **{p['strength_pct']}%** ({p['significance_hi'][:60]}...)")
 
-    with tab_num2:
-        st.markdown("### 🪐 मूलांक एवं भाग्यांक व्यक्तित्व विश्लेषण")
+        # Repetition Frequency Analysis
+        st.markdown("---")
+        st.markdown("#### 🔁 अंक पुनरावृत्ति फल (Number Frequency Analysis)")
+        st.caption("ग्रिड में किसी अंक की अत्यधिक पुनरावृत्ति (३ या अधिक बार) ऊर्जा का असंतुलन कर सकती है:")
+
+        rep_rows = []
+        for n in range(1, 10):
+            cnt = g.get(n, 0)
+            if cnt > 0:
+                p_name = num_mod.NUMBER_DATA[n]["planet"].split()[0]
+                status_note = "संतुलित ऊर्जा (+)" if cnt <= 2 else "अति-ऊर्जा / सावधानी (-)"
+                rep_rows.append({
+                    "अंक (Number)": f"{n} ({p_name})",
+                    "आवृत्ति (Count)": f"{cnt} बार",
+                    "ऊर्जा संतुलन": status_note,
+                    "शास्त्रीय प्रभाव": "सकारात्मक अभिव्यक्ति एवं स्वाभाविक तेज" if cnt <= 2 else f"अंक {n} की अति-पुनरावृत्ति से अहंकार अथवा हठधर्मिता की संभावना, सात्विक संतुलन अपेक्षित।"
+                })
+        if rep_rows:
+            st.dataframe(pd.DataFrame(rep_rows), use_container_width=True, hide_index=True)
+
+    # -------------------------------------------------------------
+    # TAB 2: मूलांक व भाग्यांक — शास्त्रीय फल
+    # -------------------------------------------------------------
+    with rendered_tabs[1]:
+        st.markdown("### 🪐 मूलांक एवं भाग्यांक — प्रामाणिक शास्त्रीय श्लोक एवं द्विविध फल (Positive & Negative)")
+        st.caption("वैदिक सांख्य शास्त्र अनुसार जातक के मूलांक (स्वभाव) एवं भाग्यांक (कर्म-पथ) का सकारात्मक शक्ति एवं छाया सावधानियों सहित यथार्थ विश्लेषण:")
+
         col_dr1, col_dr2 = st.columns(2)
         with col_dr1:
             d = num_res.driver_info
+            shloka_1 = d.get("shloka_sa", "")
+            pos_1 = d.get("positive_traits_hi", d["nature_hi"])
+            neg_1 = d.get("negative_traits_hi", "अति-उत्साह से बचें।")
             st.markdown(f"""
-            <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px;">
+            <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:16px; margin-bottom:12px;">
                 <h4 style="color:#B45309; margin-top:0;">👑 मूलांक: {num_res.mulank} (स्वामी: {d['planet']})</h4>
-                <p><b>तत्व:</b> {d['element']} | <b>दिशा:</b> {d['direction']}</p>
-                <p><b>स्वभाव एवं गुण:</b> {d['nature_hi']}</p>
-                <p><b>मुख्य रत्न:</b> {d['gemstone']}</p>
+                <div style="background:#FEF3C7; border-left:3px solid #D97706; padding:6px 10px; margin:8px 0; font-size:12.5px; color:#78350F;">
+                    <b>📜 मूल संस्कृत श्लोक:</b><br/>{shloka_1.replace(chr(10), '<br/>')}
+                </div>
+                <p style="margin:4px 0;"><b>तत्व:</b> {d['element']} | <b>दिशा:</b> {d['direction']}</p>
+                <div style="margin:8px 0; padding:8px; background:#ECFDF5; border-radius:6px; border:1px solid #A7F3D0;">
+                    <b style="color:#065F46;">🟢 सकारात्मक गुण (+):</b><br/>
+                    <span style="font-size:13px; color:#064E3B;">{pos_1}</span>
+                </div>
+                <div style="margin:8px 0; padding:8px; background:#FEF2F2; border-radius:6px; border:1px solid #FECACA;">
+                    <b style="color:#991B1B;">🔴 छाया लक्षण व सावधानी (-):</b><br/>
+                    <span style="font-size:13px; color:#7F1D1D;">{neg_1}</span>
+                </div>
+                <p style="margin:4px 0; font-size:12.5px;"><b>मुख्य रत्न:</b> {d['gemstone']}</p>
             </div>
             """, unsafe_allow_html=True)
 
         with col_dr2:
             c = num_res.conductor_info
+            shloka_2 = c.get("shloka_sa", "")
+            pos_2 = c.get("positive_traits_hi", c["nature_hi"])
+            neg_2 = c.get("negative_traits_hi", "अहंकार व लापरवाही से बचें।")
             st.markdown(f"""
-            <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:14px;">
+            <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:16px; margin-bottom:12px;">
                 <h4 style="color:#1E40AF; margin-top:0;">🌟 भाग्यांक: {num_res.bhagyank} (स्वामी: {c['planet']})</h4>
-                <p><b>तत्व:</b> {c['element']} | <b>दिशा:</b> {c['direction']}</p>
-                <p><b>जीवन लक्ष्य व कर्म:</b> {c['nature_hi']}</p>
-                <p><b>मुख्य रत्न:</b> {c['gemstone']}</p>
+                <div style="background:#DBEAFE; border-left:3px solid #2563EB; padding:6px 10px; margin:8px 0; font-size:12.5px; color:#1E3A8A;">
+                    <b>📜 मूल संस्कृत श्लोक:</b><br/>{shloka_2.replace(chr(10), '<br/>')}
+                </div>
+                <p style="margin:4px 0;"><b>तत्व:</b> {c['element']} | <b>दिशा:</b> {c['direction']}</p>
+                <div style="margin:8px 0; padding:8px; background:#ECFDF5; border-radius:6px; border:1px solid #A7F3D0;">
+                    <b style="color:#065F46;">🟢 सकारात्मक कर्म-पथ (+):</b><br/>
+                    <span style="font-size:13px; color:#064E3B;">{pos_2}</span>
+                </div>
+                <div style="margin:8px 0; padding:8px; background:#FEF2F2; border-radius:6px; border:1px solid #FECACA;">
+                    <b style="color:#991B1B;">🔴 कर्म-पथ की बाधाएं व सावधानी (-):</b><br/>
+                    <span style="font-size:13px; color:#7F1D1D;">{neg_2}</span>
+                </div>
+                <p style="margin:4px 0; font-size:12.5px;"><b>मुख्य रत्न:</b> {c['gemstone']}</p>
             </div>
             """, unsafe_allow_html=True)
 
         st.info(f"⏳ **पर्सनल ईयर (Personal Year {date.today().year}):** इस वर्ष का व्यक्तिगत अंक **{num_res.personal_year}** है। यह वर्ष नए संकल्पों एवं योजनाओं के क्रियान्वयन हेतु अत्यंत महत्वपूर्ण रहेगा।")
 
-    with tab_num3:
-        st.markdown("### 🧩 मिसिंग नंबर (Missing Numbers) एवं अचूक उपाय")
+    # -------------------------------------------------------------
+    # TAB 3: मिसिंग नंबर व पंचतत्व उपाय
+    # -------------------------------------------------------------
+    with rendered_tabs[2]:
+        st.markdown("### 🧩 मिसिंग नंबर (Missing Numbers) एवं पंचतत्वीय अचूक उपाय")
         st.caption("लो-शू ग्रिड में जो अंक अनुपस्थित हैं, उनके जीवन पर पड़ने वाले प्रभाव व सटीक निवारण:")
 
         if num_res.remedies_for_missing:
             for rem in num_res.remedies_for_missing:
                 st.markdown(f"""
-                <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px; margin-bottom:10px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+                <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:10px; padding:14px; margin-bottom:10px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
                     <b style="color:#DC2626; font-size:15px;">⚠️ अनुपस्थित अंक {rem['number']} ({rem['planet']})</b>
                     <p style="margin:4px 0; color:#475569;"><b>प्रभाव:</b> {rem['lacking_hi']}</p>
                     <p style="margin:4px 0; color:#047857;"><b>🌿 अचूक उपाय:</b> {rem['remedy_hi']}</p>
-                    <small style="color:#2563EB;"><b>धारण योग्य वस्तु:</b> {rem['item']}</small>
+                    <small style="color:#2563EB;"><b>धारण योग्य वस्तु / क्रिस्टल:</b> {rem['item']}</small>
                 </div>
                 """, unsafe_allow_html=True)
         else:
             st.success("🎉 अद्भुत! आपके लो-शू ग्रिड में लगभग सभी महत्वपूर्ण अंक संतुलित हैं।")
 
-    with tab_num4:
+    # -------------------------------------------------------------
+    # TAB 4: लकी फैक्टर्स, नामांक व फोन शोधन
+    # -------------------------------------------------------------
+    with rendered_tabs[3]:
         st.markdown("### 💎 लकी फैक्टर्स, नेम ट्यूनिंग एवं वाहन/मोबाइल नंबर अनुकूलता")
         st.caption("कील्डियन अंकशास्त्र, मूलांक-भाग्यांक मैत्री एवं ध्वनि तरंगों के आधार पर जीवन में सर्वतोमुखी सफलता के सूत्र:")
 
@@ -206,8 +284,10 @@ def render_numerology_view(birth_profile, tabs=None):
             )
             col_cmp1, col_cmp2 = st.columns([1.2, 2.8])
             with col_cmp1:
+                bg_col = "#F0FDF4" if compat_eval['is_lucky'] else "#FEF2F2"
+                bd_col = "#86EFAC" if compat_eval['is_lucky'] else "#FCA5A5"
                 st.markdown(f"""
-                <div style="background:#F0FDF4 if compat_eval['is_lucky'] else #FEF2F2; border:1.5px solid #86EFAC if compat_eval['is_lucky'] else #FCA5A5; border-radius:10px; padding:14px; text-align:center;">
+                <div style="background:{bg_col}; border:1.5px solid {bd_col}; border-radius:10px; padding:14px; text-align:center;">
                     <span style="font-size:13px; color:#475569;">कुल योग (Compound ➔ Single)</span>
                     <div style="font-size:26px; font-weight:900; color:#1E293B; margin:4px 0;">{compat_eval['compound_sum']} ➔ {compat_eval['single_digit']}</div>
                     <small style="color:#2563EB;">स्वामी: {compat_eval['lord']}</small>
@@ -216,9 +296,3 @@ def render_numerology_view(birth_profile, tabs=None):
             with col_cmp2:
                 st.markdown(f"**रेटिंग:** {compat_eval['rating']}")
                 st.info(compat_eval["advice"])
-
-
-    # =============================================================
-    # MODULE 23: लाल किताब 1952 तेवा एवं उपाय (LAL KITAB 1952)
-    # =============================================================
-
