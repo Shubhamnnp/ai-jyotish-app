@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import importlib
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 from src.jyotish.core.shadbala import default_shadbala_calculator
 
@@ -412,12 +411,18 @@ def render_shadbala_view(chart, tabs=None):
                 12: ("व्यय भाव", "मोक्ष, विदेश वास, दान, शयन सुख, व्यय")
             }
 
+            bhava_comps = getattr(sb_summary, "bhava_bala_components", {})
             for h in range(1, 13):
                 h_obj = chart.houses[h - 1]
                 h_lord = h_obj.lord
                 lord_vir = getattr(sb_planets.get(h_lord), "total_virupas", 350.0) if sb_planets.get(h_lord) else 350.0
                 total_b = sb_bhavas.get(h, 300.0)
                 h_title, h_sig = house_significations.get(h, ("भाव", ""))
+
+                h_comp = bhava_comps.get(h, {})
+                adhipati_b = h_comp.get("adhipati_bala", round(lord_vir * 0.6, 1))
+                dig_b = h_comp.get("dig_bala", 0.0)
+                drishti_b = h_comp.get("drishti_bala", 0.0)
 
                 if total_b >= 480:
                     status_lbl = "🌟 अति प्रबल"
@@ -434,9 +439,12 @@ def render_shadbala_view(chart, tabs=None):
                     "भाव": f"भाव {h} ({h_title})",
                     "राशि": h_obj.sign_name,
                     "भावेश": f"{h_lord} ({int(lord_vir)}V)",
-                    "भावस्थ ग्रह": occ_str,
+                    "भावेश बल (60%)": f"{adhipati_b:.1f}",
+                    "भाव दिग्बल": f"{dig_b:.1f}",
+                    "भाव दृष्टि बल": f"{drishti_b:.1f}",
                     "कुल भाव बल": f"{int(total_b)} विरूपा",
                     "सामर्थ्य श्रेणी": status_lbl,
+                    "भावस्थ ग्रह": occ_str,
                     "मुख्य जीवन क्षेत्र प्रभाव": h_sig
                 })
 
@@ -515,11 +523,9 @@ def render_shadbala_view(chart, tabs=None):
             st.caption("Shri Jyoti Star एवं Parashara's Light ग्रेड 9x9 कोणीय अंतर मैट्रिक्स, पराशरीय विशेष दृष्टि (मंगल 4/8, गुरु 5/9, शनि 3/10) एवं पाश्चात्य प्रमुख कोणीय वेध (0°, 60°, 90°, 120°, 150°, 180°):")
 
             try:
-                import importlib
-                import src.jyotish.services.aspectarium as asp_mod
-                importlib.reload(asp_mod)
-                asp_data = asp_mod.default_aspectarium_service.calculate_aspectarium(chart)
-                asp_html = asp_mod.default_aspectarium_service.render_aspectarium_html(chart)
+                from src.jyotish.services.aspectarium import default_aspectarium_service
+                asp_data = default_aspectarium_service.calculate_aspectarium(chart)
+                asp_html = default_aspectarium_service.render_aspectarium_html(chart)
 
                 c_as1, c_as2, c_as3 = st.columns(3)
                 with c_as1:

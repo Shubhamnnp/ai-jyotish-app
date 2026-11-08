@@ -9809,9 +9809,7 @@ elif selected_idx == 5:
     prashna_view_mod.render_prashna_view(chart=chart, tz_offset=tz_offset, latitude=latitude, longitude=longitude, default_city_name=default_city_name, render_chart_svg_fn=render_chart_svg, tabs=MODULE_TABS_REGISTRY.get(5))
 
 elif selected_idx == 6:
-    import importlib
     import src.jyotish.ui.modules.shadbala_view as shadbala_view_mod
-    importlib.reload(shadbala_view_mod)
     shadbala_view_mod.render_shadbala_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(6))
 
 elif selected_idx == 7:
