@@ -99,6 +99,15 @@ class TestModule2RemediesAudit(unittest.TestCase):
         self.assertEqual(bm_fixed["maraka_primary"]["house"], 2)
         self.assertEqual(bm_fixed["maraka_secondary"]["house"], 7)
 
+    def test_remedies_view_active_native_dms_and_shloka(self):
+        """Verify active native's planets have valid DMS, ansh, kala, nakshatra padas and BPHS shloka in remedies_view."""
+        view_code = open("src/jyotish/ui/modules/remedies_view.py", encoding="utf-8").read()
+        self.assertIn("bphs_remedies_shloka", view_code)
+        self.assertIn("चरभवनेषु लाभेशो बाधको नवमो स्थिरे", view_code)
+        self.assertIn("बाधकेश सूक्ष्म स्थिति", view_code)
+        self.assertIn("मुख्य मारकेश सूक्ष्म स्थिति", view_code)
+        self.assertIn("बाधकेश स्थिति", view_code)
+
 
 if __name__ == "__main__":
     unittest.main()

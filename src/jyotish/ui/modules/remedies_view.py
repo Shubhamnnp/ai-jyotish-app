@@ -336,9 +336,54 @@ def render_remedies_view(chart, tabs=None):
     st.subheader("🛡️ दोष, फ्री-विल एवं शास्त्रीय उपचार (Affliction, Free Will & Remedy Suite)")
     st.caption("सर्वर की हस्ताक्षर प्रणाली: द्वादश भाव एवं नवग्रहों का सौम्य/क्रूर प्रभाव, २७ जीवन आयामों का ३-पक्षीय विश्लेषण एवं वैदिक दोष निवारक उपचार।")
 
-    # Shared Life Area Selection State Helper
-    if "gla_shared_life_area_id" not in st.session_state:
-        st.session_state.gla_shared_life_area_id = 1
+    # Classical Shastriya Shloka Card
+    bphs_remedies_shloka = {
+        "title": "बृहत्पाराशर होराशास्त्रम् एवं फलदीपिका — दोष शांति व बाधक निर्णय",
+        "source": "महर्षि पराशर विरचित BPHS (अध्याय ५०) एवं फलदीपिका",
+        "shloka": "चरभवनेषु लाभेशो बाधको नवमो स्थिरे।\nद्विशरीरे च कामेशो बाधको भवति स्फुटम्॥\nमारकाणां च सर्वेषां विचारः क्रियते बुधैः।\nशान्त्या च जपहोमाद्यैर्दुष्टदोषः प्रशाम्यति॥",
+        "meaning": "चर लग्न में ११वें भाव का स्वामी, स्थिर लग्न में ९वें भाव का स्वामी और द्विस्वभाव लग्न में ७वें भाव का स्वामी बाधक होता है। २रे व ७वें भाव के मारक ग्रहों के प्रभाव को समझकर वैदिक जप, होम, रुद्राक्ष एवं सात्विक दान द्वारा दुष्ट दोषों की शांति की जाती है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_remedies_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_remedies_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_remedies_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {bphs_remedies_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Active Native Micro-Planetary Longitudes & DMS Console
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    bm_res = default_shastriya_pramana_engine.audit_badhaka_maraka(chart)
+    badhakesh_name = bm_res.get("badhakesh", "Saturn")
+    maraka_primary = bm_res.get("maraka_primary", {}).get("lord", "Venus")
+    
+    b_po = chart.planets.get(badhakesh_name)
+    m_po = chart.planets.get(maraka_primary)
+    
+    c_rm1, c_rm2, c_rm3, c_rm4 = st.columns(4)
+    c_rm1.metric("लग्न एवं प्रकृति", f"{lagna_sname}", bm_res.get("lagna_type", "चर लग्न"))
+    c_rm2.metric("बाधक स्थान", f"{bm_res.get('badhaka_house')} भाव ({bm_res.get('badhaka_sign')})", f"बाधकेश: {badhakesh_name}")
+    if b_po:
+        _b_sdeg = getattr(b_po, 'sign_degree', 0.0)
+        _b_ansh = int(_b_sdeg)
+        _b_kala = int(round((_b_sdeg - _b_ansh) * 60.0))
+        if _b_kala >= 60: _b_kala = 0; _b_ansh += 1
+        _b_nak = getattr(b_po, 'nakshatra_name', '')[:4]
+        _b_pad = getattr(b_po, 'nakshatra_pada', 1)
+        c_rm3.metric("बाधकेश स्थिति", f"{b_po.sign_name} ({_b_ansh}° {_b_kala:02d}')", f"{b_po.house_from_lagna} भाव | {_b_nak}-P{_b_pad}")
+    if m_po:
+        _m_sdeg = getattr(m_po, 'sign_degree', 0.0)
+        _m_ansh = int(_m_sdeg)
+        _m_kala = int(round((_m_sdeg - _m_ansh) * 60.0))
+        if _m_kala >= 60: _m_kala = 0; _m_ansh += 1
+        _m_nak = getattr(m_po, 'nakshatra_name', '')[:4]
+        _m_pad = getattr(m_po, 'nakshatra_pada', 1)
+        c_rm4.metric("मुख्य मारकेश (२रा)", f"{m_po.sign_name} ({_m_ansh}° {_m_kala:02d}')", f"{m_po.house_from_lagna} भाव | {_m_nak}-P{_m_pad}")
 
     tab_fw_overview, tab_life_areas_deep, tab_remedies_suite, tab_badhaka_maraka = st.tabs(tabs)
 
@@ -924,12 +969,30 @@ def render_remedies_view(chart, tabs=None):
                 st.markdown("#### ⚡ बाधकेश का व्यावहारिक प्रभाव एवं अवरोध मुक्ति")
                 st.write(f"- **बाधक भाव:** इस कुण्डली का लग्न **{bm_data['lagna_type']}** होने के कारण **भाव {bm_data['badhaka_house']}** बाधक स्थान है।")
                 st.write(f"- **बाधकेश की स्थिति:** बाधकेश **{bm_data['badhakesh']}** कुण्डली के **{bm_data['badhakesh_placement']}** में स्थित हैं।")
+                _badh_p = chart.planets.get(bm_data['badhakesh'])
+                if _badh_p:
+                    _bp_sdeg = getattr(_badh_p, 'sign_degree', 0.0)
+                    _bp_ansh = int(_bp_sdeg)
+                    _bp_kala = int(round((_bp_sdeg - _bp_ansh)*60.0))
+                    if _bp_kala >= 60: _bp_kala = 0; _bp_ansh += 1
+                    _bp_dms = f"{_bp_ansh}° {_bp_kala:02d}'"
+                    _bp_nak = f"{getattr(_badh_p, 'nakshatra_name', '')} (पाद {getattr(_badh_p, 'nakshatra_pada', 1)})"
+                    st.write(f"- **बाधकेश सूक्ष्म स्थिति:** `{_badh_p.sign_name} ({_bp_dms})` | `{_badh_p.house_from_lagna} भाव` | `{_bp_nak}`")
                 st.write("- **फलकथन सिद्धांत:** बाधकेश जीवन में सब कुछ अनुकूल दिखते हुए भी ऐन मौके पर अदृश्य बाधा या अप्रत्याशित विलंब उत्पन्न करता है। जब बाधकेश की महादशा या अंतर्दशा चले, तो महत्वपूर्ण कार्यों में सुरक्षा व दैवीय अनुष्ठान अनिवार्य माना जाता है।")
                 st.info(f"🛡️ **बाधकेश शांति उपाय:** {bm_data['badhakesh']} के आराध्य देव की नियमित आराधना एवं गायत्री मंत्र का जप करने से बाधक दोष निष्प्रभावी हो जाता है।")
 
             with c_det2:
                 st.markdown("#### ⚔️ मारक भाव एवं मारकेश सतर्कता विश्लेषण")
                 st.write(f"- **महा-मारक (द्वितीय भाव):** भावेश **{p_mar['lord']}** — स्थिति: **{p_mar['placement']}**। महर्षि पराशर के अनुसार द्वितीय भाव सप्तम से अधिक प्रबल मारक होता है।")
+                _mar_p = chart.planets.get(p_mar['lord'])
+                if _mar_p:
+                    _mp_sdeg = getattr(_mar_p, 'sign_degree', 0.0)
+                    _mp_ansh = int(_mp_sdeg)
+                    _mp_kala = int(round((_mp_sdeg - _mp_ansh)*60.0))
+                    if _mp_kala >= 60: _mp_kala = 0; _mp_ansh += 1
+                    _mp_dms = f"{_mp_ansh}° {_mp_kala:02d}'"
+                    _mp_nak = f"{getattr(_mar_p, 'nakshatra_name', '')} (पाद {getattr(_mar_p, 'nakshatra_pada', 1)})"
+                    st.write(f"- **मुख्य मारकेश सूक्ष्म स्थिति:** `{_mar_p.sign_name} ({_mp_dms})` | `{_mar_p.house_from_lagna} भाव` | `{_mp_nak}`")
                 st.write(f"- **द्वितीयक मारक (सप्तम भाव):** भावेश **{s_mar['lord']}** — स्थिति: **{s_mar['placement']}**।")
                 st.write("- **आयुर्दाय सावधानी:** जब विंशोत्तरी दशा में द्वितीयेश या सप्तमेश की परस्पर दशा-अंतर्दशा सक्रिय हो, अथवा गोचर में शनि या राहु का इन पर वेध हो, तब जातक को स्वास्थ्य, यात्रा एवं वाहन संचालन में पूर्ण सतर्कता रखनी चाहिए।")
                 st.warning("🕉️ **मारक निवृत्ति उपाय:** भगवान शिव के **महामृत्युंजय मंत्र** का जप अथवा रुद्राभिषेक मारक प्रभाव को दूर कर दीर्घायु प्रदान करता है।")
