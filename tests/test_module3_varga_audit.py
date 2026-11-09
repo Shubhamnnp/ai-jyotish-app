@@ -79,6 +79,22 @@ class TestModule3VargaAudit(unittest.TestCase):
         self.assertIn("Aries", vgv.SIGN_LORDS)
         self.assertEqual(vgv.SIGN_LORDS["Aries"], "Mars")
 
+    def test_module3_shastriya_shloka_and_dms_integration(self):
+        """Test that classical BPHS shloka and active native micro DMS are present in varga_grid_view."""
+        with open("src/jyotish/ui/modules/varga_grid_view.py", "r", encoding="utf-8") as f:
+            code = f.read()
+
+        # Classical Shloka verification
+        self.assertIn("बृहत्पाराशर होराशास्त्रम्", code)
+        self.assertIn("पारिजातांशके जाते धनवान् कीर्तिमान् सुधीः", code)
+        self.assertIn("देवलोके नृपो भूयादैरावते तु भूपतिः", code)
+
+        # Micro DMS & Active Native Console verification
+        self.assertIn("lagna_sname", code)
+        self.assertIn("top_p", code)
+        self.assertIn("विंशोपक अंक", code)
+        self.assertIn("लग्न (D1) राशि, अंश-कला व नक्षत्र", code)
+
 
 if __name__ == "__main__":
     unittest.main()

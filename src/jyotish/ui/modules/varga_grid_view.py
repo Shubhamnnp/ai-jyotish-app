@@ -236,6 +236,41 @@ def render_varga_grid_view(chart, tabs=None):
     dv_summary = affliction_engine.calculate_varga_dignity_summary(dasvarga_codes)
     sv_summary = affliction_engine.calculate_varga_dignity_summary(shodashvarga_codes)
 
+    # Classical Shastriya Shloka Card
+    bphs_varga_shloka = {
+        "title": "बृहत्पाराशर होराशास्त्रम् — वैशेषिकांश एवं वर्ग बल विचार",
+        "source": "महर्षि पराशर विरचित BPHS (अध्याय ६ एवं ४५)",
+        "shloka": "पारिजातांशके जाते धनवान् कीर्तिमान् सुधीः।\nउत्तमे च गुणाध्यक्षो गोपुरे धान्यवान् भवेत्॥\nसिंहासने नृपप्रायः पारावते महायशाः।\nदेवलोके नृपो भूयादैरावते तु भूपतिः॥",
+        "meaning": "पारिजात (२ शुभ वर्ग) में उत्पन्न जातक धनवान, कीर्तिमान व बुद्धिमान होता है। उत्तम (३ वर्ग) में गुणवान, गोपुर (४ वर्ग) में प्रचुर संपत्तिवान, सिंहासन (५ वर्ग) में राजतुल्य, पारावत (६ वर्ग) में महायशस्वी, देवलोक (७ वर्ग) में राजा और ऐरावत (८ वर्ग) में चक्रवर्ती सम्राट समान प्रतिष्ठा प्राप्त करता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_varga_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_varga_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_varga_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {bphs_varga_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Active Native Micro-Planetary Longitudes & DMS Console
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    moon = chart.planets.get("Moon")
+    
+    top_p = max(sv_summary.keys(), key=lambda p: sv_summary[p]["score_20"]) if sv_summary else "Jupiter"
+    top_v_name = sv_summary[top_p]["vaisheshikamsa_hi"] if sv_summary else "पारिजात"
+    varg_count = sum(1 for p in sv_summary.values() if p.get("is_vargottama")) if sv_summary else 0
+    avg_score = sum(p["score_20"] for p in sv_summary.values()) / len(sv_summary) if sv_summary else 0.0
+
+    c_vg1, c_vg2, c_vg3, c_vg4 = st.columns(4)
+    c_vg1.metric("लग्न एवं राशि", f"{lagna_sname}", f"चन्द्र: {moon.sign_name if moon else '—'}")
+    c_vg2.metric("शिरोमणि ग्रह", f"{top_p}", f"{top_v_name} ({sv_summary[top_p]['score_20']:.1f}/20)")
+    c_vg3.metric("वर्गोत्तम ग्रह", f"{varg_count} ग्रह", "D1 व D9 समरूप")
+    c_vg4.metric("औसत विंशोपक बल", f"{avg_score:.1f} / 20", "१६ वर्गों का सामूहिक बल")
+
     # 3 Dedicated Tabs
     tab_dv, tab_sv, tab_saransh = st.tabs(tabs)
 
@@ -448,7 +483,21 @@ def render_varga_grid_view(chart, tabs=None):
 
         for p_name in ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]:
             p_pos = d1_c.get(p_name)
-            d1_sign = f"{p_pos.sign_name} ({p_pos.sign_degree:.1f}°)" if p_pos else "-"
+            if p_pos:
+                ansh = int(p_pos.sign_degree)
+                kala = int(round((p_pos.sign_degree - ansh) * 60.0))
+                if kala >= 60:
+                    kala = 0
+                    ansh += 1
+                dms = f"{ansh}° {kala:02d}'"
+                nak_str = getattr(p_pos, 'nakshatra', '—')
+                pada_str = f"चरण {getattr(p_pos, 'pada', '—')}" if getattr(p_pos, 'pada', None) else ""
+                nak_pada = f"[{nak_str} {pada_str}]".strip()
+                h_num = getattr(p_pos, 'house', None)
+                h_str = f" ({h_num} भाव)" if h_num else ""
+                d1_sign = f"{p_pos.sign_name} {dms}{h_str} {nak_pada}"
+            else:
+                d1_sign = "-"
             d9_sign = d9_c.planets[p_name].sign_name if (d9_c and p_name in d9_c.planets) else "-"
             is_varg = "👑 हाँ (वर्गोत्तम)" if dv_summary[p_name]["is_vargottama"] else "—"
             dv_t = f"{dv_summary[p_name]['vaisheshikamsa_hi']} ({dv_summary[p_name]['auspicious_count']}/11)"
@@ -457,7 +506,7 @@ def render_varga_grid_view(chart, tabs=None):
 
             dossier_rows.append({
                 "ग्रह (Planet)": p_name,
-                "लग्न (D1) राशि": d1_sign,
+                "लग्न (D1) राशि, अंश-कला व नक्षत्र": d1_sign,
                 "नवांश (D9) राशि": d9_sign,
                 "वर्गोत्तम": is_varg,
                 "दशवर्ग संज्ञा": dv_t,
