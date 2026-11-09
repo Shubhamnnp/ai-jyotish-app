@@ -203,6 +203,65 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
     if "active_prashna_res" not in st.session_state or not st.session_state.active_prashna_res:
         st.session_state.active_prashna_res = st.session_state.get("prashna_native_res")
 
+    # Classical Shastriya Shloka Card
+    prashna_marga_shloka = {
+        "title": "प्रश्नमार्ग एवं ताजिक नीलकण्ठी — होरारी प्रश्न रहस्य एवं कार्य सिद्धि विचार",
+        "source": "केरलीय 'प्रश्नमार्ग' (अध्याय २, श्लोक १) एवं 'ताजिक नीलकण्ठी' (प्रश्न तंत्र)",
+        "shloka": "यदुपचितमन्यजन्मनि शुभाशुभं तस्य कर्मणः पुंसाम्।\nव्यञ्जयति शास्त्रमेतत् तमसि द्रव्याणि दीप इव॥\nलग्नेशकार्येशसुदृष्टियोगे सौम्येक्षिते वा बलसंयुते च।\nकार्यस्य सिद्धिं प्रवदन्ति सन्तो हीने विलोमं मुनयो वदन्ति॥",
+        "meaning": "पूर्वजन्मों में उपार्जित मनुष्य के शुभाशुभ कर्मफल को यह प्रश्न शास्त्र उसी प्रकार प्रत्यक्ष कर देता है जैसे घोर अन्धकार में प्रज्वलित दीपक समस्त पदार्थों को प्रकाशित कर देता है। जब प्रश्न लग्नेश एवं कार्येश में परस्पर शुभ दृष्टि, युति या इत्थशाल योग हो और वे शुभ ग्रहों से दृष्ट व बलवान हों, तो अभीष्ट कार्य की सिद्धि निश्चित होती है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {prashna_marga_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {prashna_marga_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{prashna_marga_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {prashna_marga_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Active Native Micro-Planetary Longitudes & DMS Console
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    l_deg = getattr(chart, "lagna_degree", 0.0)
+    l_ansh = int(l_deg)
+    l_kala = int(round((l_deg - l_ansh) * 60.0))
+    if l_kala >= 60:
+        l_kala = 0
+        l_ansh += 1
+    l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+    moon = chart.planets.get("Moon")
+    if moon:
+        m_deg = getattr(moon, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+        moon_str = f"{moon.sign_name} {m_dms} [{m_nak}-P{m_pada}]"
+    else:
+        moon_str = "—"
+
+    # Active Prashna baseline details
+    cur_p_init = st.session_state.get("active_prashna_res") or st.session_state.get("prashna_native_res") or {}
+    p_lagna_str = cur_p_init.get("prashna_lagna", "—")
+    p_lagnesh_str = cur_p_init.get("lagnesh", "—")
+    p_karyesh_str = cur_p_init.get("karyesh", "—")
+    p_yoga_str = cur_p_init.get("tajika_yoga", "—")
+    p_verdict_str = str(cur_p_init.get("verdict", "उत्कृष्ट")).split(" (")[0]
+
+    c_pn1, c_pn2, c_pn3, c_pn4 = st.columns(4)
+    c_pn1.metric("जन्म लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
+    c_pn2.metric("तात्कालिक प्रश्न लग्न", f"{p_lagna_str}", f"लग्नेश: {p_lagnesh_str}")
+    c_pn3.metric("कार्येश एवं ताजिक योग", f"{p_karyesh_str}", f"योग: {p_yoga_str}")
+    c_pn4.metric("तात्कालिक शास्त्रीय निर्णय", f"{p_verdict_str}", f"सिद्धि स्कोर: {int(cur_p_init.get('verdict_score', 0.75) * 100)}%")
+
     # 6 Main Tabs as requested by user
     ptab1, ptab2, ptab3, ptab4, ptab5, ptab6 = st.tabs(tabs)
 
@@ -322,7 +381,7 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
             st.markdown(f"###### 📜 चक्र 1: जन्म कुण्डली (Natal D1 — {name})")
             natal_svg = render_chart_svg(chart, f"Natal D1 — {name}", varga_code="D1")
             st.markdown(f'<div style="max-width:90%;margin:0 auto;">{natal_svg}</div>', unsafe_allow_html=True)
-            st.caption(f"जन्म लग्न: **{chart.lagna_sign_name} ({chart.lagna_degree:.2f}°)** | जातक: **{name}**")
+            st.caption(f"जन्म लग्न: **{chart.lagna_sign_name} ({l_dms})** | जातक: **{name}**")
 
         with col_c_prashna:
             c_icon_nat = p_nat_res.get("category_icon", "🔮")
@@ -606,13 +665,35 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
             p_obj = cur_p_chart.planets.get(g_name)
             is_comb = "🔥 अस्त" if (p_obj and getattr(p_obj, "is_combust", False)) else "—"
 
+            # Micro DMS & Swabhav
+            dms_val = g_row.get("dms_str")
+            if not dms_val and p_obj:
+                deg_val = getattr(p_obj, "sign_degree", 0.0)
+                ansh = int(deg_val)
+                kala = int(round((deg_val - ansh) * 60.0))
+                if kala >= 60:
+                    kala = 0
+                    ansh += 1
+                dms_val = f"{ansh}° {kala:02d}'"
+            elif not dms_val:
+                dms_val = g_row.get("degree", "—")
+
+            swabhav_val = g_row.get("swabhav")
+            if not swabhav_val:
+                swabhav_val = "नैसर्गिक शुभ" if g_name in ["Jupiter", "Venus", "Mercury", "Moon"] else "नैसर्गिक क्रूर"
+
+            nak_val = g_row.get("nakshatra", "—")
+            if g_row.get("nakshatra_name") and g_row.get("nakshatra_pada"):
+                nak_val = f"{g_row.get('nakshatra_name')} (चरण {g_row.get('nakshatra_pada')})"
+
             p_graha_rows.append({
                 "ग्रह (Graha)": g_name,
+                "नैसर्गिक स्वभाव": swabhav_val,
                 "राशि (Sign)": g_row.get("sign", ""),
                 "राशि स्वामी (Lord)": g_row.get("lord", ""),
                 "भाव (House)": g_row.get("house", ""),
-                "अंश (Degree)": g_row.get("degree", ""),
-                "नक्षत्र (Nakshatra)": g_row.get("nakshatra", ""),
+                "अंश-कला (DMS)": dms_val,
+                "नक्षत्र एवं चरण": nak_val,
                 "गति (Motion)": g_row.get("motion", ""),
                 "अस्त (Combust)": is_comb,
                 "गरिमा (Dignity)": dignity_label,

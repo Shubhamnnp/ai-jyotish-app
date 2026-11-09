@@ -110,6 +110,46 @@ class TestModule5PrashnaAudit(unittest.TestCase):
         self.assertIn("tajika_yoga", res)
         self.assertTrue(len(res["tajika_yoga"]) > 0)
 
+    def test_prashna_micro_dms_nakshatra_swabhav(self):
+        """Test that prashna graha table data contains micro DMS, nakshatra pada, and swabhav."""
+        res = default_prashna_service.generate_prashna_chart(
+            query_text="क्या कार्य सिद्ध होगा?",
+            category_name="Job",
+            latitude=28.6139,
+            longitude=77.2090,
+            timezone_offset=5.5,
+            query_dt=self.query_dt,
+            questioner_name="Test Querent"
+        )
+        gt = res.get("graha_table", [])
+        self.assertEqual(len(gt), 9)
+        for g in gt:
+            self.assertIn("ansh", g)
+            self.assertIn("kala", g)
+            self.assertIn("dms_str", g)
+            self.assertIn("nakshatra_pada", g)
+            self.assertIn("swabhav", g)
+            self.assertIn("°", g["dms_str"])
+            self.assertIn("'", g["dms_str"])
+            self.assertIn(g["swabhav"], ["नैसर्गिक शुभ", "नैसर्गिक क्रूर"])
+
+    def test_prashna_view_shastriya_shloka_and_console(self):
+        """Test that classical Prashna Marga shloka and micro console are present in prashna_view."""
+        with open("src/jyotish/ui/modules/prashna_view.py", "r", encoding="utf-8") as f:
+            code = f.read()
+
+        # Classical Shloka verification
+        self.assertIn("प्रश्नमार्ग एवं ताजिक नीलकण्ठी", code)
+        self.assertIn("यदुपचितमन्यजन्मनि शुभाशुभं", code)
+        self.assertIn("लग्नेशकार्येशसुदृष्टियोगे", code)
+
+        # Micro DMS & Active Native Console verification
+        self.assertIn("c_pn1", code)
+        self.assertIn("जन्म लग्न एवं चन्द्र", code)
+        self.assertIn("तात्कालिक प्रश्न लग्न", code)
+        self.assertIn("अंश-कला (DMS)", code)
+        self.assertIn("नैसर्गिक स्वभाव", code)
+
 
 if __name__ == "__main__":
     unittest.main()

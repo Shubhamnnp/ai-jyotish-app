@@ -379,13 +379,33 @@ class PrashnaService:
                 continue
             h_lord = SIGN_LORDS.get(p_obj.sign_name, "-")
             h_num = p_obj.house_from_lagna
+
+            # Micro DMS, Nakshatra-pada & Swabhav computation
+            deg_val = getattr(p_obj, "sign_degree", 0.0)
+            ansh = int(deg_val)
+            kala = int(round((deg_val - ansh) * 60.0))
+            if kala >= 60:
+                kala = 0
+                ansh += 1
+            dms_str = f"{ansh}° {kala:02d}'"
+            nak_name = getattr(p_obj, "nakshatra_name", getattr(p_obj, "nakshatra", "—"))
+            nak_pada = getattr(p_obj, "nakshatra_pada", getattr(p_obj, "pada", 1))
+            is_shubh = p_name in ["Jupiter", "Venus", "Mercury", "Moon"]
+            swabhav = "नैसर्गिक शुभ" if is_shubh else "नैसर्गिक क्रूर"
+
             graha_table_data.append({
                 "graha": p_name,
                 "sign": p_obj.sign_name,
                 "lord": h_lord,
                 "degree": f"{p_obj.sign_degree:.2f}°",
+                "ansh": ansh,
+                "kala": kala,
+                "dms_str": dms_str,
+                "nakshatra_name": nak_name,
+                "nakshatra_pada": nak_pada,
+                "swabhav": swabhav,
                 "house": f"{h_num} भाव",
-                "nakshatra": f"{p_obj.nakshatra_name} ({p_obj.nakshatra_pada})",
+                "nakshatra": f"{nak_name} ({nak_pada})",
                 "motion": "वक्री (R)" if p_obj.is_retrograde else "मार्गी (D)",
                 "is_retrograde": p_obj.is_retrograde
             })
