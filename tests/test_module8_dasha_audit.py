@@ -162,6 +162,23 @@ class TestModule8DashaAudit(unittest.TestCase):
         import src.jyotish.ui.modules.dasha_view as dasha_view_mod
         self.assertTrue(hasattr(dasha_view_mod, "render_dasha_view"))
 
+    def test_dasha_view_shastriya_shloka_and_console(self):
+        """Verify BPHS Dasha shloka, micro console, and DMS columns exist in dasha_view."""
+        with open("src/jyotish/ui/modules/dasha_view.py", "r", encoding="utf-8") as f:
+            code = f.read()
+
+        # Classical BPHS Dasha Shloka verification
+        self.assertIn("बृहत्पाराशर होराशास्त्रम् एवं सारावली", code)
+        self.assertIn("दशासु सर्वजन्तूनां शुभाशुभफलोद्भवः", code)
+        self.assertIn("विंशोत्तरी दशा मुख्या नक्षत्राणां बलेन च", code)
+
+        # Micro DMS & Active Native Console verification
+        self.assertIn("c_da1", code)
+        self.assertIn("लग्न एवं चन्द्र", code)
+        self.assertIn("🌟 सक्रिय महादशा (MD)", code)
+        self.assertIn("राशि व अंश-कला (DMS)", code)
+        self.assertIn("नैसर्गिक स्वभाव", code)
+
 
 if __name__ == "__main__":
     unittest.main()

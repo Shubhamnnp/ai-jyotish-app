@@ -72,6 +72,82 @@ def render_dasha_view(chart, tz_offset=5.5, tabs=None):
     sthira_engine = sthira_mod.default_sthira_engine
     drig_engine = sthira_mod.default_drigdasha_engine
 
+    # Classical Shastriya Shloka Card
+    bphs_dasha_shloka = {
+        "title": "बृहत्पाराशर होराशास्त्रम् एवं सारावली — दशा फल एवं काल निर्णय",
+        "source": "महर्षि पराशर विरचित BPHS (अध्याय ३५ - दशाध्याय) एवं सारावली (अध्याय ४०)",
+        "shloka": "दशासु सर्वजन्तूनां शुभाशुभफलोद्भवः।\nग्रहाणां बलदोषेण जायते कालसंयुतः॥\nविंशोत्तरी दशा मुख्या नक्षत्राणां बलेन च।\nयोगिन्याद्यास्तथैवान्या फलपाके विशिष्यते॥",
+        "meaning": "समस्त प्राणियों के जीवन में शुभाशुभ फलों की अभिव्यक्ति ग्रहों की दशाओं में उनके बल, निर्बलता, सूक्ष्म देशांतर व काल-संयोग से होती है। कलिकाल में नक्षत्र-बल से परिकलित १२०-वर्षीय विंशोत्तरी दशा सर्वप्रमुख है तथा योगिनी, चर आदि दशाएं सूक्ष्म फलपाक को प्रकट करती हैं।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_dasha_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_dasha_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_dasha_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {bphs_dasha_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Active Native Micro-Planetary Longitudes & Active Dasha Lords Console
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    l_deg = getattr(chart, "lagna_degree", 0.0)
+    l_ansh = int(l_deg)
+    l_kala = int(round((l_deg - l_ansh) * 60.0))
+    if l_kala >= 60:
+        l_kala = 0
+        l_ansh += 1
+    l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+    moon = chart.planets.get("Moon")
+    if moon:
+        m_deg = getattr(moon, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+        moon_str = f"{moon.sign_name} {m_dms} [{m_nak}-P{m_pada}]"
+    else:
+        moon_str = "—"
+
+    # Active Vimshottari at target date
+    try:
+        active_vim = d_engine.get_active_dasha_at(birth_dt, moon_lon, dasha_target_date)
+        md_lord = active_vim.mahadasha.lord if (active_vim and active_vim.mahadasha) else "—"
+        ad_lord = active_vim.antardasha.lord if (active_vim and active_vim.antardasha) else "—"
+        pd_lord = active_vim.pratyantardasha.lord if (active_vim and active_vim.pratyantardasha) else "—"
+    except Exception:
+        md_lord, ad_lord, pd_lord = "—", "—", "—"
+
+    # Micro coords of MD lord
+    md_p_obj = chart.planets.get(md_lord)
+    if md_p_obj:
+        md_deg = getattr(md_p_obj, "sign_degree", 0.0)
+        md_ansh = int(md_deg)
+        md_kala = int(round((md_deg - md_ansh) * 60.0))
+        if md_kala >= 60:
+            md_kala = 0
+            md_ansh += 1
+        md_dms = f"{md_p_obj.sign_name} {md_ansh}° {md_kala:02d}' [{getattr(md_p_obj, 'nakshatra_name', getattr(md_p_obj, 'nakshatra', '—'))}-P{getattr(md_p_obj, 'nakshatra_pada', getattr(md_p_obj, 'pada', 1))}]"
+        is_shubh_md = md_lord in ["Jupiter", "Venus", "Mercury", "Moon"]
+        md_swabhav = "नैसर्गिक शुभ" if is_shubh_md else "नैसर्गिक क्रूर"
+    else:
+        md_dms = ""
+        md_swabhav = "—"
+
+    c_da1, c_da2, c_da3, c_da4 = st.columns(4)
+    c_da1.metric("लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
+    c_da2.metric("🌟 सक्रिय महादशा (MD)", f"{md_lord} ({md_swabhav})", f"{md_dms}")
+    c_da3.metric("🎯 अंतर्दशा (AD) व प्रत्यंतर", f"{ad_lord} ➔ {pd_lord}", f"लक्षित: {dasha_target_date.strftime('%d-%b-%Y')}")
+    c_da4.metric("📊 एकीकृत दशा चक्र", "१४ दशा प्रणालियाँ", "पाराशर, जैमिनी व योगिनी")
+
     tab_d1, tab_d2, tab_d3, tab_d4, tab_d5, tab_d6, tab_d7, tab_d8, tab_d9, tab_d10, tab_d11, tab_d12, tab_d13, tab_d14 = st.tabs(tabs)
 
     # =========================================================================
@@ -295,6 +371,45 @@ def render_dasha_view(chart, tz_offset=5.5, tabs=None):
         st.write("")
         st.markdown(f"**🪐 सक्रिय अंतर्दशा ({act_m['lord']}-{act_a['lord']}) प्रगति: {int(a_pct * 100)}% संपन्न**")
         st.progress(a_pct)
+
+        def _get_lord_micro_info(p_name):
+            p_obj = chart.planets.get(p_name)
+            if not p_obj:
+                return "—", "—", "—"
+            deg_val = getattr(p_obj, "sign_degree", 0.0)
+            ansh = int(deg_val)
+            kala = int(round((deg_val - ansh) * 60.0))
+            if kala >= 60:
+                kala = 0
+                ansh += 1
+            dms_str = f"{p_obj.sign_name} {ansh}° {kala:02d}'"
+            nak_str = getattr(p_obj, "nakshatra_name", getattr(p_obj, "nakshatra", "—"))
+            pada_str = getattr(p_obj, "nakshatra_pada", getattr(p_obj, "pada", 1))
+            is_shubh = p_name in ["Jupiter", "Venus", "Mercury", "Moon"]
+            swabhav_str = "नैसर्गिक शुभ" if is_shubh else "नैसर्गिक क्रूर"
+            return dms_str, f"{nak_str} (चरण {pada_str})", swabhav_str
+
+        st.markdown("##### 🪐 सक्रिय ५-स्तरीय दशा स्वामियों के सूक्ष्म देशांतर व स्वभाव (Active Dasha Lords Micro Dossier)")
+        h5_rows = []
+        for lvl_name, item in [
+            ("महादशा (L1)", act_m),
+            ("अंतर्दशा (L2)", act_a),
+            ("प्रत्यंतर्दशा (L3)", act_pr),
+            ("सूक्ष्मदशा (L4)", act_s),
+            ("प्राणदशा (L5)", act_p)
+        ]:
+            l_name = item['lord']
+            dms_s, nak_s, swa_s = _get_lord_micro_info(l_name)
+            h5_rows.append({
+                "दशा स्तर": lvl_name,
+                "स्वामी ग्रह": l_name,
+                "नैसर्गिक स्वभाव": swa_s,
+                "राशि व अंश-कला (DMS)": dms_s,
+                "नक्षत्र एवं चरण": nak_s,
+                "अवधि प्रारंभ": item['start_date'].strftime('%d-%b-%Y'),
+                "अवधि समाप्ति": item['end_date'].strftime('%d-%b-%Y')
+            })
+        st.dataframe(pd.DataFrame(h5_rows), use_container_width=True, hide_index=True)
 
         st.markdown("---")
         st.markdown("#### 🌳 विंशोत्तरी दशा बहु-स्तरीय विस्तृत अन्वेषक (5-Level Interactive Explorer)")
