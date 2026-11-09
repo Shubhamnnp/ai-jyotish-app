@@ -97,6 +97,84 @@ def render_jaimini_view(chart, tabs=None):
         svg.append('</svg>')
         return "".join(svg)
 
+    # Classical Shastriya Shloka Card
+    jaimini_sutra_shloka = {
+        "title": "जैमिनी उपदेश सूत्रम् — आत्मकारक एवं कारकांश विचार",
+        "source": "महर्षि जैमिनी प्रणीत 'जैमिनी उपदेश सूत्रम्' (अध्याय १, पाद १, सूत्र १०-१२)",
+        "shloka": "आत्मधिकः कलादिभिर्न भोगैः स आत्मकारकः।\nस इष्टे बन्धमोक्षयोः। तत्र स्वांशे कारकांशः॥",
+        "meaning": "समस्त ग्रहों में जो ग्रह कला-काष्ठादि (अंश-कला) भोगों में सर्वाधिक आगे हो, वह 'आत्मकारक' (AK) होता है। वही जातक के सांसारिक बंधन और मोक्ष का नियामक होता है। उस आत्मकारक ग्रह की नवमांश में जो स्थिति होती है, उसे 'स्वांश' अथवा 'कारकांश' कहते हैं, जिसके आधार पर इष्ट देवता एवं जीवनोद्देश्य का निर्धारण होता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {jaimini_sutra_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {jaimini_sutra_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{jaimini_sutra_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {jaimini_sutra_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Active Native Micro-Planetary Longitudes & DMS Console
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    l_deg = getattr(chart, "lagna_degree", 0.0)
+    l_ansh = int(l_deg)
+    l_kala = int(round((l_deg - l_ansh) * 60.0))
+    if l_kala >= 60:
+        l_kala = 0
+        l_ansh += 1
+    l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+    moon = chart.planets.get("Moon")
+    if moon:
+        m_deg = getattr(moon, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+        moon_str = f"{moon.sign_name} {m_dms} [{m_nak}-P{m_pada}]"
+    else:
+        moon_str = "—"
+
+    ak_planet = j_res.get("atmakaraka", "Moon")
+    ak_obj = chart.planets.get(ak_planet)
+    if ak_obj:
+        ak_deg = getattr(ak_obj, "sign_degree", 0.0)
+        ak_ansh = int(ak_deg)
+        ak_kala = int(round((ak_deg - ak_ansh) * 60.0))
+        if ak_kala >= 60:
+            ak_kala = 0
+            ak_ansh += 1
+        ak_dms = f"{ak_obj.sign_name} {ak_ansh}° {ak_kala:02d}' [{getattr(ak_obj, 'nakshatra_name', getattr(ak_obj, 'nakshatra', '—'))}-P{getattr(ak_obj, 'nakshatra_pada', getattr(ak_obj, 'pada', 1))}]"
+    else:
+        ak_dms = ""
+
+    amk_planet = karakas_7.get("AmK", "Sun")
+    amk_obj = chart.planets.get(amk_planet)
+    if amk_obj:
+        amk_deg = getattr(amk_obj, "sign_degree", 0.0)
+        amk_ansh = int(amk_deg)
+        amk_kala = int(round((amk_deg - amk_ansh) * 60.0))
+        if amk_kala >= 60:
+            amk_kala = 0
+            amk_ansh += 1
+        amk_dms = f"{amk_obj.sign_name} {amk_ansh}° {amk_kala:02d}'"
+    else:
+        amk_dms = ""
+
+    c_jm1, c_jm2, c_jm3, c_jm4 = st.columns(4)
+    c_jm1.metric("लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
+    c_jm2.metric("👑 आत्मकारक (AK)", f"{ak_planet}", f"{ak_dms}")
+    c_jm3.metric("💼 अमात्यकारक (AmK)", f"{amk_planet}", f"{amk_dms}")
+    ishta_info = j_res.get("ishta_devata", {})
+    c_jm4.metric("कारकांश (D9) व इष्ट", f"{j_res.get('karakamsha_sign', '-')}", f"इष्ट: {ishta_info.get('deity', 'श्री विष्णु')}")
+
     # 10 Dedicated Tabs for Jaimini Suite
     jtab1, jtab2, jtab3, jtab4, jtab5, jtab6, jtab7, jtab8, jtab9, jtab10 = st.tabs(tabs)
 
@@ -211,18 +289,38 @@ def render_jaimini_view(chart, tabs=None):
             p_name = karakas_7.get(k_code, "—")
             p_obj = chart.planets.get(p_name)
             p_sign = getattr(p_obj, "sign_name", "—") if p_obj else "—"
-            p_deg = f"{getattr(p_obj, 'sign_degree', 0.0):.2f}°" if p_obj else "—"
-            p_nak = f"{getattr(p_obj, 'nakshatra_name', '—')} ({getattr(p_obj, 'nakshatra_pada', 1)})" if p_obj else "—"
-            p_house = f"भाव {getattr(p_obj, 'house_from_lagna', 1)}" if p_obj else "—"
+
+            # Micro DMS & Swabhav
+            if p_obj:
+                deg_val = getattr(p_obj, "sign_degree", 0.0)
+                ansh = int(deg_val)
+                kala = int(round((deg_val - ansh) * 60.0))
+                if kala >= 60:
+                    kala = 0
+                    ansh += 1
+                dms_str = f"{ansh}° {kala:02d}'"
+                nak_name = getattr(p_obj, "nakshatra_name", getattr(p_obj, "nakshatra", "—"))
+                nak_pada = getattr(p_obj, "nakshatra_pada", getattr(p_obj, "pada", 1))
+                nak_pada_str = f"{nak_name} (चरण {nak_pada})"
+                h_num = getattr(p_obj, "house_from_lagna", getattr(p_obj, "house", "—"))
+                p_house = f"भाव {h_num}"
+                is_shubh = p_name in ["Jupiter", "Venus", "Mercury", "Moon"]
+                swabhav_str = "नैसर्गिक शुभ" if is_shubh else "नैसर्गिक क्रूर"
+            else:
+                dms_str = "—"
+                nak_pada_str = "—"
+                p_house = "—"
+                swabhav_str = "—"
 
             ck_table_rows.append({
                 "कारक कोड": k_code,
                 "कारक नाम": k_full,
                 "ग्रह (Planet)": p_name,
-                "अंश (Degree)": p_deg,
+                "नैसर्गिक स्वभाव": swabhav_str,
+                "अंश-कला (DMS)": dms_str,
                 "राशि (Sign)": p_sign,
                 "भाव (House)": p_house,
-                "नक्षत्र (Nakshatra)": p_nak,
+                "नक्षत्र एवं चरण": nak_pada_str,
                 "शास्त्रीय दायित्व एवं फल": k_duty
             })
 
@@ -500,14 +598,23 @@ def render_jaimini_view(chart, tabs=None):
 
         if getattr(chart, "upagrahas", None):
             u = chart.upagrahas
+            def _to_up_dms(deg_val):
+                r_deg = deg_val % 30.0
+                ansh = int(r_deg)
+                kala = int(round((r_deg - ansh) * 60.0))
+                if kala >= 60:
+                    kala = 0
+                    ansh += 1
+                return f"{ansh}° {kala:02d}'"
+
             u_data = [
-                {"उपग्रह (Upagraha)": "गुलिक (Gulika)", "राशि": u.gulika_sign_name, "भोगांश": f"{u.gulika_longitude:.2f}°", "प्रकृति": "शनि पुत्र / दारुण", "शास्त्रीय प्रभाव": "कष्ट, विघ्न, विषमय परिस्थितियां"},
-                {"उपग्रह (Upagraha)": "मान्दि (Mandi)", "राशि": u.mandi_sign_name, "भोगांश": f"{u.mandi_longitude:.2f}°", "प्रकृति": "शनि अंश / मारक", "शास्त्रीय प्रभाव": "शारीरिक पीड़ा, रोग, आघात"},
-                {"उपग्रह (Upagraha)": "धूम (Dhuma)", "राशि": "Calculated", "भोगांश": f"{u.dhuma_longitude:.2f}°", "प्रकृति": "सूर्य उपग्रह / संताप", "शास्त्रीय प्रभाव": "अग्नि भय, ताप, नेत्र कष्ट"},
-                {"उपग्रह (Upagraha)": "व्यतीपात (Vyatipata)", "राशि": "Calculated", "भोगांश": f"{u.vyatipata_longitude:.2f}°", "प्रकृति": "सूर्य उपग्रह / विघ्न", "शास्त्रीय प्रभाव": "आकस्मिक हानि, पतन, भ्रम"},
-                {"उपग्रह (Upagraha)": "परिवेष (Parivesha)", "राशि": "Calculated", "भोगांश": f"{u.parivesha_longitude:.2f}°", "प्रकृति": "चन्द्र उपग्रह / भय", "शास्त्रीय प्रभाव": "मानसिक चिंता, जल भय, अशांति"},
-                {"उपग्रह (Upagraha)": "इन्द्रचाप (Indrachapa)", "राशि": "Calculated", "भोगांश": f"{u.indrachapa_longitude:.2f}°", "प्रकृति": "शुक्र उपग्रह / क्षय", "शास्त्रीय प्रभाव": "संसाधनों का क्षय, मिथ्या व्यय"},
-                {"उपग्रह (Upagraha)": "उपकेतु (Upaketu)", "राशि": "Calculated", "भोगांश": f"{u.upaketu_longitude:.2f}°", "प्रकृति": "केतु उपग्रह / अनिष्ट", "शास्त्रीय प्रभाव": "विस्फोट, अचानक अवरोध, चोट"}
+                {"उपग्रह (Upagraha)": "गुलिक (Gulika)", "राशि": u.gulika_sign_name, "अंश-कला (DMS)": _to_up_dms(u.gulika_longitude), "भोगांश": f"{u.gulika_longitude:.2f}°", "प्रकृति": "शनि पुत्र / दारुण", "शास्त्रीय प्रभाव": "कष्ट, विघ्न, विषमय परिस्थितियां"},
+                {"उपग्रह (Upagraha)": "मान्दि (Mandi)", "राशि": u.mandi_sign_name, "अंश-कला (DMS)": _to_up_dms(u.mandi_longitude), "भोगांश": f"{u.mandi_longitude:.2f}°", "प्रकृति": "शनि अंश / मारक", "शास्त्रीय प्रभाव": "शारीरिक पीड़ा, रोग, आघात"},
+                {"उपग्रह (Upagraha)": "धूम (Dhuma)", "राशि": "Calculated", "अंश-कला (DMS)": _to_up_dms(u.dhuma_longitude), "भोगांश": f"{u.dhuma_longitude:.2f}°", "प्रकृति": "सूर्य उपग्रह / संताप", "शास्त्रीय प्रभाव": "अग्नि भय, ताप, नेत्र कष्ट"},
+                {"उपग्रह (Upagraha)": "व्यतीपात (Vyatipata)", "राशि": "Calculated", "अंश-कला (DMS)": _to_up_dms(u.vyatipata_longitude), "भोगांश": f"{u.vyatipata_longitude:.2f}°", "प्रकृति": "सूर्य उपग्रह / विघ्न", "शास्त्रीय प्रभाव": "आकस्मिक हानि, पतन, भ्रम"},
+                {"उपग्रह (Upagraha)": "परिवेष (Parivesha)", "राशि": "Calculated", "अंश-कला (DMS)": _to_up_dms(u.parivesha_longitude), "भोगांश": f"{u.parivesha_longitude:.2f}°", "प्रकृति": "चन्द्र उपग्रह / भय", "शास्त्रीय प्रभाव": "मानसिक चिंता, जल भय, अशांति"},
+                {"उपग्रह (Upagraha)": "इन्द्रचाप (Indrachapa)", "राशि": "Calculated", "अंश-कला (DMS)": _to_up_dms(u.indrachapa_longitude), "भोगांश": f"{u.indrachapa_longitude:.2f}°", "प्रकृति": "शुक्र उपग्रह / क्षय", "शास्त्रीय प्रभाव": "संसाधनों का क्षय, मिथ्या व्यय"},
+                {"उपग्रह (Upagraha)": "उपकेतु (Upaketu)", "राशि": "Calculated", "अंश-कला (DMS)": _to_up_dms(u.upaketu_longitude), "भोगांश": f"{u.upaketu_longitude:.2f}°", "प्रकृति": "केतु उपग्रह / अनिष्ट", "शास्त्रीय प्रभाव": "विस्फोट, अचानक अवरोध, चोट"}
             ]
             st.dataframe(pd.DataFrame(u_data), use_container_width=True, hide_index=True)
 

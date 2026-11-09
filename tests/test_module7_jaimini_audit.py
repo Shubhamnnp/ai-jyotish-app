@@ -136,6 +136,24 @@ class TestModule7JaiminiAudit(unittest.TestCase):
         import src.jyotish.ui.modules.jaimini_view as jaimini_view_mod
         self.assertTrue(hasattr(jaimini_view_mod, "render_jaimini_view"))
 
+    def test_jaimini_view_shastriya_shloka_and_console(self):
+        """Verify Jaimini Sutram shloka, micro console, and DMS columns exist in jaimini_view."""
+        with open("src/jyotish/ui/modules/jaimini_view.py", "r", encoding="utf-8") as f:
+            code = f.read()
+
+        # Classical Jaimini Shloka verification
+        self.assertIn("जैमिनी उपदेश सूत्रम्", code)
+        self.assertIn("आत्मधिकः कलादिभिर्न भोगैः स आत्मकारकः", code)
+        self.assertIn("स इष्टे बन्धमोक्षयोः। तत्र स्वांशे कारकांशः", code)
+
+        # Micro DMS & Active Native Console verification
+        self.assertIn("c_jm1", code)
+        self.assertIn("लग्न एवं चन्द्र", code)
+        self.assertIn("👑 आत्मकारक (AK)", code)
+        self.assertIn("💼 अमात्यकारक (AmK)", code)
+        self.assertIn("अंश-कला (DMS)", code)
+        self.assertIn("नैसर्गिक स्वभाव", code)
+
 
 if __name__ == "__main__":
     unittest.main()
