@@ -195,6 +195,26 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
         ]
     st.subheader("📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (Natal & Divisional Charts)")
 
+    # Classical Shastriya Shloka Card
+    bphs_d1_shloka = {
+        "title": "बृहत्पाराशर होराशास्त्रम् — षोडशवर्ग एवं ग्रह स्वरूप निर्णय",
+        "source": "महर्षि पराशर विरचित बृहत्पाराशर होराशास्त्रम् (अध्याय ३ एवं ६)",
+        "shloka": "क्षेत्रं होराऽथ द्रेष्काणस्तथा तुर्यांशको वरः।\nसप्तांशो नवमांशश्च दशमांशस्ततः परम्॥\nद्वादशांशः षोडशांशो विंशांशः सिद्धभांशकः।\nभांशस्त्रिंशदथाक्षांशः षष्ट्यंशश्च षोडश स्मृताः॥",
+        "meaning": "क्षेत्र (D1), होरा (D2), द्रेष्काण (D3), चतुर्थांश (D4), सप्तांश (D7), नवमांश (D9), दशमांश (D10), द्वादशांश (D12), षोडशांश (D16), विंशांश (D20), चतुर्विंशांश (D24), भभांश/सप्तविंशांश (D27), त्रिंशांश (D30), खवेदांश (D40), अक्षवेदांश (D45) एवं षष्ट्यंश (D60) — ये महर्षियों द्वारा कहे गए षोडशवर्ग हैं, जिनमें सूक्ष्म अंश-कला और नक्षत्र-चरणों द्वारा जातक के समस्त जीवन, स्वभाव व प्रारब्ध का अचूक निर्णय होता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_d1_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_d1_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_d1_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {bphs_d1_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     tab_d1, tab_pushkara, tab_jm_hud, tab_bhav, tab_chandra, tab_surya, tab_yuddha, tab_vishesh, tab_kota = st.tabs(tabs)
 
     with tab_d1:
@@ -367,7 +387,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
             # Row 2: Box 3 (Planetary Longitudes & Dignity Table) & Box 4 (Sarvashtakavarga 12-Sign Matrix)
             pl_r2_c1, pl_r2_c2 = st.columns(2, gap="small")
             with pl_r2_c1:
-                st.markdown("""<div class="pl-box-header"><span>🪐 ग्रह स्पष्ट तालिका (Planetary Longitudes & Dignity)</span><span style="font-size:11px;">D1 स्पष्ट</span></div>""", unsafe_allow_html=True)
+                st.markdown("""<div class="pl-box-header"><span>🪐 ग्रह स्पष्ट तालिका (Planetary Longitudes & Dignity)</span><span style="font-size:11px;">D1 स्पष्ट DMS</span></div>""", unsafe_allow_html=True)
                 _p_rows_box = []
                 _p_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
                 for _pn in _p_order:
@@ -378,9 +398,19 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     _motion = "℞" if _po.is_retrograde else ""
                     _comb = "☌" if _po.is_combust else ""
                     _badge_color = "#1E40AF" if "उच्च" in _d_lbl else ("#047857" if "स्वराशि" in _d_lbl or "मूल" in _d_lbl else ("#B91C1C" if "नीच" in _d_lbl else "#475569"))
-                    _p_rows_box.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:3px 5px; font-weight:800; color:#0F172A; white-space:nowrap;">{_sym} <span style="color:#DC2626; font-size:10px;">{_motion}{_comb}</span></td><td style="padding:3px 5px; font-weight:700; color:#1E3A8A;">{_po.sign_name[:4]}</td><td style="padding:3px 5px; font-family:monospace; font-weight:700; color:#0F172A;">{_po.sign_degree:.2f}°</td><td style="padding:3px 5px; font-size:10px; color:#475569;">{_po.nakshatra_name[:4]}-P{_po.nakshatra_pada}</td><td style="padding:3px 5px; font-weight:800; color:{_badge_color}; font-size:10px;">{_d_lbl[:6]}</td></tr>')
+                    
+                    _p_deg_val = getattr(_po, "sign_degree", 0.0)
+                    _p_ansh = int(_p_deg_val)
+                    _p_kala = int(round((_p_deg_val - _p_ansh) * 60.0))
+                    if _p_kala >= 60:
+                        _p_kala = 0
+                        _p_ansh += 1
+                    _p_dms = f"{_p_ansh}° {_p_kala:02d}'"
+                    _p_nak = f"{getattr(_po, 'nakshatra_name', '')[:4]}-P{getattr(_po, 'nakshatra_pada', 1)}"
+                    _p_house = f"{getattr(_po, 'house_from_lagna', 1)} भाव"
+                    _p_rows_box.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:3px 5px; font-weight:800; color:#0F172A; white-space:nowrap;">{_sym} <span style="color:#DC2626; font-size:10px;">{_motion}{_comb}</span></td><td style="padding:3px 5px; font-weight:700; color:#475569;">{_p_house}</td><td style="padding:3px 5px; font-weight:700; color:#1E3A8A;">{_po.sign_name[:4]}</td><td style="padding:3px 5px; font-family:monospace; font-weight:700; color:#0F172A;">{_p_dms}</td><td style="padding:3px 5px; font-size:10px; color:#475569;">{_p_nak}</td><td style="padding:3px 5px; font-weight:800; color:{_badge_color}; font-size:10px;">{_d_lbl[:6]}</td></tr>')
 
-                _p_table_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:none; border-radius:0 0 6px 6px; padding:4px; max-height:190px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; font-size:11px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:3px 5px; text-align:left;">ग्रह</th><th style="padding:3px 5px; text-align:left;">राशि</th><th style="padding:3px 5px; text-align:left;">अंश</th><th style="padding:3px 5px; text-align:left;">नक्षत्र</th><th style="padding:3px 5px; text-align:left;">गरिमा</th></tr></thead><tbody>{"".join(_p_rows_box)}</tbody></table></div>'
+                _p_table_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-top:none; border-radius:0 0 6px 6px; padding:4px; max-height:190px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; font-size:11px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:3px 5px; text-align:left;">ग्रह</th><th style="padding:3px 5px; text-align:left;">भाव</th><th style="padding:3px 5px; text-align:left;">राशि</th><th style="padding:3px 5px; text-align:left;">अंश-कला (DMS)</th><th style="padding:3px 5px; text-align:left;">नक्षत्र</th><th style="padding:3px 5px; text-align:left;">गरिमा</th></tr></thead><tbody>{"".join(_p_rows_box)}</tbody></table></div>'
                 st.markdown(_p_table_html, unsafe_allow_html=True)
 
             with pl_r2_c2:
@@ -577,12 +607,22 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                         retro = "℞" if pp_o.is_retrograde else ""
                         combust = "☌" if pp_o.is_combust else ""
                         d_label, d_pts, _ = get_varga_dignity_info(pn, pp_o.sign_name, affliction_engine)
+                        _e_sdeg = getattr(pp_o, 'sign_degree', 0.0)
+                        _e_ansh = int(_e_sdeg)
+                        _e_kala = int(round((_e_sdeg - _e_ansh) * 60.0))
+                        if _e_kala >= 60:
+                            _e_kala = 0
+                            _e_ansh += 1
+                        _e_dms = f"{_e_ansh}° {_e_kala:02d}'"
+                        _e_nak = f"{getattr(pp_o, 'nakshatra_name', '')[:4]}-P{getattr(pp_o, 'nakshatra_pada', 1)}"
+                        _e_bhava = f"{getattr(pp_o, 'house_from_lagna', 1)} भाव"
                         eph_rows.append(
-                            f'<tr><td style="color:{nc};font-weight:900;padding:2px 5px;font-size:13px;">{sym}</td>'
-                            f'<td style="color:{_dc_val};padding:2px 4px;font-size:11px;">{pn}{retro}{combust}</td>'
+                            f'<tr><td style="color:{nc};font-weight:900;padding:2px 4px;font-size:12px;">{sym}</td>'
+                            f'<td style="color:{_dc_val};padding:2px 4px;font-size:11px;font-weight:700;">{pn}{retro}{combust}</td>'
+                            f'<td style="color:{_dc_txt};padding:2px 4px;font-size:10.5px;">{_e_bhava}</td>'
                             f'<td style="color:{nc};padding:2px 4px;font-size:11px;">{pp_o.sign_name[:3]}</td>'
-                            f'<td style="color:{_dc_txt};padding:2px 4px;font-size:11px;">{pp_o.sign_degree:.2f}°</td>'
-                            f'<td style="color:{_dc_txt};padding:2px 4px;font-size:10px;">{pp_o.nakshatra_name[:5]}-P{pp_o.nakshatra_pada}</td>'
+                            f'<td style="color:{_dc_val};padding:2px 4px;font-size:11px;font-family:monospace;font-weight:800;">{_e_dms}</td>'
+                            f'<td style="color:{_dc_txt};padding:2px 4px;font-size:10px;">{_e_nak}</td>'
                             f'<td style="color:{_pts_good if d_pts>=15 else (_pts_mid if d_pts>=10 else _pts_low)};padding:2px 4px;font-size:10px;font-weight:700;">{d_pts}pts</td>'
                             f'</tr>'
                         )
@@ -593,8 +633,9 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
             <tr style="background:{_dc_row};">
               <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Sym</th>
               <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Planet</th>
+              <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">भाव</th>
               <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Sign</th>
-              <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Deg°</th>
+              <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">अंश-कला</th>
               <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Nakshatra</th>
               <th style="color:{_dc_th_col};padding:2px 4px;text-align:left;font-size:10px;">Bala</th>
             </tr>
@@ -756,15 +797,32 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 9: "धर्म (9th)", 10: "कर्म (10th)", 11: "लाभ (11th)", 12: "व्यय (12th)"
             }.get(h_num, f"{h_num}{h_suffix}")
 
+            _v_deg_val = getattr(vp_obj, "degree_in_varga", 0.0)
+            _v_ansh = int(_v_deg_val)
+            _v_kala = int(round((_v_deg_val - _v_ansh) * 60.0))
+            if _v_kala >= 60:
+                _v_kala = 0
+                _v_ansh += 1
+            _v_dms = f"{_v_ansh}° {_v_kala:02d}'"
+
+            _d1_deg_val = getattr(d1_p, "sign_degree", 0.0) if d1_p else 0.0
+            _d1_ansh = int(_d1_deg_val)
+            _d1_kala = int(round((_d1_deg_val - _d1_ansh) * 60.0))
+            if _d1_kala >= 60:
+                _d1_kala = 0
+                _d1_ansh += 1
+            _d1_dms = f"{_d1_ansh}° {_d1_kala:02d}'"
+            _d1_nak = f"{getattr(d1_p, 'nakshatra_name', '')[:4]}-P{getattr(d1_p, 'nakshatra_pada', 1)}" if d1_p else "-"
+
             p_data.append({
                 "ग्रह (Graha)": name_p,
                 "वर्ग राशि (Sign)": vp_obj.sign_name,
                 "राशि स्वामी (Lord)": h_lord,
-                "वर्ग अंश (Degree)": f"{vp_obj.degree_in_varga:.2f}°",
+                "वर्ग अंश (Degree)": _v_dms,
                 "वर्ग भाव (Varga House)": f"{h_num}{h_suffix} भाव ({h_name_hi})",
                 "वर्ग गरिमा (Dignity)": d_label,
-                "D1 राशि (Ref)": d1_p.sign_name if d1_p else "-",
-                "D1 भाव (Ref)": f"{d1_p.house_from_lagna}th House" if d1_p else "-",
+                "D1 राशि (Ref)": f"{d1_p.sign_name} ({_d1_dms})" if d1_p else "-",
+                "D1 भाव (Ref)": f"{d1_p.house_from_lagna} भाव / {_d1_nak}" if d1_p else "-",
                 "गति (Motion)": "वक्री (R)" if (d1_p and d1_p.is_retrograde) else "मार्गी",
                 "अवस्था / शास्त्रीय प्रभाव": d_impact,
             })
@@ -1504,7 +1562,13 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                         _c_deg = _c.get("cusp_degree", 0.0)
                         _arambha = (_c_deg - 15.0 + 30.0) % 30.0
                         _anta = (_c_deg + 15.0) % 30.0
-                        _c_tbl_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:4px 8px; font-weight:800; color:#1E3A8A;">{_b_num} भाव</td><td style="padding:4px 8px; font-weight:700;">{_c.get("sign_name", "")}</td><td style="padding:4px 8px; font-family:monospace; color:#475569;">{_arambha:.2f}°</td><td style="padding:4px 8px; font-family:monospace; font-weight:800; color:#0F172A;">{_c_deg:.2f}°</td><td style="padding:4px 8px; font-family:monospace; color:#475569;">{_anta:.2f}°</td></tr>')
+                        _c_ansh = int(_c_deg)
+                        _c_kala = int(round((_c_deg - _c_ansh) * 60.0))
+                        _ar_ansh = int(_arambha)
+                        _ar_kala = int(round((_arambha - _ar_ansh) * 60.0))
+                        _an_ansh = int(_anta)
+                        _an_kala = int(round((_anta - _an_ansh) * 60.0))
+                        _c_tbl_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:4px 8px; font-weight:800; color:#1E3A8A;">{_b_num} भाव</td><td style="padding:4px 8px; font-weight:700;">{_c.get("sign_name", "")}</td><td style="padding:4px 8px; font-family:monospace; color:#475569;">{_ar_ansh}° {_ar_kala:02d}\'</td><td style="padding:4px 8px; font-family:monospace; font-weight:800; color:#0F172A;">{_c_ansh}° {_c_kala:02d}\'</td><td style="padding:4px 8px; font-family:monospace; color:#475569;">{_an_ansh}° {_an_kala:02d}\'</td></tr>')
                     _c_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:180px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 8px; text-align:left;">भाव</th><th style="padding:4px 8px; text-align:left;">राशि</th><th style="padding:4px 8px; text-align:left;">आरंभ</th><th style="padding:4px 8px; text-align:left;">मध्य (Cusp)</th><th style="padding:4px 8px; text-align:left;">संधि (अंत)</th></tr></thead><tbody>{"".join(_c_tbl_rows)}</tbody></table></div>'
                     st.markdown(_c_tbl_html, unsafe_allow_html=True)
 
@@ -1564,10 +1628,18 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 svg_chandra = render_chart_svg(chart, f"🌙 चन्द्र कुण्डली ({_moon.sign_name} लग्न)", varga_code="CHANDRA")
                 st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:10px;">{svg_chandra}</div>', unsafe_allow_html=True)
 
+                _m_sdeg = getattr(_moon, 'sign_degree', 0.0)
+                _m_ansh = int(_m_sdeg)
+                _m_kala = int(round((_m_sdeg - _m_ansh) * 60.0))
+                if _m_kala >= 60:
+                    _m_kala = 0
+                    _m_ansh += 1
+                _m_dms = f"{_m_ansh}° {_m_kala:02d}'"
+
                 st.markdown(f"""
                 <div style="background:#EFF6FF; border:1px solid #93C5FD; border-radius:8px; padding:10px 14px; font-size:12px; color:#1E3A8A; line-height:1.6;">
                     <b>🌕 चन्द्रमा का स्पष्ट परिचय:</b><br/>
-                    • <b>राशि:</b> {_moon.sign_name} ({_moon.sign_degree:.2f}°)<br/>
+                    • <b>राशि:</b> {_moon.sign_name} ({_m_dms})<br/>
                     • <b>नक्षत्र:</b> {_moon.nakshatra_name} (पाद {_moon.nakshatra_pada}) — स्वामी: {_moon.nakshatra_lord}<br/>
                     • <b>तिथि:</b> {chart.panchang.tithi_name} ({chart.panchang.tithi_type})<br/>
                     • <b>चन्द्र बल:</b> {'शुक्ल पक्ष बलिष्ठ' if 'Shukla' in (chart.panchang.tithi_type or '') else 'कृष्ण पक्ष सौम्य'}
@@ -1685,10 +1757,18 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:10px;">{svg_surya}</div>', unsafe_allow_html=True)
 
                 _sun_dignity, _, _ = get_varga_dignity_info("Sun", _sun.sign_name, affliction_engine)
+                _s_sdeg = getattr(_sun, 'sign_degree', 0.0)
+                _s_ansh = int(_s_sdeg)
+                _s_kala = int(round((_s_sdeg - _s_ansh) * 60.0))
+                if _s_kala >= 60:
+                    _s_kala = 0
+                    _s_ansh += 1
+                _s_dms = f"{_s_ansh}° {_s_kala:02d}'"
+
                 st.markdown(f"""
                 <div style="background:#FFFBEB; border:1px solid #FCD34D; border-radius:8px; padding:10px 14px; font-size:12px; color:#78350F; line-height:1.6;">
                     <b>☀️ सूर्य देव का स्पष्ट परिचय:</b><br/>
-                    • <b>राशि:</b> {_sun.sign_name} ({_sun.sign_degree:.2f}°)<br/>
+                    • <b>राशि:</b> {_sun.sign_name} ({_s_dms})<br/>
                     • <b>नक्षत्र:</b> {_sun.nakshatra_name} (पाद {_sun.nakshatra_pada}) — स्वामी: {_sun.nakshatra_lord}<br/>
                     • <b>गरिमा:</b> {_sun_dignity}<br/>
                     • <b>सम्पूर्ण निरयण देशांतर:</b> {_sun.longitude:.2f}°

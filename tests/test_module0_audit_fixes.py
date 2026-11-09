@@ -120,6 +120,27 @@ class TestModule0AuditFixes(unittest.TestCase):
         self.assertIn("planet_allocations", k_data)
         self.assertGreater(len(k_data["planet_allocations"]), 0)
 
+    def test_active_native_degrees_ansh_kala_and_bphs_shloka(self):
+        """Verify active native's planets have valid DMS, ansh, kala, nakshatra padas and BPHS shloka in d1_varga_view."""
+        for p_name, p_pos in self.chart.planets.items():
+            deg = p_pos.sign_degree
+            ansh = int(deg)
+            kala = int(round((deg - ansh) * 60.0))
+            if kala >= 60:
+                kala = 0
+                ansh += 1
+            self.assertTrue(0 <= ansh <= 30)
+            self.assertTrue(0 <= kala < 60)
+            self.assertTrue(1 <= p_pos.nakshatra_pada <= 4)
+            self.assertTrue(len(p_pos.nakshatra_name) > 0)
+            self.assertTrue(1 <= p_pos.house_from_lagna <= 12)
+
+        view_code = open("src/jyotish/ui/modules/d1_varga_view.py", encoding="utf-8").read()
+        self.assertIn("bphs_d1_shloka", view_code)
+        self.assertIn("षोडश स्मृताः", view_code)
+        self.assertIn("D1 स्पष्ट DMS", view_code)
+        self.assertIn("अंश-कला (DMS)", view_code)
+
 
 if __name__ == "__main__":
     unittest.main()
