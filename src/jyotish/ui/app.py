@@ -9898,9 +9898,7 @@ elif selected_idx == 27:
     pooja_view_mod.render_pooja_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(27))
 
 elif selected_idx == 28:
-    import importlib
     import src.jyotish.ui.modules.karma_view as karma_view_mod
-    importlib.reload(karma_view_mod)
     karma_view_mod.render_karma_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(28))
 
 elif selected_idx == 29:

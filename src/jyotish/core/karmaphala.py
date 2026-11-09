@@ -680,7 +680,7 @@ class KarmaphalaEngine:
                 stressors.append("अधीरता एवं जल्दबाजी में लिए गए निर्णयों का पछतावा")
 
             # 4. Debilitated Moon (in Scorpio)
-            if moon_p.sign_name == "Scorpio":
+            if getattr(moon_p, "sign_name", "") == "Scorpio" or getattr(moon_p, "sign_id", 0) == 8:
                 raw_peace -= 14.0
                 moon_doshas.append("♏ चन्द्रमा नीच राशि (वृश्चिक) में: मन की संवेदनशीलता अत्यधिक होना, छोटी-छोटी बातों को दिल पर लगाना और गहरा मानसिक आघात।")
                 stressors.append("अत्यधिक भावुकता एवं असुरक्षा की आंतरिक भावना")

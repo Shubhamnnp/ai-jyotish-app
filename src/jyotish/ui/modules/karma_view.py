@@ -1,22 +1,35 @@
 import streamlit as st
-import importlib
+from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
+import src.jyotish.core.karmaphala as karma_mod
 
 def render_karma_view(chart, tabs=None):
     if tabs is None:
         tabs = [
-            '💼 आजीविका: व्यापार बनाम नौकरी',
-            '🎓 विद्या, बुद्धि एवं मेधा',
-            '⚖️ आचरण, सत्यनिष्ठा एवं चरित्र',
-            '⚠️ व्यसन एवं चरित्र-पतन जोखिम',
-            '🏰 पैतृक संपत्ति एवं आंतरिक सुख',
-            '🕉️ पूर्वजन्म प्रारब्ध एवं आत्मकारक'
+            "💼 नौकरी बनाम व्यापार",
+            "🎓 शिक्षा व मेधा",
+            "⚖️ आचरण व प्रवृत्तियां",
+            "🚫 व्यसन व प्रलोभन",
+            "🏛️ पैतृक संपत्ति व सुख",
+            "🕉️ पूर्वजन्म प्रारब्ध व ऋण"
         ]
     st.subheader("🧘 व्यक्तित्व एवं कर्मफल विश्लेषण (Personality, Vices, Destiny & Karmic Ledger)")
     st.write("शास्त्रीय वैदिक ज्योतिष (पाराशर, जैमिनी, फलदीपिका एवं सारावली) के नियमों के आधार पर व्यापार बनाम नौकरी, शिक्षा-मेधा, नैतिक आचरण, व्यसन/लत जोखिम, पैतृक संपत्ति, आंतरिक सुख एवं पूर्वजन्म प्रारब्ध का निष्पक्ष व प्रामाणिक विश्लेषण।")
 
-    import importlib
-    import src.jyotish.core.karmaphala as karma_mod
-    importlib.reload(karma_mod)
+    # Classical Shastriya Shloka Card
+    karma_pramana = SHASTRIYA_SHLOKAS.get("phaladeepika_karma_vipaka", {})
+    if karma_pramana:
+        with st.expander("📜 शास्त्रीय प्रमाण — फलदीपिका एवं बृहज्जातकम् (कर्म विपाक एवं प्रारब्ध सिद्धान्त)", expanded=False):
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+                <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {karma_pramana.get('grantha', '')}</b>
+                <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{karma_pramana.get('shloka_sanskrit', karma_pramana.get('shloka', ''))}
+                </pre>
+                <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                    <b>हिंदी भावार्थ:</b> {karma_pramana.get('anuvad_hi', karma_pramana.get('hindi_translation', ''))}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
     kp_res = karma_mod.KarmaphalaEngine.analyze(chart)
     car = kp_res["career"]
