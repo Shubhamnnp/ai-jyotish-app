@@ -100,6 +100,23 @@ class TestModule6ShadbalaAudit(unittest.TestCase):
         import src.jyotish.ui.modules.shadbala_view as shadbala_view_mod
         self.assertTrue(hasattr(shadbala_view_mod, "render_shadbala_view"))
 
+    def test_shadbala_view_shastriya_shloka_and_console(self):
+        """Verify BPHS Shadbala shloka, micro console, and DMS table column exist in shadbala_view."""
+        with open("src/jyotish/ui/modules/shadbala_view.py", "r", encoding="utf-8") as f:
+            code = f.read()
+
+        # Classical BPHS Shloka verification
+        self.assertIn("बृहत्पाराशर होराशास्त्रम्", code)
+        self.assertIn("स्थानं दिग्कालचेष्टा च नैसर्गं दृग्बलं तथा", code)
+        self.assertIn("विरूपाणां समूहस्तु षड्बलं कथ्यते बुधैः", code)
+
+        # Micro DMS & Active Native Console verification
+        self.assertIn("c_sb1", code)
+        self.assertIn("लग्न एवं चन्द्र", code)
+        self.assertIn("🌟 शिरोमणि बली ग्रह", code)
+        self.assertIn("राशि व अंश-कला (DMS)", code)
+        self.assertIn("नैसर्गिक स्वभाव", code)
+
 
 if __name__ == "__main__":
     unittest.main()

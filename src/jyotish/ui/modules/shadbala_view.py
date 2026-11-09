@@ -209,6 +209,95 @@ def render_shadbala_view(chart, tabs=None):
             svg.append('</svg>')
             return "".join(svg)
 
+        # Classical Shastriya Shloka Card
+        bphs_shadbala_shloka = {
+            "title": "बृहत्पाराशर होराशास्त्रम् — षड्बल एवं सामर्थ्य निरूपण",
+            "source": "महर्षि पराशर विरचित BPHS (अध्याय २७, श्लोक १-२)",
+            "shloka": "स्थानं दिग्कालचेष्टा च नैसर्गं दृग्बलं तथा।\nषड्विधं बलमेतेषां ग्रहाणां कथयाम्यहम्॥\nरूपाणि षड्गुणा विंशत्या विरूपाणि भवन्ति हि।\nविरूपाणां समूहस्तु षड्बलं कथ्यते बुधैः॥",
+            "meaning": "स्थान बल, दिग्बल, काल बल, चेष्टा बल, नैसर्गिक बल एवं दृग्बल — ये ग्रहों के ६ प्रकार के षड्बल कहे गए हैं। ६० विरूपा का एक रूप होता है। महर्षि पराशर अनुसार इन समस्त बलों का सामूहिक योग ही जातक के जीवन में ग्रह के वास्तविक सामर्थ्य एवं शुभाशुभ फल का निर्धारण करता है।"
+        }
+        with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_shadbala_shloka['title']}", expanded=False):
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+                <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_shadbala_shloka['source']}</b>
+                <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_shadbala_shloka['shloka']}
+                </pre>
+                <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                    <b>हिंदी भावार्थ:</b> {bphs_shadbala_shloka['meaning']}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # Active Native Micro-Planetary Longitudes & DMS Console
+        lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+        l_deg = getattr(chart, "lagna_degree", 0.0)
+        l_ansh = int(l_deg)
+        l_kala = int(round((l_deg - l_ansh) * 60.0))
+        if l_kala >= 60:
+            l_kala = 0
+            l_ansh += 1
+        l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+        moon = chart.planets.get("Moon")
+        if moon:
+            m_deg = getattr(moon, "sign_degree", 0.0)
+            m_ansh = int(m_deg)
+            m_kala = int(round((m_deg - m_ansh) * 60.0))
+            if m_kala >= 60:
+                m_kala = 0
+                m_ansh += 1
+            m_dms = f"{m_ansh}° {m_kala:02d}'"
+            m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+            m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+            moon_str = f"{moon.sign_name} {m_dms} [{m_nak}-P{m_pada}]"
+        else:
+            moon_str = "—"
+
+        ranked_planets = sorted(seven_p, key=lambda p: getattr(sb_planets.get(p), "strength_ratio", 0.0), reverse=True)
+        top_planet = ranked_planets[0]
+        top_obj = sb_planets.get(top_planet)
+        low_planet = ranked_planets[-1]
+        low_obj = sb_planets.get(low_planet)
+
+        # Top planet micro coords
+        top_p_chart = chart.planets.get(top_planet)
+        if top_p_chart:
+            tp_deg = getattr(top_p_chart, "sign_degree", 0.0)
+            tp_ansh = int(tp_deg)
+            tp_kala = int(round((tp_deg - tp_ansh) * 60.0))
+            if tp_kala >= 60:
+                tp_kala = 0
+                tp_ansh += 1
+            top_dms = f"{tp_ansh}° {tp_kala:02d}' [{getattr(top_p_chart, 'nakshatra_name', getattr(top_p_chart, 'nakshatra', '—'))}-P{getattr(top_p_chart, 'nakshatra_pada', getattr(top_p_chart, 'pada', 1))}]"
+        else:
+            top_dms = ""
+
+        # Low planet micro coords
+        low_p_chart = chart.planets.get(low_planet)
+        if low_p_chart:
+            lp_deg = getattr(low_p_chart, "sign_degree", 0.0)
+            lp_ansh = int(lp_deg)
+            lp_kala = int(round((lp_deg - lp_ansh) * 60.0))
+            if lp_kala >= 60:
+                lp_kala = 0
+                lp_ansh += 1
+            low_dms = f"{lp_ansh}° {lp_kala:02d}' [{getattr(low_p_chart, 'nakshatra_name', getattr(low_p_chart, 'nakshatra', '—'))}-P{getattr(low_p_chart, 'nakshatra_pada', getattr(low_p_chart, 'pada', 1))}]"
+        else:
+            low_dms = ""
+
+        strong_count = sum(1 for p in seven_p if getattr(sb_planets.get(p), "is_strong", False))
+        avg_ratio = sum(getattr(sb_planets.get(p), "strength_ratio", 1.0) for p in seven_p) / 7.0
+
+        c_sb1, c_sb2, c_sb3, c_sb4 = st.columns(4)
+        top_hi = hi_planet_meta.get(top_planet, (top_planet, "", ""))[0]
+        low_hi = hi_planet_meta.get(low_planet, (low_planet, "", ""))[0]
+
+        c_sb1.metric("लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
+        c_sb2.metric("🌟 शिरोमणि बली ग्रह", f"{top_hi}", f"{top_obj.strength_ratio:.2f}x ({int(top_obj.total_virupas)}V) {top_dms}")
+        c_sb3.metric("⚠️ न्यूनतम बली ग्रह", f"{low_hi}", f"{low_obj.strength_ratio:.2f}x ({int(low_obj.total_virupas)}V) {low_dms}")
+        c_sb4.metric("📊 षड्बल सामर्थ्य", f"{avg_ratio:.2f}x (औसत)", f"{strong_count}/7 ग्रह बलवान्")
+
         # 6 Dedicated Shadbala Tabs
         sbtab1, sbtab2, sbtab3, sbtab4, sbtab5, sbtab6 = st.tabs(tabs)
 
@@ -220,19 +309,7 @@ def render_shadbala_view(chart, tabs=None):
             st.caption("७ ग्रहों का कुल विरूपा बल, रूपा मान, न्यूनतम BPHS अपेक्षा एवं सामर्थ्य अनुपात (Strength Ratio >= 1.00 = बलवान्)।")
 
             # Compute ranks and top metrics
-            ranked_planets = sorted(seven_p, key=lambda p: getattr(sb_planets.get(p), "strength_ratio", 0.0), reverse=True)
-            top_planet = ranked_planets[0]
-            top_obj = sb_planets.get(top_planet)
-            low_planet = ranked_planets[-1]
-            low_obj = sb_planets.get(low_planet)
-
-            strong_count = sum(1 for p in seven_p if getattr(sb_planets.get(p), "is_strong", False))
-            avg_ratio = sum(getattr(sb_planets.get(p), "strength_ratio", 1.0) for p in seven_p) / 7.0
-
             k1, k2, k3, k4 = st.columns(4)
-            top_hi = hi_planet_meta.get(top_planet, (top_planet, "", ""))[0]
-            low_hi = hi_planet_meta.get(low_planet, (low_planet, "", ""))[0]
-
             k1.metric("🌟 सर्वाधिक बली ग्रह", f"{top_hi}", f"Ratio: {top_obj.strength_ratio:.2f}x ({int(top_obj.total_virupas)}V)")
             k2.metric("⚠️ न्यूनतम बली ग्रह", f"{low_hi}", f"Ratio: {low_obj.strength_ratio:.2f}x ({int(low_obj.total_virupas)}V)")
             k3.metric("👑 बलवान् ग्रह संख्या", f"{strong_count} / 7 ग्रह", "न्यूनतम मानक उत्तीर्ण")
@@ -250,13 +327,38 @@ def render_shadbala_view(chart, tabs=None):
             sb_master_rows = []
             for rank_idx, p in enumerate(ranked_planets, start=1):
                 p_obj = sb_planets.get(p)
+                p_chart = chart.planets.get(p)
                 p_hi, _, _ = hi_planet_meta.get(p, (p, "", ""))
                 is_str = p_obj.is_strong
                 st_badge = "✅ बलवान्" if is_str else "⚠️ निर्बल"
 
+                # Micro DMS & Swabhav
+                if p_chart:
+                    deg_v = getattr(p_chart, "sign_degree", 0.0)
+                    ansh = int(deg_v)
+                    kala = int(round((deg_v - ansh) * 60.0))
+                    if kala >= 60:
+                        kala = 0
+                        ansh += 1
+                    dms_str = f"{p_chart.sign_name} {ansh}° {kala:02d}'"
+                    nak_str = getattr(p_chart, "nakshatra_name", getattr(p_chart, "nakshatra", "—"))
+                    pada_str = getattr(p_chart, "nakshatra_pada", getattr(p_chart, "pada", 1))
+                    nak_info = f"[{nak_str}-P{pada_str}]"
+                    h_num = getattr(p_chart, "house_from_lagna", getattr(p_chart, "house", "—"))
+                else:
+                    dms_str = "—"
+                    nak_info = ""
+                    h_num = "—"
+
+                is_shubh = p in ["Jupiter", "Venus", "Mercury", "Moon"]
+                swabhav_lbl = "नैसर्गिक शुभ" if is_shubh else "नैसर्गिक क्रूर"
+
                 sb_master_rows.append({
                     "क्रम (Rank)": f"#{rank_idx}",
                     "ग्रह (Planet)": f"{p_hi} ({p})",
+                    "नैसर्गिक स्वभाव": swabhav_lbl,
+                    "राशि व अंश-कला (DMS)": f"{dms_str} {nak_info}",
+                    "भाव (House)": f"{h_num} भाव",
                     "स्थान बल": f"{p_obj.sthana_bala:.1f}",
                     "दिग्बल": f"{p_obj.dik_bala:.1f}",
                     "काल बल": f"{p_obj.kaala_bala:.1f}",
@@ -467,6 +569,7 @@ def render_shadbala_view(chart, tabs=None):
             avastha_rows = []
             for p in seven_p:
                 p_obj = sb_planets.get(p)
+                p_chart = chart.planets.get(p)
                 p_hi, _, _ = hi_planet_meta.get(p, (p, "", ""))
                 ishta_v = getattr(p_obj, "ishta_phala", 30.0)
                 kashta_v = getattr(p_obj, "kashta_phala", 30.0)
@@ -476,8 +579,25 @@ def render_shadbala_view(chart, tabs=None):
 
                 ik_ratio = int((ishta_v / max(1.0, ishta_v + kashta_v)) * 100)
 
+                # Micro DMS & Nakshatra-pada
+                if p_chart:
+                    deg_v = getattr(p_chart, "sign_degree", 0.0)
+                    ansh = int(deg_v)
+                    kala = int(round((deg_v - ansh) * 60.0))
+                    if kala >= 60:
+                        kala = 0
+                        ansh += 1
+                    dms_str = f"{p_chart.sign_name} {ansh}° {kala:02d}'"
+                    nak_str = getattr(p_chart, "nakshatra_name", getattr(p_chart, "nakshatra", "—"))
+                    pada_str = getattr(p_chart, "nakshatra_pada", getattr(p_chart, "pada", 1))
+                    nak_info = f"[{nak_str}-P{pada_str}]"
+                else:
+                    dms_str = "—"
+                    nak_info = ""
+
                 avastha_rows.append({
                     "ग्रह": f"{p_hi} ({p})",
+                    "राशि व अंश-कला (DMS)": f"{dms_str} {nak_info}",
                     "इष्ट फल (0-60)": f"{ishta_v:.1f}",
                     "कष्ट फल (0-60)": f"{kashta_v:.1f}",
                     "शुभ अनुपात": f"{ik_ratio}%",
