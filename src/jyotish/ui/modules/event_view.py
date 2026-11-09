@@ -23,6 +23,52 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
         ]
     st.subheader("🎯 घटना विश्लेषण एवं काल सत्यापन (Event Analysis & Verification)")
 
+    # Classical Shastriya Shloka Card
+    phaladeepika_event_shloka = {
+        "title": "फलदीपिका एवं जातक पारिजात — दशा-गोचर काल विधान",
+        "source": "मन्त्रेश्वर विरचित फलदीपिका (अध्याय २०) एवं जातक पारिजात",
+        "shloka": "यद्भावे यत्फलं प्रोक्तं तत्तत्समये समुपस्थिते।\nदशानाथानुसारेण गोचरेण विचारयेत्॥\nगुरुणा शनिना युक्ते दृष्टे वा भावसंस्थिते।\nतदा फलस्य संसिद्धिः प्रोक्ता दैवज्ञसम्मतैः॥",
+        "meaning": "कुण्डली में जिस भाव का जो फल शास्त्रों में कहा गया है, वह तभी घटित होता है जब दशानाथ अनुकूल हो तथा गोचर में देवगुरु बृहस्पति एवं मन्द शनि का शुभ दृष्टि/युति संबंध बने। दशा और गोचर के त्रिबल संयोग से ही काल-निर्णय प्रामाणिक होता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {phaladeepika_event_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {phaladeepika_event_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{phaladeepika_event_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {phaladeepika_event_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Active Native Micro-Planetary Longitudes & DMS Console
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    moon = chart.planets.get("Moon")
+    jup = chart.planets.get("Jupiter")
+    sat = chart.planets.get("Saturn")
+    
+    c_ev1, c_ev2, c_ev3, c_ev4 = st.columns(4)
+    c_ev1.metric("लग्न एवं राशि", f"{lagna_sname}", f"चन्द्र: {moon.sign_name if moon else '—'}")
+    c_ev2.metric("आत्मकारक ग्रह", f"{getattr(chart, 'atmakaraka', '—')}", "मूल स्वभाव")
+    if jup:
+        _j_sdeg = getattr(jup, 'sign_degree', 0.0)
+        _j_ansh = int(_j_sdeg)
+        _j_kala = int(round((_j_sdeg - _j_ansh) * 60.0))
+        if _j_kala >= 60: _j_kala = 0; _j_ansh += 1
+        _j_nak = getattr(jup, 'nakshatra_name', '')[:4]
+        _j_pad = getattr(jup, 'nakshatra_pada', 1)
+        c_ev3.metric("गुरु स्थिति", f"{jup.sign_name} ({_j_ansh}° {_j_kala:02d}')", f"{jup.house_from_lagna} भाव | {_j_nak}-P{_j_pad}")
+    if sat:
+        _s_sdeg = getattr(sat, 'sign_degree', 0.0)
+        _s_ansh = int(_s_sdeg)
+        _s_kala = int(round((_s_sdeg - _s_ansh) * 60.0))
+        if _s_kala >= 60: _s_kala = 0; _s_ansh += 1
+        _s_nak = getattr(sat, 'nakshatra_name', '')[:4]
+        _s_pad = getattr(sat, 'nakshatra_pada', 1)
+        c_ev4.metric("शनि स्थिति", f"{sat.sign_name} ({_s_ansh}° {_s_kala:02d}')", f"{sat.house_from_lagna} भाव | {_s_nak}-P{_s_pad}")
+
     tab_future_event, tab_past_event = st.tabs(tabs)
 
     with tab_future_event:
@@ -205,12 +251,25 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
                     st.markdown(result.narrative_en)
 
             with col_res2:
-                st.markdown("### 🪐 गोचर स्थिति (Transit Snapshot)")
+                st.markdown("### 🪐 गोचर व सूक्ष्म स्थिति (Transit & Micro-Coordinates)")
                 t = result.transit_summary
                 st.markdown(f"- **शनि गोचर:** चंद्र से {t.saturn_house_from_moon}वां | लग्न से {t.saturn_house_from_lagna}वां भाव")
                 st.markdown(f"- **गुरु गोचर:** चंद्र से {t.jupiter_house_from_moon}वां | लग्न से {t.jupiter_house_from_lagna}वां भाव")
                 st.markdown(f"- **साढ़े साती:** {'✅ सक्रिय - ' + (t.sade_sati_phase or '') if t.is_sade_sati else '❌ निष्क्रिय'}")
                 st.markdown(f"- **ढैय्या:** {'✅ सक्रिय - ' + (t.dhaiya_type or '') if t.is_dhaiya else '❌ निष्क्रिय'}")
+
+                st.markdown("---")
+                st.markdown("##### ⏳ सक्रिय दशानाथ सूक्ष्म स्थिति:")
+                _d_lord = getattr(result, 'dasha_lord', 'Jupiter')
+                _po = chart.planets.get(_d_lord)
+                if _po:
+                    _d_sdeg = getattr(_po, 'sign_degree', 0.0)
+                    _d_ansh = int(_d_sdeg)
+                    _d_kala = int(round((_d_sdeg - _d_ansh) * 60.0))
+                    if _d_kala >= 60: _d_kala = 0; _d_ansh += 1
+                    _d_nak = getattr(_po, 'nakshatra_name', '')
+                    _d_pad = getattr(_po, 'nakshatra_pada', 1)
+                    st.markdown(f"- **{_d_lord}:** `{_po.sign_name} ({_d_ansh}° {_d_kala:02d}')` | `{_po.house_from_lagna} भाव` | `{_d_nak} (पद {_d_pad})`")
 
             st.markdown("### 🔍 सक्रिय शास्त्रीय नियम एवं साक्ष्य (Fired Rules Evidence)")
             if result.top_positive_signals:

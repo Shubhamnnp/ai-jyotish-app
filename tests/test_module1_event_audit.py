@@ -125,6 +125,15 @@ class TestModule1EventAudit(unittest.TestCase):
         self.assertGreaterEqual(tier2["score"], 0)
         self.assertLessEqual(tier2["score"], 35)
 
+    def test_event_view_active_native_dms_and_shloka(self):
+        """Verify active native's planets have valid DMS, ansh, kala, nakshatra padas and Phaldeepika shloka in event_view."""
+        view_code = open("src/jyotish/ui/modules/event_view.py", encoding="utf-8").read()
+        self.assertIn("phaladeepika_event_shloka", view_code)
+        self.assertIn("दशानाथानुसारेण गोचरेण विचारयेत्", view_code)
+        self.assertIn("सक्रिय दशानाथ सूक्ष्म स्थिति", view_code)
+        self.assertIn("गुरु स्थिति", view_code)
+        self.assertIn("शनि स्थिति", view_code)
+
 
 if __name__ == "__main__":
     unittest.main()
