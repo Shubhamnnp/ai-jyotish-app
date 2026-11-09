@@ -265,76 +265,143 @@ class RelationshipEngine:
         for rel_key, rel_meta in cls.RELATION_HOUSES.items():
             h_num = rel_meta["house"]
             target_sign_id = ((lagna_sign_id + h_num - 2) % 12) + 1
-            target_sign_name = SIGNS[target_sign_id - 1]["name_en"]
+            target_sign = SIGNS[target_sign_id - 1]
+            target_sign_name = target_sign["name_en"]
+            target_sign_hi = target_sign.get("name_hi", target_sign_name)
             house_lord = SIGN_LORDS[target_sign_name]
             karaka = rel_meta["karaka"]
 
             # Occupants in this house
             occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == h_num]
 
-            # Relationship harmony score:
             # Check friendship between Lagnesh and House Lord
             is_friend = house_lord in NATURAL_FRIENDS.get(lagnesh, []) or house_lord == lagnesh
             is_enemy = house_lord in NATURAL_ENEMIES.get(lagnesh, [])
 
-            # Check house lord dignity
+            # House lord details
             lord_pos = chart.planets.get(house_lord)
-            lord_dignity = lord_pos.dignity if lord_pos else "neutral"
+            lord_dignity = getattr(lord_pos, "dignity", "neutral") if lord_pos else "neutral"
+            lord_house = getattr(lord_pos, "house_from_lagna", h_num) if lord_pos else h_num
+            lord_retro = getattr(lord_pos, "is_retrograde", False) if lord_pos else False
 
-            # Determine status & description
+            # Karaka details
+            karaka_pos = chart.planets.get(karaka)
+            karaka_dignity = getattr(karaka_pos, "dignity", "neutral") if karaka_pos else "neutral"
+
+            positive_points = []
+            caution_points = []
+
             if h_num == 6:
-                # Enemies
-                harm_level = "उच्च (सावधानी आवश्यक)" if occupants or is_enemy else "मध्यम (नियंत्रण में)"
-                nature_hi = f"६ठे भाव में {', '.join(occupants) if occupants else 'कोई पापग्रह नहीं'} है। गुप्त प्रतिस्पर्धियों से सतर्क रहें।"
-                if "Mars" in occupants or "Saturn" in occupants or "Rahu" in occupants:
-                    advice_hi = "शत्रुहंता योग: विरोधी आप पर हावी नहीं हो पाएंगे, अंततः आपकी ही विजय होगी।"
+                # Enemies & Opponents
+                shatruhanta = any(p in ["Mars", "Saturn", "Rahu"] for p in occupants)
+                if shatruhanta:
+                    harm_level = "शत्रुहंता योग (विरोधी परास्त होंगे)"
+                    nature_hi = f"६ठे भाव में {', '.join(occupants)} की उपस्थिति से 'शत्रुहंता योग' निर्मित है। प्रतिस्पर्धी आपके सम्मुख टिक नहीं पाएंगे।"
+                    advice_hi = "विजय आपकी होगी; फिर भी व्यर्थ के अहंकार या कानूनी विवादों को स्वयं न भड़काएं।"
+                    positive_points.append("शत्रुओं व मुकदमों में जातक की अंतिम विजय सुनिश्चित होती है।")
+                    caution_points.append("प्रतिद्वंद्विता में अधिक समय व ऊर्जा नष्ट करने से बचें।")
                 else:
-                    advice_hi = "ऋण देने या अजनबियों पर अंधविश्वास करने से बचें; लिखा-पढ़ी में सावधानी रखें।"
+                    harm_level = "सावधानी अपेक्षित (सजग रहें)" if is_enemy or occupants else "सामान्य नियंत्रण में"
+                    nature_hi = f"६ठे भाव का स्वामी {house_lord} भाव {lord_house} में स्थित है। गुप्त प्रतिद्वंद्वियों और ईर्ष्यालु लोगों से सतर्क रहें।"
+                    advice_hi = "बिना लिखा-पढ़ी के किसी को ऋण न दें और न ही किसी की वित्तीय जमानत लें।"
+                    positive_points.append("शालीन व्यवहार एवं नीतिपूर्ण कार्यशैली से शत्रु स्वतः शांत होते हैं।")
+                    caution_points.append("वित्तीय लेन-देन व कार्यक्षेत्र में आंख मूंदकर भरोसा न करें।")
+
                 results[rel_key] = {
                     "title": rel_meta["title_hi"],
                     "lord": house_lord,
+                    "lord_house": lord_house,
+                    "lord_dignity": lord_dignity,
+                    "sign_name": target_sign_hi,
                     "occupants": occupants,
                     "status": harm_level,
                     "nature_hi": nature_hi,
-                    "advice_hi": advice_hi
+                    "advice_hi": advice_hi,
+                    "positive_points": positive_points,
+                    "caution_points": caution_points
                 }
+
             elif h_num == 11:
                 # Friends & Benefactors
-                benefit_level = "अत्यधिक लाभकारी (Strong Benefactors)" if (is_friend and lord_dignity in ("exalted", "own", "friend")) else "सामान्य सहयोगी"
-                nature_hi = f"११वें भाव के स्वामी {house_lord} हैं। {', '.join(occupants) if occupants else 'शुभ भाव'} द्वारा समर्थित।"
-                advice_hi = "बुजुर्गों, उच्चाधिकारियों और विद्वान मित्रों से जीवन में अकस्मात बड़ा सहयोग और आर्थिक लाभ प्राप्त होगा।"
+                benefit_level = "अत्यधिक लाभकारी (Strong Benefactors)" if (is_friend and lord_dignity in ("exalted", "own", "friend")) else "सहयोगात्मक एवं प्रगतिशील"
+                nature_hi = f"११वें भाव के अधिपति {house_lord} ({target_sign_hi}) भाव {lord_house} में हैं। {('भाव में ' + ', '.join(occupants) + ' स्थित हैं।') if occupants else 'शुभ भाव द्वारा समर्थित।'}"
+                advice_hi = "समान विचारधारा वाले विद्वान मित्रों, गुरुओं एवं वरिष्ठ अधिकारियों के संपर्क से बड़े आर्थिक व सामाजिक अवसर प्राप्त होंगे।"
+                positive_points.append("मित्र मंडली एवं शुभचिंतक आवश्यकता के समय महत्वपूर्ण मार्गदर्शन व सहयोग देंगे।")
+                if "Rahu" in occupants or is_enemy:
+                    caution_points.append("स्वार्थी या अत्यधिक चापलूस मित्रों से दूरी बनाए रखें।")
+                else:
+                    caution_points.append("मित्रों के साथ आर्थिक लेन-देन में स्पष्टता व लिखित हिसाब रखें।")
+
                 results[rel_key] = {
                     "title": rel_meta["title_hi"],
                     "lord": house_lord,
+                    "lord_house": lord_house,
+                    "lord_dignity": lord_dignity,
+                    "sign_name": target_sign_hi,
                     "occupants": occupants,
                     "status": benefit_level,
                     "nature_hi": nature_hi,
-                    "advice_hi": advice_hi
+                    "advice_hi": advice_hi,
+                    "positive_points": positive_points,
+                    "caution_points": caution_points
                 }
+
             elif h_num == 7:
-                # Spouse
-                status = "सद्भावपूर्ण एवं भाग्यवर्धक" if is_friend else ("तार्किक / विचार-भेद परंतु सहयोगात्मक" if not is_enemy else "धीरज व तालमेल आवश्यक")
-                if "Venus" in occupants or "Jupiter" in occupants:
-                    status += " (अत्यंत शुभ ग्रह दृष्टि)"
-                nature_hi = f"सप्तमेश {house_lord} की स्थिति अनुसार जीवनसाथी बुद्धिमान व कर्मठ होंगे।"
-                advice_hi = "आपसी समझ और संवाद खुला रखें; जीवनसाथी के नाम से किया गया कार्य फलीभूत होगा।"
+                # Spouse & Marriage
+                is_auspicious = lord_dignity in ("exalted", "own", "friend") and not any(p in ["Rahu", "Ketu", "Mars"] for p in occupants)
+                status = "सद्भावपूर्ण एवं भाग्यवर्धक (सुखद दांपत्य)" if is_auspicious else ("परिपक्व एवं सहयोगात्मक" if is_friend else "संवाद व धैर्य अपेक्षित")
+
+                if any(p in ["Jupiter", "Venus", "Mercury"] for p in occupants):
+                    positive_points.append("सप्तम भाव में शुभ ग्रह की स्थिति से जीवनसाथी सुसंस्कृत, बौद्धिक एवं आकर्षक व्यक्तित्व वाले होंगे।")
+                else:
+                    positive_points.append("विवाह उपरांत जीवन में सामाजिक प्रतिष्ठा एवं भाग्य में विशेष स्थायित्व की संभावना।")
+
+                if "Mars" in occupants:
+                    caution_points.append("सप्तम में मंगल की स्थिति से स्वभाव में कभी-कभी उग्रता या जल्दबाजी संभव; धैर्य से काम लें।")
+                if "Saturn" in occupants:
+                    caution_points.append("सप्तम में शनि की उपस्थिति जीवनसाथी को कर्तव्यनिष्ठ किंतु गंभीर बनाती है; आपसी संवाद निरंतर रखें।")
+                if "Rahu" in occupants:
+                    caution_points.append("सप्तम में राहु की स्थिति से अवास्तविक अपेक्षाओं या भ्रम से बचें; पूर्ण पारदर्शिता रखें।")
+                if not caution_points:
+                    caution_points.append("परस्पर विचारों का सम्मान करें एवं महत्वपूर्ण निर्णयों में जीवनसाथी की राय अवश्य लें।")
+
+                nature_hi = f"सप्तम भाव की राशि {target_sign_hi} है तथा इसके स्वामी {house_lord} भाव {lord_house} में हैं (कारक {karaka}: {karaka_dignity})।"
+                advice_hi = "आपसी समझ और विश्वास ही दांपत्य का मूल आधार है; जीवनसाथी के नाम से किया गया निवेश व कार्य शुभ फलदायी रहेगा।"
+
                 results[rel_key] = {
                     "title": rel_meta["title_hi"],
                     "lord": house_lord,
+                    "lord_house": lord_house,
+                    "lord_dignity": lord_dignity,
+                    "sign_name": target_sign_hi,
                     "occupants": occupants,
                     "status": status,
                     "nature_hi": nature_hi,
-                    "advice_hi": advice_hi
+                    "advice_hi": advice_hi,
+                    "positive_points": positive_points,
+                    "caution_points": caution_points
                 }
+
             else:
-                status = "प्रगाढ़ एवं सहयोगी" if is_friend else ("सामान्य संबंध" if not is_enemy else "सहनशीलता अपेक्षित")
+                # Family members: Father (9), Mother (4), Siblings (3), Children (5)
+                status = "प्रगाढ़ एवं सहयोगी" if is_friend else ("सामान्य सौहार्द" if not is_enemy else "सहनशीलता व संतुलन अपेक्षित")
+                nature_hi = f"भाव {h_num} ({target_sign_hi}) के स्वामी {house_lord} भाव {lord_house} में स्थित हैं (कारक: {karaka})।"
+                advice_hi = "पारिवारिक संस्कारों का पालन एवं परस्पर आदर इस संबंध से दीर्घकालिक शांति व आशीर्वाद प्रदान करेगा।"
+                positive_points.append(f"{rel_meta['title_hi'].split(' (')[0]} से स्नेह, संस्कार एवं मानसिक संबल प्राप्त होगा।")
+                caution_points.append("अनावश्यक वाद-विवाद से बचें तथा परिजनों के अनुभव का सम्मान करें।")
+
                 results[rel_key] = {
                     "title": rel_meta["title_hi"],
                     "lord": house_lord,
+                    "lord_house": lord_house,
+                    "lord_dignity": lord_dignity,
+                    "sign_name": target_sign_hi,
                     "occupants": occupants,
                     "status": status,
-                    "nature_hi": f"भाव स्वामी {house_lord} तथा कारक {karaka} की स्थिति अनुसार।",
-                    "advice_hi": "सद्भाव बनाए रखने से इस पक्ष से मानसिक संबल व सुख मिलेगा।"
+                    "nature_hi": nature_hi,
+                    "advice_hi": advice_hi,
+                    "positive_points": positive_points,
+                    "caution_points": caution_points
                 }
 
         # Overall relationship summary

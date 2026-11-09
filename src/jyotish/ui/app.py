@@ -9882,9 +9882,7 @@ elif selected_idx == 23:
     diet_view_mod.render_ayurvedic_diet_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(23))
 
 elif selected_idx == 24:
-    import importlib
     import src.jyotish.ui.modules.relationships_view as rel_view_mod
-    importlib.reload(rel_view_mod)
     rel_view_mod.render_relationships_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(24))
 
 elif selected_idx == 25:
