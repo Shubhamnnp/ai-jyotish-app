@@ -1,20 +1,28 @@
+# -*- coding: utf-8 -*-
+"""
+Module 22: Lal Kitab 1952 Teva & Classical Remedies View.
+Evaluates 12 Pakka Khanas (Houses), 9 Karmic Rinas (Debts), Sleeping Houses & Planets,
+Dharmi Teva, Andha Teva, and 108 authentic Lal Kitab Totkas with classical guidelines.
+"""
+
 import streamlit as st
 import pandas as pd
-import importlib
+from typing import List, Optional
+import src.jyotish.core.lalkitab as lk_mod
+from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 
-def render_lal_kitab_view(chart, tabs=None):
+
+def render_lal_kitab_view(chart, tabs: Optional[List[str]] = None):
     if tabs is None:
         tabs = [
-            '📖 खाना विश्लेषण व पक्का घर',
-            '⛓️ कर्मिक ऋण (Rinas) व दोष',
-            '🌿 कुण्डली टोटके एवं उपाय'
+            "🏠 १२ पक्के खाने व ग्रह स्थिति",
+            "⚠️ ९ कर्मिक ऋण व पितृ दोष",
+            "💤 सोए हुए घर व ग्रह विचार",
+            "🌿 १०८ प्रामाणिक टोटके व उपाय"
         ]
-    st.subheader("📕 लाल किताब 1952 तेवा एवं शास्त्रीय उपाय (Lal Kitab 1952 Engine)")
-    st.write("कालपुरुष पक्के घर (खाना नं. १ से १२), ९ प्रकार के कर्मिक ऋण (Pitra, Matra, Swa, Stri, Rishtedari, Nirdayi, Kudrati, Kanya, Jal Rina), सोया हुआ घर/ग्रह, धर्मी व अंधा तेवा एवं १०८ प्रामाणिक अचूक टोटके।")
 
-    import importlib
-    import src.jyotish.core.lalkitab as lk_mod
-    importlib.reload(lk_mod)
+    st.subheader("📕 लाल किताब 1952 तेवा एवं शास्त्रीय उपाय (Lal Kitab 1952 Engine)")
+    st.caption("कालपुरुष पक्के घर (खाना नं. १ से १२), ९ प्रकार के कर्मिक ऋण, सोया हुआ घर/ग्रह, धर्मी व अंधा तेवा एवं १०८ प्रामाणिक अचूक टोटके।")
 
     lk_res = lk_mod.default_lalkitab_engine.calculate(chart)
 
@@ -25,11 +33,18 @@ def render_lal_kitab_view(chart, tabs=None):
     c_lk3.metric("सक्रिय कर्मिक ऋण", f"{len(lk_res.active_debts)} / 9 ऋण", "पूर्वजन्म संस्कार")
     c_lk4.metric("सोए हुए घर (Sleeping)", f"{len(lk_res.sleeping_houses)} / 12", "जाग्रत करने योग्य")
 
-    tab_lk1, tab_lk2, tab_lk3, tab_lk4 = st.tabs(tabs)
+    rendered_tabs = st.tabs(tabs)
+    tab_lk1 = rendered_tabs[0]
+    tab_lk2 = rendered_tabs[1]
+    tab_lk3 = rendered_tabs[2]
+    tab_lk4 = rendered_tabs[3]
 
+    # -------------------------------------------------------------
+    # TAB 1: १२ पक्के खाने व ग्रह स्थिति
+    # -------------------------------------------------------------
     with tab_lk1:
         st.markdown("### 🏠 लाल किताब अनुसार १२ खानों में ग्रह स्थिति")
-        st.caption("लाल किताब में राशि नहीं, बल्कि खाना (House 1 to 12) सर्वोपरि होता है:")
+        st.caption("लाल किताब में राशि नहीं, बल्कि कालपुरुष के पक्के घर (खाना नं. १ से १२) सर्वोपरि होते हैं:")
 
         khana_table = []
         for kh in range(1, 13):
@@ -44,9 +59,22 @@ def render_lal_kitab_view(chart, tabs=None):
             })
         st.dataframe(pd.DataFrame(khana_table), use_container_width=True, hide_index=True)
 
+        st.info("ℹ️ **लाल किताब सिद्धांत:** लाल किताब में मेष राशि सदा लग्न (खाना १) मानी जाती है, चाहे जन्म लग्न कोई भी हो। सभी ग्रह अपनी खाना स्थिति के अनुसार विशिष्ट फल व टोटके निर्धारित करते हैं।")
+
+    # -------------------------------------------------------------
+    # TAB 2: ९ कर्मिक ऋण व पितृ दोष
+    # -------------------------------------------------------------
     with tab_lk2:
         st.markdown("### ⚠️ लाल किताब के ९ शास्त्रीय कर्मिक ऋण (9 Karmic Debts)")
-        st.caption("पूर्वजन्म अथवा पूर्वजों द्वारा किए गए कृत्यों के कारण उत्पन्न ९ शास्त्रीय ऋण:")
+        rina_pramana = SHASTRIYA_SHLOKAS.get("lalkitab_rina_parihara", {})
+        if rina_pramana:
+            st.markdown(f"""
+            <div style="background:#FEF2F2; border-left:3px solid #EF4444; padding:8px 12px; margin-bottom:12px; border-radius:6px; font-size:13px; color:#991B1B;">
+                <b>📜 शास्त्रीय ऋण परिहार प्रमाण:</b><br/>
+                <i>{rina_pramana.get('shloka_sanskrit', '').replace(chr(10), '<br/>')}</i><br/>
+                <small style="color:#7F1D1D;"><b>ग्रन्थ:</b> {rina_pramana.get('grantha', '')}</small>
+            </div>
+            """, unsafe_allow_html=True)
 
         if lk_res.active_debts:
             for d in lk_res.active_debts:
@@ -72,48 +100,62 @@ def render_lal_kitab_view(chart, tabs=None):
                 </div>
                 """, unsafe_allow_html=True)
 
+    # -------------------------------------------------------------
+    # TAB 3: सोए हुए घर व ग्रह विचार
+    # -------------------------------------------------------------
     with tab_lk3:
-        st.markdown("### 💤 सोए हुए घर एवं ग्रह विचार")
+        st.markdown("### 💤 सोए हुए घर एवं ग्रह विचार (Sleeping Houses & Planets)")
+        dharmi_pramana = SHASTRIYA_SHLOKAS.get("lalkitab_farman_dharmi", {})
+        if dharmi_pramana:
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border-left:3px solid #D97706; padding:8px 12px; margin-bottom:12px; border-radius:6px; font-size:13px; color:#78350F;">
+                <b>📜 धर्मी तेवा फरमान प्रमाण:</b><br/>
+                <i>{dharmi_pramana.get('shloka_sanskrit', '').replace(chr(10), '<br/>')}</i><br/>
+                <small style="color:#92400E;"><b>ग्रन्थ:</b> {dharmi_pramana.get('grantha', '')}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
         col_sl1, col_sl2 = st.columns(2)
         with col_sl1:
             st.markdown("#### 🏠 सोए हुए घर (Sleeping Houses)")
-            st.write("जिन घरों में कोई ग्रह नहीं होता, वे सोए हुए माने जाते हैं। उनके पक्के स्वामियों की सेवा से वे जाग्रत होते हैं:")
+            st.write("जिन घरों में कोई ग्रह स्थित नहीं होता, वे सोए हुए माने जाते हैं। उनके पक्के स्वामियों की सेवा व अनुकूल उपायों से वे जाग्रत होते हैं:")
             st.info(", ".join(f"खाना {h}" for h in lk_res.sleeping_houses) if lk_res.sleeping_houses else "कोई घर सोया हुआ नहीं है।")
 
         with col_sl2:
             st.markdown("#### 🪐 सोए हुए ग्रह (Sleeping Planets)")
-            st.write("जो ग्रह अपने कारक घर से संपर्क नहीं बना पाते:")
-            st.warning(", ".join(lk_res.sleeping_planets) if lk_res.sleeping_planets else "सभी ग्रह सक्रिय हैं।")
+            st.write("जो ग्रह अपने कारक घर या मित्र ग्रहों से दृष्टि-संपर्क स्थापित नहीं कर पाते:")
+            st.warning(", ".join(lk_res.sleeping_planets) if lk_res.sleeping_planets else "सभी ग्रह सक्रिय व जाग्रत हैं।")
 
+    # -------------------------------------------------------------
+    # TAB 4: १०८ प्रामाणिक टोटके व उपाय
+    # -------------------------------------------------------------
     with tab_lk4:
-        st.markdown("### 🌿 लाल किताब के अनुभूत अचूक टोटके एवं सावधानियां")
+        st.markdown("### 🌿 कुण्डली-आधारित लाल किताब टोटके एवं १०८ उपाय")
+        st.caption("आपकी कुण्डली के ग्रहों की खाना स्थिति अनुसार तत्काल प्रभावी लाल किताब उपाय:")
 
-        # 1. Native Chart 9 Planets Specific Totkas
-        st.markdown("#### 🎯 आपकी कुण्डली के ९ ग्रहों के अचूक टोटके:")
-        st.caption("आपके जन्म लग्न के अनुसार प्रत्येक ग्रह के वर्तमान खाने के प्रामाणिक उपाय व सावधानियां:")
-
-        if lk_res.chart_108_totkas:
-            t_grid_cols = st.columns(3)
-            for idx, c_t in enumerate(lk_res.chart_108_totkas):
-                col_i = idx % 3
-                with t_grid_cols[col_i]:
+        # 1. Custom Totkas for Current Chart
+        chart_totkas = getattr(lk_res, "chart_108_totkas", getattr(lk_res, "specific_remedies", []))
+        if chart_totkas:
+            c_cols = st.columns(3)
+            for idx, c_t in enumerate(chart_totkas):
+                with c_cols[idx % 3]:
                     st.markdown(f"""
-    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px; margin-bottom:12px; min-height:220px;">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-size:15px; font-weight:900; color:#B45309;">{c_t['planet_hi']} (खाना नं. {c_t['khana']})</span>
-        <span style="font-size:11px; background:#FEF3C7; color:#92400E; padding:2px 6px; border-radius:4px; font-weight:700;">लाल किताब 1952</span>
-    </div>
-    <div style="font-size:12px; color:#1E293B; margin-top:8px; line-height:1.5;">
-        <b>🌿 अचूक टोटका:</b> {c_t['totka_hi']}
-    </div>
-    <div style="font-size:11px; color:#991B1B; margin-top:6px; line-height:1.4;">
-        <b>⚠️ विशेष सावधानी:</b> {c_t['precaution_hi']}
-    </div>
-    <div style="font-size:11px; color:#065F46; margin-top:6px; font-style:italic;">
-        ✨ {c_t['shastra_effect_hi']}
-    </div>
-    </div>
-    """, unsafe_allow_html=True)
+                    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:14px; margin-bottom:12px; min-height:220px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:15px; font-weight:900; color:#B45309;">{c_t['planet_hi']} (खाना नं. {c_t['khana']})</span>
+                            <span style="font-size:11px; background:#FEF3C7; color:#92400E; padding:2px 6px; border-radius:4px; font-weight:700;">लाल किताब 1952</span>
+                        </div>
+                        <div style="font-size:12px; color:#1E293B; margin-top:8px; line-height:1.5;">
+                            <b>🌿 अचूक टोटका:</b> {c_t['totka_hi']}
+                        </div>
+                        <div style="font-size:11px; color:#991B1B; margin-top:6px; line-height:1.4;">
+                            <b>⚠️ विशेष सावधानी:</b> {c_t['precaution_hi']}
+                        </div>
+                        <div style="font-size:11px; color:#065F46; margin-top:6px; font-style:italic;">
+                            ✨ {c_t['shastra_effect_hi']}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
         st.markdown("---")
         # 2. Comprehensive 108 Totkas Explorer
@@ -139,28 +181,27 @@ def render_lal_kitab_view(chart, tabs=None):
         exp_data = lk_mod.LAL_KITAB_108_TOTKAS.get((sel_pl, sel_kh), None)
         if exp_data:
             st.markdown(f"""
-    <div style="background:#F0FDF4; border:1.5px solid #10B981; border-radius:10px; padding:16px; margin:10px 0;">
-    <div style="font-size:16px; font-weight:900; color:#065F46;">
-        📜 {sel_pl} खाना नं. {sel_kh} का प्रामाणिक लाल किताब उपाय
-    </div>
-    <div style="font-size:14px; color:#0F172A; margin-top:10px; line-height:1.6;">
-        <b>🌿 अचूक टोटका:</b> {exp_data['totka_hi']}
-    </div>
-    <div style="font-size:13px; color:#991B1B; margin-top:8px;">
-        <b>⚠️ जीवन रक्षा सावधानी:</b> {exp_data['precaution_hi']}
-    </div>
-    <div style="font-size:12px; color:#047857; margin-top:8px; font-style:italic;">
-        <b>फल प्रभाव:</b> {exp_data['shastra_effect_hi']}
-    </div>
-    </div>
-    """, unsafe_allow_html=True)
+            <div style="background:#F0FDF4; border:1.5px solid #10B981; border-radius:10px; padding:16px; margin:10px 0;">
+                <div style="font-size:16px; font-weight:900; color:#065F46;">
+                    📜 {sel_pl} खाना नं. {sel_kh} का प्रामाणिक लाल किताब उपाय
+                </div>
+                <div style="font-size:14px; color:#0F172A; margin-top:10px; line-height:1.6;">
+                    <b>🌿 अचूक टोटका:</b> {exp_data['totka_hi']}
+                </div>
+                <div style="font-size:13px; color:#991B1B; margin-top:8px;">
+                    <b>⚠️ जीवन रक्षा सावधानी:</b> {exp_data['precaution_hi']}
+                </div>
+                <div style="font-size:12px; color:#047857; margin-top:8px; font-style:italic;">
+                    <b>फल प्रभाव:</b> {exp_data['shastra_effect_hi']}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
         st.markdown("""
         #### 📜 लाल किताब के १० शाश्वत नियम:
-        1. किसी भी उपाय को सूर्योदय के पश्चात और सूर्यास्त से पहले करें।
+        1. किसी भी उपाय को सूर्योदय के पश्चात और सूर्यास्त से पहले करें (दिन के समय)।
         2. एक समय में एक ही उपाय करें, कम से कम ४० से ४३ दिन तक नियम न टूटे।
-        3. मुफ्त में कोई वस्तु या ताबीज न लें, न ही बिना दक्षिणा के ज्योतिषीय उपाय करें।
+        3. मुफ्त में कोई वस्तु या ताबीज न लें, न ही बिना दक्षिणा के ज्योतिषीय परामर्श करें।
         4. घर के मंदिर में भारी घंटियां या ऊंची मूर्तियां न रखें।
         5. मांस, मदिरा एवं पराई स्त्री के संग से सदा दूर रहें।
         """)
-

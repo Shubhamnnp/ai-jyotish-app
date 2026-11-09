@@ -7044,10 +7044,10 @@ MODULE_TABS_REGISTRY = {
         "💎 लकी फैक्टर्स, नामांक व फोन शोधन"
     ],
     22: [
-        "🏠 १२ पक्के खाने",
+        "🏠 १२ पक्के खाने व ग्रह स्थिति",
         "⚠️ ९ कर्मिक ऋण व पितृ दोष",
-        "💤 सोए हुए घर व ग्रह",
-        "🌿 १०८ प्रामाणिक टोटके"
+        "💤 सोए हुए घर व ग्रह विचार",
+        "🌿 १०८ प्रामाणिक टोटके व उपाय"
     ],
     23: [
         "🌿 त्रिदोष प्रकृति",
@@ -9874,9 +9874,7 @@ elif selected_idx == 21:
     numerology_view_mod.render_numerology_view(birth_profile=birth_profile, tabs=MODULE_TABS_REGISTRY.get(21))
 
 elif selected_idx == 22:
-    import importlib
     import src.jyotish.ui.modules.lal_kitab_view as lal_kitab_view_mod
-    importlib.reload(lal_kitab_view_mod)
     lal_kitab_view_mod.render_lal_kitab_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(22))
 
 elif selected_idx == 23:
