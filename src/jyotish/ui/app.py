@@ -9890,9 +9890,7 @@ elif selected_idx == 25:
     health_view_mod.render_health_disease_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(25))
 
 elif selected_idx == 26:
-    import importlib
     import src.jyotish.ui.modules.body_anatomy_view as body_view_mod
-    importlib.reload(body_view_mod)
     body_view_mod.render_body_anatomy_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(26))
 
 elif selected_idx == 27:

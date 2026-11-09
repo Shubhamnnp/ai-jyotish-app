@@ -692,14 +692,26 @@ class BodyAnatomyEngine:
     @classmethod
     def analyze(cls, chart: KundaliChart) -> Dict[str, Any]:
         lagna_sign_id = chart.lagna_sign_id
-        lagna_sign_name = SIGNS[lagna_sign_id - 1]["name_en"]
+        lagna_sign = SIGNS[lagna_sign_id - 1]
+        lagna_sign_name = lagna_sign["name_en"]
+        lagna_sign_hi = lagna_sign.get("name_hi", lagna_sign_name)
+        lagna_element = lagna_sign.get("element", "Fire")
+        lagnesh_name = SIGN_LORDS[lagna_sign_name]
+        lagnesh_pos = chart.planets.get(lagnesh_name)
+        lagnesh_dignity = getattr(lagnesh_pos, "dignity", "neutral") if lagnesh_pos else "neutral"
+
+        moon_pos = chart.planets.get("Moon")
+        moon_nakshatra = getattr(moon_pos, "nakshatra_name", "अश्विनी") if moon_pos else "अश्विनी"
+
         physique_data = cls.LAGNA_PHYSIQUE.get(lagna_sign_name, cls.LAGNA_PHYSIQUE["Aries"])
 
         # 12 Limbs Assessment
         limbs_status = []
+        vulnerable_count = 0
+        protected_count = 0
+
         for limb in cls.KALAPURUSHA_LIMBS:
             s_id = limb["sign_id"]
-            # Find which house corresponds to this sign or where malefic planets sit
             h_from_lagna = ((s_id - lagna_sign_id) % 12) + 1
             occupants = [p_name for p_name, p in chart.planets.items() if p.sign_id == s_id]
 
@@ -710,13 +722,15 @@ class BodyAnatomyEngine:
 
             if has_malefic and not has_benefic:
                 status = "🔴 संवेदनशील / दुर्बल (Afflicted/Vulnerable)"
-                notes = f"पापग्रह {', '.join(occupants)} की उपस्थिति: इस अंग में चोट, दर्द या खिंचाव की संवेदनशीलता।"
+                notes = f"पापग्रह {', '.join(occupants)} की उपस्थिति: इस अंग में चोट, खिंचाव या संवेदनशीलता की संभावना।"
+                vulnerable_count += 1
             elif has_malefic and has_benefic:
                 status = "🟡 मिश्रित प्रभाव (Moderate)"
                 notes = f"मिश्रित ग्रह ({', '.join(occupants)}): समय-समय पर देखभाल आवश्यक।"
             elif has_benefic:
                 status = "✨ विशेष शुभ एवं सशक्त (Protected)"
                 notes = f"शुभ ग्रह {', '.join(occupants)} द्वारा पोषित।"
+                protected_count += 1
 
             limbs_status.append({
                 "sign_id": s_id,
@@ -728,23 +742,52 @@ class BodyAnatomyEngine:
             })
 
         # Congenital Marks (तिल / मस्सा / जन्मजात चिन्ह)
-        # BPHS Rule: Malefics in Lagna or 6th house indicate scars or marks
+        # BPHS Rule: Malefics in Lagna, 2nd, 3rd, 6th, 8th indicate distinct scars or marks
         congenital_marks = []
         h1_occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == 1]
-        if "Mars" in h1_occupants:
-            congenital_marks.append("मस्तक, चेहरे या भौंहों के पास तिल, कटने का हल्का निशान या बचपन की चोट का चिन्ह संभव।")
-        if "Saturn" in h1_occupants:
-            congenital_marks.append("चेहरे या दाहिने कंधे पर गहरा तिल या मस्सा होना संभव।")
-        if "Rahu" in h1_occupants:
-            congenital_marks.append("सिर के पिछले हिस्से, गले या होंठों के आसपास तिल या जन्मजात चिन्ह।")
+        h2_occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == 2]
+        h3_occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == 3]
+        h6_occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == 6]
+        h8_occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == 8]
+
+        if "Mars" in h1_occupants or "Sun" in h1_occupants:
+            congenital_marks.append("मस्तक, ललाट या भौंहों के समीप लाल/भूरा तिल, कटने का सूक्ष्म निशान या बचपन की चोट का चिन्ह संभव।")
+        if "Saturn" in h1_occupants or "Rahu" in h1_occupants:
+            congenital_marks.append("चेहरे, ठोड़ी अथवा सिर के पिछले हिस्से पर गहरा तिल या मस्सा होना संभव।")
+        if any(p in ["Mars", "Rahu", "Saturn"] for p in h2_occupants):
+            congenital_marks.append("मुख, होंठ, दाहिने गाल या गले के आसपास तिल अथवा जन्मजात चिन्ह।")
+        if any(p in ["Mars", "Saturn"] for p in h3_occupants):
+            congenital_marks.append("दाहिने कंधे, बांह या कलाई पर तिल अथवा मस्सा।")
+        if any(p in ["Mars", "Ketu"] for p in h6_occupants):
+            congenital_marks.append("नाभि के आसपास, पेट के निचले भाग या कमर पर सूक्ष्म निशान या तिल।")
+        if any(p in ["Rahu", "Ketu"] for p in h8_occupants):
+            congenital_marks.append("कमर के निचले भाग, जांघ या गुप्त स्थानों पर जन्मजात मस्सा अथवा तिल।")
         if not congenital_marks:
-            congenital_marks.append("शरीर पर स्वाभाविक सौंदर्य व संतुलित चिन्ह हैं; कोई हानिकारक जन्मजात विकार नहीं है।")
+            congenital_marks.append("शरीर पर स्वाभाविक सौंदर्य व संतुलित चिन्ह हैं; कोई विकृत या अवांछित जन्मजात निशान नहीं है।")
+
+        # Element-based Asana & Posture Guidance
+        if lagna_element == "Fire":
+            asana_guidance = "अग्नि तत्व प्रधान शरीर: अतिरिक्त पित्त व ऊष्मा के शमन हेतु शीतलीकरण योगासन (शवासन, चंद्र नमस्कार, शीतली प्राणायाम, भ्रामरी) सर्वोत्तम हैं।"
+        elif lagna_element == "Earth":
+            asana_guidance = "पृथ्वी तत्व प्रधान शरीर: जोड़ों की जकड़न से बचाव व लचीलापन बढ़ाने हेतु गतिमान आसन (सूर्य नमस्कार, भुजंगासन, ताड़ासन, कटिचक्रासन) नियमित करें।"
+        elif lagna_element == "Air":
+            asana_guidance = "वायु तत्व प्रधान शरीर: नर्वस सिस्टम को शांत रखने व एकाग्रता बढ़ाने हेतु स्थिरता दायक आसन (वृक्षासन, पद्मासन, पश्चिमोत्तानासन, अनुलोम-विलोम) अत्यंत लाभकारी हैं।"
+        else:
+            asana_guidance = "जल तत्व प्रधान शरीर: आलस्य व कफ संचय से बचाव हेतु ऊर्जावान व चयापचय प्रदीप्त करने वाले आसन (धनुरासन, त्रिकोणासन, नौकासन, कपालभाति) प्रतिदिन करें।"
 
         return {
             "lagna_sign": lagna_sign_name,
+            "lagna_sign_hi": lagna_sign_hi,
+            "lagna_element": lagna_element,
+            "lagnesh_name": lagnesh_name,
+            "lagnesh_dignity": lagnesh_dignity,
+            "moon_nakshatra": moon_nakshatra,
             "physique": physique_data,
             "limbs_status": limbs_status,
+            "vulnerable_count": vulnerable_count,
+            "protected_count": protected_count,
             "congenital_marks": congenital_marks,
-            "core_advice": "प्रतिदिन सूर्योदय के समय योग, नियमित तेल मालिश (अभ्यंग) और शारीरिक मुद्रा (Posture) सीधी रखने से आपका शारीरिक तेज सदा बना रहेगा।"
+            "asana_guidance": asana_guidance,
+            "core_advice": "प्रतिदिन सूर्योदय के समय योग, नियमित तेल मालिश (अभ्यंग) और शारीरिक मुद्रा (Posture) सीधी रखने से आपका शारीरिक तेज व आभा सदा बनी रहेगी।"
         }
 
