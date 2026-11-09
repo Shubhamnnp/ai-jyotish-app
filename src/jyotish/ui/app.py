@@ -5934,7 +5934,8 @@ if "English" in st.session_state.app_lang:
         "🧘 Karma & Destiny (Karma)",
         "📅 Vedic Panchang (Panchang)",
         "📜 Classical Predictions (Predictions)",
-        "✋ Palmistry & Samudrika (Palmistry)"
+        "✋ Palmistry & Samudrika (Palmistry)",
+        "💎 Gemology & Remedies (Gemology)"
     ]
 elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -5969,7 +5970,8 @@ elif "Tamil" in st.session_state.app_lang or "தமிழ்" in st.session_sta
         "🧘 கர்ம பலன் (Karma)",
         "📅 பஞ்சாங்கம் (Panchang)",
         "📜 சாஸ்திர பலன் (Predictions)",
-        "✋ கைரேகை ஜோதிடம் (Palmistry)"
+        "✋ கைரேகை ஜோதிடம் (Palmistry)",
+        "💎 ரத்தின ஜோதிடம் (Gemology)"
     ]
 elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -6004,7 +6006,8 @@ elif "Telugu" in st.session_state.app_lang or "తెలుగు" in st.session
         "🧘 కర్మఫలం (Karma)",
         "📅 పంచాంగం (Panchang)",
         "📜 శాస్త్రీయ ఫలితాలు (Predictions)",
-        "✋ హస్తసాముద్రికం (Palmistry)"
+        "✋ హస్తసాముద్రికం (Palmistry)",
+        "💎 రత్న శాస్త్రం (Gemology)"
     ]
 elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -6039,7 +6042,8 @@ elif "Gujarati" in st.session_state.app_lang or "ગુજરાતી" in st.se
         "🧘 કર્મફળ (Karma)",
         "📅 વૈદિક પંચાંગ (Panchang)",
         "📜 શાસ્ત્રીય ફલાદેશ (Predictions)",
-        "✋ હસ્તરેખા વિજ્ઞાન (Palmistry)"
+        "✋ હસ્તરેખા વિજ્ઞાન (Palmistry)",
+        "💎 રત્ન અને રૂદ્રાક્ષ (Gemology)"
     ]
 elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -6074,7 +6078,8 @@ elif "Marathi" in st.session_state.app_lang or "मराठी" in st.session_s
         "🧘 कर्मफळ (Karma)",
         "📅 वैदिक पंचांग (Panchang)",
         "📜 शास्त्रीय फलादेश (Predictions)",
-        "✋ हस्तरेषा विज्ञान (Palmistry)"
+        "✋ हस्तरेषा विज्ञान (Palmistry)",
+        "💎 रत्न व रुद्राक्ष (Gemology)"
     ]
 elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_state.app_lang:
     MODULE_OPTIONS = [
@@ -6109,7 +6114,8 @@ elif "Bengali" in st.session_state.app_lang or "বাংলা" in st.session_s
         "🧘 কর্মফল (Karma)",
         "📅 বৈদিক পঞ্জিকা (Panchang)",
         "📜 শাস্ত্রীয় ফলাফল (Predictions)",
-        "✋ হস্তরেখা বিজ্ঞান (Palmistry)"
+        "✋ হস্তরেখা বিজ্ঞান (Palmistry)",
+        "💎 রত্ন ও প্রতিকার (Gemology)"
     ]
 else:
     MODULE_OPTIONS = [
@@ -6144,7 +6150,8 @@ else:
         "🧘 व्यक्तित्व व कर्मफल (Karma)",
         "📅 वैदिक पञ्चाङ्ग (Panchang)",
         "📜 शास्त्रीय फलादेश (Predictions)",
-        "✋ हस्तरेखा व सामुद्रिक (Palmistry)"
+        "✋ हस्तरेखा व सामुद्रिक (Palmistry)",
+        "💎 रत्न व रुद्राक्ष (Gemology)"
     ]
 
 
@@ -7117,6 +7124,14 @@ MODULE_TABS_REGISTRY = {
         "⚜️ ५. विशिष्ट दिव्य चिन्ह व योग (Yogas)",
         "🔗 ६. कुण्डली-हस्तरेखा समन्वय (Synthesis)",
         "🪔 ७. दोष निवारण एवं वैदिक उपाय (Remedies)"
+    ],
+    32: [
+        "💎 १. शास्त्रीय रत्न ऑडिट व संस्तुति (Gemstone Audit)",
+        "🚫 २. सर्वथा वर्जित रत्न व त्रिक दोष (Prohibited Dusthana Gems)",
+        "📿 ३. कुण्डली-सम्मत रुद्राक्ष विधान (Rudraksha Therapy)",
+        "🌿 ४. दान, व्रत, मन्त्र एवं सात्विक शांति (Mantra, Daan & Vrata)",
+        "💍 ५. विवाह व मांगलिक रत्न शुद्धि (Vivaha & Manglik Gem Shuddhi)",
+        "📜 ६. बृहत्संहिता व गरुड़ पुराण प्रमाण (Classical Shlokas)"
     ]
 }
 
@@ -9925,6 +9940,13 @@ elif selected_idx == 31:
     palmistry_view_mod.render_palmistry_view(
         chart=chart,
         tabs=MODULE_TABS_REGISTRY.get(31)
+    )
+
+elif selected_idx == 32:
+    import src.jyotish.ui.modules.gemology_view as gemology_view_mod
+    gemology_view_mod.render_gemology_view(
+        chart=chart,
+        tabs=MODULE_TABS_REGISTRY.get(32)
     )
 
 # -------------------------------------------------------------

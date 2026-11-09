@@ -20,6 +20,56 @@ Core Principles:
 
 from typing import Dict, List, Tuple, Optional, Any
 from ..core.models import KundaliChart
+from ..core.constants import NAKSHATRAS, SIGN_NAMES
+
+
+SHASTRIYA_GEMOLOGY_SHLOKAS = {
+    "brihat_samhita_ratna_pariksha": {
+        "title": "बृहत्संहिता — रत्नपरीक्षा लक्षण",
+        "shloka": "रत्नेन शुभेन शुभं भवति नृपाणां निहन्त्यशुभमशुभम्।\nयस्मादतः परीक्ष्यं दैवज्ञैः सर्वथा रत्नम्॥",
+        "source": "वराहमिहिर विरचित बृहत्संहिता (अध्याय ८०, श्लोक १)",
+        "meaning": "शुभ एवं शुद्ध रत्न धारण करने से राजाओं और मनुष्यों का परम कल्याण व भाग्योदय होता है, जबकि अशुद्ध व अनुपयुक्त रत्न अनिष्टकारी होता है। अतः दैवज्ञ (ज्योतिषी) को कुण्डली की सूक्ष्म परीक्षा करके ही रत्न धारण की संस्तुति करनी चाहिए।"
+    },
+    "garuda_purana_ratna_dharana": {
+        "title": "गरुड़ पुराण — नवग्रह रत्न निर्णय",
+        "shloka": "माणिक्यं तरणेः सुजातममलं मुक्ताफलं शीतगोः माहेयस्य च विद्रुमं मरकतं सौम्यस्य गारुत्मतम्।\nदेवेज्यस्य च पुष्पराजमसुराचार्यस्य वज्रं शने- र्नीलं निर्मलमन्ययोश्च गदिते गोमेदवैदूर्यके॥",
+        "source": "गरुड़ पुराण (आचारकाण्ड, रत्न परीक्षा अध्याय ६८)",
+        "meaning": "सूर्य के लिए श्रेष्ठ माणिक्य, चन्द्रमा के लिए विमल मोती, मंगल के लिए रक्त मूंगा, बुध के लिए मरकत (पन्ना), देवगुरु के लिए पुखराज, शुक्र के लिए वज्र (हीरा), शनि के लिए नीलकांत (नीलम), राहु के लिए गोमेद और केतु के लिए वैदूर्य (लहसुनिया) प्रशस्त कहे गए हैं।"
+    },
+    "phaladeepika_dusthana_ratna_nishedha": {
+        "title": "फलदीपिका / जातक पारिजात — त्रिक भाव रत्न निषेध",
+        "shloka": "षष्ठाष्टमव्ययगतानां ग्रहाणां रत्नानि न धार्याणि।\nदोषावहं भवति तत्तु तद्भावे विवृद्धिकारकत्वात्॥",
+        "source": "फलदीपिका एवं जातक पारिजात (रत्न विवेक विधान)",
+        "meaning": "६ठे, ८वें व १२वें (त्रिक/दुष्ट) भावों में स्थित ग्रहों के रत्न कदापि धारण नहीं करने चाहिए। रत्न उस ग्रह की रश्मियों को तीक्ष्ण कर उस भाव के अनिष्ट फल (रोग, ऋण, शत्रु, संकट, मानसिक क्लेश व धन हानि) को प्रवर्धित कर देते हैं।"
+    }
+}
+
+INCOMPATIBLE_GEM_COMBINATIONS = [
+    {
+        "pair": ("माणिक्य (Ruby)", "नीलम (Blue Sapphire)"),
+        "reason": "सूर्य और शनि परस्पर परम शत्रु हैं। इनका एक साथ धारण रक्तचाप, पित्त-वायु असंतुलन एवं पिता-पुत्र कलह उत्पन्न करता है।"
+    },
+    {
+        "pair": ("माणिक्य (Ruby)", "गोमेद (Hessonite)"),
+        "reason": "सूर्य-राहु का योग 'सूर्य ग्रहण योग' बनाता है। दोनों रत्न एक साथ पहनने से यश हानि व मानसिक भ्रम होता है।"
+    },
+    {
+        "pair": ("मोती (Pearl)", "गोमेद (Hessonite)"),
+        "reason": "चन्द्र-राहु ग्रहण योग। एक साथ धारण करने से भारी मानसिक अवसाद, अनिद्रा एवं जल/कफ जन्य व्याधियां हो सकती हैं।"
+    },
+    {
+        "pair": ("पुखराज (Yellow Sapphire)", "हीरा (Diamond)"),
+        "reason": "देवगुरु बृहस्पति और दैत्यगुरु शुक्र परस्पर विरोधी ऊर्जा रखते हैं। इनके रत्न एक साथ पहनने से वैवाहिक व आध्यात्मिक तालमेल में द्वंद्व आता है।"
+    },
+    {
+        "pair": ("पुखराज (Yellow Sapphire)", "पन्ना (Emerald)"),
+        "reason": "गुरु और बुध की शत्रुता के कारण एक साथ धारण करने से निर्णय क्षमता में असमंजस उत्पन्न होता है।"
+    },
+    {
+        "pair": ("मूँगा (Red Coral)", "नीलम (Blue Sapphire)"),
+        "reason": "मंगल (अग्नि) और शनि (वायु/लोहा) का संयोग दुर्घटना, अस्थि विकार एवं उग्रता को जन्म देता है।"
+    }
+]
 
 
 GEMSTONE_CATALOG = {
@@ -307,11 +357,26 @@ class VedicGemologyService:
             is_retro = pos.is_retrograde
             gem_meta = GEMSTONE_CATALOG.get(p_name, GEMSTONE_CATALOG["Sun"])
 
+            # Degree, ansh, kala, nakshatra, and pada calculation
+            raw_deg = float(getattr(pos, "longitude", getattr(pos, "degree", 0.0)))
+            ansh = int(raw_deg % 30.0)
+            kala = int(round(((raw_deg % 30.0) - ansh) * 60.0))
+            if kala >= 60:
+                kala = 0
+                ansh += 1
+            sign_idx = int(raw_deg / 30.0) % 12
+            sign_name = SIGN_NAMES[sign_idx] if sign_idx < len(SIGN_NAMES) else ""
+            nak_idx = int(raw_deg / (360.0 / 27.0)) % 27
+            nak_name = NAKSHATRAS[nak_idx]["name"] if nak_idx < len(NAKSHATRAS) else ""
+            pada = int((raw_deg % (360.0 / 27.0)) / (360.0 / 108.0)) + 1
+
             is_rec = False
             status_code = "NEUTRAL"
             verdict = ""
             reasons = []
             alert = None
+            pos_verdict = ""
+            neg_caution = ""
 
             # -------------------------------------------------------------
             # RULE 1: DUSTHANA / TRIK (6, 8, 12) HOUSE PLACEMENT PROHIBITION
@@ -329,6 +394,8 @@ class VedicGemologyService:
                     "reason": alert
                 })
                 dusthana_afflictions.append((p_name, h, gem_meta["gem_hi"]))
+                pos_verdict = "सात्विक मन्त्र, रुद्राक्ष व दान से इस अनिष्ट भाव का शमन संभव है।"
+                neg_caution = f"रत्न धारण करने पर {h}वें भाव के रोग, ऋण, गुप्त शत्रु व अचानक हानि की आशंका अत्यंत तीव्र हो जाएगी।"
 
             # -------------------------------------------------------------
             # RULE 2: DEBILITATION (नीच राशि) WITHOUT STRONG CANCELLATION
@@ -344,6 +411,8 @@ class VedicGemologyService:
                     "house": h,
                     "reason": alert
                 })
+                pos_verdict = f"{gem_meta['rudraksha']} एवं {p_name} के वैदिक बीज मन्त्र का जप आत्मबल व प्रतिष्ठा की रक्षा करता है।"
+                neg_caution = "नीच ग्रह का रत्न धारण करने से नकारात्मक प्रवृत्तियों और मानसिक कुंठा में वृद्धि हो सकती है।"
 
             # -------------------------------------------------------------
             # RULE 3: FUNCTIONAL MALEFICS & MARAKAS
@@ -353,6 +422,8 @@ class VedicGemologyService:
                 verdict = f"⚠️ सतर्कता (Maraka Lord — सावधानी)"
                 alert = f"{p_name} इस लग्न के लिए मारक भाव का स्वामी है। बिना विशेष परीक्षण के रत्न न पहनें।"
                 reasons.append(alert)
+                pos_verdict = "मारक ग्रह की शांति हेतु शिव आराधना व महामृत्युंजय जप सर्वोत्तम सुरक्षा प्रदान करता है।"
+                neg_caution = "मारक दशा या अंतरदशा में इसका रत्न स्वास्थ्य व आयु पर प्रतिकूल प्रभाव डाल सकता है।"
 
             # -------------------------------------------------------------
             # RULE 4: FUNCTIONAL BENEFICS IN KENDRA / TRIKONA
@@ -374,20 +445,32 @@ class VedicGemologyService:
                         "house": h,
                         "role": bonus_role
                     })
+                    pos_verdict = f"{bonus_role} का रत्न धारण करने से कार्यसिद्धि, यश, ओजस्विता एवं दीर्घकालिक समृद्धि प्राप्त होगी।"
+                    neg_caution = "अशुद्ध, खंडित अथवा दोषयुक्त रत्न धारण न करें; केवल ज्योतिषी विधि से प्राण-प्रतिष्ठित रत्न ही पहनें।"
                 else:
                     status_code = "CONDITIONAL"
                     verdict = f"🟡 मध्यम / विशिष्ट दशा में विचारणीय"
                     reasons.append(f"{p_name} की स्थिति मध्यम है। इसकी महादशा में ज्योतिषी परामर्श से विचार करें।")
+                    pos_verdict = "विशिष्ट समयावधि या महादशा में सीमित काल के लिए अनुभवी दैवज्ञ के परामर्श से धारण किया जा सकता है।"
+                    neg_caution = "सामान्य स्थिति में रत्न के स्थान पर रुद्राक्ष या सात्विक जप अधिक सुरक्षित रहता है।"
 
             audit_results[p_name] = {
                 "planet": p_name,
                 "house": h,
+                "degree": raw_deg,
+                "ansh": ansh,
+                "kala": kala,
+                "sign_name": sign_name,
+                "nakshatra": nak_name,
+                "pada": pada,
                 "dignity": dignity,
                 "is_combust": is_combust,
                 "is_retrograde": is_retro,
                 "is_recommended": is_rec,
                 "status_code": status_code,
                 "verdict": verdict,
+                "positive_verdict": pos_verdict,
+                "negative_caution": neg_caution,
                 "alert": alert,
                 "reasons": reasons,
                 "gem_hi": gem_meta["gem_hi"],
@@ -412,6 +495,92 @@ class VedicGemologyService:
             "recommended_gems": recommended_gems,
             "strictly_prohibited_gems": strictly_prohibited_gems,
             "dusthana_afflictions": dusthana_afflictions
+        }
+
+    @classmethod
+    def get_navratri_fasting_tithi(cls, chart: KundaliChart) -> Dict[str, Any]:
+        """
+        Calculates optimal Navratri fasting tithi and deity based on native's Lagnesha,
+        Moon nakshatra, and Atmakaraka.
+        """
+        lagna_id = getattr(chart, "lagna_sign_id", 1)
+        profile = LAGNA_FUNCTIONAL_PROFILE.get(lagna_id, LAGNA_FUNCTIONAL_PROFILE[1])
+        lagnesh = profile["lagnesh"]
+
+        moon = chart.planets.get("Moon")
+        moon_deg = float(getattr(moon, "longitude", getattr(moon, "degree", 0.0))) if moon else 0.0
+        nak_idx = int(moon_deg / (360.0 / 27.0)) % 27
+        pada = int((moon_deg % (360.0 / 27.0)) / (360.0 / 108.0)) + 1
+        nak_name = NAKSHATRAS[nak_idx]["name"] if nak_idx < len(NAKSHATRAS) else "Ashwini"
+
+        # Tithi and Swarupa mapping based on Lagnesha & Nakshatra
+        tithi_mapping = {
+            "Sun": {"tithi": "प्रतिपदा / अष्टमी (1st / 8th Tithi)", "form": "मां शैलपुत्री एवं महागौरी", "focus": "आत्मबल, ओजस्विता व सूर्य-दोष शमन"},
+            "Moon": {"tithi": "द्वितीया / तृतीया (2nd / 3rd Tithi)", "form": "मां ब्रह्मचारिणी एवं चंद्रघंटा", "focus": "मानसिक शांति, एकाग्रता व मातृ सुख"},
+            "Mars": {"tithi": "तृतीया / स्कंद षष्ठी (3rd / 6th Tithi)", "form": "मां चंद्रघंटा एवं स्कंदमाता", "focus": "साहस, भूमि-भवन लाभ व मांगलिक दोष शांति"},
+            "Mercury": {"tithi": "चतुर्थी / पंचमी (4th / 5th Tithi)", "form": "मां कूष्मांडा एवं स्कंदमाता", "focus": "बुद्धि, व्यापारिक यश व वाक् सिद्धि"},
+            "Jupiter": {"tithi": "पंचमी / नवमी (5th / 9th Tithi)", "form": "मां स्कंदमाता एवं सिद्धिदात्री", "focus": "ज्ञान, सन्तान सुख, धर्म व मोक्ष सिद्धि"},
+            "Venus": {"tithi": "षष्ठी / अष्टमी (6th / 8th Tithi)", "form": "मां कात्यायनी एवं महागौरी", "focus": "दांपत्य सौख्य, आकर्षण, वैभव व ऐश्वर्य"},
+            "Saturn": {"tithi": "सप्तमी / महाअष्टमी (7th / 8th Tithi)", "form": "मां कालरात्रि एवं महागौरी", "focus": "शत्रु बाधा निवारण, साढ़ेसाती शांति व दीर्घायु"},
+            "Rahu": {"tithi": "महाअष्टमी (8th Tithi - दुर्गाष्टमी)", "form": "मां महागौरी एवं महिषासुरमर्दिनी", "focus": "राहु-केतु ग्रहण दोष एवं तंत्र बाधा निवारण"},
+            "Ketu": {"tithi": "महानवमी (9th Tithi - सिद्धिदात्री)", "form": "मां सिद्धिदात्री", "focus": "अध्यात्म, मोक्ष व सर्व कार्य सिद्धि"}
+        }
+
+        cfg = tithi_mapping.get(lagnesh, tithi_mapping["Jupiter"])
+
+        return {
+            "lagnesh": lagnesh,
+            "moon_nakshatra": nak_name,
+            "moon_pada": pada,
+            "optimal_tithi": cfg["tithi"],
+            "devi_form": cfg["form"],
+            "spiritual_focus": cfg["focus"],
+            "fasting_guideline": f"जातक के लग्नेश ({lagnesh}) एवं चन्द्र नक्षत्र ({nak_name} पद {pada}) के अनुसार नवरात्रि में {cfg['tithi']} को {cfg['form']} की विशिष्ट साधना व व्रत रखना सर्वोत्तम रहेगा।",
+            "positive_verdict": f"इस तिथि को फलाहार व्रत व मन्त्र जप करने से कुण्डली के समस्त दोषों का शमन एवं दैवीय अनुग्रह प्राप्त होता है।",
+            "negative_caution": "तामसिक भोजन, क्रोध एवं असत्य भाषण से पूर्णतः परहेज रखें; षष्ठी/अष्टमी के दिन जल-नियम का पालन अवश्य करें।"
+        }
+
+    @classmethod
+    def get_vivaha_gem_muhurta_compatibility(cls, chart: KundaliChart) -> Dict[str, Any]:
+        """
+        Evaluates gemstone suitability for marriage, auspicious ceremonies,
+        and gemstone wearing muhurta checks (Tribala Shuddhi).
+        """
+        sun = chart.planets.get("Sun")
+        moon = chart.planets.get("Moon")
+        jupiter = chart.planets.get("Jupiter")
+        venus = chart.planets.get("Venus")
+
+        sun_house = getattr(sun, "house_from_lagna", 1) if sun else 1
+        moon_house = getattr(moon, "house_from_lagna", 1) if moon else 1
+        jup_house = getattr(jupiter, "house_from_lagna", 1) if jupiter else 1
+        is_jup_combust = getattr(jupiter, "is_combust", False) if jupiter else False
+        is_ven_combust = getattr(venus, "is_combust", False) if venus else False
+
+        # Tribala Shuddhi for Vivaha/Manglik tasks
+        sun_shuddhi = sun_house in [3, 6, 10, 11, 1, 5, 9]
+        chandra_shuddhi = moon_house in [1, 3, 6, 7, 10, 11, 2, 5, 9]
+        guru_shuddhi = (jup_house in [1, 2, 5, 7, 9, 11]) and not is_jup_combust
+
+        muhurta_score = 0
+        if sun_shuddhi: muhurta_score += 35
+        if chandra_shuddhi: muhurta_score += 35
+        if guru_shuddhi: muhurta_score += 30
+
+        combustion_warning = None
+        if is_jup_combust or is_ven_combust:
+            combustion_warning = "⚠️ गुरु अथवा शुक्र का अस्तत्व (Combustion): विवाह एवं नवीन रत्न धारण में गुरु/शुक्र का अस्त काल त्याज्य माना गया है।"
+
+        return {
+            "sun_shuddhi": sun_shuddhi,
+            "chandra_shuddhi": chandra_shuddhi,
+            "guru_shuddhi": guru_shuddhi,
+            "muhurta_score": muhurta_score,
+            "combustion_warning": combustion_warning,
+            "incompatible_combinations": INCOMPATIBLE_GEM_COMBINATIONS,
+            "auspicious_wearing_nakshatras": ["पुष्य (Pushya)", "रोहिणी (Rohini)", "अश्विनी (Ashwini)", "रेवती (Revati)", "हस्त (Hasta)", "अनुराधा (Anuradha)", "चित्रा (Chitra)", "स्वाति (Swati)"],
+            "positive_verdict": "शुभ नक्षत्र (पुष्य/रोहिणी/हस्त) एवं शुक्ल पक्ष के शुभ वार में सूर्योदय वेला में रत्न धारण से अक्षुण्ण फल प्राप्त होता है।",
+            "negative_caution": "राहुकाल, भद्रा, ग्रहण वेध अथवा कृष्ण पक्ष की रिक्त तिथियों (४, ९, १४) में कभी भी रत्न धारण न करें।"
         }
 
     @classmethod
