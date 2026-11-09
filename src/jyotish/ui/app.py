@@ -9911,17 +9911,13 @@ elif selected_idx == 29:
     )
 
 elif selected_idx == 30:
-    import importlib
-    import src.jyotish.services.shastriya_faladesh as shastriya_svc_mod
-    importlib.reload(shastriya_svc_mod)
     import src.jyotish.ui.shastriya_faladesh_view as shastriya_view_mod
-    importlib.reload(shastriya_view_mod)
-
     shastriya_view_mod.render_shastriya_faladesh_view(
         chart=chart,
         birth_profile=birth_profile,
         is_dark=st.session_state.get("dark_mode", False),
-        tz_offset=tz_offset
+        tz_offset=tz_offset,
+        tabs=MODULE_TABS_REGISTRY.get(30)
     )
 
 elif selected_idx == 31:

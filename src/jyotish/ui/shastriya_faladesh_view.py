@@ -9,22 +9,26 @@ Presents:
 """
 
 import streamlit as st
-import importlib
 from datetime import datetime, date, time
 from typing import Dict, Any, Optional, List
 
-import src.jyotish.services.shastriya_faladesh as s_faladesh_mod
-importlib.reload(s_faladesh_mod)
 from src.jyotish.services.shastriya_faladesh import (
     default_shastriya_faladesh_engine,
     LIFE_DIMENSIONS_50,
     PLANET_NAMES_HI
 )
+from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 from src.jyotish.core.models import KundaliChart, BirthData
 from src.jyotish.core.constants import GRAHAS, SIGNS, SIGN_NAMES, SIGN_LORDS, NAKSHATRAS
 
 
-def render_shastriya_faladesh_view(chart: KundaliChart, birth_profile: Optional[BirthData] = None, is_dark: bool = False, tz_offset: float = 5.5):
+def render_shastriya_faladesh_view(
+    chart: KundaliChart,
+    birth_profile: Optional[BirthData] = None,
+    is_dark: bool = False,
+    tz_offset: float = 5.5,
+    tabs: Optional[List[str]] = None
+):
     """Renders the comprehensive Classical Predictive Analysis (शास्त्रीय फलादेश) view."""
 
     card_bg = "#111827" if is_dark else "#FFFFFF"
@@ -81,13 +85,30 @@ def render_shastriya_faladesh_view(chart: KundaliChart, birth_profile: Optional[
     </div>
     """, unsafe_allow_html=True)
 
+    # Classical Shastriya Shloka Card
+    faladesh_pramana = SHASTRIYA_SHLOKAS.get("bphs_shastriya_faladesh_srishti", {})
+    if faladesh_pramana:
+        with st.expander("📜 शास्त्रीय प्रमाण — महर्षि पराशर विरचित बृहत्पाराशर होराशास्त्रम् (सृष्टि-क्रम एवं शुभाशुभ फल विधान)", expanded=False):
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+                <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {faladesh_pramana.get('grantha', '')}</b>
+                <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{faladesh_pramana.get('shloka_sanskrit', faladesh_pramana.get('shloka', ''))}
+                </pre>
+                <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                    <b>हिंदी भावार्थ:</b> {faladesh_pramana.get('anuvad_hi', faladesh_pramana.get('hindi_translation', ''))}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
     # 4 Master View Sub-Tabs
-    sub_tab1, sub_tab2, sub_tab3, sub_tab4 = st.tabs([
+    tab_list = tabs if tabs and len(tabs) == 4 else [
         "🌟 ५० जीवन आयाम",
         "❓ १०० प्रश्न-उत्तर (FAQs)",
         "🔬 सर्व-गणना संश्लेषण",
         "📜 ग्रन्थ प्रमाण व उपाय"
-    ])
+    ]
+    sub_tab1, sub_tab2, sub_tab3, sub_tab4 = st.tabs(tab_list)
 
     # -------------------------------------------------------------------------
     # TAB 1: 50 LIFE DIMENSIONS NAVIGATOR
@@ -181,9 +202,12 @@ def render_shastriya_faladesh_view(chart: KundaliChart, birth_profile: Optional[
             p_rows = []
             for p in synth["planets_data"]:
                 comb_str = "🔥 अस्त" if p["is_combust"] else ("⚡ वक्री" if p["is_retrograde"] else "मार्गी")
+                deg_val = p.get("degree", 0.0)
+                deg_ansh = int(deg_val % 30)
+                deg_kala = int(round(((deg_val % 30) - deg_ansh) * 60))
                 p_rows.append({
                     "ग्रह": p["planet_hi"],
-                    "अंश": f"{p['degree']}°",
+                    "अंश (DMS)": f"{deg_ansh}° {deg_kala}' ({deg_val:.2f}°)",
                     "नक्षत्र व पद": f"{p['nakshatra']} (पद {p['pada']})",
                     "गरिमा (Dignity)": p["dignity"].split(" ")[0],
                     "अवस्था": p["baladi"].split(" ")[0],
@@ -374,12 +398,18 @@ def render_shastriya_faladesh_view(chart: KundaliChart, birth_profile: Optional[
                 av = default_shastriya_faladesh_engine.evaluate_planet_avashtha(p_name, p.sign_degree, is_odd)
                 st_flag = "🔥 अस्त" if p.is_combust else ("⚡ वक्री" if p.is_retrograde else "मार्गी")
 
+                p_deg = getattr(p, "sign_degree", getattr(p, "degree", 15.0))
+                p_ansh = int(p_deg % 30)
+                p_kala = int(round(((p_deg % 30) - p_ansh) * 60))
+                p_nak_name = getattr(p, "nakshatra_name", "") or getattr(p, "nakshatra", "अश्विनी")
+                p_nak_pada = getattr(p, "nakshatra_pada", 1) or getattr(p, "pada", 1)
+
                 all_p_rows.append({
                     "ग्रह": PLANET_NAMES_HI.get(p_name, p_name),
-                    "राशि": p.sign_name,
-                    "अंश": f"{p.sign_degree:.2f}°",
-                    "नक्षत्र": f"{p.nakshatra_name} ({p.nakshatra_pada})",
-                    "नक्षत्र स्वामी": PLANET_NAMES_HI.get(p.nakshatra_lord, p.nakshatra_lord),
+                    "राशि": getattr(p, "sign_name", "मेष"),
+                    "अंश (DMS)": f"{p_ansh}° {p_kala}' ({p_deg:.2f}°)",
+                    "नक्षत्र": f"{p_nak_name} (पद {p_nak_pada})",
+                    "नक्षत्र स्वामी": PLANET_NAMES_HI.get(getattr(p, "nakshatra_lord", "Ketu"), getattr(p, "nakshatra_lord", "Ketu")),
                     "भाव (Lagna)": f"{p.house_from_lagna}",
                     "भाव (Moon)": f"{p.house_from_moon}",
                     "गरिमा": p.dignity or "सम",

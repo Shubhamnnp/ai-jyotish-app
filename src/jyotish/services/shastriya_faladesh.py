@@ -923,10 +923,20 @@ class ShastriyaFaladeshEngine:
             # Shadbala
             p_shad = shadbala_planets.get(p_name)
             virupas = getattr(p_shad, "total_virupas", 350.0) if p_shad else 350.0
-            rupas = getattr(p_shad, "total_rupas", virupas / 60.0) if p_shad else (virupas / 60.0)
-            ratio = getattr(p_shad, "strength_ratio", 1.0) if p_shad else 1.0
-            if ratio is None:
-                ratio = rupas / 5.5
+            rupas = getattr(p_shad, "total_rupas", None) if p_shad else None
+            try:
+                virupas = float(virupas)
+            except (TypeError, ValueError):
+                virupas = 350.0
+            try:
+                rupas = float(rupas) if rupas is not None else (virupas / 60.0)
+            except (TypeError, ValueError):
+                rupas = virupas / 60.0
+            ratio = getattr(p_shad, "strength_ratio", None) if p_shad else None
+            try:
+                ratio = float(ratio) if ratio is not None else (rupas / 5.5)
+            except (TypeError, ValueError):
+                ratio = 1.0
 
             # Dignity
             dignity_str = p_obj.dignity or "neutral"
