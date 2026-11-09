@@ -9921,10 +9921,7 @@ elif selected_idx == 30:
     )
 
 elif selected_idx == 31:
-    import importlib
     import src.jyotish.ui.modules.palmistry_view as palmistry_view_mod
-    importlib.reload(palmistry_view_mod)
-
     palmistry_view_mod.render_palmistry_view(
         chart=chart,
         tabs=MODULE_TABS_REGISTRY.get(31)

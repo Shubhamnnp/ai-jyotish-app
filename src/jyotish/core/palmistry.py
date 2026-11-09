@@ -721,51 +721,74 @@ class HastarekhaEngine:
         jup_pos = chart.planets.get("Jupiter")
         if jup_pos:
             sign_name = getattr(jup_pos, "sign_name", "")
+            j_deg = getattr(jup_pos, "sign_degree", getattr(jup_pos, "degree", 15.0))
+            j_ansh = int(j_deg % 30)
+            j_kala = int(round(((j_deg % 30) - j_ansh) * 60))
+            j_nak = getattr(jup_pos, "nakshatra_name", "") or getattr(jup_pos, "nakshatra", "")
+            j_pada = getattr(jup_pos, "nakshatra_pada", 1) or getattr(jup_pos, "pada", 1)
             is_strong = sign_name in ("Cancer", "Sagittarius", "Pisces") or getattr(jup_pos, "is_retrograde", False)
+            coord_str = f"{sign_name} ({j_ansh}° {j_kala}', {j_nak} पद {j_pada})" if j_nak else f"{sign_name} ({j_ansh}° {j_kala}')"
             if is_strong and p.mount_jupiter.prominence == "Prominent":
                 correlations.append({
                     "domain": "गुरु पर्वत एवं कुण्डली गुरु (Jupiter Synthesis)",
                     "status": "🌟 १००% पूर्ण संपुष्टि (Double Confirmation)",
-                    "explanation": f"कुण्डली में देवगुरु बृहस्पति {sign_name} में सशक्त हैं तथा हथेली में भी गुरु पर्वत पुष्ट है — यह उच्च विद्या, राजसम्मान व दैवीय कृपा का अखंड प्रमाण है।"
+                    "explanation": f"कुण्डली में देवगुरु बृहस्पति {coord_str} में सशक्त हैं तथा हथेली में भी गुरु पर्वत पुष्ट है — यह उच्च विद्या, राजसम्मान व दैवीय कृपा का अखंड प्रमाण है।"
                 })
             else:
                 correlations.append({
                     "domain": "गुरु पर्वत एवं कुण्डली गुरु",
                     "status": "✅ संतुलित संपुष्टि",
-                    "explanation": f"कुण्डली में गुरु {sign_name} राशि में स्थित हैं; हथेली का गुरु पर्वत नैतिकता व ज्ञान के प्रति समर्पित बनाता है।"
+                    "explanation": f"कुण्डली में गुरु {coord_str} में स्थित हैं; हथेली का गुरु पर्वत नैतिकता व ज्ञान के प्रति समर्पित बनाता है।"
                 })
 
         # 2. Sun Mount vs Kundali Sun
         sun_pos = chart.planets.get("Sun")
         if sun_pos:
             sign_name = getattr(sun_pos, "sign_name", "")
+            s_deg = getattr(sun_pos, "sign_degree", getattr(sun_pos, "degree", 15.0))
+            s_ansh = int(s_deg % 30)
+            s_kala = int(round(((s_deg % 30) - s_ansh) * 60))
+            s_nak = getattr(sun_pos, "nakshatra_name", "") or getattr(sun_pos, "nakshatra", "")
+            s_pada = getattr(sun_pos, "nakshatra_pada", 1) or getattr(sun_pos, "pada", 1)
+            s_coord = f"{sign_name} ({s_ansh}° {s_kala}', {s_nak} पद {s_pada})" if s_nak else f"{sign_name} ({s_ansh}° {s_kala}')"
             is_exalt = sign_name == "Aries"
             if (is_exalt or sign_name == "Leo") and p.mount_sun.prominence == "Prominent":
                 correlations.append({
                     "domain": "सूर्य पर्वत एवं कुण्डली सूर्य (Solar Synthesis)",
                     "status": "🌟 १००% पूर्ण संपुष्टि (Double Confirmation)",
-                    "explanation": f"कुण्डली में सूर्य {sign_name} में स्वराशि/उच्च हैं तथा हथेली में सूर्य रेखा व पर्वत दीप्त हैं — यह अचूक रूप से प्रशासनिक व राजकीय यश प्रदान करता है।"
+                    "explanation": f"कुण्डली में सूर्य {s_coord} में स्वराशि/उच्च हैं तथा हथेली में सूर्य रेखा व पर्वत दीप्त हैं — यह अचूक रूप से प्रशासनिक व राजकीय यश प्रदान करता है।"
                 })
 
         # 3. Saturn Mount vs Kundali Saturn
         sat_pos = chart.planets.get("Saturn")
         if sat_pos:
             sign_name = getattr(sat_pos, "sign_name", "")
+            st_deg = getattr(sat_pos, "sign_degree", getattr(sat_pos, "degree", 15.0))
+            st_ansh = int(st_deg % 30)
+            st_kala = int(round(((st_deg % 30) - st_ansh) * 60))
+            st_nak = getattr(sat_pos, "nakshatra_name", "") or getattr(sat_pos, "nakshatra", "")
+            st_pada = getattr(sat_pos, "nakshatra_pada", 1) or getattr(sat_pos, "pada", 1)
+            st_coord = f"{sign_name} ({st_ansh}° {st_kala}', {st_nak} पद {st_pada})" if st_nak else f"{sign_name} ({st_ansh}° {st_kala}')"
             correlations.append({
                 "domain": "शनि पर्वत एवं भाग्य रेखा (Saturn & Fate)",
                 "status": "✅ शास्त्रीय सामंजस्य",
-                "explanation": f"कुण्डली में शनि {sign_name} राशि में कर्मेश/भाग्येश बनकर भाग्य रेखा के उर्ध्व गमन को स्थायित्व व धैर्य प्रदान कर रहे हैं।"
+                "explanation": f"कुण्डली में शनि {st_coord} में कर्मेश/भाग्येश बनकर भाग्य रेखा के उर्ध्व गमन को स्थायित्व व धैर्य प्रदान कर रहे हैं।"
             })
 
         # 4. Moon Mount vs Kundali Moon
         moon_pos = chart.planets.get("Moon")
         if moon_pos:
             sign_name = getattr(moon_pos, "sign_name", "")
-            nakshatra = getattr(moon_pos, "nakshatra", "")
+            m_deg = getattr(moon_pos, "sign_degree", getattr(moon_pos, "degree", 15.0))
+            m_ansh = int(m_deg % 30)
+            m_kala = int(round(((m_deg % 30) - m_ansh) * 60))
+            nakshatra = getattr(moon_pos, "nakshatra_name", "") or getattr(moon_pos, "nakshatra", "")
+            m_pada = getattr(moon_pos, "nakshatra_pada", 1) or getattr(moon_pos, "pada", 1)
+            m_coord = f"{sign_name} ({m_ansh}° {m_kala}', {nakshatra} पद {m_pada})" if nakshatra else f"{sign_name} ({m_ansh}° {m_kala}')"
             correlations.append({
                 "domain": "चन्द्र पर्वत एवं जन्म नक्षत्र (Moon & Mind)",
                 "status": "✅ शास्त्रीय सामंजस्य",
-                "explanation": f"जन्म राशि {sign_name} (नक्षत्र: {nakshatra}) और हथेली के चन्द्र पर्वत का संयोग जातक को गहरी कल्पनाशक्ति, यात्रा सुख व अंतर्ज्ञान देता है।"
+                "explanation": f"जन्म चन्द्रमा {m_coord} और हथेली के चन्द्र पर्वत का संयोग जातक को गहरी कल्पनाशक्ति, यात्रा सुख व अंतर्ज्ञान देता है।"
             })
 
         return correlations

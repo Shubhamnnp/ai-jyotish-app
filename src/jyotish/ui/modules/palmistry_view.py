@@ -17,6 +17,7 @@ from src.jyotish.core.palmistry import (
     SHASTRIYA_PALM_SHLOKAS
 )
 from src.jyotish.ui.palmistry_renderer import PalmRenderer
+from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 
 
 def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = None):
@@ -25,6 +26,22 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
     """
     st.subheader("✋ हस्तरेखा एवं सामुद्रिक शास्त्र विज्ञान (Vedic Palmistry & Samudrika Shastra)")
     st.caption("गरुड़ पुराण, भविष्य पुराण, बृहत्संहिता व कीरो-बेनहम मानकों पर आधारित प्रामाणिक हस्तरेखा, पर्वत बल, आयु काल-विभाजन एवं ९९.९९% अचूक फलादेश:")
+
+    # Classical Shastriya Shloka Card
+    palm_pramana = SHASTRIYA_SHLOKAS.get("samudrika_shastra_lakshana", {})
+    if palm_pramana:
+        with st.expander("📜 शास्त्रीय प्रमाण — गरुड़ पुराण, भविष्य पुराण एवं बृहत्संहिता (सामुद्रिक लक्षण एवं फल)", expanded=False):
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+                <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {palm_pramana.get('grantha', '')}</b>
+                <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{palm_pramana.get('shloka_sanskrit', palm_pramana.get('shloka', ''))}
+                </pre>
+                <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                    <b>हिंदी भावार्थ:</b> {palm_pramana.get('anuvad_hi', palm_pramana.get('hindi_translation', ''))}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
     # Initialize Palm Profile in session state if missing or outdated schema
     if "palm_profile_data" not in st.session_state or not hasattr(st.session_state.palm_profile_data, "hand_side"):
@@ -173,7 +190,7 @@ def render_palmistry_view(chart: Optional[Any] = None, tabs: Optional[list] = No
     # -------------------------------------------------------------------------
     # MAIN TABS ARCHITECTURE
     # -------------------------------------------------------------------------
-    tab_list = [
+    tab_list = tabs if tabs and len(tabs) == 7 else [
         "✋ १. विज़ुअल हस्त-नक्शा (Palm Map)",
         "📜 २. समग्र शास्त्रीय फलादेश (Predictions)",
         "🪐 ३. नवग्रह पर्वत एवं बल (Mounts)",
