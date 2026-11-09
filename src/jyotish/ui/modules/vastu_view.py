@@ -289,6 +289,69 @@ def render_vastu_view(chart, tabs=None):
         compact = "".join(line.strip() for line in html_markup.splitlines() if line.strip())
         st.markdown(compact, unsafe_allow_html=True)
 
+    # Classical Shastriya Shloka Card
+    vishwakarma_vastu_shloka = {
+        "title": "विश्वकर्मा प्रकाश — वास्तु पुरुष एवं अष्टदिशा संस्थान विचार",
+        "source": "महर्षि विश्वकर्मा विरचित 'विश्वकर्मा प्रकाश' (अध्याय १, श्लोक २-३)",
+        "shloka": "ईशाने देवता गेहं पूर्वस्यां स्नानमन्दिरम् ।\nआग्नेय्यां पचनागारं याम्ये शयनमन्दिरम् ॥\nनैऋत्यां शस्त्रसदनं वारुणे भोजनालयम् ।\nवायव्यां धान्यगेहं स्यात् कोशगेहं तथोत्तरे ॥",
+        "meaning": "ईशान (NE) में देवालय/पूजागृह, पूर्व (East) में स्नानागार, आग्नेय (SE) में पाकशाला (रसोई), दक्षिण (South) में शयनकक्ष, नैऋत्य (SW) में भारी उपकरण/शस्त्रगार, पश्चिम (West) में भोजनालय/डाइनिंग, वायव्य (NW) में अन्नभंडार/अतिथिगृह तथा उत्तर (North) में कुबेर का धनकोष (तिजोरी) स्थापित करना सर्वकल्याणकारी एवं वास्तु सम्मत होता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {vishwakarma_vastu_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {vishwakarma_vastu_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{vishwakarma_vastu_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {vishwakarma_vastu_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Active Native Micro-Planetary Longitudes & DMS Console
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    moon = chart.planets.get("Moon")
+    if moon:
+        m_deg = getattr(moon, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+        moon_str = f"{moon.sign_name} {m_dms} [{m_nak}-P{m_pada}]"
+    else:
+        moon_str = "—"
+
+    # Active Dasha Lord Micro Coordinates
+    dasha_p = chart.planets.get(active_dasha_lord) if active_dasha_lord else None
+    if dasha_p:
+        dp_deg = getattr(dasha_p, "sign_degree", 0.0)
+        dp_ansh = int(dp_deg)
+        dp_kala = int(round((dp_deg - dp_ansh) * 60.0))
+        if dp_kala >= 60:
+            dp_kala = 0
+            dp_ansh += 1
+        dp_dms = f"{dp_ansh}° {dp_kala:02d}'"
+        dp_nak = getattr(dasha_p, "nakshatra_name", getattr(dasha_p, "nakshatra", "—"))
+        dp_pada = getattr(dasha_p, "nakshatra_pada", getattr(dasha_p, "pada", 1))
+        dasha_str = f"{active_dasha_lord} ({dasha_p.sign_name} {dp_dms} [{dp_nak}-P{dp_pada}])"
+    else:
+        dasha_str = active_dasha_lord or "—"
+
+    active_zone = next((z for z in v_zones if z.get("is_active_dasha")), None)
+    scores = [z.get("score", 70) for z in v_zones]
+    avg_score = int(round(sum(scores) / len(scores))) if scores else 0
+
+    c_vn1, c_vn2, c_vn3, c_vn4 = st.columns(4)
+    c_vn1.metric("लग्न एवं चन्द्र", f"{lagna_sname}", f"🌙 {moon_str}")
+    c_vn2.metric("सक्रिय महादशा स्वामी", f"{active_dasha_lord or '—'}", f"🪐 {dasha_str}")
+    c_vn3.metric("महादशा सक्रिय दिशा", f"{active_zone.get('hindi', '—') if active_zone else '—'}", f"तत्व: {active_zone.get('element', '') if active_zone else '—'}")
+    c_vn4.metric("समग्र वास्तु सूचकांक", f"{avg_score} / 100", "९ दिशाओं का सामूहिक बल")
+
     v_tab_titles = tabs
     v_tabs = st.tabs(tabs)
 
@@ -296,8 +359,6 @@ def render_vastu_view(chart, tabs=None):
     # TAB 0: समग्र वास्तु मण्डल (Overview, Compass & Comparative Table)
     # -------------------------------------------------------------
     with v_tabs[0]:
-        scores = [z.get("score", 70) for z in v_zones]
-        avg_score = int(round(sum(scores) / len(scores))) if scores else 0
         sorted_zones = sorted(v_zones, key=lambda x: x.get("score", 70), reverse=True)
         best_zone = sorted_zones[0] if sorted_zones else None
         worst_zone = sorted_zones[-1] if sorted_zones else None
@@ -388,7 +449,7 @@ def render_vastu_view(chart, tabs=None):
         tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिशा (Direction)</th>'
         tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिक्पाल व स्वामी</th>'
         tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">तत्व</th>'
-        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">कुण्डली भाव व स्थिति</th>'
+        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">कुण्डली भाव, सूक्ष्म अंश-कला व स्वभाव</th>'
         tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिग्बल</th>'
         tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary}; text-align: center;">सामंजस्य स्कोर</th>'
         tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary}; text-align: center;">दोष जोखिम</th>'
@@ -412,14 +473,16 @@ def render_vastu_view(chart, tabs=None):
                 b_txt = "🚨 उच्च दोष"
 
             h_val = z.get('house')
+            dms_val = z.get('dms_str', z.get('degree_str', ''))
+            nak_info = f"[{z.get('nakshatra_name', '')}-P{z.get('nakshatra_pada', '')}]" if z.get('nakshatra_name') else ""
             if h_val is not None and str(h_val) != "":
                 h_str = f"भाव {h_val}"
-                if z.get('sign_name') or z.get('degree_str'):
-                    h_str += f" ({z.get('sign_name', '')} {z.get('degree_str', '')})".strip()
+                if z.get('sign_name') or dms_val:
+                    h_str += f" ({z.get('sign_name', '')} {dms_val} {nak_info})".strip()
             else:
                 h_str = "केन्द्र भाव (1, 4, 7, 10)" if "ब्रह्म" in str(z.get('hindi', '')) or z.get('direction') == 'Center' else "तटस्थ"
 
-            d_str = z.get('status', 'सामान्य')
+            d_str = f"{z.get('swabhav', 'सामान्य')} • {z.get('status', 'सामान्य')}"
             if z.get('is_combust'): d_str += " [अस्त]"
             if z.get('is_retrograde'): d_str += " [वक्री]"
 
@@ -530,14 +593,18 @@ def render_vastu_view(chart, tabs=None):
 
                 combust_badge = "🔥 अस्त (Combust)" if z.get("is_combust") else "☀️ उदित (Normal)"
                 retro_badge = "🔄 वक्री (Retrograde)" if z.get("is_retrograde") else "➡️ मार्गी (Direct)"
+                swabhav_badge = z.get("swabhav", "सामान्य")
+                dms_disp = z.get("dms_str", z.get("degree_str", "N/A"))
+                nak_disp = f"{z.get('nakshatra_name', '—')} (चरण {z.get('nakshatra_pada', '—')})"
 
                 _v_render(f"""
                 <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 12.5px; line-height: 1.6; color: {text_primary};">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
-                        <div><b>स्वामी ग्रह:</b> {z.get('lord', '')}</div>
-                        <div><b>राशि व अंश:</b> {z.get('sign_name', 'N/A')} {z.get('degree_str', '')}</div>
+                        <div><b>स्वामी ग्रह व स्वभाव:</b> {z.get('lord', '')} ({swabhav_badge})</div>
+                        <div><b>सूक्ष्म राशि व अंश-कला:</b> {z.get('sign_name', 'N/A')} {dms_disp}</div>
+                        <div><b>नक्षत्र एवं चरण:</b> {nak_disp}</div>
                         <div><b>कुण्डली भाव:</b> भाव {z.get('house', 'N/A')}</div>
-                        <div><b>ग्रह गरिमा:</b> {z.get('status', 'सामान्य')}</div>
+                        <div><b>ग्रह गरिमा व अवस्था:</b> {z.get('status', 'सामान्य')}</div>
                         <div><b>दिग्बल स्थिति:</b> {z.get('digbala', 'तटस्थ')}</div>
                         <div><b>अस्त/वक्री:</b> {combust_badge} | {retro_badge}</div>
                     </div>
@@ -630,11 +697,11 @@ def render_vastu_view(chart, tabs=None):
 
             p_rows = [
                 ("दिशा एवं दिक्पाल (Direction & Deity)", f"{z.get('hindi', '')} ({z.get('direction', '')}) — {deity_val}"),
-                ("दिशा स्वामी ग्रह (Ruling Planet)", f"{z.get('lord', '')}"),
+                ("दिशा स्वामी ग्रह व स्वभाव (Ruling Planet)", f"{z.get('lord', '')} ({z.get('swabhav', 'सामान्य')})"),
                 ("पंचमहाभूत तत्व (Five Elements)", f"{z.get('element', '')}"),
                 ("कोणीय विस्तार (Degree Range)", f"{deg_val}"),
                 ("संबद्ध कुण्डली भाव (Kundali House)", f"{house_val}"),
-                ("जातक की कुण्डली में ग्रह स्थिति", f"भाव {z.get('house', 'N/A')}, {z.get('sign_name', '')} {z.get('degree_str', '')}"),
+                ("जातक की कुण्डली में ग्रह स्थिति", f"भाव {z.get('house', 'N/A')}, {z.get('sign_name', '')} {z.get('dms_str', z.get('degree_str', ''))} [{z.get('nakshatra_name', '')}-चरण {z.get('nakshatra_pada', '')}] — {z.get('swabhav', '')}"),
                 ("ग्रह गरिमा एवं अवस्था (Dignity)", f"{z.get('status', 'सामान्य')} {'[अस्त]' if z.get('is_combust') else ''} {'[वक्री]' if z.get('is_retrograde') else ''}"),
                 ("दिग्बल स्थिति (Directional Strength)", f"{z.get('digbala', 'तटस्थ')}"),
                 ("वास्तु पुरुष शरीर अंग (Anatomy)", f"{organ_val}"),

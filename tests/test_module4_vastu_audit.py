@@ -85,6 +85,39 @@ class TestModule4VastuAudit(unittest.TestCase):
         self.assertTrue(hasattr(vastu_view_mod, "render_vastu_view"))
         self.assertTrue(hasattr(vastu_view_mod, "_VastuEngine"))
 
+    def test_vastu_micro_dms_nakshatra_swabhav(self):
+        """Test that evaluate_vastu_zones outputs micro DMS, nakshatra, pada, and swabhav."""
+        engine = VastuJyotishEngine(self.chart)
+        zones = engine.evaluate_vastu_zones()
+        for z in zones:
+            self.assertIn("ansh", z)
+            self.assertIn("kala", z)
+            self.assertIn("dms_str", z)
+            self.assertIn("nakshatra_name", z)
+            self.assertIn("nakshatra_pada", z)
+            self.assertIn("swabhav", z)
+            if z["direction"] != "Center":
+                self.assertIn("°", z["dms_str"])
+                self.assertIn("'", z["dms_str"])
+                self.assertIn(z["swabhav"], ["नैसर्गिक शुभ", "नैसर्गिक क्रूर"])
+
+    def test_vastu_view_shastriya_shloka_and_console(self):
+        """Test that Vishwakarma Prakasha shloka, micro console, and DMS table columns exist."""
+        with open("src/jyotish/ui/modules/vastu_view.py", "r", encoding="utf-8") as f:
+            code = f.read()
+
+        # Classical Shloka verification
+        self.assertIn("विश्वकर्मा प्रकाश", code)
+        self.assertIn("ईशाने देवता गेहं पूर्वस्यां स्नानमन्दिरम्", code)
+        self.assertIn("कुबेर का धनकोष", code)
+
+        # Micro DMS & Active Native Console verification
+        self.assertIn("c_vn1", code)
+        self.assertIn("लग्न एवं चन्द्र", code)
+        self.assertIn("सक्रिय महादशा स्वामी", code)
+        self.assertIn("कुण्डली भाव, सूक्ष्म अंश-कला व स्वभाव", code)
+        self.assertIn("स्वामी ग्रह व स्वभाव:", code)
+
 
 if __name__ == "__main__":
     unittest.main()

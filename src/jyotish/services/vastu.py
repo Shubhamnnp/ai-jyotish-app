@@ -286,6 +286,12 @@ class VastuJyotishEngine:
                     "planet_symbol": "🕉️",
                     "sign_name": "सर्वव्यापी (All Signs)",
                     "degree_str": "नाभि केंद्र",
+                    "ansh": 0,
+                    "kala": 0,
+                    "dms_str": "नाभि केंद्र",
+                    "nakshatra_name": "सर्व नक्षत्र",
+                    "nakshatra_pada": "१-४",
+                    "swabhav": "परम सात्विक व दिव्य",
                     "house": "केन्द्र (1, 4, 7, 10)",
                     "element": meta["element"],
                     "status": "दिव्य चेतना (Cosmic)",
@@ -350,6 +356,19 @@ class VastuJyotishEngine:
             if self.current_dasha_lord and lord_name.lower() == self.current_dasha_lord.lower():
                 is_active_d = True
 
+            # Micro DMS, Nakshatra, Pada and Swabhav computation
+            deg_val = getattr(pos, "sign_degree", 0.0)
+            ansh = int(deg_val)
+            kala = int(round((deg_val - ansh) * 60.0))
+            if kala >= 60:
+                kala = 0
+                ansh += 1
+            dms_str = f"{ansh}° {kala:02d}'"
+            nak_name = getattr(pos, "nakshatra_name", getattr(pos, "nakshatra", "—"))
+            nak_pada = getattr(pos, "nakshatra_pada", getattr(pos, "pada", 1))
+            is_shubh = lord_name in ["Jupiter", "Venus", "Mercury", "Moon"]
+            swabhav = "नैसर्गिक शुभ" if is_shubh else "नैसर्गिक क्रूर"
+
             results.append({
                 "direction": direction,
                 "hindi": meta["hindi"],
@@ -357,6 +376,12 @@ class VastuJyotishEngine:
                 "planet_symbol": pos.name[:2],
                 "sign_name": pos.sign_name,
                 "degree_str": f"{pos.sign_degree:.2f}°",
+                "ansh": ansh,
+                "kala": kala,
+                "dms_str": dms_str,
+                "nakshatra_name": nak_name,
+                "nakshatra_pada": nak_pada,
+                "swabhav": swabhav,
                 "house": pos.house_from_lagna,
                 "element": meta["element"],
                 "status": status,
