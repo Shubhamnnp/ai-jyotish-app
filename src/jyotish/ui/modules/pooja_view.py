@@ -1,25 +1,40 @@
 import streamlit as st
-import importlib
+from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
+import src.jyotish.core.ishta_devata as ishta_mod
+
 
 def render_pooja_view(chart, tabs=None):
     if tabs is None:
         tabs = [
-            '🕉️ प्रधान इष्टदेवता',
-            '⚖️ धर्मदेवता एवं कुलदेवता',
-            '📿 नित्य पूजा एवं जप विधान',
-            '🌸 ग्रह शांति एवं स्त्रोत पाठ',
-            '🗓️ पावन व्रत एवं तिथियां'
+            "🕉️ इष्टदेवता व मोक्ष",
+            "📿 कुलदेवता व मन्त्र साधना",
+            "🪔 नित्य पूजा विधान",
+            "📅 व्रत व उपवास नियम",
+            "🚩 नवरात्रि ९ दिवसीय विधान"
         ]
+
     st.subheader("🕉️ इष्टदेवता, धर्मदेवता, नित्य पूजा विधान एवं व्रत निर्णय")
     st.write("महर्षि जैमिनी उपदेश सूत्र एवं बृहत्पाराशर होराशास्त्र अनुसार आत्मकारक (AK), कारकांश (D9) के १२वें भाव (मोक्ष भाव), ५वें भाव (मंत्र सिद्धि), धर्मदेवता, कुलदेवी/कुलदेवता, नित्य पूजा विधि, जप माला एवं पावन व्रत निर्णय।")
 
-    import importlib
-    import src.jyotish.core.ishta_devata as ishta_mod
-    importlib.reload(ishta_mod)
+    # Classical Shastriya Shloka Card
+    ishta_pramana = SHASTRIYA_SHLOKAS.get("jaimini_ishta_moksha", {})
+    if ishta_pramana:
+        with st.expander("📜 शास्त्रीय प्रमाण — महर्षि जैमिनी उपदेश सूत्राणि एवं बृहत्पाराशर होराशास्त्र (कारकांश द्वादश भाव एवं इष्ट निर्णय)", expanded=False):
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+                <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {ishta_pramana.get('grantha', '')}</b>
+                <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{ishta_pramana.get('shloka_sanskrit', ishta_pramana.get('shloka', ''))}
+                </pre>
+                <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                    <b>हिंदी भावार्थ:</b> {ishta_pramana.get('anuvad_hi', ishta_pramana.get('hindi_translation', ''))}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
     ishta_res = ishta_mod.IshtaDevataEngine.analyze(chart)
 
-    # Top Status Banner
+    # Top Status Banner - 4 Key Spiritual Pillars
     c_i1, c_i2, c_i3, c_i4 = st.columns(4)
     c_i1.metric("प्रधान इष्टदेवता", ishta_res["ishta_deity"].split(" / ")[0], f"ग्रह: {ishta_res['ishta_planet']}")
     c_i2.metric("कारकांश लग्न (D9)", ishta_res["karakamsha_sign"], f"आत्मकारक: {ishta_res['atmakaraka']}")
@@ -36,21 +51,21 @@ def render_pooja_view(chart, tabs=None):
             <div style="font-size:16px; font-weight:900; color:#B45309; margin-bottom:6px;">
                 📜 शास्त्रीय जैमिनी कारकांश निर्णय (Shastriya Proof):
             </div>
-            <p style="margin:4px 0; color:#1E293B; line-height:1.6;">
+            <p style="margin:4px 0; color:#1E293B; line-height:1.6; font-size:14px;">
                 <b>१. आत्मकारक (Atmakaraka):</b> आपकी कुण्डली में <b>{ishta_res['atmakaraka']}</b> आत्मकारक हैं, जो आत्मा के पूर्वजन्म संचित संस्कारों के अधिपति हैं।<br/>
                 <b>२. कारकांश राशि (Navamsha):</b> नवांश (D9) कुण्डली में आत्मकारक <b>{ishta_res['karakamsha_sign']}</b> राशि में स्थित हैं।<br/>
                 <b>३. मोक्ष भाव (१२वां भाव):</b> कारकांश से १२वें भाव ({ishta_res['h12_sign']}) का स्वामी ग्रह <b>{ishta_res['h12_lord']}</b> है। {ishta_res['ishta_reason']}
             </p>
             <div style="background:#FFFFFF; border:1px solid #FCD34D; border-radius:6px; padding:10px; margin-top:8px;">
-                <b style="color:#78350F;">✨ इष्टदेव स्वरूप एवं फल:</b> {ishta_res['ishta_form']}<br/>
-                <span style="color:#15803D;"><b>फल:</b> {ishta_res['ishta_fruit']}</span>
+                <b style="color:#78350F;">✨ इष्टदेव स्वरूप एवं ध्यान:</b> {ishta_res['ishta_form']}<br/>
+                <span style="color:#15803D;"><b>आध्यात्मिक फल:</b> {ishta_res['ishta_fruit']}</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
         st.markdown("#### 📿 सिद्ध इष्ट मंत्र:")
         st.code(ishta_res["ishta_mantra"], language="text")
-        st.caption(f"**बीज मंत्र:** `{ishta_res['ishta_beej']}` | नित्य १०८ बार जप करने से आत्मिक शांति व रक्षा प्राप्त होती है।")
+        st.caption(f"**बीज मंत्र:** `{ishta_res['ishta_beej']}` | नित्य १०८ बार जप करने से आत्मिक शांति, संकट-निवारण व रक्षा प्राप्त होती है।")
 
     with tab_i2:
         st.markdown("### 📿 कुलदेवता, पालनकर्ता देवता, धर्मदेवता एवं मंत्र-साधना")
@@ -73,7 +88,7 @@ def render_pooja_view(chart, tabs=None):
                 <b style="color:#1E40AF; font-size:15px;">🛡️ धर्मदेवता (Dharma Devata):</b><br/>
                 <small style="color:#64748B;">(कारकांश से ९वां भाव)</small>
                 <p style="margin:8px 0; font-weight:800; color:#0F172A;">{ishta_res['dharma_deity']}</p>
-                <small style="color:#334155;">यह देव आपके धर्म, सदाचार एवं भाग्य के रक्षक हैं। इनकी कृपा से संकटों में मार्ग मिलता है।</small>
+                <small style="color:#334155;">यह देव आपके धर्म, सदाचार एवं भाग्य के रक्षक हैं। इनकी कृपा से संकटों में सही दिशा व मार्गदर्शन मिलता है।</small>
             </div>
             """, unsafe_allow_html=True)
 
@@ -83,7 +98,7 @@ def render_pooja_view(chart, tabs=None):
                 <b style="color:#7E22CE; font-size:15px;">⚡ मंत्र देवता (Mantra Devata):</b><br/>
                 <small style="color:#64748B;">(लग्न से ५वां भाव — पूर्वपुण्य)</small>
                 <p style="margin:8px 0; font-weight:800; color:#0F172A;">{ishta_res['mantra_deity']}</p>
-                <small style="color:#334155;">इस देव के मंत्र का अनुष्ठान करने से सबसे तीव्र मंत्र-सिद्धि एवं मेधा शक्ति प्राप्त होती है।</small>
+                <small style="color:#334155;">इस देव के मंत्र का अनुष्ठान करने से सबसे तीव्र मंत्र-सिद्धि, पूर्वपुण्य जागृति एवं मेधा शक्ति प्राप्त होती है।</small>
             </div>
             """, unsafe_allow_html=True)
 
@@ -165,20 +180,24 @@ def render_pooja_view(chart, tabs=None):
 
     with tab_i5:
         st.markdown("### 🚩 नवरात्रि विशेष: कुण्डली अनुसार ९ दिवसीय पूजा, व्रत एवं संपूर्ण विधान")
-        st.caption("देवी भागवत, निर्णय सिंधु, कालिका पुराण एवं चरक संहिता अनुसार आपकी कुण्डली के ग्रहों का सटीक विश्लेषण:")
+        st.caption("देवी भागवत, निर्णय सिंधु, कालिका पुराण एवं चरक संहिता अनुसार आपकी कुण्डली के ग्रहों, आत्मकारक व भावों का सटीक विश्लेषण:")
 
         nv = ishta_res.get("navratri", {})
         if nv:
-            # 1. Overview Banner
+            # 1. Prominent Highlight: Optimal Navratri Fasting Tithi
             st.markdown(f"""
-            <div style="background:#FFF1F2; border:2px solid #E11D48; border-radius:12px; padding:16px; margin-bottom:16px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
-                    <span style="font-size:18px; font-weight:900; color:#9F1239;">🕉️ नवरात्रि में कौन सा व्रत रखें: {nv.get('vrat_pattern_title')}</span>
-                    <span style="background:#FFE4E6; color:#BE123C; padding:4px 10px; border-radius:20px; font-size:13px; font-weight:700;">{nv.get('element')}</span>
+            <div style="background:#FFF1F2; border:2.5px solid #E11D48; border-radius:12px; padding:18px; margin-bottom:16px; box-shadow:0 4px 14px rgba(225,29,72,0.12);">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:10px;">
+                    <span style="font-size:19px; font-weight:900; color:#9F1239;">🎯 सक्रिय जातक कुण्डली अनुसार नवरात्रि की सर्वोत्तम व्रत तिथि</span>
+                    <span style="background:#FFE4E6; color:#BE123C; padding:5px 12px; border-radius:20px; font-size:13.5px; font-weight:800;">{nv.get('element')}</span>
                 </div>
-                <p style="margin:6px 0; color:#1E293B; font-size:14.5px; line-height:1.6;">{nv.get('vrat_pattern_desc')}</p>
-                <div style="background:#FFFFFF; border-left:4px solid #E11D48; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
-                    <b style="color:#881337;">📅 आपके लिए सर्वोत्तम व्रत दिवस:</b> <span style="color:#0F172A; font-weight:700;">{nv.get('recommended_days')}</span>
+                <div style="background:#FFFFFF; border:1.5px solid #FDA4AF; border-radius:8px; padding:12px; margin-bottom:10px;">
+                    <b style="color:#BE123C; font-size:16px;">🌟 अनुशंसित सर्वोत्तम व्रत तिथि:</b> <span style="color:#0F172A; font-size:16px; font-weight:800;">{nv.get('optimal_fasting_tithi', 'महाअष्टमी')}</span>
+                    <p style="margin:8px 0 0 0; color:#334155; font-size:14px; line-height:1.6;">{nv.get('optimal_fasting_tithi_reason', '')}</p>
+                </div>
+                <p style="margin:6px 0; color:#1E293B; font-size:14px; line-height:1.6;"><b>उपवास प्रारूप:</b> {nv.get('vrat_pattern_desc')}</p>
+                <div style="background:#FFFBEB; border-left:4px solid #F59E0B; padding:8px 12px; margin-top:8px; border-radius:0 6px 6px 0;">
+                    <b style="color:#B45309;">📅 सर्वोत्तम व्रत दिवस क्रम:</b> <span style="color:#0F172A; font-weight:700;">{nv.get('recommended_days')}</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -266,5 +285,3 @@ def render_pooja_view(chart, tabs=None):
                 </p>
             </div>
             """, unsafe_allow_html=True)
-
-

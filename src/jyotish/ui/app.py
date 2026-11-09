@@ -9894,9 +9894,7 @@ elif selected_idx == 26:
     body_view_mod.render_body_anatomy_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(26))
 
 elif selected_idx == 27:
-    import importlib
     import src.jyotish.ui.modules.pooja_view as pooja_view_mod
-    importlib.reload(pooja_view_mod)
     pooja_view_mod.render_pooja_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(27))
 
 elif selected_idx == 28:
