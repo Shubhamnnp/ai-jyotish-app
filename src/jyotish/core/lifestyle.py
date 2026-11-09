@@ -478,7 +478,8 @@ class HealthEngine:
     @classmethod
     def analyze(cls, chart: KundaliChart) -> Dict[str, Any]:
         lagna_sign_id = chart.lagna_sign_id
-        lagnesh = SIGN_LORDS[SIGNS[lagna_sign_id - 1]["name_en"]]
+        lagna_sign = SIGNS[lagna_sign_id - 1]
+        lagnesh = SIGN_LORDS[lagna_sign["name_en"]]
 
         # 1. Overall Vitality Assessment
         sun_pos = chart.planets.get("Sun")
@@ -486,41 +487,58 @@ class HealthEngine:
         lagnesh_pos = chart.planets.get(lagnesh)
 
         vitality_score = 75  # base
-        if lagnesh_pos and lagnesh_pos.dignity in ("exalted", "own", "moolatrikona"):
+        if lagnesh_pos and getattr(lagnesh_pos, "dignity", "") in ("exalted", "own", "moolatrikona"):
             vitality_score += 15
-        elif lagnesh_pos and lagnesh_pos.dignity in ("debilitated", "enemy"):
+        elif lagnesh_pos and getattr(lagnesh_pos, "dignity", "") in ("debilitated", "enemy"):
             vitality_score -= 15
 
-        if sun_pos and sun_pos.dignity in ("exalted", "own"):
+        if sun_pos and getattr(sun_pos, "dignity", "") in ("exalted", "own"):
             vitality_score += 10
-        elif sun_pos and sun_pos.dignity == "debilitated":
+        elif sun_pos and getattr(sun_pos, "dignity", "") == "debilitated":
             vitality_score -= 10
 
         vitality_score = max(40, min(98, vitality_score))
         vitality_status = "उत्कृष्ट एवं सुदृढ़ (Strong Immunity)" if vitality_score >= 80 else ("मध्यम एवं संतुलित" if vitality_score >= 60 else "संवेदनशील (विशेष देखभाल आवश्यक)")
 
-        # 2. 6th House (Diseases) & 8th House (Chronic Illness)
+        # 2. Nakshatras & Moon Swabhava
+        moon_nakshatra = getattr(moon_pos, "nakshatra_name", "अश्विनी") if moon_pos else "अश्विनी"
+        moon_pada = getattr(moon_pos, "nakshatra_pada", 1) if moon_pos else 1
+
+        # 3. 6th, 8th & 12th Houses (Roga, Randhra & Vyaya)
         h6_sign_id = ((lagna_sign_id + 4) % 12) + 1
-        h6_lord = SIGN_LORDS[SIGNS[h6_sign_id - 1]["name_en"]]
+        h6_sign = SIGNS[h6_sign_id - 1]
+        h6_lord = SIGN_LORDS[h6_sign["name_en"]]
         h6_occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == 6]
 
         h8_occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == 8]
         h12_occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == 12]
 
-        # 3. Identify Afflicted/Sensitive Planets
+        # Positive Health Indicators
+        positive_health_traits = []
+        if vitality_score >= 75:
+            positive_health_traits.append("लग्नेश व सूर्य का शुभ प्रभाव: प्राकृतिक रोग प्रतिरोधक क्षमता (Innate Immunity) सुदृढ़ है।")
+        if not h8_occupants:
+            positive_health_traits.append("अष्टम भाव शांत व सुरक्षित: गंभीर या दीर्घकालिक संकटों से दैवीय सुरक्षा।")
+        if lagnesh_pos and lagnesh_pos.house_from_lagna in [1, 4, 5, 9, 10]:
+            positive_health_traits.append(f"लग्नेश {lagnesh} केंद्र/त्रिकोण में स्थित: जीवनी शक्ति (Vitality) दीर्घायु की पोषक है।")
+
+        # 4. Identify Afflicted/Sensitive Planets
         vulnerable_areas = []
         for p_name, p in chart.planets.items():
             is_afflicted = False
             reasons = []
-            if p.dignity == "debilitated":
+            if getattr(p, "dignity", "") == "debilitated":
                 is_afflicted = True
-                reasons.append("नीच राशि में स्थित")
-            if p.is_combust:
+                reasons.append("नीच राशि में")
+            if getattr(p, "is_combust", False):
                 is_afflicted = True
                 reasons.append("सूर्य से अस्त")
-            if p.house_from_lagna in (6, 8, 12):
+            if getattr(p, "house_from_lagna", 1) in (6, 8, 12):
                 is_afflicted = True
-                reasons.append(f"त्रिक भाव (घर {p.house_from_lagna}) में स्थित")
+                reasons.append(f"त्रिक भाव (घर {p.house_from_lagna}) में")
+            if getattr(p, "is_retrograde", False) and p_name in ["Saturn", "Mars"]:
+                is_afflicted = True
+                reasons.append("वक्री चाल")
 
             if is_afflicted and p_name in cls.GRAHA_BODY_MAPPING:
                 meta = cls.GRAHA_BODY_MAPPING[p_name]
@@ -545,7 +563,6 @@ class HealthEngine:
             future_risks.append("अष्टम भाव रिक्त व शांत है — दीर्घायु योग एवं आकस्मिक गंभीर संकटों से सुरक्षा।")
 
         if not vulnerable_areas:
-            # Fallback if chart is exceptionally clean
             vulnerable_areas.append({
                 "planet": "Lagna Lord " + lagnesh,
                 "reasons": "सामान्य प्राकृतिक चक्र",
@@ -558,10 +575,13 @@ class HealthEngine:
             "vitality_score": vitality_score,
             "vitality_status": vitality_status,
             "lagnesh": lagnesh,
+            "moon_nakshatra": moon_nakshatra,
+            "moon_pada": moon_pada,
             "h6_lord": h6_lord,
             "h6_occupants": h6_occupants,
             "h8_occupants": h8_occupants,
             "h12_occupants": h12_occupants,
+            "positive_health_traits": positive_health_traits,
             "vulnerable_areas": vulnerable_areas,
             "future_risks": future_risks,
             "general_health_advice": "नियमित दिनचर्या, सूर्य नमस्कार, सात्विक आहार और रात्रि में समय पर शयन आपके आरोग्य की कुंजी है।"

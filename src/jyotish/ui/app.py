@@ -9886,9 +9886,7 @@ elif selected_idx == 24:
     rel_view_mod.render_relationships_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(24))
 
 elif selected_idx == 25:
-    import importlib
     import src.jyotish.ui.modules.health_disease_view as health_view_mod
-    importlib.reload(health_view_mod)
     health_view_mod.render_health_disease_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(25))
 
 elif selected_idx == 26:
