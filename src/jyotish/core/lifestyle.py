@@ -111,6 +111,21 @@ class DietEngine:
         }
     }
 
+    NAKSHATRA_DOSHA = {
+        # Vata Nakshatras (वात प्रधान)
+        "Ashwini": "Vata (वात)", "Ardra": "Vata (वात)", "Punarvasu": "Vata (वात)",
+        "Uttara Phalguni": "Vata (वात)", "Hasta": "Vata (वात)", "Swati": "Vata (वात)",
+        "Moola": "Vata (वात)", "Shatabhisha": "Vata (वात)", "Purva Bhadrapada": "Vata (वात)",
+        # Pitta Nakshatras (पित्त प्रधान)
+        "Bharani": "Pitta (पित्त)", "Mrigashira": "Pitta (पित्त)", "Pushya": "Pitta (पित्त)",
+        "Purva Phalguni": "Pitta (पित्त)", "Chitra": "Pitta (पित्त)", "Vishakha": "Pitta (पित्त)",
+        "Purva Ashadha": "Pitta (पित्त)", "Dhanishta": "Pitta (पित्त)", "Uttara Bhadrapada": "Pitta (पित्त)",
+        # Kapha Nakshatras (कफ प्रधान)
+        "Krittika": "Kapha (कफ)", "Rohini": "Kapha (कफ)", "Ashlesha": "Kapha (कफ)",
+        "Magha": "Kapha (कफ)", "Anuradha": "Kapha (कफ)", "Jyeshtha": "Kapha (कफ)",
+        "Uttara Ashadha": "Kapha (कफ)", "Shravana": "Kapha (कफ)", "Revati": "Kapha (कफ)"
+    }
+
     @classmethod
     def analyze(cls, chart: KundaliChart) -> Dict[str, Any]:
         lagna_sign_id = chart.lagna_sign_id
@@ -118,20 +133,46 @@ class DietEngine:
         lagna_elem = lagna_sign["element"]
         primary_dosha = cls.ELEMENT_DOSHA.get(lagna_elem, "Pitta (पित्त)")
 
-        # Moon sign dosha influence
-        moon_pos = chart.planets.get("Moon")
-        moon_sign_elem = "Water"
-        if moon_pos:
-            moon_sign_elem = SIGNS[moon_pos.sign_id - 1]["element"]
+        # 1. Lagnesha Swabhava & Placement
+        lagnesh_name = lagna_sign.get("lord", "Mars")
+        lagnesh_pos = chart.planets.get(lagnesh_name)
+        lagnesh_summary = f"लग्नेश {lagnesh_name} जीवनशक्ति एवं मूल आरोग्यता का नियंत्रक है।"
+        if lagnesh_pos:
+            lagnesh_elem = SIGNS[lagnesh_pos.sign_id - 1]["element"]
+            lagnesh_h = lagnesh_pos.house_from_lagna
+            lagnesh_sign_name = SIGNS[lagnesh_pos.sign_id - 1].get("name_hi", "")
+            lagnesh_summary = f"लग्नेश {lagnesh_name} भाव {lagnesh_h} ({lagnesh_sign_name}, {lagnesh_elem} तत्व) में स्थित है, जो देह की रोग प्रतिरोधक शक्ति का आधार है।"
 
-        # 2nd House Analysis (Food & Habits)
+        # 2. Moon & Nakshatra Dosha
+        moon_pos = chart.planets.get("Moon")
+        moon_nakshatra = getattr(moon_pos, "nakshatra_name", "अश्विनी") if moon_pos else "अश्विनी"
+        moon_pada = getattr(moon_pos, "nakshatra_pada", 1) if moon_pos else 1
+        nakshatra_dosha = cls.NAKSHATRA_DOSHA.get(moon_nakshatra, "त्रिदोष सम")
+
+        # 3. Sun's Jatharagni (सूर्य की जठराग्नि व चयापचय विश्लेषण)
+        sun_pos = chart.planets.get("Sun")
+        sun_jatharagni = "सम जठराग्नि (संतुलित पाचन शक्ति)"
+        sun_status_note = "पाचन मध्यम व संतुलित है।"
+        if sun_pos:
+            sun_sign_elem = SIGNS[sun_pos.sign_id - 1]["element"]
+            sun_house = sun_pos.house_from_lagna
+            if sun_sign_elem == "Fire" or sun_house in [1, 5, 10]:
+                sun_jatharagni = "तीक्ष्ण जठराग्नि (प्रदीप्त पाचन अग्नि)"
+                sun_status_note = "पाचन अग्नि तीव्र है; समय पर भोजन न मिलने पर एसिडिटी, सिरदर्द या पित्त विकार हो सकता है।"
+            elif sun_sign_elem == "Water" or sun_house in [6, 8, 12]:
+                sun_jatharagni = "मन्द जठराग्नि (शीतल व धीमा चयापचय)"
+                sun_status_note = "पाचन मंद है; भारी, तला-भुना या देर रात का भोजन आसानी से नहीं पचता।"
+            elif sun_sign_elem == "Air":
+                sun_jatharagni = "विषम जठराग्नि (अनियमित पाचन)"
+                sun_status_note = "भूख अनिश्चित रहती है; कभी अधिक भूख और कभी बिल्कुल अरुचि, गैस/अफारा की प्रवृत्ति।"
+
+        # 4. 2nd House Analysis (Food & Habits)
         h2_sign_id = ((lagna_sign_id) % 12) + 1  # 2nd house
         h2_sign = SIGNS[h2_sign_id - 1]
         h2_lord = h2_sign["lord"]
 
         h2_occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == 2]
 
-        # 2nd house eating psychology
         eating_habit_notes = []
         if "Rahu" in h2_occupants:
             eating_habit_notes.append("⚠️ राहु द्वितीय भाव में: असामान्य या तीखे, फास्ट-फूड और होटल के भोजन की ओर अधिक खिंचाव। मिलावटी या बासी भोजन से पेट में संक्रमण की आशंका, अतः स्वच्छता अनिवार्य है।")
@@ -148,12 +189,16 @@ class DietEngine:
         if "Moon" in h2_occupants:
             eating_habit_notes.append("🌙 चंद्र द्वितीय भाव में: जलीय तत्व, दूध, खीर, सूप व रसदार फल प्रिय। रात्रि में भारी भोजन से बचें।")
         if not eating_habit_notes:
-            eating_habit_notes.append(f"द्वितीय भाव का स्वामी ग्रह {h2_lord} है। सामान्य सात्विक व समयबद्ध भोजन आपके शरीर के अनुकूल है।")
+            eating_habit_notes.append(f"द्वितीय भाव का स्वामी ग्रह {h2_lord} ({h2_sign.get('name_hi', '')}) है। स्वाभाविक सात्विक व समयबद्ध भोजन आपके शरीर के लिए सर्वश्रेष्ठ है।")
 
         dosha_info = cls.DOSHA_DETAILS.get(primary_dosha, cls.DOSHA_DETAILS["Pitta (पित्त)"])
 
-        # 6th house (digestive vulnerabilities)
+        # 5. 6th House (Digestive Vulnerabilities & Rogas)
+        h6_sign_id = ((lagna_sign_id + 4) % 12) + 1
+        h6_sign = SIGNS[h6_sign_id - 1]
+        h6_lord = h6_sign["lord"]
         h6_occupants = [p_name for p_name, p in chart.planets.items() if p.house_from_lagna == 6]
+
         digestive_warnings = []
         if "Mars" in h6_occupants or "Rahu" in h6_occupants:
             digestive_warnings.append("पेट में जलन, अल्सर या फूड पॉइजनिंग की संवेदनशीलता — तली-भुनी चीज़ों से सख्त परहेज रखें।")
@@ -174,7 +219,19 @@ class DietEngine:
             "digestive_warnings": digestive_warnings,
             "fasting_remedy": dosha_info["fasting_remedy_hi"],
             "favorable_drink": "ताज़ा नारियल पानी, सौंफ-मिश्री अर्क एवं गुनगुना गाय का दूध" if "Pitta" in primary_dosha else ("अदरक-तुलसी काढ़ा व गुनगुना पानी" if "Vata" in primary_dosha else "त्रिकटु जल, छाछ व ग्रीन टी"),
-            "salt_recommendation": "सेंधा नमक (Rock Salt) सर्वोत्तम है, सादे समुद्री नमक का अतिसेवन न करें।"
+            "salt_recommendation": "सेंधा नमक (Rock Salt) सर्वोत्तम है, सादे समुद्री नमक का अतिसेवन न करें।",
+            "lagna_element": lagna_elem,
+            "lagnesh_name": lagnesh_name,
+            "lagnesh_summary": lagnesh_summary,
+            "moon_nakshatra": moon_nakshatra,
+            "moon_pada": moon_pada,
+            "nakshatra_dosha": nakshatra_dosha,
+            "sun_jatharagni": sun_jatharagni,
+            "sun_status_note": sun_status_note,
+            "h2_lord": h2_lord,
+            "h6_lord": h6_lord,
+            "h2_occupants": h2_occupants,
+            "h6_occupants": h6_occupants
         }
 
 

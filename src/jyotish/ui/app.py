@@ -7050,9 +7050,9 @@ MODULE_TABS_REGISTRY = {
         "🌿 १०८ प्रामाणिक टोटके व उपाय"
     ],
     23: [
-        "🌿 त्रिदोष प्रकृति",
-        "✅ अनुकूल आहार",
-        "❌ वर्जित आहार",
+        "🌿 त्रिदोष शारीरिक प्रकृति",
+        "✅ अनुकूल आहार व रस",
+        "❌ वर्जित आहार व परहेज",
         "⏰ भोजन नियम व उपवास"
     ],
     24: [
@@ -9878,9 +9878,7 @@ elif selected_idx == 22:
     lal_kitab_view_mod.render_lal_kitab_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(22))
 
 elif selected_idx == 23:
-    import importlib
     import src.jyotish.ui.modules.ayurvedic_diet_view as diet_view_mod
-    importlib.reload(diet_view_mod)
     diet_view_mod.render_ayurvedic_diet_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(23))
 
 elif selected_idx == 24:
