@@ -9902,16 +9902,12 @@ elif selected_idx == 28:
     karma_view_mod.render_karma_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(28))
 
 elif selected_idx == 29:
-    import importlib
-    import src.jyotish.services.panchang as panchang_svc_mod
-    importlib.reload(panchang_svc_mod)
     import src.jyotish.ui.panchang_view as panchang_view_mod
-    importlib.reload(panchang_view_mod)
-
     panchang_view_mod.render_vedic_panchang_view(
         chart=chart,
         birth_profile=birth_profile,
-        is_dark=st.session_state.get("dark_mode", False)
+        is_dark=st.session_state.get("dark_mode", False),
+        tabs=MODULE_TABS_REGISTRY.get(29)
     )
 
 elif selected_idx == 30:

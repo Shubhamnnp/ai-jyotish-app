@@ -17,15 +17,13 @@ Provides a comprehensive, world-class Shastriya Panchang interface exceeding Dri
 """
 
 import streamlit as st
-import importlib
 import calendar
 import os
 from datetime import datetime, date, timedelta
 from typing import Dict, Any, Optional, List
 
-import src.jyotish.services.panchang as panchang_svc_module
-importlib.reload(panchang_svc_module)
 from src.jyotish.services.panchang import VedicPanchangService
+from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 
 
 POPULAR_CITIES = {
@@ -133,7 +131,414 @@ Respond directly in respectful, clear Hindi (4-6 bullet points) with exact Shast
         )
 
 
-def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = False):
+# ---------------------------------------------------------------------------
+# Active Native Kundali Personalization & Muhurta Evaluators
+# ---------------------------------------------------------------------------
+
+NAKSHATRA_NAMES_HI = [
+    "अश्विनी", "भरणी", "कृत्तिका", "रोहिणी", "मृगशिरा", "आर्द्रा",
+    "पुनर्वसु", "पुष्य", "आश्लेषा", "मघा", "पूर्वाफाल्गुनी", "उत्तराफाल्गुनी",
+    "हस्त", "चित्रा", "स्वाती", "विशाखा", "अनुराधा", "ज्येष्ठा",
+    "मूल", "पूर्वाषाढ़ा", "उत्तराषाढ़ा", "श्रवण", "धनिष्ठा", "शतभिषा",
+    "पूर्वाभाद्रपद", "उत्तराभाद्रपद", "रेवती"
+]
+
+SIGN_NAMES_HI = [
+    "मेष (Mesha)", "वृषभ (Vrishabha)", "मिथुन (Mithuna)", "कर्क (Karka)",
+    "सिंह (Simha)", "कन्या (Kanya)", "तुला (Tula)", "वृश्चिक (Vrishchika)",
+    "धनु (Dhanu)", "मकर (Makara)", "कुम्भ (Kumbha)", "मीन (Meena)"
+]
+
+SIGN_LORDS_MAP = {
+    1: "Mars", 2: "Venus", 3: "Mercury", 4: "Moon",
+    5: "Sun", 6: "Mercury", 7: "Venus", 8: "Mars",
+    9: "Jupiter", 10: "Saturn", 11: "Saturn", 12: "Jupiter"
+}
+
+GRAHA_NAMES_HI = {
+    "Sun": "सूर्य (Sun)", "Moon": "चन्द्र (Moon)", "Mars": "मंगल (Mars)",
+    "Mercury": "बुध (Mercury)", "Jupiter": "गुरु (Jupiter)", "Venus": "शुक्र (Venus)",
+    "Saturn": "शनि (Saturn)", "Rahu": "राहु (Rahu)", "Ketu": "केतु (Ketu)"
+}
+
+
+def _extract_native_kundali_details(chart: Any, birth_profile: Any) -> Dict[str, Any]:
+    """Extracts degree, ansh, kala, nakshatra pada, sign and bhavas of active native."""
+    lagna_id = getattr(chart, "lagna_sign_id", 1) or 1
+    lagna_deg = getattr(chart, "lagna_degree", 15.0) or 15.0
+    lagna_ansh = int(lagna_deg % 30.0)
+    lagna_kala = int(round(((lagna_deg % 30.0) - lagna_ansh) * 60.0))
+    lagna_abs = ((lagna_id - 1) * 30.0 + (lagna_deg % 30.0)) % 360.0
+    lagna_nak_idx = int(lagna_abs / (360.0 / 27.0)) % 27
+    lagna_pada = int((lagna_abs % (360.0 / 27.0)) / (360.0 / 108.0)) + 1
+
+    planets_data: Dict[str, Any] = {}
+    chart_planets = getattr(chart, "planets", {}) or {}
+
+    max_deg = -1.0
+    ak_planet = "Sun"
+
+    for p_name in ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]:
+        p_obj = chart_planets.get(p_name)
+        if p_obj:
+            s_id = getattr(p_obj, "sign_id", 1) or 1
+            deg = getattr(p_obj, "degree", 15.0) or 15.0
+            ansh = int(deg % 30.0)
+            kala = int(round(((deg % 30.0) - ansh) * 60.0))
+            abs_deg = ((s_id - 1) * 30.0 + (deg % 30.0)) % 360.0
+            nak_i = int(abs_deg / (360.0 / 27.0)) % 27
+            pada = int((abs_deg % (360.0 / 27.0)) / (360.0 / 108.0)) + 1
+            house = getattr(p_obj, "house_from_lagna", 1) or (((s_id - lagna_id) % 12) + 1)
+            dignity = getattr(p_obj, "dignity", "neutral")
+            s_name = getattr(p_obj, "sign_name", "") or (SIGN_NAMES_HI[s_id - 1] if 1 <= s_id <= 12 else "मेष")
+
+            planets_data[p_name] = {
+                "sign_id": s_id,
+                "sign_name": s_name,
+                "deg": deg,
+                "ansh": ansh,
+                "kala": kala,
+                "nak_idx": nak_i,
+                "nak_name": NAKSHATRA_NAMES_HI[nak_i],
+                "pada": pada,
+                "house": house,
+                "dignity": dignity
+            }
+            if p_name not in ["Rahu", "Ketu"] and (deg % 30.0) > max_deg:
+                max_deg = (deg % 30.0)
+                ak_planet = p_name
+        else:
+            planets_data[p_name] = {
+                "sign_id": 1,
+                "sign_name": "मेष (Mesha)",
+                "deg": 15.0,
+                "ansh": 15,
+                "kala": 0,
+                "nak_idx": 0,
+                "nak_name": "अश्विनी",
+                "pada": 1,
+                "house": 1,
+                "dignity": "neutral"
+            }
+
+    lagnesha = SIGN_LORDS_MAP.get(lagna_id, "Mars")
+    ak = getattr(chart, "atmakaraka", "") or ak_planet
+
+    moon_info = planets_data.get("Moon", {})
+    return {
+        "lagna_id": lagna_id,
+        "lagna_name": SIGN_NAMES_HI[lagna_id - 1] if 1 <= lagna_id <= 12 else "मेष",
+        "lagna_ansh": lagna_ansh,
+        "lagna_kala": lagna_kala,
+        "lagna_nak_name": NAKSHATRA_NAMES_HI[lagna_nak_idx],
+        "lagna_pada": lagna_pada,
+        "lagnesha": lagnesha,
+        "lagnesha_hi": GRAHA_NAMES_HI.get(lagnesha, lagnesha),
+        "atmakaraka": ak,
+        "atmakaraka_hi": GRAHA_NAMES_HI.get(ak, ak),
+        "moon_sign_id": moon_info.get("sign_id", 1),
+        "moon_sign_name": moon_info.get("sign_name", "मेष"),
+        "moon_ansh": moon_info.get("ansh", 15),
+        "moon_kala": moon_info.get("kala", 0),
+        "moon_nak_idx": moon_info.get("nak_idx", 0),
+        "moon_nak_name": moon_info.get("nak_name", "अश्विनी"),
+        "moon_pada": moon_info.get("pada", 1),
+        "planets": planets_data,
+        "native_name": getattr(birth_profile, "name", "सक्रिय जातक") or "सक्रिय जातक"
+    }
+
+
+def _evaluate_native_navratri_fasting(native_info: Dict[str, Any]) -> Dict[str, Any]:
+    """Evaluates the most auspicious Navratri Fasting Tithi based on native's Lagnesha, Atmakaraka, and Moon."""
+    ak = native_info.get("atmakaraka", "Sun")
+    lagnesha = native_info.get("lagnesha", "Mars")
+    m_nak = native_info.get("moon_nak_name", "अश्विनी")
+    m_pada = native_info.get("moon_pada", 1)
+    m_ansh = native_info.get("moon_ansh", 15)
+    m_kala = native_info.get("moon_kala", 0)
+
+    fire_grahas = ["Sun", "Mars"]
+    air_shadow_grahas = ["Saturn", "Rahu", "Ketu"]
+    water_grahas = ["Moon", "Venus"]
+
+    if lagnesha in fire_grahas or ak in fire_grahas:
+        best_tithi = "🚩 महाष्टमी (दुर्गाष्टमी) एवं प्रतिपदा (घटस्थापना)"
+        devi_sadhana = "मां महागौरी एवं मां शैलपुत्री"
+        shastriya_reason = (
+            f"जातक के लग्नेश ({native_info.get('lagnesha_hi')}) व आत्मकारक ({native_info.get('atmakaraka_hi')}) "
+            f"अग्नि तत्त्व प्रधान हैं। जन्म नक्षत्र {m_nak} (चरण {m_pada}, भोगांश {m_ansh}°{m_kala}') के प्रभाव से "
+            "अष्टमी तिथि का व्रत जातक के अंतःकरण के तेज व आत्म-ऊर्जा को जागृत करता है तथा समस्त शत्रुभय व विघ्नों का शमन करता है।"
+        )
+        positives = [
+            "सर्वकार्य सिद्धि, आत्मबल में अदम्य वृद्धि एवं प्रतिष्ठा लाभ।",
+            "प्रतिपदा को कलश स्थापना एवं अष्टमी को महागौरी व्रत से कुल की रक्षा।",
+            "कठिन बाधाओं व शत्रुओं पर विजय हेतु यह व्रत अचूक सुरक्षा कवच है।"
+        ]
+        cautions = [
+            "अष्टमी व्रत के दिन तामसिक संगति, क्रोध व वाद-विवाद से सर्वथा दूर रहें।",
+            "अत्यधिक शुष्क उपवास न करें; पर्याप्त दुग्ध, गंगाजल या फलाहार ग्रहण करें।"
+        ]
+    elif lagnesha in air_shadow_grahas or ak in air_shadow_grahas:
+        best_tithi = "⚡ महासप्तमी (कालरात्रि महानिशा) एवं महाष्टमी"
+        devi_sadhana = "मां कालरात्रि एवं मां महागौरी"
+        shastriya_reason = (
+            f"जातक की कुण्डली में वायु/तमोगुणी ग्रह ({native_info.get('lagnesha_hi')} / {native_info.get('atmakaraka_hi')}) "
+            f"का प्रभाव है तथा चन्द्रमा {m_nak} (चरण {m_pada}) में स्थित है। सप्तमी की रात्रि में महानिशा पूजा एवं "
+            "कालरात्रि व्रत करने से राहु-शनि जनित कार्मिक ऋण, मानसिक अवसाद व दृष्टि-दोषों का समूल नाश होता है।"
+        )
+        positives = [
+            "अदृश्य व्याधियों, भय व शनि/राहु की साढ़ेसाती-दोषों से पूर्ण त्राण।",
+            "सप्तमी की महानिशा में सिद्ध कुंजिका स्तोत्र अथवा अर्गला स्तोत्र पाठ से परम सिद्धि।",
+            "आंतरिक भय का विनाश होकर आध्यात्मिक तेज की प्राप्ति।"
+        ]
+        cautions = [
+            "रात्रि जागरण के समय नकारात्मक या अंधविश्वासी चिन्तन से बचें।",
+            "उपवास में नमक का पूर्ण त्याग रखें, केवल सेंधा नमक व फलाहार ही ग्राह्य है।"
+        ]
+    elif lagnesha in water_grahas or ak in water_grahas:
+        best_tithi = "🌸 प्रतिपदा घटस्थापना एवं अष्टमी अथवा सम्पूर्ण ९-दिवसीय सौम्य फलाहार व्रत"
+        devi_sadhana = "मां ब्रह्मचारिणी, मां चन्द्रघण्टा एवं मां महागौरी"
+        shastriya_reason = (
+            f"जातक के लग्नेश/आत्मकारक सौम्य जल तत्त्व ({native_info.get('lagnesha_hi')}) से समन्वित हैं। "
+            f"चन्द्रमा {m_nak} (चरण {m_pada}, {m_ansh}°{m_kala}') की स्थिति भक्ति, मानसिक शुद्धि एवं दांपत्य सुख का संचार करती है। "
+            "प्रतिपदा से अष्टमी पर्यन्त सात्विक फलाहार अथवा अष्टमी का व्रत जातक को परम शांति व लक्ष्मी कृपा प्रदान करता है।"
+        )
+        positives = [
+            "मानसिक संतुलन, सौम्य आकर्षण एवं गृहस्थ सुख-समृद्धि में वृद्धि।",
+            "मां जगदम्बा की वात्सल्यमयी कृपा से मनोवांछित फल की प्राप्ति।",
+            "सकारात्मक विचारों एवं सौहार्दपूर्ण पारिवारिक वातावरण का सृजन।"
+        ]
+        cautions = [
+            "निर्जला व्रत का हठ न करें; जल, दूध व फलों के रस का यथोचित सेवन करें।",
+            "माता अथवा घर की स्त्रियों का अनादर व्रत फल को क्षीण करता है, उनका आशीर्वाद लें।"
+        ]
+    else:
+        best_tithi = "👑 महानवमी (सिद्धिदात्री / रामनवमी) एवं अष्टमी-नवमी सन्धि"
+        devi_sadhana = "मां सिद्धिदात्री एवं मां सरस्वती"
+        shastriya_reason = (
+            f"जातक के लग्नेश ({native_info.get('lagnesha_hi')}) व आत्मकारक ({native_info.get('atmakaraka_hi')}) "
+            f"बुद्धि व ज्ञान के कारक हैं। जन्म नक्षत्र {m_nak} (चरण {m_pada}) के अनुसार नवमी तिथि का व्रत परा-विद्या, "
+            "मेधा शक्ति एवं संपूर्ण मनोवांछित सिद्धियों को प्रदान करने वाला शास्त्रीय अमृत योग है।"
+        )
+        positives = [
+            "विद्या, शोध, न्याय, व्यापार एवं उच्च पद-प्रतिष्ठा में अभूतपूर्व प्रगति।",
+            "नवमी को ९ कन्याओं का विधिवत पूजन व सत्कार करने से अखंड सौभाग्य।",
+            "आध्यात्मिक एवं सांसारिक दोनों क्षेत्रों में सर्वतोमुखी सफलता।"
+        ]
+        cautions = [
+            "अहंकार, मिथ्या भाषण एवं कटु वचनों से व्रत दिवस पर पूर्णतः बचें।",
+            "हवन व कन्या-पूजन के बिना नवमी व्रत का पूर्ण फल अपूर्ण माना जाता है।"
+        ]
+
+    return {
+        "best_tithi": best_tithi,
+        "devi_sadhana": devi_sadhana,
+        "shastriya_reason": shastriya_reason,
+        "positives": positives,
+        "cautions": cautions
+    }
+
+
+def _evaluate_native_vivaha_and_manglik(native_info: Dict[str, Any], panchang_data: Dict[str, Any]) -> Dict[str, Any]:
+    """Evaluates Tribala Shuddhi, Guru/Venus combustion, Ashtama Lagna, and Manglik deeds suitability for native."""
+    native_moon_sign = native_info.get("moon_sign_id", 1)
+    native_lagna_id = native_info.get("lagna_id", 1)
+
+    pil = panchang_data.get("five_pillars", {})
+    trans = panchang_data.get("planetary_transit", {})
+    t_list = trans.get("planets", [])
+
+    sun_sign = 1
+    moon_sign = 1
+    jup_sign = 1
+    ven_sign = 1
+    jup_combust = False
+    ven_combust = False
+
+    for tp in t_list:
+        p_name = tp.get("name", "")
+        s_id = tp.get("sign_id", 1)
+        comb = tp.get("is_combust", False)
+        if "Sun" in p_name or "सूर्य" in p_name:
+            sun_sign = s_id
+        elif "Moon" in p_name or "चन्द्र" in p_name:
+            moon_sign = s_id
+        elif "Jupiter" in p_name or "गुरु" in p_name:
+            jup_sign = s_id
+            jup_combust = comb
+        elif "Venus" in p_name or "शुक्र" in p_name:
+            ven_sign = s_id
+            ven_combust = comb
+
+    # 1. Surya Balam
+    s_diff = ((sun_sign - native_moon_sign) % 12) + 1
+    if s_diff in [3, 6, 10, 11]:
+        s_status = "🟢 पूर्ण शुभ सूर्य बल (Purna Shuddhi)"
+        s_color = "#059669"
+        s_desc = f"जन्म राशि से {s_diff}वें भाव में सूर्य गोचर — आरोग्य, पराक्रम एवं तेज प्रदान करता है।"
+    elif s_diff in [1, 2, 5, 7, 9]:
+        s_status = "🟡 मध्यम सूर्य बल (Madhyama)"
+        s_color = "#D97706"
+        s_desc = f"जन्म राशि से {s_diff}वें भाव में सूर्य गोचर — सामान्य फल, सूर्य अर्घ्य व दान से शुद्धि।"
+    else:
+        s_status = "🔴 हीन सूर्य बल (Adhama / Inauspicious)"
+        s_color = "#DC2626"
+        s_desc = f"जन्म राशि से {s_diff}वें (अनिष्ट) भाव में सूर्य गोचर — विवाह में विशेष शांति आवश्यक।"
+
+    # 2. Guru Balam
+    g_diff = ((jup_sign - native_moon_sign) % 12) + 1
+    if g_diff in [2, 5, 7, 9, 11]:
+        g_status = "🟢 अमृत फल गुरु बल (Amrita Guru Balam)"
+        g_color = "#059669"
+        g_desc = f"जन्म राशि से {g_diff}वें (शुभ त्रिकोण/लाभ) भाव में देवगुरु — सौभाग्य व अखंड दांपत्य।"
+    elif g_diff in [1, 3, 6, 10]:
+        g_status = "🟡 मध्यम गुरु बल (Parihar Grahyam)"
+        g_color = "#D97706"
+        g_desc = f"जन्म राशि से {g_diff}वें भाव में देवगुरु — पीली वस्तु दान व गुरु पूजन से ग्राह्य।"
+    else:
+        g_status = "🔴 अनिष्ट गुरु बल (Varjya)"
+        g_color = "#DC2626"
+        g_desc = f"जन्म राशि से {g_diff}वें (४, ८, १२ अनिष्ट) भाव में गुरु — विवाह संस्कार त्याज्य।"
+
+    # 3. Chandra Balam
+    c_diff = ((moon_sign - native_moon_sign) % 12) + 1
+    if c_diff in [1, 3, 6, 7, 10, 11]:
+        c_status = "🟢 श्रेष्ठ चन्द्र बल (Subha Balam)"
+        c_color = "#059669"
+        c_desc = f"जन्म राशि से {c_diff}वें भाव में चन्द्रमा — मानसिक सौहार्द एवं निर्विघ्न कार्य सिद्धि।"
+    elif c_diff in [2, 5, 9]:
+        c_status = "🟡 साधारण चन्द्र बल (Sama Balam)"
+        c_color = "#D97706"
+        c_desc = f"जन्म राशि से {c_diff}वें भाव में चन्द्रमा — सामान्य शुद्धि।"
+    else:
+        c_status = "🔴 अष्टम/कण्टक चन्द्र बल (Varjya)"
+        c_color = "#DC2626"
+        c_desc = f"जन्म राशि से {c_diff}वें (४, ८, १२ अनिष्ट) भाव में चन्द्रमा — शुभ कार्य टालना श्रेयस्कर।"
+
+    combust_cautions = []
+    if jup_combust:
+        combust_cautions.append("देवगुरु बृहस्पति अस्त (Combust) हैं — विवाह एवं उपनयन संस्कार सर्वथा निषिद्ध हैं।")
+    if ven_combust:
+        combust_cautions.append("दैत्यगुरु शुक्र अस्त (Combust) हैं — विवाह एवं नवीन गृह प्रवेश सर्वथा वर्जित हैं।")
+
+    ashtama_lagna_id = ((native_lagna_id + 7 - 1) % 12) + 1
+    ashtama_lagna_name = SIGN_NAMES_HI[ashtama_lagna_id - 1]
+
+    is_shukla = "शुक्ल" in pil.get("tithi", {}).get("paksha", "शुक्ल")
+    bhadra = panchang_data.get("bhadra", {})
+    is_bhadra = bhadra.get("is_fatal_on_earth", False)
+
+    deeds = [
+        {
+            "name": "💍 विवाह संस्कार (Vivaha)",
+            "score": "उत्तम" if (s_diff in [3, 6, 10, 11] and g_diff in [2, 5, 7, 9, 11] and c_diff in [1, 3, 6, 7, 10, 11] and not jup_combust and not ven_combust and not is_bhadra) else ("साधारण / परिहार" if not (jup_combust or ven_combust) else "🚫 वर्जित"),
+            "color": "#059669" if (s_diff in [3, 6, 10, 11] and g_diff in [2, 5, 7, 9, 11] and c_diff in [1, 3, 6, 7, 10, 11] and not jup_combust and not ven_combust and not is_bhadra) else ("#D97706" if not (jup_combust or ven_combust) else "#DC2626"),
+            "note": "त्रिबल शुद्धि, गुरु-शुक्र उदित एवं भद्रा रहित काल आवश्यक।"
+        },
+        {
+            "name": "🏠 गृह प्रवेश व वास्तु पूजन (Griha Pravesha)",
+            "score": "उत्तम" if (c_diff in [1, 3, 6, 7, 10, 11] and is_shukla and not is_bhadra) else "मध्यम",
+            "color": "#059669" if (c_diff in [1, 3, 6, 7, 10, 11] and is_shukla and not is_bhadra) else "#D97706",
+            "note": "स्थिर लग्न (वृषभ, सिंह, वृश्चिक, कुंभ) में प्रवेश अचल समृद्धि देता है।"
+        },
+        {
+            "name": "👶 नामकरण व मुण्डन संस्कार (Namakarana)",
+            "score": "उत्तम" if c_diff in [1, 3, 6, 7, 10, 11] else "मध्यम",
+            "color": "#059669" if c_diff in [1, 3, 6, 7, 10, 11] else "#D97706",
+            "note": "शुभ नक्षत्र व चन्द्रबल होने पर दीर्घायु एवं बुद्धि वृद्धि।"
+        },
+        {
+            "name": "🎓 उपनयन व विद्यारंभ (Upanayana)",
+            "score": "उत्तम" if (g_diff in [2, 5, 7, 9, 11] and not jup_combust) else "मध्यम / त्याज्य",
+            "color": "#059669" if (g_diff in [2, 5, 7, 9, 11] and not jup_combust) else "#D97706",
+            "note": "गुरु का बली होना एवं शुक्ल पक्ष की शुभ तिथियां ग्राह्य।"
+        },
+        {
+            "name": "🚗 वाहन क्रय व नवीन व्यापार (Vehicle / Business)",
+            "score": "उत्तम" if (c_diff in [1, 3, 6, 7, 10, 11] and not is_bhadra) else "सावधानी रखें",
+            "color": "#059669" if (c_diff in [1, 3, 6, 7, 10, 11] and not is_bhadra) else "#DC2626",
+            "note": "शुभ चौघड़िया (अमृत, शुभ, लाभ) एवं चर लग्न में वाहन क्रय फलदायी।"
+        }
+    ]
+
+    return {
+        "tribala": {
+            "surya": {"status": s_status, "color": s_color, "desc": s_desc, "bhava": s_diff},
+            "guru": {"status": g_status, "color": g_color, "desc": g_desc, "bhava": g_diff},
+            "chandra": {"status": c_status, "color": c_color, "desc": c_desc, "bhava": c_diff}
+        },
+        "combust_cautions": combust_cautions,
+        "ashtama_lagna_name": ashtama_lagna_name,
+        "deeds": deeds
+    }
+
+
+def _evaluate_native_chandra_tara_bala(native_info: Dict[str, Any], panchang_data: Dict[str, Any]) -> Dict[str, Any]:
+    """Calculates active native's personalized Chandrabalam & Tarabalam for the current date."""
+    native_moon_sign = native_info.get("moon_sign_id", 1)
+    native_nak_idx = native_info.get("moon_nak_idx", 0)
+
+    pil = panchang_data.get("five_pillars", {})
+    today_nak_idx = pil.get("nakshatra", {}).get("nakshatra_id", 1) - 1
+    if today_nak_idx < 0:
+        today_nak_idx = 0
+
+    trans = panchang_data.get("planetary_transit", {})
+    t_list = trans.get("planets", [])
+    today_moon_sign = 1
+    for tp in t_list:
+        if "Moon" in tp.get("name", "") or "चन्द्र" in tp.get("name", ""):
+            today_moon_sign = tp.get("sign_id", 1)
+            break
+
+    c_diff = ((today_moon_sign - native_moon_sign) % 12) + 1
+    if c_diff in [1, 3, 6, 7, 10, 11]:
+        c_score = "१००% (उत्कृष्ट)"
+        c_status = "🟢 पूर्ण चन्द्रबल (शुभ व कार्य सिद्धिप्रद)"
+        c_color = "#059669"
+        c_desc = f"आज का गोचर चन्द्रमा आपकी जन्म राशि ({native_info.get('moon_sign_name')}) से {c_diff}वें शुभ भाव में संचरण कर रहा है। सभी नूतन व मांगलिक कर्मों में विजय मिलेगी।"
+    elif c_diff in [2, 5, 9]:
+        c_score = "६५% (मध्यम)"
+        c_status = "🟡 मध्यम चन्द्रबल (सामान्य फल)"
+        c_color = "#D97706"
+        c_desc = f"आज का गोचर चन्द्रमा आपकी जन्म राशि से {c_diff}वें भाव में है। सामान्य दैनिक कार्य सम्पन्न होंगे, बड़े निर्णयों में विचार अपेक्षित है।"
+    else:
+        c_score = "२५% (अनिष्ट)"
+        c_status = "🔴 अष्टम / कण्टक चन्द्रबल (सावधानी आवश्यक)"
+        c_color = "#DC2626"
+        c_desc = f"आज का गोचर चन्द्रमा आपकी जन्म राशि से {c_diff}वें (४, ८, १२) अनिष्ट भाव में है। नया निवेश, विवाद व मांगलिक अनुष्ठान आज टालें।"
+
+    tara_offset = ((today_nak_idx - native_nak_idx) % 9) + 1
+    tara_names = [
+        ("जन्म", "शारीरिक कष्ट सम्भव, सामान्य दिन", "#D97706", "🟡 मध्यम"),
+        ("सम्पत", "धन, लाभ, ऐश्वर्य व समृद्धि", "#059669", "🟢 परम शुभ"),
+        ("विपत", "विपत्ति, हानि, संकट व दुर्घटना भय", "#DC2626", "🔴 वर्जित"),
+        ("क्षेम", "कल्याण, आरोग्य, सुरक्षा व सफलता", "#059669", "🟢 परम शुभ"),
+        ("प्रत्यरि", "शत्रु बाधा, विवाद, विरोध व कलह", "#DC2626", "🔴 वर्जित"),
+        ("साधक", "मनोरथ सिद्धि, साधना व कार्य पूर्णता", "#059669", "🟢 परम शुभ"),
+        ("वध", "मृत्यु तुल्य कष्ट, गंभीर हानि", "#DC2626", "🚫 महा-वर्जित"),
+        ("मित्र", "सुख, सौहार्द, सहयोग व प्रगति", "#059669", "🟢 शुभ"),
+        ("अतिमित्र", "परम कल्याण, विजय, उल्लास व सिद्धि", "#059669", "🟢 सर्वोत्तम")
+    ]
+    t_name, t_desc, t_color, t_badge = tara_names[tara_offset - 1]
+
+    return {
+        "c_diff": c_diff,
+        "c_score": c_score,
+        "c_status": c_status,
+        "c_color": c_color,
+        "c_desc": c_desc,
+        "today_moon_sign_name": SIGN_NAMES_HI[today_moon_sign - 1] if 1 <= today_moon_sign <= 12 else "मेष",
+        "tara_num": tara_offset,
+        "tara_name": t_name,
+        "tara_desc": t_desc,
+        "tara_color": t_color,
+        "tara_badge": t_badge,
+        "today_nak_name": NAKSHATRA_NAMES_HI[today_nak_idx % 27]
+    }
+
+
+def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = False, tabs: Optional[List[str]] = None):
     """Renders the master Vedic Jyotish Panchang module with 12 rich interactive tabs."""
 
     st.markdown("""
@@ -159,6 +564,24 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # Classical Shastriya Shloka Card
+    panchang_pramana = SHASTRIYA_SHLOKAS.get("panchanga_phala", {})
+    if panchang_pramana:
+        with st.expander("📜 शास्त्रीय प्रमाण — तैत्तिरीय ब्राह्मण एवं मुहूर्त चिन्तामणि (पञ्चाङ्ग माहात्म्य फल)", expanded=False):
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+                <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {panchang_pramana.get('grantha', '')}</b>
+                <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{panchang_pramana.get('shloka_sanskrit', panchang_pramana.get('shloka', ''))}
+                </pre>
+                <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                    <b>हिंदी भावार्थ:</b> {panchang_pramana.get('anuvad_hi', panchang_pramana.get('hindi_translation', ''))}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    native_info = _extract_native_kundali_details(chart, birth_profile)
 
     # -------------------------------------------------------------
     # TOP CONTROLS: Date, Location & Preset Quick Select
@@ -420,7 +843,7 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     # -------------------------------------------------------------
     # 12 COMPREHENSIVE TABS
     # -------------------------------------------------------------
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs([
+    tab_list = tabs if tabs and len(tabs) == 12 else [
         "🌟 पञ्चाङ्ग ५ स्तम्भ",
         "🚩 पर्व, व्रत व एकादशी",
         "🪔 पक्ष व श्राद्ध",
@@ -433,7 +856,8 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
         "📜 दैनिक सङ्कल्प मन्त्र",
         "📅 मासिक पञ्चाङ्ग",
         "🤖 AI पञ्चाङ्ग सारथी"
-    ])
+    ]
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs(tab_list)
 
     # =============================================================
     # TAB 1: पञ्चाङ्ग के पाँच स्तम्भ (5 Pillars)
@@ -632,6 +1056,47 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     with tab2:
         st.markdown("### 🚩 व्रत, पर्व एवं एकादशी पारणा शोध")
         st.caption("दृक्-पञ्चाङ्ग प्रमाणित प्रमुख सनातन व्रत, त्यौहार, महा-पर्व एवं एकादशी पारणा का सूक्ष्म समय:")
+
+        # 0. Active Native Navratri Fasting Tithi Decision Card
+        nav_eval = _evaluate_native_navratri_fasting(native_info)
+        st.markdown(f"""
+        <div style="background:{'#1F2937' if is_dark else '#FFFDF5'}; border:2px solid #E11D48;
+                    border-radius:14px; padding:18px 22px; margin-bottom:18px; box-shadow:0 4px 14px rgba(225, 29, 72, 0.1);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <span style="font-size:12px; font-weight:700; color:#E11D48; text-transform:uppercase; letter-spacing:0.5px;">
+                        🔱 सक्रिय जातक कुण्डली आधारित नवरात्रि व्रत निर्णय ({native_info.get('native_name')})
+                    </span>
+                    <h3 style="margin:4px 0 0 0; color:#9F1239; font-size:20px; font-weight:800;">
+                        {nav_eval['best_tithi']}
+                    </h3>
+                </div>
+                <div>
+                    <span style="background:#FFE4E6; border:1.5px solid #F43F5E; color:#BE123C; padding:5px 14px; border-radius:20px; font-size:13px; font-weight:700;">
+                        🌺 अभीष्ट देवी: {nav_eval['devi_sadhana']}
+                    </span>
+                </div>
+            </div>
+            <div style="background:{'#111827' if is_dark else '#FFF1F2'}; border-radius:8px; padding:10px 14px; margin:12px 0; font-size:13px; color:{'#F9FAFB' if is_dark else '#881337'}; line-height:1.6;">
+                <b>🪐 कुण्डली संस्थिति:</b> लग्न: <b>{native_info.get('lagna_name')}</b> ({native_info.get('lagna_ansh')}°{native_info.get('lagna_kala')}', {native_info.get('lagna_nak_name')} पद {native_info.get('lagna_pada')}) | लग्नेश: <b>{native_info.get('lagnesha_hi')}</b> | आत्मकारक: <b>{native_info.get('atmakaraka_hi')}</b> | चन्द्रमा: <b>{native_info.get('moon_sign_name')}</b> ({native_info.get('moon_ansh')}°{native_info.get('moon_kala')}', {native_info.get('moon_nak_name')} पद {native_info.get('moon_pada')})<br/>
+                <b>📜 शास्त्रीय निर्णय:</b> {nav_eval['shastriya_reason']}
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;">
+                <div style="background:{'#064E3B' if is_dark else '#F0FDF4'}; border:1px solid #10B981; border-radius:8px; padding:10px 14px;">
+                    <b style="color:#047857; font-size:13px;">✅ शास्त्र सम्मत अमृत फल (+):</b>
+                    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12.5px; color:{'#D1FAE5' if is_dark else '#065F46'}; line-height:1.6;">
+                        {''.join(f'<li>{p}</li>' for p in nav_eval['positives'])}
+                    </ul>
+                </div>
+                <div style="background:{'#7F1D1D' if is_dark else '#FEF2F2'}; border:1px solid #EF4444; border-radius:8px; padding:10px 14px;">
+                    <b style="color:#B91C1C; font-size:13px;">⚠️ व्रत सावधानियां एवं संयम (-):</b>
+                    <ul style="margin:6px 0 0 0; padding-left:18px; font-size:12.5px; color:{'#FEE2E2' if is_dark else '#991B1B'}; line-height:1.6;">
+                        {''.join(f'<li>{c}</li>' for c in nav_eval['cautions'])}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
         vr_list = festivals_vrat.get("vrats", [])
         ek_parana = festivals_vrat.get("ekadashi_parana")
@@ -997,6 +1462,78 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
                 </div>
                 """, unsafe_allow_html=True)
 
+        # 3. Active Native Manglik & Vivaha Tribala Muhurta Card
+        viv_eval = _evaluate_native_vivaha_and_manglik(native_info, panchang_data)
+        st.markdown("---")
+        st.markdown(f"#### 💍 सक्रिय जातक विवाह एवं समस्त मांगलिक संस्कार शुद्धि ({native_info.get('native_name')})")
+        st.caption("मुहूर्त चिन्तामणि एवं नारद संहिता के अनुसार त्रिबल शुद्धि (सूर्य, गुरु, चन्द्र), गुरु-शुक्र उदित स्थिति एवं संस्कार अनुकूलता:")
+
+        col_tb1, col_tb2, col_tb3 = st.columns(3)
+        with col_tb1:
+            tb_s = viv_eval["tribala"]["surya"]
+            st.markdown(f"""
+            <div style="background:{'#1F2937' if is_dark else '#FFFBEB'}; border:1.5px solid {tb_s['color']};
+                        border-radius:10px; padding:12px 14px; text-align:center; height:100%;">
+                <span style="font-size:12px; font-weight:700; color:{tb_s['color']};">☀️ सूर्य बल (आत्मबल/आरोग्य)</span>
+                <div style="font-size:15px; font-weight:800; color:{tb_s['color']}; margin:4px 0;">{tb_s['status']}</div>
+                <small style="color:{'#D1D5DB' if is_dark else '#475569'}; line-height:1.4;">{tb_s['desc']}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_tb2:
+            tb_g = viv_eval["tribala"]["guru"]
+            st.markdown(f"""
+            <div style="background:{'#1F2937' if is_dark else '#FFFDF5'}; border:1.5px solid {tb_g['color']};
+                        border-radius:10px; padding:12px 14px; text-align:center; height:100%;">
+                <span style="font-size:12px; font-weight:700; color:{tb_g['color']};">🌟 गुरु बल (सौभाग्य/पुत्र/दांपत्य)</span>
+                <div style="font-size:15px; font-weight:800; color:{tb_g['color']}; margin:4px 0;">{tb_g['status']}</div>
+                <small style="color:{'#D1D5DB' if is_dark else '#475569'}; line-height:1.4;">{tb_g['desc']}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_tb3:
+            tb_c = viv_eval["tribala"]["chandra"]
+            st.markdown(f"""
+            <div style="background:{'#1F2937' if is_dark else '#EFF6FF'}; border:1.5px solid {tb_c['color']};
+                        border-radius:10px; padding:12px 14px; text-align:center; height:100%;">
+                <span style="font-size:12px; font-weight:700; color:{tb_c['color']};">🌙 चन्द्र बल (मनःशुद्धि/सफलता)</span>
+                <div style="font-size:15px; font-weight:800; color:{tb_c['color']}; margin:4px 0;">{tb_c['status']}</div>
+                <small style="color:{'#D1D5DB' if is_dark else '#475569'}; line-height:1.4;">{tb_c['desc']}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+        if viv_eval.get("combust_cautions"):
+            for cc in viv_eval["combust_cautions"]:
+                st.markdown(f"""
+                <div style="background:#FEF2F2; border:1.5px solid #DC2626; border-radius:8px; padding:10px 14px; margin:8px 0; color:#991B1B; font-size:13px; font-weight:700;">
+                    ⚠️ {cc}
+                </div>
+                """, unsafe_allow_html=True)
+
+        st.markdown(f"""
+        <div style="background:{'#111827' if is_dark else '#F8FAFC'}; border:1px solid {'#374151' if is_dark else '#E2E8F0'};
+                    border-radius:8px; padding:8px 14px; margin:10px 0; font-size:12.5px; color:{'#9CA3AF' if is_dark else '#475569'};">
+            <b>🛡️ अष्टम लग्न परिहार:</b> आज के दिन <b>{viv_eval['ashtama_lagna_name']} लग्न</b> जातक के लग्न से अष्टम पड़ता है। इस लग्न की अवधि में पाणिग्रहण (विवाह) अथवा उपनयन संस्कार सर्वथा त्याज्य है।
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("##### 📋 प्रमुख ५ मांगलिक संस्कारों की आज की पात्रता (Manglik Deeds Suitability Scorecard):")
+        cols_d = st.columns(5)
+        for i, d_item in enumerate(viv_eval["deeds"]):
+            with cols_d[i % 5]:
+                st.markdown(f"""
+                <div style="background:{'#1F2937' if is_dark else '#FFFFFF'}; border:1px solid {d_item['color']};
+                            border-radius:8px; padding:10px 8px; text-align:center; height:100%; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <b style="font-size:12px; color:{'#F9FAFB' if is_dark else '#0F172A'};">{d_item['name']}</b>
+                    <div style="background:{d_item['color']}20; color:{d_item['color']}; padding:2px 6px; border-radius:10px; font-weight:800; font-size:12px; margin:4px 0;">
+                        {d_item['score']}
+                    </div>
+                    <small style="font-size:10.5px; color:{'#9CA3AF' if is_dark else '#64748B'}; line-height:1.3; display:block;">
+                        {d_item['note']}
+                    </small>
+                </div>
+                """, unsafe_allow_html=True)
+
     # =============================================================
     # TAB 6: चौघड़िया, होरा एवं वैदिक घड़ी
     # =============================================================
@@ -1277,6 +1814,47 @@ def render_vedic_panchang_view(chart: Any, birth_profile: Any, is_dark: bool = F
     with tab8:
         st.markdown("### ⚖️ चन्द्रबलम, ताराबलम एवं आनन्दादि शुभ योग")
         st.caption("१२ राशियों का चन्द्रबल, २७ नक्षत्रों का ताराबल एवं २८ आनन्दादि महायोग:")
+
+        # 0. Active Native Personalized Chandrabala & Tarabala Card
+        ct_eval = _evaluate_native_chandra_tara_bala(native_info, panchang_data)
+        st.markdown(f"""
+        <div style="background:{'#1F2937' if is_dark else '#F0FDF4'}; border:2px solid {ct_eval['c_color']};
+                    border-radius:14px; padding:16px 20px; margin-bottom:16px; box-shadow:0 3px 10px rgba(0,0,0,0.06);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <span style="font-size:12px; font-weight:700; color:{ct_eval['c_color']}; text-transform:uppercase;">
+                        🎯 सक्रिय जातक का व्यक्तिगत बल ({native_info.get('native_name')})
+                    </span>
+                    <h4 style="margin:4px 0 0 0; color:{'#FFFFFF' if is_dark else '#065F46'}; font-size:18px; font-weight:800;">
+                        चन्द्रबल: {ct_eval['c_status']} | ताराबल: {ct_eval['tara_badge']} ({ct_eval['tara_name']} तारा)
+                    </h4>
+                </div>
+                <div>
+                    <span style="background:{ct_eval['c_color']}20; color:{ct_eval['c_color']}; border:1px solid {ct_eval['c_color']}; padding:4px 12px; border-radius:16px; font-weight:800; font-size:13px;">
+                        बल स्कोर: {ct_eval['c_score']}
+                    </span>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;">
+                <div style="background:{'#111827' if is_dark else '#FFFFFF'}; border:1px solid {'#374151' if is_dark else '#D1FAE5'}; border-radius:8px; padding:10px 12px;">
+                    <b style="color:{ct_eval['c_color']}; font-size:13px;">🌙 व्यक्तिगत चन्द्रबल विमर्श:</b>
+                    <div style="font-size:12.5px; color:{'#D1D5DB' if is_dark else '#334155'}; margin-top:4px; line-height:1.5;">
+                        • <b>जन्म राशि:</b> {native_info.get('moon_sign_name')} ({native_info.get('moon_ansh')}°{native_info.get('moon_kala')}')<br/>
+                        • <b>आज का गोचर चन्द्रमा:</b> {ct_eval['today_moon_sign_name']} (जन्म राशि से {ct_eval['c_diff']}वां भाव)<br/>
+                        • <b>शास्त्रीय फल:</b> {ct_eval['c_desc']}
+                    </div>
+                </div>
+                <div style="background:{'#111827' if is_dark else '#FFFFFF'}; border:1px solid {'#374151' if is_dark else '#D1FAE5'}; border-radius:8px; padding:10px 12px;">
+                    <b style="color:{ct_eval['tara_color']}; font-size:13px;">⭐ व्यक्तिगत नवतारा बल विमर्श:</b>
+                    <div style="font-size:12.5px; color:{'#D1D5DB' if is_dark else '#334155'}; margin-top:4px; line-height:1.5;">
+                        • <b>जन्म नक्षत्र:</b> {native_info.get('moon_nak_name')} (चरण {native_info.get('moon_pada')})<br/>
+                        • <b>आज का नक्षत्र:</b> {ct_eval['today_nak_name']}<br/>
+                        • <b>तारा प्रकार:</b> #{ct_eval['tara_num']} <b>{ct_eval['tara_name']} तारा</b> ({ct_eval['tara_desc']})
+                    </div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
         # Special Yogas Banner
         sp_yogas = yogas["special_yogas"]
