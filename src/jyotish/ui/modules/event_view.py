@@ -49,62 +49,71 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
     jup = chart.planets.get("Jupiter")
     sat = chart.planets.get("Saturn")
     
-    c_ev1, c_ev2, c_ev3, c_ev4 = st.columns(4)
-    c_ev1.metric("लग्न एवं राशि", f"{lagna_sname}", f"चन्द्र: {moon.sign_name if moon else '—'}")
-    c_ev2.metric("आत्मकारक ग्रह", f"{getattr(chart, 'atmakaraka', '—')}", "मूल स्वभाव")
-    if jup:
-        _j_sdeg = getattr(jup, 'sign_degree', 0.0)
-        _j_ansh = int(_j_sdeg)
-        _j_kala = int(round((_j_sdeg - _j_ansh) * 60.0))
-        if _j_kala >= 60: _j_kala = 0; _j_ansh += 1
-        _j_nak = getattr(jup, 'nakshatra_name', '')[:4]
-        _j_pad = getattr(jup, 'nakshatra_pada', 1)
-        c_ev3.metric("गुरु स्थिति", f"{jup.sign_name} ({_j_ansh}° {_j_kala:02d}')", f"{jup.house_from_lagna} भाव | {_j_nak}-P{_j_pad}")
-    if sat:
-        _s_sdeg = getattr(sat, 'sign_degree', 0.0)
-        _s_ansh = int(_s_sdeg)
-        _s_kala = int(round((_s_sdeg - _s_ansh) * 60.0))
-        if _s_kala >= 60: _s_kala = 0; _s_ansh += 1
-        _s_nak = getattr(sat, 'nakshatra_name', '')[:4]
-        _s_pad = getattr(sat, 'nakshatra_pada', 1)
-        c_ev4.metric("शनि स्थिति", f"{sat.sign_name} ({_s_ansh}° {_s_kala:02d}')", f"{sat.house_from_lagna} भाव | {_s_nak}-P{_s_pad}")
+    with st.expander("🪐 सक्रिय जातक खगोलीय स्थिति एवं मुख्य ग्रह निर्देशांक (Native Key Planets HUD)", expanded=False):
+        c_ev1, c_ev2, c_ev3, c_ev4 = st.columns(4)
+        c_ev1.metric("लग्न एवं राशि", f"{lagna_sname}", f"चन्द्र: {moon.sign_name if moon else '—'}")
+        c_ev2.metric("आत्मकारक ग्रह", f"{getattr(chart, 'atmakaraka', '—')}", "मूल स्वभाव")
+        if jup:
+            _j_sdeg = getattr(jup, 'sign_degree', 0.0)
+            _j_ansh = int(_j_sdeg)
+            _j_kala = int(round((_j_sdeg - _j_ansh) * 60.0))
+            if _j_kala >= 60: _j_kala = 0; _j_ansh += 1
+            _j_nak = getattr(jup, 'nakshatra_name', '')[:4]
+            _j_pad = getattr(jup, 'nakshatra_pada', 1)
+            c_ev3.metric("गुरु स्थिति", f"{jup.sign_name} ({_j_ansh}° {_j_kala:02d}')", f"{jup.house_from_lagna} भाव | {_j_nak}-P{_j_pad}")
+        if sat:
+            _s_sdeg = getattr(sat, 'sign_degree', 0.0)
+            _s_ansh = int(_s_sdeg)
+            _s_kala = int(round((_s_sdeg - _s_ansh) * 60.0))
+            if _s_kala >= 60: _s_kala = 0; _s_ansh += 1
+            _s_nak = getattr(sat, 'nakshatra_name', '')[:4]
+            _s_pad = getattr(sat, 'nakshatra_pada', 1)
+            c_ev4.metric("शनि स्थिति", f"{sat.sign_name} ({_s_ansh}° {_s_kala:02d}')", f"{sat.house_from_lagna} भाव | {_s_nak}-P{_s_pad}")
 
     tab_future_event, tab_past_event = st.tabs(tabs)
 
     with tab_future_event:
-        st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का ३-स्तरीय शास्त्रीय ट्रिगर (दशा, गुरु-शनि दोहरा गोचर, अष्टकवर्ग) एवं ३२-शास्त्रीय नियमों द्वारा वैज्ञानिक विश्लेषण प्राप्त करें।")
+        with st.expander("⚙️ भविष्य घटना पूर्वानुमान पैरामीटर्स एवं विषय चयन (Event Forecast Query Controls)", expanded=True):
+            st.write("अपनी कुण्डली के लिए किसी भी भविष्य की तिथि अथवा समयावधि का ३-स्तरीय शास्त्रीय ट्रिगर (दशा, गुरु-शनि दोहरा गोचर, अष्टकवर्ग) एवं ३२-शास्त्रीय नियमों द्वारा वैज्ञानिक विश्लेषण प्राप्त करें।")
 
-        scan_mode = st.radio(
-            "विश्लेषण प्रारूप चयन करें (Analysis Mode):",
-            ["📈 १२-२४ माह सम्भावना क्षितिज (12-24 Month Horizon Scanner)", "🎯 एकल तिथि गहन वेध (Single Date Deep Dive)"],
-            horizontal=True,
-            key="ghatna_scan_mode_rad"
-        )
+            scan_mode = st.radio(
+                "विश्लेषण प्रारूप चयन करें (Analysis Mode):",
+                ["📈 १२-२४ माह सम्भावना क्षितिज (12-24 Month Horizon Scanner)", "🎯 एकल तिथि गहन वेध (Single Date Deep Dive)"],
+                horizontal=True,
+                key="ghatna_scan_mode_rad"
+            )
 
-        col_q1, col_q2, col_q3 = st.columns([2, 2, 2])
-        theme = col_q1.selectbox(
-            "विश्लेषण विषय (Event Theme)",
-            ["career", "marriage", "wealth", "children", "property", "travel", "health", "spirituality", "all"],
-            format_func=lambda x: {
-                "career": "💼 आजीविका / नौकरी / पदोन्नति (Career)",
-                "marriage": "💍 विवाह / संबंध (Marriage)",
-                "wealth": "💰 धन / संचित वैभव (Wealth)",
-                "children": "👶 संतान प्राप्ति / विद्या (Children)",
-                "property": "🏠 भूमि / भवन / वाहन क्रय (Property)",
-                "travel": "✈️ विदेश गमन / दूरस्थ यात्रा (Travel)",
-                "health": "🌿 स्वास्थ्य एवं जीवनी शक्ति (Health)",
-                "spirituality": "🕉️ आध्यात्म एवं साधना (Spirituality)",
-                "all": "🌐 समग्र जीवन चक्र (All Themes)"
-            }.get(x, x),
-            key="ghatna_theme_sel"
-        )
+            col_q1, col_q2, col_q3 = st.columns([2, 2, 2])
+            theme = col_q1.selectbox(
+                "विश्लेषण विषय (Event Theme)",
+                ["career", "marriage", "wealth", "children", "property", "travel", "health", "spirituality", "all"],
+                format_func=lambda x: {
+                    "career": "💼 आजीविका / नौकरी / पदोन्नति (Career)",
+                    "marriage": "💍 विवाह / संबंध (Marriage)",
+                    "wealth": "💰 धन / संचित वैभव (Wealth)",
+                    "children": "👶 संतान प्राप्ति / विद्या (Children)",
+                    "property": "🏠 भूमि / भवन / वाहन क्रय (Property)",
+                    "travel": "✈️ विदेश गमन / दूरस्थ यात्रा (Travel)",
+                    "health": "🌿 स्वास्थ्य एवं जीवनी शक्ति (Health)",
+                    "spirituality": "🕉️ आध्यात्म एवं साधना (Spirituality)",
+                    "all": "🌐 समग्र जीवन चक्र (All Themes)"
+                }.get(x, x),
+                key="ghatna_theme_sel"
+            )
+
+            if "12-24" in scan_mode:
+                with col_q2:
+                    start_range_date = st.date_input("प्रारंभ तिथि (Start Date)", value=get_live_local_now(tz_offset).date(), format="DD/MM/YYYY", key="ghatna_start_d")
+                with col_q3:
+                    months_horizon = st.selectbox("अवधि क्षितिज (Horizon)", [12, 18, 24], index=0, format_func=lambda x: f"{x} माह ({x//12} वर्ष)", key="ghatna_horizon_m")
+            else:
+                with col_q2:
+                    target_event_date = st.date_input("लक्षित तिथि (Target Date)", value=date(2027, 4, 12), format="DD/MM/YYYY", key="ghatna_single_d")
+                with col_q3:
+                    st.write("")
+                    st.caption("📍 लक्षित तिथि का ३२-शास्त्रीय नियमों व ३-स्तरीय ट्रिगर द्वारा वेध")
 
         if "12-24" in scan_mode:
-            with col_q2:
-                start_range_date = st.date_input("प्रारंभ तिथि (Start Date)", value=get_live_local_now(tz_offset).date(), format="DD/MM/YYYY", key="ghatna_start_d")
-            with col_q3:
-                months_horizon = st.selectbox("अवधि क्षितिज (Horizon)", [12, 18, 24], index=0, format_func=lambda x: f"{x} माह ({x//12} वर्ष)", key="ghatna_horizon_m")
-
             scan_res = default_event_query_service.scan_event_range(chart, theme, start_range_date, months_horizon)
 
             # Top Hero Peak Banner
@@ -184,13 +193,7 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
     """, unsafe_allow_html=True)
 
         else:
-            # Single Date Deep Dive
-            with col_q2:
-                target_event_date = st.date_input("लक्षित तिथि (Target Date)", value=date(2027, 4, 12), format="DD/MM/YYYY", key="ghatna_single_d")
-            with col_q3:
-                st.write("")
-                st.caption(f"📍 लक्षित तिथि का ३२-शास्त्रीय नियमों व ३-स्तरीय ट्रिगर द्वारा वेध")
-
+            # Single Date Deep Dive Execution
             query_input = GhatnaQueryInput(
                 birth_data=birth_profile,
                 target_date=target_event_date,
@@ -285,30 +288,31 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
                     """, unsafe_allow_html=True)
 
     with tab_past_event:
-        st.write("विगत जीवन की किसी भी ऐतिहासिक घटना (उदा: विवाह, प्रथम नौकरी, पदोन्नति, मकान क्रय, संतान जन्म, विदेश यात्रा आदि) का **६ शास्त्रीय स्तंभों** द्वारा वैज्ञानिक एवं शास्त्र-सम्मत सत्यापन प्राप्त करें।")
+        with st.expander("⚙️ भूतपूर्व घटना विवरण एवं ६-स्तंभ सत्यापन पैरामीटर्स (Past Event Verification Controls)", expanded=True):
+            st.write("विगत जीवन की किसी भी ऐतिहासिक घटना (उदा: विवाह, प्रथम नौकरी, पदोन्नति, मकान क्रय, संतान जन्म, विदेश यात्रा आदि) का **६ शास्त्रीय स्तंभों** द्वारा वैज्ञानिक एवं शास्त्र-सम्मत सत्यापन प्राप्त करें।")
 
-        col_p1, col_p2, col_p3 = st.columns([2, 2, 2])
-        default_past_date = date(2021, 5, 20)
-        past_target_date = col_p1.date_input("भूतपूर्व घटना तिथि (Past Event Date)", value=default_past_date, format="DD/MM/YYYY", key="pe_target_date_inp")
-        past_theme = col_p2.selectbox(
-            "घटना का विषय (Event Theme)",
-            ["marriage", "career", "wealth", "education", "children", "property", "travel", "health", "spirituality"],
-            format_func=lambda x: {
-                "marriage": "💍 विवाह / संबंध (Marriage)",
-                "career": "💼 आजीविका / नौकरी / पदोन्नति (Career)",
-                "wealth": "💰 धन / संचित वैभव (Wealth)",
-                "education": "🎓 उच्च शिक्षा / उपाधि (Education)",
-                "children": "👶 संतान प्राप्ति (Children)",
-                "property": "🏠 भूमि / भवन / वाहन क्रय (Property)",
-                "travel": "✈️ विदेश गमन / दूरस्थ यात्रा (Travel)",
-                "health": "🌿 स्वास्थ्य संकट / रोग (Health)",
-                "spirituality": "🕉️ दीक्षा / साधना / आध्यात्म (Spirituality)"
-            }.get(x, x),
-            key="pe_theme_sel"
-        )
-        past_desc = col_p3.text_input("घटना विवरण (Event Description)", value="विवाह संपन्न हुआ", key="pe_desc_inp")
+            col_p1, col_p2, col_p3 = st.columns([2, 2, 2])
+            default_past_date = date(2021, 5, 20)
+            past_target_date = col_p1.date_input("भूतपूर्व घटना तिथि (Past Event Date)", value=default_past_date, format="DD/MM/YYYY", key="pe_target_date_inp")
+            past_theme = col_p2.selectbox(
+                "घटना का विषय (Event Theme)",
+                ["marriage", "career", "wealth", "education", "children", "property", "travel", "health", "spirituality"],
+                format_func=lambda x: {
+                    "marriage": "💍 विवाह / संबंध (Marriage)",
+                    "career": "💼 आजीविका / नौकरी / पदोन्नति (Career)",
+                    "wealth": "💰 धन / संचित वैभव (Wealth)",
+                    "education": "🎓 उच्च शिक्षा / उपाधि (Education)",
+                    "children": "👶 संतान प्राप्ति (Children)",
+                    "property": "🏠 भूमि / भवन / वाहन क्रय (Property)",
+                    "travel": "✈️ विदेश गमन / दूरस्थ यात्रा (Travel)",
+                    "health": "🌿 स्वास्थ्य संकट / रोग (Health)",
+                    "spirituality": "🕉️ दीक्षा / साधना / आध्यात्म (Spirituality)"
+                }.get(x, x),
+                key="pe_theme_sel"
+            )
+            past_desc = col_p3.text_input("घटना विवरण (Event Description)", value="विवाह संपन्न हुआ", key="pe_desc_inp")
 
-        run_past_verify = st.button("🔍 ६-स्तंभ शास्त्रीय सत्यापन करें (Verify Across 6 Classical Pillars)", type="primary", use_container_width=True, key="pe_verify_btn")
+            run_past_verify = st.button("🔍 ६-स्तंभ शास्त्रीय सत्यापन करें (Verify Across 6 Classical Pillars)", type="primary", use_container_width=True, key="pe_verify_btn")
 
         if run_past_verify or st.session_state.get("pe_last_verified", False):
             st.session_state["pe_last_verified"] = True
