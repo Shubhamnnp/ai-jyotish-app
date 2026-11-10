@@ -22,6 +22,31 @@ from src.jyotish.core.models import KundaliChart, BirthData
 from src.jyotish.core.constants import GRAHAS, SIGNS, SIGN_NAMES, SIGN_LORDS, NAKSHATRAS
 
 
+SHASTRIYA_FALADESH_SHLOKA = {
+    "title": "बृहत्पाराशर होराशास्त्रम् एवं फलदीपिका — फलित निरूपण व भावाधिपति समन्वय",
+    "source": "महर्षि पराशर विरचित 'बृहत्पाराशर होराशास्त्रम्' (फलितनिरूपणाध्याय) एवं मन्त्रेश्वर विरचित 'फलदीपिका'",
+    "shloka": "यद् यद् भावगतो मन्दः सौम्यो वा बलवान् भवेत् ।\nतस्य तस्य फलं सर्वं सम्यग् ज्ञेयं विचक्षणैः ॥\nकारकाणां बलेनैव भावानां फलमुच्यते ।\nलग्नचन्द्रार्कयोगेन त्रिविधं फललक्षणम् ॥",
+    "meaning": "जिस-जिस भाव में शुभ अथवा पापी ग्रह स्थित या दृष्टिपात करते हैं और जो ग्रह षड्बल में बलवान होते हैं, उनके आधार पर ही विद्वानों को फलित का सूक्ष्म निर्णय करना चाहिए। लग्न, चन्द्र व सूर्य तीनों कुण्डलियों के समन्वय तथा ग्रहों के सूक्ष्म अंश-कला-विकला से त्रिविध फलादेश की प्रामाणिकता सिद्ध होती है।"
+}
+
+
+def _format_dms(deg_val):
+    """Calculates classical Ansh (Degrees), Kala (Arcminutes), and Vikala (Arcseconds)."""
+    deg = float(deg_val) if deg_val is not None else 0.0
+    deg = deg % 30.0
+    ansh = int(deg)
+    rem_min = (deg - ansh) * 60.0
+    kala = int(rem_min)
+    vikala = int(round((rem_min - kala) * 60.0))
+    if vikala >= 60:
+        vikala = 0
+        kala += 1
+    if kala >= 60:
+        kala = 0
+        ansh += 1
+    return ansh, kala, vikala, f"{ansh}° {kala:02d}' {vikala:02d}\""
+
+
 def render_shastriya_faladesh_view(
     chart: KundaliChart,
     birth_profile: Optional[BirthData] = None,
@@ -43,6 +68,7 @@ def render_shastriya_faladesh_view(
     # Active Lagna & Planets
     lagna_name = chart.lagna_sign_name or "Aries"
     lagna_deg = round(chart.lagna_degree, 2)
+    _, _, _, lagna_dms = _format_dms(chart.lagna_degree)
     moon_p = chart.planets.get("Moon")
     sun_p = chart.planets.get("Sun")
     moon_sign = moon_p.sign_name if moon_p else "Taurus"
@@ -66,7 +92,7 @@ def render_shastriya_faladesh_view(
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <div style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 9px; padding: 6px 12px; text-align: center;">
                     <div style="font-size: 10px; color: #FDE68A; font-weight: 700;">जन्म लग्न</div>
-                    <div style="font-size: 13px; font-weight: 800; color: #FFFFFF;">{lagna_name} ({lagna_deg}°)</div>
+                    <div style="font-size: 13px; font-weight: 800; color: #FFFFFF;">{lagna_name} ({lagna_dms})</div>
                 </div>
                 <div style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 9px; padding: 6px 12px; text-align: center;">
                     <div style="font-size: 10px; color: #93C5FD; font-weight: 700;">चन्द्र राशि</div>
@@ -135,7 +161,10 @@ def render_shastriya_faladesh_view(
             chosen_dim_str = st.selectbox("🎯 सक्रिय आयाम चुनें (Choose Dimension):", dim_names, key="faladesh_chosen_dim_select")
 
         # Get chosen dimension object
-        chosen_dim_id = int(chosen_dim_str.split(".")[0])
+        try:
+            chosen_dim_id = int(str(chosen_dim_str).split(".")[0])
+        except Exception:
+            chosen_dim_id = 1
         synth = default_shastriya_faladesh_engine.synthesize_dimension(chart, chosen_dim_id, birth_profile)
         dim = synth["dimension"]
 
@@ -198,16 +227,15 @@ def render_shastriya_faladesh_view(
             st.dataframe(h_rows, use_container_width=True, hide_index=True)
 
         with tab_ev2:
-            st.markdown("**🪐 नैसर्गिक कारक ग्रह, अंश व अवस्था (Karaka Planets & Degrees):**")
+            st.markdown("**🪐 नैसर्गिक कारक ग्रह, सूक्ष्म अंश-कला-विकला व अवस्था (Karaka Planets & Micro DMS):**")
             p_rows = []
             for p in synth["planets_data"]:
                 comb_str = "🔥 अस्त" if p["is_combust"] else ("⚡ वक्री" if p["is_retrograde"] else "मार्गी")
                 deg_val = p.get("degree", 0.0)
-                deg_ansh = int(deg_val % 30)
-                deg_kala = int(round(((deg_val % 30) - deg_ansh) * 60))
+                ansh, kala, vikala, dms_str = _format_dms(deg_val)
                 p_rows.append({
                     "ग्रह": p["planet_hi"],
-                    "अंश (DMS)": f"{deg_ansh}° {deg_kala}' ({deg_val:.2f}°)",
+                    "अंश-कला-विकला (DMS)": f"{dms_str} ({deg_val:.2f}°)",
                     "नक्षत्र व पद": f"{p['nakshatra']} (पद {p['pada']})",
                     "गरिमा (Dignity)": p["dignity"].split(" ")[0],
                     "अवस्था": p["baladi"].split(" ")[0],
@@ -399,15 +427,14 @@ def render_shastriya_faladesh_view(
                 st_flag = "🔥 अस्त" if p.is_combust else ("⚡ वक्री" if p.is_retrograde else "मार्गी")
 
                 p_deg = getattr(p, "sign_degree", getattr(p, "degree", 15.0))
-                p_ansh = int(p_deg % 30)
-                p_kala = int(round(((p_deg % 30) - p_ansh) * 60))
+                p_ansh, p_kala, p_vikala, p_dms_str = _format_dms(p_deg)
                 p_nak_name = getattr(p, "nakshatra_name", "") or getattr(p, "nakshatra", "अश्विनी")
                 p_nak_pada = getattr(p, "nakshatra_pada", 1) or getattr(p, "pada", 1)
 
                 all_p_rows.append({
                     "ग्रह": PLANET_NAMES_HI.get(p_name, p_name),
                     "राशि": getattr(p, "sign_name", "मेष"),
-                    "अंश (DMS)": f"{p_ansh}° {p_kala}' ({p_deg:.2f}°)",
+                    "अंश-कला-विकला (DMS)": f"{p_dms_str} ({p_deg:.2f}°)",
                     "नक्षत्र": f"{p_nak_name} (पद {p_nak_pada})",
                     "नक्षत्र स्वामी": PLANET_NAMES_HI.get(getattr(p, "nakshatra_lord", "Ketu"), getattr(p, "nakshatra_lord", "Ketu")),
                     "भाव (Lagna)": f"{p.house_from_lagna}",

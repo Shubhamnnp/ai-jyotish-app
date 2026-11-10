@@ -872,7 +872,7 @@ class ShastriyaFaladeshEngine:
             occupants = h_obj.occupants if h_obj else []
 
             # SAV for this house sign (sign_id 1..12 -> index sign_id-1)
-            if sav_list and 1 <= sign_id <= len(sav_list):
+            if sav_list and isinstance(sign_id, int) and 1 <= sign_id <= len(sav_list):
                 sav_points = sav_list[sign_id - 1]
             else:
                 sav_points = 28
