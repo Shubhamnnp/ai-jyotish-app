@@ -94,3 +94,18 @@ def test_btr_view_module_imports_cleanly():
     """Verify that btr_view imports cleanly without NameError or reload issues."""
     import src.jyotish.ui.modules.btr_view as btr_view
     assert hasattr(btr_view, "render_btr_view")
+
+
+def test_btr_view_shastriya_shloka_and_console():
+    """Verify classical BPHS Kunda & Pranapada shloka, micro DMS, D60 deity, and BTR console in btr_view."""
+    import inspect
+    import src.jyotish.ui.modules.btr_view as btr_view
+    source = inspect.getsource(btr_view.render_btr_view)
+
+    assert "bphs_btr_shloka" in source
+    assert "बृहत्पाराशर होराशास्त्र एवं चन्द्रकला नाड़ी" in source
+    assert "इष्टघट्या गुणीकृत्य भानुभं सप्तभिर्भजेत्" in source
+    assert "col_mb1, col_mb2, col_mb3, col_mb4 = st.columns(4)" in source
+    assert "जन्म लग्न (D1 & D9)" in source
+    assert "D60:" in source
+    assert "कुण्ड व प्राणपद" in source

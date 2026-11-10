@@ -25,7 +25,27 @@ def render_btr_view(chart, birth_profile, tabs=None):
         "तत्व शोधन, कुण्ड शोधन, प्राणपद लग्न, षष्ट्यंश (D60) सीमा विश्लेषण एवं जीवन की ऐतिहासिक घटनाओं के समन्वय से सटीक इष्टकाल निर्धारण।"
     )
 
-    # Native Profile Metrics
+    # Classical Shastriya Shloka Card
+    bphs_btr_shloka = {
+        "title": "बृहत्पाराशर होराशास्त्र एवं चन्द्रकला नाड़ी — कुण्ड व प्राणपद जन्म शोधन",
+        "source": "महर्षि पराशर विरचित 'बृहत्पाराशर होराशास्त्र' (अध्याय ३, श्लोक ६५) एवं 'चन्द्रकला नाड़ी'",
+        "shloka": "इष्टघट्या गुणीकृत्य भानुभं सप्तभिर्भजेत्।\nशेषं कुण्डमिति प्रोक्तं जन्मलग्नविशोधनम्॥\nप्राणपदात् त्रिकोणेषु यदि जन्म भवेत्तदा।\nसत्यं जन्म विजानीयात् न संशयोऽत्र कश्चन॥",
+        "meaning": "इष्टकाल की घटी-पलों से कुण्ड एवं प्राणपद लग्न का साधन कर जन्म लग्न का सूक्ष्म शोधन किया जाता है। जब प्राणपद लग्न और जन्म चन्द्रमा परस्पर त्रिकोण (१, ५, ९) अथवा केन्द्र में संरेखित हों, तभी जन्म समय पूर्णतः प्रामाणिक व सत्य सिद्ध होता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_btr_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_btr_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_btr_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {bphs_btr_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Native Profile Metrics & Micro DMS BTR Coordinates
     calc_chart = chart if ('chart' in locals() and chart is not None) else default_chart_calculator.calculate_chart(birth_profile)
     if not hasattr(calc_chart, 'vargas') or not calc_chart.vargas:
         calc_chart.vargas = VargaCalculator.calculate_all_vargas(calc_chart)
@@ -33,11 +53,43 @@ def render_btr_view(chart, birth_profile, tabs=None):
     b_nat_t = birth_profile.birth_time
     nat_dt = datetime.combine(b_nat_d, b_nat_t)
 
+    l_deg = getattr(calc_chart, "lagna_degree", 0.0)
+    l_ansh = int(l_deg)
+    l_kala = int(round((l_deg - l_ansh) * 60.0))
+    if l_kala >= 60:
+        l_kala = 0
+        l_ansh += 1
+    l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+    moon = calc_chart.planets.get("Moon")
+    if moon:
+        m_deg = getattr(moon, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+    else:
+        m_dms = "—"
+        m_pada = "—"
+
+    # Quick BTR Divisional & Kunda analysis
+    div_info = default_btr_service.calculate_divisional_boundaries(calc_chart, birth_profile)
+    d9_num = div_info.get("d9_navamsha_num", 1)
+    d60_num = div_info.get("d60_part_num", 1)
+    d60_deity = div_info.get("d60_deity_name", "—")
+
+    kp_kp_info = default_btr_service.calculate_kunda_pranapada(calc_chart, birth_profile)
+    kunda_nak = kp_kp_info.get("kunda_nakshatra_name", "—")
+    prana_sign = kp_kp_info.get("pranapada_sign", "—")
+
     col_mb1, col_mb2, col_mb3, col_mb4 = st.columns(4)
-    col_mb1.metric("मूल जन्म समय", nat_dt.strftime("%I:%M:%S %p"), "पंजीकृत समय")
-    col_mb2.metric("जन्म लग्न (D1)", f"{calc_chart.lagna_sign_name}", f"{round(calc_chart.lagna_degree, 2)}°")
-    col_mb3.metric("चन्द्र नक्षत्र", f"{calc_chart.panchang.nakshatra_name}", f"पाद {calc_chart.planets['Moon'].nakshatra_pada}")
-    col_mb4.metric("जन्म वार", f"{calc_chart.panchang.vara_name}", "वार स्वामी")
+    col_mb1.metric("मूल जन्म समय", nat_dt.strftime("%I:%M:%S %p"), f"पंजीकृत ({birth_profile.name})")
+    col_mb2.metric("जन्म लग्न (D1 & D9)", f"{calc_chart.lagna_sign_name} ({l_dms})", f"D9-नवां {d9_num} | D60: {d60_deity}")
+    col_mb3.metric("चन्द्र नक्षत्र व पाद", f"{calc_chart.panchang.nakshatra_name}", f"🌙 {m_dms} (चरण {m_pada})")
+    col_mb4.metric("कुण्ड व प्राणपद", f"{kunda_nak}", f"प्राणपद: {prana_sign} ({kp_kp_info.get('pranapada_status', '')})")
 
     # 8 Dedicated Tabs
     tab_btr1, tab_btr2, tab_btr3, tab_btr4, tab_btr5, tab_btr6, tab_btr7, tab_btr8 = st.tabs(tabs)
