@@ -12,11 +12,60 @@ import streamlit as st
 import pandas as pd
 from datetime import date
 from typing import List, Optional
+from src.jyotish.core.constants import SIGN_NAMES
 import src.jyotish.core.numerology as num_mod
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 
+# Classical Graha Hindi Names & Natural Significations
+GRAHA_NAMES_HI = {
+    "Sun": "सूर्य", "Moon": "चंद्र", "Mars": "मंगल", "Mercury": "बुध",
+    "Jupiter": "गुरु", "Venus": "शुक्र", "Saturn": "शनि", "Rahu": "राहु", "Ketu": "केतु",
+    "Ascendant": "लग्न"
+}
 
-def render_numerology_view(birth_profile, tabs: Optional[List[str]] = None):
+DIGNITY_HI = {
+    "exalted": "उच्च (Exalted)",
+    "moolatrikona": "मूलत्रिकोण (Moolatrikona)",
+    "own": "स्वराशि (Own Sign)",
+    "great_friend": "अधिमित्र (Great Friend)",
+    "friend": "मित्र (Friend)",
+    "neutral": "सम (Neutral)",
+    "enemy": "शत्रु (Enemy)",
+    "great_enemy": "अधिशत्रु (Great Enemy)",
+    "debilitated": "नीच (Debilitated)"
+}
+
+NUMEROLOGY_GRAHA_MAP = {
+    1: ("Sun", "सूर्य"),
+    2: ("Moon", "चंद्र"),
+    3: ("Jupiter", "गुरु"),
+    4: ("Rahu", "राहु"),
+    5: ("Mercury", "बुध"),
+    6: ("Venus", "शुक्र"),
+    7: ("Ketu", "केतु"),
+    8: ("Saturn", "शनि"),
+    9: ("Mars", "मंगल")
+}
+
+VEDIC_NUMEROLOGY_SHLOKA = {
+    "title": "अंकविद्या रहस्य एवं सामुद्रिक सुधाकर — सांख्य शास्त्र व पञ्चदश यन्त्र",
+    "source": "महर्षि प्रणीत 'अंकविद्या रहस्य' (सांख्य शास्त्र) एवं 'सामुद्रिक सुधाकर'",
+    "shloka": "अंकानां देवताः सर्वा ग्रहाश्चैव व्यवस्थिताः ।\nयस्य यः कुलजो भाग्यो तस्य तद्गुणसम्भवः ॥\nएकतः नवपर्यन्तं यन्त्राणां पञ्चदश स्मृतम् ।\nलोशू-ग्रिडे स्थिताः सर्वे तत्तद्भूतबलप्रदाः ॥",
+    "meaning": "१ से ९ तक के समस्त अंकों के अधिष्ठाता नवग्रह हैं। ३×३ लो-शू ग्रिड / पञ्चदश यन्त्र में स्थित अंक पंचमहाभूतों—जल, अग्नि, पृथ्वी, धातु, काष्ठ की शक्तियों को संतुलित कर जातक के स्वभाव व कर्म-पथ का निर्माण करते हैं।"
+}
+
+
+def _format_dms(deg_val):
+    deg = float(deg_val) if deg_val is not None else 0.0
+    ansh = int(deg)
+    kala = int(round((deg - ansh) * 60.0))
+    if kala >= 60:
+        kala = 0
+        ansh += 1
+    return ansh, kala, f"{ansh}° {kala:02d}'"
+
+
+def render_numerology_view(birth_profile, tabs: Optional[List[str]] = None, chart=None):
     if tabs is None:
         tabs = [
             "📊 ३×३ लो-शू ग्रिड व ८ तल",
@@ -28,6 +77,20 @@ def render_numerology_view(birth_profile, tabs: Optional[List[str]] = None):
     st.subheader("🔢 अंकशास्त्र एवं लो-शू ग्रिड (Vedic & Lo-Shu Numerology)")
     st.caption("कील्डियन नामांक, मूलांक, भाग्यांक, कुआ नंबर, ३×३ लो-शू ग्रिड (८ तल), मिसिंग नंबर एवं शास्त्रीय रत्न/धातु/क्रिस्टल आधारित अचूक उपाय।")
 
+    # 1. Classical Shastriya Shloka Card
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {VEDIC_NUMEROLOGY_SHLOKA['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {VEDIC_NUMEROLOGY_SHLOKA['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{VEDIC_NUMEROLOGY_SHLOKA['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {VEDIC_NUMEROLOGY_SHLOKA['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     b_date = birth_profile.birth_date
     num_res = num_mod.default_numerology_engine.calculate(
         birth_date=b_date,
@@ -35,12 +98,104 @@ def render_numerology_view(birth_profile, tabs: Optional[List[str]] = None):
         gender=st.session_state.get("birth_gender", "male")
     )
 
-    # 4-Pillar Numerology HUD
-    c_n1, c_n2, c_n3, c_n4 = st.columns(4)
-    c_n1.metric("मूलांक (Driver / Root)", f"🔢 {num_res.mulank}", num_res.driver_info["planet"].split()[0])
-    c_n2.metric("भाग्यांक (Destiny / Conductor)", f"🌟 {num_res.bhagyank}", num_res.conductor_info["planet"].split()[0])
-    c_n3.metric("कुआ नंबर (Kua / Feng Shui)", f"🧭 {num_res.kua_number}", "दिशात्मक ऊर्जा")
-    c_n4.metric("कील्डियन नामांक (Name No.)", f"✍️ {num_res.chaldean_namank}", f"पाइथागोरस: {num_res.pythagorean_namank}")
+    # 2. Active Native Micro Numerology & Planetary HUD Console
+    active_chart = chart or st.session_state.get("active_chart") or st.session_state.get("chart")
+    l_dms, m_dms, m_nak, m_pada, l_sign_name, m_sign_name = "—", "—", "—", 1, "—", "—"
+
+    if active_chart is not None:
+        l_deg = getattr(active_chart, "lagna_degree", 0.0)
+        _, _, l_dms = _format_dms(l_deg)
+        l_sign = getattr(active_chart, "lagna_sign", 1)
+        l_sign_name = SIGN_NAMES[l_sign - 1] if 1 <= l_sign <= 12 else f"Sign {l_sign}"
+
+        moon = active_chart.planets.get("Moon") if hasattr(active_chart, "planets") else None
+        if moon:
+            m_deg = getattr(moon, "sign_degree", 0.0)
+            _, _, m_dms = _format_dms(m_deg)
+            m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+            m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+            m_sign = getattr(moon, "sign_id", getattr(moon, "sign", 1))
+            m_sign_name = SIGN_NAMES[m_sign - 1] if 1 <= m_sign <= 12 else f"Sign {m_sign}"
+
+    st.markdown(f"""
+    <div style="background:linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color:#FFFFFF; border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+            <span style="font-size:16px; font-weight:700;">🪐 सक्रिय जातक अंक-वेध: <span style="color:#FDE047;">{birth_profile.name}</span></span>
+            <span style="font-size:13px; color:#C7D2FE;">📅 जन्म: <b>{b_date.strftime('%d-%m-%Y')}</b> | 🏛️ लग्न: <b>{l_sign_name} ({l_dms})</b> | 🌙 चंद्र: <b>{m_sign_name} ({m_dms})</b> | 🌟 <b>{m_nak} (पद {m_pada})</b></span>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; font-size:12.5px; text-align:center;">
+            <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                <div style="color:#FDE047; font-size:11px;">👑 मूलांक (Driver)</div>
+                <div style="font-size:16px; font-weight:700; color:#FEF08A;">🔢 {num_res.mulank}</div>
+                <div style="font-size:10px; color:#FEF9C3;">स्वामी: {num_res.driver_info['planet'].split()[0]}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                <div style="color:#86EFAC; font-size:11px;">🌟 भाग्यांक (Conductor)</div>
+                <div style="font-size:16px; font-weight:700; color:#4ADE80;">✨ {num_res.bhagyank}</div>
+                <div style="font-size:10px; color:#BBF7D0;">स्वामी: {num_res.conductor_info['planet'].split()[0]}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                <div style="color:#93C5FD; font-size:11px;">🧭 कुआ नंबर (Kua)</div>
+                <div style="font-size:16px; font-weight:700; color:#FFFFFF;">🧭 {num_res.kua_number}</div>
+                <div style="font-size:10px; color:#C7D2FE;">दिशात्मक ऊर्जा</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                <div style="color:#F472B6; font-size:11px;">✍️ कील्डियन नामांक</div>
+                <div style="font-size:16px; font-weight:700; color:#FBCFE8;">{num_res.chaldean_namank}</div>
+                <div style="font-size:10px; color:#FDF2F8;">पाइथागोरस: {num_res.pythagorean_namank}</div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Micro Planetary Alignment Grid Expander for Numerology Lords
+    with st.expander("🪐 सक्रिय जातक अंक-स्वामी ग्रह कुण्डली संरेखण (अंश, कला, नक्षत्र, चरण व स्वभाव)", expanded=False):
+        num_planets_data = []
+        target_keys = {
+            "मूलांक स्वामी": NUMEROLOGY_GRAHA_MAP.get(num_res.mulank, ("Sun", "सूर्य")),
+            "भाग्यांक स्वामी": NUMEROLOGY_GRAHA_MAP.get(num_res.bhagyank, ("Sun", "सूर्य"))
+        }
+
+        if active_chart is not None and hasattr(active_chart, "planets") and isinstance(active_chart.planets, dict):
+            for role_lbl, (p_en, p_hi) in target_keys.items():
+                p_obj = active_chart.planets.get(p_en)
+                if p_obj:
+                    s_id = getattr(p_obj, "sign_id", getattr(p_obj, "sign", 1))
+                    s_name = SIGN_NAMES[s_id - 1] if 1 <= s_id <= 12 else f"Sign {s_id}"
+                    deg = getattr(p_obj, "sign_degree", 0.0)
+                    _, _, dms_str = _format_dms(deg)
+                    nak = getattr(p_obj, "nakshatra_name", getattr(p_obj, "nakshatra", "—"))
+                    pada = getattr(p_obj, "nakshatra_pada", getattr(p_obj, "pada", 1))
+                    house = getattr(p_obj, "house_from_lagna", getattr(p_obj, "house", "—"))
+                    dignity_raw = getattr(p_obj, "dignity", "neutral")
+                    dignity_hi = DIGNITY_HI.get(str(dignity_raw).lower(), str(dignity_raw))
+                    is_retro = getattr(p_obj, "is_retrograde", False)
+                    status_tag = " (🔄 वक्री)" if is_retro else ""
+
+                    num_planets_data.append({
+                        "अंक कारकत्व": role_lbl,
+                        "ग्रह": f"{p_hi} ({p_en})",
+                        "भाव": f"भाव {house}",
+                        "राशि": s_name,
+                        "अंश-कला (DMS)": dms_str,
+                        "नक्षत्र व पद": f"{nak} (पद {pada})",
+                        "कुण्डली अवस्था": f"{dignity_hi}{status_tag}",
+                        "अंक समन्वय": "✅ कुण्डली समर्थित"
+                    })
+        else:
+            for role_lbl, (p_en, p_hi) in target_keys.items():
+                num_planets_data.append({
+                    "अंक कारकत्व": role_lbl,
+                    "ग्रह": f"{p_hi} ({p_en})",
+                    "भाव": "—",
+                    "राशि": "—",
+                    "अंश-कला (DMS)": "—",
+                    "नक्षत्र व पद": "—",
+                    "कुण्डली अवस्था": "सामान्य सांख्य मानक",
+                    "अंक समन्वय": "सांख्य गणना"
+                })
+
+        st.dataframe(pd.DataFrame(num_planets_data), use_container_width=True, hide_index=True)
 
     rendered_tabs = st.tabs(tabs)
 
@@ -123,7 +278,7 @@ def render_numerology_view(birth_profile, tabs: Optional[List[str]] = None):
                     "अंक (Number)": f"{n} ({p_name})",
                     "आवृत्ति (Count)": f"{cnt} बार",
                     "ऊर्जा संतुलन": status_note,
-                    "शास्त्रीय प्रभाव": "सकारात्मक अभिव्यक्ति एवं स्वाभाविक तेज" if cnt <= 2 else f"अंक {n} की अति-पुनरावृत्ति से अहंकार अथवा हठधर्मिता की संभावना, सात्विक संतुलन अपेक्षित।"
+                    "शास्त्रीय प्रभाव": "सकारात्मक अभिव्यक्ति एवं स्वाभाविक तेज" if cnt <= 2 else f"अंक {n} की अति-पुनरावृत्ति से ऊर्जा का अतिरेक, सात्विक संतुलन व यम-नियम अपेक्षित।"
                 })
         if rep_rows:
             st.dataframe(pd.DataFrame(rep_rows), use_container_width=True, hide_index=True)

@@ -97,3 +97,40 @@ def test_numerology_view_imports_cleanly():
     """Verify numerology_view imports cleanly without errors."""
     import src.jyotish.ui.modules.numerology_view as nv_mod
     assert hasattr(nv_mod, "render_numerology_view")
+
+
+def test_module21_classical_shloka_and_constants():
+    """Verify Module 21 includes authentic Vedic Numerology shloka and graha mappings."""
+    from src.jyotish.ui.modules.numerology_view import (
+        VEDIC_NUMEROLOGY_SHLOKA, GRAHA_NAMES_HI, NUMEROLOGY_GRAHA_MAP
+    )
+    assert "अंकविद्या रहस्य" in VEDIC_NUMEROLOGY_SHLOKA["title"]
+    assert "अंकानां देवताः सर्वा" in VEDIC_NUMEROLOGY_SHLOKA["shloka"]
+    assert "पञ्चदश स्मृतम्" in VEDIC_NUMEROLOGY_SHLOKA["shloka"]
+    assert GRAHA_NAMES_HI["Sun"] == "सूर्य"
+    assert NUMEROLOGY_GRAHA_MAP[1] == ("Sun", "सूर्य")
+    assert NUMEROLOGY_GRAHA_MAP[3] == ("Jupiter", "गुरु")
+    assert NUMEROLOGY_GRAHA_MAP[8] == ("Saturn", "शनि")
+
+
+def test_module21_format_dms_and_alignment():
+    """Verify DMS formatting and graha alignment helper."""
+    from src.jyotish.ui.modules.numerology_view import _format_dms
+
+    ansh, kala, dms = _format_dms(18.25)
+    assert ansh == 18
+    assert kala == 15
+    assert dms == "18° 15'"
+
+
+def test_module21_render_source_audit():
+    """Verify render_numerology_view contains HUD, shloka expander, and alignment grid."""
+    import inspect
+    from src.jyotish.ui.modules import numerology_view
+    src = inspect.getsource(numerology_view.render_numerology_view)
+
+    assert "VEDIC_NUMEROLOGY_SHLOKA" in src
+    assert "सक्रिय जातक अंक-वेध" in src
+    assert "_format_dms" in src
+    assert "सक्रिय जातक अंक-स्वामी ग्रह कुण्डली संरेखण" in src
+    assert "३×३ लो-शू ग्रिड" in src
