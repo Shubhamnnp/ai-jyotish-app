@@ -80,3 +80,44 @@ def test_validation_view_imports_cleanly():
     """Verify validation_view module imports cleanly without side-effects."""
     import src.jyotish.ui.modules.validation_view as val_mod
     assert hasattr(val_mod, "render_validation_view")
+
+
+def test_module19_classical_shloka_and_constants():
+    """Verify Module 19 includes authentic Surya Siddhanta shloka and constants."""
+    from src.jyotish.ui.modules.validation_view import (
+        SURYA_SIDDHANTA_SHLOKA, GRAHA_NAMES_HI, DIGNITY_HI
+    )
+    assert "सूर्यसिद्धान्त" in SURYA_SIDDHANTA_SHLOKA["title"]
+    assert "प्रत्यक्षं ज्योतिषं शास्त्रं" in SURYA_SIDDHANTA_SHLOKA["shloka"]
+    assert "सिद्धान्तेन विना यत्तु" in SURYA_SIDDHANTA_SHLOKA["shloka"]
+    assert GRAHA_NAMES_HI["Sun"] == "सूर्य"
+    assert GRAHA_NAMES_HI["Saturn"] == "शनि"
+    assert "उच्च" in DIGNITY_HI["exalted"]
+
+
+def test_module19_format_dms_and_motion():
+    """Verify DMS formatting and motion classification."""
+    from src.jyotish.ui.modules.validation_view import _format_dms, _classify_motion
+
+    ansh, kala, dms = _format_dms(23.75)
+    assert ansh == 23
+    assert kala == 45
+    assert dms == "23° 45'"
+
+    assert "वक्री" in _classify_motion(1.0, is_retrograde=True)
+    assert "अतिचारी" in _classify_motion(1.5, is_retrograde=False)
+    assert "मन्द" in _classify_motion(0.3, is_retrograde=False)
+    assert "मार्गी" in _classify_motion(0.9, is_retrograde=False)
+
+
+def test_module19_render_source_audit():
+    """Verify render_validation_view contains HUD, enriched tables, and shloka expander."""
+    import inspect
+    from src.jyotish.ui.modules import validation_view
+    src = inspect.getsource(validation_view.render_validation_view)
+
+    assert "SURYA_SIDDHANTA_SHLOKA" in src
+    assert "सक्रिय जातक खगोलीय वेध" in src
+    assert "_format_dms" in src
+    assert "_classify_motion" in src
+    assert "सूक्ष्म खगोलीय देशांतर व गति सत्यापन" in src
