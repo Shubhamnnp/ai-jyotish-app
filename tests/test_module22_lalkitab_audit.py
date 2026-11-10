@@ -105,3 +105,55 @@ def test_lal_kitab_view_imports_cleanly():
     """Verify lal_kitab_view imports cleanly without errors."""
     import src.jyotish.ui.modules.lal_kitab_view as lk_view
     assert hasattr(lk_view, "render_lal_kitab_view")
+
+
+def test_module22_classical_shloka_and_constants():
+    """Verify Module 22 includes authentic Lal Kitab 1952 farman and conjunction rules."""
+    from src.jyotish.ui.modules.lal_kitab_view import (
+        LAL_KITAB_SHLOKA, LAL_KITAB_CONJUNCTION_RULES, GRAHA_NAMES_HI, DIGNITY_HI
+    )
+    assert "लाल किताब १९५२" in LAL_KITAB_SHLOKA["title"]
+    assert "किस्मत का लिखा कोई टाल न सके" in LAL_KITAB_SHLOKA["shloka"]
+    assert "नेकी से बुराई टलती है" in LAL_KITAB_SHLOKA["shloka"]
+    assert GRAHA_NAMES_HI["Sun"] == "सूर्य"
+    assert GRAHA_NAMES_HI["Saturn"] == "शनि"
+    assert frozenset(["Sun", "Mercury"]) in LAL_KITAB_CONJUNCTION_RULES
+    assert frozenset(["Sun", "Saturn"]) in LAL_KITAB_CONJUNCTION_RULES
+    assert frozenset(["Moon", "Jupiter"]) in LAL_KITAB_CONJUNCTION_RULES
+
+
+def test_module22_multi_planet_conjunctions_analysis(sample_chart):
+    """Verify analyze_khana_conjunctions detects multi-planet khanas, masnui planets, and how to evaluate."""
+    from src.jyotish.ui.modules.lal_kitab_view import analyze_khana_conjunctions
+
+    mock_khana_planets = {
+        1: ["Sun", "Mercury"],
+        5: ["Jupiter"],
+        10: ["Saturn", "Mars"]
+    }
+    res = analyze_khana_conjunctions(mock_khana_planets, sample_chart)
+    assert len(res) == 2, "Expected 2 khanas with multiple planets"
+
+    kh1 = next(item for item in res if item["khana"] == 1)
+    assert "Sun" in kh1["planets"] and "Mercury" in kh1["planets"]
+    assert len(kh1["conjunctions"]) == 1
+    assert "बुधादित्य" in kh1["conjunctions"][0]["title"]
+    assert "मंगल नेक" in kh1["conjunctions"][0]["masnui"]
+    assert "कैसे देखें" in kh1["conjunctions"][0]["how_to_see"] or len(kh1["conjunctions"][0]["how_to_see"]) > 5
+
+    kh10 = next(item for item in res if item["khana"] == 10)
+    assert len(kh10["conjunctions"]) == 1
+    assert "मंगल + शनि" in kh10["conjunctions"][0]["title"]
+
+
+def test_module22_render_source_audit():
+    """Verify render_lal_kitab_view contains HUD, farman card, and multi-planet conjunctions expander."""
+    import inspect
+    from src.jyotish.ui.modules import lal_kitab_view
+    src = inspect.getsource(lal_kitab_view.render_lal_kitab_view)
+
+    assert "LAL_KITAB_SHLOKA" in src
+    assert "सक्रिय जातक लाल किताब तेवा" in src
+    assert "_format_dms" in src
+    assert "analyze_khana_conjunctions" in src
+    assert "एक ही खाने में एकाधिक ग्रह युति फलादेश" in src
