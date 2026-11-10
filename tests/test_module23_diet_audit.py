@@ -77,6 +77,8 @@ def test_render_ayurvedic_diet_view_no_unpack_crash(mock_chart, monkeypatch):
     monkeypatch.setattr("streamlit.info", lambda *args, **kwargs: None)
     monkeypatch.setattr("streamlit.markdown", lambda *args, **kwargs: None)
     monkeypatch.setattr("streamlit.caption", lambda *args, **kwargs: None)
+    monkeypatch.setattr("streamlit.expander", lambda *args, **kwargs: MagicMock())
+    monkeypatch.setattr("streamlit.dataframe", lambda *args, **kwargs: None)
 
     # Call with tabs=None
     render_ayurvedic_diet_view(mock_chart, tabs=None)
@@ -100,3 +102,47 @@ def test_app_tabs_registry_sync():
         "❌ वर्जित आहार व परहेज",
         "⏰ भोजन नियम व उपवास"
     ]
+
+
+def test_module23_classical_shloka_and_constants():
+    """Verify Module 23 includes authentic Ayurveda shloka and dhatu mappings."""
+    from src.jyotish.ui.modules.ayurvedic_diet_view import (
+        AYURVEDA_SHLOKA, GRAHA_AYURVEDIC_DHATU, GRAHA_NAMES_HI, DIGNITY_HI
+    )
+    assert "अष्टांगहृदयम्" in AYURVEDA_SHLOKA["title"]
+    assert "वातः पित्तं कफश्चेति" in AYURVEDA_SHLOKA["shloka"]
+    assert "रसायनानि सर्वाणि" in AYURVEDA_SHLOKA["shloka"]
+    assert GRAHA_NAMES_HI["Sun"] == "सूर्य"
+    assert "पित्त दोष" in GRAHA_AYURVEDIC_DHATU["Sun"][0]
+    assert "कफ दोष" in GRAHA_AYURVEDIC_DHATU["Moon"][0]
+    assert "वात दोष" in GRAHA_AYURVEDIC_DHATU["Saturn"][0]
+
+
+def test_module23_format_dms_and_graha_dosha():
+    """Verify Ansh, Kala, Vikala (DMS) precision formatting."""
+    from src.jyotish.ui.modules.ayurvedic_diet_view import _format_dms
+
+    ansh, kala, vikala, dms = _format_dms(15.508333)
+    assert ansh == 15
+    assert kala == 30
+    assert vikala == 30
+    assert dms == '15° 30\' 30"'
+
+    ansh2, kala2, vikala2, dms2 = _format_dms(0.0)
+    assert ansh2 == 0
+    assert kala2 == 0
+    assert vikala2 == 0
+    assert dms2 == '0° 00\' 00"'
+
+
+def test_module23_render_source_audit():
+    """Verify render_ayurvedic_diet_view contains HUD, shloka card, and planetary dhatu status grid."""
+    import inspect
+    from src.jyotish.ui.modules import ayurvedic_diet_view
+    src = inspect.getsource(ayurvedic_diet_view.render_ayurvedic_diet_view)
+
+    assert "AYURVEDA_SHLOKA" in src
+    assert "सक्रिय जातक त्रिदोष वेध" in src
+    assert "_format_dms" in src
+    assert "सक्रिय जातक सूक्ष्म ग्रह-स्थिति" in src
+    assert "विरुद्ध आहार" in src

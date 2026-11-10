@@ -1,9 +1,74 @@
+# -*- coding: utf-8 -*-
+"""
+Module 23: Ayurvedic Diet & Tridosha Nutrition View.
+Evaluates Tridosha Prakriti (Vata, Pitta, Kapha), Lagna & Moon Nakshatra-Pada,
+Sun's Jatharagni, 2nd House (Food & Taste) and 6th House (Digestion & Disease),
+with complete Ansh-Kala-Vikala (DMS) precision, Shad-Rasa balancing, and Charaka Viruddha Ahara guidelines.
+"""
+
 import streamlit as st
+import pandas as pd
+from typing import List, Optional
+from src.jyotish.core.constants import SIGN_NAMES
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 import src.jyotish.core.lifestyle as life_mod
 
+# Classical Graha Hindi Names & Natural Significations
+GRAHA_NAMES_HI = {
+    "Sun": "सूर्य", "Moon": "चंद्र", "Mars": "मंगल", "Mercury": "बुध",
+    "Jupiter": "गुरु", "Venus": "शुक्र", "Saturn": "शनि", "Rahu": "राहु", "Ketu": "केतु",
+    "Ascendant": "लग्न"
+}
 
-def render_ayurvedic_diet_view(chart, tabs=None):
+DIGNITY_HI = {
+    "exalted": "उच्च (Exalted)",
+    "moolatrikona": "मूलत्रिकोण (Moolatrikona)",
+    "own": "स्वराशि (Own Sign)",
+    "great_friend": "अधिमित्र (Great Friend)",
+    "friend": "मित्र (Friend)",
+    "neutral": "सम (Neutral)",
+    "enemy": "शत्रु (Enemy)",
+    "great_enemy": "अधिशत्रु (Great Enemy)",
+    "debilitated": "नीच (Debilitated)"
+}
+
+GRAHA_AYURVEDIC_DHATU = {
+    "Sun": ("पित्त दोष (Pitta)", "अस्थि धातु (Bones), हृदय व तेज"),
+    "Moon": ("कफ दोष (Kapha)", "रस व रक्त धातु (Body Fluids & Plasma), मन"),
+    "Mars": ("पित्त दोष (Pitta)", "मज्जा धातु व रक्त (Bone Marrow & Blood), पित्त पित्ताशय"),
+    "Mercury": ("त्रिदोष सम (Tridosha)", "त्वचा व स्नायु धातु (Skin, Nerves & Brain)"),
+    "Jupiter": ("कफ दोष (Kapha)", "मेद धातु (Body Fat), यकृत (Liver) व ओज"),
+    "Venus": ("कफ-वात दोष (Kapha-Vata)", "शुक्र धातु (Reproductive Tissue & Vital Fluids)"),
+    "Saturn": ("वात दोष (Vata)", "स्नायु, जोड़, नसें व अस्थि संधि (Nerves & Joints)"),
+    "Rahu": ("तमोगुणी वात (Vata/Toxins)", "विषाक्त तत्व, गैस, एलर्जी व सूक्ष्म संक्रमण"),
+    "Ketu": ("अग्नि-वात (Pitta-Vata)", "सूक्ष्म नाड़ियां, पाचन मन्दता व चर्म विकार")
+}
+
+AYURVEDA_SHLOKA = {
+    "title": "अष्टांगहृदयम् एवं चरक संहिता — त्रिदोष एवं अन्नपानविधि",
+    "source": "महर्षि वाग्भट विरचित 'अष्टांगहृदयम्' (सूत्रस्थान, अध्याय १) एवं महर्षि चरक 'चरक संहिता' (सूत्रस्थान, अध्याय २७)",
+    "shloka": "वातः पित्तं कफश्चेति त्रयो दोषाः समासतः ।\nविकृताऽविकृता देहं घ्नन्ति ते वर्तयन्ति च ॥\nरसायनानि सर्वाणि आहाराधीनानि देहिनाम् ।\nतस्मादाहारनियमं कुर्यान्नित्यं विचक्षणः ॥",
+    "meaning": "वात, पित्त और कफ—ये तीन शारीरिक दोष हैं। सम स्थिति में रहने पर ये देह का पोषण व स्वास्थ्य रक्षा करते हैं और विषम होने पर रोग उत्पन्न करते हैं। समस्त ओज, तेज और जीवन आहार के अधीन है, अतः बुद्धिमान मनुष्य को सदा शास्त्रोक्त आहार नियमों का पालन करना चाहिए।"
+}
+
+
+def _format_dms(deg_val):
+    """Calculates classical Ansh (Degrees), Kala (Arcminutes), and Vikala (Arcseconds)."""
+    deg = float(deg_val) if deg_val is not None else 0.0
+    ansh = int(deg)
+    rem_min = (deg - ansh) * 60.0
+    kala = int(rem_min)
+    vikala = int(round((rem_min - kala) * 60.0))
+    if vikala >= 60:
+        vikala = 0
+        kala += 1
+    if kala >= 60:
+        kala = 0
+        ansh += 1
+    return ansh, kala, vikala, f"{ansh}° {kala:02d}' {vikala:02d}\""
+
+
+def render_ayurvedic_diet_view(chart, tabs: Optional[List[str]] = None):
     if tabs is None:
         tabs = [
             "🌿 त्रिदोष शारीरिक प्रकृति",
@@ -15,33 +80,124 @@ def render_ayurvedic_diet_view(chart, tabs=None):
     st.subheader("🍽️ खानपान एवं त्रिदोष आहार परामर्श (Diet & Ayurvedic Nutrition)")
     st.write("बृहत्पाराशर होराशास्त्र एवं चरक-सुश्रुत-अष्टांगहृदयम् अनुसार सक्रिय जातक की कुण्डली, ग्रह-नक्षत्र, लग्न, २य भाव (भोजन) एवं ६ठे भाव (पाचन) आधारित पूर्ण आहार परामर्श।")
 
-    # Classical Shastriya Shloka Card
-    ayur_pramana = SHASTRIYA_SHLOKAS.get("ayurveda_diet_tridosha", {})
-    if ayur_pramana:
-        with st.expander("📜 शास्त्रीय प्रमाण — अष्टांगहृदयम् एवं चरक संहिता (त्रिदोष एवं षड्रस सिद्धान्त)", expanded=False):
-            st.markdown(f"""
-            <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
-                <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {ayur_pramana.get('grantha', '')}</b>
-                <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
-{ayur_pramana.get('shloka_sanskrit', ayur_pramana.get('shloka', ''))}
-                </pre>
-                <div style="font-size:13px; color:#92400E; margin-top:6px;">
-                    <b>हिंदी भावार्थ:</b> {ayur_pramana.get('anuvad_hi', ayur_pramana.get('hindi_translation', ''))}
-                </div>
+    # 1. Classical Shastriya Shloka Card
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {AYURVEDA_SHLOKA['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {AYURVEDA_SHLOKA['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{AYURVEDA_SHLOKA['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {AYURVEDA_SHLOKA['meaning']}
             </div>
-            """, unsafe_allow_html=True)
+        </div>
+        """, unsafe_allow_html=True)
 
     diet_res = life_mod.DietEngine.analyze(chart)
 
-    # Top Status Banner - 4 Key Pillars
-    c_d1, c_d2, c_d3, c_d4 = st.columns(4)
-    c_d1.metric("प्राथमिक शारीरिक प्रकृति", diet_res.get("primary_dosha", "पित्त"), "लग्न तत्व आधारित")
-    c_d2.metric("चंद्र नक्षत्र त्रिदोष", f"{diet_res.get('moon_nakshatra', 'अश्विनी')} (पद {diet_res.get('moon_pada', 1)})", diet_res.get("nakshatra_dosha", "सम"))
-    c_d3.metric("सूर्य जठराग्नि स्थिति", diet_res.get("sun_jatharagni", "सम जठराग्नि").split(" (")[0], "चयापचय व पाचन")
-    c_d4.metric("लवण (नमक) परामर्श", "सेंधा नमक (Rock Salt)", "दोष शमन")
+    # 2. Active Native Micro Tridosha HUD Console with Ansh, Kala, Vikala
+    if chart is not None:
+        l_deg = getattr(chart, "lagna_degree", 0.0)
+        if not isinstance(l_deg, (int, float)):
+            l_deg = 0.0
+        _, _, _, l_dms = _format_dms(l_deg)
 
-    tab_d1, tab_d2, tab_d3, tab_d4 = st.tabs(tabs)
+        l_sign = getattr(chart, "lagna_sign", 1)
+        if not isinstance(l_sign, int):
+            l_sign = getattr(chart, "lagna_sign_id", 1)
+        if not isinstance(l_sign, int):
+            l_sign = 1
+        l_sign_name = SIGN_NAMES[l_sign - 1] if 1 <= l_sign <= 12 else f"Sign {l_sign}"
 
+        moon = chart.planets.get("Moon") if hasattr(chart, "planets") and isinstance(chart.planets, dict) else None
+        if moon:
+            m_deg = getattr(moon, "sign_degree", 0.0)
+            if not isinstance(m_deg, (int, float)):
+                m_deg = 0.0
+            _, _, _, m_dms = _format_dms(m_deg)
+            m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+            m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+            m_sign = getattr(moon, "sign_id", getattr(moon, "sign", 1))
+            if not isinstance(m_sign, int):
+                m_sign = 1
+            m_sign_name = SIGN_NAMES[m_sign - 1] if 1 <= m_sign <= 12 else f"Sign {m_sign}"
+        else:
+            m_dms, m_nak, m_pada, m_sign_name = "—", "—", 1, "—"
+
+        st.markdown(f"""
+        <div style="background:linear-gradient(135deg, #064E3B 0%, #065F46 100%); color:#FFFFFF; border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                <span style="font-size:16px; font-weight:700;">🌿 सक्रिय जातक त्रिदोष वेध: <span style="color:#FDE047;">{getattr(chart, 'name', 'सक्रिय कुण्डली')}</span></span>
+                <span style="font-size:13px; color:#A7F3D0;">🏛️ लग्न: <b>{l_sign_name} ({l_dms})</b> | 🌙 चंद्र: <b>{m_sign_name} ({m_dms})</b> | 🌟 <b>{m_nak} (पद {m_pada})</b></span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; font-size:12.5px; text-align:center;">
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#A7F3D0; font-size:11px;">प्राथमिक शारीरिक प्रकृति</div>
+                    <div style="font-size:15px; font-weight:700; color:#FFFFFF;">{diet_res.get('primary_dosha', 'पित्त')}</div>
+                    <div style="font-size:10px; color:#6EE7B7;">लग्न तत्व: {diet_res.get('lagna_element', 'अग्नि')}</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#FDE047; font-size:11px;">चंद्र नक्षत्र त्रिदोष</div>
+                    <div style="font-size:15px; font-weight:700; color:#FEF08A;">{diet_res.get('nakshatra_dosha', 'सम')}</div>
+                    <div style="font-size:10px; color:#FEF9C3;">{diet_res.get('moon_nakshatra', 'अश्विनी')} (पद {diet_res.get('moon_pada', 1)})</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#FCA5A5; font-size:11px;">सूर्य जठराग्नि स्थिति</div>
+                    <div style="font-size:15px; font-weight:700; color:#FCA5A5;">{diet_res.get('sun_jatharagni', 'सम जठराग्नि').split(' (')[0]}</div>
+                    <div style="font-size:10px; color:#FECACA;">चयापचय व पाचन</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#93C5FD; font-size:11px;">लवण व रस परामर्श</div>
+                    <div style="font-size:15px; font-weight:700; color:#BFDBFE;">सेंधा नमक (Rock Salt)</div>
+                    <div style="font-size:10px; color:#DBEAFE;">दोष शमन रस</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Micro Planetary Ayurvedic Status Grid Expander with Ansh-Kala-Vikala
+        with st.expander("🪐 सक्रिय जातक सूक्ष्म ग्रह-स्थिति (अंश, कला, विकला, नक्षत्र, चरण व त्रिदोष-धातु प्रभाव)", expanded=False):
+            planets_data = []
+            if hasattr(chart, "planets") and isinstance(chart.planets, dict):
+                for p_name, p_obj in chart.planets.items():
+                    if p_name in ["Uranus", "Neptune", "Pluto"]:
+                        continue
+                    p_hi = GRAHA_NAMES_HI.get(p_name, p_name)
+                    s_id = getattr(p_obj, "sign_id", getattr(p_obj, "sign", 1))
+                    s_name = SIGN_NAMES[s_id - 1] if 1 <= s_id <= 12 else f"Sign {s_id}"
+                    deg = getattr(p_obj, "sign_degree", 0.0)
+                    _, _, _, dms_str = _format_dms(deg)
+                    nak = getattr(p_obj, "nakshatra_name", getattr(p_obj, "nakshatra", "—"))
+                    pada = getattr(p_obj, "nakshatra_pada", getattr(p_obj, "pada", 1))
+                    house = getattr(p_obj, "house_from_lagna", getattr(p_obj, "house", "—"))
+
+                    dignity_raw = getattr(p_obj, "dignity", "neutral")
+                    dignity_hi = DIGNITY_HI.get(str(dignity_raw).lower(), str(dignity_raw))
+                    is_retro = getattr(p_obj, "is_retrograde", False)
+                    status_tag = " (🔄 वक्री)" if is_retro else ""
+
+                    dhatu_info = GRAHA_AYURVEDIC_DHATU.get(p_name, ("त्रिदोष", "सामान्य"))
+
+                    planets_data.append({
+                        "ग्रह": f"{p_hi} ({p_name})",
+                        "भाव": f"भाव {house}",
+                        "राशि": s_name,
+                        "अंश-कला-विकला (DMS)": dms_str,
+                        "नक्षत्र व पद": f"{nak} (पद {pada})",
+                        "अवस्था": f"{dignity_hi}{status_tag}",
+                        "शारीरिक दोष प्रभाव": dhatu_info[0],
+                        "अधिष्ठित धातु / अंग": dhatu_info[1]
+                    })
+            if planets_data:
+                st.dataframe(pd.DataFrame(planets_data), use_container_width=True, hide_index=True)
+
+    rendered_tabs = st.tabs(tabs)
+    tab_d1, tab_d2, tab_d3, tab_d4 = rendered_tabs[0], rendered_tabs[1], rendered_tabs[2], rendered_tabs[3]
+
+    # -------------------------------------------------------------
+    # TAB 1: त्रिदोष शारीरिक प्रकृति
+    # -------------------------------------------------------------
     with tab_d1:
         st.markdown(f"### 🌿 आपकी शारीरिक प्रकृति: {diet_res.get('dosha_title', '')}")
         st.info(diet_res.get("characteristics", ""))
@@ -96,11 +252,13 @@ def render_ayurvedic_diet_view(chart, tabs=None):
             </div>
             """, unsafe_allow_html=True)
 
+    # -------------------------------------------------------------
+    # TAB 2: अनुकूल आहार व रस
+    # -------------------------------------------------------------
     with tab_d2:
         st.markdown("### ✅ आपके शरीर के लिए सर्वोत्तम अनुकूल खाद्य पदार्थ व षड्रस")
         st.caption("इन पदार्थों का नियमित सेवन आपके त्रिदोष को संतुलित रखेगा और ओज व रोग-प्रतिरोधक क्षमता बढ़ाएगा:")
 
-        # Rasa pacification guide
         p_dosha = diet_res.get("primary_dosha", "")
         if "Pitta" in p_dosha:
             rasa_text = "मधुर (मीठा), तिक्त (कड़वा/नीम-करेला), कषाय (कसैला/आंवला) रस पित्त का शमन करते हैं। अम्ल (खट्टा), लवण (नमकीन) व कटु (तीखा) रस पित्त को बढ़ाते हैं।"
@@ -132,6 +290,9 @@ def render_ayurvedic_diet_view(chart, tabs=None):
         </div>
         """, unsafe_allow_html=True)
 
+    # -------------------------------------------------------------
+    # TAB 3: वर्जित आहार व परहेज
+    # -------------------------------------------------------------
     with tab_d3:
         st.markdown("### ❌ प्रतिकूल खाद्य पदार्थ (जिनसे परहेज रखें)")
         st.caption("ये खाद्य पदार्थ आपकी जठराग्नि को बिगाड़ते हैं और त्रिदोष असंतुलन, आलस्य व रोग उत्पन्न करते हैं:")
@@ -152,6 +313,9 @@ def render_ayurvedic_diet_view(chart, tabs=None):
         - 🌙 **रात्रि में दही का सेवन वर्जित:** रात्रि में दही खाने से कफ स्रोत अवरुद्ध होते हैं और वात-कफ प्रकोप होता है।
         """)
 
+    # -------------------------------------------------------------
+    # TAB 4: भोजन नियम व उपवास
+    # -------------------------------------------------------------
     with tab_d4:
         st.markdown("### ⏰ शास्त्रीय भोजन नियम एवं उपवास विधि")
         st.markdown(f"""
