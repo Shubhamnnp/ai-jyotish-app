@@ -36,11 +36,11 @@ def render_house_freewill_svg(hp_list, is_dark: bool = False) -> str:
     text_muted = "#94A3B8" if is_dark else "#64748B"
 
     w_svg = 680
-    h_svg = 245
-    pad_left = 46
+    h_svg = 205
+    pad_left = 44
     pad_right = 16
-    top_y = 30
-    base_y = 188
+    top_y = 20
+    base_y = 152
     chart_h = base_y - top_y
 
     n = 12
@@ -54,14 +54,14 @@ def render_house_freewill_svg(hp_list, is_dark: bool = False) -> str:
         ty = base_y - (tick / 100.0) * chart_h
         if tick == 50:
             grid_svg.append(f'<line x1="{pad_left}" y1="{ty:.1f}" x2="{w_svg - pad_right}" y2="{ty:.1f}" stroke="#F59E0B" stroke-dasharray="4,4" stroke-width="1.5" opacity="0.95"/>')
-            grid_svg.append(f'<text x="{pad_left - 8}" y="{ty + 3.5:.1f}" font-size="9.5" font-weight="bold" fill="#F59E0B" font-family="sans-serif" text-anchor="end">50%</text>')
+            grid_svg.append(f'<text x="{pad_left - 8}" y="{ty + 3.5:.1f}" font-size="9" font-weight="bold" fill="#F59E0B" font-family="sans-serif" text-anchor="end">50%</text>')
             grid_svg.append(f'<text x="{w_svg - pad_right - 4}" y="{ty - 4:.1f}" font-size="8.5" font-weight="700" fill="#F59E0B" font-family="sans-serif" text-anchor="end">स्वाधीनता सीमा (Agency Baseline)</text>')
         else:
             grid_svg.append(f'<line x1="{pad_left}" y1="{ty:.1f}" x2="{w_svg - pad_right}" y2="{ty:.1f}" stroke="{grid_col}" stroke-dasharray="3,3" stroke-width="1"/>')
-            grid_svg.append(f'<text x="{pad_left - 8}" y="{ty + 3.5:.1f}" font-size="9" fill="{axis_col}" font-family="sans-serif" text-anchor="end">{tick}%</text>')
+            grid_svg.append(f'<text x="{pad_left - 8}" y="{ty + 3.5:.1f}" font-size="8.5" fill="{axis_col}" font-family="sans-serif" text-anchor="end">{tick}%</text>')
 
     grid_svg.append(f'<line x1="{pad_left}" y1="{base_y}" x2="{w_svg - pad_right}" y2="{base_y}" stroke="{base_col}" stroke-width="1.5"/>')
-    grid_svg.append(f'<text x="{pad_left - 8}" y="{base_y + 3.5:.1f}" font-size="9" fill="{axis_col}" font-family="sans-serif" text-anchor="end">0%</text>')
+    grid_svg.append(f'<text x="{pad_left - 8}" y="{base_y + 3.5:.1f}" font-size="8.5" fill="{axis_col}" font-family="sans-serif" text-anchor="end">0%</text>')
 
     bars_svg = []
     for i in range(12):
@@ -87,11 +87,11 @@ def render_house_freewill_svg(hp_list, is_dark: bool = False) -> str:
         bars_svg.append(f'<rect x="{bar_x:.1f}" y="{bar_y:.1f}" width="{bar_w:.1f}" height="{bar_h:.1f}" rx="5" ry="5" fill="url(#{grad_id})" filter="url(#fw_glow)"/>')
 
         val_str = f"{fw:.0f}%" if fw % 1 == 0 else f"{fw:.1f}%"
-        val_y = max(top_y - 2, bar_y - 6)
-        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{val_y:.1f}" font-size="10.5" font-weight="800" fill="{val_col}" font-family="sans-serif" text-anchor="middle">{val_str}</text>')
-        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{base_y + 16:.1f}" font-size="11" font-weight="800" fill="{text_primary}" font-family="sans-serif" text-anchor="middle">H{h_num}</text>')
+        val_y = max(16, bar_y - 5)
+        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{val_y:.1f}" font-size="10" font-weight="800" fill="{val_col}" font-family="sans-serif" text-anchor="middle">{val_str}</text>')
+        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{base_y + 15:.1f}" font-size="10.5" font-weight="800" fill="{text_primary}" font-family="sans-serif" text-anchor="middle">H{h_num}</text>')
         hi_name = house_hi.get(h_num, "")
-        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{base_y + 29:.1f}" font-size="9.5" font-weight="600" fill="{text_muted}" font-family="sans-serif" text-anchor="middle">{hi_name}</text>')
+        bars_svg.append(f'<text x="{bar_x + bar_w/2:.1f}" y="{base_y + 27:.1f}" font-size="9" font-weight="600" fill="{text_muted}" font-family="sans-serif" text-anchor="middle">{hi_name}</text>')
 
     defs = '''
     <defs>
@@ -120,24 +120,24 @@ def render_house_freewill_svg(hp_list, is_dark: bool = False) -> str:
     </svg>'''
 
     header_html = f'''
-    <div style="background:{card_bg}; border:1.5px solid {card_bdr}; border-radius:12px; padding:14px 16px; box-shadow:0 4px 14px rgba(0,0,0,0.06); margin-bottom:14px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+    <div style="background:{card_bg}; border:1.5px solid {card_bdr}; border-radius:10px; padding:10px 14px; box-shadow:0 2px 8px rgba(0,0,0,0.04); margin-bottom:6px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
         <div>
-          <div style="font-size:13px; font-weight:800; color:{text_primary}; display:flex; align-items:center; gap:6px;">
+          <div style="font-size:12.5px; font-weight:800; color:{text_primary}; display:flex; align-items:center; gap:6px;">
             <span>📊 १२ भावों का फ्री-विल प्रतिशत वितरण</span>
-            <span style="font-size:10px; background:rgba(37,99,235,0.12); color:#2563EB; padding:1px 6px; border-radius:4px; font-weight:700;">H1 – H12 प्राकृतिक क्रम</span>
+            <span style="font-size:9.5px; background:rgba(37,99,235,0.12); color:#2563EB; padding:1px 5px; border-radius:4px; font-weight:700;">H1 – H12 प्राकृतिक क्रम</span>
           </div>
-          <div style="font-size:10.5px; color:{text_muted}; margin-top:2px;">कर्म स्वाधीनता (Purushartha) बनाम प्रारब्ध (Destiny) अनुपातिक शक्ति</div>
+          <div style="font-size:10px; color:{text_muted}; margin-top:1px;">कर्म स्वाधीनता (Purushartha) बनाम प्रारब्ध (Destiny) अनुपातिक शक्ति</div>
         </div>
-        <div style="display:flex; align-items:center; gap:8px; font-size:10px; font-weight:700;">
-          <span style="display:inline-flex; align-items:center; gap:4px; color:#059669; background:rgba(16,185,129,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(16,185,129,0.25);">
-            <span style="width:7px; height:7px; border-radius:50%; background:#10B981;"></span> ≥50% पुरुषार्थ
+        <div style="display:flex; align-items:center; gap:6px; font-size:9.5px; font-weight:700;">
+          <span style="display:inline-flex; align-items:center; gap:3px; color:#059669; background:rgba(16,185,129,0.1); padding:2px 6px; border-radius:10px; border:1px solid rgba(16,185,129,0.25);">
+            <span style="width:6px; height:6px; border-radius:50%; background:#10B981;"></span> ≥50% पुरुषार्थ
           </span>
-          <span style="display:inline-flex; align-items:center; gap:4px; color:#D97706; background:rgba(245,158,11,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(245,158,11,0.25);">
-            <span style="width:7px; height:7px; border-radius:50%; background:#F59E0B;"></span> 35-49% मध्यम
+          <span style="display:inline-flex; align-items:center; gap:3px; color:#D97706; background:rgba(245,158,11,0.1); padding:2px 6px; border-radius:10px; border:1px solid rgba(245,158,11,0.25);">
+            <span style="width:6px; height:6px; border-radius:50%; background:#F59E0B;"></span> 35-49% मध्यम
           </span>
-          <span style="display:inline-flex; align-items:center; gap:4px; color:#DC2626; background:rgba(239,68,68,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(239,68,68,0.25);">
-            <span style="width:7px; height:7px; border-radius:50%; background:#EF4444;"></span> &lt;35% प्रारब्ध
+          <span style="display:inline-flex; align-items:center; gap:3px; color:#DC2626; background:rgba(239,68,68,0.1); padding:2px 6px; border-radius:10px; border:1px solid rgba(239,68,68,0.25);">
+            <span style="width:6px; height:6px; border-radius:50%; background:#EF4444;"></span> &lt;35% प्रारब्ध
           </span>
         </div>
       </div>
@@ -192,11 +192,11 @@ def render_soumya_krura_balance_svg(hp_list, is_dark: bool = False) -> str:
     max_scale = max(4.0, float(int(max_pts + 0.99)))
 
     w_svg = 680
-    h_svg = 245
-    pad_left = 46
+    h_svg = 205
+    pad_left = 44
     pad_right = 16
-    top_y = 30
-    base_y = 188
+    top_y = 20
+    base_y = 148
     chart_h = base_y - top_y
 
     n = 12
@@ -210,10 +210,10 @@ def render_soumya_krura_balance_svg(hp_list, is_dark: bool = False) -> str:
     for tick in ticks:
         ty = base_y - (tick / max_scale) * chart_h
         grid_svg.append(f'<line x1="{pad_left}" y1="{ty:.1f}" x2="{w_svg - pad_right}" y2="{ty:.1f}" stroke="{grid_col}" stroke-dasharray="3,3" stroke-width="1"/>')
-        grid_svg.append(f'<text x="{pad_left - 8}" y="{ty + 3.5:.1f}" font-size="9" fill="{axis_col}" font-family="sans-serif" text-anchor="end">{tick}</text>')
+        grid_svg.append(f'<text x="{pad_left - 8}" y="{ty + 3.5:.1f}" font-size="8.5" fill="{axis_col}" font-family="sans-serif" text-anchor="end">{tick}</text>')
 
     grid_svg.append(f'<line x1="{pad_left}" y1="{base_y}" x2="{w_svg - pad_right}" y2="{base_y}" stroke="{base_col}" stroke-width="1.5"/>')
-    grid_svg.append(f'<text x="{pad_left - 8}" y="{base_y + 3.5:.1f}" font-size="9" fill="{axis_col}" font-family="sans-serif" text-anchor="end">0</text>')
+    grid_svg.append(f'<text x="{pad_left - 8}" y="{base_y + 3.5:.1f}" font-size="8.5" fill="{axis_col}" font-family="sans-serif" text-anchor="end">0</text>')
 
     bars_svg = []
     for i in range(12):
@@ -246,11 +246,11 @@ def render_soumya_krura_balance_svg(hp_list, is_dark: bool = False) -> str:
             bars_svg.append(f'<text x="{k_x + bar_w/2:.1f}" y="{k_y - 4:.1f}" font-size="9" font-weight="700" fill="#EF4444" font-family="sans-serif" text-anchor="middle">{k_str}</text>')
 
         # House Code (H1..H12)
-        bars_svg.append(f'<text x="{col_cx:.1f}" y="{base_y + 15:.1f}" font-size="11" font-weight="800" fill="{text_primary}" font-family="sans-serif" text-anchor="middle">H{h_num}</text>')
+        bars_svg.append(f'<text x="{col_cx:.1f}" y="{base_y + 14:.1f}" font-size="10.5" font-weight="800" fill="{text_primary}" font-family="sans-serif" text-anchor="middle">H{h_num}</text>')
 
         # Sanskrit House Name
         hi_name = house_hi.get(h_num, "")
-        bars_svg.append(f'<text x="{col_cx:.1f}" y="{base_y + 27:.1f}" font-size="9" font-weight="600" fill="{text_muted}" font-family="sans-serif" text-anchor="middle">{hi_name}</text>')
+        bars_svg.append(f'<text x="{col_cx:.1f}" y="{base_y + 25:.1f}" font-size="8.5" font-weight="600" fill="{text_muted}" font-family="sans-serif" text-anchor="middle">{hi_name}</text>')
 
         # Net Score Badge at Bottom
         if net > 0:
@@ -266,10 +266,10 @@ def render_soumya_krura_balance_svg(hp_list, is_dark: bool = False) -> str:
             badge_fg = "#64748B"
             net_txt = "0"
 
-        badge_w = 26
+        badge_w = 24
         badge_h = 13
         badge_rx = col_cx - badge_w / 2
-        badge_ry = base_y + 32
+        badge_ry = base_y + 28
         bars_svg.append(f'<rect x="{badge_rx:.1f}" y="{badge_ry:.1f}" width="{badge_w}" height="{badge_h}" rx="3" fill="{badge_bg}"/>')
         bars_svg.append(f'<text x="{col_cx:.1f}" y="{badge_ry + 10:.1f}" font-size="8.5" font-weight="800" fill="{badge_fg}" font-family="sans-serif" text-anchor="middle">{net_txt}</text>')
 
@@ -286,30 +286,30 @@ def render_soumya_krura_balance_svg(hp_list, is_dark: bool = False) -> str:
     </defs>
     '''
 
-    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w_svg} {h_svg + 8}" style="width:100%; height:auto; display:block;">
+    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w_svg} {h_svg}" style="width:100%; height:auto; display:block;">
       {defs}
       {"".join(grid_svg)}
       {"".join(bars_svg)}
     </svg>'''
 
     header_html = f'''
-    <div style="background:{card_bg}; border:1.5px solid {card_bdr}; border-radius:12px; padding:14px 16px; box-shadow:0 4px 14px rgba(0,0,0,0.06); margin-bottom:14px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+    <div style="background:{card_bg}; border:1.5px solid {card_bdr}; border-radius:10px; padding:10px 14px; box-shadow:0 2px 8px rgba(0,0,0,0.04); margin-bottom:6px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
         <div>
-          <div style="font-size:13px; font-weight:800; color:{text_primary}; display:flex; align-items:center; gap:6px;">
+          <div style="font-size:12.5px; font-weight:800; color:{text_primary}; display:flex; align-items:center; gap:6px;">
             <span>⚖️ भाव सौम्य (शुभ) बनाम क्रूर (पाप) प्रभाव अंक</span>
-            <span style="font-size:10px; background:rgba(16,185,129,0.12); color:#059669; padding:1px 6px; border-radius:4px; font-weight:700;">द्वि-चर तुलना</span>
+            <span style="font-size:9.5px; background:rgba(16,185,129,0.12); color:#059669; padding:1px 5px; border-radius:4px; font-weight:700;">द्वि-चर तुलना</span>
           </div>
-          <div style="font-size:10.5px; color:{text_muted}; margin-top:2px;">शुभ ग्रह (सौम्य) बनाम पाप ग्रह (क्रूर) प्रभाव व नीचे नेट संतुलन अंक (+/-)</div>
+          <div style="font-size:10px; color:{text_muted}; margin-top:1px;">शुभ ग्रह (सौम्य) बनाम पाप ग्रह (क्रूर) प्रभाव व नीचे नेट संतुलन अंक (+/-)</div>
         </div>
-        <div style="display:flex; align-items:center; gap:8px; font-size:10px; font-weight:700;">
-          <span style="display:inline-flex; align-items:center; gap:4px; color:#059669; background:rgba(16,185,129,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(16,185,129,0.25);">
-            <span style="width:7px; height:7px; border-radius:50%; background:#10B981;"></span> सौम्य (Benefic)
+        <div style="display:flex; align-items:center; gap:6px; font-size:9.5px; font-weight:700;">
+          <span style="display:inline-flex; align-items:center; gap:3px; color:#059669; background:rgba(16,185,129,0.1); padding:2px 6px; border-radius:10px; border:1px solid rgba(16,185,129,0.25);">
+            <span style="width:6px; height:6px; border-radius:50%; background:#10B981;"></span> सौम्य (Benefic)
           </span>
-          <span style="display:inline-flex; align-items:center; gap:4px; color:#DC2626; background:rgba(239,68,68,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(239,68,68,0.25);">
-            <span style="width:7px; height:7px; border-radius:50%; background:#EF4444;"></span> क्रूर (Malefic)
+          <span style="display:inline-flex; align-items:center; gap:3px; color:#DC2626; background:rgba(239,68,68,0.1); padding:2px 6px; border-radius:10px; border:1px solid rgba(239,68,68,0.25);">
+            <span style="width:6px; height:6px; border-radius:50%; background:#EF4444;"></span> क्रूर (Malefic)
           </span>
-          <span style="display:inline-flex; align-items:center; gap:4px; color:#2563EB; background:rgba(37,99,235,0.1); padding:2px 7px; border-radius:12px; border:1px solid rgba(37,99,235,0.25);">
+          <span style="display:inline-flex; align-items:center; gap:3px; color:#2563EB; background:rgba(37,99,235,0.1); padding:2px 6px; border-radius:10px; border:1px solid rgba(37,99,235,0.25);">
             ⚖️ नेट संतुलन
           </span>
         </div>
@@ -318,6 +318,247 @@ def render_soumya_krura_balance_svg(hp_list, is_dark: bool = False) -> str:
     </div>
     '''
     return header_html
+
+
+def _render_fw_bar(val: float, is_dark: bool = False) -> str:
+    """Generates an executive progress bar + badge for Free Will percentage."""
+    clamped = max(0.0, min(100.0, float(val)))
+    if clamped >= 50.0:
+        grad = "linear-gradient(90deg, #34D399, #059669)"
+        text_c = "#059669" if not is_dark else "#34D399"
+        badge = '<span style="background:rgba(16,185,129,0.12); color:#059669; font-size:9.5px; font-weight:800; padding:1px 6px; border-radius:8px; border:1px solid rgba(16,185,129,0.25);">पुरुषार्थ</span>'
+    elif clamped >= 35.0:
+        grad = "linear-gradient(90deg, #FBBF24, #D97706)"
+        text_c = "#D97706" if not is_dark else "#FBBF24"
+        badge = '<span style="background:rgba(245,158,11,0.12); color:#D97706; font-size:9.5px; font-weight:800; padding:1px 6px; border-radius:8px; border:1px solid rgba(245,158,11,0.25);">मध्यम</span>'
+    else:
+        grad = "linear-gradient(90deg, #F87171, #DC2626)"
+        text_c = "#DC2626" if not is_dark else "#F87171"
+        badge = '<span style="background:rgba(239,68,68,0.12); color:#DC2626; font-size:9.5px; font-weight:800; padding:1px 6px; border-radius:8px; border:1px solid rgba(239,68,68,0.25);">प्रारब्ध</span>'
+
+    val_str = f"{clamped:.0f}%" if clamped % 1 == 0 else f"{clamped:.1f}%"
+    bar_bg = "rgba(255,255,255,0.08)" if is_dark else "#E2E8F0"
+
+    return f'''<div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-weight:900; font-size:12px; color:{text_c}; min-width:38px;">{val_str}</span>
+        <div style="flex:1; max-width:85px; height:6px; background:{bar_bg}; border-radius:3px; overflow:hidden;">
+            <div style="width:{clamped}%; height:100%; background:{grad}; border-radius:3px;"></div>
+        </div>
+        {badge}
+    </div>'''
+
+
+def _render_pill(val, ptype="neutral", is_dark: bool = False) -> str:
+    """Renders high-contrast colored micro-badges for Shastriya metrics."""
+    s = str(val).strip()
+    if not s or s == "0" or s == "None":
+        return f'<span style="color:{"#64748B" if is_dark else "#94A3B8"}; font-weight:600;">—</span>'
+
+    if ptype == "soumya":
+        txt = s if any(c.isalpha() for c in s) else f"+{s}"
+        return f'<span style="display:inline-block; padding:1px 6px; border-radius:6px; font-size:10px; font-weight:800; background:rgba(16,185,129,0.12); color:{"#34D399" if is_dark else "#059669"}; border:1px solid rgba(16,185,129,0.25);">{txt}</span>'
+    elif ptype == "krura":
+        txt = s if any(c.isalpha() for c in s) else f"-{s}"
+        return f'<span style="display:inline-block; padding:1px 6px; border-radius:6px; font-size:10px; font-weight:800; background:rgba(239,68,68,0.12); color:{"#F87171" if is_dark else "#DC2626"}; border:1px solid rgba(239,68,68,0.25);">{txt}</span>'
+    elif ptype == "lords159":
+        txt = s if any(c.isalpha() for c in s) else f"+{s}"
+        return f'<span style="display:inline-block; padding:1px 6px; border-radius:6px; font-size:10px; font-weight:800; background:rgba(37,99,235,0.12); color:{"#60A5FA" if is_dark else "#1D4ED8"}; border:1px solid rgba(37,99,235,0.25);">{txt}</span>'
+    elif ptype == "lords6812":
+        txt = s if any(c.isalpha() for c in s) else f"-{s}"
+        return f'<span style="display:inline-block; padding:1px 6px; border-radius:6px; font-size:10px; font-weight:800; background:rgba(245,158,11,0.12); color:{"#FBBF24" if is_dark else "#B45309"}; border:1px solid rgba(245,158,11,0.25);">{txt}</span>'
+    elif ptype == "dashvarga":
+        return f'<span style="display:inline-block; padding:1px 7px; border-radius:6px; font-size:10.5px; font-weight:900; background:rgba(217,119,6,0.12); color:{"#FCD34D" if is_dark else "#B45309"}; border:1px solid rgba(217,119,6,0.3);">⭐ {s}/11</span>'
+    elif ptype == "digbala":
+        if "Digbala" in s:
+            return f'<span style="display:inline-block; padding:1px 6px; border-radius:6px; font-size:10px; font-weight:800; background:rgba(16,185,129,0.12); color:{"#34D399" if is_dark else "#059669"}; border:1px solid rgba(16,185,129,0.25);">⚡ दिग्बली</span>'
+        elif "Nirbala" in s:
+            return f'<span style="display:inline-block; padding:1px 6px; border-radius:6px; font-size:10px; font-weight:800; background:rgba(239,68,68,0.12); color:{"#F87171" if is_dark else "#DC2626"}; border:1px solid rgba(239,68,68,0.25);">निर्बल</span>'
+        return f'<span style="color:{"#64748B" if is_dark else "#94A3B8"}; font-weight:600;">—</span>'
+    elif ptype == "kaalbala":
+        if "Bali" in s:
+            return f'<span style="display:inline-block; padding:1px 6px; border-radius:6px; font-size:10px; font-weight:800; background:rgba(99,102,241,0.12); color:{"#A5B4FC" if is_dark else "#4F46E5"}; border:1px solid rgba(99,102,241,0.25);">🌙 बली</span>'
+        return f'<span style="color:{"#64748B" if is_dark else "#94A3B8"}; font-weight:600;">—</span>'
+    elif ptype == "exchange":
+        if s and s != "0":
+            return f'<span style="display:inline-block; padding:1px 6px; border-radius:6px; font-size:10px; font-weight:800; background:rgba(245,158,11,0.12); color:{"#FBBF24" if is_dark else "#B45309"}; border:1px solid rgba(245,158,11,0.25);">🔄 {s}</span>'
+        return f'<span style="color:{"#64748B" if is_dark else "#94A3B8"}; font-weight:600;">—</span>'
+    else:
+        return f'<span style="display:inline-block; padding:1px 5px; border-radius:4px; font-size:10px; font-weight:700; background:rgba(100,116,139,0.1); color:{"#CBD5E1" if is_dark else "#475569"};">{s}</span>'
+
+
+def render_premium_planet_table(pp_list, is_dark: bool = False) -> str:
+    """Renders a sleek, publication-grade responsive HTML table for 9 Planets Free Will & Dashvarga."""
+    card_bg = "#111827" if is_dark else "#FFFFFF"
+    card_bdr = "rgba(255,255,255,0.12)" if is_dark else "#E2E8F0"
+    th_bg = "#1E293B" if is_dark else "#F8FAFC"
+    th_col = "#94A3B8" if is_dark else "#475569"
+    row_alt = "rgba(255,255,255,0.02)" if is_dark else "#F8FAFC"
+    txt_col = "#F1F5F9" if is_dark else "#1E293B"
+    border_subtle = "rgba(255,255,255,0.06)" if is_dark else "#F1F5F9"
+
+    p_info = {
+        "Sun": {"sym": "☉", "hi": "सूर्य", "col": "#F59E0B"},
+        "Moon": {"sym": "☽", "hi": "चन्द्र", "col": "#38BDF8" if is_dark else "#2563EB"},
+        "Mars": {"sym": "♂", "hi": "मंगल", "col": "#EF4444"},
+        "Mercury": {"sym": "☿", "hi": "बुध", "col": "#10B981"},
+        "Jupiter": {"sym": "♃", "hi": "गुरु", "col": "#EAB308"},
+        "Venus": {"sym": "♀", "hi": "शुक्र", "col": "#EC4899"},
+        "Saturn": {"sym": "♄", "hi": "शनि", "col": "#94A3B8" if is_dark else "#475569"},
+        "Rahu": {"sym": "☊", "hi": "राहु", "col": "#A855F7"},
+        "Ketu": {"sym": "☋", "hi": "केतु", "col": "#F97316"}
+    }
+
+    rows = []
+    for idx, p_item in enumerate(pp_list):
+        p_name = p_item.get("planet", "")
+        inf = p_info.get(p_name, {"sym": "🪐", "hi": p_name, "col": "#64748B"})
+
+        try:
+            fw = float(str(p_item.get("freeWill", 0)).replace("%", "").strip())
+        except Exception:
+            fw = 0.0
+
+        fw_html = _render_fw_bar(fw, is_dark)
+        soumya_html = _render_pill(p_item.get("soumya", 0), "soumya", is_dark)
+        l159_html = _render_pill(p_item.get("lords159", 0), "lords159", is_dark)
+        krura_html = _render_pill(p_item.get("krura", 0), "krura", is_dark)
+        l6812_html = _render_pill(p_item.get("lords6812", 0), "lords6812", is_dark)
+        disp_html = _render_pill(p_item.get("dispositor", 0), "neutral", is_dark)
+        sep_html = _render_pill(p_item.get("seperative", 0), "neutral", is_dark)
+        dash_val = p_item.get("dashvarga", 0)
+        dash_html = _render_pill(dash_val, "dashvarga", is_dark)
+
+        bg_row = row_alt if idx % 2 == 1 else "transparent"
+        rows.append(f'''
+        <tr style="background:{bg_row}; border-bottom:1px solid {border_subtle};">
+            <td style="padding:6px 10px; font-weight:800; color:{txt_col}; white-space:nowrap;">
+                <span style="color:{inf['col']}; font-size:13px; margin-right:4px;">{inf['sym']}</span>
+                <span>{inf['hi']}</span> <span style="font-size:10px; color:{'#94A3B8' if is_dark else '#64748B'}; font-weight:600;">({p_name})</span>
+            </td>
+            <td style="padding:6px 10px;">{fw_html}</td>
+            <td style="padding:6px 8px; text-align:center;">{soumya_html}</td>
+            <td style="padding:6px 8px; text-align:center;">{l159_html}</td>
+            <td style="padding:6px 8px; text-align:center;">{krura_html}</td>
+            <td style="padding:6px 8px; text-align:center;">{l6812_html}</td>
+            <td style="padding:6px 8px; text-align:center;">{disp_html}</td>
+            <td style="padding:6px 8px; text-align:center;">{sep_html}</td>
+            <td style="padding:6px 10px; text-align:center;">{dash_html}</td>
+        </tr>
+        ''')
+
+    return f'''
+    <div style="background:{card_bg}; border:1px solid {card_bdr}; border-radius:10px; overflow:hidden; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+        <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:11px; text-align:left;">
+                <thead>
+                    <tr style="background:{th_bg}; color:{th_col}; font-weight:800; border-bottom:1.5px solid {card_bdr};">
+                        <th style="padding:7px 10px;">🪐 ग्रह (Planet)</th>
+                        <th style="padding:7px 10px; min-width:170px;">⚡ फ्री-विल (Agency %)</th>
+                        <th style="padding:7px 8px; text-align:center;">🌿 सौम्य (Benefic)</th>
+                        <th style="padding:7px 8px; text-align:center;">✨ १/५/९ भावेश</th>
+                        <th style="padding:7px 8px; text-align:center;">🔥 क्रूर (Malefic)</th>
+                        <th style="padding:7px 8px; text-align:center;">⚠️ ६/८/१२ भावेश</th>
+                        <th style="padding:7px 8px; text-align:center;">🏛️ डिस्पोजिटर</th>
+                        <th style="padding:7px 8px; text-align:center;">✂️ सेपरेटिव</th>
+                        <th style="padding:7px 10px; text-align:center;">👑 दशवर्ग अंक</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {"".join(rows)}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    '''
+
+
+def render_premium_house_table(hp_list, is_dark: bool = False) -> str:
+    """Renders a sleek, publication-grade responsive HTML table for 12 Houses Free Will & Points."""
+    def _house_num(item):
+        h_raw = str(item.get("house", "1"))
+        digits = "".join(c for c in h_raw if c.isdigit())
+        return int(digits) if digits else 1
+
+    sorted_hp = sorted(hp_list, key=_house_num)
+
+    card_bg = "#111827" if is_dark else "#FFFFFF"
+    card_bdr = "rgba(255,255,255,0.12)" if is_dark else "#E2E8F0"
+    th_bg = "#1E293B" if is_dark else "#F8FAFC"
+    th_col = "#94A3B8" if is_dark else "#475569"
+    row_alt = "rgba(255,255,255,0.02)" if is_dark else "#F8FAFC"
+    txt_col = "#F1F5F9" if is_dark else "#1E293B"
+    border_subtle = "rgba(255,255,255,0.06)" if is_dark else "#F1F5F9"
+
+    house_hi = {
+        1: "तनु (Self)", 2: "धन (Wealth)", 3: "सहज (Courage)", 4: "सुख (Home)",
+        5: "सुत (Intellect)", 6: "रिपु (Debts)", 7: "जाया (Partner)", 8: "आयु (Longevity)",
+        9: "धर्म (Fortune)", 10: "कर्म (Career)", 11: "लाभ (Gains)", 12: "व्यय (Moksha)"
+    }
+
+    rows = []
+    for idx, h_item in enumerate(sorted_hp):
+        h_num = _house_num(h_item)
+        hi_name = house_hi.get(h_num, f"H{h_num}")
+
+        try:
+            fw = float(str(h_item.get("freeWill", 0)).replace("%", "").strip())
+        except Exception:
+            fw = 0.0
+
+        fw_html = _render_fw_bar(fw, is_dark)
+        soumya_html = _render_pill(h_item.get("soumya", 0), "soumya", is_dark)
+        l159_html = _render_pill(h_item.get("lords159", 0), "lords159", is_dark)
+        krura_html = _render_pill(h_item.get("krura", 0), "krura", is_dark)
+        l6812_html = _render_pill(h_item.get("lords6812", 0), "lords6812", is_dark)
+        dig_html = _render_pill(h_item.get("digbala", ""), "digbala", is_dark)
+        kaal_html = _render_pill(h_item.get("kaalbala", ""), "kaalbala", is_dark)
+        exch_html = _render_pill(h_item.get("exchange", "0"), "exchange", is_dark)
+        sep_html = _render_pill(h_item.get("seperative", 0), "neutral", is_dark)
+
+        bg_row = row_alt if idx % 2 == 1 else "transparent"
+        rows.append(f'''
+        <tr style="background:{bg_row}; border-bottom:1px solid {border_subtle};">
+            <td style="padding:5px 10px; font-weight:800; color:{txt_col}; white-space:nowrap;">
+                <span style="display:inline-block; width:22px; height:20px; line-height:20px; text-align:center; border-radius:4px; background:rgba(37,99,235,0.1); color:#2563EB; font-size:10px; font-weight:900; margin-right:5px;">H{h_num}</span>
+                <span>{hi_name}</span>
+            </td>
+            <td style="padding:5px 10px;">{fw_html}</td>
+            <td style="padding:5px 8px; text-align:center;">{soumya_html}</td>
+            <td style="padding:5px 8px; text-align:center;">{l159_html}</td>
+            <td style="padding:5px 8px; text-align:center;">{krura_html}</td>
+            <td style="padding:5px 8px; text-align:center;">{l6812_html}</td>
+            <td style="padding:5px 8px; text-align:center;">{dig_html}</td>
+            <td style="padding:5px 8px; text-align:center;">{kaal_html}</td>
+            <td style="padding:5px 8px; text-align:center;">{exch_html}</td>
+            <td style="padding:5px 8px; text-align:center;">{sep_html}</td>
+        </tr>
+        ''')
+
+    return f'''
+    <div style="background:{card_bg}; border:1px solid {card_bdr}; border-radius:10px; overflow:hidden; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+        <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:11px; text-align:left;">
+                <thead>
+                    <tr style="background:{th_bg}; color:{th_col}; font-weight:800; border-bottom:1.5px solid {card_bdr};">
+                        <th style="padding:7px 10px;">🏠 भाव (House)</th>
+                        <th style="padding:7px 10px; min-width:170px;">⚡ फ्री-विल (Agency %)</th>
+                        <th style="padding:7px 8px; text-align:center;">🌿 सौम्य (Benefic)</th>
+                        <th style="padding:7px 8px; text-align:center;">✨ १/५/९ भावेश</th>
+                        <th style="padding:7px 8px; text-align:center;">🔥 क्रूर (Malefic)</th>
+                        <th style="padding:7px 8px; text-align:center;">⚠️ ६/८/१२ भावेश</th>
+                        <th style="padding:7px 8px; text-align:center;">🧭 डिगबल</th>
+                        <th style="padding:7px 8px; text-align:center;">🌙 कालबल</th>
+                        <th style="padding:7px 8px; text-align:center;">🔄 परिवर्तन</th>
+                        <th style="padding:7px 8px; text-align:center;">✂️ सेपरेटिव</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {"".join(rows)}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    '''
 
 
 
@@ -439,8 +680,10 @@ def render_remedies_view(chart, tabs=None):
     # =========================================================================
     with tab_fw_overview:
         c_head1, c_head2 = st.columns([3, 1], vertical_alignment="center")
+        with c_head1:
+            st.markdown('<div style="font-size:12px; font-weight:800; color:#3B82F6; display:flex; align-items:center; gap:6px;"><span>⚡</span><span>वैदिक कर्म-सिद्धांत एवं स्वाधीनता अंकन (Agency Scoring)</span></div>', unsafe_allow_html=True)
         with c_head2:
-            detailed_toggle = st.toggle("🔄 विस्तृत ग्रह प्रतीक दृश्य", value=False, key="aff_det_sym_toggle")
+            detailed_toggle = st.toggle("🔄 विस्तृत प्रतीक", value=False, key="aff_det_sym_toggle")
 
         hp_list = affliction_engine.calculate_house_points(detailed=detailed_toggle)
         pp_list = affliction_engine.calculate_planet_points(detailed=detailed_toggle)
@@ -511,29 +754,11 @@ def render_remedies_view(chart, tabs=None):
         ])
 
         with subtab_planets:
-            st.markdown("##### 🪐 नवग्रह फ्री-विल एवं दशवर्ग अंक")
-            pp_df = pd.DataFrame(pp_list).rename(columns={
-                "planet": "Planet", "freeWill": "Free Will %", "soumya": "सौम्य (Benefic)",
-                "lords159": "1/5/9 Lords", "krura": "क्रूर (Malefic)", "lords6812": "6/8/12 Lords",
-                "dispositor": "Dispositor", "exchange": "Exchange", "seperative": "Separative",
-                "dashvarga": "दशवर्ग अंक"
-            })
-            st.dataframe(pp_df, use_container_width=True, hide_index=True)
-
-            st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+            st.markdown(render_premium_planet_table(pp_list, is_dark=_is_dark), unsafe_allow_html=True)
             st.markdown(render_soumya_krura_balance_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
 
         with subtab_houses:
-            st.markdown("##### 🏠 द्वादश भाव फ्री-विल एवं प्रभाव अंक")
-            hp_df = pd.DataFrame(hp_list).rename(columns={
-                "house": "House", "freeWill": "Free Will %", "soumya": "सौम्य (Benefic)",
-                "lords159": "1/5/9 Lords", "krura": "क्रूर (Malefic)", "lords6812": "6/8/12 Lords",
-                "dispositor": "Dispositor", "exchange": "Exchange", "seperative": "Separative",
-                "digbala": "Digbala", "kaalbala": "Kaalbala"
-            })
-            st.dataframe(hp_df, use_container_width=True, hide_index=True)
-
-            st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+            st.markdown(render_premium_house_table(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
             st.markdown(render_house_freewill_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
 
 
