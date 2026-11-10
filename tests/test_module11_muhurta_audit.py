@@ -119,6 +119,22 @@ class TestModule11MuhurtaAudit(unittest.TestCase):
         import src.jyotish.ui.modules.muhurta_view as muhurta_view_mod
         self.assertTrue(hasattr(muhurta_view_mod, "render_muhurta_view"))
 
+    def test_muhurta_view_shastriya_shloka_and_console(self):
+        """Verify classical Muhurta Chintamani shloka, micro DMS, and Tara/Chandra Balam HUD in muhurta_view."""
+        import inspect
+        import src.jyotish.ui.modules.muhurta_view as muhurta_view_mod
+        source = inspect.getsource(muhurta_view_mod.render_muhurta_view)
+
+        self.assertIn("muhurta_shastriya_shloka", source)
+        self.assertIn("मुहूर्त चिन्तामणि एवं कालप्रकाशिका", source)
+        self.assertIn("तिथेश्च श्रियमवाप्नोति वारादायुष्यवर्धनम्", source)
+        self.assertIn("col_hud1, col_hud2, col_hud3, col_hud4 = st.columns(4)", source)
+        self.assertIn("जातक ताराबल (Tara Balam)", source)
+        self.assertIn("जातक चन्द्रबल (Chandra Balam)", source)
+        self.assertIn("जन्म लग्न स्पष्ट (DMS)", source)
+        self.assertIn("जन्म चन्द्र स्पष्ट (DMS)", source)
+        self.assertIn("जन्म सूर्य स्पष्ट (DMS)", source)
+
 
 if __name__ == "__main__":
     unittest.main()

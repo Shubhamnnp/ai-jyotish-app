@@ -24,6 +24,26 @@ def render_muhurta_view(chart, tz_offset=5.5, default_city_name=None, tabs=None)
     st.subheader("⏳ शुभ मुहूर्त, दैनिक चौघड़िया एवं जातक पञ्चाङ्ग (Vedic Muhurta & Birth Panchanga)")
     st.write("सूर्य सिद्धांत, मुहूर्त चिन्तामणि एवं कालप्रकाशिका आधारित जातक जन्म पञ्चाङ्ग तत्व, अहोरात्र चौघड़िया, काल-वेला, ताराबल-चन्द्रबल, १६ कार्य मुहूर्त एवं २१ महादोष परिहार।")
 
+    # Classical Shastriya Shloka Card
+    muhurta_shastriya_shloka = {
+        "title": "मुहूर्त चिन्तामणि एवं कालप्रकाशिका — पञ्चाङ्ग फल एवं मुहूर्त तत्व",
+        "source": "दैवज्ञ राम विरचित 'मुहूर्त चिन्तामणि' (संस्कार प्रकरण) एवं 'कालप्रकाशिका'",
+        "shloka": "तिथेश्च श्रियमवाप्नोति वारादायुष्यवर्धनम्।\nनक्षत्राद्धरते पापं योगाद्रोगनिवारणम्॥\nकरणात् कार्यसिद्धिः स्यात् पञ्चाङ्गफलमुत्तमम्।\nअनेन शुभकालेषु प्रारम्भो विजयप्रदः॥",
+        "meaning": "पञ्चाङ्ग के ५ अंगों का विशिष्ट शास्त्रीय फल: तिथि से श्री (लक्ष्मी व धन), वार से आयु वृद्धि, नक्षत्र से पाप-हरण, योग से रोग-निवारण (आरोग्य) तथा करण से अभीष्ट कार्य की सिद्धि होती है। शुभ काल व शुद्ध पञ्चाङ्ग में प्रारंभ किया गया कार्य सर्वदा विजय और समृद्धि प्रदान करता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {muhurta_shastriya_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {muhurta_shastriya_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{muhurta_shastriya_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {muhurta_shastriya_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     import src.jyotish.services.muhurta as muh_svc_mod
     import src.jyotish.services.milan as milan_mod
     m_engine = muh_svc_mod.default_muhurta_engine
@@ -93,6 +113,84 @@ def render_muhurta_view(chart, tz_offset=5.5, default_city_name=None, tabs=None)
     <span style="color:#64748B;">करण:</span> <b>{p_doshas['karana_name']}</b>
     </div>""", unsafe_allow_html=True)
 
+    # =========================================================================
+    # ACTIVE NATIVE MICRO-LONGITUDES & LIVE MUHURTA HUD CONSOLE
+    # =========================================================================
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    l_deg = getattr(chart, "lagna_degree", 0.0)
+    l_ansh = int(l_deg)
+    l_kala = int(round((l_deg - l_ansh) * 60.0))
+    if l_kala >= 60:
+        l_kala = 0
+        l_ansh += 1
+    l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+    m_planet = chart.planets.get("Moon", None)
+    if m_planet:
+        m_deg = getattr(m_planet, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_nak = getattr(m_planet, "nakshatra_name", getattr(m_planet, "nakshatra", "—"))
+        m_pada = getattr(m_planet, "nakshatra_pada", getattr(m_planet, "pada", 1))
+        moon_str = f"{m_planet.sign_name} {m_dms} [{m_nak}-P{m_pada}]"
+        moon_nak_idx = int(m_planet.longitude / (360.0 / 27.0))
+        natal_m_sign = m_planet.sign_id
+    else:
+        m_dms = "—"
+        moon_str = "—"
+        moon_nak_idx = 0
+        natal_m_sign = 1
+
+    s_planet = chart.planets.get("Sun", None)
+    if s_planet:
+        s_deg = getattr(s_planet, "sign_degree", 0.0)
+        s_ansh = int(s_deg)
+        s_kala = int(round((s_deg - s_ansh) * 60.0))
+        if s_kala >= 60:
+            s_kala = 0
+            s_ansh += 1
+        s_dms = f"{s_ansh}° {s_kala:02d}'"
+    else:
+        s_dms = "—"
+
+    # Active Native Tara & Chandra Balam calculation for selected muhurta_date
+    tara_names_9 = [
+        ("जन्म तारा (Janma)", "शारीरिक चिंता / सतर्कता", "⚠️ मध्यम", "#F59E0B"),
+        ("सम्पत् तारा (Sampat)", "धन लाभ, समृद्धि व सफलता", "🟢 अति शुभ", "#10B981"),
+        ("विपत् तारा (Vipat)", "विपत्ति, हानि व रुकावटें", "🔴 अशुभ (वर्जित)", "#EF4444"),
+        ("क्षेम तारा (Kshema)", "कल्याण, सुरक्षा व कार्य सिद्धि", "🟢 शुभ", "#10B981"),
+        ("प्रत्यरि तारा (Pratyari)", "शत्रुता, विवाद व अड़चनें", "🔴 अशुभ (वर्जित)", "#EF4444"),
+        ("साधक तारा (Sadhaka)", "अभीष्ट सिद्धि व विजय", "🟢 अति शुभ", "#10B981"),
+        ("वध / निधन तारा (Naidhana)", "संकट, दुर्घटना व असफलता", "🔴 महा अशुभ", "#DC2626"),
+        ("मित्र तारा (Mitra)", "सुखद सहयोग व आनंद", "🟢 शुभ", "#10B981"),
+        ("परम मित्र तारा (Parama Mitra)", "सर्वोच्च सिद्धि व मंगल", "🟢 परम शुभ", "#059669")
+    ]
+    transit_nak = p_doshas.get("nakshatra_idx", 1)
+    transit_sign = p_doshas.get("moon_sign_id", 1)
+    natal_m_nak = moon_nak_idx + 1
+
+    today_tara_diff = (transit_nak - natal_m_nak) % 27
+    today_tara_num = (today_tara_diff % 9) + 1
+    t_name, t_desc, t_verdict, t_col = tara_names_9[today_tara_num - 1]
+
+    c_diff = ((transit_sign - natal_m_sign) % 12) + 1
+    if c_diff in [1, 3, 6, 7, 10, 11]:
+        chandra_bal_status = f"🟢 शुभ ({c_diff}वां चन्द्र)"
+    elif c_diff in [4, 8, 12]:
+        chandra_bal_status = f"🔴 घात/अष्टम ({c_diff}वां चन्द्र)"
+    else:
+        chandra_bal_status = f"🟡 मध्यम ({c_diff}वां चन्द्र)"
+
+    col_hud1, col_hud2, col_hud3, col_hud4 = st.columns(4)
+    col_hud1.metric("सक्रिय जातक लग्न व चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
+    col_hud2.metric("तात्कालिक गोचर चन्द्र व वार", f"🌙 {p_doshas.get('moon_sign_name', '—')}", f"वार: {p_doshas['weekday_name']}")
+    col_hud3.metric("जातक ताराबल (Tara Balam)", f"{t_name.split(' ')[0]}", f"{t_verdict}")
+    col_hud4.metric("जातक चन्द्रबल (Chandra Balam)", f"{chandra_bal_status}", f"जन्म राशि से #{c_diff} भाव")
+
     st.write("")
 
     # =========================================================================
@@ -108,8 +206,6 @@ def render_muhurta_view(chart, tz_offset=5.5, default_city_name=None, tabs=None)
         st.caption("जन्म क्षण के ५ महा-अंग (तिथि, वार, नक्षत्र, योग, करण), पञ्चमहाभूत तत्व संतुलन, अवकहड़ा चक्र एवं जन्म पञ्चाङ्ग दोष परीक्षण:")
 
         p_info = chart.panchang
-        m_planet = chart.planets.get("Moon", None)
-        moon_nak_idx = int(m_planet.longitude / (360.0 / 27.0)) if m_planet else 0
 
         # Avakhada Chakra Data from milan module
         ganas = ["देव गण (Deva)", "मनुष्य गण (Manushya)", "राक्षस गण (Rakshasa)"]
@@ -154,8 +250,11 @@ def render_muhurta_view(chart, tz_offset=5.5, default_city_name=None, tabs=None)
         st.write("")
         col_ak1, col_ak2 = st.columns(2)
         with col_ak1:
-            st.markdown("##### 🧭 अवकहड़ा चक्र विवरण (Avakhada Chakra Details)")
+            st.markdown("##### 🧭 अवकहड़ा चक्र एवं सूक्ष्म स्थिति (Avakhada & Micro DMS)")
             ak_rows = [
+                {"घटक": "जन्म लग्न स्पष्ट (DMS)", "विवरण": f"{lagna_sname} ({l_dms})"},
+                {"घटक": "जन्म चन्द्र स्पष्ट (DMS)", "विवरण": f"{m_planet.sign_name if m_planet else ''} ({m_dms}) — चरण {getattr(m_planet, 'nakshatra_pada', 1)} (नैसर्गिक शुभ)"},
+                {"घटक": "जन्म सूर्य स्पष्ट (DMS)", "विवरण": f"{s_planet.sign_name if s_planet else ''} ({s_dms}) — चरण {getattr(s_planet, 'nakshatra_pada', 1)} (नैसर्गिक क्रूर)"},
                 {"घटक": "जन्म नक्षत्र", "विवरण": f"{p_info.nakshatra_name} (पद {getattr(m_planet, 'nakshatra_pada', 1)})"},
                 {"घटक": "चन्द्र राशि", "विवरण": f"{m_planet.sign_id if m_planet else 1} राशि"},
                 {"घटक": "गण (Temperament)", "विवरण": gana_val},
