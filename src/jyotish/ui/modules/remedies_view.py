@@ -7,6 +7,10 @@ from src.jyotish.core.constants import SIGN_LORDS, SIGN_NAMES
 from src.jyotish.services.shastriya_pramana import default_shastriya_pramana_engine
 from src.jyotish.services.grahalakshanam import GrahalakshanamClient, GrahalakshanamConfig
 
+def _clean_html(html_str: str) -> str:
+    """Strips all leading/trailing indentation from every line so Markdown never treats HTML as code blocks."""
+    return "\n".join(line.strip() for line in html_str.splitlines() if line.strip())
+
 def render_house_freewill_svg(hp_list, is_dark: bool = False) -> str:
     """Renders an executive, publication-grade SVG bar dashboard for 12 Houses Free Will percentage."""
     def _house_num(item):
@@ -144,7 +148,7 @@ def render_house_freewill_svg(hp_list, is_dark: bool = False) -> str:
       {svg_content}
     </div>
     '''
-    return header_html
+    return _clean_html(header_html)
 
 
 def render_soumya_krura_balance_svg(hp_list, is_dark: bool = False) -> str:
@@ -317,7 +321,7 @@ def render_soumya_krura_balance_svg(hp_list, is_dark: bool = False) -> str:
       {svg_content}
     </div>
     '''
-    return header_html
+    return _clean_html(header_html)
 
 
 def _render_fw_bar(val: float, is_dark: bool = False) -> str:
@@ -339,13 +343,8 @@ def _render_fw_bar(val: float, is_dark: bool = False) -> str:
     val_str = f"{clamped:.0f}%" if clamped % 1 == 0 else f"{clamped:.1f}%"
     bar_bg = "rgba(255,255,255,0.08)" if is_dark else "#E2E8F0"
 
-    return f'''<div style="display:flex; align-items:center; gap:8px;">
-        <span style="font-weight:900; font-size:12px; color:{text_c}; min-width:38px;">{val_str}</span>
-        <div style="flex:1; max-width:85px; height:6px; background:{bar_bg}; border-radius:3px; overflow:hidden;">
-            <div style="width:{clamped}%; height:100%; background:{grad}; border-radius:3px;"></div>
-        </div>
-        {badge}
-    </div>'''
+    html = f'<div style="display:flex; align-items:center; gap:8px;"><span style="font-weight:900; font-size:12px; color:{text_c}; min-width:38px;">{val_str}</span><div style="flex:1; max-width:85px; height:6px; background:{bar_bg}; border-radius:3px; overflow:hidden;"><div style="width:{clamped}%; height:100%; background:{grad}; border-radius:3px;"></div></div>{badge}</div>'
+    return html
 
 
 def _render_pill(val, ptype="neutral", is_dark: bool = False) -> str:
@@ -429,47 +428,43 @@ def render_premium_planet_table(pp_list, is_dark: bool = False) -> str:
         dash_html = _render_pill(dash_val, "dashvarga", is_dark)
 
         bg_row = row_alt if idx % 2 == 1 else "transparent"
-        rows.append(f'''
-        <tr style="background:{bg_row}; border-bottom:1px solid {border_subtle};">
-            <td style="padding:6px 10px; font-weight:800; color:{txt_col}; white-space:nowrap;">
-                <span style="color:{inf['col']}; font-size:13px; margin-right:4px;">{inf['sym']}</span>
-                <span>{inf['hi']}</span> <span style="font-size:10px; color:{'#94A3B8' if is_dark else '#64748B'}; font-weight:600;">({p_name})</span>
-            </td>
-            <td style="padding:6px 10px;">{fw_html}</td>
-            <td style="padding:6px 8px; text-align:center;">{soumya_html}</td>
-            <td style="padding:6px 8px; text-align:center;">{l159_html}</td>
-            <td style="padding:6px 8px; text-align:center;">{krura_html}</td>
-            <td style="padding:6px 8px; text-align:center;">{l6812_html}</td>
-            <td style="padding:6px 8px; text-align:center;">{disp_html}</td>
-            <td style="padding:6px 8px; text-align:center;">{sep_html}</td>
-            <td style="padding:6px 10px; text-align:center;">{dash_html}</td>
-        </tr>
-        ''')
+        row_str = (
+            f'<tr style="background:{bg_row}; border-bottom:1px solid {border_subtle};">'
+            f'<td style="padding:6px 10px; font-weight:800; color:{txt_col}; white-space:nowrap;">'
+            f'<span style="color:{inf["col"]}; font-size:13px; margin-right:4px;">{inf["sym"]}</span>'
+            f'<span>{inf["hi"]}</span> <span style="font-size:10px; color:{"#94A3B8" if is_dark else "#64748B"}; font-weight:600;">({p_name})</span>'
+            f'</td>'
+            f'<td style="padding:6px 10px;">{fw_html}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{soumya_html}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{l159_html}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{krura_html}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{l6812_html}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{disp_html}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{sep_html}</td>'
+            f'<td style="padding:6px 10px; text-align:center;">{dash_html}</td>'
+            f'</tr>'
+        )
+        rows.append(row_str)
 
-    return f'''
-    <div style="background:{card_bg}; border:1px solid {card_bdr}; border-radius:10px; overflow:hidden; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-        <div style="overflow-x:auto;">
-            <table style="width:100%; border-collapse:collapse; font-size:11px; text-align:left;">
-                <thead>
-                    <tr style="background:{th_bg}; color:{th_col}; font-weight:800; border-bottom:1.5px solid {card_bdr};">
-                        <th style="padding:7px 10px;">🪐 ग्रह (Planet)</th>
-                        <th style="padding:7px 10px; min-width:170px;">⚡ फ्री-विल (Agency %)</th>
-                        <th style="padding:7px 8px; text-align:center;">🌿 सौम्य (Benefic)</th>
-                        <th style="padding:7px 8px; text-align:center;">✨ १/५/९ भावेश</th>
-                        <th style="padding:7px 8px; text-align:center;">🔥 क्रूर (Malefic)</th>
-                        <th style="padding:7px 8px; text-align:center;">⚠️ ६/८/१२ भावेश</th>
-                        <th style="padding:7px 8px; text-align:center;">🏛️ डिस्पोजिटर</th>
-                        <th style="padding:7px 8px; text-align:center;">✂️ सेपरेटिव</th>
-                        <th style="padding:7px 10px; text-align:center;">👑 दशवर्ग अंक</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {"".join(rows)}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    '''
+    html = (
+        f'<div style="background:{card_bg}; border:1px solid {card_bdr}; border-radius:10px; overflow:hidden; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">'
+        f'<div style="overflow-x:auto;">'
+        f'<table style="width:100%; border-collapse:collapse; font-size:11px; text-align:left;">'
+        f'<thead><tr style="background:{th_bg}; color:{th_col}; font-weight:800; border-bottom:1.5px solid {card_bdr};">'
+        f'<th style="padding:7px 10px;">🪐 ग्रह (Planet)</th>'
+        f'<th style="padding:7px 10px; min-width:170px;">⚡ फ्री-विल (Agency %)</th>'
+        f'<th style="padding:7px 8px; text-align:center;">🌿 सौम्य (Benefic)</th>'
+        f'<th style="padding:7px 8px; text-align:center;">✨ १/५/९ भावेश</th>'
+        f'<th style="padding:7px 8px; text-align:center;">🔥 क्रूर (Malefic)</th>'
+        f'<th style="padding:7px 8px; text-align:center;">⚠️ ६/८/१२ भावेश</th>'
+        f'<th style="padding:7px 8px; text-align:center;">🏛️ डिस्पोजिटर</th>'
+        f'<th style="padding:7px 8px; text-align:center;">✂️ सेपरेटिव</th>'
+        f'<th style="padding:7px 10px; text-align:center;">👑 दशवर्ग अंक</th>'
+        f'</tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody>'
+        f'</table></div></div>'
+    )
+    return _clean_html(html)
 
 
 def render_premium_house_table(hp_list, is_dark: bool = False) -> str:
@@ -516,49 +511,45 @@ def render_premium_house_table(hp_list, is_dark: bool = False) -> str:
         sep_html = _render_pill(h_item.get("seperative", 0), "neutral", is_dark)
 
         bg_row = row_alt if idx % 2 == 1 else "transparent"
-        rows.append(f'''
-        <tr style="background:{bg_row}; border-bottom:1px solid {border_subtle};">
-            <td style="padding:5px 10px; font-weight:800; color:{txt_col}; white-space:nowrap;">
-                <span style="display:inline-block; width:22px; height:20px; line-height:20px; text-align:center; border-radius:4px; background:rgba(37,99,235,0.1); color:#2563EB; font-size:10px; font-weight:900; margin-right:5px;">H{h_num}</span>
-                <span>{hi_name}</span>
-            </td>
-            <td style="padding:5px 10px;">{fw_html}</td>
-            <td style="padding:5px 8px; text-align:center;">{soumya_html}</td>
-            <td style="padding:5px 8px; text-align:center;">{l159_html}</td>
-            <td style="padding:5px 8px; text-align:center;">{krura_html}</td>
-            <td style="padding:5px 8px; text-align:center;">{l6812_html}</td>
-            <td style="padding:5px 8px; text-align:center;">{dig_html}</td>
-            <td style="padding:5px 8px; text-align:center;">{kaal_html}</td>
-            <td style="padding:5px 8px; text-align:center;">{exch_html}</td>
-            <td style="padding:5px 8px; text-align:center;">{sep_html}</td>
-        </tr>
-        ''')
+        row_str = (
+            f'<tr style="background:{bg_row}; border-bottom:1px solid {border_subtle};">'
+            f'<td style="padding:5px 10px; font-weight:800; color:{txt_col}; white-space:nowrap;">'
+            f'<span style="display:inline-block; width:22px; height:20px; line-height:20px; text-align:center; border-radius:4px; background:rgba(37,99,235,0.1); color:#2563EB; font-size:10px; font-weight:900; margin-right:5px;">H{h_num}</span>'
+            f'<span>{hi_name}</span>'
+            f'</td>'
+            f'<td style="padding:5px 10px;">{fw_html}</td>'
+            f'<td style="padding:5px 8px; text-align:center;">{soumya_html}</td>'
+            f'<td style="padding:5px 8px; text-align:center;">{l159_html}</td>'
+            f'<td style="padding:5px 8px; text-align:center;">{krura_html}</td>'
+            f'<td style="padding:5px 8px; text-align:center;">{l6812_html}</td>'
+            f'<td style="padding:5px 8px; text-align:center;">{dig_html}</td>'
+            f'<td style="padding:5px 8px; text-align:center;">{kaal_html}</td>'
+            f'<td style="padding:5px 8px; text-align:center;">{exch_html}</td>'
+            f'<td style="padding:5px 8px; text-align:center;">{sep_html}</td>'
+            f'</tr>'
+        )
+        rows.append(row_str)
 
-    return f'''
-    <div style="background:{card_bg}; border:1px solid {card_bdr}; border-radius:10px; overflow:hidden; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-        <div style="overflow-x:auto;">
-            <table style="width:100%; border-collapse:collapse; font-size:11px; text-align:left;">
-                <thead>
-                    <tr style="background:{th_bg}; color:{th_col}; font-weight:800; border-bottom:1.5px solid {card_bdr};">
-                        <th style="padding:7px 10px;">🏠 भाव (House)</th>
-                        <th style="padding:7px 10px; min-width:170px;">⚡ फ्री-विल (Agency %)</th>
-                        <th style="padding:7px 8px; text-align:center;">🌿 सौम्य (Benefic)</th>
-                        <th style="padding:7px 8px; text-align:center;">✨ १/५/९ भावेश</th>
-                        <th style="padding:7px 8px; text-align:center;">🔥 क्रूर (Malefic)</th>
-                        <th style="padding:7px 8px; text-align:center;">⚠️ ६/८/१२ भावेश</th>
-                        <th style="padding:7px 8px; text-align:center;">🧭 डिगबल</th>
-                        <th style="padding:7px 8px; text-align:center;">🌙 कालबल</th>
-                        <th style="padding:7px 8px; text-align:center;">🔄 परिवर्तन</th>
-                        <th style="padding:7px 8px; text-align:center;">✂️ सेपरेटिव</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {"".join(rows)}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    '''
+    html = (
+        f'<div style="background:{card_bg}; border:1px solid {card_bdr}; border-radius:10px; overflow:hidden; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">'
+        f'<div style="overflow-x:auto;">'
+        f'<table style="width:100%; border-collapse:collapse; font-size:11px; text-align:left;">'
+        f'<thead><tr style="background:{th_bg}; color:{th_col}; font-weight:800; border-bottom:1.5px solid {card_bdr};">'
+        f'<th style="padding:7px 10px;">🏠 भाव (House)</th>'
+        f'<th style="padding:7px 10px; min-width:170px;">⚡ फ्री-विल (Agency %)</th>'
+        f'<th style="padding:7px 8px; text-align:center;">🌿 सौम्य (Benefic)</th>'
+        f'<th style="padding:7px 8px; text-align:center;">✨ १/५/९ भावेश</th>'
+        f'<th style="padding:7px 8px; text-align:center;">🔥 क्रूर (Malefic)</th>'
+        f'<th style="padding:7px 8px; text-align:center;">⚠️ ६/८/१२ भावेश</th>'
+        f'<th style="padding:7px 8px; text-align:center;">🧭 डिगबल</th>'
+        f'<th style="padding:7px 8px; text-align:center;">🌙 कालबल</th>'
+        f'<th style="padding:7px 8px; text-align:center;">🔄 परिवर्तन</th>'
+        f'<th style="padding:7px 8px; text-align:center;">✂️ सेपरेटिव</th>'
+        f'</tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody>'
+        f'</table></div></div>'
+    )
+    return _clean_html(html)
 
 
 
