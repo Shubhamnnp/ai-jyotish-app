@@ -1608,15 +1608,77 @@ unified_css = f"""
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
-        padding-top: 5px !important;
-        padding-bottom: 5px !important;
-        padding-left: 10px !important;
-        padding-right: 12px !important;
+        padding-top: 6px !important;
+        padding-bottom: 7px !important;
+        padding-left: 12px !important;
+        padding-right: 14px !important;
         margin: 0px !important;
-        border-bottom: 2px solid #F59E0B !important;
-        box-shadow: 0 4px 20px rgba(3, 8, 18, 0.6), 0 1px 6px rgba(245, 158, 11, 0.3) !important;
+        border-bottom: 2.5px solid #F59E0B !important;
+        box-shadow: 0 4px 20px rgba(3, 8, 18, 0.7), 0 1px 6px rgba(245, 158, 11, 0.4) !important;
         box-sizing: border-box !important;
         transition: left 0.15s ease, width 0.15s ease !important;
+    }}
+
+    /* Header Breadcrumb Strip (Thick, High-Contrast, Sovereign Typography) */
+    .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+        padding: 6px 14px !important;
+        margin-top: 5px !important;
+        min-height: 32px !important;
+        background: linear-gradient(90deg, #132238 0%, #1A2F4C 50%, #132238 100%) !important;
+        border-top: 1.5px solid #F59E0B !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 6px !important;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+        box-sizing: border-box !important;
+    }
+    .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip span,
+    .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip p,
+    .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip div,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip span,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip p,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip div {
+        line-height: 1.4 !important;
+    }
+    .st-key-frozen_toolbelt_container .hdr-crumb-label-mod,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-label-mod {
+        color: #FBBF24 !important;
+        font-weight: 900 !important;
+        font-size: 13px !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    }
+    .st-key-frozen_toolbelt_container .hdr-crumb-val-mod,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-mod {
+        color: #FFFFFF !important;
+        font-weight: 800 !important;
+        font-size: 13px !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    }
+    .st-key-frozen_toolbelt_container .hdr-crumb-label-jatak,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-label-jatak {
+        color: #38BDF8 !important;
+        font-weight: 900 !important;
+        font-size: 13px !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    }
+    .st-key-frozen_toolbelt_container .hdr-crumb-val-jatak,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-jatak {
+        color: #FFFFFF !important;
+        font-weight: 800 !important;
+        font-size: 13px !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    }
+    .st-key-frozen_toolbelt_container .hdr-crumb-val-details,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-details {
+        color: #F1F5F9 !important;
+        font-weight: 600 !important;
+        font-size: 12px !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
     }}
     .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"],
     div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] {{
@@ -4284,15 +4346,75 @@ client_bridge_code = """
                             display: block !important;
                             visibility: visible !important;
                             opacity: 1 !important;
-                            border-bottom: 2px solid #F59E0B !important;
-                            box-shadow: 0 4px 18px rgba(5, 12, 24, 0.45) !important;
-                            padding-top: 5px !important;
-                            padding-bottom: 5px !important;
-                            padding-left: 10px !important;
-                            padding-right: 12px !important;
+                            border-bottom: 2.5px solid #F59E0B !important;
+                            box-shadow: 0 4px 18px rgba(5, 12, 24, 0.5) !important;
+                            padding-top: 6px !important;
+                            padding-bottom: 7px !important;
+                            padding-left: 12px !important;
+                            padding-right: 14px !important;
                             margin: 0px !important;
                             box-sizing: border-box !important;
                             transition: left 0.15s ease, width 0.15s ease !important;
+                        }
+                        .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip {
+                            display: flex !important;
+                            justify-content: space-between !important;
+                            align-items: center !important;
+                            flex-wrap: wrap !important;
+                            gap: 12px !important;
+                            padding: 6px 14px !important;
+                            margin-top: 5px !important;
+                            min-height: 32px !important;
+                            background: linear-gradient(90deg, #132238 0%, #1A2F4C 50%, #132238 100%) !important;
+                            border-top: 1.5px solid #F59E0B !important;
+                            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+                            border-radius: 6px !important;
+                            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+                            box-sizing: border-box !important;
+                        }
+                        .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip span,
+                        .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip p,
+                        .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip div,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip span,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip p,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip div {
+                            line-height: 1.4 !important;
+                        }
+                        .st-key-frozen_toolbelt_container .hdr-crumb-label-mod,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-label-mod {
+                            color: #FBBF24 !important;
+                            font-weight: 900 !important;
+                            font-size: 13px !important;
+                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+                        }
+                        .st-key-frozen_toolbelt_container .hdr-crumb-val-mod,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-mod {
+                            color: #FFFFFF !important;
+                            font-weight: 800 !important;
+                            font-size: 13px !important;
+                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+                        }
+                        .st-key-frozen_toolbelt_container .hdr-crumb-label-jatak,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-label-jatak {
+                            color: #38BDF8 !important;
+                            font-weight: 900 !important;
+                            font-size: 13px !important;
+                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+                        }
+                        .st-key-frozen_toolbelt_container .hdr-crumb-val-jatak,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-jatak {
+                            color: #FFFFFF !important;
+                            font-weight: 800 !important;
+                            font-size: 13px !important;
+                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+                        }
+                        .st-key-frozen_toolbelt_container .hdr-crumb-val-details,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-details {
+                            color: #F1F5F9 !important;
+                            font-weight: 600 !important;
+                            font-size: 12px !important;
+                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
                         }
                         .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"],
                         div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] {
@@ -5142,7 +5264,7 @@ client_bridge_code = """
                 if (isHeaderCollapsed) {
                     blockContainer.style.setProperty('padding-top', isMobile ? '12px' : '16px', 'important');
                 } else {
-                    const defaultMinH = isMobile ? 110 : 66;
+                    const defaultMinH = isMobile ? 125 : 82;
                     const tbH = (frozenTb && frozenTb.offsetHeight && frozenTb.offsetHeight > 30) ? frozenTb.offsetHeight : defaultMinH;
                     const padTop = Math.max(tbH + 12, defaultMinH + 12);
                     blockContainer.style.setProperty('padding-top', padTop + 'px', 'important');
@@ -7385,15 +7507,15 @@ with st.container(key="top_frozen_header_container", border=False):
 
         st.markdown(
             f"""
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:3px 12px; margin-top:2px; background:rgba(255,255,255,0.06); border-top:1px solid rgba(255,255,255,0.12); border-radius:4px; font-size:12px; font-weight:600; color:#E2E8F0;">
-                <div style="display:flex; align-items:center; gap:6px;">
-                    <span style="color:#F59E0B; font-weight:800;">📍 सक्रिय मॉड्यूल:</span>
-                    <span style="color:#FFFFFF; font-weight:700;">{_cur_m_name}</span>
+            <div class="hdr-breadcrumb-strip" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; padding:6px 14px; margin-top:5px; margin-bottom:2px; min-height:32px; background:linear-gradient(90deg, #132238 0%, #1A2F4C 50%, #132238 100%) !important; border-top:1.5px solid #F59E0B !important; border-bottom:1px solid rgba(255,255,255,0.2) !important; border-radius:6px; box-shadow:inset 0 1px 3px rgba(0,0,0,0.6) !important; box-sizing:border-box;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="hdr-crumb-label-mod" style="color:#FBBF24 !important; font-weight:900 !important; font-size:13px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">📍 सक्रिय मॉड्यूल:</span>
+                    <span class="hdr-crumb-val-mod" style="color:#FFFFFF !important; font-weight:800 !important; font-size:13px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">{_cur_m_name}</span>
                 </div>
-                <div style="display:flex; align-items:center; gap:6px;">
-                    <span style="color:#38BDF8; font-weight:800;">👤 जातक:</span>
-                    <span style="color:#FFFFFF; font-weight:700;">{_j_name}</span>
-                    <span style="color:#CBD5E1;">(जन्म: {_j_dob}, {_j_tob} | {_j_place})</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="hdr-crumb-label-jatak" style="color:#38BDF8 !important; font-weight:900 !important; font-size:13px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">👤 जातक:</span>
+                    <span class="hdr-crumb-val-jatak" style="color:#FFFFFF !important; font-weight:800 !important; font-size:13px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">{_j_name}</span>
+                    <span class="hdr-crumb-val-details" style="color:#F1F5F9 !important; font-weight:600 !important; font-size:12px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">(जन्म: {_j_dob}, {_j_tob} | {_j_place})</span>
                 </div>
             </div>
             """,
