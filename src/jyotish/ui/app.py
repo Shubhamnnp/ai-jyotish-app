@@ -6030,15 +6030,17 @@ if getattr(chart, "engine_degraded", False) or (getattr(chart, "metadata", None)
 if getattr(chart, "metadata", None):
     meta = chart.metadata
     from src.jyotish.ui.components.provenance import render_provenance_badge_html
-    st.markdown(render_provenance_badge_html(chart, verified_rules_count=32), unsafe_allow_html=True)
-    with st.expander("🌐 Astronomical Provenance & Metadata Details (Shastriya Pramana)", expanded=False):
-        c1, c2, c3, c4, c5 = st.columns(5)
-        c1.metric("Engine", meta.engine)
-        c2.metric("Julian Day (UT)", f"{meta.jd_ut:.5f}")
-        c3.metric("Delta T", f"{meta.delta_t_seconds:.2f}s")
-        c4.metric("Ayanamsa", f"{meta.ayanamsa_name} ({meta.ayanamsa_value:.4f}°)")
-        c5.metric("Coord Mode", getattr(chart, "calculation_mode", "Geocentric"))
-        st.caption(f"Timezone: `{meta.timezone_iana}` | House System: `{meta.house_system}` | Ephemeris: `{meta.ephemeris_mode}` | Mode: `{getattr(chart, 'calculation_mode', 'Geocentric')}` (Moon Parallax: `{getattr(chart, 'moon_parallax_arcmin', 0.0):.2f}'`) | UTC: `{meta.utc_datetime}`")
+    # कोड सुरक्षित रखा गया है, स्क्रीन से यूजर अनुरोध अनुसार छिपाया गया (Hidden from UI screen):
+    if st.session_state.get("show_screen_provenance_details", False):
+        st.markdown(render_provenance_badge_html(chart, verified_rules_count=32), unsafe_allow_html=True)
+        with st.expander("🌐 Astronomical Provenance & Metadata Details (Shastriya Pramana)", expanded=False):
+            c1, c2, c3, c4, c5 = st.columns(5)
+            c1.metric("Engine", meta.engine)
+            c2.metric("Julian Day (UT)", f"{meta.jd_ut:.5f}")
+            c3.metric("Delta T", f"{meta.delta_t_seconds:.2f}s")
+            c4.metric("Ayanamsa", f"{meta.ayanamsa_name} ({meta.ayanamsa_value:.4f}°)")
+            c5.metric("Coord Mode", getattr(chart, "calculation_mode", "Geocentric"))
+            st.caption(f"Timezone: `{meta.timezone_iana}` | House System: `{meta.house_system}` | Ephemeris: `{meta.ephemeris_mode}` | Mode: `{getattr(chart, 'calculation_mode', 'Geocentric')}` (Moon Parallax: `{getattr(chart, 'moon_parallax_arcmin', 0.0):.2f}'`) | UTC: `{meta.utc_datetime}`")
 affliction_engine = AfflictionEngine(chart)
 vastu_engine = VastuJyotishEngine(chart)
 
@@ -9922,13 +9924,14 @@ _breadcrumb_border = "#00E5FF" if is_astrallis_mode else ("#4B5563" if is_night_
 _breadcrumb_title_color = "#00E5FF" if is_astrallis_mode else ("#F59E0B" if is_night_mode else "#1E40AF")
 _breadcrumb_text_color = "#CBD5E1" if is_astrallis_mode else ("#D1D5DB" if is_night_mode else "#1E293B")
 
-# Active Module Breadcrumb Pill
-st.markdown(f"""
-<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; background:{_breadcrumb_bg}; border:1.5px solid {_breadcrumb_border}; border-radius:8px; padding:6px 14px; margin-bottom:6px;">
-    <div style="font-weight:800; color:{_breadcrumb_title_color}; font-size:13px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
-    <div style="font-size:12px; color:{_breadcrumb_text_color}; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
-</div>
-""", unsafe_allow_html=True)
+# Active Module Breadcrumb Pill (कोड सुरक्षित रखा गया है, स्क्रीन से यूजर अनुरोध अनुसार छिपाया गया):
+if st.session_state.get("show_screen_module_breadcrumb", False):
+    st.markdown(f"""
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; background:{_breadcrumb_bg}; border:1.5px solid {_breadcrumb_border}; border-radius:8px; padding:6px 14px; margin-bottom:6px;">
+        <div style="font-weight:800; color:{_breadcrumb_title_color}; font-size:13px;">📍 सक्रिय मॉड्यूल: <b>{selected_module}</b></div>
+        <div style="font-size:12px; color:{_breadcrumb_text_color}; font-weight:700;">जातक: <b>{name}</b> ({birth_d.strftime('%d-%b-%Y')}, {birth_t.strftime('%I:%M %p')})</div>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 
