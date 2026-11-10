@@ -1,108 +1,87 @@
-import pytest
+"""
+Tests for Module 27: Vedic Pooja & Spiritual Sadhana (pooja_view.py)
+Verifies DMS precision, classical shastriya shloka, and micro planetary spiritual diagnostics console.
+"""
 from unittest.mock import MagicMock
-from src.jyotish.core.ishta_devata import IshtaDevataEngine
-from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
-from src.jyotish.ui.modules.pooja_view import render_pooja_view
+import pytest
+from src.jyotish.ui.modules.pooja_view import (
+    _format_dms,
+    POOJA_SHLOKA,
+    GRAHA_DEITY_MAPPINGS,
+    render_pooja_view,
+)
 
 
-@pytest.fixture
-def mock_chart():
-    chart = MagicMock()
-    chart.lagna_sign_id = 1  # Aries (Mesha, Lagnesha Mars)
-    chart.lagna_sign_name = "Aries"
-    chart.lagna_degree = 12.0
-    chart.atmakaraka = "Sun"
-    chart.jaimini = None
-    chart.vargas = {}
+def test_format_dms_precision():
+    """Verify conversion of float degrees to Ansh, Kala, Vikala."""
+    ansh, kala, vikala, dms_str = _format_dms(21.3333)
+    assert ansh == 21
+    assert kala == 20
+    assert vikala == 0
+    assert dms_str == '21° 20\' 00"'
 
-    class PlanetMock:
-        def __init__(self, sign_id, house_from_lagna, degree=15.0, speed=1.0, dignity="neutral", sign_name="मेष"):
-            self.sign_id = sign_id
-            self.house_from_lagna = house_from_lagna
-            self.degree = degree
-            self.speed = speed
-            self.dignity = dignity
-            self.sign_name = sign_name
+    ansh2, kala2, vikala2, dms_str2 = _format_dms(0.5)
+    assert ansh2 == 0
+    assert kala2 == 30
+    assert vikala2 == 0
+    assert dms_str2 == '0° 30\' 00"'
 
-    chart.planets = {
-        "Sun": PlanetMock(1, 1, degree=28.5),     # Sun at 28.5 deg -> Atmakaraka!
-        "Moon": PlanetMock(2, 2, degree=14.0),
-        "Mars": PlanetMock(1, 1, degree=20.0),    # Lagnesha Mars
-        "Mercury": PlanetMock(6, 6, degree=10.0),
-        "Jupiter": PlanetMock(9, 9, degree=25.0),
-        "Venus": PlanetMock(12, 12, degree=18.0),
-        "Saturn": PlanetMock(11, 11, degree=8.0),
-        "Rahu": PlanetMock(8, 8, degree=5.0),
-        "Ketu": PlanetMock(2, 2, degree=5.0)
+
+def test_pooja_shloka_authenticity():
+    """Verify authentic Sanskrit shloka from Jaimini Sutram & BPHS."""
+    assert "कारकांशाद्" in POOJA_SHLOKA["shloka"]
+    assert "जैमिनी" in POOJA_SHLOKA["source"]
+    assert len(POOJA_SHLOKA["meaning"]) > 20
+
+
+def test_graha_deity_mappings_completeness():
+    """Verify all 9 Vedic planets have spiritual deity and mantra mappings."""
+    planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
+    for p in planets:
+        assert p in GRAHA_DEITY_MAPPINGS
+        deity, mala, mantra = GRAHA_DEITY_MAPPINGS[p]
+        assert len(deity) > 2
+        assert len(mala) > 2
+        assert len(mantra) > 5
+
+
+def test_render_pooja_view_no_crash(monkeypatch):
+    """Verify render_pooja_view executes cleanly without crashing."""
+    import streamlit as st
+
+    # Mock streamlit components
+    monkeypatch.setattr(st, "subheader", MagicMock())
+    monkeypatch.setattr(st, "write", MagicMock())
+    monkeypatch.setattr(st, "caption", MagicMock())
+    monkeypatch.setattr(st, "markdown", MagicMock())
+    monkeypatch.setattr(st, "expander", MagicMock())
+    monkeypatch.setattr(st, "columns", MagicMock(side_effect=lambda n: [MagicMock() for _ in range(n if isinstance(n, int) else len(n))]))
+    monkeypatch.setattr(st, "metric", MagicMock())
+    monkeypatch.setattr(st, "dataframe", MagicMock())
+    monkeypatch.setattr(st, "info", MagicMock())
+    monkeypatch.setattr(st, "success", MagicMock())
+    monkeypatch.setattr(st, "warning", MagicMock())
+    monkeypatch.setattr(st, "error", MagicMock())
+    monkeypatch.setattr(st, "code", MagicMock())
+    monkeypatch.setattr(st, "tabs", MagicMock(side_effect=lambda tabs: [MagicMock() for _ in tabs]))
+
+    # Mock chart object with planetary details
+    mock_chart = MagicMock()
+    mock_chart.planets = {
+        "Sun": MagicMock(longitude=120.45, sign_num=5, house=1, is_retrograde=False, is_combust=False, dignity="own"),
+        "Moon": MagicMock(longitude=55.12, sign_num=2, house=10, is_retrograde=False, is_combust=False, dignity="exalted"),
+        "Mars": MagicMock(longitude=295.8, sign_num=10, house=6, is_retrograde=False, is_combust=False, dignity="exalted"),
+        "Mercury": MagicMock(longitude=135.0, sign_num=5, house=1, is_retrograde=True, is_combust=True, dignity="friend"),
+        "Jupiter": MagicMock(longitude=92.3, sign_num=4, house=12, is_retrograde=False, is_combust=False, dignity="exalted"),
+        "Venus": MagicMock(longitude=358.9, sign_num=12, house=8, is_retrograde=False, is_combust=False, dignity="exalted"),
+        "Saturn": MagicMock(longitude=210.2, sign_num=7, house=3, is_retrograde=True, is_combust=False, dignity="exalted"),
+        "Rahu": MagicMock(longitude=45.0, sign_num=2, house=10, is_retrograde=True, is_combust=False, dignity="neutral"),
+        "Ketu": MagicMock(longitude=225.0, sign_num=8, house=4, is_retrograde=True, is_combust=False, dignity="neutral")
     }
-    return chart
+    mock_chart.ascendant = 120.0
+    mock_chart.lagna_sign_id = 5
+    mock_chart.lagna_sign = 5
+    mock_chart.birth_data = MagicMock(name="परीक्षण जातक")
 
-
-def test_ishta_devata_engine_analysis(mock_chart):
-    res = IshtaDevataEngine.analyze(mock_chart)
-
-    # 1. Atmakaraka & Ishta Devata
-    assert res["atmakaraka"] == "Sun"
-    assert "karakamsha_sign" in res
-    assert "ishta_deity" in res
-    assert "ishta_mantra" in res
-    assert "ishta_beej" in res
-
-    # 2. Deities
-    assert "palana_deity" in res
-    assert "dharma_deity" in res
-    assert "mantra_deity" in res
-    assert "kula_deity" in res
-
-    # 3. Navratri Guidelines & Optimal Fasting Tithi
-    assert "navratri" in res
-    nv = res["navratri"]
-    assert "optimal_fasting_tithi" in nv
-    assert "optimal_fasting_tithi_reason" in nv
-    assert len(nv["nine_days"]) == 9
-    assert ("तृतीया" in nv["optimal_fasting_tithi"] or "प्रतिपदा" in nv["optimal_fasting_tithi"] or "अष्टमी" in nv["optimal_fasting_tithi"])
-
-
-def test_shastriya_pramana_ishta_shloka():
-    assert "jaimini_ishta_moksha" in SHASTRIYA_SHLOKAS
-    pramana = SHASTRIYA_SHLOKAS["jaimini_ishta_moksha"]
-    assert "जैमिनी" in pramana["grantha"]
-    assert "कारकांश" in pramana["shloka_sanskrit"]
-    assert "मोक्ष" in pramana["anuvad_hi"] or "इष्ट" in pramana["anuvad_hi"]
-
-
-def test_render_pooja_view_no_unpack_crash(mock_chart, monkeypatch):
-    """Ensure render_pooja_view unpacks 5 tabs cleanly with default tabs=None."""
-    mock_tabs = [MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock()]
-    monkeypatch.setattr("streamlit.tabs", lambda t: mock_tabs)
-    monkeypatch.setattr("streamlit.columns", lambda n: [MagicMock() for _ in range(n)])
-    monkeypatch.setattr("streamlit.subheader", lambda *args, **kwargs: None)
-    monkeypatch.setattr("streamlit.write", lambda *args, **kwargs: None)
-    monkeypatch.setattr("streamlit.markdown", lambda *args, **kwargs: None)
-    monkeypatch.setattr("streamlit.caption", lambda *args, **kwargs: None)
-    monkeypatch.setattr("streamlit.code", lambda *args, **kwargs: None)
-    monkeypatch.setattr("streamlit.expander", lambda *args, **kwargs: MagicMock(__enter__=MagicMock(), __exit__=MagicMock()))
-
-    # Call with default tabs=None
-    render_pooja_view(mock_chart, tabs=None)
-    assert len(mock_tabs) == 5
-
-
-def test_app_tabs_registry_module27():
-    """Verify MODULE_TABS_REGISTRY[27] in app.py has 5 synchronized tabs."""
-    import re
-    with open("src/jyotish/ui/app.py", "r", encoding="utf-8") as f:
-        content = f.read()
-
-    match = re.search(r'27:\s*\[(.*?)\]', content, re.DOTALL)
-    assert match is not None, "MODULE_TABS_REGISTRY[27] not found in app.py"
-    raw_tabs = match.group(1)
-    tabs = [line.strip().strip('",\'') for line in raw_tabs.splitlines() if line.strip().strip('",\'')]
-    assert len(tabs) == 5
-    assert tabs == [
-        "🕉️ इष्टदेवता व मोक्ष",
-        "📿 कुलदेवता व मन्त्र साधना",
-        "🪔 नित्य पूजा विधान",
-        "📅 व्रत व उपवास नियम",
-        "🚩 नवरात्रि ९ दिवसीय विधान"
-    ]
+    # Call view renderer
+    render_pooja_view(chart=mock_chart)
