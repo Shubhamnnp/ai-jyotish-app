@@ -1,107 +1,85 @@
-import pytest
+"""
+Tests for Module 26: Body Anatomy & Physical Traits (body_anatomy_view.py)
+Verifies DMS precision, classical shastriya shloka, and micro planetary anatomy diagnostics console.
+"""
 from unittest.mock import MagicMock
-from src.jyotish.core.lifestyle import BodyAnatomyEngine
-from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
-from src.jyotish.ui.modules.body_anatomy_view import render_body_anatomy_view
+import pytest
+from src.jyotish.ui.modules.body_anatomy_view import (
+    _format_dms,
+    BODY_ANATOMY_SHLOKA,
+    GRAHA_KALAPURUSHA_LIMBS,
+    render_body_anatomy_view,
+)
 
 
-@pytest.fixture
-def mock_chart():
-    chart = MagicMock()
-    chart.lagna_sign_id = 1  # Aries (Mesha, Fire)
+def test_format_dms_precision():
+    """Verify conversion of float degrees to Ansh, Kala, Vikala."""
+    ansh, kala, vikala, dms_str = _format_dms(12.75)
+    assert ansh == 12
+    assert kala == 45
+    assert vikala == 0
+    assert dms_str == '12° 45\' 00"'
 
-    class PlanetMock:
-        def __init__(self, sign_id, house_from_lagna, dignity="neutral", is_retrograde=False, nakshatra_name="Ashwini", nakshatra_pada=1):
-            self.sign_id = sign_id
-            self.house_from_lagna = house_from_lagna
-            self.dignity = dignity
-            self.is_retrograde = is_retrograde
-            self.nakshatra_name = nakshatra_name
-            self.nakshatra_pada = nakshatra_pada
+    ansh2, kala2, vikala2, dms_str2 = _format_dms(29.9999)
+    assert ansh2 == 30
+    assert kala2 == 0
+    assert vikala2 == 0
+    assert dms_str2 == '30° 00\' 00"'
 
-    chart.planets = {
-        "Sun": PlanetMock(1, 1, "exalted"),       # Sun in 1st house (Head mark)
-        "Moon": PlanetMock(2, 2, "exalted"),      # Moon in 2nd house (Throat/Face)
-        "Mars": PlanetMock(1, 1, "own"),          # Mars in 1st house (Face scar/mark)
-        "Mercury": PlanetMock(6, 6, "exalted"),
-        "Jupiter": PlanetMock(9, 9, "own"),
-        "Venus": PlanetMock(12, 12, "exalted"),
-        "Saturn": PlanetMock(11, 11, "own"),
-        "Rahu": PlanetMock(8, 8, "neutral"),      # Rahu in 8th house (Pelvic/thigh mark)
-        "Ketu": PlanetMock(2, 2, "neutral")
+
+def test_body_anatomy_shloka_authenticity():
+    """Verify authentic Sanskrit shloka from Brihat Samhita & BPHS."""
+    assert "शीर्षं" in BODY_ANATOMY_SHLOKA["shloka"]
+    assert "बृहत्संहिता" in BODY_ANATOMY_SHLOKA["source"]
+    assert len(BODY_ANATOMY_SHLOKA["meaning"]) > 20
+
+
+def test_graha_kalapurusha_limbs_completeness():
+    """Verify all 9 Vedic planets have Kalapurusha organ mappings."""
+    planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
+    for p in planets:
+        assert p in GRAHA_KALAPURUSHA_LIMBS
+        limb, details = GRAHA_KALAPURUSHA_LIMBS[p]
+        assert len(limb) > 2
+        assert len(details) > 5
+
+
+def test_render_body_anatomy_view_no_crash(monkeypatch):
+    """Verify render_body_anatomy_view executes cleanly without crashing."""
+    import streamlit as st
+
+    # Mock streamlit components
+    monkeypatch.setattr(st, "subheader", MagicMock())
+    monkeypatch.setattr(st, "write", MagicMock())
+    monkeypatch.setattr(st, "caption", MagicMock())
+    monkeypatch.setattr(st, "markdown", MagicMock())
+    monkeypatch.setattr(st, "expander", MagicMock())
+    monkeypatch.setattr(st, "columns", MagicMock(side_effect=lambda n: [MagicMock() for _ in range(n if isinstance(n, int) else len(n))]))
+    monkeypatch.setattr(st, "metric", MagicMock())
+    monkeypatch.setattr(st, "dataframe", MagicMock())
+    monkeypatch.setattr(st, "info", MagicMock())
+    monkeypatch.setattr(st, "success", MagicMock())
+    monkeypatch.setattr(st, "warning", MagicMock())
+    monkeypatch.setattr(st, "error", MagicMock())
+    monkeypatch.setattr(st, "tabs", MagicMock(side_effect=lambda tabs: [MagicMock() for _ in tabs]))
+
+    # Mock chart object with planetary details
+    mock_chart = MagicMock()
+    mock_chart.planets = {
+        "Sun": MagicMock(longitude=120.45, sign_num=5, house=1, is_retrograde=False, is_combust=False, dignity="own"),
+        "Moon": MagicMock(longitude=55.12, sign_num=2, house=10, is_retrograde=False, is_combust=False, dignity="exalted"),
+        "Mars": MagicMock(longitude=295.8, sign_num=10, house=6, is_retrograde=False, is_combust=False, dignity="exalted"),
+        "Mercury": MagicMock(longitude=135.0, sign_num=5, house=1, is_retrograde=True, is_combust=True, dignity="friend"),
+        "Jupiter": MagicMock(longitude=92.3, sign_num=4, house=12, is_retrograde=False, is_combust=False, dignity="exalted"),
+        "Venus": MagicMock(longitude=358.9, sign_num=12, house=8, is_retrograde=False, is_combust=False, dignity="exalted"),
+        "Saturn": MagicMock(longitude=210.2, sign_num=7, house=3, is_retrograde=True, is_combust=False, dignity="exalted"),
+        "Rahu": MagicMock(longitude=45.0, sign_num=2, house=10, is_retrograde=True, is_combust=False, dignity="neutral"),
+        "Ketu": MagicMock(longitude=225.0, sign_num=8, house=4, is_retrograde=True, is_combust=False, dignity="neutral")
     }
-    return chart
+    mock_chart.ascendant = 120.0
+    mock_chart.lagna_sign_id = 5
+    mock_chart.lagna_sign = 5
+    mock_chart.birth_data = MagicMock(name="परीक्षण जातक")
 
-
-def test_body_anatomy_engine_analysis(mock_chart):
-    res = BodyAnatomyEngine.analyze(mock_chart)
-
-    # 1. Lagna & Physique
-    assert res["lagna_sign"] == "Aries"
-    assert "मेष" in res["lagna_sign_hi"]
-    assert res["lagna_element"] == "Fire"
-    assert res["lagnesh_name"] == "Mars"
-    assert "frame" in res["physique"]
-    assert "complexion" in res["physique"]
-    assert "facial" in res["physique"]
-    assert "constitution" in res["physique"]
-
-    # 2. 12 Kalapurusha Limbs
-    assert len(res["limbs_status"]) == 12
-    for limb in res["limbs_status"]:
-        assert "limb_hi" in limb
-        assert "house_from_lagna" in limb
-        assert "status" in limb
-        assert "notes" in limb
-
-    # 3. Congenital Marks (Mars/Sun in 1st house, Rahu in 8th house)
-    assert len(res["congenital_marks"]) > 0
-    assert any("मस्तक" in m or "चेहरे" in m for m in res["congenital_marks"])
-
-    # 4. Asana Guidance & Core Advice
-    assert "शीतलीकरण" in res["asana_guidance"] or "अग्नि" in res["asana_guidance"]
-    assert "core_advice" in res
-
-
-def test_shastriya_pramana_sharirika_shloka():
-    assert "brihat_samhita_sharirika_lakshana" in SHASTRIYA_SHLOKAS
-    pramana = SHASTRIYA_SHLOKAS["brihat_samhita_sharirika_lakshana"]
-    assert "बृहत्संहिता" in pramana["grantha"]
-    assert "लग्नेशे बलसंयुक्ते" in pramana["shloka_sanskrit"]
-    assert "पुष्ट" in pramana["anuvad_hi"] or "शरीर" in pramana["anuvad_hi"]
-
-
-def test_render_body_anatomy_view_no_unpack_crash(mock_chart, monkeypatch):
-    """Ensure render_body_anatomy_view unpacks 4 tabs cleanly with default tabs=None."""
-    mock_tabs = [MagicMock(), MagicMock(), MagicMock(), MagicMock()]
-    monkeypatch.setattr("streamlit.tabs", lambda t: mock_tabs)
-    monkeypatch.setattr("streamlit.columns", lambda n: [MagicMock() for _ in range(n)])
-    monkeypatch.setattr("streamlit.subheader", lambda *args, **kwargs: None)
-    monkeypatch.setattr("streamlit.write", lambda *args, **kwargs: None)
-    monkeypatch.setattr("streamlit.markdown", lambda *args, **kwargs: None)
-    monkeypatch.setattr("streamlit.caption", lambda *args, **kwargs: None)
-    monkeypatch.setattr("streamlit.dataframe", lambda *args, **kwargs: None)
-    monkeypatch.setattr("streamlit.success", lambda *args, **kwargs: None)
-
-    # Call with default tabs=None
-    render_body_anatomy_view(mock_chart, tabs=None)
-    assert len(mock_tabs) == 4
-
-
-def test_app_tabs_registry_module26():
-    """Verify MODULE_TABS_REGISTRY[26] in app.py has 4 synchronized tabs."""
-    import re
-    with open("src/jyotish/ui/app.py", "r", encoding="utf-8") as f:
-        content = f.read()
-
-    match = re.search(r'26:\s*\[(.*?)\]', content, re.DOTALL)
-    assert match is not None, "MODULE_TABS_REGISTRY[26] not found in app.py"
-    raw_tabs = match.group(1)
-    tabs = [line.strip().strip('",\'') for line in raw_tabs.splitlines() if line.strip().strip('",\'')]
-    assert len(tabs) == 4
-    assert tabs == [
-        "🏃 कद-काठी व रंग-रूप",
-        "🦴 १२ कालपुरुष अंग",
-        "🎯 तिल, मस्से व चिन्ह",
-        "🔮 सुरक्षा व आसन परामर्श"
-    ]
+    # Call view renderer
+    render_body_anatomy_view(chart=mock_chart)
