@@ -368,25 +368,26 @@ def render_remedies_view(chart, tabs=None):
     b_po = chart.planets.get(badhakesh_name)
     m_po = chart.planets.get(maraka_primary)
     
-    c_rm1, c_rm2, c_rm3, c_rm4 = st.columns(4)
-    c_rm1.metric("लग्न एवं प्रकृति", f"{lagna_sname}", bm_res.get("lagna_type", "चर लग्न"))
-    c_rm2.metric("बाधक स्थान", f"{bm_res.get('badhaka_house')} भाव ({bm_res.get('badhaka_sign')})", f"बाधकेश: {badhakesh_name}")
-    if b_po:
-        _b_sdeg = getattr(b_po, 'sign_degree', 0.0)
-        _b_ansh = int(_b_sdeg)
-        _b_kala = int(round((_b_sdeg - _b_ansh) * 60.0))
-        if _b_kala >= 60: _b_kala = 0; _b_ansh += 1
-        _b_nak = getattr(b_po, 'nakshatra_name', '')[:4]
-        _b_pad = getattr(b_po, 'nakshatra_pada', 1)
-        c_rm3.metric("बाधकेश स्थिति", f"{b_po.sign_name} ({_b_ansh}° {_b_kala:02d}')", f"{b_po.house_from_lagna} भाव | {_b_nak}-P{_b_pad}")
-    if m_po:
-        _m_sdeg = getattr(m_po, 'sign_degree', 0.0)
-        _m_ansh = int(_m_sdeg)
-        _m_kala = int(round((_m_sdeg - _m_ansh) * 60.0))
-        if _m_kala >= 60: _m_kala = 0; _m_ansh += 1
-        _m_nak = getattr(m_po, 'nakshatra_name', '')[:4]
-        _m_pad = getattr(m_po, 'nakshatra_pada', 1)
-        c_rm4.metric("मुख्य मारकेश (२रा)", f"{m_po.sign_name} ({_m_ansh}° {_m_kala:02d}')", f"{m_po.house_from_lagna} भाव | {_m_nak}-P{_m_pad}")
+    with st.expander("🛡️ लग्न, बाधक एवं मुख्य मारकेश स्थिति (Lagna, Badhaka & Maraka Overview)", expanded=False):
+        c_rm1, c_rm2, c_rm3, c_rm4 = st.columns(4)
+        c_rm1.metric("लग्न एवं प्रकृति", f"{lagna_sname}", bm_res.get("lagna_type", "चर लग्न"))
+        c_rm2.metric("बाधक स्थान", f"{bm_res.get('badhaka_house')} भाव ({bm_res.get('badhaka_sign')})", f"बाधकेश: {badhakesh_name}")
+        if b_po:
+            _b_sdeg = getattr(b_po, 'sign_degree', 0.0)
+            _b_ansh = int(_b_sdeg)
+            _b_kala = int(round((_b_sdeg - _b_ansh) * 60.0))
+            if _b_kala >= 60: _b_kala = 0; _b_ansh += 1
+            _b_nak = getattr(b_po, 'nakshatra_name', '')[:4]
+            _b_pad = getattr(b_po, 'nakshatra_pada', 1)
+            c_rm3.metric("बाधकेश स्थिति", f"{b_po.sign_name} ({_b_ansh}° {_b_kala:02d}')", f"{b_po.house_from_lagna} भाव | {_b_nak}-P{_b_pad}")
+        if m_po:
+            _m_sdeg = getattr(m_po, 'sign_degree', 0.0)
+            _m_ansh = int(_m_sdeg)
+            _m_kala = int(round((_m_sdeg - _m_ansh) * 60.0))
+            if _m_kala >= 60: _m_kala = 0; _m_ansh += 1
+            _m_nak = getattr(m_po, 'nakshatra_name', '')[:4]
+            _m_pad = getattr(m_po, 'nakshatra_pada', 1)
+            c_rm4.metric("मुख्य मारकेश (२रा)", f"{m_po.sign_name} ({_m_ansh}° {_m_kala:02d}')", f"{m_po.house_from_lagna} भाव | {_m_nak}-P{_m_pad}")
 
     tab_fw_overview, tab_life_areas_deep, tab_remedies_suite, tab_badhaka_maraka = st.tabs(tabs)
 
@@ -437,7 +438,9 @@ def render_remedies_view(chart, tabs=None):
     # TAB 1: दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)
     # =========================================================================
     with tab_fw_overview:
-        detailed_toggle = st.toggle("🔄 विस्तृत ग्रह प्रतीक दृश्य (Detailed Symbols: Ju, Ma, Ra)", value=False, key="aff_det_sym_toggle")
+        c_head1, c_head2 = st.columns([3, 1], vertical_alignment="center")
+        with c_head2:
+            detailed_toggle = st.toggle("🔄 विस्तृत ग्रह प्रतीक दृश्य", value=False, key="aff_det_sym_toggle")
 
         hp_list = affliction_engine.calculate_house_points(detailed=detailed_toggle)
         pp_list = affliction_engine.calculate_planet_points(detailed=detailed_toggle)
@@ -460,66 +463,54 @@ def render_remedies_view(chart, tabs=None):
         max_p_idx = p_fws.index(max(p_fws)) if p_fws else 0
         min_p_idx = p_fws.index(min(p_fws)) if p_fws else 0
 
-        # Top 4 KPI Metric Cards
-        st.markdown(f"""
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 15px;">
-            <div style="background: #FFFFFF; border: 1.5px solid #3B82F6; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(59, 130, 246, 0.08);">
-                <div style="font-size: 11px; color: #1E40AF; font-weight: 800;">🏠 औसत भाव फ्री-विल (Agency)</div>
-                <div style="font-size: 18px; font-weight: 900; color: {'#059669' if avg_h_fw >= 50 else '#DC2626'};">{avg_h_fw:.1f}%</div>
-                <div style="font-size: 10.5px; color: #64748B;">१२ भावों का समग्र स्वाधीनता अंक</div>
+        # Collapsible KPI Cards & Purushartha vs Prarabdha Card
+        with st.expander("📊 समग्र फ्री-विल सूचकांक एवं कर्म-सिद्धांत रहस्य (Free Will KPI & Purushartha vs Prarabdha)", expanded=False):
+            st.markdown(f"""
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 12px;">
+                <div style="background: #FFFFFF; border: 1.5px solid #3B82F6; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(59, 130, 246, 0.08);">
+                    <div style="font-size: 11px; color: #1E40AF; font-weight: 800;">🏠 औसत भाव फ्री-विल (Agency)</div>
+                    <div style="font-size: 18px; font-weight: 900; color: {'#059669' if avg_h_fw >= 50 else '#DC2626'};">{avg_h_fw:.1f}%</div>
+                    <div style="font-size: 10.5px; color: #64748B;">१२ भावों का समग्र स्वाधीनता अंक</div>
+                </div>
+                <div style="background: #FFFFFF; border: 1.5px solid #8B5CF6; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(139, 92, 246, 0.08);">
+                    <div style="font-size: 11px; color: #6D28D9; font-weight: 800;">🪐 औसत ग्रह फ्री-विल (Agency)</div>
+                    <div style="font-size: 18px; font-weight: 900; color: {'#059669' if avg_p_fw >= 50 else '#DC2626'};">{avg_p_fw:.1f}%</div>
+                    <div style="font-size: 10.5px; color: #64748B;">नवग्रहों की संकल्प शक्ति सामर्थ्य</div>
+                </div>
+                <div style="background: #FFFFFF; border: 1.5px solid #10B981; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(16, 185, 129, 0.08);">
+                    <div style="font-size: 11px; color: #047857; font-weight: 800;">🌟 सर्वोच्च स्वाधीन भाव व ग्रह</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #065F46;">H{max_h_idx+1} ({h_fws[max_h_idx]:.0f}%) | {pp_list[max_p_idx].get('planet')} ({p_fws[max_p_idx]:.0f}%)</div>
+                    <div style="font-size: 10.5px; color: #059669;">कर्म द्वारा पूर्ण परिवर्तन संभव</div>
+                </div>
+                <div style="background: #FFFFFF; border: 1.5px solid #EF4444; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(239, 68, 68, 0.08);">
+                    <div style="font-size: 11px; color: #B91C1C; font-weight: 800;">⚠️ सर्वाधिक प्रारब्ध/पीड़ित क्षेत्र</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #991B1B;">H{min_h_idx+1} ({h_fws[min_h_idx]:.0f}%) | {pp_list[min_p_idx].get('planet')} ({p_fws[min_p_idx]:.0f}%)</div>
+                    <div style="font-size: 10.5px; color: #DC2626;">शास्त्रीय उपाय एवं शांति अपेक्षित</div>
+                </div>
             </div>
-            <div style="background: #FFFFFF; border: 1.5px solid #8B5CF6; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(139, 92, 246, 0.08);">
-                <div style="font-size: 11px; color: #6D28D9; font-weight: 800;">🪐 औसत ग्रह फ्री-विल (Agency)</div>
-                <div style="font-size: 18px; font-weight: 900; color: {'#059669' if avg_p_fw >= 50 else '#DC2626'};">{avg_p_fw:.1f}%</div>
-                <div style="font-size: 10.5px; color: #64748B;">नवग्रहों की संकल्प शक्ति सामर्थ्य</div>
-            </div>
-            <div style="background: #FFFFFF; border: 1.5px solid #10B981; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(16, 185, 129, 0.08);">
-                <div style="font-size: 11px; color: #047857; font-weight: 800;">🌟 सर्वोच्च स्वाधीन भाव व ग्रह</div>
-                <div style="font-size: 14px; font-weight: 900; color: #065F46;">H{max_h_idx+1} ({h_fws[max_h_idx]:.0f}%) | {pp_list[max_p_idx].get('planet')} ({p_fws[max_p_idx]:.0f}%)</div>
-                <div style="font-size: 10.5px; color: #059669;">कर्म द्वारा पूर्ण परिवर्तन संभव</div>
-            </div>
-            <div style="background: #FFFFFF; border: 1.5px solid #EF4444; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(239, 68, 68, 0.08);">
-                <div style="font-size: 11px; color: #B91C1C; font-weight: 800;">⚠️ सर्वाधिक प्रारब्ध/पीड़ित क्षेत्र</div>
-                <div style="font-size: 14px; font-weight: 900; color: #991B1B;">H{min_h_idx+1} ({h_fws[min_h_idx]:.0f}%) | {pp_list[min_p_idx].get('planet')} ({p_fws[min_p_idx]:.0f}%)</div>
-                <div style="font-size: 10.5px; color: #DC2626;">शास्त्रीय उपाय एवं शांति अपेक्षित</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
-        st.markdown("""
-        <div style="background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%); border: 1.5px solid #BFDBFE; border-radius: 8px; padding: 10px 16px; margin-bottom: 12px; font-size: 12px; color: #1E293B; line-height: 1.6;">
-            <div style="font-weight: 800; color: #1E40AF; margin-bottom: 4px; display:flex; align-items:center; gap:6px;">
-                <span>📜 <b>कर्म-सिद्धांत एवं फ्री-विल शास्त्रीय रहस्य (Purushartha vs Prarabdha)</b></span>
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%); border: 1.5px solid #BFDBFE; border-radius: 8px; padding: 10px 16px; font-size: 12px; color: #1E293B; line-height: 1.6;">
+                <div style="font-weight: 800; color: #1E40AF; margin-bottom: 4px; display:flex; align-items:center; gap:6px;">
+                    <span>📜 <b>कर्म-सिद्धांत एवं फ्री-विल शास्त्रीय रहस्य (Purushartha vs Prarabdha)</b></span>
+                </div>
+                • <b>५०% से अधिक फ्री-विल (अदृढ़ कर्म):</b> जातक के चेतन संकल्प, पुरुषार्थ एवं सतत् उद्यम द्वारा इन क्षेत्रों के परिणामों को पूर्णतः अनुकूल बनाया जा सकता है।<br/>
+                • <b>५०% से कम फ्री-विल (दृढ़ प्रारब्ध):</b> पूर्वजन्म संचित प्रारब्ध की प्रधानता है; यहाँ केवल हठपूर्वक कर्म करने के स्थान पर शास्त्रीय दान, मंत्र जप, रुद्राक्ष एवं ईश्वरीय शरणागति से ही शांति संभव है।
             </div>
-            • <b>५०% से अधिक फ्री-विल (अदृढ़ कर्म):</b> जातक के चेतन संकल्प, पुरुषार्थ एवं सतत् उद्यम द्वारा इन क्षेत्रों के परिणामों को पूर्णतः अनुकूल बनाया जा सकता है।<br/>
-            • <b>५०% से कम फ्री-विल (दृढ़ प्रारब्ध):</b> पूर्वजन्म संचित प्रारब्ध की प्रधानता है; यहाँ केवल हठपूर्वक कर्म करने के स्थान पर शास्त्रीय दान, मंत्र जप, रुद्राक्ष एवं ईश्वरीय शरणागति से ही शांति संभव है।
-        </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
-        # Visual Charts Row (Executive SVG Dashboards)
         _is_dark = is_astrallis_mode or is_night_mode
-        col_ch1, col_ch2 = st.columns(2, gap="medium")
-        with col_ch1:
-            st.markdown(render_house_freewill_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
 
-        with col_ch2:
-            st.markdown(render_soumya_krura_balance_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
+        # Two Sub-Tabs as requested:
+        # 1. नवग्रह फ्री-विल एवं दशवर्ग अंक, iske niche भाव सौम्य (शुभ) बनाम क्रूर (पाप) प्रभाव अंक
+        # 2. द्वादश भाव फ्री-विल एवं प्रभाव अंक, iske niche १२ भावों का फ्री-विल प्रतिशत वितरण
+        subtab_planets, subtab_houses = st.tabs([
+            "1. 🪐 नवग्रह फ्री-विल एवं दशवर्ग अंक",
+            "2. 🏠 द्वादश भाव फ्री-विल एवं प्रभाव अंक"
+        ])
 
-        st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-
-        # Comparative Detailed Tables
-        col_aff1, col_aff2 = st.columns(2, gap="medium")
-        with col_aff1:
-            st.markdown("##### 🏠 द्वादश भाव फ्री-विल एवं प्रभाव अंक")
-            hp_df = pd.DataFrame(hp_list).rename(columns={
-                "house": "House", "freeWill": "Free Will %", "soumya": "सौम्य (Benefic)",
-                "lords159": "1/5/9 Lords", "krura": "क्रूर (Malefic)", "lords6812": "6/8/12 Lords",
-                "dispositor": "Dispositor", "exchange": "Exchange", "seperative": "Separative",
-                "digbala": "Digbala", "kaalbala": "Kaalbala"
-            })
-            st.dataframe(hp_df, use_container_width=True, hide_index=True, height=440)
-
-        with col_aff2:
+        with subtab_planets:
             st.markdown("##### 🪐 नवग्रह फ्री-विल एवं दशवर्ग अंक")
             pp_df = pd.DataFrame(pp_list).rename(columns={
                 "planet": "Planet", "freeWill": "Free Will %", "soumya": "सौम्य (Benefic)",
@@ -527,7 +518,23 @@ def render_remedies_view(chart, tabs=None):
                 "dispositor": "Dispositor", "exchange": "Exchange", "seperative": "Separative",
                 "dashvarga": "दशवर्ग अंक"
             })
-            st.dataframe(pp_df, use_container_width=True, hide_index=True, height=440)
+            st.dataframe(pp_df, use_container_width=True, hide_index=True)
+
+            st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+            st.markdown(render_soumya_krura_balance_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
+
+        with subtab_houses:
+            st.markdown("##### 🏠 द्वादश भाव फ्री-विल एवं प्रभाव अंक")
+            hp_df = pd.DataFrame(hp_list).rename(columns={
+                "house": "House", "freeWill": "Free Will %", "soumya": "सौम्य (Benefic)",
+                "lords159": "1/5/9 Lords", "krura": "क्रूर (Malefic)", "lords6812": "6/8/12 Lords",
+                "dispositor": "Dispositor", "exchange": "Exchange", "seperative": "Separative",
+                "digbala": "Digbala", "kaalbala": "Kaalbala"
+            })
+            st.dataframe(hp_df, use_container_width=True, hide_index=True)
+
+            st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+            st.markdown(render_house_freewill_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
 
 
     # =========================================================================
