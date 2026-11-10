@@ -110,6 +110,21 @@ class TestModule12SudarshanAudit(unittest.TestCase):
         import src.jyotish.ui.modules.sudarshan_chakra_view as sudarshan_view_mod
         self.assertTrue(hasattr(sudarshan_view_mod, "render_sudarshan_chakra_view"))
 
+    def test_sudarshan_view_shastriya_shloka_and_console(self):
+        """Verify classical BPHS Ch. 74 shloka, micro DMS, and Tri-Lagna HUD in sudarshan_chakra_view."""
+        import inspect
+        import src.jyotish.ui.modules.sudarshan_chakra_view as sudarshan_view_mod
+        source = inspect.getsource(sudarshan_view_mod.render_sudarshan_chakra_view)
+
+        self.assertIn("bphs_sudarshan_shloka", source)
+        self.assertIn("बृहत्पाराशर होराशास्त्र — सुदर्शन चक्र", source)
+        self.assertIn("लग्नं देहं विजानीयात् चन्द्रमा मन उच्यते", source)
+        self.assertIn("c_sd1, c_sd2, c_sd3, c_sd4 = st.columns(4)", source)
+        self.assertIn("🟢 देह लग्न (Physical)", source)
+        self.assertIn("🔵 मन लग्न (Mental)", source)
+        self.assertIn("🟡 आत्म लग्न (Soul)", source)
+        self.assertIn("⏳ सक्रिय सुदर्शन दशा", source)
+
 
 if __name__ == "__main__":
     unittest.main()

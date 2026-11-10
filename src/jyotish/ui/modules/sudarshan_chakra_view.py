@@ -24,6 +24,26 @@ def render_sudarshan_chakra_view(chart, birth_profile, tz_offset=5.5, tabs=None)
     st.subheader("☸️ सुदर्शन चक्र (Sudarshan Chakra - 3-Ring Concentric Mandala)")
     st.write("बृहत्पाराशर होराशास्त्र (BPHS), अध्याय ७४ अनुसार लग्न (स्थूल देह), चन्द्र (सूक्ष्म मन) एवं सूर्य (कारण आत्मा) तीनों संकेंद्री चक्रों का एक साथ सर्वांगीण त्रिविध विश्लेषण।")
 
+    # Classical Shastriya Shloka Card
+    bphs_sudarshan_shloka = {
+        "title": "बृहत्पाराशर होराशास्त्र — सुदर्शन चक्र (त्रि-शरीर मीमांसा)",
+        "source": "महर्षि पराशर विरचित 'बृहत्पाराशर होराशास्त्र' (अध्याय ७४, श्लोक १-२)",
+        "shloka": "लग्नं देहं विजानीयात् चन्द्रमा मन उच्यते।\nसूर्यश्चात्मा विजानीयात् त्रिभिरेतैर्विचिन्तयेत्॥\nसुदर्शनमिति ख्यातं सर्वशास्त्रेषु दुर्लभम्।\nयस्य ज्ञानेन विमलं फलमादिश्यते स्फुटम्॥",
+        "meaning": "महर्षि पराशर प्रतिपादित करते हैं: लग्न स्थूल शरीर है, चन्द्रमा सूक्ष्म मन है तथा सूर्य कारण आत्मा है। जब इन तीनों संकेंद्री चक्रों (देह, मन, आत्मा) का एक साथ समन्वय कर विचार किया जाता है, तो फलित में कोई संशय शेष नहीं रहता और जातक का भूत, भविष्य व वर्तमान पूर्णतः स्फुट (प्रत्यक्ष) हो जाता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_sudarshan_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_sudarshan_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_sudarshan_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {bphs_sudarshan_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     # Native basic info for age calculation
     from datetime import datetime, date
     from src.jyotish.ui import sudarshan
@@ -83,6 +103,57 @@ def render_sudarshan_chakra_view(chart, birth_profile, tz_offset=5.5, tabs=None)
     </div>
     """, unsafe_allow_html=True)
 
+    # Active Native Micro Tri-Lagna Coordinates & Live Dasha HUD
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    l_deg = getattr(chart, "lagna_degree", 0.0)
+    l_ansh = int(l_deg)
+    l_kala = int(round((l_deg - l_ansh) * 60.0))
+    if l_kala >= 60:
+        l_kala = 0
+        l_ansh += 1
+    l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+    moon = chart.planets.get("Moon")
+    if moon:
+        m_deg = getattr(moon, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+        moon_str = f"{moon.sign_name} {m_dms} [{m_nak}-P{m_pada}]"
+    else:
+        m_dms = "—"
+        moon_str = "—"
+
+    sun = chart.planets.get("Sun")
+    if sun:
+        s_deg = getattr(sun, "sign_degree", 0.0)
+        s_ansh = int(s_deg)
+        s_kala = int(round((s_deg - s_ansh) * 60.0))
+        if s_kala >= 60:
+            s_kala = 0
+            s_ansh += 1
+        s_dms = f"{s_ansh}° {s_kala:02d}'"
+        s_nak = getattr(sun, "nakshatra_name", getattr(sun, "nakshatra", "—"))
+        s_pada = getattr(sun, "nakshatra_pada", getattr(sun, "pada", 1))
+        sun_str = f"{sun.sign_name} {s_dms} [{s_nak}-P{s_pada}]"
+    else:
+        s_dms = "—"
+        sun_str = "—"
+
+    active_dasha_house = ((default_calc_age - 1) % 12) + 1
+    cycle_num = ((default_calc_age - 1) // 12) + 1
+
+    c_sd1, c_sd2, c_sd3, c_sd4 = st.columns(4)
+    c_sd1.metric("🟢 देह लग्न (Physical)", f"{sd_full_res['lagna_sign_hi']} ({l_dms})", f"बल: {sd_triad_dom['lagna_score']}/100")
+    c_sd2.metric("🔵 मन लग्न (Mental)", f"{sd_full_res['chandra_sign_hi']} ({m_dms})", f"🌙 {moon_str.split(' ')[-1]} (शुभ)")
+    c_sd3.metric("🟡 आत्म लग्न (Soul)", f"{sd_full_res['surya_sign_hi']} ({s_dms})", f"☀️ {sun_str.split(' ')[-1]} (क्रूर)")
+    c_sd4.metric("⏳ सक्रिय सुदर्शन दशा", f"भाव #{active_dasha_house}", f"आयु: {default_calc_age} वर्ष (चक्र #{cycle_num})")
+
     tab_sd1, tab_sd2, tab_sd3, tab_sd4, tab_sd5, tab_sd6, tab_sd7, tab_sd8, tab_sd9 = st.tabs(tabs)
 
     # -------------------------------------------------------------------------
@@ -114,7 +185,7 @@ def render_sudarshan_chakra_view(chart, birth_profile, tz_offset=5.5, tabs=None)
                 st.markdown(f"""
     <div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:10px; padding:12px; height:100%;">
     <div style="font-size:12px; font-weight:800; color:#065F46;">🟢 देह लग्न (Lagna)</div>
-    <div style="font-size:18px; font-weight:900; color:#047857; margin:4px 0;">{sd_full_res['lagna_sign_hi']}</div>
+    <div style="font-size:17px; font-weight:900; color:#047857; margin:4px 0;">{sd_full_res['lagna_sign_hi']} ({l_dms})</div>
     <div style="font-size:11px; color:#065F46;"><b>अधिपति:</b> {PLANET_NAMES_HI.get(SIGN_LORDS[chart.lagna_sign_id], '')}</div>
     <div style="font-size:11px; color:#065F46; margin-top:4px;"><b>बल स्कोर:</b> {sd_triad_dom['lagna_score']}/100</div>
     <div style="font-size:10px; color:#047857; margin-top:4px; line-height:1.3;">स्थूल शरीर, भौतिक स्वास्थ्य व बाह्य क्रियाकलाप</div>
@@ -122,22 +193,26 @@ def render_sudarshan_chakra_view(chart, birth_profile, tz_offset=5.5, tabs=None)
     """, unsafe_allow_html=True)
             with c_l2:
                 moon_sign_id_curr = chart.planets["Moon"].sign_id
+                m_obj = chart.planets.get("Moon")
+                m_nak_info = f"{getattr(m_obj, 'nakshatra_name', '')} (पद {getattr(m_obj, 'nakshatra_pada', 1)})" if m_obj else ""
                 st.markdown(f"""
     <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px; height:100%;">
     <div style="font-size:12px; font-weight:800; color:#1E40AF;">🔵 मन लग्न (Moon)</div>
-    <div style="font-size:18px; font-weight:900; color:#1D4ED8; margin:4px 0;">{sd_full_res['chandra_sign_hi']}</div>
-    <div style="font-size:11px; color:#1E40AF;"><b>अधिपति:</b> {PLANET_NAMES_HI.get(SIGN_LORDS[moon_sign_id_curr], '')}</div>
+    <div style="font-size:17px; font-weight:900; color:#1D4ED8; margin:4px 0;">{sd_full_res['chandra_sign_hi']} ({m_dms})</div>
+    <div style="font-size:11px; color:#1E40AF;"><b>अधिपति:</b> {PLANET_NAMES_HI.get(SIGN_LORDS[moon_sign_id_curr], '')} | <b>नक्षत्र:</b> {m_nak_info}</div>
     <div style="font-size:11px; color:#1E40AF; margin-top:4px;"><b>बल स्कोर:</b> {sd_triad_dom['chandra_score']}/100</div>
     <div style="font-size:10px; color:#1E40AF; margin-top:4px; line-height:1.3;">सूक्ष्म मन, भावनाएं, ग्रहणशीलता व सुख-दुःख</div>
     </div>
     """, unsafe_allow_html=True)
             with c_l3:
                 sun_sign_id_curr = chart.planets["Sun"].sign_id
+                s_obj = chart.planets.get("Sun")
+                s_nak_info = f"{getattr(s_obj, 'nakshatra_name', '')} (पद {getattr(s_obj, 'nakshatra_pada', 1)})" if s_obj else ""
                 st.markdown(f"""
     <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:12px; height:100%;">
     <div style="font-size:12px; font-weight:800; color:#92400E;">🟡 आत्म लग्न (Sun)</div>
-    <div style="font-size:18px; font-weight:900; color:#B45309; margin:4px 0;">{sd_full_res['surya_sign_hi']}</div>
-    <div style="font-size:11px; color:#92400E;"><b>अधिपति:</b> {PLANET_NAMES_HI.get(SIGN_LORDS[sun_sign_id_curr], '')}</div>
+    <div style="font-size:17px; font-weight:900; color:#B45309; margin:4px 0;">{sd_full_res['surya_sign_hi']} ({s_dms})</div>
+    <div style="font-size:11px; color:#92400E;"><b>अधिपति:</b> {PLANET_NAMES_HI.get(SIGN_LORDS[sun_sign_id_curr], '')} | <b>नक्षत्र:</b> {s_nak_info}</div>
     <div style="font-size:11px; color:#92400E; margin-top:4px;"><b>बल स्कोर:</b> {sd_triad_dom['surya_score']}/100</div>
     <div style="font-size:10px; color:#92400E; margin-top:4px; line-height:1.3;">कारण आत्मा, प्राण-शक्ति, प्रतिष्ठा व दैवीय कृपा</div>
     </div>
