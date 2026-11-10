@@ -265,11 +265,12 @@ def render_varga_grid_view(chart, tabs=None):
     varg_count = sum(1 for p in sv_summary.values() if p.get("is_vargottama")) if sv_summary else 0
     avg_score = sum(p["score_20"] for p in sv_summary.values()) / len(sv_summary) if sv_summary else 0.0
 
-    c_vg1, c_vg2, c_vg3, c_vg4 = st.columns(4)
-    c_vg1.metric("लग्न एवं राशि", f"{lagna_sname}", f"चन्द्र: {moon.sign_name if moon else '—'}")
-    c_vg2.metric("शिरोमणि ग्रह", f"{top_p}", f"{top_v_name} ({sv_summary[top_p]['score_20']:.1f}/20)")
-    c_vg3.metric("वर्गोत्तम ग्रह", f"{varg_count} ग्रह", "D1 व D9 समरूप")
-    c_vg4.metric("औसत विंशोपक बल", f"{avg_score:.1f} / 20", "१६ वर्गों का सामूहिक बल")
+    with st.expander("🔮 लग्न, शिरोमणि व विंशोपक बल सारांश (Key Lagna, Top Planet & Vimshopaka Summary)", expanded=False):
+        c_vg1, c_vg2, c_vg3, c_vg4 = st.columns(4)
+        c_vg1.metric("लग्न एवं राशि", f"{lagna_sname}", f"चन्द्र: {moon.sign_name if moon else '—'}")
+        c_vg2.metric("शिरोमणि ग्रह", f"{top_p}", f"{top_v_name} ({sv_summary[top_p]['score_20']:.1f}/20)")
+        c_vg3.metric("वर्गोत्तम ग्रह", f"{varg_count} ग्रह", "D1 व D9 समरूप")
+        c_vg4.metric("औसत विंशोपक बल", f"{avg_score:.1f} / 20", "१६ वर्गों का सामूहिक बल")
 
     # 3 Dedicated Tabs
     tab_dv, tab_sv, tab_saransh = st.tabs(tabs)
