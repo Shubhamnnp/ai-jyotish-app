@@ -502,6 +502,8 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     varga_choice = st.selectbox(
                         "वर्ग चक्र चयन (Select Varga Chart)",
                         varga_options,
+                        index=varga_options.index(varga_choice) if varga_choice in varga_options else 0,
+                        key="d1_varga_choice_sel",
                         format_func=lambda x: f"{x} - {chart.vargas[x].varga_name}" if x in chart.vargas else x
                     )
                     # Dynamic Sampradaya Variation Allocation
