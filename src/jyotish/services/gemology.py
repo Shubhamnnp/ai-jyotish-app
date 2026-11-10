@@ -36,6 +36,13 @@ SHASTRIYA_GEMOLOGY_SHLOKAS = {
         "source": "गरुड़ पुराण (आचारकाण्ड, रत्न परीक्षा अध्याय ६८)",
         "meaning": "सूर्य के लिए श्रेष्ठ माणिक्य, चन्द्रमा के लिए विमल मोती, मंगल के लिए रक्त मूंगा, बुध के लिए मरकत (पन्ना), देवगुरु के लिए पुखराज, शुक्र के लिए वज्र (हीरा), शनि के लिए नीलकांत (नीलम), राहु के लिए गोमेद और केतु के लिए वैदूर्य (लहसुनिया) प्रशस्त कहे गए हैं।"
     },
+    "jataka_parijata_navaratna": {
+        "title": "जातक पारिजात — नवरत्न विवेक विधान",
+        "grantha": "जातक पारिजात",
+        "shloka": "माणिक्यं तरणेः सुजात्यममलं मुक्ताफलं शीतगोः । माहेयस्य च विद्रुमं मरकतं सौम्यस्य गारुत्मतम् ॥\nदेवेज्यस्य च पुष्पराजमसुराचार्यस्य वज्रं शने- । र्नीलं निर्मलमन्ययोश्च गदिते गोमेदवैदूर्यके ॥",
+        "source": "वैद्यनाथ दीक्षित विरचित 'जातक पारिजात' (अध्याय २, श्लोक २१)",
+        "meaning": "सूर्य का माणिक्य, चन्द्र का मोती, मंगल का मूंगा, बुध का पन्ना, गुरु का पुखराज, शुक्र का हीरा, शनि का नीलम, राहु का गोमेद एवं केतु का लहसुनिया (वैदूर्य) शास्त्रसम्मत नवरत्न हैं।"
+    },
     "phaladeepika_dusthana_ratna_nishedha": {
         "title": "फलदीपिका / जातक पारिजात — त्रिक भाव रत्न निषेध",
         "shloka": "षष्ठाष्टमव्ययगतानां ग्रहाणां रत्नानि न धार्याणि।\nदोषावहं भवति तत्तु तद्भावे विवृद्धिकारकत्वात्॥",
@@ -357,13 +364,20 @@ class VedicGemologyService:
             is_retro = pos.is_retrograde
             gem_meta = GEMSTONE_CATALOG.get(p_name, GEMSTONE_CATALOG["Sun"])
 
-            # Degree, ansh, kala, nakshatra, and pada calculation
+            # Degree, ansh, kala, vikala, nakshatra, and pada calculation
             raw_deg = float(getattr(pos, "longitude", getattr(pos, "degree", 0.0)))
-            ansh = int(raw_deg % 30.0)
-            kala = int(round(((raw_deg % 30.0) - ansh) * 60.0))
+            deg_in_sign = raw_deg % 30.0
+            ansh = int(deg_in_sign)
+            rem_min = (deg_in_sign - ansh) * 60.0
+            kala = int(rem_min)
+            vikala = int(round((rem_min - kala) * 60.0))
+            if vikala >= 60:
+                vikala = 0
+                kala += 1
             if kala >= 60:
                 kala = 0
                 ansh += 1
+            dms_str = f"{ansh}° {kala:02d}' {vikala:02d}\""
             sign_idx = int(raw_deg / 30.0) % 12
             sign_name = SIGN_NAMES[sign_idx] if sign_idx < len(SIGN_NAMES) else ""
             nak_idx = int(raw_deg / (360.0 / 27.0)) % 27
@@ -460,6 +474,8 @@ class VedicGemologyService:
                 "degree": raw_deg,
                 "ansh": ansh,
                 "kala": kala,
+                "vikala": vikala,
+                "dms_str": dms_str,
                 "sign_name": sign_name,
                 "nakshatra": nak_name,
                 "pada": pada,

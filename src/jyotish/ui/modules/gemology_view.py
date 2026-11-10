@@ -75,11 +75,11 @@ def render_gemology_view(chart, tabs: Optional[List[str]] = None):
         table_data = []
         for p_name, p_info in audit["planets_audit"].items():
             status_symbol = "🟢 शुभ" if p_info["is_recommended"] else ("🚫 वर्जित" if p_info["status_code"] in ["STRICTLY_PROHIBITED", "PROHIBITED"] else "🟡 मध्यम")
-            dms_str = f"{p_info['ansh']}° {p_info['kala']}'"
+            dms_str = p_info.get("dms_str") or f"{p_info['ansh']}° {p_info['kala']}'"
             table_data.append({
                 "ग्रह": p_name,
                 "भाव": f"{p_info['house']} भाव",
-                "स्पष्ट अंश (DMS)": dms_str,
+                "अंश-कला-विकला (DMS)": dms_str,
                 "नक्षत्र एवं पद": f"{p_info['nakshatra']} (पद {p_info['pada']})",
                 "रत्न": p_info["gem_hi"],
                 "उपरत्न": p_info["substitute"],
@@ -101,7 +101,8 @@ def render_gemology_view(chart, tabs: Optional[List[str]] = None):
                     with c_g1:
                         st.markdown(f"### {rg['gem']}")
                         st.markdown(f"**स्वामी ग्रह:** `{rg['planet']}` ({rg['role']})")
-                        st.markdown(f"**स्थिति:** `{p_item['house']} भाव` | `{p_item['ansh']}° {p_item['kala']}'`")
+                        p_dms = p_item.get("dms_str") or f"{p_item['ansh']}° {p_item['kala']}'"
+                        st.markdown(f"**स्थिति:** `{p_item['house']} भाव` | `{p_dms}`")
                         st.markdown(f"**नक्षत्र:** `{p_item['nakshatra']} (पद {p_item['pada']})`")
                     with c_g2:
                         st.success(f"**सकारात्मक फल (+):** {p_item['positive_verdict']}")
@@ -150,9 +151,10 @@ def render_gemology_view(chart, tabs: Optional[List[str]] = None):
 
         rudra_data = []
         for p_name, p_info in audit["planets_audit"].items():
+            r_dms = p_info.get("dms_str") or f"{p_info['ansh']}° {p_info['kala']}'"
             rudra_data.append({
                 "सम्बन्धित ग्रह": p_name,
-                "ग्रह स्थिति": f"{p_info['house']} भाव ({p_info['ansh']}° {p_info['kala']}')",
+                "ग्रह स्थिति": f"{p_info['house']} भाव ({r_dms})",
                 "प्रशस्त रुद्राक्ष": p_info["rudraksha"],
                 "इष्ट देवता": p_info["deity"],
                 "शांति मन्त्र": p_info["beej_mantra"],
