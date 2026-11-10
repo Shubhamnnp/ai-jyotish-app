@@ -381,6 +381,8 @@ def _render_pill(val, ptype="neutral", is_dark: bool = False) -> str:
         if s and s != "0":
             return f'<span style="display:inline-block; padding:1px 6px; border-radius:6px; font-size:10px; font-weight:800; background:rgba(245,158,11,0.12); color:{"#FBBF24" if is_dark else "#B45309"}; border:1px solid rgba(245,158,11,0.25);">🔄 {s}</span>'
         return f'<span style="color:{"#64748B" if is_dark else "#94A3B8"}; font-weight:600;">—</span>'
+    elif ptype in ("separative", "sep"):
+        return f'<span style="display:inline-block; padding:1px 6px; border-radius:6px; font-size:10px; font-weight:800; background:rgba(147,51,234,0.12); color:{"#C084FC" if is_dark else "#7E22CE"}; border:1px solid rgba(147,51,234,0.25);">{s}</span>'
     else:
         return f'<span style="display:inline-block; padding:1px 5px; border-radius:4px; font-size:10px; font-weight:700; background:rgba(100,116,139,0.1); color:{"#CBD5E1" if is_dark else "#475569"};">{s}</span>'
 
@@ -547,6 +549,175 @@ def render_premium_house_table(hp_list, is_dark: bool = False) -> str:
         f'<th style="padding:7px 8px; text-align:center;">✂️ सेपरेटिव</th>'
         f'</tr></thead>'
         f'<tbody>{"".join(rows)}</tbody>'
+        f'</table></div></div>'
+    )
+    return _clean_html(html)
+
+
+def render_premium_pillar_breakdown_table(rows, title: str, icon: str = "🏛️", is_dark: bool = False) -> str:
+    """Renders a sleek, publication-grade HTML card table for 3-Pillar House or Lord affliction breakdown."""
+    card_bg = "#111827" if is_dark else "#FFFFFF"
+    card_bdr = "rgba(255,255,255,0.12)" if is_dark else "#CBD5E1"
+    th_bg = "#1E293B" if is_dark else "#F8FAFC"
+    th_col = "#94A3B8" if is_dark else "#475569"
+    hdr_col = "#F1F5F9" if is_dark else "#0F172A"
+    row_alt = "rgba(255,255,255,0.02)" if is_dark else "#F8FAFC"
+    txt_col = "#F1F5F9" if is_dark else "#1E293B"
+    border_subtle = "rgba(255,255,255,0.06)" if is_dark else "#E2E8F0"
+
+    tb_rows = []
+    for idx, r in enumerate(rows):
+        label = str(r[0]) if len(r) > 0 else ""
+        s_val = str(r[1]) if len(r) > 1 else "0"
+        l159_val = str(r[2]) if len(r) > 2 else "0"
+        k_val = str(r[3]) if len(r) > 3 else "0"
+        l6812_val = str(r[4]) if len(r) > 4 else "0"
+        sep_val = str(r[5]) if len(r) > 5 else "0"
+
+        soumya_html = _render_pill(s_val, "soumya", is_dark)
+        l159_html = _render_pill(l159_val, "lords159", is_dark)
+        krura_html = _render_pill(k_val, "krura", is_dark)
+        l6812_html = _render_pill(l6812_val, "lords6812", is_dark)
+        sep_html = _render_pill(sep_val, "separative", is_dark)
+
+        bg_row = row_alt if idx % 2 == 1 else "transparent"
+        row_str = (
+            f'<tr style="background:{bg_row}; border-bottom:1px solid {border_subtle};">'
+            f'<td style="padding:6px 10px; font-weight:800; color:{txt_col}; white-space:nowrap;">{label}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{soumya_html}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{l159_html}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{krura_html}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{l6812_html}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{sep_html}</td>'
+            f'</tr>'
+        )
+        tb_rows.append(row_str)
+
+    html = (
+        f'<div style="background:{card_bg}; border:1px solid {card_bdr}; border-radius:8px; overflow:hidden; margin-bottom:8px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">'
+        f'<div style="font-weight:800; font-size:12px; color:{hdr_col}; padding:7px 10px; background:{th_bg}; border-bottom:1px solid {card_bdr}; display:flex; align-items:center; gap:6px;">'
+        f'<span>{icon}</span><span>{title}</span>'
+        f'</div>'
+        f'<div style="overflow-x:auto;">'
+        f'<table style="width:100%; border-collapse:collapse; font-size:11px; text-align:left;">'
+        f'<thead><tr style="background:{th_bg}; color:{th_col}; font-weight:800; border-bottom:1px solid {card_bdr};">'
+        f'<th style="padding:6px 10px;">Pillar</th>'
+        f'<th style="padding:6px 8px; text-align:center;">🌿 सौम्य</th>'
+        f'<th style="padding:6px 8px; text-align:center;">✨ १/५/९</th>'
+        f'<th style="padding:6px 8px; text-align:center;">🔥 क्रूर</th>'
+        f'<th style="padding:6px 8px; text-align:center;">⚠️ ६/८/१२</th>'
+        f'<th style="padding:6px 8px; text-align:center;">✂️ सेपरेटिव</th>'
+        f'</tr></thead>'
+        f'<tbody>{"".join(tb_rows)}</tbody>'
+        f'</table></div></div>'
+    )
+    return _clean_html(html)
+
+
+def render_premium_rashi_qualities_table(rows, title: str, icon: str = "🔮", is_dark: bool = False) -> str:
+    """Renders a sleek HTML card table for Signs & Qualities breakdown."""
+    card_bg = "#111827" if is_dark else "#FFFFFF"
+    card_bdr = "rgba(255,255,255,0.12)" if is_dark else "#CBD5E1"
+    th_bg = "#1E293B" if is_dark else "#F8FAFC"
+    th_col = "#94A3B8" if is_dark else "#475569"
+    hdr_col = "#F1F5F9" if is_dark else "#0F172A"
+    row_alt = "rgba(255,255,255,0.02)" if is_dark else "#F8FAFC"
+    txt_col = "#F1F5F9" if is_dark else "#1E293B"
+    border_subtle = "rgba(255,255,255,0.06)" if is_dark else "#E2E8F0"
+
+    sign_hi = {
+        "Aries": "मेष", "Taurus": "वृषभ", "Gemini": "मिथुन", "Cancer": "कर्क",
+        "Leo": "सिंह", "Virgo": "कन्या", "Libra": "तुला", "Scorpio": "वृश्चिक",
+        "Sagittarius": "धनु", "Capricorn": "मकर", "Aquarius": "कुम्भ", "Pisces": "मीन"
+    }
+
+    tb_rows = []
+    for idx, r in enumerate(rows):
+        entity = str(r[0]) if len(r) > 0 else ""
+        sign = str(r[1]) if len(r) > 1 else ""
+        mobility = str(r[2]) if len(r) > 2 else ""
+        element = str(r[3]) if len(r) > 3 else ""
+        varna = str(r[4]) if len(r) > 4 else ""
+        purushartha = str(r[5]) if len(r) > 5 else ""
+        gender = str(r[6]) if len(r) > 6 else ""
+        rising = str(r[7]) if len(r) > 7 else ""
+        day_night = str(r[8]) if len(r) > 8 else ""
+        guna = str(r[9]) if len(r) > 9 else ""
+
+        # Sign formatting with Hindi name
+        sign_label = f"{sign} ({sign_hi.get(sign, '')})" if sign in sign_hi else sign
+
+        if "Movable" in mobility:
+            mob_badge = '<span style="background:rgba(16,185,129,0.12); color:#059669; padding:1px 5px; border-radius:4px; font-weight:700; font-size:10px;">चर</span>'
+        elif "Fixed" in mobility:
+            mob_badge = '<span style="background:rgba(124,58,237,0.12); color:#7C3AED; padding:1px 5px; border-radius:4px; font-weight:700; font-size:10px;">स्थिर</span>'
+        else:
+            mob_badge = '<span style="background:rgba(217,119,6,0.12); color:#B45309; padding:1px 5px; border-radius:4px; font-weight:700; font-size:10px;">द्विस्वभाव</span>'
+
+        if "Fire" in element:
+            elem_badge = '<span style="background:rgba(239,68,68,0.12); color:#DC2626; padding:1px 5px; border-radius:4px; font-weight:700; font-size:10px;">🔥 अग्नि</span>'
+        elif "Water" in element:
+            elem_badge = '<span style="background:rgba(37,99,235,0.12); color:#2563EB; padding:1px 5px; border-radius:4px; font-weight:700; font-size:10px;">💧 जल</span>'
+        elif "Air" in element:
+            elem_badge = '<span style="background:rgba(14,165,233,0.12); color:#0284C7; padding:1px 5px; border-radius:4px; font-weight:700; font-size:10px;">💨 वायु</span>'
+        else:
+            elem_badge = '<span style="background:rgba(245,158,11,0.12); color:#B45309; padding:1px 5px; border-radius:4px; font-weight:700; font-size:10px;">🌍 पृथ्वी</span>'
+
+        gender_badge = '<span style="color:#2563EB; font-weight:700; font-size:10px;">♂ नर</span>' if gender == "Male" else '<span style="color:#EC4899; font-weight:700; font-size:10px;">♀ नारी</span>'
+        
+        if "Head" in rising:
+            rise_badge = '<span style="color:#059669; font-weight:700; font-size:10px;">शीर्षोदय</span>'
+        elif "Hind" in rising:
+            rise_badge = '<span style="color:#B45309; font-weight:700; font-size:10px;">पृष्ठोदय</span>'
+        else:
+            rise_badge = '<span style="color:#7C3AED; font-weight:700; font-size:10px;">उभयोदय</span>'
+
+        dn_badge = '<span style="color:#D97706; font-weight:700; font-size:10px;">☀️ दिवा</span>' if day_night == "Day" else '<span style="color:#4F46E5; font-weight:700; font-size:10px;">🌙 रात्रि</span>'
+
+        if guna == "Shrishti":
+            guna_badge = '<span style="background:rgba(16,185,129,0.1); color:#059669; padding:1px 5px; border-radius:4px; font-weight:700; font-size:10px;">सृष्टि</span>'
+        elif guna == "Samhar":
+            guna_badge = '<span style="background:rgba(239,68,68,0.1); color:#DC2626; padding:1px 5px; border-radius:4px; font-weight:700; font-size:10px;">संहार</span>'
+        else:
+            guna_badge = '<span style="background:rgba(59,130,246,0.1); color:#2563EB; padding:1px 5px; border-radius:4px; font-weight:700; font-size:10px;">स्थिति</span>'
+
+        bg_row = row_alt if idx % 2 == 1 else "transparent"
+        row_str = (
+            f'<tr style="background:{bg_row}; border-bottom:1px solid {border_subtle};">'
+            f'<td style="padding:6px 10px; font-weight:800; color:{txt_col}; white-space:nowrap;">{entity}</td>'
+            f'<td style="padding:6px 8px; font-weight:700; color:{txt_col}; white-space:nowrap;">{sign_label}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{mob_badge}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{elem_badge}</td>'
+            f'<td style="padding:6px 8px; text-align:center; font-size:10px; color:{txt_col}; font-weight:700;">{varna}</td>'
+            f'<td style="padding:6px 8px; text-align:center; font-weight:800; font-size:10.5px; color:#D97706;">{purushartha}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{gender_badge}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{rise_badge}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{dn_badge}</td>'
+            f'<td style="padding:6px 8px; text-align:center;">{guna_badge}</td>'
+            f'</tr>'
+        )
+        tb_rows.append(row_str)
+
+    html = (
+        f'<div style="background:{card_bg}; border:1px solid {card_bdr}; border-radius:8px; overflow:hidden; margin-bottom:8px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">'
+        f'<div style="font-weight:800; font-size:12px; color:{hdr_col}; padding:7px 10px; background:{th_bg}; border-bottom:1px solid {card_bdr}; display:flex; align-items:center; gap:6px;">'
+        f'<span>{icon}</span><span>{title}</span>'
+        f'</div>'
+        f'<div style="overflow-x:auto;">'
+        f'<table style="width:100%; border-collapse:collapse; font-size:11px; text-align:left;">'
+        f'<thead><tr style="background:{th_bg}; color:{th_col}; font-weight:800; border-bottom:1px solid {card_bdr};">'
+        f'<th style="padding:6px 10px;">Entity</th>'
+        f'<th style="padding:6px 8px;">Sign</th>'
+        f'<th style="padding:6px 8px; text-align:center;">स्वभाव</th>'
+        f'<th style="padding:6px 8px; text-align:center;">तत्व</th>'
+        f'<th style="padding:6px 8px; text-align:center;">वर्ण</th>'
+        f'<th style="padding:6px 8px; text-align:center;">पुरुषार्थ</th>'
+        f'<th style="padding:6px 8px; text-align:center;">लिंग</th>'
+        f'<th style="padding:6px 8px; text-align:center;">उदय</th>'
+        f'<th style="padding:6px 8px; text-align:center;">काल</th>'
+        f'<th style="padding:6px 8px; text-align:center;">प्रवृत्ति</th>'
+        f'</tr></thead>'
+        f'<tbody>{"".join(tb_rows)}</tbody>'
         f'</table></div></div>'
     )
     return _clean_html(html)
@@ -865,28 +1036,21 @@ def render_remedies_view(chart, tabs=None):
             </div>
             """), unsafe_allow_html=True)
 
-        h_cols = ["Pillar", "सौम्य (Benefic)", "1/5/9 Lords", "क्रूर (Malefic)", "6/8/12 Lords", "Separative"]
-        r_cols = ["Entity", "Sign", "Mobility", "Element", "Varna", "Purushartha", "Gender", "Rising", "Day/Night", "Guna"]
-
         # 1. House Breakdown Row
         r1_c1, r1_c2 = st.columns(2, gap="medium")
         with r1_c1:
-            st.markdown("##### 🏛️ त्रिपक्षीय भाव विश्लेषण (3-Pillar House Breakdown)")
-            st.dataframe(pd.DataFrame(la_detail["HouseRows"], columns=h_cols), use_container_width=True, hide_index=True)
+            st.markdown(render_premium_pillar_breakdown_table(la_detail["HouseRows"], "त्रिपक्षीय भाव विश्लेषण (3-Pillar House Breakdown)", icon="🏛️", is_dark=_is_dark), unsafe_allow_html=True)
         with r1_c2:
-            st.markdown("##### 🔮 भाव राशि तत्व एवं गुण धर्म (House Signs & Qualities)")
-            st.dataframe(pd.DataFrame(rashi_pred["HouseRashiRows"], columns=r_cols), use_container_width=True, hide_index=True)
+            st.markdown(render_premium_rashi_qualities_table(rashi_pred["HouseRashiRows"], "भाव राशि तत्व एवं गुण धर्म (House Signs & Qualities)", icon="🔮", is_dark=_is_dark), unsafe_allow_html=True)
 
         st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
 
         # 2. Lord Breakdown Row
         r2_c1, r2_c2 = st.columns(2, gap="medium")
         with r2_c1:
-            st.markdown("##### 👑 त्रिपक्षीय भावेश विश्लेषण (3-Pillar Lord Breakdown)")
-            st.dataframe(pd.DataFrame(la_detail["LordRows"], columns=h_cols), use_container_width=True, hide_index=True)
+            st.markdown(render_premium_pillar_breakdown_table(la_detail["LordRows"], "त्रिपक्षीय भावेश विश्लेषण (3-Pillar Lord Breakdown)", icon="👑", is_dark=_is_dark), unsafe_allow_html=True)
         with r2_c2:
-            st.markdown("##### 🔮 भावेश राशि तत्व एवं गुण धर्म (Lord Signs & Qualities)")
-            st.dataframe(pd.DataFrame(rashi_pred["LordRashiRows"], columns=r_cols), use_container_width=True, hide_index=True)
+            st.markdown(render_premium_rashi_qualities_table(rashi_pred["LordRashiRows"], "भावेश राशि तत्व एवं गुण धर्म (Lord Signs & Qualities)", icon="🔮", is_dark=_is_dark), unsafe_allow_html=True)
 
 
     # =========================================================================
