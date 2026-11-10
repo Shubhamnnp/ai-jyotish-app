@@ -9,9 +9,58 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, date
 from typing import List, Optional
+from src.jyotish.core.constants import SIGN_NAMES
 import src.jyotish.rules.engine as r_mod
 import src.jyotish.dasha.vimshottari as vim_mod
 import src.jyotish.core.gochar as goc_mod
+
+# Classical Graha Hindi Names & Natural Significations
+GRAHA_NAMES_HI = {
+    "Sun": "सूर्य", "Moon": "चंद्र", "Mars": "मंगल", "Mercury": "बुध",
+    "Jupiter": "गुरु", "Venus": "शुक्र", "Saturn": "शनि", "Rahu": "राहु", "Ketu": "केतु",
+    "Ascendant": "लग्न"
+}
+
+DIGNITY_HI = {
+    "exalted": "उच्च (Exalted)",
+    "moolatrikona": "मूलत्रिकोण (Moolatrikona)",
+    "own": "स्वराशि (Own Sign)",
+    "great_friend": "अधिमित्र (Great Friend)",
+    "friend": "मित्र (Friend)",
+    "neutral": "सम (Neutral)",
+    "enemy": "शत्रु (Enemy)",
+    "great_enemy": "अधिशत्रु (Great Enemy)",
+    "debilitated": "नीच (Debilitated)"
+}
+
+NATURAL_SWABHAV = {
+    "Sun": "नैसर्गिक क्रूर / आत्मा कारक",
+    "Moon": "नैसर्गिक शुभ / मन कारक",
+    "Mars": "नैसर्गिक क्रूर / पराक्रम कारक",
+    "Mercury": "नैसर्गिक शुभ / बुद्धि कारक",
+    "Jupiter": "नैसर्गिक परम शुभ / ज्ञान कारक",
+    "Venus": "नैसर्गिक शुभ / सुख-कला कारक",
+    "Saturn": "नैसर्गिक मंद-क्रूर / कर्म व न्याय कारक",
+    "Rahu": "छाया ग्रह / तमोगुणी कारक",
+    "Ketu": "छाया ग्रह / मोक्ष कारक"
+}
+
+BPHS_YOGA_SHLOKA = {
+    "title": "बृहत्पाराशर होराशास्त्र एवं फलदीपिका — योगकारक व दोष शांति विचार",
+    "source": "महर्षि पराशर विरचित 'बृहत्पाराशर होराशास्त्रम्' (योगकारकाध्याय) एवं मन्त्रेश्वर विरचित 'फलदीपिका' (अध्याय ६)",
+    "shloka": "केन्द्रत्रिकोणपतयः परस्परमथापि वा ।\nसम्बन्धमात्रेणैव स्याद्योगोऽयं राजयोगकृत् ॥\nयद्यद्भावे स्थितो मन्दः कुजो वा राहुसंयुतः ।\nतत्तद्भावफलं हन्ति शान्त्या शुभत्वमाप्नुयात् ॥",
+    "meaning": "केन्द्र एवं त्रिकोण के स्वामियों का परस्पर संबंध राजयोग का निर्माण करता है; जबकि अशुभ व क्रूर ग्रहों की युति अथवा दृष्टि से उत्पन्न होने वाले भाव दोषों का शमन शास्त्रोक्त जप, तप, दान व सात्विक आचरण से होकर शुभत्व की प्राप्ति होती है।"
+}
+
+
+def _format_dms(deg_val):
+    deg = float(deg_val) if deg_val is not None else 0.0
+    ansh = int(deg)
+    kala = int(round((deg - ansh) * 60.0))
+    if kala >= 60:
+        kala = 0
+        ansh += 1
+    return ansh, kala, f"{ansh}° {kala:02d}'"
 
 
 # Specific Remedial Mapping Database per Dosha / Affliction
@@ -94,7 +143,21 @@ def render_yogas_doshas_view(chart, tabs: Optional[List[str]] = None):
     st.subheader("⚡ सम्पूर्ण दोष एवं योग विश्लेषण एवं कुण्डली आधारित उपाय")
     st.caption("बृहत्पाराशर होराशास्त्र, फलदीपिका, सारावली एवं जातक पारिजात अनुसार कुण्डली के समस्त सक्रिय/निष्क्रिय दोषों, राजयोगों, धनयोगों तथा कुण्डली-आधारित अचूक उपायों का पूर्ण विश्लेषण।")
 
-    # 1. Compute Active Dasha & Transit Context required by the Rules Library
+    # 1. Classical Shastriya Shloka Card
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {BPHS_YOGA_SHLOKA['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {BPHS_YOGA_SHLOKA['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{BPHS_YOGA_SHLOKA['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {BPHS_YOGA_SHLOKA['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # 2. Compute Active Dasha & Transit Context required by the Rules Library
     try:
         _eval_date = date.today()
         _full_bdt = datetime.combine(chart.birth_data.birth_date, chart.birth_data.birth_time)
@@ -112,19 +175,123 @@ def render_yogas_doshas_view(chart, tabs: Optional[List[str]] = None):
         _evidences = []
         st.warning(f"नियम मूल्यांकन प्रणाली सूचना: {_r_err}")
 
-    # 2. Categorize Evidences into Doshas (Negative Polarity) and Yogas (Positive Polarity)
+    # Categorize Evidences into Doshas (Negative Polarity) and Yogas (Positive Polarity)
     _doshas_ev = [e for e in _evidences if e.polarity == '-']
     _yogas_ev = [e for e in _evidences if e.polarity == '+']
 
     _active_doshas = [e for e in _doshas_ev if e.fired]
     _active_yogas = [e for e in _yogas_ev if e.fired]
 
-    # Summary metric HUD
-    _mc1, _mc2, _mc3, _mc4 = st.columns(4)
-    _mc1.metric("⚠️ सक्रिय दोष (Active Doshas)", len(_active_doshas), delta=f"कुल {_active_doshas and 'ध्यान दें' or 'सुरक्षित'}", delta_color="inverse")
-    _mc2.metric("✨ सक्रिय योग (Active Yogas)", len(_active_yogas), delta=f"कुल {len(_yogas_ev)} योगों में से")
-    _mc3.metric("📋 मूल्यांकित नियम (Rules Evaluated)", f"{len(_evidences):,}", delta="100% Shastriya")
-    _mc4.metric("💊 कुण्डली उपाय (Specific Remedies)", len(_active_doshas) + (1 if not _active_doshas else 0))
+    # 3. Active Native Micro Planetary HUD Console
+    if chart is not None:
+        l_deg = getattr(chart, "lagna_degree", 0.0)
+        _, _, l_dms = _format_dms(l_deg)
+        l_sign = getattr(chart, "lagna_sign", 1)
+        l_sign_name = SIGN_NAMES[l_sign - 1] if 1 <= l_sign <= 12 else f"Sign {l_sign}"
+
+        moon = chart.planets.get("Moon") if hasattr(chart, "planets") else None
+        if moon:
+            m_deg = getattr(moon, "sign_degree", 0.0)
+            _, _, m_dms = _format_dms(m_deg)
+            m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+            m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+            m_sign = getattr(moon, "sign_id", getattr(moon, "sign", 1))
+            m_sign_name = SIGN_NAMES[m_sign - 1] if 1 <= m_sign <= 12 else f"Sign {m_sign}"
+        else:
+            m_dms, m_nak, m_pada, m_sign_name = "—", "—", 1, "—"
+
+        st.markdown(f"""
+        <div style="background:linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color:#FFFFFF; border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                <span style="font-size:16px; font-weight:700;">🪐 सक्रिय जातक योग-दोष वेध: <span style="color:#FDE047;">{getattr(chart, 'name', 'सक्रिय कुण्डली')}</span></span>
+                <span style="font-size:13px; color:#C7D2FE;">🏛️ लग्न: <b>{l_sign_name} ({l_dms})</b> | 🌙 चंद्र: <b>{m_sign_name} ({m_dms})</b> | 🌟 <b>{m_nak} (पद {m_pada})</b></span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; font-size:12.5px; text-align:center;">
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#FCA5A5; font-size:11px;">⚠️ सक्रिय दोष</div>
+                    <div style="font-size:16px; font-weight:700; color:#F87171;">{len(_active_doshas)}</div>
+                    <div style="font-size:10px; color:#FECACA;">{len(_active_doshas) and 'सावधानी व शांति' or 'सुरक्षित / निर्दोष'}</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#86EFAC; font-size:11px;">✨ सक्रिय शुभ योग</div>
+                    <div style="font-size:16px; font-weight:700; color:#4ADE80;">{len(_active_yogas)}</div>
+                    <div style="font-size:10px; color:#BBF7D0;">राजयोग व धनयोग</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#93C5FD; font-size:11px;">📋 मूल्यांकित नियम</div>
+                    <div style="font-size:16px; font-weight:700; color:#FFFFFF;">{len(_evidences):,}</div>
+                    <div style="font-size:10px; color:#C7D2FE;">१६+ महा-ग्रन्थ</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#FDE047; font-size:11px;">💊 कुण्डली उपाय</div>
+                    <div style="font-size:16px; font-weight:700; color:#FEF08A;">{len(_active_doshas) + (1 if not _active_doshas else 0)}</div>
+                    <div style="font-size:10px; color:#FEF9C3;">वैदिक शांति विधान</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Micro Planetary Status Grid Expander
+        with st.expander("🪐 सक्रिय जातक सूक्ष्म ग्रह-स्थिति (अंश, कला, नक्षत्र, चरण व स्वभाव)", expanded=False):
+            planets_data = []
+            if hasattr(chart, "planets") and isinstance(chart.planets, dict):
+                for p_name, p_obj in chart.planets.items():
+                    if p_name in ["Uranus", "Neptune", "Pluto"]:
+                        continue
+                    p_hi = GRAHA_NAMES_HI.get(p_name, p_name)
+                    s_id = getattr(p_obj, "sign_id", getattr(p_obj, "sign", 1))
+                    s_name = SIGN_NAMES[s_id - 1] if 1 <= s_id <= 12 else f"Sign {s_id}"
+                    deg = getattr(p_obj, "sign_degree", 0.0)
+                    _, _, dms_str = _format_dms(deg)
+                    nak = getattr(p_obj, "nakshatra_name", getattr(p_obj, "nakshatra", "—"))
+                    pada = getattr(p_obj, "nakshatra_pada", getattr(p_obj, "pada", 1))
+                    house = getattr(p_obj, "house_from_lagna", getattr(p_obj, "house", "—"))
+                    dignity_raw = getattr(p_obj, "dignity", "neutral")
+                    dignity_hi = DIGNITY_HI.get(str(dignity_raw).lower(), str(dignity_raw))
+                    is_retro = getattr(p_obj, "is_retrograde", False)
+                    is_comb = getattr(p_obj, "is_combust", False)
+                    swabhav = NATURAL_SWABHAV.get(p_name, "सामान्य")
+
+                    status_tags = []
+                    if is_retro:
+                        status_tags.append("🔄 वक्री")
+                    if is_comb:
+                        status_tags.append("🔥 अस्त")
+                    tag_str = f" ({', '.join(status_tags)})" if status_tags else ""
+
+                    planets_data.append({
+                        "ग्रह": f"{p_hi} ({p_name})",
+                        "भाव": f"भाव {house}",
+                        "राशि": s_name,
+                        "अंश-कला (DMS)": dms_str,
+                        "नक्षत्र व चरण": f"{nak} (पद {pada})",
+                        "अवस्था (Dignity)": f"{dignity_hi}{tag_str}",
+                        "नैसर्गिक स्वभाव": swabhav
+                    })
+            if planets_data:
+                st.dataframe(pd.DataFrame(planets_data), use_container_width=True, hide_index=True)
+
+    # 4. Polarity Balance & Shastriya Synthesis Card
+    net_balance = len(_active_yogas) - len(_active_doshas)
+    if net_balance >= 5:
+        bal_color = "#15803D"
+        bal_bg = "#F0FDF4"
+        bal_verdict = "अत्यंत शुभ एवं राजयोग प्रधान कुण्डली। शुभ योगों का प्राबल्य दोषों का शमन कर जीवन में निरंतर उन्नति व यश प्रदान करता है।"
+    elif net_balance >= 0:
+        bal_color = "#1D4ED8"
+        bal_bg = "#EFF6FF"
+        bal_verdict = "संतुलित एवं पुरुषार्थ प्रधान कुण्डली। शुभ एवं अशुभ नियमों का सम्यक संतुलन है; सद्कर्म एवं नियम पालन से श्रेष्ठ फल की प्राप्ति।"
+    else:
+        bal_color = "#B91C1C"
+        bal_bg = "#FEF2F2"
+        bal_verdict = "सावधानी एवं वैदिक शांति अपेक्षित कुण्डली। ग्रह दोषों एवं अनिष्ट योगों के शमन हेतु शास्त्रोक्त जप-दान व यम-नियम का आश्रय लाभप्रद।"
+
+    st.markdown(f"""
+    <div style="background:{bal_bg}; border-left:4px solid {bal_color}; padding:10px 14px; border-radius:6px; margin:10px 0;">
+        <b style="color:{bal_color}; font-size:14px;">⚖️ शास्त्रीय योग-दोष संतुलन मीमांसा:</b> 
+        <span style="font-size:13px; color:#1E293B;">सक्रिय राजयोग ({len(_active_yogas)}) vs सक्रिय दोष ({len(_active_doshas)}) | <b>निष्कर्ष:</b> {bal_verdict}</span>
+    </div>
+    """, unsafe_allow_html=True)
 
     _dy_t1, _dy_t2, _dy_t3, _dy_t4 = st.tabs(tabs)
 

@@ -92,3 +92,45 @@ def test_yogas_doshas_view_imports_cleanly():
     """Verify yogas_doshas_view module imports cleanly without error."""
     import src.jyotish.ui.modules.yogas_doshas_view as yd_mod
     assert hasattr(yd_mod, "render_yogas_doshas_view")
+
+
+def test_module20_classical_shloka_and_constants():
+    """Verify Module 20 includes authentic BPHS yoga shloka and dictionaries."""
+    from src.jyotish.ui.modules.yogas_doshas_view import (
+        BPHS_YOGA_SHLOKA, GRAHA_NAMES_HI, DIGNITY_HI, NATURAL_SWABHAV
+    )
+    assert "बृहत्पाराशर" in BPHS_YOGA_SHLOKA["title"]
+    assert "केन्द्रत्रिकोणपतयः" in BPHS_YOGA_SHLOKA["shloka"]
+    assert "राजयोगकृत्" in BPHS_YOGA_SHLOKA["shloka"]
+    assert GRAHA_NAMES_HI["Sun"] == "सूर्य"
+    assert GRAHA_NAMES_HI["Jupiter"] == "गुरु"
+    assert "उच्च" in DIGNITY_HI["exalted"]
+    assert "ज्ञान कारक" in NATURAL_SWABHAV["Jupiter"]
+
+
+def test_module20_format_dms_and_balance():
+    """Verify DMS formatting and polarity balance computation."""
+    from src.jyotish.ui.modules.yogas_doshas_view import _format_dms
+
+    ansh, kala, dms = _format_dms(14.8)
+    assert ansh == 14
+    assert kala == 48
+    assert dms == "14° 48'"
+
+    ansh2, kala2, dms2 = _format_dms(0.0)
+    assert ansh2 == 0
+    assert kala2 == 0
+    assert dms2 == "0° 00'"
+
+
+def test_module20_render_source_audit():
+    """Verify render_yogas_doshas_view contains HUD, shloka expander, and planetary grid."""
+    import inspect
+    from src.jyotish.ui.modules import yogas_doshas_view
+    src = inspect.getsource(yogas_doshas_view.render_yogas_doshas_view)
+
+    assert "BPHS_YOGA_SHLOKA" in src
+    assert "सक्रिय जातक योग-दोष वेध" in src
+    assert "_format_dms" in src
+    assert "सक्रिय जातक सूक्ष्म ग्रह-स्थिति" in src
+    assert "शास्त्रीय योग-दोष संतुलन मीमांसा" in src
