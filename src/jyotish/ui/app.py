@@ -1621,7 +1621,7 @@ unified_css = f"""
 
     /* Header Breadcrumb Strip (Thick, High-Contrast, Sovereign Typography) */
     .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip,
-    div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip {
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip {{
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
@@ -1636,45 +1636,45 @@ unified_css = f"""
         border-radius: 6px !important;
         box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6) !important;
         box-sizing: border-box !important;
-    }
+    }}
     .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip span,
     .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip p,
     .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip div,
     div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip span,
     div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip p,
-    div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip div {
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip div {{
         line-height: 1.4 !important;
-    }
+    }}
     .st-key-frozen_toolbelt_container .hdr-crumb-label-mod,
-    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-label-mod {
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-label-mod {{
         color: #FBBF24 !important;
         font-weight: 900 !important;
         font-size: 13px !important;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
-    }
+    }}
     .st-key-frozen_toolbelt_container .hdr-crumb-val-mod,
-    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-mod {
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-mod {{
         color: #FFFFFF !important;
         font-weight: 800 !important;
         font-size: 13px !important;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
-    }
+    }}
     .st-key-frozen_toolbelt_container .hdr-crumb-label-jatak,
-    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-label-jatak {
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-label-jatak {{
         color: #38BDF8 !important;
         font-weight: 900 !important;
         font-size: 13px !important;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
-    }
+    }}
     .st-key-frozen_toolbelt_container .hdr-crumb-val-jatak,
-    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-jatak {
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-jatak {{
         color: #FFFFFF !important;
         font-weight: 800 !important;
         font-size: 13px !important;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
-    }
+    }}
     .st-key-frozen_toolbelt_container .hdr-crumb-val-details,
-    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-details {
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-val-details {{
         color: #F1F5F9 !important;
         font-weight: 600 !important;
         font-size: 12px !important;
