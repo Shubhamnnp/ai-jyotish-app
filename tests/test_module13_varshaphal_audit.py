@@ -136,6 +136,21 @@ class TestModule13VarshaphalAudit(unittest.TestCase):
         import src.jyotish.ui.modules.varshaphal_view as varshaphal_view_mod
         self.assertTrue(hasattr(varshaphal_view_mod, "render_varshaphal_view"))
 
+    def test_varshaphal_view_shastriya_shloka_and_console(self):
+        """Verify classical Tajika Neelakanthi shloka, micro DMS, and HUD in varshaphal_view."""
+        import inspect
+        import src.jyotish.ui.modules.varshaphal_view as varshaphal_view_mod
+        source = inspect.getsource(varshaphal_view_mod.render_varshaphal_view)
+
+        self.assertIn("tajika_neelakanthi_shloka", source)
+        self.assertIn("ताजिक नीलकण्ठी — वर्ष लग्न", source)
+        self.assertIn("सूर्यस्य संक्रमणकाले यल्लग्नं समुदेति तत्", source)
+        self.assertIn("c_vp1, c_vp2, c_vp3, c_vp4 = st.columns(4)", source)
+        self.assertIn("जन्म लग्न बनाम वर्ष लग्न", source)
+        self.assertIn("अंश-कला (DMS)", source)
+        self.assertIn("नक्षत्र एवं चरण", source)
+        self.assertIn("नैसर्गिक स्वभाव", source)
+
 
 if __name__ == "__main__":
     unittest.main()

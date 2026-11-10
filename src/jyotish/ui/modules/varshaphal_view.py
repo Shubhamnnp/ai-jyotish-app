@@ -40,6 +40,26 @@ def render_varshaphal_view(chart, birth_profile, tz_offset=5.5, render_chart_svg
     st.subheader("📅 वर्षफल / ताजिक वार्षिक चक्र (Tajika Annual Solar Return)")
     st.write("ताजिक नीलकण्ठी एवं हायन रत्न अनुसार वार्षिक सौर वापसी कुण्डली, मुन्था विचार, पंचाधिकारी वर्षेश निर्णय, पंचवर्गीय व हर्ष बल, १६ ताजिक योग, २८ सहम एवं १-वर्षीय मुद्धा दशा चक्र।")
 
+    # Classical Shastriya Shloka Card
+    tajika_neelakanthi_shloka = {
+        "title": "ताजिक नीलकण्ठी — वर्ष लग्न, मुन्था एवं वर्षेश निर्णय",
+        "source": "नीलकण्ठ दैवज्ञ विरचित 'ताजिक नीलकण्ठी' (वर्षतंत्र)",
+        "shloka": "सूर्यस्य संक्रमणकाले यल्लग्नं समुदेति तत्।\nवर्षलग्नमिति ख्यातं ताजिके शास्त्रसंमतम्॥\nपञ्चाधिकारिसम्पन्नो वर्षेशो यत्र संस्थितः।\nमुन्था च शुभसंयुक्ता तद्वर्षं शुभदायकम्॥",
+        "meaning": "जब सूर्य ठीक अपने जन्मकालीन स्पष्ट भोग (अंश व कला) पर पुनः आता है, उस सौर क्रांति वेला उदित होने वाला लग्न 'वर्ष लग्न' कहलाता है। पंचाधिकारियों (मुन्थाधिपति, जन्म लग्नेश, वर्ष लग्नेश, त्रिराशीश, दिन/रात्रि पति) में सर्वाधिक बलवान् ग्रह 'वर्षेश' निर्धारित होता है। वर्षेश एवं मुन्था की शुभ स्थिति वर्ष को सर्वतोमुखी ऐश्वर्य, पदोन्नति व कार्यसिद्धि प्रदान करती है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {tajika_neelakanthi_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {tajika_neelakanthi_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{tajika_neelakanthi_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {tajika_neelakanthi_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     from src.jyotish.services import varshaphal
     service_vp = getattr(varshaphal, "default_varshaphal_service", default_varshaphal_service)
 
@@ -79,6 +99,45 @@ def render_varshaphal_view(chart, birth_profile, tz_offset=5.5, render_chart_svg
     </div>
     """, unsafe_allow_html=True)
 
+    # Active Native Micro-Planetary Longitudes & Live Varshaphal Console
+    nl_deg = getattr(chart, "lagna_degree", 0.0)
+    nl_ansh = int(nl_deg)
+    nl_kala = int(round((nl_deg - nl_ansh) * 60.0))
+    if nl_kala >= 60:
+        nl_kala = 0
+        nl_ansh += 1
+    nl_dms = f"{nl_ansh}° {nl_kala:02d}'"
+
+    vl_deg = float(vp_res.get("varsha_lagna_degree", 0.0))
+    vl_ansh = int(vl_deg)
+    vl_kala = int(round((vl_deg - vl_ansh) * 60.0))
+    if vl_kala >= 60:
+        vl_kala = 0
+        vl_ansh += 1
+    vl_dms = f"{vl_ansh}° {vl_kala:02d}'"
+
+    sun_natal = chart.planets.get("Sun")
+    if sun_natal:
+        sn_deg = getattr(sun_natal, "sign_degree", 0.0)
+        sn_ansh = int(sn_deg)
+        sn_kala = int(round((sn_deg - sn_ansh) * 60.0))
+        if sn_kala >= 60:
+            sn_kala = 0
+            sn_ansh += 1
+        sn_dms = f"{sn_ansh}° {sn_kala:02d}'"
+        sn_nak = getattr(sun_natal, "nakshatra_name", getattr(sun_natal, "nakshatra", "—"))
+        sn_pada = getattr(sun_natal, "nakshatra_pada", getattr(sun_natal, "pada", 1))
+        sun_str = f"{sun_natal.sign_name} {sn_dms} [{sn_nak}-P{sn_pada}]"
+    else:
+        sn_dms = "—"
+        sun_str = "—"
+
+    c_vp1, c_vp2, c_vp3, c_vp4 = st.columns(4)
+    c_vp1.metric("जन्म लग्न बनाम वर्ष लग्न", f"{vp_res['varsha_lagna_hi']} ({vl_dms})", f"जन्म: {SIGN_NAMES_HI[chart.lagna_sign_id - 1]} ({nl_dms})")
+    c_vp2.metric("सौर क्रांति वेला (सूर्य भोग)", f"{sn_dms}", f"☀️ {sun_str.split(' ')[-1]}")
+    c_vp3.metric("वर्षेश एवं मुन्था स्थिति", f"👑 {vp_res['varshesha_hi']}", f"मुन्था: भाव #{vp_res['muntha_house']} ({vp_res['muntha_sign_hi']})")
+    c_vp4.metric("वार्षिक स्कोर व काल बलि", f"{vp_res['annual_score']}/100", f"{'दिवा बलि सूर्य' if vp_res['is_day_return'] else 'रात्रि बलि चन्द्र'}")
+
     tab_vp1, tab_vp2, tab_vp3, tab_vp4, tab_vp5, tab_vp6, tab_vp7, tab_vp8, tab_vp9, tab_vp10 = st.tabs(tabs)
 
     # -------------------------------------------------------------------------
@@ -99,10 +158,23 @@ def render_varshaphal_view(chart, birth_profile, tz_offset=5.5, render_chart_svg
             for p_k, p_pos in vp_res["varsha_chart"].planets.items():
                 p_hi = PLANET_NAMES_HI.get(p_k, p_k)
                 r_hi = SIGN_NAMES_HI[p_pos.sign_id - 1]
+                p_deg = getattr(p_pos, "sign_degree", 0.0)
+                p_ansh = int(p_deg)
+                p_kala = int(round((p_deg - p_ansh) * 60.0))
+                if p_kala >= 60:
+                    p_kala = 0
+                    p_ansh += 1
+                p_dms = f"{p_ansh}° {p_kala:02d}'"
+                p_nak = getattr(p_pos, "nakshatra_name", getattr(p_pos, "nakshatra", "—"))
+                p_pada = getattr(p_pos, "nakshatra_pada", getattr(p_pos, "pada", "—"))
+                swabhav_str = "नैसर्गिक शुभ" if p_k in ["Jupiter", "Venus", "Mercury", "Moon"] else "नैसर्गिक क्रूर"
+
                 v_planets_data.append({
                     "ग्रह (Graha)": p_hi,
+                    "नैसर्गिक स्वभाव": swabhav_str,
                     "राशि (Sign)": f"{r_hi} ({p_pos.sign_name})",
-                    "अंश (Degree)": f"{p_pos.sign_degree:.2f}°",
+                    "अंश-कला (DMS)": p_dms,
+                    "नक्षत्र एवं चरण": f"{p_nak} (चरण {p_pada})",
                     "भाव (House)": f"{p_pos.house_from_lagna} भाव",
                     "गरिमा (Dignity)": p_pos.dignity.capitalize(),
                     "गति (Motion)": "⚡ वक्री (R)" if p_pos.is_retrograde else "मार्गी"
