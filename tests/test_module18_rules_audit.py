@@ -138,3 +138,71 @@ def test_quarantine_integrity():
         "verification": {"status": "scholar_verified"}
     }
     assert is_generated_rule(mock_authentic_rule) is False
+
+
+def test_module18_classical_shloka_and_constants():
+    """Verifies that Module 18 includes authentic BPHS shloka and planetary swabhav dictionaries."""
+    from src.jyotish.ui.modules.rules_library_view import (
+        BPHS_RULES_SHLOKA, GRAHA_NAMES_HI, DIGNITY_HI, NATURAL_SWABHAV, _format_dms
+    )
+    assert "बृहत्पाराशर" in BPHS_RULES_SHLOKA["title"]
+    assert "पाराशर्यादि शास्त्राणि" in BPHS_RULES_SHLOKA["shloka"]
+    assert "जातकार्णवसङ्ग्रहम्" in BPHS_RULES_SHLOKA["shloka"]
+    assert GRAHA_NAMES_HI["Sun"] == "सूर्य"
+    assert GRAHA_NAMES_HI["Jupiter"] == "गुरु"
+    assert "उच्च" in DIGNITY_HI["exalted"]
+    assert "नीच" in DIGNITY_HI["debilitated"]
+    assert "आत्मा कारक" in NATURAL_SWABHAV["Sun"]
+
+
+def test_module18_format_dms():
+    """Verifies degree to ansh-kala (DMS) conversion."""
+    from src.jyotish.ui.modules.rules_library_view import _format_dms
+    ansh, kala, dms = _format_dms(12.5)
+    assert ansh == 12
+    assert kala == 30
+    assert dms == "12° 30'"
+
+    ansh2, kala2, dms2 = _format_dms(29.999)
+    assert ansh2 == 30
+    assert kala2 == 0
+    assert dms2 == "30° 00'"
+
+
+def test_module18_chart_rules_evaluation():
+    """Verifies that RulesEngine evaluates a live chart and returns valid rule evidences."""
+    from datetime import date, time
+    from src.jyotish.core.models import BirthData
+    from src.jyotish.core.calculator import default_chart_calculator
+    from src.jyotish.rules.engine import RulesEngine
+
+    b_data = BirthData(
+        name="सुनील कुमार",
+        birth_date=date(1991, 10, 10),
+        birth_time=time(8, 20, 0),
+        latitude=28.6139,
+        longitude=77.2090,
+        timezone_offset=5.5
+    )
+    chart = default_chart_calculator.calculate_chart(b_data)
+    engine = RulesEngine()
+    evidences = engine.evaluate_all(chart, None, {}, None)
+    assert len(evidences) > 0
+
+    fired = [ev for ev in evidences if ev.fired]
+    assert len(fired) > 0, "Active chart should trigger classical astrological rules"
+    polarities = {ev.polarity for ev in fired}
+    assert "+" in polarities or "-" in polarities
+
+
+def test_module18_render_source_audit():
+    """Verifies that render_rules_library_view contains micro HUD, planetary grid, and shastriya balance."""
+    import inspect
+    from src.jyotish.ui.modules import rules_library_view
+    src = inspect.getsource(rules_library_view.render_rules_library_view)
+
+    assert "BPHS_RULES_SHLOKA" in src
+    assert "सक्रिय जातक" in src
+    assert "_format_dms" in src
+    assert "सक्रिय जातक सूक्ष्म ग्रह-स्थिति" in src
+    assert "शास्त्रीय नियम संतुलन मीमांसा" in src

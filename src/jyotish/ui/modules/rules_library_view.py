@@ -4,6 +4,56 @@ import importlib
 from datetime import datetime
 from src.jyotish.core.constants import SIGN_NAMES
 from src.jyotish.rules.quarantine import get_quarantine_stats, filter_rules_by_verification
+from src.jyotish.rules.engine import RulesEngine
+
+# Classical Graha Hindi Names & Natural Significations
+GRAHA_NAMES_HI = {
+    "Sun": "सूर्य", "Moon": "चंद्र", "Mars": "मंगल", "Mercury": "बुध",
+    "Jupiter": "गुरु", "Venus": "शुक्र", "Saturn": "शनि", "Rahu": "राहु", "Ketu": "केतु",
+    "Ascendant": "लग्न"
+}
+
+DIGNITY_HI = {
+    "exalted": "उच्च (Exalted)",
+    "moolatrikona": "मूलत्रिकोण (Moolatrikona)",
+    "own": "स्वराशि (Own Sign)",
+    "great_friend": "अधिमित्र (Great Friend)",
+    "friend": "मित्र (Friend)",
+    "neutral": "सम (Neutral)",
+    "enemy": "शत्रु (Enemy)",
+    "great_enemy": "अधिशत्रु (Great Enemy)",
+    "debilitated": "नीच (Debilitated)"
+}
+
+NATURAL_SWABHAV = {
+    "Sun": "नैसर्गिक क्रूर / आत्मा कारक",
+    "Moon": "नैसर्गिक शुभ / मन कारक",
+    "Mars": "नैसर्गिक क्रूर / पराक्रम कारक",
+    "Mercury": "नैसर्गिक शुभ / बुद्धि कारक",
+    "Jupiter": "नैसर्गिक परम शुभ / ज्ञान कारक",
+    "Venus": "नैसर्गिक शुभ / सुख-कला कारक",
+    "Saturn": "नैसर्गिक मंद-क्रूर / कर्म व न्याय कारक",
+    "Rahu": "छाया ग्रह / तमोगुणी कारक",
+    "Ketu": "छाया ग्रह / मोक्ष कारक"
+}
+
+BPHS_RULES_SHLOKA = {
+    "title": "बृहत्पाराशर होराशास्त्र एवं जातक पारिजात — शास्त्रीय नियम संग्रह एवं कुण्डली परीक्षण",
+    "source": "महर्षि पराशर विरचित 'बृहत्पाराशर होराशास्त्रम्' (संज्ञाध्याय) एवं दैवज्ञ वैद्यनाथ 'जातक पारिजात' (अध्याय १)",
+    "shloka": "पाराशर्यादि शास्त्राणि समालोक्य मयाधुना ।\nवक्ष्येऽहं दैववित्प्रीत्यै जातकार्णवसङ्ग्रहम् ॥\nशास्त्रदृष्ट्या सुसूक्ष्मेण ग्रहाणां भावसंस्थितान् ।\nयोगान् संवीक्ष्य यो ब्रूते स भवेद् दैववित्तमः ॥",
+    "meaning": "पराशर, वराहमिहिर, कल्याणवर्मा आदि पूज्य ऋषियों के प्रामाणिक शास्त्रों का सूक्ष्म अनुशीलन करके भाव, ग्रह, नक्षत्र, अंश व कला के अनुसार जो दैवज्ञ योगों व नियमों का परीक्षण करता है, वही यथार्थ फलकथन में समर्थ होता है। यह १२,५००+ नियम बैंक उसी अविच्छिन्न ऋषि-परम्परा का संरक्षण करता है।"
+}
+
+
+def _format_dms(deg_val):
+    deg = float(deg_val) if deg_val is not None else 0.0
+    ansh = int(deg)
+    kala = int(round((deg - ansh) * 60.0))
+    if kala >= 60:
+        kala = 0
+        ansh += 1
+    return ansh, kala, f"{ansh}° {kala:02d}'"
+
 
 def render_rules_library_view(chart, tabs=None):
     if tabs is None:
@@ -14,122 +64,257 @@ def render_rules_library_view(chart, tabs=None):
             '🛡️ Rules Lab (Admin)'
         ]
     st.subheader("📚 १२,५००+ महा-शास्त्रीय नियम बैंक, ग्रन्थ एक्सप्लोरर एवं अनुसंधान इंजन (Vedic Rules & Research Engine)")
+
+    # 1. Classical Shastriya Shloka Card
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {BPHS_RULES_SHLOKA['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {BPHS_RULES_SHLOKA['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{BPHS_RULES_SHLOKA['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {BPHS_RULES_SHLOKA['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # 2. Pre-evaluate Rules Engine on Active Chart
+    rules_engine = RulesEngine()
+    all_rules = rules_engine.rules
+
+    evidences = []
+    ev_by_id = {}
+    if chart is not None:
+        try:
+            evidences = rules_engine.evaluate_all(chart, None, {}, None)
+            ev_by_id = {ev.rule_id: ev for ev in evidences}
+        except Exception as e_ev:
+            st.warning(f"नियम मूल्यांकन में आंशिक त्रुटि: {e_ev}")
+
+    fired_evs = [ev for ev in evidences if ev.fired]
+    fired_yogas = [ev for ev in fired_evs if ev.polarity == "+"]
+    fired_doshas = [ev for ev in fired_evs if ev.polarity == "-"]
+
+    # 3. Active Native Micro HUD Console
+    if chart is not None:
+        l_deg = getattr(chart, "lagna_degree", 0.0)
+        _, _, l_dms = _format_dms(l_deg)
+        l_sign = getattr(chart, "lagna_sign", 1)
+        l_sign_name = SIGN_NAMES[l_sign - 1] if 1 <= l_sign <= 12 else f"Sign {l_sign}"
+
+        moon = chart.planets.get("Moon") if hasattr(chart, "planets") else None
+        if moon:
+            m_deg = getattr(moon, "sign_degree", 0.0)
+            _, _, m_dms = _format_dms(m_deg)
+            m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+            m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+            m_sign = getattr(moon, "sign_id", getattr(moon, "sign", 1))
+            m_sign_name = SIGN_NAMES[m_sign - 1] if 1 <= m_sign <= 12 else f"Sign {m_sign}"
+        else:
+            m_dms, m_nak, m_pada, m_sign_name = "—", "—", 1, "—"
+
+        st.markdown(f"""
+        <div style="background:linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color:#FFFFFF; border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                <span style="font-size:16px; font-weight:700;">🪐 सक्रिय जातक: <span style="color:#FDE047;">{getattr(chart, 'name', 'सक्रिय कुण्डली')}</span></span>
+                <span style="font-size:13px; color:#C7D2FE;">🏛️ लग्न: <b>{l_sign_name} ({l_dms})</b> | 🌙 चंद्र: <b>{m_sign_name} ({m_dms})</b> | 🌟 <b>{m_nak} (चरण {m_pada})</b></span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; font-size:12.5px; text-align:center;">
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#93C5FD; font-size:11px;">📚 कुल संकलित नियम</div>
+                    <div style="font-size:16px; font-weight:700; color:#FFFFFF;">{len(all_rules):,}</div>
+                    <div style="font-size:10px; color:#C7D2FE;">१५+ महा-ग्रन्थ</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#86EFAC; font-size:11px;">⚡ कुण्डली में सक्रिय नियम</div>
+                    <div style="font-size:16px; font-weight:700; color:#4ADE80;">{len(fired_evs)}</div>
+                    <div style="font-size:10px; color:#BBF7D0;">सक्रियता ({round((len(fired_evs)/max(1, len(all_rules)))*100)}%)</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#FDE047; font-size:11px;">🟢 सक्रिय शुभ योग (+)</div>
+                    <div style="font-size:16px; font-weight:700; color:#FEF08A;">{len(fired_yogas)}</div>
+                    <div style="font-size:10px; color:#FEF9C3;">सौभाग्य व उत्कर्ष</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                    <div style="color:#FCA5A5; font-size:11px;">🔴 सक्रिय दोष / चेतावनी (-)</div>
+                    <div style="font-size:16px; font-weight:700; color:#F87171;">{len(fired_doshas)}</div>
+                    <div style="font-size:10px; color:#FECACA;">सावधानी व उपाय</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Micro Planetary Status Grid Expander
+        with st.expander("🪐 सक्रिय जातक सूक्ष्म ग्रह-स्थिति (अंश, कला, नक्षत्र, चरण व स्वभाव)", expanded=False):
+            planets_data = []
+            if hasattr(chart, "planets") and isinstance(chart.planets, dict):
+                for p_name, p_obj in chart.planets.items():
+                    if p_name in ["Uranus", "Neptune", "Pluto"]:
+                        continue
+                    p_hi = GRAHA_NAMES_HI.get(p_name, p_name)
+                    s_id = getattr(p_obj, "sign_id", getattr(p_obj, "sign", 1))
+                    s_name = SIGN_NAMES[s_id - 1] if 1 <= s_id <= 12 else f"Sign {s_id}"
+                    deg = getattr(p_obj, "sign_degree", 0.0)
+                    _, _, dms_str = _format_dms(deg)
+                    nak = getattr(p_obj, "nakshatra_name", getattr(p_obj, "nakshatra", "—"))
+                    pada = getattr(p_obj, "nakshatra_pada", getattr(p_obj, "pada", 1))
+                    house = getattr(p_obj, "house_from_lagna", getattr(p_obj, "house", "—"))
+                    dignity_raw = getattr(p_obj, "dignity", "neutral")
+                    dignity_hi = DIGNITY_HI.get(str(dignity_raw).lower(), str(dignity_raw))
+                    is_retro = getattr(p_obj, "is_retrograde", False)
+                    is_comb = getattr(p_obj, "is_combust", False)
+                    swabhav = NATURAL_SWABHAV.get(p_name, "सामान्य")
+
+                    status_tags = []
+                    if is_retro:
+                        status_tags.append("🔄 वक्री")
+                    if is_comb:
+                        status_tags.append("🔥 अस्त")
+                    tag_str = f" ({', '.join(status_tags)})" if status_tags else ""
+
+                    planets_data.append({
+                        "ग्रह": f"{p_hi} ({p_name})",
+                        "भाव": f"भाव {house}",
+                        "राशि": s_name,
+                        "अंश-कला (DMS)": dms_str,
+                        "नक्षत्र व चरण": f"{nak} (पद {pada})",
+                        "अवस्था (Dignity)": f"{dignity_hi}{tag_str}",
+                        "नैसर्गिक स्वभाव": swabhav
+                    })
+            if planets_data:
+                st.dataframe(pd.DataFrame(planets_data), use_container_width=True, hide_index=True)
+
     rendered_tabs = st.tabs(tabs)
     tab_rules_bank = rendered_tabs[0]
     tab_grantha_explorer = rendered_tabs[1]
     tab_research_engine = rendered_tabs[2]
     tab_admin_lab = rendered_tabs[3] if len(rendered_tabs) > 3 else None
+
+    # =============================================================
+    # TAB 1: RULES BANK
+    # =============================================================
     with tab_rules_bank:
-            from src.jyotish.rules.engine import RulesEngine
-            rules_engine = RulesEngine()
-            all_rules = rules_engine.rules
+        # Top Status Metrics
+        col_rm1, col_rm2, col_rm3, col_rm4 = st.columns(4)
+        col_rm1.metric("कुल संकलित नियम", f"{len(all_rules):,}", "१५ महा-ग्रंथ")
+        col_rm2.metric("कुण्डली में सक्रिय नियम", f"{len(fired_evs)}", f"सत्यापित ({round((len(fired_evs)/max(1, len(all_rules)))*100)}%)")
+        col_rm3.metric("सक्रिय शुभ योग", f"{len(fired_yogas)}", "शुभ फलित")
+        col_rm4.metric("सक्रिय दोष / चेतावनियां", f"{len(fired_doshas)}", "सावधानी अपेक्षित")
 
-            # Evaluate all rules on current chart dynamically
-            with st.spinner("१२,५००+ शास्त्रीय नियमों का स्वचालित मूल्यांकन जारी..."):
-                evidences = rules_engine.evaluate_all(chart, None, {}, None)
-                ev_by_id = {ev.rule_id: ev for ev in evidences}
+        # Shastriya Rules Balance & Synthesis
+        net_balance = len(fired_yogas) - len(fired_doshas)
+        if net_balance >= 5:
+            bal_color = "#15803D"
+            bal_bg = "#F0FDF4"
+            bal_verdict = "अत्यंत शुभ एवं राजयोग प्रधान कुण्डली। शुभ योगों का प्राबल्य दोषों का शमन कर जीवन में निरंतर उन्नति व यश प्रदान करता है।"
+        elif net_balance >= 0:
+            bal_color = "#1D4ED8"
+            bal_bg = "#EFF6FF"
+            bal_verdict = "संतुलित एवं पुरुषार्थ प्रधान कुण्डली। शुभ एवं अशुभ नियमों का सम्यक संतुलन है; सद्कर्म एवं नियम पालन से श्रेष्ठ फल की प्राप्ति।"
+        else:
+            bal_color = "#B91C1C"
+            bal_bg = "#FEF2F2"
+            bal_verdict = "सावधानी एवं वैदिक शांति अपेक्षित कुण्डली। ग्रह दोषों एवं अनिष्ट योगों के शमन हेतु शास्त्रीय जप-दान व यम-नियम का आश्रय लाभप्रद।"
 
-            fired_evs = [ev for ev in evidences if ev.fired]
-            fired_yogas = [ev for ev in fired_evs if ev.polarity == "+"]
-            fired_doshas = [ev for ev in fired_evs if ev.polarity == "-"]
+        st.markdown(f"""
+        <div style="background:{bal_bg}; border-left:4px solid {bal_color}; padding:10px 14px; border-radius:6px; margin:10px 0;">
+            <b style="color:{bal_color}; font-size:14px;">⚖️ शास्त्रीय नियम संतुलन मीमांसा:</b> 
+            <span style="font-size:13px; color:#1E293B;">शुभ योग ({len(fired_yogas)}) vs दोष ({len(fired_doshas)}) | <b>निष्कर्ष:</b> {bal_verdict}</span>
+        </div>
+        """, unsafe_allow_html=True)
 
-            # Top Status Metrics
-            col_rm1, col_rm2, col_rm3, col_rm4 = st.columns(4)
-            col_rm1.metric("कुल संकलित नियम", f"{len(all_rules):,}", "१५ महा-ग्रंथ")
-            col_rm2.metric("कुण्डली में सक्रिय नियम", f"{len(fired_evs)}", f"सत्यापित ({round((len(fired_evs)/max(1, len(all_rules)))*100)}%)")
-            col_rm3.metric("सक्रिय शुभ योग", f"{len(fired_yogas)}", "शुभ फलित")
-            col_rm4.metric("सक्रिय दोष / चेतावनियां", f"{len(fired_doshas)}", "सावधानी अपेक्षित")
+        st.info("ℹ️ **सत्यनिष्ठा व प्रामाणिकता नीति:** मुख्य फलादेश व AI विश्लेषण में केवल **मशीन-जांचित** व **विद्वान-सत्यापित** नियम सक्रिय रहते हैं। शेष नियम ड्राफ्ट व संगरोध (Quarantine) में सुरक्षित हैं और आंतरिक अनुसंधान हेतु **Rules Lab** में उपलब्ध हैं।")
 
-            st.info("ℹ️ **सत्यनिष्ठा व प्रामाणिकता नीति:** मुख्य फलादेश व AI विश्लेषण में केवल **मशीन-जांचित (३,५९५)** व **विद्वान-सत्यापित** नियम सक्रिय रहते हैं। शेष ८,९११ नियम ड्राफ्ट व संगरोध (Quarantine) में सुरक्षित हैं और आंतरिक अनुसंधान हेतु **Rules Lab** में उपलब्ध हैं।")
+        st.markdown("---")
 
-            st.markdown("---")
+        # Filter Controls
+        c_f1, c_f2, c_f3 = st.columns([2.5, 2, 1.8])
+        search_kw = c_f1.text_input("🔍 नियम खोजें (Search Rule)", placeholder="e.g. गजकेसरी, बुधादित्य, धनेश, षष्ठम, शनि, राहु...")
 
-            # Filter Controls
-            c_f1, c_f2, c_f3 = st.columns([2.5, 2, 1.8])
-            search_kw = c_f1.text_input("🔍 नियम खोजें (Search Rule)", placeholder="e.g. गजकेसरी, बुधादित्य, धनेश, षष्ठम, शनि, राहु...")
+        grantha_list = ["सभी १० महा-ग्रंथ (All Granthas)"] + sorted(list({r.get('source', {}).get('text', 'Unknown') for r in all_rules}))
+        sel_grantha = c_f2.selectbox("📖 ग्रन्थ अनुसार फ़िल्टर (By Grantha)", grantha_list)
 
-            grantha_list = ["सभी १० महा-ग्रंथ (All Granthas)"] + sorted(list({r.get('source', {}).get('text', 'Unknown') for r in all_rules}))
-            sel_grantha = c_f2.selectbox("📖 ग्रन्थ अनुसार फ़िल्टर (By Grantha)", grantha_list)
+        cat_list = ["सभी श्रेणियां (All Categories)"] + sorted(list({r.get('category', 'general') for r in all_rules}))
+        sel_cat = c_f3.selectbox("🏷️ श्रेणी अनुसार फ़िल्टर (By Category)", cat_list)
 
-            cat_list = ["सभी श्रेणियां (All Categories)"] + sorted(list({r.get('category', 'general') for r in all_rules}))
-            sel_cat = c_f3.selectbox("🏷️ श्रेणी अनुसार फ़िल्टर (By Category)", cat_list)
+        col_chk1, col_chk2 = st.columns([2, 1])
+        show_only_fired = col_chk1.checkbox("⭐ केवल आपकी कुण्डली में सक्रिय नियम देखें (Show Only Fired Rules)", value=False)
+        sort_order = col_chk2.selectbox("क्रम (Sort)", ["सक्रिय नियम पहले (Fired First)", "ग्रन्थ क्रमानुसार (By Grantha)"])
 
-            col_chk1, col_chk2 = st.columns([2, 1])
-            show_only_fired = col_chk1.checkbox("⭐ केवल आपकी कुण्डली में सक्रिय नियम देखें (Show Only Fired Rules)", value=False)
-            sort_order = col_chk2.selectbox("क्रम (Sort)", ["सक्रिय नियम पहले (Fired First)", "ग्रन्थ क्रमानुसार (By Grantha)"])
+        # Filtering
+        filtered_rules = []
+        for r in all_rules:
+            r_id = r.get("rule_id", "")
+            ev = ev_by_id.get(r_id)
+            is_fired = ev.fired if ev else False
 
-            # Filtering
-            filtered_rules = []
-            for r in all_rules:
-                r_id = r.get("rule_id", "")
-                ev = ev_by_id.get(r_id)
-                is_fired = ev.fired if ev else False
-
-                if show_only_fired and not is_fired:
+            if show_only_fired and not is_fired:
+                continue
+            if sel_grantha != "सभी १० महा-ग्रंथ (All Granthas)" and r.get('source', {}).get('text') != sel_grantha:
+                continue
+            if sel_cat != "सभी श्रेणियां (All Categories)" and r.get('category') != sel_cat:
+                continue
+            if search_kw:
+                kw_l = search_kw.lower()
+                match_txt = f"{r.get('rule_name_hi', '')} {r.get('rule_name_en', '')} {r_id} {r.get('effect', {}).get('description_hi', '')}".lower()
+                if kw_l not in match_txt:
                     continue
-                if sel_grantha != "सभी १० महा-ग्रंथ (All Granthas)" and r.get('source', {}).get('text') != sel_grantha:
-                    continue
-                if sel_cat != "सभी श्रेणियां (All Categories)" and r.get('category') != sel_cat:
-                    continue
-                if search_kw:
-                    kw_l = search_kw.lower()
-                    match_txt = f"{r.get('rule_name_hi', '')} {r.get('rule_name_en', '')} {r_id} {r.get('effect', {}).get('description_hi', '')}".lower()
-                    if kw_l not in match_txt:
-                        continue
-                filtered_rules.append(r)
+            filtered_rules.append(r)
 
-            if sort_order == "सक्रिय नियम पहले (Fired First)":
-                filtered_rules.sort(key=lambda r: (0 if ev_by_id.get(r['rule_id'], None) and ev_by_id[r['rule_id']].fired else 1, r.get('source', {}).get('text', '')))
+        if sort_order == "सक्रिय नियम पहले (Fired First)":
+            filtered_rules.sort(key=lambda r: (0 if ev_by_id.get(r['rule_id'], None) and ev_by_id[r['rule_id']].fired else 1, r.get('source', {}).get('text', '')))
 
-            st.caption(f"प्रदर्शित शास्त्रीय नियम: **{len(filtered_rules)}** / {len(all_rules)} (सक्रिय: {sum(1 for r in filtered_rules if ev_by_id.get(r['rule_id']) and ev_by_id[r['rule_id']].fired)})")
+        st.caption(f"प्रदर्शित शास्त्रीय नियम: **{len(filtered_rules)}** / {len(all_rules)} (सक्रिय: {sum(1 for r in filtered_rules if ev_by_id.get(r['rule_id']) and ev_by_id[r['rule_id']].fired)})")
 
-            # Render Rules (Paginate to top 150 for ultra-fast rendering)
-            limit = 150
-            rules_slice = filtered_rules[:limit]
+        # Render Rules (Paginate to top 150 for ultra-fast rendering)
+        limit = 150
+        rules_slice = filtered_rules[:limit]
 
-            for r in rules_slice:
-                r_id = r.get("rule_id", "")
-                ev = ev_by_id.get(r_id)
-                is_fired = ev.fired if ev else False
-                pol = r.get("effect", {}).get("polarity", "+")
-                pol_badge = "🟢 शुभ योग (+)" if pol == "+" else "🔴 अनिष्ट / दोष (-)"
-                status_badge = "✅ आपकी कुण्डली में सक्रिय (Fired)" if is_fired else "⚪ निष्क्रिय (Inactive)"
-                status_color = "#15803D" if is_fired else "#64748B"
-                border_color = "#86EFAC" if is_fired else "#CBD5E1"
-                bg_color = "#F0FDF4" if is_fired else "#FFFFFF"
+        for r in rules_slice:
+            r_id = r.get("rule_id", "")
+            ev = ev_by_id.get(r_id)
+            is_fired = ev.fired if ev else False
+            pol = r.get("effect", {}).get("polarity", "+")
+            pol_badge = "🟢 शुभ योग (+)" if pol == "+" else "🔴 अनिष्ट / दोष (-)"
+            status_badge = "✅ आपकी कुण्डली में सक्रिय (Fired)" if is_fired else "⚪ निष्क्रिय (Inactive)"
+            status_color = "#15803D" if is_fired else "#64748B"
+            border_color = "#86EFAC" if is_fired else "#CBD5E1"
+            bg_color = "#F0FDF4" if is_fired else "#FFFFFF"
 
-                shloka_sa = r.get('source', {}).get('original_excerpt_sa', '')
-                shloka_html = f'<div style="background:#FFFBEB; border-left:3px solid #D97706; padding:6px 10px; margin:6px 0; font-size:13px; color:#78350F; font-weight:600; font-family:sans-serif; border-radius:4px;"><b>📜 मूल शास्त्रीय श्लोक / प्रमाण:</b><br>{shloka_sa}</div>' if shloka_sa else ''
+            shloka_sa = r.get('source', {}).get('original_excerpt_sa', '')
+            shloka_html = f'<div style="background:#FFFBEB; border-left:3px solid #D97706; padding:6px 10px; margin:6px 0; font-size:13px; color:#78350F; font-weight:600; font-family:sans-serif; border-radius:4px;"><b>📜 मूल शास्त्रीय श्लोक / प्रमाण:</b><br>{shloka_sa}</div>' if shloka_sa else ''
 
-                with st.expander(f"{'⭐ ' if is_fired else ''}{r.get('rule_name_hi', '')} — {r.get('rule_name_en', '')} [{status_badge}]", expanded=is_fired):
-                    st.markdown(f"""
-                    <div style="background:{bg_color}; border:1px solid {border_color}; border-radius:8px; padding:12px; margin-bottom:8px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
-                            <b style="color:{status_color}; font-size:14px;">स्थिति: {status_badge}</b>
-                            <span style="font-size:12px; color:#475569;"><b>नियम ID:</b> {r_id} | <b>प्रभाव:</b> {pol_badge}</span>
-                        </div>
-                        <div style="font-size:13px; color:#1E293B; margin-bottom:6px;">
-                            <b>📖 ग्रन्थ:</b> {r.get('source', {}).get('text', 'Unknown')} <i>({r.get('source', {}).get('chapter', 'General')})</i> | 
-                            <b>ऋषि/लेखक:</b> {r.get('source', {}).get('author', 'Vedic')} | 
-                            <b>पद्धति:</b> {r.get('school', 'Classical')} | 
-                            <b>श्रेणी:</b> {r.get('category', 'yoga')}
-                        </div>
-                        {shloka_html}
-                        <p style="margin:6px 0; color:#0F172A; font-size:13.5px; line-height:1.5;">
-                            <b>शास्त्रीय फलित:</b> {ev.explanation_hi if (ev and is_fired) else r.get('effect', {}).get('description_hi', '')}
-                        </p>
+            with st.expander(f"{'⭐ ' if is_fired else ''}{r.get('rule_name_hi', '')} — {r.get('rule_name_en', '')} [{status_badge}]", expanded=is_fired):
+                st.markdown(f"""
+                <div style="background:{bg_color}; border:1px solid {border_color}; border-radius:8px; padding:12px; margin-bottom:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:6px;">
+                        <b style="color:{status_color}; font-size:14px;">स्थिति: {status_badge}</b>
+                        <span style="font-size:12px; color:#475569;"><b>नियम ID:</b> {r_id} | <b>प्रभाव:</b> {pol_badge}</span>
                     </div>
-                    """, unsafe_allow_html=True)
+                    <div style="font-size:13px; color:#1E293B; margin-bottom:6px;">
+                        <b>📖 ग्रन्थ:</b> {r.get('source', {}).get('text', 'Unknown')} <i>({r.get('source', {}).get('chapter', 'General')})</i> | 
+                        <b>ऋषि/लेखक:</b> {r.get('source', {}).get('author', 'Vedic')} | 
+                        <b>पद्धति:</b> {r.get('school', 'Classical')} | 
+                        <b>श्रेणी:</b> {r.get('category', 'yoga')}
+                    </div>
+                    {shloka_html}
+                    <p style="margin:6px 0; color:#0F172A; font-size:13.5px; line-height:1.5;">
+                        <b>शास्त्रीय फलित:</b> {ev.explanation_hi if (ev and is_fired) else r.get('effect', {}).get('description_hi', '')}
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
-                    if r.get('modifiers'):
-                        mods_txt = " • ".join([f"{m.get('condition', '')} ({m.get('delta', '')})" for m in r['modifiers']])
-                        st.caption(f"🔧 संशोधक (Modifiers): {mods_txt}")
+                if r.get('modifiers'):
+                    mods_txt = " • ".join([f"{m.get('condition', '')} ({m.get('delta', '')})" for m in r['modifiers']])
+                    st.caption(f"🔧 संशोधक (Modifiers): {mods_txt}")
 
-            if len(filtered_rules) > limit:
-                st.info(f"💡 कुल {len(filtered_rules)} में से प्रथम {limit} नियम प्रदर्शित हैं। विशिष्ट नियम खोजने हेतु ऊपर 'खोजें' बॉक्स या 'ग्रन्थ' फ़िल्टर का प्रयोग करें।")
+        if len(filtered_rules) > limit:
+            st.info(f"💡 कुल {len(filtered_rules)} में से प्रथम {limit} नियम प्रदर्शित हैं। विशिष्ट नियम खोजने हेतु ऊपर 'खोजें' बॉक्स या 'ग्रन्थ' फ़िल्टर का प्रयोग करें।")
 
-
-        # =============================================================
+    # =============================================================
+    # TAB 2: GRANTHA EXPLORER
+    # =============================================================
     with tab_grantha_explorer:
         st.markdown("### 🔍 शास्त्रीय ग्रन्थ नियम एक्सप्लोरर एवं १-क्लिक कुण्डली वेध (Grantha Rules Explorer)")
         st.caption("बृहत्पाराशर होराशास्त्र, बृहज्जातक, सारावली, फलदीपिका, जैमिनी सूत्र, लाल किताब, के.पी. ज्योतिष, नाड़ी एवं प्रश्न मार्ग के १२,५००+ नियमों का लाइव सर्च व कुण्डली परीक्षण:")
@@ -207,6 +392,9 @@ def render_rules_library_view(chart, tabs=None):
         except Exception as _e_re:
             st.error(f"नियम एक्सप्लोरर में त्रुटि: {_e_re}")
 
+    # =============================================================
+    # TAB 3: RESEARCH ENGINE
+    # =============================================================
     with tab_research_engine:
         st.markdown("### 🔍 शास्त्रीय योग एवं कुण्डली अनुसंधान इंजन (Astrological Research & Query Engine)")
         st.write("शास्त्रीय शोध इंजन के समान अपने सहेजे गए जातकों एवं ऐतिहासिक बेंचमार्क कुण्डलियों में विशिष्ट शास्त्रीय योगों, ग्रह स्थितियों व उच्च-नीच अवस्थाओं की खोज।")
@@ -279,9 +467,12 @@ def render_rules_library_view(chart, tabs=None):
         else:
             st.warning("दिए गए मापदंडों से मेल खाती कोई कुण्डली नहीं मिली। कृपया फ़िल्टर शिथिल करके पुनः प्रयास करें।")
 
+    # =============================================================
+    # TAB 4: RULES LAB (ADMIN)
+    # =============================================================
     if tab_admin_lab is not None:
         with tab_admin_lab:
-            render_rules_lab_admin_panel(all_rules=all_rules if 'all_rules' in locals() else None)
+            render_rules_lab_admin_panel(all_rules=all_rules)
 
 
 def render_rules_lab_admin_panel(all_rules=None):
@@ -374,6 +565,3 @@ def render_rules_lab_admin_panel(all_rules=None):
                                 d_rule["verification"]["notes"] = scholar_note
                             st.warning(f"नियम {rid} को अस्वीकृत किया गया।")
                             st.rerun()
-
-
-
