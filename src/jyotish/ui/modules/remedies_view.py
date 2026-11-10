@@ -758,7 +758,6 @@ def render_remedies_view(chart, tabs=None):
     # =========================================================================
     with tab_life_areas_deep:
         st.markdown("#### 🎯 २७ जीवन आयाम त्रि-पक्षीय विश्लेषण (27 Classical Life Areas)")
-        st.info("प्रत्येक जीवन आयाम का निर्माण ३ प्रमुख स्तम्भों से होता है: **१. भाव (House)**, **२. कारक ग्रह (Karaka)**, एवं **३. भावेश (House Lord)**।")
 
         c_la_sel1, c_la_sel2 = st.columns([3, 1], vertical_alignment="center")
         with c_la_sel1:
@@ -791,35 +790,10 @@ def render_remedies_view(chart, tabs=None):
         _sec_h = la_info_obj.get("sec_house", 1)
         _h_lord = SIGN_LORDS.get(SIGN_NAMES[((chart.lagna_sign_id - 1 + (_h_num - 1)) % 12)], "")
 
-        st.markdown(f"""
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; margin: 10px 0 14px 0;">
-            <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
-                <div style="font-size: 11px; color: #475569; font-weight: 700;">🏛️ प्राथमिक भाव (House)</div>
-                <div style="font-size: 14.5px; font-weight: 900; color: #1E293B;">{_h_num} भाव</div>
-                <div style="font-size: 10px; color: #64748B;">आधारशिला व क्षेत्र</div>
-            </div>
-            <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
-                <div style="font-size: 11px; color: #475569; font-weight: 700;">🪐 नैसर्गिक कारक (Karaka)</div>
-                <div style="font-size: 14.5px; font-weight: 900; color: #D97706;">{_k_name}</div>
-                <div style="font-size: 10px; color: #64748B;">आंतरिक शक्ति व बीज</div>
-            </div>
-            <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
-                <div style="font-size: 11px; color: #475569; font-weight: 700;">👑 भावेश (House Lord)</div>
-                <div style="font-size: 14.5px; font-weight: 900; color: #1E40AF;">{_h_lord}</div>
-                <div style="font-size: 10px; color: #64748B;">कार्यकारी फल प्रदाता</div>
-            </div>
-            <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
-                <div style="font-size: 11px; color: #475569; font-weight: 700;">🎯 द्वितीयक भाव (Sec. House)</div>
-                <div style="font-size: 14.5px; font-weight: 900; color: #059669;">{_sec_h} भाव</div>
-                <div style="font-size: 10px; color: #64748B;">सहायक प्रभाव क्षेत्र</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        # Life Area Classical Quality Evaluation Card
+        # Life Area Classical Quality Evaluation Calculation
+        _total_soumya = 0
+        _total_krura = 0
         try:
-            _total_soumya = 0
-            _total_krura = 0
             for _r in la_detail.get("HouseRows", []) + la_detail.get("LordRows", []):
                 for _idx in [1, 2]:
                     try: _total_soumya += int(_r[_idx])
@@ -846,18 +820,50 @@ def render_remedies_view(chart, tabs=None):
                 _status_bdr = "#F59E0B"
                 _status_col = "#92400E"
                 _status_desc = "इस आयाम में शुभ व क्रूर ग्रहों का मिला-जुला प्रभाव है; इस क्षेत्र की सफलता जातक के पुरुषार्थ, विवेक और निरंतर उद्यम पर निर्भर करेगी।"
+        except Exception as _e_la_ev:
+            _area_status = "⚖️ मिश्रित व सम क्षेत्र"
+            _status_bg = "#FFFBEB"
+            _status_bdr = "#F59E0B"
+            _status_col = "#92400E"
+            _status_desc = f"आयाम मूल्यांकन: {_e_la_ev}"
 
-            st.markdown(f"""
-            <div style="background:{_status_bg}; border:1.5px solid {_status_bdr}; border-radius:8px; padding:10px 14px; margin-bottom:12px;">
+        # Collapsible Section for Life Area Explanation, HUD Pillars & Evaluation
+        with st.expander(f"🏛️ आयाम स्तम्भ, कारक एवं गरिमा विवरण — {_area_status.split('(')[0].strip()}", expanded=False):
+            st.info("प्रत्येक जीवन आयाम का निर्माण ३ प्रमुख स्तम्भों से होता है: **१. भाव (House)**, **२. कारक ग्रह (Karaka)**, एवं **३. भावेश (House Lord)**।")
+            st.markdown(_clean_html(f"""
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; margin: 6px 0 10px 0;">
+                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
+                    <div style="font-size: 11px; color: #475569; font-weight: 700;">🏛️ प्राथमिक भाव (House)</div>
+                    <div style="font-size: 14.5px; font-weight: 900; color: #1E293B;">{_h_num} भाव</div>
+                    <div style="font-size: 10px; color: #64748B;">आधारशिला व क्षेत्र</div>
+                </div>
+                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
+                    <div style="font-size: 11px; color: #475569; font-weight: 700;">🪐 नैसर्गिक कारक (Karaka)</div>
+                    <div style="font-size: 14.5px; font-weight: 900; color: #D97706;">{_k_name}</div>
+                    <div style="font-size: 10px; color: #64748B;">आंतरिक शक्ति व बीज</div>
+                </div>
+                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
+                    <div style="font-size: 11px; color: #475569; font-weight: 700;">👑 भावेश (House Lord)</div>
+                    <div style="font-size: 14.5px; font-weight: 900; color: #1E40AF;">{_h_lord}</div>
+                    <div style="font-size: 10px; color: #64748B;">कार्यकारी फल प्रदाता</div>
+                </div>
+                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
+                    <div style="font-size: 11px; color: #475569; font-weight: 700;">🎯 द्वितीयक भाव (Sec. House)</div>
+                    <div style="font-size: 14.5px; font-weight: 900; color: #059669;">{_sec_h} भाव</div>
+                    <div style="font-size: 10px; color: #64748B;">सहायक प्रभाव क्षेत्र</div>
+                </div>
+            </div>
+            """), unsafe_allow_html=True)
+
+            st.markdown(_clean_html(f"""
+            <div style="background:{_status_bg}; border:1.5px solid {_status_bdr}; border-radius:8px; padding:10px 14px; margin-bottom:6px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                     <span style="font-weight:900; color:{_status_col}; font-size:13.5px;">{_area_status}</span>
                     <span style="font-size:11.5px; font-weight:800; color:#475569;">कुल सौम्य अंक: <b style="color:#059669;">{_total_soumya}</b> | कुल क्रूर अंक: <b style="color:#DC2626;">{_total_krura}</b></span>
                 </div>
                 <div style="font-size:12px; color:#1E293B; margin-top:4px; line-height:1.5;">{_status_desc}</div>
             </div>
-            """, unsafe_allow_html=True)
-        except Exception as _e_la_ev:
-            st.caption(f"आयाम मूल्यांकन: {_e_la_ev}")
+            """), unsafe_allow_html=True)
 
         h_cols = ["Pillar", "सौम्य (Benefic)", "1/5/9 Lords", "क्रूर (Malefic)", "6/8/12 Lords", "Separative"]
         r_cols = ["Entity", "Sign", "Mobility", "Element", "Varna", "Purushartha", "Gender", "Rising", "Day/Night", "Guna"]
