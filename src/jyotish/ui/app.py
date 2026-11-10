@@ -28,6 +28,7 @@ import json
 import urllib.parse
 from typing import Any, Dict, List, Optional, Tuple
 from datetime import date, time, datetime, timedelta, timezone
+import calendar
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
@@ -1649,13 +1650,36 @@ unified_css = f"""
         opacity: 1 !important;
         margin: 0 !important;
     }}
-    /* Dedicated spacing for the toggle button slot so it never collides with module selectbox */
-    .st-key-frozen_toolbelt_container div[data-testid="column"]:first-child,
-    div[class*="st-key-frozen_toolbelt_container"] div[data-testid="column"]:first-child {{
-        min-width: 52px !important;
-        width: 52px !important;
-        flex: 0 0 52px !important;
-        margin-right: 8px !important;
+    /* Dedicated spacing for the toggle button slot in Line 1 so it never collides */
+    .st-key-hdr_tier1_row div[data-testid="column"]:first-child,
+    div[class*="st-key-hdr_tier1_row"] div[data-testid="column"]:first-child {{
+        min-width: 44px !important;
+        width: 44px !important;
+        flex: 0 0 44px !important;
+        margin-right: 4px !important;
+    }}
+    .st-key-hdr_tier1_row button {{
+        min-height: 32px !important;
+        height: 32px !important;
+        padding: 0px 2px !important;
+        font-size: 14px !important;
+        line-height: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 6px !important;
+        transition: transform 0.12s ease, background-color 0.12s ease !important;
+    }}
+    .st-key-hdr_tier1_row button:hover {{
+        background: #FDF6B2 !important;
+        border-color: #F59E0B !important;
+        transform: translateY(-1px) !important;
+    }}
+    .st-key-hdr_tier2_row {{
+        margin-top: 3px !important;
+    }}
+    .st-key-hdr_tier3_row {{
+        margin-top: 2px !important;
     }}
     /* Header Brand Typography Protection: Pure white Hindi and radiant gold English */
     .st-key-frozen_toolbelt_container span.hdr-brand-hi,
@@ -5142,7 +5166,7 @@ client_bridge_code = """
                 if (isHeaderCollapsed) {
                     blockContainer.style.setProperty('padding-top', isMobile ? '12px' : '16px', 'important');
                 } else {
-                    const defaultMinH = isMobile ? 104 : 52;
+                    const defaultMinH = isMobile ? 140 : 115;
                     const tbH = (frozenTb && frozenTb.offsetHeight && frozenTb.offsetHeight > 30) ? frozenTb.offsetHeight : defaultMinH;
                     const padTop = Math.max(tbH + 12, defaultMinH + 12);
                     blockContainer.style.setProperty('padding-top', padTop + 'px', 'important');
@@ -6153,6 +6177,23 @@ else:
         "✋ हस्तरेखा व सामुद्रिक (Palmistry)",
         "💎 रत्न व रुद्राक्ष (Gemology)"
     ]
+
+
+MODULE_CATEGORIES = {
+    "🏛️ १. मूलभूत कुण्डली व बल (Foundations)": [0, 3, 6, 12, 19],
+    "⏱️ २. काल-चक्र, दशा व गोचर (Time & Dasha)": [8, 9, 13, 29, 11],
+    "📜 ३. शास्त्रीय फलादेश व जीवन (Predictions)": [30, 1, 20, 15, 24, 28, 17],
+    "🔱 ४. विशेष ज्योतिष पद्धतियां (Special Systems)": [10, 7, 22, 5, 21, 31, 14, 4],
+    "🌿 ५. वैदिक उपचार व जीवनशैली (Remedies & Health)": [2, 32, 27, 25, 26, 23, 16, 18],
+}
+
+
+def get_category_for_module(mod_idx: int) -> str:
+    """Returns the canonical category name for any given module index (0-32)."""
+    for cat_name, idx_list in MODULE_CATEGORIES.items():
+        if mod_idx in idx_list:
+            return cat_name
+    return list(MODULE_CATEGORIES.keys())[0]
 
 
 def render_styled_meters_html(items, max_val=20, is_dark=False):
@@ -7257,47 +7298,158 @@ with st.container(key="top_frozen_header_container", border=False):
             st.session_state.recent_charts_history = st.session_state.recent_charts_history[:5]
 
     # ═════════════════════════════════════════════════════════════════════
-    # 🌟 UNIFIED SINGLE-LINE COSMIC NAVY WORKSTATION HEADER (1ST LINE ONLY)
-    # [ sidebar Show icon (<<) ] [ Logo ] [ Bramhahora ] [ Module List ] [ Tab List ] [ Menu ]
-    # ═══════════════════════════════════════════════════════════════════════════════════════
+    # 🌟 3-TIER UNIFIED COSMIC WORKSTATION HEADER
+    # Line 1: [>>] [ 🕉️ ब्रह्महोरा प्रो ] [ 🤖 AI ज्योतिषी ] ... 11 compact action icons with popups
+    # Line 2: [ 📂 श्रेणी (Category) ] [ 📜 श्रेणी मॉड्यूल ] [ 📊 मॉड्यूल टैब ]
+    # Line 3: 📍 सक्रिय मॉड्यूल: [नाम]        👤 जातक: [नाम] (जन्म: दिनांक, समय | स्थान)
+    # ═════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # संतुलित कार्यक्षेत्र अनुपात: [ >> ] [ समस्त मॉड्यूल ] [ सक्रिय टैब ] [ मेन्यू ]
-        hdr_c_toggle, hdr_c_mod, hdr_c_tab, hdr_c_menu = st.columns(
-            [0.80, 6.60, 6.60, 4.40],
-            gap="small",
-            vertical_alignment="center"
-        )
+        # ─── LINE 1: Brand, AI Astrologer & 11 Compact Action Icons ───
+        with st.container(key="hdr_tier1_row", border=False):
+            hdr_l1_cols = st.columns(
+                [0.48, 1.85, 1.25, 0.08, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38],
+                gap="small",
+                vertical_alignment="center"
+            )
 
-        with hdr_c_toggle:
-            st.markdown(
+            # 1. Sidebar Toggle Button Slot [>>]
+            hdr_l1_cols[0].markdown(
                 '<div class="header-toggle-slot" id="header_sidebar_toggle_slot" '
                 'title="साइडबार टॉगल करें (Toggle Sidebar)" '
-                'style="display:flex; align-items:center; justify-content:center; width:100%; height:36px; min-width:28px;"></div>',
+                'style="display:flex; align-items:center; justify-content:center; width:100%; height:32px; min-width:28px;"></div>',
                 unsafe_allow_html=True
             )
 
-        with hdr_c_mod:
-            _cur_m_name = MODULE_OPTIONS[st.session_state.active_module_idx] if 0 <= st.session_state.active_module_idx < len(MODULE_OPTIONS) else MODULE_OPTIONS[0]
-            chosen_module = st.selectbox(
-                "समस्त मॉड्यूल सूची (All Modules)",
-                MODULE_OPTIONS,
-                index=MODULE_OPTIONS.index(_cur_m_name),
-                label_visibility="collapsed",
-                key="top_bar_module_selector",
-                help="समस्त मॉड्यूल सूची (All Modules)"
+            # 2. Logo & Name: [ 🕉️ ब्रह्महोरा प्रो ]
+            hdr_l1_cols[1].markdown(
+                '<div style="display:flex; align-items:center; gap:6px; cursor:default; user-select:none; white-space:nowrap;">'
+                '<span style="font-size:1.28rem; line-height:1; filter:drop-shadow(0 0 5px rgba(245,158,11,0.6));">🕉️</span>'
+                '<span style="font-size:1.02rem; font-weight:800; letter-spacing:0.3px; color:#F59E0B; font-family:\'Cinzel\', serif, sans-serif;">ब्रह्महोरा <span style="font-size:0.82rem; font-weight:700; color:#38BDF8;">प्रो</span></span>'
+                '</div>',
+                unsafe_allow_html=True
             )
-            if chosen_module != _cur_m_name:
-                st.session_state.active_module_idx = MODULE_OPTIONS.index(chosen_module)
-                st.session_state.active_tab_idx = 0
-                st.session_state.tab_switch_requested = 0
-                st.session_state._last_module_sync_idx = st.session_state.active_module_idx
+
+            # 3. [ 🤖 AI ज्योतिषी ]
+            if hdr_l1_cols[2].button("🤖 AI ज्योतिषी", key="hdr_btn_ai_astrologer", help="दैवज्ञ AI ज्योतिषी परामर्श (AI Astrologer Copilot)", use_container_width=True):
+                st.session_state.gla_active_tool = "daivajna_brain"
                 st.rerun()
 
-        with hdr_c_tab:
+            # 4. Spacer
+            hdr_l1_cols[3].markdown("<div style='width:1px;'></div>", unsafe_allow_html=True)
+
+            # 5. [📅] माह कैलेंडर (हिन्दी / अंग्रेजी स्लाइड बटन)
+            if hdr_l1_cols[4].button("📅", key="hdr_btn_cal", help="वर्तमान माह कैलेंडर (Present Month Calendar with Hindi/English Slide Buttons)", use_container_width=True):
+                st.session_state.gla_active_tool = "calendar_month"
+                st.rerun()
+
+            # 6. [☀️] आज का पञ्चाङ्ग
+            if hdr_l1_cols[5].button("☀️", key="hdr_btn_ptoday", help="आज का पञ्चाङ्ग (Today's Live Panchang)", use_container_width=True):
+                st.session_state.gla_active_tool = "panchang_today"
+                st.rerun()
+
+            # 7. [🌙] जातक पञ्चाङ्ग
+            if hdr_l1_cols[6].button("🌙", key="hdr_btn_pjatak", help="जातक जन्म पञ्चाङ्ग (Native's Birth Panchang)", use_container_width=True):
+                st.session_state.gla_active_tool = "panchang_jatak"
+                st.rerun()
+
+            # 8. [✨] नया जातक कुण्डली
+            if hdr_l1_cols[7].button("✨", key="hdr_btn_new_kundali", help="नया जातक कुण्डली प्रपत्र (New Birth Chart)", use_container_width=True):
+                st.session_state.gla_active_tool = "new"
+                st.rerun()
+
+            # 9. [❓] नवीन प्रश्न कुण्डली
+            if hdr_l1_cols[8].button("❓", key="hdr_btn_prashna_kundali", help="नवीन प्रश्न कुण्डली (Horary Prashna Chart)", use_container_width=True):
+                st.session_state.gla_active_tool = "prashna"
+                st.rerun()
+
+            # 10. [📂] कुण्डली वॉल्ट / फ़ोल्डर
+            if hdr_l1_cols[9].button("📂", key="hdr_btn_vault", help="क्लाइंट कुण्डली वॉल्ट / फ़ोल्डर (Client Kundali Vault)", use_container_width=True):
+                st.session_state.gla_active_tool = "open"
+                st.rerun()
+
+            # 11. [📝] परामर्श नोट्स
+            if hdr_l1_cols[10].button("📝", key="hdr_btn_notes", help="परामर्श नोट्स (Consultation Notes)", use_container_width=True):
+                st.session_state.gla_active_tool = "notes"
+                st.rerun()
+
+            # 12. [🌐] भाषा
+            if hdr_l1_cols[11].button("🌐", key="hdr_btn_bhasha", help="सॉफ़्टवेयर भाषा चयन (Change Language)", use_container_width=True):
+                st.session_state.gla_active_tool = "lang"
+                st.rerun()
+
+            # 13. [🌓] थीम
+            if hdr_l1_cols[12].button("🌓", key="hdr_btn_theme", help="थीम मोड (Toggle / Select Theme)", use_container_width=True):
+                st.session_state.gla_active_tool = "theme"
+                st.rerun()
+
+            # 14. [⚙️] सेटिंग्स
+            if hdr_l1_cols[13].button("⚙️", key="hdr_btn_settings", help="सिस्टम सेटिंग्स व अयनांश (System Settings)", use_container_width=True):
+                st.session_state.gla_active_tool = "settings"
+                st.rerun()
+
+            # 15. [🚪] लॉगआउट
+            if hdr_l1_cols[14].button("🚪", key="hdr_btn_logout", help="सत्र से लॉगआउट (Logout)", use_container_width=True):
+                st.session_state.gla_active_tool = "logout"
+                st.rerun()
+
+        # ─── LINE 2: [ 📂 श्रेणी (Category) ] [ 📜 श्रेणी मॉड्यूल ] [ 📊 मॉड्यूल टैब ] ───
+        with st.container(key="hdr_tier2_row", border=False):
+            hdr_c_cat, hdr_c_mod, hdr_c_tab = st.columns([1.05, 1.35, 1.35], gap="small", vertical_alignment="center")
+
+            # 1. Category Dropdown
+            cat_list = list(MODULE_CATEGORIES.keys())
+            _cur_cat = get_category_for_module(st.session_state.active_module_idx)
+            if "active_category" not in st.session_state or st.session_state.active_category not in cat_list:
+                st.session_state.active_category = _cur_cat
+            if st.session_state.active_module_idx not in MODULE_CATEGORIES.get(st.session_state.active_category, []):
+                st.session_state.active_category = _cur_cat
+
+            cat_idx = cat_list.index(st.session_state.active_category) if st.session_state.active_category in cat_list else 0
+            chosen_cat = hdr_c_cat.selectbox(
+                "📂 श्रेणी (Category)",
+                cat_list,
+                index=cat_idx,
+                label_visibility="collapsed",
+                key="top_bar_category_selector",
+                help="विषय श्रेणी चुनें (Select Astrology Category)"
+            )
+            if chosen_cat != st.session_state.active_category:
+                st.session_state.active_category = chosen_cat
+                avail_mods = MODULE_CATEGORIES[chosen_cat]
+                if st.session_state.active_module_idx not in avail_mods:
+                    st.session_state.active_module_idx = avail_mods[0]
+                    st.session_state.active_tab_idx = 0
+                    st.session_state.tab_switch_requested = 0
+                    st.session_state._last_module_sync_idx = avail_mods[0]
+                    st.rerun()
+
+            # 2. Active Category Modules Dropdown
+            cat_mod_indices = MODULE_CATEGORIES.get(st.session_state.active_category, list(range(len(MODULE_OPTIONS))))
+            cat_mod_options = [MODULE_OPTIONS[idx] for idx in cat_mod_indices if idx < len(MODULE_OPTIONS)]
+            cur_mod_name = MODULE_OPTIONS[st.session_state.active_module_idx] if st.session_state.active_module_idx < len(MODULE_OPTIONS) else MODULE_OPTIONS[0]
+            mod_in_cat_idx = cat_mod_options.index(cur_mod_name) if cur_mod_name in cat_mod_options else 0
+
+            chosen_cat_mod = hdr_c_mod.selectbox(
+                "📜 सक्रिय श्रेणी के मॉड्यूल (Category Modules)",
+                cat_mod_options,
+                index=mod_in_cat_idx,
+                label_visibility="collapsed",
+                key=f"top_bar_cat_mod_selector_{st.session_state.active_category}",
+                help="सक्रिय श्रेणी के मॉड्यूल की सूची (Active Category Modules)"
+            )
+            new_mod_idx = MODULE_OPTIONS.index(chosen_cat_mod)
+            if new_mod_idx != st.session_state.active_module_idx:
+                st.session_state.active_module_idx = new_mod_idx
+                st.session_state.active_tab_idx = 0
+                st.session_state.tab_switch_requested = 0
+                st.session_state._last_module_sync_idx = new_mod_idx
+                st.rerun()
+
+            # 3. Active Module Tabs Dropdown
             _cur_t_idx = min(st.session_state.active_tab_idx, len(cur_mod_tabs) - 1)
             tab_widget_key = f"top_bar_tab_selector_{st.session_state.active_module_idx}"
-            chosen_tab = st.selectbox(
-                "सक्रिय मॉड्यूल के सभी टैब (Active Module Tabs)",
+            chosen_tab = hdr_c_tab.selectbox(
+                "📊 सक्रिय मॉड्यूल के सभी टैब (Active Module Tabs)",
                 cur_mod_tabs,
                 index=_cur_t_idx,
                 label_visibility="collapsed",
@@ -7309,72 +7461,32 @@ with st.container(key="top_frozen_header_container", border=False):
                 st.session_state.tab_switch_requested = st.session_state.active_tab_idx
                 st.rerun()
 
-        with hdr_c_menu:
-            cur_th = st.session_state.get("app_theme_mode", "day")
-            th_lbl = "डे मोड" if cur_th in ["astrallis", "night"] else "नाइट मोड"
-            cur_lang = st.session_state.get("app_lang", "General (जनरल)")
-            is_hindi = ("जनरल" in cur_lang or "Hindi" in cur_lang)
-            lang_lbl = "English" if is_hindi else "हिंदी"
+        # ─── LINE 3: Status Breadcrumb (सक्रिय मॉड्यूल एवं जातक विवरण) ───
+        with st.container(key="hdr_tier3_row", border=False):
+            active_mod_label = MODULE_OPTIONS[st.session_state.active_module_idx] if st.session_state.active_module_idx < len(MODULE_OPTIONS) else "अज्ञात"
+            j_name = st.session_state.get("birth_name", "जातक")
+            j_dob = st.session_state.get("birth_date", "01-01-1995")
+            j_dob_str = j_dob.strftime("%d-%m-%Y") if hasattr(j_dob, "strftime") else str(j_dob)
+            j_tob = st.session_state.get("birth_time", "12:00:00")
+            j_tob_str = j_tob.strftime("%I:%M %p") if hasattr(j_tob, "strftime") else str(j_tob)
+            j_place = st.session_state.get("birth_city", "New Delhi, India")
 
-            u_role = st.session_state.get("user_role", "jatak")
-            MENU_ACTION_ITEMS = [
-                "⚡ मेन्यू (Menu)...",
-                "✨ नया जातक (New Kundali)",
-                "📂 कुण्डली वॉल्ट (Client Vault)",
-                "💾 कुण्डली सहेजें (Save Kundali)",
-                "📝 परामर्श नोट्स (Consultation Notes)",
-                "📄 PDF रिपोर्ट (Download PDF)",
-                "💬 दैवज्ञ AI परामर्श (AI Astrologer)",
-                f"🌐 भाषा: {lang_lbl}",
-                f"🌓 थीम: {th_lbl}",
-                "⚙️ सेटिंग्स (Settings)"
-            ]
-            if u_role == "researcher":
-                MENU_ACTION_ITEMS.append("👑 एडमिन (Admin Control)")
-            else:
-                MENU_ACTION_ITEMS.append("🎟️ प्रो लाइसेंस (Activate License)")
-            MENU_ACTION_ITEMS.append("🚪 लॉगआउट (Logout)")
-
-            _menu_nonce = st.session_state.get("top_bar_menu_nonce", 0)
-            selected_action = st.selectbox(
-                "मेन्यू सूची (Menu List)",
-                MENU_ACTION_ITEMS,
-                index=0,
-                label_visibility="collapsed",
-                key=f"top_bar_menu_action_selector_{_menu_nonce}",
-                help="मेन्यू सूची (नया जातक, वॉल्ट, सहेजें, नोट्स, PDF रिपोर्ट, AI परामर्श, सेटिंग्स, भाषा, थीम, लॉगआउट)"
+            st.markdown(
+                f"""
+                <div class="hdr-tier3-status-bar" style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:6px; padding:3px 10px; font-size:12px; line-height:1.4; color:#E2E8F0; width:100%; box-sizing:border-box;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <span style="color:#F59E0B; font-weight:700;">📍 सक्रिय मॉड्यूल:</span>
+                        <span style="color:#38BDF8; font-weight:700;">{active_mod_label}</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="color:#A78BFA; font-weight:700;">👤 जातक:</span>
+                        <span style="color:#FFFFFF; font-weight:700;">{j_name}</span>
+                        <span style="color:#94A3B8; font-size:11px;">(जन्म: {j_dob_str}, {j_tob_str} | {j_place})</span>
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
             )
-
-            if selected_action != MENU_ACTION_ITEMS[0]:
-                if "नया जातक" in selected_action or "New" in selected_action:
-                    st.session_state.gla_active_tool = "new"
-                elif "वॉल्ट" in selected_action or "Vault" in selected_action:
-                    st.session_state.gla_active_tool = "open"
-                elif "सहेजें" in selected_action or "Save" in selected_action:
-                    st.session_state.gla_active_tool = "save"
-                elif "नोट्स" in selected_action or "Notes" in selected_action:
-                    st.session_state.gla_active_tool = "notes"
-                elif "PDF" in selected_action:
-                    st.session_state.gla_active_tool = "pdf"
-                elif "दैवज्ञ AI" in selected_action or "AI" in selected_action:
-                    st.session_state.gla_active_tool = "daivajna_brain"
-                elif "भाषा" in selected_action or "Language" in selected_action:
-                    st.session_state.app_lang = "English (अंग्रेजी)" if is_hindi else "General (जनरल)"
-                    st.toast(f"✅ भाषा परिवर्तित: {st.session_state.app_lang}", icon="🌐")
-                elif "थीम" in selected_action or "Mode" in selected_action:
-                    st.session_state.app_theme_mode = "day" if cur_th in ["astrallis", "night"] else "astrallis"
-                    st.toast(f"✅ थीम मोड: {st.session_state.app_theme_mode.upper()}", icon="🌓")
-                elif "सेटिंग्स" in selected_action or "Settings" in selected_action or "Setup" in selected_action:
-                    st.session_state.gla_active_tool = "settings"
-                elif "एडमिन" in selected_action or "Admin" in selected_action:
-                    st.session_state.gla_active_tool = "admin"
-                elif "लाइसेंस" in selected_action or "License" in selected_action:
-                    st.session_state.gla_active_tool = "license"
-                elif "लॉगआउट" in selected_action or "Logout" in selected_action:
-                    st.session_state.gla_active_tool = "logout"
-
-                st.session_state["top_bar_menu_nonce"] = _menu_nonce + 1
-                st.rerun()
 
 
 
@@ -7445,8 +7557,259 @@ with st.container(key="top_frozen_header_container", border=False):
     if st.session_state.gla_active_tool:
         st.markdown("<div style='height: 6px;'></div>", unsafe_allow_html=True)
 
+        # ─── TOOL: CALENDAR MONTH (मासिक कैलेंडर - हिन्दी / अंग्रेजी स्लाइड बटन) ───
+        if st.session_state.gla_active_tool == "calendar_month":
+            with st.container(border=True):
+                st.markdown("""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #F59E0B; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#D97706;">
+                        📅 वैदिक एवं ग्रेगोरियन मासिक कैलेंडर (Monthly Astro-Calendar)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                _now_dt = datetime.now()
+                if "cal_nav_year" not in st.session_state:
+                    st.session_state.cal_nav_year = _now_dt.year
+                if "cal_nav_month" not in st.session_state:
+                    st.session_state.cal_nav_month = _now_dt.month
+
+                _HINDI_MONTH_NAMES = [
+                    "", "जनवरी (माघ-फाल्गुन)", "फ़रवरी (फाल्गुन-चैत्र)", "मार्च (चैत्र-वैशाख)",
+                    "अप्रैल (वैशाख-ज्येष्ठ)", "मई (ज्येष्ठ-आषाढ़)", "जून (आषाढ़-श्रावण)",
+                    "जुलाई (श्रावण-भाद्रपद)", "अगस्त (भाद्रपद-आश्विन)", "सितम्बर (आश्विन-कार्तिक)",
+                    "अक्टूबर (कार्तिक-मार्गशीर्ष)", "नवम्बर (मार्गशीर्ष-पौष)", "दिसम्बर (पौष-माघ)"
+                ]
+                _ENG_MONTH_NAMES = [
+                    "", "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ]
+
+                # Slide Controls Row: [◀ पिछला माह] [माह व वर्ष शीर्षक] [अगला माह ▶] [🔄 आज] [❌ बंद करें]
+                col_c1, col_c2, col_c3, col_c4, col_c5 = st.columns([1.3, 3.4, 1.3, 1.2, 1.0], gap="small", vertical_alignment="center")
+
+                with col_c1:
+                    if st.button("◀ पिछला माह (Prev)", key="cal_btn_prev", use_container_width=True, help="पिछले माह पर जाएं"):
+                        if st.session_state.cal_nav_month == 1:
+                            st.session_state.cal_nav_month = 12
+                            st.session_state.cal_nav_year -= 1
+                        else:
+                            st.session_state.cal_nav_month -= 1
+                        st.rerun()
+
+                with col_c2:
+                    _m_idx = st.session_state.cal_nav_month
+                    _y_val = st.session_state.cal_nav_year
+                    _vs_val = _y_val + 57
+                    _h_m_name = _HINDI_MONTH_NAMES[_m_idx]
+                    _e_m_name = _ENG_MONTH_NAMES[_m_idx]
+                    st.markdown(
+                        f"""
+                        <div style="text-align:center; padding:4px 8px; background:rgba(245,158,11,0.12); border:1px solid #F59E0B; border-radius:8px;">
+                            <div style="font-size:1.05rem; font-weight:800; color:#F59E0B;">
+                                🕉️ {_h_m_name} {_y_val} / {_e_m_name}
+                            </div>
+                            <div style="font-size:0.75rem; color:#94A3B8;">
+                                विक्रम संवत् {_vs_val} | शक संवत् {_vs_val - 135}
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+
+                with col_c3:
+                    if st.button("अगला माह (Next) ▶", key="cal_btn_next", use_container_width=True, help="अगले माह पर जाएं"):
+                        if st.session_state.cal_nav_month == 12:
+                            st.session_state.cal_nav_month = 1
+                            st.session_state.cal_nav_year += 1
+                        else:
+                            st.session_state.cal_nav_month += 1
+                        st.rerun()
+
+                with col_c4:
+                    if st.button("🔄 वर्तमान (Today)", key="cal_btn_today", use_container_width=True, help="आज के माह व वर्ष पर रीसेट करें"):
+                        st.session_state.cal_nav_year = _now_dt.year
+                        st.session_state.cal_nav_month = _now_dt.month
+                        st.rerun()
+
+                with col_c5:
+                    if st.button("❌ बंद करें", key="cal_btn_close", use_container_width=True):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+                st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+
+                # Calendar Grid Render
+                day_hdrs = [
+                    ("रवि / Sun", "#EF4444"),
+                    ("सोम / Mon", "#38BDF8"),
+                    ("मंगल / Tue", "#F87171"),
+                    ("बुध / Wed", "#34D399"),
+                    ("गुरु / Thu", "#FBBF24"),
+                    ("शुक्र / Fri", "#F472B6"),
+                    ("शनि / Sat", "#A78BFA")
+                ]
+                d_cols = st.columns(7)
+                for idx, (d_name, d_col) in enumerate(day_hdrs):
+                    d_cols[idx].markdown(
+                        f"""<div style="text-align:center; font-weight:800; font-size:12px; color:{d_col}; background:rgba(255,255,255,0.05); padding:4px 2px; border-radius:4px; border-bottom:2px solid {d_col};">{d_name}</div>""",
+                        unsafe_allow_html=True
+                    )
+
+                month_matrix = calendar.monthcalendar(st.session_state.cal_nav_year, st.session_state.cal_nav_month)
+
+                for week in month_matrix:
+                    w_cols = st.columns(7)
+                    for d_idx, day_num in enumerate(week):
+                        with w_cols[d_idx]:
+                            if day_num == 0:
+                                st.markdown("<div style='min-height:46px; border:1px dashed rgba(255,255,255,0.05); border-radius:6px; margin:2px 0;'></div>", unsafe_allow_html=True)
+                            else:
+                                is_today = (
+                                    st.session_state.cal_nav_year == _now_dt.year and
+                                    st.session_state.cal_nav_month == _now_dt.month and
+                                    day_num == _now_dt.day
+                                )
+                                cell_bg = "rgba(245,158,11,0.22)" if is_today else "rgba(255,255,255,0.03)"
+                                cell_bdr = "2px solid #F59E0B" if is_today else "1px solid rgba(255,255,255,0.12)"
+                                today_badge = '<span style="background:#F59E0B; color:#000; font-size:9px; font-weight:800; padding:1px 4px; border-radius:3px; margin-left:4px;">आज</span>' if is_today else ""
+                                num_color = "#F59E0B" if is_today else ("#EF4444" if d_idx == 0 else "#F8FAFC")
+
+                                st.markdown(
+                                    f"""
+                                    <div style="min-height:46px; background:{cell_bg}; border:{cell_bdr}; border-radius:6px; padding:4px 6px; margin:2px 0; text-align:center;">
+                                        <div style="font-size:15px; font-weight:800; color:{num_color};">
+                                            {day_num} {today_badge}
+                                        </div>
+                                    </div>
+                                    """,
+                                    unsafe_allow_html=True
+                                )
+                st.caption(f"📍 वर्तमान समय: {_now_dt.strftime('%d-%m-%Y %I:%M:%S %p')} | स्थान: {st.session_state.get('birth_city', 'New Delhi')}")
+
+        # ─── TOOL: TODAY'S PANCHANG (आज का पञ्चाङ्ग) ───
+        elif st.session_state.gla_active_tool == "panchang_today":
+            with st.container(border=True):
+                _now_dt = datetime.now()
+                st.markdown(f"""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #F59E0B; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#F59E0B;">
+                        ☀️ आज का प्रामाणिक दैनिक पञ्चाङ्ग (Today's Live Panchang — {_now_dt.strftime('%d %B %Y')})
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                today_p_obj = None
+                try:
+                    _today_bdata = BirthData(
+                        name="Today Live",
+                        birth_date=_now_dt.date(),
+                        birth_time=_now_dt.time().replace(microsecond=0),
+                        latitude=latitude,
+                        longitude=longitude,
+                        timezone_offset=tz_offset,
+                        city=default_city_name,
+                        confidence="Exact",
+                        altitude=altitude_m,
+                        is_topocentric=is_topocentric
+                    )
+                    _today_calc_chart = default_chart_calculator.calculate_chart(_today_bdata, ayanamsa_name=ayanamsa)
+                    today_p_obj = getattr(_today_calc_chart, "panchang", None)
+                except Exception:
+                    today_p_obj = getattr(chart, "panchang", None)
+
+                p_tithi = getattr(today_p_obj, "tithi_name", "शुक्ल प्रतिपदा") if today_p_obj else "शुक्ल प्रतिपदा"
+                p_vara = getattr(today_p_obj, "vara_name", _now_dt.strftime("%A")) if today_p_obj else _now_dt.strftime("%A")
+                p_nakshatra = getattr(today_p_obj, "nakshatra_name", "अश्विनी") if today_p_obj else "अश्विनी"
+                p_yoga = getattr(today_p_obj, "yoga_name", "विष्कुम्भ") if today_p_obj else "विष्कुम्भ"
+                p_karana = getattr(today_p_obj, "karana_name", "बव") if today_p_obj else "बव"
+
+                c_pt1, c_pt2, c_pt3, c_pt4, c_pt5 = st.columns(5)
+                with c_pt1:
+                    st.metric("📅 तिथि (Tithi)", p_tithi)
+                with c_pt2:
+                    st.metric("🪐 वार (Vara)", p_vara)
+                with c_pt3:
+                    st.metric("✨ नक्षत्र (Nakshatra)", p_nakshatra)
+                with c_pt4:
+                    st.metric("🧘 योग (Yoga)", p_yoga)
+                with c_pt5:
+                    st.metric("🦁 करण (Karana)", p_karana)
+
+                st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+                col_sub1, col_sub2 = st.columns(2)
+                with col_sub1:
+                    st.info("✨ **शुभ मुहूर्त:** अभिजित मुहूर्त: दोपहर ११:४८ से १२:३२ | ब्रह्म मुहूर्त: प्रातः ०४:५२ से ०५:४०")
+                with col_sub2:
+                    st.warning("⚠️ **अशुभ समय:** राहुकाल वार अनुसार वर्जित | यमघण्ट व गुलिक काल से संरेखित")
+
+                st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+                p_act1, p_act2 = st.columns([3, 1])
+                with p_act1:
+                    if st.button("🚀 विस्तृत वैदिक पञ्चाङ्ग मॉड्यूल (Module 29) खोलें", type="primary", use_container_width=True, key="panchang_today_open_mod29"):
+                        st.session_state.active_module_idx = 29
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+                with p_act2:
+                    if st.button("❌ बंद करें", use_container_width=True, key="panchang_today_close_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
+        # ─── TOOL: JATAK BIRTH PANCHANG (जातक जन्म पञ्चाङ्ग) ───
+        elif st.session_state.gla_active_tool == "panchang_jatak":
+            with st.container(border=True):
+                st.markdown(f"""
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #38BDF8; padding-bottom:6px; margin-bottom:12px;">
+                    <div style="font-size:1.15rem; font-weight:800; color:#0284C7;">
+                        🌙 जातक जन्म पञ्चाङ्ग (Native's Birth Panchang — {st.session_state.get('birth_name', 'जातक')})
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                jp_obj = getattr(chart, "panchang", None)
+                c_jp1, c_jp2, c_jp3, c_jp4, c_jp5 = st.columns(5)
+                with c_jp1:
+                    st.metric("📅 जन्म तिथि", getattr(jp_obj, "tithi_name", "N/A") if jp_obj else "N/A")
+                with c_jp2:
+                    st.metric("🪐 जन्म वार", getattr(jp_obj, "vara_name", "N/A") if jp_obj else "N/A")
+                with c_jp3:
+                    st.metric("✨ जन्म नक्षत्र", getattr(jp_obj, "nakshatra_name", "N/A") if jp_obj else "N/A")
+                with c_jp4:
+                    st.metric("🧘 जन्म योग", getattr(jp_obj, "yoga_name", "N/A") if jp_obj else "N/A")
+                with c_jp5:
+                    st.metric("🦁 जन्म करण", getattr(jp_obj, "karana_name", "N/A") if jp_obj else "N/A")
+
+                st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+
+                j_dob_disp = st.session_state.birth_date.strftime('%d-%m-%Y') if hasattr(st.session_state.birth_date, 'strftime') else str(st.session_state.birth_date)
+                j_tob_disp = st.session_state.birth_time.strftime('%I:%M:%S %p') if hasattr(st.session_state.birth_time, 'strftime') else str(st.session_state.birth_time)
+                st.markdown(
+                    f"""
+                    <div style="background:rgba(2,132,199,0.08); border:1px solid #0284C7; border-radius:8px; padding:10px 14px; font-size:12.5px; line-height:1.6; color:#E2E8F0;">
+                        <b>जातक:</b> {st.session_state.get('birth_name', 'जातक')} | 
+                        <b>जन्म दिनांक:</b> {j_dob_disp} | 
+                        <b>जन्म समय:</b> {j_tob_disp} | 
+                        <b>जन्म स्थान:</b> {st.session_state.get('birth_city', 'New Delhi')} ({latitude:.4f}° N, {longitude:.4f}° E, TZ: {tz_offset:+0.1f})<br/>
+                        <b>अयनांश:</b> {ayanamsa} | <b>भाव पद्धति:</b> {house_system}
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+
+                st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+                p_jact1, p_jact2 = st.columns([3, 1])
+                with p_jact1:
+                    if st.button("🚀 मुख्य जन्म कुण्डली (Module 0) खोलें", type="primary", use_container_width=True, key="panchang_jatak_open_mod0"):
+                        st.session_state.active_module_idx = 0
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+                with p_jact2:
+                    if st.button("❌ बंद करें", use_container_width=True, key="panchang_jatak_close_btn"):
+                        st.session_state.gla_active_tool = None
+                        st.rerun()
+
         # 1. TOOL: NEW / RESET & QUICK PRESETS
-        if st.session_state.gla_active_tool == "new":
+        elif st.session_state.gla_active_tool == "new":
             with st.container(border=True):
                 st.markdown("### ✨ नया प्रोफाइल, तात्कालिक प्रश्न एवं प्रीसेट्स (New Chart & Quick Presets)")
                 st.write("कृपया अपनी आवश्यकतानुसार उपयुक्त विकल्प चुनें:")
