@@ -322,6 +322,9 @@ def render_soumya_krura_balance_svg(hp_list, is_dark: bool = False) -> str:
 
 
 def render_remedies_view(chart, tabs=None):
+    if "gla_shared_life_area_id" not in st.session_state:
+        st.session_state.gla_shared_life_area_id = 1
+
     is_dark = st.session_state.get("dark_mode", False)
     is_astrallis_mode = st.session_state.get("astrallis_mode", False)
     is_night_mode = is_dark
@@ -537,8 +540,9 @@ def render_remedies_view(chart, tabs=None):
         c_la_sel1, c_la_sel2 = st.columns([3, 1], vertical_alignment="center")
         with c_la_sel1:
             cur_idx = 0
+            cur_shared_id = st.session_state.get("gla_shared_life_area_id", 1)
             for idx, opt in enumerate(la_options_list):
-                if opt.startswith(f"{st.session_state.gla_shared_life_area_id}."):
+                if opt.startswith(f"{cur_shared_id}."):
                     cur_idx = idx
                     break
             sel_la = st.selectbox(
@@ -666,8 +670,9 @@ def render_remedies_view(chart, tabs=None):
         c_rem_sel1, c_rem_sel2 = st.columns([3, 1], vertical_alignment="center")
         with c_rem_sel1:
             cur_idx_rem = 0
+            cur_shared_id_rem = st.session_state.get("gla_shared_life_area_id", 1)
             for idx, opt in enumerate(la_options_list):
-                if opt.startswith(f"{st.session_state.gla_shared_life_area_id}."):
+                if opt.startswith(f"{cur_shared_id_rem}."):
                     cur_idx_rem = idx
                     break
             sel_rem_la = st.selectbox(
