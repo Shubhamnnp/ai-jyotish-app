@@ -1627,12 +1627,11 @@ unified_css = f"""
         justify-content: center !important;
         flex-wrap: nowrap !important;
         width: 100% !important;
-        min-height: 36px !important;
-        height: 36px !important;
-        max-height: 36px !important;
+        min-height: 34px !important;
+        height: auto !important;
         visibility: visible !important;
         opacity: 1 !important;
-        gap: 8px !important;
+        gap: 6px !important;
         margin: 0 !important;
         padding: 0 !important;
         overflow: visible !important;
@@ -1640,12 +1639,11 @@ unified_css = f"""
     .st-key-frozen_toolbelt_container div[data-testid="column"],
     div[class*="st-key-frozen_toolbelt_container"] div[data-testid="column"] {{
         min-width: 0 !important;
-        padding-left: 3px !important;
-        padding-right: 3px !important;
+        padding-left: 2px !important;
+        padding-right: 2px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        height: 36px !important;
         visibility: visible !important;
         opacity: 1 !important;
         margin: 0 !important;
@@ -1682,44 +1680,91 @@ unified_css = f"""
     .st-key-hdr_tier2_row {{
         margin-top: 4px !important;
     }}
-    .st-key-hdr_tier3_row {{
-        margin-top: 4px !important;
-        margin-bottom: 2px !important;
+    .st-key-hdr_tier3_row,
+    div[class*="st-key-hdr_tier3_row"] {{
+        margin-top: 5px !important;
+        margin-bottom: 3px !important;
+        width: 100% !important;
+        overflow: visible !important;
     }}
-    /* Header Brand Typography Protection: Pure white Hindi and radiant gold English */
-    .st-key-frozen_toolbelt_container span.hdr-brand-hi,
-    .st-key-frozen_toolbelt_container b.hdr-brand-hi,
-    span.hdr-brand-hi,
-    b.hdr-brand-hi,
-    .header-brand-box .hdr-brand-hi,
-    .header-title-box .hdr-brand-hi {{
-        color: #FFFFFF !important;
-        -webkit-text-fill-color: #FFFFFF !important;
-        font-weight: 900 !important;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 0 10px rgba(245, 158, 11, 0.35) !important;
-        font-size: 21px !important;
-        letter-spacing: 1px !important;
-        line-height: 1 !important;
+    .hdr-tier3-breadcrumb-pill {{
         display: flex !important;
+        justify-content: space-between !important;
         align-items: center !important;
+        background: rgba(10, 25, 47, 0.95) !important;
+        border: 1.5px solid rgba(245, 158, 11, 0.5) !important;
+        border-radius: 24px !important;
+        padding: 5px 18px !important;
+        min-height: 30px !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }}
-    .st-key-frozen_toolbelt_container span.hdr-brand-en,
-    .st-key-frozen_toolbelt_container b.hdr-brand-en,
-    span.hdr-brand-en,
-    b.hdr-brand-en,
-    .header-brand-box .hdr-brand-en,
-    .header-title-box .hdr-brand-en {{
+    /* Header Brand & Breadcrumb Typography Protection: NEVER OVERRIDDEN TO BLACK */
+    .st-key-hdr_tier1_row .hdr-brand-om {{
+        font-size: 1.65rem !important;
+        font-weight: 900 !important;
         color: #FBBF24 !important;
         -webkit-text-fill-color: #FBBF24 !important;
-        font-weight: 900 !important;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 0 10px rgba(245, 158, 11, 0.45) !important;
-        font-size: 18px !important;
-        letter-spacing: 2.5px !important;
+        text-shadow: 0 0 14px rgba(245, 158, 11, 0.9), 0 2px 4px rgba(0, 0, 0, 0.9) !important;
         line-height: 1 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
+        display: inline-block !important;
+    }}
+    .st-key-hdr_tier1_row .hdr-brand-title {{
+        font-size: 1.22rem !important;
+        font-weight: 900 !important;
+        color: #FBBF24 !important;
+        -webkit-text-fill-color: #FBBF24 !important;
+        text-shadow: 0 0 12px rgba(245, 158, 11, 0.8), 0 2px 4px rgba(0, 0, 0, 0.9) !important;
+        letter-spacing: 0.5px !important;
+        display: inline-block !important;
+        white-space: nowrap !important;
+    }}
+    .st-key-hdr_tier1_row .hdr-brand-pro {{
+        font-size: 0.95rem !important;
+        font-weight: 800 !important;
+        color: #38BDF8 !important;
+        -webkit-text-fill-color: #38BDF8 !important;
+        text-shadow: 0 0 10px rgba(56, 189, 248, 0.8) !important;
+        letter-spacing: 0.5px !important;
+        display: inline-block !important;
+    }}
+    .hdr-status-lbl {{
+        color: #F59E0B !important;
+        -webkit-text-fill-color: #F59E0B !important;
+        font-weight: 900 !important;
+        font-size: 12.5px !important;
+    }}
+    .hdr-status-val {{
+        color: #38BDF8 !important;
+        -webkit-text-fill-color: #38BDF8 !important;
+        font-weight: 800 !important;
+        font-size: 12.5px !important;
+    }}
+    .hdr-pill-sep {{
+        color: rgba(245, 158, 11, 0.45) !important;
+        -webkit-text-fill-color: rgba(245, 158, 11, 0.45) !important;
+        font-size: 15px !important;
+        margin: 0 12px !important;
+        user-select: none !important;
+    }}
+    .hdr-native-lbl {{
+        color: #C084FC !important;
+        -webkit-text-fill-color: #C084FC !important;
+        font-weight: 900 !important;
+        font-size: 12.5px !important;
+    }}
+    .hdr-native-val {{
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-weight: 800 !important;
+        font-size: 12.5px !important;
+    }}
+    .hdr-native-details {{
+        color: #CBD5E1 !important;
+        -webkit-text-fill-color: #CBD5E1 !important;
+        font-size: 11.5px !important;
+        font-weight: 600 !important;
     }}
     /* Perfect vertical alignment across all header container wrappers (36px workstation height) */
     .st-key-frozen_toolbelt_container div[data-testid="column"] > div[data-testid="stVerticalBlock"],
@@ -7325,11 +7370,11 @@ with st.container(key="top_frozen_header_container", border=False):
                 unsafe_allow_html=True
             )
 
-            # 2. Logo & Name: [ 🕉️ ब्रह्महोरा प्रो ]
+            # 2. Logo & Name: [ ॐ ब्रह्महोरा प्रो ]
             hdr_l1_cols[1].markdown(
                 '<div style="display:flex; align-items:center; gap:8px; cursor:default; user-select:none; white-space:nowrap; height:32px;">'
-                '<span style="font-size:1.35rem; line-height:1; filter:drop-shadow(0 0 6px rgba(245,158,11,0.7));">🕉️</span>'
-                '<span style="font-size:1.15rem; font-weight:900; letter-spacing:0.5px; color:#FBBF24 !important; -webkit-text-fill-color:#FBBF24 !important; text-shadow:0 0 10px rgba(245,158,11,0.5), 0 1px 3px rgba(0,0,0,0.9) !important; font-family:\'Cinzel\', serif, sans-serif;">ब्रह्महोरा <span style="font-size:0.92rem; font-weight:800; color:#38BDF8 !important; -webkit-text-fill-color:#38BDF8 !important; text-shadow:0 0 8px rgba(56,189,248,0.5) !important;">प्रो</span></span>'
+                '<span class="hdr-brand-om">ॐ</span>'
+                '<span class="hdr-brand-title">ब्रह्महोरा <span class="hdr-brand-pro">प्रो</span></span>'
                 '</div>',
                 unsafe_allow_html=True
             )
@@ -7473,16 +7518,16 @@ with st.container(key="top_frozen_header_container", border=False):
 
             st.markdown(
                 f"""
-                <div class="hdr-tier3-breadcrumb-pill" style="display:flex; justify-content:space-between; align-items:center; background:rgba(15, 23, 42, 0.75); border:1px solid rgba(245, 158, 11, 0.35); border-radius:30px; padding:4px 16px; margin:2px 0 3px 0; font-size:12px; line-height:1.4; color:#E2E8F0; width:100%; box-sizing:border-box; box-shadow:0 2px 8px rgba(0,0,0,0.35);">
+                <div class="hdr-tier3-breadcrumb-pill">
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="color:#F59E0B; font-weight:800;">📍 सक्रिय मॉड्यूल:</span>
-                        <span style="color:#38BDF8; font-weight:700;">{active_mod_label}</span>
+                        <span class="hdr-status-lbl">📍 सक्रिय मॉड्यूल:</span>
+                        <span class="hdr-status-val">{active_mod_label}</span>
                     </div>
-                    <div style="color:rgba(255,255,255,0.3); font-weight:300; font-size:14px; user-select:none; margin:0 12px;">│</div>
+                    <div class="hdr-pill-sep">│</div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="color:#A78BFA; font-weight:800;">👤 जातक:</span>
-                        <span style="color:#FFFFFF; font-weight:700;">{j_name}</span>
-                        <span style="color:#94A3B8; font-size:11.5px;">(जन्म: {j_dob_str}, {j_tob_str}, {j_place})</span>
+                        <span class="hdr-native-lbl">👤 जातक:</span>
+                        <span class="hdr-native-val">{j_name}</span>
+                        <span class="hdr-native-details">(जन्म: {j_dob_str}, {j_tob_str}, {j_place})</span>
                     </div>
                 </div>
                 """,
