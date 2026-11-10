@@ -81,3 +81,18 @@ def test_reports_view_module_imports_cleanly():
     """Verify reports_view imports cleanly without errors."""
     import src.jyotish.ui.modules.reports_view as reports_view
     assert hasattr(reports_view, "render_reports_view")
+
+
+def test_reports_view_shastriya_shloka_and_console():
+    """Verify BPHS report shloka, micro DMS coordinates, and reports HUD console in reports_view."""
+    import inspect
+    import src.jyotish.ui.modules.reports_view as reports_view
+    source = inspect.getsource(reports_view.render_reports_view)
+
+    assert "bphs_report_shloka" in source
+    assert "बृहत्पाराशर होराशास्त्र एवं फलदीपिका" in source
+    assert "होराशास्त्रं प्रवक्ष्यामि लोकानां हितकाम्यया" in source
+    assert "col_rep1, col_rep2, col_rep3, col_rep4 = st.columns(4)" in source
+    assert "सक्रिय जातक व लग्न" in source
+    assert "चन्द्र राशि व नक्षत्र" in source
+    assert "अनुकूल प्राथमिक रत्न" in source

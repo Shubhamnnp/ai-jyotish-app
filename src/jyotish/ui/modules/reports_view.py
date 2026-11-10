@@ -17,6 +17,69 @@ def render_reports_view(chart, birth_profile, tabs=None):
         ]
     st.subheader("📄 सम्पूर्ण जीवन कुण्डली पत्रिका एवं १-पेज परामर्श पर्ची (Printable Dossier & Prescription)")
 
+    # Classical Shastriya Shloka Card
+    bphs_report_shloka = {
+        "title": "बृहत्पाराशर होराशास्त्र एवं फलदीपिका — सम्पूर्ण जीवन पत्रिका निर्माण",
+        "source": "महर्षि पराशर विरचित 'बृहत्पाराशर होराशास्त्र' (अध्याय १, श्लोक ३-४) एवं 'फलदीपिका'",
+        "shloka": "होराशास्त्रं प्रवक्ष्यामि लोकानां हितकाम्यया।\nब्रह्मणा यत्पुरातन्यं पाराशर्यं महन्मतम्॥\nयस्य विज्ञानमात्रेण सर्वज्ञत्वं प्रपद्यते।\nआयुर्दायं दशा ज्ञेया शुभाशुभफलं स्फुटम्॥",
+        "meaning": "समस्त मानव जाति के कल्याणार्थ महर्षि पराशर ने होराशास्त्र का विशद ज्ञान प्रकट किया। षोडशवर्ग, अष्टकवर्ग, द्वादश भाव, विंशोत्तरी दशा एवं गोचर का प्रामाणिक समन्वय कर जब सम्पूर्ण जीवन पत्रिका निर्मित की जाती है, तो जातक के भूत, भविष्य और वर्तमान का स्फुट व प्रामाणिक मार्गदर्शन प्राप्त होता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_report_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_report_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_report_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {bphs_report_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Active Native Micro Reports HUD Console
+    l_deg = getattr(chart, "lagna_degree", 0.0)
+    l_ansh = int(l_deg)
+    l_kala = int(round((l_deg - l_ansh) * 60.0))
+    if l_kala >= 60:
+        l_kala = 0
+        l_ansh += 1
+    l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+    moon = chart.planets.get("Moon")
+    if moon:
+        m_deg = getattr(moon, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+    else:
+        m_dms = "—"
+        m_nak = "—"
+        m_pada = 1
+
+    p_serv = default_prescription_service
+    if p_serv is None:
+        from src.jyotish.services.prescription import ConsultationSlipService
+        p_serv = ConsultationSlipService()
+    try:
+        quick_p = p_serv.generate_prescription(chart)
+        pri_gem = quick_p.get("primary_gem", "माणिक्य")
+        pro_gems = ", ".join(quick_p.get("prohibited_gems", [])[:2]) or "कोई नहीं"
+    except Exception:
+        pri_gem = "माणिक्य"
+        pro_gems = "—"
+
+    col_rep1, col_rep2, col_rep3, col_rep4 = st.columns(4)
+    col_rep1.metric("सक्रिय जातक व लग्न", f"{birth_profile.name}", f"{chart.lagna_sign_name} ({l_dms})")
+    col_rep2.metric("चन्द्र राशि व नक्षत्र", f"{moon.sign_name if moon else '—'} ({m_dms})", f"🌙 {m_nak}-चरण {m_pada}")
+    col_rep3.metric("अनुकूल प्राथमिक रत्न", f"🟢 {pri_gem}", f"वर्जित: 🚫 {pro_gems}")
+    col_rep4.metric("रिपोर्ट स्वरूप (Formats)", "२२ अध्याय पत्रिका", "A4 PDF / HTML / पर्ची")
+
     with st.expander("👑 ज्योतिषी कस्टम ब्रांडिंग एवं रिपोर्ट विन्यास (White-Label Branding Settings)", expanded=False):
         c_br1, c_br2, c_br3 = st.columns(3)
         astro_name = c_br1.text_input("ज्योतिषी का नाम (Astrologer Name)", value="ज्योतिषाचार्य पं. शुभम तिवारी", key="rep_astro_name")
