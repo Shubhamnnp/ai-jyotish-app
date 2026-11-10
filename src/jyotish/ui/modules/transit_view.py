@@ -200,6 +200,97 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
         "Ketu": "☄️ केतु"
     }
 
+    # Classical Shastriya Shloka Card
+    phaladeepika_transit_shloka = {
+        "title": "फलदीपिका एवं बृहत्संहिता — गोचर फल एवं अष्टकवर्ग समन्वय",
+        "source": "मंत्रेश्वर विरचित 'फलदीपिका' (अध्याय २६, श्लोक १) एवं वराहमिहिर 'बृहत्संहिता'",
+        "shloka": "गोचरे च यदा जीवाः स्वतुङ्गस्वर्क्षसंस्थिताः।\nकेंद्रत्रिकोणगा वापि तदा सर्वार्थसाधकाः॥\nअष्टकवर्गशुद्धो हि गोचरे फलदायकः।\nविनाष्टकवर्गज्ञानेन न गोचरफलं स्फुटम्॥",
+        "meaning": "गोचर में जब शुभ ग्रह स्वराशि, उच्च राशि अथवा केंद्र-त्रिकोण में संचरण करते हैं, तो अभीष्ट कार्यों की सिद्धि करते हैं। परंतु अष्टकवर्ग की शुद्धि (रेखा-बिन्दु बल) के बिना केवल गोचर का फल स्पष्ट नहीं हो सकता; अष्टकवर्ग और गोचर का संयुक्त समन्वय ही फलित का अचूक रहस्य है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {phaladeepika_transit_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {phaladeepika_transit_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{phaladeepika_transit_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {phaladeepika_transit_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    def _calc_paya(m_h: int):
+        if m_h in (1, 6, 11):
+            return "स्वर्ण पाया (Gold)", "#F59E0B", "#FEF3C7", "50% (मध्यम)", "प्रारंभिक संघर्षोपरांत लाभ"
+        elif m_h in (2, 5, 9):
+            return "रजत पाया (Silver)", "#10B981", "#D1FAE5", "100% (सर्वोत्तम)", "धन वृद्धि, यश व सर्वतोमुखी सिद्धि"
+        elif m_h in (3, 7, 10):
+            return "ताम्र पाया (Copper)", "#3B82F6", "#DBEAFE", "75% (उत्तम)", "साहस, पराक्रम व व्यापार विस्तार"
+        else:
+            return "लौह पाया (Iron)", "#EF4444", "#FEE2E2", "25% (कष्टप्रद)", "मानसिक तनाव, शारीरिक श्रम व सतर्कता"
+
+    # Active Native Micro-Planetary Longitudes & Live Transit Console
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    l_deg = getattr(chart, "lagna_degree", 0.0)
+    l_ansh = int(l_deg)
+    l_kala = int(round((l_deg - l_ansh) * 60.0))
+    if l_kala >= 60:
+        l_kala = 0
+        l_ansh += 1
+    l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+    moon = chart.planets.get("Moon")
+    if moon:
+        m_deg = getattr(moon, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+        moon_str = f"{moon.sign_name} {m_dms} [{m_nak}-P{m_pada}]"
+    else:
+        moon_str = "—"
+
+    # Transit Moon details
+    t_moon = t_chart.planets.get("Moon")
+    if t_moon:
+        tm_deg = getattr(t_moon, "sign_degree", 0.0)
+        tm_ansh = int(tm_deg)
+        tm_kala = int(round((tm_deg - tm_ansh) * 60.0))
+        if tm_kala >= 60:
+            tm_kala = 0
+            tm_ansh += 1
+        tm_dms = f"{tm_ansh}° {tm_kala:02d}'"
+        tm_nak = getattr(t_moon, "nakshatra_name", getattr(t_moon, "nakshatra", "—"))
+        tm_pada = getattr(t_moon, "nakshatra_pada", getattr(t_moon, "pada", 1))
+        t_moon_str = f"{t_moon.sign_name} {tm_dms} [{tm_nak}-P{tm_pada}]"
+        # Paya
+        m_h_from_t = (natal_moon_id - t_moon.sign_id) % 12 + 1
+        paya_info = _calc_paya(m_h_from_t)
+        paya_name = paya_info[0]
+    else:
+        t_moon_str = "—"
+        paya_name = "—"
+
+    t_lagna_name = rashi_names_hi[t_chart.lagna_sign_id - 1]
+    tl_deg = getattr(t_chart, "lagna_degree", 0.0)
+    tl_ansh = int(tl_deg)
+    tl_kala = int(round((tl_deg - tl_ansh) * 60.0))
+    if tl_kala >= 60:
+        tl_kala = 0
+        tl_ansh += 1
+    t_lagna_dms = f"{tl_ansh}° {tl_kala:02d}'"
+
+    c_tr1, c_tr2, c_tr3, c_tr4 = st.columns(4)
+    c_tr1.metric("जन्म लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
+    c_tr2.metric("तात्कालिक गोचर लग्न", f"{t_lagna_name} ({t_lagna_dms})", f"समय: {t_time.strftime('%I:%M %p')}")
+    c_tr3.metric("गोचर चन्द्र एवं पाया", f"{paya_name}", f"🌙 {t_moon_str}")
+    c_tr4.metric("समग्र अष्टकवर्ग (SAV)", f"{chart.ashtakavarga.total_bindus if chart.ashtakavarga else 337} बिन्दु", f"लक्षित: {t_date.strftime('%d-%b-%Y')}")
+
     tab_g1, tab_g2, tab_g3, tab_g4, tab_g5, tab_g6, tab_g7, tab_g8, tab_g9, tab_g10, tab_g11, tab_g12, tab_g13, tab_g14 = st.tabs(tabs)
 
     # =========================================================================
@@ -274,18 +365,26 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
                 s_idx = tp.sign_id - 1
                 s_name = rashi_names_hi[s_idx]
                 s_sym = rashi_symbols[s_idx]
-                deg_str = f"{int(tp.sign_degree)}° {int((tp.sign_degree % 1)*60)}'"
+                t_deg = getattr(tp, "sign_degree", 0.0)
+                ansh = int(t_deg)
+                kala = int(round((t_deg - ansh) * 60.0))
+                if kala >= 60:
+                    kala = 0
+                    ansh += 1
+                deg_str = f"{ansh}° {kala:02d}'"
                 h_from_lagna = (tp.sign_id - natal_lagna_id) % 12 + 1
                 h_from_moon = (tp.sign_id - natal_moon_id) % 12 + 1
                 sign_sav = sav_list[s_idx]
                 sav_status = "🌟 उत्तम (" + str(sign_sav) + ")" if sign_sav >= 30 else ("✅ शुभ (" + str(sign_sav) + ")" if sign_sav >= 28 else "⚠️ न्यून (" + str(sign_sav) + ")")
                 motion_str = "⚡ वक्री (R)" if tp.is_retrograde else "मार्गी (D)"
+                swabhav_str = "नैसर्गिक शुभ" if p_name in ["Jupiter", "Venus", "Mercury", "Moon"] else "नैसर्गिक क्रूर"
 
                 gochar_rows.append({
                     "ग्रह (Planet)": planet_icons.get(p_name, p_name),
+                    "नैसर्गिक स्वभाव": swabhav_str,
                     "गोचर राशि (Sign)": f"{s_sym} {s_name}",
-                    "अंश (Degree)": deg_str,
-                    "नक्षत्र (Nakshatra)": f"{tp.nakshatra_name} (पद {tp.nakshatra_pada})",
+                    "अंश-कला (DMS)": deg_str,
+                    "नक्षत्र एवं चरण": f"{tp.nakshatra_name} (चरण {tp.nakshatra_pada})",
                     "गति (Motion)": motion_str,
                     "लग्न से भाव": f"{h_from_lagna} भाव",
                     "चन्द्र से भाव": f"{h_from_moon} भाव",

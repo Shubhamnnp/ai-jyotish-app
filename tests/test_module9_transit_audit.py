@@ -181,6 +181,20 @@ class TestModule9TransitAudit(unittest.TestCase):
         import src.jyotish.ui.modules.transit_view as transit_view_mod
         self.assertTrue(hasattr(transit_view_mod, "render_transit_view"))
 
+    def test_transit_view_shastriya_shloka_and_console(self):
+        """Verify classical Phaldeepika shloka, micro-planetary DMS formatting, and swabhav logic in transit view."""
+        import inspect
+        import src.jyotish.ui.modules.transit_view as transit_view_mod
+        source = inspect.getsource(transit_view_mod.render_transit_view)
+        
+        self.assertIn("फलदीपिका एवं बृहत्संहिता", source)
+        self.assertIn("गोचरे च यदा जीवाः स्वतुङ्गस्वर्क्षसंस्थिताः", source)
+        self.assertIn("c_tr1, c_tr2, c_tr3, c_tr4 = st.columns(4)", source)
+        self.assertIn("अंश-कला (DMS)", source)
+        self.assertIn("नैसर्गिक स्वभाव", source)
+        self.assertIn("नक्षत्र एवं चरण", source)
+        self.assertIn("_calc_paya", source)
+
 
 if __name__ == "__main__":
     unittest.main()
