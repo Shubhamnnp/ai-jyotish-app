@@ -115,3 +115,18 @@ def test_matching_view_module_imports_cleanly():
     """Verify that matching_view imports cleanly without errors."""
     import src.jyotish.ui.modules.matching_view as matching_view
     assert hasattr(matching_view, "render_matching_view")
+
+
+def test_matching_view_shastriya_shloka_and_console():
+    """Verify Muhurta Chintamani Ashtakoota shloka, micro DMS coordinates, and synastry console in matching_view."""
+    import inspect
+    import src.jyotish.ui.modules.matching_view as matching_view
+    source = inspect.getsource(matching_view.render_matching_view)
+
+    assert "muhurta_chintamani_milan_shloka" in source
+    assert "मुहूर्त चिन्तामणि एवं बृहत्संहिता" in source
+    assert "वर्णो वश्यं तथा तारा योनिश्च ग्रहमैत्रकम्" in source
+    assert "c_mil1, c_mil2, c_mil3, c_mil4 = st.columns(4)" in source
+    assert "👦 वर (Lagna & Moon)" in source
+    assert "👧 कन्या (Lagna & Moon)" in source
+    assert "भौम साम्य (Manglik)" in source

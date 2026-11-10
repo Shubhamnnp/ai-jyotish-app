@@ -41,8 +41,28 @@ def render_matching_view(birth_profile, render_chart_svg_fn=None, tabs=None):
     st.write(
         "महर्षि पराशर, मुहूर्त चिंतामणि, फलदीपिका, जातक पारिजात, बृहत्संहिता एवं जैमिनी उपदेश सूत्र पर आधारित ९९.९% प्रामाणिक विवाह मेलापक। "
         "३६ गुण अष्टकूट के सूक्ष्म सूत्र, १६ शास्त्रीय दोष-परिहार, मांगलिक भौम साम्य, उभय D1 व D9 नवांश चक्र, ग्रह दृष्टि सिनैस्ट्री, "
-        "बीज-क्षेत्र स्फुट (संतान सुख), ससुराल सामंजस्य, अष्टकवर्ग रेखा मिलान, दशा-संधि कालक्रम एवं व्यापारिक साझेदारी का संपूर्ण वैज्ञानिक वेध।"
+        "बीज-क्षेत्र स्फुट (संतान सुख), ससुराल सामंजस्य, अष्टकवर्ग रेखा मिलान, दशा-संधि कालक्रम एवं व्यापारिक साझेदारी का संपूर्ण वैज्ञानिक वेध। "
     )
+
+    # Classical Shastriya Shloka Card
+    muhurta_chintamani_milan_shloka = {
+        "title": "मुहूर्त चिन्तामणि एवं बृहत्संहिता — अष्टकूट ३६ गुण मेलापक",
+        "source": "दैवज्ञ राम विरचित 'मुहूर्त चिन्तामणि' (विवाह प्रकरण) एवं वराहमिहिर 'बृहत्संहिता'",
+        "shloka": "वर्णो वश्यं तथा तारा योनिश्च ग्रहमैत्रकम्।\nगणकूटं भकूटं च नाडी चैवेति ते गुणाः॥\nसर्वसम्पत्प्रदं प्रोक्तं मेलापकं मुनीश्वरैः।\nदोषे सति परिहारं ज्ञात्वा कुर्याद्विचक्षणः॥",
+        "meaning": "वैदिक विवाह मेलापक के ८ प्रधान कूट: वर्ण (१), वश्य (२), तारा (३), योनि (४), ग्रहमैत्री (५), गण (६), भकूट (७) एवं नाड़ी (८) — कुल ३६ गुण हैं। १८ से अधिक गुण प्राप्त होने पर तथा नाड़ी-भकूट महादोषों के प्रामाणिक शास्त्रीय परिहार की उपस्थिति में विवाह सर्वतोमुखी सुख, वंश वृद्धि व ऐश्वर्य प्रदान करता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {muhurta_chintamani_milan_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {muhurta_chintamani_milan_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{muhurta_chintamani_milan_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {muhurta_chintamani_milan_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
     # -------------------------------------------------------------------------
     # GROOM & BRIDE INPUT SECTION
@@ -136,6 +156,73 @@ def render_matching_view(birth_profile, render_chart_svg_fn=None, tabs=None):
     </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # Active Native Micro Synastry Console (वर-कन्या सूक्ष्म ग्रह स्थिति कंसोल)
+    gl_deg = getattr(g_chart, "lagna_degree", 0.0)
+    gl_ansh = int(gl_deg)
+    gl_kala = int(round((gl_deg - gl_ansh) * 60.0))
+    if gl_kala >= 60:
+        gl_kala = 0
+        gl_ansh += 1
+    gl_dms = f"{gl_ansh}° {gl_kala:02d}'"
+
+    gm = g_chart.planets.get("Moon")
+    if gm:
+        gm_deg = getattr(gm, "sign_degree", 0.0)
+        gm_ansh = int(gm_deg)
+        gm_kala = int(round((gm_deg - gm_ansh) * 60.0))
+        if gm_kala >= 60:
+            gm_kala = 0
+            gm_ansh += 1
+        gm_dms = f"{gm_ansh}° {gm_kala:02d}'"
+        gm_nak = getattr(gm, "nakshatra_name", getattr(gm, "nakshatra", "—"))
+        gm_pada = getattr(gm, "nakshatra_pada", getattr(gm, "pada", 1))
+        gm_str = f"{gm.sign_name} {gm_dms} [{gm_nak}-P{gm_pada}]"
+    else:
+        gm_dms = "—"
+        gm_str = "—"
+
+    bl_deg = getattr(b_chart, "lagna_degree", 0.0)
+    bl_ansh = int(bl_deg)
+    bl_kala = int(round((bl_deg - bl_ansh) * 60.0))
+    if bl_kala >= 60:
+        bl_kala = 0
+        bl_ansh += 1
+    bl_dms = f"{bl_ansh}° {bl_kala:02d}'"
+
+    bm = b_chart.planets.get("Moon")
+    if bm:
+        bm_deg = getattr(bm, "sign_degree", 0.0)
+        bm_ansh = int(bm_deg)
+        bm_kala = int(round((bm_deg - bm_ansh) * 60.0))
+        if bm_kala >= 60:
+            bm_kala = 0
+            bm_ansh += 1
+        bm_dms = f"{bm_ansh}° {bm_kala:02d}'"
+        bm_nak = getattr(bm, "nakshatra_name", getattr(bm, "nakshatra", "—"))
+        bm_pada = getattr(bm, "nakshatra_pada", getattr(bm, "pada", 1))
+        bm_str = f"{bm.sign_name} {bm_dms} [{bm_nak}-P{bm_pada}]"
+    else:
+        bm_dms = "—"
+        bm_str = "—"
+
+    if m_score.manglik_match:
+        manglik_status = "✅ मांगलिक साम्य (अनुकूल)"
+    elif m_score.groom_manglik != m_score.bride_manglik:
+        manglik_status = "⚠️ एकतरफा मांगलिक (परिहार्य)"
+    else:
+        manglik_status = "✅ दोनों अमंगल (दोष मुक्त)"
+
+    if m_score.nadi_dosha:
+        nadi_status = "⚠️ नाड़ी दोष (परिहार विचार्य)" if m_score.nadi_dosha_cancelled else "🔴 नाड़ी दोष (अशुभ)"
+    else:
+        nadi_status = "✅ नाड़ी शुद्धि"
+
+    c_mil1, c_mil2, c_mil3, c_mil4 = st.columns(4)
+    c_mil1.metric("👦 वर (Lagna & Moon)", f"{g_chart.lagna_sign_name} ({gl_dms})", f"🌙 {gm_str}")
+    c_mil2.metric("👧 कन्या (Lagna & Moon)", f"{b_chart.lagna_sign_name} ({bl_dms})", f"🌙 {bm_str}")
+    c_mil3.metric("अष्टकूट ३६ गुण", f"{m_score.total_score} / 36 गुण", f"{nadi_status}")
+    c_mil4.metric("भौम साम्य (Manglik)", f"{manglik_status}", f"निर्णय: {m_score.verdict}")
 
     # -------------------------------------------------------------------------
     # 10 DEDICATED TABS
