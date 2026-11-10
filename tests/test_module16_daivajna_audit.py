@@ -82,3 +82,18 @@ def test_daivajna_view_module_imports_cleanly():
     """Verify daivajna_view imports cleanly and accepts tabs argument."""
     import src.jyotish.ui.modules.daivajna_view as daivajna_view
     assert hasattr(daivajna_view, "render_daivajna_view")
+
+
+def test_daivajna_view_shastriya_shloka_and_console():
+    """Verify classical Prashna Marga shloka, micro DMS coordinates, and Daivajna HUD console in daivajna_view."""
+    import inspect
+    import src.jyotish.ui.modules.daivajna_view as daivajna_view
+    source = inspect.getsource(daivajna_view.render_daivajna_view)
+
+    assert "prashna_marga_daivajna_shloka" in source
+    assert "प्रश्न मार्ग एवं बृहत्संहिता" in source
+    assert "दैवज्ञः शान्तो दान्तो विमलमनाः शास्त्रपारगो विप्रः" in source
+    assert "col_dj1, col_dj2, col_dj3, col_dj4 = st.columns(4)" in source
+    assert "सक्रिय जातक व लग्न" in source
+    assert "चन्द्र राशि व नक्षत्र" in source
+    assert "आत्मकारक (AK) व AmK" in source

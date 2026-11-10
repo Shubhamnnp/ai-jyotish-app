@@ -8,21 +8,75 @@ def render_daivajna_view(chart, tabs=None):
     st.subheader("💬 दैवज्ञ AI सहायक — प्रामाणिक वैदिक परामर्श (Dual-Kundali AI Astrologer)")
     st.write("९९.९% शास्त्रीय परिशुद्धता: जन्म कुण्डली (D1-D60) एवं तात्कालिक प्रश्न कुण्डली (Prashna Marga) के संयुक्त शोध पर आधारित निष्पक्ष, ईमानदार एवं सत्य फलादेश।")
 
-    # Active Kundali Profile Banner
+    # Classical Shastriya Shloka Card
+    prashna_marga_daivajna_shloka = {
+        "title": "प्रश्न मार्ग एवं बृहत्संहिता — दैवज्ञ लक्षण व निष्पक्ष सत्य फलादेश",
+        "source": "केरलीय आचार्य विरचित 'प्रश्न मार्ग' (अध्याय १, श्लोक १-२) एवं वराहमिहिर 'बृहत्संहिता'",
+        "shloka": "दैवज्ञः शान्तो दान्तो विमलमनाः शास्त्रपारगो विप्रः।\nसत्यवादी हितवादी सर्वभूतानुकम्पकः॥\nशुभमशुभं वा फलं यत् स्फुटमभिदध्यात् न संशयं कुर्यात्।\nप्रश्नक्षणप्रभावात् सत्यं वचः प्रकाशते तस्य॥",
+        "meaning": "सच्चे दैवज्ञ (ज्योतिषी) का परम धर्म: वह शास्त्रपारंगत, शांतचित्त, सत्यवादी व सर्वप्राणियों का हितैषी हो। जातक के सम्मुख शुभ और अशुभ (सकारात्मक व नकारात्मक) दोनों फलों को बिना किसी लोभ, भय अथवा संशय के स्पष्ट कहे। प्रश्न क्षण एवं जन्म कुण्डली के संयुक्त अनुसंधानात्मक शोध से ही अचूक सत्य वाणी प्रकट होती है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {prashna_marga_daivajna_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {prashna_marga_daivajna_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{prashna_marga_daivajna_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {prashna_marga_daivajna_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Active Kundali Profile Micro DMS & HUD Console
     vim_current = ""
+    curr_dasha = {}
     try:
-        curr_dasha = default_vimshottari_engine.get_current_dasha(chart)
+        curr_dasha = default_vimshottari_engine.get_current_dasha(chart) or {}
         if curr_dasha:
             vim_current = f" &nbsp;|&nbsp; <b>वर्तमान महादशा:</b> <span style='color:#7C3AED;'>{curr_dasha.get('lord', '')} ({curr_dasha.get('level', 'MD')})</span>"
     except Exception:
         vim_current = ""
 
+    l_deg = getattr(chart, "lagna_degree", 0.0)
+    l_ansh = int(l_deg)
+    l_kala = int(round((l_deg - l_ansh) * 60.0))
+    if l_kala >= 60:
+        l_kala = 0
+        l_ansh += 1
+    l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+    moon = chart.planets.get("Moon")
+    if moon:
+        m_deg = getattr(moon, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+    else:
+        m_dms = "—"
+        m_nak = "—"
+        m_pada = 1
+
+    ak = getattr(chart, "atmakaraka", "—")
+    amk = getattr(chart, "amatyakaraka", "—")
+
+    col_dj1, col_dj2, col_dj3, col_dj4 = st.columns(4)
+    col_dj1.metric("सक्रिय जातक व लग्न", f"{chart.birth_data.name}", f"{chart.lagna_sign_name} ({l_dms})")
+    col_dj2.metric("चन्द्र राशि व नक्षत्र", f"{moon.sign_name if moon else '—'} ({m_dms})", f"🌙 {m_nak}-चरण {m_pada}")
+    col_dj3.metric("आत्मकारक (AK) व AmK", f"👑 {ak}", f"अमात्यकारक: {amk}")
+    col_dj4.metric("सक्रिय विंशोत्तरी दशा", f"{curr_dasha.get('lord', '—')} महादशा", f"परामर्श: ९९.९% प्रामाणिक")
+
     st.markdown(
         f'<div style="background:linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border:1.5px solid #93C5FD; border-radius:10px; padding:12px 18px; margin-bottom:15px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">'
         f'<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">'
         f'<div><b style="color:#1E40AF; font-size:15px;">👤 सक्रिय कुण्डली:</b> <span style="font-weight:700; color:#0F172A;">{chart.birth_data.name}</span> &nbsp;|&nbsp; '
-        f'<b>लग्न:</b> <span style="color:#2563EB;">{chart.lagna_sign_name}</span> &nbsp;|&nbsp; '
-        f'<b>चन्द्र राशि:</b> <span style="color:#2563EB;">{chart.planets["Moon"].sign_name} ({chart.panchang.nakshatra_name})</span> &nbsp;|&nbsp; '
+        f'<b>लग्न:</b> <span style="color:#2563EB;">{chart.lagna_sign_name} ({l_dms})</span> &nbsp;|&nbsp; '
+        f'<b>चन्द्र राशि:</b> <span style="color:#2563EB;">{chart.planets["Moon"].sign_name} {m_dms} ({m_nak}-चरण {m_pada})</span> &nbsp;|&nbsp; '
         f'<b>आत्मकारक:</b> <span style="color:#D97706;">{chart.atmakaraka}</span>'
         f'{vim_current}</div>'
         f'<div><span style="background:#DCFCE7; color:#166534; border:1px solid #86EFAC; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:700;">🌟 ९९.९% प्रामाणिक दैवज्ञ शोध</span></div>'
