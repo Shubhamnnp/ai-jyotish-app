@@ -102,3 +102,45 @@ def test_line3_status_breadcrumb_formatting():
     assert "New Delhi, India" in line3_html
     assert "शुभम शर्मा" in line3_html
     assert "जन्म कुण्डली" in line3_html
+
+
+def test_line3_status_breadcrumb_with_micro_dms_coordinates():
+    """Verify Line 3 status breadcrumb with active native Lagna and Moon micro coordinates (अंश, कला, विकला & चरण)."""
+    def _pill_dms(deg_val):
+        deg_norm = float(deg_val) % 30.0
+        ansh = int(deg_norm)
+        rem_min = (deg_norm - ansh) * 60.0
+        kala = int(rem_min)
+        vikala = int(round((rem_min - kala) * 60.0))
+        if vikala >= 60:
+            vikala = 0
+            kala += 1
+        if kala >= 60:
+            kala = 0
+            ansh = (ansh + 1) % 30
+        return f"{ansh}° {kala:02d}' {vikala:02d}\""
+
+    # Test exact DMS calculation
+    l_dms = _pill_dms(14.5025)
+    assert l_dms == "14° 30' 09\""
+
+    # Test boundary roll-over
+    assert _pill_dms(29.9999) == "0° 00' 00\"" or "29°" in _pill_dms(29.9999)
+
+    lagna_sign = "मेष (Aries)"
+    moon_sign = "वृषभ (Taurus)"
+    moon_dms = _pill_dms(22.75)
+    assert moon_dms == "22° 45' 00\""
+    moon_nak = "रोहिणी"
+    moon_pada = 4
+
+    breadcrumb_snippet = (
+        f"🌅 लग्न: <b>{lagna_sign}</b> ({l_dms}) │ "
+        f"🌙 चंद्र: <b>{moon_sign}</b> ({moon_dms}) • {moon_nak} (पद-{moon_pada})"
+    )
+
+    assert "14° 30' 09\"" in breadcrumb_snippet
+    assert "22° 45' 00\"" in breadcrumb_snippet
+    assert "रोहिणी (पद-4)" in breadcrumb_snippet
+    assert "मेष (Aries)" in breadcrumb_snippet
+

@@ -1699,6 +1699,8 @@ unified_css = f"""
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
         width: 100% !important;
         box-sizing: border-box !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
     }}
     /* Header Brand & Breadcrumb Typography Protection: NEVER OVERRIDDEN TO BLACK */
     .st-key-hdr_tier1_row .hdr-brand-om {{
@@ -1765,6 +1767,28 @@ unified_css = f"""
         -webkit-text-fill-color: #CBD5E1 !important;
         font-size: 11.5px !important;
         font-weight: 600 !important;
+    }}
+    .hdr-lagna-pill {{
+        color: #34D399 !important;
+        -webkit-text-fill-color: #34D399 !important;
+        font-size: 11.8px !important;
+        font-weight: 700 !important;
+        white-space: nowrap !important;
+    }}
+    .hdr-lagna-pill b {{
+        color: #6EE7B7 !important;
+        -webkit-text-fill-color: #6EE7B7 !important;
+    }}
+    .hdr-moon-pill {{
+        color: #93C5FD !important;
+        -webkit-text-fill-color: #93C5FD !important;
+        font-size: 11.8px !important;
+        font-weight: 700 !important;
+        white-space: nowrap !important;
+    }}
+    .hdr-moon-pill b {{
+        color: #BFDBFE !important;
+        -webkit-text-fill-color: #BFDBFE !important;
     }}
     /* Perfect vertical alignment across all header container wrappers (36px workstation height) */
     .st-key-frozen_toolbelt_container div[data-testid="column"] > div[data-testid="stVerticalBlock"],
@@ -7516,6 +7540,47 @@ with st.container(key="top_frozen_header_container", border=False):
             j_tob_str = j_tob.strftime("%I:%M %p") if hasattr(j_tob, "strftime") else str(j_tob)
             j_place = st.session_state.get("birth_city", "New Delhi, India")
 
+            # Extract active native Lagna and Chandra DMS & Nakshatra coordinates
+            astro_coords_html = ""
+            try:
+                if 'chart' in locals() and chart is not None:
+                    def _pill_dms(deg_val):
+                        deg_norm = float(deg_val) % 30.0
+                        ansh = int(deg_norm)
+                        rem_min = (deg_norm - ansh) * 60.0
+                        kala = int(rem_min)
+                        vikala = int(round((rem_min - kala) * 60.0))
+                        if vikala >= 60:
+                            vikala = 0
+                            kala += 1
+                        if kala >= 60:
+                            kala = 0
+                            ansh = (ansh + 1) % 30
+                        return f"{ansh}° {kala:02d}' {vikala:02d}\""
+
+                    l_sign = getattr(chart, "lagna_sign_name", "")
+                    l_deg = getattr(chart, "lagna_degree", 0.0)
+                    l_dms = _pill_dms(l_deg)
+
+                    moon_str = ""
+                    if hasattr(chart, "planets") and "Moon" in chart.planets:
+                        m_pos = chart.planets["Moon"]
+                        m_sign = getattr(m_pos, "sign_name", "")
+                        m_dms = _pill_dms(getattr(m_pos, "sign_degree", 0.0))
+                        m_nak = getattr(m_pos, "nakshatra_name", "")
+                        m_pada = getattr(m_pos, "nakshatra_pada", 1)
+                        moon_str = f"🌙 चंद्र: <b>{m_sign}</b> ({m_dms}) • {m_nak} (पद-{m_pada})"
+
+                    astro_coords_html = f"""
+                    <div class="hdr-pill-sep">│</div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="hdr-lagna-pill">🌅 लग्न: <b>{l_sign}</b> ({l_dms})</span>
+                        {f'<span class="hdr-moon-pill">{moon_str}</span>' if moon_str else ''}
+                    </div>
+                    """
+            except Exception:
+                astro_coords_html = ""
+
             st.markdown(
                 f"""
                 <div class="hdr-tier3-breadcrumb-pill">
@@ -7529,6 +7594,7 @@ with st.container(key="top_frozen_header_container", border=False):
                         <span class="hdr-native-val">{j_name}</span>
                         <span class="hdr-native-details">(जन्म: {j_dob_str}, {j_tob_str}, {j_place})</span>
                     </div>
+                    {astro_coords_html}
                 </div>
                 """,
                 unsafe_allow_html=True
