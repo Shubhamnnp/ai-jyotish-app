@@ -5142,7 +5142,7 @@ client_bridge_code = """
                 if (isHeaderCollapsed) {
                     blockContainer.style.setProperty('padding-top', isMobile ? '12px' : '16px', 'important');
                 } else {
-                    const defaultMinH = isMobile ? 104 : 52;
+                    const defaultMinH = isMobile ? 110 : 66;
                     const tbH = (frozenTb && frozenTb.offsetHeight && frozenTb.offsetHeight > 30) ? frozenTb.offsetHeight : defaultMinH;
                     const padTop = Math.max(tbH + 12, defaultMinH + 12);
                     blockContainer.style.setProperty('padding-top', padTop + 'px', 'important');
@@ -7375,6 +7375,30 @@ with st.container(key="top_frozen_header_container", border=False):
 
                 st.session_state["top_bar_menu_nonce"] = _menu_nonce + 1
                 st.rerun()
+
+        # ─── LINE 2: Active Module & Native Context Breadcrumb ───
+        _j_name = str(st.session_state.get("birth_name", "जातक")).strip() or "जातक"
+        _j_dob = st.session_state.birth_date.strftime("%d-%m-%Y") if hasattr(st.session_state.birth_date, "strftime") else str(st.session_state.birth_date)
+        _j_tob = st.session_state.birth_time.strftime("%I:%M %p") if hasattr(st.session_state.birth_time, "strftime") else str(st.session_state.birth_time)
+        _j_place = str(st.session_state.get("birth_city", "New Delhi")).strip() or "New Delhi"
+        _cur_m_name = MODULE_OPTIONS[st.session_state.active_module_idx] if 0 <= st.session_state.active_module_idx < len(MODULE_OPTIONS) else MODULE_OPTIONS[0]
+
+        st.markdown(
+            f"""
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:3px 12px; margin-top:2px; background:rgba(255,255,255,0.06); border-top:1px solid rgba(255,255,255,0.12); border-radius:4px; font-size:12px; font-weight:600; color:#E2E8F0;">
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <span style="color:#F59E0B; font-weight:800;">📍 सक्रिय मॉड्यूल:</span>
+                    <span style="color:#FFFFFF; font-weight:700;">{_cur_m_name}</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <span style="color:#38BDF8; font-weight:800;">👤 जातक:</span>
+                    <span style="color:#FFFFFF; font-weight:700;">{_j_name}</span>
+                    <span style="color:#CBD5E1;">(जन्म: {_j_dob}, {_j_tob} | {_j_place})</span>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 
 

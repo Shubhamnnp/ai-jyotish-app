@@ -81,3 +81,18 @@ def test_top_menu_action_items_structure():
     assert "✨ नया जातक (New Kundali)" in MENU_ACTION_ITEMS
     assert "📂 कुण्डली वॉल्ट (Client Vault)" in MENU_ACTION_ITEMS
     assert "💾 कुण्डली सहेजें (Save Kundali)" in MENU_ACTION_ITEMS
+
+
+def test_header_line2_breadcrumb_formatting():
+    """Verify Header Line 2 status breadcrumb formatting."""
+    mod_str = "📜 जन्म कुण्डली (Kundali)"
+    name_str = "शुभम शर्मा"
+    dob_str = "01-01-1995"
+    tob_str = "02:30 PM"
+    place_str = "New Delhi, India"
+
+    line2_text = f"📍 सक्रिय मॉड्यूल: {mod_str} | 👤 जातक: {name_str} (जन्म: {dob_str}, {tob_str} | {place_str})"
+    assert "📍 सक्रिय मॉड्यूल:" in line2_text
+    assert "👤 जातक:" in line2_text
+    assert "जन्म कुण्डली" in line2_text
+    assert "शुभम शर्मा" in line2_text
