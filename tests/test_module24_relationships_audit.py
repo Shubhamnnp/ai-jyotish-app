@@ -87,6 +87,8 @@ def test_render_relationships_view_no_unpack_crash(mock_chart, monkeypatch):
     monkeypatch.setattr("streamlit.markdown", lambda *args, **kwargs: None)
     monkeypatch.setattr("streamlit.info", lambda *args, **kwargs: None)
     monkeypatch.setattr("streamlit.warning", lambda *args, **kwargs: None)
+    monkeypatch.setattr("streamlit.expander", lambda *args, **kwargs: MagicMock())
+    monkeypatch.setattr("streamlit.dataframe", lambda *args, **kwargs: None)
 
     # Call with default tabs=None
     render_relationships_view(mock_chart, tabs=None)
@@ -110,3 +112,47 @@ def test_app_tabs_registry_module24():
         "🌟 मित्र व सहायक",
         "⚔️ शत्रु व विरोधी"
     ]
+
+
+def test_module24_classical_shloka_and_constants():
+    """Verify Module 24 includes authentic BPHS sambandha shloka and karakas."""
+    from src.jyotish.ui.modules.relationships_view import (
+        RELATIONSHIPS_SHLOKA, GRAHA_RELATIONSHIP_KARAKAS, GRAHA_NAMES_HI, DIGNITY_HI
+    )
+    assert "बृहत्पाराशर" in RELATIONSHIPS_SHLOKA["title"]
+    assert "सप्तमेशे बलोपेते" in RELATIONSHIPS_SHLOKA["shloka"]
+    assert "कलत्रसुखमाप्नोति" in RELATIONSHIPS_SHLOKA["shloka"]
+    assert GRAHA_NAMES_HI["Sun"] == "सूर्य"
+    assert "पिता" in GRAHA_RELATIONSHIP_KARAKAS["Sun"][0]
+    assert "माता" in GRAHA_RELATIONSHIP_KARAKAS["Moon"][0]
+    assert "जीवनसाथी" in GRAHA_RELATIONSHIP_KARAKAS["Venus"][0]
+
+
+def test_module24_format_dms_and_karakas():
+    """Verify classical Ansh, Kala, Vikala (DMS) precision formatting."""
+    from src.jyotish.ui.modules.relationships_view import _format_dms
+
+    ansh, kala, vikala, dms = _format_dms(28.752778)
+    assert ansh == 28
+    assert kala == 45
+    assert vikala == 10
+    assert dms == '28° 45\' 10"'
+
+    ansh2, kala2, vikala2, dms2 = _format_dms(0.0)
+    assert ansh2 == 0
+    assert kala2 == 0
+    assert vikala2 == 0
+    assert dms2 == '0° 00\' 00"'
+
+
+def test_module24_render_source_audit():
+    """Verify render_relationships_view contains HUD, shloka card, and karakas grid."""
+    import inspect
+    from src.jyotish.ui.modules import relationships_view
+    src = inspect.getsource(relationships_view.render_relationships_view)
+
+    assert "RELATIONSHIPS_SHLOKA" in src
+    assert "सक्रिय जातक संबंध वेध" in src
+    assert "_format_dms" in src
+    assert "सक्रिय जातक सूक्ष्म ग्रह-स्थिति" in src
+    assert "दांपत्य एवं जीवनसाथी संबंध" in src
