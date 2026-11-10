@@ -1656,30 +1656,35 @@ unified_css = f"""
         min-width: 44px !important;
         width: 44px !important;
         flex: 0 0 44px !important;
-        margin-right: 4px !important;
+        margin-right: 6px !important;
     }}
     .st-key-hdr_tier1_row button {{
         min-height: 32px !important;
         height: 32px !important;
         padding: 0px 2px !important;
-        font-size: 14px !important;
+        font-size: 15px !important;
         line-height: 1 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        border-radius: 6px !important;
-        transition: transform 0.12s ease, background-color 0.12s ease !important;
+        border-radius: 8px !important;
+        background: #FFFFFF !important;
+        border: 1.2px solid rgba(245, 158, 11, 0.4) !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.15) !important;
+        transition: transform 0.12s ease, background-color 0.12s ease, border-color 0.12s ease !important;
     }}
     .st-key-hdr_tier1_row button:hover {{
-        background: #FDF6B2 !important;
+        background: #FEF3C7 !important;
         border-color: #F59E0B !important;
         transform: translateY(-1px) !important;
+        box-shadow: 0 3px 8px rgba(245, 158, 11, 0.3) !important;
     }}
     .st-key-hdr_tier2_row {{
-        margin-top: 3px !important;
+        margin-top: 4px !important;
     }}
     .st-key-hdr_tier3_row {{
-        margin-top: 2px !important;
+        margin-top: 4px !important;
+        margin-bottom: 2px !important;
     }}
     /* Header Brand Typography Protection: Pure white Hindi and radiant gold English */
     .st-key-frozen_toolbelt_container span.hdr-brand-hi,
@@ -5166,9 +5171,9 @@ client_bridge_code = """
                 if (isHeaderCollapsed) {
                     blockContainer.style.setProperty('padding-top', isMobile ? '12px' : '16px', 'important');
                 } else {
-                    const defaultMinH = isMobile ? 140 : 115;
+                    const defaultMinH = isMobile ? 185 : 158;
                     const tbH = (frozenTb && frozenTb.offsetHeight && frozenTb.offsetHeight > 30) ? frozenTb.offsetHeight : defaultMinH;
-                    const padTop = Math.max(tbH + 12, defaultMinH + 12);
+                    const padTop = Math.max(tbH + 18, defaultMinH + 18);
                     blockContainer.style.setProperty('padding-top', padTop + 'px', 'important');
                 }
                 blockContainer.style.setProperty('padding-left', isMobile ? '8px' : '16px', 'important');
@@ -6180,11 +6185,11 @@ else:
 
 
 MODULE_CATEGORIES = {
-    "🏛️ १. मूलभूत कुण्डली व बल (Foundations)": [0, 3, 6, 12, 19],
-    "⏱️ २. काल-चक्र, दशा व गोचर (Time & Dasha)": [8, 9, 13, 29, 11],
-    "📜 ३. शास्त्रीय फलादेश व जीवन (Predictions)": [30, 1, 20, 15, 24, 28, 17],
-    "🔱 ४. विशेष ज्योतिष पद्धतियां (Special Systems)": [10, 7, 22, 5, 21, 31, 14, 4],
-    "🌿 ५. वैदिक उपचार व जीवनशैली (Remedies & Health)": [2, 32, 27, 25, 26, 23, 16, 18],
+    "🏛️ १. मूलभूत व षड्बल": [0, 3, 6, 12, 19],
+    "⏱️ २. दशा व गोचर": [8, 9, 13, 29, 11],
+    "📜 ३. शास्त्रीय फलादेश": [30, 1, 20, 15, 24, 28, 17],
+    "🔱 ४. विशेष पद्धतियां": [10, 7, 22, 5, 21, 31, 14, 4],
+    "🌿 ५. उपचार व जीवनशैली": [2, 32, 27, 25, 26, 23, 16, 18],
 }
 
 
@@ -7304,10 +7309,10 @@ with st.container(key="top_frozen_header_container", border=False):
     # Line 3: 📍 सक्रिय मॉड्यूल: [नाम]        👤 जातक: [नाम] (जन्म: दिनांक, समय | स्थान)
     # ═════════════════════════════════════════════════════════════════════
     with st.container(key="frozen_toolbelt_container", border=False):
-        # ─── LINE 1: Brand, AI Astrologer & 11 Compact Action Icons ───
+        # ─── LINE 1: [>>] [ 🕉️ ब्रह्महोरा प्रो ] ─── 11 Compact Action Icons ───
         with st.container(key="hdr_tier1_row", border=False):
             hdr_l1_cols = st.columns(
-                [0.48, 1.85, 1.25, 0.08, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38],
+                [0.45, 2.20, 0.15, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38, 0.38],
                 gap="small",
                 vertical_alignment="center"
             )
@@ -7322,79 +7327,74 @@ with st.container(key="top_frozen_header_container", border=False):
 
             # 2. Logo & Name: [ 🕉️ ब्रह्महोरा प्रो ]
             hdr_l1_cols[1].markdown(
-                '<div style="display:flex; align-items:center; gap:6px; cursor:default; user-select:none; white-space:nowrap;">'
-                '<span style="font-size:1.28rem; line-height:1; filter:drop-shadow(0 0 5px rgba(245,158,11,0.6));">🕉️</span>'
-                '<span style="font-size:1.02rem; font-weight:800; letter-spacing:0.3px; color:#F59E0B; font-family:\'Cinzel\', serif, sans-serif;">ब्रह्महोरा <span style="font-size:0.82rem; font-weight:700; color:#38BDF8;">प्रो</span></span>'
+                '<div style="display:flex; align-items:center; gap:8px; cursor:default; user-select:none; white-space:nowrap; height:32px;">'
+                '<span style="font-size:1.35rem; line-height:1; filter:drop-shadow(0 0 6px rgba(245,158,11,0.7));">🕉️</span>'
+                '<span style="font-size:1.15rem; font-weight:900; letter-spacing:0.5px; color:#FBBF24 !important; -webkit-text-fill-color:#FBBF24 !important; text-shadow:0 0 10px rgba(245,158,11,0.5), 0 1px 3px rgba(0,0,0,0.9) !important; font-family:\'Cinzel\', serif, sans-serif;">ब्रह्महोरा <span style="font-size:0.92rem; font-weight:800; color:#38BDF8 !important; -webkit-text-fill-color:#38BDF8 !important; text-shadow:0 0 8px rgba(56,189,248,0.5) !important;">प्रो</span></span>'
                 '</div>',
                 unsafe_allow_html=True
             )
 
-            # 3. [ 🤖 AI ज्योतिषी ]
-            if hdr_l1_cols[2].button("🤖 AI ज्योतिषी", key="hdr_btn_ai_astrologer", help="दैवज्ञ AI ज्योतिषी परामर्श (AI Astrologer Copilot)", use_container_width=True):
-                st.session_state.gla_active_tool = "daivajna_brain"
-                st.rerun()
+            # 3. Spacer
+            hdr_l1_cols[2].markdown("<div style='width:1px;'></div>", unsafe_allow_html=True)
 
-            # 4. Spacer
-            hdr_l1_cols[3].markdown("<div style='width:1px;'></div>", unsafe_allow_html=True)
-
-            # 5. [📅] माह कैलेंडर (हिन्दी / अंग्रेजी स्लाइड बटन)
-            if hdr_l1_cols[4].button("📅", key="hdr_btn_cal", help="वर्तमान माह कैलेंडर (Present Month Calendar with Hindi/English Slide Buttons)", use_container_width=True):
+            # 4. [📅] माह कैलेंडर
+            if hdr_l1_cols[3].button("📅", key="hdr_btn_cal", help="माह कैलेंडर (Month Calendar)", use_container_width=True):
                 st.session_state.gla_active_tool = "calendar_month"
                 st.rerun()
 
-            # 6. [☀️] आज का पञ्चाङ्ग
-            if hdr_l1_cols[5].button("☀️", key="hdr_btn_ptoday", help="आज का पञ्चाङ्ग (Today's Live Panchang)", use_container_width=True):
+            # 5. [☀️] आज का पञ्चाङ्ग
+            if hdr_l1_cols[4].button("☀️", key="hdr_btn_ptoday", help="आज का पञ्चाङ्ग (Today's Live Panchang)", use_container_width=True):
                 st.session_state.gla_active_tool = "panchang_today"
                 st.rerun()
 
-            # 7. [🌙] जातक पञ्चाङ्ग
-            if hdr_l1_cols[6].button("🌙", key="hdr_btn_pjatak", help="जातक जन्म पञ्चाङ्ग (Native's Birth Panchang)", use_container_width=True):
+            # 6. [🌙] जातक पञ्चाङ्ग
+            if hdr_l1_cols[5].button("🌙", key="hdr_btn_pjatak", help="जातक जन्म पञ्चाङ्ग (Native's Birth Panchang)", use_container_width=True):
                 st.session_state.gla_active_tool = "panchang_jatak"
                 st.rerun()
 
-            # 8. [✨] नया जातक कुण्डली
-            if hdr_l1_cols[7].button("✨", key="hdr_btn_new_kundali", help="नया जातक कुण्डली प्रपत्र (New Birth Chart)", use_container_width=True):
+            # 7. [✨] नया जातक
+            if hdr_l1_cols[6].button("✨", key="hdr_btn_new_kundali", help="नया जातक (New Kundali)", use_container_width=True):
                 st.session_state.gla_active_tool = "new"
                 st.rerun()
 
-            # 9. [❓] नवीन प्रश्न कुण्डली
-            if hdr_l1_cols[8].button("❓", key="hdr_btn_prashna_kundali", help="नवीन प्रश्न कुण्डली (Horary Prashna Chart)", use_container_width=True):
+            # 8. [❓] नवीन प्रश्न
+            if hdr_l1_cols[7].button("❓", key="hdr_btn_prashna_kundali", help="नवीन प्रश्न (Horary Prashna)", use_container_width=True):
                 st.session_state.gla_active_tool = "prashna"
                 st.rerun()
 
-            # 10. [📂] कुण्डली वॉल्ट / फ़ोल्डर
-            if hdr_l1_cols[9].button("📂", key="hdr_btn_vault", help="क्लाइंट कुण्डली वॉल्ट / फ़ोल्डर (Client Kundali Vault)", use_container_width=True):
+            # 9. [📂] वॉल्ट
+            if hdr_l1_cols[8].button("📂", key="hdr_btn_vault", help="क्लाइंट वॉल्ट / फ़ोल्डर (Client Vault)", use_container_width=True):
                 st.session_state.gla_active_tool = "open"
                 st.rerun()
 
-            # 11. [📝] परामर्श नोट्स
-            if hdr_l1_cols[10].button("📝", key="hdr_btn_notes", help="परामर्श नोट्स (Consultation Notes)", use_container_width=True):
+            # 10. [📝] नोट्स
+            if hdr_l1_cols[9].button("📝", key="hdr_btn_notes", help="परामर्श नोट्स (Consultation Notes)", use_container_width=True):
                 st.session_state.gla_active_tool = "notes"
                 st.rerun()
 
-            # 12. [🌐] भाषा
-            if hdr_l1_cols[11].button("🌐", key="hdr_btn_bhasha", help="सॉफ़्टवेयर भाषा चयन (Change Language)", use_container_width=True):
+            # 11. [🌐] भाषा
+            if hdr_l1_cols[10].button("🌐", key="hdr_btn_bhasha", help="भाषा चयन (Language)", use_container_width=True):
                 st.session_state.gla_active_tool = "lang"
                 st.rerun()
 
-            # 13. [🌓] थीम
-            if hdr_l1_cols[12].button("🌓", key="hdr_btn_theme", help="थीम मोड (Toggle / Select Theme)", use_container_width=True):
+            # 12. [🌓] थीम
+            if hdr_l1_cols[11].button("🌓", key="hdr_btn_theme", help="थीम मोड (Theme)", use_container_width=True):
                 st.session_state.gla_active_tool = "theme"
                 st.rerun()
 
-            # 14. [⚙️] सेटिंग्स
-            if hdr_l1_cols[13].button("⚙️", key="hdr_btn_settings", help="सिस्टम सेटिंग्स व अयनांश (System Settings)", use_container_width=True):
+            # 13. [⚙️] सेटिंग्स
+            if hdr_l1_cols[12].button("⚙️", key="hdr_btn_settings", help="सिस्टम सेटिंग्स (Settings)", use_container_width=True):
                 st.session_state.gla_active_tool = "settings"
                 st.rerun()
 
-            # 15. [🚪] लॉगआउट
-            if hdr_l1_cols[14].button("🚪", key="hdr_btn_logout", help="सत्र से लॉगआउट (Logout)", use_container_width=True):
+            # 14. [🚪] लॉगआउट
+            if hdr_l1_cols[13].button("🚪", key="hdr_btn_logout", help="सत्र से लॉगआउट (Logout)", use_container_width=True):
                 st.session_state.gla_active_tool = "logout"
                 st.rerun()
 
-        # ─── LINE 2: [ 📂 श्रेणी (Category) ] [ 📜 श्रेणी मॉड्यूल ] [ 📊 मॉड्यूल टैब ] ───
+        # ─── LINE 2: [ 📂 श्रेणी short name ] [ 📜 सक्रिय श्रेणी के मॉड्यूल सूची ] [ 📊 सक्रिय मॉड्यूल के टैब्स की सूची ] ───
         with st.container(key="hdr_tier2_row", border=False):
-            hdr_c_cat, hdr_c_mod, hdr_c_tab = st.columns([1.05, 1.35, 1.35], gap="small", vertical_alignment="center")
+            hdr_c_cat, hdr_c_mod, hdr_c_tab = st.columns([1.25, 1.40, 1.35], gap="small", vertical_alignment="center")
 
             # 1. Category Dropdown
             cat_list = list(MODULE_CATEGORIES.keys())
@@ -7461,7 +7461,7 @@ with st.container(key="top_frozen_header_container", border=False):
                 st.session_state.tab_switch_requested = st.session_state.active_tab_idx
                 st.rerun()
 
-        # ─── LINE 3: Status Breadcrumb (सक्रिय मॉड्यूल एवं जातक विवरण) ───
+        # ─── LINE 3: Context & Native Breadcrumb Pill ───
         with st.container(key="hdr_tier3_row", border=False):
             active_mod_label = MODULE_OPTIONS[st.session_state.active_module_idx] if st.session_state.active_module_idx < len(MODULE_OPTIONS) else "अज्ञात"
             j_name = st.session_state.get("birth_name", "जातक")
@@ -7473,15 +7473,16 @@ with st.container(key="top_frozen_header_container", border=False):
 
             st.markdown(
                 f"""
-                <div class="hdr-tier3-status-bar" style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:6px; padding:3px 10px; font-size:12px; line-height:1.4; color:#E2E8F0; width:100%; box-sizing:border-box;">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                        <span style="color:#F59E0B; font-weight:700;">📍 सक्रिय मॉड्यूल:</span>
+                <div class="hdr-tier3-breadcrumb-pill" style="display:flex; justify-content:space-between; align-items:center; background:rgba(15, 23, 42, 0.75); border:1px solid rgba(245, 158, 11, 0.35); border-radius:30px; padding:4px 16px; margin:2px 0 3px 0; font-size:12px; line-height:1.4; color:#E2E8F0; width:100%; box-sizing:border-box; box-shadow:0 2px 8px rgba(0,0,0,0.35);">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="color:#F59E0B; font-weight:800;">📍 सक्रिय मॉड्यूल:</span>
                         <span style="color:#38BDF8; font-weight:700;">{active_mod_label}</span>
                     </div>
+                    <div style="color:rgba(255,255,255,0.3); font-weight:300; font-size:14px; user-select:none; margin:0 12px;">│</div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="color:#A78BFA; font-weight:700;">👤 जातक:</span>
+                        <span style="color:#A78BFA; font-weight:800;">👤 जातक:</span>
                         <span style="color:#FFFFFF; font-weight:700;">{j_name}</span>
-                        <span style="color:#94A3B8; font-size:11px;">(जन्म: {j_dob_str}, {j_tob_str} | {j_place})</span>
+                        <span style="color:#94A3B8; font-size:11.5px;">(जन्म: {j_dob_str}, {j_tob_str}, {j_place})</span>
                     </div>
                 </div>
                 """,
