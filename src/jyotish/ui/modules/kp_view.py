@@ -29,6 +29,26 @@ def render_kp_view(chart, tz_offset=5.5, default_city_name=None, tabs=None):
     st.subheader("📐 के.पी. ज्योतिष प्रणाली (Krishnamurti Paddhati - Complete Professional KP System)")
     st.write("प्रोफेसर के.एस. कृष्णमूर्ति (KP Readers I-VI) प्रतिपादित ४-स्तरीय कार्यकत्व, कस्पल सब-लॉर्ड, रूलिंग प्लैनेट्स, १-२४९ होरारी, पाश्चात्य दृष्टि एवं अचूक भविष्य फलित निर्णय।")
 
+    # Classical Shastriya Shloka Card
+    kp_shastriya_shloka = {
+        "title": "कृष्णमूर्ति पद्धति एवं फलदीपिका — नक्षत्र-उप-स्वामी (CSL) फलित सिद्धांत",
+        "source": "प्रोफेसर के.एस. कृष्णमूर्ति (KP Reader III) एवं फलदीपिका (भाव-फल विचार)",
+        "shloka": "यद्भावगो वा यद्भावेशयुक्तो वा यद्भावेशेन दृष्टो वा।\nग्रहः स्वस्वामिभवनफलं प्रयच्छति नक्षत्रस्वामिनश्च॥\nउपस्वाम्यनुसारतः कार्यसिद्धिर्भवति निश्चिता।\nसूक्ष्मभावेन विज्ञाय कथयेत् दैवचिन्तकः॥",
+        "meaning": "के.पी. ज्योतिष का अकाट्य स्वर्णिम नियम: ग्रह जिस नक्षत्र में स्थित होता है, वह उस नक्षत्र स्वामी के भावों का फल देता है तथा सब-लॉर्ड (उप-स्वामी) यह अंतिम निर्णय करता है कि कार्य की सिद्धि (सकारात्मक अथवा नकारात्मक) होगी या नहीं। बिना उप-स्वामी के सूक्ष्म विश्लेषण के फलित का निश्चय नहीं किया जा सकता।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {kp_shastriya_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {kp_shastriya_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{kp_shastriya_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {kp_shastriya_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     import src.jyotish.core.kp as kp_mod
     import src.jyotish.dasha.vimshottari as vim_mod
     k_engine = kp_mod.default_kp_engine
@@ -56,10 +76,31 @@ def render_kp_view(chart, tz_offset=5.5, default_city_name=None, tabs=None):
 
     if "१. सक्रिय जातक" in kp_user_mode:
         with col_m_sel2:
+            l_d = getattr(chart, "lagna_degree", 0.0)
+            l_a = int(l_d)
+            l_k = int(round((l_d - l_a) * 60.0))
+            if l_k >= 60:
+                l_k = 0
+                l_a += 1
+            l_dms = f"{l_a}° {l_k:02d}'"
+            m_obj = chart.planets.get("Moon")
+            if m_obj:
+                m_d = getattr(m_obj, "sign_degree", 0.0)
+                m_a = int(m_d)
+                m_k = int(round((m_d - m_a) * 60.0))
+                if m_k >= 60:
+                    m_k = 0
+                    m_a += 1
+                m_dms = f"{m_a}° {m_k:02d}'"
+                m_nak = getattr(m_obj, "nakshatra_name", getattr(m_obj, "nakshatra", "—"))
+                m_pad = getattr(m_obj, "nakshatra_pada", getattr(m_obj, "pada", 1))
+                moon_summary = f" &nbsp;|&nbsp; <b>चन्द्र:</b> {m_obj.sign_name} {m_dms} [{m_nak}-P{m_pad}]"
+            else:
+                moon_summary = ""
             st.markdown(f"""<div style="background:#F0FDF4; border:1.5px solid #22C55E; border-radius:10px; padding:12px 16px;">
     <b style="color:#15803D; font-size:14px;">👤 सक्रिय जातक विवरण (Active Native):</b><br/>
     • <b>नाम:</b> {chart.birth_data.name} &nbsp;|&nbsp; <b>जन्म दिनांक:</b> {chart.birth_data.birth_date.strftime('%d-%b-%Y')} ({chart.birth_data.birth_time.strftime('%H:%M')})<br/>
-    • <b>स्थान:</b> {getattr(chart.birth_data, 'city_name', str(default_city_name))} &nbsp;|&nbsp; <b>लग्न:</b> {chart.lagna_sign_id} राशि ({chart.lagna_degree:.2f}°)
+    • <b>स्थान:</b> {getattr(chart.birth_data, 'city_name', str(default_city_name))} &nbsp;|&nbsp; <b>लग्न:</b> {getattr(chart, 'lagna_sign_name', str(chart.lagna_sign_id) + ' राशि')} {l_dms}{moon_summary}
     </div>""", unsafe_allow_html=True)
     else:
         with col_m_sel2:
@@ -331,10 +372,16 @@ def render_kp_view(chart, tz_offset=5.5, default_city_name=None, tabs=None):
         for p in planets_kp_data:
             p_name = p["planet"]
             p_sig = p_sigs.get(p_name, {})
+            p_obj = active_kp_chart.planets.get(p_name)
+            nak_name = getattr(p_obj, "nakshatra_name", getattr(p_obj, "nakshatra", p["star_lord"])) if p_obj else p["star_lord"]
+            nak_pada = getattr(p_obj, "nakshatra_pada", getattr(p_obj, "pada", "—")) if p_obj else "—"
+            swabhav_str = "नैसर्गिक शुभ" if p_name in ["Jupiter", "Venus", "Mercury", "Moon"] else "नैसर्गिक क्रूर"
             p_rows.append({
                 "ग्रह (Planet)": p_name,
+                "नैसर्गिक स्वभाव": swabhav_str,
                 "राशि (Sign)": p["sign"],
-                "सटीक अंश (Degree)": p["degree_formatted"],
+                "अंश-कला (DMS)": p["degree_formatted"],
+                "नक्षत्र एवं चरण": f"{nak_name} (चरण {nak_pada})",
                 "राशि स्वामी (Sign Lord)": p["sign_lord"],
                 "नक्षत्र स्वामी (Star Lord)": p["star_lord"],
                 "उप-स्वामी (Sub Lord)": p["sub_lord"],
@@ -365,14 +412,26 @@ def render_kp_view(chart, tz_offset=5.5, default_city_name=None, tabs=None):
         st.markdown("#### 🏰 द्वादश भाव संधि, कस्पल उप-स्वामी (Cuspal Sub-Lords) व भाव कार्यक")
         st.caption("के.पी. पद्धति में किसी भी भाव का फलित निर्णय उस भाव के **कस्पल सब-लॉर्ड (Cuspal Sub-Lord - CSL)** के नक्षत्र स्वामी द्वारा ही निर्धारित होता है:")
 
+        nakshatras_hi_kp = [
+            "अश्विनी", "भरणी", "कृत्तिका", "रोहिणी", "मृगशिरा", "आर्द्रा",
+            "पुनर्वसु", "पुष्य", "आश्लेषा", "मघा", "पूर्वाफाल्गुनी", "उत्तराफाल्गुनी",
+            "हस्त", "चित्रा", "स्वाती", "विशाखा", "अनुराधा", "ज्येष्ठा",
+            "मूल", "पूर्वाषाढ़ा", "उत्तराषाढ़ा", "श्रवण", "धनिष्ठा", "शतभिषा",
+            "पूर्वाभाद्रपद", "उत्तराभाद्रपद", "रेवती"
+        ]
         c_rows = []
         for c in cusps_data:
             h_num = c["cusp_num"]
             h_sig = h_sigs.get(h_num, {})
+            c_lon = c.get("longitude", 0.0)
+            c_nak_idx = int(c_lon / (360.0 / 27)) % 27
+            c_pada = int((c_lon % (360.0 / 27)) / (360.0 / 108)) + 1
+            c_nak_name = nakshatras_hi_kp[c_nak_idx]
             c_rows.append({
                 "भाव (Cusp)": c["cusp"],
                 "राशि (Sign)": c["sign"],
-                "कस्प अंश (Degree)": c["degree_formatted"],
+                "कस्प अंश-कला (DMS)": c["degree_formatted"],
+                "नक्षत्र एवं चरण": f"{c_nak_name} (चरण {c_pada})",
                 "राशि स्वामी (Sign Lord)": c["sign_lord"],
                 "नक्षत्र स्वामी (Star Lord)": c["star_lord"],
                 "कस्पल सब-लॉर्ड (CSL)": c["sub_lord"],

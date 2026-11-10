@@ -149,6 +149,20 @@ class TestModule10KPAudit(unittest.TestCase):
         import src.jyotish.ui.modules.kp_view as kp_view_mod
         self.assertTrue(hasattr(kp_view_mod, "render_kp_view"))
 
+    def test_kp_view_shastriya_shloka_and_console(self):
+        """Verify classical KP shloka, micro DMS coordinates, and swabhav in kp_view."""
+        import inspect
+        import src.jyotish.ui.modules.kp_view as kp_view_mod
+        source = inspect.getsource(kp_view_mod.render_kp_view)
+
+        self.assertIn("kp_shastriya_shloka", source)
+        self.assertIn("कृष्णमूर्ति पद्धति एवं फलदीपिका", source)
+        self.assertIn("यद्भावगो वा यद्भावेशयुक्तो वा यद्भावेशेन दृष्टो वा", source)
+        self.assertIn("नैसर्गिक स्वभाव", source)
+        self.assertIn("अंश-कला (DMS)", source)
+        self.assertIn("कस्प अंश-कला (DMS)", source)
+        self.assertIn("नक्षत्र एवं चरण", source)
+
 
 if __name__ == "__main__":
     unittest.main()
