@@ -1016,38 +1016,41 @@ def render_remedies_view(chart, tabs=None):
         # Collapsible Section for Life Area Explanation, HUD Pillars & Evaluation
         with st.expander(f"🏛️ आयाम स्तम्भ, कारक एवं गरिमा विवरण — {_area_status.split('(')[0].strip()}", expanded=False):
             st.info("प्रत्येक जीवन आयाम का निर्माण ३ प्रमुख स्तम्भों से होता है: **१. भाव (House)**, **२. कारक ग्रह (Karaka)**, एवं **३. भावेश (House Lord)**।")
+            st.markdown("<div style='height: 6px;'></div>", unsafe_allow_html=True)
             st.markdown(_clean_html(f"""
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; margin: 6px 0 10px 0;">
-                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 10px 0 16px 0;">
+                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 12px;">
                     <div style="font-size: 11px; color: #475569; font-weight: 700;">🏛️ प्राथमिक भाव (House)</div>
-                    <div style="font-size: 14.5px; font-weight: 900; color: #1E293B;">{_h_num} भाव</div>
-                    <div style="font-size: 10px; color: #64748B;">आधारशिला व क्षेत्र</div>
+                    <div style="font-size: 14.5px; font-weight: 900; color: #1E293B; margin-top: 2px;">{_h_num} भाव</div>
+                    <div style="font-size: 10px; color: #64748B; margin-top: 2px;">आधारशिला व क्षेत्र</div>
                 </div>
-                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
+                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 12px;">
                     <div style="font-size: 11px; color: #475569; font-weight: 700;">🪐 नैसर्गिक कारक (Karaka)</div>
-                    <div style="font-size: 14.5px; font-weight: 900; color: #D97706;">{_k_name}</div>
-                    <div style="font-size: 10px; color: #64748B;">आंतरिक शक्ति व बीज</div>
+                    <div style="font-size: 14.5px; font-weight: 900; color: #D97706; margin-top: 2px;">{_k_name}</div>
+                    <div style="font-size: 10px; color: #64748B; margin-top: 2px;">आंतरिक शक्ति व बीज</div>
                 </div>
-                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
+                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 12px;">
                     <div style="font-size: 11px; color: #475569; font-weight: 700;">👑 भावेश (House Lord)</div>
-                    <div style="font-size: 14.5px; font-weight: 900; color: #1E40AF;">{_h_lord}</div>
-                    <div style="font-size: 10px; color: #64748B;">कार्यकारी फल प्रदाता</div>
+                    <div style="font-size: 14.5px; font-weight: 900; color: #1E40AF; margin-top: 2px;">{_h_lord}</div>
+                    <div style="font-size: 10px; color: #64748B; margin-top: 2px;">कार्यकारी फल प्रदाता</div>
                 </div>
-                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 8px 10px;">
+                <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 12px;">
                     <div style="font-size: 11px; color: #475569; font-weight: 700;">🎯 द्वितीयक भाव (Sec. House)</div>
-                    <div style="font-size: 14.5px; font-weight: 900; color: #059669;">{_sec_h} भाव</div>
-                    <div style="font-size: 10px; color: #64748B;">सहायक प्रभाव क्षेत्र</div>
+                    <div style="font-size: 14.5px; font-weight: 900; color: #059669; margin-top: 2px;">{_sec_h} भाव</div>
+                    <div style="font-size: 10px; color: #64748B; margin-top: 2px;">सहायक प्रभाव क्षेत्र</div>
                 </div>
             </div>
             """), unsafe_allow_html=True)
 
+            st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
+
             st.markdown(_clean_html(f"""
-            <div style="background:{_status_bg}; border:1.5px solid {_status_bdr}; border-radius:8px; padding:10px 14px; margin-bottom:6px;">
+            <div style="background:{_status_bg}; border:1.5px solid {_status_bdr}; border-radius:8px; padding:12px 16px; margin-top:6px; margin-bottom:10px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                     <span style="font-weight:900; color:{_status_col}; font-size:13.5px;">{_area_status}</span>
                     <span style="font-size:11.5px; font-weight:800; color:#475569;">कुल सौम्य अंक: <b style="color:#059669;">{_total_soumya}</b> | कुल क्रूर अंक: <b style="color:#DC2626;">{_total_krura}</b></span>
                 </div>
-                <div style="font-size:12px; color:#1E293B; margin-top:4px; line-height:1.5;">{_status_desc}</div>
+                <div style="font-size:12px; color:#1E293B; margin-top:6px; line-height:1.5;">{_status_desc}</div>
             </div>
             """), unsafe_allow_html=True)
 
