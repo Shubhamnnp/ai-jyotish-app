@@ -908,8 +908,6 @@ def render_remedies_view(chart, tabs=None):
     # TAB 2: 27 जीवन आयाम विश्लेषण (27 Life Areas Deep Breakdown)
     # =========================================================================
     with tab_life_areas_deep:
-        st.markdown("#### 🎯 २७ जीवन आयाम त्रि-पक्षीय विश्लेषण (27 Classical Life Areas)")
-
         c_la_sel1, c_la_sel2 = st.columns([3, 1], vertical_alignment="center")
         with c_la_sel1:
             cur_idx = 0
