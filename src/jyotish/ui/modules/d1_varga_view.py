@@ -1490,7 +1490,8 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 st.markdown(_sl_table_html, unsafe_allow_html=True)
 
             with subtab_jm_phala:
-                # ─── 3 Jaimini Special Yoga Analysis Cards ───
+                # ─── Top Spacing & 3 Jaimini Special Yoga Analysis Cards ───
+                st.markdown("<div style='margin-top: 6px;'></div>", unsafe_allow_html=True)
                 col_y1, col_y2, col_y3 = st.columns(3)
 
                 # 1. Dhana Yoga (HL & SL)
@@ -1501,14 +1502,19 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     is_hl_benefic = hl_lord in ["Jupiter", "Venus", "Mercury", "Moon"]
                     _c1_msg = '🌟 प्रबल धन योग: होरा लग्न का स्वामी शुभ ग्रह है तथा वित्तीय संचय में स्थायित्व प्रदान करता है।' if is_hl_benefic else '⚡ कर्मप्रधान धन योग: वित्तीय सफलता पुरुषार्थ एवं निरंतर उद्यम से निर्मित होगी।'
                     st.markdown(
-                        f'<div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:12px; height:100%;">'
+                        f'<div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:12px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; box-sizing:border-box;">'
+                        f'<div>'
                         f'<h5 style="color:#B45309; margin:0 0 6px 0;">💰 जैमिनी धन योग (HL &amp; SL)</h5>'
                         f'<div style="font-size:12px; color:#1E293B; line-height:1.5;">'
                         f'<b>होरा लग्न (HL):</b> {hl_s} (स्वामी: {hl_lord})<br/>'
                         f'<b>श्री लग्न (SL):</b> {sl_s}<br/>'
                         f'<div style="margin:6px 0; padding:6px; background:#FEF3C7; border-radius:6px; font-weight:800; font-size:11.5px; color:#78350F;">{_c1_msg}</div>'
-                        f'<b>शास्त्रीय सूत्र:</b> होरा लग्न और श्री लग्न पर शुभ ग्रहों (गुरु, शुक्र, बुध) की दृष्टि या युति जातक को विपुल संपदा एवं महालक्ष्मी का स्थायी अनुग्रह प्रदान करती है।'
-                        f'</div></div>',
+                        f'</div>'
+                        f'</div>'
+                        f'<div style="font-size:11.5px; color:#475569; line-height:1.4; border-top:1px dashed #FCD34D; padding-top:6px; margin-top:6px;">'
+                        f'<b style="color:#1E293B;">शास्त्रीय सूत्र:</b> होरा लग्न और श्री लग्न पर शुभ ग्रहों (गुरु, शुक्र, बुध) की दृष्टि या युति जातक को विपुल संपदा एवं महालक्ष्मी का स्थायी अनुग्रह प्रदान करती है।'
+                        f'</div>'
+                        f'</div>',
                         unsafe_allow_html=True
                     )
 
@@ -1520,14 +1526,19 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     is_gl_kendra = gl_h in [1, 4, 7, 10, 5, 9]
                     _c2_msg = '👑 प्रतिष्ठित राजयोग: घटी लग्न केंद्र/त्रिकोण में स्थित होकर शासकीय प्रभुत्व एवं यश देता है।' if is_gl_kendra else '📈 प्रतिष्ठा योग: घटी लग्न जातक को सामाजिक दायित्व एवं प्रशासनिक प्रभाव प्रदान करता है।'
                     st.markdown(
-                        f'<div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px; height:100%;">'
+                        f'<div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; box-sizing:border-box;">'
+                        f'<div>'
                         f'<h5 style="color:#1D4ED8; margin:0 0 6px 0;">🏛️ जैमिनी राज योग (GL &amp; Lagna)</h5>'
                         f'<div style="font-size:12px; color:#1E293B; line-height:1.5;">'
                         f'<b>घटी लग्न (GL):</b> {gl_s} ({gl_h} भाव)<br/>'
                         f'<b>घटी लग्न स्वामी:</b> {gl_lord}<br/>'
                         f'<div style="margin:6px 0; padding:6px; background:#DBEAFE; border-radius:6px; font-weight:800; font-size:11.5px; color:#1E3A8A;">{_c2_msg}</div>'
-                        f'<b>शास्त्रीय सूत्र:</b> यदि जन्म लग्न और घटी लग्न दोनों पर किसी एक ही ग्रह की दृष्टि हो, तो महर्षि जैमिनी अनुसार जातक को राजा समान पद, सत्ता एवं समाज में सर्वोच्च सम्मान प्राप्त होता है।'
-                        f'</div></div>',
+                        f'</div>'
+                        f'</div>'
+                        f'<div style="font-size:11.5px; color:#475569; line-height:1.4; border-top:1px dashed #BFDBFE; padding-top:6px; margin-top:6px;">'
+                        f'<b style="color:#1E293B;">शास्त्रीय सूत्र:</b> यदि जन्म लग्न और घटी लग्न दोनों पर किसी एक ही ग्रह की दृष्टि हो, तो महर्षि जैमिनी अनुसार जातक को राजा समान पद, सत्ता एवं समाज में सर्वोच्च सम्मान प्राप्त होता है।'
+                        f'</div>'
+                        f'</div>',
                         unsafe_allow_html=True
                     )
 
@@ -1540,19 +1551,25 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     _c3_msg = '🏆 कोटिपतित्व योग: शुभ ग्रह इन्दु लग्न में विद्यमान होकर अकूत संपदा का सृजन कर रहे हैं!' if il_benefics else ('⚡ उद्योगी धन योग: इन्दु लग्न स्वामी ' + il_lord + ' के बल से वित्तीय साम्राज्य खड़ा होगा।')
                     _il_occ = ', '.join(il_planets) if il_planets else 'शुभ दृष्टि प्रभाव'
                     st.markdown(
-                        f'<div style="background:#FAF5FF; border:1.5px solid #8B5CF6; border-radius:10px; padding:12px; height:100%;">'
+                        f'<div style="background:#FAF5FF; border:1.5px solid #8B5CF6; border-radius:10px; padding:12px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; box-sizing:border-box;">'
+                        f'<div>'
                         f'<h5 style="color:#6D28D9; margin:0 0 6px 0;">💎 इन्दु लग्न कोटिपतित्व योग</h5>'
                         f'<div style="font-size:12px; color:#1E293B; line-height:1.5;">'
                         f'<b>इन्दु लग्न:</b> {il_s} (स्वामी: {il_lord})<br/>'
                         f'<b>इन्दु लग्न में स्थित ग्रह:</b> {_il_occ}<br/>'
                         f'<div style="margin:6px 0; padding:6px; background:#F3E8FF; border-radius:6px; font-weight:800; font-size:11.5px; color:#581C87;">{_c3_msg}</div>'
-                        f'<b>शास्त्रीय सूत्र:</b> इन्दु लग्न में केवल एक भी उच्च या शुभ ग्रह स्थित हो तो जातक बहु-करोड़पति बनता है; पाप ग्रह हों तो धन का प्रवाह उद्यम के साथ आता है।'
-                        f'</div></div>',
+                        f'</div>'
+                        f'</div>'
+                        f'<div style="font-size:11.5px; color:#475569; line-height:1.4; border-top:1px dashed #DDD6FE; padding-top:6px; margin-top:6px;">'
+                        f'<b style="color:#1E293B;">शास्त्रीय सूत्र:</b> इन्दु लग्न में केवल एक भी उच्च या शुभ ग्रह स्थित हो तो जातक बहु-करोड़पति बनता है; पाप ग्रह हों तो धन का प्रवाह उद्यम के साथ आता है।'
+                        f'</div>'
+                        f'</div>',
                         unsafe_allow_html=True
                     )
 
-                # Bottom Classical Reference Card in Subtab 2
-                with st.expander("📖 जैमिनी विशेष लग्न शास्त्रीय संदर्भ व सूत्र (BPHS & Jaimini Sutras)", expanded=False):
+                # Spacing before Bottom Classical Reference Card in Subtab 2
+                st.markdown("<div style='margin-top: 14px;'></div>", unsafe_allow_html=True)
+                with st.expander("📜 जैमिनी विशेष लग्न शास्त्रीय संदर्भ व सूत्र (BPHS & Jaimini Sutras)", expanded=False):
                     st.caption("महर्षि पराशर (BPHS अध्याय ४ एवं ५) तथा महर्षि जैमिनी उपदेश सूत्रों के अनुसार:")
                     st.markdown("""
                     - **होरा लग्न (HL):** सूर्योदय से प्रत्येक होरा (२.५ घटी / १ घंटा) में एक राशि की गति। धन संपदा, तरल पूंजी एवं वित्तीय सुदृढ़ता का निर्णायक।
