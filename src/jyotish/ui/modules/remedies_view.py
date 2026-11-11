@@ -802,6 +802,36 @@ def render_remedies_view(chart, tabs=None):
     la_options_list = [f"{a['Id']}. {LIFE_AREA_HINDI_NAMES.get(a['Id'], a['LifeArea'])}" for a in applicable_life_areas]
 
     # Level 1 Module Tabs immediately at the top (Zero Top Whitespace)
+    st.markdown("""
+    <style>
+    /* Zero excess whitespace for Level 1 tabs and Level 2 sub-tabs */
+    div[data-testid="stTabs"] {
+        margin-top: 0px !important;
+        margin-bottom: 4px !important;
+    }
+    div[data-testid="stTabs"] div[data-baseweb="tab-panel"] {
+        padding-top: 4px !important;
+        padding-bottom: 2px !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    div[data-testid="stTabs"] div[data-baseweb="tab-panel"] > div > div[data-testid="stTabs"],
+    div[data-testid="stTabs"] div[data-baseweb="tab-panel"] div[data-testid="stTabs"] {
+        margin-top: 2px !important;
+        margin-bottom: 3px !important;
+    }
+    div[data-testid="stTabs"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"] {
+        margin-top: 1px !important;
+        margin-bottom: 1px !important;
+        padding: 3px 5px !important;
+        gap: 4px !important;
+    }
+    div[data-testid="stTabs"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"] button[role="tab"] {
+        padding: 4px 12px !important;
+        font-size: 12.5px !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     tab_fw_overview, tab_life_areas_deep, tab_remedies_suite, tab_badhaka_maraka = st.tabs(tabs)
 
     # =========================================================================

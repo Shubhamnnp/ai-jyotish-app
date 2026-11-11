@@ -2421,8 +2421,8 @@ unified_css = f"""
     /* Segmented Luxury Tabs with Horizontal Swiping on Mobile */
     [data-testid="stTabs"] {{
         width: 100% !important;
-        margin-top: 6px !important;
-        margin-bottom: 14px !important;
+        margin-top: 0px !important;
+        margin-bottom: 6px !important;
     }}
     [data-testid="stTabs"] [data-baseweb="tab-list"] {{
         display: flex !important;
@@ -2431,11 +2431,9 @@ unified_css = f"""
         overflow-y: hidden !important;
         -webkit-overflow-scrolling: touch !important;
         scrollbar-width: none !important;
-        border-radius: 12px !important;
-        padding: 5px !important;
+        border-radius: 10px !important;
+        padding: 4px 6px !important;
         gap: 6px !important;
-        padding: 6px !important;
-        gap: 8px !important;
     }}
     [data-testid="stTabs"] [data-baseweb="tab-list"]::-webkit-scrollbar {{
         display: none !important;
@@ -2443,9 +2441,7 @@ unified_css = f"""
     [data-testid="stTabs"] button[role="tab"] {{
         flex-shrink: 0 !important;
         border-radius: 8px !important;
-        padding: 8px 16px !important;
-        font-weight: 700 !important;
-        font-size: 13.5px !important;
+        padding: 6px 14px !important;
         font-weight: 800 !important;
         font-size: 13px !important;
         border: 1.5px solid transparent !important;
@@ -2456,6 +2452,29 @@ unified_css = f"""
     [data-testid="stTabs"] [data-baseweb="tab-highlight"],
     [data-testid="stTabs"] [data-baseweb="tab-border"] {{
         display: none !important;
+    }}
+
+    /* Zero excess whitespace for Tab Panel & Nested Sub-Tabs */
+    [data-testid="stTabs"] [data-baseweb="tab-panel"] {{
+        padding-top: 4px !important;
+        padding-bottom: 2px !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }}
+    [data-testid="stTabs"] [data-baseweb="tab-panel"] > div > [data-testid="stTabs"],
+    [data-testid="stTabs"] [data-baseweb="tab-panel"] [data-testid="stTabs"] {{
+        margin-top: 1px !important;
+        margin-bottom: 4px !important;
+    }}
+    [data-testid="stTabs"] [data-baseweb="tab-panel"] [data-baseweb="tab-list"] {{
+        margin-top: 1px !important;
+        margin-bottom: 1px !important;
+        padding: 3px 5px !important;
+        gap: 4px !important;
+    }}
+    [data-testid="stTabs"] [data-baseweb="tab-panel"] [data-baseweb="tab-list"] button[role="tab"] {{
+        padding: 4px 12px !important;
+        font-size: 12.5px !important;
     }}
 
     /* Distinct Luxury Gemstone Colors for Every Module Tab */
@@ -5315,9 +5334,9 @@ client_bridge_code = """
                 if (isHeaderCollapsed) {
                     blockContainer.style.setProperty('padding-top', isMobile ? '12px' : '16px', 'important');
                 } else {
-                    const defaultMinH = isMobile ? 125 : 82;
+                    const defaultMinH = isMobile ? 115 : 72;
                     const tbH = (frozenTb && frozenTb.offsetHeight && frozenTb.offsetHeight > 30) ? frozenTb.offsetHeight : defaultMinH;
-                    const padTop = Math.max(tbH + 12, defaultMinH + 12);
+                    const padTop = tbH + (isMobile ? 4 : 2);
                     blockContainer.style.setProperty('padding-top', padTop + 'px', 'important');
                 }
                 blockContainer.style.setProperty('padding-left', isMobile ? '8px' : '16px', 'important');
@@ -7644,9 +7663,6 @@ with st.container(key="top_frozen_header_container", border=False):
         } catch(e) {}
         </script>
         """, height=0, width=0)
-
-    # Physical spacer between toolbelt and module selector/dialogs
-    st.markdown("<div style='height: 8px; margin: 0; padding: 0;'></div>", unsafe_allow_html=True)
 
     # Active tool dialog/form container
     if st.session_state.gla_active_tool:
