@@ -2271,7 +2271,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
             kc_col1, kc_col2 = st.columns([1, 1], gap="medium")
             with kc_col1:
                 kota_svg_m0 = ChartRenderer.render_kota_chakra_svg(kota_data_m0, title=f"कोटा चक्र दुर्ग — {chart.birth_data.name if chart.birth_data else 'जातक'}")
-                st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:10px;">{kota_svg_m0}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:16px;">{kota_svg_m0}</div>', unsafe_allow_html=True)
 
                 st.markdown("""
                 <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px; font-size:12px; color:#334155; line-height:1.5; margin-bottom:12px;">

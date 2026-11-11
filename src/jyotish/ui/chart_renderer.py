@@ -541,7 +541,7 @@ class ChartRenderer:
         Stambha (Center Core), Madhya, Prakaara, and Bahya zones,
         indicating planet placements, Ingress/Egress, and siege evaluation.
         """
-        W, H = 540, 520
+        W, H = 540, 524
         swami = kota_data.get("kota_swami", "Moon")
         pala = kota_data.get("kota_pala", "Mercury")
         status = kota_data.get("defense_status", "सामान्य स्थिति")
@@ -624,8 +624,8 @@ class ChartRenderer:
             py = 452
             svg.append(f'<text x="{px}" y="{py}" fill="{p_color}" font-size="10" font-weight="700">{m_arrow} {p_name}</text>')
 
-        svg.append(f'<rect x="20" y="475" width="{W-40}" height="32" fill="#F8FAFC" rx="6" stroke="#E2E8F0"/>')
-        svg.append(f'<text x="{W//2}" y="495" text-anchor="middle" fill="#475569" font-size="11" font-weight="800">🟢 शुभ ग्रह (Defense) | 🔴 पाप ग्रह (Attacker) | ➡️ प्रवेश (Entering/Siege) | ⬅️ निर्गम (Exiting/Relief)</text>')
+        svg.append(f'<rect x="15" y="478" width="{W-30}" height="32" fill="#F8FAFC" rx="8" stroke="#CBD5E1"/>')
+        svg.append(f'<text x="{W//2}" y="498" text-anchor="middle" fill="#475569" font-size="9.8" font-weight="800">🟢 शुभ ग्रह (Defense) | 🔴 पाप ग्रह (Attacker) | ➡️ प्रवेश (Entering/Siege) | ⬅️ निर्गम (Exiting/Relief)</text>')
         svg.append('</svg>')
         return "".join(svg)
 
