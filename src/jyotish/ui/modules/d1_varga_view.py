@@ -1215,22 +1215,21 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
             p = chart.panchang
 
     with tab_pushkara:
-        st.markdown("### 🌟 पुष्कर नवांश, पुष्कर भाग एवं वर्गोत्तम शास्त्रीय विवेचन")
-        st.caption("महर्षि पराशर, जातक पारिजात एवं उत्तर कालामृत के अनुसार कुण्डली को अमृततुल्य पोषण एवं राजयोग प्रदान करने वाले दुर्लभ अंश:")
-
         p_audit = default_shastriya_pramana_engine.audit_chart_pushkara(chart)
         v_audit = default_shastriya_pramana_engine.audit_vargottama(chart)
 
-        col_pk1, col_pk2, col_pk3 = st.columns(3)
-        with col_pk1:
-            p_nav_str = ", ".join(p_audit["pushkara_navamsha_planets"]) if p_audit["pushkara_navamsha_planets"] else "कोई नहीं"
-            st.metric("🌟 पुष्कर नवांश (Pushkara Navamsha)", f"{len(p_audit['pushkara_navamsha_planets'])} ग्रह/लग्न", p_nav_str)
-        with col_pk2:
-            p_bhaga_str = ", ".join(p_audit["pushkara_bhaga_planets"]) if p_audit["pushkara_bhaga_planets"] else "कोई नहीं"
-            st.metric("🎯 पुष्कर भाग (Pushkara Bhaga)", f"{len(p_audit['pushkara_bhaga_planets'])} ग्रह/लग्न", p_bhaga_str)
-        with col_pk3:
-            v_str = ", ".join([v["planet"] for v in v_audit["vargottama_planets"]]) if v_audit["vargottama_planets"] else "कोई नहीं"
-            st.metric("👑 वर्गोत्तम ग्रह (Vargottama D1=D9)", f"{v_audit['count']} ग्रह", v_str)
+        with st.expander("🌟 पुष्कर नवांश, पुष्कर भाग एवं वर्गोत्तम शास्त्रीय विवेचन (Pushkara & Vargottama Overview)", expanded=False):
+            st.caption("महर्षि पराशर, जातक पारिजात एवं उत्तर कालामृत के अनुसार कुण्डली को अमृततुल्य पोषण एवं राजयोग प्रदान करने वाले दुर्लभ अंश:")
+            col_pk1, col_pk2, col_pk3 = st.columns(3)
+            with col_pk1:
+                p_nav_str = ", ".join(p_audit["pushkara_navamsha_planets"]) if p_audit["pushkara_navamsha_planets"] else "कोई नहीं"
+                st.metric("🌟 पुष्कर नवांश (Pushkara Navamsha)", f"{len(p_audit['pushkara_navamsha_planets'])} ग्रह/लग्न", p_nav_str)
+            with col_pk2:
+                p_bhaga_str = ", ".join(p_audit["pushkara_bhaga_planets"]) if p_audit["pushkara_bhaga_planets"] else "कोई नहीं"
+                st.metric("🎯 पुष्कर भाग (Pushkara Bhaga)", f"{len(p_audit['pushkara_bhaga_planets'])} ग्रह/लग्न", p_bhaga_str)
+            with col_pk3:
+                v_str = ", ".join([v["planet"] for v in v_audit["vargottama_planets"]]) if v_audit["vargottama_planets"] else "कोई नहीं"
+                st.metric("👑 वर्गोत्तम ग्रह (Vargottama D1=D9)", f"{v_audit['count']} ग्रह", v_str)
 
         st.markdown("#### 📜 नवग्रह एवं लग्न पुष्करांश-वर्गोत्तम स्थिति तालिका")
         rows_html = []
