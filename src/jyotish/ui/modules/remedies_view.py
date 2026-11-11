@@ -872,6 +872,7 @@ def render_remedies_view(chart, tabs=None):
 
             st.markdown(render_premium_planet_table(pp_list, is_dark=_is_dark), unsafe_allow_html=True)
             st.markdown(render_soumya_krura_balance_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
+            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
         with subtab_houses:
             c_h1, c_h2 = st.columns([3, 1], vertical_alignment="center")
@@ -882,6 +883,7 @@ def render_remedies_view(chart, tabs=None):
 
             st.markdown(render_premium_house_table(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
             st.markdown(render_house_freewill_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
+            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
         # Compute KPI Metrics
         def _to_float(v):
@@ -900,43 +902,6 @@ def render_remedies_view(chart, tabs=None):
         min_h_idx = h_fws.index(min(h_fws)) if h_fws else 0
         max_p_idx = p_fws.index(max(p_fws)) if p_fws else 0
         min_p_idx = p_fws.index(min(p_fws)) if p_fws else 0
-
-        # Collapsible KPI Cards & Purushartha vs Prarabdha Card
-        with st.expander("📊 समग्र फ्री-विल सूचकांक एवं कर्म-सिद्धांत रहस्य (Free Will KPI & Purushartha vs Prarabdha)", expanded=False):
-            st.markdown(f"""
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 12px;">
-                <div style="background: #FFFFFF; border: 1.5px solid #3B82F6; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(59, 130, 246, 0.08);">
-                    <div style="font-size: 11px; color: #1E40AF; font-weight: 800;">🏠 औसत भाव फ्री-विल (Agency)</div>
-                    <div style="font-size: 18px; font-weight: 900; color: {'#059669' if avg_h_fw >= 50 else '#DC2626'};">{avg_h_fw:.1f}%</div>
-                    <div style="font-size: 10.5px; color: #64748B;">१२ भावों का समग्र स्वाधीनता अंक</div>
-                </div>
-                <div style="background: #FFFFFF; border: 1.5px solid #8B5CF6; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(139, 92, 246, 0.08);">
-                    <div style="font-size: 11px; color: #6D28D9; font-weight: 800;">🪐 औसत ग्रह फ्री-विल (Agency)</div>
-                    <div style="font-size: 18px; font-weight: 900; color: {'#059669' if avg_p_fw >= 50 else '#DC2626'};">{avg_p_fw:.1f}%</div>
-                    <div style="font-size: 10.5px; color: #64748B;">नवग्रहों की संकल्प शक्ति सामर्थ्य</div>
-                </div>
-                <div style="background: #FFFFFF; border: 1.5px solid #10B981; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(16, 185, 129, 0.08);">
-                    <div style="font-size: 11px; color: #047857; font-weight: 800;">🌟 सर्वोच्च स्वाधीन भाव व ग्रह</div>
-                    <div style="font-size: 14px; font-weight: 900; color: #065F46;">H{max_h_idx+1} ({h_fws[max_h_idx]:.0f}%) | {pp_list[max_p_idx].get('planet')} ({p_fws[max_p_idx]:.0f}%)</div>
-                    <div style="font-size: 10.5px; color: #059669;">कर्म द्वारा पूर्ण परिवर्तन संभव</div>
-                </div>
-                <div style="background: #FFFFFF; border: 1.5px solid #EF4444; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(239, 68, 68, 0.08);">
-                    <div style="font-size: 11px; color: #B91C1C; font-weight: 800;">⚠️ सर्वाधिक प्रारब्ध/पीड़ित क्षेत्र</div>
-                    <div style="font-size: 14px; font-weight: 900; color: #991B1B;">H{min_h_idx+1} ({h_fws[min_h_idx]:.0f}%) | {pp_list[min_p_idx].get('planet')} ({p_fws[min_p_idx]:.0f}%)</div>
-                    <div style="font-size: 10.5px; color: #DC2626;">शास्त्रीय उपाय एवं शांति अपेक्षित</div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-            st.markdown("""
-            <div style="background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%); border: 1.5px solid #BFDBFE; border-radius: 8px; padding: 10px 16px; font-size: 12px; color: #1E293B; line-height: 1.6;">
-                <div style="font-weight: 800; color: #1E40AF; margin-bottom: 4px; display:flex; align-items:center; gap:6px;">
-                    <span>📜 <b>कर्म-सिद्धांत एवं फ्री-विल शास्त्रीय रहस्य (Purushartha vs Prarabdha)</b></span>
-                </div>
-                • <b>५०% से अधिक फ्री-विल (अदृढ़ कर्म):</b> जातक के चेतन संकल्प, पुरुषार्थ एवं सतत् उद्यम द्वारा इन क्षेत्रों के परिणामों को पूर्णतः अनुकूल बनाया जा सकता है।<br/>
-                • <b>५०% से कम फ्री-विल (दृढ़ प्रारब्ध):</b> पूर्वजन्म संचित प्रारब्ध की प्रधानता है; यहाँ केवल हठपूर्वक कर्म करने के स्थान पर शास्त्रीय दान, मंत्र जप, रुद्राक्ष एवं ईश्वरीय शरणागति से ही शांति संभव है।
-            </div>
-            """, unsafe_allow_html=True)
 
 
     # =========================================================================
@@ -1413,7 +1378,56 @@ def render_remedies_view(chart, tabs=None):
             st.error(f"बाधक/मारक विश्लेषण त्रुटि: {_e_bm}")
 
     # ─── Shastriya Pramana & Classical Overview moved to Bottom (Zero Top Scroll) ───
-    st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+    # 1. Collapsible KPI Cards & Purushartha vs Prarabdha Card
+    with st.expander("📊 समग्र फ्री-विल सूचकांक एवं कर्म-सिद्धांत रहस्य (Free Will KPI & Purushartha vs Prarabdha)", expanded=False):
+        _avg_h = avg_h_fw if 'avg_h_fw' in locals() else 50.0
+        _avg_p = avg_p_fw if 'avg_p_fw' in locals() else 50.0
+        _max_h = max_h_idx if 'max_h_idx' in locals() else 0
+        _min_h = min_h_idx if 'min_h_idx' in locals() else 0
+        _max_p = max_p_idx if 'max_p_idx' in locals() else 0
+        _min_p = min_p_idx if 'min_p_idx' in locals() else 0
+        _h_fws = h_fws if 'h_fws' in locals() else [50.0] * 12
+        _p_fws = p_fws if 'p_fws' in locals() else [50.0] * 9
+        _pp_list = pp_list if 'pp_list' in locals() else []
+        _p_max_name = _pp_list[_max_p].get('planet', 'Sun') if _max_p < len(_pp_list) else 'Sun'
+        _p_min_name = _pp_list[_min_p].get('planet', 'Saturn') if _min_p < len(_pp_list) else 'Saturn'
+
+        st.markdown(f"""
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 12px;">
+            <div style="background: #FFFFFF; border: 1.5px solid #3B82F6; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(59, 130, 246, 0.08);">
+                <div style="font-size: 11px; color: #1E40AF; font-weight: 800;">🏠 औसत भाव फ्री-विल (Agency)</div>
+                <div style="font-size: 18px; font-weight: 900; color: {'#059669' if _avg_h >= 50 else '#DC2626'};">{_avg_h:.1f}%</div>
+                <div style="font-size: 10.5px; color: #64748B;">१२ भावों का समग्र स्वाधीनता अंक</div>
+            </div>
+            <div style="background: #FFFFFF; border: 1.5px solid #8B5CF6; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(139, 92, 246, 0.08);">
+                <div style="font-size: 11px; color: #6D28D9; font-weight: 800;">🪐 औसत ग्रह फ्री-विल (Agency)</div>
+                <div style="font-size: 18px; font-weight: 900; color: {'#059669' if _avg_p >= 50 else '#DC2626'};">{_avg_p:.1f}%</div>
+                <div style="font-size: 10.5px; color: #64748B;">नवग्रहों की संकल्प शक्ति सामर्थ्य</div>
+            </div>
+            <div style="background: #FFFFFF; border: 1.5px solid #10B981; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(16, 185, 129, 0.08);">
+                <div style="font-size: 11px; color: #047857; font-weight: 800;">🌟 सर्वोच्च स्वाधीन भाव व ग्रह</div>
+                <div style="font-size: 14px; font-weight: 900; color: #065F46;">H{_max_h+1} ({_h_fws[_max_h]:.0f}%) | {_p_max_name} ({_p_fws[_max_p]:.0f}%)</div>
+                <div style="font-size: 10.5px; color: #059669;">कर्म द्वारा पूर्ण परिवर्तन संभव</div>
+            </div>
+            <div style="background: #FFFFFF; border: 1.5px solid #EF4444; border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 4px rgba(239, 68, 68, 0.08);">
+                <div style="font-size: 11px; color: #B91C1C; font-weight: 800;">⚠️ सर्वाधिक प्रारब्ध/पीड़ित क्षेत्र</div>
+                <div style="font-size: 14px; font-weight: 900; color: #991B1B;">H{_min_h+1} ({_h_fws[_min_h]:.0f}%) | {_p_min_name} ({_p_fws[_min_p]:.0f}%)</div>
+                <div style="font-size: 10.5px; color: #DC2626;">शास्त्रीय उपाय एवं शांति अपेक्षित</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%); border: 1.5px solid #BFDBFE; border-radius: 8px; padding: 10px 16px; font-size: 12px; color: #1E293B; line-height: 1.6;">
+            <div style="font-weight: 800; color: #1E40AF; margin-bottom: 4px; display:flex; align-items:center; gap:6px;">
+                <span>📜 <b>कर्म-सिद्धांत एवं फ्री-विल शास्त्रीय रहस्य (Purushartha vs Prarabdha)</b></span>
+            </div>
+            • <b>५०% से अधिक फ्री-विल (अदृढ़ कर्म):</b> जातक के चेतन संकल्प, पुरुषार्थ एवं सतत् उद्यम द्वारा इन क्षेत्रों के परिणामों को पूर्णतः अनुकूल बनाया जा सकता है।<br/>
+            • <b>५०% से कम फ्री-विल (दृढ़ प्रारब्ध):</b> पूर्वजन्म संचित प्रारब्ध की प्रधानता है; यहाँ केवल हठपूर्वक कर्म करने के स्थान पर शास्त्रीय दान, मंत्र जप, रुद्राक्ष एवं ईश्वरीय शरणागति से ही शांति संभव है।
+        </div>
+        """, unsafe_allow_html=True)
+
+    # 2. Classical Shastriya Shloka Card
     with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_remedies_shloka['title']}", expanded=False):
         st.markdown(f"""
         <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
@@ -1427,6 +1441,7 @@ def render_remedies_view(chart, tabs=None):
         </div>
         """, unsafe_allow_html=True)
 
+    # 3. Lagna, Badhaka & Maraka Overview
     with st.expander("🛡️ लग्न, बाधक एवं मुख्य मारकेश स्थिति (Lagna, Badhaka & Maraka Overview)", expanded=False):
         c_rm1, c_rm2, c_rm3, c_rm4 = st.columns(4)
         c_rm1.metric("लग्न एवं प्रकृति", f"{lagna_sname}", bm_res.get("lagna_type", "चर लग्न"))
