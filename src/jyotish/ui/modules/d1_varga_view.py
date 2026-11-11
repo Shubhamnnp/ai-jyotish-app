@@ -1964,9 +1964,6 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
 
     with tab_yuddha:
-        st.markdown("### ⚔️ ग्रह युद्ध (Graha Yuddha — Classical Planetary War Engine)")
-        st.info("बृहत्संहिता (अध्याय १७) एवं सूर्य सिद्धांत अनुसार जब पांच तारा ग्रह (मंगल, बुध, गुरु, शुक्र, शनि) परस्पर १° (६० कला) के भीतर आ जाते हैं, तो उनके मध्य 'ग्रह युद्ध' घटित होता है। उत्तर अक्षांश (Greater North Latitude) वाला ग्रह विजयी होकर बलवान होता है तथा पराजित ग्रह अपनी प्राकृतिक शक्ति (षड्बल) खो देता है:")
-
         try:
             _yw_list = default_chart_calculator.detect_graha_yuddha(chart)
             _tara_grahas = ["Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
@@ -2078,6 +2075,11 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
+
+            # ─── Shastriya Overview Shifted to Bottom for Zero-Scroll UX ───
+            st.markdown("<div style='height: 16px; clear: both;'></div>", unsafe_allow_html=True)
+            with st.expander("⚔️ ग्रह युद्ध शास्त्रीय सिद्धांत एवं नियम (Graha Yuddha Overview)", expanded=False):
+                st.info("बृहत्संहिता (अध्याय १७) एवं सूर्य सिद्धांत अनुसार जब पांच तारा ग्रह (मंगल, बुध, गुरु, शुक्र, शनि) परस्पर १° (६० कला) के भीतर आ जाते हैं, तो उनके मध्य 'ग्रह युद्ध' घटित होता है। उत्तर अक्षांश (Greater North Latitude) वाला ग्रह विजयी होकर बलवान होता है तथा पराजित ग्रह अपनी प्राकृतिक शक्ति (षड्बल) खो देता है:")
 
         except Exception as _egy:
             st.error(f"ग्रह युद्ध गणना त्रुटि: {_egy}")
