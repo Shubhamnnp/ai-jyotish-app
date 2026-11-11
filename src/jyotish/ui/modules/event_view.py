@@ -98,27 +98,6 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
     </div>
     """, unsafe_allow_html=True)
 
-            st.markdown("#### 📊 माह-दर-माह सम्भावना एवं ३-स्तरीय शास्त्रीय ट्रिगर्स:")
-            st.caption("प्रत्येक माह की सम्भावना (०-१००%) = दशा संरेखण (४०) + शनि-गुरु दोहरा गोचर (३५) + अष्टकवर्ग बल (२५):")
-
-            dt_shl = SHASTRIYA_SHLOKAS.get("double_transit", {})
-            if dt_shl:
-                dt_lines = "<br/>".join(dt_shl['shloka'].splitlines())
-                st.markdown(f"""
-    <div style="background: rgba(37, 99, 235, 0.08); border-left: 4px solid #2563EB; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 {dt_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {dt_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {dt_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {dt_shl['rule']}
-    </div>
-    </div>
-    """, unsafe_allow_html=True)
-
             # Grid of Monthly Records
             m_cols = st.columns(3)
             for idx, r in enumerate(scan_res["monthly_records"]):
@@ -140,6 +119,27 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
     </div>
     <div style="font-size:11px; color:#065F46; margin-top:6px; font-style:italic; line-height:1.4;">
         💡 {r['guidance_hi']}
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+            # Collapsible Classical Rules & Triggers Expander below the monthly grid
+            dt_shl = SHASTRIYA_SHLOKAS.get("double_transit", {})
+            with st.expander("📜 शास्त्रीय प्रमाण — दोहरा गोचर एवं ३-स्तरीय ट्रिगर विधान (Double Transit & Classical Rules)", expanded=False):
+                st.caption("प्रत्येक माह की सम्भावना (०-१००%) = दशा संरेखण (४०) + शनि-गुरु दोहरा गोचर (३५) + अष्टकवर्ग बल (२५):")
+                if dt_shl:
+                    dt_lines = "<br/>".join(dt_shl['shloka'].splitlines())
+                    st.markdown(f"""
+    <div style="background: rgba(37, 99, 235, 0.08); border-left: 4px solid #2563EB; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 {dt_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {dt_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {dt_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {dt_shl['rule']}
     </div>
     </div>
     """, unsafe_allow_html=True)
