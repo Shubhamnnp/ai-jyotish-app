@@ -1502,7 +1502,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     is_hl_benefic = hl_lord in ["Jupiter", "Venus", "Mercury", "Moon"]
                     _c1_msg = '🌟 प्रबल धन योग: होरा लग्न का स्वामी शुभ ग्रह है तथा वित्तीय संचय में स्थायित्व प्रदान करता है।' if is_hl_benefic else '⚡ कर्मप्रधान धन योग: वित्तीय सफलता पुरुषार्थ एवं निरंतर उद्यम से निर्मित होगी।'
                     st.markdown(
-                        f'<div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:12px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; box-sizing:border-box;">'
+                        f'<div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:12px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; box-sizing:border-box; margin-bottom:12px;">'
                         f'<div>'
                         f'<h5 style="color:#B45309; margin:0 0 6px 0;">💰 जैमिनी धन योग (HL &amp; SL)</h5>'
                         f'<div style="font-size:12px; color:#1E293B; line-height:1.5;">'
@@ -1526,7 +1526,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     is_gl_kendra = gl_h in [1, 4, 7, 10, 5, 9]
                     _c2_msg = '👑 प्रतिष्ठित राजयोग: घटी लग्न केंद्र/त्रिकोण में स्थित होकर शासकीय प्रभुत्व एवं यश देता है।' if is_gl_kendra else '📈 प्रतिष्ठा योग: घटी लग्न जातक को सामाजिक दायित्व एवं प्रशासनिक प्रभाव प्रदान करता है।'
                     st.markdown(
-                        f'<div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; box-sizing:border-box;">'
+                        f'<div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; box-sizing:border-box; margin-bottom:12px;">'
                         f'<div>'
                         f'<h5 style="color:#1D4ED8; margin:0 0 6px 0;">🏛️ जैमिनी राज योग (GL &amp; Lagna)</h5>'
                         f'<div style="font-size:12px; color:#1E293B; line-height:1.5;">'
@@ -1551,7 +1551,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     _c3_msg = '🏆 कोटिपतित्व योग: शुभ ग्रह इन्दु लग्न में विद्यमान होकर अकूत संपदा का सृजन कर रहे हैं!' if il_benefics else ('⚡ उद्योगी धन योग: इन्दु लग्न स्वामी ' + il_lord + ' के बल से वित्तीय साम्राज्य खड़ा होगा।')
                     _il_occ = ', '.join(il_planets) if il_planets else 'शुभ दृष्टि प्रभाव'
                     st.markdown(
-                        f'<div style="background:#FAF5FF; border:1.5px solid #8B5CF6; border-radius:10px; padding:12px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; box-sizing:border-box;">'
+                        f'<div style="background:#FAF5FF; border:1.5px solid #8B5CF6; border-radius:10px; padding:12px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; box-sizing:border-box; margin-bottom:12px;">'
                         f'<div>'
                         f'<h5 style="color:#6D28D9; margin:0 0 6px 0;">💎 इन्दु लग्न कोटिपतित्व योग</h5>'
                         f'<div style="font-size:12px; color:#1E293B; line-height:1.5;">'
@@ -1568,7 +1568,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     )
 
                 # Spacing before Bottom Classical Reference Card in Subtab 2
-                st.markdown("<div style='margin-top: 14px;'></div>", unsafe_allow_html=True)
+                st.markdown("<div style='height: 20px; clear: both;'></div>", unsafe_allow_html=True)
                 with st.expander("📜 जैमिनी विशेष लग्न शास्त्रीय संदर्भ व सूत्र (BPHS & Jaimini Sutras)", expanded=False):
                     st.caption("महर्षि पराशर (BPHS अध्याय ४ एवं ५) तथा महर्षि जैमिनी उपदेश सूत्रों के अनुसार:")
                     st.markdown("""
