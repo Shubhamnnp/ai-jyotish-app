@@ -1296,7 +1296,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
         )
         st.markdown(table_html, unsafe_allow_html=True)
 
-        # ─── Pushkara & Vargottama Summary Expander (Shifted Below Table) ───
+        # ─── 1. Pushkara & Vargottama Summary Expander ───
         with st.expander("🌟 पुष्कर नवांश, पुष्कर भाग एवं वर्गोत्तम शास्त्रीय विवेचन (Pushkara & Vargottama Overview)", expanded=False):
             st.caption("महर्षि पराशर, जातक पारिजात एवं उत्तर कालामृत के अनुसार कुण्डली को अमृततुल्य पोषण एवं राजयोग प्रदान करने वाले दुर्लभ अंश:")
             col_pk1, col_pk2, col_pk3 = st.columns(3)
@@ -1310,12 +1310,12 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 v_str = ", ".join([v["planet"] for v in v_audit["vargottama_planets"]]) if v_audit["vargottama_planets"] else "कोई नहीं"
                 st.metric("👑 वर्गोत्तम ग्रह (Vargottama D1=D9)", f"{v_audit['count']} ग्रह", v_str)
 
-        # ─── Pushkara & Vargottama Dynamic Timing & Auspicious Elevation Card ───
+        # ─── 2. Pushkara & Vargottama Dynamic Timing Expander ───
         try:
             _p_pn_names = [p for p, info in p_audit.get("planets", {}).items() if info.get("is_pushkara_navamsha")]
             _p_pb_names = [p for p, info in p_audit.get("planets", {}).items() if info.get("is_pushkara_bhaga")]
             _p_vg_names = [v["planet"] for v in v_audit.get("vargottama_planets", [])] if v_audit else []
-            
+
             _elev_items = []
             if _p_pn_names:
                 _elev_items.append(f"🌟 **पुष्कर नवांश स्थित ग्रह ({', '.join(_p_pn_names)}):** इनकी विंशोत्तरी महादशा व अंतर्दशा में जातक को अमृततुल्य पोषण, आकस्मिक भाग्योदय एवं संकटों से दैवीय सुरक्षा प्राप्त होती है।")
@@ -1326,20 +1326,14 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
             if not _elev_items:
                 _elev_items.append("⚖️ **सामान्य शुभ स्थिति:** कुण्डली में अन्य शुभ योगों (केंद्र-त्रिकोण राजयोग, गजकेसरी) के आधार पर दशा-अंतर्दशा का फल संचालित होगा।")
 
-            st.markdown(f"""
-            <div style="background: linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%); border: 1.5px solid #10B981; border-radius: 10px; padding: 12px 16px; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.1);">
-                <div style="color: #065F46; font-size: 13px; font-weight: 900; margin-bottom: 6px; display:flex; align-items:center; gap:6px;">
-                    <span>🛡️ <b>पुष्कर व वर्गोत्तम सक्रिय फलित एवं दशा समय (Auspicious Dasha Timing)</b></span>
-                </div>
-                <div style="font-size: 12px; color: #1E293B; line-height: 1.6;">
-                    {'<br/>'.join(_elev_items)}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            with st.expander("🛡️ पुष्कर व वर्गोत्तम सक्रिय फलित एवं दशा समय (Auspicious Dasha Timing)", expanded=False):
+                for item in _elev_items:
+                    st.markdown(f"- {item}")
         except Exception as _e_pk_syn:
             st.caption(f"पुष्कर फलित समन्वय: {_e_pk_syn}")
 
-        with st.expander("📜 पुष्कर नवांश एवं वर्गोत्तम शास्त्रीय श्लोक व प्रमाण", expanded=True):
+        # ─── 3. Pushkara & Vargottama Classical Shloka Expander ───
+        with st.expander("📜 पुष्कर नवांश एवं वर्गोत्तम शास्त्रीय श्लोक व प्रमाण", expanded=False):
             st.markdown("""
             **🌟 पुष्कर नवांश महात्म्य (*जातक पारिजात*, अध्याय १, श्लोक ५७-५८):**
             ```text
