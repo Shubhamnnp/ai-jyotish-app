@@ -948,15 +948,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
             st.markdown(table_html, unsafe_allow_html=True)
 
         with subtab_bhava:
-            st.info(f"🎯 **चयनित वर्ग चक्र:** **{varga_choice} ({v_name})** — {VARGA_SIGNIFICANCE.get(varga_choice, 'शास्त्रीय विश्लेषण')} | **वर्ग लग्न:** **{v_lagna_sign}** (स्वामी: **{SIGN_LORDS.get(v_lagna_sign, '—')}**)")
-            # ═══════════════════════════════════════════════════════════════════════
-            # 🏛️ द्वादश भाव सम्पूर्ण शास्त्रीय तालिका (12 Houses Master Analysis Table)
-            # ═══════════════════════════════════════════════════════════════════════
-            st.markdown(f"### 🏛️ {varga_choice} ({v_name}) चक्र — द्वादश भाव सम्पूर्ण शास्त्रीय स्थिति, दृष्टि, गरिमा व गुणधर्म तालिका")
-            if varga_choice == "D1":
-                st.caption("महर्षि पराशर (BPHS), श्रीपति एवं फलदीपिका अनुसार जन्म लग्न (D1) व भाव चलित चक्र के द्वादश भावों की सूक्ष्म स्थिति, स्थित ग्रह, दृष्टियां, भाव मध्य, नक्षत्र-पद व गुणधर्म:")
-            else:
-                st.caption(f"महर्षि पराशर (BPHS) अनुसार **{varga_choice} ({v_name})** चक्र के द्वादश भावों ({v_lagna_sign} लग्न से), वर्ग में स्थित ग्रह, दृष्टि संबंध, मूल D1 संदर्भ, वर्ग गरिमा व गुणधर्म:")
+            st.caption(f"🎯 **{varga_choice} ({v_name}):** {VARGA_SIGNIFICANCE.get(varga_choice, 'शास्त्रीय विश्लेषण')} | **वर्ग लग्न:** {v_lagna_sign} ({SIGN_LORDS.get(v_lagna_sign, '—')})")
 
             try:
                 _BHAVA_META = {
@@ -1042,22 +1034,6 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 _kendra_occ = sum(1 for vp in _cur_v_planets.values() if vp.house_number in (1, 4, 7, 10))
                 _trik_occ = sum(1 for vp in _cur_v_planets.values() if vp.house_number in (1, 5, 9))
                 _upachaya_occ = sum(1 for vp in _cur_v_planets.values() if vp.house_number in (3, 6, 10, 11))
-
-                # ─── Top Bhava Vital Summary Cards for Active Varga ───
-                bc_col_m1, bc_col_m2, bc_col_m3, bc_col_m4 = st.columns(4)
-                with bc_col_m1:
-                    st.metric("🏛️ केंद्र भाव (1, 4, 7, 10)", f"{_kendra_occ} ग्रह स्थित", "विष्णु स्थान • जीवन आधार")
-                with bc_col_m2:
-                    st.metric("👑 त्रिकोण भाव (1, 5, 9)", f"{_trik_occ} ग्रह स्थित", "लक्ष्मी स्थान • धर्म व पुण्य")
-                with bc_col_m3:
-                    st.metric("📈 उपचय भाव (3, 6, 10, 11)", f"{_upachaya_occ} ग्रह स्थित", "पुरुषार्थ व सतत प्रगति")
-                with bc_col_m4:
-                    if varga_choice == "D1":
-                        _tot_shift = sum(1 for it in _bc_items if it.get("rashi_house") != it.get("chalit_house"))
-                        shift_badge_txt = f"{_tot_shift} ग्रह चलित शिफ्ट" if _tot_shift > 0 else "पूर्ण समरूप (0 शिफ्ट)"
-                        st.metric("🔄 चलित चक्र स्थिति", shift_badge_txt, f"{_occ_h_count} भाव सक्रिय / {_vac_h_count} रिक्त")
-                    else:
-                        st.metric(f"🎯 {varga_choice} वर्ग लग्न", f"{_active_lagna_name} ({_active_lagna_id})", f"{_occ_h_count} भाव सक्रिय / {_vac_h_count} रिक्त")
 
                 b_rows = []
                 for b in range(1, 13):
@@ -1209,6 +1185,28 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
           </table>
         </div>"""
                 st.markdown(bhav_table_html, unsafe_allow_html=True)
+
+                # ─── Collapsible Bhava Vital Summary (Shifted to Bottom) ───
+                with st.expander("📊 द्वादश भाव वर्गीकरण एवं चलित स्थिति सारांश (House Vital Summary)", expanded=False):
+                    if varga_choice == "D1":
+                        st.caption("महर्षि पराशर (BPHS), श्रीपति एवं फलदीपिका अनुसार जन्म लग्न (D1) व भाव चलित चक्र के द्वादश भावों की सूक्ष्म स्थिति, स्थित ग्रह, दृष्टियां, भाव मध्य, नक्षत्र-पद व गुणधर्म:")
+                    else:
+                        st.caption(f"महर्षि पराशर (BPHS) अनुसार **{varga_choice} ({v_name})** चक्र के द्वादश भावों ({v_lagna_sign} लग्न से), वर्ग में स्थित ग्रह, दृष्टि संबंध, मूल D1 संदर्भ, वर्ग गरिमा व गुणधर्म:")
+
+                    bc_col_m1, bc_col_m2, bc_col_m3, bc_col_m4 = st.columns(4)
+                    with bc_col_m1:
+                        st.metric("🏛️ केंद्र भाव (1, 4, 7, 10)", f"{_kendra_occ} ग्रह स्थित", "विष्णु स्थान • जीवन आधार")
+                    with bc_col_m2:
+                        st.metric("👑 त्रिकोण भाव (1, 5, 9)", f"{_trik_occ} ग्रह स्थित", "लक्ष्मी स्थान • धर्म व पुण्य")
+                    with bc_col_m3:
+                        st.metric("📈 उपचय भाव (3, 6, 10, 11)", f"{_upachaya_occ} ग्रह स्थित", "पुरुषार्थ व सतत प्रगति")
+                    with bc_col_m4:
+                        if varga_choice == "D1":
+                            _tot_shift = sum(1 for it in _bc_items if it.get("rashi_house") != it.get("chalit_house"))
+                            shift_badge_txt = f"{_tot_shift} ग्रह चलित शिफ्ट" if _tot_shift > 0 else "पूर्ण समरूप (0 शिफ्ट)"
+                            st.metric("🔄 चलित चक्र स्थिति", shift_badge_txt, f"{_occ_h_count} भाव सक्रिय / {_vac_h_count} रिक्त")
+                        else:
+                            st.metric(f"🎯 {varga_choice} वर्ग लग्न", f"{_active_lagna_name} ({_active_lagna_id})", f"{_occ_h_count} भाव सक्रिय / {_vac_h_count} रिक्त")
 
                 # Shastriya Rules Explanatory Expander
                 with st.expander(f"📖 {varga_choice} ({v_name}) भाव फलादेश के मूलभूत शास्त्रीय नियम एवं सिद्धांत"):
