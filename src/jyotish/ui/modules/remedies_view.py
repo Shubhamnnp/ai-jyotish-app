@@ -832,8 +832,8 @@ def render_remedies_view(chart, tabs=None):
     }
     /* Uniform equal spacing for all Expanders so they never stick together */
     div[data-testid="stExpander"] {
-        margin-top: 10px !important;
-        margin-bottom: 10px !important;
+        margin-top: 14px !important;
+        margin-bottom: 14px !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -877,7 +877,7 @@ def render_remedies_view(chart, tabs=None):
 
             st.markdown(render_premium_planet_table(pp_list, is_dark=_is_dark), unsafe_allow_html=True)
             st.markdown(render_soumya_krura_balance_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
-            st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 16px; min-height: 16px; clear: both; width: 100%; display: block;'></div>", unsafe_allow_html=True)
 
         with subtab_houses:
             c_h1, c_h2 = st.columns([3, 1], vertical_alignment="center")
@@ -888,7 +888,7 @@ def render_remedies_view(chart, tabs=None):
 
             st.markdown(render_premium_house_table(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
             st.markdown(render_house_freewill_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
-            st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 16px; min-height: 16px; clear: both; width: 100%; display: block;'></div>", unsafe_allow_html=True)
 
         # Compute KPI Metrics
         def _to_float(v):
@@ -982,14 +982,14 @@ def render_remedies_view(chart, tabs=None):
             _status_desc = f"आयाम मूल्यांकन: {_e_la_ev}"
 
         # 1. House Breakdown Row
-        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 16px; min-height: 16px; clear: both; width: 100%; display: block;'></div>", unsafe_allow_html=True)
         r1_c1, r1_c2 = st.columns(2, gap="medium")
         with r1_c1:
             st.markdown(render_premium_pillar_breakdown_table(la_detail["HouseRows"], "त्रिपक्षीय भाव विश्लेषण (3-Pillar House Breakdown)", icon="🏛️", is_dark=_is_dark), unsafe_allow_html=True)
         with r1_c2:
             st.markdown(render_premium_rashi_qualities_table(rashi_pred["HouseRashiRows"], "भाव राशि तत्व एवं गुण धर्म (House Signs & Qualities)", icon="🔮", is_dark=_is_dark), unsafe_allow_html=True)
 
-        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 16px; min-height: 16px; clear: both; width: 100%; display: block;'></div>", unsafe_allow_html=True)
 
         # 2. Lord Breakdown Row
         r2_c1, r2_c2 = st.columns(2, gap="medium")
@@ -998,7 +998,7 @@ def render_remedies_view(chart, tabs=None):
         with r2_c2:
             st.markdown(render_premium_rashi_qualities_table(rashi_pred["LordRashiRows"], "भावेश राशि तत्व एवं गुण धर्म (Lord Signs & Qualities)", icon="🔮", is_dark=_is_dark), unsafe_allow_html=True)
 
-        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 16px; min-height: 16px; clear: both; width: 100%; display: block;'></div>", unsafe_allow_html=True)
 
         # Collapsible Section for Life Area Explanation, HUD Pillars & Evaluation (Shifted to Bottom)
         with st.expander(f"🏛️ आयाम स्तम्भ, कारक एवं गरिमा विवरण — {_area_status.split('(')[0].strip()}", expanded=False):
@@ -1083,7 +1083,7 @@ def render_remedies_view(chart, tabs=None):
         if not rem_rows:
             rem_rows = affliction_engine.calculate_remedy(life_area_id=sel_rem_la_id, lords=rem_lords_toggle)
 
-        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 16px; min-height: 16px; clear: both; width: 100%; display: block;'></div>", unsafe_allow_html=True)
         if is_live_server_data:
             st.markdown('<div style="font-size: 11.5px; color: #047857; font-weight: 700; margin-bottom: 8px;">🌐 Grahalakshanam लाइव सर्वर सत्यापित गणना (Synchronized with api.grahalakshanam.in)</div>', unsafe_allow_html=True)
         else:
@@ -1260,6 +1260,8 @@ def render_remedies_view(chart, tabs=None):
             """, unsafe_allow_html=True)
         except Exception as _e_gem:
             st.caption(f"रत्न सुरक्षा लोड हो रहा है: {_e_gem}")
+
+        st.markdown("<div style='height: 16px; min-height: 16px; clear: both; width: 100%; display: block;'></div>", unsafe_allow_html=True)
 
         # Remedy Shastriya Rules & Guidance Box
         with st.expander("📖 सर्वर शास्त्रीय उपाय नियम पुस्तिका (Remedy Rules & Scientific Guide)", expanded=True):

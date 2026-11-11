@@ -2533,7 +2533,8 @@ unified_css = f"""
     /* Luxury Card-styled Expanders */
     div[data-testid="stExpander"] {{
         border-radius: 12px !important;
-        margin-bottom: 10px !important;
+        margin-top: 14px !important;
+        margin-bottom: 14px !important;
         overflow: hidden !important;
         transition: all 0.2s ease !important;
     }}
