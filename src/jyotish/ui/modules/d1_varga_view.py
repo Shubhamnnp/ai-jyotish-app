@@ -1703,10 +1703,8 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
 
     with tab_chandra:
-        st.markdown("### 🌙 चन्द्र कुण्डली (Chandra Kundali — Mind & Emotional Consciousness)")
         _moon = chart.planets.get("Moon")
         if _moon:
-            st.info(f"चन्द्रमा मन, माता, जन-समर्थन एवं भौतिक जीवन का मुख्य कारक है। चन्द्र कुण्डली में चन्द्रमा की राशि (**{_moon.sign_name}**) को प्रथम भाव (लग्न) मानकर सम्पूर्ण जीवन का अध्ययन किया जाता है:")
 
             # Construct Chandra VargaChart
             _chandra_planets = {
@@ -1826,6 +1824,11 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 # Render Yoga Cards
                 for _yt, _yd, _bg, _fg in _lunar_yogas:
                     st.markdown(f'<div style="background:{_bg}; border:1px solid #CBD5E1; border-radius:6px; padding:6px 10px; margin-bottom:5px;"><span style="font-weight:900; color:{_fg}; font-size:12px;">{_yt}:</span> <span style="font-size:11.5px; color:#1E293B;">{_yd}</span></div>', unsafe_allow_html=True)
+
+            # ─── Shastriya Overview Shifted to Bottom for Zero-Scroll UX ───
+            st.markdown("<div style='height: 14px; clear: both;'></div>", unsafe_allow_html=True)
+            with st.expander("📜 चन्द्र कुण्डली शास्त्रीय प्रयोजन एवं नियम (Chandra Kundali Overview)", expanded=False):
+                st.info(f"चन्द्रमा मन, माता, जन-समर्थन एवं भौतिक जीवन का मुख्य कारक है। चन्द्र कुण्डली में चन्द्रमा की राशि (**{_moon.sign_name}**) को प्रथम भाव (लग्न) मानकर सम्पूर्ण जीवन का अध्ययन किया जाता है:")
         else:
             st.warning("चन्द्रमा की स्थिति उपलब्ध नहीं।")
 
