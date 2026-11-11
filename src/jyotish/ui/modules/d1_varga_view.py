@@ -1740,7 +1740,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 _m_dms = f"{_m_ansh}° {_m_kala:02d}'"
 
                 st.markdown(f"""
-                <div style="background:#EFF6FF; border:1px solid #93C5FD; border-radius:8px; padding:10px 14px; font-size:12px; color:#1E3A8A; line-height:1.6;">
+                <div style="background:#EFF6FF; border:1px solid #93C5FD; border-radius:8px; padding:10px 14px; font-size:12px; color:#1E3A8A; line-height:1.6; margin-bottom:12px;">
                     <b>🌕 चन्द्रमा का स्पष्ट परिचय:</b><br/>
                     • <b>राशि:</b> {_moon.sign_name} ({_m_dms})<br/>
                     • <b>नक्षत्र:</b> {_moon.nakshatra_name} (पाद {_moon.nakshatra_pada}) — स्वामी: {_moon.nakshatra_lord}<br/>
@@ -1766,7 +1766,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     _occ_str = ", ".join(_occ_p) if _occ_p else "—"
                     _c_house_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:4px 6px; font-weight:800; color:#1E40AF;">{_h_idx} भाव</td><td style="padding:4px 6px; font-weight:700;">{_target_sname}</td><td style="padding:4px 6px; color:#475569;">{_h_lord}</td><td style="padding:4px 6px; font-weight:800; color:#0F172A;">{_occ_str}</td><td style="padding:4px 6px; font-size:10.5px; color:#475569;">{_c_signifs[_h_idx-1]}</td></tr>')
 
-                _ch_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:220px; overflow-y:auto; margin-bottom:10px;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 6px; text-align:left;">भाव</th><th style="padding:4px 6px; text-align:left;">राशि</th><th style="padding:4px 6px; text-align:left;">स्वामी</th><th style="padding:4px 6px; text-align:left;">स्थित ग्रह</th><th style="padding:4px 6px; text-align:left;">जीवन क्षेत्र</th></tr></thead><tbody>{"".join(_c_house_rows)}</tbody></table></div>'
+                _ch_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:285px; overflow-y:auto; margin-bottom:10px;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 6px; text-align:left;">भाव</th><th style="padding:4px 6px; text-align:left;">राशि</th><th style="padding:4px 6px; text-align:left;">स्वामी</th><th style="padding:4px 6px; text-align:left;">स्थित ग्रह</th><th style="padding:4px 6px; text-align:left;">जीवन क्षेत्र</th></tr></thead><tbody>{"".join(_c_house_rows)}</tbody></table></div>'
                 st.markdown(_ch_tbl_html, unsafe_allow_html=True)
 
                 # ─── Lunar Yogas Engine ───
@@ -1826,8 +1826,8 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     st.markdown(f'<div style="background:{_bg}; border:1px solid #CBD5E1; border-radius:6px; padding:6px 10px; margin-bottom:5px;"><span style="font-weight:900; color:{_fg}; font-size:12px;">{_yt}:</span> <span style="font-size:11.5px; color:#1E293B;">{_yd}</span></div>', unsafe_allow_html=True)
 
             # ─── Shastriya Overview Shifted to Bottom for Zero-Scroll UX ───
-            st.markdown("<div style='height: 14px; clear: both;'></div>", unsafe_allow_html=True)
-            with st.expander("📜 चन्द्र कुण्डली शास्त्रीय प्रयोजन एवं नियम (Chandra Kundali Overview)", expanded=False):
+            st.markdown("<div style='height: 20px; clear: both;'></div>", unsafe_allow_html=True)
+            with st.expander("🌙 चन्द्र कुण्डली शास्त्रीय प्रयोजन एवं नियम (Chandra Kundali Overview)", expanded=False):
                 st.info(f"चन्द्रमा मन, माता, जन-समर्थन एवं भौतिक जीवन का मुख्य कारक है। चन्द्र कुण्डली में चन्द्रमा की राशि (**{_moon.sign_name}**) को प्रथम भाव (लग्न) मानकर सम्पूर्ण जीवन का अध्ययन किया जाता है:")
         else:
             st.warning("चन्द्रमा की स्थिति उपलब्ध नहीं।")
