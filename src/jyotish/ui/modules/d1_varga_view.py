@@ -1582,9 +1582,6 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
 
     with tab_bhav:
-        st.markdown("### 🏠 भाव चलित चक्र (Bhava Chalit Chart — Equal / Sripati Cusp System)")
-        st.info("श्रीपति एवं समभाव पद्धति अनुसार भाव के मध्य बिंदु (Cusp) से आरंभ व अंत सीमा का निर्धारण होता है। यदि कोई ग्रह राशि में होते हुए भी भाव सीमा पार कर जाता है, तो उसका प्रभाव वास्तविक चलित भाव से ही फलित होता है:")
-
         try:
             _bc_res = default_chart_calculator.calculate_bhava_chalit(chart)
             _bc_items = _bc_res.get("planet_positions", []) if isinstance(_bc_res, dict) else _bc_res
@@ -1695,6 +1692,11 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     st.warning(f"⚠️ **भाव संधि दोष (Sandhi Grihas — निस्तेज / फल शून्य):** {', '.join(_sandhi_alerts)}। शास्त्रीय नियमानुसार जो ग्रह भाव के आरंभ या अंत सीमा के १° के भीतर स्थित होते हैं, उनका भाव-फल सामर्थ्य क्षीण अथवा निष्प्रभावी हो जाता है।")
                 else:
                     st.success("✅ **संधि दोष रहित:** इस कुण्डली में कोई भी ग्रह भाव संधि के १° के भीतर नहीं है; सभी ग्रह अपने-अपने भाव का पूर्ण एवं स्वतंत्र फल प्रदान कर रहे हैं।")
+
+            # ─── Shastriya Overview Shifted to Bottom for Zero-Scroll UX ───
+            st.markdown("<div style='height: 14px; clear: both;'></div>", unsafe_allow_html=True)
+            with st.expander("📜 भाव चलित चक्र शास्त्रीय पद्धति एवं नियम (Equal / Sripati Cusp System)", expanded=False):
+                st.info("श्रीपति एवं समभाव पद्धति अनुसार भाव के मध्य बिंदु (Cusp) से आरंभ व अंत सीमा का निर्धारण होता है। यदि कोई ग्रह राशि में होते हुए भी भाव सीमा पार कर जाता है, तो उसका प्रभाव वास्तविक चलित भाव से ही फलित होता है:")
 
         except Exception as _ebc:
             st.error(f"भाव चलित गणना त्रुटि: {_ebc}")
