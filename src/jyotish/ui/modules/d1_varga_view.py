@@ -1371,56 +1371,58 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 pp_o = sl_details.get('PP', {})
                 vl_o = sl_details.get('VL', {})
 
-                st.markdown(f"""
-                <div style="background: linear-gradient(90deg, #FFFBEB 0%, #FEF3C7 100%); border: 1.5px solid #F59E0B; border-radius: 10px; padding: 10px 16px; margin: 0 0 12px 0; box-shadow: 0 2px 6px rgba(217, 119, 6, 0.08);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <div style="color: #92400E; font-size: 13px; font-weight: 900; display: flex; align-items: center; gap: 6px;">
-                            <span>👑 <b>जैमिनी विशेष लग्न त्वरित अवलोकन (Quick HUD Console)</b></span>
-                        </div>
-                        <div style="font-size: 11px; color: #78350F; font-weight: 800; background: #FDE68A; padding: 2px 8px; border-radius: 6px;">
-                            अयनांश: {chart.ayanamsa_name} ({chart.ayanamsa_value:.2f}°) | नोड: {st.session_state.get('app_node_type', 'Mean Node').split('(')[0]}
-                        </div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px;">
-                        <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 8px;">
-                            <div style="font-size: 10.5px; color: #B45309; font-weight: 800;">💰 होरा लग्न (HL)</div>
-                            <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.hora_lagna_sign_name}</div>
-                            <div style="font-size: 9.5px; color: #64748B;">अंश: {hl_o.get('degree', 0.0):.2f}° | स्वामी: {hl_o.get('lord', '—')}</div>
-                            <div style="font-size: 9.5px; color: #047857; font-weight:700;">धन, संचित संपदा</div>
-                        </div>
-                        <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 8px;">
-                            <div style="font-size: 10.5px; color: #B45309; font-weight: 800;">🏛️ घटी लग्न (GL)</div>
-                            <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.ghati_lagna_sign_name}</div>
-                            <div style="font-size: 9.5px; color: #64748B;">अंश: {gl_o.get('degree', 0.0):.2f}° | स्वामी: {gl_o.get('lord', '—')}</div>
-                            <div style="font-size: 9.5px; color: #1D4ED8; font-weight:700;">सत्ता, अधिकार, पद</div>
-                        </div>
-                        <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 8px;">
-                            <div style="font-size: 10.5px; color: #B45309; font-weight: 800;">🪷 श्री लग्न (SL)</div>
-                            <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.sri_lagna_sign_name}</div>
-                            <div style="font-size: 9.5px; color: #64748B;">अंश: {sl_o.get('degree', 0.0):.2f}° | स्वामी: {sl_o.get('lord', '—')}</div>
-                            <div style="font-size: 9.5px; color: #D97706; font-weight:700;">महालक्ष्मी कृपा, समृद्धि</div>
-                        </div>
-                        <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 8px;">
-                            <div style="font-size: 10.5px; color: #B45309; font-weight: 800;">💎 इन्दु लग्न (IL)</div>
-                            <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.indu_lagna_sign_name}</div>
-                            <div style="font-size: 9.5px; color: #64748B;">स्वामी: {il_o.get('lord', '—')}</div>
-                            <div style="font-size: 9.5px; color: #7C3AED; font-weight:700;">कोटिपतित्व / धनागमन</div>
-                        </div>
-                        <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 8px;">
-                            <div style="font-size: 10.5px; color: #B45309; font-weight: 800;">💨 प्राणपद लग्न (PP)</div>
-                            <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.pranapada_lagna_sign_name}</div>
-                            <div style="font-size: 9.5px; color: #64748B;">अंश: {pp_o.get('degree', 0.0):.2f}° | स्वामी: {pp_o.get('lord', '—')}</div>
-                            <div style="font-size: 9.5px; color: #059669; font-weight:700;">प्राण शक्ति, BTR शोधन</div>
-                        </div>
-                        <div style="background: #FFFFFF; border: 1px solid #FCD34D; border-radius: 8px; padding: 6px 8px;">
-                            <div style="font-size: 10.5px; color: #B45309; font-weight: 800;">⚔️ वर्णद लग्न (VL)</div>
-                            <div style="font-size: 14px; font-weight: 900; color: #1E293B;">{jm.varnada_lagna_sign_name}</div>
-                            <div style="font-size: 9.5px; color: #64748B;">स्वामी: {vl_o.get('lord', '—')}</div>
-                            <div style="font-size: 9.5px; color: #DC2626; font-weight:700;">सामाजिक दायित्व, आजीविका</div>
-                        </div>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+                _app_node_clean = str(st.session_state.get('app_node_type', 'Mean Node')).split('(')[0].strip()
+                _hud_html = (
+                    f'<div style="background:linear-gradient(90deg, #FFFBEB 0%, #FEF3C7 100%); border:1.5px solid #F59E0B; border-radius:10px; padding:10px 16px; margin:0 0 12px 0; box-shadow:0 2px 6px rgba(217, 119, 6, 0.08);">'
+                    f'<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">'
+                    f'<div style="color:#92400E; font-size:13px; font-weight:900; display:flex; align-items:center; gap:6px;">'
+                    f'<span>👑 <b>जैमिनी विशेष लग्न त्वरित अवलोकन (Quick HUD Console)</b></span>'
+                    f'</div>'
+                    f'<div style="font-size:11px; color:#78350F; font-weight:800; background:#FDE68A; padding:2px 8px; border-radius:6px;">'
+                    f'अयनांश: {chart.ayanamsa_name} ({chart.ayanamsa_value:.2f}°) | नोड: {_app_node_clean}'
+                    f'</div>'
+                    f'</div>'
+                    f'<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:8px;">'
+                    f'<div style="background:#FFFFFF; border:1px solid #FCD34D; border-radius:8px; padding:6px 8px;">'
+                    f'<div style="font-size:10.5px; color:#B45309; font-weight:800;">💰 होरा लग्न (HL)</div>'
+                    f'<div style="font-size:14px; font-weight:900; color:#1E293B;">{jm.hora_lagna_sign_name}</div>'
+                    f'<div style="font-size:9.5px; color:#64748B;">अंश: {hl_o.get("degree", 0.0):.2f}° | स्वामी: {hl_o.get("lord", "—")}</div>'
+                    f'<div style="font-size:9.5px; color:#047857; font-weight:700;">धन, संचित संपदा</div>'
+                    f'</div>'
+                    f'<div style="background:#FFFFFF; border:1px solid #FCD34D; border-radius:8px; padding:6px 8px;">'
+                    f'<div style="font-size:10.5px; color:#B45309; font-weight:800;">🏛️ घटी लग्न (GL)</div>'
+                    f'<div style="font-size:14px; font-weight:900; color:#1E293B;">{jm.ghati_lagna_sign_name}</div>'
+                    f'<div style="font-size:9.5px; color:#64748B;">अंश: {gl_o.get("degree", 0.0):.2f}° | स्वामी: {gl_o.get("lord", "—")}</div>'
+                    f'<div style="font-size:9.5px; color:#1D4ED8; font-weight:700;">सत्ता, अधिकार, पद</div>'
+                    f'</div>'
+                    f'<div style="background:#FFFFFF; border:1px solid #FCD34D; border-radius:8px; padding:6px 8px;">'
+                    f'<div style="font-size:10.5px; color:#B45309; font-weight:800;">🪷 श्री लग्न (SL)</div>'
+                    f'<div style="font-size:14px; font-weight:900; color:#1E293B;">{jm.sri_lagna_sign_name}</div>'
+                    f'<div style="font-size:9.5px; color:#64748B;">अंश: {sl_o.get("degree", 0.0):.2f}° | स्वामी: {sl_o.get("lord", "—")}</div>'
+                    f'<div style="font-size:9.5px; color:#D97706; font-weight:700;">महालक्ष्मी कृपा, समृद्धि</div>'
+                    f'</div>'
+                    f'<div style="background:#FFFFFF; border:1px solid #FCD34D; border-radius:8px; padding:6px 8px;">'
+                    f'<div style="font-size:10.5px; color:#B45309; font-weight:800;">💎 इन्दु लग्न (IL)</div>'
+                    f'<div style="font-size:14px; font-weight:900; color:#1E293B;">{jm.indu_lagna_sign_name}</div>'
+                    f'<div style="font-size:9.5px; color:#64748B;">स्वामी: {il_o.get("lord", "—")}</div>'
+                    f'<div style="font-size:9.5px; color:#7C3AED; font-weight:700;">कोटिपतित्व / धनागमन</div>'
+                    f'</div>'
+                    f'<div style="background:#FFFFFF; border:1px solid #FCD34D; border-radius:8px; padding:6px 8px;">'
+                    f'<div style="font-size:10.5px; color:#B45309; font-weight:800;">💨 प्राणपद लग्न (PP)</div>'
+                    f'<div style="font-size:14px; font-weight:900; color:#1E293B;">{jm.pranapada_lagna_sign_name}</div>'
+                    f'<div style="font-size:9.5px; color:#64748B;">अंश: {pp_o.get("degree", 0.0):.2f}° | स्वामी: {pp_o.get("lord", "—")}</div>'
+                    f'<div style="font-size:9.5px; color:#059669; font-weight:700;">प्राण शक्ति, BTR शोधन</div>'
+                    f'</div>'
+                    f'<div style="background:#FFFFFF; border:1px solid #FCD34D; border-radius:8px; padding:6px 8px;">'
+                    f'<div style="font-size:10.5px; color:#B45309; font-weight:800;">⚔️ वर्णद लग्न (VL)</div>'
+                    f'<div style="font-size:14px; font-weight:900; color:#1E293B;">{jm.varnada_lagna_sign_name}</div>'
+                    f'<div style="font-size:9.5px; color:#64748B;">स्वामी: {vl_o.get("lord", "—")}</div>'
+                    f'<div style="font-size:9.5px; color:#DC2626; font-weight:700;">सामाजिक दायित्व, आजीविका</div>'
+                    f'</div>'
+                    f'</div>'
+                    f'</div>'
+                )
+                st.markdown(_hud_html, unsafe_allow_html=True)
 
                 # ─── Detailed Comparative Table ───
                 sl_rows = []
@@ -1445,38 +1447,38 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 for row in sl_rows:
                     badge_bg = "#FEF3C7" if row["code"] in ["HL", "SL"] else ("#DBEAFE" if row["code"] in ["GL", "PP"] else "#F3E8FF")
                     badge_col = "#92400E" if row["code"] in ["HL", "SL"] else ("#1E40AF" if row["code"] in ["GL", "PP"] else "#6B21A8")
-                    _sl_tbody_rows.append(f"""
-                    <tr style="border-bottom: 1px solid #E2E8F0;">
-                        <td style="padding: 7px 10px; font-weight: 800; color: #1E293B;">{row['name']}</td>
-                        <td style="padding: 7px 10px; text-align: center;"><span style="background:{badge_bg}; color:{badge_col}; font-weight:900; padding:2px 7px; border-radius:4px; font-size:11px;">{row['code']}</span></td>
-                        <td style="padding: 7px 10px; font-weight: 700; color: #334155;">{row['sign']}</td>
-                        <td style="padding: 7px 10px; font-family: monospace; font-size: 12px; color: #047857; font-weight: 700;">{row['degree']}</td>
-                        <td style="padding: 7px 10px; font-family: monospace; font-size: 12px; color: #64748B;">{row['lon']}</td>
-                        <td style="padding: 7px 10px; font-weight: 700; color: #1E293B;">{row['lord']}</td>
-                        <td style="padding: 7px 10px; font-weight: 800; color: #D97706; text-align: center;"><span style="background:#FFFBEB; padding:2px 8px; border-radius:10px; border:1px solid #FDE68A;">{row['house']}</span></td>
-                        <td style="padding: 7px 10px; font-size: 11.5px; color: #475569; line-height: 1.4;">{row['purpose']}</td>
-                    </tr>
-                    """)
+                    _sl_tbody_rows.append(
+                        f'<tr style="border-bottom:1px solid #E2E8F0;">'
+                        f'<td style="padding:7px 10px; font-weight:800; color:#1E293B;">{row["name"]}</td>'
+                        f'<td style="padding:7px 10px; text-align:center;"><span style="background:{badge_bg}; color:{badge_col}; font-weight:900; padding:2px 7px; border-radius:4px; font-size:11px;">{row["code"]}</span></td>'
+                        f'<td style="padding:7px 10px; font-weight:700; color:#334155;">{row["sign"]}</td>'
+                        f'<td style="padding:7px 10px; font-family:monospace; font-size:12px; color:#047857; font-weight:700;">{row["degree"]}</td>'
+                        f'<td style="padding:7px 10px; font-family:monospace; font-size:12px; color:#64748B;">{row["lon"]}</td>'
+                        f'<td style="padding:7px 10px; font-weight:700; color:#1E293B;">{row["lord"]}</td>'
+                        f'<td style="padding:7px 10px; font-weight:800; color:#D97706; text-align:center;"><span style="background:#FFFBEB; padding:2px 8px; border-radius:10px; border:1px solid #FDE68A;">{row["house"]}</span></td>'
+                        f'<td style="padding:7px 10px; font-size:11.5px; color:#475569; line-height:1.4;">{row["purpose"]}</td>'
+                        f'</tr>'
+                    )
 
-                _sl_table_html = f"""
-                <div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:10px; padding:6px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.04); overflow-x:auto;">
-                    <table style="width:100%; border-collapse:collapse; font-size:12px; text-align:left;">
-                        <thead>
-                            <tr style="background:#F1F5F9; border-bottom:2px solid #CBD5E1; color:#1E293B; font-weight:800;">
-                                <th style="padding:8px 10px;">विशेष लग्न</th>
-                                <th style="padding:8px 10px; text-align:center;">प्रतीक</th>
-                                <th style="padding:8px 10px;">राशि</th>
-                                <th style="padding:8px 10px;">स्पष्ट अंश</th>
-                                <th style="padding:8px 10px;">सम्पूर्ण देशांतर</th>
-                                <th style="padding:8px 10px;">राशि स्वामी</th>
-                                <th style="padding:8px 10px; text-align:center;">लग्न से भाव</th>
-                                <th style="padding:8px 10px;">शास्त्रीय प्रयोजन एवं नियम</th>
-                            </tr>
-                        </thead>
-                        <tbody>{"".join(_sl_tbody_rows)}</tbody>
-                    </table>
-                </div>
-                """
+                _sl_table_html = (
+                    f'<div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:10px; padding:6px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.04); overflow-x:auto;">'
+                    f'<table style="width:100%; border-collapse:collapse; font-size:12px; text-align:left;">'
+                    f'<thead>'
+                    f'<tr style="background:#F1F5F9; border-bottom:2px solid #CBD5E1; color:#1E293B; font-weight:800;">'
+                    f'<th style="padding:8px 10px;">विशेष लग्न</th>'
+                    f'<th style="padding:8px 10px; text-align:center;">प्रतीक</th>'
+                    f'<th style="padding:8px 10px;">राशि</th>'
+                    f'<th style="padding:8px 10px;">स्पष्ट अंश</th>'
+                    f'<th style="padding:8px 10px;">सम्पूर्ण देशांतर</th>'
+                    f'<th style="padding:8px 10px;">राशि स्वामी</th>'
+                    f'<th style="padding:8px 10px; text-align:center;">लग्न से भाव</th>'
+                    f'<th style="padding:8px 10px;">शास्त्रीय प्रयोजन एवं नियम</th>'
+                    f'</tr>'
+                    f'</thead>'
+                    f'<tbody>{"".join(_sl_tbody_rows)}</tbody>'
+                    f'</table>'
+                    f'</div>'
+                )
                 st.markdown(_sl_table_html, unsafe_allow_html=True)
 
             with subtab_jm_phala:
@@ -1489,19 +1491,18 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     sl_s = jm.sri_lagna_sign_name
                     hl_lord = SIGN_LORDS.get(hl_s, '')
                     is_hl_benefic = hl_lord in ["Jupiter", "Venus", "Mercury", "Moon"]
-                    st.markdown(f"""
-                    <div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:12px; height:100%;">
-                        <h5 style="color:#B45309; margin:0 0 6px 0;">💰 जैमिनी धन योग (HL &amp; SL)</h5>
-                        <div style="font-size:12px; color:#1E293B; line-height:1.5;">
-                            <b>होरा लग्न (HL):</b> {hl_s} (स्वामी: {hl_lord})<br/>
-                            <b>श्री लग्न (SL):</b> {sl_s}<br/>
-                            <div style="margin:6px 0; padding:6px; background:#FEF3C7; border-radius:6px; font-weight:800; font-size:11.5px; color:#78350F;">
-                                {'🌟 प्रबल धन योग: होरा लग्न का स्वामी शुभ ग्रह है तथा वित्तीय संचय में स्थायित्व प्रदान करता है।' if is_hl_benefic else '⚡ कर्मप्रधान धन योग: वित्तीय सफलता पुरुषार्थ एवं निरंतर उद्यम से निर्मित होगी।'}
-                            </div>
-                            <b>शास्त्रीय सूत्र:</b> होरा लग्न और श्री लग्न पर शुभ ग्रहों (गुरु, शुक्र, बुध) की दृष्टि या युति जातक को विपुल संपदा एवं महालक्ष्मी का स्थायी अनुग्रह प्रदान करती है।
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    _c1_msg = '🌟 प्रबल धन योग: होरा लग्न का स्वामी शुभ ग्रह है तथा वित्तीय संचय में स्थायित्व प्रदान करता है।' if is_hl_benefic else '⚡ कर्मप्रधान धन योग: वित्तीय सफलता पुरुषार्थ एवं निरंतर उद्यम से निर्मित होगी।'
+                    st.markdown(
+                        f'<div style="background:#FFFBEB; border:1.5px solid #F59E0B; border-radius:10px; padding:12px; height:100%;">'
+                        f'<h5 style="color:#B45309; margin:0 0 6px 0;">💰 जैमिनी धन योग (HL &amp; SL)</h5>'
+                        f'<div style="font-size:12px; color:#1E293B; line-height:1.5;">'
+                        f'<b>होरा लग्न (HL):</b> {hl_s} (स्वामी: {hl_lord})<br/>'
+                        f'<b>श्री लग्न (SL):</b> {sl_s}<br/>'
+                        f'<div style="margin:6px 0; padding:6px; background:#FEF3C7; border-radius:6px; font-weight:800; font-size:11.5px; color:#78350F;">{_c1_msg}</div>'
+                        f'<b>शास्त्रीय सूत्र:</b> होरा लग्न और श्री लग्न पर शुभ ग्रहों (गुरु, शुक्र, बुध) की दृष्टि या युति जातक को विपुल संपदा एवं महालक्ष्मी का स्थायी अनुग्रह प्रदान करती है।'
+                        f'</div></div>',
+                        unsafe_allow_html=True
+                    )
 
                 # 2. Raja Yoga (GL & Janma Lagna)
                 with col_y2:
@@ -1509,19 +1510,18 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     gl_lord = SIGN_LORDS.get(gl_s, '')
                     gl_h = ((SIGN_NAMES.index(gl_s) - chart.lagna_sign_id + 12) % 12) + 1 if gl_s in SIGN_NAMES else 1
                     is_gl_kendra = gl_h in [1, 4, 7, 10, 5, 9]
-                    st.markdown(f"""
-                    <div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px; height:100%;">
-                        <h5 style="color:#1D4ED8; margin:0 0 6px 0;">🏛️ जैमिनी राज योग (GL &amp; Lagna)</h5>
-                        <div style="font-size:12px; color:#1E293B; line-height:1.5;">
-                            <b>घटी लग्न (GL):</b> {gl_s} ({gl_h} भाव)<br/>
-                            <b>घटी लग्न स्वामी:</b> {gl_lord}<br/>
-                            <div style="margin:6px 0; padding:6px; background:#DBEAFE; border-radius:6px; font-weight:800; font-size:11.5px; color:#1E3A8A;">
-                                {'👑 प्रतिष्ठित राजयोग: घटी लग्न केंद्र/त्रिकोण में स्थित होकर शासकीय प्रभुत्व एवं यश देता है।' if is_gl_kendra else '📈 प्रतिष्ठा योग: घटी लग्न जातक को सामाजिक दायित्व एवं प्रशासनिक प्रभाव प्रदान करता है।'}
-                            </div>
-                            <b>शास्त्रीय सूत्र:</b> यदि जन्म लग्न और घटी लग्न दोनों पर किसी एक ही ग्रह की दृष्टि हो, तो महर्षि जैमिनी अनुसार जातक को राजा समान पद, सत्ता एवं समाज में सर्वोच्च सम्मान प्राप्त होता है।
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    _c2_msg = '👑 प्रतिष्ठित राजयोग: घटी लग्न केंद्र/त्रिकोण में स्थित होकर शासकीय प्रभुत्व एवं यश देता है।' if is_gl_kendra else '📈 प्रतिष्ठा योग: घटी लग्न जातक को सामाजिक दायित्व एवं प्रशासनिक प्रभाव प्रदान करता है।'
+                    st.markdown(
+                        f'<div style="background:#EFF6FF; border:1.5px solid #3B82F6; border-radius:10px; padding:12px; height:100%;">'
+                        f'<h5 style="color:#1D4ED8; margin:0 0 6px 0;">🏛️ जैमिनी राज योग (GL &amp; Lagna)</h5>'
+                        f'<div style="font-size:12px; color:#1E293B; line-height:1.5;">'
+                        f'<b>घटी लग्न (GL):</b> {gl_s} ({gl_h} भाव)<br/>'
+                        f'<b>घटी लग्न स्वामी:</b> {gl_lord}<br/>'
+                        f'<div style="margin:6px 0; padding:6px; background:#DBEAFE; border-radius:6px; font-weight:800; font-size:11.5px; color:#1E3A8A;">{_c2_msg}</div>'
+                        f'<b>शास्त्रीय सूत्र:</b> यदि जन्म लग्न और घटी लग्न दोनों पर किसी एक ही ग्रह की दृष्टि हो, तो महर्षि जैमिनी अनुसार जातक को राजा समान पद, सत्ता एवं समाज में सर्वोच्च सम्मान प्राप्त होता है।'
+                        f'</div></div>',
+                        unsafe_allow_html=True
+                    )
 
                 # 3. Indu Lagna Wealth Engine
                 with col_y3:
@@ -1529,19 +1529,19 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     il_lord = SIGN_LORDS.get(il_s, '')
                     il_planets = [pn for pn, p in chart.planets.items() if p.sign_name == il_s]
                     il_benefics = [p for p in il_planets if p in ["Jupiter", "Venus", "Mercury", "Moon"]]
-                    st.markdown(f"""
-                    <div style="background:#FAF5FF; border:1.5px solid #8B5CF6; border-radius:10px; padding:12px; height:100%;">
-                        <h5 style="color:#6D28D9; margin:0 0 6px 0;">💎 इन्दु लग्न कोटिपतित्व योग</h5>
-                        <div style="font-size:12px; color:#1E293B; line-height:1.5;">
-                            <b>इन्दु लग्न:</b> {il_s} (स्वामी: {il_lord})<br/>
-                            <b>इन्दु लग्न में स्थित ग्रह:</b> {', '.join(il_planets) if il_planets else 'शुभ दृष्टि प्रभाव'}<br/>
-                            <div style="margin:6px 0; padding:6px; background:#F3E8FF; border-radius:6px; font-weight:800; font-size:11.5px; color:#581C87;">
-                                {'🏆 कोटिपतित्व योग: शुभ ग्रह इन्दु लग्न में विद्यमान होकर अकूत संपदा का सृजन कर रहे हैं!' if il_benefics else ('⚡ उद्योगी धन योग: इन्दु लग्न स्वामी ' + il_lord + ' के बल से वित्तीय साम्राज्य खड़ा होगा।')}
-                            </div>
-                            <b>शास्त्रीय सूत्र:</b> इन्दु लग्न में केवल एक भी उच्च या शुभ ग्रह स्थित हो तो जातक बहु-करोड़पति बनता है; पाप ग्रह हों तो धन का प्रवाह उद्यम के साथ आता है।
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    _c3_msg = '🏆 कोटिपतित्व योग: शुभ ग्रह इन्दु लग्न में विद्यमान होकर अकूत संपदा का सृजन कर रहे हैं!' if il_benefics else ('⚡ उद्योगी धन योग: इन्दु लग्न स्वामी ' + il_lord + ' के बल से वित्तीय साम्राज्य खड़ा होगा।')
+                    _il_occ = ', '.join(il_planets) if il_planets else 'शुभ दृष्टि प्रभाव'
+                    st.markdown(
+                        f'<div style="background:#FAF5FF; border:1.5px solid #8B5CF6; border-radius:10px; padding:12px; height:100%;">'
+                        f'<h5 style="color:#6D28D9; margin:0 0 6px 0;">💎 इन्दु लग्न कोटिपतित्व योग</h5>'
+                        f'<div style="font-size:12px; color:#1E293B; line-height:1.5;">'
+                        f'<b>इन्दु लग्न:</b> {il_s} (स्वामी: {il_lord})<br/>'
+                        f'<b>इन्दु लग्न में स्थित ग्रह:</b> {_il_occ}<br/>'
+                        f'<div style="margin:6px 0; padding:6px; background:#F3E8FF; border-radius:6px; font-weight:800; font-size:11.5px; color:#581C87;">{_c3_msg}</div>'
+                        f'<b>शास्त्रीय सूत्र:</b> इन्दु लग्न में केवल एक भी उच्च या शुभ ग्रह स्थित हो तो जातक बहु-करोड़पति बनता है; पाप ग्रह हों तो धन का प्रवाह उद्यम के साथ आता है।'
+                        f'</div></div>',
+                        unsafe_allow_html=True
+                    )
 
                 # Bottom Classical Reference Card in Subtab 2
                 with st.expander("📖 जैमिनी विशेष लग्न शास्त्रीय संदर्भ व सूत्र (BPHS & Jaimini Sutras)", expanded=False):
