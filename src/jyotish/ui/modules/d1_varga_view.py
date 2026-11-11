@@ -2291,7 +2291,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
                 # Strategic Defense Scorecard
                 st.markdown(f"""
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
                     <div style="background:#EFF6FF; border:1px solid #93C5FD; border-radius:8px; padding:8px 12px;">
                         <div style="font-size:11px; color:#1E40AF; font-weight:800;">👑 दुर्ग स्वामी (Kota Swami)</div>
                         <div style="font-size:15px; font-weight:900; color:#1E293B;">{_k_swami}</div>
@@ -2306,13 +2306,14 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 """, unsafe_allow_html=True)
 
                 st.markdown(f"""
-                <div style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:8px; padding:10px 12px; margin-bottom:10px;">
+                <div style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:8px; padding:10px 12px; margin-bottom:12px;">
                     <div style="font-weight:900; color:#92400E; font-size:12.5px; margin-bottom:4px;">दुर्ग रक्षा मूल्यांकन: {_def_status}</div>
                     <div style="font-size:11.5px; color:#1E293B; line-height:1.5;">{_def_sum}</div>
                 </div>
                 """, unsafe_allow_html=True)
 
                 # Planet Allocations Table
+                st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
                 st.markdown("#### 🪐 दुर्ग में ग्रहों की स्थिति एवं गति")
                 _p_allocs = kota_data_m0.get("planet_allocations", [])
                 if _p_allocs:
@@ -2327,10 +2328,11 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                         _role_badge = f'<span style="background:{"#FEE2E2" if _is_mal else "#DCFCE7"}; color:{_p_col}; font-weight:800; padding:1px 6px; border-radius:4px; font-size:10.5px;">{"आक्रांता" if _is_mal else "रक्षक"}</span>'
                         _pl_k_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:4px 6px; font-weight:800; color:#1E293B;">{_pn}</td><td style="padding:4px 6px; color:#475569;">{_pa.get("nakshatra", "")}</td><td style="padding:4px 6px; font-weight:700;">{_zn}</td><td style="padding:4px 6px; font-size:11px;">{_mo}</td><td style="padding:4px 6px; text-align:center;">{_role_badge}</td></tr>')
 
-                    _k_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:220px; overflow-y:auto;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 6px; text-align:left;">ग्रह</th><th style="padding:4px 6px; text-align:left;">नक्षत्र</th><th style="padding:4px 6px; text-align:left;">दुर्ग क्षेत्र</th><th style="padding:4px 6px; text-align:left;">गति दिशा</th><th style="padding:4px 6px; text-align:center;">भूमिका</th></tr></thead><tbody>{"".join(_pl_k_rows)}</tbody></table></div>'
+                    _k_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:280px; overflow-y:auto; margin-bottom:12px;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 6px; text-align:left;">ग्रह</th><th style="padding:4px 6px; text-align:left;">नक्षत्र</th><th style="padding:4px 6px; text-align:left;">दुर्ग क्षेत्र</th><th style="padding:4px 6px; text-align:left;">गति दिशा</th><th style="padding:4px 6px; text-align:center;">भूमिका</th></tr></thead><tbody>{"".join(_pl_k_rows)}</tbody></table></div>'
                     st.markdown(_k_tbl_html, unsafe_allow_html=True)
 
                 # ─── Live Transit Defense Assessment Overlay ───
+                st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
                 _stambha_malefics = [pa["planet"] for pa in _p_allocs if pa.get("zone") == "Stambha" and ("Malefic" in pa.get("nature", "") or pa["planet"] in ["Mars", "Saturn", "Rahu", "Ketu"])]
                 _madhya_malefics = [pa["planet"] for pa in _p_allocs if pa.get("zone") == "Madhya" and ("Malefic" in pa.get("nature", "") or pa["planet"] in ["Mars", "Saturn", "Rahu", "Ketu"])]
 
