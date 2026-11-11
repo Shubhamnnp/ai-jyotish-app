@@ -1770,6 +1770,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 st.markdown(_ch_tbl_html, unsafe_allow_html=True)
 
                 # ─── Lunar Yogas Engine ───
+                st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
                 st.markdown("#### 🌟 चन्द्र आधारित प्रमुख योग (Classical Lunar Yogas)")
                 _lunar_yogas = []
 
@@ -1821,9 +1822,16 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     if _m_dist in [1, 7]:
                         _lunar_yogas.append(("💎 चन्द्र-मंगल महालक्ष्मी योग", f"चन्द्रमा एवं मंगल परस्पर {_m_dist}वें भाव में युत/दृष्ट हैं। यह व्यापारिक सफलता, उद्योग में धन लाभ एवं तीव्र क्रियाशीलता का कारक है।", "#FAF5FF", "#6B21A8"))
 
-                # Render Yoga Cards
+                # Render Yoga Cards with clear spacing between each card
+                _cards_html = []
                 for _yt, _yd, _bg, _fg in _lunar_yogas:
-                    st.markdown(f'<div style="background:{_bg}; border:1px solid #CBD5E1; border-radius:6px; padding:6px 10px; margin-bottom:5px;"><span style="font-weight:900; color:{_fg}; font-size:12px;">{_yt}:</span> <span style="font-size:11.5px; color:#1E293B;">{_yd}</span></div>', unsafe_allow_html=True)
+                    _cards_html.append(
+                        f'<div style="background:{_bg}; border:1px solid #CBD5E1; border-radius:8px; padding:8px 12px; margin-bottom:10px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">'
+                        f'<span style="font-weight:900; color:{_fg}; font-size:12px;">{_yt}:</span> '
+                        f'<span style="font-size:11.5px; color:#1E293B; line-height:1.5;">{_yd}</span>'
+                        f'</div>'
+                    )
+                st.markdown("".join(_cards_html), unsafe_allow_html=True)
 
             # ─── Shastriya Overview Shifted to Bottom for Zero-Scroll UX ───
             st.markdown("<div style='height: 20px; clear: both;'></div>", unsafe_allow_html=True)
