@@ -201,14 +201,6 @@ def render_varga_grid_view(chart, tabs=None):
             '🏛️ षोडशवर्ग (D1-D60)',
             '📜 वर्ग सारांश व प्रमाण'
         ]
-    st.subheader("📊 दशवर्ग एवं षोडशवर्ग विश्लेषण (Dasvarga & Shodashvarga Dignity Suite)")
-    st.caption("महर्षि पराशर प्रणीत दशवर्ग (10 Divisions) एवं षोडशवर्ग (16 Divisions) ग्रह गरिमा, विंशोपक बल, वैशेषिकांश एवं शास्त्रीय फल सारांश।")
-
-    import src.jyotish.core.affliction as aff_mod
-    affliction_engine = aff_mod.AfflictionEngine(chart)
-
-    _is_dark = is_astrallis_mode or is_night_mode
-
     # Master metadata for all 16 divisional charts
     varga_meta_full = {
         "D1": "D1 (लग्न/राशि - Core Physical & Mental Self)",
@@ -236,27 +228,15 @@ def render_varga_grid_view(chart, tabs=None):
     dv_summary = affliction_engine.calculate_varga_dignity_summary(dasvarga_codes)
     sv_summary = affliction_engine.calculate_varga_dignity_summary(shodashvarga_codes)
 
-    # Classical Shastriya Shloka Card
+    # Classical Shastriya Shloka Card Definition
     bphs_varga_shloka = {
         "title": "बृहत्पाराशर होराशास्त्रम् — वैशेषिकांश एवं वर्ग बल विचार",
         "source": "महर्षि पराशर विरचित BPHS (अध्याय ६ एवं ४५)",
         "shloka": "पारिजातांशके जाते धनवान् कीर्तिमान् सुधीः।\nउत्तमे च गुणाध्यक्षो गोपुरे धान्यवान् भवेत्॥\nसिंहासने नृपप्रायः पारावते महायशाः।\nदेवलोके नृपो भूयादैरावते तु भूपतिः॥",
         "meaning": "पारिजात (२ शुभ वर्ग) में उत्पन्न जातक धनवान, कीर्तिमान व बुद्धिमान होता है। उत्तम (३ वर्ग) में गुणवान, गोपुर (४ वर्ग) में प्रचुर संपत्तिवान, सिंहासन (५ वर्ग) में राजतुल्य, पारावत (६ वर्ग) में महायशस्वी, देवलोक (७ वर्ग) में राजा और ऐरावत (८ वर्ग) में चक्रवर्ती सम्राट समान प्रतिष्ठा प्राप्त करता है।"
     }
-    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_varga_shloka['title']}", expanded=False):
-        st.markdown(f"""
-        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
-            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_varga_shloka['source']}</b>
-            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
-{bphs_varga_shloka['shloka']}
-            </pre>
-            <div style="font-size:13px; color:#92400E; margin-top:6px;">
-                <b>हिंदी भावार्थ:</b> {bphs_varga_shloka['meaning']}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
 
-    # Active Native Micro-Planetary Longitudes & DMS Console
+    # Active Native Micro-Planetary Longitudes & DMS Calculations
     lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
     moon = chart.planets.get("Moon")
     
@@ -265,14 +245,7 @@ def render_varga_grid_view(chart, tabs=None):
     varg_count = sum(1 for p in sv_summary.values() if p.get("is_vargottama")) if sv_summary else 0
     avg_score = sum(p["score_20"] for p in sv_summary.values()) / len(sv_summary) if sv_summary else 0.0
 
-    with st.expander("🔮 लग्न, शिरोमणि व विंशोपक बल सारांश (Key Lagna, Top Planet & Vimshopaka Summary)", expanded=False):
-        c_vg1, c_vg2, c_vg3, c_vg4 = st.columns(4)
-        c_vg1.metric("लग्न एवं राशि", f"{lagna_sname}", f"चन्द्र: {moon.sign_name if moon else '—'}")
-        c_vg2.metric("शिरोमणि ग्रह", f"{top_p}", f"{top_v_name} ({sv_summary[top_p]['score_20']:.1f}/20)")
-        c_vg3.metric("वर्गोत्तम ग्रह", f"{varg_count} ग्रह", "D1 व D9 समरूप")
-        c_vg4.metric("औसत विंशोपक बल", f"{avg_score:.1f} / 20", "१६ वर्गों का सामूहिक बल")
-
-    # 3 Dedicated Tabs
+    # 3 Dedicated Tabs immediately at the top (Zero Top Whitespace)
     tab_dv, tab_sv, tab_saransh = st.tabs(tabs)
 
     # =========================================================================
@@ -611,6 +584,25 @@ def render_varga_grid_view(chart, tabs=None):
 
 
 
-    # =============================================================
-    # TAB 5: VASTU-JYOTISH (MANDALA & REMEDIES)
+    # ─── Shastriya Pramana & Classical Overview moved to Bottom (Zero Top Scroll) ───
+    st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_varga_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_varga_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_varga_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {bphs_varga_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with st.expander("🔮 लग्न, शिरोमणि व विंशोपक बल सारांश (Key Lagna, Top Planet & Vimshopaka Summary)", expanded=False):
+        c_vg1, c_vg2, c_vg3, c_vg4 = st.columns(4)
+        c_vg1.metric("लग्न एवं राशि", f"{lagna_sname}", f"चन्द्र: {moon.sign_name if moon else '—'}")
+        c_vg2.metric("शिरोमणि ग्रह", f"{top_p}", f"{top_v_name} ({sv_summary[top_p]['score_20']:.1f}/20)")
+        c_vg3.metric("वर्गोत्तम ग्रह", f"{varg_count} ग्रह", "D1 व D9 समरूप")
+        c_vg4.metric("औसत विंशोपक बल", f"{avg_score:.1f} / 20", "१६ वर्गों का सामूहिक बल")
 

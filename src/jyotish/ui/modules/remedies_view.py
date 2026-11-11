@@ -731,6 +731,7 @@ def render_remedies_view(chart, tabs=None):
     is_dark = st.session_state.get("dark_mode", False)
     is_astrallis_mode = st.session_state.get("astrallis_mode", False)
     is_night_mode = is_dark
+    _is_dark = is_astrallis_mode or is_night_mode
 
     if tabs is None:
         tabs = [
@@ -739,30 +740,16 @@ def render_remedies_view(chart, tabs=None):
             '🌿 वैदिक उपचार व उपाय',
             '⚠️ बाधक व मारक विचार'
         ]
-    st.subheader("🛡️ दोष, फ्री-विल एवं शास्त्रीय उपचार (Affliction, Free Will & Remedy Suite)")
-    st.caption("सर्वर की हस्ताक्षर प्रणाली: द्वादश भाव एवं नवग्रहों का सौम्य/क्रूर प्रभाव, २७ जीवन आयामों का ३-पक्षीय विश्लेषण एवं वैदिक दोष निवारक उपचार।")
 
-    # Classical Shastriya Shloka Card
+    # Classical Shastriya Shloka Definition
     bphs_remedies_shloka = {
         "title": "बृहत्पाराशर होराशास्त्रम् एवं फलदीपिका — दोष शांति व बाधक निर्णय",
         "source": "महर्षि पराशर विरचित BPHS (अध्याय ५०) एवं फलदीपिका",
         "shloka": "चरभवनेषु लाभेशो बाधको नवमो स्थिरे।\nद्विशरीरे च कामेशो बाधको भवति स्फुटम्॥\nमारकाणां च सर्वेषां विचारः क्रियते बुधैः।\nशान्त्या च जपहोमाद्यैर्दुष्टदोषः प्रशाम्यति॥",
         "meaning": "चर लग्न में ११वें भाव का स्वामी, स्थिर लग्न में ९वें भाव का स्वामी और द्विस्वभाव लग्न में ७वें भाव का स्वामी बाधक होता है। २रे व ७वें भाव के मारक ग्रहों के प्रभाव को समझकर वैदिक जप, होम, रुद्राक्ष एवं सात्विक दान द्वारा दुष्ट दोषों की शांति की जाती है।"
     }
-    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_remedies_shloka['title']}", expanded=False):
-        st.markdown(f"""
-        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
-            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_remedies_shloka['source']}</b>
-            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
-{bphs_remedies_shloka['shloka']}
-            </pre>
-            <div style="font-size:13px; color:#92400E; margin-top:6px;">
-                <b>हिंदी भावार्थ:</b> {bphs_remedies_shloka['meaning']}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
 
-    # Active Native Micro-Planetary Longitudes & DMS Console
+    # Active Native Micro-Planetary Longitudes & DMS Calculations
     lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
     bm_res = default_shastriya_pramana_engine.audit_badhaka_maraka(chart)
     badhakesh_name = bm_res.get("badhakesh", "Saturn")
@@ -770,29 +757,6 @@ def render_remedies_view(chart, tabs=None):
     
     b_po = chart.planets.get(badhakesh_name)
     m_po = chart.planets.get(maraka_primary)
-    
-    with st.expander("🛡️ लग्न, बाधक एवं मुख्य मारकेश स्थिति (Lagna, Badhaka & Maraka Overview)", expanded=False):
-        c_rm1, c_rm2, c_rm3, c_rm4 = st.columns(4)
-        c_rm1.metric("लग्न एवं प्रकृति", f"{lagna_sname}", bm_res.get("lagna_type", "चर लग्न"))
-        c_rm2.metric("बाधक स्थान", f"{bm_res.get('badhaka_house')} भाव ({bm_res.get('badhaka_sign')})", f"बाधकेश: {badhakesh_name}")
-        if b_po:
-            _b_sdeg = getattr(b_po, 'sign_degree', 0.0)
-            _b_ansh = int(_b_sdeg)
-            _b_kala = int(round((_b_sdeg - _b_ansh) * 60.0))
-            if _b_kala >= 60: _b_kala = 0; _b_ansh += 1
-            _b_nak = getattr(b_po, 'nakshatra_name', '')[:4]
-            _b_pad = getattr(b_po, 'nakshatra_pada', 1)
-            c_rm3.metric("बाधकेश स्थिति", f"{b_po.sign_name} ({_b_ansh}° {_b_kala:02d}')", f"{b_po.house_from_lagna} भाव | {_b_nak}-P{_b_pad}")
-        if m_po:
-            _m_sdeg = getattr(m_po, 'sign_degree', 0.0)
-            _m_ansh = int(_m_sdeg)
-            _m_kala = int(round((_m_sdeg - _m_ansh) * 60.0))
-            if _m_kala >= 60: _m_kala = 0; _m_ansh += 1
-            _m_nak = getattr(m_po, 'nakshatra_name', '')[:4]
-            _m_pad = getattr(m_po, 'nakshatra_pada', 1)
-            c_rm4.metric("मुख्य मारकेश (२रा)", f"{m_po.sign_name} ({_m_ansh}° {_m_kala:02d}')", f"{m_po.house_from_lagna} भाव | {_m_nak}-P{_m_pad}")
-
-    tab_fw_overview, tab_life_areas_deep, tab_remedies_suite, tab_badhaka_maraka = st.tabs(tabs)
 
     LIFE_AREA_HINDI_NAMES = {
         1: "करियर एवं आजीविका (Career)",
@@ -837,18 +801,37 @@ def render_remedies_view(chart, tabs=None):
     applicable_life_areas = affliction_engine.get_applicable_life_areas(c_gender)
     la_options_list = [f"{a['Id']}. {LIFE_AREA_HINDI_NAMES.get(a['Id'], a['LifeArea'])}" for a in applicable_life_areas]
 
+    # Level 1 Module Tabs immediately at the top (Zero Top Whitespace)
+    tab_fw_overview, tab_life_areas_deep, tab_remedies_suite, tab_badhaka_maraka = st.tabs(tabs)
+
     # =========================================================================
     # TAB 1: दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)
     # =========================================================================
     with tab_fw_overview:
+        detailed_toggle = st.session_state.get("aff_det_sym_toggle", False)
+        hp_list = affliction_engine.calculate_house_points(detailed=detailed_toggle)
+        pp_list = affliction_engine.calculate_planet_points(detailed=detailed_toggle)
+
+        # Level 2 Sub-Tabs immediately at the top of Tab 1
+        subtab_planets, subtab_houses = st.tabs([
+            "1. 🪐 नवग्रह फ्री-विल एवं दशवर्ग अंक",
+            "2. 🏠 द्वादश भाव फ्री-विल एवं प्रभाव अंक"
+        ])
+
+        with subtab_planets:
+            st.markdown(render_premium_planet_table(pp_list, is_dark=_is_dark), unsafe_allow_html=True)
+            st.markdown(render_soumya_krura_balance_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
+
+        with subtab_houses:
+            st.markdown(render_premium_house_table(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
+            st.markdown(render_house_freewill_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
+
+        # Micro-toolbar and summary expander below the tables
         c_head1, c_head2 = st.columns([3, 1], vertical_alignment="center")
         with c_head1:
             st.markdown('<div style="font-size:12px; font-weight:800; color:#3B82F6; display:flex; align-items:center; gap:6px;"><span>⚡</span><span>वैदिक कर्म-सिद्धांत एवं स्वाधीनता अंकन (Agency Scoring)</span></div>', unsafe_allow_html=True)
         with c_head2:
-            detailed_toggle = st.toggle("🔄 विस्तृत प्रतीक", value=False, key="aff_det_sym_toggle")
-
-        hp_list = affliction_engine.calculate_house_points(detailed=detailed_toggle)
-        pp_list = affliction_engine.calculate_planet_points(detailed=detailed_toggle)
+            st.toggle("🔄 विस्तृत प्रतीक", value=detailed_toggle, key="aff_det_sym_toggle")
 
         # Compute KPI Metrics
         def _to_float(v):
@@ -904,24 +887,6 @@ def render_remedies_view(chart, tabs=None):
                 • <b>५०% से कम फ्री-विल (दृढ़ प्रारब्ध):</b> पूर्वजन्म संचित प्रारब्ध की प्रधानता है; यहाँ केवल हठपूर्वक कर्म करने के स्थान पर शास्त्रीय दान, मंत्र जप, रुद्राक्ष एवं ईश्वरीय शरणागति से ही शांति संभव है।
             </div>
             """, unsafe_allow_html=True)
-
-        _is_dark = is_astrallis_mode or is_night_mode
-
-        # Two Sub-Tabs as requested:
-        # 1. नवग्रह फ्री-विल एवं दशवर्ग अंक, iske niche भाव सौम्य (शुभ) बनाम क्रूर (पाप) प्रभाव अंक
-        # 2. द्वादश भाव फ्री-विल एवं प्रभाव अंक, iske niche १२ भावों का फ्री-विल प्रतिशत वितरण
-        subtab_planets, subtab_houses = st.tabs([
-            "1. 🪐 नवग्रह फ्री-विल एवं दशवर्ग अंक",
-            "2. 🏠 द्वादश भाव फ्री-विल एवं प्रभाव अंक"
-        ])
-
-        with subtab_planets:
-            st.markdown(render_premium_planet_table(pp_list, is_dark=_is_dark), unsafe_allow_html=True)
-            st.markdown(render_soumya_krura_balance_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
-
-        with subtab_houses:
-            st.markdown(render_premium_house_table(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
-            st.markdown(render_house_freewill_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
 
 
     # =========================================================================
@@ -1396,6 +1361,42 @@ def render_remedies_view(chart, tabs=None):
                 st.warning("🕉️ **मारक निवृत्ति उपाय:** भगवान शिव के **महामृत्युंजय मंत्र** का जप अथवा रुद्राभिषेक मारक प्रभाव को दूर कर दीर्घायु प्रदान करता है।")
         except Exception as _e_bm:
             st.error(f"बाधक/मारक विश्लेषण त्रुटि: {_e_bm}")
+
+    # ─── Shastriya Pramana & Classical Overview moved to Bottom (Zero Top Scroll) ───
+    st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_remedies_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_remedies_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_remedies_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {bphs_remedies_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with st.expander("🛡️ लग्न, बाधक एवं मुख्य मारकेश स्थिति (Lagna, Badhaka & Maraka Overview)", expanded=False):
+        c_rm1, c_rm2, c_rm3, c_rm4 = st.columns(4)
+        c_rm1.metric("लग्न एवं प्रकृति", f"{lagna_sname}", bm_res.get("lagna_type", "चर लग्न"))
+        c_rm2.metric("बाधक स्थान", f"{bm_res.get('badhaka_house')} भाव ({bm_res.get('badhaka_sign')})", f"बाधकेश: {badhakesh_name}")
+        if b_po:
+            _b_sdeg = getattr(b_po, 'sign_degree', 0.0)
+            _b_ansh = int(_b_sdeg)
+            _b_kala = int(round((_b_sdeg - _b_ansh) * 60.0))
+            if _b_kala >= 60: _b_kala = 0; _b_ansh += 1
+            _b_nak = getattr(b_po, 'nakshatra_name', '')[:4]
+            _b_pad = getattr(b_po, 'nakshatra_pada', 1)
+            c_rm3.metric("बाधकेश स्थिति", f"{b_po.sign_name} ({_b_ansh}° {_b_kala:02d}')", f"{b_po.house_from_lagna} भाव | {_b_nak}-P{_b_pad}")
+        if m_po:
+            _m_sdeg = getattr(m_po, 'sign_degree', 0.0)
+            _m_ansh = int(_m_sdeg)
+            _m_kala = int(round((_m_sdeg - _m_ansh) * 60.0))
+            if _m_kala >= 60: _m_kala = 0; _m_ansh += 1
+            _m_nak = getattr(m_po, 'nakshatra_name', '')[:4]
+            _m_pad = getattr(m_po, 'nakshatra_pada', 1)
+            c_rm4.metric("मुख्य मारकेश (२रा)", f"{m_po.sign_name} ({_m_ansh}° {_m_kala:02d}')", f"{m_po.house_from_lagna} भाव | {_m_nak}-P{_m_pad}")
 
 
 
