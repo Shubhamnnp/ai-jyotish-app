@@ -193,27 +193,13 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
             '🏰 १२ आरूढ़ पद (Arudha Padas)',
             '🏰 कोटा चक्र'
         ]
-    st.subheader("📜 जन्म कुण्डली एवं षोडशवर्ग चक्र (Natal & Divisional Charts)")
-
-    # Classical Shastriya Shloka Card
+    # Classical Shastriya Shloka Definition
     bphs_d1_shloka = {
         "title": "बृहत्पाराशर होराशास्त्रम् — षोडशवर्ग एवं ग्रह स्वरूप निर्णय",
         "source": "महर्षि पराशर विरचित बृहत्पाराशर होराशास्त्रम् (अध्याय ३ एवं ६)",
         "shloka": "क्षेत्रं होराऽथ द्रेष्काणस्तथा तुर्यांशको वरः।\nसप्तांशो नवमांशश्च दशमांशस्ततः परम्॥\nद्वादशांशः षोडशांशो विंशांशः सिद्धभांशकः।\nभांशस्त्रिंशदथाक्षांशः षष्ट्यंशश्च षोडश स्मृताः॥",
         "meaning": "क्षेत्र (D1), होरा (D2), द्रेष्काण (D3), चतुर्थांश (D4), सप्तांश (D7), नवमांश (D9), दशमांश (D10), द्वादशांश (D12), षोडशांश (D16), विंशांश (D20), चतुर्विंशांश (D24), भभांश/सप्तविंशांश (D27), त्रिंशांश (D30), खवेदांश (D40), अक्षवेदांश (D45) एवं षष्ट्यंश (D60) — ये महर्षियों द्वारा कहे गए षोडशवर्ग हैं, जिनमें सूक्ष्म अंश-कला और नक्षत्र-चरणों द्वारा जातक के समस्त जीवन, स्वभाव व प्रारब्ध का अचूक निर्णय होता है।"
     }
-    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_d1_shloka['title']}", expanded=False):
-        st.markdown(f"""
-        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
-            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_d1_shloka['source']}</b>
-            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
-{bphs_d1_shloka['shloka']}
-            </pre>
-            <div style="font-size:13px; color:#92400E; margin-top:6px;">
-                <b>हिंदी भावार्थ:</b> {bphs_d1_shloka['meaning']}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
 
     tab_d1, tab_pushkara, tab_jm_hud, tab_bhav, tab_chandra, tab_surya, tab_yuddha, tab_vishesh, tab_kota = st.tabs(tabs)
 
@@ -2212,6 +2198,21 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
         except Exception as _ekc:
             st.error(f"कोटा चक्र गणना त्रुटि: {_ekc}")
+
+    # ─── Shastriya Praman (Moved to Bottom for Zero-Scroll UX) ───
+    st.markdown("<div style='margin-top:28px;'></div>", unsafe_allow_html=True)
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_d1_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_d1_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_d1_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {bphs_d1_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
 
     # =============================================================
