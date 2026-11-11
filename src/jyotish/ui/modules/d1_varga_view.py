@@ -190,7 +190,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
             '🌙 चन्द्र कुण्डली',
             '☀️ सूर्य कुण्डली',
             '⚔️ ग्रह युद्ध',
-            '🏛️ आरूढ़ पद',
+            '🏰 आरूढ़ पद',
             '🏰 कोटा चक्र'
         ]
     # Classical Shastriya Shloka Definition
