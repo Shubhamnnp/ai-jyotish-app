@@ -2034,135 +2034,181 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
 
     with tab_vishesh:
-        st.markdown("### 🌟 विशेष लग्न एवं १२ आरूढ़ पद महा-विश्लेषण (All 12 Arudha Padas & Special Lagnas Deep Dive)")
-        st.info("महर्षि जैमिनी के सूत्र अनुसार 'पदं पितृभ्यः' — प्रत्येक भाव का आरूढ़ पद उस भाव का सांसारिक प्रतिबिंब (Maya / Worldly Manifestation) होता है। लोग जातक को सांसारिक रूप में कैसा देखते हैं, इसका रहस्य आरूढ़ पदों में समाहित है:")
-
-        if chart.jaimini and getattr(chart.jaimini, 'arudha_details', None):
+        if not (chart.jaimini and getattr(chart.jaimini, 'arudha_details', None)):
+            st.info("आरूढ़ पद गणना लोड हो रही है...")
+        else:
             jm = chart.jaimini
             a_details = jm.arudha_details
+            _al_data = a_details.get("AL", {})
+            _al_h = _al_data.get("pada_house_from_lagna", 1)
+            _al_sign = _al_data.get("pada_sign_name", "")
+            _ul_data = a_details.get("UL", {})
+            _ul_h = _ul_data.get("pada_house_from_lagna", 1)
+            _ul_sign = _ul_data.get("pada_sign_name", "")
+            _ul_lord = _ul_data.get("lord_name", "")
 
-            # ─── Complete 12 Arudha Master Table ───
-            st.markdown("#### 📜 समस्त १२ आरूढ़ पद संपूर्ण विवरण (Master Arudha Padas Matrix)")
-            _arudha_order = ["AL", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "UL"]
-            _ar_rows = []
-            for _ak in _arudha_order:
-                _ad = a_details.get(_ak)
-                if not _ad:
-                    continue
-                _is_special = _ak in ["AL", "UL"]
-                _lbl_col = "#B45309" if _is_special else "#1E3A8A"
-                _ar_rows.append({
-                    "आरूढ़ पद": _ak,
-                    "स्रोत भाव": f"{_ad.get('house_num', 1)} भाव",
-                    "स्रोत राशि": _ad.get('house_sign', ''),
-                    "भाव स्वामी": _ad.get('lord_name', ''),
-                    "स्वामी की राशि": _ad.get('lord_sign', ''),
-                    "दूरी (कदम)": f"{_ad.get('distance', 1)} राशि",
-                    "लागू नियम": _ad.get('exception', 'सामान्य'),
-                    "आरूढ़ राशि": _ad.get('pada_sign_name', ''),
-                    "लग्न से भाव": f"{_ad.get('pada_house_from_lagna', 1)} भाव",
-                    "शास्त्रीय प्रयोजन / फल": _ad.get('signification_hi', '').split(':', 1)[-1].strip()
-                })
-            st.dataframe(pd.DataFrame(_ar_rows), use_container_width=True, hide_index=True)
+            subtab_ar_all, subtab_ar_deep, subtab_ar_drishti = st.tabs([
+                "1. 📜 समस्त १२ आरूढ़ पद संपूर्ण विवरण",
+                "2. 🔬 प्रमुख आरूढ़ पदों का गहन विश्लेषण",
+                "3. 👁️ आरूढ़ लग्न एवं उपपद पर जैमिनी राशि दृष्टि"
+            ])
 
-            # ─── Deep Dive Analytical Cards: AL, UL & Wealth ───
-            st.markdown("#### 🔬 प्रमुख आरूढ़ पदों का गहन विश्लेषण (Arudha Lagna & Upapada Deep Dive)")
-            col_ad1, col_ad2 = st.columns(2, gap="medium")
+            with subtab_ar_all:
+                st.caption("महर्षि जैमिनी सूत्र 'पदं पितृभ्यः' — प्रत्येक भाव का आरूढ़ पद उस भाव का सांसारिक प्रतिबिंब (Maya / Worldly Manifestation) होता है।")
+                _arudha_order = ["AL", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "UL"]
+                _ar_rows = []
+                for _ak in _arudha_order:
+                    _ad = a_details.get(_ak)
+                    if not _ad:
+                        continue
+                    _ar_rows.append({
+                        "arudha": _ak,
+                        "source_house": f"{_ad.get('house_num', 1)} भाव",
+                        "source_sign": _ad.get('house_sign', ''),
+                        "lord": _ad.get('lord_name', ''),
+                        "lord_sign": _ad.get('lord_sign', ''),
+                        "dist": f"{_ad.get('distance', 1)} राशि",
+                        "rule": _ad.get('exception', 'सामान्य'),
+                        "pada_sign": _ad.get('pada_sign_name', ''),
+                        "house_from_lag": f"{_ad.get('pada_house_from_lagna', 1)} भाव",
+                        "signification": _ad.get('signification_hi', '').split(':', 1)[-1].strip()
+                    })
 
-            with col_ad1:
-                _al_data = a_details.get("AL", {})
-                _al_h = _al_data.get("pada_house_from_lagna", 1)
-                _al_sign = _al_data.get("pada_sign_name", "")
+                _ar_tbody = []
+                for row in _ar_rows:
+                    _is_sp = row["arudha"] in ["AL", "UL"]
+                    _badge_bg = "#FEF3C7" if row["arudha"] == "AL" else ("#FCE7F3" if row["arudha"] == "UL" else "#F1F5F9")
+                    _badge_col = "#92400E" if row["arudha"] == "AL" else ("#9D174D" if row["arudha"] == "UL" else "#334155")
+                    _rule_bg = "#DCFCE7" if row["rule"] != "सामान्य" else "#F8FAFC"
+                    _rule_col = "#15803D" if row["rule"] != "सामान्य" else "#64748B"
+                    _ar_tbody.append(
+                        f'<tr style="border-bottom:1px solid #E2E8F0;">'
+                        f'<td style="padding:6px 8px; text-align:center;"><span style="background:{_badge_bg}; color:{_badge_col}; font-weight:900; padding:2px 7px; border-radius:4px; font-size:11.5px; border:1px solid {"#FCD34D" if _is_sp else "#CBD5E1"};">{row["arudha"]}</span></td>'
+                        f'<td style="padding:6px 8px; font-weight:700; color:#1E293B;">{row["source_house"]}</td>'
+                        f'<td style="padding:6px 8px; color:#475569;">{row["source_sign"]}</td>'
+                        f'<td style="padding:6px 8px; font-weight:700; color:#1E293B;">{row["lord"]}</td>'
+                        f'<td style="padding:6px 8px; color:#475569;">{row["lord_sign"]}</td>'
+                        f'<td style="padding:6px 8px; font-family:monospace; color:#0369A1; font-weight:700;">{row["dist"]}</td>'
+                        f'<td style="padding:6px 8px;"><span style="background:{_rule_bg}; color:{_rule_col}; padding:2px 6px; border-radius:4px; font-size:10.5px; font-weight:700;">{row["rule"]}</span></td>'
+                        f'<td style="padding:6px 8px; font-weight:800; color:#0F172A;">{row["pada_sign"]}</td>'
+                        f'<td style="padding:6px 8px; text-align:center;"><span style="background:#FFFBEB; color:#B45309; padding:2px 6px; border-radius:6px; font-weight:800; font-size:11px; border:1px solid #FDE68A;">{row["house_from_lag"]}</span></td>'
+                        f'<td style="padding:6px 8px; font-size:11.5px; color:#475569; line-height:1.4;">{row["signification"]}</td>'
+                        f'</tr>'
+                    )
 
-                if _al_h in [1, 4, 7, 10]:
-                    _al_rel = "केंन्द्र संबंध (1/4/7/10 Axis) — जातक की आंतरिक क्षमता एवं बाह्य सामाजिक छवि में श्रेष्ठ सामंजस्य है।"
-                    _al_bg, _al_bdr = "#F0FDF4", "#86EFAC"
-                elif _al_h in [5, 9]:
-                    _al_rel = "त्रिकोण संबंध (5/9 Axis) — पूर्वपुण्य एवं धर्म का प्रबल प्रभाव; समाज में जातक को स्वाभाविक आदर व सम्मान प्राप्त होता है।"
-                    _al_bg, _al_bdr = "#ECFDF5", "#6EE7B7"
-                elif _al_h in [3, 6, 11]:
-                    _al_rel = "उपचय संबंध (3/6/11 Axis) — जातक निरंतर पुरुषार्थ एवं उद्योग द्वारा अपनी सामाजिक छवि को विशाल बनाता है।"
-                    _al_bg, _al_bdr = "#EFF6FF", "#93C5FD"
-                else:
-                    _al_rel = "षडाष्टक/व्यय संबंध (6/8/12 Axis) — जातक का आंतरिक सत्य एवं बाह्य छवि भिन्न हो सकती है; जनसामान्य द्वारा गलत समझे जाने का अंदेशा।"
-                    _al_bg, _al_bdr = "#FFFBEB", "#FCD34D"
+                _ar_tbl_html = (
+                    f'<div style="background:#FFFFFF; border:1.5px solid #CBD5E1; border-radius:10px; padding:6px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.04); overflow-x:auto;">'
+                    f'<table style="width:100%; border-collapse:collapse; font-size:12px; text-align:left;">'
+                    f'<thead>'
+                    f'<tr style="background:#F1F5F9; border-bottom:2px solid #CBD5E1; color:#1E293B; font-weight:800;">'
+                    f'<th style="padding:8px 8px; text-align:center;">आरूढ़ पद</th>'
+                    f'<th style="padding:8px 8px;">स्रोत भाव</th>'
+                    f'<th style="padding:8px 8px;">स्रोत राशि</th>'
+                    f'<th style="padding:8px 8px;">भाव स्वामी</th>'
+                    f'<th style="padding:8px 8px;">स्वामी राशि</th>'
+                    f'<th style="padding:8px 8px;">दूरी</th>'
+                    f'<th style="padding:8px 8px;">लागू नियम</th>'
+                    f'<th style="padding:8px 8px;">आरूढ़ राशि</th>'
+                    f'<th style="padding:8px 8px; text-align:center;">लग्न से भाव</th>'
+                    f'<th style="padding:8px 8px;">शास्त्रीय प्रयोजन / फल</th>'
+                    f'</tr>'
+                    f'</thead>'
+                    f'<tbody>{"".join(_ar_tbody)}</tbody>'
+                    f'</table>'
+                    f'</div>'
+                )
+                st.markdown(_ar_tbl_html, unsafe_allow_html=True)
 
-                st.markdown(f"""
-                <div style="background:{_al_bg}; border:1.5px solid {_al_bdr}; border-radius:10px; padding:14px; height:100%;">
-                    <h5 style="color:#1E3A8A; margin:0 0 6px 0;">👑 आरूढ़ लग्न (AL): {_al_sign} (लग्न से {_al_h} भाव)</h5>
-                    <div style="font-size:12.5px; color:#1E293B; line-height:1.6;">
-                        <b>संबंध स्वरूप:</b> {_al_rel}<br/>
-                        • <b>सामाजिक प्रतिष्ठा:</b> आरूढ़ लग्न जातक की सामाजिक स्थिति, करियर में यश एवं जनता में पहचान का निर्णायक है।<br/>
-                        • <b>शास्त्रीय नियम:</b> यदि आरूढ़ लग्न से एकादश भाव में शुभ ग्रह स्थित हों, तो जातक निरंतर प्रचुर मात्रा में धन अर्जित करता है; दशम भाव में शुभ ग्रह होने पर व्यक्ति की आजीविका स्वच्छ एवं सम्मानित होती है।
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+            with subtab_ar_deep:
+                col_ad1, col_ad2 = st.columns(2, gap="medium")
+                with col_ad1:
+                    if _al_h in [1, 4, 7, 10]:
+                        _al_rel = "केंन्द्र संबंध (1/4/7/10 Axis) — जातक की आंतरिक क्षमता एवं बाह्य सामाजिक छवि में श्रेष्ठ सामंजस्य है।"
+                        _al_bg, _al_bdr = "#F0FDF4", "#86EFAC"
+                    elif _al_h in [5, 9]:
+                        _al_rel = "त्रिकोण संबंध (5/9 Axis) — पूर्वपुण्य एवं धर्म का प्रबल प्रभाव; समाज में जातक को स्वाभाविक आदर व सम्मान प्राप्त होता है।"
+                        _al_bg, _al_bdr = "#ECFDF5", "#6EE7B7"
+                    elif _al_h in [3, 6, 11]:
+                        _al_rel = "उपचय संबंध (3/6/11 Axis) — जातक निरंतर पुरुषार्थ एवं उद्योग द्वारा अपनी सामाजिक छवि को विशाल बनाता है।"
+                        _al_bg, _al_bdr = "#EFF6FF", "#93C5FD"
+                    else:
+                        _al_rel = "षडाष्टक/व्यय संबंध (6/8/12 Axis) — जातक का आंतरिक सत्य एवं बाह्य छवि भिन्न हो सकती है; जनसामान्य द्वारा गलत समझे जाने का अंदेशा।"
+                        _al_bg, _al_bdr = "#FFFBEB", "#FCD34D"
 
-            with col_ad2:
-                _ul_data = a_details.get("UL", {})
-                _ul_h = _ul_data.get("pada_house_from_lagna", 1)
-                _ul_sign = _ul_data.get("pada_sign_name", "")
-                _ul_lord = _ul_data.get("lord_name", "")
+                    st.markdown(
+                        f'<div style="background:{_al_bg}; border:1.5px solid {_al_bdr}; border-radius:10px; padding:14px; height:100%;">'
+                        f'<h5 style="color:#1E3A8A; margin:0 0 6px 0;">👑 आरूढ़ लग्न (AL): {_al_sign} (लग्न से {_al_h} भाव)</h5>'
+                        f'<div style="font-size:12.5px; color:#1E293B; line-height:1.6;">'
+                        f'<b>संबंध स्वरूप:</b> {_al_rel}<br/>'
+                        f'• <b>सामाजिक प्रतिष्ठा:</b> आरूढ़ लग्न जातक की सामाजिक स्थिति, करियर में यश एवं जनता में पहचान का निर्णायक है।<br/>'
+                        f'• <b>शास्त्रीय नियम:</b> यदि आरूढ़ लग्न से एकादश भाव में शुभ ग्रह स्थित हों, तो जातक निरंतर प्रचुर मात्रा में धन अर्जित करता है; दशम भाव में शुभ ग्रह होने पर व्यक्ति की आजीविका स्वच्छ एवं सम्मानित होती है।'
+                        f'</div></div>',
+                        unsafe_allow_html=True
+                    )
 
-                st.markdown(f"""
-                <div style="background:#FDF2F8; border:1.5px solid #F472B6; border-radius:10px; padding:14px; height:100%;">
-                    <h5 style="color:#9D174D; margin:0 0 6px 0;">💍 उपपद लग्न (UL / A12): {_ul_sign} (लग्न से {_ul_h} भाव)</h5>
-                    <div style="font-size:12.5px; color:#1E293B; line-height:1.6;">
-                        <b>उपपद लग्न स्वामी:</b> {_ul_lord}<br/>
-                        • <b>दांपत्य स्थायित्व:</b> उपपद लग्न जीवनसाथी के कुल, वैवाहिक जीवन की स्थिरता एवं जीवनसाथी के स्वभाव का मुख्य दर्पण है।<br/>
-                        • <b>द्वितीय भाव सूत्र:</b> उपपद से द्वितीय भाव वैवाहिक संबंध के पालन-पोषण (Sustenance) का कारक है। यदि उपपद से द्वितीय भाव में शुभ ग्रह (गुरु, शुक्र) हों तो दांपत्य जीवन सुदीर्घ एवं सुखमय रहता है; पाप ग्रहों का प्रभाव रहने पर वैवाहिक समायोजन आवश्यक होता है।
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+                with col_ad2:
+                    st.markdown(
+                        f'<div style="background:#FDF2F8; border:1.5px solid #F472B6; border-radius:10px; padding:14px; height:100%;">'
+                        f'<h5 style="color:#9D174D; margin:0 0 6px 0;">💍 उपपद लग्न (UL / A12): {_ul_sign} (लग्न से {_ul_h} भाव)</h5>'
+                        f'<div style="font-size:12.5px; color:#1E293B; line-height:1.6;">'
+                        f'<b>उपपद लग्न स्वामी:</b> {_ul_lord}<br/>'
+                        f'• <b>दांपत्य स्थायित्व:</b> उपपद लग्न जीवनसाथी के कुल, वैवाहिक जीवन की स्थिरता एवं जीवनसाथी के स्वभाव का मुख्य दर्पण है।<br/>'
+                        f'• <b>द्वितीय भाव सूत्र:</b> उपपद से द्वितीय भाव वैवाहिक संबंध के पालन-पोषण (Sustenance) का कारक है। यदि उपपद से द्वितीय भाव में शुभ ग्रह (गुरु, शुक्र) हों तो दांपत्य जीवन सुदीर्घ एवं सुखमय रहता है; पाप ग्रहों का प्रभाव रहने पर वैवाहिक समायोजन आवश्यक होता है।'
+                        f'</div></div>',
+                        unsafe_allow_html=True
+                    )
 
-            # ─── Jaimini Rashi Drishti on AL and UL ───
-            st.markdown("#### 👁️ आरूढ़ लग्न एवं उपपद पर जैमिनी राशि दृष्टि (Jaimini Rashi Drishti on AL & UL)")
-            try:
-                def _get_j_aspecting_signs(sid):
-                    if sid in [1, 4, 7, 10]: # चर राशि -> स्थिर (निकटवर्ती छोड़कर)
-                        fixed_s = [2, 5, 8, 11]
-                        adj = (sid % 12) + 1
-                        return [s for s in fixed_s if s != adj]
-                    elif sid in [2, 5, 8, 11]: # स्थिर राशि -> चर (निकटवर्ती छोड़कर)
-                        mov_s = [1, 4, 7, 10]
-                        adj = ((sid - 2 + 12) % 12) + 1
-                        return [s for s in mov_s if s != adj]
-                    else: # द्विस्वभाव राशि -> अन्य 3 द्विस्वभाव
-                        return [s for s in [3, 6, 9, 12] if s != sid]
+            with subtab_ar_drishti:
+                try:
+                    def _get_j_aspecting_signs(sid):
+                        if sid in [1, 4, 7, 10]:
+                            fixed_s = [2, 5, 8, 11]
+                            adj = (sid % 12) + 1
+                            return [s for s in fixed_s if s != adj]
+                        elif sid in [2, 5, 8, 11]:
+                            mov_s = [1, 4, 7, 10]
+                            adj = ((sid - 2 + 12) % 12) + 1
+                            return [s for s in mov_s if s != adj]
+                        else:
+                            return [s for s in [3, 6, 9, 12] if s != sid]
 
-                _al_sid = SIGN_NAMES.index(_al_sign) + 1 if _al_sign in SIGN_NAMES else 1
-                _ul_sid = SIGN_NAMES.index(_ul_sign) + 1 if _ul_sign in SIGN_NAMES else 1
+                    _al_sid = SIGN_NAMES.index(_al_sign) + 1 if _al_sign in SIGN_NAMES else 1
+                    _ul_sid = SIGN_NAMES.index(_ul_sign) + 1 if _ul_sign in SIGN_NAMES else 1
 
-                _al_asp_sids = _get_j_aspecting_signs(_al_sid)
-                _ul_asp_sids = _get_j_aspecting_signs(_ul_sid)
+                    _al_asp_sids = _get_j_aspecting_signs(_al_sid)
+                    _ul_asp_sids = _get_j_aspecting_signs(_ul_sid)
 
-                _al_planets_asp = [pn for pn, p in chart.planets.items() if p.sign_id in _al_asp_sids]
-                _ul_planets_asp = [pn for pn, p in chart.planets.items() if p.sign_id in _ul_asp_sids]
+                    _al_planets_asp = [pn for pn, p in chart.planets.items() if p.sign_id in _al_asp_sids]
+                    _ul_planets_asp = [pn for pn, p in chart.planets.items() if p.sign_id in _ul_asp_sids]
 
-                col_jrd1, col_jrd2 = st.columns(2, gap="medium")
-                with col_jrd1:
-                    _al_asp_names = [SIGN_NAMES[s-1] for s in _al_asp_sids]
-                    st.markdown(f"""
-                    <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px 14px; font-size:12px; color:#1E293B;">
-                        <b>👑 AL ({_al_sign}) पर दृष्टि देने वाली राशियां:</b> {', '.join(_al_asp_names)}<br/>
-                        • <b>दृष्टि देने वाले ग्रह:</b> <b>{', '.join(_al_planets_asp) if _al_planets_asp else 'कोई प्रत्यक्ष ग्रह नहीं (केवल राशि दृष्टि)'}</b><br/>
-                        • <b>प्रभाव:</b> शुभ ग्रहों की दृष्टि सामाजिक यश, सम्मान व पद-प्रतिष्ठा में वृद्धि करती है।
-                    </div>
-                    """, unsafe_allow_html=True)
+                    col_jrd1, col_jrd2 = st.columns(2, gap="medium")
+                    with col_jrd1:
+                        _al_asp_names = [SIGN_NAMES[s-1] for s in _al_asp_sids]
+                        _al_p_str = ', '.join(_al_planets_asp) if _al_planets_asp else 'कोई प्रत्यक्ष ग्रह नहीं (केवल राशि दृष्टि)'
+                        st.markdown(
+                            f'<div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:12px 14px; font-size:12.5px; color:#1E293B; line-height:1.6;">'
+                            f'<h5 style="color:#1E3A8A; margin:0 0 6px 0;">👑 AL ({_al_sign}) पर दृष्टि देने वाली राशियां</h5>'
+                            f'• <b>दृष्टि देने वाली राशियां:</b> {", ".join(_al_asp_names)}<br/>'
+                            f'• <b>दृष्टि देने वाले ग्रह:</b> <b>{_al_p_str}</b><br/>'
+                            f'• <b>प्रभाव:</b> शुभ ग्रहों की दृष्टि सामाजिक यश, सम्मान व पद-प्रतिष्ठा में वृद्धि करती है।'
+                            f'</div>',
+                            unsafe_allow_html=True
+                        )
 
-                with col_jrd2:
-                    _ul_asp_names = [SIGN_NAMES[s-1] for s in _ul_asp_sids]
-                    st.markdown(f"""
-                    <div style="background:#FDF2F8; border:1px solid #FBCFE8; border-radius:8px; padding:10px 14px; font-size:12px; color:#1E293B;">
-                        <b>💍 UL ({_ul_sign}) पर दृष्टि देने वाली राशियां:</b> {', '.join(_ul_asp_names)}<br/>
-                        • <b>दृष्टि देने वाले ग्रह:</b> <b>{', '.join(_ul_planets_asp) if _ul_planets_asp else 'कोई प्रत्यक्ष ग्रह नहीं (केवल राशि दृष्टि)'}</b><br/>
-                        • <b>प्रभाव:</b> उपपद पर गुरु/शुक्र की राशि दृष्टि वैवाहिक सद्भाव, जीवनसाथी के परिवार से सहयोग एवं प्रेम में प्रगाढ़ता लाती है।
-                    </div>
-                    """, unsafe_allow_html=True)
-            except Exception as _e_jrd:
-                st.caption(f"जैमिनी दृष्टि गणना: {_e_jrd}")
-        else:
-            st.info("आरूढ़ पद गणना लोड हो रही है...")
+                    with col_jrd2:
+                        _ul_asp_names = [SIGN_NAMES[s-1] for s in _ul_asp_sids]
+                        _ul_p_str = ', '.join(_ul_planets_asp) if _ul_planets_asp else 'कोई प्रत्यक्ष ग्रह नहीं (केवल राशि दृष्टि)'
+                        st.markdown(
+                            f'<div style="background:#FDF2F8; border:1px solid #FBCFE8; border-radius:8px; padding:12px 14px; font-size:12.5px; color:#1E293B; line-height:1.6;">'
+                            f'<h5 style="color:#9D174D; margin:0 0 6px 0;">💍 UL ({_ul_sign}) पर दृष्टि देने वाली राशियां</h5>'
+                            f'• <b>दृष्टि देने वाली राशियां:</b> {", ".join(_ul_asp_names)}<br/>'
+                            f'• <b>दृष्टि देने वाले ग्रह:</b> <b>{_ul_p_str}</b><br/>'
+                            f'• <b>प्रभाव:</b> उपपद पर गुरु/शुक्र की राशि दृष्टि वैवाहिक सद्भाव, जीवनसाथी के परिवार से सहयोग एवं प्रेम में प्रगाढ़ता लाती है।'
+                            f'</div>',
+                            unsafe_allow_html=True
+                        )
+                except Exception as _e_jrd:
+                    st.caption(f"जैमिनी दृष्टि गणना: {_e_jrd}")
 
 
     with tab_kota:
