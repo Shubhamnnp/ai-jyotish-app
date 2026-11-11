@@ -201,6 +201,11 @@ def render_varga_grid_view(chart, tabs=None):
             '🏛️ षोडशवर्ग (D1-D60)',
             '📜 वर्ग सारांश व प्रमाण'
         ]
+
+    import src.jyotish.core.affliction as aff_mod
+    affliction_engine = aff_mod.AfflictionEngine(chart)
+    _is_dark = is_astrallis_mode or is_night_mode
+
     # Master metadata for all 16 divisional charts
     varga_meta_full = {
         "D1": "D1 (लग्न/राशि - Core Physical & Mental Self)",
