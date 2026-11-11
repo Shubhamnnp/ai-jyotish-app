@@ -2264,9 +2264,6 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
 
     with tab_kota:
-        st.markdown("### 🏰 कोटा चक्र दुर्ग आरेख (Kota Chakra Durga Fortress)")
-        st.info("कोटा चक्र जातक के जन्म नक्षत्र पर आधारित एक प्राचीन रक्षात्मक दुर्ग (Fortress) संरचना है। यह चार संकेन्द्री सुरक्षा दीवारों में विभाजित होता है, जो जातक की आंतरिक जीवन शक्ति, स्वास्थ्य, संकटों से सुरक्षा एवं विजय का अचूक संकेत देता है:")
-
         try:
             kota_engine = default_kota_chakra_engine
             kota_data_m0 = kota_engine.calculate(chart)
@@ -2277,7 +2274,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:10px;">{kota_svg_m0}</div>', unsafe_allow_html=True)
 
                 st.markdown("""
-                <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px; font-size:12px; color:#334155; line-height:1.5;">
+                <div style="background:#F8FAFC; border:1px solid #CBD5E1; border-radius:8px; padding:10px; font-size:12px; color:#334155; line-height:1.5; margin-bottom:12px;">
                     <b>🏰 दुर्ग की ४ रक्षात्मक दीवारें (Concentric Enclosures):</b><br/>
                     • <b>१. स्तम्भ (Stambha):</b> दुर्ग का गर्भगृह (Heart/Core) — जीवन शक्ति व आरोग्य।<br/>
                     • <b>२. मध्य (Madhya):</b> दुर्ग का अन्तःपुर (Citadel) — आंतरिक संबल व परिवार।<br/>
@@ -2343,6 +2340,11 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     st.info(f"⚠️ **मध्य परकोटा वेध:** क्रूर ग्रह ({', '.join(_madhya_malefics)}) मध्य प्राचीर में स्थित हैं। परिवार व वित्तीय सुरक्षा पर सतर्क दृष्टि रखें।")
                 else:
                     st.success("🛡️ **दुर्ग गर्भगृह अभेद्य व सुरक्षित:** स्तम्भ एवं मध्य प्राचीर में किसी भी प्रमुख क्रूर ग्रह का वेध नहीं है; जातक का जीवन दुर्ग सुदृढ़ है।")
+
+            # ─── Shastriya Overview Shifted to Bottom for Zero-Scroll UX ───
+            st.markdown("<div style='height: 16px; clear: both;'></div>", unsafe_allow_html=True)
+            with st.expander("🏰 कोटा चक्र शास्त्रीय प्रयोजन एवं नियम (Kota Chakra Durga Fortress Overview)", expanded=False):
+                st.info("कोटा चक्र जातक के जन्म नक्षत्र पर आधारित एक प्राचीन रक्षात्मक दुर्ग (Fortress) संरचना है। यह चार संकेन्द्री सुरक्षा दीवारों में विभाजित होता है, जो जातक की आंतरिक जीवन शक्ति, स्वास्थ्य, संकटों से सुरक्षा एवं विजय का अचूक संकेत देता है:")
 
         except Exception as _ekc:
             st.error(f"कोटा चक्र गणना त्रुटि: {_ekc}")
