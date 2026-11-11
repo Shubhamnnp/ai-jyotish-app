@@ -838,7 +838,22 @@ def render_remedies_view(chart, tabs=None):
     # TAB 1: दोष एवं फ्री-विल विश्लेषण (Affliction & Free Will Analysis)
     # =========================================================================
     with tab_fw_overview:
-        detailed_toggle = st.session_state.get("aff_det_sym_toggle", False)
+        def _sync_toggle_p():
+            st.session_state["aff_det_sym_toggle"] = st.session_state.get("aff_det_sym_toggle_p", False)
+            st.session_state["aff_det_sym_toggle_h"] = st.session_state["aff_det_sym_toggle"]
+
+        def _sync_toggle_h():
+            st.session_state["aff_det_sym_toggle"] = st.session_state.get("aff_det_sym_toggle_h", False)
+            st.session_state["aff_det_sym_toggle_p"] = st.session_state["aff_det_sym_toggle"]
+
+        if "aff_det_sym_toggle" not in st.session_state:
+            st.session_state["aff_det_sym_toggle"] = False
+        detailed_toggle = st.session_state["aff_det_sym_toggle"]
+        if "aff_det_sym_toggle_p" not in st.session_state:
+            st.session_state["aff_det_sym_toggle_p"] = detailed_toggle
+        if "aff_det_sym_toggle_h" not in st.session_state:
+            st.session_state["aff_det_sym_toggle_h"] = detailed_toggle
+
         hp_list = affliction_engine.calculate_house_points(detailed=detailed_toggle)
         pp_list = affliction_engine.calculate_planet_points(detailed=detailed_toggle)
 
@@ -849,19 +864,24 @@ def render_remedies_view(chart, tabs=None):
         ])
 
         with subtab_planets:
+            c_p1, c_p2 = st.columns([3, 1], vertical_alignment="center")
+            with c_p1:
+                st.markdown('<div style="font-size:12.5px; font-weight:800; color:#3B82F6; display:flex; align-items:center; gap:6px; padding:2px 0;"><span>⚡</span><span>वैदिक कर्म-सिद्धांत एवं स्वाधीनता अंकन (Agency Scoring)</span></div>', unsafe_allow_html=True)
+            with c_p2:
+                st.toggle("🔄 विस्तृत प्रतीक", key="aff_det_sym_toggle_p", on_change=_sync_toggle_p)
+
             st.markdown(render_premium_planet_table(pp_list, is_dark=_is_dark), unsafe_allow_html=True)
             st.markdown(render_soumya_krura_balance_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
 
         with subtab_houses:
+            c_h1, c_h2 = st.columns([3, 1], vertical_alignment="center")
+            with c_h1:
+                st.markdown('<div style="font-size:12.5px; font-weight:800; color:#3B82F6; display:flex; align-items:center; gap:6px; padding:2px 0;"><span>⚡</span><span>वैदिक कर्म-सिद्धांत एवं स्वाधीनता अंकन (Agency Scoring)</span></div>', unsafe_allow_html=True)
+            with c_h2:
+                st.toggle("🔄 विस्तृत प्रतीक", key="aff_det_sym_toggle_h", on_change=_sync_toggle_h)
+
             st.markdown(render_premium_house_table(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
             st.markdown(render_house_freewill_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
-
-        # Micro-toolbar and summary expander below the tables
-        c_head1, c_head2 = st.columns([3, 1], vertical_alignment="center")
-        with c_head1:
-            st.markdown('<div style="font-size:12px; font-weight:800; color:#3B82F6; display:flex; align-items:center; gap:6px;"><span>⚡</span><span>वैदिक कर्म-सिद्धांत एवं स्वाधीनता अंकन (Agency Scoring)</span></div>', unsafe_allow_html=True)
-        with c_head2:
-            st.toggle("🔄 विस्तृत प्रतीक", value=detailed_toggle, key="aff_det_sym_toggle")
 
         # Compute KPI Metrics
         def _to_float(v):
