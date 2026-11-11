@@ -1233,6 +1233,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
         st.caption("महर्षि पराशर, जातक पारिजात एवं उत्तर कालामृत अनुसार नवग्रह एवं लग्न पुष्करांश-वर्गोत्तम स्थिति तालिका:")
         rows_html = []
         d9_chart_obj = chart.vargas.get("D9") if hasattr(chart, "vargas") else None
+        d9_chart = d9_chart_obj
 
         for p_name in ["Lagna", "Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]:
             if p_name == "Lagna":
@@ -1313,7 +1314,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
         try:
             _p_pn_names = [p for p, info in p_audit.get("planets", {}).items() if info.get("is_pushkara_navamsha")]
             _p_pb_names = [p for p, info in p_audit.get("planets", {}).items() if info.get("is_pushkara_bhaga")]
-            _p_vg_names = [p for p, pos in chart.planets.items() if d9_chart and pos.sign_name == d9_chart.planets.get(p, pos).sign_name]
+            _p_vg_names = [v["planet"] for v in v_audit.get("vargottama_planets", [])] if v_audit else []
             
             _elev_items = []
             if _p_pn_names:
