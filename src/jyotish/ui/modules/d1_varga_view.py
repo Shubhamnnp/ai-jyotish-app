@@ -817,8 +817,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                             pass
 
         with subtab_graha:
-            st.info(f"🎯 **चयनित वर्ग चक्र:** **{varga_choice} ({v_name})** — {VARGA_SIGNIFICANCE.get(varga_choice, 'शास्त्रीय विश्लेषण')} | **वर्ग लग्न:** **{v_lagna_sign}** (स्वामी: **{SIGN_LORDS.get(v_lagna_sign, '—')}**)")
-            st.markdown(f"### 🪐 {varga_choice} ({v_name}) चक्र — नवग्रह स्पष्ट स्थिति, भाव एवं गरिमा तालिका")
+            st.caption(f"🎯 **{varga_choice} ({v_name}):** {VARGA_SIGNIFICANCE.get(varga_choice, 'शास्त्रीय विश्लेषण')} | **वर्ग लग्न:** {v_lagna_sign} ({SIGN_LORDS.get(v_lagna_sign, '—')})")
             p_data = []
             target_planets_order = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"]
             for name_p in target_planets_order:
