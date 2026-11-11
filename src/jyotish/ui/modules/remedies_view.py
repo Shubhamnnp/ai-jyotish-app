@@ -1038,9 +1038,6 @@ def render_remedies_view(chart, tabs=None):
     # TAB 3: 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Server Remedy Suite)
     # =========================================================================
     with tab_remedies_suite:
-        st.markdown("#### 🌿 3-Pillar शास्त्रीय उपचार एवं दोष निवारण (Server Remedy Suite)")
-        st.info("सर्वर की हस्ताक्षर उपचार प्रणाली: **भाव (House)**, **कारक (Karaka)** एवं **भावेश (Lord)** का त्रि-आयामी शास्त्रीय निवारण — रुद्राक्ष, यज्ञ, सिद्ध बीज मंत्र, विशिष्ट दान एवं नक्षत्र वृक्षारोपण।")
-
         c_rem_sel1, c_rem_sel2 = st.columns([3, 1], vertical_alignment="center")
         with c_rem_sel1:
             cur_idx_rem = 0
