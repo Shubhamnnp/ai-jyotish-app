@@ -976,7 +976,26 @@ def render_remedies_view(chart, tabs=None):
             _status_col = "#92400E"
             _status_desc = f"आयाम मूल्यांकन: {_e_la_ev}"
 
-        # Collapsible Section for Life Area Explanation, HUD Pillars & Evaluation
+        # 1. House Breakdown Row
+        st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+        r1_c1, r1_c2 = st.columns(2, gap="medium")
+        with r1_c1:
+            st.markdown(render_premium_pillar_breakdown_table(la_detail["HouseRows"], "त्रिपक्षीय भाव विश्लेषण (3-Pillar House Breakdown)", icon="🏛️", is_dark=_is_dark), unsafe_allow_html=True)
+        with r1_c2:
+            st.markdown(render_premium_rashi_qualities_table(rashi_pred["HouseRashiRows"], "भाव राशि तत्व एवं गुण धर्म (House Signs & Qualities)", icon="🔮", is_dark=_is_dark), unsafe_allow_html=True)
+
+        st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+
+        # 2. Lord Breakdown Row
+        r2_c1, r2_c2 = st.columns(2, gap="medium")
+        with r2_c1:
+            st.markdown(render_premium_pillar_breakdown_table(la_detail["LordRows"], "त्रिपक्षीय भावेश विश्लेषण (3-Pillar Lord Breakdown)", icon="👑", is_dark=_is_dark), unsafe_allow_html=True)
+        with r2_c2:
+            st.markdown(render_premium_rashi_qualities_table(rashi_pred["LordRashiRows"], "भावेश राशि तत्व एवं गुण धर्म (Lord Signs & Qualities)", icon="🔮", is_dark=_is_dark), unsafe_allow_html=True)
+
+        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+        # Collapsible Section for Life Area Explanation, HUD Pillars & Evaluation (Shifted to Bottom)
         with st.expander(f"🏛️ आयाम स्तम्भ, कारक एवं गरिमा विवरण — {_area_status.split('(')[0].strip()}", expanded=False):
             st.info("प्रत्येक जीवन आयाम का निर्माण ३ प्रमुख स्तम्भों से होता है: **१. भाव (House)**, **२. कारक ग्रह (Karaka)**, एवं **३. भावेश (House Lord)**।")
             st.markdown(_clean_html(f"""
@@ -1013,22 +1032,6 @@ def render_remedies_view(chart, tabs=None):
                 <div style="font-size:12px; color:#1E293B; margin-top:6px; line-height:1.5;">{_status_desc}</div>
             </div>
             """), unsafe_allow_html=True)
-
-        # 1. House Breakdown Row
-        r1_c1, r1_c2 = st.columns(2, gap="medium")
-        with r1_c1:
-            st.markdown(render_premium_pillar_breakdown_table(la_detail["HouseRows"], "त्रिपक्षीय भाव विश्लेषण (3-Pillar House Breakdown)", icon="🏛️", is_dark=_is_dark), unsafe_allow_html=True)
-        with r1_c2:
-            st.markdown(render_premium_rashi_qualities_table(rashi_pred["HouseRashiRows"], "भाव राशि तत्व एवं गुण धर्म (House Signs & Qualities)", icon="🔮", is_dark=_is_dark), unsafe_allow_html=True)
-
-        st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-
-        # 2. Lord Breakdown Row
-        r2_c1, r2_c2 = st.columns(2, gap="medium")
-        with r2_c1:
-            st.markdown(render_premium_pillar_breakdown_table(la_detail["LordRows"], "त्रिपक्षीय भावेश विश्लेषण (3-Pillar Lord Breakdown)", icon="👑", is_dark=_is_dark), unsafe_allow_html=True)
-        with r2_c2:
-            st.markdown(render_premium_rashi_qualities_table(rashi_pred["LordRashiRows"], "भावेश राशि तत्व एवं गुण धर्म (Lord Signs & Qualities)", icon="🔮", is_dark=_is_dark), unsafe_allow_html=True)
 
 
     # =========================================================================
