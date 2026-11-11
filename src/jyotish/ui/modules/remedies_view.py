@@ -830,6 +830,11 @@ def render_remedies_view(chart, tabs=None):
         padding: 4px 12px !important;
         font-size: 12.5px !important;
     }
+    /* Uniform equal spacing for all Expanders so they never stick together */
+    div[data-testid="stExpander"] {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+    }
     </style>
     """, unsafe_allow_html=True)
     tab_fw_overview, tab_life_areas_deep, tab_remedies_suite, tab_badhaka_maraka = st.tabs(tabs)
@@ -872,7 +877,7 @@ def render_remedies_view(chart, tabs=None):
 
             st.markdown(render_premium_planet_table(pp_list, is_dark=_is_dark), unsafe_allow_html=True)
             st.markdown(render_soumya_krura_balance_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
-            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
         with subtab_houses:
             c_h1, c_h2 = st.columns([3, 1], vertical_alignment="center")
@@ -883,7 +888,7 @@ def render_remedies_view(chart, tabs=None):
 
             st.markdown(render_premium_house_table(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
             st.markdown(render_house_freewill_svg(hp_list, is_dark=_is_dark), unsafe_allow_html=True)
-            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
         # Compute KPI Metrics
         def _to_float(v):
@@ -977,14 +982,14 @@ def render_remedies_view(chart, tabs=None):
             _status_desc = f"आयाम मूल्यांकन: {_e_la_ev}"
 
         # 1. House Breakdown Row
-        st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
         r1_c1, r1_c2 = st.columns(2, gap="medium")
         with r1_c1:
             st.markdown(render_premium_pillar_breakdown_table(la_detail["HouseRows"], "त्रिपक्षीय भाव विश्लेषण (3-Pillar House Breakdown)", icon="🏛️", is_dark=_is_dark), unsafe_allow_html=True)
         with r1_c2:
             st.markdown(render_premium_rashi_qualities_table(rashi_pred["HouseRashiRows"], "भाव राशि तत्व एवं गुण धर्म (House Signs & Qualities)", icon="🔮", is_dark=_is_dark), unsafe_allow_html=True)
 
-        st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
         # 2. Lord Breakdown Row
         r2_c1, r2_c2 = st.columns(2, gap="medium")
@@ -993,7 +998,7 @@ def render_remedies_view(chart, tabs=None):
         with r2_c2:
             st.markdown(render_premium_rashi_qualities_table(rashi_pred["LordRashiRows"], "भावेश राशि तत्व एवं गुण धर्म (Lord Signs & Qualities)", icon="🔮", is_dark=_is_dark), unsafe_allow_html=True)
 
-        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
         # Collapsible Section for Life Area Explanation, HUD Pillars & Evaluation (Shifted to Bottom)
         with st.expander(f"🏛️ आयाम स्तम्भ, कारक एवं गरिमा विवरण — {_area_status.split('(')[0].strip()}", expanded=False):
@@ -1078,10 +1083,11 @@ def render_remedies_view(chart, tabs=None):
         if not rem_rows:
             rem_rows = affliction_engine.calculate_remedy(life_area_id=sel_rem_la_id, lords=rem_lords_toggle)
 
+        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
         if is_live_server_data:
-            st.markdown('<div style="font-size: 11.5px; color: #047857; font-weight: 700; margin-bottom: 6px;">🌐 Grahalakshanam लाइव सर्वर सत्यापित गणना (Synchronized with api.grahalakshanam.in)</div>', unsafe_allow_html=True)
+            st.markdown('<div style="font-size: 11.5px; color: #047857; font-weight: 700; margin-bottom: 8px;">🌐 Grahalakshanam लाइव सर्वर सत्यापित गणना (Synchronized with api.grahalakshanam.in)</div>', unsafe_allow_html=True)
         else:
-            st.markdown('<div style="font-size: 11.5px; color: #1E40AF; font-weight: 700; margin-bottom: 6px;">⚡ JyotishOS प्रामाणिक पारशरी त्रि-स्तम्भ गणना (Verified Grahalakshanam Parity)</div>', unsafe_allow_html=True)
+            st.markdown('<div style="font-size: 11.5px; color: #1E40AF; font-weight: 700; margin-bottom: 8px;">⚡ JyotishOS प्रामाणिक पारशरी त्रि-स्तम्भ गणना (Verified Grahalakshanam Parity)</div>', unsafe_allow_html=True)
 
         def _parse_fw(fw_str: str) -> int:
             try:
@@ -1098,7 +1104,7 @@ def render_remedies_view(chart, tabs=None):
 
         # 3 Pillar Summary Cards
         st.markdown(f"""
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 10px 0 15px 0;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 4px 0 12px 0;">
             <div style="background: {'#ECFDF5' if fw_h_val >= 50 else '#FEF2F2'}; border: 1.5px solid {'#10B981' if fw_h_val >= 50 else '#EF4444'}; border-radius: 8px; padding: 10px 12px;">
                 <div style="font-size: 11px; font-weight: 800; color: {'#065F46' if fw_h_val >= 50 else '#991B1B'};">🏛️ स्तंभ १: {'भावेश (House Lord)' if rem_lords_toggle else 'भाव (House Cusp)'}</div>
                 <div style="font-size: 17px; font-weight: 900; color: {'#047857' if fw_h_val >= 50 else '#B91C1C'};">फ्री-विल: {fw_h_val}%</div>
@@ -1181,7 +1187,7 @@ def render_remedies_view(chart, tabs=None):
         th_style = "border: 1.5px solid #CBD5E1; font-size: 13.5px; padding: 10px 14px; text-align: center; vertical-align: middle; background: #F1F5F9; color: #0F172A; font-weight: 800; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;"
         left_style = "border: 1.5px solid #CBD5E1; font-size: 13px; padding: 10px 14px; text-align: center; vertical-align: middle; background: #F8FAFC; color: #0F172A; font-weight: 800; width: 170px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;"
 
-        rem_html = '<div style="overflow-x: auto; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1.5px solid #CBD5E1; border-radius: 12px;">'
+        rem_html = '<div style="overflow-x: auto; margin-bottom: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1.5px solid #CBD5E1; border-radius: 12px;">'
         rem_html += '<table style="width: 100%; border-collapse: collapse; background: #FFFFFF; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;">'
         rem_html += '<colgroup><col style="width: 18%;"><col style="width: 27%;"><col style="width: 27%;"><col style="width: 28%;"></colgroup>'
         rem_html += '<thead><tr style="background: #F8FAFC; border-bottom: 2.5px solid #2563EB;">'
@@ -1234,7 +1240,7 @@ def render_remedies_view(chart, tabs=None):
             _forbid_gem_list = [f"<b>{_GEM_MAP.get(l, l)}</b> ({l})" for l in _trika_lords]
 
             st.markdown(f"""
-            <div style="background: linear-gradient(135deg, #FEF2F2 0%, #FFFBEB 100%); border: 1.5px solid #F59E0B; border-radius: 10px; padding: 12px 16px; margin: 12px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+            <div style="background: linear-gradient(135deg, #FEF2F2 0%, #FFFBEB 100%); border: 1.5px solid #F59E0B; border-radius: 10px; padding: 12px 16px; margin: 0 0 12px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
                 <div style="font-weight: 900; color: #92400E; font-size: 13.5px; margin-bottom: 6px; display:flex; align-items:center; gap:6px;">
                     <span>🛡️ <b>रत्न धारण पात्रता एवं शास्त्रीय सुरक्षा गार्ड (Gemstone Safety Guard)</b></span>
                 </div>
@@ -1376,6 +1382,8 @@ def render_remedies_view(chart, tabs=None):
             st.error(f"बाधक/मारक विश्लेषण त्रुटि: {_e_bm}")
 
     # ─── Shastriya Pramana & Classical Overview moved to Bottom (Zero Top Scroll) ───
+    st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+
     # 1. Collapsible KPI Cards & Purushartha vs Prarabdha Card
     with st.expander("📊 समग्र फ्री-विल सूचकांक एवं कर्म-सिद्धांत रहस्य (Free Will KPI & Purushartha vs Prarabdha)", expanded=False):
         _avg_h = avg_h_fw if 'avg_h_fw' in locals() else 50.0
@@ -1424,6 +1432,8 @@ def render_remedies_view(chart, tabs=None):
             • <b>५०% से कम फ्री-विल (दृढ़ प्रारब्ध):</b> पूर्वजन्म संचित प्रारब्ध की प्रधानता है; यहाँ केवल हठपूर्वक कर्म करने के स्थान पर शास्त्रीय दान, मंत्र जप, रुद्राक्ष एवं ईश्वरीय शरणागति से ही शांति संभव है।
         </div>
         """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
     # 2. Lagna, Badhaka & Maraka Overview
     with st.expander("🛡️ लग्न, बाधक एवं मुख्य मारकेश स्थिति (Lagna, Badhaka & Maraka Overview)", expanded=False):
