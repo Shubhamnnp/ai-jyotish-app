@@ -123,27 +123,6 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
     </div>
     """, unsafe_allow_html=True)
 
-            # Collapsible Classical Rules & Triggers Expander below the monthly grid
-            dt_shl = SHASTRIYA_SHLOKAS.get("double_transit", {})
-            with st.expander("📜 शास्त्रीय प्रमाण — दोहरा गोचर एवं ३-स्तरीय ट्रिगर विधान (Double Transit & Classical Rules)", expanded=False):
-                st.caption("प्रत्येक माह की सम्भावना (०-१००%) = दशा संरेखण (४०) + शनि-गुरु दोहरा गोचर (३५) + अष्टकवर्ग बल (२५):")
-                if dt_shl:
-                    dt_lines = "<br/>".join(dt_shl['shloka'].splitlines())
-                    st.markdown(f"""
-    <div style="background: rgba(37, 99, 235, 0.08); border-left: 4px solid #2563EB; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 {dt_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {dt_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {dt_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {dt_shl['rule']}
-    </div>
-    </div>
-    """, unsafe_allow_html=True)
-
         else:
             # Single Date Deep Dive Execution
             query_input = GhatnaQueryInput(
@@ -441,9 +420,28 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
     # -----------------------------------------------------------------
     # BOTTOM EXPANDERS: Classical Pramana & Active Native Coordinates HUD
     # -----------------------------------------------------------------
-    st.markdown("<div style='height: 20px; clear: both;'></div>", unsafe_allow_html=True)
+    # 1. Double Transit & 3-Tier Classical Trigger Rules
+    dt_shl = SHASTRIYA_SHLOKAS.get("double_transit", {})
+    with st.expander("📜 शास्त्रीय प्रमाण — दोहरा गोचर एवं ३-स्तरीय ट्रिगर विधान (Double Transit & Classical Rules)", expanded=False):
+        st.caption("प्रत्येक माह की सम्भावना (०-१००%) = दशा संरेखण (४०) + शनि-गुरु दोहरा गोचर (३५) + अष्टकवर्ग बल (२५):")
+        if dt_shl:
+            dt_lines = "<br/>".join(dt_shl['shloka'].splitlines())
+            st.markdown(f"""
+            <div style="background: rgba(37, 99, 235, 0.08); border-left: 4px solid #2563EB; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+                <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 {dt_shl['grantha']}</div>
+                <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+                    {dt_lines}
+                </div>
+                <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+                    <b>हिंदी भावार्थ:</b> {dt_shl['anuvad_hi']}
+                </div>
+                <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+                    <b>शास्त्रीय नियम:</b> {dt_shl['rule']}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
-    # Classical Shastriya Shloka Card
+    # 2. Classical Shastriya Shloka Card
     phaladeepika_event_shloka = {
         "title": "फलदीपिका एवं जातक पारिजात — दशा-गोचर काल विधान",
         "source": "मन्त्रेश्वर विरचित फलदीपिका (अध्याय २०) एवं जातक पारिजात",
@@ -463,7 +461,7 @@ def render_event_view(chart, birth_profile, tz_offset=5.5, tabs=None):
         </div>
         """, unsafe_allow_html=True)
 
-    # Active Native Micro-Planetary Longitudes & DMS Console
+    # 3. Active Native Micro-Planetary Longitudes & DMS Console
     lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
     moon = chart.planets.get("Moon")
     jup = chart.planets.get("Jupiter")
