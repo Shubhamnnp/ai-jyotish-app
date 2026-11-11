@@ -513,18 +513,17 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
                     title = f"{varga_choice} {v_name} Kundali"
                     svg_code = render_chart_svg(chart, title, varga_code=varga_choice)
-                    st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:10px;">{svg_code}</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:6px;">{svg_code}</div>', unsafe_allow_html=True)
 
                     v_desc = VARGA_SIGNIFICANCE.get(varga_choice, "शास्त्रीय सूक्ष्म विश्लेषण")
-                    st.info(f"🎯 **{varga_choice} ({v_name}) शास्त्रीय प्रयोजन:** {v_desc}")
 
-                    # ─── Dynamic Varga Phalit Synthesis Card ───
+                    # ─── Unified Dynamic Varga Purpose & Phalit Synthesis Card ───
                     try:
                         _v_planets = getattr(target_varga, 'planets', {}) if target_varga else {}
                         _v_exalted, _v_own, _v_deb = [], [], []
                         _EXALT_SIGNS = {"Sun": "Aries", "Moon": "Taurus", "Mars": "Capricorn", "Mercury": "Virgo", "Jupiter": "Cancer", "Venus": "Pisces", "Saturn": "Libra", "Rahu": "Taurus", "Ketu": "Scorpio"}
                         _DEB_SIGNS = {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries", "Rahu": "Scorpio", "Ketu": "Taurus"}
-                    
+
                         for _pname, _ppos in _v_planets.items():
                             _psign = getattr(_ppos, 'sign_name', '')
                             if _psign == _EXALT_SIGNS.get(_pname):
@@ -537,25 +536,36 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                         _v_lagna_lord = SIGN_LORDS.get(v_lagna_sign, "—")
                         _v_synthesis_points = []
                         if _v_exalted:
-                            _v_synthesis_points.append(f"🌟 **उच्च ग्रह ({', '.join(_v_exalted)}):** इस वर्ग के कार्यक्षेत्र में असाधारण सफलता एवं प्रभुत्व का संकेत देते हैं।")
+                            _v_synthesis_points.append(
+                                f'<span style="background:#DCFCE7; color:#15803D; font-weight:800; padding:1px 6px; border-radius:4px; font-size:11px;">🌟 उच्च ग्रह</span> '
+                                f'<b>({", ".join(_v_exalted)}):</b> इस वर्ग के कार्यक्षेत्र में असाधारण सफलता एवं प्रभुत्व का संकेत।'
+                            )
                         if _v_own:
-                            _v_synthesis_points.append(f"🏰 **स्वगृही ग्रह ({', '.join(_v_own)}):** वर्ग फल में स्थायित्व एवं आत्म-निर्भरता का निर्माण करते हैं।")
+                            _v_synthesis_points.append(
+                                f'<span style="background:#EFF6FF; color:#1D4ED8; font-weight:800; padding:1px 6px; border-radius:4px; font-size:11px;">🏰 स्वगृही</span> '
+                                f'<b>({", ".join(_v_own)}):</b> वर्ग फल में स्थायित्व एवं आत्म-निर्भरता का निर्माण।'
+                            )
                         if _v_deb:
-                            _v_synthesis_points.append(f"⚠️ **नीच ग्रह ({', '.join(_v_deb)}):** संबंधित विषय में अतिरिक्त पुरुषार्थ, जागरूकता एवं शांति उपायों की आवश्यकता दर्शाते हैं।")
+                            _v_synthesis_points.append(
+                                f'<span style="background:#FEE2E2; color:#DC2626; font-weight:800; padding:1px 6px; border-radius:4px; font-size:11px;">⚠️ नीच ग्रह</span> '
+                                f'<b>({", ".join(_v_deb)}):</b> संबंधित विषय में अतिरिक्त पुरुषार्थ व शांति उपाय अपेक्षित।'
+                            )
                         if not _v_synthesis_points:
-                            _v_synthesis_points.append("⚖️ **संतुलित ग्रह प्रभाव:** ग्रह सामान्य गरिमा के साथ स्थित होकर मध्यम एवं क्रमिक परिणाम प्रदान कर रहे हैं।")
+                            _v_synthesis_points.append(
+                                f'<span style="background:#F1F5F9; color:#475569; font-weight:800; padding:1px 6px; border-radius:4px; font-size:11px;">⚖️ सम ग्रह प्रभाव</span> '
+                                f'ग्रह सामान्य गरिमा में मध्यम व क्रमिक फल प्रदान कर रहे हैं।'
+                            )
 
-                        st.markdown(f"""
-                        <div style="background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%); border: 1px solid #CBD5E1; border-radius: 8px; padding: 10px 14px; margin-top: 8px; font-size: 12px; color: #1E293B;">
-                            <div style="font-weight: 800; color: #1E40AF; margin-bottom: 4px; display:flex; justify-content:space-between;">
-                                <span>🔬 <b>{varga_choice} शास्त्रीय फलित समन्वय (Varga Synthesis)</b></span>
-                                <span style="color: #64748B;">वर्ग लग्न: <b>{v_lagna_sign}</b> (स्वामी: <b>{_v_lagna_lord}</b>)</span>
-                            </div>
-                            <div style="line-height: 1.5;">
-                                {'<br/>'.join(_v_synthesis_points)}
-                            </div>
-                        </div>
-                        """, unsafe_allow_html=True)
+                        _syn_card_html = (
+                            f'<div style="background:linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%); border:1.5px solid #CBD5E1; border-radius:8px; padding:8px 12px; margin-top:4px; font-size:11.5px; color:#1E293B;">'
+                            f'<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #E2E8F0; padding-bottom:5px; margin-bottom:6px;">'
+                            f'<div style="color:#1E40AF; font-size:12px; font-weight:800;">🎯 <b>{varga_choice} ({v_name}):</b> <span style="color:#475569; font-weight:600;">{v_desc}</span></div>'
+                            f'<div style="font-size:11px; color:#64748B; background:#FFFFFF; padding:1px 6px; border-radius:4px; border:1px solid #CBD5E1; font-weight:700;">वर्ग लग्न: <b>{v_lagna_sign}</b> ({_v_lagna_lord})</div>'
+                            f'</div>'
+                            f'<div style="line-height:1.5;">{"<br/>".join(_v_synthesis_points)}</div>'
+                            f'</div>'
+                        )
+                        st.markdown(_syn_card_html, unsafe_allow_html=True)
                     except Exception as _e_syn:
                         st.caption(f"वर्ग समन्वय लोड हो रहा है: {_e_syn}")
 
@@ -755,51 +765,56 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                             else:
                                 st.markdown(generate_styled_vertical_svg(vims_items, max_val=20, is_dark=_is_dark), unsafe_allow_html=True)
 
-            # ─── Pancha Mahapurusha Yogas & Key Yogas Banner ───
-            try:
-                _yogas_found = []
-                # Pancha Mahapurusha Yogas
-                _kendra_houses = [1, 4, 7, 10]
-                _mars = chart.planets.get("Mars")
-                if _mars and _mars.house_from_lagna in _kendra_houses and _mars.sign_name in ["Aries", "Scorpio", "Capricorn"]:
-                    _yogas_found.append(("🔴 रुचक महापुरुष योग (Ruchaka)", "मंगल केंद्र में स्व/उच्च राशि — अदम्य साहस, भूमि-भवन लाभ, नेतृत्व एवं सैन्य/प्रशासनिक पराक्रम।"))
-                _merc = chart.planets.get("Mercury")
-                if _merc and _merc.house_from_lagna in _kendra_houses and _merc.sign_name in ["Gemini", "Virgo"]:
-                    _yogas_found.append(("🟢 भद्र महापुरुष योग (Bhadra)", "बुध केंद्र में स्व/उच्च राशि — असाधारण बौद्धिक प्रखरता, वाणी प्रभाव, व्यापारिक कुशलता एवं दीर्घायु।"))
-                _jup = chart.planets.get("Jupiter")
-                if _jup and _jup.house_from_lagna in _kendra_houses and _jup.sign_name in ["Sagittarius", "Pisces", "Cancer"]:
-                    _yogas_found.append(("🟡 हंस महापुरुष योग (Hamsa)", "गुरु केंद्र में स्व/उच्च राशि — सात्विक बुद्धि, आध्यात्मिक तेज, पूज्य सम्मान एवं सदाचार।"))
-                _ven = chart.planets.get("Venus")
-                if _ven and _ven.house_from_lagna in _kendra_houses and _ven.sign_name in ["Taurus", "Libra", "Pisces"]:
-                    _yogas_found.append(("🌸 मालव्य महापुरुष योग (Malavya)", "शुक्र केंद्र में स्व/उच्च राशि — राजसी वैभव, कलात्मक सौंदर्य, ऐश्वर्य, सुखी वैवाहिक जीवन व वाहन सुख।"))
-                _sat = chart.planets.get("Saturn")
-                if _sat and _sat.house_from_lagna in _kendra_houses and _sat.sign_name in ["Capricorn", "Aquarius", "Libra"]:
-                    _yogas_found.append(("🪐 शश महापुरुष योग (Sasa)", "शनि केंद्र में स्व/उच्च राशि — जननायक, अपार धैर्य, गुप्त अधिकार, राजनीतिक प्रभाव एवं स्थिर सत्ता।"))
+                        # ─── Pancha Mahapurusha Yogas & Key Yogas Console ───
+                        try:
+                            _yogas_found = []
+                            # Pancha Mahapurusha Yogas
+                            _kendra_houses = [1, 4, 7, 10]
+                            _mars = chart.planets.get("Mars")
+                            if _mars and _mars.house_from_lagna in _kendra_houses and _mars.sign_name in ["Aries", "Scorpio", "Capricorn"]:
+                                _yogas_found.append(("🔴 रुचक महापुरुष योग (Ruchaka)", "मंगल केंद्र में स्व/उच्च राशि — अदम्य साहस, भूमि-भवन लाभ, नेतृत्व एवं सैन्य/प्रशासनिक पराक्रम।"))
+                            _merc = chart.planets.get("Mercury")
+                            if _merc and _merc.house_from_lagna in _kendra_houses and _merc.sign_name in ["Gemini", "Virgo"]:
+                                _yogas_found.append(("🟢 भद्र महापुरुष योग (Bhadra)", "बुध केंद्र में स्व/उच्च राशि — असाधारण बौद्धिक प्रखरता, वाणी प्रभाव, व्यापारिक कुशलता एवं दीर्घायु।"))
+                            _jup = chart.planets.get("Jupiter")
+                            if _jup and _jup.house_from_lagna in _kendra_houses and _jup.sign_name in ["Sagittarius", "Pisces", "Cancer"]:
+                                _yogas_found.append(("🟡 हंस महापुरुष योग (Hamsa)", "गुरु केंद्र में स्व/उच्च राशि — सात्विक बुद्धि, आध्यात्मिक तेज, पूज्य सम्मान एवं सदाचार।"))
+                            _ven = chart.planets.get("Venus")
+                            if _ven and _ven.house_from_lagna in _kendra_houses and _ven.sign_name in ["Taurus", "Libra", "Pisces"]:
+                                _yogas_found.append(("🌸 मालव्य महापुरुष योग (Malavya)", "शुक्र केंद्र में स्व/उच्च राशि — राजसी वैभव, कलात्मक सौंदर्य, ऐश्वर्य, सुखी वैवाहिक जीवन व वाहन सुख।"))
+                            _sat = chart.planets.get("Saturn")
+                            if _sat and _sat.house_from_lagna in _kendra_houses and _sat.sign_name in ["Capricorn", "Aquarius", "Libra"]:
+                                _yogas_found.append(("🪐 शश महापुरुष योग (Sasa)", "शनि केंद्र में स्व/उच्च राशि — जननायक, अपार धैर्य, गुप्त अधिकार, राजनीतिक प्रभाव एवं स्थिर सत्ता।"))
 
-                # Gajakesari Yoga
-                _moon = chart.planets.get("Moon")
-                if _jup and _moon:
-                    _jm_dist = ((_jup.house_from_lagna - _moon.house_from_lagna + 12) % 12) + 1
-                    if _jm_dist in [1, 4, 7, 10]:
-                        _yogas_found.append(("🐘 गजकेसरी योग (Gajakesari)", "गुरु चन्द्र से केंद्र में स्थित — अपार यश, विद्वता, निर्भय व्यक्तित्व एवं सर्वत्र आदर-सत्कार।"))
+                            # Gajakesari Yoga
+                            _moon = chart.planets.get("Moon")
+                            if _jup and _moon:
+                                _jm_dist = ((_jup.house_from_lagna - _moon.house_from_lagna + 12) % 12) + 1
+                                if _jm_dist in [1, 4, 7, 10]:
+                                    _yogas_found.append(("🐘 गजकेसरी योग (Gajakesari)", "गुरु चन्द्र से केंद्र में स्थित — अपार यश, विद्वता, निर्भय व्यक्तित्व एवं सर्वत्र आदर-सत्कार।"))
 
-                # Budhaditya Yoga
-                _sun = chart.planets.get("Sun")
-                if _sun and _merc and _sun.sign_id == _merc.sign_id:
-                    _diff = abs(_sun.longitude - _merc.longitude)
-                    if _diff > 180: _diff = 360 - _diff
-                    if _diff <= 10.0:
-                        _comb_txt = " (बुध अस्त नहीं)" if not _merc.is_combust else " (अंश निकट)"
-                        _yogas_found.append(("⚡ बुधादित्य योग (Budhaditya)", f"सूर्य-बुध युति (अंतर: {_diff:.1f}°){_comb_txt} — तीक्ष्ण बुद्धि, प्रशासनिक कुशलता व व्यावसायिक सफलता।"))
+                            # Budhaditya Yoga
+                            _sun = chart.planets.get("Sun")
+                            if _sun and _merc and _sun.sign_id == _merc.sign_id:
+                                _diff = abs(_sun.longitude - _merc.longitude)
+                                if _diff > 180: _diff = 360 - _diff
+                                if _diff <= 10.0:
+                                    _comb_txt = " (बुध अस्त नहीं)" if not _merc.is_combust else " (अंश निकट)"
+                                    _yogas_found.append(("⚡ बुधादित्य योग (Budhaditya)", f"सूर्य-बुध युति (अंतर: {_diff:.1f}°){_comb_txt} — तीक्ष्ण बुद्धि, प्रशासनिक कुशलता व व्यावसायिक सफलता।"))
 
-                if _yogas_found:
-                    _y_cards = []
-                    for _yt, _yd in _yogas_found:
-                        _y_cards.append(f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:6px; padding:6px 10px; margin-bottom:4px;"><span style="font-weight:900; color:#1E3A8A; font-size:12px;">{_yt}</span>: <span style="font-size:11.5px; color:#334155;">{_yd}</span></div>')
-                    _yoga_banner_html = f'<div style="background:linear-gradient(135deg, #EFF6FF 0%, #F0FDF4 100%); border:1.5px solid #93C5FD; border-radius:8px; padding:10px 12px; margin-bottom:12px;"><div style="font-weight:900; color:#1E40AF; font-size:13px; margin-bottom:6px; display:flex; align-items:center; gap:6px;"><span>🏆 <b>कुण्डली प्रमुख महा-योग उद्घोष (Major Planetary Yogas Detected)</b></span></div>{"".join(_y_cards)}</div>'
-                    st.markdown(_yoga_banner_html, unsafe_allow_html=True)
-            except Exception as _ey:
-                pass
+                            if _yogas_found:
+                                _y_cards = []
+                                for _yt, _yd in _yogas_found:
+                                    _y_cards.append(f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:6px; padding:5px 8px; margin-bottom:3px;"><span style="font-weight:900; color:#1E3A8A; font-size:11.5px;">{_yt}</span>: <span style="font-size:11px; color:#334155;">{_yd}</span></div>')
+                                _yoga_banner_html = (
+                                    f'<div style="background:linear-gradient(135deg, #EFF6FF 0%, #F0FDF4 100%); border:1.5px solid #93C5FD; border-radius:8px; padding:8px 10px; margin-top:8px;">'
+                                    f'<div style="font-weight:900; color:#1E40AF; font-size:12px; margin-bottom:5px; display:flex; align-items:center; gap:5px;">'
+                                    f'<span>🏆 <b>कुण्डली प्रमुख महा-योग (Major Yogas Detected)</b></span>'
+                                    f'</div>{"".join(_y_cards)}</div>'
+                                )
+                                st.markdown(_yoga_banner_html, unsafe_allow_html=True)
+                        except Exception as _ey:
+                            pass
 
         with subtab_graha:
             st.info(f"🎯 **चयनित वर्ग चक्र:** **{varga_choice} ({v_name})** — {VARGA_SIGNIFICANCE.get(varga_choice, 'शास्त्रीय विश्लेषण')} | **वर्ग लग्न:** **{v_lagna_sign}** (स्वामी: **{SIGN_LORDS.get(v_lagna_sign, '—')}**)")
@@ -2294,21 +2309,6 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
         except Exception as _ekc:
             st.error(f"कोटा चक्र गणना त्रुटि: {_ekc}")
-
-    # ─── Shastriya Praman (Moved to Bottom for Zero-Scroll UX) ───
-    st.markdown("<div style='margin-top:28px;'></div>", unsafe_allow_html=True)
-    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_d1_shloka['title']}", expanded=False):
-        st.markdown(f"""
-        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
-            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_d1_shloka['source']}</b>
-            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
-{bphs_d1_shloka['shloka']}
-            </pre>
-            <div style="font-size:13px; color:#92400E; margin-top:6px;">
-                <b>हिंदी भावार्थ:</b> {bphs_d1_shloka['meaning']}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
 
 
     # =============================================================
