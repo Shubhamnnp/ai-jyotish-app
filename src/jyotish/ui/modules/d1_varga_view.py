@@ -1842,10 +1842,8 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
 
 
     with tab_surya:
-        st.markdown("### ☀️ सूर्य कुण्डली (Surya Kundali — Soul, Vitality & Social Stature)")
         _sun = chart.planets.get("Sun")
         if _sun:
-            st.info(f"भगवान सूर्य आत्मा, पिता, जीवनी शक्ति, शासकीय प्रभुत्व एवं आजीविका के मूल कारक हैं। सूर्य राशि (**{_sun.sign_name}**) को प्रथम भाव मानकर जातक के आत्मबल एवं सामाजिक प्रभाव का अध्ययन किया जाता है:")
 
             # Construct Surya VargaChart
             _surya_planets = {
@@ -1882,7 +1880,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 _s_dms = f"{_s_ansh}° {_s_kala:02d}'"
 
                 st.markdown(f"""
-                <div style="background:#FFFBEB; border:1px solid #FCD34D; border-radius:8px; padding:10px 14px; font-size:12px; color:#78350F; line-height:1.6;">
+                <div style="background:#FFFBEB; border:1px solid #FCD34D; border-radius:8px; padding:10px 14px; font-size:12px; color:#78350F; line-height:1.6; margin-bottom:12px;">
                     <b>☀️ सूर्य देव का स्पष्ट परिचय:</b><br/>
                     • <b>राशि:</b> {_sun.sign_name} ({_s_dms})<br/>
                     • <b>नक्षत्र:</b> {_sun.nakshatra_name} (पाद {_sun.nakshatra_pada}) — स्वामी: {_sun.nakshatra_lord}<br/>
@@ -1908,10 +1906,11 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     _occ_str = ", ".join(_occ_p) if _occ_p else "—"
                     _s_house_rows.append(f'<tr style="border-bottom:1px solid #E2E8F0;"><td style="padding:4px 6px; font-weight:800; color:#B45309;">{_h_idx} भाव</td><td style="padding:4px 6px; font-weight:700;">{_target_sname}</td><td style="padding:4px 6px; color:#475569;">{_h_lord}</td><td style="padding:4px 6px; font-weight:800; color:#0F172A;">{_occ_str}</td><td style="padding:4px 6px; font-size:10.5px; color:#475569;">{_s_signifs[_h_idx-1]}</td></tr>')
 
-                _sh_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:220px; overflow-y:auto; margin-bottom:10px;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 6px; text-align:left;">भाव</th><th style="padding:4px 6px; text-align:left;">राशि</th><th style="padding:4px 6px; text-align:left;">स्वामी</th><th style="padding:4px 6px; text-align:left;">स्थित ग्रह</th><th style="padding:4px 6px; text-align:left;">जीवन क्षेत्र</th></tr></thead><tbody>{"".join(_s_house_rows)}</tbody></table></div>'
+                _sh_tbl_html = f'<div style="background:#FFFFFF; border:1px solid #CBD5E1; border-radius:8px; padding:4px; max-height:285px; overflow-y:auto; margin-bottom:10px;"><table style="width:100%; border-collapse:collapse; font-size:11.5px;"><thead><tr style="background:#F1F5F9; color:#475569; font-weight:800; border-bottom:1.5px solid #CBD5E1;"><th style="padding:4px 6px; text-align:left;">भाव</th><th style="padding:4px 6px; text-align:left;">राशि</th><th style="padding:4px 6px; text-align:left;">स्वामी</th><th style="padding:4px 6px; text-align:left;">स्थित ग्रह</th><th style="padding:4px 6px; text-align:left;">जीवन क्षेत्र</th></tr></thead><tbody>{"".join(_s_house_rows)}</tbody></table></div>'
                 st.markdown(_sh_tbl_html, unsafe_allow_html=True)
 
                 # ─── Solar Yogas Engine ───
+                st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
                 st.markdown("#### 🌟 सूर्य आधारित प्रमुख योग (Classical Solar Yogas)")
                 _solar_yogas = []
 
@@ -1945,8 +1944,21 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                 else:
                     _solar_yogas.append(("☀️ स्वतंत्र सौर तेज (Independent Sun)", "सूर्य के अगल-बगल कोई ग्रह नहीं है; जातक आत्मनिर्भर, आत्म-प्रेरित एवं स्वतंत्र व्यक्तित्व का धनी होता है।", "#F8FAFC", "#334155"))
 
+                # Render Yoga Cards with clear spacing between each card
+                _s_cards_html = []
                 for _yt, _yd, _bg, _fg in _solar_yogas:
-                    st.markdown(f'<div style="background:{_bg}; border:1px solid #CBD5E1; border-radius:6px; padding:6px 10px; margin-bottom:5px;"><span style="font-weight:900; color:{_fg}; font-size:12px;">{_yt}:</span> <span style="font-size:11.5px; color:#1E293B;">{_yd}</span></div>', unsafe_allow_html=True)
+                    _s_cards_html.append(
+                        f'<div style="background:{_bg}; border:1px solid #CBD5E1; border-radius:8px; padding:8px 12px; margin-bottom:10px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">'
+                        f'<span style="font-weight:900; color:{_fg}; font-size:12px;">{_yt}:</span> '
+                        f'<span style="font-size:11.5px; color:#1E293B; line-height:1.5;">{_yd}</span>'
+                        f'</div>'
+                    )
+                st.markdown("".join(_s_cards_html), unsafe_allow_html=True)
+
+            # ─── Shastriya Overview Shifted to Bottom for Zero-Scroll UX ───
+            st.markdown("<div style='height: 20px; clear: both;'></div>", unsafe_allow_html=True)
+            with st.expander("☀️ सूर्य कुण्डली शास्त्रीय प्रयोजन एवं नियम (Surya Kundali Overview)", expanded=False):
+                st.info(f"भगवान सूर्य आत्मा, पिता, जीवनी शक्ति, शासकीय प्रभुत्व एवं आजीविका के मूल कारक हैं। सूर्य राशि (**{_sun.sign_name}**) को प्रथम भाव मानकर जातक के आत्मबल एवं सामाजिक प्रभाव का अध्ययन किया जाता है:")
         else:
             st.warning("सूर्य की स्थिति उपलब्ध नहीं।")
 
