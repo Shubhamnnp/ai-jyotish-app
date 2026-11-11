@@ -1428,21 +1428,7 @@ def render_remedies_view(chart, tabs=None):
         </div>
         """, unsafe_allow_html=True)
 
-    # 2. Classical Shastriya Shloka Card
-    with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_remedies_shloka['title']}", expanded=False):
-        st.markdown(f"""
-        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
-            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_remedies_shloka['source']}</b>
-            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
-{bphs_remedies_shloka['shloka']}
-            </pre>
-            <div style="font-size:13px; color:#92400E; margin-top:6px;">
-                <b>हिंदी भावार्थ:</b> {bphs_remedies_shloka['meaning']}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    # 3. Lagna, Badhaka & Maraka Overview
+    # 2. Lagna, Badhaka & Maraka Overview
     with st.expander("🛡️ लग्न, बाधक एवं मुख्य मारकेश स्थिति (Lagna, Badhaka & Maraka Overview)", expanded=False):
         c_rm1, c_rm2, c_rm3, c_rm4 = st.columns(4)
         c_rm1.metric("लग्न एवं प्रकृति", f"{lagna_sname}", bm_res.get("lagna_type", "चर लग्न"))
