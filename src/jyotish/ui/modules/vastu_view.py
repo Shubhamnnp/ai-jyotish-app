@@ -324,12 +324,6 @@ def render_vastu_view(chart, tabs=None):
     scores = [z.get("score", 70) for z in v_zones]
     avg_score = int(round(sum(scores) / len(scores))) if scores else 0
 
-    c_vn1, c_vn2, c_vn3, c_vn4 = st.columns(4)
-    c_vn1.metric("लग्न एवं चन्द्र", f"{lagna_sname}", f"🌙 {moon_str}")
-    c_vn2.metric("सक्रिय महादशा स्वामी", f"{active_dasha_lord or '—'}", f"🪐 {dasha_str}")
-    c_vn3.metric("महादशा सक्रिय दिशा", f"{active_zone.get('hindi', '—') if active_zone else '—'}", f"तत्व: {active_zone.get('element', '') if active_zone else '—'}")
-    c_vn4.metric("समग्र वास्तु सूचकांक", f"{avg_score} / 100", "९ दिशाओं का सामूहिक बल")
-
     v_tab_titles = tabs
     v_tabs = st.tabs(tabs)
 
@@ -724,6 +718,13 @@ def render_vastu_view(chart, tabs=None):
 
     # ─── Bottom Information & Shastriya Pramana (Collapsible Expanders) ───
     st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+    with st.expander("🔮 लग्न, महादशा व समग्र वास्तु सूचकांक सारांश (Lagna, Dasha & Vastu Summary)", expanded=False):
+        c_vn1, c_vn2, c_vn3, c_vn4 = st.columns(4)
+        c_vn1.metric("लग्न एवं चन्द्र", f"{lagna_sname}", f"🌙 {moon_str}")
+        c_vn2.metric("सक्रिय महादशा स्वामी", f"{active_dasha_lord or '—'}", f"🪐 {dasha_str}")
+        c_vn3.metric("महादशा सक्रिय दिशा", f"{active_zone.get('hindi', '—') if active_zone else '—'}", f"तत्व: {active_zone.get('element', '') if active_zone else '—'}")
+        c_vn4.metric("समग्र वास्तु सूचकांक", f"{avg_score} / 100", "९ दिशाओं का सामूहिक बल")
+
     with st.expander("ℹ️ वास्तु-ज्योतिष दिशा मण्डल शास्त्रीय परिचय एवं प्रयोजन", expanded=False):
         st.write("जन्म कुण्डली के ग्रहों, भावों एवं दिग्बल का अष्ट दिशाओं और ब्रह्मस्थान से शास्त्रीय समन्वय, 360° दिशा चक्र, गहन गणनाएं एवं पंच-आयामी शास्त्रीय उपचार।")
 
