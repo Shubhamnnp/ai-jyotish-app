@@ -668,9 +668,6 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
     # TAB 3: प्रश्नकालीन नवग्रह स्थिति तालिका एवं सामर्थ्य
     # =========================================================================
     with ptab3:
-        st.markdown("#### 🪐 प्रश्नकालीन नवग्रह स्थिति तालिका एवं खगोलीय सामर्थ्य (Planetary Horary Metrics)")
-        st.info(f"📍 वर्तमान सक्रिय विश्लेषण: **{cur_p_res.get('questioner_name', 'जातक')}** | श्रेणी: **{cur_p_res.get('category_icon', '🔮')} {cur_p_res.get('category_hi', cur_p_res.get('category', ''))}** | प्रश्न: *'{cur_p_res.get('query_text', '')}'*")
-
         # Subtabs for Tab 3: प्रश्न ग्रह स्थिति
         subtab_p3_table, subtab_p3_chart = st.tabs([
             "1. 📋 प्रश्नकालीन नवग्रह स्थिति तालिका एवं खगोलीय सामर्थ्य",
