@@ -289,26 +289,6 @@ def render_vastu_view(chart, tabs=None):
         compact = "".join(line.strip() for line in html_markup.splitlines() if line.strip())
         st.markdown(compact, unsafe_allow_html=True)
 
-    # Classical Shastriya Shloka Card
-    vishwakarma_vastu_shloka = {
-        "title": "विश्वकर्मा प्रकाश — वास्तु पुरुष एवं अष्टदिशा संस्थान विचार",
-        "source": "महर्षि विश्वकर्मा विरचित 'विश्वकर्मा प्रकाश' (अध्याय १, श्लोक २-३)",
-        "shloka": "ईशाने देवता गेहं पूर्वस्यां स्नानमन्दिरम् ।\nआग्नेय्यां पचनागारं याम्ये शयनमन्दिरम् ॥\nनैऋत्यां शस्त्रसदनं वारुणे भोजनालयम् ।\nवायव्यां धान्यगेहं स्यात् कोशगेहं तथोत्तरे ॥",
-        "meaning": "ईशान (NE) में देवालय/पूजागृह, पूर्व (East) में स्नानागार, आग्नेय (SE) में पाकशाला (रसोई), दक्षिण (South) में शयनकक्ष, नैऋत्य (SW) में भारी उपकरण/शस्त्रगार, पश्चिम (West) में भोजनालय/डाइनिंग, वायव्य (NW) में अन्नभंडार/अतिथिगृह तथा उत्तर (North) में कुबेर का धनकोष (तिजोरी) स्थापित करना सर्वकल्याणकारी एवं वास्तु सम्मत होता है।"
-    }
-    with st.expander(f"📜 शास्त्रीय प्रमाण — {vishwakarma_vastu_shloka['title']}", expanded=False):
-        st.markdown(f"""
-        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
-            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {vishwakarma_vastu_shloka['source']}</b>
-            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
-{vishwakarma_vastu_shloka['shloka']}
-            </pre>
-            <div style="font-size:13px; color:#92400E; margin-top:6px;">
-                <b>हिंदी भावार्थ:</b> {vishwakarma_vastu_shloka['meaning']}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
     # Active Native Micro-Planetary Longitudes & DMS Console
     lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
     moon = chart.planets.get("Moon")
@@ -743,5 +723,27 @@ def render_vastu_view(chart, tabs=None):
                     </div>
                 </div>
                 """)
+
+    # ─── Shastriya Pramana moved to Bottom (Collapsible Expander) ───
+    st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+    vishwakarma_vastu_shloka = {
+        "title": "विश्वकर्मा प्रकाश — वास्तु पुरुष एवं अष्टदिशा संस्थान विचार",
+        "source": "महर्षि विश्वकर्मा विरचित 'विश्वकर्मा प्रकाश' (अध्याय १, श्लोक २-३)",
+        "shloka": "ईशाने देवता गेहं पूर्वस्यां स्नानमन्दिरम् ।\nआग्नेय्यां पचनागारं याम्ये शयनमन्दिरम् ॥\nनैऋत्यां शस्त्रसदनं वारुणे भोजनालयम् ।\nवायव्यां धान्यगेहं स्यात् कोशगेहं तथोत्तरे ॥",
+        "meaning": "ईशान (NE) में देवालय/पूजागृह, पूर्व (East) में स्नानागार, आग्नेय (SE) में पाकशाला (रसोई), दक्षिण (South) में शयनकक्ष, नैऋत्य (SW) में भारी उपकरण/शस्त्रगार, पश्चिम (West) में भोजनालय/डाइनिंग, वायव्य (NW) में अन्नभंडार/अतिथिगृह तथा उत्तर (North) में कुबेर का धनकोष (तिजोरी) स्थापित करना सर्वकल्याणकारी एवं वास्तु सम्मत होता है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {vishwakarma_vastu_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {vishwakarma_vastu_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{vishwakarma_vastu_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {vishwakarma_vastu_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
 
 
