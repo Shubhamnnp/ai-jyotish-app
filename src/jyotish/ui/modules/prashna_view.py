@@ -862,27 +862,6 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
     # TAB 5: ताजिक एवं प्रश्न मार्ग सिद्धांत
     # =========================================================================
     with ptab5:
-        st.markdown("#### 📖 ताजिक नीलकण्ठी एवं प्रश्न मार्ग के प्रामाणिक सिद्धांत")
-        st.write("होरारी फलकथन के मूल स्तंभ: 16 ताजिक योग, ग्रहों के दीप्तांश, केरल प्रश्न मार्ग पद्धतियां एवं सटीक काल निर्धारण सूत्र।")
-
-        taj_shl = SHASTRIYA_SHLOKAS.get("tajika_prashna", {})
-        if taj_shl:
-            taj_lines = "<br/>".join(taj_shl['shloka'].splitlines())
-            st.markdown(f"""
-    <div style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid #9333EA; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
-    <div style="font-weight: 700; color: #7E22CE; font-size: 13.5px; margin-bottom: 4px;">📖 {taj_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {taj_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {taj_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {taj_shl['rule']}
-    </div>
-    </div>
-    """, unsafe_allow_html=True)
-
         t_sub1, t_sub2, t_sub3, t_sub4 = st.tabs([
             "1. 🔯 16 ताजिक योग संदर्भ",
             "2. 📐 दीप्तांश एवं दृष्टि सिद्धांत",
@@ -964,6 +943,27 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
             - यदि द्विस्वभाव राशि में हैं ➔ **3 सप्ताह / 3 मास** में फल।
             - यदि स्थिर राशि में हैं ➔ **3 मास / 3 वर्ष** में फल।
             """)
+
+        # Collapsible Shastriya Pramana shifted to bottom
+        with st.expander("📖 शास्त्रीय प्रमाण — ताजिक नीलकण्ठी एवं प्रश्न मार्ग के प्रामाणिक सिद्धांत व मूल श्लोक", expanded=False):
+            st.caption("होरारी फलकथन के मूल स्तंभ: 16 ताजिक योग, ग्रहों के दीप्तांश, केरल प्रश्न मार्ग पद्धतियां एवं सटीक काल निर्धारण सूत्र।")
+            taj_shl = SHASTRIYA_SHLOKAS.get("tajika_prashna", {})
+            if taj_shl:
+                taj_lines = "<br/>".join(taj_shl['shloka'].splitlines())
+                st.markdown(f"""
+    <div style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid #9333EA; padding: 14px 18px; border-radius: 8px; margin: 10px 0 16px 0;">
+    <div style="font-weight: 700; color: #7E22CE; font-size: 13.5px; margin-bottom: 4px;">📖 {taj_shl['grantha']}</div>
+    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+        {taj_lines}
+    </div>
+    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+        <b>हिंदी भावार्थ:</b> {taj_shl['anuvad_hi']}
+    </div>
+    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+        <b>शास्त्रीय नियम:</b> {taj_shl['rule']}
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # =========================================================================
     # TAB 6: 100 शास्त्रीय प्रश्न नियम एवं प्रमाण संदर्भ
