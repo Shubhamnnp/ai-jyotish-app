@@ -104,8 +104,6 @@ def render_vastu_view(chart, tabs=None):
             '🕉️ ईशान (NE)',
             '🌌 ब्रह्मस्थान (Center)'
         ]
-    st.subheader("🏛️ वास्तु-ज्योतिष दिशा मण्डल (Vastu-Jyotish Architectural Alignment)")
-    st.write("जन्म कुण्डली के ग्रहों, भावों एवं दिग्बल का अष्ट दिशाओं और ब्रह्मस्थान से शास्त्रीय समन्वय, 360° दिशा चक्र, गहन गणनाएं एवं पंच-आयामी शास्त्रीय उपचार।")
 
     # Detect active Mahadasha lord if birth data is present
     active_dasha_lord = None
@@ -724,8 +722,11 @@ def render_vastu_view(chart, tabs=None):
                 </div>
                 """)
 
-    # ─── Shastriya Pramana moved to Bottom (Collapsible Expander) ───
+    # ─── Bottom Information & Shastriya Pramana (Collapsible Expanders) ───
     st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+    with st.expander("ℹ️ वास्तु-ज्योतिष दिशा मण्डल शास्त्रीय परिचय एवं प्रयोजन", expanded=False):
+        st.write("जन्म कुण्डली के ग्रहों, भावों एवं दिग्बल का अष्ट दिशाओं और ब्रह्मस्थान से शास्त्रीय समन्वय, 360° दिशा चक्र, गहन गणनाएं एवं पंच-आयामी शास्त्रीय उपचार।")
+
     vishwakarma_vastu_shloka = {
         "title": "विश्वकर्मा प्रकाश — वास्तु पुरुष एवं अष्टदिशा संस्थान विचार",
         "source": "महर्षि विश्वकर्मा विरचित 'विश्वकर्मा प्रकाश' (अध्याय १, श्लोक २-३)",
