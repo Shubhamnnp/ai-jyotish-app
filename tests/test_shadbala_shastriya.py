@@ -93,6 +93,44 @@ def test_cheshta_bala_retrograde_and_speed():
             assert shad.planets[p_name].cheshta_bala == 60.0
 
 
+def test_mercury_venus_cheshta_motion_ratios():
+    """Verify Mercury and Venus cheshta bala scaling for stationary, normal, and atichara."""
+    from src.jyotish.core.models import PlanetPosition
+
+    base_kwargs = {
+        "longitude": 50.0,
+        "sign_id": 2,
+        "sign_name": "Taurus",
+        "sign_degree": 20.0,
+        "nakshatra_id": 4,
+        "nakshatra_name": "Rohini",
+        "nakshatra_pada": 1,
+        "nakshatra_lord": "Moon",
+        "house_from_lagna": 1,
+        "house_from_moon": 1
+    }
+
+    # 1. Mercury Stationary (speed ~ 0.1 deg/day, ratio ~ 0.072 < 0.15)
+    p_merc_stat = PlanetPosition(name="Mercury", speed=0.1, is_retrograde=False, **base_kwargs)
+    b_stat = ShadbalaCalculator._calc_cheshta_bala(p_merc_stat)
+    assert b_stat == 15.0
+
+    # 2. Mercury Normal (speed ~ 1.383 deg/day, ratio 1.0)
+    p_merc_norm = PlanetPosition(name="Mercury", speed=1.383, is_retrograde=False, **base_kwargs)
+    b_norm = ShadbalaCalculator._calc_cheshta_bala(p_merc_norm)
+    assert b_norm == 45.0
+
+    # 3. Mercury Atichara (speed ~ 2.15 deg/day, ratio > 1.5)
+    p_merc_fast = PlanetPosition(name="Mercury", speed=2.15, is_retrograde=False, **base_kwargs)
+    b_fast = ShadbalaCalculator._calc_cheshta_bala(p_merc_fast)
+    assert b_fast == 60.0
+
+    # 4. Venus Retrograde (speed negative or is_retrograde True)
+    p_ven_retro = PlanetPosition(name="Venus", speed=-0.4, is_retrograde=True, **base_kwargs)
+    b_ven_retro = ShadbalaCalculator._calc_cheshta_bala(p_ven_retro)
+    assert b_ven_retro == 60.0
+
+
 def test_detailed_bhava_bala():
     """Verify detailed Bhava Bala calculation for all 12 houses."""
     calc = ChartCalculator()

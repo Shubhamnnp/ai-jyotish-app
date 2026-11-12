@@ -247,19 +247,37 @@ class ShadbalaCalculator:
     def _calc_cheshta_bala(cls, p: PlanetPosition) -> float:
         """
         Motional strength (Cheshta Bala) derived from Swiss Ephemeris speed:
-        - Retrograde (Vakra): 60.0 Virupas per BPHS.
-        - Stationary (Vikala): 15.0 to 30.0 Virupas.
-        - Direct: scaled proportional to speed / mean_speed (15 to 60 Virupas).
-        - Luminaries: 35.0 Virupas.
+        - Retrograde (Vakra): 60.0 Virupas per BPHS Ch. 27.
+        - Stationary (Vikala): 15.0 Virupas.
+        - Slow (Manda): 30.0 Virupas.
+        - Normal (Sama): 45.0 Virupas.
+        - Accelerated / Atichara: 50.0 to 60.0 Virupas.
+        - Luminaries: 35.0 Virupas baseline (Ayana/Paksha balance).
+        For Mercury and Venus (inferior planets), geocentric motion is scaled
+        relative to their solar elongation rate.
         """
         if p.name in ("Sun", "Moon"):
             return 35.0
-        if p.is_retrograde or p.speed < 0.0:
+        if p.is_retrograde or (p.speed is not None and p.speed < 0.0):
             return 60.0
 
         mean_speed = cls.MEAN_MOTIONS.get(p.name, 1.0)
         speed = abs(p.speed) if p.speed else mean_speed
         ratio = speed / mean_speed
+
+        # Mercury and Venus have wider geocentric speed variation (0 to > 1.8 deg/day)
+        if p.name in ("Mercury", "Venus"):
+            if ratio < 0.15:
+                return 15.0  # Stationary (Vikala)
+            elif ratio < 0.75:
+                return 30.0  # Manda (slow motion)
+            elif ratio <= 1.25:
+                return 45.0  # Sama (mean motion)
+            elif ratio <= 1.50:
+                return 52.5  # Chara (accelerated motion)
+            else:
+                return 60.0  # Atichara (high velocity)
+
         if ratio < 0.2:
             return 15.0  # Stationary
         elif ratio < 0.8:
