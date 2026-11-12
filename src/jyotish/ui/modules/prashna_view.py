@@ -969,43 +969,13 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
     # TAB 6: 100 शास्त्रीय प्रश्न नियम एवं प्रमाण संदर्भ
     # =========================================================================
     with ptab6:
-        st.markdown("#### 📜 100 शास्त्रीय प्रश्न नियम एवं प्रमाण संदर्भ (100 Classical Rules Engine)")
-        st.caption("प्रश्न मार्ग, ताजिक नीलकण्ठी, षट्पंचाशिका, दैवज्ञ वल्लभ एवं केपी होरारी के 100 शास्त्रीय नियमों का स्वचालित मूल्यांकन।")
-
         r_pos_c = cur_p_res.get("active_positive_count", 0)
         r_neg_c = cur_p_res.get("active_negative_count", 0)
         r_pos_pts = cur_p_res.get("total_positive_points", 0)
         r_neg_pts = cur_p_res.get("total_negative_points", 0)
         r_net_bal = cur_p_res.get("net_balance_score", 0)
 
-        # 3 Top KPI Cards
-        rkpi1, rkpi2, rkpi3 = st.columns(3)
-        rkpi1.markdown(_clean_html(f"""
-        <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:12px;text-align:center;">
-            <div style="font-size:13px;color:#166534;font-weight:700;">🟢 सक्रिय शुभ नियम (Active Positive Rules)</div>
-            <div style="font-size:22px;font-weight:900;color:#15803d;margin-top:4px;">{r_pos_c} नियम (+{r_pos_pts} अंक)</div>
-        </div>
-        """), unsafe_allow_html=True)
-
-        rkpi2.markdown(_clean_html(f"""
-        <div style="background:#fef2f2;border:2px solid #fecaca;border-radius:10px;padding:12px;text-align:center;">
-            <div style="font-size:13px;color:#991b1b;font-weight:700;">🔴 सक्रिय अशुभ बाधाएं (Active Obstacles)</div>
-            <div style="font-size:22px;font-weight:900;color:#dc2626;margin-top:4px;">{r_neg_c} नियम (-{r_neg_pts} अंक)</div>
-        </div>
-        """), unsafe_allow_html=True)
-
-        bal_color = "#15803d" if r_net_bal > 0 else ("#dc2626" if r_net_bal < 0 else "#b45309")
-        bal_bg = "#f0fdf4" if r_net_bal > 0 else ("#fef2f2" if r_net_bal < 0 else "#fffbeb")
-        bal_border = "#86efac" if r_net_bal > 0 else ("#fecaca" if r_net_bal < 0 else "#fde68a")
-        rkpi3.markdown(_clean_html(f"""
-        <div style="background:{bal_bg};border:2px solid {bal_border};border-radius:10px;padding:12px;text-align:center;">
-            <div style="font-size:13px;color:{bal_color};font-weight:700;">⚖️ शुद्ध शास्त्रीय संतुलन अंक (Net Balance)</div>
-            <div style="font-size:22px;font-weight:900;color:{bal_color};margin-top:4px;">{r_net_bal:+d} अंक</div>
-        </div>
-        """), unsafe_allow_html=True)
-
-        st.markdown("---")
-        # 3 Sub-tabs for the 100 Rules
+        # 3 Sub-tabs for the 100 Rules shifted to top
         rsub1, rsub2, rsub3 = st.tabs([
             "🟢 सक्रिय शुभ नियम तालिका",
             "🔴 सक्रिय अशुभ बाधा तालिका",
@@ -1105,6 +1075,34 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
 
             st.caption(f"प्रदर्शित नियम: **{len(filtered_100)} / 100**")
             st.dataframe(pd.DataFrame(filtered_100), use_container_width=True, hide_index=True)
+
+        # Collapsible 100 Rules KPI Summary shifted to bottom
+        with st.expander("📊 100 शास्त्रीय प्रश्न नियम संतुलन एवं स्कोर सारांश (Rules Engine Summary)", expanded=False):
+            st.caption("प्रश्न मार्ग, ताजिक नीलकण्ठी, षट्पंचाशिका, दैवज्ञ वल्लभ एवं केपी होरारी के 100 शास्त्रीय नियमों का स्वचालित मूल्यांकन।")
+            rkpi1, rkpi2, rkpi3 = st.columns(3)
+            rkpi1.markdown(_clean_html(f"""
+            <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:12px;text-align:center;">
+                <div style="font-size:13px;color:#166534;font-weight:700;">🟢 सक्रिय शुभ नियम (Active Positive Rules)</div>
+                <div style="font-size:22px;font-weight:900;color:#15803d;margin-top:4px;">{r_pos_c} नियम (+{r_pos_pts} अंक)</div>
+            </div>
+            """), unsafe_allow_html=True)
+
+            rkpi2.markdown(_clean_html(f"""
+            <div style="background:#fef2f2;border:2px solid #fecaca;border-radius:10px;padding:12px;text-align:center;">
+                <div style="font-size:13px;color:#991b1b;font-weight:700;">🔴 सक्रिय अशुभ बाधाएं (Active Obstacles)</div>
+                <div style="font-size:22px;font-weight:900;color:#dc2626;margin-top:4px;">{r_neg_c} नियम (-{r_neg_pts} अंक)</div>
+            </div>
+            """), unsafe_allow_html=True)
+
+            bal_color = "#15803d" if r_net_bal > 0 else ("#dc2626" if r_net_bal < 0 else "#b45309")
+            bal_bg = "#f0fdf4" if r_net_bal > 0 else ("#fef2f2" if r_net_bal < 0 else "#fffbeb")
+            bal_border = "#86efac" if r_net_bal > 0 else ("#fecaca" if r_net_bal < 0 else "#fde68a")
+            rkpi3.markdown(_clean_html(f"""
+            <div style="background:{bal_bg};border:2px solid {bal_border};border-radius:10px;padding:12px;text-align:center;">
+                <div style="font-size:13px;color:{bal_color};font-weight:700;">⚖️ शुद्ध शास्त्रीय संतुलन अंक (Net Balance)</div>
+                <div style="font-size:22px;font-weight:900;color:{bal_color};margin-top:4px;">{r_net_bal:+d} अंक</div>
+            </div>
+            """), unsafe_allow_html=True)
 
     # ─── Bottom Information & Shastriya Pramana (Collapsible Expanders) ───
     st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
