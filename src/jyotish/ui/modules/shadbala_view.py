@@ -17,9 +17,6 @@ def render_shadbala_view(chart, tabs=None):
             '📐 दृष्टि चक्र (Aspectarium)',
             '📜 षड्बल प्रमाण'
         ]
-    st.subheader("⚖️ षड्बल, भावबल एवं दृष्टि वेध चक्र (Comprehensive Shadbala & Aspectarium)")
-    st.write("महर्षि पराशर विरचित बृहत्पाराशर होराशास्त्र (BPHS Ch. 27-29) आधारित षड्विध बल, द्वादश भाव बल, त्रिविध ग्रह अवस्थाएं, इष्ट-कष्ट फल एवं दृष्टि वेध मैट्रिक्स।")
-
     # CSS for compact unified expanders & zero top scroll
     st.markdown("""
     <style>
@@ -222,25 +219,13 @@ def render_shadbala_view(chart, tabs=None):
             svg.append('</svg>')
             return "".join(svg)
 
-        # Classical Shastriya Shloka Card
+        # Classical Shastriya Shloka Card definition
         bphs_shadbala_shloka = {
             "title": "बृहत्पाराशर होराशास्त्रम् — षड्बल एवं सामर्थ्य निरूपण",
             "source": "महर्षि पराशर विरचित BPHS (अध्याय २७, श्लोक १-२)",
             "shloka": "स्थानं दिग्कालचेष्टा च नैसर्गं दृग्बलं तथा।\nषड्विधं बलमेतेषां ग्रहाणां कथयाम्यहम्॥\nरूपाणि षड्गुणा विंशत्या विरूपाणि भवन्ति हि।\nविरूपाणां समूहस्तु षड्बलं कथ्यते बुधैः॥",
             "meaning": "स्थान बल, दिग्बल, काल बल, चेष्टा बल, नैसर्गिक बल एवं दृग्बल — ये ग्रहों के ६ प्रकार के षड्बल कहे गए हैं। ६० विरूपा का एक रूप होता है। महर्षि पराशर अनुसार इन समस्त बलों का सामूहिक योग ही जातक के जीवन में ग्रह के वास्तविक सामर्थ्य एवं शुभाशुभ फल का निर्धारण करता है।"
         }
-        with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_shadbala_shloka['title']}", expanded=False):
-            st.markdown(f"""
-            <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
-                <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_shadbala_shloka['source']}</b>
-                <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
-{bphs_shadbala_shloka['shloka']}
-                </pre>
-                <div style="font-size:13px; color:#92400E; margin-top:6px;">
-                    <b>हिंदी भावार्थ:</b> {bphs_shadbala_shloka['meaning']}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
 
         # Active Native Micro-Planetary Longitudes & DMS Console
         lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
@@ -301,17 +286,8 @@ def render_shadbala_view(chart, tabs=None):
 
         strong_count = sum(1 for p in seven_p if getattr(sb_planets.get(p), "is_strong", False))
         avg_ratio = sum(getattr(sb_planets.get(p), "strength_ratio", 1.0) for p in seven_p) / 7.0
-
-        c_sb_exp = st.expander("🔮 लग्न, शिरोमणि व न्यूनतम बली ग्रह एवं षड्बल सामर्थ्य सारांश (Shadbala Highlights)", expanded=True)
-        with c_sb_exp:
-            c_sb1, c_sb2, c_sb3, c_sb4 = st.columns(4)
-            top_hi = hi_planet_meta.get(top_planet, (top_planet, "", ""))[0]
-            low_hi = hi_planet_meta.get(low_planet, (low_planet, "", ""))[0]
-
-            c_sb1.metric("लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
-            c_sb2.metric("🌟 शिरोमणि बली ग्रह", f"{top_hi}", f"{top_obj.strength_ratio:.2f}x ({int(top_obj.total_virupas)}V) {top_dms}")
-            c_sb3.metric("⚠️ न्यूनतम बली ग्रह", f"{low_hi}", f"{low_obj.strength_ratio:.2f}x ({int(low_obj.total_virupas)}V) {low_dms}")
-            c_sb4.metric("📊 षड्बल सामर्थ्य", f"{avg_ratio:.2f}x (औसत)", f"{strong_count}/7 ग्रह बलवान्")
+        top_hi = hi_planet_meta.get(top_planet, (top_planet, "", ""))[0]
+        low_hi = hi_planet_meta.get(low_planet, (low_planet, "", ""))[0]
 
         # 6 Dedicated Shadbala Tabs
         sbtab1, sbtab2, sbtab3, sbtab4, sbtab5, sbtab6 = st.tabs(tabs)
@@ -808,6 +784,29 @@ def render_shadbala_view(chart, tabs=None):
             - **४०० विरूपा से अधिक बल वाला भाव:** जीवन के उस आयाम में सहज सफलता, स्थिरता और संतोष प्रदान करता है।
             - **३३० विरूपा से कम बल वाला भाव:** उस क्षेत्र में अत्यधिक परिश्रम के उपरांत भी आंशिक सफलता या अवरोध का संकेत देता है, जिसके लिए विशिष्ट वैदिक उपचार अनुशंसित हैं।
             """)
+
+        # ─── Bottom Information & Shastriya Pramana (Collapsible Expanders) ───
+        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+        c_sb_exp = st.expander("🔮 लग्न, शिरोमणि व न्यूनतम बली ग्रह एवं षड्बल सामर्थ्य सारांश (Shadbala Highlights)", expanded=False)
+        with c_sb_exp:
+            c_sb1, c_sb2, c_sb3, c_sb4 = st.columns(4)
+            c_sb1.metric("लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
+            c_sb2.metric("🌟 शिरोमणि बली ग्रह", f"{top_hi}", f"{top_obj.strength_ratio:.2f}x ({int(top_obj.total_virupas)}V) {top_dms}")
+            c_sb3.metric("⚠️ न्यूनतम बली ग्रह", f"{low_hi}", f"{low_obj.strength_ratio:.2f}x ({int(low_obj.total_virupas)}V) {low_dms}")
+            c_sb4.metric("📊 षड्बल सामर्थ्य", f"{avg_ratio:.2f}x (औसत)", f"{strong_count}/7 ग्रह बलवान्")
+
+        with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_shadbala_shloka['title']}", expanded=False):
+            st.markdown(f"""
+            <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+                <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_shadbala_shloka['source']}</b>
+                <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{bphs_shadbala_shloka['shloka']}
+                </pre>
+                <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                    <b>हिंदी भावार्थ:</b> {bphs_shadbala_shloka['meaning']}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
 
 
