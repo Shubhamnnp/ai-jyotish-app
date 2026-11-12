@@ -226,6 +226,43 @@ def render_varga_grid_view(chart, tabs=None):
         "D60": "D60 (षष्ट्यंश - सूक्ष्म प्रारब्ध, संचित कर्म व सर्व फल)"
     }
 
+    vais_data = [
+        {"शुभ वर्ग संख्या": "२ वर्ग", "शास्त्रीय संज्ञा": "पारिजात (Parijata)", "फलित प्रभाव": "सामान्य सुख, जीवन में स्थिरता, धन व समाज में सामान्य कीर्ति।"},
+        {"शुभ वर्ग संख्या": "३ वर्ग", "शास्त्रीय संज्ञा": "उत्तम (Uttama)", "फलित प्रभाव": "सद्विचार, उत्तम आचरण, विनयशीलता, विद्या लाभ व लोकसम्मान।"},
+        {"शुभ वर्ग संख्या": "४ वर्ग", "शास्त्रीय संज्ञा": "गोपुर (Gopura)", "फलित प्रभाव": "प्रचुर भूमि, वाहन, पशु-धन, बौद्धिक ऐश्वर्य व कुटुम्ब का पोषण।"},
+        {"शुभ वर्ग संख्या": "५ वर्ग", "शास्त्रीय संज्ञा": "सिंहासन (Simhasana)", "फलित प्रभाव": "राजतुल्य प्रतिष्ठा, शासन-प्रशासन में अधिकार, नेतृत्व व प्रभुत्व।"},
+        {"शुभ वर्ग संख्या": "६ वर्ग", "शास्त्रीय संज्ञा": "पारावत (Paravata)", "फलित प्रभाव": "सर्वप्रिय व्यक्तित्व, उत्तम सवारी, राज्य द्वारा सम्मानित व अक्षय कीर्ति।"},
+        {"शुभ वर्ग संख्या": "७ वर्ग", "शास्त्रीय संज्ञा": "देवलोक (Devaloka)", "फलित प्रभाव": "राजाधिराज पद, देवतुल्य आदर, महान धार्मिक कार्य व दीर्घायु।"},
+        {"शुभ वर्ग संख्या": "८ वर्ग", "शास्त्रीय संज्ञा": "ऐरावत (Airavata)", "फलित प्रभाव": "सम्राट तुल्य वैभव, गजराज समान ऐश्वर्य, कीर्ति का दिगन्त विस्तार।"},
+        {"शुभ वर्ग संख्या": "९ वर्ग", "शास्त्रीय संज्ञा": "वैशेषिक (Vaisheshika)", "फलित प्रभाव": "सर्वमनोरथ सिद्धि, अद्वितीय शास्त्रज्ञान, विश्वविख्यात प्रतिष्ठा।"},
+        {"शुभ वर्ग संख्या": "१० वर्ग", "शास्त्रीय संज्ञा": "भास्वदांश (Bhasvadamsa)", "फलित प्रभाव": "सूर्य समान तेज, अपराजेय प्रभाव, अमर यश व राजपूजित।"},
+        {"शुभ वर्ग संख्या": "११ वर्ग", "शास्त्रीय संज्ञा": "इन्द्रलोक (Indraloka)", "फलित प्रभाव": "इन्द्रसम ऐश्वर्य, अपार संपदा, भोग-विलास व कीर्ति।"},
+        {"शुभ वर्ग संख्या": "१२ वर्ग", "शास्त्रीय संज्ञा": "कल्पवृक्ष (Kalpavriksha)", "फलित प्रभाव": "सर्व मनोकामनाओं की पूर्ति, अक्षय दानशीलता व अमूल्य सम्पत्ति।"},
+        {"शुभ वर्ग संख्या": "१३ वर्ग", "शास्त्रीय संज्ञा": "ब्रह्मलोक (Brahmaloka)", "फलित प्रभाव": "परम ज्ञान, तपस्या का फल, आत्मसाक्षात्कार व शाश्वत प्रतिष्ठा।"},
+        {"शुभ वर्ग संख्या": "१४ वर्ग", "शास्त्रीय संज्ञा": "शिवलोक (Shivaloka)", "फलित प्रभाव": "परम शक्ति, कल्याणकारी स्वभाव, शत्रुओं पर विजय व मोक्ष मार्ग।"},
+        {"शुभ वर्ग संख्या": "१५ वर्ग", "शास्त्रीय संज्ञा": "विष्णुलोक (Vishnuloka)", "फलित प्रभाव": "अक्षय श्री, धर्म-रक्षा, जननायकत्व व परम पद प्राप्ति।"},
+        {"शुभ वर्ग संख्या": "१६ वर्ग", "शास्त्रीय संज्ञा": "कामधेनु (Kamadhenu)", "फलित प्रभाव": "अखंड साम्राज्य, सर्वसिद्धि, जीवन-मृत्यु के चक्र से मुक्ति व मोक्ष।"}
+    ]
+
+    varga_deity_data = [
+        {"वर्ग": "D1", "नाम": "लग्न / राशि", "भाग": "1", "फलित प्रयोजन": "समग्र देह, शारीरिक स्वास्थ्य, रूप, रंग व सामान्य स्वभाव", "अधिष्ठाता देवता": "द्वादश आदित्य"},
+        {"वर्ग": "D2", "नाम": "होरा", "भाग": "2", "फलित प्रयोजन": "धन, संपत्ति, पैतृक वैभव, वाणी व कुटुम्ब सुख", "अधिष्ठाता देवता": "सूर्य एवं चन्द्र (पितर व देव)"},
+        {"वर्ग": "D3", "नाम": "द्रेष्काण", "भाग": "3", "फलित प्रयोजन": "पराक्रम, छोटे भाई-बहन, साहस, उद्यम व मृत्यु कारण", "अधिष्ठाता देवता": "नारद, अगस्त्य, दुर्वासा"},
+        {"वर्ग": "D4", "नाम": "चतुर्थांश", "भाग": "4", "फलित प्रयोजन": "भूमि, भवन, अचल संपत्ति, वाहन व सामान्य भाग्य", "अधिष्ठाता देवता": "सनक, सनन्द, सनातन, सनत्कुमार"},
+        {"वर्ग": "D7", "नाम": "सप्तमांश", "भाग": "7", "फलित प्रयोजन": "संतान सुख, वंश वृद्धि, पौत्र-दौहित्र व संतति सामर्थ्य", "अधिष्ठाता देवता": "क्षार, क्षीर, दधि, घृत, इक्षु, मद्य, शुद्धजल"},
+        {"वर्ग": "D9", "नाम": "नवांश", "भाग": "9", "फलित प्रयोजन": "धर्म, जीवनसाथी, दांपत्य सुख, सूक्ष्म भाग्य व आंतरिक गुण", "अधिष्ठाता देवता": "देव, मनुष्य, राक्षस गण"},
+        {"वर्ग": "D10", "नाम": "दशमांश", "भाग": "10", "फलित प्रयोजन": "आजीविका, कर्म, पद-प्रतिष्ठा, व्यापार, यश व सामाजिक अधिकार", "अधिष्ठाता देवता": "दश दिक्पाल (इन्द्र, अग्नि आदि)"},
+        {"वर्ग": "D12", "नाम": "द्वादशांश", "भाग": "12", "फलित प्रयोजन": "माता-पिता का सुख, पूर्वजों का ऋण व कुल परंपरा", "अधिष्ठाता देवता": "गणेश, अश्विनीकुमार, यम, सर्प"},
+        {"वर्ग": "D16", "नाम": "षोडशांश", "भाग": "16", "फलित प्रयोजन": "वाहन सुख, भौतिक सुख-साधन, यात्राएं व आनंद", "अधिष्ठाता देवता": "ब्रह्मा, विष्णु, शिव, सूर्य"},
+        {"वर्ग": "D20", "नाम": "विंशांश", "भाग": "20", "फलित प्रयोजन": "आध्यात्मिक प्रगति, उपासना, मन्त्र सिद्धि व भक्ति भाव", "अधिष्ठाता देवता": "काली, गौरी, जया, विजया आदि"},
+        {"वर्ग": "D24", "नाम": "चतुर्विंशांश", "भाग": "24", "फलित प्रयोजन": "उच्च शिक्षा, विद्या, मेधा शक्ति, ज्ञान व अनुसंधान", "अधिष्ठाता देवता": "स्कन्द, प्रजापति आदि"},
+        {"वर्ग": "D27", "नाम": "सप्तविंशांश", "भाग": "27", "फलित प्रयोजन": "शारीरिक बल, अवचेतन सामर्थ्य व मानसिक सहनशीलता", "अधिष्ठाता देवता": "वसु, वरुण, मित्र, अर्यमा आदि"},
+        {"वर्ग": "D30", "नाम": "त्रिंशांश", "भाग": "30", "फलित प्रयोजन": "अरिष्ट, रोग, विपत्ति, शत्रु भय, दुर्घटना व पूर्वजन्म दोष", "अधिष्ठाता देवता": "यम, वायु, इन्द्र, वरुण, कुबेर"},
+        {"वर्ग": "D40", "नाम": "खवेदांश", "भाग": "40", "फलित प्रयोजन": "मातृक पक्ष का शुभाशुभ फल, शुभ-अशुभ संस्कार व घटनाक्रम", "अधिष्ठाता देवता": "विष्णु व चन्द्र देव"},
+        {"वर्ग": "D45", "नाम": "अक्षवेदांश", "भाग": "45", "फलित प्रयोजन": "चारित्रिक शुद्धता, सदाचार, नैतिक बल व समग्र जीवन की पवित्रता", "अधिष्ठाता देवता": "ब्रह्मा, शिव, विष्णु"},
+        {"वर्ग": "D60", "नाम": "षष्ट्यंश", "भाग": "60", "फलित प्रयोजन": "सूक्ष्म प्रारब्ध, संचित कर्मों का पूर्ण लेखा-जोखा व सर्वोच्च फलित", "अधिष्ठाता देवता": "६० षष्ट्यंश अधिष्ठाता (घोर, राक्षस, देव आदि)"}
+    ]
+
     dasvarga_codes = ["D1", "D2", "D3", "D7", "D9", "D10", "D12", "D16", "D24", "D30", "D60"]
     shodashvarga_codes = ["D1", "D2", "D3", "D4", "D7", "D9", "D10", "D12", "D16", "D20", "D24", "D27", "D30", "D40", "D45", "D60"]
 
@@ -250,6 +287,43 @@ def render_varga_grid_view(chart, tabs=None):
     varg_count = sum(1 for p in sv_summary.values() if p.get("is_vargottama")) if sv_summary else 0
     avg_score = sum(p["score_20"] for p in sv_summary.values()) / len(sv_summary) if sv_summary else 0.0
 
+    # Level 1 Module Tabs CSS & Unified Spacing
+    st.markdown("""
+    <style>
+    /* Zero excess whitespace for Level 1 tabs and Level 2 sub-tabs */
+    div[data-testid="stTabs"] {
+        margin-top: 0px !important;
+        margin-bottom: 4px !important;
+    }
+    div[data-testid="stTabs"] div[data-baseweb="tab-panel"] {
+        padding-top: 4px !important;
+        padding-bottom: 2px !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    div[data-testid="stTabs"] div[data-baseweb="tab-panel"] > div > div[data-testid="stTabs"],
+    div[data-testid="stTabs"] div[data-baseweb="tab-panel"] div[data-testid="stTabs"] {
+        margin-top: 2px !important;
+        margin-bottom: 3px !important;
+    }
+    div[data-testid="stTabs"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"] {
+        margin-top: 1px !important;
+        margin-bottom: 1px !important;
+        padding: 3px 5px !important;
+        gap: 4px !important;
+    }
+    div[data-testid="stTabs"] div[data-baseweb="tab-panel"] div[data-baseweb="tab-list"] button[role="tab"] {
+        padding: 4px 12px !important;
+        font-size: 12.5px !important;
+    }
+    /* Uniform equal spacing for all Expanders so they never stick together */
+    div[data-testid="stExpander"] {
+        margin-top: 14px !important;
+        margin-bottom: 14px !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     # 3 Dedicated Tabs immediately at the top (Zero Top Whitespace)
     tab_dv, tab_sv, tab_saransh = st.tabs(tabs)
 
@@ -257,195 +331,280 @@ def render_varga_grid_view(chart, tabs=None):
     # TAB 1: DASHVARGA (10 PRINCIPAL DIVISIONS)
     # =========================================================================
     with tab_dv:
-        st.markdown("#### 📊 दशवर्ग ग्रह गरिमा एवं विंशोपक बल (10 Divisions Matrix)")
-        st.caption("बृहत्पाराशर होराशास्त्र अनुसार प्रमुख १० वर्ग (D1, D2, D3, D7, D9, D10, D12, D16, D24, D30, D60) में ग्रहों की प्रतिष्ठा।")
+        subtab_dv_dignity, subtab_dv_table, subtab_dv_praman = st.tabs([
+            "1. 📊 दशवर्ग ग्रह गरिमा एवं वैशेषिकांश वितरण",
+            "2. 📋 दशवर्ग टेबल (Table)",
+            "3. 📜 दशवर्ग शास्त्रीय प्रमाण एवं फलादेश"
+        ])
 
-        # Top 4 KPI Metrics for Dasvarga
-        top_dv_planet = max(dv_summary.keys(), key=lambda p: dv_summary[p]["score_20"])
-        vargottama_planets = [p for p in dv_summary if dv_summary[p]["is_vargottama"]]
-        varg_str = ", ".join(vargottama_planets) if vargottama_planets else "कोई नहीं"
-        total_exalt_own_dv = sum(dv_summary[p]["own_mool_exalt"] for p in dv_summary)
-        deb_dv = [(p, dv_summary[p]["counts"]["deb"]) for p in dv_summary if dv_summary[p]["counts"]["deb"] > 0]
-        deb_str = ", ".join([f"{p} ({c})" for p, c in deb_dv]) if deb_dv else "शून्य (उत्तम)"
+        with subtab_dv_dignity:
+            # Top 4 KPI Metrics for Dasvarga
+            top_dv_planet = max(dv_summary.keys(), key=lambda p: dv_summary[p]["score_20"])
+            vargottama_planets = [p for p in dv_summary if dv_summary[p]["is_vargottama"]]
+            varg_str = ", ".join(vargottama_planets) if vargottama_planets else "कोई नहीं"
+            total_exalt_own_dv = sum(dv_summary[p]["own_mool_exalt"] for p in dv_summary)
+            deb_dv = [(p, dv_summary[p]["counts"]["deb"]) for p in dv_summary if dv_summary[p]["counts"]["deb"] > 0]
+            deb_str = ", ".join([f"{p} ({c})" for p, c in deb_dv]) if deb_dv else "शून्य (उत्तम)"
 
-        c_kpi1, c_kpi2, c_kpi3, c_kpi4 = st.columns(4)
-        c_kpi1.markdown(f"""
-        <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #10B981; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(16,185,129,0.08);">
-            <div style="font-size:11px; color:#059669; font-weight:800;">🌟 सर्वोच्च प्रतिष्ठित ग्रह</div>
-            <div style="font-size:16px; font-weight:900; color:{'#34D399' if _is_dark else '#065F46'};">{top_dv_planet} ({dv_summary[top_dv_planet]['score_20']:.1f}/20)</div>
-            <div style="font-size:10.5px; color:#64748B;">👑 {dv_summary[top_dv_planet]['vaisheshikamsa_hi']} ({dv_summary[top_dv_planet]['auspicious_count']} शुभ वर्ग)</div>
-        </div>
-        """, unsafe_allow_html=True)
+            c_kpi1, c_kpi2, c_kpi3, c_kpi4 = st.columns(4)
+            c_kpi1.markdown(f"""
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #10B981; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(16,185,129,0.08);">
+                <div style="font-size:11px; color:#059669; font-weight:800;">🌟 सर्वोच्च प्रतिष्ठित ग्रह</div>
+                <div style="font-size:16px; font-weight:900; color:{'#34D399' if _is_dark else '#065F46'};">{top_dv_planet} ({dv_summary[top_dv_planet]['score_20']:.1f}/20)</div>
+                <div style="font-size:10.5px; color:#64748B;">👑 {dv_summary[top_dv_planet]['vaisheshikamsa_hi']} ({dv_summary[top_dv_planet]['auspicious_count']} शुभ वर्ग)</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-        c_kpi2.markdown(f"""
-        <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #3B82F6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(59,130,246,0.08);">
-            <div style="font-size:11px; color:#2563EB; font-weight:800;">👑 वर्गोत्तम ग्रह (D1 = D9)</div>
-            <div style="font-size:16px; font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'};">{varg_str}</div>
-            <div style="font-size:10.5px; color:#64748B;">नवांश व लग्न में समान राशि बल</div>
-        </div>
-        """, unsafe_allow_html=True)
+            c_kpi2.markdown(f"""
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #3B82F6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(59,130,246,0.08);">
+                <div style="font-size:11px; color:#2563EB; font-weight:800;">👑 वर्गोत्तम ग्रह (D1 = D9)</div>
+                <div style="font-size:16px; font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'};">{varg_str}</div>
+                <div style="font-size:10.5px; color:#64748B;">नवांश व लग्न में समान राशि बल</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-        c_kpi3.markdown(f"""
-        <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #8B5CF6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(139,92,246,0.08);">
-            <div style="font-size:11px; color:#7C3AED; font-weight:800;">🛡️ उच्च/मूल/स्व वर्ग योग</div>
-            <div style="font-size:16px; font-weight:900; color:{'#A78BFA' if _is_dark else '#5B21B6'};">{total_exalt_own_dv} वर्ग स्थितियां</div>
-            <div style="font-size:10.5px; color:#64748B;">१० वर्गों में प्रबल गरिमा संख्या</div>
-        </div>
-        """, unsafe_allow_html=True)
+            c_kpi3.markdown(f"""
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #8B5CF6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(139,92,246,0.08);">
+                <div style="font-size:11px; color:#7C3AED; font-weight:800;">🛡️ उच्च/मूल/स्व वर्ग योग</div>
+                <div style="font-size:16px; font-weight:900; color:{'#A78BFA' if _is_dark else '#5B21B6'};">{total_exalt_own_dv} वर्ग स्थितियां</div>
+                <div style="font-size:10.5px; color:#64748B;">१० वर्गों में प्रबल गरिमा संख्या</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-        c_kpi4.markdown(f"""
-        <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #F59E0B; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(245,158,11,0.08);">
-            <div style="font-size:11px; color:#D97706; font-weight:800;">⚠️ नीच वर्ग दृष्टि/सतर्कता</div>
-            <div style="font-size:16px; font-weight:900; color:{'#FBBF24' if _is_dark else '#92400E'};">{deb_str}</div>
-            <div style="font-size:10.5px; color:#64748B;">उपाय एवं शांति अपेक्षित क्षेत्र</div>
-        </div>
-        """, unsafe_allow_html=True)
+            c_kpi4.markdown(f"""
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #F59E0B; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(245,158,11,0.08);">
+                <div style="font-size:11px; color:#D97706; font-weight:800;">⚠️ नीच वर्ग दृष्टि/सतर्कता</div>
+                <div style="font-size:16px; font-weight:900; color:{'#FBBF24' if _is_dark else '#92400E'};">{deb_str}</div>
+                <div style="font-size:10.5px; color:#64748B;">उपाय एवं शांति अपेक्षित क्षेत्र</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
-        # Executive Graph for Dasvarga
-        st.markdown(render_varga_dignity_dashboard(
-            dv_summary, total_vargas=len(dasvarga_codes), is_dark=_is_dark,
-            title="दशवर्ग ग्रह गरिमा एवं वैशेषिकांश वितरण (Dasvarga Planetary Dignity & Vaisheshikamsa)"
-        ), unsafe_allow_html=True)
+            # Executive Graph for Dasvarga
+            st.markdown(render_varga_dignity_dashboard(
+                dv_summary, total_vargas=len(dasvarga_codes), is_dark=_is_dark,
+                title="दशवर्ग ग्रह गरिमा एवं वैशेषिकांश वितरण (Dasvarga Planetary Dignity & Vaisheshikamsa)"
+            ), unsafe_allow_html=True)
 
-        # Dignity Legend Bar
-        st.markdown(render_dignity_legend_bar(), unsafe_allow_html=True)
+            # Dignity Legend Bar
+            st.markdown(render_dignity_legend_bar(), unsafe_allow_html=True)
 
-        # Styled HTML Table (NO redundant st.dataframe!)
-        dv_table = affliction_engine.calculate_dasvarga_table()
-        st.markdown(render_styled_varga_table_html(dv_table, varga_meta_full, is_dark=_is_dark), unsafe_allow_html=True)
+        with subtab_dv_table:
+            # Dignity Legend Bar
+            st.markdown(render_dignity_legend_bar(), unsafe_allow_html=True)
 
-        # ─── Interactive Dasvarga Domain Insight Explorer ───
-        with st.expander("🔍 विशिष्ट दशवर्ग फलित अन्वेषक (Dasvarga Life-Domain Deep Dive)", expanded=False):
-            sel_dv_code = st.selectbox(
-                "विश्लेषण हेतु वर्ग चुनें (Select Dasvarga)",
-                dasvarga_codes,
-                format_func=lambda x: varga_meta_full.get(x, x),
-                key="dv_deep_dive_sel"
-            )
-            _t_varga = chart.vargas.get(sel_dv_code) if chart.vargas else None
-            if _t_varga:
-                _v_l_sign = getattr(_t_varga, "lagna_sign_name", chart.lagna_sign_name)
-                _v_l_lord = SIGN_LORDS.get(_v_l_sign, "—")
-                _v_p_map = getattr(_t_varga, "planets", {})
+            # Styled HTML Table (NO redundant st.dataframe!)
+            dv_table = affliction_engine.calculate_dasvarga_table()
+            st.markdown(render_styled_varga_table_html(dv_table, varga_meta_full, is_dark=_is_dark), unsafe_allow_html=True)
 
-                _ex_p = [pn for pn, pp in _v_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Aries", "Moon": "Taurus", "Mars": "Capricorn", "Mercury": "Virgo", "Jupiter": "Cancer", "Venus": "Pisces", "Saturn": "Libra"}.get(pn)]
-                _own_p = [pn for pn, pp in _v_p_map.items() if SIGN_LORDS.get(getattr(pp, "sign_name", "")) == pn]
-                _deb_p = [pn for pn, pp in _v_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries"}.get(pn)]
+        with subtab_dv_praman:
+            # ─── Interactive Dasvarga Domain Insight Explorer ───
+            with st.expander("🔍 विशिष्ट दशवर्ग फलित अन्वेषक (Dasvarga Life-Domain Deep Dive)", expanded=True):
+                sel_dv_code = st.selectbox(
+                    "विश्लेषण हेतु वर्ग चुनें (Select Dasvarga)",
+                    dasvarga_codes,
+                    format_func=lambda x: varga_meta_full.get(x, x),
+                    key="dv_deep_dive_sel"
+                )
+                _t_varga = chart.vargas.get(sel_dv_code) if chart.vargas else None
+                if _t_varga:
+                    _v_l_sign = getattr(_t_varga, "lagna_sign_name", chart.lagna_sign_name)
+                    _v_l_lord = SIGN_LORDS.get(_v_l_sign, "—")
+                    _v_p_map = getattr(_t_varga, "planets", {})
 
-                st.markdown(f"""
-                <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                        <span style="font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'}; font-size:13.5px;">🎯 {varga_meta_full.get(sel_dv_code, sel_dv_code)}</span>
-                        <span style="font-size:11px; font-weight:800; background:#EFF6FF; color:#1E40AF; padding:2px 8px; border-radius:4px;">वर्ग लग्न: {_v_l_sign} (स्वामी: {_v_l_lord})</span>
+                    _ex_p = [pn for pn, pp in _v_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Aries", "Moon": "Taurus", "Mars": "Capricorn", "Mercury": "Virgo", "Jupiter": "Cancer", "Venus": "Pisces", "Saturn": "Libra"}.get(pn)]
+                    _own_p = [pn for pn, pp in _v_p_map.items() if SIGN_LORDS.get(getattr(pp, "sign_name", "")) == pn]
+                    _deb_p = [pn for pn, pp in _v_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries"}.get(pn)]
+
+                    st.markdown(f"""
+                    <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <span style="font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'}; font-size:13.5px;">🎯 {varga_meta_full.get(sel_dv_code, sel_dv_code)}</span>
+                            <span style="font-size:11px; font-weight:800; background:#EFF6FF; color:#1E40AF; padding:2px 8px; border-radius:4px;">वर्ग लग्न: {_v_l_sign} (स्वामी: {_v_l_lord})</span>
+                        </div>
+                        <div style="line-height:1.6; color:{'#E2E8F0' if _is_dark else '#1E293B'};">
+                            • 🌟 <b>उच्च ग्रह:</b> {', '.join(_ex_p) if _ex_p else 'कोई नहीं'} {'— इस क्षेत्र में विशिष्ट कीर्ति व अधिकार' if _ex_p else ''}<br/>
+                            • 🏰 <b>स्वगृही ग्रह:</b> {', '.join(_own_p) if _own_p else 'कोई नहीं'} {'— इस क्षेत्र में आत्म-निर्भरता व स्थायित्व' if _own_p else ''}<br/>
+                            • ⚠️ <b>नीच ग्रह:</b> {', '.join(_deb_p) if _deb_p else 'कोई नहीं (दोष मुक्त)'} {'— अतिरिक्त साधना व जागरूकता अपेक्षित' if _deb_p else ''}
+                        </div>
                     </div>
-                    <div style="line-height:1.6; color:{'#E2E8F0' if _is_dark else '#1E293B'};">
-                        • 🌟 <b>उच्च ग्रह:</b> {', '.join(_ex_p) if _ex_p else 'कोई नहीं'} {'— इस क्षेत्र में विशिष्ट कीर्ति व अधिकार' if _ex_p else ''}<br/>
-                        • 🏰 <b>स्वगृही ग्रह:</b> {', '.join(_own_p) if _own_p else 'कोई नहीं'} {'— इस क्षेत्र में आत्म-निर्भरता व स्थायित्व' if _own_p else ''}<br/>
-                        • ⚠️ <b>नीच ग्रह:</b> {', '.join(_deb_p) if _deb_p else 'कोई नहीं (दोष मुक्त)'} {'— अतिरिक्त साधना व जागरूकता अपेक्षित' if _deb_p else ''}
-                    </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.caption(f"{sel_dv_code} वर्ग गणना उपलब्ध नहीं।")
+
+            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+            # Classical Dasvarga Shloka & Pramana Card
+            st.markdown(f"""
+            <div style="background: rgba(37, 99, 235, 0.08); border-left: 4px solid #2563EB; padding: 14px 18px; border-radius: 8px; margin-bottom: 14px;">
+                <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 बृहत्पाराशर होराशास्त्रम् — दशवर्ग फल एवं विंशोपक बल विधान</div>
+                <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+                    दशवर्गेषु ये खेटाः स्वांशेषु स्वोच्चकेषु च।<br/>
+                    तेषां वीर्यं प्रवक्ष्यामि शृणु त्वं द्विजसत्तम॥<br/>
+                    वर्गोत्तमे स्थिताः सर्वे कुर्वन्ति विपुलं यशः।<br/>
+                    दशवर्गबलेनैव सम्पूर्णं फलमादिशेत्॥
                 </div>
-                """, unsafe_allow_html=True)
-            else:
-                st.caption(f"{sel_dv_code} वर्ग गणना उपलब्ध नहीं।")
+                <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+                    <b>हिंदी भावार्थ:</b> दशवर्गों में जो ग्रह स्वराशि, मूलत्रिकोण अथवा उच्चांश में स्थित होते हैं, वे जातक को अक्षय बल, ऐश्वर्य व कीर्ति प्रदान करते हैं। विशेष रूप से लग्न व नवांश में वर्गोत्तम ग्रह जातक को अतुल्य ख्याति दिलाता है। फलादेश का अंतिम निर्णय दशवर्ग बल देखकर ही करना चाहिए।
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Vaisheshikamsa Summary for Dasvarga (Up to 10 Auspicious Vargas)
+            st.markdown("##### 👑 दशवर्ग वैशेषिकांश संज्ञाएं (Dasvarga Vaisheshikamsa System)")
+            dv_vais_data = [
+                {"शुभ वर्ग संख्या": "२ वर्ग", "शास्त्रीय संज्ञा": "पारिजात (Parijata)", "फलित प्रभाव": "सामान्य सुख, जीवन में स्थिरता, धन व समाज में सामान्य कीर्ति।"},
+                {"शुभ वर्ग संख्या": "३ वर्ग", "शास्त्रीय संज्ञा": "उत्तम (Uttama)", "फलित प्रभाव": "सद्विचार, उत्तम आचरण, विनयशीलता, विद्या लाभ व लोकसम्मान।"},
+                {"शुभ वर्ग संख्या": "४ वर्ग", "शास्त्रीय संज्ञा": "गोपुर (Gopura)", "फलित प्रभाव": "प्रचुर भूमि, वाहन, पशु-धन, बौद्धिक ऐश्वर्य व कुटुम्ब का पोषण।"},
+                {"शुभ वर्ग संख्या": "५ वर्ग", "शास्त्रीय संज्ञा": "सिंहासन (Simhasana)", "फलित प्रभाव": "राजतुल्य प्रतिष्ठा, शासन-प्रशासन में अधिकार, नेतृत्व व प्रभुत्व।"},
+                {"शुभ वर्ग संख्या": "६ वर्ग", "शास्त्रीय संज्ञा": "पारावत (Paravata)", "फलित प्रभाव": "सर्वप्रिय व्यक्तित्व, उत्तम सवारी, राज्य द्वारा सम्मानित व अक्षय कीर्ति।"},
+                {"शुभ वर्ग संख्या": "७ वर्ग", "शास्त्रीय संज्ञा": "देवलोक (Devaloka)", "फलित प्रभाव": "राजाधिराज पद, देवतुल्य आदर, महान धार्मिक कार्य व दीर्घायु।"},
+                {"शुभ वर्ग संख्या": "८ वर्ग", "शास्त्रीय संज्ञा": "ऐरावत (Airavata)", "फलित प्रभाव": "सम्राट तुल्य वैभव, गजराज समान ऐश्वर्य, कीर्ति का दिगन्त विस्तार।"},
+                {"शुभ वर्ग संख्या": "९ वर्ग", "शास्त्रीय संज्ञा": "वैशेषिक (Vaisheshika)", "फलित प्रभाव": "सर्वमनोरथ सिद्धि, अद्वितीय शास्त्रज्ञान, विश्वविख्यात प्रतिष्ठा।"},
+                {"शुभ वर्ग संख्या": "१० वर्ग", "शास्त्रीय संज्ञा": "भास्वदांश (Bhasvadamsa)", "फलित प्रभाव": "सूर्य समान तेज, अपराजेय प्रभाव, अमर यश व राजपूजित।"}
+            ]
+            st.dataframe(pd.DataFrame(dv_vais_data), use_container_width=True, hide_index=True)
 
     # =========================================================================
     # TAB 2: SHODASHVARGA (16 FULL DIVISIONS)
     # =========================================================================
     with tab_sv:
-        st.markdown("#### 🏛️ षोडशवर्ग सम्पूर्ण ग्रह गरिमा चक्र (Complete 16 Divisions Matrix)")
-        st.caption("महर्षि पाराशर प्रणीत संपूर्ण १६ वर्ग (D1 से D60) में ग्रहों की सूक्ष्म गरिमा, विंशोपक बल एवं वैशेषिकांश संज्ञान।")
+        subtab_sv_dignity, subtab_sv_table, subtab_sv_praman = st.tabs([
+            "1. 🏛️ षोडशवर्ग समग्र गरिमा एवं वैशेषिकांश वितरण",
+            "2. 📋 षोडशवर्ग टेबल (Table)",
+            "3. 📜 षोडशवर्ग शास्त्रीय प्रमाण एवं फलादेश"
+        ])
 
-        # Top 4 KPI Metrics for Shodashvarga
-        top_sv_planet = max(sv_summary.keys(), key=lambda p: sv_summary[p]["score_20"])
-        avg_sv_score = sum(sv_summary[p]["score_20"] for p in sv_summary) / len(sv_summary)
-        total_auspicious_sv = sum(sv_summary[p]["auspicious_count"] for p in sv_summary)
-        deb_sv = [(p, sv_summary[p]["counts"]["deb"]) for p in sv_summary if sv_summary[p]["counts"]["deb"] > 0]
-        deb_sv_str = ", ".join([f"{p} ({c})" for p, c in deb_sv]) if deb_sv else "शून्य (अति उत्तम)"
+        with subtab_sv_dignity:
+            # Top 4 KPI Metrics for Shodashvarga
+            top_sv_planet = max(sv_summary.keys(), key=lambda p: sv_summary[p]["score_20"])
+            avg_sv_score = sum(sv_summary[p]["score_20"] for p in sv_summary) / len(sv_summary)
+            total_auspicious_sv = sum(sv_summary[p]["auspicious_count"] for p in sv_summary)
+            deb_sv = [(p, sv_summary[p]["counts"]["deb"]) for p in sv_summary if sv_summary[p]["counts"]["deb"] > 0]
+            deb_sv_str = ", ".join([f"{p} ({c})" for p, c in deb_sv]) if deb_sv else "शून्य (अति उत्तम)"
 
-        s_kpi1, s_kpi2, s_kpi3, s_kpi4 = st.columns(4)
-        s_kpi1.markdown(f"""
-        <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #10B981; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(16,185,129,0.08);">
-            <div style="font-size:11px; color:#059669; font-weight:800;">🌟 षोडशवर्ग शिरोमणि ग्रह</div>
-            <div style="font-size:16px; font-weight:900; color:{'#34D399' if _is_dark else '#065F46'};">{top_sv_planet} ({sv_summary[top_sv_planet]['score_20']:.1f}/20)</div>
-            <div style="font-size:10.5px; color:#64748B;">👑 {sv_summary[top_sv_planet]['vaisheshikamsa_hi']} ({sv_summary[top_sv_planet]['auspicious_count']}/16 शुभ वर्ग)</div>
-        </div>
-        """, unsafe_allow_html=True)
+            s_kpi1, s_kpi2, s_kpi3, s_kpi4 = st.columns(4)
+            s_kpi1.markdown(f"""
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #10B981; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(16,185,129,0.08);">
+                <div style="font-size:11px; color:#059669; font-weight:800;">🌟 षोडशवर्ग शिरोमणि ग्रह</div>
+                <div style="font-size:16px; font-weight:900; color:{'#34D399' if _is_dark else '#065F46'};">{top_sv_planet} ({sv_summary[top_sv_planet]['score_20']:.1f}/20)</div>
+                <div style="font-size:10.5px; color:#64748B;">👑 {sv_summary[top_sv_planet]['vaisheshikamsa_hi']} ({sv_summary[top_sv_planet]['auspicious_count']}/16 शुभ वर्ग)</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-        s_kpi2.markdown(f"""
-        <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #8B5CF6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(139,92,246,0.08);">
-            <div style="font-size:11px; color:#7C3AED; font-weight:800;">⚡ औसत षोडशवर्ग बल</div>
-            <div style="font-size:16px; font-weight:900; color:{'#A78BFA' if _is_dark else '#5B21B6'};">{avg_sv_score:.1f} / 20</div>
-            <div style="font-size:10.5px; color:#64748B;">समग्र १६ वर्गों की सामूहिक सामर्थ्य</div>
-        </div>
-        """, unsafe_allow_html=True)
+            s_kpi2.markdown(f"""
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #8B5CF6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(139,92,246,0.08);">
+                <div style="font-size:11px; color:#7C3AED; font-weight:800;">⚡ औसत षोडशवर्ग बल</div>
+                <div style="font-size:16px; font-weight:900; color:{'#A78BFA' if _is_dark else '#5B21B6'};">{avg_sv_score:.1f} / 20</div>
+                <div style="font-size:10.5px; color:#64748B;">समग्र १६ वर्गों की सामूहिक सामर्थ्य</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-        s_kpi3.markdown(f"""
-        <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #3B82F6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(59,130,246,0.08);">
-            <div style="font-size:11px; color:#2563EB; font-weight:800;">🛡️ कुल शुभ वर्ग स्थितियां</div>
-            <div style="font-size:16px; font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'};">{total_auspicious_sv} / 112</div>
-            <div style="font-size:10.5px; color:#64748B;">स्वोच्चमित्रांश योग (७ ग्रह x १६ वर्ग)</div>
-        </div>
-        """, unsafe_allow_html=True)
+            s_kpi3.markdown(f"""
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #3B82F6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(59,130,246,0.08);">
+                <div style="font-size:11px; color:#2563EB; font-weight:800;">🛡️ कुल शुभ वर्ग स्थितियां</div>
+                <div style="font-size:16px; font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'};">{total_auspicious_sv} / 112</div>
+                <div style="font-size:10.5px; color:#64748B;">स्वोच्चमित्रांश योग (७ ग्रह x १६ वर्ग)</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-        s_kpi4.markdown(f"""
-        <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #EF4444; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(239,68,68,0.08);">
-            <div style="font-size:11px; color:#DC2626; font-weight:800;">⚠️ नीच वर्ग स्थितियां</div>
-            <div style="font-size:16px; font-weight:900; color:{'#F87171' if _is_dark else '#991B1B'};">{deb_sv_str}</div>
-            <div style="font-size:10.5px; color:#64748B;">१६ वर्गों में नीच राशि स्थिति</div>
-        </div>
-        """, unsafe_allow_html=True)
+            s_kpi4.markdown(f"""
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #EF4444; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(239,68,68,0.08);">
+                <div style="font-size:11px; color:#DC2626; font-weight:800;">⚠️ नीच वर्ग स्थितियां</div>
+                <div style="font-size:16px; font-weight:900; color:{'#F87171' if _is_dark else '#991B1B'};">{deb_sv_str}</div>
+                <div style="font-size:10.5px; color:#64748B;">१६ वर्गों में नीच राशि स्थिति</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
-        # Executive Graph for Shodashvarga
-        st.markdown(render_varga_dignity_dashboard(
-            sv_summary, total_vargas=len(shodashvarga_codes), is_dark=_is_dark,
-            title="षोडशवर्ग समग्र गरिमा एवं वैशेषिकांश वितरण (Complete 16-Varga Dignity Matrix)"
-        ), unsafe_allow_html=True)
+            # Executive Graph for Shodashvarga
+            st.markdown(render_varga_dignity_dashboard(
+                sv_summary, total_vargas=len(shodashvarga_codes), is_dark=_is_dark,
+                title="षोडशवर्ग समग्र गरिमा एवं वैशेषिकांश वितरण (Complete 16-Varga Dignity Matrix)"
+            ), unsafe_allow_html=True)
 
-        # Dignity Legend Bar
-        st.markdown(render_dignity_legend_bar(), unsafe_allow_html=True)
+            # Dignity Legend Bar
+            st.markdown(render_dignity_legend_bar(), unsafe_allow_html=True)
 
-        # Styled HTML Table for all 16 Vargas
-        sv_table = affliction_engine.calculate_shodashvarga_table()
-        st.markdown(render_styled_varga_table_html(sv_table, varga_meta_full, is_dark=_is_dark), unsafe_allow_html=True)
+        with subtab_sv_table:
+            # Dignity Legend Bar
+            st.markdown(render_dignity_legend_bar(), unsafe_allow_html=True)
 
-        # ─── Interactive Higher Shodashvarga Domain Insight Explorer ───
-        with st.expander("🔬 सूक्ष्म षोडशवर्ग उच्च-स्तरीय फलित अन्वेषक (Higher Shodashvarga Deep Dive: D16-D60)", expanded=False):
-            higher_codes = ["D16", "D20", "D24", "D27", "D30", "D40", "D45", "D60"]
-            sel_hv_code = st.selectbox(
-                "सूक्ष्म वर्ग चुनें (Select Higher Division)",
-                higher_codes,
-                format_func=lambda x: varga_meta_full.get(x, x),
-                key="hv_deep_dive_sel"
-            )
-            _hv_varga = chart.vargas.get(sel_hv_code) if chart.vargas else None
-            if _hv_varga:
-                _hv_l_sign = getattr(_hv_varga, "lagna_sign_name", chart.lagna_sign_name)
-                _hv_l_lord = SIGN_LORDS.get(_hv_l_sign, "—")
-                _hv_p_map = getattr(_hv_varga, "planets", {})
+            # Styled HTML Table for all 16 Vargas
+            sv_table = affliction_engine.calculate_shodashvarga_table()
+            st.markdown(render_styled_varga_table_html(sv_table, varga_meta_full, is_dark=_is_dark), unsafe_allow_html=True)
 
-                _h_ex_p = [pn for pn, pp in _hv_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Aries", "Moon": "Taurus", "Mars": "Capricorn", "Mercury": "Virgo", "Jupiter": "Cancer", "Venus": "Pisces", "Saturn": "Libra"}.get(pn)]
-                _h_own_p = [pn for pn, pp in _hv_p_map.items() if SIGN_LORDS.get(getattr(pp, "sign_name", "")) == pn]
-                _h_deb_p = [pn for pn, pp in _hv_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries"}.get(pn)]
+        with subtab_sv_praman:
+            # ─── Interactive Higher Shodashvarga Domain Insight Explorer ───
+            with st.expander("🔬 सूक्ष्म षोडशवर्ग उच्च-स्तरीय फलित अन्वेषक (Higher Shodashvarga Deep Dive: D16-D60)", expanded=True):
+                higher_codes = ["D16", "D20", "D24", "D27", "D30", "D40", "D45", "D60"]
+                sel_hv_code = st.selectbox(
+                    "सूक्ष्म वर्ग चुनें (Select Higher Division)",
+                    higher_codes,
+                    format_func=lambda x: varga_meta_full.get(x, x),
+                    key="hv_deep_dive_sel"
+                )
+                _hv_varga = chart.vargas.get(sel_hv_code) if chart.vargas else None
+                if _hv_varga:
+                    _hv_l_sign = getattr(_hv_varga, "lagna_sign_name", chart.lagna_sign_name)
+                    _hv_l_lord = SIGN_LORDS.get(_hv_l_sign, "—")
+                    _hv_p_map = getattr(_hv_varga, "planets", {})
 
-                st.markdown(f"""
-                <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                        <span style="font-weight:900; color:{'#A78BFA' if _is_dark else '#6D28D9'}; font-size:13.5px;">👑 {varga_meta_full.get(sel_hv_code, sel_hv_code)}</span>
-                        <span style="font-size:11px; font-weight:800; background:#F5F3FF; color:#6D28D9; padding:2px 8px; border-radius:4px;">सूक्ष्म वर्ग लग्न: {_hv_l_sign} (स्वामी: {_hv_l_lord})</span>
+                    _h_ex_p = [pn for pn, pp in _hv_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Aries", "Moon": "Taurus", "Mars": "Capricorn", "Mercury": "Virgo", "Jupiter": "Cancer", "Venus": "Pisces", "Saturn": "Libra"}.get(pn)]
+                    _h_own_p = [pn for pn, pp in _hv_p_map.items() if SIGN_LORDS.get(getattr(pp, "sign_name", "")) == pn]
+                    _h_deb_p = [pn for pn, pp in _hv_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries"}.get(pn)]
+
+                    st.markdown(f"""
+                    <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <span style="font-weight:900; color:{'#A78BFA' if _is_dark else '#6D28D9'}; font-size:13.5px;">👑 {varga_meta_full.get(sel_hv_code, sel_hv_code)}</span>
+                            <span style="font-size:11px; font-weight:800; background:#F5F3FF; color:#6D28D9; padding:2px 8px; border-radius:4px;">सूक्ष्म वर्ग लग्न: {_hv_l_sign} (स्वामी: {_hv_l_lord})</span>
+                        </div>
+                        <div style="line-height:1.6; color:{'#E2E8F0' if _is_dark else '#1E293B'};">
+                            • 🌟 <b>उच्च ग्रह:</b> {', '.join(_h_ex_p) if _h_ex_p else 'कोई नहीं'}<br/>
+                            • 🏰 <b>स्वगृही ग्रह:</b> {', '.join(_h_own_p) if _h_own_p else 'कोई नहीं'}<br/>
+                            • ⚠️ <b>नीच ग्रह:</b> {', '.join(_h_deb_p) if _h_deb_p else 'कोई नहीं (दोष मुक्त)'}
+                        </div>
                     </div>
-                    <div style="line-height:1.6; color:{'#E2E8F0' if _is_dark else '#1E293B'};">
-                        • 🌟 <b>उच्च ग्रह:</b> {', '.join(_h_ex_p) if _h_ex_p else 'कोई नहीं'}<br/>
-                        • 🏰 <b>स्वगृही ग्रह:</b> {', '.join(_h_own_p) if _h_own_p else 'कोई नहीं'}<br/>
-                        • ⚠️ <b>नीच ग्रह:</b> {', '.join(_h_deb_p) if _h_deb_p else 'कोई नहीं (दोष मुक्त)'}
+                    """, unsafe_allow_html=True)
+                else:
+                    st.caption(f"{sel_hv_code} वर्ग गणना उपलब्ध नहीं।")
+
+            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+            # 16 Vargas Utility & Deities Table
+            st.markdown("##### 📖 षोडशवर्गों का शास्त्रीय प्रयोजन एवं अधिष्ठाता देवता (16 Vargas Classical Utility & Deities)")
+            st.dataframe(pd.DataFrame(varga_deity_data), use_container_width=True, hide_index=True)
+
+            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+            # BPHS Vaisheshikamsa System
+            st.markdown("##### 👑 महर्षि पाराशर प्रणीत वैशेषिकांश संज्ञाएं एवं फल (BPHS Ch. 45 Vaisheshikamsa System)")
+            st.dataframe(pd.DataFrame(vais_data), use_container_width=True, hide_index=True)
+
+            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+            # Classical Scriptural Pramana Shlokas
+            st.markdown("##### 📜 शास्त्रीय प्रमाण एवं मूल श्लोक संग्रह (Classical Scriptural Pramana)")
+            sv_shl = SHASTRIYA_SHLOKAS.get("shodashvarga_vaisheshikamsa", {})
+            if sv_shl:
+                sv_lines = "<br/>".join(sv_shl['shloka'].splitlines())
+                st.markdown(f"""
+                <div style="background: rgba(245, 158, 11, 0.08); border-left: 4px solid #F59E0B; padding: 14px 18px; border-radius: 8px; margin-bottom: 14px;">
+                    <div style="font-weight: 700; color: #B45309; font-size: 13.5px; margin-bottom: 4px;">📖 {sv_shl['grantha']}</div>
+                    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+                        {sv_lines}
+                    </div>
+                    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+                        <b>हिंदी भावार्थ:</b> {sv_shl['anuvad_hi']}
+                    </div>
+                    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+                        <b>शास्त्रीय नियम:</b> {sv_shl['rule']}
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
-            else:
-                st.caption(f"{sel_hv_code} वर्ग गणना उपलब्ध नहीं।")
 
     # =========================================================================
     # TAB 3: SARANSH, ALL DETAILS & SHASTRIYA PRAMAN
