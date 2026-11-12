@@ -324,6 +324,20 @@ def render_vastu_view(chart, tabs=None):
     scores = [z.get("score", 70) for z in v_zones]
     avg_score = int(round(sum(scores) / len(scores))) if scores else 0
 
+    # Module Specific Unified Compact Expanders & Tabs CSS
+    st.markdown("""
+    <style>
+    /* Compact clean margin for Expanders in Vastu View */
+    div[data-testid="stExpander"] {
+        margin-top: 6px !important;
+        margin-bottom: 6px !important;
+    }
+    div[data-testid="stExpander"] details {
+        border-radius: 8px !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     v_tab_titles = tabs
     v_tabs = st.tabs(tabs)
 
@@ -723,7 +737,6 @@ def render_vastu_view(chart, tabs=None):
                 """)
 
     # ─── Bottom Information & Shastriya Pramana (Collapsible Expanders) ───
-    st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
     with st.expander("🔮 लग्न, महादशा व समग्र वास्तु सूचकांक सारांश (Lagna, Dasha & Vastu Summary)", expanded=False):
         c_vn1, c_vn2, c_vn3, c_vn4 = st.columns(4)
         c_vn1.metric("लग्न एवं चन्द्र", f"{lagna_sname}", f"🌙 {moon_str}")
