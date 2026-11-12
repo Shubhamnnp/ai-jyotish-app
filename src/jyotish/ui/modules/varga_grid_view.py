@@ -223,7 +223,12 @@ def render_varga_grid_view(chart, tabs=None):
         "D30": "D30 (त्रिंशांश - अरिष्ट, पाप, विपत्ति व दोष)",
         "D40": "D40 (खवेदांश - शुभाशुभ फल व मातृक पूर्वजन्म)",
         "D45": "D45 (अक्षवेदांश - सदाचार, चरित्र व समग्र भाग्य)",
-        "D60": "D60 (षष्ट्यंश - सूक्ष्म प्रारब्ध, संचित कर्म व सर्व फल)"
+        "D60": "D60 (षष्ट्यंश - सूक्ष्म प्रारब्ध, संचित कर्म व सर्व फल)",
+        "D72": "D72 (अष्टोत्तरांश - सूक्ष्म आध्यात्मिक सिद्धि व बल)",
+        "D81": "D81 (नवनवांश - अंतरंग आत्म-सामर्थ्य व सूक्ष्म चरित्र)",
+        "D108": "D108 (अष्टोत्तरशतांश - नक्षत्र-पाद चक्र व नाड़ी सूक्ष्म फल)",
+        "D144": "D144 (द्वादश-द्वादशांश - आनुवंशिक पूर्वज संस्कार व वंश ऋण)",
+        "D150": "D150 (नाड्यांश - देव केरलम् / चंद्र कला नाड़ी सूक्ष्म रेखा)"
     }
 
     vais_data = [
@@ -537,30 +542,48 @@ def render_varga_grid_view(chart, tabs=None):
             st.markdown(render_styled_varga_table_html(sv_table, varga_meta_full, is_dark=_is_dark), unsafe_allow_html=True)
 
         with subtab_sv_praman:
-            # ─── Interactive Higher Shodashvarga Domain Insight Explorer ───
-            with st.expander("🔬 सूक्ष्म षोडशवर्ग उच्च-स्तरीय फलित अन्वेषक (Higher Shodashvarga Deep Dive: D16-D60)", expanded=True):
-                higher_codes = ["D16", "D20", "D24", "D27", "D30", "D40", "D45", "D60"]
+            # ─── Interactive Higher Shodashvarga & Nadi Varga Domain Insight Explorer ───
+            with st.expander("🔬 सूक्ष्म षोडशवर्ग एवं नाड़ी उच्च-वर्ग अन्वेषक (Higher Vargas Deep Dive: D16-D150)", expanded=True):
+                higher_codes = ["D16", "D20", "D24", "D27", "D30", "D40", "D45", "D60", "D72", "D81", "D108", "D144", "D150"]
                 sel_hv_code = st.selectbox(
-                    "सूक्ष्म वर्ग चुनें (Select Higher Division)",
+                    "सूक्ष्म वर्ग चुनें (Select Division)",
                     higher_codes,
                     format_func=lambda x: varga_meta_full.get(x, x),
                     key="hv_deep_dive_sel"
                 )
-                _hv_varga = chart.vargas.get(sel_hv_code) if chart.vargas else None
+                _hv_varga = chart.vargas.get(sel_hv_code) if (chart.vargas and sel_hv_code in chart.vargas) else None
+                if not _hv_varga and chart is not None:
+                    from src.jyotish.core.varga import VargaCalculator
+                    fn_map = {
+                        "D72": VargaCalculator.calculate_d72,
+                        "D81": VargaCalculator.calculate_d81,
+                        "D108": VargaCalculator.calculate_d108,
+                        "D144": VargaCalculator.calculate_d144,
+                        "D150": VargaCalculator.calculate_d150,
+                    }
+                    if sel_hv_code in fn_map:
+                        _hv_varga = fn_map[sel_hv_code](chart)
+
                 if _hv_varga:
                     _hv_l_sign = getattr(_hv_varga, "lagna_sign_name", chart.lagna_sign_name)
                     _hv_l_lord = SIGN_LORDS.get(_hv_l_sign, "—")
                     _hv_p_map = getattr(_hv_varga, "planets", {})
+                    _hv_deity = getattr(_hv_varga, "lagna_deity", None)
 
                     _h_ex_p = [pn for pn, pp in _hv_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Aries", "Moon": "Taurus", "Mars": "Capricorn", "Mercury": "Virgo", "Jupiter": "Cancer", "Venus": "Pisces", "Saturn": "Libra"}.get(pn)]
                     _h_own_p = [pn for pn, pp in _hv_p_map.items() if SIGN_LORDS.get(getattr(pp, "sign_name", "")) == pn]
                     _h_deb_p = [pn for pn, pp in _hv_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries"}.get(pn)]
 
+                    deity_badge = f'<span style="font-size:11px; font-weight:800; background:#FEF3C7; color:#B45309; padding:2px 8px; border-radius:4px; margin-left:6px;">अधिष्ठाता: {_hv_deity}</span>' if _hv_deity else ''
+
                     st.markdown(f"""
                     <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                             <span style="font-weight:900; color:{'#A78BFA' if _is_dark else '#6D28D9'}; font-size:13.5px;">👑 {varga_meta_full.get(sel_hv_code, sel_hv_code)}</span>
-                            <span style="font-size:11px; font-weight:800; background:#F5F3FF; color:#6D28D9; padding:2px 8px; border-radius:4px;">सूक्ष्म वर्ग लग्न: {_hv_l_sign} (स्वामी: {_hv_l_lord})</span>
+                            <div>
+                                <span style="font-size:11px; font-weight:800; background:#F5F3FF; color:#6D28D9; padding:2px 8px; border-radius:4px;">सूक्ष्म वर्ग लग्न: {_hv_l_sign} (स्वामी: {_hv_l_lord})</span>
+                                {deity_badge}
+                            </div>
                         </div>
                         <div style="line-height:1.6; color:{'#E2E8F0' if _is_dark else '#1E293B'};">
                             • 🌟 <b>उच्च ग्रह:</b> {', '.join(_h_ex_p) if _h_ex_p else 'कोई नहीं'}<br/>
@@ -569,6 +592,19 @@ def render_varga_grid_view(chart, tabs=None):
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
+
+                    # Quick planetary breakdown table for the selected higher varga
+                    hv_rows = []
+                    for pn, pp in _hv_p_map.items():
+                        hv_rows.append({
+                            "ग्रह": pn,
+                            "वर्ग राशि": pp.sign_name,
+                            "भाव": f"भाव {pp.house_number}",
+                            "वर्ग अंश": f"{pp.degree_in_varga:.1f}°",
+                            "अधिष्ठाता": getattr(pp, "deity", "—") or "—"
+                        })
+                    if hv_rows:
+                        st.dataframe(pd.DataFrame(hv_rows), use_container_width=True, hide_index=True)
                 else:
                     st.caption(f"{sel_hv_code} वर्ग गणना उपलब्ध नहीं।")
 
