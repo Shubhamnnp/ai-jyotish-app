@@ -259,58 +259,58 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
     # TAB 1: सक्रिय जातक प्रश्न विश्लेषण (Active Native Dual Synthesis)
     # =========================================================================
     with ptab1:
-        st.markdown("#### 👤 सक्रिय जातक प्रश्न विश्लेषण (Active Native Dual Horary Synthesis)")
-        st.caption(f"सक्रिय जातक: **{name}** | जन्म स्थान: **{default_city_name}** | तात्कालिक प्रश्न कुण्डली एवं जन्म कुण्डली का शास्त्रीय समन्वय।")
+        with st.expander("👤 सक्रिय जातक प्रश्न विश्लेषण (Active Native Dual Horary Synthesis)", expanded=True):
+            st.caption(f"सक्रिय जातक: **{name}** | जन्म स्थान: **{default_city_name}** | तात्कालिक प्रश्न कुण्डली एवं जन्म कुण्डली का शास्त्रीय समन्वय।")
 
-        col_t1_c1, col_t1_c2 = st.columns([1, 2])
-        with col_t1_c1:
-            cat_choice_nat = st.selectbox(
-                "प्रश्न श्रेणी चुनें (Select Category)",
-                range(len(cat_options)),
-                format_func=lambda i: cat_options[i] if i < len(cat_options) else "",
-                index=min(6, max(0, len(cat_options) - 1)),
-                key="nat_prashna_cat_idx"
-            )
-            nat_cat_meta = PRASHNA_CATEGORIES[cat_choice_nat] if cat_choice_nat < len(PRASHNA_CATEGORIES) else PRASHNA_CATEGORIES[0]
-            nat_cat_name = nat_cat_meta.get("Name", "Job")
-        with col_t1_c2:
-            nat_default_q = sample_queries.get(nat_cat_name, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
-            nat_query_text = st.text_input("अपना प्रश्न दर्ज करें (Enter Native Query)", value=nat_default_q, key="nat_prashna_query_text")
+            col_t1_c1, col_t1_c2 = st.columns([1, 2])
+            with col_t1_c1:
+                cat_choice_nat = st.selectbox(
+                    "प्रश्न श्रेणी चुनें (Select Category)",
+                    range(len(cat_options)),
+                    format_func=lambda i: cat_options[i] if i < len(cat_options) else "",
+                    index=min(6, max(0, len(cat_options) - 1)),
+                    key="nat_prashna_cat_idx"
+                )
+                nat_cat_meta = PRASHNA_CATEGORIES[cat_choice_nat] if cat_choice_nat < len(PRASHNA_CATEGORIES) else PRASHNA_CATEGORIES[0]
+                nat_cat_name = nat_cat_meta.get("Name", "Job")
+            with col_t1_c2:
+                nat_default_q = sample_queries.get(nat_cat_name, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
+                nat_query_text = st.text_input("अपना प्रश्न दर्ज करें (Enter Native Query)", value=nat_default_q, key="nat_prashna_query_text")
 
-        # Live Vartaman Date, Time & GPS Controls for Tab 1
-        live_now_nat = get_live_local_now(tz_offset)
-        if "nat_prashna_date_val" not in st.session_state:
-            st.session_state.nat_prashna_date_val = live_now_nat.date()
-        if "nat_prashna_time_val" not in st.session_state:
-            st.session_state.nat_prashna_time_val = live_now_nat.time().replace(microsecond=0)
+            # Live Vartaman Date, Time & GPS Controls for Tab 1
+            live_now_nat = get_live_local_now(tz_offset)
+            if "nat_prashna_date_val" not in st.session_state:
+                st.session_state.nat_prashna_date_val = live_now_nat.date()
+            if "nat_prashna_time_val" not in st.session_state:
+                st.session_state.nat_prashna_time_val = live_now_nat.time().replace(microsecond=0)
 
-        def _cb_nat_set_live_now():
-            upd_now = get_live_local_now(tz_offset)
-            st.session_state.nat_prashna_date_val = upd_now.date()
-            st.session_state.nat_prashna_time_val = upd_now.time().replace(microsecond=0)
-            st.session_state.nat_prashna_d_picker = upd_now.date()
-            st.session_state.nat_prashna_t_picker = upd_now.time().replace(microsecond=0)
+            def _cb_nat_set_live_now():
+                upd_now = get_live_local_now(tz_offset)
+                st.session_state.nat_prashna_date_val = upd_now.date()
+                st.session_state.nat_prashna_time_val = upd_now.time().replace(microsecond=0)
+                st.session_state.nat_prashna_d_picker = upd_now.date()
+                st.session_state.nat_prashna_t_picker = upd_now.time().replace(microsecond=0)
 
-        col_nt1, col_nt2, col_nt3, col_nt4 = st.columns([1.4, 1.4, 1.2, 1.2])
-        with col_nt1:
-            nat_q_date = st.date_input("📅 प्रश्न तिथि (Query Date)", value=st.session_state.nat_prashna_date_val, format="DD/MM/YYYY", key="nat_prashna_d_picker")
-            st.session_state.nat_prashna_date_val = nat_q_date
-        with col_nt2:
-            nat_q_time = st.time_input("⏱️ प्रश्न समय (Time - सेकंड सहित)", value=st.session_state.nat_prashna_time_val, step=1, key="nat_prashna_t_picker")
-            st.session_state.nat_prashna_time_val = nat_q_time
-        with col_nt3:
-            st.write("")
-            st.write("")
-            if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_nat_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें", on_click=_cb_nat_set_live_now):
-                st.toast("✅ वर्तमान समय सेट किया गया!", icon="⏱️")
-        with col_nt4:
-            st.write("")
-            st.write("")
-            if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_nat_set_gps", help="डिवाइस GPS अनुमति मांगकर सटीक वर्तमान स्थान लें"):
-                st.session_state.trigger_browser_gps = "nat_prashna"
-                st.rerun()
+            col_nt1, col_nt2, col_nt3, col_nt4 = st.columns([1.4, 1.4, 1.2, 1.2])
+            with col_nt1:
+                nat_q_date = st.date_input("📅 प्रश्न तिथि (Query Date)", value=st.session_state.nat_prashna_date_val, format="DD/MM/YYYY", key="nat_prashna_d_picker")
+                st.session_state.nat_prashna_date_val = nat_q_date
+            with col_nt2:
+                nat_q_time = st.time_input("⏱️ प्रश्न समय (Time - सेकंड सहित)", value=st.session_state.nat_prashna_time_val, step=1, key="nat_prashna_t_picker")
+                st.session_state.nat_prashna_time_val = nat_q_time
+            with col_nt3:
+                st.write("")
+                st.write("")
+                if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_nat_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें", on_click=_cb_nat_set_live_now):
+                    st.toast("✅ वर्तमान समय सेट किया गया!", icon="⏱️")
+            with col_nt4:
+                st.write("")
+                st.write("")
+                if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_nat_set_gps", help="डिवाइस GPS अनुमति मांगकर सटीक वर्तमान स्थान लें"):
+                    st.session_state.trigger_browser_gps = "nat_prashna"
+                    st.rerun()
 
-        calc_nat_btn = st.button("🔮 सक्रिय जातक प्रश्न विश्लेषण प्राप्त करें (Analyze Native Horary Query)", type="primary", use_container_width=True, key="btn_calc_nat_prashna")
+            calc_nat_btn = st.button("🔮 सक्रिय जातक प्रश्न विश्लेषण प्राप्त करें (Analyze Native Horary Query)", type="primary", use_container_width=True, key="btn_calc_nat_prashna")
 
         nat_target_dt = datetime.combine(st.session_state.nat_prashna_date_val, st.session_state.nat_prashna_time_val)
 
