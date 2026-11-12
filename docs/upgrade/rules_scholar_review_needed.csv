@@ -2154,6 +2154,39 @@ NADI_KARAKA_H9_SATURN_KETU,nadi_rules.json,नाड़ी कारक भा�
 NADI_KARAKA_H10_SATURN_KETU,nadi_rules.json,नाड़ी कारक भाव फल: शनि भाव 10 (केतु दृष्टि/युति),Jeeva Karma Bhava Phalam,2,+
 NADI_KARAKA_H11_SATURN_KETU,nadi_rules.json,नाड़ी कारक भाव फल: शनि भाव 11 (केतु दृष्टि/युति),Jeeva Karma Bhava Phalam,2,+
 NADI_KARAKA_H12_SATURN_KETU,nadi_rules.json,नाड़ी कारक भाव फल: शनि भाव 12 (केतु दृष्टि/युति),Jeeva Karma Bhava Phalam,2,+
+NUM_LOSHU_MISSING_1,numerology_rules.json,लो-शू ग्रिड: अंक 1 की हीनता (Missing Number 1),Missing Numbers & Elemental Remedy,1,-
+NUM_LOSHU_MISSING_2,numerology_rules.json,लो-शू ग्रिड: अंक 2 की हीनता (Missing Number 2),Missing Numbers & Elemental Remedy,1,-
+NUM_LOSHU_MISSING_3,numerology_rules.json,लो-शू ग्रिड: अंक 3 की हीनता (Missing Number 3),Missing Numbers & Elemental Remedy,1,-
+NUM_LOSHU_MISSING_4,numerology_rules.json,लो-शू ग्रिड: अंक 4 की हीनता (Missing Number 4),Missing Numbers & Elemental Remedy,1,-
+NUM_LOSHU_MISSING_5,numerology_rules.json,लो-शू ग्रिड: अंक 5 की हीनता (Missing Number 5),Missing Numbers & Elemental Remedy,1,-
+NUM_LOSHU_MISSING_6,numerology_rules.json,लो-शू ग्रिड: अंक 6 की हीनता (Missing Number 6),Missing Numbers & Elemental Remedy,1,-
+NUM_LOSHU_MISSING_7,numerology_rules.json,लो-शू ग्रिड: अंक 7 की हीनता (Missing Number 7),Missing Numbers & Elemental Remedy,1,-
+NUM_LOSHU_MISSING_8,numerology_rules.json,लो-शू ग्रिड: अंक 8 की हीनता (Missing Number 8),Missing Numbers & Elemental Remedy,1,-
+NUM_LOSHU_MISSING_9,numerology_rules.json,लो-शू ग्रिड: अंक 9 की हीनता (Missing Number 9),Missing Numbers & Elemental Remedy,1,-
+NUM_LOSHU_REP_1_1,numerology_rules.json,लो-शू: अंक 1 की 1 बार पुनरावृत्ति (Single 1),Repetition Frequency Analysis,1,+
+NUM_LOSHU_REP_1_2,numerology_rules.json,लो-शू: अंक 1 की 2 बार पुनरावृत्ति (Double 1 (11)),Repetition Frequency Analysis,1,+
+NUM_LOSHU_REP_1_3,numerology_rules.json,लो-शू: अंक 1 की 3 बार पुनरावृत्ति (Triple 1 (111)),Repetition Frequency Analysis,1,-
+NUM_LOSHU_REP_1_4,numerology_rules.json,लो-शू: अंक 1 की 4 बार पुनरावृत्ति (Quadruple 1 (1111+)),Repetition Frequency Analysis,1,-
+NUM_LOSHU_REP_2_1,numerology_rules.json,लो-शू: अंक 2 की 1 बार पुनरावृत्ति (Single 2),Repetition Frequency Analysis,1,+
+NUM_LOSHU_REP_2_2,numerology_rules.json,लो-शू: अंक 2 की 2 बार पुनरावृत्ति (Double 2 (22)),Repetition Frequency Analysis,1,+
+NUM_LOSHU_REP_2_3,numerology_rules.json,लो-शू: अंक 2 की 3 बार पुनरावृत्ति (Triple 2 (222)),Repetition Frequency Analysis,1,-
+NUM_LOSHU_REP_2_4,numerology_rules.json,लो-शू: अंक 2 की 4 बार पुनरावृत्ति (Quadruple 2 (2222+)),Repetition Frequency Analysis,1,-
+NUM_LOSHU_REP_8_1,numerology_rules.json,लो-शू: अंक 8 की 1 बार पुनरावृत्ति (Single 8),Repetition Frequency Analysis,1,+
+NUM_LOSHU_REP_8_2,numerology_rules.json,लो-शू: अंक 8 की 2 बार पुनरावृत्ति (Double 8 (88)),Repetition Frequency Analysis,1,+
+NUM_LOSHU_REP_8_3,numerology_rules.json,लो-शू: अंक 8 की 3 बार पुनरावृत्ति (Triple 8 (888)),Repetition Frequency Analysis,1,-
+NUM_LOSHU_REP_8_4,numerology_rules.json,लो-शू: अंक 8 की 4 बार पुनरावृत्ति (Quadruple 8 (8888+)),Repetition Frequency Analysis,1,-
+NUM_LOSHU_REP_9_1,numerology_rules.json,लो-शू: अंक 9 की 1 बार पुनरावृत्ति (Single 9),Repetition Frequency Analysis,1,+
+NUM_LOSHU_REP_9_2,numerology_rules.json,लो-शू: अंक 9 की 2 बार पुनरावृत्ति (Double 9 (99)),Repetition Frequency Analysis,1,+
+NUM_LOSHU_REP_9_3,numerology_rules.json,लो-शू: अंक 9 की 3 बार पुनरावृत्ति (Triple 9 (999)),Repetition Frequency Analysis,1,-
+NUM_LOSHU_REP_9_4,numerology_rules.json,लो-शू: अंक 9 की 4 बार पुनरावृत्ति (Quadruple 9 (9999+)),Repetition Frequency Analysis,1,-
+NUM_LOSHU_PLANE_492_MENTAL,numerology_rules.json,मानसिक तल (Mental Plane 4-9-2),8 Planes of Manifestation,1,+
+NUM_LOSHU_PLANE_357_EMOTIONAL,numerology_rules.json,भावनात्मक तल (Emotional Plane 3-5-7),8 Planes of Manifestation,1,+
+NUM_LOSHU_PLANE_816_PRACTICAL,numerology_rules.json,व्यावहारिक तल (Practical Plane 8-1-6),8 Planes of Manifestation,1,+
+NUM_LOSHU_PLANE_438_THOUGHT,numerology_rules.json,विचार तल (Thought Plane 4-3-8),8 Planes of Manifestation,1,+
+NUM_LOSHU_PLANE_951_WILL,numerology_rules.json,संकल्प तल (Will Plane 9-5-1),8 Planes of Manifestation,1,+
+NUM_LOSHU_PLANE_276_ACTION,numerology_rules.json,कर्म तल (Action Plane 2-7-6),8 Planes of Manifestation,1,+
+NUM_LOSHU_PLANE_456_GOLDEN,numerology_rules.json,स्वर्णिम राजयोग तल (Golden Raj Yoga 4-5-6),8 Planes of Manifestation,1,+
+NUM_LOSHU_PLANE_258_SILVER,numerology_rules.json,रजत राजयोग तल (Silver Raj Yoga 2-5-8),8 Planes of Manifestation,1,+
 NUM_CHALDEAN_COMP_11,numerology_rules.json,कीरो अंकशास्त्र: संयुक्त अंक 11 - छिपे हुए खतरे (Clenched Fists),Chaldean Compound Numbers,1,-
 NUM_CHALDEAN_COMP_12,numerology_rules.json,कीरो अंकशास्त्र: संयुक्त अंक 12 - बलिदान (The Sacrifice),Chaldean Compound Numbers,1,-
 NUM_CHALDEAN_COMP_16,numerology_rules.json,कीरो अंकशास्त्र: संयुक्त अंक 16 - टूटा हुआ गढ़ (The Shattered Citadel),Chaldean Compound Numbers,1,-
@@ -2445,6 +2478,28 @@ SAMHITA_NAK_TRANSIT_VENUS_UTTARA ASHADHA,samhita_rules.json,बृहत्स�
 SAMHITA_NAK_TRANSIT_JUPITER_UTTARA BHADRAPADA,samhita_rules.json,बृहत्संहिता: गुरु का Uttara Bhadrapada नक्षत्र में गोचर फल,Nakshatra Gocharadhyaya,1,+
 SAMHITA_NAK_TRANSIT_VENUS_UTTARA BHADRAPADA,samhita_rules.json,बृहत्संहिता: शुक्र का Uttara Bhadrapada नक्षत्र में गोचर फल,Nakshatra Gocharadhyaya,1,+
 SAMHITA_NAK_TRANSIT_RAHU_REVATI,samhita_rules.json,बृहत्संहिता: राहु का Revati नक्षत्र में गोचर फल,Nakshatra Gocharadhyaya,1,-
+SAM_MNT_JUP_PROMINENT,samudrika_rules.json,गुरु पर्वत उन्नत (बृहस्पति शुभ),Samudrika Lakshana Adhyaya 65,1,+
+SAM_MNT_JUP_OVERDEVELOPED,samudrika_rules.json,गुरु पर्वत अत्यधिक उभरा हुआ,Hastarekha Prakarana,1,-
+SAM_MNT_JUP_DEPRESSED,samudrika_rules.json,गुरु पर्वत दबा हुआ (न्यून),Samudrika Lakshana Adhyaya 68,1,-
+SAM_MNT_SAT_NORMAL,samudrika_rules.json,शनि पर्वत संतुलित व स्पष्ट,Samudrika Adhyaya 65,1,+
+SAM_MNT_SAT_OVERDEVELOPED,samudrika_rules.json,शनि पर्वत अत्यधिक उभरा या जाल-युक्त,Hastarekha Prakarana,1,-
+SAM_MNT_SUN_PROMINENT,samudrika_rules.json,सूर्य पर्वत उन्नत व तेजोमय,Adhyaya 68,1,+
+SAM_MNT_SUN_DEPRESSED,samudrika_rules.json,सूर्य पर्वत दबा हुआ या दूषित,Samudrika Adhyaya 65,1,-
+SAM_MNT_MERC_PROMINENT,samudrika_rules.json,बुध पर्वत उन्नत व सुस्पष्ट,Hastarekha Prakarana,1,+
+SAM_MNT_MERC_GRILLE,samudrika_rules.json,बुध पर्वत पर जाली या विकृति,Vyapara Adhyaya,1,-
+SAM_MNT_VEN_PROMINENT,samudrika_rules.json,"शुक्र पर्वत उन्नत, स्निग्ध व मांसल",Samudrika Adhyaya 65,1,+
+SAM_MNT_VEN_OVERDEVELOPED,samudrika_rules.json,शुक्र पर्वत अत्यधिक उभरा व लाल,Kamashastra Prakarana,1,-
+SAM_MNT_MOON_PROMINENT,samudrika_rules.json,"चन्द्र पर्वत उन्नत, स्वच्छ व स्निग्ध",Adhyaya 68,1,+
+SAM_MNT_MOON_AFFLICTED,samudrika_rules.json,चन्द्र पर्वत पर कटी रेखाएं या तिल,Chandra Adhyaya,1,-
+SAM_LINE_LIFE_CLEAR_LONG,samudrika_rules.json,"जीवन रेखा सुस्पष्ट, गहरी व अखंड",Samudrika Adhyaya 65,1,+
+SAM_LINE_LIFE_BROKEN,samudrika_rules.json,जीवन रेखा बीच में खंडित (टूटी हुई),Ayur Nirnaya Prakarana,1,-
+SAM_LINE_HEAD_CLEAR_LONG,samudrika_rules.json,"मस्तिष्क रेखा स्पष्ट, निर्दोष व सुदृढ़",Adhyaya 68,1,+
+SAM_LINE_HEAD_ISLAND,samudrika_rules.json,मस्तिष्क रेखा पर द्वीप (Island) चिन्ह,Samudrika Adhyaya 65,1,-
+SAM_LINE_HEART_CHAINED,samudrika_rules.json,हृदय रेखा जंजीरदार या खंडित,Hridaya Dosha Adhyaya,1,-
+SAM_LINE_FATE_STOPPED_HEAD,samudrika_rules.json,भाग्य रेखा मस्तिष्क रेखा पर रुक जाए,Bhagya Prakarana,1,-
+SAM_SYM_YAVA_THUMB,samudrika_rules.json,अंगूठे पर यव चिन्ह (बुद्ध आई / अक्षी),Adhyaya 68,1,+
+SAM_SYM_MYSTIC_CROSS,samudrika_rules.json,रहस्यमयी क्रॉस (हृदय व मस्तिष्क रेखा के मध्य),Guhya Vidya Adhyaya,1,+
+SAM_SYM_BLACK_MOLE_PALM,samudrika_rules.json,पर्वत पर खुला काला तिल (Black Mole),Samudrika Adhyaya 65,1,-
 SARAVALI_SUN_MOON_H1,saravali_rules.json,सूर्य-चन्द्र युति - 1वें भाव में,Adhyaya 15 (Dvi-Graha Yoga Phala - House 1),2,-
 SARAVALI_SUN_MOON_H2,saravali_rules.json,सूर्य-चन्द्र युति - 2वें भाव में,Adhyaya 15 (Dvi-Graha Yoga Phala - House 2),2,-
 SARAVALI_SUN_MOON_H3,saravali_rules.json,सूर्य-चन्द्र युति - 3वें भाव में,Adhyaya 15 (Dvi-Graha Yoga Phala - House 3),2,-

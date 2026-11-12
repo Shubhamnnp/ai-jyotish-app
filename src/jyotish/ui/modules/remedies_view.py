@@ -1240,12 +1240,12 @@ def render_remedies_view(chart, tabs=None):
             _forbid_gem_list = [f"<b>{_GEM_MAP.get(l, l)}</b> ({l})" for l in _trika_lords]
 
             st.markdown(f"""
-            <div style="background: linear-gradient(135deg, #FEF2F2 0%, #FFFBEB 100%); border: 1.5px solid #F59E0B; border-radius: 10px; padding: 12px 16px; margin: 0 0 12px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
-                <div style="font-weight: 900; color: #92400E; font-size: 13.5px; margin-bottom: 6px; display:flex; align-items:center; gap:6px;">
+            <div style="background: linear-gradient(135deg, #FEF2F2 0%, #FFFBEB 100%); border: 1.5px solid #F59E0B; border-radius: 10px; padding: 14px 18px; margin-top: 10px; margin-bottom: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                <div style="font-weight: 900; color: #92400E; font-size: 13.5px; margin-bottom: 8px; display:flex; align-items:center; gap:6px;">
                     <span>🛡️ <b>रत्न धारण पात्रता एवं शास्त्रीय सुरक्षा गार्ड (Gemstone Safety Guard)</b></span>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; font-size: 12px; color: #1E293B;">
-                    <div style="background: #F0FDF4; border: 1px solid #86EFAC; border-radius: 6px; padding: 8px 12px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; font-size: 12px; color: #1E293B;">
+                    <div style="background: #F0FDF4; border: 1px solid #86EFAC; border-radius: 6px; padding: 10px 14px;">
                         <span style="color: #166534; font-weight: 800;">✅ शास्त्र-सम्मत सुरक्षित रत्न (अनुशंसित):</span><br/>
                         {', '.join(_safe_gem_list) if _safe_gem_list else 'केवल लग्न शुद्धि अनुसार'}<br/>
                         <small style="color: #047857;">त्रिकोणेश (१, ५, ९) रत्न बल एवं सौभाग्य संवर्धन करते हैं।</small>
@@ -1261,10 +1261,10 @@ def render_remedies_view(chart, tabs=None):
         except Exception as _e_gem:
             st.caption(f"रत्न सुरक्षा लोड हो रहा है: {_e_gem}")
 
-        st.markdown("<div style='height: 16px; min-height: 16px; clear: both; width: 100%; display: block;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 28px; min-height: 28px; line-height: 28px; margin: 16px 0; clear: both;'>&nbsp;</div>", unsafe_allow_html=True)
 
         # Remedy Shastriya Rules & Guidance Box
-        with st.expander("📖 सर्वर शास्त्रीय उपाय नियम पुस्तिका (Remedy Rules & Scientific Guide)", expanded=True):
+        with st.expander("📖 सर्व शास्त्रीय उपाय नियम पुस्तिका (Remedy Rules & Scientific Guide)", expanded=True):
             st.markdown("""
             1. **रत्न धारण नियम (Gemstone Rule):**
                - रत्न केवल उन्हीं ग्रहों का धारण किया जाता है जो कुण्डली में **शुभ (Benefic)** हों तथा जिनका **फ्री-विल 50% से अधिक** हो (तालिका में हरे रंग से चिन्हित)।

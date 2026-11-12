@@ -1,15 +1,15 @@
 # JyotishOS — Classical Rules Lint & Quality Audit Report (U1-T1)
 
 **Audit Timestamp:** 2026-11-05T11:00:00Z  
-**Total Rules Audited:** 12,506 across 15 Granthas  
-**Total Quality Flags:** 10,633  
+**Total Rules Audited:** 12,584 across 16 Granthas  
+**Total Quality Flags:** 10,657  
 
 ## 1. Quality Issues Breakdown by Type
 
 | Issue Type | Severity | Count | Impact |
 | :--- | :---: | :---: | :--- |
-| **CONTRADICTORY_POLARITY** | `CRITICAL` | 8,192 | Identical astronomical criteria producing conflicting +/- outcomes |
-| **NAME_CONDITION_MISMATCH** | `HIGH` | 303 | Title refers to different planet or house than evaluated condition |
+| **CONTRADICTORY_POLARITY** | `CRITICAL` | 8,210 | Identical astronomical criteria producing conflicting +/- outcomes |
+| **NAME_CONDITION_MISMATCH** | `HIGH` | 309 | Title refers to different planet or house than evaluated condition |
 | **GENERATED_FLAG** | `HIGH` | 0 | Rules marked as synthetic templates requiring quarantine |
 | **IDENTICAL_DESC_CLUSTER** | `MEDIUM` | 2,048 | Large clusters of rules sharing verbatim identical description |
 | **CITATION_ANOMALY** | `MEDIUM` | 0 | Missing, generic, or Sloka 0 placeholder citations |
@@ -31,9 +31,10 @@
 | **Muhurtha Chintamani & Nirnaya Sindhu** | 505 | 495 | 98.0% |
 | **Prashna Marga** | 498 | 323 | 64.9% |
 | **Jaimini Upadesha Sutras** | 415 | 408 | 98.3% |
+| **Ank Shastra & Lo-Shu (अंकशास्त्र एवं लो-शू चक्र)** | 264 | 226 | 85.6% |
 | **Sarvatobhadra & Kota Chakra Shastra** | 229 | 104 | 45.4% |
-| **Ank Shastra** | 213 | 208 | 97.7% |
 | **Tajika Neelakanthi** | 108 | 108 | 100.0% |
+| **Samudrika Shastra (सामुद्रिक शास्त्र - गरुड़ एवं भविष्य पुराण)** | 27 | 6 | 22.2% |
 
 ## 3. Top Contradictory Rule Pairs (Sample)
 
