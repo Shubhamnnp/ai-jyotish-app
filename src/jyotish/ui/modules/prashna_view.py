@@ -259,117 +259,116 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
     # TAB 1: सक्रिय जातक प्रश्न विश्लेषण (Active Native Dual Synthesis)
     # =========================================================================
     with ptab1:
-        with st.expander("👤 सक्रिय जातक प्रश्न विश्लेषण (Active Native Dual Horary Synthesis)", expanded=True):
-            st.caption(f"सक्रिय जातक: **{name}** | जन्म स्थान: **{default_city_name}** | तात्कालिक प्रश्न कुण्डली एवं जन्म कुण्डली का शास्त्रीय समन्वय।")
-
-            col_t1_c1, col_t1_c2 = st.columns([1, 2])
-            with col_t1_c1:
-                cat_choice_nat = st.selectbox(
-                    "प्रश्न श्रेणी चुनें (Select Category)",
-                    range(len(cat_options)),
-                    format_func=lambda i: cat_options[i] if i < len(cat_options) else "",
-                    index=min(6, max(0, len(cat_options) - 1)),
-                    key="nat_prashna_cat_idx"
-                )
-                nat_cat_meta = PRASHNA_CATEGORIES[cat_choice_nat] if cat_choice_nat < len(PRASHNA_CATEGORIES) else PRASHNA_CATEGORIES[0]
-                nat_cat_name = nat_cat_meta.get("Name", "Job")
-            with col_t1_c2:
-                nat_default_q = sample_queries.get(nat_cat_name, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
-                nat_query_text = st.text_input("अपना प्रश्न दर्ज करें (Enter Native Query)", value=nat_default_q, key="nat_prashna_query_text")
-
-            # Live Vartaman Date, Time & GPS Controls for Tab 1
-            live_now_nat = get_live_local_now(tz_offset)
-            if "nat_prashna_date_val" not in st.session_state:
-                st.session_state.nat_prashna_date_val = live_now_nat.date()
-            if "nat_prashna_time_val" not in st.session_state:
-                st.session_state.nat_prashna_time_val = live_now_nat.time().replace(microsecond=0)
-
-            def _cb_nat_set_live_now():
-                upd_now = get_live_local_now(tz_offset)
-                st.session_state.nat_prashna_date_val = upd_now.date()
-                st.session_state.nat_prashna_time_val = upd_now.time().replace(microsecond=0)
-                st.session_state.nat_prashna_d_picker = upd_now.date()
-                st.session_state.nat_prashna_t_picker = upd_now.time().replace(microsecond=0)
-
-            col_nt1, col_nt2, col_nt3, col_nt4 = st.columns([1.4, 1.4, 1.2, 1.2])
-            with col_nt1:
-                nat_q_date = st.date_input("📅 प्रश्न तिथि (Query Date)", value=st.session_state.nat_prashna_date_val, format="DD/MM/YYYY", key="nat_prashna_d_picker")
-                st.session_state.nat_prashna_date_val = nat_q_date
-            with col_nt2:
-                nat_q_time = st.time_input("⏱️ प्रश्न समय (Time - सेकंड सहित)", value=st.session_state.nat_prashna_time_val, step=1, key="nat_prashna_t_picker")
-                st.session_state.nat_prashna_time_val = nat_q_time
-            with col_nt3:
-                st.write("")
-                st.write("")
-                if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_nat_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें", on_click=_cb_nat_set_live_now):
-                    st.toast("✅ वर्तमान समय सेट किया गया!", icon="⏱️")
-            with col_nt4:
-                st.write("")
-                st.write("")
-                if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_nat_set_gps", help="डिवाइस GPS अनुमति मांगकर सटीक वर्तमान स्थान लें"):
-                    st.session_state.trigger_browser_gps = "nat_prashna"
-                    st.rerun()
-
-            calc_nat_btn = st.button("🔮 सक्रिय जातक प्रश्न विश्लेषण प्राप्त करें (Analyze Native Horary Query)", type="primary", use_container_width=True, key="btn_calc_nat_prashna")
-
-        nat_target_dt = datetime.combine(st.session_state.nat_prashna_date_val, st.session_state.nat_prashna_time_val)
-
-        need_nat_recalc = (
-            calc_nat_btn
-            or "prashna_native_res" not in st.session_state
-            or not st.session_state.prashna_native_res
-            or st.session_state.prashna_native_res.get("category") != nat_cat_name
-        )
-
-        if need_nat_recalc:
-            try:
-                st.session_state.prashna_native_res = default_prashna_service.generate_prashna_chart(
-                    query_text=nat_query_text,
-                    category_name=nat_cat_name,
-                    latitude=latitude,
-                    longitude=longitude,
-                    timezone_offset=tz_offset,
-                    query_dt=nat_target_dt,
-                    questioner_name=name
-                )
-                st.session_state.active_prashna_res = st.session_state.prashna_native_res
-                if calc_nat_btn:
-                    st.toast("✅ सक्रिय जातक प्रश्न कुण्डली एवं समन्वय सफलतापूर्वक परिकलित!", icon="🔮")
-            except Exception as e:
-                st.error(f"प्रश्न परिकलन में त्रुटि: {e}")
-
-        p_nat_res = st.session_state.get("prashna_native_res") or default_prashna_service.generate_prashna_chart(
-            query_text=nat_query_text, category_name=nat_cat_name, latitude=latitude, longitude=longitude, timezone_offset=tz_offset, query_dt=nat_target_dt, questioner_name=name
-        )
-        p_nat_chart: KundaliChart = p_nat_res.get("chart", chart)
-
-        # 4 Top KPI Cards wrapped in Collapsible Expander
-        with st.expander("🎯 प्रश्न फलसिद्धि निर्णय, समय एवं नियम सारांश (Horary Verdict & Timing Summary)", expanded=True):
-            kpi1, kpi2, kpi3, kpi4 = st.columns(4)
-            v_text_nat = str(p_nat_res.get("verdict", "उत्कृष्ट")).split(" (")[0]
-            v_badge_nat = str(p_nat_res.get("verdict_badge", "✅ शुभ"))
-            t_text_nat = str(p_nat_res.get("timing", "1 से 3 सप्ताह")).split(" (")[0]
-            v_score_nat = float(p_nat_res.get("verdict_score", 0.75))
-            pos_c_nat = p_nat_res.get("active_positive_count", 0)
-            neg_c_nat = p_nat_res.get("active_negative_count", 0)
-
-            kpi1.metric("🎯 शास्त्रीय निर्णय", v_text_nat, v_badge_nat)
-            kpi2.metric("⏳ संभावित समय", t_text_nat)
-            kpi3.metric("📊 सहमति व सिद्धि स्कोर", f"{int(v_score_nat * 100)}%")
-            kpi4.metric("📜 100 शास्त्रीय नियम", f"✅ {pos_c_nat} शुभ | ⚠️ {neg_c_nat} बाधाएं")
-
-            # Visual Probability Bar
-            st.markdown(f"**फलसिद्धि संभावना सूचकांक (Success Probability): {int(v_score_nat * 100)}%**")
-            st.progress(v_score_nat)
-
         # Sub-tabs for Tab 1: सक्रिय जातक प्रश्न विश्लेषण
-        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
         subtab_p1_charts, subtab_p1_synthesis = st.tabs([
             "1. ♊ जन्म कुण्डली एवं तात्कालिक प्रश्न कुण्डली द्वि-चक्र दर्शन",
             "2. ⚖️ जन्म कुण्डली vs प्रश्न कुण्डली शास्त्रीय समन्वय"
         ])
 
         with subtab_p1_charts:
+            with st.expander("👤 सक्रिय जातक प्रश्न विश्लेषण (Active Native Dual Horary Synthesis)", expanded=True):
+                st.caption(f"सक्रिय जातक: **{name}** | जन्म स्थान: **{default_city_name}** | तात्कालिक प्रश्न कुण्डली एवं जन्म कुण्डली का शास्त्रीय समन्वय।")
+
+                col_t1_c1, col_t1_c2 = st.columns([1, 2])
+                with col_t1_c1:
+                    cat_choice_nat = st.selectbox(
+                        "प्रश्न श्रेणी चुनें (Select Category)",
+                        range(len(cat_options)),
+                        format_func=lambda i: cat_options[i] if i < len(cat_options) else "",
+                        index=min(6, max(0, len(cat_options) - 1)),
+                        key="nat_prashna_cat_idx"
+                    )
+                    nat_cat_meta = PRASHNA_CATEGORIES[cat_choice_nat] if cat_choice_nat < len(PRASHNA_CATEGORIES) else PRASHNA_CATEGORIES[0]
+                    nat_cat_name = nat_cat_meta.get("Name", "Job")
+                with col_t1_c2:
+                    nat_default_q = sample_queries.get(nat_cat_name, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
+                    nat_query_text = st.text_input("अपना प्रश्न दर्ज करें (Enter Native Query)", value=nat_default_q, key="nat_prashna_query_text")
+
+                # Live Vartaman Date, Time & GPS Controls for Tab 1
+                live_now_nat = get_live_local_now(tz_offset)
+                if "nat_prashna_date_val" not in st.session_state:
+                    st.session_state.nat_prashna_date_val = live_now_nat.date()
+                if "nat_prashna_time_val" not in st.session_state:
+                    st.session_state.nat_prashna_time_val = live_now_nat.time().replace(microsecond=0)
+
+                def _cb_nat_set_live_now():
+                    upd_now = get_live_local_now(tz_offset)
+                    st.session_state.nat_prashna_date_val = upd_now.date()
+                    st.session_state.nat_prashna_time_val = upd_now.time().replace(microsecond=0)
+                    st.session_state.nat_prashna_d_picker = upd_now.date()
+                    st.session_state.nat_prashna_t_picker = upd_now.time().replace(microsecond=0)
+
+                col_nt1, col_nt2, col_nt3, col_nt4 = st.columns([1.4, 1.4, 1.2, 1.2])
+                with col_nt1:
+                    nat_q_date = st.date_input("📅 प्रश्न तिथि (Query Date)", value=st.session_state.nat_prashna_date_val, format="DD/MM/YYYY", key="nat_prashna_d_picker")
+                    st.session_state.nat_prashna_date_val = nat_q_date
+                with col_nt2:
+                    nat_q_time = st.time_input("⏱️ प्रश्न समय (Time - सेकंड सहित)", value=st.session_state.nat_prashna_time_val, step=1, key="nat_prashna_t_picker")
+                    st.session_state.nat_prashna_time_val = nat_q_time
+                with col_nt3:
+                    st.write("")
+                    st.write("")
+                    if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_nat_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें", on_click=_cb_nat_set_live_now):
+                        st.toast("✅ वर्तमान समय सेट किया गया!", icon="⏱️")
+                with col_nt4:
+                    st.write("")
+                    st.write("")
+                    if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_nat_set_gps", help="डिवाइस GPS अनुमति मांगकर सटीक वर्तमान स्थान लें"):
+                        st.session_state.trigger_browser_gps = "nat_prashna"
+                        st.rerun()
+
+                calc_nat_btn = st.button("🔮 सक्रिय जातक प्रश्न विश्लेषण प्राप्त करें (Analyze Native Horary Query)", type="primary", use_container_width=True, key="btn_calc_nat_prashna")
+
+            nat_target_dt = datetime.combine(st.session_state.nat_prashna_date_val, st.session_state.nat_prashna_time_val)
+
+            need_nat_recalc = (
+                calc_nat_btn
+                or "prashna_native_res" not in st.session_state
+                or not st.session_state.prashna_native_res
+                or st.session_state.prashna_native_res.get("category") != nat_cat_name
+            )
+
+            if need_nat_recalc:
+                try:
+                    st.session_state.prashna_native_res = default_prashna_service.generate_prashna_chart(
+                        query_text=nat_query_text,
+                        category_name=nat_cat_name,
+                        latitude=latitude,
+                        longitude=longitude,
+                        timezone_offset=tz_offset,
+                        query_dt=nat_target_dt,
+                        questioner_name=name
+                    )
+                    st.session_state.active_prashna_res = st.session_state.prashna_native_res
+                    if calc_nat_btn:
+                        st.toast("✅ सक्रिय जातक प्रश्न कुण्डली एवं समन्वय सफलतापूर्वक परिकलित!", icon="🔮")
+                except Exception as e:
+                    st.error(f"प्रश्न परिकलन में त्रुटि: {e}")
+
+            p_nat_res = st.session_state.get("prashna_native_res") or default_prashna_service.generate_prashna_chart(
+                query_text=nat_query_text, category_name=nat_cat_name, latitude=latitude, longitude=longitude, timezone_offset=tz_offset, query_dt=nat_target_dt, questioner_name=name
+            )
+            p_nat_chart: KundaliChart = p_nat_res.get("chart", chart)
+
+            # 4 Top KPI Cards wrapped in Collapsible Expander
+            with st.expander("🎯 प्रश्न फलसिद्धि निर्णय, समय एवं नियम सारांश (Horary Verdict & Timing Summary)", expanded=True):
+                kpi1, kpi2, kpi3, kpi4 = st.columns(4)
+                v_text_nat = str(p_nat_res.get("verdict", "उत्कृष्ट")).split(" (")[0]
+                v_badge_nat = str(p_nat_res.get("verdict_badge", "✅ शुभ"))
+                t_text_nat = str(p_nat_res.get("timing", "1 से 3 सप्ताह")).split(" (")[0]
+                v_score_nat = float(p_nat_res.get("verdict_score", 0.75))
+                pos_c_nat = p_nat_res.get("active_positive_count", 0)
+                neg_c_nat = p_nat_res.get("active_negative_count", 0)
+
+                kpi1.metric("🎯 शास्त्रीय निर्णय", v_text_nat, v_badge_nat)
+                kpi2.metric("⏳ संभावित समय", t_text_nat)
+                kpi3.metric("📊 सहमति व सिद्धि स्कोर", f"{int(v_score_nat * 100)}%")
+                kpi4.metric("📜 100 शास्त्रीय नियम", f"✅ {pos_c_nat} शुभ | ⚠️ {neg_c_nat} बाधाएं")
+
+                # Visual Probability Bar
+                st.markdown(f"**फलसिद्धि संभावना सूचकांक (Success Probability): {int(v_score_nat * 100)}%**")
+                st.progress(v_score_nat)
+
             # Dual Chart Display (Side-by-side)
             st.markdown("##### ♊ जन्म कुण्डली एवं तात्कालिक प्रश्न कुण्डली द्वि-चक्र दर्शन (Dual Chart View)")
             col_c_natal, col_c_prashna = st.columns(2)
