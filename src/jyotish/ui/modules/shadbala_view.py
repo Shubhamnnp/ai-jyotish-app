@@ -20,6 +20,19 @@ def render_shadbala_view(chart, tabs=None):
     st.subheader("⚖️ षड्बल, भावबल एवं दृष्टि वेध चक्र (Comprehensive Shadbala & Aspectarium)")
     st.write("महर्षि पराशर विरचित बृहत्पाराशर होराशास्त्र (BPHS Ch. 27-29) आधारित षड्विध बल, द्वादश भाव बल, त्रिविध ग्रह अवस्थाएं, इष्ट-कष्ट फल एवं दृष्टि वेध मैट्रिक्स।")
 
+    # CSS for compact unified expanders & zero top scroll
+    st.markdown("""
+    <style>
+    div[data-testid="stExpander"] {
+        margin-top: 6px !important;
+        margin-bottom: 6px !important;
+    }
+    div[data-testid="stExpander"] details {
+        border-radius: 8px !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     def _clean_html(s: str) -> str:
         return "".join(line.strip() for line in s.splitlines() if line.strip())
 
@@ -289,14 +302,16 @@ def render_shadbala_view(chart, tabs=None):
         strong_count = sum(1 for p in seven_p if getattr(sb_planets.get(p), "is_strong", False))
         avg_ratio = sum(getattr(sb_planets.get(p), "strength_ratio", 1.0) for p in seven_p) / 7.0
 
-        c_sb1, c_sb2, c_sb3, c_sb4 = st.columns(4)
-        top_hi = hi_planet_meta.get(top_planet, (top_planet, "", ""))[0]
-        low_hi = hi_planet_meta.get(low_planet, (low_planet, "", ""))[0]
+        c_sb_exp = st.expander("🔮 लग्न, शिरोमणि व न्यूनतम बली ग्रह एवं षड्बल सामर्थ्य सारांश (Shadbala Highlights)", expanded=True)
+        with c_sb_exp:
+            c_sb1, c_sb2, c_sb3, c_sb4 = st.columns(4)
+            top_hi = hi_planet_meta.get(top_planet, (top_planet, "", ""))[0]
+            low_hi = hi_planet_meta.get(low_planet, (low_planet, "", ""))[0]
 
-        c_sb1.metric("लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
-        c_sb2.metric("🌟 शिरोमणि बली ग्रह", f"{top_hi}", f"{top_obj.strength_ratio:.2f}x ({int(top_obj.total_virupas)}V) {top_dms}")
-        c_sb3.metric("⚠️ न्यूनतम बली ग्रह", f"{low_hi}", f"{low_obj.strength_ratio:.2f}x ({int(low_obj.total_virupas)}V) {low_dms}")
-        c_sb4.metric("📊 षड्बल सामर्थ्य", f"{avg_ratio:.2f}x (औसत)", f"{strong_count}/7 ग्रह बलवान्")
+            c_sb1.metric("लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
+            c_sb2.metric("🌟 शिरोमणि बली ग्रह", f"{top_hi}", f"{top_obj.strength_ratio:.2f}x ({int(top_obj.total_virupas)}V) {top_dms}")
+            c_sb3.metric("⚠️ न्यूनतम बली ग्रह", f"{low_hi}", f"{low_obj.strength_ratio:.2f}x ({int(low_obj.total_virupas)}V) {low_dms}")
+            c_sb4.metric("📊 षड्बल सामर्थ्य", f"{avg_ratio:.2f}x (औसत)", f"{strong_count}/7 ग्रह बलवान्")
 
         # 6 Dedicated Shadbala Tabs
         sbtab1, sbtab2, sbtab3, sbtab4, sbtab5, sbtab6 = st.tabs(tabs)
