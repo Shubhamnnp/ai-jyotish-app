@@ -362,117 +362,124 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
             st.markdown(f"**फलसिद्धि संभावना सूचकांक (Success Probability): {int(v_score_nat * 100)}%**")
             st.progress(v_score_nat)
 
-        # Dual Chart Display (Side-by-side)
-        st.markdown("---")
-        st.markdown("##### ♊ जन्म कुण्डली एवं तात्कालिक प्रश्न कुण्डली द्वि-चक्र दर्शन (Dual Chart View)")
-        col_c_natal, col_c_prashna = st.columns(2)
+        # Sub-tabs for Tab 1: सक्रिय जातक प्रश्न विश्लेषण
+        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+        subtab_p1_charts, subtab_p1_synthesis = st.tabs([
+            "1. ♊ जन्म कुण्डली एवं तात्कालिक प्रश्न कुण्डली द्वि-चक्र दर्शन",
+            "2. ⚖️ जन्म कुण्डली vs प्रश्न कुण्डली शास्त्रीय समन्वय"
+        ])
 
-        with col_c_natal:
-            st.markdown(f"###### 📜 चक्र 1: जन्म कुण्डली (Natal D1 — {name})")
-            natal_svg = render_chart_svg(chart, f"Natal D1 — {name}", varga_code="D1")
-            st.markdown(f'<div style="max-width:90%;margin:0 auto;">{natal_svg}</div>', unsafe_allow_html=True)
-            st.caption(f"जन्म लग्न: **{chart.lagna_sign_name} ({l_dms})** | जातक: **{name}**")
+        with subtab_p1_charts:
+            # Dual Chart Display (Side-by-side)
+            st.markdown("##### ♊ जन्म कुण्डली एवं तात्कालिक प्रश्न कुण्डली द्वि-चक्र दर्शन (Dual Chart View)")
+            col_c_natal, col_c_prashna = st.columns(2)
 
-        with col_c_prashna:
-            c_icon_nat = p_nat_res.get("category_icon", "🔮")
-            c_hi_nat = p_nat_res.get("category_hi", nat_cat_name)
-            st.markdown(f"###### 🔮 चक्र 2: तात्कालिक प्रश्न कुण्डली (Instant Prashna — {c_icon_nat} {c_hi_nat})")
-            prashna_svg = render_chart_svg(p_nat_chart, f"Prashna D1 — {nat_cat_name}", varga_code="D1")
-            st.markdown(f'<div style="max-width:90%;margin:0 auto;">{prashna_svg}</div>', unsafe_allow_html=True)
-            st.caption(f"प्रश्न लग्न: **{p_nat_res.get('prashna_lagna', '-')}** | समय: **{p_nat_res.get('query_time', '')}**")
+            with col_c_natal:
+                st.markdown(f"###### 📜 चक्र 1: जन्म कुण्डली (Natal D1 — {name})")
+                natal_svg = render_chart_svg(chart, f"Natal D1 — {name}", varga_code="D1")
+                st.markdown(f'<div style="max-width:90%;margin:0 auto;">{natal_svg}</div>', unsafe_allow_html=True)
+                st.caption(f"जन्म लग्न: **{chart.lagna_sign_name} ({l_dms})** | जातक: **{name}**")
 
-        # Dual Synthesis Engine
-        st.markdown("---")
-        st.markdown("##### ⚖️ जन्म कुण्डली vs प्रश्न कुण्डली शास्त्रीय समन्वय (Dual Kundali Synthesis Matrix)")
+            with col_c_prashna:
+                c_icon_nat = p_nat_res.get("category_icon", "🔮")
+                c_hi_nat = p_nat_res.get("category_hi", nat_cat_name)
+                st.markdown(f"###### 🔮 चक्र 2: तात्कालिक प्रश्न कुण्डली (Instant Prashna — {c_icon_nat} {c_hi_nat})")
+                prashna_svg = render_chart_svg(p_nat_chart, f"Prashna D1 — {nat_cat_name}", varga_code="D1")
+                st.markdown(f'<div style="max-width:90%;margin:0 auto;">{prashna_svg}</div>', unsafe_allow_html=True)
+                st.caption(f"प्रश्न लग्न: **{p_nat_res.get('prashna_lagna', '-')}** | समय: **{p_nat_res.get('query_time', '')}**")
 
-        p_lagna_id_val = p_nat_chart.lagna_sign_id
-        natal_lagna_id_val = chart.lagna_sign_id
-        lagna_rel_house = ((p_lagna_id_val - natal_lagna_id_val) % 12) + 1
+        with subtab_p1_synthesis:
+            # Dual Synthesis Engine
+            st.markdown("##### ⚖️ जन्म कुण्डली vs प्रश्न कुण्डली शास्त्रीय समन्वय (Dual Kundali Synthesis Matrix)")
 
-        if lagna_rel_house in [1, 4, 7, 10]:
-            rel_desc = f"🌟 **केंद्र सम्बंध ({lagna_rel_house}वां भाव):** प्रश्न लग्न जातक के जन्म लग्न से केंद्र में है। यह कार्य में तात्कालिक गतिशीलता, सामाजिक प्रभाव एवं प्रत्यक्ष सफलता का प्रबल शास्त्रीय सूचक है।"
-            rel_color = "#15803d"
-            rel_bg = "#f0fdf4"
-            rel_border = "#86efac"
-        elif lagna_rel_house in [5, 9]:
-            rel_desc = f"✨ **त्रिकोण सम्बंध ({lagna_rel_house}वां भाव):** प्रश्न लग्न जातक के जन्म लग्न से त्रिकोण में स्थित है। यह पूर्वपुण्य, ईश्वरीय कृपा एवं सहज सौभाग्य से कार्य सिद्ध होने का प्रमाण है।"
-            rel_color = "#047857"
-            rel_bg = "#ecfdf5"
-            rel_border = "#6ee7b7"
-        elif lagna_rel_house in [3, 11]:
-            rel_desc = f"🚀 **उपचय सम्बंध ({lagna_rel_house}वां भाव):** प्रश्न लग्न जातक के जन्म लग्न से उपचय भाव में है। जातक के निरंतर पुरुषार्थ, मित्रों के सहयोग एवं पराक्रम से निश्चित सिद्धि प्राप्त होगी।"
-            rel_color = "#1d4ed8"
-            rel_bg = "#eff6ff"
-            rel_border = "#93c5fd"
-        elif lagna_rel_house in [6, 8, 12]:
-            rel_desc = f"⚠️ **त्रिक सम्बंध ({lagna_rel_house}वां भाव):** प्रश्न लग्न जातक के जन्म लग्न से दुस्थान (त्रिक) भाव में है। अभीष्ट कार्य में अज्ञात रुकावटें, तनाव अथवा विलंब की संभावना है; अतिरिक्त सावधानी व शास्त्रीय उपाय अपेक्षित हैं।"
-            rel_color = "#b91c1c"
-            rel_bg = "#fef2f2"
-            rel_border = "#fca5a5"
-        else:
-            rel_desc = f"⚖️ **द्वितीय भाव सम्बंध ({lagna_rel_house}वां भाव):** प्रश्न लग्न जातक के जन्म लग्न से द्वितीय भाव में है। आर्थिक व पारिवारिक संसाधनों के सदुपयोग से मध्यम गति से कार्य सिद्धि होगी।"
-            rel_color = "#b45309"
-            rel_bg = "#fffbeb"
-            rel_border = "#fcd34d"
+            p_lagna_id_val = p_nat_chart.lagna_sign_id
+            natal_lagna_id_val = chart.lagna_sign_id
+            lagna_rel_house = ((p_lagna_id_val - natal_lagna_id_val) % 12) + 1
 
-        col_syn1, col_syn2 = st.columns(2)
-        with col_syn1:
-            st.markdown(_clean_html(f"""
-            <div style="background:{rel_bg};border:1px solid {rel_border};border-radius:10px;padding:14px;margin-bottom:12px;">
-                <div style="font-weight:700;color:{rel_color};font-size:14px;">1. लग्न-सम्बन्ध विश्लेषण (Lagna Inter-Relation)</div>
-                <div style="font-size:13px;color:#1e293b;margin-top:6px;line-height:1.5;">{rel_desc}</div>
-                <div style="font-size:12px;color:#64748b;margin-top:6px;">जन्म लग्न: {chart.lagna_sign_name} ➔ प्रश्न लग्न: {p_nat_res.get('prashna_lagna_sign', '')} ({lagna_rel_house}वां भाव)</div>
-            </div>
-            """), unsafe_allow_html=True)
+            if lagna_rel_house in [1, 4, 7, 10]:
+                rel_desc = f"🌟 **केंद्र सम्बंध ({lagna_rel_house}वां भाव):** प्रश्न लग्न जातक के जन्म लग्न से केंद्र में है। यह कार्य में तात्कालिक गतिशीलता, सामाजिक प्रभाव एवं प्रत्यक्ष सफलता का प्रबल शास्त्रीय सूचक है।"
+                rel_color = "#15803d"
+                rel_bg = "#f0fdf4"
+                rel_border = "#86efac"
+            elif lagna_rel_house in [5, 9]:
+                rel_desc = f"✨ **त्रिकोण सम्बंध ({lagna_rel_house}वां भाव):** प्रश्न लग्न जातक के जन्म लग्न से त्रिकोण में स्थित है। यह पूर्वपुण्य, ईश्वरीय कृपा एवं सहज सौभाग्य से कार्य सिद्ध होने का प्रमाण है।"
+                rel_color = "#047857"
+                rel_bg = "#ecfdf5"
+                rel_border = "#6ee7b7"
+            elif lagna_rel_house in [3, 11]:
+                rel_desc = f"🚀 **उपचय सम्बंध ({lagna_rel_house}वां भाव):** प्रश्न लग्न जातक के जन्म लग्न से उपचय भाव में है। जातक के निरंतर पुरुषार्थ, मित्रों के सहयोग एवं पराक्रम से निश्चित सिद्धि प्राप्त होगी।"
+                rel_color = "#1d4ed8"
+                rel_bg = "#eff6ff"
+                rel_border = "#93c5fd"
+            elif lagna_rel_house in [6, 8, 12]:
+                rel_desc = f"⚠️ **त्रिक सम्बंध ({lagna_rel_house}वां भाव):** प्रश्न लग्न जातक के जन्म लग्न से दुस्थान (त्रिक) भाव में है। अभीष्ट कार्य में अज्ञात रुकावटें, तनाव अथवा विलंब की संभावना है; अतिरिक्त सावधानी व शास्त्रीय उपाय अपेक्षित हैं।"
+                rel_color = "#b91c1c"
+                rel_bg = "#fef2f2"
+                rel_border = "#fca5a5"
+            else:
+                rel_desc = f"⚖️ **द्वितीय भाव सम्बंध ({lagna_rel_house}वां भाव):** प्रश्न लग्न जातक के जन्म लग्न से द्वितीय भाव में है। आर्थिक व पारिवारिक संसाधनों के सदुपयोग से मध्यम गति से कार्य सिद्धि होगी।"
+                rel_color = "#b45309"
+                rel_bg = "#fffbeb"
+                rel_border = "#fcd34d"
 
-            tajika_yoga_str = p_nat_res.get("tajika_yoga", "")
-            st.markdown(_clean_html(f"""
-            <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:14px;">
-                <div style="font-weight:700;color:#0f172a;font-size:14px;">2. कार्येश एवं ताजिक सम्बंध (Karyesha & Tajika Alignment)</div>
-                <div style="font-size:13px;color:#334155;margin-top:6px;line-height:1.5;">
-                    • <b>प्रश्न लग्नेश:</b> {p_nat_res.get('lagnesh', '-')}<br/>
-                    • <b>अभीष्ट कार्येश:</b> {p_nat_res.get('karyesh', '-')}<br/>
-                    • <b>सक्रिय ताजिक योग:</b> {tajika_yoga_str}
+            col_syn1, col_syn2 = st.columns(2)
+            with col_syn1:
+                st.markdown(_clean_html(f"""
+                <div style="background:{rel_bg};border:1px solid {rel_border};border-radius:10px;padding:14px;margin-bottom:12px;">
+                    <div style="font-weight:700;color:{rel_color};font-size:14px;">1. लग्न-सम्बन्ध विश्लेषण (Lagna Inter-Relation)</div>
+                    <div style="font-size:13px;color:#1e293b;margin-top:6px;line-height:1.5;">{rel_desc}</div>
+                    <div style="font-size:12px;color:#64748b;margin-top:6px;">जन्म लग्न: {chart.lagna_sign_name} ➔ प्रश्न लग्न: {p_nat_res.get('prashna_lagna_sign', '')} ({lagna_rel_house}वां भाव)</div>
                 </div>
-            </div>
-            """), unsafe_allow_html=True)
+                """), unsafe_allow_html=True)
 
-        with col_syn2:
-            moon_plc_str = p_nat_res.get("moon_placement", "-")
-            expl_str = p_nat_res.get("explanation_hi", "")
-            st.markdown(_clean_html(f"""
-            <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:14px;margin-bottom:12px;">
-                <div style="font-weight:700;color:#0f172a;font-size:14px;">3. प्रश्नकालीन चन्द्र मनःस्थिति (Querent's Mental Readiness)</div>
-                <div style="font-size:13px;color:#334155;margin-top:6px;line-height:1.5;">
-                    {moon_plc_str}<br/>
-                    <span style="font-size:12px;color:#64748b;">(चन्द्रमा प्रश्नकर्ता की मानसिक तत्परता एवं अनुकूल वातावरण का नियामक है।)</span>
+                tajika_yoga_str = p_nat_res.get("tajika_yoga", "")
+                st.markdown(_clean_html(f"""
+                <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:14px;">
+                    <div style="font-weight:700;color:#0f172a;font-size:14px;">2. कार्येश एवं ताजिक सम्बंध (Karyesha & Tajika Alignment)</div>
+                    <div style="font-size:13px;color:#334155;margin-top:6px;line-height:1.5;">
+                        • <b>प्रश्न लग्नेश:</b> {p_nat_res.get('lagnesh', '-')}<br/>
+                        • <b>अभीष्ट कार्येश:</b> {p_nat_res.get('karyesh', '-')}<br/>
+                        • <b>सक्रिय ताजिक योग:</b> {tajika_yoga_str}
+                    </div>
                 </div>
-            </div>
-            <div style="background:#f1f5f9;border-left:4px solid #3b82f6;border-radius:4px;padding:14px;">
-                <div style="font-weight:700;color:#1e3a8a;font-size:14px;">4. शास्त्रीय निष्कर्ष एवं दिशानिर्देश (Shastriya Synthesis Verdict)</div>
-                <div style="font-size:13px;color:#1e293b;margin-top:6px;line-height:1.5;">{expl_str}</div>
-            </div>
-            """), unsafe_allow_html=True)
+                """), unsafe_allow_html=True)
 
-            # 5. केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)
-            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
-            with st.expander("🔮 केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)", expanded=False):
-                st.caption("केरलीय प्रश्न मार्ग एवं माधव दीपिका प्रतिपादित त्रिक-स्फुट, पञ्च-स्फुट, प्राण, देह, मृत्यु, बीज, क्षेत्र एवं कार्य स्फुटों का सूक्ष्म विन्यास:")
-                try:
-                    calc_fn = getattr(default_prashna_service, "calculate_shodasha_sphutas", None)
-                    if not calc_fn:
-                        import src.jyotish.services.prashna as _p_dyn
-                        _p_dyn = importlib.reload(_p_dyn)
-                        calc_fn = getattr(_p_dyn.PrashnaService, "calculate_shodasha_sphutas", None) or getattr(_p_dyn.default_prashna_service, "calculate_shodasha_sphutas", None)
-                    if calc_fn:
-                        karyesha_p = p_nat_res.get("karyesh", "Jupiter")
-                        sphutas_data = calc_fn(chart, karyesha=karyesha_p)
-                        df_sphutas = pd.DataFrame(sphutas_data)
-                        st.dataframe(df_sphutas, use_container_width=True, hide_index=True)
-                    else:
-                        st.info("षोडश स्फुट सेवा मॉड्यूल रीलोड हो रहा है, कृपया पृष्ठ रिफ्रेश करें...")
-                except Exception as _e_sph:
-                    st.warning(f"षोडश स्फुट गणना उपलब्ध नहीं: {_e_sph}")
+            with col_syn2:
+                moon_plc_str = p_nat_res.get("moon_placement", "-")
+                expl_str = p_nat_res.get("explanation_hi", "")
+                st.markdown(_clean_html(f"""
+                <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:14px;margin-bottom:12px;">
+                    <div style="font-weight:700;color:#0f172a;font-size:14px;">3. प्रश्नकालीन चन्द्र मनःस्थिति (Querent's Mental Readiness)</div>
+                    <div style="font-size:13px;color:#334155;margin-top:6px;line-height:1.5;">
+                        {moon_plc_str}<br/>
+                        <span style="font-size:12px;color:#64748b;">(चन्द्रमा प्रश्नकर्ता की मानसिक तत्परता एवं अनुकूल वातावरण का नियामक है।)</span>
+                    </div>
+                </div>
+                <div style="background:#f1f5f9;border-left:4px solid #3b82f6;border-radius:4px;padding:14px;">
+                    <div style="font-weight:700;color:#1e3a8a;font-size:14px;">4. शास्त्रीय निष्कर्ष एवं दिशानिर्देश (Shastriya Synthesis Verdict)</div>
+                    <div style="font-size:13px;color:#1e293b;margin-top:6px;line-height:1.5;">{expl_str}</div>
+                </div>
+                """), unsafe_allow_html=True)
+
+                # 5. केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)
+                st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+                with st.expander("🔮 केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)", expanded=False):
+                    st.caption("केरलीय प्रश्न मार्ग एवं माधव दीपिका प्रतिपादित त्रिक-स्फुट, पञ्च-स्फुट, प्राण, देह, मृत्यु, बीज, क्षेत्र एवं कार्य स्फुटों का सूक्ष्म विन्यास:")
+                    try:
+                        calc_fn = getattr(default_prashna_service, "calculate_shodasha_sphutas", None)
+                        if not calc_fn:
+                            import src.jyotish.services.prashna as _p_dyn
+                            _p_dyn = importlib.reload(_p_dyn)
+                            calc_fn = getattr(_p_dyn.PrashnaService, "calculate_shodasha_sphutas", None) or getattr(_p_dyn.default_prashna_service, "calculate_shodasha_sphutas", None)
+                        if calc_fn:
+                            karyesha_p = p_nat_res.get("karyesh", "Jupiter")
+                            sphutas_data = calc_fn(chart, karyesha=karyesha_p)
+                            df_sphutas = pd.DataFrame(sphutas_data)
+                            st.dataframe(df_sphutas, use_container_width=True, hide_index=True)
+                        else:
+                            st.info("षोडश स्फुट सेवा मॉड्यूल रीलोड हो रहा है, कृपया पृष्ठ रिफ्रेश करें...")
+                    except Exception as _e_sph:
+                        st.warning(f"षोडश स्फुट गणना उपलब्ध नहीं: {_e_sph}")
 
     # =========================================================================
     # TAB 2: नवीन प्रश्नकर्ता एवं तात्कालिक प्रश्न (New / Custom Querent)
@@ -666,87 +673,135 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
         st.markdown("#### 🪐 प्रश्नकालीन नवग्रह स्थिति तालिका एवं खगोलीय सामर्थ्य (Planetary Horary Metrics)")
         st.info(f"📍 वर्तमान सक्रिय विश्लेषण: **{cur_p_res.get('questioner_name', 'जातक')}** | श्रेणी: **{cur_p_res.get('category_icon', '🔮')} {cur_p_res.get('category_hi', cur_p_res.get('category', ''))}** | प्रश्न: *'{cur_p_res.get('query_text', '')}'*")
 
-        # Planetary Astronomical Metrics Table
-        p_graha_rows = []
-        for g_row in cur_p_res.get("graha_table", []):
-            g_name = g_row.get("graha", "")
-            dignity_label, _, _ = get_varga_dignity_info(g_name, g_row.get("sign", ""), affliction_engine)
-            deeptamsha_val = PRASHNA_DEEPTAMSHA.get(g_name, 10.0)
-            p_obj = cur_p_chart.planets.get(g_name)
-            is_comb = "🔥 अस्त" if (p_obj and getattr(p_obj, "is_combust", False)) else "—"
+        # Subtabs for Tab 3: प्रश्न ग्रह स्थिति
+        subtab_p3_table, subtab_p3_chart = st.tabs([
+            "1. 📋 प्रश्नकालीन नवग्रह स्थिति तालिका एवं खगोलीय सामर्थ्य",
+            "2. 📊 नवग्रह तात्कालिक क्रियाशीलता व सामर्थ्य आलेख"
+        ])
 
-            # Micro DMS & Swabhav
-            dms_val = g_row.get("dms_str")
-            if not dms_val and p_obj:
-                deg_val = getattr(p_obj, "sign_degree", 0.0)
-                ansh = int(deg_val)
-                kala = int(round((deg_val - ansh) * 60.0))
-                if kala >= 60:
-                    kala = 0
-                    ansh += 1
-                dms_val = f"{ansh}° {kala:02d}'"
-            elif not dms_val:
-                dms_val = g_row.get("degree", "—")
+        with subtab_p3_table:
+            # Planetary Astronomical Metrics Table (Premium HTML Styling)
+            card_bg_p = "#111827" if (is_night_mode or is_astrallis_mode) else "#FFFFFF"
+            card_bdr_p = "rgba(255,255,255,0.12)" if (is_night_mode or is_astrallis_mode) else "#E2E8F0"
+            hdr_bg_p = "#1F2937" if (is_night_mode or is_astrallis_mode) else "#F1F5F9"
+            hdr_bdr_p = "#374151" if (is_night_mode or is_astrallis_mode) else "#CBD5E1"
+            text_p1 = "#F8FAFC" if (is_night_mode or is_astrallis_mode) else "#0F172A"
+            text_p2 = "#94A3B8" if (is_night_mode or is_astrallis_mode) else "#475569"
+            row_alt_p = "#1F2937" if (is_night_mode or is_astrallis_mode) else "#FCFCFD"
+            row_bg_p = "#111827" if (is_night_mode or is_astrallis_mode) else "#FFFFFF"
+            row_bdr_p = "#374151" if (is_night_mode or is_astrallis_mode) else "#F1F5F9"
 
-            swabhav_val = g_row.get("swabhav")
-            if not swabhav_val:
-                swabhav_val = "नैसर्गिक शुभ" if g_name in ["Jupiter", "Venus", "Mercury", "Moon"] else "नैसर्गिक क्रूर"
+            tbl_pr_html = f'<div style="width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1.5px solid {card_bdr_p}; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 6px; margin-bottom: 16px;">'
+            tbl_pr_html += f'<table style="width: 100%; border-collapse: collapse; text-align: left; background: {card_bg_p}; font-size: 12px; table-layout: auto;">'
+            tbl_pr_html += f'<thead><tr style="background: {hdr_bg_p}; border-bottom: 2px solid {hdr_bdr_p};">'
+            tbl_pr_html += f'<th style="padding: 9px 12px; font-weight: 800; color: {text_p1};">ग्रह (Graha)</th>'
+            tbl_pr_html += f'<th style="padding: 9px 10px; font-weight: 800; color: {text_p1};">स्वभाव</th>'
+            tbl_pr_html += f'<th style="padding: 9px 10px; font-weight: 800; color: {text_p1};">राशि व स्वामी</th>'
+            tbl_pr_html += f'<th style="padding: 9px 10px; font-weight: 800; color: {text_p1};">भाव</th>'
+            tbl_pr_html += f'<th style="padding: 9px 10px; font-weight: 800; color: {text_p1};">अंश-कला (DMS)</th>'
+            tbl_pr_html += f'<th style="padding: 9px 10px; font-weight: 800; color: {text_p1};">नक्षत्र व चरण</th>'
+            tbl_pr_html += f'<th style="padding: 9px 10px; font-weight: 800; color: {text_p1}; text-align: center;">गति व अवस्था</th>'
+            tbl_pr_html += f'<th style="padding: 9px 10px; font-weight: 800; color: {text_p1}; text-align: center;">गरिमा (Dignity)</th>'
+            tbl_pr_html += f'<th style="padding: 9px 10px; font-weight: 800; color: {text_p1}; text-align: center;">दीप्तांश (Orb)</th>'
+            tbl_pr_html += '</tr></thead><tbody>'
 
-            nak_val = g_row.get("nakshatra", "—")
-            if g_row.get("nakshatra_name") and g_row.get("nakshatra_pada"):
-                nak_val = f"{g_row.get('nakshatra_name')} (चरण {g_row.get('nakshatra_pada')})"
+            for idx, g_row in enumerate(cur_p_res.get("graha_table", [])):
+                g_name = g_row.get("graha", "")
+                dignity_label, _, _ = get_varga_dignity_info(g_name, g_row.get("sign", ""), affliction_engine)
+                deeptamsha_val = PRASHNA_DEEPTAMSHA.get(g_name, 10.0)
+                p_obj = cur_p_chart.planets.get(g_name)
+                is_comb = bool(p_obj and getattr(p_obj, "is_combust", False))
 
-            p_graha_rows.append({
-                "ग्रह (Graha)": g_name,
-                "नैसर्गिक स्वभाव": swabhav_val,
-                "राशि (Sign)": g_row.get("sign", ""),
-                "राशि स्वामी (Lord)": g_row.get("lord", ""),
-                "भाव (House)": g_row.get("house", ""),
-                "अंश-कला (DMS)": dms_val,
-                "नक्षत्र एवं चरण": nak_val,
-                "गति (Motion)": g_row.get("motion", ""),
-                "अस्त (Combust)": is_comb,
-                "गरिमा (Dignity)": dignity_label,
-                "दीप्तांश (Orb)": f"{deeptamsha_val:.1f}°"
-            })
+                dms_val = g_row.get("dms_str")
+                if not dms_val and p_obj:
+                    deg_val = getattr(p_obj, "sign_degree", 0.0)
+                    ansh = int(deg_val)
+                    kala = int(round((deg_val - ansh) * 60.0))
+                    if kala >= 60:
+                        kala = 0
+                        ansh += 1
+                    dms_val = f"{ansh}° {kala:02d}'"
+                elif not dms_val:
+                    dms_val = g_row.get("degree", "—")
 
-        st.dataframe(pd.DataFrame(p_graha_rows), use_container_width=True, hide_index=True)
+                swabhav_val = g_row.get("swabhav")
+                if not swabhav_val:
+                    swabhav_val = "नैसर्गिक शुभ" if g_name in ["Jupiter", "Venus", "Mercury", "Moon"] else "नैसर्गिक क्रूर"
 
-        st.markdown("---")
-        st.markdown("##### 📊 नवग्रह तात्कालिक क्रियाशीलता व सामर्थ्य आलेख (Graha Horary Strength Chart)")
-        svg_graha_bala = _render_prashna_graha_bala_svg(cur_p_res.get("graha_table", []), is_dark=is_night_mode or is_astrallis_mode)
-        st.markdown(svg_graha_bala, unsafe_allow_html=True)
+                nak_val = g_row.get("nakshatra", "—")
+                if g_row.get("nakshatra_name") and g_row.get("nakshatra_pada"):
+                    nak_val = f"{g_row.get('nakshatra_name')} (च. {g_row.get('nakshatra_pada')})"
 
-        # Lagna Spashta & Bhava Sandhi Card
-        st.markdown("---")
-        st.markdown("##### 📐 प्रश्न लग्न स्पष्ट एवं भाव संधि सारांश (Lagna & Cuspal Summary)")
-        l_col1, l_col2, l_col3 = st.columns(3)
-        l_col1.markdown(f"- **प्रश्न लग्न स्पष्ट:** {cur_p_res.get('prashna_lagna', '-')}")
-        l_col1.markdown(f"- **लग्नेश:** {cur_p_res.get('lagnesh', '-')}")
-        l_col2.markdown(f"- **उदित राशि तत्व:** {cur_p_res.get('prashna_lagna_sign', '-')}")
-        l_col2.markdown(f"- **कार्येश:** {cur_p_res.get('karyesh', '-')}")
-        l_col3.markdown(f"- **अयनांश:** {cur_p_chart.ayanamsa_name} ({cur_p_chart.ayanamsa_value:.4f}°)")
-        l_col3.markdown(f"- **प्रश्न काल समय:** {cur_p_res.get('query_time', '-')}")
-
-        # 16 Shodasha Sphutas (Kerala Prashna Marga)
-        st.markdown("---")
-        with st.expander("🔮 केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)", expanded=False):
-            st.caption("केरलीय प्रश्न मार्ग एवं माधव दीपिका प्रतिपादित त्रिक-स्फुट, पञ्च-स्फुट, प्राण, देह, मृत्यु, बीज, क्षेत्र एवं कार्य स्फुटों का सूक्ष्म विन्यास:")
-            try:
-                calc_fn = getattr(default_prashna_service, "calculate_shodasha_sphutas", None)
-                if not calc_fn:
-                    import src.jyotish.services.prashna as _p_dyn
-                    _p_dyn = importlib.reload(_p_dyn)
-                    calc_fn = getattr(_p_dyn.PrashnaService, "calculate_shodasha_sphutas", None) or getattr(_p_dyn.default_prashna_service, "calculate_shodasha_sphutas", None)
-                if calc_fn:
-                    kary_name = cur_p_res.get("karyesh", "Jupiter")
-                    s_sphutas = calc_fn(cur_p_chart, karyesha=kary_name)
-                    df_sphutas = pd.DataFrame(s_sphutas)
-                    st.dataframe(df_sphutas, use_container_width=True, hide_index=True)
+                # Dignity Badge styling
+                if "उच्च" in dignity_label:
+                    dig_badge = '<span style="background:#DBEAFE;color:#1E40AF;padding:3px 7px;border-radius:4px;font-weight:700;">🌟 उच्च</span>'
+                elif "मूल" in dignity_label:
+                    dig_badge = '<span style="background:#CCFBF1;color:#0F766E;padding:3px 7px;border-radius:4px;font-weight:700;">👑 मूलत्रिकोण</span>'
+                elif "स्व" in dignity_label:
+                    dig_badge = '<span style="background:#DCFCE7;color:#166534;padding:3px 7px;border-radius:4px;font-weight:700;">🏠 स्वगृही</span>'
+                elif "नीच" in dignity_label:
+                    dig_badge = '<span style="background:#FEE2E2;color:#991B1B;padding:3px 7px;border-radius:4px;font-weight:700;">🔻 नीच</span>'
+                elif "मित्र" in dignity_label:
+                    dig_badge = '<span style="background:#F0FDF4;color:#15803D;padding:3px 7px;border-radius:4px;font-weight:600;">🤝 मित्र</span>'
+                elif "शत्रु" in dignity_label:
+                    dig_badge = '<span style="background:#FFF7ED;color:#C2410C;padding:3px 7px;border-radius:4px;font-weight:600;">⚔️ शत्रु</span>'
                 else:
-                    st.info("षोडश स्फुट सेवा मॉड्यूल रीलोड हो रहा है, कृपया पृष्ठ रिफ्रेश करें...")
-            except Exception as _e_sph:
-                st.warning(f"षोडश स्फुट गणना उपलब्ध नहीं: {_e_sph}")
+                    dig_badge = f'<span style="background:#F1F5F9;color:#475569;padding:3px 7px;border-radius:4px;">{dignity_label}</span>'
+
+                motion_str = g_row.get("motion", "मार्गी")
+                if is_comb:
+                    motion_str += " <span style='color:#EF4444;font-weight:700;'>[अस्त]</span>"
+
+                bg_row = row_alt_p if idx % 2 == 1 else row_bg_p
+                tbl_pr_html += f'<tr style="background-color: {bg_row}; border-bottom: 1px solid {row_bdr_p};">'
+                tbl_pr_html += f'<td style="padding: 8px 12px; font-weight: 700; color: {text_p1}; white-space: nowrap;">{g_name}</td>'
+                tbl_pr_html += f'<td style="padding: 8px 10px; color: {text_p2};">{swabhav_val}</td>'
+                tbl_pr_html += f'<td style="padding: 8px 10px; color: {text_p1};"><b>{g_row.get("sign", "")}</b> <span style="font-size:11px;color:{text_p2};">({g_row.get("lord", "")})</span></td>'
+                tbl_pr_html += f'<td style="padding: 8px 10px; color: {text_p1}; font-weight:600;">{g_row.get("house", "")}</td>'
+                tbl_pr_html += f'<td style="padding: 8px 10px; color: {text_p1}; font-family:monospace;">{dms_val}</td>'
+                tbl_pr_html += f'<td style="padding: 8px 10px; color: {text_p2};">{nak_val}</td>'
+                tbl_pr_html += f'<td style="padding: 8px 10px; text-align: center; color: {text_p1};">{motion_str}</td>'
+                tbl_pr_html += f'<td style="padding: 8px 10px; text-align: center;">{dig_badge}</td>'
+                tbl_pr_html += f'<td style="padding: 8px 10px; text-align: center; color: {text_p1}; font-weight:700;">{deeptamsha_val:.1f}°</td>'
+                tbl_pr_html += '</tr>'
+
+            tbl_pr_html += '</tbody></table></div>'
+            st.markdown(_clean_html(tbl_pr_html), unsafe_allow_html=True)
+
+            # Lagna Spashta & Bhava Sandhi Card
+            st.markdown("##### 📐 प्रश्न लग्न स्पष्ट एवं भाव संधि सारांश (Lagna & Cuspal Summary)")
+            l_col1, l_col2, l_col3 = st.columns(3)
+            l_col1.markdown(f"- **प्रश्न लग्न स्पष्ट:** {cur_p_res.get('prashna_lagna', '-')}")
+            l_col1.markdown(f"- **लग्नेश:** {cur_p_res.get('lagnesh', '-')}")
+            l_col2.markdown(f"- **उदित राशि तत्व:** {cur_p_res.get('prashna_lagna_sign', '-')}")
+            l_col2.markdown(f"- **कार्येश:** {cur_p_res.get('karyesh', '-')}")
+            l_col3.markdown(f"- **अयनांश:** {cur_p_chart.ayanamsa_name} ({cur_p_chart.ayanamsa_value:.4f}°)")
+            l_col3.markdown(f"- **प्रश्न काल समय:** {cur_p_res.get('query_time', '-')}")
+
+            # 16 Shodasha Sphutas (Kerala Prashna Marga)
+            with st.expander("🔮 केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)", expanded=False):
+                st.caption("केरलीय प्रश्न मार्ग एवं माधव दीपिका प्रतिपादित त्रिक-स्फुट, पञ्च-स्फुट, प्राण, देह, मृत्यु, बीज, क्षेत्र एवं कार्य स्फुटों का सूक्ष्म विन्यास:")
+                try:
+                    calc_fn = getattr(default_prashna_service, "calculate_shodasha_sphutas", None)
+                    if not calc_fn:
+                        import src.jyotish.services.prashna as _p_dyn
+                        _p_dyn = importlib.reload(_p_dyn)
+                        calc_fn = getattr(_p_dyn.PrashnaService, "calculate_shodasha_sphutas", None) or getattr(_p_dyn.default_prashna_service, "calculate_shodasha_sphutas", None)
+                    if calc_fn:
+                        kary_name = cur_p_res.get("karyesh", "Jupiter")
+                        s_sphutas = calc_fn(cur_p_chart, karyesha=kary_name)
+                        df_sphutas = pd.DataFrame(s_sphutas)
+                        st.dataframe(df_sphutas, use_container_width=True, hide_index=True)
+                    else:
+                        st.info("षोडश स्फुट सेवा मॉड्यूल रीलोड हो रहा है, कृपया पृष्ठ रिफ्रेश करें...")
+                except Exception as _e_sph:
+                    st.warning(f"षोडश स्फुट गणना उपलब्ध नहीं: {_e_sph}")
+
+        with subtab_p3_chart:
+            st.markdown("##### 📊 नवग्रह तात्कालिक क्रियाशीलता व सामर्थ्य आलेख (Graha Horary Strength Chart)")
+            svg_graha_bala = _render_prashna_graha_bala_svg(cur_p_res.get("graha_table", []), is_dark=is_night_mode or is_astrallis_mode)
+            st.markdown(svg_graha_bala, unsafe_allow_html=True)
+            st.caption("यह आलेख प्रश्न कुंडली में नवग्रहों के केंद्र, त्रिकोण, उपचय एवं उच्च/स्वक्षेत्रीय बल के आधार पर तात्कालिक क्रियाशीलता (Horary Operational Strength) को प्रदर्शित करता है।")
 
     # =========================================================================
     # TAB 4: द्वादश भाव भूमिका एवं प्रभाव
