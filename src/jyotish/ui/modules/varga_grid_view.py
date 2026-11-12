@@ -425,7 +425,7 @@ def render_varga_grid_view(chart, tabs=None):
                     _deb_p = [pn for pn, pp in _v_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries"}.get(pn)]
 
                     st.markdown(_clean_html(f"""
-                    <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
+                    <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px; margin-bottom:16px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                             <span style="font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'}; font-size:13.5px;">🎯 {varga_meta_full.get(sel_dv_code, sel_dv_code)}</span>
                             <span style="font-size:11px; font-weight:800; background:#EFF6FF; color:#1E40AF; padding:2px 8px; border-radius:4px;">वर्ग लग्न: {_v_l_sign} (स्वामी: {_v_l_lord})</span>
@@ -578,7 +578,7 @@ def render_varga_grid_view(chart, tabs=None):
                     deity_badge = f'<span style="font-size:11px; font-weight:800; background:#FEF3C7; color:#B45309; padding:2px 8px; border-radius:4px; margin-left:6px;">अधिष्ठाता: {_hv_deity}</span>' if _hv_deity else ''
 
                     st.markdown(_clean_html(f"""
-                    <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
+                    <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px; margin-bottom:16px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                             <span style="font-weight:900; color:{'#A78BFA' if _is_dark else '#6D28D9'}; font-size:13.5px;">👑 {varga_meta_full.get(sel_hv_code, sel_hv_code)}</span>
                             <div>
