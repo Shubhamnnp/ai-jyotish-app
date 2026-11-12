@@ -542,5 +542,108 @@ class PrashnaService:
             "daivajna_prashna_authenticity": prashna_result.get("daivajna_authenticity")
         }
 
+    @staticmethod
+    def calculate_shodasha_sphutas(chart: KundaliChart, karyesha: Optional[str] = "Moon") -> List[Dict[str, Any]]:
+        """
+        Calculates 16 Sensitive Sphutas (Shodasha Sphuta) according to classical Kerala Prashna Marga (Ch. 12-18):
+        Trisphuta, Chatursphuta, Panchasphuta, Prana, Deha, Mrityu, Beeja, Kshetra, Santana, Vivaha,
+        Artha, Karya, Shatru, Labha, Rina, and Dosha Sphutas with Navamsha and Nakshatra Padas.
+        """
+        from src.jyotish.core.upagraha import UpagrahaCalculator
+        from src.jyotish.core.constants import SIGN_NAMES, NAKSHATRAS
+
+        lagna_lon = chart.lagna_longitude
+        sun_lon = chart.planets["Sun"].longitude
+        moon_lon = chart.planets["Moon"].longitude
+        mars_lon = chart.planets["Mars"].longitude
+        merc_lon = chart.planets["Mercury"].longitude
+        jup_lon = chart.planets["Jupiter"].longitude
+        ven_lon = chart.planets["Venus"].longitude
+        sat_lon = chart.planets["Saturn"].longitude
+        rahu_lon = chart.planets["Rahu"].longitude
+
+        # Upagraha Gulika
+        upagrahas = UpagrahaCalculator.calculate(chart)
+        gulika_lon = getattr(upagrahas, "gulika_longitude", 0.0)
+
+        # House cusps
+        def get_h_lon(h_idx: int) -> float:
+            if hasattr(chart, "houses") and chart.houses and len(chart.houses) >= h_idx:
+                return getattr(chart.houses[h_idx - 1], "cusp", (lagna_lon + (h_idx - 1) * 30.0) % 360.0)
+            return (lagna_lon + (h_idx - 1) * 30.0) % 360.0
+
+        h2_lon = get_h_lon(2)
+        h6_lon = get_h_lon(6)
+        h7_lon = get_h_lon(7)
+        h8_lon = get_h_lon(8)
+        h11_lon = get_h_lon(11)
+
+        karyesh_obj = chart.planets.get(karyesha or "Moon", chart.planets["Moon"])
+        karyesh_lon = karyesh_obj.longitude
+
+        # 16 Sphuta definitions (Formula modulo 360°)
+        raw_sphutas = [
+            ("त्रिसपुट (Trisphuta)", "Trisphuta", (lagna_lon + moon_lon + gulika_lon) % 360.0, "लग्न + चन्द्र + गुलिक", "प्रश्न का केंद्रीय कर्मबीज व तात्कालिक फल की कुँजी।"),
+            ("चतुस्फुट (Chatursphuta)", "Chatursphuta", (lagna_lon + moon_lon + gulika_lon + sun_lon) % 360.0, "त्रिसपुट + सूर्य", "आत्मा, मान-प्रतिष्ठा, राज्य व आरोग्यता का सूचक।"),
+            ("पंचस्फुट (Panchasphuta)", "Panchasphuta", (lagna_lon + moon_lon + gulika_lon + sun_lon + rahu_lon) % 360.0, "चतुस्फुट + राहु", "गुप्त बाधाएं, दृष्टि दोष, तंत्र-मंत्र व भ्रम का परीक्षण।"),
+            ("प्राण स्फुट (Prana Sphuta)", "Prana Sphuta", (lagna_lon * 5.0 + gulika_lon) % 360.0, "(लग्न × ५) + गुलिक", "जीवन-शक्ति, श्वास, चेतना एवं तात्कालिक शारीरिक ऊर्जा।"),
+            ("देह स्फुट (Deha Sphuta)", "Deha Sphuta", (moon_lon * 8.0 + gulika_lon) % 360.0, "(चन्द्र × ८) + गुलिक", "स्थूल देह, शारीरिक कष्ट, रोग का स्थान व आरोग्य क्षमता।"),
+            ("मृत्यु स्फुट (Mrityu Sphuta)", "Mrityu Sphuta", (h8_lon * 8.0 + sun_lon) % 360.0, "(अष्टम भाव × ८) + सूर्य", "गंभीर संकट, अरिष्ट, मृत्युतुल्य कष्ट अथवा कार्य की समाप्ति।"),
+            ("बीज स्फुट (Beeja Sphuta)", "Beeja Sphuta", (sun_lon + ven_lon + jup_lon) % 360.0, "सूर्य + शुक्र + गुरु", "पुरुष की प्रजनन शक्ति, वीर्य सामर्थ्य एवं संतति उत्पत्ति।"),
+            ("क्षेत्र स्फुट (Kshetra Sphuta)", "Kshetra Sphuta", (moon_lon + mars_lon + jup_lon) % 360.0, "चन्द्र + मंगल + गुरु", "स्त्री का गर्भाधान सामर्थ्य, क्षेत्र शुद्धि व मातृत्व सुख।"),
+            ("संतान स्फुट (Santana Sphuta)", "Santana Sphuta", (jup_lon * 5.0 - sun_lon - moon_lon) % 360.0, "(५ × गुरु) - सूर्य - चन्द्र", "संतान प्राप्ति का समय, वंश वृद्धि व पूर्वपुण्य।"),
+            ("विवाह स्फुट (Vivaha Sphuta)", "Vivaha Sphuta", (lagna_lon + h7_lon + ven_lon) % 360.0, "लग्न + सप्तम भाव + शुक्र", "विवाह सम्पादन, संबंध की अनुकूलता व दांपत्य जीवन।"),
+            ("अर्थ स्फुट (Artha Sphuta)", "Artha Sphuta", (h2_lon + h11_lon + jup_lon) % 360.0, "द्वितीय भाव + एकादश भाव + गुरु", "संचित धन, अकस्मात वित्तीय लाभ, बैंक बैलेंस व तरलता।"),
+            ("कार्य स्फुट (Karya Sphuta)", "Karya Sphuta", (lagna_lon + karyesh_lon + moon_lon) % 360.0, "लग्न + कार्येश + चन्द्र", "प्रश्न कार्य की प्रत्यक्ष सिद्धि, सफलता व परिणाम।"),
+            ("शत्रु स्फुट (Shatru Sphuta)", "Shatru Sphuta", (h6_lon + mars_lon + sat_lon) % 360.0, "षष्ठ भाव + मंगल + शनि", "प्रतिद्वंद्वियों की शक्ति, मुक़दमा, विवाद एवं गुप्त षड्यंत्र।"),
+            ("लाभ स्फुट (Labha Sphuta)", "Labha Sphuta", (h11_lon + jup_lon - sun_lon) % 360.0, "एकादश भाव + गुरु - सूर्य", "सर्वतोमुखी लाभ, पदोन्नति, मित्र सहयोग व उपलब्धि।"),
+            ("ऋण स्फुट (Rina Sphuta)", "Rina Sphuta", (h6_lon + gulika_lon - jup_lon) % 360.0, "षष्ठ भाव + गुलिक - गुरु", "ऋण भार, कर्ज़ की स्थिति, देयता व आर्थिक चिंताएं।"),
+            ("दोष स्फुट (Dosha Sphuta)", "Dosha Sphuta", (rahu_lon + gulika_lon + sun_lon) % 360.0, "राहु + गुलिक + सूर्य", "देव दोष, पितृ दोष अथवा वास्तु दोष का सूक्ष्म संकेत।")
+        ]
+
+        results = []
+        for idx, (name_hi, name_en, lon_val, formula_str, phala_str) in enumerate(raw_sphutas, 1):
+            lon = lon_val % 360.0
+            s_idx = int(lon // 30.0)
+            sign_name = SIGN_NAMES[s_idx]
+            deg_in_sign = lon % 30.0
+
+            # DMS formatting
+            d = int(deg_in_sign)
+            rem_m = (deg_in_sign - d) * 60.0
+            m = int(rem_m)
+            s = int(round((rem_m - m) * 60.0))
+            if s >= 60:
+                s = 0
+                m += 1
+            if m >= 60:
+                m = 0
+                d += 1
+            dms = f"{d}° {m:02d}' {s:02d}\""
+
+            # Nakshatra & Pada
+            nak_idx = int(lon // (360.0 / 27.0)) % 27
+            nak_name = NAKSHATRAS[nak_idx]
+            pada = int((lon % (360.0 / 27.0)) // (360.0 / 108.0)) + 1
+
+            # Navamsha sign
+            d9_part = int(lon // (360.0 / 108.0)) % 12
+            d9_sign = SIGN_NAMES[d9_part]
+
+            results.append({
+                "sphuta_id": idx,
+                "name_hi": f"{idx}. {name_hi}",
+                "name_en": name_en,
+                "formula": formula_str,
+                "longitude": round(lon, 2),
+                "sign": sign_name,
+                "dms": dms,
+                "nakshatra_pada": f"{nak_name} (पद {pada})",
+                "navamsha_sign": d9_sign,
+                "phala": phala_str
+            })
+
+        return results
+
 
 default_prashna_service = PrashnaService()
