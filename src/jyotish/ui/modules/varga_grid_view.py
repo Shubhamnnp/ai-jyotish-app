@@ -397,9 +397,6 @@ def render_varga_grid_view(chart, tabs=None):
                 title="दशवर्ग ग्रह गरिमा एवं वैशेषिकांश वितरण (Dasvarga Planetary Dignity & Vaisheshikamsa)"
             ), unsafe_allow_html=True)
 
-            # Dignity Legend Bar
-            st.markdown(render_dignity_legend_bar(), unsafe_allow_html=True)
-
         with subtab_dv_table:
             # Dignity Legend Bar
             st.markdown(render_dignity_legend_bar(), unsafe_allow_html=True)
@@ -534,9 +531,6 @@ def render_varga_grid_view(chart, tabs=None):
                 sv_summary, total_vargas=len(shodashvarga_codes), is_dark=_is_dark,
                 title="षोडशवर्ग समग्र गरिमा एवं वैशेषिकांश वितरण (Complete 16-Varga Dignity Matrix)"
             ), unsafe_allow_html=True)
-
-            # Dignity Legend Bar
-            st.markdown(render_dignity_legend_bar(), unsafe_allow_html=True)
 
         with subtab_sv_table:
             # Dignity Legend Bar
