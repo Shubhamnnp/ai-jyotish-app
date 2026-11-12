@@ -10042,7 +10042,9 @@ elif selected_idx == 3:
     varga_grid_view_mod.render_varga_grid_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(3))
 
 elif selected_idx == 4:
+    import importlib
     import src.jyotish.ui.modules.vastu_view as vastu_view_mod
+    importlib.reload(vastu_view_mod)
     vastu_view_mod.render_vastu_view(chart=chart, tabs=MODULE_TABS_REGISTRY.get(4))
 
 elif selected_idx == 5:
