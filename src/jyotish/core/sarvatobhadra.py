@@ -182,3 +182,6 @@ class SarvatobhadraChakraEngine:
             "sensitive_vedhas": sensitive_vedhas,
             "is_transit_mode": is_transit
         }
+
+
+default_sarvatobhadra_chakra_engine = SarvatobhadraChakraEngine()

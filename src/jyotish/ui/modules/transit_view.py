@@ -951,6 +951,31 @@ def render_transit_view(chart, ayanamsa, house_system, node_type_val, tz_offset,
             sp_df = pd.DataFrame(sbc_res["sensitive_points"])
             st.dataframe(sp_df[["hi_name", "nakshatra", "desc"]], use_container_width=True)
 
+        # Classical 3-Way Raycasting Vedha Audit (Frontal, Vama, Dakshina)
+        st.markdown("---")
+        with st.expander("🛡️ शास्त्रीय त्रिविध वेध विस्तृत विश्लेषण (Frontal, Vama & Dakshina Vedha Matrix)", expanded=False):
+            st.caption("नरपतिजयचर्या स्वरोदय अनुसार २८ नक्षत्रों (अभिजित सहित) पर सम्मुख, वाम व दक्षिण त्रिविध वेध:")
+            try:
+                from src.jyotish.core.sarvatobhadra import default_sarvatobhadra_chakra_engine
+                sbc_vedha_res = default_sarvatobhadra_chakra_engine.calculate_chakra_vedha(chart, t_chart)
+                sens_v = sbc_vedha_res.get("sensitive_vedhas", [])
+                if sens_v:
+                    v_tbl_data = []
+                    for v in sens_v:
+                        v_tbl_data.append({
+                            "वेधकर्त्ता ग्रह": v.aspecting_planet,
+                            "वेध प्रकार": v.vedha_type,
+                            "लक्षित नक्षत्र": f"{v.nakshatra_hi} ({v.nakshatra_name})",
+                            "संवेदनशील संज्ञा": v.special_role or "—",
+                            "प्रकृति": "⚠️ अनिष्ट / क्रूर" if v.is_malefic else "🌟 शुभ / सौम्य",
+                            "शास्त्रीय प्रभाव": v.influence
+                        })
+                    st.dataframe(pd.DataFrame(v_tbl_data), use_container_width=True, hide_index=True)
+                else:
+                    st.success("✅ संवेदनशील नक्षत्रों पर कोई क्रूर अथवा अनिष्टकारी त्रिविध वेध वर्तमान में सक्रिय नहीं है।")
+            except Exception as _e_sbc:
+                st.warning(f"विस्तृत त्रिविध वेध गणना अनुपलब्ध: {_e_sbc}")
+
     # =========================================================================
     # TAB 11: KOTA CHAKRA 4-ZONE FORTRESS
     # =========================================================================

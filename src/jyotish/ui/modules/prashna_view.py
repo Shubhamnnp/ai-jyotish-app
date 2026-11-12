@@ -464,6 +464,18 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
             </div>
             """), unsafe_allow_html=True)
 
+            # 5. केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)
+            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+            with st.expander("🔮 केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)", expanded=False):
+                st.caption("केरलीय प्रश्न मार्ग एवं माधव दीपिका प्रतिपादित त्रिक-स्फुट, पञ्च-स्फुट, प्राण, देह, मृत्यु, बीज, क्षेत्र एवं कार्य स्फुटों का सूक्ष्म विन्यास:")
+                try:
+                    karyesha_p = p_nat_res.get("karyesh", "Jupiter")
+                    sphutas_data = default_prashna_service.calculate_shodasha_sphutas(chart, karyesha=karyesha_p)
+                    df_sphutas = pd.DataFrame(sphutas_data)
+                    st.dataframe(df_sphutas, use_container_width=True, hide_index=True)
+                except Exception as _e_sph:
+                    st.warning(f"षोडश स्फुट गणना उपलब्ध नहीं: {_e_sph}")
+
     # =========================================================================
     # TAB 2: नवीन प्रश्नकर्ता एवं तात्कालिक प्रश्न (New / Custom Querent)
     # =========================================================================
@@ -717,6 +729,18 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
         l_col2.markdown(f"- **कार्येश:** {cur_p_res.get('karyesh', '-')}")
         l_col3.markdown(f"- **अयनांश:** {cur_p_chart.ayanamsa_name} ({cur_p_chart.ayanamsa_value:.4f}°)")
         l_col3.markdown(f"- **प्रश्न काल समय:** {cur_p_res.get('query_time', '-')}")
+
+        # 16 Shodasha Sphutas (Kerala Prashna Marga)
+        st.markdown("---")
+        with st.expander("🔮 केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)", expanded=False):
+            st.caption("केरलीय प्रश्न मार्ग एवं माधव दीपिका प्रतिपादित त्रिक-स्फुट, पञ्च-स्फुट, प्राण, देह, मृत्यु, बीज, क्षेत्र एवं कार्य स्फुटों का सूक्ष्म विन्यास:")
+            try:
+                kary_name = cur_p_res.get("karyesh", "Jupiter")
+                s_sphutas = default_prashna_service.calculate_shodasha_sphutas(cur_p_chart, karyesha=kary_name)
+                df_sphutas = pd.DataFrame(s_sphutas)
+                st.dataframe(df_sphutas, use_container_width=True, hide_index=True)
+            except Exception as _e_sph:
+                st.warning(f"षोडश स्फुट गणना उपलब्ध नहीं: {_e_sph}")
 
     # =========================================================================
     # TAB 4: द्वादश भाव भूमिका एवं प्रभाव

@@ -418,6 +418,25 @@ def render_varshaphal_view(chart, birth_profile, tz_offset=5.5, render_chart_svg
                 })
             st.dataframe(pd.DataFrame(m_y_tbl), use_container_width=True, hide_index=True)
 
+        st.markdown("---")
+        st.markdown("#### 📐 ताजिक पत्यायिनी दशा चक्र (1-Year Patyayini Dasha Timeline)")
+        st.caption("ताजिक नीलकण्ठी अनुसार ग्रहों के राशिगत भोगांशों के आरोही क्रम (Ascending Sign Degrees) एवं कृष्णभाग अंतरालों पर आधारित वार्षिक दशा चक्र:")
+        pat_tbl = []
+        for r in vp_res.get("patyayini_dasha", []):
+            pat_tbl.append({
+                "दशेश ग्रह": r.get("lord_hi", r["lord"]),
+                "आरंभ": r.get("start_date", "—"),
+                "समाप्ति": r.get("end_date", "—"),
+                "अवधि (दिन)": f"{r.get('duration_days', 0):.2f} दिन",
+                "भोगांश (Degree)": f"{r.get('degree', 0):.2f}°",
+                "कृष्णभाग (Diff)": f"{r.get('krishnabhaga', 0):.2f}°",
+                "स्थिति": r.get("status", "—")
+            })
+        if pat_tbl:
+            st.dataframe(pd.DataFrame(pat_tbl), use_container_width=True, hide_index=True)
+        else:
+            st.info("पत्यायिनी दशा विवरण लोड हो रहा है...")
+
     # -------------------------------------------------------------------------
     # TAB 8: 12 BHAVAS ANNUAL FORECAST
     # -------------------------------------------------------------------------
