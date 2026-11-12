@@ -802,9 +802,6 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
     # TAB 4: द्वादश भाव भूमिका एवं प्रभाव
     # =========================================================================
     with ptab4:
-        st.markdown("#### 🎭 द्वादश भाव भूमिका, कार्येश एवं प्रभाव (12 Houses Role & Functional Matrix)")
-        st.info(f"📍 वर्तमान सक्रिय विश्लेषण: **{cur_p_res.get('questioner_name', 'जातक')}** — प्रश्न: *'{cur_p_res.get('query_text', '')}'*")
-
         # Category Triad Focus
         k_house_num = cur_p_res.get("karya_house_num", 10)
         st.markdown("##### 🎯 प्रश्न सम्बंधी मुख्य त्रि-भाव धुरी (The Primary Horary Triad)")
