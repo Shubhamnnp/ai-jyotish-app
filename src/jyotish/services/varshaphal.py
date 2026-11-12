@@ -609,6 +609,83 @@ class VarshaphalService:
             make_entry("रोग सहम", "Rog Saham", rog_lon, "शारीरिक स्वास्थ्य, मौसमी व्याधियां एवं आवश्यक सावधानी", "सावधानी / बाधा")
         ]
 
+    @staticmethod
+    def calculate_saham_aspect_matrix(sahams: List[Dict[str, Any]], chart: KundaliChart) -> List[Dict[str, Any]]:
+        """
+        Calculates Tajika Drishti (Aspects) between Sahams and the 7 classical planets:
+        - Pratyaksha Mitra (प्रत्यक्ष मित्र): 5th/9th (120°) and 3rd/11th (60°)
+        - Pratyaksha Shatru (प्रत्यक्ष शत्रु): 1st/7th (180°) and 4th/10th (90°)
+        - Udasina (सम): 2nd, 6th, 8th, 12th
+        - Conjunction (युति): Same sign within 12° orb
+        """
+        planets = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]
+        matrix_rows = []
+
+        for s in sahams:
+            s_name = s.get("saham_hi", s.get("saham_en", "सहम"))
+            s_lon = float(s.get("longitude", 0.0))
+            s_sign = int(s_lon // 30.0) + 1
+
+            deg_raw = s.get('degree', s.get('sign_deg', f"{s_lon % 30.0:.1f}°"))
+            deg_display = f"{deg_raw}°" if "°" not in str(deg_raw) else str(deg_raw)
+            row = {
+                "सहम बिंदु": s_name,
+                "सहम राशि": s.get("sign", ""),
+                "अंश": deg_display
+            }
+
+            benefic_count = 0
+            malefic_count = 0
+
+            for p_name in planets:
+                p_obj = getattr(chart, "planets", {}).get(p_name)
+                if not p_obj:
+                    row[p_name] = "—"
+                    continue
+
+                p_lon = getattr(p_obj, "longitude", 0.0)
+                p_sign = int(p_lon // 30.0) + 1
+                diff_signs = ((p_sign - s_sign) % 12)
+
+                ang_dist = abs(p_lon - s_lon)
+                if ang_dist > 180.0:
+                    ang_dist = 360.0 - ang_dist
+
+                if diff_signs == 0 and ang_dist <= 12.0:
+                    tag = "🟡 युति (Conj)"
+                    if p_name in ("Jupiter", "Venus", "Moon", "Mercury"):
+                        benefic_count += 1
+                    else:
+                        malefic_count += 1
+                elif diff_signs in (4, 8):
+                    tag = "🟢 मित्र (Trine 120°)"
+                    benefic_count += 1
+                elif diff_signs in (2, 10):
+                    tag = "🟢 मित्र (Sextile 60°)"
+                    benefic_count += 1
+                elif diff_signs == 6:
+                    tag = "🔴 शत्रु (Opp 180°)"
+                    malefic_count += 1
+                elif diff_signs in (3, 9):
+                    tag = "🔴 शत्रु (Square 90°)"
+                    malefic_count += 1
+                else:
+                    tag = "⚪ सम (Neutral)"
+
+                row[p_name] = tag
+
+            if benefic_count > malefic_count:
+                verdict = f"🌟 शुभ दृष्टि बाहुल्य (+{benefic_count})"
+            elif malefic_count > benefic_count:
+                verdict = f"⚠️ शत्रु दृष्टि बाधा (-{malefic_count})"
+            else:
+                verdict = "⚖️ सम प्रभाव"
+
+            row["ताजिक दृष्टि फलादेश"] = verdict
+            matrix_rows.append(row)
+
+        return matrix_rows
+
     def _calculate_mudda_dasha(self, start_dt: datetime, moon_lon: float) -> List[Dict[str, Any]]:
         """Calculates full 1-year Mudda Vimshottari Dasha sequence."""
         vimshottari_years = [

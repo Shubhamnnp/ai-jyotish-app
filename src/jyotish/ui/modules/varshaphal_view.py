@@ -358,6 +358,14 @@ def render_varshaphal_view(chart, birth_profile, tz_offset=5.5, render_chart_svg
 
         st.dataframe(pd.DataFrame(filtered_sahams), use_container_width=True, hide_index=True)
 
+        # Interactive Tajika Saham Drishti Matrix
+        if filtered_sahams and chart:
+            with st.expander("👁️ ताजिक सहम दृष्टि ग्रिड (Saham-to-Planets Tajika Aspect Matrix)", expanded=True):
+                st.caption("ताजिक नीलकंठी के अनुसार सहमों पर ७ ग्रहों की प्रत्यक्ष दृष्टि संबंध (मित्र: ५/९ व ३/११, शत्रु: १/७ व ४/१०, सम: २/६/८/१२):")
+                aspect_matrix = varshaphal.VarshaphalService.calculate_saham_aspect_matrix(filtered_sahams, chart)
+                if aspect_matrix:
+                    st.dataframe(pd.DataFrame(aspect_matrix), use_container_width=True, hide_index=True)
+
     # -------------------------------------------------------------------------
     # TAB 7: ANNUAL DASHAS (MUDDA & YOGINI)
     # -------------------------------------------------------------------------
