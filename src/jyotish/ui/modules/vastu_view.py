@@ -391,92 +391,98 @@ def render_vastu_view(chart, tabs=None):
 
         _v_render("<div style='height: 14px;'></div>")
 
-        # 360 Degree Cosmic Compass SVG Wheel
-        compass_col, info_col = st.columns([1.1, 1.0])
-        with compass_col:
-            st.markdown("##### 🧭 360° वास्तु दिशा चक्र (Cosmic Compass Wheel)")
-            compass_svg = render_vastu_compass_wheel_svg(v_zones, is_dark=_is_dark)
-            _v_render(f'<div style="width:100%;display:flex;justify-content:center;margin:8px 0;">{compass_svg}</div>')
-            st.caption("🟢 हरा (≥75): सुसंगत व शुभ | 🟡 पीला (50-74): मध्यम सतर्कता | 🔴 लाल (<50): संवेदनशील/दोष निवारण आवश्यक")
+        # Subtabs under Tab 0: 360° दिशा चक्र एवं नवदिशा शास्त्रीय तुलनात्मक सारणी
+        subtab_v_compass, subtab_v_table = st.tabs([
+            "1. 🧭 360° वास्तु दिशा चक्र",
+            "2. 📋 नवदिशा शास्त्रीय तुलनात्मक सारणी"
+        ])
 
-        with info_col:
-            st.markdown("##### 📜 वास्तु-ज्योतिष आधार एवं कुण्डली समन्वय")
-            _v_render(f"""
-            <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 12px; padding: 16px; font-size: 13px; line-height: 1.6; color: {text_primary};">
-                <p style="margin-top: 0;"><b>वास्तु-ज्योतिष का शास्त्रीय नियम:</b> जातक की जन्मकुण्डली में जिस दिशा का स्वामी ग्रह <b>उच्च, स्वराशि अथवा दिग्बली</b> होता है, भवन की वह दिशा स्वतः ऊर्जावान और भाग्यवर्धक सिद्ध होती है। इसके विपरीत जब दिशा स्वामी <b>नीच, शत्रु राशि, अस्त, वक्री अथवा ६, ८, १२वें भाव</b> में स्थित हो तो संबंधित दिशा में वास्तु दोष का दुष्प्रभाव कई गुना बढ़ जाता है।</p>
-                <div style="background: {row_alt_bg}; border-left: 4px solid #F59E0B; padding: 8px 12px; border-radius: 4px; margin: 10px 0; font-size: 12px;">
-                    <i>"यस्मिन् देशे स्थिता देवा दिशामुख्याः समन्ततः । तं देशं वास्तुमित्याहुः सर्वकामफलप्रदम् ॥"</i><br>
-                    <span style="color: {text_secondary};">— मयमतम् एवं विश्वकर्मा प्रकाश</span>
+        with subtab_v_compass:
+            compass_col, info_col = st.columns([1.1, 1.0])
+            with compass_col:
+                st.markdown("##### 🧭 360° वास्तु दिशा चक्र (Cosmic Compass Wheel)")
+                compass_svg = render_vastu_compass_wheel_svg(v_zones, is_dark=_is_dark)
+                _v_render(f'<div style="width:100%;display:flex;justify-content:center;margin:8px 0;">{compass_svg}</div>')
+                st.caption("🟢 हरा (≥75): सुसंगत व शुभ | 🟡 पीला (50-74): मध्यम सतर्कता | 🔴 लाल (<50): संवेदनशील/दोष निवारण आवश्यक")
+
+            with info_col:
+                st.markdown("##### 📜 वास्तु-ज्योतिष आधार एवं कुण्डली समन्वय")
+                _v_render(f"""
+                <div style="background: {card_bg}; border: 1.5px solid {card_bdr}; border-radius: 12px; padding: 16px; font-size: 13px; line-height: 1.6; color: {text_primary};">
+                    <p style="margin-top: 0;"><b>वास्तु-ज्योतिष का शास्त्रीय नियम:</b> जातक की जन्मकुण्डली में जिस दिशा का स्वामी ग्रह <b>उच्च, स्वराशि अथवा दिग्बली</b> होता है, भवन की वह दिशा स्वतः ऊर्जावान और भाग्यवर्धक सिद्ध होती है। इसके विपरीत जब दिशा स्वामी <b>नीच, शत्रु राशि, अस्त, वक्री अथवा ६, ८, १२वें भाव</b> में स्थित हो तो संबंधित दिशा में वास्तु दोष का दुष्प्रभाव कई गुना बढ़ जाता है।</p>
+                    <div style="background: {row_alt_bg}; border-left: 4px solid #F59E0B; padding: 8px 12px; border-radius: 4px; margin: 10px 0; font-size: 12px;">
+                        <i>"यस्मिन् देशे स्थिता देवा दिशामुख्याः समन्ततः । तं देशं वास्तुमित्याहुः सर्वकामफलप्रदम् ॥"</i><br>
+                        <span style="color: {text_secondary};">— मयमतम् एवं विश्वकर्मा प्रकाश</span>
+                    </div>
+                    <p style="margin-bottom: 0;">ऊपर दिए गए प्रत्येक दिशा के स्वतंत्र टैब में जाकर आप अपनी कुण्डली के अनुसार उस दिशा के <b>विस्तृत पैरामीटर्स, आदर्श वास्तु नियोजन, वर्जित निर्माण, दोष के लक्षण एवं ५-आयामी अचूक शास्त्रीय उपचार</b> का अध्ययन कर सकते हैं।</p>
                 </div>
-                <p style="margin-bottom: 0;">ऊपर दिए गए प्रत्येक दिशा के स्वतंत्र टैब में जाकर आप अपनी कुण्डली के अनुसार उस दिशा के <b>विस्तृत पैरामीटर्स, आदर्श वास्तु नियोजन, वर्जित निर्माण, दोष के लक्षण एवं ५-आयामी अचूक शास्त्रीय उपचार</b> का अध्ययन कर सकते हैं।</p>
-            </div>
-            """)
+                """)
 
-        _v_render("<div style='height: 16px;'></div>")
-        st.markdown("##### 📋 नवदिशा शास्त्रीय तुलनात्मक सारणी (9-Direction Master Matrix)")
+        with subtab_v_table:
+            st.markdown("##### 📋 नवदिशा शास्त्रीय तुलनात्मक सारणी (9-Direction Master Matrix)")
 
-        tbl_html = f'<div style="overflow-x: auto; border: 1.5px solid {card_bdr}; border-radius: 10px; margin-bottom: 16px;">'
-        tbl_html += f'<table style="width: 100%; border-collapse: collapse; text-align: left; background: {card_bg}; font-size: 12px;">'
-        tbl_html += f'<thead><tr style="background: {hdr_bg}; border-bottom: 2px solid {hdr_bdr};">'
-        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिशा (Direction)</th>'
-        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिक्पाल व स्वामी</th>'
-        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">तत्व</th>'
-        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">कुण्डली भाव, सूक्ष्म अंश-कला व स्वभाव</th>'
-        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिग्बल</th>'
-        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary}; text-align: center;">सामंजस्य स्कोर</th>'
-        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary}; text-align: center;">दोष जोखिम</th>'
-        tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">प्राथमिक शास्त्रीय उपचार</th>'
-        tbl_html += '</tr></thead><tbody>'
+            tbl_html = f'<div style="overflow-x: auto; border: 1.5px solid {card_bdr}; border-radius: 10px; margin-bottom: 16px;">'
+            tbl_html += f'<table style="width: 100%; border-collapse: collapse; text-align: left; background: {card_bg}; font-size: 12px;">'
+            tbl_html += f'<thead><tr style="background: {hdr_bg}; border-bottom: 2px solid {hdr_bdr};">'
+            tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिशा (Direction)</th>'
+            tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिक्पाल व स्वामी</th>'
+            tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">तत्व</th>'
+            tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">कुण्डली भाव, सूक्ष्म अंश-कला व स्वभाव</th>'
+            tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">दिग्बल</th>'
+            tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary}; text-align: center;">सामंजस्य स्कोर</th>'
+            tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary}; text-align: center;">दोष जोखिम</th>'
+            tbl_html += f'<th style="padding: 10px 12px; font-weight: 800; color: {text_primary};">प्राथमिक शास्त्रीय उपचार</th>'
+            tbl_html += '</tr></thead><tbody>'
 
-        for idx, z in enumerate(v_zones):
-            bg_r = row_alt_bg if idx % 2 == 1 else row_bg
-            r_risk = z.get("defect_risk", "Moderate Risk")
-            if r_risk == "Harmonious":
-                b_color = "#10B981"
-                b_bg = "#ECFDF5" if not _is_dark else "#064E3B"
-                b_txt = "✨ सुसंगत"
-            elif r_risk == "Moderate Risk":
-                b_color = "#F59E0B"
-                b_bg = "#FFFBEB" if not _is_dark else "#78350F"
-                b_txt = "⚠️ मध्यम जोखिम"
-            else:
-                b_color = "#EF4444"
-                b_bg = "#FEF2F2" if not _is_dark else "#7F1D1D"
-                b_txt = "🚨 उच्च दोष"
+            for idx, z in enumerate(v_zones):
+                bg_r = row_alt_bg if idx % 2 == 1 else row_bg
+                r_risk = z.get("defect_risk", "Moderate Risk")
+                if r_risk == "Harmonious":
+                    b_color = "#10B981"
+                    b_bg = "#ECFDF5" if not _is_dark else "#064E3B"
+                    b_txt = "✨ सुसंगत"
+                elif r_risk == "Moderate Risk":
+                    b_color = "#F59E0B"
+                    b_bg = "#FFFBEB" if not _is_dark else "#78350F"
+                    b_txt = "⚠️ मध्यम जोखिम"
+                else:
+                    b_color = "#EF4444"
+                    b_bg = "#FEF2F2" if not _is_dark else "#7F1D1D"
+                    b_txt = "🚨 उच्च दोष"
 
-            h_val = z.get('house')
-            dms_val = z.get('dms_str', z.get('degree_str', ''))
-            nak_info = f"[{z.get('nakshatra_name', '')}-P{z.get('nakshatra_pada', '')}]" if z.get('nakshatra_name') else ""
-            if h_val is not None and str(h_val) != "":
-                h_str = f"भाव {h_val}"
-                if z.get('sign_name') or dms_val:
-                    h_str += f" ({z.get('sign_name', '')} {dms_val} {nak_info})".strip()
-            else:
-                h_str = "केन्द्र भाव (1, 4, 7, 10)" if "ब्रह्म" in str(z.get('hindi', '')) or z.get('direction') == 'Center' else "तटस्थ"
+                h_val = z.get('house')
+                dms_val = z.get('dms_str', z.get('degree_str', ''))
+                nak_info = f"[{z.get('nakshatra_name', '')}-P{z.get('nakshatra_pada', '')}]" if z.get('nakshatra_name') else ""
+                if h_val is not None and str(h_val) != "":
+                    h_str = f"भाव {h_val}"
+                    if z.get('sign_name') or dms_val:
+                        h_str += f" ({z.get('sign_name', '')} {dms_val} {nak_info})".strip()
+                else:
+                    h_str = "केन्द्र भाव (1, 4, 7, 10)" if "ब्रह्म" in str(z.get('hindi', '')) or z.get('direction') == 'Center' else "तटस्थ"
 
-            d_str = f"{z.get('swabhav', 'सामान्य')} • {z.get('status', 'सामान्य')}"
-            if z.get('is_combust'): d_str += " [अस्त]"
-            if z.get('is_retrograde'): d_str += " [वक्री]"
+                d_str = f"{z.get('swabhav', 'सामान्य')} • {z.get('status', 'सामान्य')}"
+                if z.get('is_combust'): d_str += " [अस्त]"
+                if z.get('is_retrograde'): d_str += " [वक्री]"
 
-            meta_d = z.get("meta", {})
-            fb_d = VASTU_PARAM_FALLBACKS.get(z.get("direction", ""), {})
+                meta_d = z.get("meta", {})
+                fb_d = VASTU_PARAM_FALLBACKS.get(z.get("direction", ""), {})
 
-            deity_name = meta_d.get("deity") or fb_d.get("deity", "")
-            rem_text = meta_d.get("non_destructive_remedy") or meta_d.get("remedy_hi") or fb_d.get("non_destructive_remedy", "")
+                deity_name = meta_d.get("deity") or fb_d.get("deity", "")
+                rem_text = meta_d.get("non_destructive_remedy") or meta_d.get("remedy_hi") or fb_d.get("non_destructive_remedy", "")
 
-            tbl_html += f'<tr style="background-color: {bg_r}; border-bottom: 1px solid {row_bdr};">'
-            tbl_html += f'<td style="padding: 8px 12px; font-weight: 700; color: {text_primary}; white-space: nowrap;">{z.get("hindi", "")}</td>'
-            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{deity_name} / <b>{z.get("lord", "")}</b></td>'
-            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z.get("element", "")}</td>'
-            tbl_html += f'<td style="padding: 8px 12px; color: {text_primary};">{h_str}<br><span style="font-size: 11px; color: {text_secondary};">{d_str}</span></td>'
-            tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z.get("digbala", "तटस्थ")}</td>'
-            tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><b style="color: {b_color}; font-size: 13px;">{z.get("score", 70)}/100</b></td>'
-            tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><span style="background: {b_bg}; color: {b_color}; border: 1px solid {b_color}; padding: 2px 8px; border-radius: 12px; font-weight: 700; font-size: 11px;">{b_txt}</span></td>'
-            tbl_html += f'<td style="padding: 8px 12px; font-size: 11.5px; color: {text_secondary}; max-width: 250px;">{rem_text[:75]}...</td>'
-            tbl_html += '</tr>'
+                tbl_html += f'<tr style="background-color: {bg_r}; border-bottom: 1px solid {row_bdr};">'
+                tbl_html += f'<td style="padding: 8px 12px; font-weight: 700; color: {text_primary}; white-space: nowrap;">{z.get("hindi", "")}</td>'
+                tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{deity_name} / <b>{z.get("lord", "")}</b></td>'
+                tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z.get("element", "")}</td>'
+                tbl_html += f'<td style="padding: 8px 12px; color: {text_primary};">{h_str}<br><span style="font-size: 11px; color: {text_secondary};">{d_str}</span></td>'
+                tbl_html += f'<td style="padding: 8px 12px; color: {text_secondary};">{z.get("digbala", "तटस्थ")}</td>'
+                tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><b style="color: {b_color}; font-size: 13px;">{z.get("score", 70)}/100</b></td>'
+                tbl_html += f'<td style="padding: 8px 12px; text-align: center;"><span style="background: {b_bg}; color: {b_color}; border: 1px solid {b_color}; padding: 2px 8px; border-radius: 12px; font-weight: 700; font-size: 11px;">{b_txt}</span></td>'
+                tbl_html += f'<td style="padding: 8px 12px; font-size: 11.5px; color: {text_secondary}; max-width: 250px;">{rem_text[:75]}...</td>'
+                tbl_html += '</tr>'
 
-        tbl_html += '</tbody></table></div>'
-        _v_render(tbl_html)
+            tbl_html += '</tbody></table></div>'
+            _v_render(tbl_html)
 
     # -------------------------------------------------------------
     # TABS 1 to 9: INDIVIDUAL DIRECTION DEEP DIVE TABS
