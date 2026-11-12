@@ -53,11 +53,25 @@ def normalize_house_system_name(name: str) -> str:
     return "Whole Sign"
 
 
-def point_in_arc(point: float, start: float, end: float) -> bool:
+def point_in_arc(point: float, start: float, end: float, epsilon: float = 1e-9) -> bool:
     """Returns True if point is on circular arc [start, end) on 0-360 wheel."""
     total_arc = (end - start) % 360.0
+    if total_arc == 0.0:
+        total_arc = 360.0
     p_offset = (point - start) % 360.0
-    return 0.0 <= p_offset < total_arc
+    return 0.0 <= p_offset < total_arc or abs(p_offset - total_arc) < epsilon
+
+
+@dataclass
+class BhavaSpan:
+    house_number: int
+    arambha: float
+    madhya: float
+    samapti: float
+    span_degrees: float
+    arambha_sign: str
+    madhya_sign: str
+    samapti_sign: str
 
 
 @dataclass
@@ -72,6 +86,45 @@ class HouseComputationResult:
     madhyas: Optional[List[float]]   # 12 madhyas (centers of bhavas)
     polar_latitude_adjusted: bool = False
     warning: Optional[str] = None
+
+    def get_bhava_spans(self) -> List[BhavaSpan]:
+        """
+        Returns the detailed 12 Bhava spans (Arambha, Madhya, Samapti)
+        according to the computed house system.
+        """
+        spans: List[BhavaSpan] = []
+        is_sripati = (self.house_system_name == "Sripati" and self.sandhis and self.madhyas)
+
+        for h in range(1, 13):
+            if is_sripati and self.sandhis is not None and self.madhyas is not None:
+                arambha = self.sandhis[(h - 2) % 12]
+                madhya = self.madhyas[h - 1]
+                samapti = self.sandhis[(h - 1) % 12]
+            else:
+                arambha = self.cusps[h - 1]
+                samapti = self.cusps[h % 12]
+                arc_len = (samapti - arambha) % 360.0
+                madhya = (arambha + arc_len / 2.0) % 360.0
+
+            span_deg = (samapti - arambha) % 360.0
+            if span_deg == 0.0:
+                span_deg = 360.0
+
+            s_arambha = SIGN_NAMES[int(arambha // 30.0) % 12]
+            s_madhya = SIGN_NAMES[int(madhya // 30.0) % 12]
+            s_samapti = SIGN_NAMES[int(samapti // 30.0) % 12]
+
+            spans.append(BhavaSpan(
+                house_number=h,
+                arambha=arambha,
+                madhya=madhya,
+                samapti=samapti,
+                span_degrees=span_deg,
+                arambha_sign=s_arambha,
+                madhya_sign=s_madhya,
+                samapti_sign=s_samapti
+            ))
+        return spans
 
 
 class HouseCalculator:

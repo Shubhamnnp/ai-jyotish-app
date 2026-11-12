@@ -192,3 +192,30 @@ def test_house_calculator_tuple_length_compatibility(monkeypatch):
     assert len(res13.cusps) == 12
     assert res13.ascendant == 15.0
 
+
+def test_sripati_bhava_spans_and_zero_crossing():
+    """Verifies detailed BhavaSpan generation and sandhi interpolation across 0° boundary."""
+    jd_test = 2451545.0
+    lat_delhi = 28.6139
+    lon_delhi = 77.2090
+
+    res = HouseCalculator.calculate_houses(jd_test, lat_delhi, lon_delhi, "Sripati", ayanamsa_code=1)
+    spans = res.get_bhava_spans()
+    assert len(spans) == 12
+
+    for span in spans:
+        assert 1 <= span.house_number <= 12
+        assert 0.0 <= span.arambha < 360.0
+        assert 0.0 <= span.madhya < 360.0
+        assert 0.0 <= span.samapti < 360.0
+        assert 15.0 <= span.span_degrees <= 45.0  # Realistic Sripati house widths
+        assert span.arambha_sign in [
+            "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+            "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+        ]
+
+    # Verify that house 1 arambha is indeed previous house (12) samapti
+    assert abs(spans[0].arambha - spans[11].samapti) < 0.0001
+    # Verify house 1 samapti is house 2 arambha
+    assert abs(spans[0].samapti - spans[1].arambha) < 0.0001
+
