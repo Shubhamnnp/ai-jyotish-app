@@ -19,7 +19,62 @@ D60_DEITIES = [
 ]
 
 D60_MALEFIC_INDICES = {
-    0, 1, 6, 7, 8, 9, 10, 11, 14, 15, 26, 29, 30, 31, 32, 33, 34, 35, 39, 40, 41, 42, 43, 47, 50, 51, 54, 58
+    0, 1, 6, 7, 8, 9, 10, 11, 14, 15, 25, 29, 30, 31, 32, 33, 34, 35, 39, 40, 41, 42, 43, 47, 50, 51, 54, 58
+}
+
+D60_DEITY_DESCRIPTIONS: Dict[str, Dict[str, str]] = {
+    "Ghora": {"nature": "क्रूर (Malefic)", "phala": "दारुण कष्ट, उग्र स्वभाव व संघर्षमय प्रारब्ध।"},
+    "Rakshasa": {"nature": "क्रूर (Malefic)", "phala": "तामसिक वृत्तियां, बाधाएं व हिंसक प्रवृत्तियां।"},
+    "Deva": {"nature": "सौम्य (Benefic)", "phala": "दैवीय कृपा, धार्मिकता, सद्बुद्धि व यश।"},
+    "Kubera": {"nature": "सौम्य (Benefic)", "phala": "प्रचुर धन, संपदा, कुबेर समान ऐश्वर्य व आदर।"},
+    "Yaksha": {"nature": "सौम्य (Benefic)", "phala": "भौतिक आकर्षण, कला, सौंदर्य व संचित संपदा।"},
+    "Kinnara": {"nature": "सौम्य (Benefic)", "phala": "संगीत, काव्य, ललित कलाएं व मधुर व्यक्तित्व।"},
+    "Bhrashta": {"nature": "क्रूर (Malefic)", "phala": "पदच्युति, अपव्यय, मार्गभ्रष्टता व संशय।"},
+    "Kulaghna": {"nature": "क्रूर (Malefic)", "phala": "कुल व कुटुंब में विवाद, पारिवारिक कष्ट।"},
+    "Garala": {"nature": "क्रूर (Malefic)", "phala": "विषतुल्य क्लेश, गुप्त व्याधि व मानसिक उद्वेग।"},
+    "Vahni": {"nature": "क्रूर (Malefic)", "phala": "अग्नि भय, तीव्र क्रोध, पित्त विकार व ज्वर।"},
+    "Maya": {"nature": "क्रूर (Malefic)", "phala": "कपट, मायाजाल, भ्रम व मिथ्या आकर्षण।"},
+    "Purishaka": {"nature": "क्रूर (Malefic)", "phala": "मलिनता, अस्वच्छता, रोग व दरिद्रता।"},
+    "Apampati": {"nature": "सौम्य (Benefic)", "phala": "वरुण देव कृपा, जल यात्रा, शांति व सौम्यता।"},
+    "Marutvana": {"nature": "क्रूर (Malefic)", "phala": "वात व्याधि, अस्थिरता, निरंतर भ्रमण व चिंता।"},
+    "Kaala": {"nature": "क्रूर (Malefic)", "phala": "काल का कठोर दंड, संकट, भय व अवरोध।"},
+    "Sarpa": {"nature": "क्रूर (Malefic)", "phala": "सर्प भय, गुप्त शत्रु, कुटिलता व विष प्रकोप।"},
+    "Amrita": {"nature": "सौम्य (Benefic)", "phala": "अमृत समान आरोग्य, दीर्घायु, शांति व सुख।"},
+    "Indu": {"nature": "सौम्य (Benefic)", "phala": "चंद्र समान शांति, शीतलता, कांति व लोकप्रियता।"},
+    "Mridu": {"nature": "सौम्य (Benefic)", "phala": "कोमल हृदय, विनम्रता, दयालुता व लोकसम्मान।"},
+    "Komala": {"nature": "सौम्य (Benefic)", "phala": "सुकुमारता, शारीरिक सौंदर्य व मधुर वाणी।"},
+    "Heramba": {"nature": "सौम्य (Benefic)", "phala": "श्री गणेश कृपा, विघ्न विनाश, बुद्धि व सिद्धि।"},
+    "Brahma": {"nature": "सौम्य (Benefic)", "phala": "सृष्टि ज्ञान, उच्च विद्या, वेद निष्ठा व तप।"},
+    "Vishnu": {"nature": "सौम्य (Benefic)", "phala": "पालन सामर्थ्य, ऐश्वर्य, राजकृपा व धर्मनिष्ठा।"},
+    "Maheshwara": {"nature": "सौम्य (Benefic)", "phala": "शिव कृपा, वैराग्य, मोक्ष मार्ग व दिव्य ज्ञान।"},
+    "Ardra": {"nature": "क्रूर (Malefic)", "phala": "तीव्र शोक, अश्रुपात, संताप व मानसिक वेदना।"},
+    "Kalinasha": {"nature": "सौम्य (Benefic)", "phala": "कलह का नाश, धर्म विजय, शांति व शुद्धि।"},
+    "Kshiteesha": {"nature": "सौम्य (Benefic)", "phala": "भूमि स्वामित्व, राजतुल्य अधिकार व उच्च पद।"},
+    "Kamalakara": {"nature": "सौम्य (Benefic)", "phala": "लक्ष्मी का अक्षय निवास, धन-धान्य व वैभव।"},
+    "Gulika": {"nature": "क्रूर (Malefic)", "phala": "शनि पुत्र गुलिक प्रभाव, मरणतुल्य कष्ट व पीड़ा।"},
+    "Mrityu": {"nature": "क्रूर (Malefic)", "phala": "मारक बाधा, भय, दुर्घटना व क्षीणता।"},
+    "Davagni": {"nature": "क्रूर (Malefic)", "phala": "दावाग्नि समान आकस्मिक विपत्ति व विनाश।"},
+    "Adhama": {"nature": "क्रूर (Malefic)", "phala": "नीच संगति, अपयश व आत्मग्लानि।"},
+    "Kantaka": {"nature": "क्रूर (Malefic)", "phala": "कंटकमय जीवन, मार्ग में अवरोध व तीक्ष्ण कष्ट।"},
+    "Sudha": {"nature": "सौम्य (Benefic)", "phala": "परम तृप्ति, सुधापान, आरोग्य व मनःशांति।"},
+    "Purnachandra": {"nature": "सौम्य (Benefic)", "phala": "पूर्ण चंद्र समान मानसिक शांति, यश व सुख।"},
+    "Vishadagdha": {"nature": "क्रूर (Malefic)", "phala": "आहत मन, विष का प्रभाव व कटु अनुभव।"},
+    "Kulanasha": {"nature": "क्रूर (Malefic)", "phala": "कुल में विघ्न, संतति कष्ट व अलगाव।"},
+    "Vamshakshaya": {"nature": "क्रूर (Malefic)", "phala": "वंश वृद्धि में मंदता, क्लेश व चिंता।"},
+    "Utpata": {"nature": "क्रूर (Malefic)", "phala": "आकस्मिक उपद्रव, अनहोनी व उथल-पुथल।"},
+    "Saumya": {"nature": "सौम्य (Benefic)", "phala": "बुद्धियुक्त, सौम्य व्यवहार, शांति व प्रतिष्ठा।"},
+    "Sheetala": {"nature": "सौम्य (Benefic)", "phala": "शीतलता, ताप निवारण, संतोष व आनंद।"},
+    "Karaladamshtra": {"nature": "क्रूर (Malefic)", "phala": "भयावह परिस्थितियां, शत्रु भय व कठोरता।"},
+    "Chandramukhi": {"nature": "सौम्य (Benefic)", "phala": "चंद्र समान मुख कांति, आकर्षण व सर्वप्रियता।"},
+    "Praveena": {"nature": "सौम्य (Benefic)", "phala": "सर्व कार्य कुशलता, निपुणता, चातुर्य व सफलता।"},
+    "Kalapavaka": {"nature": "क्रूर (Malefic)", "phala": "प्रलय अग्नि समान संहारक संकट व हानि।"},
+    "Dandayudha": {"nature": "क्रूर (Malefic)", "phala": "न्याय दंड, राजदंड भय, अस्त्र-शस्त्र पीड़ा।"},
+    "Nirmala": {"nature": "सौम्य (Benefic)", "phala": "निष्कलंक चरित्र, निर्मल बुद्धि व सात्विक यश।"},
+    "Krura": {"nature": "क्रूर (Malefic)", "phala": "क्रूर परिणाम, कठोर निर्णय व संघर्ष।"},
+    "Atisheetala": {"nature": "सौम्य (Benefic)", "phala": "परम शांत चित्त, आधि-व्याधि से मुक्ति।"},
+    "Payodhi": {"nature": "सौम्य (Benefic)", "phala": "क्षीरसागर समान गंभीरता, अकूत संपदा व कृपा।"},
+    "Bhramana": {"nature": "क्रूर (Malefic)", "phala": "अनावश्यक देशाटन, व्यर्थ भटकाव व अस्थिरता।"},
+    "Chandrarekha": {"nature": "सौम्य (Benefic)", "phala": "द्वितीया के चंद्र समान नित्य वर्धमान सौभाग्य।"}
 }
 
 SHODASHAVARGA_CODES = [
@@ -514,6 +569,21 @@ class VargaCalculator:
             lagna_deity=lagna_deity,
             lagna_is_benefic_deity=lagna_is_benefic
         )
+
+    @classmethod
+    def get_d60_deity_details(cls, deity_name: str) -> Dict[str, str]:
+        """Returns classical BPHS Ch. 6 deity description, nature, and phala."""
+        clean_name = str(deity_name).strip()
+        desc = D60_DEITY_DESCRIPTIONS.get(clean_name, {
+            "nature": "विद्वत् सम्मत (Classical)",
+            "phala": "पाराशरी षष्ट्यंश अधिष्ठाता प्रभाव।"
+        })
+        return {
+            "name": clean_name,
+            "nature": desc["nature"],
+            "phala": desc["phala"],
+            "grantha": "बृहत्पाराशर होराशास्त्रम् अ. ६ (BPHS Ch. 6)"
+        }
 
     @staticmethod
     def calculate_d40(chart: KundaliChart) -> VargaChart:

@@ -101,3 +101,31 @@ def test_vaisheshikamsa_tally(test_chart):
             assert "1 Varga" in data["designation"]
         elif c == 0:
             assert data["designation"] == "Sadharana"
+
+
+def test_d60_deity_dual_reference_and_descriptions():
+    """Verify BPHS Ch. 6 deity rich description retrieval for both benefic and malefic deities."""
+    # 1. Benefic Deva
+    deva_info = VargaCalculator.get_d60_deity_details("Deva")
+    assert deva_info["name"] == "Deva"
+    assert "सौम्य" in deva_info["nature"]
+    assert "BPHS" in deva_info["grantha"]
+    assert len(deva_info["phala"]) > 5
+
+    # 2. Benefic Kubera
+    kubera_info = VargaCalculator.get_d60_deity_details("Kubera")
+    assert kubera_info["name"] == "Kubera"
+    assert "सौम्य" in kubera_info["nature"]
+    assert "धन" in kubera_info["phala"] or "ऐश्वर्य" in kubera_info["phala"]
+
+    # 3. Malefic Ghora
+    ghora_info = VargaCalculator.get_d60_deity_details("Ghora")
+    assert ghora_info["name"] == "Ghora"
+    assert "क्रूर" in ghora_info["nature"]
+    assert "कष्ट" in ghora_info["phala"]
+
+    # 4. Benefic Chandrarekha (59th deity)
+    rekha_info = VargaCalculator.get_d60_deity_details("Chandrarekha")
+    assert rekha_info["name"] == "Chandrarekha"
+    assert "सौम्य" in rekha_info["nature"]
+    assert "सौभाग्य" in rekha_info["phala"]
