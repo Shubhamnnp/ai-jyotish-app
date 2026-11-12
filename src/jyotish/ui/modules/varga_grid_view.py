@@ -21,6 +21,11 @@ def render_dignity_legend_bar() -> str:
     """
 
 
+def _clean_html(s: str) -> str:
+    """Helper to remove leading/trailing whitespace and prevent markdown 4-space code block glitch."""
+    return "".join(line.strip() for line in s.splitlines() if line.strip())
+
+
 def render_varga_dignity_dashboard(summary: Dict[str, Any], total_vargas: int = 11, is_dark: bool = False, title: str = "") -> str:
     """Renders an executive horizontal stacked dignity distribution and Vaisheshikamsa dashboard for 7 planets."""
     w_svg = 700
@@ -422,7 +427,7 @@ def render_varga_grid_view(chart, tabs=None):
                     _own_p = [pn for pn, pp in _v_p_map.items() if SIGN_LORDS.get(getattr(pp, "sign_name", "")) == pn]
                     _deb_p = [pn for pn, pp in _v_p_map.items() if getattr(pp, "sign_name", "") == {"Sun": "Libra", "Moon": "Scorpio", "Mars": "Cancer", "Mercury": "Pisces", "Jupiter": "Capricorn", "Venus": "Virgo", "Saturn": "Aries"}.get(pn)]
 
-                    st.markdown(f"""
+                    st.markdown(_clean_html(f"""
                     <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                             <span style="font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'}; font-size:13.5px;">🎯 {varga_meta_full.get(sel_dv_code, sel_dv_code)}</span>
@@ -434,14 +439,14 @@ def render_varga_grid_view(chart, tabs=None):
                             • ⚠️ <b>नीच ग्रह:</b> {', '.join(_deb_p) if _deb_p else 'कोई नहीं (दोष मुक्त)'} {'— अतिरिक्त साधना व जागरूकता अपेक्षित' if _deb_p else ''}
                         </div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """), unsafe_allow_html=True)
                 else:
                     st.caption(f"{sel_dv_code} वर्ग गणना उपलब्ध नहीं।")
 
             st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
             # Classical Dasvarga Shloka & Pramana Card
-            st.markdown(f"""
+            st.markdown(_clean_html(f"""
             <div style="background: rgba(37, 99, 235, 0.08); border-left: 4px solid #2563EB; padding: 14px 18px; border-radius: 8px; margin-bottom: 14px;">
                 <div style="font-weight: 700; color: #1D4ED8; font-size: 13.5px; margin-bottom: 4px;">📖 बृहत्पाराशर होराशास्त्रम् — दशवर्ग फल एवं विंशोपक बल विधान</div>
                 <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
@@ -454,7 +459,7 @@ def render_varga_grid_view(chart, tabs=None):
                     <b>हिंदी भावार्थ:</b> दशवर्गों में जो ग्रह स्वराशि, मूलत्रिकोण अथवा उच्चांश में स्थित होते हैं, वे जातक को अक्षय बल, ऐश्वर्य व कीर्ति प्रदान करते हैं। विशेष रूप से लग्न व नवांश में वर्गोत्तम ग्रह जातक को अतुल्य ख्याति दिलाता है। फलादेश का अंतिम निर्णय दशवर्ग बल देखकर ही करना चाहिए।
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """), unsafe_allow_html=True)
 
             # Vaisheshikamsa Summary for Dasvarga (Up to 10 Auspicious Vargas)
             st.markdown("##### 👑 दशवर्ग वैशेषिकांश संज्ञाएं (Dasvarga Vaisheshikamsa System)")
@@ -576,7 +581,7 @@ def render_varga_grid_view(chart, tabs=None):
 
                     deity_badge = f'<span style="font-size:11px; font-weight:800; background:#FEF3C7; color:#B45309; padding:2px 8px; border-radius:4px; margin-left:6px;">अधिष्ठाता: {_hv_deity}</span>' if _hv_deity else ''
 
-                    st.markdown(f"""
+                    st.markdown(_clean_html(f"""
                     <div style="background:{'#1E293B' if _is_dark else '#F8FAFC'}; border:1.5px solid #CBD5E1; border-radius:10px; padding:12px 16px; font-size:12px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                             <span style="font-weight:900; color:{'#A78BFA' if _is_dark else '#6D28D9'}; font-size:13.5px;">👑 {varga_meta_full.get(sel_hv_code, sel_hv_code)}</span>
@@ -591,7 +596,7 @@ def render_varga_grid_view(chart, tabs=None):
                             • ⚠️ <b>नीच ग्रह:</b> {', '.join(_h_deb_p) if _h_deb_p else 'कोई नहीं (दोष मुक्त)'}
                         </div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """), unsafe_allow_html=True)
 
                     # Quick planetary breakdown table for the selected higher varga
                     hv_rows = []
@@ -627,7 +632,7 @@ def render_varga_grid_view(chart, tabs=None):
             sv_shl = SHASTRIYA_SHLOKAS.get("shodashvarga_vaisheshikamsa", {})
             if sv_shl:
                 sv_lines = "<br/>".join(sv_shl['shloka'].splitlines())
-                st.markdown(f"""
+                st.markdown(_clean_html(f"""
                 <div style="background: rgba(245, 158, 11, 0.08); border-left: 4px solid #F59E0B; padding: 14px 18px; border-radius: 8px; margin-bottom: 14px;">
                     <div style="font-weight: 700; color: #B45309; font-size: 13.5px; margin-bottom: 4px;">📖 {sv_shl['grantha']}</div>
                     <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
@@ -640,7 +645,7 @@ def render_varga_grid_view(chart, tabs=None):
                         <b>शास्त्रीय नियम:</b> {sv_shl['rule']}
                     </div>
                 </div>
-                """, unsafe_allow_html=True)
+                """), unsafe_allow_html=True)
 
     # =========================================================================
     # TAB 3: SARANSH, ALL DETAILS & SHASTRIYA PRAMAN
@@ -749,45 +754,45 @@ def render_varga_grid_view(chart, tabs=None):
         sv_shl = SHASTRIYA_SHLOKAS.get("shodashvarga_vaisheshikamsa", {})
         if sv_shl:
             sv_lines = "<br/>".join(sv_shl['shloka'].splitlines())
-            st.markdown(f"""
-    <div style="background: rgba(245, 158, 11, 0.08); border-left: 4px solid #F59E0B; padding: 14px 18px; border-radius: 8px; margin-bottom: 14px;">
-    <div style="font-weight: 700; color: #B45309; font-size: 13.5px; margin-bottom: 4px;">📖 {sv_shl['grantha']}</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {sv_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {sv_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {sv_shl['rule']}
-    </div>
-    </div>
-    """, unsafe_allow_html=True)
+            st.markdown(_clean_html(f"""
+            <div style="background: rgba(245, 158, 11, 0.08); border-left: 4px solid #F59E0B; padding: 14px 18px; border-radius: 8px; margin-bottom: 14px;">
+                <div style="font-weight: 700; color: #B45309; font-size: 13.5px; margin-bottom: 4px;">📖 {sv_shl['grantha']}</div>
+                <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+                    {sv_lines}
+                </div>
+                <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+                    <b>हिंदी भावार्थ:</b> {sv_shl['anuvad_hi']}
+                </div>
+                <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+                    <b>शास्त्रीय नियम:</b> {sv_shl['rule']}
+                </div>
+            </div>
+            """), unsafe_allow_html=True)
 
         vg_shl = SHASTRIYA_SHLOKAS.get("vargottama", {})
         if vg_shl:
             vg_lines = "<br/>".join(vg_shl['shloka'].splitlines())
-            st.markdown(f"""
-    <div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 14px 18px; border-radius: 8px; margin-bottom: 14px;">
-    <div style="font-weight: 700; color: #047857; font-size: 13.5px; margin-bottom: 4px;">📖 फलदीपिका — वर्गोत्तम विचार (अध्याय ३, श्लोक ९) एवं बृहज्जातक</div>
-    <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
-        {vg_lines}
-    </div>
-    <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
-        <b>हिंदी भावार्थ:</b> {vg_shl['anuvad_hi']}
-    </div>
-    <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
-        <b>शास्त्रीय नियम:</b> {vg_shl['rule']}
-    </div>
-    </div>
-    """, unsafe_allow_html=True)
+            st.markdown(_clean_html(f"""
+            <div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid #10B981; padding: 14px 18px; border-radius: 8px; margin-bottom: 14px;">
+                <div style="font-weight: 700; color: #047857; font-size: 13.5px; margin-bottom: 4px;">📖 फलदीपिका — वर्गोत्तम विचार (अध्याय ३, श्लोक ९) एवं बृहज्जातक</div>
+                <div style="font-family: 'Devanagari Sangam MN', serif; font-size: 14px; font-weight: 600; line-height: 1.6; color: #0F172A;">
+                    {vg_lines}
+                </div>
+                <div style="margin-top: 6px; font-size: 12.5px; color: #334155; line-height: 1.5;">
+                    <b>हिंदी भावार्थ:</b> {vg_shl['anuvad_hi']}
+                </div>
+                <div style="margin-top: 4px; font-size: 11.5px; color: #64748B;">
+                    <b>शास्त्रीय नियम:</b> {vg_shl['rule']}
+                </div>
+            </div>
+            """), unsafe_allow_html=True)
 
 
 
     # ─── Shastriya Pramana & Classical Overview moved to Bottom (Zero Top Scroll) ───
     st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
     with st.expander(f"📜 शास्त्रीय प्रमाण — {bphs_varga_shloka['title']}", expanded=False):
-        st.markdown(f"""
+        st.markdown(_clean_html(f"""
         <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
             <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {bphs_varga_shloka['source']}</b>
             <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
@@ -797,7 +802,7 @@ def render_varga_grid_view(chart, tabs=None):
                 <b>हिंदी भावार्थ:</b> {bphs_varga_shloka['meaning']}
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """), unsafe_allow_html=True)
 
     with st.expander("🔮 लग्न, शिरोमणि व विंशोपक बल सारांश (Key Lagna, Top Planet & Vimshopaka Summary)", expanded=False):
         c_vg1, c_vg2, c_vg3, c_vg4 = st.columns(4)
