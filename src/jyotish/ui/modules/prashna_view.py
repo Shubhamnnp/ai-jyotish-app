@@ -206,6 +206,39 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
     if "active_prashna_res" not in st.session_state or not st.session_state.active_prashna_res:
         st.session_state.active_prashna_res = st.session_state.get("prashna_native_res")
 
+    # Active Native Micro-Planetary Longitudes & DMS Console
+    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
+    l_deg = getattr(chart, "lagna_degree", 0.0)
+    l_ansh = int(l_deg)
+    l_kala = int(round((l_deg - l_ansh) * 60.0))
+    if l_kala >= 60:
+        l_kala = 0
+        l_ansh += 1
+    l_dms = f"{l_ansh}° {l_kala:02d}'"
+
+    moon = chart.planets.get("Moon")
+    if moon:
+        m_deg = getattr(moon, "sign_degree", 0.0)
+        m_ansh = int(m_deg)
+        m_kala = int(round((m_deg - m_ansh) * 60.0))
+        if m_kala >= 60:
+            m_kala = 0
+            m_ansh += 1
+        m_dms = f"{m_ansh}° {m_kala:02d}'"
+        m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
+        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
+        moon_str = f"{moon.sign_name} {m_dms} [{m_nak}-P{m_pada}]"
+    else:
+        moon_str = "—"
+
+    # Active Prashna baseline details
+    cur_p_init = st.session_state.get("active_prashna_res") or st.session_state.get("prashna_native_res") or {}
+    p_lagna_str = cur_p_init.get("prashna_lagna", "—")
+    p_lagnesh_str = cur_p_init.get("lagnesh", "—")
+    p_karyesh_str = cur_p_init.get("karyesh", "—")
+    p_yoga_str = cur_p_init.get("tajika_yoga", "—")
+    p_verdict_str = str(cur_p_init.get("verdict", "उत्कृष्ट")).split(" (")[0]
+
     # CSS for compact unified expanders & zero top scroll
     st.markdown("""
     <style>
