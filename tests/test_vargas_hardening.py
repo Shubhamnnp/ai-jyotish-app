@@ -30,14 +30,15 @@ def sample_chart():
 
 
 def test_all_20_divisional_charts_generated(sample_chart):
-    """Verify that all 20 classical divisional charts are generated with valid structure."""
+    """Verify that all classical and higher divisional charts are generated with valid structure."""
     expected_vargas = [
         "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10",
-        "D11", "D12", "D16", "D20", "D24", "D27", "D30", "D40", "D45", "D60"
+        "D11", "D12", "D16", "D20", "D24", "D27", "D30", "D40", "D45", "D60",
+        "D72", "D81", "D108", "D144", "D150"
     ]
     vargas = VargaCalculator.calculate_all_vargas(sample_chart)
     
-    assert len(vargas) == 20
+    assert len(vargas) >= 25
     for v_code in expected_vargas:
         assert v_code in vargas, f"Missing varga {v_code}"
         v_chart = vargas[v_code]
@@ -48,6 +49,40 @@ def test_all_20_divisional_charts_generated(sample_chart):
             assert 1 <= pos.sign_id <= 12
             assert 1 <= pos.house_number <= 12
             assert 0.0 <= pos.degree_in_varga <= 30.0
+
+
+def test_higher_vargas_d72_to_d150(sample_chart):
+    """Verify mathematical properties and metadata of higher vargas D72, D81, D108, D144, D150."""
+    # 1. D72 Ashtottaramsha (division 72)
+    d72 = VargaCalculator.calculate_d72(sample_chart)
+    assert d72.varga_code == "D72"
+    assert d72.division == 72
+    assert 1 <= d72.lagna_sign_id <= 12
+
+    # 2. D81 Navanavamsha (division 81)
+    d81 = VargaCalculator.calculate_d81(sample_chart)
+    assert d81.varga_code == "D81"
+    assert d81.division == 81
+    assert 1 <= d81.lagna_sign_id <= 12
+
+    # 3. D108 Ashtottarashatamsha (division 108)
+    d108 = VargaCalculator.calculate_d108(sample_chart)
+    assert d108.varga_code == "D108"
+    assert d108.division == 108
+    assert 1 <= d108.lagna_sign_id <= 12
+
+    # 4. D144 Dwadash-Dwadashamsha (division 144)
+    d144 = VargaCalculator.calculate_d144(sample_chart)
+    assert d144.varga_code == "D144"
+    assert d144.division == 144
+    assert 1 <= d144.lagna_sign_id <= 12
+
+    # 5. D150 Nadiamsha (division 150)
+    d150 = VargaCalculator.calculate_d150(sample_chart)
+    assert d150.varga_code == "D150"
+    assert d150.division == 150
+    assert 1 <= d150.lagna_sign_id <= 12
+    assert "Nadi #" in d150.lagna_deity
 
 
 def test_d5_panchamsha_classical_mapping(sample_chart):

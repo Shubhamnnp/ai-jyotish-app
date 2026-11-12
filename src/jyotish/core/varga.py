@@ -721,6 +721,142 @@ class VargaCalculator:
         return VargaChart(varga_code="D11", varga_name="Rudramsha", division=11,
                           lagna_sign_id=lagna_d11, lagna_sign_name=SIGN_NAMES[lagna_d11 - 1], planets=planets)
 
+    @staticmethod
+    def calculate_d72(chart: KundaliChart) -> VargaChart:
+        """D72 (Ashtottaramsha / Aparajita - Latent Spiritual Powers & Subtle Strengths). 6 parts of 5.0 deg."""
+        def get_d72_sign(sign_id: int, deg: float) -> int:
+            part = min(5, int(deg // 5.0))  # 0 to 5
+            is_odd = (sign_id % 2 != 0)
+            start_sign = 1 if is_odd else 7  # Aries for odd signs, Libra for even signs
+            return ((start_sign - 1 + part) % 12) + 1
+
+        lagna_d72 = get_d72_sign(chart.lagna_sign_id, chart.lagna_degree)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        for name, p in chart.planets.items():
+            s_id = get_d72_sign(p.sign_id, p.sign_degree)
+            house = ((s_id - lagna_d72) % 12) + 1
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.sign_degree % 5.0) / 5.0) * 30.0,
+                house_number=house
+            )
+        return VargaChart(varga_code="D72", varga_name="Ashtottaramsha", division=72,
+                          lagna_sign_id=lagna_d72, lagna_sign_name=SIGN_NAMES[lagna_d72 - 1], planets=planets)
+
+    @staticmethod
+    def calculate_d81(chart: KundaliChart) -> VargaChart:
+        """D81 (Navanavamsha - Navamsha of Navamsha - Esoteric Vitality & Inner Character). 81 parts."""
+        def get_d81_sign(lon: float) -> int:
+            # 1. Primary D9 Navamsha sign
+            d9_part = int((lon % 360.0) // (360.0 / 108.0))  # 0 to 107
+            d9_sign = (d9_part % 12) + 1
+
+            # 2. Sub-Navamsha inside the D9 span (3°20' = 200 arcmin)
+            d9_span = 360.0 / 108.0  # 3.333333°
+            deg_in_d9 = lon % d9_span
+            sub_span = d9_span / 9.0  # ~0.37037° = 22.222 arcmin
+            sub_part = min(8, int(deg_in_d9 // sub_span))
+
+            # Sub-navamsha start by element of D9 sign
+            elem = (d9_sign - 1) % 4  # 0: Fire, 1: Earth, 2: Air, 3: Water
+            start_sign = 1 if elem == 0 else (10 if elem == 1 else (7 if elem == 2 else 4))
+            return ((start_sign - 1 + sub_part) % 12) + 1
+
+        lagna_d81 = get_d81_sign(chart.lagna_longitude)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        sub_span = (360.0 / 108.0) / 9.0
+        for name, p in chart.planets.items():
+            s_id = get_d81_sign(p.longitude)
+            house = ((s_id - lagna_d81) % 12) + 1
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.longitude % sub_span) / sub_span) * 30.0,
+                house_number=house
+            )
+        return VargaChart(varga_code="D81", varga_name="Navanavamsha", division=81,
+                          lagna_sign_id=lagna_d81, lagna_sign_name=SIGN_NAMES[lagna_d81 - 1], planets=planets)
+
+    @staticmethod
+    def calculate_d108(chart: KundaliChart) -> VargaChart:
+        """D108 (Ashtottarashatamsha - Nakshatra Pada Wheel & High Nadi Divination). 108 parts of 3°20'."""
+        span = 360.0 / 108.0  # 3.333333° = 3°20'
+        def get_d108_sign(lon: float) -> int:
+            part = int((lon % 360.0) // span)  # 0 to 107
+            return (part % 12) + 1  # 9 complete cycles of 12 zodiac signs
+
+        lagna_d108 = get_d108_sign(chart.lagna_longitude)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        for name, p in chart.planets.items():
+            s_id = get_d108_sign(p.longitude)
+            house = ((s_id - lagna_d108) % 12) + 1
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.longitude % span) / span) * 30.0,
+                house_number=house
+            )
+        return VargaChart(varga_code="D108", varga_name="Ashtottarashatamsha", division=108,
+                          lagna_sign_id=lagna_d108, lagna_sign_name=SIGN_NAMES[lagna_d108 - 1], planets=planets)
+
+    @staticmethod
+    def calculate_d144(chart: KundaliChart) -> VargaChart:
+        """D144 (Dwadash-Dwadashamsha - Ancestral Heritage & Genetic Karmic Lineage). 144 parts of 12.5 arcmin."""
+        d12_span = 30.0 / 12.0  # 2.5°
+        sub_span = d12_span / 12.0  # 0.208333° = 12.5'
+
+        def get_d144_sign(sign_id: int, deg: float) -> int:
+            d12_part = min(11, int(deg // d12_span))
+            d12_sign = ((sign_id - 1 + d12_part) % 12) + 1
+            deg_in_d12 = deg % d12_span
+            sub_part = min(11, int(deg_in_d12 // sub_span))
+            return ((d12_sign - 1 + sub_part) % 12) + 1
+
+        lagna_d144 = get_d144_sign(chart.lagna_sign_id, chart.lagna_degree)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        for name, p in chart.planets.items():
+            s_id = get_d144_sign(p.sign_id, p.sign_degree)
+            house = ((s_id - lagna_d144) % 12) + 1
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.sign_degree % sub_span) / sub_span) * 30.0,
+                house_number=house
+            )
+        return VargaChart(varga_code="D144", varga_name="Dwadash-Dwadashamsha", division=144,
+                          lagna_sign_id=lagna_d144, lagna_sign_name=SIGN_NAMES[lagna_d144 - 1], planets=planets)
+
+    @staticmethod
+    def calculate_d150(chart: KundaliChart) -> VargaChart:
+        """D150 (Nadiamsha - Chandra Kala Nadi / Deva Keralam 150 Micro-divisions of 12 arcmin = 0.2°)."""
+        span = 30.0 / 150.0  # 0.2° = 12 arcmin
+
+        def get_d150_info(sign_id: int, deg: float) -> Tuple[int, int, str]:
+            part = min(149, int(deg // span))  # 0 to 149
+            m_type = (sign_id - 1) % 3  # 0: Movable, 1: Fixed, 2: Dual
+            if m_type == 0:
+                nadi_num = part + 1
+            elif m_type == 1:
+                nadi_num = 150 - part
+            else:
+                nadi_num = (part + 76) if part < 75 else (part - 74)
+
+            target_sign = ((sign_id - 1 + part) % 12) + 1
+            half = "Poorvardha (पूर्वार्ध: 0-6')" if (deg % span) < (span / 2.0) else "Uttarardha (उत्तरार्ध: 6-12')"
+            return target_sign, nadi_num, half
+
+        lagna_d150, l_nadi, l_half = get_d150_info(chart.lagna_sign_id, chart.lagna_degree)
+        planets: Dict[str, VargaPlanetPosition] = {}
+        for name, p in chart.planets.items():
+            s_id, p_nadi, p_half = get_d150_info(p.sign_id, p.sign_degree)
+            house = ((s_id - lagna_d150) % 12) + 1
+            planets[name] = VargaPlanetPosition(
+                name=name, sign_id=s_id, sign_name=SIGN_NAMES[s_id - 1],
+                degree_in_varga=((p.sign_degree % span) / span) * 30.0,
+                house_number=house,
+                deity=f"Nadi #{p_nadi} ({p_half})"
+            )
+        return VargaChart(varga_code="D150", varga_name="Nadiamsha", division=150,
+                          lagna_sign_id=lagna_d150, lagna_sign_name=SIGN_NAMES[lagna_d150 - 1],
+                          planets=planets, lagna_deity=f"Nadi #{l_nadi} ({l_half})")
+
     @classmethod
     def get_vargottama_planets(cls, chart: KundaliChart) -> List[str]:
         """
@@ -862,6 +998,11 @@ class VargaCalculator:
             "D40": cls.calculate_d40(chart),
             "D45": cls.calculate_d45(chart),
             "D60": cls.calculate_d60(chart),
+            "D72": cls.calculate_d72(chart),
+            "D81": cls.calculate_d81(chart),
+            "D108": cls.calculate_d108(chart),
+            "D144": cls.calculate_d144(chart),
+            "D150": cls.calculate_d150(chart),
         }
 
     @classmethod
