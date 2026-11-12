@@ -76,8 +76,6 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
             '📖 ताजिक व इत्थशाल',
             '📜 १०० शास्त्रीय प्रश्न नियम'
         ]
-    st.subheader("❓ प्रश्न कुण्डली एवं ताजिक फलकथन (Horary Astrology Suite)")
-    st.write("23 शास्त्रीय प्रश्न श्रेणियाँ, सक्रिय जातक-प्रश्न समन्वय, नवीन प्रश्नकर्ता स्वतंत्र होरारी, खगोलीय नवग्रह सामर्थ्य, द्वादश भाव भूमिका, ताजिक/प्रश्न मार्ग सिद्धांत एवं 100 शास्त्रीय नियम इंजन।")
 
     def _clean_html(s: str) -> str:
         """Helper to ensure no 4+ indentation spaces for streamlit markdown HTML."""
@@ -208,64 +206,18 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
     if "active_prashna_res" not in st.session_state or not st.session_state.active_prashna_res:
         st.session_state.active_prashna_res = st.session_state.get("prashna_native_res")
 
-    # Classical Shastriya Shloka Card
-    prashna_marga_shloka = {
-        "title": "प्रश्नमार्ग एवं ताजिक नीलकण्ठी — होरारी प्रश्न रहस्य एवं कार्य सिद्धि विचार",
-        "source": "केरलीय 'प्रश्नमार्ग' (अध्याय २, श्लोक १) एवं 'ताजिक नीलकण्ठी' (प्रश्न तंत्र)",
-        "shloka": "यदुपचितमन्यजन्मनि शुभाशुभं तस्य कर्मणः पुंसाम्।\nव्यञ्जयति शास्त्रमेतत् तमसि द्रव्याणि दीप इव॥\nलग्नेशकार्येशसुदृष्टियोगे सौम्येक्षिते वा बलसंयुते च।\nकार्यस्य सिद्धिं प्रवदन्ति सन्तो हीने विलोमं मुनयो वदन्ति॥",
-        "meaning": "पूर्वजन्मों में उपार्जित मनुष्य के शुभाशुभ कर्मफल को यह प्रश्न शास्त्र उसी प्रकार प्रत्यक्ष कर देता है जैसे घोर अन्धकार में प्रज्वलित दीपक समस्त पदार्थों को प्रकाशित कर देता है। जब प्रश्न लग्नेश एवं कार्येश में परस्पर शुभ दृष्टि, युति या इत्थशाल योग हो और वे शुभ ग्रहों से दृष्ट व बलवान हों, तो अभीष्ट कार्य की सिद्धि निश्चित होती है।"
+    # CSS for compact unified expanders & zero top scroll
+    st.markdown("""
+    <style>
+    div[data-testid="stExpander"] {
+        margin-top: 6px !important;
+        margin-bottom: 6px !important;
     }
-    with st.expander(f"📜 शास्त्रीय प्रमाण — {prashna_marga_shloka['title']}", expanded=False):
-        st.markdown(f"""
-        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
-            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {prashna_marga_shloka['source']}</b>
-            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
-{prashna_marga_shloka['shloka']}
-            </pre>
-            <div style="font-size:13px; color:#92400E; margin-top:6px;">
-                <b>हिंदी भावार्थ:</b> {prashna_marga_shloka['meaning']}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    # Active Native Micro-Planetary Longitudes & DMS Console
-    lagna_sname = getattr(chart, "lagna_sign_name", "Aries")
-    l_deg = getattr(chart, "lagna_degree", 0.0)
-    l_ansh = int(l_deg)
-    l_kala = int(round((l_deg - l_ansh) * 60.0))
-    if l_kala >= 60:
-        l_kala = 0
-        l_ansh += 1
-    l_dms = f"{l_ansh}° {l_kala:02d}'"
-
-    moon = chart.planets.get("Moon")
-    if moon:
-        m_deg = getattr(moon, "sign_degree", 0.0)
-        m_ansh = int(m_deg)
-        m_kala = int(round((m_deg - m_ansh) * 60.0))
-        if m_kala >= 60:
-            m_kala = 0
-            m_ansh += 1
-        m_dms = f"{m_ansh}° {m_kala:02d}'"
-        m_nak = getattr(moon, "nakshatra_name", getattr(moon, "nakshatra", "—"))
-        m_pada = getattr(moon, "nakshatra_pada", getattr(moon, "pada", 1))
-        moon_str = f"{moon.sign_name} {m_dms} [{m_nak}-P{m_pada}]"
-    else:
-        moon_str = "—"
-
-    # Active Prashna baseline details
-    cur_p_init = st.session_state.get("active_prashna_res") or st.session_state.get("prashna_native_res") or {}
-    p_lagna_str = cur_p_init.get("prashna_lagna", "—")
-    p_lagnesh_str = cur_p_init.get("lagnesh", "—")
-    p_karyesh_str = cur_p_init.get("karyesh", "—")
-    p_yoga_str = cur_p_init.get("tajika_yoga", "—")
-    p_verdict_str = str(cur_p_init.get("verdict", "उत्कृष्ट")).split(" (")[0]
-
-    c_pn1, c_pn2, c_pn3, c_pn4 = st.columns(4)
-    c_pn1.metric("जन्म लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
-    c_pn2.metric("तात्कालिक प्रश्न लग्न", f"{p_lagna_str}", f"लग्नेश: {p_lagnesh_str}")
-    c_pn3.metric("कार्येश एवं ताजिक योग", f"{p_karyesh_str}", f"योग: {p_yoga_str}")
-    c_pn4.metric("तात्कालिक शास्त्रीय निर्णय", f"{p_verdict_str}", f"सिद्धि स्कोर: {int(cur_p_init.get('verdict_score', 0.75) * 100)}%")
+    div[data-testid="stExpander"] details {
+        border-radius: 8px !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     # 6 Main Tabs as requested by user
     ptab1, ptab2, ptab3, ptab4, ptab5, ptab6 = st.tabs(tabs)
@@ -1073,5 +1025,34 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
 
             st.caption(f"प्रदर्शित नियम: **{len(filtered_100)} / 100**")
             st.dataframe(pd.DataFrame(filtered_100), use_container_width=True, hide_index=True)
+
+    # ─── Bottom Information & Shastriya Pramana (Collapsible Expanders) ───
+    st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+    with st.expander("🔮 जन्म लग्न, तात्कालिक प्रश्न लग्न व शास्त्रीय निर्णय सारांश (Prashna Key Metrics)", expanded=False):
+        c_pn1, c_pn2, c_pn3, c_pn4 = st.columns(4)
+        c_pn1.metric("जन्म लग्न एवं चन्द्र", f"{lagna_sname} {l_dms}", f"🌙 {moon_str}")
+        c_pn2.metric("तात्कालिक प्रश्न लग्न", f"{p_lagna_str}", f"लग्नेश: {p_lagnesh_str}")
+        c_pn3.metric("कार्येश एवं ताजिक योग", f"{p_karyesh_str}", f"योग: {p_yoga_str}")
+        c_pn4.metric("तात्कालिक शास्त्रीय निर्णय", f"{p_verdict_str}", f"सिद्धि स्कोर: {int(cur_p_init.get('verdict_score', 0.75) * 100)}%")
+
+    prashna_marga_shloka = {
+        "title": "प्रश्नमार्ग एवं ताजिक नीलकण्ठी — होरारी प्रश्न रहस्य एवं कार्य सिद्धि विचार",
+        "source": "केरलीय 'प्रश्नमार्ग' (अध्याय २, श्लोक १) एवं 'ताजिक नीलकण्ठी' (प्रश्न तंत्र)",
+        "shloka": "यदुपचितमन्यजन्मनि शुभाशुभं तस्य कर्मणः पुंसाम्।\nव्यञ्जयति शास्त्रमेतत् तमसि द्रव्याणि दीप इव॥\nलग्नेशकार्येशसुदृष्टियोगे सौम्येक्षिते वा बलसंयुते च।\nकार्यस्य सिद्धिं प्रवदन्ति सन्तो हीने विलोमं मुनयो वदन्ति॥",
+        "meaning": "पूर्वजन्मों में उपार्जित मनुष्य के शुभाशुभ कर्मफल को यह प्रश्न शास्त्र उसी प्रकार प्रत्यक्ष कर देता है जैसे घोर अन्धकार में प्रज्वलित दीपक समस्त पदार्थों को प्रकाशित कर देता है। जब प्रश्न लग्नेश एवं कार्येश में परस्पर शुभ दृष्टि, युति या इत्थशाल योग हो और वे शुभ ग्रहों से दृष्ट व बलवान हों, तो अभीष्ट कार्य की सिद्धि निश्चित होती है।"
+    }
+    with st.expander(f"📜 शास्त्रीय प्रमाण — {prashna_marga_shloka['title']}", expanded=False):
+        st.markdown(f"""
+        <div style="background:#FFFBEB; border-left:4px solid #D97706; padding:12px; border-radius:6px; margin-bottom:10px;">
+            <b style="color:#B45309; font-size:15px;">📖 ग्रंथ संदर्भ: {prashna_marga_shloka['source']}</b>
+            <pre style="white-space:pre-wrap; font-family:serif; font-size:14px; color:#78350F; margin:8px 0; background:transparent; border:none; padding:0;">
+{prashna_marga_shloka['shloka']}
+            </pre>
+            <div style="font-size:13px; color:#92400E; margin-top:6px;">
+                <b>हिंदी भावार्थ:</b> {prashna_marga_shloka['meaning']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
 
 
