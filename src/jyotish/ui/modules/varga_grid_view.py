@@ -107,7 +107,7 @@ def render_varga_dignity_dashboard(summary: Dict[str, Any], total_vargas: int = 
     ''' if title else ''
 
     return f'''
-    <div style="background:{card_bg}; border:1.5px solid {card_bdr}; border-radius:12px; padding:14px 16px; box-shadow:0 4px 14px rgba(0,0,0,0.06); margin-bottom:14px;">
+    <div style="background:{card_bg}; border:1.5px solid {card_bdr}; border-radius:12px; padding:14px 16px; box-shadow:0 4px 14px rgba(0,0,0,0.06); margin-top:22px; margin-bottom:18px;">
       {title_html}
       {svg_str}
     </div>
@@ -358,7 +358,7 @@ def render_varga_grid_view(chart, tabs=None):
 
             c_kpi1, c_kpi2, c_kpi3, c_kpi4 = st.columns(4)
             c_kpi1.markdown(f"""
-            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #10B981; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(16,185,129,0.08);">
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #10B981; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(16,185,129,0.08); margin-bottom:16px;">
                 <div style="font-size:11px; color:#059669; font-weight:800;">🌟 सर्वोच्च प्रतिष्ठित ग्रह</div>
                 <div style="font-size:16px; font-weight:900; color:{'#34D399' if _is_dark else '#065F46'};">{top_dv_planet} ({dv_summary[top_dv_planet]['score_20']:.1f}/20)</div>
                 <div style="font-size:10.5px; color:#64748B;">👑 {dv_summary[top_dv_planet]['vaisheshikamsa_hi']} ({dv_summary[top_dv_planet]['auspicious_count']} शुभ वर्ग)</div>
@@ -366,7 +366,7 @@ def render_varga_grid_view(chart, tabs=None):
             """, unsafe_allow_html=True)
 
             c_kpi2.markdown(f"""
-            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #3B82F6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(59,130,246,0.08);">
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #3B82F6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(59,130,246,0.08); margin-bottom:16px;">
                 <div style="font-size:11px; color:#2563EB; font-weight:800;">👑 वर्गोत्तम ग्रह (D1 = D9)</div>
                 <div style="font-size:16px; font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'};">{varg_str}</div>
                 <div style="font-size:10.5px; color:#64748B;">नवांश व लग्न में समान राशि बल</div>
@@ -374,7 +374,7 @@ def render_varga_grid_view(chart, tabs=None):
             """, unsafe_allow_html=True)
 
             c_kpi3.markdown(f"""
-            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #8B5CF6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(139,92,246,0.08);">
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #8B5CF6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(139,92,246,0.08); margin-bottom:16px;">
                 <div style="font-size:11px; color:#7C3AED; font-weight:800;">🛡️ उच्च/मूल/स्व वर्ग योग</div>
                 <div style="font-size:16px; font-weight:900; color:{'#A78BFA' if _is_dark else '#5B21B6'};">{total_exalt_own_dv} वर्ग स्थितियां</div>
                 <div style="font-size:10.5px; color:#64748B;">१० वर्गों में प्रबल गरिमा संख्या</div>
@@ -382,14 +382,14 @@ def render_varga_grid_view(chart, tabs=None):
             """, unsafe_allow_html=True)
 
             c_kpi4.markdown(f"""
-            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #F59E0B; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(245,158,11,0.08);">
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #F59E0B; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(245,158,11,0.08); margin-bottom:16px;">
                 <div style="font-size:11px; color:#D97706; font-weight:800;">⚠️ नीच वर्ग दृष्टि/सतर्कता</div>
                 <div style="font-size:16px; font-weight:900; color:{'#FBBF24' if _is_dark else '#92400E'};">{deb_str}</div>
                 <div style="font-size:10.5px; color:#64748B;">उपाय एवं शांति अपेक्षित क्षेत्र</div>
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 18px; line-height: 18px; clear: both;'>&nbsp;</div>", unsafe_allow_html=True)
 
             # Executive Graph for Dasvarga
             st.markdown(render_varga_dignity_dashboard(
@@ -496,7 +496,7 @@ def render_varga_grid_view(chart, tabs=None):
 
             s_kpi1, s_kpi2, s_kpi3, s_kpi4 = st.columns(4)
             s_kpi1.markdown(f"""
-            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #10B981; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(16,185,129,0.08);">
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #10B981; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(16,185,129,0.08); margin-bottom:16px;">
                 <div style="font-size:11px; color:#059669; font-weight:800;">🌟 षोडशवर्ग शिरोमणि ग्रह</div>
                 <div style="font-size:16px; font-weight:900; color:{'#34D399' if _is_dark else '#065F46'};">{top_sv_planet} ({sv_summary[top_sv_planet]['score_20']:.1f}/20)</div>
                 <div style="font-size:10.5px; color:#64748B;">👑 {sv_summary[top_sv_planet]['vaisheshikamsa_hi']} ({sv_summary[top_sv_planet]['auspicious_count']}/16 शुभ वर्ग)</div>
@@ -504,7 +504,7 @@ def render_varga_grid_view(chart, tabs=None):
             """, unsafe_allow_html=True)
 
             s_kpi2.markdown(f"""
-            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #8B5CF6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(139,92,246,0.08);">
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #8B5CF6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(139,92,246,0.08); margin-bottom:16px;">
                 <div style="font-size:11px; color:#7C3AED; font-weight:800;">⚡ औसत षोडशवर्ग बल</div>
                 <div style="font-size:16px; font-weight:900; color:{'#A78BFA' if _is_dark else '#5B21B6'};">{avg_sv_score:.1f} / 20</div>
                 <div style="font-size:10.5px; color:#64748B;">समग्र १६ वर्गों की सामूहिक सामर्थ्य</div>
@@ -512,7 +512,7 @@ def render_varga_grid_view(chart, tabs=None):
             """, unsafe_allow_html=True)
 
             s_kpi3.markdown(f"""
-            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #3B82F6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(59,130,246,0.08);">
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #3B82F6; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(59,130,246,0.08); margin-bottom:16px;">
                 <div style="font-size:11px; color:#2563EB; font-weight:800;">🛡️ कुल शुभ वर्ग स्थितियां</div>
                 <div style="font-size:16px; font-weight:900; color:{'#60A5FA' if _is_dark else '#1E40AF'};">{total_auspicious_sv} / 112</div>
                 <div style="font-size:10.5px; color:#64748B;">स्वोच्चमित्रांश योग (७ ग्रह x १६ वर्ग)</div>
@@ -520,14 +520,14 @@ def render_varga_grid_view(chart, tabs=None):
             """, unsafe_allow_html=True)
 
             s_kpi4.markdown(f"""
-            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #EF4444; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(239,68,68,0.08);">
+            <div style="background:{'#111827' if _is_dark else '#FFFFFF'}; border:1.5px solid #EF4444; border-radius:10px; padding:10px 14px; box-shadow:0 2px 6px rgba(239,68,68,0.08); margin-bottom:16px;">
                 <div style="font-size:11px; color:#DC2626; font-weight:800;">⚠️ नीच वर्ग स्थितियां</div>
                 <div style="font-size:16px; font-weight:900; color:{'#F87171' if _is_dark else '#991B1B'};">{deb_sv_str}</div>
                 <div style="font-size:10.5px; color:#64748B;">१६ वर्गों में नीच राशि स्थिति</div>
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 18px; line-height: 18px; clear: both;'>&nbsp;</div>", unsafe_allow_html=True)
 
             # Executive Graph for Shodashvarga
             st.markdown(render_varga_dignity_dashboard(
