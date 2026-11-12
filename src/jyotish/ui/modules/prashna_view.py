@@ -611,23 +611,22 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
         p_new_res = st.session_state.get("prashna_new_res") or st.session_state.get("prashna_native_res")
         p_new_chart: KundaliChart = p_new_res.get("chart", chart)
 
-        # 4 Top KPI Cards
-        st.markdown("---")
-        nkpi1, nkpi2, nkpi3, nkpi4 = st.columns(4)
-        v_text_new = str(p_new_res.get("verdict", "उत्कृष्ट")).split(" (")[0]
-        v_badge_new = str(p_new_res.get("verdict_badge", "✅ शुभ"))
-        t_text_new = str(p_new_res.get("timing", "1 से 3 सप्ताह")).split(" (")[0]
-        v_score_new = float(p_new_res.get("verdict_score", 0.75))
-        pos_c_new = p_new_res.get("active_positive_count", 0)
-        neg_c_new = p_new_res.get("active_negative_count", 0)
+        # 4 Top KPI Cards wrapped in Collapsible Expander
+        with st.expander("🎯 प्रश्न फलसिद्धि निर्णय, समय एवं नियम सारांश (Horary Verdict & Timing Summary)", expanded=True):
+            nkpi1, nkpi2, nkpi3, nkpi4 = st.columns(4)
+            v_text_new = str(p_new_res.get("verdict", "उत्कृष्ट")).split(" (")[0]
+            v_badge_new = str(p_new_res.get("verdict_badge", "✅ शुभ"))
+            t_text_new = str(p_new_res.get("timing", "1 से 3 सप्ताह")).split(" (")[0]
+            v_score_new = float(p_new_res.get("verdict_score", 0.75))
+            pos_c_new = p_new_res.get("active_positive_count", 0)
+            neg_c_new = p_new_res.get("active_negative_count", 0)
 
-        nkpi1.metric("🎯 शास्त्रीय निर्णय", v_text_new, v_badge_new)
-        nkpi2.metric("⏳ संभावित समय", t_text_new)
-        nkpi3.metric("📊 सहमति व सिद्धि स्कोर", f"{int(v_score_new * 100)}%")
-        nkpi4.metric("📜 100 शास्त्रीय नियम", f"✅ {pos_c_new} शुभ | ⚠️ {neg_c_new} बाधाएं")
+            nkpi1.metric("🎯 शास्त्रीय निर्णय", v_text_new, v_badge_new)
+            nkpi2.metric("⏳ संभावित समय", t_text_new)
+            nkpi3.metric("📊 सहमति व सिद्धि स्कोर", f"{int(v_score_new * 100)}%")
+            nkpi4.metric("📜 100 शास्त्रीय नियम", f"✅ {pos_c_new} शुभ | ⚠️ {neg_c_new} बाधाएं")
 
         # Layout: Left SVG Chart, Right Summary HUD
-        st.markdown("---")
         col_nchart, col_nsum = st.columns([1, 1])
         with col_nchart:
             c_icon_new = p_new_res.get("category_icon", "🔮")
