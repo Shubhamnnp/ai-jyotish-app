@@ -186,9 +186,10 @@ class VarshaphalService:
         ithasala_10th = self._check_ithasala(varsha_chart, lagnesh_name, varsha_chart.houses[9].lord)
         all_tajika_yogas = self._detect_all_tajika_yogas(varsha_chart, varshesha, muntha_lord)
 
-        # 9. 1-Year Mudda Dasha Timeline (Vimshottari & Yogini)
+        # 9. 1-Year Mudda Dasha Timeline (Vimshottari, Yogini & Patyayini)
         mudda_timeline = self._calculate_mudda_dasha(return_dt, varsha_chart.planets["Moon"].longitude)
         mudda_yogini = self._calculate_mudda_yogini_dasha(return_dt)
+        patyayini_timeline = self._calculate_patyayini_dasha(return_dt, varsha_chart)
 
         # 10. Muntha Fruit & Annual Interpretation
         muntha_fruits = {
@@ -275,6 +276,7 @@ class VarshaphalService:
             "mudda_dasha_full": mudda_timeline,
             "mudda_dasha_summary": mudda_timeline[:4],
             "mudda_yogini_dasha": mudda_yogini,
+            "patyayini_dasha": patyayini_timeline,
             "bhavas_forecast": bhavas_forecast,
             "maasa_pravesha_timeline": maasa_timeline,
             "annual_score": annual_score,
@@ -744,6 +746,64 @@ class VarshaphalService:
                 "status": "👉 वर्तमान सक्रिय" if is_active else ("व्यतीत" if end < now_dt else "आगामी")
             })
             curr = end
+        return timeline
+
+    def _calculate_patyayini_dasha(self, start_dt: datetime, chart: KundaliChart) -> List[Dict[str, Any]]:
+        """
+        Calculates 1-year Tajika Patyayini Dasha according to Tajika Neelakanthi Ch. 4:
+        Planets (Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn) and Lagna sorted by degrees in sign.
+        Dasha duration is proportional to differences between consecutive degrees.
+        Total span across all entities is exactly 365.25 days.
+        """
+        entity_degs = []
+
+        # Lagna
+        l_deg = chart.lagna_longitude % 30.0
+        entity_degs.append(("Lagna", "लग्न (Ascendant)", l_deg))
+
+        # Planets
+        for p_name in ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn"]:
+            p_obj = chart.planets.get(p_name)
+            if p_obj:
+                deg = p_obj.longitude % 30.0
+                entity_degs.append((p_name, PLANET_NAMES_HI.get(p_name, p_name), deg))
+
+        # Sort ascending by sign degree
+        entity_degs.sort(key=lambda x: x[2])
+
+        # Calculate differential spans (Patyamsas)
+        diffs = []
+        prev_deg = 0.0
+        for name_en, name_hi, deg in entity_degs:
+            diff = max(0.1, deg - prev_deg)
+            diffs.append((name_en, name_hi, deg, diff))
+            prev_deg = deg
+
+        total_diff = sum(d[3] for d in diffs)
+        if total_diff <= 0:
+            total_diff = 1.0
+
+        timeline = []
+        curr = start_dt
+        now_dt = datetime.now()
+
+        for name_en, name_hi, deg, diff in diffs:
+            dur_days = (diff / total_diff) * 365.25
+            end = curr + timedelta(days=dur_days)
+            is_active = (curr <= now_dt <= end)
+            timeline.append({
+                "lord": name_en,
+                "lord_hi": name_hi,
+                "sign_degree": f"{deg:.2f}°",
+                "patyamsa_diff": f"{diff:.2f}°",
+                "start_date": curr.strftime("%d-%b-%Y"),
+                "end_date": end.strftime("%d-%b-%Y"),
+                "duration_days": round(dur_days, 1),
+                "is_active": is_active,
+                "status": "👉 वर्तमान सक्रिय" if is_active else ("व्यतीत" if end < now_dt else "आगामी")
+            })
+            curr = end
+
         return timeline
 
     def _evaluate_12_bhavas(self, chart: KundaliChart, muntha_h: int, varshesha: str) -> List[Dict[str, Any]]:
