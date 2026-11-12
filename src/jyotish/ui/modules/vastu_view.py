@@ -335,62 +335,6 @@ def render_vastu_view(chart, tabs=None):
         best_zone = sorted_zones[0] if sorted_zones else None
         worst_zone = sorted_zones[-1] if sorted_zones else None
 
-        # Top KPI Summary Cards
-        kpi_col1, kpi_col2, kpi_col3, kpi_col4 = st.columns(4)
-        with kpi_col1:
-            _v_render(f"""
-            <div style="background: {card_bg}; border: 1.5px solid #10B981; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                <div style="font-size: 11.5px; font-weight: 700; color: #10B981; text-transform: uppercase;">🏆 सर्वोच्च सामंजस्य दिशा</div>
-                <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{best_zone.get('hindi', 'N/A') if best_zone else 'N/A'}</div>
-                <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #10B981;">{best_zone.get('score', 0) if best_zone else 0}/100</b> | {best_zone.get('lord', '') if best_zone else ''}</div>
-            </div>
-            """)
-        with kpi_col2:
-            _v_render(f"""
-            <div style="background: {card_bg}; border: 1.5px solid #EF4444; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                <div style="font-size: 11.5px; font-weight: 700; color: #EF4444; text-transform: uppercase;">⚠️ सर्वाधिक संवेदनशील दिशा</div>
-                <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{worst_zone.get('hindi', 'N/A') if worst_zone else 'N/A'}</div>
-                <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #EF4444;">{worst_zone.get('score', 0) if worst_zone else 0}/100</b> | {worst_zone.get('lord', '') if worst_zone else ''}</div>
-            </div>
-            """)
-        with kpi_col3:
-            _v_render(f"""
-            <div style="background: {card_bg}; border: 1.5px solid #3B82F6; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                <div style="font-size: 11.5px; font-weight: 700; color: #3B82F6; text-transform: uppercase;">🌿 पंचतत्व संतुलन</div>
-                <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">जल • अग्नि • वायु • पृथ्वी</div>
-                <div style="font-size: 12px; color: {text_secondary};">आकाश (ब्रह्मस्थान): <b style="color: #3B82F6;">{zone_dict.get('Center', {}).get('score', 85)}/100</b></div>
-            </div>
-            """)
-        with kpi_col4:
-            idx_color = "#10B981" if avg_score >= 75 else "#F59E0B" if avg_score >= 50 else "#EF4444"
-            _v_render(f"""
-            <div style="background: {card_bg}; border: 1.5px solid {idx_color}; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                <div style="font-size: 11.5px; font-weight: 700; color: {idx_color}; text-transform: uppercase;">📊 समग्र वास्तु सूचकांक</div>
-                <div style="font-size: 22px; font-weight: 900; color: {idx_color}; margin: 2px 0;">{avg_score}<span style="font-size: 14px; color: {text_secondary};">/100</span></div>
-                <div style="font-size: 12px; color: {text_secondary};">9 दिशाओं का औसत सामंजस्य</div>
-            </div>
-            """)
-
-        # Active Mahadasha Direction Vibration Alert
-        active_zone = next((z for z in v_zones if z.get("is_active_dasha")), None)
-        if active_zone and active_dasha_lord:
-            _v_render(f"""
-            <div style="background: {'#1E1B4B' if _is_dark else '#EEF2FF'}; border: 1.5px solid #6366F1; border-radius: 12px; padding: 12px 18px; margin: 14px 0 6px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <span style="font-size: 26px;">⚡</span>
-                    <div>
-                        <div style="font-weight: 800; color: #4F46E5; font-size: 14px;">वर्तमान सक्रिय महादशा दिशा: {active_zone.get('hindi', '')} ({active_zone.get('direction', '')})</div>
-                        <div style="font-size: 12px; color: {text_secondary};">आपकी वर्तमान विंशोत्तरी महादशा स्वामी <b>{active_dasha_lord}</b> हैं। इस समय भवन की <b>{active_zone.get('hindi', '')}</b> दिशा सर्वाधिक सक्रिय कंपन पैदा कर रही है, इसे वास्तु-दोषमुक्त व प्रकाशयुक्त रखें।</div>
-                    </div>
-                </div>
-                <div style="text-align: right;">
-                    <span style="background: #4F46E5; color: #FFFFFF; padding: 4px 10px; border-radius: 12px; font-weight: 700; font-size: 11.5px;">दिशा स्कोर: {active_zone.get('score', 70)}/100</span>
-                </div>
-            </div>
-            """)
-
-        _v_render("<div style='height: 14px;'></div>")
-
         # Subtabs under Tab 0: 360° दिशा चक्र एवं नवदिशा शास्त्रीय तुलनात्मक सारणी
         subtab_v_compass, subtab_v_table = st.tabs([
             "1. 🧭 360° वास्तु दिशा चक्र",
@@ -483,6 +427,62 @@ def render_vastu_view(chart, tabs=None):
 
             tbl_html += '</tbody></table></div>'
             _v_render(tbl_html)
+
+        _v_render("<div style='height: 14px;'></div>")
+
+        # Bottom Collapsible KPI Summary Cards & Dasha Alert under Tab 0
+        with st.expander("📊 समग्र वास्तु सूचकांक, संवेदनशील दिशा एवं महादशा विश्लेषण (Executive Summary)", expanded=False):
+            kpi_col1, kpi_col2, kpi_col3, kpi_col4 = st.columns(4)
+            with kpi_col1:
+                _v_render(f"""
+                <div style="background: {card_bg}; border: 1.5px solid #10B981; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <div style="font-size: 11.5px; font-weight: 700; color: #10B981; text-transform: uppercase;">🏆 सर्वोच्च सामंजस्य दिशा</div>
+                    <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{best_zone.get('hindi', 'N/A') if best_zone else 'N/A'}</div>
+                    <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #10B981;">{best_zone.get('score', 0) if best_zone else 0}/100</b> | {best_zone.get('lord', '') if best_zone else ''}</div>
+                </div>
+                """)
+            with kpi_col2:
+                _v_render(f"""
+                <div style="background: {card_bg}; border: 1.5px solid #EF4444; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <div style="font-size: 11.5px; font-weight: 700; color: #EF4444; text-transform: uppercase;">⚠️ सर्वाधिक संवेदनशील दिशा</div>
+                    <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">{worst_zone.get('hindi', 'N/A') if worst_zone else 'N/A'}</div>
+                    <div style="font-size: 12px; color: {text_secondary};">स्कोर: <b style="color: #EF4444;">{worst_zone.get('score', 0) if worst_zone else 0}/100</b> | {worst_zone.get('lord', '') if worst_zone else ''}</div>
+                </div>
+                """)
+            with kpi_col3:
+                _v_render(f"""
+                <div style="background: {card_bg}; border: 1.5px solid #3B82F6; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <div style="font-size: 11.5px; font-weight: 700; color: #3B82F6; text-transform: uppercase;">🌿 पंचतत्व संतुलन</div>
+                    <div style="font-size: 18px; font-weight: 900; color: {text_primary}; margin: 4px 0;">जल • अग्नि • वायु • पृथ्वी</div>
+                    <div style="font-size: 12px; color: {text_secondary};">आकाश (ब्रह्मस्थान): <b style="color: #3B82F6;">{zone_dict.get('Center', {}).get('score', 85)}/100</b></div>
+                </div>
+                """)
+            with kpi_col4:
+                idx_color = "#10B981" if avg_score >= 75 else "#F59E0B" if avg_score >= 50 else "#EF4444"
+                _v_render(f"""
+                <div style="background: {card_bg}; border: 1.5px solid {idx_color}; border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <div style="font-size: 11.5px; font-weight: 700; color: {idx_color}; text-transform: uppercase;">📊 समग्र वास्तु सूचकांक</div>
+                    <div style="font-size: 22px; font-weight: 900; color: {idx_color}; margin: 2px 0;">{avg_score}<span style="font-size: 14px; color: {text_secondary};">/100</span></div>
+                    <div style="font-size: 12px; color: {text_secondary};">9 दिशाओं का औसत सामंजस्य</div>
+                </div>
+                """)
+
+            active_zone = next((z for z in v_zones if z.get("is_active_dasha")), None)
+            if active_zone and active_dasha_lord:
+                _v_render(f"""
+                <div style="background: {'#1E1B4B' if _is_dark else '#EEF2FF'}; border: 1.5px solid #6366F1; border-radius: 12px; padding: 12px 18px; margin-top: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 26px;">⚡</span>
+                        <div>
+                            <div style="font-weight: 800; color: #4F46E5; font-size: 14px;">वर्तमान सक्रिय महादशा दिशा: {active_zone.get('hindi', '')} ({active_zone.get('direction', '')})</div>
+                            <div style="font-size: 12px; color: {text_secondary};">आपकी वर्तमान विंशोत्तरी महादशा स्वामी <b>{active_dasha_lord}</b> हैं। इस समय भवन की <b>{active_zone.get('hindi', '')}</b> दिशा सर्वाधिक सक्रिय कंपन पैदा कर रही है, इसे वास्तु-दोषमुक्त व प्रकाशयुक्त रखें।</div>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="background: #4F46E5; color: #FFFFFF; padding: 4px 10px; border-radius: 12px; font-weight: 700; font-size: 11.5px;">दिशा स्कोर: {active_zone.get('score', 70)}/100</span>
+                    </div>
+                </div>
+                """)
 
     # -------------------------------------------------------------
     # TABS 1 to 9: INDIVIDUAL DIRECTION DEEP DIVE TABS
