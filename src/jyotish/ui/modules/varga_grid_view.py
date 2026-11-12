@@ -556,18 +556,20 @@ def render_varga_grid_view(chart, tabs=None):
                     format_func=lambda x: varga_meta_full.get(x, x),
                     key="hv_deep_dive_sel"
                 )
-                _hv_varga = chart.vargas.get(sel_hv_code) if (chart.vargas and sel_hv_code in chart.vargas) else None
-                if not _hv_varga and chart is not None:
-                    from src.jyotish.core.varga import VargaCalculator
-                    fn_map = {
-                        "D72": VargaCalculator.calculate_d72,
-                        "D81": VargaCalculator.calculate_d81,
-                        "D108": VargaCalculator.calculate_d108,
-                        "D144": VargaCalculator.calculate_d144,
-                        "D150": VargaCalculator.calculate_d150,
-                    }
-                    if sel_hv_code in fn_map:
-                        _hv_varga = fn_map[sel_hv_code](chart)
+                _hv_varga = None
+                if chart and getattr(chart, "vargas", None) and sel_hv_code in chart.vargas:
+                    _hv_varga = chart.vargas[sel_hv_code]
+                elif chart is not None:
+                    try:
+                        import src.jyotish.core.varga as varga_mod
+                        importlib.reload(varga_mod)
+                        VargaCalc = getattr(varga_mod, "VargaCalculator", None)
+                        if VargaCalc:
+                            calc_fn = getattr(VargaCalc, f"calculate_{sel_hv_code.lower()}", None)
+                            if calc_fn:
+                                _hv_varga = calc_fn(chart)
+                    except Exception:
+                        _hv_varga = None
 
                 if _hv_varga:
                     _hv_l_sign = getattr(_hv_varga, "lagna_sign_name", chart.lagna_sign_name)
