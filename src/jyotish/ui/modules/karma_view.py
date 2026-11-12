@@ -590,6 +590,26 @@ def render_karma_view(chart, tabs: Optional[List[str]] = None):
         else:
             st.info("कुण्डली में कोई गंभीर या असाध्य ऋणानुबंध सक्रिय नहीं है। पूर्वपुण्य का प्रभाव प्रबल है।")
 
+        # Classical Ayurdaya & Pindayu Harana Reduction Table (BPHS Ch. 43)
+        if chart is not None:
+            try:
+                from src.jyotish.core.ayurdaya import AyurdayaEngine
+                pindayu_data = AyurdayaEngine.calculate_pindayu_with_haranas(chart)
+                st.markdown("---")
+                st.markdown("#### ⏳ आयुर्दाय एवं शास्त्रीय हरण गणना (Pindayu Longevity & Harana Reductions — BPHS Ch. 43)")
+                st.caption("महर्षि पाराशर प्रणीत पिंडायु गणना: मूल ग्रह आयु में से शत्रुक्षेत्र हरण (१/३), अस्तांगत हरण (१/२) एवं चक्रपात हरण (भाव १२ से ७) की शास्त्रीय कटौतियां:")
+
+                c_py1, c_py2, c_py3 = st.columns(3)
+                c_py1.metric("शुद्ध पिंडायु अनुमान", f"{pindayu_data.get('net_pindayu_years', 0.0)} वर्ष", "समग्र हरण उपरांत")
+                c_py2.metric("अपरिशोधित मूल आयु", f"{pindayu_data.get('total_unreduced', 0.0)} वर्ष", "७ ग्रहों का प्रारंभिक योग")
+                c_py3.metric("लग्न आयु अंशदान", f"+{pindayu_data.get('lagna_contribution', 0.0)} वर्ष", "लग्न अंश के अनुपात में")
+
+                audit_rows = pindayu_data.get("audit_table", [])
+                if audit_rows:
+                    st.dataframe(pd.DataFrame(audit_rows), use_container_width=True, hide_index=True)
+            except Exception as e:
+                st.caption(f"पिंडायु हरण गणना उपलब्ध नहीं: {e}")
+
         st.markdown(f"""
         <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:12px; margin-top:14px;">
             <small style="color:#64748B;"><b>शास्त्रीय संदर्भ:</b> {krm.get('shastriya_basis', '')}</small>

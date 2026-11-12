@@ -255,37 +255,120 @@ class AyurdayaEngine:
 
     @classmethod
     def calculate_pindayu(cls, chart: KundaliChart) -> Dict[str, Any]:
-        """Classical Pindayu Longevity Calculation."""
+        """Classical Pindayu Longevity Calculation with full classical Harana deductions."""
+        return cls.calculate_pindayu_with_haranas(chart)
+
+    @classmethod
+    def calculate_pindayu_with_haranas(cls, chart: KundaliChart) -> Dict[str, Any]:
+        """
+        Calculates Classical Pindayu Longevity with the 4 Parashari Harana Reductions (BPHS Ch. 43):
+        1. Shatrukshetra Harana: 1/3 reduction if in enemy sign (Exception: Retrograde planets).
+        2. Astangata Harana: 1/2 reduction if combust (Exception: Venus and Saturn).
+        3. Chakrapata Harana: House 12 to 7 reductions (1, 1/2, 1/3, 1/4, 1/5, 1/6 for malefics; half for benefics).
+        4. Lagna Ayurdaya: Addition of Lagna proportion.
+        """
         max_years = {
             "Sun": 19.0, "Moon": 25.0, "Mars": 15.0,
             "Mercury": 12.0, "Jupiter": 15.0, "Venus": 21.0, "Saturn": 20.0
         }
 
-        planet_years = {}
+        unreduced_years: Dict[str, float] = {}
+        shatru_reductions: Dict[str, Dict[str, Any]] = {}
+        astangata_reductions: Dict[str, Dict[str, Any]] = {}
+        chakrapata_reductions: Dict[str, Dict[str, Any]] = {}
+        net_years: Dict[str, float] = {}
+        audit_rows: List[Dict[str, Any]] = []
+
         total_unreduced = 0.0
 
         for p_name, max_y in max_years.items():
             p_obj = chart.planets[p_name]
-            # Exaltation distance factor
             exalt_info = EXALTATION.get(p_name, ("Aries", 10.0))
-            exalt_idx = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"].index(exalt_info[0])
+            zodiac_order = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
+            exalt_idx = zodiac_order.index(exalt_info[0]) if exalt_info[0] in zodiac_order else 0
             exalt_lon = exalt_idx * 30.0 + exalt_info[1]
+
             diff = abs(p_obj.longitude - exalt_lon)
             if diff > 180.0:
                 diff = 360.0 - diff
 
             factor = 0.5 + 0.5 * (1.0 - diff / 180.0)
-            p_contribution = max_y * factor
-            planet_years[p_name] = round(p_contribution, 2)
-            total_unreduced += p_contribution
+            raw_y = round(max_y * factor, 2)
+            unreduced_years[p_name] = raw_y
+            total_unreduced += raw_y
 
-        # Classical reductions (Haranas: Chakrardha Hani ~ 15% average for natal houses)
-        net_years = round(total_unreduced * 0.72, 1)
+            curr_y = raw_y
+
+            # 1. Shatrukshetra Harana (1/3 deduction; exception: Retrograde)
+            shatru_cut = 0.0
+            shatru_reason = "शत्रु राशि नहीं"
+            if p_obj.dignity in ("enemy", "great_enemy"):
+                if getattr(p_obj, "is_retrograde", False):
+                    shatru_reason = "शत्रु राशि में परंतु वक्री (अपवाद मुक्त: कोई कटौती नहीं)"
+                else:
+                    shatru_cut = round(curr_y / 3.0, 2)
+                    shatru_reason = f"शत्रु राशि हरण (१/३ कटौती: -{shatru_cut} वर्ष)"
+                    curr_y -= shatru_cut
+            shatru_reductions[p_name] = {"cut": shatru_cut, "reason": shatru_reason}
+
+            # 2. Astangata Harana (1/2 deduction; exception: Venus and Saturn)
+            ast_cut = 0.0
+            ast_reason = "अस्त नहीं"
+            if getattr(p_obj, "is_combust", False):
+                if p_name in ("Venus", "Saturn"):
+                    ast_reason = f"{p_name} अस्त परंतु शास्त्रानुसार हरण मुक्त (अपवाद)"
+                else:
+                    ast_cut = round(curr_y / 2.0, 2)
+                    ast_reason = f"सूर्य से अस्त हरण (१/२ कटौती: -{ast_cut} वर्ष)"
+                    curr_y -= ast_cut
+            astangata_reductions[p_name] = {"cut": ast_cut, "reason": ast_reason}
+
+            # 3. Chakrapata Harana (Houses 12 down to 7)
+            # Malefics: 12th=1, 11th=1/2, 10th=1/3, 9th=1/4, 8th=1/5, 7th=1/6
+            h_num = p_obj.house_from_lagna
+            is_malefic = p_name in ("Sun", "Mars", "Saturn")
+            chak_cut = 0.0
+            chak_reason = "चक्रपात क्षेत्र से बाहर (भाव १-६)"
+
+            rates_malefic = {12: 1.0, 11: 0.5, 10: 1.0/3.0, 9: 0.25, 8: 0.2, 7: 1.0/6.0}
+            rates_benefic = {12: 0.5, 11: 0.25, 10: 1.0/6.0, 9: 0.125, 8: 0.1, 7: 1.0/12.0}
+
+            if h_num in rates_malefic:
+                rate = rates_malefic[h_num] if is_malefic else rates_benefic[h_num]
+                chak_cut = round(curr_y * rate, 2)
+                chak_reason = f"भाव {h_num} चक्रपात हरण ({'क्रूर' if is_malefic else 'सौम्य'} दर: -{chak_cut} वर्ष)"
+                curr_y -= chak_cut
+            chakrapata_reductions[p_name] = {"cut": chak_cut, "reason": chak_reason}
+
+            net_y = max(0.0, round(curr_y, 2))
+            net_years[p_name] = net_y
+
+            audit_rows.append({
+                "ग्रह (Graha)": p_name,
+                "मूल पिंडायु (Unreduced)": raw_y,
+                "शत्रुक्षेत्र हरण": f"-{shatru_cut}" if shatru_cut > 0 else "0.0",
+                "अस्तांगत हरण": f"-{ast_cut}" if ast_cut > 0 else "0.0",
+                "चक्रपात हरण": f"-{chak_cut}" if chak_cut > 0 else "0.0",
+                "शुद्ध आयु (Net Years)": net_y,
+                "शास्त्रीय टिप्पणी": f"{shatru_reason} | {ast_reason}"
+            })
+
+        # 4. Lagna Ayurdaya contribution (Lagna degree / 30.0 * 12 years proportion)
+        lagna_deg = chart.lagna_degree
+        lagna_years = round((lagna_deg / 30.0) * 8.0, 2)
+
+        total_net_pindayu = round(sum(net_years.values()) + lagna_years, 1)
 
         return {
-            "planet_contributions": planet_years,
+            "planet_contributions": net_years,
+            "unreduced_contributions": unreduced_years,
             "total_unreduced": round(total_unreduced, 2),
-            "net_pindayu_years": net_years,
+            "lagna_contribution": lagna_years,
+            "net_pindayu_years": total_net_pindayu,
+            "shatrukshetra_reductions": shatru_reductions,
+            "astangata_reductions": astangata_reductions,
+            "chakrapata_reductions": chakrapata_reductions,
+            "audit_table": audit_rows
         }
 
 
