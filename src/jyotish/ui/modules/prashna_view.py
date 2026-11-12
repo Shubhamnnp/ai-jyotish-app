@@ -4,7 +4,12 @@ from datetime import datetime, timezone, timedelta, date, time
 import re
 
 from src.jyotish.core.models import KundaliChart
-from src.jyotish.services.prashna import default_prashna_service, PRASHNA_CATEGORIES
+import importlib
+import src.jyotish.services.prashna as prashna_mod
+if not hasattr(prashna_mod.PrashnaService, "calculate_shodasha_sphutas") or not hasattr(prashna_mod.default_prashna_service, "calculate_shodasha_sphutas"):
+    prashna_mod = importlib.reload(prashna_mod)
+default_prashna_service = prashna_mod.default_prashna_service
+PRASHNA_CATEGORIES = prashna_mod.PRASHNA_CATEGORIES
 from src.jyotish.services.geocoding import default_geocoding_service
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 from src.jyotish.core.affliction import AfflictionEngine
@@ -469,10 +474,18 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
             with st.expander("🔮 केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)", expanded=False):
                 st.caption("केरलीय प्रश्न मार्ग एवं माधव दीपिका प्रतिपादित त्रिक-स्फुट, पञ्च-स्फुट, प्राण, देह, मृत्यु, बीज, क्षेत्र एवं कार्य स्फुटों का सूक्ष्म विन्यास:")
                 try:
-                    karyesha_p = p_nat_res.get("karyesh", "Jupiter")
-                    sphutas_data = default_prashna_service.calculate_shodasha_sphutas(chart, karyesha=karyesha_p)
-                    df_sphutas = pd.DataFrame(sphutas_data)
-                    st.dataframe(df_sphutas, use_container_width=True, hide_index=True)
+                    calc_fn = getattr(default_prashna_service, "calculate_shodasha_sphutas", None)
+                    if not calc_fn:
+                        import src.jyotish.services.prashna as _p_dyn
+                        _p_dyn = importlib.reload(_p_dyn)
+                        calc_fn = getattr(_p_dyn.PrashnaService, "calculate_shodasha_sphutas", None) or getattr(_p_dyn.default_prashna_service, "calculate_shodasha_sphutas", None)
+                    if calc_fn:
+                        karyesha_p = p_nat_res.get("karyesh", "Jupiter")
+                        sphutas_data = calc_fn(chart, karyesha=karyesha_p)
+                        df_sphutas = pd.DataFrame(sphutas_data)
+                        st.dataframe(df_sphutas, use_container_width=True, hide_index=True)
+                    else:
+                        st.info("षोडश स्फुट सेवा मॉड्यूल रीलोड हो रहा है, कृपया पृष्ठ रिफ्रेश करें...")
                 except Exception as _e_sph:
                     st.warning(f"षोडश स्फुट गणना उपलब्ध नहीं: {_e_sph}")
 
@@ -735,10 +748,18 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
         with st.expander("🔮 केरलीय प्रश्नमार्ग षोडश स्फुट (16 Sensitive Horary Sphutas)", expanded=False):
             st.caption("केरलीय प्रश्न मार्ग एवं माधव दीपिका प्रतिपादित त्रिक-स्फुट, पञ्च-स्फुट, प्राण, देह, मृत्यु, बीज, क्षेत्र एवं कार्य स्फुटों का सूक्ष्म विन्यास:")
             try:
-                kary_name = cur_p_res.get("karyesh", "Jupiter")
-                s_sphutas = default_prashna_service.calculate_shodasha_sphutas(cur_p_chart, karyesha=kary_name)
-                df_sphutas = pd.DataFrame(s_sphutas)
-                st.dataframe(df_sphutas, use_container_width=True, hide_index=True)
+                calc_fn = getattr(default_prashna_service, "calculate_shodasha_sphutas", None)
+                if not calc_fn:
+                    import src.jyotish.services.prashna as _p_dyn
+                    _p_dyn = importlib.reload(_p_dyn)
+                    calc_fn = getattr(_p_dyn.PrashnaService, "calculate_shodasha_sphutas", None) or getattr(_p_dyn.default_prashna_service, "calculate_shodasha_sphutas", None)
+                if calc_fn:
+                    kary_name = cur_p_res.get("karyesh", "Jupiter")
+                    s_sphutas = calc_fn(cur_p_chart, karyesha=kary_name)
+                    df_sphutas = pd.DataFrame(s_sphutas)
+                    st.dataframe(df_sphutas, use_container_width=True, hide_index=True)
+                else:
+                    st.info("षोडश स्फुट सेवा मॉड्यूल रीलोड हो रहा है, कृपया पृष्ठ रिफ्रेश करें...")
             except Exception as _e_sph:
                 st.warning(f"षोडश स्फुट गणना उपलब्ध नहीं: {_e_sph}")
 
