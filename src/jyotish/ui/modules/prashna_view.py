@@ -484,103 +484,103 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
     # TAB 2: नवीन प्रश्नकर्ता एवं तात्कालिक प्रश्न (New / Custom Querent)
     # =========================================================================
     with ptab2:
-        st.markdown("#### ✍️ नवीन प्रश्नकर्ता एवं तात्कालिक प्रश्न (New / Custom Querent Horary)")
-        st.caption("किसी भी नए अथवा आगंतुक प्रश्नकर्ता के लिए तात्कालिक होरारी कुण्डली का स्वतंत्र निर्माण, शास्त्रीय गणना एवं निष्पक्ष निर्णय।")
+        with st.expander("✍️ नवीन प्रश्नकर्ता एवं तात्कालिक प्रश्न (New / Custom Querent Horary)", expanded=True):
+            st.caption("किसी भी नए अथवा आगंतुक प्रश्नकर्ता के लिए तात्कालिक होरारी कुण्डली का स्वतंत्र निर्माण, शास्त्रीय गणना एवं निष्पक्ष निर्णय।")
 
-        # Initialize custom querent session state if not already set
-        live_now_new = get_live_local_now(tz_offset)
-        if "new_prashna_date_val" not in st.session_state:
-            st.session_state.new_prashna_date_val = live_now_new.date()
-        if "new_prashna_time_val" not in st.session_state:
-            st.session_state.new_prashna_time_val = live_now_new.time().replace(microsecond=0)
-        if "new_prashna_city" not in st.session_state:
-            st.session_state.new_prashna_city = default_city_name
-        if "new_prashna_lat" not in st.session_state:
-            st.session_state.new_prashna_lat = float(latitude)
-        if "new_prashna_lon" not in st.session_state:
-            st.session_state.new_prashna_lon = float(longitude)
-        if "new_prashna_tz" not in st.session_state:
-            st.session_state.new_prashna_tz = float(tz_offset)
+            # Initialize custom querent session state if not already set
+            live_now_new = get_live_local_now(tz_offset)
+            if "new_prashna_date_val" not in st.session_state:
+                st.session_state.new_prashna_date_val = live_now_new.date()
+            if "new_prashna_time_val" not in st.session_state:
+                st.session_state.new_prashna_time_val = live_now_new.time().replace(microsecond=0)
+            if "new_prashna_city" not in st.session_state:
+                st.session_state.new_prashna_city = default_city_name
+            if "new_prashna_lat" not in st.session_state:
+                st.session_state.new_prashna_lat = float(latitude)
+            if "new_prashna_lon" not in st.session_state:
+                st.session_state.new_prashna_lon = float(longitude)
+            if "new_prashna_tz" not in st.session_state:
+                st.session_state.new_prashna_tz = float(tz_offset)
 
-        # Row 1: Name and Place lookup
-        col_nq1, col_nq2 = st.columns([1.5, 2.5])
-        with col_nq1:
-            new_q_name = st.text_input("प्रश्नकर्ता का नाम (Questioner Name)", value="नवीन प्रश्नकर्ता", key="new_prashna_name_input")
-        with col_nq2:
-            new_city_input = st.text_input("स्थान / नगर (City / Place)", value=st.session_state.new_prashna_city, key="new_prashna_city_input")
-            if new_city_input and new_city_input.strip() != st.session_state.new_prashna_city:
-                try:
-                    geo_lookup = default_geocoding_service.resolve(new_city_input.strip())
-                    if geo_lookup:
-                        st.session_state.new_prashna_city = new_city_input.strip()
-                        st.session_state.new_prashna_lat = float(geo_lookup.get("latitude", st.session_state.new_prashna_lat))
-                        st.session_state.new_prashna_lon = float(geo_lookup.get("longitude", st.session_state.new_prashna_lon))
-                        st.session_state.new_prashna_tz = float(geo_lookup.get("timezone_offset", st.session_state.new_prashna_tz))
-                except Exception:
-                    pass
+            # Row 1: Name and Place lookup
+            col_nq1, col_nq2 = st.columns([1.5, 2.5])
+            with col_nq1:
+                new_q_name = st.text_input("प्रश्नकर्ता का नाम (Questioner Name)", value="नवीन प्रश्नकर्ता", key="new_prashna_name_input")
+            with col_nq2:
+                new_city_input = st.text_input("स्थान / नगर (City / Place)", value=st.session_state.new_prashna_city, key="new_prashna_city_input")
+                if new_city_input and new_city_input.strip() != st.session_state.new_prashna_city:
+                    try:
+                        geo_lookup = default_geocoding_service.resolve(new_city_input.strip())
+                        if geo_lookup:
+                            st.session_state.new_prashna_city = new_city_input.strip()
+                            st.session_state.new_prashna_lat = float(geo_lookup.get("latitude", st.session_state.new_prashna_lat))
+                            st.session_state.new_prashna_lon = float(geo_lookup.get("longitude", st.session_state.new_prashna_lon))
+                            st.session_state.new_prashna_tz = float(geo_lookup.get("timezone_offset", st.session_state.new_prashna_tz))
+                    except Exception:
+                        pass
 
-        def _cb_new_set_live_now():
-            upd_now = get_live_local_now(st.session_state.new_prashna_tz)
-            st.session_state.new_prashna_date_val = upd_now.date()
-            st.session_state.new_prashna_time_val = upd_now.time().replace(microsecond=0)
-            st.session_state.new_prashna_d_picker = upd_now.date()
-            st.session_state.new_prashna_t_picker = upd_now.time().replace(microsecond=0)
+            def _cb_new_set_live_now():
+                upd_now = get_live_local_now(st.session_state.new_prashna_tz)
+                st.session_state.new_prashna_date_val = upd_now.date()
+                st.session_state.new_prashna_time_val = upd_now.time().replace(microsecond=0)
+                st.session_state.new_prashna_d_picker = upd_now.date()
+                st.session_state.new_prashna_t_picker = upd_now.time().replace(microsecond=0)
 
-        # Row 2: Vartaman Date, Time (with seconds), Live Now Button, GPS Button
-        col_nt1, col_nt2, col_nt3, col_nt4 = st.columns([1.4, 1.4, 1.2, 1.2])
-        with col_nt1:
-            new_q_date = st.date_input("📅 प्रश्न तिथि (Query Date)", value=st.session_state.new_prashna_date_val, format="DD/MM/YYYY", key="new_prashna_d_picker")
-            st.session_state.new_prashna_date_val = new_q_date
-        with col_nt2:
-            new_q_time = st.time_input("⏱️ प्रश्न समय (Time - सेकंड सहित)", value=st.session_state.new_prashna_time_val, step=1, key="new_prashna_t_picker")
-            st.session_state.new_prashna_time_val = new_q_time
-        with col_nt3:
-            st.write("")
-            st.write("")
-            if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_new_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें", on_click=_cb_new_set_live_now):
-                st.toast("✅ वर्तमान समय सेट किया गया!", icon="⏱️")
-        with col_nt4:
-            st.write("")
-            st.write("")
-            if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_new_set_gps", help="डिवाइस GPS अनुमति मांगकर सटीक वर्तमान स्थान लें"):
-                st.session_state.trigger_browser_gps = "new_prashna"
-                st.rerun()
+            # Row 2: Vartaman Date, Time (with seconds), Live Now Button, GPS Button
+            col_nt1, col_nt2, col_nt3, col_nt4 = st.columns([1.4, 1.4, 1.2, 1.2])
+            with col_nt1:
+                new_q_date = st.date_input("📅 प्रश्न तिथि (Query Date)", value=st.session_state.new_prashna_date_val, format="DD/MM/YYYY", key="new_prashna_d_picker")
+                st.session_state.new_prashna_date_val = new_q_date
+            with col_nt2:
+                new_q_time = st.time_input("⏱️ प्रश्न समय (Time - सेकंड सहित)", value=st.session_state.new_prashna_time_val, step=1, key="new_prashna_t_picker")
+                st.session_state.new_prashna_time_val = new_q_time
+            with col_nt3:
+                st.write("")
+                st.write("")
+                if st.button("⏱️ वर्तमान समय लोड करें", use_container_width=True, key="btn_new_set_live_now", help="सटीक वर्तमान सेकंड-लेवल समय लोड करें", on_click=_cb_new_set_live_now):
+                    st.toast("✅ वर्तमान समय सेट किया गया!", icon="⏱️")
+            with col_nt4:
+                st.write("")
+                st.write("")
+                if st.button("🛰️ वर्तमान GPS स्थान", use_container_width=True, key="btn_new_set_gps", help="डिवाइस GPS अनुमति मांगकर सटीक वर्तमान स्थान लें"):
+                    st.session_state.trigger_browser_gps = "new_prashna"
+                    st.rerun()
 
-        # Row 3: Coordinate fine-tuning
-        col_c1, col_c2, col_c3 = st.columns(3)
-        with col_c1:
-            new_lat = st.number_input("अक्षांश (Latitude)", value=float(st.session_state.new_prashna_lat), format="%.4f", key="new_prashna_lat_num")
-            st.session_state.new_prashna_lat = new_lat
-        with col_c2:
-            new_lon = st.number_input("देशांतर (Longitude)", value=float(st.session_state.new_prashna_lon), format="%.4f", key="new_prashna_lon_num")
-            st.session_state.new_prashna_lon = new_lon
-        with col_c3:
-            new_tz = st.number_input("समय क्षेत्र (Timezone Offset)", value=float(st.session_state.new_prashna_tz), format="%.2f", key="new_prashna_tz_num")
-            st.session_state.new_prashna_tz = new_tz
+            # Row 3: Coordinate fine-tuning
+            col_c1, col_c2, col_c3 = st.columns(3)
+            with col_c1:
+                new_lat = st.number_input("अक्षांश (Latitude)", value=float(st.session_state.new_prashna_lat), format="%.4f", key="new_prashna_lat_num")
+                st.session_state.new_prashna_lat = new_lat
+            with col_c2:
+                new_lon = st.number_input("देशांतर (Longitude)", value=float(st.session_state.new_prashna_lon), format="%.4f", key="new_prashna_lon_num")
+                st.session_state.new_prashna_lon = new_lon
+            with col_c3:
+                new_tz = st.number_input("समय क्षेत्र (Timezone Offset)", value=float(st.session_state.new_prashna_tz), format="%.2f", key="new_prashna_tz_num")
+                st.session_state.new_prashna_tz = new_tz
 
-        # Row 4: Category and Query Text
-        col_nqc1, col_nqc2 = st.columns([1, 2])
-        with col_nqc1:
-            cat_choice_new = st.selectbox(
-                "प्रश्न श्रेणी (Question Category)",
-                range(len(cat_options)),
-                format_func=lambda i: cat_options[i] if i < len(cat_options) else "",
-                index=min(6, max(0, len(cat_options) - 1)),
-                key="new_prashna_cat_idx"
-            )
-            new_cat_meta = PRASHNA_CATEGORIES[cat_choice_new] if cat_choice_new < len(PRASHNA_CATEGORIES) else PRASHNA_CATEGORIES[0]
-            new_cat_name = new_cat_meta.get("Name", "Job")
-        with col_nqc2:
-            new_default_q = sample_queries.get(new_cat_name, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
-            new_query_text = st.text_input("प्रश्न विवरण दर्ज करें (Enter Question)", value=new_default_q, key="new_prashna_query_text")
+            # Row 4: Category and Query Text
+            col_nqc1, col_nqc2 = st.columns([1, 2])
+            with col_nqc1:
+                cat_choice_new = st.selectbox(
+                    "प्रश्न श्रेणी (Question Category)",
+                    range(len(cat_options)),
+                    format_func=lambda i: cat_options[i] if i < len(cat_options) else "",
+                    index=min(6, max(0, len(cat_options) - 1)),
+                    key="new_prashna_cat_idx"
+                )
+                new_cat_meta = PRASHNA_CATEGORIES[cat_choice_new] if cat_choice_new < len(PRASHNA_CATEGORIES) else PRASHNA_CATEGORIES[0]
+                new_cat_name = new_cat_meta.get("Name", "Job")
+            with col_nqc2:
+                new_default_q = sample_queries.get(new_cat_name, "क्या मेरा अभीष्ट कार्य सिद्ध होगा?")
+                new_query_text = st.text_input("प्रश्न विवरण दर्ज करें (Enter Question)", value=new_default_q, key="new_prashna_query_text")
 
-        col_kp1, col_kp2 = st.columns([1, 2])
-        with col_kp1:
-            new_kp_seed = st.number_input("केपी होरारी संख्या (KP Seed 1-249, ऐच्छिक)", min_value=0, max_value=249, value=0, help="0 = समय आधारित लग्न; 1 से 249 = केपी सूक्ष्म उप-स्वामी बीज", key="new_prashna_kp_seed")
-        with col_kp2:
-            st.caption("ℹ️ यदि प्रश्नकर्ता ने 1 से 249 के बीच कोई संख्या चुनी है तो उसे दर्ज करें, अन्यथा सामान्य समय आधारित लग्न लिया जाएगा।")
+            col_kp1, col_kp2 = st.columns([1, 2])
+            with col_kp1:
+                new_kp_seed = st.number_input("केपी होरारी संख्या (KP Seed 1-249, ऐच्छिक)", min_value=0, max_value=249, value=0, help="0 = समय आधारित लग्न; 1 से 249 = केपी सूक्ष्म उप-स्वामी बीज", key="new_prashna_kp_seed")
+            with col_kp2:
+                st.caption("ℹ️ यदि प्रश्नकर्ता ने 1 से 249 के बीच कोई संख्या चुनी है तो उसे दर्ज करें, अन्यथा सामान्य समय आधारित लग्न लिया जाएगा।")
 
-        calc_new_btn = st.button("🔮 नवीन प्रश्न कुण्डली परिकलन एवं निर्णय (Calculate Horary Chart)", type="primary", use_container_width=True, key="btn_calc_new_prashna")
+            calc_new_btn = st.button("🔮 नवीन प्रश्न कुण्डली परिकलन एवं निर्णय (Calculate Horary Chart)", type="primary", use_container_width=True, key="btn_calc_new_prashna")
 
         new_query_dt = datetime.combine(st.session_state.new_prashna_date_val, st.session_state.new_prashna_time_val)
 
