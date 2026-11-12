@@ -343,24 +343,24 @@ def render_prashna_view(chart, tz_offset, latitude, longitude, default_city_name
         )
         p_nat_chart: KundaliChart = p_nat_res.get("chart", chart)
 
-        # 4 Top KPI Cards
-        st.markdown("---")
-        kpi1, kpi2, kpi3, kpi4 = st.columns(4)
-        v_text_nat = str(p_nat_res.get("verdict", "उत्कृष्ट")).split(" (")[0]
-        v_badge_nat = str(p_nat_res.get("verdict_badge", "✅ शुभ"))
-        t_text_nat = str(p_nat_res.get("timing", "1 से 3 सप्ताह")).split(" (")[0]
-        v_score_nat = float(p_nat_res.get("verdict_score", 0.75))
-        pos_c_nat = p_nat_res.get("active_positive_count", 0)
-        neg_c_nat = p_nat_res.get("active_negative_count", 0)
+        # 4 Top KPI Cards wrapped in Collapsible Expander
+        with st.expander("🎯 प्रश्न फलसिद्धि निर्णय, समय एवं नियम सारांश (Horary Verdict & Timing Summary)", expanded=True):
+            kpi1, kpi2, kpi3, kpi4 = st.columns(4)
+            v_text_nat = str(p_nat_res.get("verdict", "उत्कृष्ट")).split(" (")[0]
+            v_badge_nat = str(p_nat_res.get("verdict_badge", "✅ शुभ"))
+            t_text_nat = str(p_nat_res.get("timing", "1 से 3 सप्ताह")).split(" (")[0]
+            v_score_nat = float(p_nat_res.get("verdict_score", 0.75))
+            pos_c_nat = p_nat_res.get("active_positive_count", 0)
+            neg_c_nat = p_nat_res.get("active_negative_count", 0)
 
-        kpi1.metric("🎯 शास्त्रीय निर्णय", v_text_nat, v_badge_nat)
-        kpi2.metric("⏳ संभावित समय", t_text_nat)
-        kpi3.metric("📊 सहमति व सिद्धि स्कोर", f"{int(v_score_nat * 100)}%")
-        kpi4.metric("📜 100 शास्त्रीय नियम", f"✅ {pos_c_nat} शुभ | ⚠️ {neg_c_nat} बाधाएं")
+            kpi1.metric("🎯 शास्त्रीय निर्णय", v_text_nat, v_badge_nat)
+            kpi2.metric("⏳ संभावित समय", t_text_nat)
+            kpi3.metric("📊 सहमति व सिद्धि स्कोर", f"{int(v_score_nat * 100)}%")
+            kpi4.metric("📜 100 शास्त्रीय नियम", f"✅ {pos_c_nat} शुभ | ⚠️ {neg_c_nat} बाधाएं")
 
-        # Visual Probability Bar
-        st.markdown(f"**फलसिद्धि संभावना सूचकांक (Success Probability): {int(v_score_nat * 100)}%**")
-        st.progress(v_score_nat)
+            # Visual Probability Bar
+            st.markdown(f"**फलसिद्धि संभावना सूचकांक (Success Probability): {int(v_score_nat * 100)}%**")
+            st.progress(v_score_nat)
 
         # Dual Chart Display (Side-by-side)
         st.markdown("---")
