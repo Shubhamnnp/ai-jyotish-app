@@ -1352,6 +1352,49 @@ unified_css = f"""
         box-shadow: none !important;
         pointer-events: none !important;
     }}
+
+    /* ─── CRITICAL CONTRAST: Header Breadcrumb Strip Text Brilliant White On Dark Navy ─── */
+    .hdr-breadcrumb-strip,
+    .hdr-breadcrumb-strip *,
+    .hdr-breadcrumb-strip span,
+    .hdr-breadcrumb-strip p,
+    .hdr-breadcrumb-strip div,
+    .hdr-crumb-details-badge,
+    .hdr-crumb-details-badge *,
+    .hdr-crumb-details-badge span,
+    .hdr-crumb-jatak-badge .hdr-crumb-val-jatak,
+    .hdr-crumb-val-mod,
+    .st-key-frozen_toolbelt_container .hdr-breadcrumb-strip span,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-breadcrumb-strip span,
+    .st-key-frozen_toolbelt_container .hdr-crumb-details-badge span,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-details-badge span {{
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-weight: 750 !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+    }}
+    .hdr-breadcrumb-strip .hdr-crumb-label-mod,
+    .st-key-frozen_toolbelt_container .hdr-crumb-label-mod,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-label-mod {{
+        color: #FBBF24 !important;
+        -webkit-text-fill-color: #FBBF24 !important;
+        font-weight: 850 !important;
+    }}
+    .hdr-breadcrumb-strip .hdr-crumb-label-jatak,
+    .st-key-frozen_toolbelt_container .hdr-crumb-label-jatak,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-label-jatak {{
+        color: #38BDF8 !important;
+        -webkit-text-fill-color: #38BDF8 !important;
+        font-weight: 850 !important;
+    }}
+    .hdr-crumb-details-badge,
+    .st-key-frozen_toolbelt_container .hdr-crumb-details-badge,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-details-badge {{
+        background: rgba(255, 255, 255, 0.12) !important;
+        border: 1px solid rgba(255, 255, 255, 0.28) !important;
+        border-radius: 6px !important;
+        padding: 3px 10px !important;
+    }}
     /* Streamlit top header bar: transparent & non-blocking so sidebar toggle controls remain visible */
     header[data-testid="stHeader"] {{
         background: transparent !important;
@@ -1694,15 +1737,25 @@ unified_css = f"""
     div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-details-badge {{
         display: inline-flex !important;
         align-items: center !important;
-        gap: 6px !important;
-        background: rgba(255, 255, 255, 0.06) !important;
-        border: 1px solid rgba(255, 255, 255, 0.12) !important;
-        border-radius: 4px !important;
-        padding: 2px 8px !important;
-        color: #E2E8F0 !important;
-        font-size: 11.5px !important;
-        font-weight: 500 !important;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+        gap: 8px !important;
+        background: rgba(255, 255, 255, 0.12) !important;
+        border: 1px solid rgba(255, 255, 255, 0.28) !important;
+        border-radius: 6px !important;
+        padding: 3px 10px !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-size: 12px !important;
+        font-weight: 750 !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+    }}
+    .st-key-frozen_toolbelt_container .hdr-crumb-details-badge span,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-details-badge span,
+    .st-key-frozen_toolbelt_container .hdr-crumb-details-badge *,
+    div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-details-badge * {{
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-weight: 750 !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
     }}
     .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"],
     div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] {{
@@ -4479,15 +4532,25 @@ client_bridge_code = """
                         div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-details-badge {
                             display: inline-flex !important;
                             align-items: center !important;
-                            gap: 6px !important;
-                            background: rgba(255, 255, 255, 0.06) !important;
-                            border: 1px solid rgba(255, 255, 255, 0.12) !important;
-                            border-radius: 4px !important;
-                            padding: 2px 8px !important;
-                            color: #E2E8F0 !important;
-                            font-size: 11.5px !important;
-                            font-weight: 500 !important;
-                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+                            gap: 8px !important;
+                            background: rgba(255, 255, 255, 0.12) !important;
+                            border: 1px solid rgba(255, 255, 255, 0.28) !important;
+                            border-radius: 6px !important;
+                            padding: 3px 10px !important;
+                            color: #FFFFFF !important;
+                            -webkit-text-fill-color: #FFFFFF !important;
+                            font-size: 12px !important;
+                            font-weight: 750 !important;
+                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+                        }
+                        .st-key-frozen_toolbelt_container .hdr-crumb-details-badge span,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-details-badge span,
+                        .st-key-frozen_toolbelt_container .hdr-crumb-details-badge *,
+                        div[class*="st-key-frozen_toolbelt_container"] .hdr-crumb-details-badge * {
+                            color: #FFFFFF !important;
+                            -webkit-text-fill-color: #FFFFFF !important;
+                            font-weight: 750 !important;
+                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
                         }
                         .st-key-frozen_toolbelt_container div[data-testid="stHorizontalBlock"],
                         div[class*="st-key-frozen_toolbelt_container"] div[data-testid="stHorizontalBlock"] {
@@ -7584,20 +7647,20 @@ with st.container(key="top_frozen_header_container", border=False):
             f"""
             <div class="hdr-breadcrumb-strip" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:5px 16px; margin-top:6px; margin-left:-12px; margin-right:-14px; margin-bottom:0px; width:calc(100% + 26px); min-height:32px; background:linear-gradient(90deg, #081322 0%, #0E1F36 50%, #081322 100%) !important; border-top:1px solid rgba(245,158,11,0.35) !important; border-bottom:none !important; border-radius:0px !important; box-shadow:inset 0 2px 4px rgba(0,0,0,0.5) !important; box-sizing:border-box;">
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <span class="hdr-crumb-label-mod" style="color:#FBBF24 !important; font-weight:800 !important; font-size:12.5px !important; letter-spacing:0.3px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">📍 सक्रिय मॉड्यूल:</span>
-                    <span class="hdr-crumb-val-mod" style="color:#FFFFFF !important; font-weight:700 !important; font-size:12.5px !important; background:rgba(255,255,255,0.08) !important; padding:2px 8px !important; border-radius:4px !important; border:1px solid rgba(255,255,255,0.15) !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">{_cur_m_name}</span>
+                    <span class="hdr-crumb-label-mod" style="color:#FBBF24 !important; -webkit-text-fill-color:#FBBF24 !important; font-weight:800 !important; font-size:12.5px !important; letter-spacing:0.3px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">📍 सक्रिय मॉड्यूल:</span>
+                    <span class="hdr-crumb-val-mod" style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; font-weight:700 !important; font-size:12.5px !important; background:rgba(255,255,255,0.08) !important; padding:2px 8px !important; border-radius:4px !important; border:1px solid rgba(255,255,255,0.15) !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">{_cur_m_name}</span>
                 </div>
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <span class="hdr-crumb-jatak-badge" style="display:inline-flex !important; align-items:center !important; gap:6px !important; background:rgba(56,189,248,0.12) !important; border:1px solid rgba(56,189,248,0.32) !important; border-radius:4px !important; padding:2px 8px !important;">
-                        <span class="hdr-crumb-label-jatak" style="color:#38BDF8 !important; font-weight:800 !important; font-size:12px !important; letter-spacing:0.2px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">👤 जातक:</span>
-                        <span class="hdr-crumb-val-jatak" style="color:#FFFFFF !important; font-weight:800 !important; font-size:12.5px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">{_j_name}</span>
+                        <span class="hdr-crumb-label-jatak" style="color:#38BDF8 !important; -webkit-text-fill-color:#38BDF8 !important; font-weight:800 !important; font-size:12px !important; letter-spacing:0.2px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">👤 जातक:</span>
+                        <span class="hdr-crumb-val-jatak" style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; font-weight:800 !important; font-size:12.5px !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">{_j_name}</span>
                     </span>
-                    <span class="hdr-crumb-details-badge" style="display:inline-flex !important; align-items:center !important; gap:6px !important; background:rgba(255,255,255,0.06) !important; border:1px solid rgba(255,255,255,0.12) !important; border-radius:4px !important; padding:2px 8px !important; color:#E2E8F0 !important; font-size:11.5px !important; font-weight:500 !important; text-shadow:0 1px 2px rgba(0,0,0,0.8) !important;">
-                        <span>📅 {_j_dob}</span>
-                        <span style="opacity:0.4;">•</span>
-                        <span>⏰ {_j_tob}</span>
-                        <span style="opacity:0.4;">•</span>
-                        <span>📍 {_j_place}</span>
+                    <span class="hdr-crumb-details-badge" style="display:inline-flex !important; align-items:center !important; gap:8px !important; background:rgba(255,255,255,0.12) !important; border:1px solid rgba(255,255,255,0.28) !important; border-radius:6px !important; padding:3px 10px !important; color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; font-size:12px !important; font-weight:750 !important; text-shadow:0 1px 2px rgba(0,0,0,0.9) !important;">
+                        <span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; font-weight:750 !important;">📅 {_j_dob}</span>
+                        <span style="color:rgba(255,255,255,0.5) !important; -webkit-text-fill-color:rgba(255,255,255,0.5) !important;">•</span>
+                        <span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; font-weight:750 !important;">⏰ {_j_tob}</span>
+                        <span style="color:rgba(255,255,255,0.5) !important; -webkit-text-fill-color:rgba(255,255,255,0.5) !important;">•</span>
+                        <span style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; font-weight:750 !important;">📍 {_j_place}</span>
                     </span>
                 </div>
             </div>
