@@ -836,7 +836,7 @@ else:
         color: #0F172A !important;
     }
     [data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
-        color: #0073CF !important;
+        color: #1E3A8A !important;
         font-weight: 900 !important;
         font-size: 1.6rem !important;
     }
@@ -847,10 +847,10 @@ else:
     }
     [data-testid="stMetric"] {
         background: #FFFFFF !important;
-        border: 1.5px solid #00B0F0 !important;
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 12px !important;
         padding: 12px 16px !important;
-        box-shadow: 0 2px 8px rgba(0, 115, 207, 0.08) !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
     }
     [data-testid="stSidebar"], section[data-testid="stSidebar"] {
         background-color: #EBF5E4 !important;
@@ -861,21 +861,21 @@ else:
         color: #000000 !important;
     }
     [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
-        color: #0073CF !important;
+        color: #1E3A8A !important;
         font-weight: 900 !important;
     }
     header.top-nav-bar {
-        background: #0073CF !important;
-        border-color: #00B0F0 !important;
-        border-bottom: 3.5px solid #00B0F0 !important;
-        box-shadow: 0 4px 18px rgba(0, 115, 207, 0.15) !important;
+        background: linear-gradient(135deg, #0B1120 0%, #0F172A 45%, #1E3A8A 100%) !important;
+        border-color: #1E3A8A !important;
+        border-bottom: 2.5px solid #D97706 !important;
+        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.35) !important;
     }
     .top-nav-bar * {
         color: #FFFFFF !important;
     }
     .gla-info-strip {
-        background: linear-gradient(90deg, #0073CF 0%, #0077B6 100%) !important;
-        border: 1.5px solid #00B0F0 !important;
+        background: linear-gradient(90deg, #0F172A 0%, #1E293B 45%, #1E3A8A 100%) !important;
+        border: 1px solid rgba(217, 119, 6, 0.35) !important;
         color: #FFFFFF !important;
     }
     .gla-info-strip * {
@@ -887,19 +887,19 @@ else:
     }
     .gla-active-tag {
         color: #FFFFFF !important;
-        background: #00B0F0 !important;
-        border: 1px solid #38BDF8 !important;
+        background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+        border: 1px solid #F59E0B !important;
         font-weight: 800 !important;
     }
     .gla-tile-belt {
         background: #FFFFFF !important;
-        border: 1.5px solid #00B0F0 !important;
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 8px !important;
         padding: 3px 6px !important;
     }
     .gla-btn-tile {
-        background-color: #F2F2F2 !important;
-        border: 2px solid #00B0F0 !important;
+        background-color: #FFFFFF !important;
+        border: 1.5px solid #CBD5E1 !important;
         border-radius: 10px !important;
         height: 48px !important;
         min-height: 48px !important;
@@ -911,20 +911,20 @@ else:
         align-items: center !important;
         justify-content: center !important;
         cursor: pointer !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
         transition: all 0.15s ease !important;
     }
     .gla-btn-tile:hover {
-        background-color: #E0F2FE !important;
-        border-color: #0073CF !important;
+        background-color: #EFF6FF !important;
+        border-color: #3B82F6 !important;
         transform: translateY(-1px) !important;
-        box-shadow: 0 3px 8px rgba(0, 115, 207, 0.25) !important;
+        box-shadow: 0 3px 8px rgba(37, 99, 235, 0.2) !important;
     }
     .gla-tile-box.gla-active-tile .gla-btn-tile,
     .gla-btn-tile.active {
-        background-color: #0073CF !important;
-        border: 2px solid #00B0F0 !important;
-        box-shadow: 0 0 10px rgba(0, 115, 207, 0.45) !important;
+        background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%) !important;
+        border: 1.5px solid #60A5FA !important;
+        box-shadow: 0 0 10px rgba(37, 99, 235, 0.45) !important;
     }
     .gla-tile-box.gla-active-tile .gla-btn-tile span,
     .gla-btn-tile.active span {
@@ -940,7 +940,7 @@ else:
         margin: 0 auto !important;
     }
     .gla-btn-tile span {
-        color: #0077B6 !important;
+        color: #334155 !important;
         font-weight: 750 !important;
         font-size: 10px !important;
         line-height: 1.2 !important;
@@ -954,8 +954,8 @@ else:
     }
     .digital-hud {
         background: #FFFFFF !important;
-        border: 1.5px solid #00B0F0 !important;
-        box-shadow: 0 2px 8px rgba(0, 115, 207, 0.08) !important;
+        border: 1.5px solid #CBD5E1 !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
     }
     .digital-hud * {
         color: #0F172A !important;
@@ -971,8 +971,8 @@ else:
     }
     .rule-card, .vastu-card {
         background: #FFFFFF !important;
-        border: 1.5px solid #00B0F0 !important;
-        box-shadow: 0 2px 8px rgba(0, 115, 207, 0.08) !important;
+        border: 1.5px solid #CBD5E1 !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
         color: #0F172A !important;
     }
     .rule-card *, .vastu-card * {
@@ -980,7 +980,7 @@ else:
     }
     div[data-testid="stExpander"] {
         background: #FFFFFF !important;
-        border: 1.5px solid #00B0F0 !important;
+        border: 1.5px solid #CBD5E1 !important;
         color: #0F172A !important;
     }
     div[data-testid="stExpander"] * {
@@ -1003,8 +1003,8 @@ else:
     }
     button[kind="secondary"]:hover {
         background-color: #EFF6FF !important;
-        border-color: #0073CF !important;
-        color: #0073CF !important;
+        border-color: #3B82F6 !important;
+        color: #1E3A8A !important;
     }
     /* Day Mode Tabs */
 
@@ -2154,16 +2154,16 @@ unified_css = f"""
         font-weight: 800 !important;
     }}
 
-    /* Primary Calculate Button (Grahalakshanam Royal Azure Gradient) */
+    /* Primary Calculate Button (Sovereign Cosmic Sapphire & Gold) */
     button[kind="primary"] {{
-        background: linear-gradient(135deg, #0073CF 0%, #0077B6 100%) !important;
+        background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%) !important;
         color: #FFFFFF !important;
         font-weight: 900 !important;
         font-size: 1.05rem !important;
-        border: 1px solid #00B0F0 !important;
+        border: 1px solid #3B82F6 !important;
         border-radius: 10px !important;
         padding: 12px 20px !important;
-        box-shadow: 0 4px 15px rgba(0, 115, 207, 0.35) !important;
+        box-shadow: 0 4px 15px rgba(30, 58, 138, 0.35) !important;
         cursor: pointer !important;
         transition: all 0.15s ease !important;
     }}
@@ -2172,8 +2172,9 @@ unified_css = f"""
         font-weight: 900 !important;
     }}
     button[kind="primary"]:hover {{
+        background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
         transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(0, 176, 240, 0.45) !important;
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45) !important;
     }}
 
     /* Secondary Buttons */
@@ -2991,25 +2992,26 @@ unified_css = f"""
     div[data-testid="stHorizontalBlock"]:has(.gla-tile-box) {{
         padding: 0 2px !important;
     }}
-    /* 🏛️ Authentic Grahalakshanam Workstation Styling */
+    /* 🏛️ Sovereign Cosmic Sapphire Workstation Styling */
     .pl-workstation-left {{
         background: #FFFFFF !important;
-        border: 1.5px solid #00B0F0 !important;
-        border-radius: 8px !important;
-        padding: 6px !important;
-        box-shadow: 0 2px 8px rgba(0, 115, 207, 0.08) !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 10px !important;
+        padding: 8px !important;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
     }}
     .pl-box-header {{
-        background: linear-gradient(180deg, #0073CF 0%, #005FAD 100%) !important;
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 55%, #1E3A8A 100%) !important;
         color: #FFFFFF !important;
-        font-size: 12px !important;
-        font-weight: 800 !important;
-        padding: 5px 10px !important;
-        border-radius: 6px 6px 0 0 !important;
+        font-size: 12.5px !important;
+        font-weight: 850 !important;
+        padding: 7px 12px !important;
+        border-radius: 8px 8px 0 0 !important;
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
         margin-bottom: 0px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
     }}
     .pl-box-header,
     .pl-box-header *,
@@ -3024,8 +3026,8 @@ unified_css = f"""
         gap: 4px !important;
         margin-bottom: 8px !important;
         padding: 4px !important;
-        background: #F0F9FF !important;
-        border: 1px solid #BAE6FD !important;
+        background: #F8FAFC !important;
+        border: 1px solid #CBD5E1 !important;
         border-radius: 6px !important;
     }}
 

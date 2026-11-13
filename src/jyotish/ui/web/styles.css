@@ -1,68 +1,86 @@
 /* ==========================================================================
    JyotishOS - World-Class Vedic Astrology SaaS Web UI
-   Theme: Authentic Grahalakshanam (Royal Azure, Cyan & Clean Pearl)
+   Theme: Sovereign Cosmic Sapphire & Sacred Gold (Ultra-Premium Edition)
    100% Responsive Fit-Screen Architecture (Flexbox & CSS Grid)
    ========================================================================== */
 
 :root {
-  --primary: #0073CF;
-  --primary-hover: #005FAD;
-  --primary-dark: #004080;
-  --accent-cyan: #00B0F0;
+  /* Ultra-Premium Brand Palette */
+  --primary: #1E3A8A;           /* Deep Royal Sapphire */
+  --primary-hover: #1D4ED8;
+  --primary-dark: #0F172A;      /* Midnight Obsidian */
+  --accent-gold: #D97706;       /* Sacred Vedic Gold */
+  --accent-amber: #F59E0B;
+  --accent-gold-light: #FEF3C7;
+  --accent-cyan: #0284C7;       /* Refined Celestial Cerulean */
   --accent-sky: #38BDF8;
-  --accent-light: #E0F2FE;
+  --accent-light: #F0F9FF;
   
   --bg-app: #F8FAFC;
   --bg-card: #FFFFFF;
   --bg-sidebar: #FFFFFF;
-  --bg-tile: #F2F2F2;
-  --bg-tile-hover: #E0F2FE;
-  --bg-tile-active: #0073CF;
+  --bg-tile: #FFFFFF;
+  --bg-tile-hover: #EFF6FF;
+  --bg-tile-active: #1E3A8A;
   
   --text-main: #0F172A;
   --text-muted: #64748B;
-  --text-sub: #475569;
+  --text-sub: #334155;
   --text-white: #FFFFFF;
   
   --border-light: #E2E8F0;
-  --border-cyan: #00B0F0;
+  --border-cyan: #CBD5E1;       /* Refined soft border instead of harsh neon cyan */
   --border-subtle: #CBD5E1;
+  --border-gold: #D97706;
 
-  --badge-exalted-bg: #BCE636;
-  --badge-exalted-fg: #1E293B;
-  --badge-debilitated-bg: #FF0000;
-  --badge-debilitated-fg: #FFFFFF;
-  --badge-own-bg: #0073CF;
-  --badge-own-fg: #FFFFFF;
-  --badge-moola-bg: #CAF0F8;
-  --badge-moola-fg: #0077B6;
-  --badge-friend-bg: #E0F2FE;
-  --badge-friend-fg: #0284C7;
-  --badge-enemy-bg: #FFE2E5;
-  --badge-enemy-fg: #D92D20;
-  --badge-dasha-bg: #F18736;
+  /* Gemstone Dignity Badges (Ultra-Premium Contrast & Elegance) */
+  --badge-exalted-bg: #ECFDF5;
+  --badge-exalted-fg: #065F46;
+  --badge-exalted-border: #10B981;
+
+  --badge-debilitated-bg: #FEF2F2;
+  --badge-debilitated-fg: #991B1B;
+  --badge-debilitated-border: #EF4444;
+
+  --badge-own-bg: #EFF6FF;
+  --badge-own-fg: #1E40AF;
+  --badge-own-border: #3B82F6;
+
+  --badge-moola-bg: #FAF5FF;
+  --badge-moola-fg: #6B21A8;
+  --badge-moola-border: #A855F7;
+
+  --badge-friend-bg: #F0F9FF;
+  --badge-friend-fg: #0369A1;
+  --badge-friend-border: #38BDF8;
+
+  --badge-enemy-bg: #FFF7ED;
+  --badge-enemy-fg: #C2410C;
+  --badge-enemy-border: #FB923C;
+
+  --badge-dasha-bg: #D97706;
   --badge-dasha-fg: #FFFFFF;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 14px rgba(0, 115, 207, 0.08);
-  --shadow-lg: 0 10px 25px rgba(0, 115, 207, 0.15);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.07);
+  --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.12);
   
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Noto Sans", sans-serif;
 }
 
 /* Dark Theme Variables */
 [data-theme="dark"] {
-  --bg-app: #0B1120;
-  --bg-card: #131E32;
-  --bg-sidebar: #0F172A;
+  --bg-app: #070A12;
+  --bg-card: #0F172A;
+  --bg-sidebar: #0B1120;
   --bg-tile: #1E293B;
   --bg-tile-hover: #334155;
-  --bg-tile-active: #0073CF;
+  --bg-tile-active: #1E3A8A;
   --text-main: #F8FAFC;
   --text-muted: #94A3B8;
   --text-sub: #CBD5E1;
   --border-light: #1E293B;
-  --border-cyan: #0284C7;
+  --border-cyan: #334155;
   --border-subtle: #334155;
 }
 
@@ -93,18 +111,18 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   1. TOP NAVIGATION HEADER
+   1. TOP NAVIGATION HEADER (Ultra-Premium Midnight Sapphire & Gold)
    ═══════════════════════════════════════════════════════════════════ */
 .top-navbar {
   height: 52px;
-  background: var(--primary);
-  border-bottom: 2.5px solid var(--accent-cyan);
+  background: linear-gradient(135deg, #0B1120 0%, #0F172A 45%, #1E3A8A 100%);
+  border-bottom: 2px solid var(--accent-gold);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
   color: var(--text-white);
-  box-shadow: 0 3px 12px rgba(0, 115, 207, 0.25);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.35);
   z-index: 100;
   flex-shrink: 0;
 }
@@ -116,8 +134,8 @@ html, body {
 }
 
 .sidebar-toggle-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: #fff;
   border-radius: 8px;
   width: 34px;
@@ -131,7 +149,7 @@ html, body {
 }
 
 .sidebar-toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.25);
   border-color: #fff;
 }
 
@@ -146,31 +164,34 @@ html, body {
 }
 
 .app-badge-tag {
-  background: var(--accent-cyan);
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
   color: #fff;
   font-size: 10px;
-  font-weight: 800;
-  padding: 2px 7px;
-  border-radius: 12px;
+  font-weight: 850;
+  padding: 2px 8px;
+  border-radius: 4px;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
+  box-shadow: 0 1px 4px rgba(217, 119, 6, 0.35);
 }
 
 .header-active-client {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0, 0, 0, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: all 0.15s ease;
 }
 
 .header-active-client:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .client-status-dot {
@@ -178,7 +199,7 @@ html, body {
   height: 8px;
   border-radius: 50%;
   background: #10B981;
-  box-shadow: 0 0 6px #10B981;
+  box-shadow: 0 0 8px #10B981;
 }
 
 .header-actions {
@@ -188,8 +209,8 @@ html, body {
 }
 
 .hdr-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: #fff;
   border-radius: 7px;
   padding: 5px 12px;
@@ -203,33 +224,37 @@ html, body {
 }
 
 .hdr-btn:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.24);
+  border-color: #fff;
 }
 
 .hdr-btn.btn-cta {
-  background: #10B981;
-  border-color: #059669;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  border: 1px solid #10B981;
+  color: #FFFFFF;
   font-weight: 850;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
 }
 
 .hdr-btn.btn-cta:hover {
-  background: #059669;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   2. HORIZONTAL TOOLBELT (Grahalakshanam Exact Style)
+   2. HORIZONTAL TOOLBELT (Sleek High-End Slider)
    ═══════════════════════════════════════════════════════════════════ */
 .toolbelt-bar {
   background: #FFFFFF;
-  border-bottom: 1.5px solid var(--border-light);
-  padding: 4px 10px;
+  border-bottom: 1px solid var(--border-light);
+  padding: 5px 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   overflow-x: auto;
   white-space: nowrap;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
 }
 
 .toolbelt-bar::-webkit-scrollbar {
@@ -243,44 +268,44 @@ html, body {
 
 .tb-btn {
   background-color: var(--bg-tile);
-  border: 2px solid var(--border-cyan);
+  border: 1.5px solid var(--border-subtle);
   border-radius: 10px;
-  height: 46px;
-  min-width: 68px;
-  padding: 3px 6px;
+  height: 48px;
+  min-width: 70px;
+  padding: 4px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
 }
 
 .tb-btn:hover {
   background-color: var(--bg-tile-hover);
-  border-color: var(--primary);
-  transform: translateY(-1px);
-  box-shadow: 0 3px 8px rgba(0, 115, 207, 0.22);
+  border-color: #3B82F6;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.16);
 }
 
 .tb-btn.active {
-  background-color: var(--primary) !important;
-  border: 2px solid var(--border-cyan) !important;
-  box-shadow: 0 0 10px rgba(0, 115, 207, 0.45) !important;
+  background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%) !important;
+  border: 1.5px solid #60A5FA !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
 }
 
 .tb-btn .tb-icon {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1;
 }
 
 .tb-btn .tb-label {
   font-size: 9.5px;
   font-weight: 800;
-  color: var(--primary);
-  margin-top: 2px;
+  color: var(--text-sub);
+  margin-top: 3px;
   line-height: 1.1;
   text-align: center;
 }
@@ -293,13 +318,18 @@ html, body {
    3. CLIENT PROFILE INFO STRIP (HUD Bar)
    ═══════════════════════════════════════════════════════════════════ */
 .client-info-strip {
-  background: linear-gradient(90deg, #0073CF 0%, #0077B6 100%);
+  background: linear-gradient(90deg, #0F172A 0%, #1E293B 45%, #1E3A8A 100%);
   color: #FFFFFF;
-  padding: 5px 16px;
+  padding: 6px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1.5px solid var(--accent-cyan);
+  border-bottom: 1.5px solid rgba(217, 119, 6, 0.35);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.2);
+}
   font-size: 12px;
   font-weight: 700;
   flex-shrink: 0;
@@ -387,8 +417,8 @@ html, body {
 }
 
 .search-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(0, 115, 207, 0.15);
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .sidebar-modules-tree {
@@ -406,11 +436,11 @@ html, body {
 }
 
 .module-group-heading {
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 850;
   text-transform: uppercase;
-  color: var(--primary);
-  margin: 10px 6px 4px 6px;
+  color: #1E3A8A;
+  margin: 12px 6px 5px 6px;
   letter-spacing: 0.6px;
   display: flex;
   align-items: center;
@@ -421,7 +451,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 10px;
+  padding: 8px 11px;
   border-radius: 8px;
   font-size: 12px;
   font-weight: 750;
@@ -433,14 +463,14 @@ html, body {
 }
 
 .module-link-item:hover {
-  background: var(--accent-light);
-  color: var(--primary);
+  background: #EFF6FF;
+  color: #1E3A8A;
 }
 
 .module-link-item.active {
-  background: var(--primary);
+  background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%);
   color: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(0, 115, 207, 0.25);
+  box-shadow: 0 3px 10px rgba(30, 58, 138, 0.25);
 }
 
 .module-link-item.active .module-icon {
@@ -456,16 +486,18 @@ html, body {
 .module-badge {
   margin-left: auto;
   font-size: 10px;
-  background: rgba(0, 115, 207, 0.12);
-  color: var(--primary);
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
   padding: 1px 6px;
   border-radius: 10px;
   font-weight: 800;
 }
 
 .module-link-item.active .module-badge {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
   color: #fff;
+  border: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -495,8 +527,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: #FFFFFF;
-  border: 1.5px solid var(--border-light);
+  background: #F1F5F9;
+  border: 1px solid var(--border-light);
   border-radius: 10px;
   padding: 4px;
   box-shadow: var(--shadow-sm);
@@ -506,7 +538,7 @@ html, body {
 
 .ws-tab-btn {
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   padding: 6px 14px;
   font-size: 12px;
   font-weight: 800;
@@ -520,14 +552,15 @@ html, body {
 }
 
 .ws-tab-btn:hover {
-  color: var(--text-main);
-  background: var(--bg-app);
+  color: #0F172A;
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .ws-tab-btn.active {
-  background: var(--primary);
-  color: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(0, 115, 207, 0.25);
+  background: #FFFFFF;
+  color: #1E3A8A;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 }
 
 /* 2-Column Responsive Kundli & Planetary Grid */
@@ -556,14 +589,15 @@ html, body {
 }
 
 .gla-card-header {
-  background: linear-gradient(180deg, #0073CF 0%, #005FAD 100%);
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 55%, #1E3A8A 100%);
   color: #FFFFFF;
-  padding: 8px 12px;
+  padding: 9px 14px;
   font-size: 13px;
   font-weight: 850;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .card-hdr-actions {
@@ -573,20 +607,27 @@ html, body {
 }
 
 .card-pill-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: #fff;
   border-radius: 6px;
-  padding: 3px 8px;
+  padding: 3px 9px;
   font-size: 11px;
   font-weight: 800;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: all 0.15s;
 }
 
-.card-pill-btn:hover, .card-pill-btn.active {
+.card-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.card-pill-btn.active {
   background: #FFFFFF;
-  color: var(--primary);
+  color: #0F172A;
+  font-weight: 850;
+  border-color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .gla-card-body {
@@ -624,22 +665,25 @@ html, body {
   font-size: 11px;
   font-weight: 800;
   background: var(--bg-tile);
-  border: 1.5px solid var(--border-subtle);
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s;
+  color: var(--text-sub);
 }
 
 .varga-pill:hover {
-  background: var(--accent-light);
-  border-color: var(--accent-cyan);
+  background: #EFF6FF;
+  border-color: #93C5FD;
+  color: #1E3A8A;
 }
 
 .varga-pill.active {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
+  background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%);
+  color: #FFFFFF;
+  border-color: #1E3A8A;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -658,13 +702,13 @@ html, body {
 }
 
 .gla-table th {
-  background: #0070C0;
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 65%, #1E3A8A 100%);
   color: #FFFFFF;
-  padding: 8px 10px;
-  font-weight: 900;
-  letter-spacing: 0.3px;
+  padding: 9px 12px;
+  font-weight: 850;
+  letter-spacing: 0.4px;
   white-space: nowrap;
-  border-bottom: 2px solid var(--accent-cyan);
+  border-bottom: 2px solid var(--accent-gold);
 }
 
 .gla-table td {
@@ -679,7 +723,7 @@ html, body {
 }
 
 .gla-table tr:hover {
-  background: #F1F5F9;
+  background: #EFF6FF;
 }
 
 .graha-cell-bold {
@@ -687,56 +731,57 @@ html, body {
   font-size: 12.5px;
 }
 
-/* Dignity Badges */
+/* Gemstone Dignity Badges (Ultra-Premium Contrast & Elegance) */
 .badge-dignity {
   display: inline-block;
-  padding: 2px 7px;
-  border-radius: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
   font-size: 11px;
   font-weight: 850;
   text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .dignity-exalted {
   background: var(--badge-exalted-bg);
   color: var(--badge-exalted-fg);
-  border: 1px solid #A4D024;
+  border: 1.5px solid var(--badge-exalted-border);
 }
 
 .dignity-debilitated {
   background: var(--badge-debilitated-bg);
   color: var(--badge-debilitated-fg);
-  border: 1px solid #CC0000;
+  border: 1.5px solid var(--badge-debilitated-border);
 }
 
 .dignity-own {
   background: var(--badge-own-bg);
   color: var(--badge-own-fg);
-  border: 1px solid var(--accent-cyan);
+  border: 1.5px solid var(--badge-own-border);
 }
 
 .dignity-moola {
   background: var(--badge-moola-bg);
   color: var(--badge-moola-fg);
-  border: 1px solid #00B4D8;
+  border: 1.5px solid var(--badge-moola-border);
 }
 
 .dignity-friend {
   background: var(--badge-friend-bg);
   color: var(--badge-friend-fg);
-  border: 1px solid #7DD3FC;
+  border: 1.5px solid var(--badge-friend-border);
 }
 
 .dignity-enemy {
   background: var(--badge-enemy-bg);
   color: var(--badge-enemy-fg);
-  border: 1px solid #FCA5A5;
+  border: 1.5px solid var(--badge-enemy-border);
 }
 
 .dignity-neutral {
-  background: #F2F4F7;
-  color: #334155;
-  border: 1px solid #CBD5E1;
+  background: #F8FAFC;
+  color: #475569;
+  border: 1.5px solid #CBD5E1;
 }
 
 .badge-motion {
@@ -837,18 +882,19 @@ html, body {
 }
 
 .modal-header {
-  background: linear-gradient(180deg, #0073CF 0%, #005FAD 100%);
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 55%, #1E3A8A 100%);
   color: #fff;
-  padding: 12px 16px;
+  padding: 13px 18px;
   font-size: 15px;
   font-weight: 850;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 2px solid var(--accent-gold);
 }
 
 .modal-close-btn {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border: none;
   color: #fff;
   width: 28px;
@@ -899,26 +945,26 @@ html, body {
 }
 
 .form-control:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(0, 115, 207, 0.15);
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .btn-primary-action {
-  background: linear-gradient(135deg, #0073CF 0%, #0077B6 100%);
+  background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%);
   color: #FFFFFF;
-  border: 1px solid var(--border-cyan);
+  border: 1px solid #3B82F6;
   border-radius: 8px;
   padding: 10px 16px;
   font-size: 13px;
   font-weight: 900;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 115, 207, 0.3);
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.3);
   transition: all 0.15s;
 }
 
 .btn-primary-action:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(0, 176, 240, 0.4);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -989,7 +1035,7 @@ html, body {
   grid-template-columns: 1fr 1fr;
   gap: 6px;
   border-bottom: 1px solid var(--border-subtle);
-  background: rgba(0, 115, 207, 0.03);
+  background: rgba(30, 58, 138, 0.03);
 }
 
 .sb-quick-btn {
@@ -1008,8 +1054,8 @@ html, body {
   text-overflow: ellipsis;
 }
 .sb-quick-btn:hover {
-  background: var(--accent-light);
-  border-color: var(--primary);
+  background: #EFF6FF;
+  border-color: #3B82F6;
   transform: translateY(-1px);
 }
 
@@ -1039,14 +1085,15 @@ html, body {
   transition: all 0.15s;
 }
 .subtab-btn:hover {
-  color: var(--primary);
-  border-color: var(--primary);
+  color: #1E3A8A;
+  border-color: #3B82F6;
+  background: #EFF6FF;
 }
 .subtab-btn.active {
-  background: var(--primary);
+  background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%);
   color: #FFFFFF;
-  border-color: var(--primary);
-  box-shadow: 0 2px 6px rgba(0, 115, 207, 0.25);
+  border-color: #1E3A8A;
+  box-shadow: 0 2px 6px rgba(30, 58, 138, 0.25);
 }
 
 /* D1 Summary & Panchang Matrix */
@@ -1344,9 +1391,9 @@ html, body {
 }
 
 .saved-kundli-item:hover {
-  border-color: var(--primary);
+  border-color: #3B82F6;
   background: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(0, 115, 207, 0.1);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
 }
 
 .saved-kundli-name {
@@ -1364,12 +1411,18 @@ html, body {
 .saved-kundli-btn-load {
   padding: 5px 12px;
   border-radius: 6px;
-  border: 1px solid var(--primary);
-  background: var(--primary);
+  border: 1px solid #1E3A8A;
+  background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%);
   color: #FFFFFF;
   font-size: 11.5px;
   font-weight: 800;
   cursor: pointer;
+  transition: all 0.15s;
+}
+
+.saved-kundli-btn-load:hover {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
 .saved-kundli-btn-load:hover {
