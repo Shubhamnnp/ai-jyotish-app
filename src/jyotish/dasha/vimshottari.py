@@ -293,6 +293,12 @@ class VimshottariDashaEngine:
         Calculates all 5 nested active levels (Maha, Antar, Prat, Sookshma, Prana)
         active at the exact target datetime.
         """
+        # Ensure birth_dt and target_dt are both timezone-naive to prevent TypeError
+        if hasattr(birth_dt, "tzinfo") and birth_dt.tzinfo is not None:
+            birth_dt = birth_dt.replace(tzinfo=None)
+        if hasattr(target_dt, "tzinfo") and target_dt.tzinfo is not None:
+            target_dt = target_dt.replace(tzinfo=None)
+
         mahadashas = self.generate_mahadasha_sequence(birth_dt, moon_lon, num_cycles=2)
 
         # 1. Active Mahadasha
@@ -397,6 +403,12 @@ class VimshottariDashaEngine:
         1. 30-day window before and after a Mahadasha shift.
         2. 7-day window before and after an Antardasha shift.
         """
+        # Ensure birth_dt and target_dt are both timezone-naive to prevent TypeError
+        if hasattr(birth_dt, "tzinfo") and birth_dt.tzinfo is not None:
+            birth_dt = birth_dt.replace(tzinfo=None)
+        if hasattr(target_dt, "tzinfo") and target_dt.tzinfo is not None:
+            target_dt = target_dt.replace(tzinfo=None)
+
         mahadashas = self.generate_mahadasha_sequence(birth_dt, moon_lon)
         active_maha = None
         for m in mahadashas:

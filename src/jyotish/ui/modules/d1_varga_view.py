@@ -16,7 +16,8 @@ from src.jyotish.ui.chart_renderer import ChartRenderer, render_aspect_orb_matri
 affliction_engine = AfflictionEngine()
 
 def get_live_local_now(tz_offset_hours: float = 5.5) -> datetime:
-    return datetime.now(timezone.utc) + timedelta(hours=tz_offset_hours)
+    now_utc = datetime.now(timezone.utc)
+    return (now_utc + timedelta(hours=tz_offset_hours)).replace(tzinfo=None)
 
 def render_chart_svg_default(c_obj, chart_title, varga_code="D1"):
     chart_style = st.session_state.get("chart_style", "North Indian")

@@ -8,7 +8,8 @@ from src.jyotish.services.geocoding import default_geocoding_service
 from src.jyotish.services.shastriya_pramana import SHASTRIYA_SHLOKAS
 
 def get_live_local_now(tz_offset_hours: float = 5.5) -> datetime:
-    return datetime.now(timezone.utc) + timedelta(hours=tz_offset_hours)
+    now_utc = datetime.now(timezone.utc)
+    return (now_utc + timedelta(hours=tz_offset_hours)).replace(tzinfo=None)
 
 def render_kp_view(chart, tz_offset=5.5, default_city_name=None, tabs=None):
     if default_city_name is None:
@@ -618,6 +619,10 @@ def render_kp_view(chart, tz_offset=5.5, default_city_name=None, tabs=None):
         st.caption("कृष्णमूर्ति पद्धति का स्वर्णिम सूत्र: 'दशा स्वामी अवसर प्रदान करता है, भुक्ति स्वामी फल का स्वरूप बनाता है, और अन्तर स्वामी घटना घटित कराता है':")
 
         b_dt = datetime.combine(active_kp_chart.birth_data.birth_date, active_kp_chart.birth_data.birth_time)
+        if hasattr(b_dt, "tzinfo") and b_dt.tzinfo is not None:
+            b_dt = b_dt.replace(tzinfo=None)
+        if hasattr(target_query_dt, "tzinfo") and target_query_dt.tzinfo is not None:
+            target_query_dt = target_query_dt.replace(tzinfo=None)
         m_lon = active_kp_chart.planets["Moon"].longitude
         h5_kp = d_engine.get_5level_hierarchy(b_dt, m_lon, target_query_dt)
 

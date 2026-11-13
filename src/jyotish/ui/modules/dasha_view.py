@@ -7,7 +7,8 @@ import streamlit.components.v1 as components
 from src.jyotish.services.shastriya_pramana import default_shastriya_pramana_engine
 
 def get_live_local_now(tz_offset_hours: float = 5.5) -> datetime:
-    return datetime.now(timezone.utc) + timedelta(hours=tz_offset_hours)
+    now_utc = datetime.now(timezone.utc)
+    return (now_utc + timedelta(hours=tz_offset_hours)).replace(tzinfo=None)
 
 def render_dasha_view(chart, tz_offset=5.5, tabs=None):
     if tabs is None or len(tabs) < 14:
