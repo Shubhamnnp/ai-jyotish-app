@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import re
 from datetime import datetime, timezone, timedelta, date, time
 import importlib
 
@@ -621,27 +622,34 @@ def render_muhurta_view(chart, tz_offset=5.5, default_city_name=None, tabs=None)
 
                 panchak_tag = " <span style='background:#FEF3C7; color:#92400E; font-size:11px; padding:2px 8px; border-radius:6px; font-weight:700;'>⚠️ पंचक</span>" if m.get("is_panchak") else ""
                 rikta_tag = " <span style='background:#FEE2E2; color:#991B1B; font-size:11px; padding:2px 8px; border-radius:6px; font-weight:700;'>रिक्ता</span>" if m.get("is_rikta") else ""
+                tags_str = f"{panchak_tag}{rikta_tag}"
 
-                st.markdown(f"""<div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-left:6px solid {badge_c}; border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-    <div>
-    <span style="font-size:18px; font-weight:800; color:#0F172A;">#{rank} 📅 {date_display} ({day_val})</span>
-    <span style="margin-left:10px; font-size:15px; letter-spacing:1px;">{stars_display}</span>
-    {panchak_tag}{rikta_tag}
-    <div style="font-size:13px; color:#475569; margin-top:2px;">🌙 {m.get('tithi', '—')} | ✨ {m.get('nakshatra', '—')}{nak_lord_str}{yoga_str}</div>
-    </div>
-    <div>
-    <span style="background:{badge_bg}; color:{badge_c}; font-size:14px; font-weight:800; padding:4px 12px; border-radius:16px;">
-    शुभ स्कोर: {m.get('score', 0)}% ({m.get('verdict', '—')})
-    </span>
-    </div>
-    </div>
-    <div style="margin-top:10px; font-size:13px; color:#1E293B; line-height:1.6; background:#F8FAFC; padding:8px 12px; border-radius:6px; border:1px solid #E2E8F0;">
-    <b>🎯 सर्वोत्तम समय खिड़की (Best Window):</b> {m.get('best_window', '—')}<br/>
-    <b>🌕 चन्द्र व तारा बल:</b> चन्द्रबल: {chandra_bal_str} ({m.get('moon_sign', '—')} राशि) | ताराबल: <b>{tara_bal_str}</b><br/>
-    <b>📜 शास्त्रीय अवलोकन:</b> {'; '.join(m.get('reasons', []))}
-    </div>
-    </div>""", unsafe_allow_html=True)
+                raw_reasons = "; ".join(m.get("reasons", []))
+                clean_reasons = re.sub(r"\*\*(.*?)\*\*", r"<b>\1</b>", raw_reasons)
+
+                card_html = (
+                    f'<div style="background:#FFFFFF; border:1.5px solid #E2E8F0; border-left:6px solid {badge_c}; border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.04);">'
+                    f'<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">'
+                    f'<div>'
+                    f'<span style="font-size:18px; font-weight:800; color:#0F172A;">#{rank} 📅 {date_display} ({day_val})</span>'
+                    f'<span style="margin-left:10px; font-size:15px; letter-spacing:1px;">{stars_display}</span>'
+                    f'{tags_str}'
+                    f'<div style="font-size:13px; color:#475569; margin-top:2px;">🌙 {m.get("tithi", "—")} | ✨ {m.get("nakshatra", "—")}{nak_lord_str}{yoga_str}</div>'
+                    f'</div>'
+                    f'<div>'
+                    f'<span style="background:{badge_bg}; color:{badge_c}; font-size:14px; font-weight:800; padding:4px 12px; border-radius:16px;">'
+                    f'शुभ स्कोर: {m.get("score", 0)}% ({m.get("verdict", "—")})'
+                    f'</span>'
+                    f'</div>'
+                    f'</div>'
+                    f'<div style="margin-top:10px; font-size:13px; color:#1E293B; line-height:1.6; background:#F8FAFC; padding:8px 12px; border-radius:6px; border:1px solid #E2E8F0;">'
+                    f'<b>🎯 सर्वोत्तम समय खिड़की (Best Window):</b> {m.get("best_window", "—")}<br/>'
+                    f'<b>🌕 चन्द्र व तारा बल:</b> चन्द्रबल: {chandra_bal_str} ({m.get("moon_sign", "—")} राशि) | ताराबल: <b>{tara_bal_str}</b><br/>'
+                    f'<b>📜 शास्त्रीय अवलोकन:</b> {clean_reasons}'
+                    f'</div>'
+                    f'</div>'
+                )
+                st.markdown(card_html, unsafe_allow_html=True)
 
         st.markdown("---")
         st.markdown("### 📅 संपूर्ण वार्षिक रेडीमेड शुभ मुहूर्त कैलेंडर (Drik Panchang Master Style)")
