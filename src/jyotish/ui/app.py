@@ -459,7 +459,6 @@ if is_astrallis_mode:
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
     }
     [data-testid="stTable"], [data-testid="stDataFrame"], [data-testid="stTable"] *, [data-testid="stDataFrame"] * {
-    [data-testid="stTable"], [data-testid="stTable"] * {
         background-color: #050811 !important;
         color: #F1F5F9 !important;
         font-family: 'JetBrains Mono', monospace !important;

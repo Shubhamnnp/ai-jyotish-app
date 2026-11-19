@@ -923,6 +923,540 @@ class ChartRenderer:
         p.append('</svg>')
         return "".join(p)
 
+    @classmethod
+    def build_bhav_inspector_data(cls, chart: "KundaliChart", varga_code: str = "D1") -> Dict[int, Dict[str, Any]]:
+        """
+        Builds complete authentic 7-item metadata for all 12 houses according to classical Parashari principles.
+        """
+        target_varga = chart.vargas.get(varga_code) if (chart.vargas and varga_code in chart.vargas) else None
+        lagna_s_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
+
+        sign_names_hi = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुंभ", "मीन"]
+        sign_names_en = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
+        sign_lords = {
+            1: "Mars (मंगल)", 2: "Venus (शुक्र)", 3: "Mercury (बुध)", 4: "Moon (चन्द्र)",
+            5: "Sun (सूर्य)", 6: "Mercury (बुध)", 7: "Venus (शुक्र)", 8: "Mars (मंगल)",
+            9: "Jupiter (गुरु)", 10: "Saturn (शनि)", 11: "Saturn (शनि)", 12: "Jupiter (गुरु)"
+        }
+        planet_glyphs = {
+            "Sun": "☉ सूर्य", "Moon": "☽ चन्द्र", "Mars": "♂ मंगल", "Mercury": "☿ बुध",
+            "Jupiter": "♃ गुरु", "Venus": "♀ शुक्र", "Saturn": "ħ शनि", "Rahu": "☊ राहु", "Ketu": "☋ केतु"
+        }
+
+        bhav_metadata = {
+            1: {"title": "भाव 1 (तनु (Lagna) • प्रथम भाव | 🏛️ केंद्र / 👑 त्रिकोण | धर्म • अग्नि)", "karaka": "☉ सूर्य (काया/आरोग्य/आत्मबल)", "sig": "शारीरिक गठन, स्वास्थ्य, वर्ण, आत्मबल, स्वभाव, दीर्घायु"},
+            2: {"title": "भाव 2 (धन (Dhana) • द्वितीय भाव | 💰 धन भाव • 🥊 मारक | अर्थ • पृथ्वी)", "karaka": "♃ गुरु (धन/वाणी/कुटुंब)", "sig": "धन संचय, वाणी, कुटुंब, प्रारंभिक शिक्षा, खान-पान, नेत्र"},
+            3: {"title": "भाव 3 (सहज (Bhratri) • तृतीय भाव | ⚡ उपचय • पराक्रम | काम • वायु)", "karaka": "♂ मंगल (पराक्रम/अनुज)", "sig": "पराक्रम, छोटे भाई-बहन, साहस, लघु यात्राएं, संचार, बाहुबल"},
+            4: {"title": "भाव 4 (सुख (Matri) • चतुर्थ भाव | 🏛️ केंद्र • सुख भाव | मोक्ष • जल)", "karaka": "☽ चन्द्र (माता/मन) व ♀ शुक्र (वाहन/गृह)", "sig": "माता, भूमि, भवन, वाहन, मानसिक शांति, सुख-सुविधा, गृहस्थी"},
+            5: {"title": "भाव 5 (सुत (Putra) • पंचम भाव | 👑 त्रिकोण • पूर्वपुण्य भाव | धर्म • अग्नि)", "karaka": "♃ गुरु (संतान/बुद्धि/ज्ञान)", "sig": "संतान, बुद्धि, उच्च विद्या, मंत्र सिद्धि, पूर्वपुण्य, रचनात्मकता"},
+            6: {"title": "भाव 6 (रिपु (Ari) • षष्ठ भाव | ⚔️ दुस्थान • उपचय | अर्थ • पृथ्वी)", "karaka": "♂ मंगल (शत्रु) व ħ शनि (रोग/ऋण)", "sig": "रोग, ऋण, शत्रु, प्रतिस्पर्धा, विवाद, सेवा, मामा"},
+            7: {"title": "भाव 7 (जाया (Kalatra) • सप्तम भाव | 🏛️ केंद्र • 🥊 मारक | काम • वायु)", "karaka": "♀ शुक्र (दाम्पत्य/काम)", "sig": "जीवनसाथी, विवाह, व्यापार, साझेदारी, लोक-संबंध, दैनिक आय"},
+            8: {"title": "भाव 8 (आयु (Randhra) • अष्टम भाव | ⏳ दुस्थान • गूढ़ भाव | मोक्ष • जल)", "karaka": "ħ शनि (दीर्घायु/मृत्यु)", "sig": "आयु, मृत्यु, गूढ़ रहस्य, वसीयत, अचानक धन लाभ/हानि, बाधाएं"},
+            9: {"title": "भाव 9 (धर्म (Bhagya) • नवम भाव | 👑 त्रिकोण • परम भाग्य भाव | धर्म • अग्नि)", "karaka": "♃ गुरु (धर्म/गुरु) व ☉ सूर्य (पिता)", "sig": "भाग्य, धर्म, पिता, गुरु, तीर्थयात्रा, उच्च ज्ञान, पुण्य कर्म"},
+            10: {"title": "भाव 10 (कर्म (Karma) • दशम भाव | 🏛️ सर्वोच्च केंद्र • उपचय | अर्थ • पृथ्वी)", "karaka": "☉ सूर्य (राज्य) व ☿ बुध/♃ गुरु/ħ शनि", "sig": "करियर, आजीविका, मान-सम्मान, पद-प्रतिष्ठा, राज्य कृपा, कर्म"},
+            11: {"title": "भाव 11 (लाभ (Labha) • एकादश भाव | 📈 श्रेष्ठ उपचय • लाभ भाव | काम • वायु)", "karaka": "♃ गुरु (सर्वतो लाभ/ज्येष्ठ भ्राता)", "sig": "आय, लाभ, इच्छा पूर्ति, बड़े भाई-बहन, सामाजिक दायरा, महत्वाकांक्षा"},
+            12: {"title": "भाव 12 (व्यय (Vyaya) • द्वादश भाव | 🌊 दुस्थान • मोक्ष भाव | मोक्ष • जल)", "karaka": "ħ शनि (व्यय/हानि) व ♃ गुरु (मोक्ष)", "sig": "व्यय, हानि, मोक्ष, विदेश वास, शयन सुख, अस्पताल, एकांत"}
+        }
+
+        # Determine planet positions and house occupancy
+        planets_in_house: Dict[int, List[str]] = {h: [] for h in range(1, 13)}
+        planet_house_map: Dict[str, int] = {}
+
+        if target_varga:
+            for p_name, vp in target_varga.planets.items():
+                h_num = vp.house_number
+                p_glyph = planet_glyphs.get(p_name, p_name)
+                deg_str = f"{vp.degree_in_varga:.1f}°"
+                planets_in_house[h_num].append(f"{p_glyph} {deg_str}")
+                planet_house_map[p_name] = h_num
+        else:
+            for p_name, p in chart.planets.items():
+                h_num = p.house_from_lagna
+                p_glyph = planet_glyphs.get(p_name, p_name)
+                deg_str = f"{p.sign_degree:.1f}°"
+                planets_in_house[h_num].append(f"{p_glyph} {deg_str}")
+                planet_house_map[p_name] = h_num
+
+        # Calculate aspects (Drishti) on each house
+        aspects_on_house: Dict[int, List[str]] = {h: [] for h in range(1, 13)}
+        for p_name, p_h in planet_house_map.items():
+            p_glyph = planet_glyphs.get(p_name, p_name)
+            # Universal 7th aspect
+            h7 = ((p_h + 6 - 1) % 12) + 1
+            aspects_on_house[h7].append(f"{p_glyph} (७म दृष्टि)")
+
+            # Special aspects
+            if p_name == "Mars":
+                h4 = ((p_h + 3 - 1) % 12) + 1
+                h8 = ((p_h + 7 - 1) % 12) + 1
+                aspects_on_house[h4].append(f"{p_glyph} (४थी दृष्टि)")
+                aspects_on_house[h8].append(f"{p_glyph} (८वीं दृष्टि)")
+            elif p_name in ("Jupiter", "Rahu", "Ketu"):
+                h5 = ((p_h + 4 - 1) % 12) + 1
+                h9 = ((p_h + 8 - 1) % 12) + 1
+                aspects_on_house[h5].append(f"{p_glyph} (५वीं दृष्टि)")
+                aspects_on_house[h9].append(f"{p_glyph} (९वीं दृष्टि)")
+            elif p_name == "Saturn":
+                h3 = ((p_h + 2 - 1) % 12) + 1
+                h10 = ((p_h + 9 - 1) % 12) + 1
+                aspects_on_house[h3].append(f"{p_glyph} (३री दृष्टि)")
+                aspects_on_house[h10].append(f"{p_glyph} (१०वीं दृष्टि)")
+
+        # Bhava Chalit cusps if available
+        cusp_map = {}
+        if hasattr(chart, "bhava_chalit") and chart.bhava_chalit:
+            for c in chart.bhava_chalit.get("bhava_cusps", []):
+                cusp_map[c.get("bhava")] = c
+
+        out = {}
+        for h in range(1, 13):
+            s_id = ((lagna_s_id - 1 + (h - 1)) % 12) + 1
+            s_name = f"{sign_names_hi[s_id-1]} ({sign_names_en[s_id-1]}) ({s_id})"
+            lord = sign_lords.get(s_id, "—")
+            
+            # Where is the lord placed?
+            lord_clean = lord.split()[0]
+            lord_h = planet_house_map.get(lord_clean)
+            if lord_h:
+                lord_placement = f"{lord} {lord_h}वें भाव में स्थित"
+            else:
+                lord_placement = lord
+
+            occ = planets_in_house.get(h, [])
+            occ_str = ", ".join(occ) if occ else "— रिक्त (कोई ग्रह नहीं) —"
+
+            asp = aspects_on_house.get(h, [])
+            asp_str = ", ".join(asp) if asp else "— कोई प्रत्यक्ष दृष्टि नहीं —"
+
+            meta = bhav_metadata.get(h, {})
+            
+            # Cusp calculation
+            c_info = cusp_map.get(h)
+            if c_info:
+                cusp_deg = c_info.get("mid_deg", 15.0)
+                cusp_str = f"{cusp_deg:.2f}° ({c_info.get('sign_name', sign_names_en[s_id-1])})"
+            else:
+                cusp_str = f"15° 00' 00″ ({sign_names_hi[s_id-1]})"
+
+            out[h] = {
+                "house": h,
+                "bhav_label": meta.get("title", f"भाव {h}"),
+                "sign_name": s_name,
+                "lord_name": lord_placement,
+                "occupants": occ_str,
+                "aspects": asp_str,
+                "karaka": meta.get("karaka", "—"),
+                "cusp_info": cusp_str,
+                "significations": meta.get("sig", "—")
+            }
+        return out
+
+    @classmethod
+    def render_interactive_chart_html(
+        cls,
+        chart: "KundaliChart",
+        varga_code: str = "D1",
+        initial_house: int = 1,
+        title: str = "कुण्डली चक्र (Interactive Bhava Click)"
+    ) -> str:
+        """
+        Renders a fully interactive North Indian Kundali component with clickable houses
+        and an instant live Bhava Inspector.
+        """
+        import json
+        bhav_data = cls.build_bhav_inspector_data(chart, varga_code=varga_code)
+        bhav_data_json = json.dumps(bhav_data, ensure_ascii=False)
+
+        target_varga = chart.vargas.get(varga_code) if (chart.vargas and varga_code in chart.vargas) else None
+        lagna_s_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
+
+        # Polygons for North Indian Kundali (Fixed 360x360 coordinates)
+        house_polys = {
+            1: "180,2 91,91 180,180 269,91",
+            2: "2,2 180,2 91,91",
+            3: "2,2 91,91 2,180",
+            4: "2,180 91,91 180,180 91,269",
+            5: "2,180 91,269 2,358",
+            6: "2,358 91,269 180,358",
+            7: "180,180 91,269 180,358 269,269",
+            8: "180,358 269,269 358,358",
+            9: "358,358 269,269 358,180",
+            10: "180,180 269,91 358,180 269,269",
+            11: "358,180 269,91 358,2",
+            12: "358,2 269,91 180,2",
+        }
+
+        # House Center text coordinates (sign number, planets)
+        house_centers = {
+            1: (180, 155, 180, 80),
+            2: (112, 80, 70, 45),
+            3: (75, 120, 40, 95),
+            4: (155, 180, 85, 180),
+            5: (75, 240, 40, 265),
+            6: (112, 280, 70, 315),
+            7: (180, 205, 180, 280),
+            8: (248, 280, 290, 315),
+            9: (285, 240, 320, 265),
+            10: (205, 180, 275, 180),
+            11: (285, 120, 320, 95),
+            12: (248, 80, 290, 45),
+        }
+
+        # Group planets by house
+        glyph_map = {
+            "Sun": "☉Su", "Moon": "☽Mo", "Mars": "♂Ma", "Mercury": "☿Me",
+            "Jupiter": "♃Ju", "Venus": "♀Ve", "Saturn": "ħSa", "Rahu": "☊Ra", "Ketu": "☋Ke", "Ascendant": "Asc"
+        }
+        house_planets_svg: Dict[int, List[Tuple[str, str]]] = {h: [] for h in range(1, 13)}
+        
+        # Exaltation / Debilitation coloring
+        exalt_signs = {"Sun": 1, "Moon": 2, "Mars": 10, "Mercury": 6, "Jupiter": 4, "Venus": 12, "Saturn": 7, "Rahu": 2, "Ketu": 8}
+        deb_signs = {"Sun": 7, "Moon": 8, "Mars": 4, "Mercury": 12, "Jupiter": 10, "Venus": 6, "Saturn": 1, "Rahu": 8, "Ketu": 2}
+
+        if target_varga:
+            for p_name, vp in target_varga.planets.items():
+                h_num = vp.house_number
+                gl = glyph_map.get(p_name, p_name[:2])
+                s_id = ((lagna_s_id - 1 + (h_num - 1)) % 12) + 1
+                col = "#2E7D32" if exalt_signs.get(p_name) == s_id else ("#C62828" if deb_signs.get(p_name) == s_id else "#8A3B14")
+                house_planets_svg[h_num].append((gl, col))
+        else:
+            for p_name, p in chart.planets.items():
+                h_num = p.house_from_lagna
+                gl = glyph_map.get(p_name, p_name[:2])
+                s_id = ((lagna_s_id - 1 + (h_num - 1)) % 12) + 1
+                col = "#2E7D32" if exalt_signs.get(p_name) == s_id else ("#C62828" if deb_signs.get(p_name) == s_id else "#8A3B14")
+                house_planets_svg[h_num].append((gl, col))
+
+        svg_elements = []
+        # Polygons
+        for h, pts in house_polys.items():
+            svg_elements.append(f'<polygon points="{pts}" class="house-poly" data-h="{h}" onclick="selectHouse({h})" />')
+
+        # Signs and Planets
+        for h in range(1, 13):
+            s_id = ((lagna_s_id - 1 + (h - 1)) % 12) + 1
+            sx, sy, px, py = house_centers[h]
+            # Sign number
+            svg_elements.append(f'<text x="{sx}" y="{sy}" class="sign-number" text-anchor="middle">{s_id}</text>')
+
+            # Special label for Lagna (House 1)
+            if h == 1:
+                svg_elements.append(f'<text x="180" y="105" class="lagna-label" text-anchor="middle">Asc (ल)</text>')
+
+            # Planets
+            pls = house_planets_svg.get(h, [])
+            for idx, (gl, col) in enumerate(pls):
+                y_offset = (idx - (len(pls) - 1) / 2.0) * 14
+                svg_elements.append(
+                    f'<text x="{px}" y="{py + y_offset}" fill="{col}" class="planet-node" data-h="{h}" onclick="selectHouse({h})" text-anchor="middle">{gl}</text>'
+                )
+
+        svg_body = "".join(svg_elements)
+
+        html = f"""
+<div class="interactive-kundali-container">
+  <style>
+    .interactive-kundali-container {{
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #2D3748;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 8px 0;
+    }}
+    .kundali-layout-grid {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: flex-start;
+      justify-content: center;
+    }}
+    .chart-card {{
+      flex: 1 1 310px;
+      max-width: 380px;
+      min-width: 270px;
+      background: #FFFAF5;
+      border: 1.5px solid #F0D5C3;
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 3px 10px rgba(179, 84, 30, 0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }}
+    .chart-card-header {{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }}
+    .chart-card-title {{
+      font-weight: 800;
+      font-size: 14px;
+      color: #9C4215;
+    }}
+    .chart-badge {{
+      background: #FEEED9;
+      color: #B3541E;
+      font-weight: 700;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid #E6C2AC;
+    }}
+    .svg-wrapper {{
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 1/1;
+      position: relative;
+    }}
+    svg.interactive-north-chart {{
+      width: 100%;
+      height: 100%;
+      stroke: #B3541E;
+      stroke-width: 1.5;
+      fill: none;
+      user-select: none;
+    }}
+    svg.interactive-north-chart rect.outer-bg {{
+      fill: #FFFDFB;
+      stroke: #B3541E;
+      stroke-width: 2;
+    }}
+    svg.interactive-north-chart rect.inner-border {{
+      fill: none;
+      stroke: #B3541E;
+      stroke-width: 1;
+    }}
+    .house-poly {{
+      fill: transparent;
+      stroke: none;
+      cursor: pointer;
+      transition: fill 0.18s ease;
+    }}
+    .house-poly:hover {{
+      fill: #FDEED9;
+      fill-opacity: 0.55;
+    }}
+    .house-poly.active {{
+      fill: #FDEED9 !important;
+      fill-opacity: 0.9 !important;
+      stroke: #B3541E !important;
+      stroke-width: 1.5 !important;
+      stroke-dasharray: 4 2 !important;
+    }}
+    .sign-number {{
+      fill: #A0522D;
+      font-size: 11px;
+      font-weight: 700;
+      pointer-events: none;
+    }}
+    .lagna-label {{
+      fill: #B3541E;
+      font-size: 12px;
+      font-weight: 800;
+      pointer-events: none;
+    }}
+    .planet-node {{
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      pointer-events: auto;
+    }}
+    .chart-footer-note {{
+      font-size: 10.5px;
+      color: #718096;
+      margin-top: 8px;
+      text-align: center;
+    }}
+    /* Inspector Card */
+    .inspector-card {{
+      background: #FFFFFF;
+      border: 1.5px solid #F0D5C3;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 3px 12px rgba(179, 84, 30, 0.06);
+    }}
+    .inspector-header {{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #FEEED9;
+      margin-bottom: 12px;
+    }}
+    .inspector-title {{
+      font-size: 14px;
+      font-weight: 800;
+      color: #B3541E;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }}
+    .inspector-table {{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }}
+    .inspector-table tr {{
+      border-bottom: 1px solid #F7FAFC;
+    }}
+    .inspector-table tr:last-child {{
+      border-bottom: none;
+    }}
+    .inspector-table td {{
+      padding: 7px 4px;
+      vertical-align: top;
+    }}
+    .insp-label {{
+      font-weight: 700;
+      color: #4A5568;
+      width: 32%;
+      white-space: nowrap;
+    }}
+    .insp-val {{
+      color: #1A202C;
+      font-weight: 600;
+    }}
+    .badge-bhav {{
+      background: #B3541E;
+      color: #FFFFFF;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 11.5px;
+      display: inline-block;
+    }}
+  </style>
+
+  <div class="kundali-layout-grid">
+    <!-- Chart Column -->
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <span class="chart-card-title">{title}</span>
+        <span class="chart-badge">Varga: {varga_code}</span>
+      </div>
+
+      <div class="svg-wrapper">
+        <svg viewBox="0 0 360 360" class="interactive-north-chart" id="northChartSVG">
+          <!-- Background and Double Borders -->
+          <rect x="2" y="2" width="356" height="356" rx="6" class="outer-bg" />
+          <rect x="6" y="6" width="348" height="348" rx="4" class="inner-border" />
+
+          <!-- Kundali Geometry -->
+          <line x1="6" y1="6" x2="354" y2="354" stroke="#B3541E" stroke-width="1.2" />
+          <line x1="354" y1="6" x2="6" y2="354" stroke="#B3541E" stroke-width="1.2" />
+          <polygon points="180,6 354,180 180,354 6,180" fill="#FFF8F0" stroke="#B3541E" stroke-width="1.2" />
+
+          <!-- Dynamic Polygons & Elements -->
+          {svg_body}
+        </svg>
+      </div>
+
+      <div class="chart-footer-note">
+        ✨ <strong>भाव या ग्रह पर क्लिक करें</strong> • <span style="color:#2E7D32; font-weight:700;">हरा = उच्च</span> • <span style="color:#C62828; font-weight:700;">लाल = नीच</span>
+      </div>
+    </div>
+
+    <!-- Inspector Column -->
+    <div class="inspector-card" id="bhav-inspector">
+      <div class="inspector-header">
+        <div class="inspector-title">
+          <span>🏛️ भाव एवं ग्रह सूक्ष्म विवरण (Inspector)</span>
+        </div>
+        <span id="activeHouseBadge" class="badge-bhav">भाव 1</span>
+      </div>
+
+      <table class="inspector-table">
+        <tbody>
+          <tr>
+            <td class="insp-label">चयनित भाव:</td>
+            <td class="insp-val" id="insp-label">—</td>
+          </tr>
+          <tr>
+            <td class="insp-label">राशि व स्वामी:</td>
+            <td class="insp-val" id="insp-rashi">—</td>
+          </tr>
+          <tr>
+            <td class="insp-label">स्थित ग्रह:</td>
+            <td class="insp-val" id="insp-occupants" style="color:#B3541E; font-weight:700;">—</td>
+          </tr>
+          <tr>
+            <td class="insp-label">दृष्टि डालने वाले ग्रह:</td>
+            <td class="insp-val" id="insp-aspects" style="color:#2B6CB0;">—</td>
+          </tr>
+          <tr>
+            <td class="insp-label">भाव कारक:</td>
+            <td class="insp-val" id="insp-karaka">—</td>
+          </tr>
+          <tr>
+            <td class="insp-label">भाव विस्तार व कस्प:</td>
+            <td class="insp-val" id="insp-cusp">—</td>
+          </tr>
+          <tr>
+            <td class="insp-label">प्रमुख शास्त्रीय कारकत्व / फल:</td>
+            <td class="insp-val" id="insp-sig" style="color:#4A5568; font-size:11.5px; line-height:1.4;">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    var BHAV_DATA = {bhav_data_json};
+
+    function selectHouse(h) {{
+      var data = BHAV_DATA[h];
+      if (!data) return;
+
+      // Update active class on SVG polygons
+      var polys = document.querySelectorAll('.house-poly');
+      polys.forEach(function(p) {{
+        if (+p.getAttribute('data-h') === h) {{
+          p.classList.add('active');
+        }} else {{
+          p.classList.remove('active');
+        }}
+      }});
+
+      // Update Inspector card
+      var badge = document.getElementById('activeHouseBadge');
+      if (badge) badge.textContent = 'भाव ' + h;
+
+      var elLabel = document.getElementById('insp-label');
+      if (elLabel) elLabel.textContent = data.bhav_label;
+
+      var elRashi = document.getElementById('insp-rashi');
+      if (elRashi) elRashi.textContent = data.sign_name + ' • ' + data.lord_name;
+
+      var elOcc = document.getElementById('insp-occupants');
+      if (elOcc) elOcc.textContent = data.occupants;
+
+      var elAsp = document.getElementById('insp-aspects');
+      if (elAsp) elAsp.textContent = data.aspects;
+
+      var elKaraka = document.getElementById('insp-karaka');
+      if (elKaraka) elKaraka.textContent = data.karaka;
+
+      var elCusp = document.getElementById('insp-cusp');
+      if (elCusp) elCusp.textContent = data.cusp_info;
+
+      var elSig = document.getElementById('insp-sig');
+      if (elSig) elSig.textContent = data.significations;
+    }}
+
+    // Auto-select initial house
+    setTimeout(function() {{
+      selectHouse({initial_house});
+    }}, 50);
+  </script>
+</div>
+"""
+        return html
+
+
 
 def render_aspect_orb_matrix_html(chart: "KundaliChart", dark_bg: bool = True) -> str:
     """

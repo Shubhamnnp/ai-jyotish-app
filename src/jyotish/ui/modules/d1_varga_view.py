@@ -513,8 +513,15 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                     v_lagna_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
 
                     title = f"{varga_choice} {v_name} Kundali"
-                    svg_code = render_chart_svg(chart, title, varga_code=varga_choice)
-                    st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:6px;">{svg_code}</div>', unsafe_allow_html=True)
+                    if "North" in curr_style or curr_style == "North Indian (Diamond)":
+                        import streamlit.components.v1 as components
+                        interactive_html = ChartRenderer.render_interactive_chart_html(
+                            chart, varga_code=varga_choice, title=title
+                        )
+                        components.html(interactive_html, height=520, scrolling=True)
+                    else:
+                        svg_code = render_chart_svg(chart, title, varga_code=varga_choice)
+                        st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:6px;">{svg_code}</div>', unsafe_allow_html=True)
 
                     v_desc = VARGA_SIGNIFICANCE.get(varga_choice, "शास्त्रीय सूक्ष्म विश्लेषण")
 
