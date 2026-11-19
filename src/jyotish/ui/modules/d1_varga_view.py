@@ -518,7 +518,7 @@ def render_d1_varga_view(chart, birth_profile, tz_offset=5.5, default_city_name=
                         interactive_html = ChartRenderer.render_interactive_chart_html(
                             chart, varga_code=varga_choice, title=title
                         )
-                        components.html(interactive_html, height=520, scrolling=True)
+                        components.html(interactive_html, height=830, scrolling=False)
                     else:
                         svg_code = render_chart_svg(chart, title, varga_code=varga_choice)
                         st.markdown(f'<div class="kundali-chart" style="width:100%; display:flex; justify-content:center; margin-bottom:6px;">{svg_code}</div>', unsafe_allow_html=True)

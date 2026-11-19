@@ -1070,42 +1070,44 @@ class ChartRenderer:
         target_varga = chart.vargas.get(varga_code) if (chart.vargas and varga_code in chart.vargas) else None
         lagna_s_id = target_varga.lagna_sign_id if target_varga else chart.lagna_sign_id
 
-        # Polygons for North Indian Kundali (Fixed 360x360 coordinates)
+        # Standard 420x420 North Indian Kundali geometry
         house_polys = {
-            1: "180,2 91,91 180,180 269,91",
-            2: "2,2 180,2 91,91",
-            3: "2,2 91,91 2,180",
-            4: "2,180 91,91 180,180 91,269",
-            5: "2,180 91,269 2,358",
-            6: "2,358 91,269 180,358",
-            7: "180,180 91,269 180,358 269,269",
-            8: "180,358 269,269 358,358",
-            9: "358,358 269,269 358,180",
-            10: "180,180 269,91 358,180 269,269",
-            11: "358,180 269,91 358,2",
-            12: "358,2 269,91 180,2",
+            1: "210,16 307,113 210,210 113,113",
+            2: "16,16 210,16 113,113",
+            3: "16,16 113,113 16,210",
+            4: "16,210 113,113 210,210 113,307",
+            5: "16,210 113,307 16,404",
+            6: "16,404 113,307 210,404",
+            7: "210,210 307,307 210,404 113,307",
+            8: "210,404 307,307 404,404",
+            9: "404,404 307,307 404,210",
+            10: "210,210 307,113 404,210 307,307",
+            11: "404,210 307,113 404,16",
+            12: "404,16 307,113 210,16",
         }
 
-        # House Center text coordinates (sign number, planets)
+        # House Center text coordinates: (sx, sy, px, py)
+        # sx, sy: Sign number position (away from center, cleanly in its house)
+        # px, py: Planets position (visual center of house)
         house_centers = {
-            1: (180, 155, 180, 80),
-            2: (112, 80, 70, 45),
-            3: (75, 120, 40, 95),
-            4: (155, 180, 85, 180),
-            5: (75, 240, 40, 265),
-            6: (112, 280, 70, 315),
-            7: (180, 205, 180, 280),
-            8: (248, 280, 290, 315),
-            9: (285, 240, 320, 265),
-            10: (205, 180, 275, 180),
-            11: (285, 120, 320, 95),
-            12: (248, 80, 290, 45),
+            1: (210, 55, 210, 135),
+            2: (135, 48, 95, 75),
+            3: (48, 135, 68, 105),
+            4: (65, 215, 125, 215),
+            5: (48, 285, 68, 315),
+            6: (135, 372, 95, 345),
+            7: (210, 365, 210, 290),
+            8: (285, 372, 325, 345),
+            9: (372, 285, 352, 315),
+            10: (355, 215, 295, 215),
+            11: (372, 135, 352, 105),
+            12: (285, 48, 325, 75),
         }
 
-        # Group planets by house
+        # Group planets by house with authentic symbols and spacing
         glyph_map = {
-            "Sun": "☉Su", "Moon": "☽Mo", "Mars": "♂Ma", "Mercury": "☿Me",
-            "Jupiter": "♃Ju", "Venus": "♀Ve", "Saturn": "ħSa", "Rahu": "☊Ra", "Ketu": "☋Ke", "Ascendant": "Asc"
+            "Sun": "☉ Su", "Moon": "☽ Mo", "Mars": "♂ Ma", "Mercury": "☿ Me",
+            "Jupiter": "♃ Ju", "Venus": "♀ Ve", "Saturn": "♄ Sa", "Rahu": "☊ Ra", "Ketu": "☋ Ke", "Ascendant": "Asc"
         }
         house_planets_svg: Dict[int, List[Tuple[str, str]]] = {h: [] for h in range(1, 13)}
         
@@ -1117,6 +1119,11 @@ class ChartRenderer:
             for p_name, vp in target_varga.planets.items():
                 h_num = vp.house_number
                 gl = glyph_map.get(p_name, p_name[:2])
+                p_chart = chart.planets.get(p_name)
+                if p_chart and p_chart.is_retrograde:
+                    gl += "(R)"
+                if p_chart and p_chart.is_combust:
+                    gl += "*"
                 s_id = ((lagna_s_id - 1 + (h_num - 1)) % 12) + 1
                 col = "#2E7D32" if exalt_signs.get(p_name) == s_id else ("#C62828" if deb_signs.get(p_name) == s_id else "#8A3B14")
                 house_planets_svg[h_num].append((gl, col))
@@ -1124,6 +1131,10 @@ class ChartRenderer:
             for p_name, p in chart.planets.items():
                 h_num = p.house_from_lagna
                 gl = glyph_map.get(p_name, p_name[:2])
+                if p.is_retrograde:
+                    gl += "(R)"
+                if p.is_combust:
+                    gl += "*"
                 s_id = ((lagna_s_id - 1 + (h_num - 1)) % 12) + 1
                 col = "#2E7D32" if exalt_signs.get(p_name) == s_id else ("#C62828" if deb_signs.get(p_name) == s_id else "#8A3B14")
                 house_planets_svg[h_num].append((gl, col))
@@ -1142,12 +1153,12 @@ class ChartRenderer:
 
             # Special label for Lagna (House 1)
             if h == 1:
-                svg_elements.append(f'<text x="180" y="105" class="lagna-label" text-anchor="middle">Asc (ल)</text>')
+                svg_elements.append(f'<text x="210" y="100" class="lagna-label" text-anchor="middle">Asc (ल)</text>')
 
             # Planets
             pls = house_planets_svg.get(h, [])
             for idx, (gl, col) in enumerate(pls):
-                y_offset = (idx - (len(pls) - 1) / 2.0) * 14
+                y_offset = (idx - (len(pls) - 1) / 2.0) * 15
                 svg_elements.append(
                     f'<text x="{px}" y="{py + y_offset}" fill="{col}" class="planet-node" data-h="{h}" onclick="selectHouse({h})" text-anchor="middle">{gl}</text>'
                 )
@@ -1340,15 +1351,15 @@ class ChartRenderer:
       </div>
 
       <div class="svg-wrapper">
-        <svg viewBox="0 0 360 360" class="interactive-north-chart" id="northChartSVG">
+        <svg viewBox="0 0 420 420" class="interactive-north-chart" id="northChartSVG">
           <!-- Background and Double Borders -->
-          <rect x="2" y="2" width="356" height="356" rx="6" class="outer-bg" />
-          <rect x="6" y="6" width="348" height="348" rx="4" class="inner-border" />
+          <rect x="10" y="10" width="400" height="400" rx="6" class="outer-bg" />
+          <rect x="16" y="16" width="388" height="388" rx="4" class="inner-border" />
 
           <!-- Kundali Geometry -->
-          <line x1="6" y1="6" x2="354" y2="354" stroke="#B3541E" stroke-width="1.2" />
-          <line x1="354" y1="6" x2="6" y2="354" stroke="#B3541E" stroke-width="1.2" />
-          <polygon points="180,6 354,180 180,354 6,180" fill="#FFF8F0" stroke="#B3541E" stroke-width="1.2" />
+          <line x1="16" y1="16" x2="404" y2="404" stroke="#B3541E" stroke-width="1.4" />
+          <line x1="404" y1="16" x2="16" y2="404" stroke="#B3541E" stroke-width="1.4" />
+          <polygon points="210,16 404,210 210,404 16,210" fill="#FFF8F0" stroke="#B3541E" stroke-width="1.4" />
 
           <!-- Dynamic Polygons & Elements -->
           {svg_body}
