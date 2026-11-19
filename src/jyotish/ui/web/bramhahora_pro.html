@@ -1,0 +1,3050 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="day">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ब्रह्महोरा Pro – संपूर्ण वैदिक ज्योतिष डैशबोर्ड</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    /* Theme tokens: Day (Ivory + Saffron/Amber), Night, Astrallis, Print */
+    :root {
+      --ic-m: #9A4A1C;
+      --ic-s: #D98A57;
+      --ic-h: #0F7C8A;
+      --ic-g: #2E7D32;
+      --ic-p: #FFF8F0;
+      --ic-l: #C9A58F;
+      --ic-i: #3A2A20;
+      --ic-bd: #FFFFFF;
+      --bg: #FAF6F0;
+      --panel: #FFFFFF;
+      --line: #E5B89B;
+      --ha: #C84B17;
+      --hb: #E65C1C;
+      --alt: #FFF1E6;
+      --ink: #3A2A20;
+      --mute: #7A6455;
+      --acc: #B3541E;
+      --good: #2E7D32;
+      --bad: #C62828;
+      --warn: #B26A00;
+      --info: #1565C0;
+      --shadow: 0 2px 8px rgba(58, 42, 32, 0.06);
+    }
+
+    :root[data-theme="night"] {
+      --ic-m: #E08A57;
+      --ic-s: #B96A3F;
+      --ic-h: #5CC8D6;
+      --ic-g: #81C784;
+      --ic-p: #2A201A;
+      --ic-l: #8A6A58;
+      --ic-i: #F3E6DA;
+      --ic-bd: #F0B089;
+      --bg: #1D1612;
+      --panel: #2A201A;
+      --line: #6B4430;
+      --ha: #A63D10;
+      --hb: #C24C14;
+      --alt: #34271F;
+      --ink: #F3E6DA;
+      --mute: #B89C88;
+      --acc: #F0A070;
+      --good: #81C784;
+      --bad: #EF9A9A;
+      --warn: #FFB74D;
+      --info: #90CAF9;
+      --shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    :root[data-theme="astrallis"] {
+      --ic-m: #00B8D4;
+      --ic-s: #007C91;
+      --ic-h: #FFB74D;
+      --ic-g: #69F0AE;
+      --ic-p: #0D1322;
+      --ic-l: #3C6A80;
+      --ic-i: #D6E6F2;
+      --ic-bd: #00E5FF;
+      --bg: #080C14;
+      --panel: #0D1322;
+      --line: #1F3A52;
+      --ha: #0B4A63;
+      --hb: #00839C;
+      --alt: #111B2E;
+      --ink: #D6E6F2;
+      --mute: #8CA3B8;
+      --acc: #00E5FF;
+      --good: #69F0AE;
+      --bad: #FF8A80;
+      --warn: #FFD180;
+      --info: #80D8FF;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    :root[data-theme="print"] {
+      --ic-m: #111111;
+      --ic-s: #444444;
+      --ic-h: #000000;
+      --ic-g: #1B5E20;
+      --ic-p: #FFFFFF;
+      --ic-l: #888888;
+      --ic-i: #000000;
+      --ic-bd: #000000;
+      --bg: #FFFFFF;
+      --panel: #FFFFFF;
+      --line: #BDBDBD;
+      --ha: #222222;
+      --hb: #444444;
+      --alt: #F4F4F4;
+      --ink: #111111;
+      --mute: #444444;
+      --acc: #000000;
+      --good: #1B5E20;
+      --bad: #B71C1C;
+      --warn: #E65100;
+      --info: #0D47A1;
+      --shadow: none;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 12.5px/1.48 "Noto Sans Devanagari", system-ui, -apple-system, sans-serif;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .m {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Top Header */
+    .top {
+      background: linear-gradient(90deg, var(--ha), var(--hb));
+      color: #FFFFFF;
+      padding: 7px 12px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+    }
+
+    .top b.brand {
+      font-size: 15.5px;
+      margin-right: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      letter-spacing: 0.2px;
+    }
+
+    .chip {
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 12px;
+      padding: 3px 9px;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s ease;
+    }
+
+    .chip:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .chip.static-chip {
+      cursor: default;
+    }
+
+    .btr-bar {
+      display: inline-flex;
+      gap: 2px;
+      background: rgba(0, 0, 0, 0.24);
+      padding: 2px;
+      border-radius: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btr-bar button {
+      background: rgba(255, 255, 255, 0.16);
+      border: 0;
+      color: #FFFFFF;
+      font: 600 10.5px "JetBrains Mono", monospace;
+      padding: 2px 6px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .btr-bar button:hover {
+      background: #FFFFFF;
+      color: var(--ha);
+    }
+
+    .tools,
+    .th {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .th {
+      margin-left: 4px;
+      padding-left: 8px;
+      border-left: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .tools button,
+    .th button {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      border: 2px solid var(--ic-bd);
+      background: var(--panel);
+      cursor: pointer;
+      padding: 4px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    }
+
+    .tools button svg,
+    .th button svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .th button {
+      opacity: 0.78;
+    }
+
+    .th button:hover,
+    .th button.on,
+    .tools button:hover {
+      opacity: 1;
+      background: var(--alt);
+      box-shadow: 0 0 0 2px var(--ic-bd);
+    }
+
+    /* Container & Collapsible Sidebar Shell */
+    .wrap {
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 8px;
+    }
+
+    .sl {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 5px 10px;
+      margin-bottom: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .slt {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 12px;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+
+    .shell.closed {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .shell.closed .side {
+      display: none;
+    }
+
+    .side {
+      position: sticky;
+      top: 8px;
+      max-height: calc(100vh - 16px);
+      overflow-y: auto;
+      display: grid;
+      gap: 8px;
+    }
+
+    .mainc {
+      min-width: 0;
+    }
+
+    .side .ban {
+      display: grid !important;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin: 0;
+    }
+
+    .side .hero .hb {
+      grid-template-columns: 1fr;
+    }
+
+    .sbk {
+      display: none;
+    }
+
+    /* Panels & Cards */
+    .pn {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+      min-width: 0;
+      box-shadow: var(--shadow);
+    }
+
+    .ph {
+      background: linear-gradient(90deg, var(--ha), var(--hb));
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 12.5px;
+    }
+
+    .pb {
+      padding: 8px 10px;
+    }
+
+    .kv {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 10px;
+    }
+
+    .kv> :nth-child(odd) {
+      color: var(--mute);
+    }
+
+    .bd {
+      display: inline-block;
+      border: 1px solid var(--line);
+      background: var(--alt);
+      border-radius: 10px;
+      padding: 1.5px 8px;
+      margin: 0 4px 4px 0;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    /* Client Tabs, Categories, Submodules & Subtabs */
+    .wt {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      margin-bottom: 6px;
+      padding-bottom: 2px;
+    }
+
+    .wt button {
+      font: inherit;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 14px;
+      padding: 3px 11px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .wt button.on {
+      background: var(--alt);
+      border-color: var(--hb);
+      color: var(--acc);
+      font-weight: 700;
+    }
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       4-TIER UNIFIED CASCADING NAVIGATION (Category -> Module -> Tab -> Sub-Tab)
+       Identical height (31px), font size (12px), text padding, and 4px uniform gap.
+       ═══════════════════════════════════════════════════════════════ */
+    .nav-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .nav-line {
+      display: flex;
+      overflow-x: auto;
+      gap: 4px;
+      align-items: center;
+      padding: 1px 0;
+      white-space: nowrap;
+      scrollbar-width: thin;
+    }
+
+    .nav-line::-webkit-scrollbar {
+      height: 3px;
+    }
+
+    .nav-line button {
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.4;
+      padding: 4px 12px;
+      color: var(--ink);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 31px;
+      box-sizing: border-box;
+    }
+
+    .nav-line button:hover {
+      background: var(--alt);
+      border-color: var(--hb);
+      color: var(--ha);
+    }
+
+    .nav-line button.on {
+      background: var(--hb);
+      color: #FFFFFF;
+      border-color: var(--ha);
+      font-weight: 700;
+      box-shadow: 0 1px 3px rgba(200, 75, 23, 0.25);
+    }
+
+    /* Subtab line accent distinction */
+    .nav-line.subtabs button.on {
+      background: var(--ha);
+      color: #FFFFFF;
+      border-color: var(--ha);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       AUTHENTIC NORTH INDIAN CHART STYLING
+       Terracotta double border, peach lagna diamond, and dignity colors.
+       ═══════════════════════════════════════════════════════════════ */
+    .north-chart {
+      width: 100%;
+      max-width: 350px;
+      aspect-ratio: 1 / 1;
+      background: var(--panel);
+      box-shadow: 0 0 0 1.5px var(--ha), 0 0 0 5px var(--panel), 0 0 0 6.5px var(--ha);
+      border-radius: 2px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .north-chart rect {
+      fill: var(--panel);
+      stroke: var(--ha);
+      stroke-width: 1.5;
+    }
+
+    .north-chart line {
+      stroke: var(--ha);
+      stroke-width: 1.5;
+    }
+
+    .north-chart .house-poly {
+      fill: transparent;
+      stroke: none;
+      transition: fill 0.15s ease;
+    }
+
+    .north-chart .house-poly:hover {
+      fill: rgba(230, 92, 28, 0.08);
+    }
+
+    .north-chart .house-poly.selected {
+      fill: #FDEED9 !important;
+    }
+
+    :root[data-theme="night"] .north-chart .house-poly.selected {
+      fill: rgba(240, 160, 112, 0.25) !important;
+    }
+
+    :root[data-theme="astrallis"] .north-chart .house-poly.selected {
+      fill: rgba(0, 229, 255, 0.22) !important;
+    }
+
+    .north-chart .house-num {
+      fill: var(--mute);
+      font-size: 11.5px;
+      font-weight: 700;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+
+    .north-chart .planet-node {
+      font-size: 12px;
+      font-weight: 700;
+      text-anchor: middle;
+      fill: var(--ha);
+      cursor: pointer;
+    }
+
+    .north-chart .planet-node.planet-ex {
+      fill: var(--good) !important;
+      font-weight: 800;
+    }
+
+    .north-chart .planet-node.planet-db {
+      fill: var(--bad) !important;
+      font-weight: 800;
+    }
+
+    /* Dual chart layout */
+    .dual-chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+      max-width: 760px;
+      align-items: center;
+      justify-items: center;
+    }
+
+    @media (max-width: 680px) {
+      .dual-chart-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Grids & Tables */
+    .g2 {
+      display: grid;
+      grid-template-columns: minmax(290px, 0.95fr) minmax(340px, 1.35fr);
+      gap: 8px;
+    }
+
+    .g2>* {
+      min-width: 0;
+    }
+
+    .cmp {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px;
+    }
+
+    .quad {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .quad-box {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 6px;
+      background: var(--bg);
+    }
+
+    .quad-lbl {
+      text-align: center;
+      font-weight: 700;
+      color: var(--acc);
+      margin-top: 4px;
+      font-size: 11.5px;
+    }
+
+    .cmp>div,
+    .quad>div {
+      min-width: 0;
+    }
+
+    .cmp svg.ch,
+    .quad svg.ch {
+      max-width: 100%;
+    }
+
+    .g2.cmpm {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .sc {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: var(--alt);
+      color: var(--acc);
+      text-align: left;
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+      font-size: 11.5px;
+    }
+
+    td {
+      padding: 4px 8px;
+      border-bottom: 1px solid var(--alt);
+      white-space: nowrap;
+      font-size: 12px;
+    }
+
+    tbody tr:nth-child(even) {
+      background: var(--alt);
+    }
+
+    /* Prominent Debilitation row & badge styling */
+    tbody tr.debil-row td {
+      background: #D32F2F !important;
+      color: #FFFFFF !important;
+      font-weight: 700;
+      border-bottom: 1px solid #9A0007;
+    }
+
+    tr.cur td {
+      box-shadow: inset 0 0 0 1px var(--hb);
+      font-weight: 700;
+    }
+
+    .good {
+      color: var(--good);
+      font-weight: 600;
+    }
+
+    .bad {
+      color: var(--bad);
+      font-weight: 700;
+    }
+
+    .warn {
+      color: var(--warn);
+      font-weight: 600;
+    }
+
+    .st-badge {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-size: 10.5px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      background: var(--alt);
+    }
+
+    .st-badge.deb {
+      background: #9A0007;
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+    }
+
+    .st-badge.good {
+      background: color-mix(in srgb, var(--good) 15%, var(--panel));
+      color: var(--good);
+      border-color: var(--good);
+    }
+
+    .st-badge.warn {
+      background: color-mix(in srgb, var(--warn) 18%, var(--panel));
+      color: var(--warn);
+      border-color: var(--warn);
+    }
+
+    /* Charts & SVGs */
+    svg.ch {
+      width: 100%;
+      max-width: 340px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    svg.ch line,
+    svg.ch rect,
+    svg.ch circle {
+      stroke: var(--acc);
+      stroke-width: 1.4;
+      fill: none;
+    }
+
+    svg.ch text {
+      fill: var(--ink);
+      font: 600 10.5px "JetBrains Mono", monospace;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+
+    svg.ch .n {
+      fill: var(--mute);
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    svg.ch .hit {
+      fill: transparent;
+      stroke: none;
+      cursor: pointer;
+      transition: fill 0.15s ease;
+    }
+
+    svg.ch .hit:hover {
+      fill: var(--hb);
+      fill-opacity: 0.14;
+    }
+
+    svg.ch .hit.sel {
+      fill: var(--hb);
+      fill-opacity: 0.24;
+    }
+
+    svg.ch .hit.asp {
+      fill: var(--info);
+      fill-opacity: 0.22;
+      stroke: var(--info);
+      stroke-width: 1.3;
+      stroke-dasharray: 3 2;
+    }
+
+    svg.ch .pl {
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      pointer-events: auto;
+    }
+
+    .ex {
+      fill: var(--good) !important;
+      filter: drop-shadow(0 0 2px var(--good));
+    }
+
+    .db {
+      fill: var(--bad) !important;
+      font-weight: 800;
+    }
+
+    svg.ch .tr-pl {
+      fill: var(--info);
+      font-size: 8.5px;
+      font-weight: 700;
+    }
+
+    /* Vastu & SBC Grids */
+    .vgrid-45 {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 2px;
+    }
+
+    .vgrid-45 div {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 8.5px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      text-align: center;
+      line-height: 1.1;
+      padding: 1px;
+    }
+
+    .vgrid-45 .brahma {
+      background: var(--hb);
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .vgrid-45 .inner {
+      background: color-mix(in srgb, var(--warn) 18%, var(--panel));
+    }
+
+    .vgrid-45 .outer {
+      background: var(--alt);
+    }
+
+    .gantt {
+      display: flex;
+      height: 34px;
+      border: 1px solid var(--line);
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .gantt div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 10.5px;
+      border-right: 1px solid var(--panel);
+      cursor: pointer;
+    }
+
+    .today {
+      position: absolute;
+      top: -6px;
+      bottom: -6px;
+      width: 2px;
+      background: var(--bad);
+    }
+
+    .strip {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 2px;
+      margin: 4px 0;
+    }
+
+    .strip div {
+      padding: 6px 2px;
+      text-align: center;
+      border: 1px solid var(--line);
+      background: var(--alt);
+      font-size: 11px;
+      border-radius: 3px;
+    }
+
+    .strip .g {
+      border-color: var(--good);
+      color: var(--good);
+    }
+
+    .strip .b {
+      border-color: var(--bad);
+      color: var(--bad);
+    }
+
+    .strip .now {
+      background: var(--hb);
+      color: #FFFFFF;
+      border-color: var(--hb);
+      font-weight: 700;
+    }
+
+    .hero .hb {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 8px;
+    }
+
+    .hc {
+      border: 1px solid var(--line);
+      background: var(--alt);
+      border-radius: 5px;
+      padding: 6px 8px;
+      min-width: 0;
+    }
+
+    .hc small {
+      color: var(--mute);
+      display: block;
+      font-size: 10.5px;
+    }
+
+    .hc b {
+      font-size: 12.5px;
+    }
+
+    .bar {
+      height: 6px;
+      background: var(--line);
+      border-radius: 3px;
+      margin-top: 4px;
+      overflow: hidden;
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--ha), var(--hb));
+    }
+
+    .acts2 {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      padding: 0 0 6px;
+    }
+
+    .btn {
+      font: inherit;
+      border: 1px solid var(--hb);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 14px;
+      padding: 3.5px 11px;
+      cursor: pointer;
+      font-size: 11.5px;
+      transition: all 0.15s ease;
+    }
+
+    .btn.pri {
+      background: var(--hb);
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    .btn-xs {
+      font: inherit;
+      border: 1px solid var(--hb);
+      background: var(--alt);
+      color: var(--acc);
+      border-radius: 10px;
+      padding: 1px 7px;
+      cursor: pointer;
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+
+    .btn-xs:hover {
+      background: var(--hb);
+      color: #FFFFFF;
+    }
+
+    .glyphs {
+      padding: 0 8px 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .glyphs span {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 4px;
+      min-width: 25px;
+      text-align: center;
+      padding: 1px 4px;
+      font-size: 13px;
+    }
+
+    svg.gr {
+      width: 100%;
+      display: block;
+    }
+
+    svg.gr text {
+      fill: var(--ink);
+      font: 600 10px "JetBrains Mono", monospace;
+    }
+
+    svg.gr .al {
+      text-anchor: end;
+      font-size: 12.5px;
+    }
+
+    svg.gr .av {
+      fill: var(--mute);
+    }
+
+    svg.gr .mk {
+      stroke: var(--bad);
+      stroke-width: 2;
+    }
+
+    svg.gr .gl {
+      stroke: var(--line);
+      stroke-width: 0.7;
+    }
+
+    svg.gr .tx {
+      text-anchor: middle;
+      fill: var(--mute);
+      font-weight: 400;
+    }
+
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .kpi .hc b {
+      font-size: 14px;
+      display: block;
+    }
+
+    .c2 {
+      border-radius: 10px;
+      padding: 1px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      background: var(--alt);
+      white-space: nowrap;
+    }
+
+    .c2.g {
+      color: var(--good);
+      border-color: var(--good);
+    }
+
+    .c2.w {
+      color: var(--warn);
+      border-color: var(--warn);
+    }
+
+    .lt {
+      position: relative;
+      height: 30px;
+      border: 1px solid var(--line);
+      margin: 6px 0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .lt div {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: 10.5px;
+      font-weight: 700;
+      overflow: hidden;
+    }
+
+    .sbc {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 2px;
+    }
+
+    .sbc div {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      text-align: center;
+      line-height: 1.15;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .sbc .nak {
+      background: var(--alt);
+    }
+
+    .sbc .center {
+      background: var(--hb);
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .sbc .hj {
+      outline: 3px solid var(--acc);
+      z-index: 2;
+    }
+
+    .sbc .hv {
+      outline: 3px solid var(--bad);
+      z-index: 2;
+    }
+
+    .sbc .hvg {
+      outline: 3px solid var(--good);
+      z-index: 2;
+    }
+
+    .shloka {
+      font-family: "Noto Serif Devanagari", serif;
+      background: var(--alt);
+      border-left: 3px solid var(--hb);
+      padding: 7px 10px;
+      margin: 6px 0;
+      border-radius: 0 4px 4px 0;
+      font-weight: 600;
+      color: var(--acc);
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+
+    .ycard {
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      background: var(--panel);
+    }
+
+    .yhead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      font-weight: 700;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tl {
+      border-left: 2px solid var(--hb);
+      margin: 6px;
+      padding-left: 10px;
+    }
+
+    .tl div {
+      margin-bottom: 8px;
+    }
+
+    .tl small {
+      color: var(--mute);
+    }
+
+    .rm {
+      display: grid;
+      grid-template-columns: 20px 1fr 90px;
+      gap: 8px;
+      align-items: center;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--alt);
+    }
+
+    /* Modals & Palettes */
+    .ov {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.56);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 12px;
+    }
+
+    .ov.on {
+      display: flex;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      width: 100%;
+      max-width: 490px;
+      max-height: 88vh;
+      overflow: auto;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.42);
+    }
+
+    .card .x {
+      background: none;
+      border: 0;
+      color: #FFFFFF;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .fr {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 6px 8px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .fr input,
+    .fr select,
+    .card textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--ink);
+      padding: 4px 7px;
+      font: inherit;
+      border-radius: 4px;
+    }
+
+    .city-list {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 4px;
+      max-height: 110px;
+      overflow-y: auto;
+      margin-top: 2px;
+    }
+
+    .city-it {
+      padding: 4px 8px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--alt);
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+    }
+
+    .city-it:hover {
+      background: var(--alt);
+      color: var(--acc);
+      font-weight: 600;
+    }
+
+    .chk-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin: 8px 0;
+    }
+
+    .chk-grid label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--alt);
+      padding: 5px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      font-size: 11.5px;
+    }
+
+    .ab {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+
+    .ab button {
+      font: inherit;
+      border-radius: 4px;
+      padding: 5px 14px;
+      cursor: pointer;
+      border: 1px solid var(--hb);
+      background: var(--panel);
+      color: var(--ink);
+    }
+
+    .ab button.pri {
+      background: var(--hb);
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .pal {
+      align-items: flex-start;
+      padding-top: 12vh;
+    }
+
+    .pal input {
+      width: 100%;
+      font: inherit;
+      font-size: 15px;
+      padding: 10px;
+      border: 0;
+      border-bottom: 2px solid var(--hb);
+      background: var(--panel);
+      color: var(--ink);
+      outline: 0;
+    }
+
+    .pal .it {
+      padding: 7px 12px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--alt);
+    }
+
+    .pal .it.on {
+      background: var(--alt);
+      color: var(--acc);
+      font-weight: 700;
+    }
+
+    .pal .it small {
+      color: var(--mute);
+    }
+
+    .kb {
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      border-radius: 4px;
+      padding: 0 5px;
+      font-size: 10px;
+    }
+
+    #tt {
+      position: fixed;
+      z-index: 80;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 5px 9px;
+      border-radius: 5px;
+      pointer-events: none;
+      display: none;
+      font-size: 11.5px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.32);
+      line-height: 1.42;
+      border: 1px solid var(--hb);
+    }
+
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 70px;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--bg);
+      padding: 6px 14px;
+      border-radius: 16px;
+      display: none;
+      z-index: 70;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+    }
+
+    .bn {
+      display: none;
+    }
+
+    @media (max-width: 1100px) {
+      .shell {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .side {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: min(88vw, 340px);
+        max-height: none;
+        z-index: 45;
+        background: var(--bg);
+        padding: 8px;
+        transform: translateX(-102%);
+        transition: transform 0.2s ease;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.32);
+        align-content: start;
+      }
+
+      .shell.closed .side {
+        display: grid;
+      }
+
+      .side.open {
+        transform: none;
+      }
+
+      .sbk.open {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 44;
+      }
+    }
+
+    @media (max-width: 860px) {
+
+      .g2,
+      .kpi,
+      .quad,
+      .chk-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .strip {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .bn {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 40;
+        background: var(--panel);
+        border-top: 2px solid var(--hb);
+      }
+
+      .bn button {
+        flex: 1;
+        border: 0;
+        background: none;
+        color: var(--ink);
+        padding: 8px 2px;
+        font: inherit;
+        font-size: 11px;
+        cursor: pointer;
+      }
+
+      .bn button.on {
+        color: var(--acc);
+        font-weight: 700;
+      }
+
+      body {
+        padding-bottom: 56px;
+      }
+    }
+
+    @media print {
+
+      .top,
+      .rib,
+      .mods,
+      .bn,
+      .acts2,
+      .wt,
+      .sl,
+      .ov {
+        display: none !important;
+      }
+
+      body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Bar -->
+  <header class="top">
+    <b class="brand">
+      <svg width="20" height="20" viewBox="-12 -12 24 24" fill="none" stroke="#fff" stroke-width="1.4"
+        aria-hidden="true">
+        <circle r="10" />
+        <circle r="5" />
+        <path d="M0-10V10M-10 0H10M-7-7L7 7M7-7L-7 7" />
+      </svg>
+      ब्रह्महोरा Pro
+    </b>
+
+    <span class="chip" onclick="openP(1)" title="जातक प्रोफ़ाइल / क्लाइंट वॉल्ट">
+      जातक: <strong id="hdrName">Sample</strong> · <span id="hdrPlace">Delhi</span> ▾
+    </span>
+
+    <div class="chip static-chip" title="बर्थ टाइम रेक्टिफिकेशन (BTR)">
+      <span>समय: <strong id="hdrTime" class="m">05:00:00</strong></span>
+      <span class="btr-bar">
+        <button type="button" onclick="stepBTR(-3600)">-1h</button>
+        <button type="button" onclick="stepBTR(-600)">-10m</button>
+        <button type="button" onclick="stepBTR(-60)">-1m</button>
+        <button type="button" onclick="stepBTR(60)">+1m</button>
+        <button type="button" onclick="stepBTR(600)">+10m</button>
+        <button type="button" onclick="stepBTR(3600)">+1h</button>
+      </span>
+    </div>
+
+    <span class="chip" onclick="openApiModal()" id="apiBadge" title="इंजन बाइंडिंग व API स्थिति">● इंजन बाइंड
+      सक्रिय</span>
+    <span class="chip" onclick="pal(1)">🔍 खोजें <span class="kb">Ctrl K</span></span>
+
+    <span class="tools" id="tools">
+      <button type="button" title="नई कुंडली (City Atlas)" onclick="openP(0)">
+        <svg viewBox="0 0 32 32">
+          <rect x="3" y="3" width="22" height="22" rx="2" fill="var(--ic-p)" stroke="var(--ic-h)" stroke-width="1.8" />
+          <path d="M3 3L25 25M25 3L3 25M14 3L3 14L14 25L25 14Z" fill="none" stroke="var(--ic-h)" stroke-width="1.3" />
+          <circle cx="24" cy="24" r="7" fill="var(--ic-g)" />
+          <path d="M24 20v8M20 24h8" stroke="var(--ic-p)" stroke-width="2.2" stroke-linecap="round" />
+        </svg>
+      </button>
+      <button type="button" title="क्लाइंट वॉल्ट" onclick="openP(1)">
+        <svg viewBox="0 0 32 32">
+          <path d="M3 9a2 2 0 012-2h7l3 3h12a2 2 0 012 2v13a2 2 0 01-2 2H5a2 2 0 01-2-2z" fill="var(--ic-m)" />
+          <path d="M3 14h26v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" fill="var(--ic-s)" />
+        </svg>
+      </button>
+      <button type="button" title="कुंडली सेव करें" onclick="openP(2)">
+        <svg viewBox="0 0 32 32">
+          <path d="M5 5a2 2 0 012-2h15l5 5v19a2 2 0 01-2 2H7a2 2 0 01-2-2z" fill="var(--ic-m)" />
+          <rect x="9" y="4" width="11" height="7" fill="var(--ic-p)" />
+          <rect x="9" y="16" width="14" height="10" rx="1" fill="var(--ic-p)" />
+        </svg>
+      </button>
+      <button type="button" title="परामर्श नोट्स" onclick="openP(3)">
+        <svg viewBox="0 0 32 32">
+          <rect x="5" y="5" width="19" height="23" rx="2" fill="var(--ic-p)" stroke="var(--ic-i)" stroke-width="1.6" />
+          <rect x="5" y="5" width="19" height="5" fill="var(--ic-h)" />
+          <path d="M9 15h11M9 19h11M9 23h7" stroke="var(--ic-l)" stroke-width="1.8" />
+        </svg>
+      </button>
+      <button type="button" title="सेटिंग्स एवं इंजन ब्रिज" onclick="openP(4)">
+        <svg viewBox="0 0 32 32">
+          <circle cx="16" cy="16" r="10" fill="none" stroke="var(--ic-m)" stroke-width="4" stroke-dasharray="4.5 4.5" />
+          <circle cx="16" cy="16" r="5" fill="var(--ic-h)" />
+        </svg>
+      </button>
+    </span>
+
+    <span class="th" id="th">
+      <button type="button" data-k="day" class="on" title="दिन थीम" onclick="theme('day')">
+        <svg viewBox="0 0 32 32">
+          <path d="M16 3v4M16 25v4M3 16h4M25 16h4M7 7l3 3M22 22l3 3M25 7l-3 3M10 22l-3 3" stroke="var(--ic-s)"
+            stroke-width="2.5" stroke-linecap="round" />
+          <circle cx="16" cy="16" r="7" fill="var(--ic-m)" />
+        </svg>
+      </button>
+      <button type="button" data-k="night" title="रात्रि थीम" onclick="theme('night')">
+        <svg viewBox="0 0 32 32">
+          <path d="M24 19.5A10.5 10.5 0 1112.5 7.5a8.5 8.5 0 0011.5 12z" fill="var(--ic-m)" />
+          <circle cx="24" cy="8" r="1.8" fill="var(--ic-h)" />
+        </svg>
+      </button>
+      <button type="button" data-k="astrallis" title="Astrallis थीम" onclick="theme('astrallis')">
+        <svg viewBox="0 0 32 32">
+          <circle cx="16" cy="16" r="7" fill="var(--ic-m)" />
+          <ellipse cx="16" cy="16" rx="13" ry="4.5" fill="none" stroke="var(--ic-h)" stroke-width="2.2"
+            transform="rotate(-25 16 16)" />
+        </svg>
+      </button>
+      <button type="button" data-k="print" title="प्रिंट / Clean White" onclick="theme('print')">
+        <svg viewBox="0 0 32 32">
+          <rect x="7" y="4" width="18" height="24" rx="2" fill="none" stroke="var(--ic-i)" stroke-width="2" />
+          <path d="M11 11h10M11 16h10M11 21h6" stroke="var(--ic-i)" stroke-width="2" />
+        </svg>
+      </button>
+    </span>
+  </header>
+
+  <!-- Modal Dialog -->
+  <div class="ov" id="ov">
+    <div class="card" role="dialog" aria-modal="true">
+      <div class="ph"><span id="ct"></span><button type="button" class="x" id="cx">×</button></div>
+      <div class="pb" id="cb"></div>
+    </div>
+  </div>
+
+  <!-- Main Workspace -->
+  <div class="wrap">
+    <div class="sl" id="sl">
+      <button type="button" class="btn pri" id="sbtn" onclick="sidet()">☰ संदर्भ पैनल</button>
+      <span class="slt">
+        <b id="slName">Sample</b> · <span class="m" id="slTime">01/01/1987 05:00:00</span> · <span
+          id="slPlace">Delhi</span> · <span id="slLagna">लग्न कुंभ (01°51')</span> · दशा <u class="curd"
+          style="text-decoration:none">Rah › Jup › Sat</u>
+      </span>
+    </div>
+
+    <div class="shell" id="shell">
+      <aside class="side" id="side">
+        <div class="ban" id="ban">
+          <div class="pn" data-slot="birth_avakahada">
+            <div class="ph">जन्म विवरण / अवकहड़ा</div>
+            <div class="pb kv">
+              <span>तिथि/समय</span><span class="m" id="banDT">01-01-1987 05:00:00 AM</span>
+              <span>स्थान</span><span id="banPlace">Delhi, India</span>
+              <span>निर्देशांक</span><span class="m" id="banCoords">28°39′N 77°13′E</span>
+              <span>अयनांश</span><span class="m">Lahiri (23°40'12")</span>
+            </div>
+          </div>
+
+          <div class="pn" data-slot="lagna_nakshatra">
+            <div class="ph">लग्न · राशि · नक्षत्र</div>
+            <div class="pb">
+              <span class="bd" id="banLagna">लग्न: कुंभ</span>
+              <span class="bd" id="banMoon">चंद्र: कुंभ</span>
+              <span class="bd" id="banNak">धनिष्ठा पाद 3</span>
+              <span class="bd">योनि: सिंह</span>
+              <span class="bd">नाड़ी: मध्य</span>
+              <span class="bd">गण: राक्षस</span>
+            </div>
+          </div>
+
+          <div class="pn" data-slot="current_summary">
+            <div class="ph">वर्तमान दशा · आज का पंचांग</div>
+            <div class="pb kv">
+              <span>दशा</span><span class="m curd">Rah › Jup › Sat</span>
+              <span>तिथि/वार</span><span>शुक्ल पंचमी · गुरुवार</span>
+              <span>राहुकाल</span><span class="m">13:30–14:52</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pn hero">
+          <div class="ph">आज एक नज़र में</div>
+          <div class="hb">
+            <div class="hc">
+              <small>चालू दशा</small>
+              <b class="curd">–</b>
+              <div class="bar"><i id="hdb" style="width:0"></i></div>
+              <small id="hds"></small>
+            </div>
+            <div class="hc">
+              <small>साढ़े साती / गोचर</small>
+              <b>अवस्था सक्रिय</b>
+              <small>शनि वक्री: मीन (14°07')</small>
+            </div>
+            <div class="hc">
+              <small>आज का चौघड़िया</small>
+              <b>चर · शुभ</b>
+              <div class="strip" style="margin:3px 0 0">
+                <div class="g">अ</div>
+                <div class="b">का</div>
+                <div class="g">शु</div>
+                <div class="b">रो</div>
+                <div class="b">उ</div>
+                <div class="now">च</div>
+                <div class="g">ला</div>
+                <div class="g">अ</div>
+              </div>
+            </div>
+            <div class="hc">
+              <small>गोचर संकेत</small>
+              <b>गुरु: कुंभ · भाव 1</b>
+              <small>शनि: मीन · भाव 2</small>
+            </div>
+          </div>
+          <div class="acts2" style="padding:0 8px 8px">
+            <button type="button" class="btn pri" onclick="pdf()">📄 कस्टम PDF रिपोर्ट</button>
+            <button type="button" class="btn" onclick="openApiModal()">🔌 इंजन सिंक</button>
+            <button type="button" class="btn" onclick="calc()">ℹ️ गणना विवरण</button>
+            <button type="button" class="btn" onclick="keys()">⌨ शॉर्टकट</button>
+          </div>
+          <div class="glyphs" id="gl"></div>
+        </div>
+      </aside>
+
+      <div class="mainc">
+        <div class="wt" id="wt"></div>
+        <!-- 4-tier Cascading Navigation: Category -> Module -> Tab -> Sub-Tab -->
+        <div class="nav-container">
+          <div class="rib nav-line" id="rib"></div>
+          <div class="mods nav-line" id="mods"></div>
+          <div class="tabs nav-line" id="tabs"></div>
+          <div class="subtabs nav-line" id="subtabs"></div>
+        </div>
+        <div class="pn" id="mod"></div>
+      </div>
+    </div>
+    <div class="sbk" id="sbk"></div>
+  </div>
+
+  <!-- Command Palette (Ctrl+K) -->
+  <div class="ov pal" id="pov">
+    <div class="card">
+      <input id="pq"
+        placeholder="मॉड्यूल (जैसे लाइफ़ एरिया, देशवर्ग, षोडशवर्ग, वास्तु, रत्न, जैमिनी, केपी, मिलान, ताजिक) खोजें…">
+      <div id="pr"></div>
+    </div>
+  </div>
+
+  <div id="tt"></div>
+  <div id="toast"></div>
+  <nav class="bn" id="bn"></nav>
+
+  <script>
+    /* ================= Safe Helpers ================= */
+    function $(id) {
+      return document.getElementById(id);
+    }
+
+    function toast(msg) {
+      var el = $("toast");
+      if (!el) return;
+      el.textContent = msg;
+      el.style.display = "block";
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(function () {
+        el.style.display = "none";
+      }, 2400);
+    }
+
+    function showTT(e, html) {
+      var tt = $("tt");
+      if (!tt || !e) return;
+      tt.innerHTML = html;
+      tt.style.display = "block";
+      tt.style.left = Math.min(e.clientX + 12, window.innerWidth - 260) + "px";
+      tt.style.top = Math.min(e.clientY + 14, window.innerHeight - 95) + "px";
+    }
+
+    function hideTT() {
+      var tt = $("tt");
+      if (tt) tt.style.display = "none";
+    }
+
+    function tbl(headers, rows, curIdx, slotName, rowClasses) {
+      var hArr = Array.isArray(headers) ? headers : [];
+      var rArr = Array.isArray(rows) ? rows : [];
+      var cArr = Array.isArray(rowClasses) ? rowClasses : [];
+      return '<div class="sc"' + (slotName ? ' data-slot="' + slotName + '"' : '') + '>' +
+        '<table><thead><tr>' +
+        hArr.map(function (h) { return '<th>' + h + '</th>'; }).join("") +
+        '</tr></thead><tbody class="m">' +
+        rArr.map(function (r, i) {
+          var cls = [];
+          if (i === curIdx) cls.push("cur");
+          if (cArr[i]) cls.push(cArr[i]);
+          return '<tr' + (cls.length ? ' class="' + cls.join(" ") + '"' : '') + '>' +
+            (Array.isArray(r) ? r : []).map(function (c) { return '<td>' + (c !== undefined && c !== null ? c : "—") + '</td>'; }).join("") +
+            '</tr>';
+        }).join("") +
+        '</tbody></table></div>';
+    }
+
+    /* ================= 8 Categories, 32 Modules, Tabs & Sub-Tabs ================= */
+    var CATS = [
+      ["जन्म कुंडली व विश्लेषण", ["जन्म कुंडली", "वर्ग कुंडली", "सुदर्शन चक्र", "ग्रह बल (षड्बल)", "योग व दोष", "शास्त्रीय फलादेश"]],
+      ["समय-चक्र", ["दशा प्रणाली", "गोचर व अष्टकवर्ग", "वर्षफल (ताजिक)", "घटना विश्लेषण", "जन्म समय शोधन"]],
+      ["ज्योतिष पद्धतियाँ", ["केपी पद्धति", "जैमिनी पद्धति", "लाल किताब", "प्रश्न कुंडली"]],
+      ["पंचांग, मुहूर्त व मिलान", ["पंचांग", "मुहूर्त", "कुंडली मिलान", "संबंध विश्लेषण"]],
+      ["उपाय व अध्यात्म", ["ग्रह पीड़ा व उपाय", "रत्न एवं रुद्राक्ष विज्ञान", "पूजा व ईष्ट देवता", "कर्मफल व पूर्वजन्म"]],
+      ["वास्तु, अंक व सामुद्रिक", ["वास्तु शास्त्र", "देशवर्ग व क्षेत्रीय विश्लेषण", "अंक ज्योतिष", "हस्तरेखा"]],
+      ["स्वास्थ्य व जीवनशैली", ["लाइफ़ एरिया (जीवन क्षेत्र)", "आयुर्वेद व त्रिदोष", "चिकित्सा ज्योतिष"]],
+      ["AI, रिपोर्ट व एडमिन", ["दैवज्ञ AI", "एडमिन डैशबोर्ड"]]
+    ];
+
+    var TABS = {
+      "जन्म कुंडली": ["लग्न व वर्ग चक्र", "पुष्कर व वर्गोत्तम", "जैमिनी विशेष लग्न", "भाव चलित", "चन्द्र कुण्डली", "सूर्य कुण्डली", "ग्रह युद्ध", "आरूढ़ पद", "कोटा चक्र"],
+      "वर्ग कुंडली": ["षोडशवर्ग चक्र (D1–D16)", "उच्च वर्ग (D27–D60, D150)", "षोडशवर्ग सारांश मैट्रिक्स"],
+      "सुदर्शन चक्र": ["त्रि-चक्र सुदर्शन (लग्न-चंद्र-सूर्य)", "भाव-वार सुदर्शन बल"],
+      "ग्रह बल (षड्बल)": ["षड्बल (रूप व रडार)", "स्थान बल उप-भेद व विंशोपक", "भाव बल व अवस्था", "इष्ट-कष्ट बल"],
+      "योग व दोष": ["राजयोग एवं धनयोग", "दोष विश्लेषण (मंगल/कालसर्प/पितृ)", "शास्त्रीय श्लोक कोष"],
+      "शास्त्रीय फलादेश": ["बृहत्पाराशर होराशास्त्र श्लोक", "भाव फल विचार"],
+      "दशा प्रणाली": ["१२०-वर्ष गेंट चार्ट", "जीवन टाइमलाइन", "विंशोत्तरी (५ स्तर)", "अष्टोत्तरी व योगिनी", "जैमिनी चर, स्थिर व नारायण", "कालचक्र, शूल व अन्य दशाएं"],
+      "गोचर व अष्टकवर्ग": ["अष्टकवर्ग (SAV/BAV)", "त्रिकोण व एकाधिपत्य शोधन", "अष्टकवर्ग गोचर व कक्ष्या", "एनिमेटेड गोचर चक्र", "सर्वतोभद्र चक्र (9×9)"],
+      "वर्षफल (ताजिक)": ["वार्षिक कुंडली व मुंथा", "पंचवर्गीय बल व १६ ताजिक योग", "सहम (Sahams) तालिका"],
+      "जन्म समय शोधन": ["लाइव BTR समय-स्टेपर", "कुंड व प्राणपद सत्यापन"],
+      "केपी पद्धति": ["रूलिंग प्लैनेट्स (4-Step RP)", "कस्पल सब-लॉर्ड तालिका", "ABCD सिग्निफिकेटर ग्रिड"],
+      "जैमिनी पद्धति": ["चरकारक व स्थिरकारक", "कारकांश, स्वांश व आरूढ़", "अर्गला व राशि दृष्टि"],
+      "लाल किताब": ["लाल किताब पक्का घर व ऋण", "वर्षफल व उपाय नियम"],
+      "प्रश्न कुंडली": ["तात्कालिक प्रश्न व आरूढ़", "त्रिसफुट व मूक प्रश्न"],
+      "पंचांग": ["पञ्चाङ्ग ५ स्तम्भ व मुहूर्त", "दिन का चौघड़िया व होरा", "नवतारा चक्र, भद्रा व पञ्चक"],
+      "मुहूर्त": ["विवाह एवं गृह प्रवेश", "यात्रा एवं नामकरण मुहूर्त"],
+      "कुंडली मिलान": ["अष्टकूट ३६-गुण मिलान", "मांगलिक व दोष-भंग नियम", "वर-वधू तुलनात्मक कुंडली"],
+      "ग्रह पीड़ा व उपाय": ["उपाय ट्रैकर एवं मंत्र जप", "परामर्श नोट्स", "शेयर व रिपोर्ट"],
+      "रत्न एवं रुद्राक्ष विज्ञान": ["रत्न अनुशंसा (जीवन/भाग्य/पुण्य)", "१–१४ मुखी रुद्राक्ष एवं धातु"],
+      "वास्तु शास्त्र": ["१६ दिशाएं एवं ग्रह-वास्तु मैपिंग", "३२ मुख्य द्वार (N1–W8) फल", "४५ वास्तु पुरुष मंडल पद"],
+      "देशवर्ग व क्षेत्रीय विश्लेषण": ["देशवर्ग तालिका (Deshavarga)", "राशि-नक्षत्र क्षेत्रीय मान"],
+      "लाइफ़ एरिया (जीवन क्षेत्र)": ["प्रमुख जीवन क्षेत्र (Life Areas)", "दशा व गोचर अनुसार क्षेत्रफल"],
+      "दैवज्ञ AI": ["चैट (प्रमाण आधारित)", "स्रोत व गार्डरेल"],
+      "एडमिन डैशबोर्ड": ["अवलोकन", "यूज़र व लाइसेंस", "बिलिंग", "इंजन की सेहत", "ऑडिट लॉग"]
+    };
+
+    var SUBTABS = {
+      "लग्न व वर्ग चक्र": [
+        "1. 📊 वर्ग चक्र चयन (Select Varga Chart)",
+        "2. 🪐 नवग्रह स्पष्ट स्थिति, भाव एवं गरिमा तालिका",
+        "3. 🏛️ द्वादश भाव सम्पूर्ण शास्त्रीय स्थिति, दृष्टि, गरिमा व गुणधर्म तालिका"
+      ],
+      "लग्न व ग्रह तालिका": [
+        "1. 📊 वर्ग चक्र चयन (Select Varga Chart)",
+        "2. 🪐 नवग्रह स्पष्ट स्थिति, भाव एवं गरिमा तालिका",
+        "3. 🏛️ द्वादश भाव सम्पूर्ण शास्त्रीय स्थिति, दृष्टि, गरिमा व गुणधर्म तालिका"
+      ],
+      "भाव चलित": [
+        "1. 🏛️ भाव चलित कुण्डली चक्र",
+        "2. 📋 भाव आरंभ, मध्य एवं संधि तालिका"
+      ],
+      "भाव चलित व संधि": [
+        "1. 🏛️ भाव चलित कुण्डली चक्र",
+        "2. 📋 भाव आरंभ, मध्य एवं संधि तालिका"
+      ]
+    };
+
+    var cat = 0;
+    var mod = "जन्म कुंडली";
+    var tab = 0;
+    var subtab = 0;
+
+    /* ================= Astrological Global State ================= */
+    var viewMode = "single"; // "single" or "cmp"
+    var kd = "d1";
+    var cs = "n"; // Chart style: n=north, s=south, e=east
+    var ks = 1;   // Selected house (1..12)
+    var kp = null;// Selected planet (e.g. "Su", "Mo", etc.)
+    var hovP = null;
+    var hovH = null;
+    var showTransit = false;
+
+    var GLOBAL_PROFILE = {
+      name: "पं. शुभम तिवारी",
+      dob: "18/11/2026",
+      tob: "05:00:00",
+      coords: "28°39' N 77°13' E",
+      ayanamsa: "Lahiri - Swiss Eph"
+    };
+
+    var GLOBAL_VARGAS = {
+      d1: {
+        lagna: 8,
+        houses: { 1: [], 2: ["Su", "Me", "Ve"], 3: [], 4: ["Ju"], 5: ["Mo", "Ma"], 6: [], 7: ["Ra"], 8: [], 9: [], 10: ["Ke"], 11: [], 12: ["Sa"] }
+      },
+      d9: {
+        lagna: 12,
+        houses: { 1: ["Mo"], 2: ["Su", "Ve"], 3: [], 4: ["Ke"], 5: ["Ma"], 6: [], 7: ["Ju", "Sa"], 8: ["Me"], 9: [], 10: ["Ra"], 11: [], 12: [] }
+      }
+    };
+
+    var GLOBAL_BHAV_DATA = {
+      1: {
+        house_num: 1, name: "तनु (Lagna)", sanskrit: "प्रथम भाव", sannya: "🏛️ केंद्र / 👑 त्रिकोण", tattva: "धर्म • अग्नि", sign_num: 8, sign_name: "वृश्चिक (Scorpio)", lord_name: "मंगल (Mars)", lord_placement: "स्वामी मंगल (Mars) 5वें भाव (मीन 01°03') [मित्र]", occupants: ["लग्नेश मंगल प्रभाव"], aspects: ["— कोई प्रत्यक्ष दृष्टि नहीं —"], karaka: "☉ सूर्य (काया/आरोग्य/आत्मबल)", cusp_info: "15° 13' 50\" (वृश्चिक)", significance: "शारीरिक गठन, स्वास्थ्य, वर्ण, आत्मबल, स्वभाव, दीर्घायु" },
+      2: { house_num: 2, name: "धन (Dhana)", sanskrit: "द्वितीय भाव", sannya: "🛡️ मारक / पणफर", tattva: "अर्थ • पृथ्वी", sign_num: 9, sign_name: "धनु (Sagittarius)", lord_name: "गुरु (Jupiter)", lord_placement: "स्वामी गुरु (Jupiter) 4वें भाव (कुंभ 24°56') [सम]", occupants: ["☉ सूर्य (Su)", "☿ बुध (Me)", "♀ शुक्र (Ve)"], aspects: ["— कोई प्रत्यक्ष दृष्टि नहीं —"], karaka: "♃ गुरु (धन), ☿ बुध (वाणी)", cusp_info: "15° 13' 50\" (धनु)", significance: "धन - संपत्ति, कुटुंब, वाणी, प्रारंभिक शिक्षा, मुख, संचित धन" },
+    3: {
+      house_num: 3, name: "सहज (Bhratri)", sanskrit: "तृतीय भाव", sannya: "📈 उपचय / आपोक्लिम", tattva: "काम • वायु", sign_num: 10, sign_name: "मकर (Capricorn)", lord_name: "शनि (Saturn)", lord_placement: "स्वामी शनि (Saturn) 12वें भाव (तुला 26°18') [उच्च]", occupants: [], aspects: ["♄ शनि (Sa) (३री दृष्टि)"], karaka: "♂ मंगल (पराक्रम, भ्रातृ)", cusp_info: "15° 13' 50\" (मकर)", significance: "साहस, पराक्रम, छोटे भाई - बहन, लघु यात्रा, लेखन, धैर्य" },
+      4: {
+        house_num: 4, name: "सुख (Matri)", sanskrit: "चतुर्थ भाव", sannya: "🏛️ केंद्र (सुख स्थान)", tattva: "मोक्ष • जल", sign_num: 11, sign_name: "कुंभ (Aquarius)", lord_name: "शनि (Saturn)", lord_placement: "स्वामी शनि (Saturn) 12वें भाव (तुला 26°18') [उच्च]", occupants: ["♃ गुरु (Ju)"], aspects: ["♂ मंगल (Ma) (४थी दृष्टि)"], karaka: "☽ चन्द्र (माता), ♀ शुक्र (वाहन)", cusp_info: "15° 13' 50\" (कुंभ)", significance: "माता, गृह, भूमि, वाहन, मानसिक शांति, हृदय, सुख - साधन" },
+        5: {
+          house_num: 5, name: "सुत (Putra)", sanskrit: "पंचम भाव", sannya: "👑 त्रिकोण (पुण्य स्थान)", tattva: "धर्म • अग्नि", sign_num: 12, sign_name: "मीन (Pisces)", lord_name: "गुरु (Jupiter)", lord_placement: "स्वामी गुरु (Jupiter) 4वें भाव (कुंभ 24°56') [सम]", occupants: ["☽ चन्द्र (Mo)", "♂ मंगल (Ma)"], aspects: ["— कोई प्रत्यक्ष दृष्टि नहीं —"], karaka: "♃ गुरु (संतान, बुद्धि)", cusp_info: "15° 13' 50\" (मीन)", significance: "संतान, बुद्धि, विद्या, पूर्वपुण्य, मंत्र - साधना, विवेक" },
+          6: {
+            house_num: 6, name: "रिपु (Ari)", sanskrit: "षष्ठ भाव", sannya: "⚡ त्रिक/दुःस्थान • 📈 उपचय", tattva: "अर्थ • पृथ्वी", sign_num: 1, sign_name: "मेष (Aries)", lord_name: "मंगल (Mars)", lord_placement: "स्वामी मंगल (Mars) 5वें भाव (मीन 01°03') [मित्र]", occupants: [], aspects: ["♄ शनि (Sa) (७म दृष्टि)"], karaka: "♂ मंगल (शत्रु), ♄ शनि (रोग/ऋण)", cusp_info: "15° 13' 50\" (मेष)", significance: "शत्रु, रोग, ऋण, प्रतियोगिता, सेवा, ननिहाल, विजय" },
+            7: {
+              house_num: 7, name: "जाया (Kalatra)", sanskrit: "सप्तम भाव", sannya: "🏛️ केंद्र • 🛡️ मारक", tattva: "काम • वायु", sign_num: 2, sign_name: "वृषभ (Taurus)", lord_name: "शुक्र (Venus)", lord_placement: "स्वामी शुक्र (Venus) 2वें भाव (धनु 24°12') [सम]", occupants: ["☊ राहु (Ra)"], aspects: ["— कोई प्रत्यक्ष दृष्टि नहीं —"], karaka: "♀ शुक्र (दाम्पत्य/काम)", cusp_info: "15° 13' 50\" (वृषभ)", significance: "जीवनसाथी, विवाह, व्यापार, साझेदारी, लोक - संबंध, दैनिक आय" },
+              8: {
+                house_num: 8, name: "आयु (Randhra)", sanskrit: "अष्टम भाव", sannya: "⚡ त्रिक/दुःस्थान • पणफर", tattva: "मोक्ष • जल", sign_num: 3, sign_name: "मिथुन (Gemini)", lord_name: "बुध (Mercury)", lord_placement: "स्वामी बुध (Mercury) 2वें भाव (धनु 09°28') [सम]", occupants: [], aspects: ["☉ सूर्य (Su), ☿ बुध (Me), ♀ शुक्र (Ve) (७म दृष्टि)"], karaka: "♄ शनि (आयु/गूढ़ रहस्य)", cusp_info: "15° 13' 50\" (मिथुन)", significance: "आयु, मृत्यु, गूढ़ ज्ञान, संकट, गुप्त धन, आकस्मिकता, शोध" },
+                9: {
+                  house_num: 9, name: "धर्म (Bhagya)", sanskrit: "नवम भाव", sannya: "👑 त्रिकोण (भाग्य स्थान)", tattva: "धर्म • अग्नि", sign_num: 4, sign_name: "कर्क (Cancer)", lord_name: "चन्द्र (Moon)", lord_placement: "स्वामी चन्द्र (Moon) 5वें भाव (मीन 01°03') [मित्र]", occupants: [], aspects: ["♄ शनि (Sa) (१०वीं दृष्टि)"], karaka: "♃ गुरु (धर्म/भाग्य), ☉ सूर्य (पिता)", cusp_info: "15° 13' 50\" (कर्क)", significance: "भाग्य, धर्म, गुरु, पिता, तीर्थाटन, उच्च शिक्षा, सत्कर्म" },
+                  10: {
+                    house_num: 10, name: "कर्म (Karma)", sanskrit: "दशम भाव", sannya: "🏛️ केंद्र • 📈 उपचय (राज्य)", tattva: "अर्थ • पृथ्वी", sign_num: 5, sign_name: "सिंह (Leo)", lord_name: "सूर्य (Sun)", lord_placement: "स्वामी सूर्य (Sun) 2वें भाव (धनु 16°19') [मित्र]", occupants: ["☋ केतु (Ke)"], aspects: ["♃ गुरु (Ju) (७म दृष्टि)"], karaka: "☉ सूर्य, ☿ बुध, ♃ गुरु, ♄ शनि", cusp_info: "15° 13' 50\" (सिंह)", significance: "आजीविका, पद - प्रतिष्ठा, राज्य, अधिकार, कीर्ति, व्यवसाय" },
+                    11: {
+                      house_num: 11, name: "लाभ (Labha)", sanskrit: "एकादश भाव", sannya: "📈 उपचय • पणफर", tattva: "काम • वायु", sign_num: 6, sign_name: "कन्या (Virgo)", lord_name: "बुध (Mercury)", lord_placement: "स्वामी बुध (Mercury) 2वें भाव (धनु 09°28') [सम]", occupants: [], aspects: ["☽ चन्द्र (Mo), ♂ मंगल (Ma) (७म दृष्टि)"], karaka: "♃ गुरु (लाभ/आय)", cusp_info: "15° 13' 50\" (कन्या)", significance: "आय, लाभ, ज्येष्ठ भ्राता, मित्र, मनोरथ सिद्धि, सर्वसिद्धि" },
+                      12: {
+                        house_num: 12, name: "व्यय (Vyaya)", sanskrit: "द्वादश भाव", sannya: "⚡ त्रिक/दुःस्थान • आपोक्लिम", tattva: "मोक्ष • जल", sign_num: 7, sign_name: "तुला (Libra)", lord_name: "शुक्र (Venus)", lord_placement: "स्वामी शुक्र (Venus) 2वें भाव (धनु 24°12') [सम]", occupants: ["♄ शनि (Sa)"], aspects: ["— कोई प्रत्यक्ष दृष्टि नहीं —"], karaka: "♄ शनि (व्यय), ☋ केतु (मोक्ष)", cusp_info: "15° 13' 50\" (तुला)", significance: "व्यय, मोक्ष, विदेश गमन, अस्पताल, शयन सुख, त्याग" }
+                      };
+
+                      var GLOBAL_GRAHA_DATA = {
+                        "Asc": { code: "Asc", hi: "लग्न", glyph: "⬆", sign: "वृश्चिक (Sco)", deg: "15° 13' 50\"", nak: "अनुराधा", pada: 4, st: "लग्न", drishti_summary: "भाव 1 स्थित • केंद्र- त्रिकोण आधार" },
+      "Su": { code: "Su", hi: "सूर्य", glyph: "☉", sign: "धनु (Sag)", deg: "16° 19' 29\"", nak: "पूर्वाषाढ़ा", pada: 1, st: "मित्र", drishti_summary: "भाव 2 से दृष्टि: भाव 8" },
+      "Mo": { code: "Mo", hi: "चन्द्र", glyph: "☽", sign: "मीन (Pis)", deg: "01° 03' 37\"", nak: "पू.भाद्रपद", pada: 4, st: "मित्र", drishti_summary: "भाव 5 से दृष्टि: भाव 11" },
+      "Ma": { code: "Ma", hi: "मंगल", glyph: "♂", sign: "धनु (Sag)", deg: "28° 27' 45\"", nak: "उत्तराषाढ़ा", pada: 1, st: "अधिमित्र", drishti_summary: "भाव 5 से दृष्टि: भाव 8, भाव 11, भाव 12" },
+      "Me": { code: "Me", hi: "बुध", glyph: "☿", sign: "धनु (Sag)", deg: "09° 28' 25\"", nak: "मूल", pada: 3, st: "सम", drishti_summary: "भाव 2 से दृष्टि: भाव 8" },
+      "Ju": { code: "Ju", hi: "गुरु", glyph: "♃", sign: "कुंभ (Aqu)", deg: "24° 56' 12\"", nak: "पू.भाद्रपद", pada: 3, st: "सम", drishti_summary: "भाव 4 से दृष्टि: भाव 8, भाव 10, भाव 12" },
+      "Ve": { code: "Ve", hi: "शुक्र", glyph: "♀", sign: "धनु (Sag)", deg: "24° 12' 08\"", nak: "पूर्वाषाढ़ा", pada: 4, st: "सम", drishti_summary: "भाव 2 से दृष्टि: भाव 8" },
+      "Sa": { code: "Sa", hi: "शनि", glyph: "♄", sign: "तुला (Lib)", deg: "26° 18' 01\"", nak: "विशाखा", pada: 2, st: "उच्च", drishti_summary: "भाव 12 से दृष्टि: भाव 2, भाव 6, भाव 9" },
+      "Ra": { code: "Ra", hi: "राहु", glyph: "☊", sign: "तुला (Lib)", deg: "23° 10' 23\"", nak: "विशाखा", pada: 1, st: "वक्री", drishti_summary: "भाव 7 से दृष्टि: भाव 11, भाव 1, भाव 3" },
+      "Ke": { code: "Ke", hi: "केतु", glyph: "☋", sign: "मेष (Ari)", deg: "23° 10' 23\"", nak: "भरणी", pada: 4, st: "वक्री", drishti_summary: "भाव 10 से दृष्टि: भाव 2, भाव 4, भाव 6" }
+    };
+
+                      var GL = { "Su": "☉", "Mo": "☽", "Ma": "♂", "Me": "☿", "Ju": "♃", "Ve": "♀", "Sa": "♄", "Ra": "☊", "Ke": "☋", "Asc": "Asc" };
+                      var SG = ["Ari", "Tau", "Gem", "Can", "Leo", "Vir", "Lib", "Sco", "Sag", "Cap", "Aqu", "Pis"];
+                      var SG_HI = ["मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुंभ", "मीन"];
+                      var LD = ["मंगल", "शुक्र", "बुध", "चंद्र", "सूर्य", "बुध", "शुक्र", "मंगल", "गुरु", "शनि", "शनि", "गुरु"];
+
+                      var AUTH_HOUSE_POLYS = {
+                        1: "180,2 91,91 180,180 269,91",
+                        2: "2,2 180,2 91,91",
+                        3: "2,2 91,91 2,180",
+                        4: "91,91 2,180 91,269 180,180",
+                        5: "2,180 91,269 2,358",
+                        6: "2,358 91,269 180,358",
+                        7: "180,180 91,269 180,358 269,269",
+                        8: "180,358 269,269 358,358",
+                        9: "269,269 358,358 358,180",
+                        10: "180,180 269,269 358,180 269,91",
+                        11: "269,91 358,180 358,2",
+                        12: "180,2 269,91 358,2"
+                      };
+
+                      var AUTH_HOUSE_CENTERS = {
+                        1: { num: [180, 154], txt: [180, 92] },
+                        2: { num: [91, 72], txt: [91, 40] },
+                        3: { num: [68, 95], txt: [36, 95] },
+                        4: { num: [152, 184], txt: [91, 184] },
+                        5: { num: [68, 272], txt: [36, 272] },
+                        6: { num: [91, 296], txt: [91, 328] },
+                        7: { num: [180, 214], txt: [180, 275] },
+                        8: { num: [269, 296], txt: [269, 328] },
+                        9: { num: [292, 272], txt: [324, 272] },
+                        10: { num: [208, 184], txt: [269, 184] },
+                        11: { num: [292, 95], txt: [324, 95] },
+                        12: { num: [269, 72], txt: [269, 40] }
+                      };
+
+                      function getLagnaSignName(vKey) {
+                        var vk = (vKey || "d1").toLowerCase();
+                        var sId = (GLOBAL_VARGAS[vk] && GLOBAL_VARGAS[vk].lagna) || 8;
+                        return SG_HI[sId - 1] || "वृश्चिक";
+                      }
+
+                      function formatPlanetStatusBadge(status) {
+                        var st = String(status || "-");
+                        if (st === "-" || st === "—") return '<span style="color:var(--mute)">-</span>';
+                        if (st.toLowerCase().indexOf("debilitat") > -1 || st.indexOf("नीच") > -1) {
+                          return '<span class="st-badge deb">' + st + '</span>';
+                        }
+                        if (st.toLowerCase().indexOf("friend") > -1 || st.toLowerCase().indexOf("exalt") > -1 || st.indexOf("उच्च") > -1 || st.indexOf("मित्र") > -1 || st.indexOf("स्व") > -1) {
+                          return '<span class="st-badge good">' + st + '</span>';
+                        }
+                        return '<span class="st-badge warn">' + st + '</span>';
+                      }
+
+                      /* ================= North Indian Chart Generator ================= */
+                      function buildNorthChartSVG(vargaKey, chartId) {
+                        var vk = (vargaKey || "d1").toLowerCase();
+                        var vData = (GLOBAL_VARGAS && GLOBAL_VARGAS[vk]) || (GLOBAL_VARGAS && GLOBAL_VARGAS["d1"]) || null;
+                        var startSign = (vData && vData.lagna) || 8;
+                        var housesMap = (vData && vData.houses) || {};
+
+                        var s = '<svg class="north-chart" viewBox="0 0 360 360" role="img" aria-label="' + vargaKey + ' उत्तर भारतीय कुंडली" id="' + (chartId || ('nc_' + vk)) + '">' +
+                          '<rect x="2" y="2" width="356" height="356"/>' +
+                          '<line x1="2" y1="2" x2="358" y2="358"/>' +
+                          '<line x1="358" y1="2" x2="2" y2="358"/>' +
+                          '<line x1="180" y1="2" x2="2" y2="180"/>' +
+                          '<line x1="2" y1="180" x2="180" y2="358"/>' +
+                          '<line x1="180" y1="358" x2="358" y2="180"/>' +
+                          '<line x1="358" y1="180" x2="180" y2="2"/>';
+
+                        // 12 Clickable House Polygons
+                        for (var h = 1; h <= 12; h++) {
+                          var isSel = (ks === h);
+                          s += '<polygon class="house-poly' + (isSel ? ' selected' : '') + '" data-h="' + h + '" points="' + AUTH_HOUSE_POLYS[h] + '" style="cursor:pointer;pointer-events:all;"/>';
+                        }
+
+                        // Rashi Numbers and Planets
+                        for (var h2 = 1; h2 <= 12; h2++) {
+                          var signNum = ((startSign + h2 - 2) % 12) + 1;
+                          var c = AUTH_HOUSE_CENTERS[h2];
+
+                          // Sign Number
+                          s += '<text class="house-num" x="' + c.num[0] + '" y="' + c.num[1] + '">' + signNum + '</text>';
+
+                          // House 1 Ascendant label
+                          if (h2 === 1) {
+                            s += '<text class="planet-node" data-p="Asc" data-h="1" x="' + c.txt[0] + '" y="' + (c.txt[1] - 12) + '" style="font-weight:800;fill:var(--ha);cursor:pointer;">Asc (ल)</text>';
+                          }
+
+                          // Planets in this house
+                          var plist = housesMap[h2] || [];
+                          var count = plist.length;
+                          plist.forEach(function (pCode, idx) {
+                            var pMeta = GLOBAL_GRAHA_DATA[pCode] || {};
+                            var dig = pMeta.st || "";
+                            var extraCls = "";
+                            if (dig === "Exalted" || dig.indexOf("उच्च") > -1) extraCls = " planet-ex";
+                            else if (dig === "Debilitation" || dig.indexOf("नीच") > -1) extraCls = " planet-db";
+
+                            var offsetY = (idx - (count - 1) / 2) * 16;
+                            if (h2 === 1) offsetY += 8;
+                            var label = (GL[pCode] || "") + pCode;
+                            s += '<text class="planet-node' + extraCls + '" data-p="' + pCode + '" data-h="' + h2 + '" x="' + c.txt[0] + '" y="' + (c.txt[1] + offsetY) + '" style="cursor:pointer;pointer-events:all;">' + label + '</text>';
+                          });
+                        }
+
+                        s += '</svg>';
+                        return s;
+                      }
+
+                      function chartI(d) {
+                        return buildNorthChartSVG(d);
+                      }
+
+                      /* ================= Inspector (Bhav & Planet Details) ================= */
+                      function detail() {
+                        if (kp && GLOBAL_GRAHA_DATA[kp]) {
+                          var m = GLOBAL_GRAHA_DATA[kp];
+                          return '<div style="display:grid; grid-template-columns:130px 1fr; row-gap:6px; column-gap:10px; font-size:12px; line-height:1.45;">' +
+                            '<span style="color:var(--mute); font-weight:700;">चयनित ग्रह:</span>' +
+                            '<span style="font-weight:800; color:var(--ha);">' + (GL[kp] || '') + ' ' + (m.hi || kp) + ' (' + kp + ')</span>' +
+                            '<span style="color:var(--mute); font-weight:700;">राशि व अंश:</span>' +
+                            '<span class="m font-semibold">' + (m.sign || '') + ' • ' + (m.deg || '') + '</span>' +
+                            '<span style="color:var(--mute); font-weight:700;">नक्षत्र / पाद:</span>' +
+                            '<span>' + (m.nak || '') + (m.pada ? ' (' + m.pada + ')' : '') + '</span>' +
+                            '<span style="color:var(--mute); font-weight:700;">गरिमा:</span>' +
+                            '<span>' + formatPlanetStatusBadge(m.st) + '</span>' +
+                            '<span style="color:var(--mute); font-weight:700;">दृष्टि सारांश:</span>' +
+                            '<span style="color:var(--info); font-weight:700;">' + (m.drishti_summary || '—') + '</span>' +
+                            '</div>' +
+                            '<div style="margin-top:10px; padding-top:6px; border-top:1px solid var(--line); display:flex; gap:8px;">' +
+                            '<span style="border:1px solid var(--ha); color:var(--ha); padding:2px 8px; border-radius:12px; font-size:11px; font-weight:700; cursor:pointer;" onclick="alert(\'📖 शास्त्रीय प्रमाण: बृहत्पाराशर होराशास्त्रम् • अध्याय 4-7\')">📖 शास्त्रीय प्रमाण</span>' +
+                            '<span style="border:1px solid var(--line); color:var(--ink); padding:2px 8px; border-radius:12px; font-size:11px; font-weight:700; cursor:pointer;" onclick="alert(\'💡 ग्रह गरिमा व भाव स्थिति का शास्त्रीय विवरण\')">💡 यह क्यों?</span>' +
+                            '</div>';
+                        }
+
+                        var h = ks || 1;
+                        var bd = GLOBAL_BHAV_DATA[h] || null;
+                        if (bd) {
+                          return '<div style="display:grid; grid-template-columns:130px 1fr; row-gap:6px; column-gap:10px; font-size:12px; line-height:1.45;">' +
+                            '<span style="color:var(--mute); font-weight:700;">चयनित भाव:</span>' +
+                            '<span style="font-weight:800; color:var(--ink);">भाव ' + bd.house_num + ' (' + (bd.name || '') + ' • ' + (bd.sanskrit || '') + ' | ' + (bd.sannya || '') + ' | ' + (bd.tattva || '') + ')</span>' +
+                            '<span style="color:var(--mute); font-weight:700;">राशि व स्वामी:</span>' +
+                            '<span style="font-weight:700; color:var(--ha);">' + (bd.sign_name || '') + ' (' + (bd.sign_num || '') + ') • ' + (bd.lord_placement || (bd.lord_name || '')) + '</span>' +
+                            '<span style="color:var(--mute); font-weight:700;">स्थित ग्रह:</span>' +
+                            '<span style="font-weight:700; color:var(--ink);">' + (bd.occupants && bd.occupants.length ? bd.occupants.join(", ") : "— कोई ग्रह नहीं —") + '</span>' +
+                            '<span style="color:var(--mute); font-weight:700;">दृष्टि डालने वाले ग्रह:</span>' +
+                            '<span style="font-weight:700; color:#1E40AF;">' + (bd.aspects && bd.aspects.length ? bd.aspects.join(", ") : "— कोई प्रत्यक्ष दृष्टि नहीं —") + '</span>' +
+                            '<span style="color:var(--mute); font-weight:700;">भाव कारक:</span>' +
+                            '<span style="font-weight:700; color:var(--ink);">' + (bd.karaka || '—') + '</span>' +
+                            '<span style="color:var(--mute); font-weight:700;">भाव विस्तार व कस्प:</span>' +
+                            '<span class="m" style="font-weight:700; color:var(--ink);">' + (bd.cusp_info || '—') + '</span>' +
+                            '<span style="color:var(--mute); font-weight:700;">प्रमुख शास्त्रीय कारकत्व / फल:</span>' +
+                            '<span style="font-size:11.5px; color:var(--ink);">' + (bd.significance || '—') + '</span>' +
+                            '</div>';
+                        }
+
+                        return '<div style="color:var(--mute)">किसी भाव या ग्रह पर क्लिक करें — विस्तृत शास्त्रीय फल दिखेगा।</div>';
+                      }
+
+                      /* ================= Planetary Degrees Table HTML ================= */
+                      function buildPlanetsTableHTML() {
+                        var rows = [];
+                        var pKeys = ["Asc", "Su", "Mo", "Ma", "Me", "Ju", "Ve", "Sa", "Ra", "Ke"];
+                        pKeys.forEach(function (k) {
+                          var m = GLOBAL_GRAHA_DATA[k];
+                          if (!m) return;
+                          var isSel = (kp === k);
+                          rows.push([
+                            '<span style="cursor:pointer; font-weight:700;" onclick="selectPlanet(\'' + k + '\', ' + (m.house || 1) + ')">' + (GL[k] || '') + ' ' + (m.hi || k) + ' (' + k + ')</span>',
+                            m.sign || '—',
+                            '<span class="m font-semibold">' + (m.deg || '—') + '</span>',
+                            (m.nak || '—') + (m.pada ? ' (' + m.pada + ')' : ''),
+                            formatPlanetStatusBadge(m.st)
+                          ]);
+                        });
+                        return tbl(["ग्रह", "राशि", "अंश (Deg/Min/Sec)", "नक्षत्र (पाद)", "गरिमा"], rows, null, "planets_table");
+                      }
+
+                      /* ================= Full Bhav Table HTML ================= */
+                      function buildFullBhavTableHTML() {
+                        var rows = [];
+                        for (var h = 1; h <= 12; h++) {
+                          var d = GLOBAL_BHAV_DATA[h] || {};
+                          rows.push([
+                            '<strong style="cursor:pointer;" onclick="selectHouse(' + h + ')">भाव ' + h + '</strong>',
+                            (d.name || '') + ' (' + (d.sign_name || '') + ')',
+                            d.lord_name || '—',
+                            (d.occupants && d.occupants.length ? d.occupants.join(", ") : '—'),
+                            (d.aspects && d.aspects.length ? d.aspects.join(", ") : '—'),
+                            d.karaka || '—',
+                            d.significance || '—'
+                          ]);
+                        }
+                        return tbl(["भाव", "संज्ञा व राशि", "स्वामी", "स्थित ग्रह", "दृष्टि", "कारक", "शास्त्रीय फल"], rows, ks ? (ks - 1) : 0, "bhava_full_table");
+                      }
+
+                      /* ================= Kundali View Renderer ================= */
+                      function vKundali() {
+                        // Subtab 2: Planetary Degrees Table
+                        if (subtab === 1) {
+                          return '<div class="pn"><div class="ph"><span>नवग्रह स्पष्ट स्थिति (Planetary Degrees)</span><button type="button" class="btn-xs" onclick="alert(\'📖 शास्त्रीय प्रमाण: बृहत्पाराशर होराशास्त्रम् • अध्याय 4-7\')">📖 प्रमाण</button></div>' +
+                            buildPlanetsTableHTML() + '</div>';
+                        }
+
+                        // Subtab 3: Complete Bhav Table
+                        if (subtab === 2) {
+                          return '<div class="pn"><div class="ph">द्वादश भाव सम्पूर्ण शास्त्रीय स्थिति, दृष्टि, गरिमा व गुणधर्म तालिका</div>' +
+                            buildFullBhavTableHTML() + '</div>';
+                        }
+
+                        // Tab 1: Bhava Chalit
+                        if (tab === 3 || tab === 1 && mod === "जन्म कुंडली" && TABS["जन्म कुंडली"][tab] === "भाव चलित") {
+                          var cusps = [];
+                          for (var i = 1; i <= 12; i++) {
+                            var bd = GLOBAL_BHAV_DATA[i] || {};
+                            cusps.push(["भाव " + i, bd.sign_name || ("भाव " + i), "00°00'00\"", bd.cusp_info || "15° 13' 50\"", "30°00'00\"", (bd.occupants && bd.occupants.join(", ")) || "—"]);
+                          }
+                          return '<div class="g2"><div class="pn"><div class="ph">भाव चलित कुण्डली</div><div class="pb">' + buildNorthChartSVG("d1", "chalit_svg") + '</div></div>' +
+                            '<div class="pn"><div class="ph">भाव आरंभ · मध्य · संधि तालिका</div>' + tbl(["भाव", "राशि", "भाव आरंभ", "भाव मध्य", "भाव संधि", "ग्रह स्थिति"], cusps, null, "bhava_chalit") + '</div></div>';
+                        }
+
+                        // Tab 4: Chandra & Surya Kundali
+                        if (tab === 4 || tab === 5) {
+                          return '<div class="g2"><div class="pn"><div class="ph">चन्द्र कुण्डली</div><div class="pb">' + buildNorthChartSVG("chandra", "chandra_svg") + '</div></div>' +
+                            '<div class="pn"><div class="ph">सूर्य कुण्डली</div><div class="pb">' + buildNorthChartSVG("d1", "surya_svg") + '</div></div></div>';
+                        }
+
+                        // Main View: Single or Dual D1 vs D9 Comparison
+                        var isDual = (viewMode === "cmp" || viewMode === "dual");
+                        var currentVarga = (kd || "d1").toUpperCase();
+
+                        var chartAreaHTML = "";
+                        if (isDual) {
+                          chartAreaHTML = '<div class="dual-chart-grid">' +
+                            '<div style="display:flex; flex-direction:column; align-items:center; width:100%;">' +
+                            buildNorthChartSVG("d1", "nc_dual_d1") +
+                            '<span style="margin-top:8px; font-weight:800; font-size:12px; color:var(--ink);">D1 लग्न कुण्डली</span>' +
+                            '</div>' +
+                            '<div style="display:flex; flex-direction:column; align-items:center; width:100%;">' +
+                            buildNorthChartSVG("d9", "nc_dual_d9") +
+                            '<span style="margin-top:8px; font-weight:800; font-size:12px; color:var(--ink);">D9 नवमांश कुण्डली</span>' +
+                            '</div>' +
+                            '</div>';
+                        } else {
+                          chartAreaHTML = '<div style="width:100%; display:flex; justify-content:center;">' +
+                            buildNorthChartSVG(kd, "nc_single") +
+                            '</div>';
+                        }
+
+                        var vargasList = ["D1", "D2", "D3", "D7", "D9", "D10", "D12", "D30", "D60", "D150"];
+                        var vargaPillsHTML = vargasList.map(function (v) {
+                          var isAct = (v.toLowerCase() === (kd || "d1").toLowerCase() && !isDual);
+                          return '<button type="button" class="btn' + (isAct ? ' pri' : '') + '" style="padding:2px 8px; font-size:11px;" onclick="setVarga(\'' + v.toLowerCase() + '\')">' + v + '</button>';
+                        }).join(" ");
+
+                        return '<div class="g2' + (isDual ? ' cmpm' : '') + '">' +
+                          '<!-- Left: Chart Card -->' +
+                          '<div class="pn" data-slot="kundali_svg">' +
+                          '<div class="ph">' +
+                          '<span>' + (isDual ? 'D1 लग्न बनाम D9 नवमांश तुलना' : ('कुण्डली चक्र • ' + currentVarga + ' (' + getLagnaSignName(kd) + ' लग्न)')) + '</span>' +
+                          '<div style="display:flex; gap:4px;">' +
+                          '<button type="button" class="btn-xs' + (!isDual ? ' pri' : '') + '" onclick="setViewMode(\'single\')">एकल</button>' +
+                          '<button type="button" class="btn-xs' + (isDual ? ' pri' : '') + '" onclick="setViewMode(\'cmp\')">D1+D9</button>' +
+                          '</div>' +
+                          '</div>' +
+                          '<div class="pb" style="display:flex; flex-direction:column; align-items:center; padding:16px;">' +
+                          chartAreaHTML +
+                          '<div style="margin-top:10px; font-size:11.5px; color:var(--mute); text-align:center;">' +
+                          'भाव या ग्रह पर क्लिक करें • <span style="color:var(--good); font-weight:700;">हरा = उच्च</span> • <span style="color:var(--bad); font-weight:700;">लाल = नीच</span>' +
+                          '</div>' +
+                          '<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:4px; margin-top:14px;">' +
+                          vargaPillsHTML +
+                          '</div>' +
+                          '</div>' +
+                          '</div>' +
+
+                          '<!-- Right: Inspector + Planetary Table -->' +
+                          '<div style="display:flex; flex-direction:column; gap:12px;">' +
+                          '<!-- Inspector Card -->' +
+                          '<div class="pn">' +
+                          '<div class="ph">' +
+                          '<span>भाव एवं ग्रह सूक्ष्म विवरण (Inspector)</span>' +
+                          '<span class="m" style="font-size:11px; color:var(--mute);">' + (GLOBAL_PROFILE.coords || "28°39' N 77°13' E") + '</span>' +
+                          '</div>' +
+                          '<div class="pb" id="inspector_body">' +
+                          detail() +
+                          '</div>' +
+                          '</div>' +
+
+                          '<!-- Planetary Degrees Table -->' +
+                          '<div class="pn" data-slot="planets_table">' +
+                          '<div class="ph">' +
+                          '<span>नवग्रह स्पष्ट स्थिति (Planetary Degrees)</span>' +
+                          '<button type="button" class="btn-xs" onclick="alert(\'📖 शास्त्रीय प्रमाण: बृहत्पाराशर होराशास्त्रम् • अध्याय 4-7\')">📖 प्रमाण</button>' +
+                          '</div>' +
+                          buildPlanetsTableHTML() +
+                          '</div>' +
+                          '</div>' +
+                          '</div>';
+                      }
+
+                      function setViewMode(m) {
+                        viewMode = m;
+                        render();
+                      }
+
+                      function setVarga(v) {
+                        kd = v;
+                        viewMode = "single";
+                        render();
+                      }
+
+                      function selectHouse(h) {
+                        ks = h;
+                        kp = null;
+                        render();
+                      }
+
+                      function selectPlanet(p, h) {
+                        kp = p;
+                        if (h) ks = h;
+                        render();
+                      }
+
+                      /* ================= Life Areas & Deshavarga Tables ================= */
+                      var LIFE_AREAS_DATA = [
+                        { area: "करियर एवं आजीविका (Career)", house: "10वां भाव", status: "सक्रिय / शुभ", note: "सूर्य दशम भाव में; नेतृत्व, प्रशासन व लक्ष्य-आधारित कार्य में अनुकूलता।" },
+                        { area: "धन एवं निवेश (Wealth & Finance)", house: "2वां व 11वां भाव", status: "संतुलित", note: "द्वितीय भाव में शनि (R) व लाभ भाव के संतुलन से चरणबद्ध आर्थिक प्रगति।" },
+                        { area: "विवाह एवं संबंध (Marriage)", house: "7वां भाव", status: "विचारणीय", note: "सप्तम भाव में मंगल, गुरु व केतु; शुक्र नीच (29° कन्या) का सूक्ष्म विचार।" },
+                        { area: "शिक्षा एवं ज्ञान (Education)", house: "4वां, 5वां व 9वां भाव", status: "उत्तम", note: "नवम भाव में बुध व पंचम भाव के प्रभाव से विश्लेषणात्मक व शास्त्रीय अध्ययन।" },
+                        { area: "स्वास्थ्य एवं ऊर्जा (Health)", house: "1वां, 6वां व 8वां भाव", status: "सतर्कता", note: "लग्न में चंद्र-राहु व अष्टम में शुक्र के कारण मानसिक/हार्मोन संतुलन की जाँच।" },
+                        { area: "विदेश एवं यात्रा (Foreign / Travel)", house: "9वां व 12वां भाव", status: "सक्रिय", note: "दशा व गोचर के अनुकूल चरणों में स्थान परिवर्तन व यात्रा योग।" }
+                      ];
+
+                      function vLifeAreas() {
+                        if (tab === 1) {
+                          var dgRows = [
+                            ["वर्तमान महादशा प्रभाव", "राहु / गुरु", "करियर, संबंध व विस्तार पर सक्रिय प्रभाव"],
+                            ["वर्तमान गोचर प्रभाव", "गुरु / शनि", "केंद्र-त्रिकोण एवं अष्टकवर्ग बिंदुओं के अनुसार प्रभाव"]
+                          ];
+                          return '<div class="pn"><div class="ph">दशा व गोचर अनुसार जीवन क्षेत्र फल</div>' + tbl(["अवधि आधार", "प्रमुख ग्रह", "विश्लेषण"], dgRows, null, "life_areas_dasha_transit") + '</div>';
+                        }
+                        var rows = LIFE_AREAS_DATA.map(function (item) {
+                          var st = item.status || "—";
+                          var badge = (st.indexOf("शुभ") > -1 || st.indexOf("उत्तम") > -1 || st.indexOf("सक्रिय") > -1)
+                            ? '<span class="st-badge good">' + st + '</span>'
+                            : '<span class="st-badge warn">' + st + '</span>';
+                          return ['<strong>' + item.area + '</strong>', '<span class="m">' + item.house + '</span>', badge, item.note];
+                        });
+                        return '<div class="pn"><div class="ph">लाइफ़ एरिया (Life Areas) विश्लेषण तालिका</div>' +
+                          tbl(["जीवन क्षेत्र", "संबंधित भाव", "स्थिति", "विश्लेषण"], rows, null, "life_areas_panel") + '</div>';
+                      }
+
+                      var DESHAVARGA_ROWS = [
+                        { division: "देशवर्ग 1 (पूर्व / प्राच्य)", sign: "मेष · वृषभ · मिथुन", ref: "क्षेत्रीय मान 07/12", status: "सक्रिय" },
+                        { division: "देशवर्ग 2 (दक्षिण / दक्षिणापथ)", sign: "कर्क · सिंह · कन्या", ref: "क्षेत्रीय मान 08/12", status: "शुभ" },
+                        { division: "देशवर्ग 3 (पश्चिम / प्रतीच्य)", sign: "तुला · वृश्चिक · धनु", ref: "क्षेत्रीय मान 07/12", status: "सक्रिय" },
+                        { division: "देशवर्ग 4 (उत्तर / उदीच्य)", sign: "मकर · कुंभ · मीन", ref: "क्षेत्रीय मान 09/12", status: "अति शुभ" }
+                      ];
+
+                      function vDeshavarga() {
+                        var rows = DESHAVARGA_ROWS.map(function (d) {
+                          var st = d.status || "—";
+                          var badge = (st.indexOf("शुभ") > -1 || st.indexOf("सक्रिय") > -1)
+                            ? '<span class="st-badge good">' + st + '</span>'
+                            : '<span class="st-badge warn">' + st + '</span>';
+                          return ['<strong>' + d.division + '</strong>', d.sign, '<span class="m">' + d.ref + '</span>', badge];
+                        });
+                        return '<div class="pn"><div class="ph">देशवर्ग तालिका (Deshavarga)</div>' +
+                          tbl(["देशवर्ग विभाजन", "राशि समूह", "क्षेत्रीय संदर्भ", "स्थिति"], rows, null, "deshavarga_table") + '</div>';
+                      }
+
+                      /* ================= Vargas, Sudarshan, Shadbala, Yoga, Dasha, Ashtakavarga, Vastu, Remedies ================= */
+                      var VARGAS = [
+                        ["d1", "D1 लग्न", "1 भाग (30°)", "शरीर व सामान्य जीवन", "BPHS 6.1"],
+                        ["d2", "D2 होरा", "2 भाग (15°)", "धन एवं संपत्ति", "BPHS 6.2"],
+                        ["d3", "D3 द्रेष्काण", "3 भाग (10°)", "सहज व पराक्रम", "BPHS 6.3"],
+                        ["d4", "D4 चतुर्थांश", "4 भाग (7°30')", "भाग्य व भूमि-वाहन", "BPHS 6.4"],
+                        ["d7", "D7 सप्तांश", "7 भाग (4°17')", "संतान एवं वंश", "BPHS 6.7"],
+                        ["d9", "D9 नवमांश", "9 भाग (3°20')", "विवाह व ग्रह बल", "BPHS 6.9"],
+                        ["d10", "D10 दशमांश", "10 भाग (3°)", "कर्म व व्यवसाय", "BPHS 6.10"],
+                        ["d12", "D12 द्वादशांश", "12 भाग (2°30')", "माता-पिता व पूर्वज", "BPHS 6.12"],
+                        ["d16", "D16 षोडशांश", "16 भाग (1°52')", "वाहन व भौतिक सुख", "BPHS 6.13"],
+                        ["d20", "D20 विंशांश", "20 भाग (1°30')", "उपासना व साधना", "BPHS 6.14"],
+                        ["d24", "D24 चतुर्विंशांश", "24 भाग (1°15')", "विद्या व शिक्षा", "BPHS 6.15"],
+                        ["d27", "D27 सप्तविंशांश", "27 भाग (1°06')", "शारीरिक बल", "BPHS 6.16"],
+                        ["d30", "D30 त्रिंशांश", "30 भाग (1°)", "अरिष्ट व दोष विचार", "BPHS 6.17"],
+                        ["d40", "D40 खवेदांश", "40 भाग (0°45')", "मातृकुल फल", "BPHS 6.18"],
+                        ["d45", "D45 अक्षवेदांश", "45 भाग (0°40')", "पितृकुल फल", "BPHS 6.19"],
+                        ["d60", "D60 षष्ट्यंश", "60 भाग (0°30')", "सूक्ष्म कर्म फल", "BPHS 6.20"],
+                        ["d150", "D150 नाड़ीअंश", "150 भाग (0°12')", "नाड़ी सूक्ष्म फल", "चंद्रकला नाड़ी"]
+                      ];
+                      var selV = "d9";
+
+                      function vVarga() {
+                        if (tab === 2) {
+                          var mRows = [
+                            ["सूर्य", "वृश्चिक", "सिंह", "मेष", "वृश्चिक", "कन्या", "धनु", "15.0 / 20"],
+                            ["चंद्र", "कुंभ", "कर्क", "वृष", "कुंभ", "मीन", "मकर", "16.2 / 20"],
+                            ["मंगल", "सिंह", "मेष", "मेष", "वृश्चिक", "मकर", "मेष", "17.0 / 20"],
+                            ["शुक्र", "कन्या", "वृषभ", "तुला", "मीन", "कन्या", "वृषभ", "12.5 / 20 (नीच)"]
+                          ];
+                          return '<div class="pn"><div class="ph">षोडशवर्ग सारांश एवं विंशोपक बल मैट्रिक्स</div>' + tbl(["ग्रह", "D1", "D2", "D3", "D7", "D9", "D10", "विंशोपक बल"], mRows, null, "shodashvarga_matrix") + '</div>';
+                        }
+                        var list = tab === 1 ? VARGAS.slice(11) : VARGAS.slice(0, 11);
+                        var info = VARGAS.filter(function (v) { return v[0] === selV; })[0] || VARGAS[0];
+                        var btns = list.map(function (v) { return '<button type="button" class="btn' + (v[0] === selV ? ' pri' : '') + '" onclick="selV=\'' + v[0] + '\';render()">' + v[1] + '</button>'; }).join("");
+                        return '<div class="acts2">' + btns + '</div><div class="g2"><div class="pn"><div class="ph">' + info[1] + ' कुंडली</div><div class="pb">' + chartI(info[0]) + '</div></div>' +
+                          '<div class="pn"><div class="ph">वर्ग गणना नियम व संदर्भ</div><div class="pb kv"><span>वर्ग</span><b>' + info[1] + '</b><span>विभाजन</span><span class="m">' + info[2] + '</span><span>विषय</span><span>' + info[3] + '</span><span>ग्रंथ</span><span>' + info[4] + '</span></div></div></div>';
+                      }
+
+                      function vSudarshan() {
+                        var svg = '<svg class="ch" viewBox="0 0 320 320"><circle cx="160" cy="160" r="150"/><circle cx="160" cy="160" r="112"/><circle cx="160" cy="160" r="74"/><circle cx="160" cy="160" r="36" style="fill:var(--alt)"/><text x="160" y="164" style="fill:var(--acc)">सुदर्शन</text>';
+                        for (var i = 0; i < 12; i++) {
+                          var a = (i * 30 - 90) * Math.PI / 180, aMid = ((i * 30 + 15) - 90) * Math.PI / 180;
+                          svg += '<line x1="' + (160 + 36 * Math.cos(a)) + '" y1="' + (160 + 36 * Math.sin(a)) + '" x2="' + (160 + 150 * Math.cos(a)) + '" y2="' + (160 + 150 * Math.sin(a)) + '"/>';
+                          svg += '<text x="' + (160 + 55 * Math.cos(aMid)) + '" y="' + (164 + 55 * Math.sin(aMid)) + '" style="font-size:8.5px">ल:' + ((11 + i - 1) % 12 + 1) + '</text>';
+                          svg += '<text x="' + (160 + 93 * Math.cos(aMid)) + '" y="' + (164 + 93 * Math.sin(aMid)) + '" style="font-size:8.5px">चं:' + ((11 + i - 1) % 12 + 1) + '</text>';
+                          svg += '<text x="' + (160 + 131 * Math.cos(aMid)) + '" y="' + (164 + 131 * Math.sin(aMid)) + '" style="font-size:8.5px">सू:' + ((8 + i - 1) % 12 + 1) + '</text>';
+                        }
+                        return '<div class="g2"><div class="pn"><div class="ph">त्रि-चक्र सुदर्शन</div><div class="pb">' + svg + '</svg></div></div>' +
+                          '<div class="pn"><div class="ph">भाव-वार सुदर्शन तालिका</div>' + tbl(["भाव", "लग्न राशि", "चंद्र राशि", "सूर्य राशि"], [["भाव 1", "कुंभ (11)", "कुंभ (11)", "वृश्चिक (8)"], ["भाव 7", "सिंह (5)", "सिंह (5)", "वृषभ (2)"], ["भाव 10", "वृश्चिक (8)", "वृश्चिक (8)", "सिंह (5)"]], null, "sudarshan_table") + '</div></div>';
+                      }
+
+                      var sbp = "Su", SP = ["Su", "Mo", "Ma", "Me", "Ju", "Ve", "Sa"], SR = [6.2, 7.1, 6.4, 6.8, 7.6, 4.3, 5.2], SM = [5, 6, 5, 7, 6.5, 5.5, 5], SI = [38, 45, 34, 42, 49, 24, 33], BT = [48, 49, 39, 54, 56, 52, 39];
+                      function rnd(s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
+                      function barsRupa() {
+                        var W = 320, L = 34, U = W - L - 14, mx = 9, s = '<svg class="gr" viewBox="0 0 320 190">';
+                        SP.forEach(function (p, i) {
+                          var y = 8 + i * 25, w = U * SR[i] / mx, m = L + U * SM[i] / mx;
+                          s += '<text x="' + (L - 6) + '" y="' + (y + 13) + '" class="al">' + GL[p] + '</text><rect x="' + L + '" y="' + y + '" width="' + w + '" height="17" rx="2" fill="' + (SR[i] >= SM[i] ? 'var(--good)' : 'var(--bad)') + '"/><line class="mk" x1="' + m + '" x2="' + m + '" y1="' + (y - 3) + '" y2="' + (y + 20) + '"/><text class="av" x="' + (L + w + 4) + '" y="' + (y + 13) + '">' + SR[i].toFixed(1) + '</text>';
+                        });
+                        return s + '</svg>';
+                      }
+                      function barsIK() {
+                        var W = 320, s = '<svg class="gr" viewBox="0 0 320 190">';
+                        SP.forEach(function (p, i) {
+                          var y = 8 + i * 25, a = (W - 50) * SI[i] / 60, b = (W - 50) * (60 - SI[i]) / 60;
+                          s += '<text x="26" y="' + (y + 13) + '" class="al">' + GL[p] + '</text><rect x="34" y="' + y + '" width="' + a + '" height="17" fill="var(--good)"/><rect x="' + (34 + a) + '" y="' + y + '" width="' + b + '" height="17" fill="var(--bad)" fill-opacity=".75"/><text x="40" y="' + (y + 13) + '" style="fill:#fff">' + SI[i] + '</text><text class="al" x="300" y="' + (y + 13) + '" style="fill:#fff">' + (60 - SI[i]) + '</text>';
+                        });
+                        return s + '</svg>';
+                      }
+                      function radar(p) {
+                        var N = ["स्थान", "दिक्", "काल", "चेष्टा", "नैसर्गिक", "दृक्"], r = rnd(SP.indexOf(p) * 37 + 11), C = 100, R = 66, s = '<svg class="gr" viewBox="0 0 200 200" style="max-width:260px;margin:auto">', k, v = [];
+                        function P(i, f) { var a = -Math.PI / 2 + i * Math.PI / 3; return [(C + R * f * Math.cos(a)).toFixed(1), (C + R * f * Math.sin(a)).toFixed(1)]; }
+                        [1, 0.66, 0.33].forEach(function (f) { var q = []; for (k = 0; k < 6; k++)q.push(P(k, f).join(",")); s += '<polygon class="gl" fill="none" points="' + q.join(" ") + '"/>'; });
+                        for (k = 0; k < 6; k++) { var e = P(k, 1), a = P(k, 1.25); s += '<line class="gl" x1="' + C + '" y1="' + C + '" x2="' + e[0] + '" y2="' + e[1] + '"/><text class="tx" x="' + a[0] + '" y="' + (+a[1] + 3) + '">' + N[k] + '</text>'; v.push(P(k, 0.35 + r() * 0.65).join(",")); }
+                        return s + '<polygon points="' + v.join(" ") + '" fill="var(--hb)" fill-opacity=".3" stroke="var(--hb)" stroke-width="2"/></svg>';
+                      }
+                      function vShad() {
+                        if (tab === 1) return '<div class="pn"><div class="ph">स्थान बल उप-भेद व विंशोपक बल</div>' + tbl(["ग्रह", "उच्च बल", "सप्तवर्ग", "ओजयुग्म", "केंद्रादि", "द्रेष्काण", "विंशोपक"], [["सूर्य", "28.4", "75.0", "15.0", "30.0", "10.0", "15.0"], ["चंद्र", "32.1", "82.5", "30.0", "45.0", "20.0", "16.2"], ["शुक्र", "12.0", "55.0", "15.0", "15.0", "10.0", "12.5"]], null, "sthana_bala_subcomponents") + '</div>';
+                        if (tab === 2) return '<div class="pn"><div class="ph">भाव बल व अवस्था</div>' + tbl(["भाव", "भावेश", "रूप बल", "अवस्था"], [["भाव 1", "शनि", "7.4 रूप", "युवा"], ["भाव 8", "बुध", "5.1 रूप", "नीच शुक्र प्रभाव"], ["भाव 10", "मंगल", "8.2 रूप", "प्रौढ़"]], null, "bhava_bala_avastha") + '</div>';
+                        if (tab === 3) return '<div class="pn"><div class="ph">इष्ट व कष्ट बल</div><div class="pb">' + barsIK() + '</div></div>';
+                        var bt = SP.map(function (p) { return '<button type="button" class="btn' + (p === sbp ? ' pri' : '') + '" data-sb="' + p + '">' + GL[p] + '</button>'; }).join("");
+                        return '<div class="g2" data-slot="shadbala_panel"><div class="pn"><div class="ph">षड्बल (रूप) · लाल रेखा = न्यूनतम</div><div class="pb">' + barsRupa() + '</div></div><div class="pn"><div class="ph">षड्बल रडार · ' + GL[sbp] + '</div><div class="pb"><div class="acts2">' + bt + '</div>' + radar(sbp) + '</div></div></div>';
+                      }
+
+                      function vYoga() {
+                        var yList = [
+                          ["नीचभंग / स्थिति विचार", "विचारणीय", "अष्टम भाव में नीच शुक्र (29° कन्या) की स्थिति का शास्त्रीय परीक्षण।", "नीचस्थेऽरिगृहे वापि... (बृहत्पाराशर होराशास्त्र)"],
+                          ["राजयोग / केंद्र-त्रिकोण संबंध", "सक्रिय", "लग्न व केंद्र-त्रिकोण ग्रहों के पारस्परिक संबंध का विश्लेषण।", "केन्द्रत्रिकोणनेतारौ मिथः सम्बन्धमागताः। (BPHS)"]
+                        ];
+                        return yList.map(function (y) {
+                          return '<div class="ycard" data-slot="yoga_analysis"><div class="yhead"><span>' + y[0] + '</span><span class="c2 g">' + y[1] + '</span></div><p style="margin:4px 0">' + y[2] + '</p><div class="shloka">' + y[3] + '</div></div>';
+                        }).join("");
+                      }
+
+                      var DN = ["Ra", "Ju", "Sa", "Me", "Ke", "Ve", "Su", "Mo", "Ma"];
+                      var DY = [18, 16, 19, 17, 7, 20, 6, 10, 7];
+                      var DC = ["#8E4A2F", "#C58A00", "#4A5A7A", "#2E7D32", "#7B5E57", "#B0457A", "#D8571B", "#5B8FB9", "#B23A3A"];
+                      var B0 = new Date(1987, 0, 1);
+                      function addY(d, y) { return new Date(d.getTime() + y * 365.25 * 864e5); }
+                      function fd(d) { return ("0" + d.getDate()).slice(-2) + "/" + ("0" + (d.getMonth() + 1)).slice(-2) + "/" + d.getFullYear(); }
+                      function subs(s, yr, i) { var o = [], k, j, y; for (k = 0; k < 9; k++) { j = (i + k) % 9; y = yr * DY[j] / 120; o.push({ i: j, s: s, e: addY(s, y), y: y }); s = addY(s, y); } return o; }
+                      function mds() { var o = [], s = B0, i; for (i = 0; i < 9; i++) { o.push({ i: i, s: s, e: addY(s, DY[i]), y: DY[i] }); s = addY(s, DY[i]); } return o; }
+                      function cur(l) { var n = new Date(), k; for (k = 0; k < l.length; k++)if (n >= l[k].s && n < l[k].e) return k; return -1; }
+                      function lvl() { var l = mds(), p = [], d, x; for (d = 0; d < dp.length; d++) { x = l[dp[d]]; p.push(x); l = subs(x.s, x.y, x.i); } return { l: l, p: p }; }
+
+                      function jumpToTransit(ms, label) {
+                        toff = Math.round((ms - Date.now()) / 864e5);
+                        cat = 1; mod = "गोचर व अष्टकवर्ग"; tab = 3;
+                        toast("🪐 " + label + " का गोचर चक्र खुला");
+                        render();
+                      }
+
+                      function vDasha() {
+                        if (tab === 1) return vLife();
+                        if (tab === 3) return '<div class="pn"><div class="ph">योगिनी एवं अष्टोत्तरी दशा</div>' + tbl(["दशा", "स्वामी", "आरंभ", "अंत"], [["मंगला", "चंद्र", "1987", "1988"], ["संकटा", "राहु", "2023", "2031"]], null, "yogini_ashtottari") + '</div>';
+                        if (tab === 4) return '<div class="pn"><div class="ph">जैमिनी चर, स्थिर व नारायण दशा</div>' + tbl(["प्रणाली", "राशि/स्वामी", "आरंभ", "अंत"], [["चर दशा", "कुंभ", "2021", "2029"], ["नारायण दशा", "सिंह", "2022", "2030"]], null, "jaimini_dashas") + '</div>';
+                        if (tab === 5) return '<div class="pn"><div class="ph">कालचक्र, शूल व अन्य दशाएं</div>' + tbl(["प्रणाली", "आधार", "स्थिति"], [["कालचक्र दशा", "नक्षत्र पाद", "सक्रिय"], ["शूल दशा", "त्रिशूल राशि", "सक्रिय"]], null, "other_dashas") + '</div>';
+
+                        var m = mds(), tp = (new Date() - B0) / (120 * 365.25 * 864e5) * 100, L = lvl(), cr = cur(L.l);
+                        var g = m.map(function (x, k) { return '<div data-k="' + k + '" style="width:' + (x.y / 120 * 100) + '%;background:' + DC[x.i] + '">' + DN[x.i] + ' ' + x.y + '</div>'; }).join("");
+                        var bc = '<button type="button" class="btn" data-up="-1">महादशा</button>' + L.p.map(function (x, k) { return ' › <button type="button" class="btn" data-up="' + k + '">' + DN[x.i] + '</button>'; }).join("");
+                        var rows = L.l.map(function (x) {
+                          return [DN[x.i], fd(x.s), fd(x.e), x.y.toFixed(2) + " वर्ष", '<button type="button" class="btn-xs" onclick="event.stopPropagation();jumpToTransit(' + x.s.getTime() + ',\'' + DN[x.i] + '\')">🪐 गोचर</button>'];
+                        });
+                        return '<div data-slot="dasha_system"><div class="pn" style="border:0"><div class="ph">१२०-वर्ष विंशोत्तरी गेंट</div><div class="pb"><div class="gantt">' + g + '<span class="today" style="left:' + tp + '%"></span></div></div></div>' +
+                          '<div class="pn" style="margin-top:8px"><div class="ph">पंचस्तरीय ड्रिल-डाउन · स्तर ' + (L.p.length + 1) + '</div><div class="pb">' + bc + '</div>' + tbl(["ग्रह", "आरंभ", "अंत", "अवधि", "गोचर"], rows, cr, "vimshottari_5_levels") + '</div></div>';
+                      }
+
+                      var BAV = [[4, 5, 3, 4, 4, 3, 5, 4, 3, 5, 4, 4], [4, 4, 5, 3, 4, 4, 3, 5, 4, 4, 5, 4], [3, 4, 3, 3, 4, 3, 4, 3, 3, 3, 3, 3], [5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4], [5, 5, 4, 5, 5, 4, 5, 5, 4, 5, 5, 4], [4, 5, 4, 4, 5, 4, 4, 5, 4, 4, 5, 4], [3, 3, 4, 3, 3, 4, 3, 3, 4, 3, 3, 3]];
+                      var SAV = BAV[0].map(function (_, c) { return BAV.reduce(function (a, r) { return a + r[c]; }, 0); });
+                      function vAshta() {
+                        if (tab === 1) return '<div class="pn"><div class="ph">त्रिकोण व एकाधिपत्य शोधन</div>' + tbl(["ग्रह", "BAV", "त्रिकोण शेष", "एकाधिपत्य शेष", "शुद्ध पिंड"], [["सूर्य", 48, 36, 28, 210], ["चंद्र", 49, 38, 31, 229], ["शुक्र", 52, 40, 32, 242]], null, "ashtakavarga_shodhana") + '</div>';
+                        if (tab === 2) return '<div class="pn"><div class="ph">अष्टकवर्ग गोचर व कक्ष्या</div>' + tbl(["ग्रह", "राशि", "BAV बिंदु", "फल"], [["गुरु", "कुंभ", "5 / 8", "शुभ"], ["शनि", "मीन", "4 / 8", "मध्यम"]], null, "ashtakavarga_transit") + '</div>';
+                        if (tab === 3) return vTrans();
+                        if (tab === 4) return vSBC();
+                        var h = ["ग्रह", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, "योग"];
+                        var rows = BAV.map(function (r, k) {
+                          return [GL[SP[k]] + " " + SP[k]].concat(r.map(function (v) { return '<span style="display:block;text-align:center">' + v + '</span>'; })).concat(["<b>" + BT[k] + "</b>"]);
+                        });
+                        rows.push(["<b>SAV</b>"].concat(SAV.map(function (v) { return '<b>' + v + '</b>'; })).concat(["<b>337</b>"]));
+                        return '<div class="pn"><div class="ph">भिन्नाष्टकवर्ग (BAV) व सर्वाष्टकवर्ग (SAV = 337)</div>' + tbl(h, rows, null, "ashtakavarga_panel") + '</div>';
+                      }
+
+                      var VASTU_ZONES_DATA = [
+                        { dir: "N (उत्तर)", rashi: "कुंभ (11) · भाव 1", planets: "चंद्र, राहु", status: "विचारणीय", remedy: "जल व उत्तर दिशा संतुलन" },
+                        { dir: "NE (ईशान)", rashi: "मीन (12) · भाव 2", planets: "शनि (R)", status: "संतुलित", remedy: "ईशान स्वच्छ रखें" },
+                        { dir: "SE (आग्नेय)", rashi: "कर्क (4) · भाव 6", planets: "—", status: "संतुलित", remedy: "अग्नि तत्व संतुलन" },
+                        { dir: "S (दक्षिण)", rashi: "सिंह (5) · भाव 7", planets: "मंगल, गुरु, केतु", status: "शुभ", remedy: "दक्षिण स्थिरता उत्तम" },
+                        { dir: "SW (नैऋत्य)", rashi: "तुला (7) · भाव 9", planets: "बुध", status: "शुभ", remedy: "नैऋत्य भारी व स्थिर रखें" },
+                        { dir: "W (पश्चिम)", rashi: "वृश्चिक (8) · भाव 10", planets: "सूर्य", status: "शुभ", remedy: "पश्चिम संतुलित" }
+                      ];
+                      function vVastu() {
+                        if (tab === 1) return '<div class="pn"><div class="ph">३२ मुख्य द्वार (N1–W8)</div>' + tbl(["द्वार पद", "स्थिति", "प्रभाव"], [["E3 · जयंत", "अति शुभ", "धन व उन्नति"], ["N3 · मुख्य", "अति शुभ", "समृद्धि"], ["SW द्वार", "वर्जित", "अस्थिरता"]], null, "vastu_entrances_32") + '</div>';
+                        if (tab === 2) {
+                          var cells = "";
+                          for (var r = 0; r < 9; r++) for (var c = 0; c < 9; c++) {
+                            cells += '<div class="' + ((r >= 3 && r <= 5 && c >= 3 && c <= 5) ? "brahma" : (r >= 2 && r <= 6 && c >= 2 && c <= 6) ? "inner" : "outer") + '">' + (r === 4 && c === 4 ? "ब्रह्म" : "पद") + '</div>';
+                          }
+                          return '<div class="pn"><div class="ph">४५ वास्तु पुरुष मंडल (9×9)</div><div class="pb"><div class="vgrid-45" data-slot="vastu_mandala_45">' + cells + '</div></div></div>';
+                        }
+                        return '<div class="pn"><div class="ph">एस्ट्रो-वास्तु: १६ दिशाएं एवं ग्रह मैपिंग</div>' + tbl(["दिशा", "राशि / भाव", "ग्रह", "स्थिति", "उपाय"], VASTU_ZONES_DATA.map(function (z) { return [z.dir, z.rashi, z.planets, z.status, z.remedy]; }), null, "vastu_panel") + '</div>';
+                      }
+
+                      var GEM_DATA = [
+                        { type: "लग्नेश / सप्तमेश", planet: "शनि / सूर्य", gem: "नीलम / माणिक्य", weight: "5.25 रत्ती", metal: "चांदी / सोना", finger: "मध्यमा / अनामिका", status: "अनुशंसित" },
+                        { type: "अष्टम नीच शुक्र", planet: "शुक्र (Debilitation)", gem: "शुक्र शांति उपाय", weight: "—", metal: "—", finger: "—", status: "सलाह अनुसार" }
+                      ];
+                      function vGems() {
+                        if (tab === 1) return '<div class="pn"><div class="ph">१–१४ मुखी रुद्राक्ष</div>' + tbl(["रुद्राक्ष", "ग्रह", "लाभ"], [["7 मुखी", "शनि", "कर्म संतुलन"], ["5 मुखी", "गुरु", "विद्या व शांति"]], null, "rudraksha_recommendations") + '</div>';
+                        return '<div class="pn"><div class="ph">रत्न अनुशंसा तालिका</div>' + tbl(["श्रेणी", "ग्रह", "रत्न", "वजन", "धातु", "अंगुली", "स्थिति"], GEM_DATA.map(function (g) { return [g.type, g.planet, g.gem, g.weight, g.metal, g.finger, g.status]; }), null, "remedy_panel") + '</div>';
+                      }
+
+                      function vPanchang() {
+                        var s = [["अमृत", "g"], ["काल", "b"], ["शुभ", "g"], ["रोग", "b"], ["उद्वेग", "b"], ["चर", "g"], ["लाभ", "g"], ["अमृत", "g"]];
+                        return '<div class="g2"><div class="pn"><div class="ph">पञ्चाङ्ग ५ स्तम्भ</div><div class="pb kv"><span>तिथि</span><span>शुक्ल पंचमी</span><span>वार</span><span>गुरुवार</span><span>नक्षत्र</span><span>पू.भा.</span><span>सूर्योदय/अस्त</span><span class="m">06:46 / 17:24</span></div></div>' +
+                          '<div class="pn"><div class="ph">चौघड़िया</div><div class="pb"><div class="strip">' + s.map(function (x, i) { return '<div class="' + (i === 5 ? 'now' : x[1]) + '">' + x[0] + '</div>'; }).join("") + '</div></div></div></div>';
+                      }
+
+                      function vKP() { return '<div class="pn"><div class="ph">KP कस्पल सब-लॉर्ड</div>' + tbl(["भाव", "राशि स्वामी", "नक्षत्र स्वामी", "सब-लॉर्ड"], [["1st", "शनि", "मंगल", "बुध"], ["7th", "सूर्य", "केतु", "गुरु"], ["10th", "मंगल", "शुक्र", "शनि"]], null, "kp_cusps") + '</div>'; }
+                      function vJaimini() { return '<div class="pn"><div class="ph">जैमिनी चरकारक</div>' + tbl(["कारक", "ग्रह", "अंश"], [["आत्मकारक (AK)", "शुक्र", "29° 10' 18\""], ["अमात्यकारक (AmK)", "चंद्र", "23° 31' 42\""], ["भ्रातृकारक (BK)", "शनि", "14° 07' 47\""]], null, "jaimini_charakarakas") + '</div>'; }
+                      function vMatching() { return '<div class="pn"><div class="ph">अष्टकूट ३६-गुण मिलान</div>' + tbl(["कूट", "अधिकतम", "प्राप्त", "स्थिति"], [["वर्ण", 1, 1, "अनुकूल"], ["वश्य", 2, 2, "अनुकूल"], ["तारा", 3, 2, "शुभ"], ["नाड़ी", 8, 8, "दोष रहित"]], null, "ashtakoot_table") + '</div>'; }
+                      function vTajika() { return '<div class="pn"><div class="ph">वर्षफल (ताजिक) व सहम</div>' + tbl(["मद", "मान", "विवरण"], [["मुंथा", "सिंह", "सप्तम भाव"], ["पुण्य सहम", "तुला 12°", "शुभ"]], null, "tajika_sahams") + '</div>'; }
+                      function vRemedies() { return '<div class="pn"><div class="ph">उपाय ट्रैकर व नोट्स</div><div class="pb"><div class="rm"><input type="checkbox" checked><span>नियमित मंत्र जप एवं पाठ</span><div class="bar"><i style="width:70%"></i></div></div></div></div>'; }
+
+                      var chat = [["ai", "नमस्ते! मैं चुनी हुई कुंडली (लग्न कुंभ 01°51', शुक्र नीच 29° कन्या) और लाइव इंजन डेटा के आधार पर उत्तर दूँगा।"]];
+                      function vAI() {
+                        return '<div class="pb">' + chat.map(function (x) { return '<div style="margin:6px 0">' + x[1] + '</div>'; }).join("") +
+                          '<div style="display:flex;gap:6px;margin-top:8px"><input id="cin" placeholder="प्रश्न पूछें…" style="flex:1;padding:6px;border:1px solid var(--line);border-radius:4px"><button type="button" class="btn pri" onclick="var el=$(\'cin\');if(el&&el.value.trim()){chat.push([\'u\',el.value.trim()],[\'ai\',\'इंजन मानों के अनुसार विश्लेषण तैयार है।\']);render()}">भेजें</button></div></div>';
+                      }
+
+                      function vAdmin() {
+                        return '<div class="kpi"><div class="hc"><small>सक्रिय यूज़र</small><b>1,284</b></div><div class="hc"><small>प्रो लाइसेंस</small><b>312</b></div><div class="hc"><small>इंजन</small><b class="good">SwissEph</b></div><div class="hc"><small>बाइंड मोड</small><b>' + (window.ASTRO_CONFIG.connected ? "Live API" : "Safe Fallback") + '</b></div></div>';
+                      }
+
+                      var TL0 = [256, 331, 268, 249, 324, 250, 206, 203], TLR = [0.9856, 13.176, 0.524, 1.383, 0.0831, 1.2, 0.0335, -0.053], TLG = ["Su", "Mo", "Ma", "Me", "Ju", "Ve", "Sa", "Ra"], toff = 0, tplay = null;
+                      function nm(x) { return ((x % 360) + 360) % 360; }
+                      function wheelSVG(off) {
+                        var s = '<svg class="ch" viewBox="0 0 300 300"><circle cx="150" cy="150" r="140"/><circle cx="150" cy="150" r="100"/><circle cx="150" cy="150" r="58"/>', days = (new Date() - B0) / 864e5 + off;
+                        function P(l, r) { var q = (l - 90) * Math.PI / 180; return [150 + r * Math.cos(q), 154 + r * Math.sin(q)]; }
+                        for (var i = 0; i < 12; i++) { var a = (i * 30 - 90) * Math.PI / 180, b = P(i * 30 + 15, 120); s += '<line x1="' + (150 + 100 * Math.cos(a)) + '" y1="' + (150 + 100 * Math.sin(a)) + '" x2="' + (150 + 140 * Math.cos(a)) + '" y2="' + (150 + 140 * Math.sin(a)) + '"/><text class="n" x="' + b[0] + '" y="' + b[1] + '">' + "♈♉♊♋♌♍♎♏♐♑♒♓".charAt(i) + '</text>'; }
+                        TL0.forEach(function (l, k) { var q = P(l, 40), r = P(nm(l + TLR[k] * days), 80); s += '<text x="' + q[0] + '" y="' + q[1] + '" style="opacity:.45">' + GL[TLG[k]] + '</text><text x="' + r[0] + '" y="' + r[1] + '" style="fill:var(--acc)">' + GL[TLG[k]] + '</text>'; });
+                        return s + '</svg>';
+                      }
+                      function tupd() { if ($("tw")) $("tw").innerHTML = wheelSVG(toff); if ($("tdate")) $("tdate").textContent = fd(new Date(Date.now() + toff * 864e5)); if ($("tsl")) $("tsl").value = toff; }
+                      function vTrans() { return '<div class="g2"><div class="pn"><div class="ph">गोचर चक्र</div><div class="pb" id="tw">' + wheelSVG(toff) + '</div></div><div class="pn"><div class="ph">तारीख़ नियंत्रण</div><div class="pb"><div id="tdate" class="m" style="font-size:16px;font-weight:700">' + fd(new Date(Date.now() + toff * 864e5)) + '</div><input id="tsl" type="range" min="-15000" max="15000" step="5" value="' + toff + '" style="width:100%"><div class="acts2" style="margin-top:6px"><button type="button" class="btn pri" id="tpl">▶ चलाएँ</button><button type="button" class="btn" id="trs">आज</button></div></div></div></div>'; }
+                      function vLife() {
+                        var m = mds(), T = 80, bands = m.map(function (x) { var s0 = (x.s - B0) / (365.25 * 864e5), w = Math.min(x.y, T - s0); return w > 0 ? '<div style="left:' + (s0 / T * 100) + '%;width:' + (w / T * 100) + '%;background:' + DC[x.i] + '">' + DN[x.i] + '</div>' : ""; }).join("");
+                        return '<div class="pn"><div class="ph">जीवन टाइमलाइन (0–80 वर्ष)</div><div class="pb"><div class="lt">' + bands + '</div></div></div>';
+                      }
+
+                      var SBC_GRID = [["अ", "कृत्तिका", "रोहिणी", "मृगशिरा", "आ", "आर्द्रा", "पुनर्वसु", "पुष्य", "इ"], ["भरणी", "वृष", "मिथुन", "नन्दा", "पूर्व", "भद्रा", "कर्क", "सिंह", "आश्लेषा"], ["अश्विनी", "मेष", "क", "च", "ई", "ट", "ठ", "कन्या", "मघा"], ["रेवती", "पूर्णा", "ह", "A", "रवि/मं", "B", "ड", "जया", "पू.फा."], ["ऋ", "उत्तर", "उ", "बुध", "ब्रह्म", "गुरु", "ऊ", "दक्षिण", "ऌ"], ["उ.भा.", "जया", "स", "C", "सोम/शु", "D", "प", "पूर्णा", "उ.फा."], ["पू.भा.", "मीन", "श", "य", "ए", "न", "म", "तुला", "हस्त"], ["शतभिषा", "कुंभ", "मकर", "रिक्ता", "पश्चिम", "रिक्ता", "धनु", "वृश्चिक", "चित्रा"], ["ऐ", "धनिष्ठा", "श्रवण", "अभिजित", "ओ", "उ.षा.", "पू.षा.", "मूल", "औ"]];
+                      function vSBC() {
+                        var cells = "";
+                        for (var i = 0; i < 9; i++) for (var j = 0; j < 9; j++) {
+                          var val = SBC_GRID[i][j], cl = (i === 4 && j === 4) ? "center" : (i === 0 || i === 8 || j === 0 || j === 8) ? "nak" : "";
+                          if (val === "पू.भा.") cl += " hj"; if (val === "विशाखा") cl += " hv"; if (val === "मृगशिरा") cl += " hvg";
+                          cells += '<div class="' + cl + '">' + val + '</div>';
+                        }
+                        return '<div class="pn"><div class="ph">सर्वतोभद्र चक्र (9×9)</div><div class="pb"><div class="sbc" data-slot="sarvatobhadra_panel">' + cells + '</div></div></div>';
+                      }
+
+                      var VIEWS = {
+                        "जन्म कुंडली": vKundali,
+                        "वर्ग कुंडली": vVarga,
+                        "सुदर्शन चक्र": vSudarshan,
+                        "ग्रह बल (षड्बल)": vShad,
+                        "योग व दोष": vYoga,
+                        "शास्त्रीय फलादेश": vYoga,
+                        "दशा प्रणाली": vDasha,
+                        "गोचर व अष्टकवर्ग": vAshta,
+                        "वर्षफल (ताजिक)": vTajika,
+                        "जन्म समय शोधन": function () { return '<div class="pn"><div class="ph">BTR समय शोधन</div><div class="pb"><div class="acts2"><button type="button" class="btn" onclick="stepBTR(-60)">-1m</button><button type="button" class="btn" onclick="stepBTR(-10)">-10s</button><button type="button" class="btn pri" onclick="stepBTR(10)">+10s</button><button type="button" class="btn pri" onclick="stepBTR(60)">+1m</button></div></div></div>'; },
+                        "केपी पद्धति": vKP,
+                        "जैमिनी पद्धति": vJaimini,
+                        "कुंडली मिलान": vMatching,
+                        "पंचांग": vPanchang,
+                        "वास्तु शास्त्र": vVastu,
+                        "देशवर्ग व क्षेत्रीय विश्लेषण": vDeshavarga,
+                        "लाइफ़ एरिया (जीवन क्षेत्र)": vLifeAreas,
+                        "रत्न एवं रुद्राक्ष विज्ञान": vGems,
+                        "ग्रह पीड़ा व उपाय": vRemedies,
+                        "दैवज्ञ AI": vAI,
+                        "एडमिन डैशबोर्ड": vAdmin
+                      };
+
+                      function renderNav() {
+                        // Line 1: Category Ribbon
+                        var ribEl = $("rib");
+                        if (ribEl) {
+                          ribEl.innerHTML = CATS.map(function (c, i) {
+                            return '<button type="button" class="' + (i === cat ? 'on' : '') + '" onclick="setCat(' + i + ')">' + c[0] + '</button>';
+                          }).join("");
+                        }
+
+                        // Line 2: Module Pills
+                        var mods = (CATS[cat] && CATS[cat][1]) || [];
+                        var modsEl = $("mods");
+                        if (modsEl) {
+                          modsEl.innerHTML = mods.map(function (m) {
+                            return '<button type="button" class="' + (m === mod ? 'on' : '') + '" onclick="setMod(\'' + m + '\')">' + m + '</button>';
+                          }).join("");
+                        }
+
+                        // Line 3: Tab Strip
+                        var tabsList = TABS[mod] || ["मुख्य विश्लेषण", "तालिका व नियम", "विवरण"];
+                        var tabsEl = $("tabs");
+                        if (tabsEl) {
+                          tabsEl.innerHTML = tabsList.map(function (tName, i) {
+                            return '<button type="button" class="' + (i === tab ? 'on' : '') + '" onclick="setTab(' + i + ')">' + tName + '</button>';
+                          }).join("");
+                        }
+
+                        // Line 4: Sub-Tab Strip
+                        var activeTabName = tabsList[tab] || "";
+                        var subTabsList = SUBTABS[activeTabName] || [
+                          "1. 📋 सारांश एवं मुख्य चक्र",
+                          "2. 📜 शास्त्रीय विवरण व विश्लेषण",
+                          "3. 📖 प्रमाण व श्लोक"
+                        ];
+                        var subtabsEl = $("subtabs");
+                        if (subtabsEl) {
+                          subtabsEl.innerHTML = subTabsList.map(function (sName, i) {
+                            return '<button type="button" class="' + (i === subtab ? 'on' : '') + '" onclick="setSubTab(' + i + ')">' + sName + '</button>';
+                          }).join("");
+                        }
+                      }
+
+                      function setCat(i) {
+                        cat = i;
+                        mod = (CATS[cat] && CATS[cat][1] && CATS[cat][1][0]) || "जन्म कुंडली";
+                        tab = 0;
+                        subtab = 0;
+                        render();
+                      }
+
+                      function setMod(m) {
+                        mod = m;
+                        tab = 0;
+                        subtab = 0;
+                        render();
+                      }
+
+                      function setTab(i) {
+                        tab = i;
+                        subtab = 0;
+                        render();
+                      }
+
+                      function setSubTab(i) {
+                        subtab = i;
+                        render();
+                      }
+
+                      function render() {
+                        renderNav();
+
+                        var fn = VIEWS[mod] || function () {
+                          return '<div class="pn"><div class="ph">' + mod + '</div><div class="pb" style="text-align:center;padding:24px;color:var(--mute)">' + mod + ' कंपोनेंट सक्रिय है और इंजन कनेक्शन के लिए तैयार है।</div></div>';
+                        };
+
+                        var modEl = $("mod");
+                        if (modEl) {
+                          modEl.innerHTML = '<div class="pb">' + fn() + '</div>';
+                        }
+                        bindEvents();
+                      }
+
+                      function bindEvents() {
+                        var M = $("mod");
+                        if (!M) return;
+
+                        [].forEach.call(M.querySelectorAll(".house-poly"), function (e) {
+                          e.onclick = function () { ks = +e.dataset.h; kp = null; render(); };
+                        });
+                        [].forEach.call(M.querySelectorAll(".planet-node"), function (e) {
+                          e.onclick = function (ev) {
+                            ev.stopPropagation();
+                            kp = e.dataset.p;
+                            if (e.dataset.h) ks = +e.dataset.h;
+                            render();
+                          };
+                        });
+
+                        [].forEach.call(M.querySelectorAll(".pl"), function (e) {
+                          var p = e.dataset.p;
+                          var info = PL_META[p];
+                          e.onclick = function (ev) {
+                            ev.stopPropagation();
+                            kp = p;
+                            ks = +e.dataset.h;
+                            hideTT();
+                            render();
+                          };
+                          e.onmouseenter = function (ev) {
+                            hovP = p;
+                            hovH = +e.dataset.h;
+                            if (info) {
+                              showTT(ev, '<b>' + GL[p] + ' ' + info.hi + '</b> · <span class="m">' + info.deg + '</span><br>' + info.nak + ' · <b>' + info.st + '</b>');
+                            }
+                            var asps = getAspects(hovP, hovH);
+                            [].forEach.call(M.querySelectorAll(".hit"), function (poly) {
+                              poly.classList.toggle("asp", asps.indexOf(+poly.dataset.h) > -1);
+                            });
+                          };
+                          e.onmousemove = function (ev) {
+                            if (info) {
+                              showTT(ev, '<b>' + GL[p] + ' ' + info.hi + '</b> · <span class="m">' + info.deg + '</span><br>' + info.nak + ' · <b>' + info.st + '</b>');
+                            }
+                          };
+                          e.onmouseleave = function () {
+                            hovP = null;
+                            hovH = null;
+                            hideTT();
+                            [].forEach.call(M.querySelectorAll(".hit"), function (poly) { poly.classList.remove("asp"); });
+                          };
+                        });
+
+                        [].forEach.call(M.querySelectorAll("button[data-k]"), function (b) {
+                          b.onclick = function () {
+                            var k = b.dataset.k;
+                            if (k === "svg") return toast("SVG चार्ट तैयार");
+                            if (k === "cmp") viewMode = (viewMode === "cmp" ? "single" : "cmp");
+                            else if (k === "quad") viewMode = (viewMode === "quad" ? "single" : "quad");
+                            else { kd = k; viewMode = "single"; }
+                            render();
+                          };
+                        });
+
+                        [].forEach.call(M.querySelectorAll("button[data-cs]"), function (b) {
+                          b.onclick = function () { cs = b.dataset.cs; render(); };
+                        });
+
+                        [].forEach.call(M.querySelectorAll("button[data-sb]"), function (b) {
+                          b.onclick = function () { sbp = b.dataset.sb; render(); };
+                        });
+
+                        if (mod === "दशा प्रणाली") {
+                          [].forEach.call(M.querySelectorAll(".gantt div"), function (d) {
+                            d.onclick = function () { dp = [+d.dataset.k]; render(); };
+                          });
+                          [].forEach.call(M.querySelectorAll("tbody tr"), function (r, i) {
+                            r.style.cursor = "pointer";
+                            r.onclick = function () { if (dp.length < 4) { dp.push(i); render(); } };
+                          });
+                          [].forEach.call(M.querySelectorAll("[data-up]"), function (b) {
+                            b.onclick = function () { dp = dp.slice(0, +b.dataset.up + 1); render(); };
+                          });
+                        }
+
+                        if (mod === "गोचर व अष्टकवर्ग" && tab === 3) {
+                          if ($("tsl")) $("tsl").oninput = function () { toff = +this.value; tupd(); };
+                          if ($("trs")) $("trs").onclick = function () { toff = 0; tupd(); };
+                          if ($("tpl")) $("tpl").onclick = function () {
+                            if (tplay) { clearInterval(tplay); tplay = null; this.textContent = "▶ चलाएँ"; }
+                            else {
+                              this.textContent = "⏸ रोकें";
+                              tplay = setInterval(function () {
+                                if (!$("tw")) { clearInterval(tplay); tplay = null; return; }
+                                toff = toff >= 15000 ? -15000 : toff + 10;
+                                tupd();
+                              }, 120);
+                            }
+                          };
+                        }
+                      }
+
+                      /* ================= BTR Time Stepper ================= */
+                      function formatSecToHMS(sec) {
+                        var daySec = 86400;
+                        var s = ((sec % daySec) + daySec) % daySec;
+                        var h = Math.floor(s / 3600);
+                        var m = Math.floor((s % 3600) / 60);
+                        var rem = Math.floor(s % 60);
+                        return ("0" + h).slice(-2) + ":" + ("0" + m).slice(-2) + ":" + ("0" + rem).slice(-2);
+                      }
+
+                      function stepBTR(deltaSec) {
+                        btrSeconds += deltaSec;
+                        var hms = formatSecToHMS(btrSeconds);
+                        if ($("hdrTime")) $("hdrTime").textContent = hms;
+                        if ($("slTime")) $("slTime").textContent = "01/01/1987 " + hms;
+                        if ($("banDT")) $("banDT").textContent = "01-01-1987 " + hms;
+                        toast("⏱ BTR समय: " + hms + " (" + (deltaSec > 0 ? "+" : "") + deltaSec + "s)");
+                      }
+
+                      /* ================= Safe Sequential Component-to-Engine Binder ================= */
+                      var autoBase = (window.location && window.location.origin && window.location.origin.indexOf("http") === 0)
+                        ? window.location.origin
+                        : "http://localhost:8000";
+
+                      window.ASTRO_CONFIG = {
+                        apiBase: autoBase,
+                        connected: false,
+                        report: []
+                      };
+
+                      var COMPONENT_BIND_ORDER = [
+                        "kundali_svg",
+                        "planets_table",
+                        "bhava_chalit",
+                        "dasha_system",
+                        "shadbala_panel",
+                        "ashtakavarga_panel",
+                        "sarvatobhadra_panel",
+                        "vastu_panel",
+                        "remedy_panel",
+                        "life_areas_panel",
+                        "deshavarga_table"
+                      ];
+
+                      function validateEnginePayload(componentKey, data) {
+                        if (!data || typeof data !== "object") return false;
+                        if (componentKey === "planets_table") return Array.isArray(data.planets);
+                        if (componentKey === "life_areas_panel") return Array.isArray(data.areas);
+                        if (componentKey === "deshavarga_table") return Array.isArray(data.rows);
+                        if (componentKey === "kundali_svg") return typeof data.lagna === "number" && typeof data.houses === "object";
+                        return true;
+                      }
+
+                      function applyBoundDataToState(componentKey, data) {
+                        if (componentKey === "planets_table" && Array.isArray(data.planets) && data.planets.length) {
+                          PLANET_DEGREE_ROWS = data.planets;
+                        } else if (componentKey === "life_areas_panel" && Array.isArray(data.areas) && data.areas.length) {
+                          LIFE_AREAS_DATA = data.areas;
+                        } else if (componentKey === "deshavarga_table" && Array.isArray(data.rows) && data.rows.length) {
+                          DESHAVARGA_ROWS = data.rows;
+                        } else if (componentKey === "kundali_svg") {
+                          if (typeof data.lagna === "number") LG.d1 = data.lagna;
+                          if (data.houses && typeof data.houses === "object") HP.d1 = data.houses;
+                        }
+                      }
+
+                      async function bindSingleComponentSafely(componentKey, birthPayload) {
+                        var slotEl = document.querySelector('[data-slot="' + componentKey + '"]');
+                        if (window.ASTRO_CONFIG.apiBase) {
+                          try {
+                            var res = await fetch(window.ASTRO_CONFIG.apiBase.replace(/\/$/, "") + "/api/v1/theme/bind", {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({ component: componentKey, birth: birthPayload })
+                            });
+                            if (res.ok) {
+                              var json = await res.json();
+                              if (json && json.ok && validateEnginePayload(componentKey, json.data)) {
+                                applyBoundDataToState(componentKey, json.data);
+                                window.ASTRO_CONFIG.connected = true;
+                                if (slotEl) slotEl.dataset.engineStatus = "LIVE_ENGINE";
+                                return { component: componentKey, status: "LIVE_ENGINE", ok: true };
+                              }
+                            }
+                          } catch (_) {
+                            // Keep safe local state on network error
+                          }
+                        }
+                        if (slotEl) slotEl.dataset.engineStatus = "SAFE_READY";
+                        return { component: componentKey, status: "SAFE_READY", ok: true };
+                      }
+
+                      async function runSequentialEngineBinding(birthPayload) {
+                        var results = [];
+                        for (var i = 0; i < COMPONENT_BIND_ORDER.length; i++) {
+                          var r = await bindSingleComponentSafely(COMPONENT_BIND_ORDER[i], birthPayload);
+                          results.push(r);
+                        }
+                        window.ASTRO_CONFIG.report = results;
+                        var badge = $("apiBadge");
+                        if (badge) {
+                          badge.textContent = window.ASTRO_CONFIG.connected ? "🟢 Live Engine" : "● इंजन बाइंड सक्रिय (" + results.length + "/11)";
+                        }
+                        render();
+                      }
+
+                      function openApiModal() {
+                        var html = '<p style="margin-top:0;color:var(--mute)">Python FastAPI ब्रिज URL सेट करें या JSON डेटा सीधे लागू करें (इंजन या थीम को नुकसान पहुँचाए बिना):</p>' +
+                          '<div class="fr"><label>API Base URL</label><input id="apiBaseIn" class="m" value="' + window.ASTRO_CONFIG.apiBase + '" placeholder="http://localhost:8000"></div>' +
+                          '<div class="fr"><label>JSON पेलोड</label><textarea id="apiJsonIn" class="m" rows="5" placeholder=\'{"component":"planets_table","data":{"planets":[...]}}\'></textarea></div>' +
+                          '<div class="ab"><button type="button" data-close>बंद करें</button><button type="button" class="btn" onclick="applyCustomJson()">📥 JSON लागू करें</button><button type="button" class="pri" onclick="saveApiBaseAndBind()">🔌 कनेक्ट व बाइंड</button></div>';
+                        popup("🔌 सुरक्षित इंजन बाइंडिंग एवं API कनेक्टर", html);
+                      }
+
+                      function applyCustomJson() {
+                        var ta = $("apiJsonIn");
+                        if (!ta || !ta.value.trim()) return toast("कृपया वैध JSON लिखें");
+                        try {
+                          var obj = JSON.parse(ta.value);
+                          if (obj.component && obj.data && validateEnginePayload(obj.component, obj.data)) {
+                            applyBoundDataToState(obj.component, obj.data);
+                            closeP();
+                            render();
+                            toast("✅ " + obj.component + " सुरक्षित रूप से अपडेट हुआ");
+                          } else {
+                            toast("⚠️ JSON में वैध component और data अपेक्षित है");
+                          }
+                        } catch (e) {
+                          toast("❌ JSON त्रुटि: " + e.message);
+                        }
+                      }
+
+                      function saveApiBaseAndBind() {
+                        var inp = $("apiBaseIn");
+                        if (inp) window.ASTRO_CONFIG.apiBase = inp.value.trim();
+                        closeP();
+                        runSequentialEngineBinding({
+                          name: $("hdrName") ? $("hdrName").textContent : "Sample",
+                          dob: "1987-01-01",
+                          tob: $("hdrTime") ? $("hdrTime").textContent : "05:00:00",
+                          lat: 28.6139,
+                          lon: 77.209,
+                          tz: "Asia/Kolkata",
+                          ayanamsa: "Lahiri"
+                        });
+                        toast("🔄 कंपोनेंट्स को इंजन से जोड़ा जा रहा है...");
+                      }
+
+                      /* ================= Theme, Sidebar, Clients, City Atlas, PDF & Palette ================= */
+                      function theme(k) {
+                        document.documentElement.setAttribute("data-theme", k);
+                        var thEl = $("th");
+                        if (thEl) {
+                          [].forEach.call(thEl.children, function (b) { b.className = b.dataset.k === k ? "on" : ""; });
+                        }
+                        toast("थीम: " + k);
+                      }
+
+                      function sidet() {
+                        var s = $("shell"), sd = $("side"), b = $("sbk");
+                        if (window.innerWidth > 1100) {
+                          if (s) s.classList.toggle("closed");
+                        } else {
+                          if (sd && b) {
+                            var o = sd.classList.toggle("open");
+                            b.classList.toggle("open", o);
+                          }
+                        }
+                      }
+
+                      if ($("sbk")) {
+                        $("sbk").onclick = function () {
+                          if ($("side")) $("side").classList.remove("open");
+                          $("sbk").classList.remove("open");
+                        };
+                      }
+
+                      var WT = ["Sample", "Ramesh", "Anita"], wti = 0;
+                      function drawWT() {
+                        var w = $("wt");
+                        if (!w) return;
+                        w.innerHTML = "";
+                        WT.forEach(function (n, i) {
+                          var b = document.createElement("button");
+                          b.type = "button";
+                          b.textContent = n + " ×";
+                          b.className = i === wti ? "on" : "";
+                          b.onclick = function () {
+                            wti = i;
+                            if ($("hdrName")) $("hdrName").textContent = n;
+                            if ($("slName")) $("slName").textContent = n;
+                            toast("जातक: " + n);
+                            drawWT();
+                          };
+                          w.appendChild(b);
+                        });
+                        var a = document.createElement("button");
+                        a.type = "button";
+                        a.textContent = "＋ नई कुंडली";
+                        a.onclick = function () { openP(0); };
+                        w.appendChild(a);
+                      }
+                      drawWT();
+
+                      var CITIES = [
+                        { n: "New Delhi, India", lat: "28°39' N", lon: "77°13' E", tz: "UTC +05:30" },
+                        { n: "Nanpara, Uttar Pradesh", lat: "27°52' N", lon: "81°30' E", tz: "UTC +05:30" },
+                        { n: "Bahraich, Uttar Pradesh", lat: "27°34' N", lon: "81°35' E", tz: "UTC +05:30" },
+                        { n: "Lucknow, Uttar Pradesh", lat: "26°51' N", lon: "80°57' E", tz: "UTC +05:30" },
+                        { n: "Varanasi, Uttar Pradesh", lat: "25°19' N", lon: "82°58' E", tz: "UTC +05:30" },
+                        { n: "Jaipur, Rajasthan", lat: "26°55' N", lon: "75°47' E", tz: "UTC +05:30" }
+                      ];
+
+                      function filterCities(q) {
+                        var box = $("cityRes");
+                        if (!box) return;
+                        var matches = CITIES.filter(function (c) { return c.n.toLowerCase().indexOf((q || "").toLowerCase()) > -1; });
+                        box.innerHTML = matches.map(function (c) {
+                          return '<div class="city-it" onclick="pickCity(\'' + c.n + '\',\'' + c.lat + '\',\'' + c.lon + '\',\'' + c.tz + '\')"><span>' + c.n + '</span><span class="m" style="color:var(--mute)">' + c.lat + ', ' + c.lon + '</span></div>';
+                        }).join("");
+                      }
+
+                      function pickCity(n, lat, lon, tz) {
+                        if ($("inCity")) $("inCity").value = n;
+                        if ($("inLat")) $("inLat").value = lat;
+                        if ($("inLon")) $("inLon").value = lon;
+                        if ($("inTz")) $("inTz").value = tz;
+                        if ($("cityRes")) $("cityRes").innerHTML = "";
+                      }
+
+                      function createNewChart() {
+                        var nm = $("inName") ? $("inName").value.trim() : "";
+                        var ct = $("inCity") ? $("inCity").value : "New Delhi, India";
+                        var lt = $("inLat") ? $("inLat").value : "28°39' N";
+                        var ln = $("inLon") ? $("inLon").value : "77°13' E";
+                        if (nm) {
+                          WT.push(nm);
+                          wti = WT.length - 1;
+                          drawWT();
+                          if ($("hdrName")) $("hdrName").textContent = nm;
+                          if ($("slName")) $("slName").textContent = nm;
+                        }
+                        if ($("hdrPlace")) $("hdrPlace").textContent = ct.split(",")[0];
+                        if ($("slPlace")) $("slPlace").textContent = ct.split(",")[0];
+                        if ($("banPlace")) $("banPlace").textContent = ct;
+                        if ($("banCoords")) $("banCoords").textContent = lt + " " + ln;
+                        closeP();
+                        runSequentialEngineBinding({ name: nm || "Sample", place: ct, lat: lt, lon: ln });
+                        toast("✅ नई कुंडली तैयार और कंपोनेंट्स बाइंड किए गए");
+                      }
+
+                      var ov = $("ov");
+                      function closeP() { if (ov) ov.className = "ov"; }
+                      function popup(t, h) {
+                        if (!ov) return;
+                        if ($("ct")) $("ct").textContent = t;
+                        if ($("cb")) $("cb").innerHTML = h;
+                        ov.className = "ov on";
+                        [].forEach.call($("cb").querySelectorAll("[data-close]"), function (b) { b.onclick = closeP; });
+                      }
+                      function acts(a) { return '<div class="ab"><button type="button" data-close>बंद करें</button><button type="button" class="pri" data-close>' + a + '</button></div>'; }
+
+                      var TOOLS = [
+                        ["नई कुंडली (City Atlas)", function () {
+                          return '<div class="fr"><label>जातक नाम</label><input id="inName" placeholder="नाम दर्ज करें"></div>' +
+                            '<div class="fr"><label>जन्म तिथि</label><input value="01/01/1987"></div>' +
+                            '<div class="fr"><label>जन्म समय</label><input value="05:00:00"></div>' +
+                            '<div class="fr"><label>जन्म स्थान</label><div><input id="inCity" value="New Delhi, India" oninput="filterCities(this.value)" onfocus="filterCities(this.value)" placeholder="शहर खोजें…"><div class="city-list" id="cityRes"></div></div></div>' +
+                            '<div class="fr"><label>अक्षांश (Lat)</label><input id="inLat" class="m" value="28°39\' N"></div>' +
+                            '<div class="fr"><label>देशांतर (Lon)</label><input id="inLon" class="m" value="77°13\' E"></div>' +
+                            '<div class="fr"><label>टाइमज़ोन</label><input id="inTz" class="m" value="UTC +05:30"></div>' +
+                            '<div class="ab"><button type="button" data-close>रद्द करें</button><button type="button" class="pri" onclick="createNewChart()">कुंडली बनाएँ एवं बाइंड</button></div>';
+                        }],
+                        ["क्लाइंट वॉल्ट", function () { return tbl(["नाम", "तिथि", "स्थान"], [["Sample", "01/01/1987", "Delhi"], ["Ramesh", "14/03/1975", "Jaipur"], ["Anita", "02/09/1992", "Pune"]]) + acts("बंद करें"); }],
+                        ["कुंडली सेव करें", function () { return '<div class="fr"><label>नाम</label><input value="Sample"></div><div class="fr"><label>फ़ोल्डर</label><select><option>सामान्य</option><option>क्लाइंट</option></select></div>' + acts("सेव करें"); }],
+                        ["परामर्श नोट्स", function () { return '<textarea rows="4" placeholder="जातक के लिए नोट्स लिखें…"></textarea>' + acts("नोट सेव करें"); }],
+                        ["सॉफ्टवेयर सेटिंग्स एवं इंजन", function () { return '<div class="fr"><label>अयनांश</label><select><option>Lahiri (चित्रपक्ष)</option><option>KP</option><option>Raman</option></select></div><div class="fr"><label>इंजन ब्रिज</label><button type="button" class="btn" onclick="closeP();openApiModal()">🔌 API सेटिंग्स खोलें</button></div>' + acts("लागू करें"); }]
+                      ];
+
+                      function openP(i) {
+                        if (!TOOLS[i]) return;
+                        popup(TOOLS[i][0], TOOLS[i][1]());
+                        if (i === 0) filterCities("");
+                      }
+
+                      if ($("cx")) $("cx").onclick = closeP;
+                      if (ov) ov.onclick = function (e) { if (e.target === ov) closeP(); };
+
+                      function pdf() {
+                        var sections = [
+                          ["जन्म विवरण व अवकहड़ा", true], ["लग्न (D1) व ग्रह तालिका", true],
+                          ["लाइफ़ एरिया विश्लेषण", true], ["देशवर्ग तालिका", true],
+                          ["विंशोत्तरी दशा", true], ["एस्ट्रो-वास्तु व रत्न", true]
+                        ];
+                        var html = '<p style="margin-top:0;color:var(--mute)">रिपोर्ट में शामिल करने के लिए खंड चुनें:</p>' +
+                          '<div class="chk-grid">' + sections.map(function (s) { return '<label><input type="checkbox"' + (s[1] ? ' checked' : '') + '> ' + s[0] + '</label>'; }).join("") + '</div>' +
+                          '<div class="ab"><button type="button" data-close>रद्द करें</button><button type="button" class="pri" onclick="closeP();theme(\'print\');setTimeout(function(){window.print()},200)">🖨️ प्रिंट / PDF</button></div>';
+                        popup("📄 कस्टम PDF रिपोर्ट बिल्डर", html);
+                      }
+
+                      function calc() { popup("ℹ️ गणना मानक", '<div class="kv"><span>इंजन</span><span>Swiss Ephemeris (Safe Bridge)</span><span>अयनांश</span><span>Lahiri (चित्रपक्ष)</span></div>' + acts("ठीक है")); }
+                      function keys() { popup("⌨ शॉर्टकट", '<p><b>Ctrl + K</b> : कमांड पैलेट खोजें</p>' + acts("बंद करें")); }
+
+                      var PI2 = [], pov = $("pov"), pq = $("pq"), pr = $("pr"), pl = [];
+                      CATS.forEach(function (c, ci) {
+                        c[1].forEach(function (m) {
+                          PI2.push({ t: m, s: c[0], f: function () { cat = ci; mod = m; tab = 0; render(); } });
+                        });
+                      });
+
+                      function pal(o) {
+                        if (!pov) return;
+                        pov.className = o ? "ov pal on" : "ov pal";
+                        if (o && pq) { pq.value = ""; pf(); pq.focus(); }
+                      }
+
+                      function pf() {
+                        if (!pr || !pq) return;
+                        var q = pq.value.toLowerCase();
+                        pl = PI2.filter(function (x) { return (x.t + x.s).toLowerCase().indexOf(q) > -1; }).slice(0, 9);
+                        pr.innerHTML = pl.length
+                          ? pl.map(function (x, i) { return '<div class="it' + (i ? '' : ' on') + '"><span>' + x.t + '</span><small>' + x.s + '</small></div>'; }).join("")
+                          : '<div class="pb" style="text-align:center;color:var(--mute)">कोई परिणाम नहीं</div>';
+                        [].forEach.call(pr.children, function (e, i) { e.onclick = function () { pal(0); if (pl[i]) pl[i].f(); }; });
+                      }
+
+                      if (pq) pq.oninput = pf;
+                      if (pov) pov.onclick = function (e) { if (e.target === pov) pal(0); };
+                      document.addEventListener("keydown", function (e) {
+                        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); pal(1); }
+                        else if (e.key === "Escape") { pal(0); closeP(); }
+                      });
+
+                      (function heroInit() {
+                        var m = mds(), a = cur(m);
+                        if (a < 0) return;
+                        var A = subs(m[a].s, m[a].y, m[a].i), b = cur(A);
+                        var P = b >= 0 ? subs(A[b].s, A[b].y, A[b].i) : [], c = P.length ? cur(P) : -1;
+                        var txt = DN[m[a].i] + (b >= 0 ? " › " + DN[A[b].i] : "") + (c >= 0 ? " › " + DN[P[c].i] : "");
+                        [].forEach.call(document.querySelectorAll(".curd"), function (e) { e.textContent = txt; });
+                        if ($("hdb")) $("hdb").style.width = Math.round((new Date() - m[a].s) / (m[a].e - m[a].s) * 100) + "%";
+                        if ($("hds")) $("hds").textContent = "महादशा समाप्ति: " + fd(m[a].e);
+                      })();
+
+                      var BN = [["कुंडली", "जन्म कुंडली"], ["लाइफ़ एरिया", "लाइफ़ एरिया (जीवन क्षेत्र)"], ["देशवर्ग", "देशवर्ग व क्षेत्रीय विश्लेषण"], ["वास्तु", "वास्तु शास्त्र"]], bn = $("bn");
+                      if (bn) {
+                        BN.forEach(function (x) {
+                          var b = document.createElement("button");
+                          b.type = "button";
+                          b.textContent = x[0];
+                          b.onclick = function () {
+                            for (var i = 0; i < CATS.length; i++) {
+                              if (CATS[i][1].indexOf(x[1]) > -1) { cat = i; break; }
+                            }
+                            mod = x[1];
+                            tab = 0;
+                            render();
+                          };
+                          bn.appendChild(b);
+                        });
+                        var sb = document.createElement("button");
+                        sb.type = "button";
+                        sb.textContent = "🔍 खोजें";
+                        sb.onclick = function () { pal(1); };
+                        bn.appendChild(sb);
+                      }
+
+                      "♈♉♊♋♌♍♎♏♐♑♒♓".split("").concat("☉☽♂☿♃♀♄☊☋".split("")).forEach(function (g) {
+                        var gl = $("gl");
+                        if (!gl) return;
+                        var s = document.createElement("span");
+                        s.textContent = g + "\uFE0E";
+                        gl.appendChild(s);
+                      });
+
+                      theme("day");
+                      render();
+                      runSequentialEngineBinding({ name: "Sample", dob: "1987-01-01", tob: "05:00:00", lat: 28.6139, lon: 77.209, tz: "Asia/Kolkata", ayanamsa: "Lahiri" });
+  </script>
+</body>
+
+</html>
